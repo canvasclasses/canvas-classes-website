@@ -1,116 +1,177 @@
+import { parse } from 'csv-parse/sync';
+
 export interface RevisionChapter {
-    id: number;
-    title: string;
-    branch: 'Physical' | 'Inorganic' | 'Organic';
-    infographicsCount: number;
-    flashcardsCount: number;
+    id: string;
+    classNum: number;
+    chapterNum: number;
+    chapterName: string;
+    summary: string;
     slug: string;
-    topicsCount: number;
 }
 
-export const revisionChapters: RevisionChapter[] = [
-    {
-        id: 1,
-        title: "Solutions",
-        branch: "Physical",
-        infographicsCount: 13,
-        flashcardsCount: 56,
-        slug: "solutions",
-        topicsCount: 13
-    },
-    {
-        id: 2,
-        title: "Electrochemistry",
-        branch: "Physical",
-        infographicsCount: 14,
-        flashcardsCount: 42,
-        slug: "electrochemistry",
-        topicsCount: 14
-    },
-    {
-        id: 3,
-        title: "Chemical Kinetics",
-        branch: "Physical",
-        infographicsCount: 9,
-        flashcardsCount: 48,
-        slug: "chemical-kinetics",
-        topicsCount: 9
-    },
-    {
-        id: 4,
-        title: "d- and f- Block Elements",
-        branch: "Inorganic",
-        infographicsCount: 7,
-        flashcardsCount: 35,
-        slug: "d-and-f-block-elements",
-        topicsCount: 7
-    },
-    {
-        id: 5,
-        title: "Coordination Compounds",
-        branch: "Inorganic",
-        infographicsCount: 8,
-        flashcardsCount: 40,
-        slug: "coordination-compounds",
-        topicsCount: 8
-    },
-    {
-        id: 6,
-        title: "Haloalkanes and Haloarenes",
-        branch: "Organic",
-        infographicsCount: 10,
-        flashcardsCount: 0,
-        slug: "haloalkanes-and-haloarenes",
-        topicsCount: 10
-    },
-    {
-        id: 7,
-        title: "Alcohols, Phenols and Ethers",
-        branch: "Organic",
-        infographicsCount: 12,
-        flashcardsCount: 0,
-        slug: "alcohols-phenols-and-ethers",
-        topicsCount: 12
-    },
-    {
-        id: 8,
-        title: "Aldehydes, Ketones and Carboxylic Acids",
-        branch: "Organic",
-        infographicsCount: 15,
-        flashcardsCount: 0,
-        slug: "aldehydes-ketones-and-carboxylic-acids",
-        topicsCount: 15
-    },
-    {
-        id: 9,
-        title: "Amines",
-        branch: "Organic",
-        infographicsCount: 8,
-        flashcardsCount: 0,
-        slug: "amines",
-        topicsCount: 8
-    },
-    {
-        id: 10,
-        title: "Biomolecules",
-        branch: "Organic",
-        infographicsCount: 7,
-        flashcardsCount: 0,
-        slug: "biomolecules",
-        topicsCount: 7
-    },
-    {
-        id: 11,
-        title: "Complete Revision",
-        branch: "Physical",
-        infographicsCount: 3,
-        flashcardsCount: 0,
-        slug: "complete-revision",
-        topicsCount: 3
-    }
-];
+export interface RevisionTopic {
+    id: string;
+    classNum: string;
+    chapterNum: string;
+    chapterName: string;
+    topicName: string;
+    topicOrder: number;
+    infographicUrl: string;
+    hasFlashcards: boolean;
+}
 
-export async function getRevisionChapters(): Promise<RevisionChapter[]> {
-    // Simulate API delay if needed, or just return data
-    return revisionChapters;
+export interface FlashcardItem {
+    id: string;
+    classNum: string;
+    chapterName: string;
+    question: string;
+    answer: string;
+    topicName: string;
+}
+
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRPlWVZDTRtknmy6zXFuwzrm4oiGYXfVVmBmj08LMU_vueoqB-uzH-TfyABixli2PoKohIfJBMPiMAN/pub?output=csv';
+const TOPICS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQhGKJhEUs03TOoURdENzh7j7pmQzHeJYL3JGHL9HeRk37a26S0-1YD55CODtkhZwcZEfCPqrvtFhFu/pub?output=csv';
+const FLASHCARDS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vToP-1ka1fN88OCt814c56-7Etbpg9lAjMdknGamiCFwqIRrwtxB6qMcKVz22kWgRJtbeAZvhXF_0E5/pub?output=csv';
+
+// Helper to generate slug from chapter name
+function generateSlug(name: string): string {
+    return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+// Robust CSV Parser for multiline support
+function parseCSVRobust(text: string): string[][] {
+    const result: string[][] = [];
+    let row: string[] = [];
+    let current = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const nextChar = text[i + 1];
+
+        if (char === '"') {
+            if (inQuotes && nextChar === '"') {
+                current += '"';
+                i++; // Skip escaped quote
+            } else {
+                inQuotes = !inQuotes;
+            }
+        } else if (char === ',' && !inQuotes) {
+            row.push(current);
+            current = '';
+        } else if ((char === '\r' || char === '\n') && !inQuotes) {
+            if (char === '\r' && nextChar === '\n') i++; // Handle CRLF
+            row.push(current);
+            result.push(row);
+            row = [];
+            current = '';
+        } else {
+            current += char;
+        }
+    }
+    if (current || row.length > 0) {
+        row.push(current);
+        result.push(row);
+    }
+    return result;
+}
+
+
+export async function fetchRevisionData(): Promise<RevisionChapter[]> {
+    try {
+        const response = await fetch(CSV_URL, { next: { revalidate: 3600 } });
+        const text = await response.text();
+
+        const rows = parseCSVRobust(text);
+        // Header: id, class, chapter_number, chapter_name, summary_text
+
+        // Skip header row
+        const dataRows = rows.slice(1);
+
+        return dataRows.map(row => {
+            // Ensure we have enough columns, some descriptive CSVs might have trailing empty cols
+            const id = row[0] || '';
+            const classNum = parseInt(row[1] || '12');
+            const chapterNum = parseInt(row[2] || '0');
+            const chapterName = row[3] || 'Untitled';
+            const summary = row[4] || ''; // This contains the markdown
+
+            return {
+                id,
+                classNum,
+                chapterNum,
+                chapterName,
+                summary,
+                slug: generateSlug(chapterName)
+            };
+        }).filter(item => item.chapterName !== 'Untitled'); // Basic filter
+
+    } catch (error) {
+        console.error('Error fetching revision data:', error);
+        return [];
+    }
+}
+
+export async function fetchRevisionTopics(): Promise<RevisionTopic[]> {
+    try {
+        // Fetch with no-cache to ensure fresh data
+        const response = await fetch(TOPICS_CSV_URL, { cache: 'no-store' });
+        const text = await response.text();
+        const rows = parseCSVRobust(text);
+
+        // Skip header
+        const dataRows = rows.slice(1);
+
+        return dataRows.map((row: any) => ({
+            id: row[0] || '',
+            classNum: row[1] || '',
+            chapterNum: row[2] || '',
+            chapterName: row[3] || '',
+            topicName: row[5] || '', // Topic Name is index 5
+            topicOrder: parseInt(row[6]) || 0, // Topic Order is index 6
+            infographicUrl: row[8] || '', // Infographic URL is index 8
+            hasFlashcards: (row[11] || '').toString().toLowerCase() === 'yes' || (row[11] || '').toString().toLowerCase() === 'true', // Has Flashcards is index 11
+        }));
+    } catch (error) {
+        console.error('Error fetching revision topics:', error);
+        return [];
+    }
+}
+
+export async function fetchFlashcards(): Promise<FlashcardItem[]> {
+    try {
+        const response = await fetch(FLASHCARDS_CSV_URL, { cache: 'no-store' });
+        const text = await response.text();
+        const rows = parseCSVRobust(text);
+
+        // Header: ID,Class,Chapter,Question,Answer,Topic Name
+        const dataRows = rows.slice(1);
+
+        return dataRows.map((row: any) => ({
+            id: row[0] || '',
+            classNum: row[1] || '',
+            chapterName: row[2] || '',
+            question: row[3] || '',
+            answer: row[4] || '',
+            topicName: row[5] || '',
+        }));
+    } catch (error) {
+        console.error('Error fetching flashcards:', error);
+        return [];
+    }
+}
+
+export async function getTopicsByChapter(chapterNum: number): Promise<RevisionTopic[]> {
+    const allTopics = await fetchRevisionTopics();
+    const chapterNumStr = chapterNum.toString();
+    return allTopics
+        .filter(topic => topic.chapterNum === chapterNumStr)
+        .sort((a, b) => a.topicOrder - b.topicOrder);
+}
+
+export async function getFlashcardsByChapter(chapterName: string): Promise<FlashcardItem[]> {
+    const allFlashcards = await fetchFlashcards();
+    // Normalize chapter name for comparison if needed
+    // Assuming CSV chapter names match "Solutions", "Biomolecules" etc.
+    return allFlashcards.filter(card => card.chapterName.toLowerCase() === chapterName.toLowerCase());
 }

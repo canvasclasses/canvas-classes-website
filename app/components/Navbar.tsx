@@ -15,6 +15,8 @@ const jeeNeetLinks = [
 const ncertBoardsLinks = [
   { label: 'NCERT Solutions', href: '/ncert-solutions', external: false },
   { label: 'CBSE 12 NCERT Revision', href: '/cbse-12-ncert-revision', external: false },
+  { label: 'Organic Name Reactions', href: '/organic-name-reactions', external: false },
+  { label: 'Assertion & Reason', href: '/assertion-reason', external: false },
   { label: 'Sample Papers', href: 'https://canvasclasses.in/sample-papers', external: true },
   { label: 'Previous Year Questions', href: 'https://canvasclasses.in/pyq', external: true },
 ];
