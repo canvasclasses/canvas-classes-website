@@ -1,5 +1,3 @@
-import { parse } from 'csv-parse/sync';
-
 export interface OrganicReaction {
     id: string;
     classNum: number;
