@@ -91,7 +91,6 @@ export default function NCERTSection() {
                             transition={{ duration: 0.5, delay: index * 0.15 }}
                             viewport={{ once: true }}
                             whileHover={{ scale: 1.03, y: -5 }}
-                            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                             className="relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer"
                         >
                             {/* Gradient Top Section */}
