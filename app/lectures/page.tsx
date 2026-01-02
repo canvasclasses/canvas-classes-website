@@ -310,12 +310,12 @@ export default function LecturesPage() {
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.05 * index }}
                                     >
-                                        <div className="group h-full bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-teal-900/20 hover:border-teal-500/30 transition-all duration-300 flex flex-col">
+                                        <div className="group h-full bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-teal-500/40 hover:border-teal-400/60 hover:ring-1 hover:ring-teal-500/30 transition-all duration-300 flex flex-col relative z-0">
                                             {/* Top Image Section */}
                                             <div className="relative h-32 bg-gray-800 overflow-hidden">
                                                 {/* Dynamic gradient background based on index to give variety */}
                                                 <div className={`absolute inset-0 bg-gradient-to-br ${index % 3 === 0 ? 'from-blue-900 to-slate-900' : index % 3 === 1 ? 'from-emerald-900 to-slate-900' : 'from-indigo-900 to-slate-900'}`}></div>
-                                                
+
                                                 {/* Decorative background patterns */}
                                                 <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
                                                 <div className="absolute top-0 right-0 p-4 opacity-10">
@@ -369,7 +369,7 @@ export default function LecturesPage() {
                                                             <PlayCircle className="w-4 h-4" /> Start Learning
                                                         </button>
                                                     </Link>
-                                                    
+
                                                     {chapter.notesLink && (
                                                         <a
                                                             href={chapter.notesLink}
