@@ -140,13 +140,17 @@ export default function CBSERevisionPage() {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: 0.3 + i * 0.1 }}
-                                className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-4 text-center"
+                                className={`bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-4 text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:bg-gray-800/80 hover:shadow-lg hover:border-gray-700 group ${stat.color.includes('blue') ? 'hover:shadow-blue-500/20 hover:border-blue-500/30' :
+                                        stat.color.includes('purple') ? 'hover:shadow-purple-500/20 hover:border-purple-500/30' :
+                                            stat.color.includes('pink') ? 'hover:shadow-pink-500/20 hover:border-pink-500/30' :
+                                                'hover:shadow-teal-500/20 hover:border-teal-500/30'
+                                    }`}
                             >
-                                <stat.icon className={`w-6 h-6 mx-auto mb-2 ${stat.color}`} />
-                                <div className="text-2xl font-bold mb-1">
+                                <stat.icon className={`w-6 h-6 mx-auto mb-2 ${stat.color} transition-transform duration-300 group-hover:scale-110`} />
+                                <div className="text-2xl font-bold mb-1 group-hover:text-white transition-colors">
                                     <AnimatedCounter value={stat.value} />
                                 </div>
-                                <div className="text-gray-500 text-sm font-medium uppercase tracking-wider">{stat.label}</div>
+                                <div className="text-gray-500 text-sm font-medium uppercase tracking-wider group-hover:text-gray-400 transition-colors">{stat.label}</div>
                             </motion.div>
                         ))}
                     </div>
@@ -175,8 +179,8 @@ export default function CBSERevisionPage() {
                                     key={filter}
                                     onClick={() => setActiveFilter(filter as any)}
                                     className={`px-4 py-2 rounded-lg font-medium text-sm transition-all whitespace-nowrap ${activeFilter === filter
-                                            ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25'
-                                            : 'bg-gray-900 text-gray-400 hover:text-white hover:bg-gray-800'
+                                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25'
+                                        : 'bg-gray-900 text-gray-400 hover:text-white hover:bg-gray-800'
                                         }`}
                                 >
                                     {filter}
