@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { path: '/2-minute-chemistry', priority: 0.8, changeFrequency: 'weekly' as const },
         { path: '/ncert-solutions', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/cbse-12-ncert-revision', priority: 0.9, changeFrequency: 'weekly' as const },
+        { path: '/handwritten-notes', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/organic-name-reactions', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/assertion-reason', priority: 0.8, changeFrequency: 'monthly' as const },
         { path: '/sample-papers', priority: 0.7, changeFrequency: 'monthly' as const },
