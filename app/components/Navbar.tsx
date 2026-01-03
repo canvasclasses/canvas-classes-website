@@ -25,7 +25,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[92%] md:w-[95%] max-w-6xl flex items-center justify-between px-6 py-2 rounded-2xl bg-white shadow-lg shadow-gray-200/50 border border-gray-100">
+    <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[92%] md:w-[95%] max-w-[1400px] flex items-center justify-between px-6 py-2 rounded-2xl bg-white shadow-lg shadow-gray-200/50 border border-gray-100">
       <Link href="/" className="flex items-center">
         <Image
           src="/logo.png"

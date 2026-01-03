@@ -97,7 +97,7 @@ const offerings = [
 
 export default function OfferingsSection() {
     return (
-        <section className="relative py-24 bg-[#fdfefe]">
+        <section className="relative py-24 bg-[#fdfefe] overflow-hidden">
             {/* Subtle Background Elements */}
             <div className="absolute top-20 right-10 w-72 h-72 bg-purple-100/50 rounded-full blur-3xl opacity-60" />
             <div className="absolute bottom-20 left-10 w-96 h-96 bg-pink-100/40 rounded-full blur-3xl opacity-50" />

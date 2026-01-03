@@ -38,7 +38,7 @@ const ncertCards = [
 
 export default function NCERTSection() {
     return (
-        <section className="relative py-24 bg-[#ecf2fe]">
+        <section className="relative py-24 bg-[#ecf2fe] overflow-hidden">
             {/* Subtle Background Elements */}
             <div className="absolute top-20 left-10 w-72 h-72 bg-blue-100/50 rounded-full blur-3xl opacity-60" />
             <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-100/40 rounded-full blur-3xl opacity-50" />
