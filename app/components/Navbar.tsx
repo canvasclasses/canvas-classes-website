@@ -25,7 +25,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-6xl flex items-center justify-between px-6 py-2 rounded-2xl bg-white shadow-lg shadow-gray-200/50 border border-gray-100">
+    <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[92%] md:w-[95%] max-w-6xl flex items-center justify-between px-6 py-2 rounded-2xl bg-white shadow-lg shadow-gray-200/50 border border-gray-100">
       <Link href="/" className="flex items-center">
         <Image
           src="/logo.png"
@@ -130,25 +130,99 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-lg border border-gray-100 py-4 md:hidden">
-          <div className="px-4 space-y-3">
-            <div className="font-semibold text-gray-500 text-xs uppercase tracking-wider">JEE/NEET</div>
-            {jeeNeetLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block py-2 text-gray-700 hover:text-teal-600 transition-colors"
+        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-100 py-4 md:hidden max-h-[80vh] overflow-y-auto">
+          <div className="px-4 space-y-1">
+
+            {/* JEE/NEET Mobile Section */}
+            <div className="py-2">
+              <button
+                onClick={() => setJeeDropdownOpen(!jeeDropdownOpen)}
+                className="flex items-center justify-between w-full font-semibold text-gray-700 hover:text-teal-600"
               >
-                {link.label}
-              </a>
-            ))}
-            <div className="border-t border-gray-100 my-3" />
-            <Link href="#" className="block py-2 text-gray-700 hover:text-teal-600 transition-colors">NCERT & Boards</Link>
-            <Link href="#" className="block py-2 text-gray-700 hover:text-teal-600 transition-colors">Flashcards</Link>
-            <Link href="#" className="block py-2 text-gray-700 hover:text-teal-600 transition-colors">My Notes</Link>
-            <Link href="#" className="block py-2 text-gray-700 hover:text-teal-600 transition-colors">About</Link>
+                JEE/NEET <ChevronDown className={`w-4 h-4 transition-transform ${jeeDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {jeeDropdownOpen && (
+                <div className="mt-2 ml-2 space-y-2 border-l-2 border-gray-100 pl-3">
+                  {jeeNeetLinks.map((link) => (
+                    link.external ? (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block py-1 text-sm text-gray-600 hover:text-teal-600"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className="block py-1 text-sm text-gray-600 hover:text-teal-600"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {link.label}
+                      </Link>
+                    )
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* NCERT & Boards Mobile Section */}
+            <div className="py-2">
+              <button
+                onClick={() => setNcertDropdownOpen(!ncertDropdownOpen)}
+                className="flex items-center justify-between w-full font-semibold text-gray-700 hover:text-teal-600"
+              >
+                NCERT & Boards <ChevronDown className={`w-4 h-4 transition-transform ${ncertDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {ncertDropdownOpen && (
+                <div className="mt-2 ml-2 space-y-2 border-l-2 border-gray-100 pl-3">
+                  {ncertBoardsLinks.map((link) => (
+                    link.external ? (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block py-1 text-sm text-gray-600 hover:text-teal-600"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className="block py-1 text-sm text-gray-600 hover:text-teal-600"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {link.label}
+                      </Link>
+                    )
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="border-t border-gray-100 my-2" />
+
+            <Link
+              href="#"
+              className="block py-3 font-semibold text-gray-700 hover:text-teal-600"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Flashcards
+            </Link>
+            <Link
+              href="/handwritten-notes"
+              className="block py-3 font-semibold text-gray-700 hover:text-teal-600"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              My Notes
+            </Link>
           </div>
         </div>
       )}

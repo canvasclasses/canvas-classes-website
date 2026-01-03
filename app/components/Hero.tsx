@@ -13,7 +13,7 @@ const stats = [
 
 export default function Hero() {
     return (
-        <section className="relative flex flex-col min-h-screen w-full overflow-hidden bg-[#0a0a1a]">
+        <section className="relative flex flex-col w-full overflow-hidden bg-[#0a0a1a]">
 
             {/* Molecular Flow Background - Positioned to the right */}
             <div className="absolute inset-0 z-0 select-none">
@@ -30,9 +30,9 @@ export default function Hero() {
             </div>
 
             {/* Main Hero Content - Fixed left padding for consistent alignment */}
-            <div className="relative z-10 flex-1 flex items-center pt-28 lg:pt-24">
+            <div className="relative z-10 flex items-center lg:items-start pt-20 lg:pt-32 pb-12">
                 <div className="w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8 xl:gap-16 py-12 lg:py-8">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8 xl:gap-16 py-4 lg:py-6">
 
                         {/* Left Side - Text Content - Fixed width */}
                         <motion.div
@@ -140,32 +140,24 @@ export default function Hero() {
                 </div>
             </motion.div>
 
-            {/* Stats Section - Matching Old Design */}
-            <div className="relative z-10 bg-gradient-to-br from-slate-50 via-purple-50/50 to-pink-50/30 py-12">
-                <div className="w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6 max-w-5xl mx-auto">
+            {/* Stats Section */}
+            <div className="relative z-10 py-8 border-t border-white/5 bg-[#0a0a1a]">
+                <div className="w-full max-w-[1200px] mx-auto px-6">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-8">
                         {stats.map((stat, index) => (
                             <motion.div
                                 key={stat.label}
-                                initial={{ opacity: 0, y: 30 }}
+                                initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 viewport={{ once: true }}
-                                whileHover={{
-                                    scale: 1.05,
-                                    y: -4,
-                                    transition: { duration: 0.25 }
-                                }}
-                                className="relative cursor-pointer group"
+                                className="relative group text-center"
                             >
-                                <div className={`relative rounded-2xl p-6 lg:p-8 text-center overflow-hidden transition-all duration-300 group-hover:shadow-xl ${index % 2 === 0
-                                    ? 'bg-gradient-to-br from-purple-50 to-pink-100/80 border border-purple-200/50'
-                                    : 'bg-gradient-to-br from-pink-50 to-purple-100/80 border border-pink-200/50'
-                                    }`}>
-                                    <p className="text-4xl sm:text-5xl lg:text-6xl font-black mb-2 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                                <div className="p-4 lg:p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-500/30 hover:bg-white/10 transition-all duration-300">
+                                    <p className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-1 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                                         {stat.value}
                                     </p>
-                                    <p className="text-gray-600 font-medium text-sm sm:text-base">
+                                    <p className="text-gray-400 font-medium text-xs sm:text-sm">
                                         {stat.label}
                                     </p>
                                 </div>
