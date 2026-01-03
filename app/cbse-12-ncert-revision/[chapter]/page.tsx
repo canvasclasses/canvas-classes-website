@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import { fetchRevisionData, RevisionChapter, getTopicsByChapter, RevisionTopic, getFlashcardsByChapter, FlashcardItem } from '../../lib/revisionData';
 import { notFound, useParams } from 'next/navigation';
-import { ArrowLeft, BookOpen, Image as ImageIcon, Layers, Zap, CheckCircle, ExternalLink, X, ChevronLeft, ChevronRight, RotateCcw, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, BookOpen, Image as ImageIcon, Layers, Zap, CheckCircle, ExternalLink, X, ChevronLeft, ChevronRight, RotateCcw, CheckCircle2, ZoomIn } from 'lucide-react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
@@ -124,7 +124,7 @@ export default function ChapterPage() {
             // Get the starting number (defaults to 1)
             const startNum = start || 1;
             return (
-                <div className="space-y-6 mb-8" {...props}>
+                <div className="space-y-4 mb-6" {...props}>
                     {React.Children.map(children, (child, index) => {
                         if (React.isValidElement(child)) {
                             return React.cloneElement(child as React.ReactElement<any>, {
@@ -145,11 +145,11 @@ export default function ChapterPage() {
             if (isNumberedSection && number) {
                 // Numbered Section Heading with Teal Badge
                 return (
-                    <div className="flex items-start gap-4 mt-8 first:mt-0">
-                        <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-teal-500 text-white flex items-center justify-center font-bold text-base shadow-md shadow-teal-500/30">
+                    <div className="flex items-start gap-3 mt-6 first:mt-0">
+                        <div className="flex-shrink-0 w-7 h-7 rounded-md bg-teal-500 text-white flex items-center justify-center font-bold text-sm shadow-sm shadow-teal-500/30 mt-0.5">
                             {number}
                         </div>
-                        <div className="pt-1.5 text-lg font-bold text-gray-900 leading-snug flex-1">
+                        <div className="text-base md:text-lg font-bold text-gray-900 leading-snug flex-1">
                             {children}
                         </div>
                     </div>
@@ -158,16 +158,16 @@ export default function ChapterPage() {
 
             // Bullet Point with Teal Checkmark
             return (
-                <li className="flex items-start gap-3 text-gray-700" {...props}>
-                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-teal-500 flex items-center justify-center mt-0.5">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+                <li className="flex items-start gap-2.5 text-gray-700" {...props}>
+                    <div className="flex-shrink-0 w-4 h-4 rounded-full bg-teal-500 flex items-center justify-center mt-1">
+                        <CheckCircle2 className="w-3 h-3 text-white" strokeWidth={3} />
                     </div>
-                    <span className="flex-1 leading-relaxed">{children}</span>
+                    <span className="flex-1 leading-relaxed text-[15px]">{children}</span>
                 </li>
             );
         },
         // Unordered Lists → Bullet Points with Checkmarks
-        ul: ({ children }: any) => <ul className="space-y-4 mb-6 ml-0">{children}</ul>,
+        ul: ({ children }: any) => <ul className="space-y-2 mb-4 ml-0">{children}</ul>,
         // Paragraphs - Handle colon-based headings
         p: ({ node, children, ...props }: any) => {
             // Check for colon-based headings (e.g., "Key Concepts:")
@@ -191,10 +191,18 @@ export default function ChapterPage() {
         em: ({ children }: any) => <em className="text-gray-800 italic">{children}</em>,
         // Images with Captions
         img: ({ src, alt }: any) => (
-            <div className="my-8 rounded-xl overflow-hidden border border-gray-200 shadow-lg bg-white">
-                <img src={src} alt={alt || ''} className="w-full h-auto" />
+            <div
+                className="my-8 rounded-xl overflow-hidden border border-gray-200 shadow-lg bg-white cursor-pointer group relative"
+                onClick={() => setLightboxImage(src)}
+            >
+                <img src={src} alt={alt || ''} className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center pointer-events-none">
+                    <div className="bg-black/60 text-white text-xs font-bold px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0">
+                        <ZoomIn size={14} /> Tap to Expand
+                    </div>
+                </div>
                 {alt && (
-                    <p className="text-center text-sm text-gray-600 py-3 px-4 bg-gray-50 border-t border-gray-100 font-medium">
+                    <p className="text-center text-sm text-gray-600 py-3 px-4 bg-gray-50 border-t border-gray-100 font-medium relative z-10">
                         {alt}
                     </p>
                 )}
@@ -222,7 +230,7 @@ export default function ChapterPage() {
     return (
         <div className="min-h-screen bg-gray-950 text-white font-sans selection:bg-purple-500/30">
 
-            <main className="pt-28 pb-20 px-4 md:px-8 max-w-7xl mx-auto">
+            <main className="pt-28 pb-20 px-4 md:px-6 max-w-[1400px] mx-auto">
                 <Link href="/cbse-12-ncert-revision" className="inline-flex items-center text-gray-400 hover:text-purple-400 mb-6 transition-colors font-medium">
                     <ArrowLeft size={18} className="mr-2" />
                     Back to Revision
@@ -313,9 +321,9 @@ export default function ChapterPage() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className="rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100" style={{ backgroundColor: '#eff9fc' }}
+                                className="rounded-3xl p-5 md:p-8 shadow-xl border border-gray-100" style={{ backgroundColor: '#eff9fc' }}
                             >
-                                <div className="max-w-4xl">
+                                <div className="max-w-none">
                                     <ReactMarkdown
                                         remarkPlugins={[remarkMath]}
                                         rehypePlugins={[rehypeKatex, rehypeRaw]}

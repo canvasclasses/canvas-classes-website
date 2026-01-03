@@ -15,6 +15,8 @@ import {
     Play,
     ExternalLink,
     ArrowLeft,
+    ZoomIn,
+    X,
 } from 'lucide-react';
 
 interface NCERTQuestion {
@@ -46,6 +48,7 @@ export default function ChapterSolutionsPage() {
     const [chapterName, setChapterName] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [expandedQuestion, setExpandedQuestion] = useState<number | null>(null);
+    const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
     // Fetch data
     useEffect(() => {
@@ -93,6 +96,16 @@ export default function ChapterSolutionsPage() {
     const formatSolution = (content: string) => {
         return content.replace(/<br>/g, '\n').replace(/\|/g, '').trim();
     };
+
+    // Helper to extract YouTube ID and create embed URL
+    const getYouTubeEmbedUrl = (url: string) => {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = url.match(regExp);
+        const videoId = (match && match[2].length === 11) ? match[2] : null;
+        return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : null;
+    };
+
+    const [playingVideo, setPlayingVideo] = useState<number | null>(null);
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
@@ -175,7 +188,7 @@ export default function ChapterSolutionsPage() {
 
             {/* Questions List */}
             <section className="py-8 pb-24">
-                <div className="container mx-auto px-6">
+                <div className="container mx-auto px-3 md:px-6">
                     {loading ? (
                         <div className="space-y-4">
                             {[1, 2, 3, 4].map(i => (
@@ -186,11 +199,12 @@ export default function ChapterSolutionsPage() {
                             ))}
                         </div>
                     ) : (
-                        <div className="space-y-4">
+                        <div className="space-y-3">
                             {filteredQuestions.map((question, idx) => {
                                 const isExpanded = expandedQuestion === question.id;
                                 const diffStyle = getDifficultyStyle(question.difficulty);
                                 const DiffIcon = diffStyle.icon;
+                                const isVideoPlaying = playingVideo === question.id;
 
                                 return (
                                     <motion.div
@@ -198,34 +212,34 @@ export default function ChapterSolutionsPage() {
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.03 * Math.min(idx, 10) }}
-                                        className="bg-gray-800/40 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden"
+                                        className="bg-gray-800/40 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden"
                                     >
                                         {/* Question Header */}
                                         <button
                                             onClick={() => setExpandedQuestion(isExpanded ? null : question.id)}
-                                            className="w-full flex items-start gap-4 p-6 text-left hover:bg-gray-800/60 transition-colors"
+                                            className="w-full flex items-start gap-2 p-3 md:p-6 text-left hover:bg-gray-800/60 transition-colors"
                                         >
-                                            <span className="shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 text-blue-400 font-bold text-sm flex items-center justify-center border border-blue-500/30">
-                                                Q{question.questionNumber}
+                                            <span className="shrink-0 text-blue-400 font-bold text-base md:text-lg pt-0.5">
+                                                Q{question.questionNumber}.
                                             </span>
                                             <div className="flex-1 min-w-0">
-                                                <p className="text-white leading-relaxed mb-3">
+                                                <p className="text-white leading-relaxed mb-2 font-medium text-[15px] md:text-base">
                                                     {question.questionText}
                                                 </p>
-                                                <div className="flex items-center gap-3">
-                                                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium border ${diffStyle.bg} ${diffStyle.text} ${diffStyle.border}`}>
-                                                        <DiffIcon className="w-3.5 h-3.5" />
+                                                <div className="flex items-center gap-2 md:gap-3">
+                                                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] md:text-xs font-medium border ${diffStyle.bg} ${diffStyle.text} ${diffStyle.border}`}>
+                                                        <DiffIcon className="w-3 h-3" />
                                                         {question.difficulty}
                                                     </span>
                                                     {question.youtubeUrl && (
-                                                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium bg-red-500/20 text-red-400 border border-red-500/30">
+                                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] md:text-xs font-medium bg-red-500/20 text-red-400 border border-red-500/30">
                                                             <Play className="w-3 h-3" />
-                                                            Video Available
+                                                            Video
                                                         </span>
                                                     )}
                                                 </div>
                                             </div>
-                                            <ChevronDown className={`shrink-0 w-6 h-6 text-gray-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                                            <ChevronDown className={`shrink-0 w-5 h-5 text-gray-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
                                         </button>
 
                                         {/* Solution */}
@@ -238,43 +252,69 @@ export default function ChapterSolutionsPage() {
                                                     transition={{ duration: 0.3 }}
                                                     className="border-t border-gray-700/50"
                                                 >
-                                                    <div className="p-6 bg-gray-900/50">
-                                                        <h4 className="text-blue-400 font-semibold mb-4 flex items-center gap-2">
-                                                            <CheckCircle className="w-5 h-5" />
+                                                    <div className="p-3 md:p-6 bg-gray-900/30">
+                                                        <h4 className="text-blue-400 font-semibold mb-3 flex items-center gap-2 text-xs md:text-sm uppercase tracking-wide">
+                                                            <CheckCircle className="w-4 h-4" />
                                                             Solution
                                                         </h4>
-                                                        <div className="text-gray-300 leading-loose whitespace-pre-wrap bg-gray-950/50 rounded-xl p-6 border border-gray-800 text-base font-sans tracking-wide">
+                                                        <div className="text-gray-300 leading-loose whitespace-pre-wrap text-base font-sans tracking-wide">
                                                             {formatSolution(question.solutionContent).split('\n').map((line, i) => {
-                                                                // Check if line is an image URL (ends with popular image extensions)
                                                                 const isImageUrl = line.trim().match(/^https?:\/\/.*\.(png|jpg|jpeg|gif|webp)(\?.*)?$/i);
 
                                                                 if (isImageUrl) {
                                                                     return (
-                                                                        <div key={i} className="my-4">
+                                                                        <div
+                                                                            key={i}
+                                                                            className="my-6 relative group cursor-pointer rounded-xl overflow-hidden border border-gray-700/50 hover:border-blue-500/30 transition-colors shadow-lg"
+                                                                            onClick={() => setLightboxImage(line.trim())}
+                                                                        >
                                                                             <img
                                                                                 src={line.trim()}
                                                                                 alt={`Solution diagram for Q${question.questionNumber}`}
-                                                                                className="max-w-full h-auto rounded-lg border border-gray-700/50"
+                                                                                className="w-full h-auto"
                                                                                 loading="lazy"
                                                                             />
+                                                                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center pointer-events-none">
+                                                                                <div className="bg-black/70 backdrop-blur-sm text-white text-xs font-bold px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 flex items-center gap-2 shadow-xl">
+                                                                                    <ZoomIn size={14} /> Tap to Expand
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     );
                                                                 }
-                                                                return <div key={i}>{line}</div>;
+                                                                return <div key={i} className="mb-1">{line}</div>;
                                                             })}
                                                         </div>
 
                                                         {question.youtubeUrl && (
-                                                            <a
-                                                                href={question.youtubeUrl}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="inline-flex items-center gap-2 mt-5 px-5 py-2.5 bg-red-500/20 text-red-400 rounded-xl text-sm font-medium border border-red-500/30 hover:bg-red-500 hover:text-white transition-all"
-                                                            >
-                                                                <Play className="w-4 h-4" />
-                                                                Watch Video Solution
-                                                                <ExternalLink className="w-3.5 h-3.5" />
-                                                            </a>
+                                                            <div className="mt-6">
+                                                                {!isVideoPlaying ? (
+                                                                    <button
+                                                                        onClick={() => setPlayingVideo(question.id)}
+                                                                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-500/10 text-red-400 rounded-xl text-sm font-bold border border-red-500/20 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all group w-full md:w-auto justify-center"
+                                                                    >
+                                                                        <Play className="w-4 h-4 group-hover:fill-current" />
+                                                                        Watch Video Solution
+                                                                    </button>
+                                                                ) : (
+                                                                    <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-gray-700 bg-black shadow-2xl">
+                                                                        <iframe
+                                                                            src={getYouTubeEmbedUrl(question.youtubeUrl) || ''}
+                                                                            title={`Video solution for Q${question.questionNumber}`}
+                                                                            className="absolute inset-0 w-full h-full"
+                                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                            allowFullScreen
+                                                                        />
+                                                                        <button
+                                                                            onClick={() => setPlayingVideo(null)}
+                                                                            className="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full backdrop-blur-md hover:bg-red-500 transition-colors"
+                                                                            title="Close Video"
+                                                                        >
+                                                                            <X size={16} />
+                                                                        </button>
+                                                                    </div>
+                                                                )}
+                                                            </div>
                                                         )}
                                                     </div>
                                                 </motion.div>
@@ -309,6 +349,32 @@ export default function ChapterSolutionsPage() {
                     </div>
                 </div>
             </section>
+
+            {/* Lightbox */}
+            <AnimatePresence>
+                {lightboxImage && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 cursor-zoom-out"
+                        onClick={() => setLightboxImage(null)}
+                    >
+                        <button className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors bg-white/10 p-2 rounded-full hover:bg-white/20">
+                            <X size={24} />
+                        </button>
+                        <motion.img
+                            src={lightboxImage}
+                            alt="Full screen solution"
+                            className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl cursor-default"
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
