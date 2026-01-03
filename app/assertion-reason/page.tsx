@@ -141,7 +141,6 @@ export default function AssertionReasonPage() {
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans">
-            <Navbar />
 
             {/* Hero Section */}
             <section className="pt-32 pb-16 px-4" style={{ background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)' }}>
@@ -246,8 +245,8 @@ export default function AssertionReasonPage() {
                                                     key={count}
                                                     onClick={() => setQuestionCount(count)}
                                                     className={`flex-1 py-3 rounded-xl font-medium transition-all ${questionCount === count
-                                                            ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
-                                                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
+                                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                                         }`}
                                                 >
                                                     {count}
@@ -287,15 +286,15 @@ export default function AssertionReasonPage() {
                                     {/* Phase Indicator */}
                                     <div className="flex items-center gap-2 mb-6">
                                         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${phase === 'assertion' || phase === 'reason' || phase === 'link' || phase === 'result'
-                                                ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'
+                                            ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'
                                             }`}>1</div>
                                         <div className={`w-12 h-1 rounded ${userAnswers.a !== null ? 'bg-blue-600' : 'bg-gray-200'}`}></div>
                                         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${phase === 'reason' || phase === 'link' || phase === 'result'
-                                                ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-500'
+                                            ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-500'
                                             }`}>2</div>
                                         <div className={`w-12 h-1 rounded ${userAnswers.r !== null ? 'bg-purple-600' : 'bg-gray-200'}`}></div>
                                         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${phase === 'link' || phase === 'result'
-                                                ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-500'
+                                            ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-500'
                                             }`}>3</div>
                                     </div>
 

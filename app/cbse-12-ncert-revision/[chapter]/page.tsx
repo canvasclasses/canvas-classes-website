@@ -221,7 +221,6 @@ export default function ChapterPage() {
 
     return (
         <div className="min-h-screen bg-gray-950 text-white font-sans selection:bg-purple-500/30">
-            <Navbar />
 
             <main className="pt-28 pb-20 px-4 md:px-8 max-w-7xl mx-auto">
                 <Link href="/cbse-12-ncert-revision" className="inline-flex items-center text-gray-400 hover:text-purple-400 mb-6 transition-colors font-medium">

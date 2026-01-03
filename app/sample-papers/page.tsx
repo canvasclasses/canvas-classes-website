@@ -51,7 +51,6 @@ export default function SamplePapersPage() {
 
     return (
         <div className="min-h-screen bg-gray-950 text-white font-sans selection:bg-teal-500/30">
-            <Navbar />
 
             {/* Hero Section */}
             <section className="relative pt-32 pb-20 px-4 overflow-hidden">

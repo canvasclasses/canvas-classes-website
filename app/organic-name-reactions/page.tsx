@@ -66,7 +66,6 @@ export default function OrganicNameReactionsPage() {
 
     return (
         <div className="min-h-screen bg-gray-50 font-sans">
-            <Navbar />
 
             {/* Hero Section - Green Theme */}
             <section className="pt-32 pb-16 px-4" style={{ background: 'linear-gradient(135deg, #047857 0%, #059669 50%, #10b981 100%)' }}>

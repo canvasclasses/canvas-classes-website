@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Navbar from '../components/Navbar';
 import { fetchHandwrittenNotes, HandwrittenNote, getUniqueCategories, getNotesStats } from '../lib/handwrittenNotesData';
 import { Search, Download, FileText, BookOpen, FlaskConical, Atom, Sparkles, Filter, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -72,7 +73,7 @@ export default function HandwrittenNotesClient() {
     return (
         <div className="min-h-screen bg-slate-50 font-sans">
             {/* Hero Section */}
-            <section className="pt-32 pb-16 px-4" style={{ background: 'linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #fbbf24 100%)' }}>
+            <section className="pt-32 pb-16 px-4" style={{ background: 'linear-gradient(135deg, #b45309 0%, #d97706 50%, #f59e0b 100%)' }}>
                 <div className="max-w-6xl mx-auto text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -95,17 +96,18 @@ export default function HandwrittenNotesClient() {
                     {/* Stats Cards */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mt-8">
                         {[
-                            { label: 'Total Notes', value: stats.total, icon: FileText, color: 'bg-white/20' },
-                            { label: 'Organic', value: stats.organic, icon: FlaskConical, color: 'bg-pink-500/30' },
-                            { label: 'Inorganic', value: stats.inorganic, icon: Atom, color: 'bg-purple-500/30' },
-                            { label: 'Physical', value: stats.physical, icon: Sparkles, color: 'bg-blue-500/30' },
+                            { label: 'Total Notes', value: stats.total, icon: FileText, color: 'bg-white/20 hover:bg-white/30' },
+                            { label: 'Organic', value: stats.organic, icon: FlaskConical, color: 'bg-pink-500/30 hover:bg-pink-500/50' },
+                            { label: 'Inorganic', value: stats.inorganic, icon: Atom, color: 'bg-purple-500/30 hover:bg-purple-500/50' },
+                            { label: 'Physical', value: stats.physical, icon: Sparkles, color: 'bg-blue-500/30 hover:bg-blue-500/50' },
                         ].map((stat, i) => (
                             <motion.div
                                 key={stat.label}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.1 * i }}
-                                className={`${stat.color} backdrop-blur-sm rounded-xl p-4 text-white`}
+                                whileHover={{ scale: 1.05, y: -5 }}
+                                className={`${stat.color} backdrop-blur-sm rounded-xl p-4 text-white cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-black/20`}
                             >
                                 <stat.icon className="w-6 h-6 mx-auto mb-2 opacity-80" />
                                 <div className="text-2xl font-bold">{stat.value}</div>
