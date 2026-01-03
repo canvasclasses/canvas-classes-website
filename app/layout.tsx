@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,9 +12,97 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = "https://canvas-classes-website.vercel.app";
+
 export const metadata: Metadata = {
-  title: "Canvas Classes - Master Chemistry with Confidence",
-  description: "Free JEE & NEET Chemistry preparation with expert video lectures, handwritten notes, and comprehensive practice materials by Paaras Sir.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Canvas Classes - Free JEE & NEET Chemistry Preparation",
+    template: "%s | Canvas Classes",
+  },
+  description:
+    "Master Chemistry for JEE & NEET with free video lectures, handwritten notes, NCERT solutions, flashcards, and practice materials by Paaras Sir. Join thousands of successful students.",
+  keywords: [
+    "JEE Chemistry",
+    "NEET Chemistry",
+    "CBSE Chemistry",
+    "Chemistry coaching",
+    "Free chemistry lectures",
+    "NCERT solutions chemistry",
+    "Paaras Sir chemistry",
+    "Canvas Classes",
+    "IIT JEE preparation",
+    "NEET preparation",
+    "Class 11 chemistry",
+    "Class 12 chemistry",
+    "Organic chemistry",
+    "Inorganic chemistry",
+    "Physical chemistry",
+  ],
+  authors: [{ name: "Paaras Sir", url: siteUrl }],
+  creator: "Canvas Classes",
+  publisher: "Canvas Classes",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: siteUrl,
+    siteName: "Canvas Classes",
+    title: "Canvas Classes - Free JEE & NEET Chemistry Preparation",
+    description:
+      "Master Chemistry for JEE & NEET with free video lectures, handwritten notes, NCERT solutions, and practice materials by Paaras Sir.",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Canvas Classes - Master Chemistry with Confidence",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Canvas Classes - Free JEE & NEET Chemistry Preparation",
+    description:
+      "Master Chemistry for JEE & NEET with free video lectures, handwritten notes, and NCERT solutions by Paaras Sir.",
+    images: ["/logo.png"],
+    creator: "@canvasclasses",
+  },
+  verification: {
+    google: "your-google-verification-code", // Replace with actual code
+  },
+  category: "Education",
+};
+
+// Structured Data (JSON-LD)
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  name: "Canvas Classes",
+  description:
+    "Free JEE & NEET Chemistry coaching with video lectures, NCERT solutions, and practice materials.",
+  url: siteUrl,
+  logo: `${siteUrl}/logo.png`,
+  sameAs: [
+    "https://www.youtube.com/@canvasclasses",
+    "https://www.instagram.com/canvasclasses",
+  ],
+  founder: {
+    "@type": "Person",
+    name: "Paaras Sir",
+  },
+  areaServed: "India",
+  teaches: ["Chemistry", "JEE Chemistry", "NEET Chemistry", "CBSE Chemistry"],
 };
 
 export default function RootLayout({
@@ -25,10 +112,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
         {children}
       </body>
     </html>
