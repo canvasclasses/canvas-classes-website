@@ -6,7 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Static pages
     const staticPages = [
         { path: '/', priority: 1.0, changeFrequency: 'weekly' as const },
-        { path: '/lectures', priority: 0.9, changeFrequency: 'weekly' as const },
+        { path: '/detailed-lectures', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/quick-recap', priority: 0.8, changeFrequency: 'weekly' as const },
         { path: '/top-50-concepts', priority: 0.8, changeFrequency: 'weekly' as const },
         { path: '/2-minute-chemistry', priority: 0.8, changeFrequency: 'weekly' as const },

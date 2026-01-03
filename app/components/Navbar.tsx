@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Menu, ChevronDown, X } from 'lucide-react';
 
 const jeeNeetLinks = [
-  { label: 'Detailed Lectures', href: '/lectures', external: false },
+  { label: 'Detailed Lectures', href: '/detailed-lectures', external: false },
   { label: 'Quick Recap', href: '/quick-recap', external: false },
   { label: 'Top 50 Concepts', href: '/top-50-concepts', external: false },
   { label: '2 Minute Chemistry', href: '/2-minute-chemistry', external: false },
@@ -15,7 +15,6 @@ const jeeNeetLinks = [
 const ncertBoardsLinks = [
   { label: 'NCERT Solutions', href: '/ncert-solutions', external: false },
   { label: 'CBSE 12 NCERT Revision', href: '/cbse-12-ncert-revision', external: false },
-  { label: 'Handwritten Notes', href: '/handwritten-notes', external: false },
   { label: 'Organic Name Reactions', href: '/organic-name-reactions', external: false },
   { label: 'Assertion & Reason', href: '/assertion-reason', external: false },
   { label: 'Sample Papers', href: 'https://canvasclasses.in/sample-papers', external: true },
@@ -118,7 +117,7 @@ export default function Navbar() {
           )}
         </div>
         <Link href="#" className="hover:text-teal-600 transition-colors">Flashcards</Link>
-        <Link href="#" className="hover:text-teal-600 transition-colors">My Notes</Link>
+        <Link href="/handwritten-notes" className="hover:text-teal-600 transition-colors">My Notes</Link>
         <Link href="#" className="hover:text-teal-600 transition-colors">About</Link>
       </div>
 
