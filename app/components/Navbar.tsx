@@ -17,8 +17,6 @@ const ncertBoardsLinks = [
   { label: 'CBSE 12 NCERT Revision', href: '/cbse-12-ncert-revision', external: false },
   { label: 'Organic Name Reactions', href: '/organic-name-reactions', external: false },
   { label: 'Assertion & Reason', href: '/assertion-reason', external: false },
-  { label: 'Sample Papers', href: 'https://canvasclasses.in/sample-papers', external: true },
-  { label: 'Previous Year Questions', href: 'https://canvasclasses.in/pyq', external: true },
 ];
 
 export default function Navbar() {
@@ -118,7 +116,6 @@ export default function Navbar() {
         </div>
         <Link href="#" className="hover:text-teal-600 transition-colors">Flashcards</Link>
         <Link href="/handwritten-notes" className="hover:text-teal-600 transition-colors">My Notes</Link>
-        <Link href="#" className="hover:text-teal-600 transition-colors">About</Link>
       </div>
 
       {/* Mobile Menu Button */}

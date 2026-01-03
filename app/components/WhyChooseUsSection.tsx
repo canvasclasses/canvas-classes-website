@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Sparkles, Users, Globe } from 'lucide-react';
 
 const features = [
@@ -63,35 +64,37 @@ export default function WhyChooseUsSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="relative bg-gradient-to-r from-teal-600 to-cyan-600 rounded-3xl p-10 md:p-14 text-center overflow-hidden"
+                    className="relative bg-gradient-to-r from-teal-600 to-cyan-600 rounded-2xl p-8 md:p-10 text-center overflow-hidden"
                 >
                     {/* Background decorative elements */}
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+                    <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                    <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
                     {/* Stars */}
-                    <div className="flex justify-center gap-1 mb-6">
+                    <div className="flex justify-center gap-1 mb-4">
                         {[...Array(5)].map((_, i) => (
-                            <span key={i} className="text-yellow-400 text-2xl">⭐</span>
+                            <span key={i} className="text-yellow-400 text-lg">⭐</span>
                         ))}
                     </div>
 
                     {/* Quote */}
-                    <blockquote className="relative z-10 text-white text-xl md:text-2xl lg:text-3xl font-semibold leading-relaxed max-w-4xl mx-auto mb-8">
+                    <blockquote className="relative z-10 text-white text-lg md:text-xl lg:text-2xl font-semibold leading-relaxed max-w-3xl mx-auto mb-6">
                         "My mission is simple: make chemistry education accessible to every student, regardless of their financial background. Education is a right, not a privilege."
                     </blockquote>
 
                     {/* Author */}
-                    <div className="flex items-center justify-center gap-4">
-                        <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/40 flex items-center justify-center overflow-hidden">
-                            <div className="w-full h-full bg-gradient-to-br from-teal-400 to-green-400 flex items-center justify-center">
-                                <span className="text-white font-bold text-sm leading-tight text-center">
-                                    Paaras<br />Sir
-                                </span>
-                            </div>
+                    <div className="flex items-center justify-center gap-3">
+                        <div className="w-12 h-12 rounded-full border-2 border-white/40 overflow-hidden">
+                            <Image
+                                src="/paaras_hero.png"
+                                alt="Paaras Sir"
+                                width={48}
+                                height={48}
+                                className="w-full h-full object-cover object-top"
+                            />
                         </div>
                         <div className="text-left">
-                            <p className="text-white font-semibold text-lg">Paaras Thakur</p>
+                            <p className="text-white font-semibold">Paaras Thakur</p>
                             <p className="text-white/80 text-sm">Founder, Canvas Classes</p>
                         </div>
                     </div>

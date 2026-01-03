@@ -9,9 +9,11 @@ import {
     PlayCircle,
     Search,
     ChevronRight,
+    ChevronDown,
     FileText,
     Layers,
     Download,
+    HelpCircle,
 } from 'lucide-react';
 
 // Animated Counter Component
@@ -101,6 +103,31 @@ export default function LecturesPage() {
     const [chapters, setChapters] = useState<Chapter[]>([]);
     const [stats, setStats] = useState<Stats>({ chapterCount: 0, videoCount: 0, totalHours: 0 });
     const [loading, setLoading] = useState(true);
+    const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+    // FAQ Data
+    const faqItems = [
+        {
+            question: "Are these lectures enough for JEE and NEET preparation?",
+            answer: "Yes! Our lectures cover the complete NCERT syllabus plus additional JEE/NEET level concepts. Combined with our notes and practice materials, you'll have comprehensive preparation for both exams."
+        },
+        {
+            question: "What is the best way to start preparing for JEE Chemistry?",
+            answer: "Start with Class 11 Physical Chemistry basics like Mole Concept and Atomic Structure. Build strong fundamentals before moving to advanced topics. Watch lectures in order and practice problems from each chapter."
+        },
+        {
+            question: "Is NCERT enough for JEE Chemistry?",
+            answer: "NCERT is essential and forms the foundation, especially for Inorganic Chemistry. However, for JEE Advanced, you'll need additional practice and conceptual depth which our lectures provide."
+        },
+        {
+            question: "Which topics in Chemistry are most important for JEE/NEET?",
+            answer: "For JEE: Organic Chemistry reactions, Electrochemistry, Chemical Kinetics, and Coordination Compounds. For NEET: Biomolecules, Polymers, Chemistry in Everyday Life, and basic Organic Chemistry."
+        },
+        {
+            question: "How should I balance all three subjects for JEE?",
+            answer: "Dedicate 2-3 hours daily to Chemistry. Focus on understanding concepts rather than rote learning. Use our chapter-wise lectures to maintain steady progress alongside Physics and Maths preparation."
+        },
+    ];
 
     // Fetch data on mount
     useEffect(() => {
@@ -388,6 +415,58 @@ export default function LecturesPage() {
                             })}
                         </div>
                     )}
+                </div>
+            </section>
+
+            {/* FAQ Section */}
+            <section className="py-16 px-6">
+                <div className="container mx-auto max-w-4xl">
+                    {/* Header */}
+                    <div className="text-center mb-10">
+                        <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 text-teal-400 text-sm font-medium border border-teal-500/20 mb-4">
+                            <HelpCircle size={16} /> FAQ
+                        </span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                            Frequently Asked Questions
+                        </h2>
+                        <p className="text-gray-400">
+                            Get answers to common questions about JEE/NEET chemistry preparation
+                        </p>
+                    </div>
+
+                    {/* FAQ Items */}
+                    <div className="space-y-4">
+                        {faqItems.map((faq, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.05 }}
+                                className="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden"
+                            >
+                                <button
+                                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                                    className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-gray-800/50 transition-colors"
+                                >
+                                    <span className="text-white font-medium pr-4">{faq.question}</span>
+                                    <ChevronDown
+                                        className={`w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300 ${openFaq === index ? 'rotate-180' : ''}`}
+                                    />
+                                </button>
+                                {openFaq === index && (
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        className="px-6 pb-5"
+                                    >
+                                        <p className="text-gray-400 leading-relaxed">{faq.answer}</p>
+                                    </motion.div>
+                                )}
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
             </section>
         </div>
