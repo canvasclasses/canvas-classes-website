@@ -391,7 +391,7 @@ export default function LecturesPage() {
 
                                                 {/* Buttons */}
                                                 <div className="grid grid-cols-1 gap-3 mt-auto">
-                                                    <Link href={`/lectures/${chapter.slug}`} className="w-full">
+                                                    <Link href={`/detailed-lectures/${chapter.slug}`} className="w-full">
                                                         <button className="w-full py-2.5 bg-teal-600 hover:bg-teal-500 text-white rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-teal-900/20 group-hover:shadow-teal-500/20">
                                                             <PlayCircle className="w-4 h-4" /> Start Learning
                                                         </button>
@@ -402,9 +402,9 @@ export default function LecturesPage() {
                                                             href={chapter.notesLink}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
-                                                            className="w-full py-2.5 bg-gray-800 hover:bg-gray-750 text-gray-300 hover:text-white rounded-xl font-medium text-sm transition-colors border border-gray-700 flex items-center justify-center gap-2"
+                                                            className="group/btn w-full py-2.5 bg-gray-800 hover:bg-gray-750 text-gray-200 hover:text-white rounded-xl font-semibold text-sm transition-all duration-300 border border-gray-700 hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/10 flex items-center justify-center gap-2"
                                                         >
-                                                            <Download className="w-4 h-4" /> Notes
+                                                            <Download className="w-4 h-4 text-teal-500 group-hover/btn:text-teal-400 transition-colors" /> Notes
                                                         </a>
                                                     )}
                                                 </div>

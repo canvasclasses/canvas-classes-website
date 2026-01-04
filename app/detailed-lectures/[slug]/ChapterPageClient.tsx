@@ -83,7 +83,7 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                     <div className="flex items-center gap-2 text-gray-400 text-sm mb-8">
                         <Link href="/" className="hover:text-teal-400 transition-colors">Home</Link>
                         <ChevronRight className="w-4 h-4" />
-                        <Link href="/lectures" className="hover:text-teal-400 transition-colors">Lectures</Link>
+                        <Link href="/detailed-lectures" className="hover:text-teal-400 transition-colors">Lectures</Link>
                         <ChevronRight className="w-4 h-4" />
                         <span className="text-teal-400">Class {chapter.class}</span>
                         <ChevronRight className="w-4 h-4" />
@@ -92,7 +92,7 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
 
                     {/* Back button */}
                     <Link
-                        href="/lectures"
+                        href="/detailed-lectures"
                         className="inline-flex items-center gap-2 text-gray-400 hover:text-teal-400 transition-colors mb-6"
                     >
                         <ArrowLeft className="w-4 h-4" />
@@ -256,8 +256,8 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                                             animate={{ opacity: 1, y: 0 }}
                                             transition={{ delay: 0.05 * index }}
                                             className={`group w-full text-left flex gap-4 md:gap-6 bg-gray-800/40 backdrop-blur-sm rounded-2xl p-4 border transition-all duration-300 ${isActive
-                                                    ? 'border-teal-500 bg-gray-800/60 ring-2 ring-teal-500/20'
-                                                    : 'border-gray-700/50 hover:border-teal-500/50 hover:bg-gray-800/60'
+                                                ? 'border-teal-500 bg-gray-800/60 ring-2 ring-teal-500/20'
+                                                : 'border-gray-700/50 hover:border-teal-500/50 hover:bg-gray-800/60'
                                                 }`}
                                         >
                                             {/* Thumbnail */}

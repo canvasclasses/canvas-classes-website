@@ -438,7 +438,7 @@ export default function TwoMinChemistryPage() {
                             </p>
                             <div className="flex flex-wrap justify-center gap-4">
                                 <Link
-                                    href="/lectures"
+                                    href="/detailed-lectures"
                                     className="flex items-center gap-2 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold px-6 py-3 rounded-xl hover:from-rose-600 hover:to-pink-600 transition-all shadow-lg shadow-rose-500/20"
                                 >
                                     <Play className="w-5 h-5" />

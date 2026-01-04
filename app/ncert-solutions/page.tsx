@@ -402,7 +402,7 @@ export default function NCERTSolutionsPage() {
                             </p>
                             <div className="flex flex-wrap justify-center gap-4">
                                 <Link
-                                    href="/lectures"
+                                    href="/detailed-lectures"
                                     className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold px-6 py-3 rounded-xl hover:from-blue-600 hover:to-cyan-600 transition-all shadow-lg shadow-blue-500/20"
                                 >
                                     <GraduationCap className="w-5 h-5" />

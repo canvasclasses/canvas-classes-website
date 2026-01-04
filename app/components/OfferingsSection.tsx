@@ -20,7 +20,7 @@ const offerings = [
         iconColor: '#f43f5e', // rose-500
         pastelBg: '#fff1f2', // rose-50
         cta: 'Start Watching',
-        href: '/lectures',
+        href: '/detailed-lectures',
         span: 'lg:col-span-2 lg:row-span-2'
     },
     {

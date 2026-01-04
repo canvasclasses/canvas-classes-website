@@ -317,8 +317,8 @@ export default function QuickRecapPage() {
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.03 * Math.min(index, 10) }}
                                         className={`group bg-gray-800/40 backdrop-blur-sm rounded-2xl overflow-hidden border transition-all duration-300 ${isActive
-                                                ? 'border-teal-500 ring-2 ring-teal-500/20'
-                                                : 'border-gray-700/50 hover:border-teal-500/50 hover:bg-gray-800/60'
+                                            ? 'border-teal-500 ring-2 ring-teal-500/20'
+                                            : 'border-gray-700/50 hover:border-teal-500/50 hover:bg-gray-800/60'
                                             }`}
                                     >
                                         {/* Thumbnail */}
@@ -381,8 +381,8 @@ export default function QuickRecapPage() {
                                                 <button
                                                     onClick={() => setActiveVideo(isActive ? null : video)}
                                                     className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all ${isActive
-                                                            ? 'bg-teal-500 text-white'
-                                                            : 'bg-gradient-to-r from-teal-500/20 to-cyan-500/20 text-teal-400 border border-teal-500/30 hover:from-teal-500 hover:to-cyan-500 hover:text-white hover:border-transparent'
+                                                        ? 'bg-teal-500 text-white'
+                                                        : 'bg-gradient-to-r from-teal-500/20 to-cyan-500/20 text-teal-400 border border-teal-500/30 hover:from-teal-500 hover:to-cyan-500 hover:text-white hover:border-transparent'
                                                         }`}
                                                 >
                                                     <Play className="w-4 h-4" />
@@ -432,7 +432,7 @@ export default function QuickRecapPage() {
                                     Visit YouTube Channel
                                 </a>
                                 <Link
-                                    href="/lectures"
+                                    href="/detailed-lectures"
                                     className="flex items-center gap-2 bg-white/20 text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/30 transition-colors border border-white/30"
                                 >
                                     <BookOpen className="w-5 h-5" />

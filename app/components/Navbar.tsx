@@ -38,7 +38,7 @@ export default function Navbar() {
       </Link>
 
       {/* Desktop Navigation */}
-      <div className="hidden md:flex items-center gap-2 text-sm font-bold text-gray-700">
+      <div className="hidden md:flex items-center gap-2 text-base font-bold text-gray-700">
         {/* JEE/NEET Dropdown */}
         <div
           className="relative group"
@@ -58,7 +58,7 @@ export default function Navbar() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block px-4 py-3 rounded-xl text-sm font-semibold text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors"
+                    className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors"
                   >
                     {link.label}
                   </a>
@@ -66,7 +66,7 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="block px-4 py-3 rounded-xl text-sm font-semibold text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors"
+                    className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -95,7 +95,7 @@ export default function Navbar() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block px-4 py-3 rounded-xl text-sm font-semibold text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors"
+                    className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors"
                   >
                     {link.label}
                   </a>
@@ -103,7 +103,7 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="block px-4 py-3 rounded-xl text-sm font-semibold text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors"
+                    className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors"
                   >
                     {link.label}
                   </Link>
