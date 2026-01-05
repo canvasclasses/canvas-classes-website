@@ -126,7 +126,7 @@ export default function NeetChapterPage() {
                                 <VideoSection
                                     videos={chapter.lectures}
                                     activeVideo={activeLecture}
-                                    onPlay={(video) => setActiveLecture(video)}
+                                    onPlay={(video: NeetLecture) => setActiveLecture(video)}
                                     onClose={() => setActiveLecture(null)}
                                     emptyMessage="No lectures uploaded for this chapter yet."
                                 />
@@ -145,7 +145,7 @@ export default function NeetChapterPage() {
                                 <VideoSection
                                     videos={chapter.dppSolutions}
                                     activeVideo={activeLecture}
-                                    onPlay={(video) => setActiveLecture(video)}
+                                    onPlay={(video: NeetLecture) => setActiveLecture(video)}
                                     onClose={() => setActiveLecture(null)}
                                     emptyMessage="Video solutions coming soon."
                                 />
@@ -242,7 +242,7 @@ export default function NeetChapterPage() {
 }
 
 // Reusable Tab Button
-function TabButton({ active, onClick, icon: Icon, label, count }: any) {
+function TabButton({ active, onClick, icon: Icon, label, count }: { active: boolean; onClick: () => void; icon: React.ElementType; label: string; count?: number }) {
     return (
         <button
             onClick={onClick}
@@ -264,9 +264,9 @@ function TabButton({ active, onClick, icon: Icon, label, count }: any) {
 }
 
 // Reusable Video Section (List + Player)
-function VideoSection({ videos, activeVideo, onPlay, onClose, emptyMessage }: any) {
+function VideoSection({ videos, activeVideo, onPlay, onClose, emptyMessage }: { videos: NeetLecture[]; activeVideo: NeetLecture | null; onPlay: (video: NeetLecture) => void; onClose: () => void; emptyMessage: string }) {
     // If a video is active, show the player
-    if (activeVideo && videos.some((v: any) => v.id === activeVideo.id)) {
+    if (activeVideo && videos.some((v: NeetLecture) => v.id === activeVideo.id)) {
         return (
             <div className="bg-black/40 rounded-3xl border border-gray-800 overflow-hidden mb-8">
                 <div className="flex items-center justify-between p-4 border-b border-gray-800 bg-gray-900/50">
