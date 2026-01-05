@@ -3,33 +3,38 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { fetchHandwrittenNotes, HandwrittenNote, getUniqueCategories, getNotesStats } from '../lib/handwrittenNotesData';
-import { Search, Download, FileText, BookOpen, FlaskConical, Atom, Sparkles, Filter, ExternalLink } from 'lucide-react';
+import { Search, Download, FileText, BookOpen, FlaskConical, Atom, Sparkles, Filter, ExternalLink, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Category icons and colors
-const categoryStyles: Record<string, { icon: React.ElementType; gradient: string; bg: string; border: string }> = {
+// Category icons and colors with BRIGHTER variants
+const categoryStyles: Record<string, { icon: React.ElementType; gradient: string; bg: string; text: string; border: string }> = {
     'Organic Chemistry': {
         icon: FlaskConical,
         gradient: 'from-pink-500 to-rose-500',
-        bg: 'bg-pink-50',
+        bg: 'bg-pink-100',
+        text: 'text-pink-600',
         border: 'border-pink-200 hover:border-pink-400'
     },
     'Inorganic Chemistry': {
         icon: Atom,
         gradient: 'from-purple-500 to-indigo-500',
-        bg: 'bg-purple-50',
+        bg: 'bg-purple-100',
+        text: 'text-purple-600',
         border: 'border-purple-200 hover:border-purple-400'
     },
     'Physical Chemistry': {
         icon: Sparkles,
-        gradient: 'from-blue-500 to-cyan-500',
-        bg: 'bg-blue-50',
-        border: 'border-blue-200 hover:border-blue-400'
+        gradient: 'from-cyan-500 to-blue-500',
+        bg: 'bg-cyan-100',
+        text: 'text-cyan-600',
+        border: 'border-cyan-200 hover:border-cyan-400'
     },
     'General chemistry': {
         icon: BookOpen,
         gradient: 'from-amber-500 to-orange-500',
-        bg: 'bg-amber-50',
+        bg: 'bg-amber-100',
+        text: 'text-amber-600',
         border: 'border-amber-200 hover:border-amber-400'
     }
 };
@@ -39,6 +44,7 @@ export default function HandwrittenNotesClient() {
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [categoryFilter, setCategoryFilter] = useState<string>('all');
+    const [viewingNote, setViewingNote] = useState<HandwrittenNote | null>(null);
 
     useEffect(() => {
         const loadData = async () => {
@@ -72,6 +78,58 @@ export default function HandwrittenNotesClient() {
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans">
+            {/* PDF Reader Modal */}
+            <AnimatePresence>
+                {viewingNote && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col"
+                    >
+                        {/* Toolbar */}
+                        <div className="h-16 border-b border-gray-800 bg-gray-900/90 flex items-center justify-between px-4 md:px-6">
+                            <div className="flex items-center gap-3 overflow-hidden">
+                                <div className="p-2 bg-amber-500/20 rounded-lg text-amber-400 shrink-0">
+                                    <FileText size={20} />
+                                </div>
+                                <div className="min-w-0">
+                                    <h3 className="font-bold text-gray-100 text-sm md:text-base truncate">{viewingNote.title}</h3>
+                                    <p className="text-xs text-gray-500 truncate">Handwritten Note • {viewingNote.category}</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-2 md:gap-4 shrink-0">
+                                <a
+                                    href={viewingNote.notesUrl}
+                                    download
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs md:text-sm font-semibold transition-all"
+                                >
+                                    <Download size={16} /> <span className="hidden md:inline">Download</span>
+                                </a>
+                                <button
+                                    onClick={() => setViewingNote(null)}
+                                    className="p-2 hover:bg-red-500/10 hover:text-red-400 rounded-lg text-gray-400 transition-colors"
+                                >
+                                    <X size={24} />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* PDF Viewer */}
+                        <div className="flex-1 bg-gray-900 relative">
+                            {/* Use Google Drive preview for drive links, or direct embed otherwise */}
+                            <iframe
+                                src={viewingNote.notesUrl.includes('drive.google.com') ? viewingNote.notesUrl.replace('/view', '/preview') : viewingNote.notesUrl}
+                                className="w-full h-full border-0"
+                                title={viewingNote.title}
+                            />
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* Hero Section */}
             <section className="pt-32 pb-16 px-4" style={{ background: 'linear-gradient(135deg, #b45309 0%, #d97706 50%, #f59e0b 100%)' }}>
                 <div className="max-w-6xl mx-auto text-center">
@@ -160,47 +218,56 @@ export default function HandwrittenNotesClient() {
                     <AnimatePresence mode="wait">
                         {filteredNotes.length > 0 ? (
                             <motion.div
-                                key="notes-grid"
+                                key="notes-list"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                                className="flex flex-col gap-4"
                             >
                                 {filteredNotes.map((note, index) => {
                                     const style = getCategoryStyle(note.category);
                                     const IconComponent = style.icon;
 
                                     return (
-                                        <motion.a
+                                        <motion.div
                                             key={note.id}
-                                            href={note.notesUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            initial={{ opacity: 0, y: 20 }}
+                                            onClick={() => setViewingNote(note)}
+                                            initial={{ opacity: 0, y: 10 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             transition={{ delay: index * 0.03 }}
-                                            className={`group block bg-white rounded-2xl p-6 border-2 ${style.border} shadow-sm hover:shadow-xl transition-all duration-300`}
+                                            className={`group relative flex items-center justify-between bg-white rounded-xl p-4 border border-gray-200 hover:border-amber-300 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer`}
                                         >
-                                            {/* Category Badge */}
-                                            <div className="flex items-center justify-between mb-4">
-                                                <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${style.bg} text-gray-700`}>
-                                                    <IconComponent size={14} />
-                                                    {note.category}
-                                                </span>
-                                                <ExternalLink size={18} className="text-gray-300 group-hover:text-amber-500 transition-colors" />
+                                            <div className="flex items-center gap-4 overflow-hidden">
+                                                {/* Icon Box */}
+                                                <div className={`shrink-0 w-12 h-12 rounded-lg ${style.bg} flex items-center justify-center ${style.text}`}>
+                                                    <IconComponent size={24} />
+                                                </div>
+
+                                                {/* Text Info */}
+                                                <div className="flex flex-col min-w-0">
+                                                    <h3 className="text-base md:text-lg font-bold text-gray-800 group-hover:text-amber-600 transition-colors truncate pr-4">
+                                                        {note.title}
+                                                    </h3>
+                                                    <div className="flex items-center gap-2 mt-1">
+                                                        <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200 group-hover:bg-amber-50 group-hover:text-amber-600 group-hover:border-amber-100 transition-colors">
+                                                            {note.category}
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
 
-                                            {/* Title */}
-                                            <h3 className="text-lg font-semibold text-gray-900 mb-4 group-hover:text-amber-600 transition-colors line-clamp-2">
-                                                {note.title}
-                                            </h3>
-
-                                            {/* Download Button */}
-                                            <div className={`flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r ${style.gradient} text-white font-medium text-sm group-hover:shadow-lg transition-all`}>
+                                            {/* Download Button (Right Side) */}
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    window.open(note.notesUrl, '_blank');
+                                                }}
+                                                className={`shrink-0 flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-50 text-gray-600 font-semibold text-sm group-hover:bg-gradient-to-r ${style.gradient} group-hover:text-white transition-all`}
+                                            >
+                                                <span className="hidden md:inline">Download</span>
                                                 <Download size={18} />
-                                                Download Notes
-                                            </div>
-                                        </motion.a>
+                                            </button>
+                                        </motion.div>
                                     );
                                 })}
                             </motion.div>

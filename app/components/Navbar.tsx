@@ -10,11 +10,13 @@ const jeeNeetLinks = [
   { label: 'Quick Recap', href: '/quick-recap', external: false },
   { label: 'Top 50 Concepts', href: '/top-50-concepts', external: false },
   { label: '2 Minute Chemistry', href: '/2-minute-chemistry', external: false },
+  { label: 'NEET Crash Course', href: '/neet-crash-course', external: false },
 ];
 
 const ncertBoardsLinks = [
   { label: 'NCERT Solutions', href: '/ncert-solutions', external: false },
   { label: 'CBSE 12 NCERT Revision', href: '/cbse-12-ncert-revision', external: false },
+  { label: 'Download NCERT Books', href: '/download-ncert-books', external: false },
   { label: 'Organic Name Reactions', href: '/organic-name-reactions', external: false },
   { label: 'Assertion & Reason', href: '/assertion-reason', external: false },
 ];
