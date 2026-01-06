@@ -14,10 +14,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://canvas-classes-website.vercel.app";
+const siteUrl = "https://www.canvasclasses.in";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: './',
+  },
   title: {
     default: "Canvas Classes - Free JEE & NEET Chemistry Preparation",
     template: "%s | Canvas Classes",
