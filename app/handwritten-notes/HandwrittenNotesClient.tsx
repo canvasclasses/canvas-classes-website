@@ -237,15 +237,15 @@ export default function HandwrittenNotesClient() {
                                             transition={{ delay: index * 0.03 }}
                                             className={`group relative flex items-center justify-between bg-white rounded-xl p-4 border border-gray-200 hover:border-amber-300 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer`}
                                         >
-                                            <div className="flex items-center gap-4 overflow-hidden">
+                                            <div className="flex items-center gap-3 overflow-hidden flex-1">
                                                 {/* Icon Box */}
-                                                <div className={`shrink-0 w-12 h-12 rounded-lg ${style.bg} flex items-center justify-center ${style.text}`}>
-                                                    <IconComponent size={24} />
+                                                <div className={`shrink-0 w-10 h-10 rounded-lg ${style.bg} flex items-center justify-center ${style.text}`}>
+                                                    <IconComponent size={20} />
                                                 </div>
 
                                                 {/* Text Info */}
-                                                <div className="flex flex-col min-w-0">
-                                                    <h3 className="text-base md:text-lg font-bold text-gray-800 group-hover:text-amber-600 transition-colors truncate pr-4">
+                                                <div className="flex flex-col min-w-0 flex-1">
+                                                    <h3 className="text-sm md:text-base font-bold text-gray-800 group-hover:text-amber-600 transition-colors truncate">
                                                         {note.title}
                                                     </h3>
                                                     <div className="flex items-center gap-2 mt-1">
@@ -255,18 +255,6 @@ export default function HandwrittenNotesClient() {
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            {/* Download Button (Right Side) */}
-                                            <button
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    window.open(note.notesUrl, '_blank');
-                                                }}
-                                                className={`shrink-0 flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-50 text-gray-600 font-semibold text-sm group-hover:bg-gradient-to-r ${style.gradient} group-hover:text-white transition-all`}
-                                            >
-                                                <span className="hidden md:inline">Download</span>
-                                                <Download size={18} />
-                                            </button>
                                         </motion.div>
                                     );
                                 })}
