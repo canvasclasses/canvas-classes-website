@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import Hero from "./components/Hero";
-import OfferingsSection from "./components/OfferingsSection";
-import WhyChooseUsSection from "./components/WhyChooseUsSection";
-import NCERTSection from "./components/NCERTSection";
+import StudentTestimonialCards from "./components/StudentTestimonialCards";
+import MyNotesSection from "./components/MyNotesSection";
+import NCERTBoardsSection from "./components/NCERTBoardsSection";
 
 export const metadata: Metadata = {
   title: "Canvas Classes - Free JEE & NEET Chemistry Preparation",
@@ -21,9 +21,9 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black">
       <Hero />
-      <OfferingsSection />
-      <WhyChooseUsSection />
-      <NCERTSection />
+      <StudentTestimonialCards />
+      <MyNotesSection />
+      <NCERTBoardsSection />
     </main>
   );
 }
