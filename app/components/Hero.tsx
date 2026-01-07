@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Play } from 'lucide-react';
+import Link from 'next/link';
+import { Play, Sparkles } from 'lucide-react';
 
 const stats = [
     { value: '2K+', label: 'Chemistry Videos' },
@@ -13,87 +14,128 @@ const stats = [
 
 export default function Hero() {
     return (
-        <section className="relative flex flex-col w-full overflow-hidden bg-[#0a0a1a]">
+        <section className="relative flex flex-col w-full overflow-hidden bg-slate-950">
 
-            {/* Molecular Flow Background - Positioned to the right */}
-            <div className="absolute inset-0 z-0 select-none">
-                <Image
-                    src="/molecular_bg.png"
-                    alt="Molecular Background"
-                    fill
-                    className="object-cover object-right"
-                    priority
-                    quality={100}
+            {/* Animated Gradient Background */}
+            <div className="absolute inset-0 z-0">
+                {/* Main gradient orbs */}
+                <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-600/20 rounded-full blur-[120px] animate-pulse" />
+                <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
+                <div className="absolute top-1/2 right-10 w-[400px] h-[400px] bg-pink-600/15 rounded-full blur-[80px] animate-pulse" style={{ animationDelay: '2s' }} />
+
+                {/* Subtle grid pattern */}
+                <div
+                    className="absolute inset-0 opacity-[0.03]"
+                    style={{
+                        backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                                          linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+                        backgroundSize: '50px 50px'
+                    }}
                 />
-                {/* Strong left gradient to keep text area clean */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a1a] via-[#0a0a1a]/90 to-transparent" />
             </div>
 
-            {/* Main Hero Content - Fixed left padding for consistent alignment */}
-            <div className="relative z-10 flex items-center lg:items-start pt-20 lg:pt-32 pb-12">
+            {/* Main Hero Content */}
+            <div className="relative z-10 flex items-center pt-24 lg:pt-32 pb-12">
                 <div className="w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8 xl:gap-16 py-4 lg:py-6">
 
-                        {/* Left Side - Text Content - Fixed width */}
+                        {/* Left Side - Text Content */}
                         <motion.div
-                            initial={{ opacity: 0, x: -40 }}
-                            animate={{ opacity: 1, x: 0 }}
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="flex flex-col items-start w-full lg:w-[50%] lg:max-w-[560px] flex-shrink-0"
+                            className="flex flex-col items-start w-full lg:w-[55%] lg:max-w-[620px] flex-shrink-0"
                         >
-                            <h1 className="text-5xl sm:text-6xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] text-white mb-6">
-                                Master<br />
-                                Chemistry <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">with</span><br />
-                                <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Confidence</span>
+                            {/* Personal Hook */}
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.2 }}
+                                className="flex items-center gap-2 mb-6 px-4 py-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full border border-purple-500/20"
+                            >
+                                <Sparkles className="w-4 h-4 text-purple-400" />
+                                <span className="text-purple-300 font-medium text-sm">Searching for someone who gets it?</span>
+                            </motion.div>
+
+                            {/* Main Headline */}
+                            <h1 className="font-bold leading-[1.15] text-white mb-6">
+                                <span className="text-5xl sm:text-6xl lg:text-6xl xl:text-7xl bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">Chemistry</span>
+                                <span className="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl"> isn't just about </span>
+                                <span className="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">formulas</span>
+                                <br />
+                                <span className="text-slate-400 text-2xl sm:text-3xl lg:text-3xl xl:text-4xl">— it's about understanding</span>
+                                <br className="sm:hidden" />
+                                <span className="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent"> WHY</span>{' '}
+                                <span className="text-2xl sm:text-3xl lg:text-3xl xl:text-4xl text-white">things work.</span>
                             </h1>
 
-                            <div className="flex items-center gap-2 mb-6">
-                                <span className="h-2 w-2 rounded-full bg-yellow-400"></span>
-                                <span className="text-yellow-400 font-medium text-sm">Trusted by 1M+ Students Worldwide</span>
+                            {/* Personal Message */}
+                            <div className="mb-8 pl-4 border-l-2 border-purple-500/50">
+                                <p className="text-slate-400 text-lg leading-relaxed">
+                                    If you've struggled to find a teacher who{' '}
+                                    <span className="text-purple-300 font-medium">feeds your curiosity</span>{' '}
+                                    instead of shutting it down,{' '}
+                                    <span className="text-white font-semibold">you've found your place.</span>
+                                </p>
                             </div>
 
-                            <p className="text-xl text-white font-medium mb-2">
-                                Complete preparation for <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-bold">JEE & NEET</span>
-                            </p>
-
-                            <p className="text-gray-400 mb-8 text-base">
-                                Expert video lectures, handwritten notes, and comprehensive practice<br className="hidden sm:block" />
-                                materials — all absolutely free
-                            </p>
+                            {/* Trust Badge */}
+                            <div className="flex items-center gap-2 mb-8">
+                                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span className="text-emerald-400 font-medium text-sm">Trusted by 1M+ curious minds across India</span>
+                            </div>
 
                             {/* CTA Buttons */}
                             <div className="flex flex-wrap gap-4 mb-10">
-                                <button className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold px-6 py-3 rounded-lg transition-all shadow-lg shadow-purple-500/25">
+                                <motion.button
+                                    whileHover={{ scale: 1.03 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold px-7 py-3.5 rounded-xl transition-all shadow-lg shadow-purple-500/25"
+                                >
                                     <Play className="w-5 h-5" />
-                                    Start Learning
-                                </button>
-                                <button className="border-2 border-purple-500 text-purple-400 hover:bg-purple-500/10 font-semibold px-6 py-3 rounded-lg transition-colors">
-                                    About Paaras Sir
-                                </button>
+                                    Start Learning Free
+                                </motion.button>
+                                <Link href="/about">
+                                    <motion.button
+                                        whileHover={{ scale: 1.03 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        className="border-2 border-purple-500/50 text-purple-400 hover:bg-purple-500/10 hover:border-purple-500 font-semibold px-7 py-3.5 rounded-xl transition-all"
+                                    >
+                                        Meet Paaras Sir
+                                    </motion.button>
+                                </Link>
                             </div>
 
-                            {/* Instructor Badge */}
-                            <div className="flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-4 py-3">
-                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg">
+                            {/* Instructor Card */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.5 }}
+                                className="flex items-center gap-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-4"
+                            >
+                                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-xl shadow-lg">
                                     P
                                 </div>
                                 <div>
-                                    <p className="text-white font-semibold">Paaras Sir</p>
-                                    <p className="text-yellow-400 text-sm">⭐⭐⭐⭐⭐ 15+ Years Experience</p>
+                                    <p className="text-white font-semibold text-lg">Paaras Thakur</p>
+                                    <p className="text-slate-400 text-sm">JEE Chemistry Expert • Ex - Allen, Resonance, Unacademy, PW</p>
                                 </div>
-                            </div>
+                            </motion.div>
                         </motion.div>
 
-                        {/* Right Side - Photo Card - Bigger and aligned with heading */}
+                        {/* Right Side - Photo Card */}
                         <motion.div
-                            initial={{ opacity: 0, x: 40 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8, delay: 0.2 }}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.8, delay: 0.3 }}
                             className="hidden lg:flex justify-end flex-1 items-start pt-0"
                         >
-                            <div className="relative w-[420px] xl:w-[480px]">
-                                <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl overflow-hidden shadow-2xl">
-                                    <div className="relative h-[500px] xl:h-[560px] w-full">
+                            <div className="relative w-[400px] xl:w-[450px]">
+                                {/* Glow behind card */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-3xl blur-2xl scale-105" />
+
+                                <div className="relative bg-slate-900/50 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+                                    <div className="relative h-[480px] xl:h-[520px] w-full">
                                         <Image
                                             src="/paaras_hero.png"
                                             alt="Paaras Sir - Chemistry Expert"
@@ -103,8 +145,8 @@ export default function Hero() {
                                         />
                                     </div>
 
-                                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-5 py-2 rounded-full font-semibold text-sm shadow-lg whitespace-nowrap">
-                                        Chemistry Educator & EdTech Pioneer
+                                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-5 py-2.5 rounded-full font-semibold text-sm shadow-lg whitespace-nowrap">
+                                        ✨ EdTech Pioneer Since 2014
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +156,7 @@ export default function Hero() {
                 </div>
             </div>
 
-            {/* Mobile Photo Card - Shows below text on smaller screens */}
+            {/* Mobile Photo Card */}
             <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -122,8 +164,11 @@ export default function Hero() {
                 className="relative z-10 lg:hidden flex justify-center px-6 pb-8"
             >
                 <div className="relative w-72 sm:w-80">
-                    <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl overflow-hidden shadow-2xl">
-                        <div className="relative h-[380px] sm:h-[420px] w-full">
+                    {/* Glow */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-3xl blur-2xl scale-105" />
+
+                    <div className="relative bg-slate-900/50 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+                        <div className="relative h-[360px] sm:h-[400px] w-full">
                             <Image
                                 src="/paaras_hero.png"
                                 alt="Paaras Sir - Chemistry Expert"
@@ -133,15 +178,15 @@ export default function Hero() {
                             />
                         </div>
 
-                        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full font-semibold text-xs shadow-lg whitespace-nowrap">
-                            Chemistry Educator & EdTech Pioneer
+                        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full font-semibold text-xs shadow-lg whitespace-nowrap">
+                            ✨ EdTech Pioneer Since 2014
                         </div>
                     </div>
                 </div>
             </motion.div>
 
             {/* Stats Section */}
-            <div className="relative z-10 py-8 border-t border-white/5 bg-[#0a0a1a]">
+            <div className="relative z-10 py-10 border-t border-white/5 bg-slate-950/80 backdrop-blur-sm">
                 <div className="w-full max-w-[1200px] mx-auto px-6">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-8">
                         {stats.map((stat, index) => (
@@ -153,11 +198,11 @@ export default function Hero() {
                                 viewport={{ once: true }}
                                 className="relative group text-center"
                             >
-                                <div className="p-4 lg:p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-500/30 hover:bg-white/10 transition-all duration-300">
+                                <div className="p-5 lg:p-6 rounded-2xl bg-slate-900/50 border border-white/5 hover:border-purple-500/30 hover:bg-slate-800/50 transition-all duration-300">
                                     <p className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-1 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                                         {stat.value}
                                     </p>
-                                    <p className="text-gray-400 font-medium text-xs sm:text-sm">
+                                    <p className="text-slate-500 font-medium text-xs sm:text-sm">
                                         {stat.label}
                                     </p>
                                 </div>
