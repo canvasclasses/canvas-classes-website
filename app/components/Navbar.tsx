@@ -115,7 +115,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        <Link href="#" className="px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all">Flashcards</Link>
+        <Link href="/flashcards" className="px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all">Flashcards</Link>
         <Link href="/handwritten-notes" className="px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all">My Notes</Link>
       </div>
 
@@ -208,7 +208,7 @@ export default function Navbar() {
 
           <div className="pt-2 space-y-2">
             <Link
-              href="#"
+              href="/flashcards"
               className="block px-5 py-3 font-bold text-gray-700 hover:bg-gray-50 rounded-2xl transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
