@@ -189,23 +189,25 @@ export default function ChapterPage() {
         strong: ({ children }: any) => <strong className="text-gray-900 font-semibold">{children}</strong>,
         // Italic Text
         em: ({ children }: any) => <em className="text-gray-800 italic">{children}</em>,
-        // Images with Captions
+        // Images with Captions - Constrained width on desktop
         img: ({ src, alt }: any) => (
-            <div
-                className="my-8 rounded-xl overflow-hidden border border-gray-200 shadow-lg bg-white cursor-pointer group relative"
-                onClick={() => setLightboxImage(src)}
-            >
-                <img src={src} alt={alt || ''} className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]" />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center pointer-events-none">
-                    <div className="bg-black/60 text-white text-xs font-bold px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0">
-                        <ZoomIn size={14} /> Tap to Expand
+            <div className="my-8 flex justify-center">
+                <div
+                    className="max-w-2xl w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg bg-white cursor-pointer group relative"
+                    onClick={() => setLightboxImage(src)}
+                >
+                    <img src={src} alt={alt || ''} className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center pointer-events-none">
+                        <div className="bg-black/60 text-white text-xs font-bold px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0">
+                            <ZoomIn size={14} /> Tap to Expand
+                        </div>
                     </div>
+                    {alt && (
+                        <p className="text-center text-sm text-gray-600 py-3 px-4 bg-gray-50 border-t border-gray-100 font-medium relative z-10">
+                            {alt}
+                        </p>
+                    )}
                 </div>
-                {alt && (
-                    <p className="text-center text-sm text-gray-600 py-3 px-4 bg-gray-50 border-t border-gray-100 font-medium relative z-10">
-                        {alt}
-                    </p>
-                )}
             </div>
         ),
         // Headers (if used directly in markdown)
