@@ -123,12 +123,19 @@ export default function ChapterPage() {
         ol: ({ children, start, ...props }: any) => {
             // Get the starting number (defaults to 1)
             const startNum = start || 1;
+            // Filter to only valid React elements (skip whitespace text nodes)
+            const validChildren = React.Children.toArray(children).filter(
+                (child) => React.isValidElement(child)
+            );
+            let itemIndex = 0;
             return (
                 <div className="space-y-4 mb-6" {...props}>
-                    {React.Children.map(children, (child, index) => {
+                    {React.Children.map(children, (child) => {
                         if (React.isValidElement(child)) {
+                            const currentNumber = startNum + itemIndex;
+                            itemIndex++;
                             return React.cloneElement(child as React.ReactElement<any>, {
-                                'data-number': startNum + index,
+                                'data-number': currentNumber,
                                 'data-is-numbered-section': true
                             });
                         }
