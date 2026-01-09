@@ -18,6 +18,10 @@ import {
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { fetchFlashcards, FlashcardItem } from '../lib/revisionData';
+import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css';
 
 interface ChapterGroup {
     chapterName: string;
@@ -242,8 +246,8 @@ export default function FlashcardsClient() {
                                                                 key={topic}
                                                                 onClick={() => toggleTopic(topic)}
                                                                 className={`p-4 rounded-xl border text-left transition-all ${isSelected
-                                                                        ? 'bg-purple-500/20 border-purple-500/50 text-white'
-                                                                        : 'bg-slate-900/50 border-white/5 text-slate-300 hover:border-white/20'
+                                                                    ? 'bg-purple-500/20 border-purple-500/50 text-white'
+                                                                    : 'bg-slate-900/50 border-white/5 text-slate-300 hover:border-white/20'
                                                                     }`}
                                                             >
                                                                 <div className="flex items-center justify-between">
@@ -319,17 +323,22 @@ export default function FlashcardsClient() {
                                                 exit={{ rotateY: isFlipped ? 90 : -90, opacity: 0 }}
                                                 transition={{ duration: 0.3 }}
                                                 className={`min-h-[300px] p-8 rounded-3xl border flex items-center justify-center text-center ${isFlipped
-                                                        ? 'bg-gradient-to-br from-emerald-600/20 to-teal-600/20 border-emerald-500/30'
-                                                        : 'bg-gradient-to-br from-purple-600/20 to-pink-600/20 border-purple-500/30'
+                                                    ? 'bg-gradient-to-br from-emerald-600/20 to-teal-600/20 border-emerald-500/30'
+                                                    : 'bg-gradient-to-br from-purple-600/20 to-pink-600/20 border-purple-500/30'
                                                     }`}
                                             >
                                                 <div>
                                                     <p className="text-xs text-slate-500 uppercase tracking-wider mb-4">
                                                         {isFlipped ? 'Answer' : 'Question'}
                                                     </p>
-                                                    <p className="text-xl sm:text-2xl text-white font-medium leading-relaxed">
-                                                        {isFlipped ? currentCard.answer : currentCard.question}
-                                                    </p>
+                                                    <div className="text-xl sm:text-2xl text-white font-medium leading-relaxed flashcard-content">
+                                                        <ReactMarkdown
+                                                            remarkPlugins={[remarkMath]}
+                                                            rehypePlugins={[rehypeKatex]}
+                                                        >
+                                                            {isFlipped ? currentCard.answer : currentCard.question}
+                                                        </ReactMarkdown>
+                                                    </div>
                                                     {!isFlipped && (
                                                         <p className="mt-6 text-slate-500 text-sm">Click to reveal answer</p>
                                                     )}
