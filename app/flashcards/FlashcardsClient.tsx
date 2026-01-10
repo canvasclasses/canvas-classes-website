@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Layers,
@@ -20,8 +20,6 @@ import {
     TrendingUp,
     RefreshCw
 } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import { fetchFlashcards, FlashcardItem } from '../lib/revisionData';
 import { useCardProgress } from '../hooks/useCardProgress';
 import { getMasteryLevel, getMasteryColor, daysUntilReview, QualityRating } from '../lib/spacedRepetition';
@@ -54,6 +52,9 @@ export default function FlashcardsClient() {
 
     // Session stats (temporary, for current session display)
     const [sessionStats, setSessionStats] = useState({ correct: 0, needsReview: 0 });
+
+    // Ref for scrolling to flashcard view
+    const practiceContainerRef = useRef<HTMLDivElement>(null);
 
     // Spaced repetition hook
     const {
@@ -136,6 +137,14 @@ export default function FlashcardsClient() {
         setIsFlipped(false);
         setSessionStats({ correct: 0, needsReview: 0 });
         setIsPracticeMode(true);
+
+        // Scroll to flashcard view on mobile
+        setTimeout(() => {
+            practiceContainerRef.current?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }, 100);
     };
 
     // Handle card responses with SM-2 quality ratings
@@ -192,7 +201,6 @@ export default function FlashcardsClient() {
 
     return (
         <main className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-            <Navbar />
 
             {/* Hero Section */}
             <section className="relative pt-28 pb-12 overflow-hidden">
@@ -443,7 +451,7 @@ export default function FlashcardsClient() {
                         </div>
                     ) : (
                         /* Practice Mode */
-                        <div className="max-w-2xl mx-auto">
+                        <div ref={practiceContainerRef} className="max-w-2xl mx-auto">
                             {currentCard ? (
                                 <motion.div
                                     key="practice"
@@ -637,8 +645,6 @@ export default function FlashcardsClient() {
                     )}
                 </div>
             </section>
-
-            <Footer />
         </main>
     );
 }
