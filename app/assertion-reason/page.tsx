@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { fetchAssertionReasonQuestions, AssertionReasonQuestion, getUniqueChapters, shuffleArray } from '../lib/assertionReasonData';
-import { Zap, CheckCircle, XCircle, Sparkles, Trophy, RefreshCw, ChevronRight, Lightbulb, Target, Brain, ArrowRight, RotateCcw } from 'lucide-react';
+import { Zap, CheckCircle, XCircle, Sparkles, Trophy, RefreshCw, ChevronRight, Lightbulb, Target, Brain, ArrowRight, RotateCcw, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
@@ -274,12 +274,21 @@ export default function AssertionReasonPage() {
                                 exit={{ opacity: 0, y: -20 }}
                                 className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden"
                             >
-                                {/* Chapter Badge */}
+                                {/* Chapter Badge & Exit */}
                                 <div className="px-6 py-4 bg-gray-50 border-b border-gray-100 flex items-center justify-between">
                                     <span className="text-sm font-medium text-gray-500">{currentQuestion.chapter}</span>
-                                    <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
-                                        Q{currentIndex + 1}
-                                    </span>
+                                    <div className="flex items-center gap-3">
+                                        <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
+                                            Q{currentIndex + 1}
+                                        </span>
+                                        <button
+                                            onClick={restartGame}
+                                            className="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-gray-700 transition-colors"
+                                            title="Exit Practice"
+                                        >
+                                            <X size={18} />
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <div className="p-6 md:p-8">
