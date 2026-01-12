@@ -111,3 +111,26 @@ export function shuffleArray<T>(array: T[]): T[] {
     }
     return shuffled;
 }
+
+// Chapter grouping for UI display
+export interface ChapterGroup {
+    chapterName: string;
+    questions: AssertionReasonQuestion[];
+}
+
+// Group questions by chapter for grid display
+export function groupByChapter(questions: AssertionReasonQuestion[]): ChapterGroup[] {
+    const groups: { [key: string]: ChapterGroup } = {};
+
+    questions.forEach(q => {
+        if (!groups[q.chapter]) {
+            groups[q.chapter] = {
+                chapterName: q.chapter,
+                questions: []
+            };
+        }
+        groups[q.chapter].questions.push(q);
+    });
+
+    return Object.values(groups);
+}
