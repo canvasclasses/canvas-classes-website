@@ -138,7 +138,7 @@ export async function fetchRevisionTopics(): Promise<RevisionTopic[]> {
 
 export async function fetchFlashcards(): Promise<FlashcardItem[]> {
     try {
-        const response = await fetch(FLASHCARDS_CSV_URL, { cache: 'no-store' });
+        const response = await fetch(FLASHCARDS_CSV_URL, { next: { revalidate: 3600 } });
         const text = await response.text();
         const rows = parseCSVRobust(text);
 
@@ -173,3 +173,37 @@ export async function getFlashcardsByChapter(chapterName: string): Promise<Flash
     // Assuming CSV chapter names match "Solutions", "Biomolecules" etc.
     return allFlashcards.filter(card => card.chapterName.toLowerCase() === chapterName.toLowerCase());
 }
+
+// Generate URL-friendly slug from chapter name
+export function generateChapterSlug(chapterName: string): string {
+    return chapterName
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+}
+
+// Get chapter name from slug
+export function getChapterFromSlug(slug: string, chapters: string[]): string | null {
+    return chapters.find(chapter => generateChapterSlug(chapter) === slug) || null;
+}
+
+// Get all unique chapter names with their slugs
+export async function getFlashcardChapters(): Promise<{ name: string; slug: string; cardCount: number }[]> {
+    const allFlashcards = await fetchFlashcards();
+    const chapterMap = new Map<string, number>();
+
+    allFlashcards.forEach(card => {
+        if (card.chapterName) {
+            chapterMap.set(card.chapterName, (chapterMap.get(card.chapterName) || 0) + 1);
+        }
+    });
+
+    return Array.from(chapterMap.entries())
+        .map(([name, cardCount]) => ({
+            name,
+            slug: generateChapterSlug(name),
+            cardCount
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+}
+

@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { getFlashcardChapters } from './lib/revisionData';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 
@@ -23,10 +24,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { path: '/flashcards', priority: 0.8, changeFrequency: 'weekly' as const },
     ];
 
-    return staticPages.map((page) => ({
+    const staticEntries = staticPages.map((page) => ({
         url: `${BASE_URL}${page.path}`,
         lastModified: new Date(),
         changeFrequency: page.changeFrequency,
         priority: page.priority,
     }));
+
+    // Dynamic flashcard chapter pages
+    let flashcardChapterEntries: MetadataRoute.Sitemap = [];
+    try {
+        const chapters = await getFlashcardChapters();
+        flashcardChapterEntries = chapters.map((chapter) => ({
+            url: `${BASE_URL}/flashcards/${chapter.slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.7,
+        }));
+    } catch (error) {
+        console.error('Error fetching flashcard chapters for sitemap:', error);
+    }
+
+    return [...staticEntries, ...flashcardChapterEntries];
 }
+
