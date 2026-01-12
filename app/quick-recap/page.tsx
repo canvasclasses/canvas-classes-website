@@ -253,29 +253,46 @@ export default function QuickRecapPage() {
                 </div>
             </section>
 
-            {/* Inline Video Player */}
+            {/* Modal Video Player */}
             <AnimatePresence>
                 {activeVideo && (
-                    <motion.section
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="bg-gray-950 border-y border-gray-800"
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
+                        onClick={() => setActiveVideo(null)}
                     >
-                        <div className="container mx-auto px-6 py-6">
+                        {/* Backdrop */}
+                        <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" />
+
+                        {/* Modal Content */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            transition={{ type: "spring", damping: 25 }}
+                            className="relative w-full max-w-5xl"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {/* Header */}
                             <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-3">
                                     <div className="w-3 h-3 bg-teal-500 rounded-full animate-pulse" />
-                                    <h3 className="text-white font-semibold text-lg line-clamp-1">Now Playing: {activeVideo.title}</h3>
+                                    <h3 className="text-white font-semibold text-lg line-clamp-1">
+                                        {activeVideo.title}
+                                    </h3>
                                 </div>
                                 <button
                                     onClick={() => setActiveVideo(null)}
-                                    className="p-2 bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white transition-colors"
+                                    className="p-2.5 bg-gray-800 text-gray-400 rounded-full hover:bg-gray-700 hover:text-white transition-colors"
                                 >
                                     <X className="w-5 h-5" />
                                 </button>
                             </div>
-                            <div className="aspect-video max-w-4xl mx-auto rounded-xl overflow-hidden border border-gray-700">
+
+                            {/* Video Player */}
+                            <div className="aspect-video w-full rounded-2xl overflow-hidden border border-gray-700 shadow-2xl shadow-teal-500/10">
                                 <iframe
                                     src={`https://www.youtube.com/embed/${getYoutubeId(activeVideo.youtubeUrl)}?autoplay=1&rel=0`}
                                     className="w-full h-full"
@@ -284,8 +301,30 @@ export default function QuickRecapPage() {
                                     title={activeVideo.title}
                                 />
                             </div>
-                        </div>
-                    </motion.section>
+
+                            {/* Footer Info */}
+                            <div className="flex items-center justify-between mt-4">
+                                <div className="flex items-center gap-4">
+                                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium border ${getCategoryStyle(activeVideo.category).bg} ${getCategoryStyle(activeVideo.category).text} ${getCategoryStyle(activeVideo.category).border}`}>
+                                        {activeVideo.category}
+                                    </span>
+                                    <span className="flex items-center gap-1.5 text-gray-400 text-sm">
+                                        <Clock className="w-4 h-4" />
+                                        {activeVideo.duration}
+                                    </span>
+                                </div>
+                                <a
+                                    href={activeVideo.youtubeUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-2 px-4 py-2 bg-red-500/20 text-red-400 rounded-xl border border-red-500/30 hover:bg-red-500 hover:text-white hover:border-transparent transition-all text-sm font-medium"
+                                >
+                                    <Youtube className="w-4 h-4" />
+                                    Open in YouTube
+                                </a>
+                            </div>
+                        </motion.div>
+                    </motion.div>
                 )}
             </AnimatePresence>
 
