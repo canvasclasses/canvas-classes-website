@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import HandwrittenNotesClient from "./HandwrittenNotesClient";
+import { fetchHandwrittenNotes } from "../lib/handwrittenNotesData";
 
 export const metadata: Metadata = {
     title: "Handwritten Notes for JEE, NEET & CBSE Chemistry",
@@ -21,6 +22,8 @@ export const metadata: Metadata = {
     },
 };
 
-export default function HandwrittenNotesPage() {
-    return <HandwrittenNotesClient />;
+// Server-side data fetching for SEO (ensures Google sees content on first render)
+export default async function HandwrittenNotesPage() {
+    const notes = await fetchHandwrittenNotes();
+    return <HandwrittenNotesClient initialNotes={notes} />;
 }

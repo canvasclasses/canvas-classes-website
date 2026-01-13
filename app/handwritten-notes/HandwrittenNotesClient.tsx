@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
-import { fetchHandwrittenNotes, HandwrittenNote, getUniqueCategories, getNotesStats } from '../lib/handwrittenNotesData';
+import { HandwrittenNote, getUniqueCategories, getNotesStats } from '../lib/handwrittenNotesData';
 import { Search, Download, FileText, BookOpen, FlaskConical, Atom, Sparkles, Filter, ExternalLink, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -39,21 +39,16 @@ const categoryStyles: Record<string, { icon: React.ElementType; gradient: string
     }
 };
 
-export default function HandwrittenNotesClient() {
-    const [notes, setNotes] = useState<HandwrittenNote[]>([]);
-    const [loading, setLoading] = useState(true);
+interface HandwrittenNotesClientProps {
+    initialNotes: HandwrittenNote[];
+}
+
+// Data is now fetched on the server and passed as props for SEO
+export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNotesClientProps) {
+    const [notes] = useState<HandwrittenNote[]>(initialNotes);
     const [searchQuery, setSearchQuery] = useState('');
     const [categoryFilter, setCategoryFilter] = useState<string>('all');
     const [viewingNote, setViewingNote] = useState<HandwrittenNote | null>(null);
-
-    useEffect(() => {
-        const loadData = async () => {
-            const data = await fetchHandwrittenNotes();
-            setNotes(data);
-            setLoading(false);
-        };
-        loadData();
-    }, []);
 
     const categories = getUniqueCategories(notes);
     const stats = getNotesStats(notes);
@@ -67,14 +62,6 @@ export default function HandwrittenNotesClient() {
     const getCategoryStyle = (category: string) => {
         return categoryStyles[category] || categoryStyles['General chemistry'];
     };
-
-    if (loading) {
-        return (
-            <div className="min-h-screen bg-slate-50 flex justify-center items-center pt-20">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
-            </div>
-        );
-    }
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans">

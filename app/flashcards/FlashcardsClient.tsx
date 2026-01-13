@@ -20,7 +20,7 @@ import {
     TrendingUp,
     RefreshCw
 } from 'lucide-react';
-import { fetchFlashcards, FlashcardItem } from '../lib/revisionData';
+import { FlashcardItem } from '../lib/revisionData';
 import { useCardProgress } from '../hooks/useCardProgress';
 import { getMasteryLevel, getMasteryColor, daysUntilReview, QualityRating } from '../lib/spacedRepetition';
 import ReactMarkdown from 'react-markdown';
@@ -36,10 +36,14 @@ interface ChapterGroup {
 
 type PracticeMode = 'due' | 'all';
 
-export default function FlashcardsClient() {
-    const [allFlashcards, setAllFlashcards] = useState<FlashcardItem[]>([]);
+interface FlashcardsClientProps {
+    initialFlashcards: FlashcardItem[];
+}
+
+// Data is now fetched on the server and passed as props for SEO
+export default function FlashcardsClient({ initialFlashcards }: FlashcardsClientProps) {
+    const [allFlashcards] = useState<FlashcardItem[]>(initialFlashcards);
     const [chapterGroups, setChapterGroups] = useState<ChapterGroup[]>([]);
-    const [loading, setLoading] = useState(true);
 
     // Practice state
     const [selectedChapter, setSelectedChapter] = useState<string | null>(null);
@@ -68,38 +72,24 @@ export default function FlashcardsClient() {
         hasAnyProgress
     } = useCardProgress();
 
-    // Fetch flashcards on mount
+    // Group flashcards by chapter on initial load
     useEffect(() => {
-        async function loadFlashcards() {
-            try {
-                const cards = await fetchFlashcards();
-                setAllFlashcards(cards);
-
-                // Group by chapter
-                const groups: { [key: string]: ChapterGroup } = {};
-                cards.forEach(card => {
-                    if (!groups[card.chapterName]) {
-                        groups[card.chapterName] = {
-                            chapterName: card.chapterName,
-                            cards: [],
-                            topics: []
-                        };
-                    }
-                    groups[card.chapterName].cards.push(card);
-                    if (!groups[card.chapterName].topics.includes(card.topicName)) {
-                        groups[card.chapterName].topics.push(card.topicName);
-                    }
-                });
-
-                setChapterGroups(Object.values(groups));
-            } catch (error) {
-                console.error('Error loading flashcards:', error);
-            } finally {
-                setLoading(false);
+        const groups: { [key: string]: ChapterGroup } = {};
+        initialFlashcards.forEach(card => {
+            if (!groups[card.chapterName]) {
+                groups[card.chapterName] = {
+                    chapterName: card.chapterName,
+                    cards: [],
+                    topics: []
+                };
             }
-        }
-        loadFlashcards();
-    }, []);
+            groups[card.chapterName].cards.push(card);
+            if (!groups[card.chapterName].topics.includes(card.topicName)) {
+                groups[card.chapterName].topics.push(card.topicName);
+            }
+        });
+        setChapterGroups(Object.values(groups));
+    }, [initialFlashcards]);
 
     // Get all card IDs
     const allCardIds = useMemo(() => allFlashcards.map(c => c.id), [allFlashcards]);
@@ -261,7 +251,7 @@ export default function FlashcardsClient() {
             {/* Main Content */}
             <section className="py-12">
                 <div className="container mx-auto px-4">
-                    {loading || !progressLoaded ? (
+                    {!progressLoaded ? (
                         <div className="flex items-center justify-center py-20">
                             <div className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
                         </div>

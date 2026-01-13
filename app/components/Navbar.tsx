@@ -30,7 +30,7 @@ export default function Navbar() {
     <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[98%] max-w-[1400px] flex items-center justify-between px-4 md:px-6 py-2.5 rounded-2xl bg-white/70 backdrop-blur-xl shadow-lg shadow-black/5 border border-white/50 transition-all duration-300">
       <Link href="/" className="flex items-center pl-2">
         <Image
-          src="/logo.png"
+          src="/logo.webp"
           alt="Canvas Classes"
           width={180}
           height={50}

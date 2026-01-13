@@ -137,7 +137,7 @@ export default function Hero() {
                                 <div className="relative bg-slate-900/50 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
                                     <div className="relative h-[480px] xl:h-[520px] w-full">
                                         <Image
-                                            src="/paaras_hero.png"
+                                            src="/paaras_hero.webp"
                                             alt="Paaras Sir - Chemistry Expert"
                                             fill
                                             className="object-contain object-bottom"
@@ -170,7 +170,7 @@ export default function Hero() {
                     <div className="relative bg-slate-900/50 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
                         <div className="relative h-[360px] sm:h-[400px] w-full">
                             <Image
-                                src="/paaras_hero.png"
+                                src="/paaras_hero.webp"
                                 alt="Paaras Sir - Chemistry Expert"
                                 fill
                                 className="object-contain object-bottom"

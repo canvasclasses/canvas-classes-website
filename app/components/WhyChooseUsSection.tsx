@@ -86,7 +86,7 @@ export default function WhyChooseUsSection() {
                     <div className="flex items-center justify-center gap-3">
                         <div className="w-12 h-12 rounded-full border-2 border-white/40 overflow-hidden">
                             <Image
-                                src="/paaras_hero.png"
+                                src="/paaras_hero.webp"
                                 alt="Paaras Sir"
                                 width={48}
                                 height={48}

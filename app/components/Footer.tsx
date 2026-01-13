@@ -14,7 +14,7 @@ export default function Footer() {
                     <div className="md:col-span-2">
                         <Link href="/" className="inline-block bg-white rounded-xl px-4 py-2 mb-4">
                             <Image
-                                src="/logo.png"
+                                src="/logo.webp"
                                 alt="Canvas Classes"
                                 width={140}
                                 height={40}

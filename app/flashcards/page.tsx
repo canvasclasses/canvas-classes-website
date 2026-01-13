@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import FlashcardsClient from './FlashcardsClient';
+import { fetchFlashcards } from '../lib/revisionData';
 
 export const metadata: Metadata = {
     title: 'Chemistry Flashcards - Class 12 | Canvas Classes',
@@ -7,6 +8,8 @@ export const metadata: Metadata = {
     keywords: ['chemistry flashcards', 'class 12 flashcards', 'CBSE flashcards', 'JEE chemistry cards', 'NEET chemistry revision'],
 };
 
-export default function FlashcardsPage() {
-    return <FlashcardsClient />;
+// Server-side data fetching for SEO (ensures Google sees content on first render)
+export default async function FlashcardsPage() {
+    const flashcards = await fetchFlashcards();
+    return <FlashcardsClient initialFlashcards={flashcards} />;
 }
