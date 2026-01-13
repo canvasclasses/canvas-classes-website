@@ -358,7 +358,7 @@ export default function PathFinder() {
                                     {/* Character Image - No circle crop */}
                                     <div className="relative w-52 h-64 md:w-64 md:h-80 rounded-2xl overflow-hidden shadow-2xl">
                                         <Image
-                                            src="/student_avatar.png"
+                                            src="/student_avatar.webp"
                                             alt="Student"
                                             fill
                                             className="object-cover"
