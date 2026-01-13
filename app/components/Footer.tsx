@@ -74,7 +74,7 @@ export default function Footer() {
                         <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Resources</h4>
                         <ul className="space-y-3 text-sm">
                             <li><Link href="/handwritten-notes" className="text-gray-400 hover:text-white transition-colors">Handwritten Notes</Link></li>
-                            <li><Link href="/quick-recap" className="text-gray-400 hover:text-white transition-colors">Quick Recap</Link></li>
+                            <li><Link href="/one-shot-lectures" className="text-gray-400 hover:text-white transition-colors">One Shot Lectures</Link></li>
                             <li><Link href="/top-50-concepts" className="text-gray-400 hover:text-white transition-colors">Top 50 Concepts</Link></li>
                         </ul>
                     </div>

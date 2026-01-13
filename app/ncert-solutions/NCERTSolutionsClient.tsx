@@ -392,7 +392,7 @@ export default function NCERTSolutionsClient({ initialChapters, initialStats }: 
                                     Video Lectures
                                 </Link>
                                 <Link
-                                    href="/quick-recap"
+                                    href="/one-shot-lectures"
                                     className="flex items-center gap-2 bg-gray-700/50 text-white font-semibold px-6 py-3 rounded-xl hover:bg-gray-700 transition-colors border border-gray-600"
                                 >
                                     <BookOpen className="w-5 h-5" />

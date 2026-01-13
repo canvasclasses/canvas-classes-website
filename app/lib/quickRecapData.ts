@@ -8,6 +8,7 @@ export interface QuickRecapVideo {
     durationMinutes: number;
     category: string;
     thumbnailUrl: string;
+    priority: number;
 }
 
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSOzbYnvX5cXE3VK9CDn7V4X0HAGW8SjoFLPY8d1crPiyjBMg5s0WETprPPQobkJXHypMuSnbn-P_dv/pub?output=csv';
@@ -90,24 +91,32 @@ export async function fetchQuickRecapData(): Promise<QuickRecapVideo[]> {
 
         for (let i = 1; i < lines.length; i++) {
             const values = parseCSVLine(lines[i]);
-            const [title, url, duration] = values;
+            // Sheet columns: ID, Title, Priority, Category, URL, Duration
+            const [idStr, title, priorityStr, category, url, duration] = values;
 
             if (!title || !url) continue;
 
             const videoId = getYoutubeId(url);
+            const priority = parseInt(priorityStr, 10) || 999;
+            // Use category from sheet, fallback to auto-categorization
+            const videoCategory = category?.trim() || categorizeVideo(title);
 
             videos.push({
-                id: i,
-                title: title,
-                youtubeUrl: url,
-                duration: duration || '',
+                id: parseInt(idStr, 10) || i,
+                title: title.trim(),
+                youtubeUrl: url.trim(),
+                duration: duration?.trim() || '',
                 durationMinutes: parseDuration(duration || '0'),
-                category: categorizeVideo(title),
+                category: videoCategory,
                 thumbnailUrl: videoId
                     ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
                     : '/placeholder-video.jpg',
+                priority: priority,
             });
         }
+
+        // Sort by priority (1 = highest, shown first)
+        videos.sort((a, b) => a.priority - b.priority);
 
         return videos;
     } catch (error) {
