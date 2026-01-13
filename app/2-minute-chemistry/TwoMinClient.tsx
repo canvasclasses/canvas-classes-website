@@ -300,7 +300,7 @@ export default function TwoMinClient({ initialVideos }: TwoMinClientProps) {
             {/* Video Grid */}
             <section className="py-8 pb-24">
                 <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                         {filteredVideos.map((video, index) => {
                             const catStyle = getCategoryStyle(video.category);
                             const isActive = activeVideo?.id === video.id;
@@ -311,77 +311,53 @@ export default function TwoMinClient({ initialVideos }: TwoMinClientProps) {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.02 * Math.min(index, 15) }}
-                                    className={`group bg-gray-800/40 backdrop-blur-sm rounded-2xl overflow-hidden border transition-all duration-300 ${isActive
-                                        ? 'border-rose-500 ring-2 ring-rose-500/20'
-                                        : 'border-gray-700/50 hover:border-rose-500/50 hover:bg-gray-800/60'
+                                    className={`group bg-gray-800/50 rounded-xl overflow-hidden border transition-all duration-200 cursor-pointer ${isActive
+                                        ? 'border-rose-500 ring-1 ring-rose-500/30'
+                                        : 'border-gray-700/30 hover:border-rose-500/40 hover:bg-gray-800/70'
                                         }`}
+                                    onClick={() => setActiveVideo(isActive ? null : video)}
                                 >
                                     {/* Thumbnail */}
-                                    <div
-                                        className="relative aspect-video cursor-pointer group/thumb overflow-hidden"
-                                        onClick={() => setActiveVideo(isActive ? null : video)}
-                                    >
+                                    <div className="relative aspect-video overflow-hidden">
                                         <Image
                                             src={video.thumbnailUrl}
                                             alt={video.title}
                                             fill
-                                            className="object-cover transition-transform duration-300 group-hover/thumb:scale-105"
+                                            className="object-cover transition-transform duration-300 group-hover:scale-105"
                                         />
                                         {/* Duration Badge */}
-                                        <div className="absolute top-2 left-2 px-2 py-1 bg-gradient-to-br from-rose-500 to-pink-500 text-white text-xs font-bold rounded-lg flex items-center gap-1 shadow-lg">
-                                            <Clock className="w-3 h-3" />
+                                        <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-black/80 text-white text-xs font-medium rounded">
                                             {video.duration}
                                         </div>
-                                        {/* Views Badge */}
-                                        <div className="absolute bottom-2 right-2 px-2 py-1 bg-black/80 text-white text-xs font-medium rounded-lg backdrop-blur-sm flex items-center gap-1">
-                                            <Eye className="w-3 h-3" />
-                                            {formatViews(video.views)}
-                                        </div>
                                         {/* Play Overlay */}
-                                        <div className={`absolute inset-0 bg-black/50 flex items-center justify-center transition-opacity ${isActive ? 'opacity-100' : 'opacity-0 group-hover/thumb:opacity-100'}`}>
-                                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center shadow-xl shadow-rose-500/25">
+                                        <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                                            <div className="w-12 h-12 rounded-full bg-rose-500/90 flex items-center justify-center">
                                                 <Play className="w-5 h-5 text-white ml-0.5" fill="currentColor" />
                                             </div>
                                         </div>
                                         {isActive && (
-                                            <div className="absolute top-2 right-2 flex items-center gap-1.5 px-2 py-1 bg-rose-500 text-white text-xs font-medium rounded-full">
+                                            <div className="absolute top-2 right-2 flex items-center gap-1.5 px-2 py-1 bg-rose-500 text-white text-xs font-medium rounded">
                                                 <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                                                 Playing
                                             </div>
                                         )}
                                     </div>
 
-                                    {/* Info */}
-                                    <div className="p-4">
-                                        <h3 className="font-medium text-white text-sm mb-2 line-clamp-2 min-h-[40px] group-hover:text-rose-400 transition-colors">
+                                    {/* Info - Compact */}
+                                    <div className="p-3">
+                                        <h3 className="font-bold text-white text-base leading-snug line-clamp-2 mb-2 group-hover:text-rose-400 transition-colors">
                                             {video.title}
                                         </h3>
 
-                                        {/* Category Tag */}
-                                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium border ${catStyle.bg} ${catStyle.text} ${catStyle.border}`}>
-                                            {video.category}
-                                        </span>
-
-                                        {/* Quick Action */}
-                                        <div className="flex items-center gap-2 mt-3">
-                                            <button
-                                                onClick={() => setActiveVideo(isActive ? null : video)}
-                                                className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg font-medium text-xs transition-all ${isActive
-                                                    ? 'bg-rose-500 text-white'
-                                                    : 'bg-gradient-to-r from-rose-500/20 to-pink-500/20 text-rose-400 border border-rose-500/30 hover:from-rose-500 hover:to-pink-500 hover:text-white hover:border-transparent'
-                                                    }`}
-                                            >
-                                                <Zap className="w-3.5 h-3.5" />
-                                                {isActive ? 'Playing' : 'Quick Watch'}
-                                            </button>
-                                            <a
-                                                href={video.youtubeUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="p-2 bg-red-500/20 text-red-400 rounded-lg border border-red-500/30 hover:bg-red-500 hover:text-white hover:border-transparent transition-all"
-                                            >
-                                                <ExternalLink className="w-3.5 h-3.5" />
-                                            </a>
+                                        {/* Category + Duration Row */}
+                                        <div className="flex items-center justify-between">
+                                            <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${catStyle.bg} ${catStyle.text}`}>
+                                                {video.category.replace(' Chemistry', '')}
+                                            </span>
+                                            <div className="flex items-center gap-1 text-gray-500 text-xs text-right">
+                                                <Eye className="w-3 h-3" />
+                                                {formatViews(video.views)}
+                                            </div>
                                         </div>
                                     </div>
                                 </motion.div>
