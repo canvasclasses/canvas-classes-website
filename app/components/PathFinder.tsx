@@ -82,7 +82,7 @@ const pathTree: PathOption[] = [
                 description: 'Effective revision sessions for JEE/NEET Chemistry',
                 gradient: 'from-amber-500 to-orange-500',
                 iconBg: 'bg-amber-400/50',
-                href: '/quick-recap',
+                href: '/one-shot-lectures',
             },
             {
                 id: '2-min-chemistry',

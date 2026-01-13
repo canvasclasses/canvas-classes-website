@@ -18,7 +18,11 @@ import {
     Trophy,
     Target,
     TrendingUp,
-    RefreshCw
+    RefreshCw,
+    Beaker,
+    Atom,
+    FlaskConical,
+    ChevronDown
 } from 'lucide-react';
 import { FlashcardItem } from '../lib/revisionData';
 import { useCardProgress } from '../hooks/useCardProgress';
@@ -32,6 +36,7 @@ interface ChapterGroup {
     chapterName: string;
     cards: FlashcardItem[];
     topics: string[];
+    category: string;
 }
 
 type PracticeMode = 'due' | 'all';
@@ -48,6 +53,7 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
     // Practice state
     const [selectedChapter, setSelectedChapter] = useState<string | null>(null);
     const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState<string>('All');
     const [practiceQueue, setPracticeQueue] = useState<FlashcardItem[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
@@ -80,7 +86,8 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                 groups[card.chapterName] = {
                     chapterName: card.chapterName,
                     cards: [],
-                    topics: []
+                    topics: [],
+                    category: card.category || 'Physical Chemistry'
                 };
             }
             groups[card.chapterName].cards.push(card);
@@ -259,72 +266,123 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                         /* Chapter Selection View */
                         <div className="max-w-5xl mx-auto">
                             {!selectedChapter ? (
-                                /* Chapter Grid */
+                                /* Chapter Grid with Category Tabs */
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                 >
                                     <h2 className="text-2xl font-bold text-white mb-6">Select a Chapter</h2>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                        {chapterGroups.map((group, idx) => {
-                                            const chapterCardIds = group.cards.map(c => c.id);
-                                            const stats = getStatistics(chapterCardIds);
-                                            const dueCount = stats.dueToday;
+
+                                    {/* Category Tabs */}
+                                    <div className="flex flex-wrap gap-2 mb-8">
+                                        {[
+                                            { id: 'All', label: 'All Chapters', icon: Layers, color: 'from-purple-500 to-pink-500' },
+                                            { id: 'Physical Chemistry', label: 'Physical', icon: FlaskConical, color: 'from-green-500 to-emerald-500' },
+                                            { id: 'Organic Chemistry', label: 'Organic', icon: Beaker, color: 'from-purple-500 to-pink-500' },
+                                            { id: 'Inorganic Chemistry', label: 'Inorganic', icon: Atom, color: 'from-orange-500 to-amber-500' },
+                                        ].map((cat) => {
+                                            const count = cat.id === 'All'
+                                                ? chapterGroups.length
+                                                : chapterGroups.filter(g => g.category === cat.id).length;
+                                            const isActive = selectedCategory === cat.id;
 
                                             return (
-                                                <motion.button
-                                                    key={group.chapterName}
-                                                    initial={{ opacity: 0, y: 20 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    transition={{ delay: idx * 0.05 }}
-                                                    onClick={() => {
-                                                        setSelectedChapter(group.chapterName);
-                                                        setSelectedTopics([]);
-                                                    }}
-                                                    className="group p-5 bg-slate-800/50 hover:bg-slate-800 border border-white/5 hover:border-purple-500/30 rounded-2xl text-left transition-all"
+                                                <button
+                                                    key={cat.id}
+                                                    onClick={() => setSelectedCategory(cat.id)}
+                                                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all ${isActive
+                                                        ? `bg-gradient-to-r ${cat.color} text-white shadow-lg`
+                                                        : 'bg-slate-800/60 text-slate-400 hover:bg-slate-800 hover:text-white border border-white/5'
+                                                        }`}
                                                 >
-                                                    <div className="flex items-start justify-between mb-3">
-                                                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                                                            <Layers className="w-5 h-5 text-white" />
-                                                        </div>
-                                                        <div className="flex items-center gap-2">
-                                                            {dueCount > 0 && (
-                                                                <span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs font-medium rounded-full">
-                                                                    {dueCount} due
-                                                                </span>
-                                                            )}
-                                                            <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-purple-400 transition-colors" />
-                                                        </div>
-                                                    </div>
-                                                    <h3 className="text-white font-semibold mb-1">{group.chapterName}</h3>
-                                                    <p className="text-slate-500 text-sm mb-3">{group.cards.length} cards • {group.topics.length} topics</p>
-
-                                                    {/* Mini progress bar */}
-                                                    {stats.mastered + stats.reviewing + stats.learning > 0 && (
-                                                        <div className="h-1.5 bg-slate-700 rounded-full overflow-hidden flex">
-                                                            {stats.mastered > 0 && (
-                                                                <div
-                                                                    className="h-full bg-emerald-500"
-                                                                    style={{ width: `${(stats.mastered / stats.total) * 100}%` }}
-                                                                />
-                                                            )}
-                                                            {stats.reviewing > 0 && (
-                                                                <div
-                                                                    className="h-full bg-blue-500"
-                                                                    style={{ width: `${(stats.reviewing / stats.total) * 100}%` }}
-                                                                />
-                                                            )}
-                                                            {stats.learning > 0 && (
-                                                                <div
-                                                                    className="h-full bg-amber-500"
-                                                                    style={{ width: `${(stats.learning / stats.total) * 100}%` }}
-                                                                />
-                                                            )}
-                                                        </div>
-                                                    )}
-                                                </motion.button>
+                                                    <cat.icon className="w-4 h-4" />
+                                                    {cat.label}
+                                                    <span className={`px-2 py-0.5 rounded-full text-xs ${isActive ? 'bg-white/20' : 'bg-slate-700'
+                                                        }`}>
+                                                        {count}
+                                                    </span>
+                                                </button>
                                             );
                                         })}
+                                    </div>
+
+                                    {/* Filtered Chapters Grid */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        {chapterGroups
+                                            .filter(group => selectedCategory === 'All' || group.category === selectedCategory)
+                                            .map((group, idx) => {
+                                                const chapterCardIds = group.cards.map(c => c.id);
+                                                const stats = getStatistics(chapterCardIds);
+                                                const dueCount = stats.dueToday;
+
+                                                // Get category colors
+                                                const catColors: Record<string, { gradient: string; badge: string }> = {
+                                                    'Physical Chemistry': { gradient: 'from-green-500 to-emerald-500', badge: 'bg-green-500/20 text-green-400' },
+                                                    'Organic Chemistry': { gradient: 'from-purple-500 to-pink-500', badge: 'bg-purple-500/20 text-purple-400' },
+                                                    'Inorganic Chemistry': { gradient: 'from-orange-500 to-amber-500', badge: 'bg-orange-500/20 text-orange-400' },
+                                                };
+                                                const colors = catColors[group.category] || catColors['Physical Chemistry'];
+
+                                                return (
+                                                    <motion.button
+                                                        key={group.chapterName}
+                                                        initial={{ opacity: 0, y: 20 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        transition={{ delay: idx * 0.03 }}
+                                                        onClick={() => {
+                                                            setSelectedChapter(group.chapterName);
+                                                            setSelectedTopics([]);
+                                                        }}
+                                                        className="group p-5 bg-slate-800/50 hover:bg-slate-800 border border-white/5 hover:border-purple-500/30 rounded-2xl text-left transition-all"
+                                                    >
+                                                        <div className="flex items-start justify-between mb-3">
+                                                            <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${colors.gradient} flex items-center justify-center`}>
+                                                                <Layers className="w-5 h-5 text-white" />
+                                                            </div>
+                                                            <div className="flex items-center gap-2">
+                                                                {dueCount > 0 && (
+                                                                    <span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs font-medium rounded-full">
+                                                                        {dueCount} due
+                                                                    </span>
+                                                                )}
+                                                                <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-purple-400 transition-colors" />
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Category Badge */}
+                                                        <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium mb-2 ${colors.badge}`}>
+                                                            {group.category.replace(' Chemistry', '')}
+                                                        </span>
+
+                                                        <h3 className="text-white font-semibold mb-1">{group.chapterName}</h3>
+                                                        <p className="text-slate-500 text-sm mb-3">{group.cards.length} cards • {group.topics.length} topics</p>
+
+                                                        {/* Mini progress bar */}
+                                                        {stats.mastered + stats.reviewing + stats.learning > 0 && (
+                                                            <div className="h-1.5 bg-slate-700 rounded-full overflow-hidden flex">
+                                                                {stats.mastered > 0 && (
+                                                                    <div
+                                                                        className="h-full bg-emerald-500"
+                                                                        style={{ width: `${(stats.mastered / stats.total) * 100}%` }}
+                                                                    />
+                                                                )}
+                                                                {stats.reviewing > 0 && (
+                                                                    <div
+                                                                        className="h-full bg-blue-500"
+                                                                        style={{ width: `${(stats.reviewing / stats.total) * 100}%` }}
+                                                                    />
+                                                                )}
+                                                                {stats.learning > 0 && (
+                                                                    <div
+                                                                        className="h-full bg-amber-500"
+                                                                        style={{ width: `${(stats.learning / stats.total) * 100}%` }}
+                                                                    />
+                                                                )}
+                                                            </div>
+                                                        )}
+                                                    </motion.button>
+                                                );
+                                            })}
                                     </div>
                                 </motion.div>
                             ) : (
@@ -633,6 +691,66 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                             )}
                         </div>
                     )}
+                </div>
+            </section>
+
+            {/* FAQ Section for SEO */}
+            <section className="py-16 border-t border-white/5">
+                <div className="container mx-auto px-4 max-w-4xl">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                    >
+                        <h2 className="text-3xl font-bold text-white text-center mb-4">
+                            Frequently Asked Questions
+                        </h2>
+                        <p className="text-slate-400 text-center mb-10 max-w-2xl mx-auto">
+                            Everything you need to know about Chemistry Flashcards
+                        </p>
+
+                        <div className="space-y-4">
+                            {[
+                                {
+                                    q: "What are Chemistry Flashcards?",
+                                    a: "Chemistry flashcards are digital study cards that present questions on one side and answers on the other. Our flashcards cover all Class 12 NCERT Chemistry topics including Physical, Organic, and Inorganic Chemistry, designed specifically for JEE, NEET, and CBSE board exam preparation."
+                                },
+                                {
+                                    q: "How does spaced repetition help in learning?",
+                                    a: "Spaced repetition is a scientifically-proven learning technique that shows you cards at increasing intervals based on how well you remember them. Cards you find difficult appear more frequently, while mastered cards appear less often. This optimizes your study time and improves long-term retention by up to 200%."
+                                },
+                                {
+                                    q: "Which chemistry chapters are covered?",
+                                    a: "Our flashcards cover all 16 chapters of Class 12 NCERT Chemistry including Solutions, Electrochemistry, Chemical Kinetics, Surface Chemistry, Coordination Compounds, Haloalkanes, Alcohols, Aldehydes & Ketones, Amines, Biomolecules, Polymers, and more."
+                                },
+                                {
+                                    q: "Are these flashcards aligned with NCERT?",
+                                    a: "Yes! All our flashcards are based on NCERT textbooks and cover the exact topics, definitions, reactions, and concepts mentioned in the NCERT curriculum. They're perfect for CBSE board exams, JEE Main, JEE Advanced, and NEET preparation."
+                                },
+                                {
+                                    q: "How do I track my progress?",
+                                    a: "Your progress is automatically saved in your browser. You can see mastery levels for each chapter - from 'New' to 'Mastered'. The system tracks which cards are due for review and shows you statistics like total cards reviewed, cards mastered, and cards that need more practice."
+                                },
+                                {
+                                    q: "Can I practice specific topics within a chapter?",
+                                    a: "Absolutely! After selecting a chapter, you can choose specific topics to practice. You can also filter between 'Due Cards' (cards that need review based on spaced repetition) or 'All Cards' for comprehensive practice."
+                                }
+                            ].map((faq, idx) => (
+                                <details
+                                    key={idx}
+                                    className="group bg-slate-800/50 border border-white/5 rounded-2xl overflow-hidden"
+                                >
+                                    <summary className="flex items-center justify-between p-5 cursor-pointer list-none">
+                                        <span className="text-white font-medium pr-4">{faq.q}</span>
+                                        <ChevronDown className="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform flex-shrink-0" />
+                                    </summary>
+                                    <div className="px-5 pb-5 text-slate-400 leading-relaxed">
+                                        {faq.a}
+                                    </div>
+                                </details>
+                            ))}
+                        </div>
+                    </motion.div>
                 </div>
             </section>
         </main>

@@ -21,6 +21,7 @@ export interface RevisionTopic {
 export interface FlashcardItem {
     id: string;
     classNum: string;
+    category: string;
     chapterName: string;
     question: string;
     answer: string;
@@ -142,16 +143,17 @@ export async function fetchFlashcards(): Promise<FlashcardItem[]> {
         const text = await response.text();
         const rows = parseCSVRobust(text);
 
-        // Header: ID,Class,Chapter,Question,Answer,Topic Name
+        // Header: ID,Class,Category,Chapter,Question,Answer,Topic Name
         const dataRows = rows.slice(1);
 
         return dataRows.map((row: any) => ({
             id: row[0] || '',
             classNum: row[1] || '',
-            chapterName: row[2] || '',
-            question: row[3] || '',
-            answer: row[4] || '',
-            topicName: row[5] || '',
+            category: row[2] || 'Physical Chemistry',
+            chapterName: row[3] || '',
+            question: row[4] || '',
+            answer: row[5] || '',
+            topicName: row[6] || '',
         }));
     } catch (error) {
         console.error('Error fetching flashcards:', error);
@@ -187,23 +189,53 @@ export function getChapterFromSlug(slug: string, chapters: string[]): string | n
     return chapters.find(chapter => generateChapterSlug(chapter) === slug) || null;
 }
 
-// Get all unique chapter names with their slugs
-export async function getFlashcardChapters(): Promise<{ name: string; slug: string; cardCount: number }[]> {
+// Get all unique chapter names with their slugs and categories
+export async function getFlashcardChapters(): Promise<{ name: string; slug: string; cardCount: number; category: string }[]> {
     const allFlashcards = await fetchFlashcards();
-    const chapterMap = new Map<string, number>();
+    const chapterMap = new Map<string, { count: number; category: string }>();
 
     allFlashcards.forEach(card => {
         if (card.chapterName) {
-            chapterMap.set(card.chapterName, (chapterMap.get(card.chapterName) || 0) + 1);
+            const existing = chapterMap.get(card.chapterName);
+            if (existing) {
+                existing.count++;
+            } else {
+                chapterMap.set(card.chapterName, { count: 1, category: card.category });
+            }
         }
     });
 
     return Array.from(chapterMap.entries())
-        .map(([name, cardCount]) => ({
+        .map(([name, data]) => ({
             name,
             slug: generateChapterSlug(name),
-            cardCount
+            cardCount: data.count,
+            category: data.category
         }))
         .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+// Get chapters grouped by category
+export async function getFlashcardChaptersByCategory(): Promise<Record<string, { name: string; slug: string; cardCount: number }[]>> {
+    const chapters = await getFlashcardChapters();
+    const grouped: Record<string, { name: string; slug: string; cardCount: number }[]> = {
+        'Physical Chemistry': [],
+        'Organic Chemistry': [],
+        'Inorganic Chemistry': [],
+    };
+
+    chapters.forEach(chapter => {
+        const category = chapter.category || 'Physical Chemistry';
+        if (!grouped[category]) {
+            grouped[category] = [];
+        }
+        grouped[category].push({
+            name: chapter.name,
+            slug: chapter.slug,
+            cardCount: chapter.cardCount
+        });
+    });
+
+    return grouped;
 }
 

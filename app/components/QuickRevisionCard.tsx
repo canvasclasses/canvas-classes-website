@@ -23,7 +23,7 @@ const revisionResources: RevisionResource[] = [
     {
         icon: Clock,
         title: 'Quick Recap',
-        href: '/quick-recap',
+        href: '/one-shot-lectures',
         color: 'from-amber-500 to-orange-500',
     },
     {

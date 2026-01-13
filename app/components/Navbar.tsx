@@ -7,7 +7,7 @@ import { Menu, ChevronDown, X } from 'lucide-react';
 
 const jeeNeetLinks = [
   { label: 'Detailed Lectures', href: '/detailed-lectures', external: false },
-  { label: 'Quick Recap', href: '/quick-recap', external: false },
+  { label: 'One Shot Lectures', href: '/one-shot-lectures', external: false },
   { label: 'Top 50 Concepts', href: '/top-50-concepts', external: false },
   { label: '2 Minute Chemistry', href: '/2-minute-chemistry', external: false },
   { label: 'NEET Crash Course', href: '/neet-crash-course', external: false },

@@ -30,7 +30,7 @@ const offerings = [
         iconColor: '#f59e0b', // amber-500
         pastelBg: '#fffbeb', // amber-50
         cta: 'Start Revising',
-        href: '/quick-recap',
+        href: '/one-shot-lectures',
         span: 'lg:col-span-1'
     },
     {
