@@ -13,6 +13,7 @@ import {
     ExternalLink,
     X,
     ChevronRight,
+    ChevronDown,
     PlayCircle,
     Youtube,
     BookOpen,
@@ -493,7 +494,7 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
             {/* Video Grid */}
             <section id="video-grid" className="py-8 pb-24">
                 <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                         {filteredVideos.map((video, index) => {
                             const catStyle = getCategoryStyle(video.category);
                             const isActive = activeVideo?.id === video.id;
@@ -503,87 +504,55 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                                     key={video.id}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.03 * Math.min(index, 10) }}
-                                    className={`group bg-gray-800/40 backdrop-blur-sm rounded-2xl overflow-hidden border transition-all duration-300 ${isActive
-                                        ? 'border-violet-500 ring-2 ring-violet-500/20'
-                                        : 'border-gray-700/50 hover:border-violet-500/50 hover:bg-gray-800/60'
+                                    transition={{ delay: 0.02 * Math.min(index, 12) }}
+                                    className={`group bg-gray-800/50 rounded-xl overflow-hidden border transition-all duration-200 cursor-pointer ${isActive
+                                        ? 'border-violet-500 ring-1 ring-violet-500/30'
+                                        : 'border-gray-700/30 hover:border-violet-500/40 hover:bg-gray-800/70'
                                         }`}
+                                    onClick={() => setActiveVideo(isActive ? null : video)}
                                 >
-                                    {/* Thumbnail */}
-                                    <div
-                                        className="relative aspect-video cursor-pointer group/thumb overflow-hidden"
-                                        onClick={() => setActiveVideo(isActive ? null : video)}
-                                    >
+                                    {/* Thumbnail - Smaller */}
+                                    <div className="relative aspect-video overflow-hidden">
                                         <Image
                                             src={video.thumbnailUrl}
                                             alt={video.title}
                                             fill
-                                            className="object-cover transition-transform duration-300 group-hover/thumb:scale-105"
+                                            className="object-cover transition-transform duration-300 group-hover:scale-105"
                                         />
-                                        {/* One Shot Badge */}
-                                        <div className="absolute top-3 left-3 px-3 py-1 rounded-lg bg-gradient-to-r from-violet-500 to-purple-500 text-white text-xs font-bold shadow-lg">
-                                            ONE SHOT
-                                        </div>
-                                        {/* Duration Badge */}
-                                        <div className="absolute bottom-3 right-3 px-2.5 py-1 bg-black/80 text-white text-xs font-medium rounded-lg backdrop-blur-sm">
+                                        {/* Duration Badge Only */}
+                                        <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-black/80 text-white text-xs font-medium rounded">
                                             {video.duration}
                                         </div>
-                                        {/* Play Overlay */}
-                                        <div className={`absolute inset-0 bg-black/50 flex items-center justify-center transition-opacity ${isActive ? 'opacity-100' : 'opacity-0 group-hover/thumb:opacity-100'}`}>
-                                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center shadow-xl shadow-violet-500/25">
-                                                <Play className="w-7 h-7 text-white ml-1" fill="currentColor" />
+                                        {/* Play Overlay on Hover */}
+                                        <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                                            <div className="w-12 h-12 rounded-full bg-violet-500/90 flex items-center justify-center">
+                                                <Play className="w-5 h-5 text-white ml-0.5" fill="currentColor" />
                                             </div>
                                         </div>
                                         {/* Now Playing Indicator */}
                                         {isActive && (
-                                            <div className="absolute top-3 right-3 flex items-center gap-2 px-3 py-1.5 bg-violet-500 text-white text-xs font-medium rounded-full">
-                                                <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                                                Now Playing
+                                            <div className="absolute top-2 left-2 flex items-center gap-1.5 px-2 py-1 bg-violet-500 text-white text-xs font-medium rounded">
+                                                <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                                                Playing
                                             </div>
                                         )}
                                     </div>
 
-                                    {/* Info */}
-                                    <div className="p-5">
-                                        <h3 className="font-semibold text-white mb-3 line-clamp-2 min-h-[48px] group-hover:text-violet-400 transition-colors">
+                                    {/* Info - Compact */}
+                                    <div className="p-3">
+                                        {/* Title - Bigger & Impactful */}
+                                        <h3 className="font-bold text-white text-base leading-snug line-clamp-2 mb-2 group-hover:text-violet-400 transition-colors">
                                             {video.title}
                                         </h3>
 
-                                        {/* Category Tag */}
-                                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium mb-4 border ${catStyle.bg} ${catStyle.text} ${catStyle.border}`}>
-                                            {video.category}
-                                        </span>
-
-                                        {/* Badges */}
-                                        <div className="flex items-center justify-between mb-4">
-                                            <span className="flex items-center gap-1.5 text-amber-400 text-sm font-medium">
-                                                <span>🎯</span> Complete Chapter
+                                        {/* Category + Duration Row */}
+                                        <div className="flex items-center justify-between">
+                                            <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${catStyle.bg} ${catStyle.text}`}>
+                                                {video.category.replace(' Chemistry', '')}
                                             </span>
-                                            <span className="flex items-center gap-1.5 text-rose-400 text-sm font-medium">
-                                                <span>🔥</span> Exam Ready
+                                            <span className="text-gray-500 text-xs">
+                                                {video.durationMinutes} min
                                             </span>
-                                        </div>
-
-                                        {/* Action Buttons */}
-                                        <div className="flex items-center gap-3">
-                                            <button
-                                                onClick={() => setActiveVideo(isActive ? null : video)}
-                                                className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all ${isActive
-                                                    ? 'bg-violet-500 text-white'
-                                                    : 'bg-gradient-to-r from-violet-500/20 to-purple-500/20 text-violet-400 border border-violet-500/30 hover:from-violet-500 hover:to-purple-500 hover:text-white hover:border-transparent'
-                                                    }`}
-                                            >
-                                                <Play className="w-4 h-4" />
-                                                {isActive ? 'Playing' : 'Watch Now'}
-                                            </button>
-                                            <a
-                                                href={video.youtubeUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="p-2.5 bg-red-500/20 text-red-400 rounded-xl border border-red-500/30 hover:bg-red-500 hover:text-white hover:border-transparent transition-all"
-                                            >
-                                                <ExternalLink className="w-4 h-4" />
-                                            </a>
                                         </div>
                                     </div>
                                 </motion.div>
@@ -628,6 +597,62 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            {/* FAQ Section for SEO */}
+            <section className="py-16 border-t border-white/5">
+                <div className="container mx-auto px-6 max-w-4xl">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                    >
+                        <h2 className="text-3xl font-bold text-white text-center mb-4">
+                            Frequently Asked Questions
+                        </h2>
+                        <p className="text-gray-400 text-center mb-10 max-w-2xl mx-auto">
+                            Everything you need to know about One Shot Lectures
+                        </p>
+
+                        <div className="space-y-4">
+                            {[
+                                {
+                                    q: "What is a one shot lecture?",
+                                    a: "A one shot lecture covers an entire chapter in a single video. Unlike marathon 6-8 hour lectures, our one shots are crisp 30-120 minute sessions focused on high-yield topics for JEE and NEET."
+                                },
+                                {
+                                    q: "How are these different from other one shot videos on YouTube?",
+                                    a: "Our one shots are shorter and more focused. We prioritize conceptual clarity and high-scoring topics rather than trying to cover everything in exhausting marathon sessions."
+                                },
+                                {
+                                    q: "Which chapters are covered in one shot lectures?",
+                                    a: "We cover all major chapters from Class 11 and 12 Chemistry including Physical, Organic, and Inorganic Chemistry - perfect for JEE Main, JEE Advanced, and NEET preparation."
+                                },
+                                {
+                                    q: "Can I use these for last-minute revision?",
+                                    a: "Absolutely! These are designed for quick revision before exams. Each video covers key concepts, important reactions, and high-yield topics in a focused manner."
+                                },
+                                {
+                                    q: "Who teaches these one shot lectures?",
+                                    a: "All lectures are taught by Paaras Sir in his friendly, easy-to-understand teaching style that students love."
+                                }
+                            ].map((faq, idx) => (
+                                <details
+                                    key={idx}
+                                    className="group bg-gray-800/50 border border-white/5 rounded-2xl overflow-hidden"
+                                >
+                                    <summary className="flex items-center justify-between p-5 cursor-pointer list-none">
+                                        <span className="text-white font-medium pr-4">{faq.q}</span>
+                                        <ChevronDown className="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform flex-shrink-0" />
+                                    </summary>
+                                    <div className="px-5 pb-5 text-gray-400 leading-relaxed">
+                                        {faq.a}
+                                    </div>
+                                </details>
+                            ))}
+                        </div>
+                    </motion.div>
                 </div>
             </section>
         </div>

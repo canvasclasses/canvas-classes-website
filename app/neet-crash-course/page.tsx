@@ -19,10 +19,69 @@ export const metadata: Metadata = {
         description: 'Free comprehensive NEET Chemistry crash course covering Class 11 & 12 syllabus.',
         type: 'website',
     },
+    alternates: {
+        canonical: '/neet-crash-course',
+    },
+};
+
+// FAQ Schema for SEO
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is covered in the NEET Chemistry Crash Course?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Complete Class 11 and 12 Chemistry syllabus covering Physical, Organic, and Inorganic Chemistry with focus on NEET pattern."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How is this different from regular lectures?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Crash course lectures are faster-paced and focus specifically on NEET important topics and previous year question patterns."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How much time does the crash course take?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The complete crash course can be finished in 15-20 days with dedicated study of 2-3 hours daily."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is this suitable for students who haven't studied chemistry before?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "This is best for revision. Students should have basic knowledge of the topics. For beginners, we recommend our detailed chapter lectures first."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Are NEET PYQs discussed?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, important NEET previous year questions are discussed with solutions and shortcuts."
+            }
+        }
+    ]
 };
 
 // Server-side data fetching for SEO
 export default async function NeetCrashCoursePage() {
     const chapters = await fetchNeetCrashCourseData();
-    return <NeetCrashCourseClient initialChapters={chapters} />;
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <NeetCrashCourseClient initialChapters={chapters} />
+        </>
+    );
 }

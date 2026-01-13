@@ -20,6 +20,57 @@ export const metadata: Metadata = {
         description: 'Quick revision for CBSE Class 12 Chemistry with summaries, infographics, and flashcards for JEE & NEET.',
         type: 'website',
     },
+    alternates: {
+        canonical: '/cbse-12-ncert-revision',
+    },
+};
+
+// FAQ Schema for SEO
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Is this aligned with the latest CBSE syllabus?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, all content is based on the latest CBSE Class 12 Chemistry syllabus and NCERT textbooks."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What's included in the revision materials?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Chapter summaries, key concepts, important reactions, formulas, and exam-oriented tips for each chapter."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How much time do I need to revise using these?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Each chapter can be revised in 15-30 minutes, making it perfect for exam preparation when time is limited."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Are sample questions included?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, important questions and previous year board exam questions are highlighted for practice."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I use this the night before my exam?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! These summaries are designed for quick last-minute revision to refresh all key concepts."
+            }
+        }
+    ]
 };
 
 // Server-side data fetching for SEO (ensures Google sees content on first render)
@@ -46,5 +97,13 @@ export default async function RevisionPage() {
         };
     });
 
-    return <RevisionClient initialChapters={enrichedChapters} />;
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <RevisionClient initialChapters={enrichedChapters} />
+        </>
+    );
 }

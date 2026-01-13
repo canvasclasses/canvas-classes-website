@@ -317,7 +317,7 @@ export default function QuickRecapClient({ initialVideos }: QuickRecapClientProp
             {/* Video Grid */}
             <section className="py-8 pb-24">
                 <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                         {filteredVideos.map((video, index) => {
                             const catStyle = getCategoryStyle(video.category);
                             const isActive = activeVideo?.id === video.id;
@@ -327,87 +327,55 @@ export default function QuickRecapClient({ initialVideos }: QuickRecapClientProp
                                     key={video.id}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.03 * Math.min(index, 10) }}
-                                    className={`group bg-gray-800/40 backdrop-blur-sm rounded-2xl overflow-hidden border transition-all duration-300 ${isActive
-                                        ? 'border-teal-500 ring-2 ring-teal-500/20'
-                                        : 'border-gray-700/50 hover:border-teal-500/50 hover:bg-gray-800/60'
+                                    transition={{ delay: 0.02 * Math.min(index, 12) }}
+                                    className={`group bg-gray-800/50 rounded-xl overflow-hidden border transition-all duration-200 cursor-pointer ${isActive
+                                        ? 'border-teal-500 ring-1 ring-teal-500/30'
+                                        : 'border-gray-700/30 hover:border-teal-500/40 hover:bg-gray-800/70'
                                         }`}
+                                    onClick={() => setActiveVideo(isActive ? null : video)}
                                 >
                                     {/* Thumbnail */}
-                                    <div
-                                        className="relative aspect-video cursor-pointer group/thumb overflow-hidden"
-                                        onClick={() => setActiveVideo(isActive ? null : video)}
-                                    >
+                                    <div className="relative aspect-video overflow-hidden">
                                         <Image
                                             src={video.thumbnailUrl}
                                             alt={video.title}
                                             fill
-                                            className="object-cover transition-transform duration-300 group-hover/thumb:scale-105"
+                                            className="object-cover transition-transform duration-300 group-hover:scale-105"
                                         />
                                         {/* Number Badge */}
-                                        <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 text-gray-900 font-bold text-sm flex items-center justify-center shadow-lg">
+                                        <div className="absolute top-2 left-2 w-7 h-7 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 text-gray-900 font-bold text-xs flex items-center justify-center">
                                             {index + 1}
                                         </div>
                                         {/* Duration Badge */}
-                                        <div className="absolute bottom-3 right-3 px-2.5 py-1 bg-black/80 text-white text-xs font-medium rounded-lg backdrop-blur-sm">
+                                        <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-black/80 text-white text-xs font-medium rounded">
                                             {video.duration}
                                         </div>
                                         {/* Play Overlay */}
-                                        <div className={`absolute inset-0 bg-black/50 flex items-center justify-center transition-opacity ${isActive ? 'opacity-100' : 'opacity-0 group-hover/thumb:opacity-100'}`}>
-                                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-xl shadow-teal-500/25">
-                                                <Play className="w-7 h-7 text-white ml-1" fill="currentColor" />
+                                        <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                                            <div className="w-12 h-12 rounded-full bg-teal-500/90 flex items-center justify-center">
+                                                <Play className="w-5 h-5 text-white ml-0.5" fill="currentColor" />
                                             </div>
                                         </div>
-                                        {/* Now Playing Indicator */}
                                         {isActive && (
-                                            <div className="absolute top-3 right-3 flex items-center gap-2 px-3 py-1.5 bg-teal-500 text-white text-xs font-medium rounded-full">
-                                                <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                                                Now Playing
+                                            <div className="absolute top-2 right-2 flex items-center gap-1.5 px-2 py-1 bg-teal-500 text-white text-xs font-medium rounded">
+                                                <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                                                Playing
                                             </div>
                                         )}
                                     </div>
 
-                                    {/* Info */}
-                                    <div className="p-5">
-                                        <h3 className="font-semibold text-white mb-3 line-clamp-2 min-h-[48px] group-hover:text-teal-400 transition-colors">
+                                    {/* Info - Compact */}
+                                    <div className="p-3">
+                                        <h3 className="font-bold text-white text-base leading-snug line-clamp-2 mb-2 group-hover:text-teal-400 transition-colors">
                                             {video.title}
                                         </h3>
-
-                                        {/* Category Tag */}
-                                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium mb-4 border ${catStyle.bg} ${catStyle.text} ${catStyle.border}`}>
-                                            {video.category}
-                                        </span>
-
-                                        {/* Badges */}
-                                        <div className="flex items-center justify-between mb-4">
-                                            <span className="flex items-center gap-1.5 text-amber-400 text-sm font-medium">
-                                                <span>👑</span> High Yield
+                                        <div className="flex items-center justify-between">
+                                            <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${catStyle.bg} ${catStyle.text}`}>
+                                                {video.category.replace(' Chemistry', '')}
                                             </span>
-                                            <span className="flex items-center gap-1.5 text-rose-400 text-sm font-medium">
-                                                <span>🎯</span> Exam Key
+                                            <span className="text-gray-500 text-xs">
+                                                {video.durationMinutes} min
                                             </span>
-                                        </div>
-
-                                        {/* Action Buttons */}
-                                        <div className="flex items-center gap-3">
-                                            <button
-                                                onClick={() => setActiveVideo(isActive ? null : video)}
-                                                className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all ${isActive
-                                                    ? 'bg-teal-500 text-white'
-                                                    : 'bg-gradient-to-r from-teal-500/20 to-cyan-500/20 text-teal-400 border border-teal-500/30 hover:from-teal-500 hover:to-cyan-500 hover:text-white hover:border-transparent'
-                                                    }`}
-                                            >
-                                                <Play className="w-4 h-4" />
-                                                {isActive ? 'Playing' : 'Watch'}
-                                            </button>
-                                            <a
-                                                href={video.youtubeUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="p-2.5 bg-red-500/20 text-red-400 rounded-xl border border-red-500/30 hover:bg-red-500 hover:text-white hover:border-transparent transition-all"
-                                            >
-                                                <ExternalLink className="w-4 h-4" />
-                                            </a>
                                         </div>
                                     </div>
                                 </motion.div>
