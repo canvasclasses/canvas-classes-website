@@ -19,7 +19,7 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
     const [reactions] = useState<OrganicReaction[]>(initialReactions);
     const [searchQuery, setSearchQuery] = useState('');
     const [classFilter, setClassFilter] = useState<'all' | '11' | '12'>('all');
-    const [typeFilter, setTypeFilter] = useState<string>('all');
+    // const [typeFilter, setTypeFilter] = useState<string>('all'); // Removed filter
     const [difficultyFilter, setDifficultyFilter] = useState<'all' | 'Easy' | 'Moderate' | 'Hard'>('all');
     const [expandedId, setExpandedId] = useState<string | null>(null);
     const [lightboxImage, setLightboxImage] = useState<string | null>(null);
@@ -33,9 +33,9 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
             reaction.reactionType.toLowerCase().includes(searchQuery.toLowerCase()) ||
             reaction.summary.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesClass = classFilter === 'all' || reaction.classNum.toString() === classFilter;
-        const matchesType = typeFilter === 'all' || reaction.reactionType === typeFilter;
+        // const matchesType = typeFilter === 'all' || reaction.reactionType === typeFilter;
         const matchesDifficulty = difficultyFilter === 'all' || reaction.difficulty === difficultyFilter;
-        return matchesSearch && matchesClass && matchesType && matchesDifficulty;
+        return matchesSearch && matchesClass && matchesDifficulty;
     });
 
     const toggleExpand = (id: string) => {
@@ -120,16 +120,7 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                                 <option value="12">Class 12</option>
                             </select>
 
-                            <select
-                                value={typeFilter}
-                                onChange={(e) => setTypeFilter(e.target.value)}
-                                className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
-                            >
-                                <option value="all">All Types</option>
-                                {reactionTypes.map(type => (
-                                    <option key={type} value={type}>{type}</option>
-                                ))}
-                            </select>
+                            {/* Type filter removed as per request */}
 
                             <select
                                 value={difficultyFilter}
@@ -164,8 +155,8 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                                         onClick={() => toggleExpand(reaction.id)}
                                         className="w-full p-5 flex items-center gap-4 text-left hover:bg-gray-50 transition-colors"
                                     >
-                                        <div className="p-3 rounded-xl bg-emerald-50 text-emerald-600 flex-shrink-0">
-                                            <FlaskConical size={24} />
+                                        <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600 flex-shrink-0">
+                                            <FlaskConical size={20} />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <h3 className="font-bold text-gray-900 text-lg truncate">
@@ -203,21 +194,6 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                                                 className="overflow-hidden"
                                             >
                                                 <div className="px-5 pb-6 pt-2 border-t border-gray-100">
-                                                    {/* Quick Summary */}
-                                                    <div className="rounded-xl p-4 mb-6" style={{ backgroundColor: '#eff6ff' }}>
-                                                        <div className="flex items-start gap-3">
-                                                            <Info className="text-blue-500 mt-0.5 flex-shrink-0" size={20} />
-                                                            <div className="text-gray-700 text-sm leading-relaxed">
-                                                                <ReactMarkdown
-                                                                    remarkPlugins={[remarkMath]}
-                                                                    rehypePlugins={[rehypeKatex]}
-                                                                >
-                                                                    {reaction.summary}
-                                                                </ReactMarkdown>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
                                                     {/* Mechanism Details */}
                                                     {reaction.mechanismDetails && (
                                                         <div className="mb-6">
@@ -267,7 +243,7 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                                 onClick={() => {
                                     setSearchQuery('');
                                     setClassFilter('all');
-                                    setTypeFilter('all');
+                                    // setTypeFilter('all');
                                     setDifficultyFilter('all');
                                 }}
                                 className="mt-4 text-emerald-600 hover:text-emerald-700 font-medium"
