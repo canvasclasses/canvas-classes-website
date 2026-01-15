@@ -17,6 +17,7 @@ const ncertBoardsLinks = [
   { label: 'NCERT Solutions', href: '/ncert-solutions', external: false },
   { label: 'CBSE 12 NCERT Revision', href: '/cbse-12-ncert-revision', external: false },
   { label: 'Download NCERT Books', href: '/download-ncert-books', external: false },
+  { label: 'Interactive P Table', href: '/interactive-periodic-table', external: false },
   { label: 'Organic Name Reactions', href: '/organic-name-reactions', external: false },
   { label: 'Assertion & Reason', href: '/assertion-reason', external: false },
 ];
