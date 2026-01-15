@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Hero from "./components/Hero";
-import StudentTestimonialCards from "./components/StudentTestimonialCards";
+import PeriodicTablePreview from "./components/PeriodicTablePreview";
+import PathfinderQuiz from "./components/PathfinderQuiz";
 import MyNotesSection from "./components/MyNotesSection";
 import NCERTBoardsSection from "./components/NCERTBoardsSection";
 
@@ -21,9 +22,11 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black">
       <Hero />
-      <StudentTestimonialCards />
+      <PeriodicTablePreview />
+      <PathfinderQuiz />
       <MyNotesSection />
       <NCERTBoardsSection />
     </main>
   );
 }
+
