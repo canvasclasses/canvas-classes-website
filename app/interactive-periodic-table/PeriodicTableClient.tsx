@@ -27,6 +27,7 @@ import {
     type CategoryType,
 } from '../lib/elementsData';
 import { BLOCK_DATA, type BlockInfo } from '../lib/blockData';
+import PeriodicTableQuiz from './PeriodicTableQuiz';
 
 type ViewMode = 'category' | 'property' | 'exceptions';
 
@@ -144,6 +145,10 @@ export default function PeriodicTableClient() {
         const bgColor = getElementColor(element);
         const isDark = !isLightColor(bgColor);
 
+        // Get property value for display in trend mode
+        const propertyValue = viewMode === 'property' ? getPropertyValue(element, selectedProperty) : undefined;
+        const propertyInfo = PROPERTY_INFO[selectedProperty];
+
         return (
             <motion.div
                 className={`
@@ -191,19 +196,38 @@ export default function PeriodicTableClient() {
                     {element.symbol}
                 </div>
 
-                {/* Name (hidden on small screens) */}
-                <div
-                    className={`hidden sm:block text-[7px] truncate leading-none ${isDark ? 'text-white/80' : 'text-gray-800/80'}`}
-                >
-                    {element.name}
-                </div>
+                {/* Property Value (shown in trend mode) OR Name (shown in category mode) */}
+                {viewMode === 'property' && propertyValue !== undefined ? (
+                    <div
+                        className={`text-[8px] sm:text-[9px] font-bold leading-none ${isDark ? 'text-white' : 'text-gray-900'}`}
+                        style={{ textShadow: isDark ? '0 1px 2px rgba(0,0,0,0.5)' : 'none' }}
+                        title={`${propertyInfo?.name}: ${propertyValue} ${propertyInfo?.unit || ''}`}
+                    >
+                        {propertyValue}
+                    </div>
+                ) : (
+                    <div
+                        className={`hidden sm:block text-[7px] truncate leading-none ${isDark ? 'text-white/80' : 'text-gray-800/80'}`}
+                    >
+                        {element.name}
+                    </div>
+                )}
 
-                {/* Atomic mass */}
-                <div
-                    className={`text-[7px] sm:text-[8px] leading-none ${isDark ? 'text-white/70' : 'text-gray-700/80'}`}
-                >
-                    {element.atomicMass.toFixed(element.atomicMass < 10 ? 3 : 2)}
-                </div>
+                {/* Unit label (only in property mode on larger screens) */}
+                {viewMode === 'property' && propertyValue !== undefined ? (
+                    <div
+                        className={`hidden sm:block text-[6px] leading-none ${isDark ? 'text-white/60' : 'text-gray-700/70'}`}
+                    >
+                        {propertyInfo?.unit || ''}
+                    </div>
+                ) : (
+                    /* Atomic mass (shown in category/exceptions mode) */
+                    <div
+                        className={`text-[7px] sm:text-[8px] leading-none ${isDark ? 'text-white/70' : 'text-gray-700/80'}`}
+                    >
+                        {element.atomicMass.toFixed(element.atomicMass < 10 ? 3 : 2)}
+                    </div>
+                )}
             </motion.div>
         );
     };
@@ -1000,6 +1024,11 @@ export default function PeriodicTableClient() {
 
                 {/* Comparison panel */}
                 <ComparisonPanel />
+
+                {/* Memory Practice Quiz Section */}
+                <div className="mt-8">
+                    <PeriodicTableQuiz />
+                </div>
 
                 {/* Exception list when in exceptions mode */}
                 {viewMode === 'exceptions' && (
