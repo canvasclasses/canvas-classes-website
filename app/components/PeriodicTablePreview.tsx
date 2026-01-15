@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Atom, Sparkles, TrendingUp, Palette, BookOpen, ArrowRight } from 'lucide-react';
+import { Atom, Sparkles, TrendingUp, Palette, BookOpen, ArrowRight, Target } from 'lucide-react';
 
 // Mini periodic table elements for preview (subset)
 const PREVIEW_ELEMENTS = [
@@ -34,8 +34,8 @@ const PREVIEW_ELEMENTS = [
 
 const FEATURES = [
     { icon: TrendingUp, label: 'Property Heatmaps', desc: 'Visualize trends in electronegativity, atomic radius, IE' },
+    { icon: Target, label: 'Memory Practice', desc: 'Test your knowledge - place elements in correct positions!', highlight: true },
     { icon: Palette, label: 'Ion Colours', desc: 'See aquated ion colors for 3d transition metals' },
-    { icon: BookOpen, label: 'NCERT Tables', desc: 'Click blocks to see hydrides, oxides, oxoacids data' },
     { icon: Sparkles, label: 'Exceptions', desc: 'Highlighted anomalies with explanations' },
 ];
 
@@ -145,13 +145,24 @@ export default function PeriodicTablePreview() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.5 + idx * 0.1 }}
-                                className="flex items-start gap-4 p-4 bg-gray-800/30 rounded-xl border border-gray-700/30 hover:border-cyan-500/30 hover:bg-gray-800/50 transition-all group"
+                                className={`flex items-start gap-4 p-4 rounded-xl border transition-all group ${'highlight' in feature && feature.highlight
+                                        ? 'bg-gradient-to-r from-orange-500/10 to-amber-500/10 border-orange-500/40 hover:border-orange-400'
+                                        : 'bg-gray-800/30 border-gray-700/30 hover:border-cyan-500/30 hover:bg-gray-800/50'
+                                    }`}
                             >
-                                <div className="p-2 bg-cyan-500/10 rounded-lg group-hover:bg-cyan-500/20 transition-colors">
-                                    <feature.icon className="text-cyan-400" size={24} />
+                                <div className={`p-2 rounded-lg transition-colors ${'highlight' in feature && feature.highlight
+                                        ? 'bg-orange-500/20 group-hover:bg-orange-500/30'
+                                        : 'bg-cyan-500/10 group-hover:bg-cyan-500/20'
+                                    }`}>
+                                    <feature.icon className={'highlight' in feature && feature.highlight ? 'text-orange-400' : 'text-cyan-400'} size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="text-white font-semibold mb-1">{feature.label}</h3>
+                                    <h3 className="text-white font-semibold mb-1 flex items-center gap-2">
+                                        {feature.label}
+                                        {'highlight' in feature && feature.highlight && (
+                                            <span className="text-[10px] bg-orange-500 text-white px-1.5 py-0.5 rounded font-bold">NEW</span>
+                                        )}
+                                    </h3>
                                     <p className="text-gray-400 text-sm">{feature.desc}</p>
                                 </div>
                             </motion.div>

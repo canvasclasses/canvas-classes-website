@@ -59,10 +59,10 @@ const getRecommendations = (answers: Record<string, string>) => {
             recommendations.push({ title: 'One-Shot Lectures', href: '/one-shot-lectures', desc: 'Quick chapter revision', primary: true });
         }
     } else if (exam === 'neet') {
-        if (stage === 'advanced') {
-            recommendations.push({ title: 'NEET Crash Course', href: '/neet-crash-course', desc: 'Complete last-minute prep', primary: true });
-        } else {
-            recommendations.push({ title: 'Detailed Lectures', href: '/detailed-lectures', desc: 'Thorough understanding', primary: true });
+        // NEET Crash Course is always primary for all NEET aspirants
+        recommendations.push({ title: 'NEET Crash Course', href: '/neet-crash-course', desc: 'Complete NEET Chemistry prep', primary: true });
+        if (stage === 'beginner') {
+            recommendations.push({ title: 'Detailed Lectures', href: '/detailed-lectures', desc: 'Build strong foundations' });
         }
     } else { // CBSE
         recommendations.push({ title: 'NCERT Revision', href: '/cbse-12-ncert-revision', desc: 'Chapter-wise summaries', primary: true });
@@ -255,8 +255,8 @@ export default function PathfinderQuiz() {
                                             >
                                                 <Link href={rec.href}>
                                                     <div className={`flex items-center justify-between p-3 rounded-xl border transition-all group ${rec.primary
-                                                            ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border-cyan-500/50 hover:border-cyan-400'
-                                                            : 'bg-slate-700/50 border-slate-600 hover:border-slate-500'
+                                                        ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border-cyan-500/50 hover:border-cyan-400'
+                                                        : 'bg-slate-700/50 border-slate-600 hover:border-slate-500'
                                                         }`}>
                                                         <div className="text-left">
                                                             <div className="font-semibold text-white text-sm flex items-center gap-2">
