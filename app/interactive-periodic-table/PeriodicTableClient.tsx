@@ -804,7 +804,7 @@ export default function PeriodicTableClient() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white">
+        <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white pt-20">
             {/* Header */}
             <div className="container mx-auto px-4 py-6">
                 <div className="text-center mb-6">
