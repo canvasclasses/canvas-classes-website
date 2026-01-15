@@ -51,6 +51,15 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
         }
     };
 
+    const getDifficultyBorderColor = (difficulty: string) => {
+        switch (difficulty) {
+            case 'Easy': return 'border-l-emerald-500';
+            case 'Moderate': return 'border-l-amber-500';
+            case 'Hard': return 'border-l-red-500';
+            default: return 'border-l-gray-500';
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 font-sans">
 
@@ -148,16 +157,13 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.03 }}
-                                    className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-shadow overflow-hidden"
+                                    className={`bg-white rounded-2xl border border-gray-200 border-l-4 ${getDifficultyBorderColor(reaction.difficulty)} shadow-sm hover:shadow-lg transition-shadow overflow-hidden`}
                                 >
                                     {/* Collapsed Header */}
                                     <button
                                         onClick={() => toggleExpand(reaction.id)}
                                         className="w-full p-5 flex items-center gap-4 text-left hover:bg-gray-50 transition-colors"
                                     >
-                                        <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600 flex-shrink-0">
-                                            <FlaskConical size={20} />
-                                        </div>
                                         <div className="flex-1 min-w-0">
                                             <h3 className="font-bold text-gray-900 text-lg truncate">
                                                 {reaction.reactionName}
