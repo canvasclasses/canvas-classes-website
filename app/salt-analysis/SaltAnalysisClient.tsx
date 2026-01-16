@@ -55,24 +55,63 @@ interface Observation {
 }
 
 // Mode selection cards
-const ModeCard = ({ mode, icon: Icon, title, desc, color, onStart }: { mode: GameMode; icon: any; title: string; desc: string; color: string; onStart: (mode: GameMode) => void }) => (
-    <motion.button
-        onClick={() => onStart(mode)}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className={`text-left p-6 rounded-2xl border-2 transition-all ${color} group`}
-    >
-        <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${color.includes('cyan') ? 'bg-cyan-500/20' : color.includes('orange') ? 'bg-orange-500/20' : 'bg-red-500/20'}`}>
-            <Icon className={color.includes('cyan') ? 'text-cyan-400' : color.includes('orange') ? 'text-orange-400' : 'text-red-400'} size={24} />
-        </div>
-        <h3 className="text-lg font-bold text-white mb-1">{title}</h3>
-        <p className="text-sm text-gray-400">{desc}</p>
-        <div className="mt-4 flex items-center gap-1 text-sm font-medium group-hover:gap-2 transition-all">
-            <span className={color.includes('cyan') ? 'text-cyan-400' : color.includes('orange') ? 'text-orange-400' : 'text-red-400'}>Start</span>
-            <ArrowRight size={16} className={color.includes('cyan') ? 'text-cyan-400' : color.includes('orange') ? 'text-orange-400' : 'text-red-400'} />
-        </div>
-    </motion.button>
-);
+const ModeCard = ({ mode, icon: Icon, title, desc, color, onStart }: { mode: GameMode; icon: any; title: string; desc: string; color: string; onStart: (mode: GameMode) => void }) => {
+    // Extract base color class for conditional styling
+    const getBaseColor = (colorClass: string) => {
+        if (colorClass.includes('cyan')) return 'cyan';
+        if (colorClass.includes('orange')) return 'orange';
+        return 'red';
+    };
+
+    const baseColor = getBaseColor(color);
+
+    const styles = {
+        cyan: {
+            bg: 'bg-gradient-to-br from-gray-800 to-cyan-900/40',
+            border: 'border-cyan-500/30 hover:border-cyan-400',
+            iconBg: 'bg-cyan-500/20',
+            iconText: 'text-cyan-400',
+            glow: 'group-hover:shadow-[0_0_20px_-5px_rgba(34,211,238,0.3)]'
+        },
+        orange: {
+            bg: 'bg-gradient-to-br from-gray-800 to-orange-900/40',
+            border: 'border-orange-500/30 hover:border-orange-400',
+            iconBg: 'bg-orange-500/20',
+            iconText: 'text-orange-400',
+            glow: 'group-hover:shadow-[0_0_20px_-5px_rgba(251,146,60,0.3)]'
+        },
+        red: {
+            bg: 'bg-gradient-to-br from-gray-800 to-red-900/40',
+            border: 'border-red-500/30 hover:border-red-400',
+            iconBg: 'bg-red-500/20',
+            iconText: 'text-red-400',
+            glow: 'group-hover:shadow-[0_0_20px_-5px_rgba(248,113,113,0.3)]'
+        }
+    }[baseColor];
+
+    return (
+        <motion.button
+            onClick={() => onStart(mode)}
+            whileHover={{ scale: 1.02, y: -5 }}
+            whileTap={{ scale: 0.98 }}
+            className={`text-left p-6 rounded-2xl border-2 transition-all duration-300 ${styles.bg} ${styles.border} ${styles.glow} group relative overflow-hidden`}
+        >
+            <div className={`absolute top-0 right-0 p-32 opacity-10 bg-gradient-to-br from-transparent to-${baseColor}-500 blur-3xl rounded-full translate-x-12 -translate-y-12 transition-opacity group-hover:opacity-20`} />
+
+            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 ${styles.iconBg}`}>
+                <Icon className={styles.iconText} size={28} />
+            </div>
+
+            <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">{title}</h3>
+            <p className="text-base text-gray-400 leading-relaxed mb-6">{desc}</p>
+
+            <div className="flex items-center gap-2 text-base font-bold group-hover:gap-3 transition-all">
+                <span className={styles.iconText}>Start Now</span>
+                <ArrowRight size={20} className={styles.iconText} />
+            </div>
+        </motion.button>
+    );
+};
 
 // Test button component
 const TestButton = ({ id, name, procedure, onPerform, isExpanded, onToggle }: { id: string; name: string; procedure: string; onPerform: () => void; isExpanded: boolean; onToggle: () => void }) => (
