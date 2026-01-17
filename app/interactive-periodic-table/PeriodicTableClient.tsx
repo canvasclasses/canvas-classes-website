@@ -804,14 +804,16 @@ export default function PeriodicTableClient() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white pt-20">
+        <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white pt-28">
             {/* Header */}
             <div className="container mx-auto px-4 py-6">
                 <div className="text-center mb-6">
                     <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                         Interactive Periodic Table
                     </h1>
-                    <p className="text-gray-400 mt-2">Explore trends, compare properties, and discover exceptions</p>
+                    <p className="text-gray-400 mt-2">
+                        Explore trends, compare properties, and discover exceptions. <span className="text-blue-400 font-medium">Trained on NCERT data and a must for JEE, NEET & CBSE exams.</span>
+                    </p>
                 </div>
 
                 {/* Mode selector */}
