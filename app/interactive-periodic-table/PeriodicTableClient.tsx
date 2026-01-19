@@ -29,6 +29,8 @@ import {
 import { BLOCK_DATA, type BlockInfo } from '../lib/blockData';
 import PeriodicTableQuiz from './PeriodicTableQuiz';
 
+
+
 type ViewMode = 'category' | 'property' | 'exceptions';
 
 const PROPERTIES = Object.keys(PROPERTY_INFO);
@@ -692,7 +694,7 @@ export default function PeriodicTableClient() {
                                         </span>
                                     ))}
                                 </div>
-                                <div className="text-xs text-gray-400 mt-1">X = F, Cl, Br, I</div>
+                                <div className="text-xs text-gray-400 mt-1">X = F, Cl, Br, I (unless specified)</div>
                             </div>
                         )}
                     </div>
@@ -816,6 +818,8 @@ export default function PeriodicTableClient() {
                     </p>
                 </div>
 
+
+
                 {/* Mode selector */}
                 <div className="flex flex-wrap justify-center gap-2 mb-4">
                     <button
@@ -882,6 +886,14 @@ export default function PeriodicTableClient() {
                         <AlertTriangle size={18} />
                         Exceptions ({exceptionElements.length})
                     </button>
+
+                    <a
+                        href="#trends-section"
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow-lg hover:opacity-90"
+                    >
+                        <BarChart3 size={18} />
+                        NCERT Graphs ↓
+                    </a>
                 </div>
 
                 {/* Selected property info */}
@@ -898,7 +910,7 @@ export default function PeriodicTableClient() {
 
                 {/* Main grid layout */}
                 <div className="flex flex-col lg:flex-row gap-4">
-                    {/* Periodic table grid */}
+                    {/* Table */}
                     <div className="flex-1 overflow-x-auto pb-4">
                         {/* Block selector buttons */}
                         <div className="flex flex-wrap gap-2 mb-3 justify-center">
@@ -1027,6 +1039,27 @@ export default function PeriodicTableClient() {
                 {/* Comparison panel */}
                 <ComparisonPanel />
 
+                {/* Link to NCERT Trends Page */}
+                <div className="mt-8">
+                    <a href="/periodic-trends" className="block bg-gradient-to-r from-violet-900/40 to-fuchsia-900/40 rounded-2xl border border-violet-500/30 p-6 hover:border-violet-500/60 transition-all group">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                                <div className="p-3 rounded-xl bg-violet-500/20 border border-violet-500/30">
+                                    <TrendingUp size={24} className="text-violet-400" />
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-bold text-white group-hover:text-violet-300 transition-colors">Periodic Trends & Exceptions</h3>
+                                    <p className="text-gray-400 text-sm">Interactive graphs from NCERT for s, p, d, f blocks</p>
+                                </div>
+                            </div>
+                            <div className="hidden sm:flex items-center gap-2 text-violet-400 group-hover:translate-x-1 transition-transform">
+                                <span className="font-medium">Explore</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
                 {/* Memory Practice Quiz Section */}
                 <div className="mt-8">
                     <PeriodicTableQuiz />
@@ -1067,6 +1100,6 @@ export default function PeriodicTableClient() {
                     {selectedBlock && <BlockInfoModal />}
                 </AnimatePresence>
             </div>
-        </div>
+        </div >
     );
 }

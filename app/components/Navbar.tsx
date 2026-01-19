@@ -17,15 +17,21 @@ const ncertBoardsLinks = [
   { label: 'NCERT Solutions', href: '/ncert-solutions', external: false },
   { label: 'CBSE 12 NCERT Revision', href: '/cbse-12-ncert-revision', external: false },
   { label: 'Download NCERT Books', href: '/download-ncert-books', external: false },
-  { label: 'Interactive P Table', href: '/interactive-periodic-table', external: false },
-  { label: 'Salt Analysis', href: '/salt-analysis', external: false },
   { label: 'Organic Name Reactions', href: '/organic-name-reactions', external: false },
+];
+
+const revisionToolsLinks = [
+  { label: 'Flashcards', href: '/flashcards', external: false },
   { label: 'Assertion & Reason', href: '/assertion-reason', external: false },
+  { label: 'Interactive P Table', href: '/interactive-periodic-table', external: false },
+  { label: 'Periodic Trends', href: '/periodic-trends', external: false },
+  { label: 'Salt Analysis', href: '/salt-analysis', external: false },
 ];
 
 export default function Navbar() {
   const [jeeDropdownOpen, setJeeDropdownOpen] = useState(false);
   const [ncertDropdownOpen, setNcertDropdownOpen] = useState(false);
+  const [revisionDropdownOpen, setRevisionDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -117,7 +123,30 @@ export default function Navbar() {
           </div>
         </div>
 
-        <Link href="/flashcards" className="px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all">Flashcards</Link>
+        {/* Revision Tools Dropdown */}
+        <div
+          className="relative group"
+          onMouseEnter={() => setRevisionDropdownOpen(true)}
+          onMouseLeave={() => setRevisionDropdownOpen(false)}
+        >
+          <button className="flex items-center gap-1.5 px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all text-gray-700">
+            Revision Tools <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${revisionDropdownOpen ? 'rotate-180 text-teal-600' : 'text-gray-400'}`} />
+          </button>
+
+          <div className={`absolute top-full left-0 pt-4 w-64 z-50 transition-all duration-300 ${revisionDropdownOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 translate-y-2 invisible'}`}>
+            <div className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl border border-white/50 p-2 overflow-hidden ring-1 ring-black/5">
+              {revisionToolsLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
         <Link href="/handwritten-notes" className="px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all">My Notes</Link>
       </div>
 
@@ -209,13 +238,29 @@ export default function Navbar() {
           </div>
 
           <div className="pt-2 space-y-2">
-            <Link
-              href="/flashcards"
-              className="block px-5 py-3 font-bold text-gray-700 hover:bg-gray-50 rounded-2xl transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Flashcards
-            </Link>
+            {/* Revision Tools Mobile Section */}
+            <div className="rounded-2xl overflow-hidden bg-gray-50/50 mt-2">
+              <button
+                onClick={() => setRevisionDropdownOpen(!revisionDropdownOpen)}
+                className="flex items-center justify-between w-full px-5 py-4 font-bold text-gray-800"
+              >
+                Revision Tools <ChevronDown className={`w-4 h-4 transition-transform ${revisionDropdownOpen ? 'rotate-180 text-teal-600' : 'text-gray-400'}`} />
+              </button>
+              <div className={`transition-all duration-300 overflow-hidden ${revisionDropdownOpen ? 'max-h-96 pb-2' : 'max-h-0'}`}>
+                <div className="px-3 space-y-1 mb-3">
+                  {revisionToolsLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="block px-4 py-2.5 text-sm font-medium text-gray-500 hover:text-teal-600 hover:bg-teal-50/50 rounded-xl transition-colors"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
             <Link
               href="/handwritten-notes"
               className="block px-5 py-3 font-bold text-gray-700 hover:bg-gray-50 rounded-2xl transition-colors"

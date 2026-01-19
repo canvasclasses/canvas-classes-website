@@ -26,6 +26,7 @@ import {
     ArrowRight,
     Check,
     BookOpen,
+    Zap,
 } from 'lucide-react';
 import SaltAnalysisGuide from './SaltAnalysisGuide';
 import {
@@ -149,6 +150,38 @@ const TestButton = ({ id, name, procedure, onPerform, isExpanded, onToggle }: { 
         </AnimatePresence>
     </div>
 );
+
+// Stat Card Component
+const StatCard = ({ label, value, icon: Icon, color, delay }: { label: string; value: number; icon: any; color: string; delay: number }) => {
+    const styles = {
+        cyan: { text: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20', glow: 'shadow-cyan-500/10', iconBg: 'bg-cyan-500/20' },
+        green: { text: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20', glow: 'shadow-green-500/10', iconBg: 'bg-green-500/20' },
+        purple: { text: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20', glow: 'shadow-purple-500/10', iconBg: 'bg-purple-500/20' },
+    }[color] || { text: 'text-gray-400', bg: 'bg-gray-500/10', border: 'border-gray-500/20', glow: 'shadow-gray-500/10', iconBg: 'bg-gray-500/20' };
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay, duration: 0.5 }}
+            className={`relative flex flex-col items-center justify-center p-5 rounded-2xl border ${styles.bg} ${styles.border} backdrop-blur-sm shadow-lg ${styles.glow} group hover:-translate-y-1 transition-all duration-300 overflow-hidden`}
+        >
+            <div className={`absolute -right-6 -top-6 w-24 h-24 rounded-full ${styles.iconBg} blur-2xl opacity-20 group-hover:opacity-40 transition-opacity`} />
+
+            <div className={`p-3 rounded-xl ${styles.iconBg} mb-3 group-hover:scale-110 transition-transform duration-300 ring-1 ring-white/10`}>
+                <Icon className={styles.text} size={24} />
+            </div>
+
+            <div className={`text-3xl font-bold ${styles.text} mb-1 tracking-tight`}>
+                {value}
+            </div>
+
+            <div className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+                {label}
+            </div>
+        </motion.div>
+    );
+};
 
 export default function SaltAnalysisClient() {
     const [gameMode, setGameMode] = useState<GameMode>('learning');
@@ -370,19 +403,28 @@ export default function SaltAnalysisClient() {
                             </div>
 
                             {/* Quick Stats */}
-                            <div className="mt-8 grid grid-cols-3 gap-4 text-center">
-                                <div className="bg-gray-800/30 rounded-xl p-4">
-                                    <div className="text-2xl font-bold text-cyan-400">{ANIONS.length}</div>
-                                    <div className="text-xs text-gray-400">Anions</div>
-                                </div>
-                                <div className="bg-gray-800/30 rounded-xl p-4">
-                                    <div className="text-2xl font-bold text-green-400">{CATIONS.length}</div>
-                                    <div className="text-xs text-gray-400">Cations</div>
-                                </div>
-                                <div className="bg-gray-800/30 rounded-xl p-4">
-                                    <div className="text-2xl font-bold text-purple-400">{SALTS.length}</div>
-                                    <div className="text-xs text-gray-400">Salts</div>
-                                </div>
+                            <div className="mt-12 grid grid-cols-3 gap-4 sm:gap-6">
+                                <StatCard
+                                    label="Anions"
+                                    value={ANIONS.length}
+                                    icon={Zap}
+                                    color="cyan"
+                                    delay={0.1}
+                                />
+                                <StatCard
+                                    label="Cations"
+                                    value={CATIONS.length}
+                                    icon={Sparkles}
+                                    color="green"
+                                    delay={0.2}
+                                />
+                                <StatCard
+                                    label="Salts"
+                                    value={SALTS.length}
+                                    icon={FlaskConical}
+                                    color="purple"
+                                    delay={0.3}
+                                />
                             </div>
                         </motion.div>
                     )}
