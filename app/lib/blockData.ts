@@ -312,7 +312,7 @@ export const sBlockData: BlockInfo = {
                 ["b.p / K", 1615, 1156, 1032, 961, 944, "-"],
                 ["Density / g cm⁻³", 0.53, 0.97, 0.86, 1.53, 1.90, "-"],
                 ["Standard potentials E⊖ / V for (M⁺ / M)", -3.04, -2.714, -2.925, -2.930, -2.927, "-"],
-                ["Occurrence in lithosphere (ppm/%)", "18*", "2.27**", "1.84**", "78-12*", "2-6*", "~ 10⁻¹⁸ *"]
+
             ],
             notes: [
                 "Ionization enthalpy decreases down the group due to increased size.",
@@ -338,7 +338,7 @@ export const sBlockData: BlockInfo = {
                 ["b.p / K", 2745, 1363, 1767, 1655, 2078, "(1973)"],
                 ["Density / g cm⁻³", 1.84, 1.74, 1.55, 2.63, 3.59, "(5.5)"],
                 ["Standard potential E⊖ / V for (M²⁺ / M)", -1.97, -2.36, -2.84, -2.89, -2.92, -2.92],
-                ["Occurrence in lithosphere (ppm/%)", "2*", "2.76**", "4.6**", "384*", "390 *", "10⁻⁶*"]
+
             ],
             notes: [
                 "Higher ionization enthalpies than Group 1 due to smaller size.",
