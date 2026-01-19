@@ -13,6 +13,10 @@ import {
     CheckCircle,
     HelpCircle,
     Sparkles,
+    Atom,
+    FlaskConical,
+    Microscope,
+    Zap,
 } from 'lucide-react';
 
 interface ChapterGroup {
@@ -74,23 +78,66 @@ function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: strin
     return <span ref={ref}>{displayValue}{suffix}</span>;
 }
 
-// Category colors
-const categoryColors: Record<string, { bg: string; text: string; gradient: string }> = {
-    'Physical Chemistry': { bg: 'bg-blue-500/20', text: 'text-blue-400', gradient: 'from-blue-500 to-cyan-500' },
-    'Organic Chemistry': { bg: 'bg-purple-500/20', text: 'text-purple-400', gradient: 'from-purple-500 to-pink-500' },
-    'Inorganic Chemistry': { bg: 'bg-orange-500/20', text: 'text-orange-400', gradient: 'from-orange-500 to-amber-500' },
-    'General Chemistry': { bg: 'bg-teal-500/20', text: 'text-teal-400', gradient: 'from-teal-500 to-emerald-500' },
-};
+// Premium Gradients Palette (Lighter/Softer)
+const CHAPTER_GRADIENTS = [
+    'from-blue-500 to-indigo-600',
+    'from-emerald-400 to-teal-600',
+    'from-orange-400 to-red-500',
+    'from-purple-500 to-fuchsia-600',
+    'from-pink-400 to-rose-500',
+    'from-cyan-400 to-blue-500',
+    'from-violet-500 to-purple-600',
+    'from-amber-400 to-orange-500',
+    'from-teal-400 to-emerald-500',
+    'from-indigo-500 to-violet-600',
+    'from-rose-400 to-pink-500',
+    'from-sky-400 to-blue-500',
+];
 
-// Chapter background images (gradient placeholders)
-const chapterImages: Record<string, string> = {
-    'Some Basic Concepts of Chemistry': '/images/chapters/basic-concepts.jpg',
-    'Structure of Atom': '/images/chapters/atom.jpg',
-    'Classification of Elements and Periodicity in Properties': '/images/chapters/periodic.jpg',
-    'Chemical Bonding and Molecular Structure': '/images/chapters/bonding.jpg',
-    'Thermodynamics': '/images/chapters/thermo.jpg',
-    'Equilibrium': '/images/chapters/equilibrium.jpg',
-};
+// Helper to deterministically get a gradient based on string
+function getChapterGradient(name: string): string {
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+        hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % CHAPTER_GRADIENTS.length;
+    return CHAPTER_GRADIENTS[index];
+}
+
+// Helper to getting category icon
+function getCategoryIcon(category: string) {
+    switch (category) {
+        case 'Physical Chemistry': return Zap;
+        case 'Organic Chemistry': return FlaskConical;
+        case 'Inorganic Chemistry': return Atom;
+        default: return Microscope;
+    }
+}
+
+// Helper to generate description
+function getChapterDescription(chapter: string, category: string): string {
+    const lower = chapter.toLowerCase();
+    if (lower.includes('atom')) return "Explore atomic models, quantum numbers, and electronic configurations structure.";
+    if (lower.includes('bonding')) return "Understand molecular orbitals, hybridization, and chemical bond theories.";
+    if (lower.includes('thermo')) return "Master laws of thermodynamics, entropy, and energy changes in reactions.";
+    if (lower.includes('equilibrium')) return "Learn about chemical and ionic equilibrium, Le Chatelier's principle.";
+    if (lower.includes('solutions')) return "Study concentration terms, colligative properties, and Raoult's law.";
+    if (lower.includes('electro')) return "Dive into redox reactions, conductance, and electrochemical cells.";
+    if (lower.includes('kinetics')) return "Analyze reaction rates, order of reaction, and Arrhenius equation.";
+    if (lower.includes('block')) return "Detailed study of elements, their properties, and periodic trends.";
+    if (lower.includes('coordination')) return "Understand complex compounds, IUPAC naming, and bonding theories.";
+    if (lower.includes('halo')) return "Reactions, mechanisms, and properties of alkyl and aryl halides.";
+    if (lower.includes('alcohol')) return "Preparation and properties of alcohols, phenols, and ethers.";
+    if (lower.includes('aldehyde')) return "Chemistry of carbonyl compounds, carboxylic acids, and derivatives.";
+    if (lower.includes('amine')) return "Study structure, basicity, and reactions of nitrogen compounds.";
+    if (lower.includes('bio')) return "Chemistry of life: carbohydrates, proteins, nucleic acids, and vitamins.";
+
+    if (category === 'Physical Chemistry') return "Master formulations, numericals, and core physical concepts.";
+    if (category === 'Organic Chemistry') return "Understand mechanisms, synthesis, and functional group reactions.";
+    if (category === 'Inorganic Chemistry') return "Learn periodic trends, elemental properties, and reactions.";
+
+    return "Comprehensive step-by-step solutions and concept explanations.";
+}
 
 // Map chapters to categories
 function getChapterCategory(chapter: string): string {
@@ -109,7 +156,8 @@ function getChapterCategory(chapter: string): string {
     }
     if (lowerChapter.includes('thermo') || lowerChapter.includes('equilibrium') ||
         lowerChapter.includes('kinetic') || lowerChapter.includes('electro') ||
-        lowerChapter.includes('solution') || lowerChapter.includes('surface')) {
+        lowerChapter.includes('solution') || lowerChapter.includes('surface') ||
+        lowerChapter.includes('solid') || lowerChapter.includes('state')) {
         return 'Physical Chemistry';
     }
     return 'General Chemistry';
@@ -150,10 +198,6 @@ export default function NCERTSolutionsClient({ initialChapters, initialStats }: 
     const categories = useMemo(() => {
         return ['All', ...new Set(chapters.map(ch => ch.category))];
     }, [chapters]);
-
-    const getCategoryStyle = (category: string) => {
-        return categoryColors[category] || categoryColors['General Chemistry'];
-    };
 
     // Generate slug for chapter
     const getChapterSlug = (chapter: string, classNum: number) => {
@@ -290,14 +334,16 @@ export default function NCERTSolutionsClient({ initialChapters, initialStats }: 
                 </div>
             </section>
 
-            {/* Chapter Grid */}
+            {/* Chapter Grid - REDESIGNED */}
             <section className="py-8 pb-24">
                 <div className="container mx-auto px-6">
                     {(
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {filteredChapters.map((chapter, idx) => {
-                                const catStyle = getCategoryStyle(chapter.category);
                                 const chapterSlug = getChapterSlug(chapter.chapter, chapter.classNum);
+                                const gradient = getChapterGradient(chapter.chapter);
+                                const description = getChapterDescription(chapter.chapter, chapter.category!);
+                                const CategoryIcon = getCategoryIcon(chapter.category!);
 
                                 return (
                                     <motion.div
@@ -305,53 +351,59 @@ export default function NCERTSolutionsClient({ initialChapters, initialStats }: 
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.05 * Math.min(idx, 8) }}
+                                        className="h-full"
                                     >
                                         <Link
                                             href={chapterSlug}
-                                            className="group block bg-gray-800/40 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10"
+                                            className="group flex flex-col h-full bg-gray-800/40 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10"
                                         >
-                                            {/* Chapter Image/Gradient */}
-                                            <div className={`relative h-40 bg-gradient-to-br ${catStyle.gradient} overflow-hidden`}>
-                                                <div className="absolute inset-0 bg-black/30" />
-                                                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent" />
+                                            {/* Chapter Header (Top Half) */}
+                                            <div className={`relative h-44 bg-gradient-to-br ${gradient} p-6 flex flex-col justify-between overflow-hidden`}>
+                                                {/* Decorative Background */}
+                                                <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
+                                                <div className="absolute -right-6 -bottom-6 opacity-10 transform rotate-12 group-hover:scale-110 transition-transform duration-500">
+                                                    <CategoryIcon className="w-32 h-32 text-white" />
+                                                </div>
 
                                                 {/* Category Badge */}
-                                                <div className="absolute top-4 left-4">
-                                                    <span className={`px-3 py-1 rounded-full text-xs font-semibold bg-black/40 backdrop-blur-sm text-white border border-white/20`}>
+                                                <div className="relative z-10 flex justify-between items-start">
+                                                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-md text-white border border-white/20 shadow-sm">
                                                         {chapter.category}
                                                     </span>
                                                 </div>
 
-                                                {/* Decorative Icon */}
-                                                <div className="absolute bottom-4 right-4 opacity-20">
-                                                    <BookOpen className="w-24 h-24 text-white" />
-                                                </div>
-                                            </div>
-
-                                            {/* Chapter Info */}
-                                            <div className="p-5">
-                                                <h3 className="font-semibold text-white text-lg mb-3 line-clamp-2 min-h-[56px] group-hover:text-blue-400 transition-colors">
+                                                {/* Title */}
+                                                <h3 className="relative z-10 text-2xl font-bold text-white leading-tight drop-shadow-md">
                                                     {chapter.chapter}
                                                 </h3>
+                                            </div>
 
-                                                {/* Stats Row */}
-                                                <div className="flex items-center gap-4 mb-4">
-                                                    <div className="flex items-center gap-1.5 text-gray-400 text-sm">
-                                                        <HelpCircle className="w-4 h-4" />
-                                                        <span>{chapter.questions.length} Questions</span>
+                                            {/* Chapter Body (Bottom Half) */}
+                                            <div className="flex-1 p-6 flex flex-col">
+                                                {/* Description */}
+                                                <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-2">
+                                                    {description}
+                                                </p>
+
+                                                <div className="mt-auto">
+                                                    {/* Stats */}
+                                                    <div className="flex items-center justify-between mb-5 border-t border-gray-700/50 pt-4">
+                                                        <div className="flex items-center gap-2 text-gray-300 text-sm font-medium">
+                                                            <HelpCircle className="w-4 h-4 text-gray-500" />
+                                                            <span>{chapter.questions.length} Questions</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold bg-emerald-500/10 px-2 py-1 rounded-md">
+                                                            <CheckCircle className="w-3.5 h-3.5" />
+                                                            <span>100% Solved</span>
+                                                        </div>
                                                     </div>
-                                                    <div className="flex items-center gap-1.5 text-emerald-400 text-sm">
-                                                        <CheckCircle className="w-4 h-4" />
-                                                        <span>100% Solved</span>
-                                                    </div>
+
+                                                    {/* View Solutions Button */}
+                                                    <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-700/50 text-white border border-gray-600/50 rounded-xl font-medium text-sm transition-all group-hover:bg-blue-600 group-hover:border-blue-500 group-hover:text-white shadow-sm">
+                                                        <span>View Chapter Solutions</span>
+                                                        <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                                                    </button>
                                                 </div>
-
-                                                {/* View Solutions Button */}
-                                                <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 border border-blue-500/30 rounded-xl font-medium text-sm hover:from-blue-500 hover:to-cyan-500 hover:text-white hover:border-transparent transition-all group-hover:from-blue-500 group-hover:to-cyan-500 group-hover:text-white group-hover:border-transparent">
-                                                    <BookOpen className="w-4 h-4" />
-                                                    View Solutions
-                                                    <ChevronRight className="w-4 h-4" />
-                                                </button>
                                             </div>
                                         </Link>
                                     </motion.div>

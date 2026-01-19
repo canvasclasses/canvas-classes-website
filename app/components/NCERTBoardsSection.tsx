@@ -9,6 +9,8 @@ import {
     FlaskConical,
     HelpCircle,
     ArrowRight,
+    Zap, // For Flashcards
+    Layers
 } from 'lucide-react';
 
 interface NCERTResource {
@@ -19,7 +21,7 @@ interface NCERTResource {
     description: string;
     href: string;
     gradient: string;
-    iconBg: string;
+    iconColor: string;
     features: string[];
 }
 
@@ -32,40 +34,40 @@ const ncertResources: NCERTResource[] = [
         description: 'Step-by-step video explanations for every NCERT in-text and exercise question. Perfect for building strong fundamentals.',
         href: '/ncert-solutions',
         gradient: 'from-blue-500 to-indigo-600',
-        iconBg: 'bg-blue-400/30',
+        iconColor: 'blue',
         features: ['Class 11 & 12 Chemistry', 'All exercises covered', 'Exam-oriented approach'],
     },
     {
         id: 'cbse-revision',
         icon: ImageIcon,
-        title: 'CBSE 12 NCERT Revision',
+        title: 'CBSE 12 Revision',
         subtitle: 'Visual Infographics',
         description: 'Complete Class 12 Chemistry revision through beautiful visual infographics. Quick recap before exams!',
         href: '/cbse-12-ncert-revision',
         gradient: 'from-purple-500 to-fuchsia-600',
-        iconBg: 'bg-purple-400/30',
+        iconColor: 'purple',
         features: ['Chapter-wise visuals', 'Key concepts highlighted', 'Print-ready format'],
     },
     {
         id: 'ncert-download',
         icon: Download,
-        title: 'Download NCERT Books',
+        title: 'Download Books',
         subtitle: 'Free PDF Downloads',
         description: 'Get official NCERT Chemistry textbooks in PDF format. Access anytime, anywhere - even offline!',
         href: '/download-ncert-books',
         gradient: 'from-emerald-500 to-teal-600',
-        iconBg: 'bg-emerald-400/30',
+        iconColor: 'emerald',
         features: ['Class 11 & 12 books', 'Official NCERT PDFs', 'Instant download'],
     },
     {
         id: 'name-reactions',
         icon: FlaskConical,
-        title: 'Organic Name Reactions',
+        title: 'Name Reactions',
         subtitle: 'Complete Collection',
         description: 'Master all important named reactions in Organic Chemistry. Essential for JEE, NEET, and board exams.',
         href: '/organic-name-reactions',
         gradient: 'from-orange-500 to-red-500',
-        iconBg: 'bg-orange-400/30',
+        iconColor: 'orange',
         features: ['40+ reactions', 'Mechanism explained', 'Practice problems'],
     },
     {
@@ -76,13 +78,39 @@ const ncertResources: NCERTResource[] = [
         description: 'Practice assertion-reason type questions that frequently appear in competitive exams. Sharpen your reasoning skills!',
         href: '/assertion-reason',
         gradient: 'from-cyan-500 to-blue-600',
-        iconBg: 'bg-cyan-400/30',
+        iconColor: 'cyan',
         features: ['Chapter-wise practice', 'Detailed explanations', 'Exam pattern based'],
+    },
+    {
+        id: 'flashcards',
+        icon: Layers,
+        title: 'Flashcards',
+        subtitle: 'Active Recall',
+        description: 'Boost your retention with spaced repetition flashcards. The smartest way to memorize formulas and facts.',
+        href: '/flashcards',
+        gradient: 'from-rose-500 to-pink-600',
+        iconColor: 'rose',
+        features: ['Spaced Repetition', 'Smart Algorithms', 'Track Progress'],
     },
 ];
 
+// Color variations helper
+const getColorStyles = (color: string) => {
+    const colors: Record<string, any> = {
+        blue: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20', glow: 'group-hover:shadow-blue-500/20' },
+        purple: { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/20', glow: 'group-hover:shadow-purple-500/20' },
+        emerald: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20', glow: 'group-hover:shadow-emerald-500/20' },
+        orange: { bg: 'bg-orange-500/10', text: 'text-orange-400', border: 'border-orange-500/20', glow: 'group-hover:shadow-orange-500/20' },
+        cyan: { bg: 'bg-cyan-500/10', text: 'text-cyan-400', border: 'border-cyan-500/20', glow: 'group-hover:shadow-cyan-500/20' },
+        rose: { bg: 'bg-rose-500/10', text: 'text-rose-400', border: 'border-rose-500/20', glow: 'group-hover:shadow-rose-500/20' },
+    };
+    return colors[color] || colors.blue;
+};
+
+
 function ResourceCard({ resource, index }: { resource: NCERTResource; index: number }) {
     const Icon = resource.icon;
+    const styles = getColorStyles(resource.iconColor);
 
     return (
         <motion.div
@@ -91,50 +119,45 @@ function ResourceCard({ resource, index }: { resource: NCERTResource; index: num
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true, margin: '-50px' }}
         >
-            <Link href={resource.href} className="block group">
-                <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${resource.gradient} p-1 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1`}>
-                    {/* Inner card with glassmorphism */}
-                    <div className="relative bg-slate-900/90 backdrop-blur-sm rounded-xl p-5 h-full">
-                        {/* Glow effect */}
-                        <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${resource.gradient} opacity-20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2`} />
+            <Link href={resource.href} className="block group h-full">
+                <div className={`relative h-full bg-slate-900/40 backdrop-blur-sm rounded-3xl border border-slate-800 p-6 md:p-8 transition-all duration-300 hover:border-slate-700 hover:-translate-y-1 hover:bg-slate-800/60 ${styles.glow} hover:shadow-xl`}>
 
-                        {/* Header */}
-                        <div className="relative flex items-start gap-4 mb-4">
-                            <div className={`w-12 h-12 ${resource.iconBg} backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg shrink-0 group-hover:scale-110 transition-transform`}>
-                                <Icon className="w-6 h-6 text-white" />
-                            </div>
-                            <div>
-                                <h3 className="text-lg font-bold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-white/80 group-hover:bg-clip-text transition-all">
-                                    {resource.title}
-                                </h3>
-                                <p className={`text-sm font-medium bg-gradient-to-r ${resource.gradient} bg-clip-text text-transparent`}>
-                                    {resource.subtitle}
-                                </p>
-                            </div>
+                    {/* Header */}
+                    <div className="flex items-start gap-5 mb-6">
+                        <div className={`w-14 h-14 rounded-2xl ${styles.bg} ${styles.border} border flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
+                            <Icon className={`w-7 h-7 ${styles.text}`} />
                         </div>
-
-                        {/* Description */}
-                        <p className="text-gray-400 text-sm leading-relaxed mb-4">
-                            {resource.description}
-                        </p>
-
-                        {/* Features */}
-                        <div className="flex flex-wrap gap-2 mb-4">
-                            {resource.features.map((feature, i) => (
-                                <span
-                                    key={i}
-                                    className="px-2.5 py-1 bg-white/5 text-gray-300 text-xs font-medium rounded-full border border-white/10"
-                                >
-                                    {feature}
-                                </span>
-                            ))}
+                        <div>
+                            <h3 className="text-xl font-bold text-white mb-1 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-slate-300 group-hover:bg-clip-text transition-all">
+                                {resource.title}
+                            </h3>
+                            <p className={`text-sm font-medium ${styles.text} opacity-90`}>
+                                {resource.subtitle}
+                            </p>
                         </div>
+                    </div>
 
-                        {/* CTA */}
-                        <div className="flex items-center gap-2 text-white/70 group-hover:text-white transition-colors">
-                            <span className="text-sm font-semibold">Explore</span>
-                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </div>
+                    {/* Description */}
+                    <p className="text-slate-400 text-sm leading-relaxed mb-6 line-clamp-3">
+                        {resource.description}
+                    </p>
+
+                    {/* Features */}
+                    <div className="flex flex-wrap gap-2 mt-auto mb-6">
+                        {resource.features.map((feature, i) => (
+                            <span
+                                key={i}
+                                className="px-2.5 py-1 bg-slate-800/50 text-slate-400 text-xs font-medium rounded-lg border border-slate-700/50"
+                            >
+                                {feature}
+                            </span>
+                        ))}
+                    </div>
+
+                    {/* CTA */}
+                    <div className={`flex items-center gap-2 text-sm font-semibold transition-all ${styles.text} opacity-80 group-hover:opacity-100 group-hover:gap-3`}>
+                        <span>Explore</span>
+                        <ArrowRight className="w-4 h-4" />
                     </div>
                 </div>
             </Link>
@@ -144,10 +167,10 @@ function ResourceCard({ resource, index }: { resource: NCERTResource; index: num
 
 export default function NCERTBoardsSection() {
     return (
-        <section className="relative py-16 md:py-24 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+        <section className="relative py-24 bg-black overflow-hidden">
             {/* Background effects */}
-            <div className="absolute top-1/4 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+            <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[128px]" />
+            <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-purple-600/5 rounded-full blur-[128px]" />
 
             <div className="relative container mx-auto px-4">
                 {/* Header */}
@@ -156,28 +179,28 @@ export default function NCERTBoardsSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     viewport={{ once: true }}
-                    className="text-center mb-12 md:mb-16"
+                    className="text-center mb-16"
                 >
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 rounded-full mb-4 border border-blue-500/20">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900/50 rounded-full mb-6 border border-slate-800 backdrop-blur-sm">
                         <BookOpen className="w-4 h-4 text-blue-400" />
                         <span className="text-blue-400 font-semibold text-sm">NCERT & Boards</span>
                     </div>
 
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4">
+                    <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 tracking-tight">
                         Master Your{' '}
-                        <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                            NCERT
-                        </span>{' '}
-                        & Boards
+                        <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent">
+                            NCERT & Boards
+                        </span>
                     </h2>
 
-                    <p className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto">
-                        NCERT is the foundation for JEE, NEET, and board exams. Choose a resource to strengthen your chemistry fundamentals.
+                    <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
+                        Comprehensive resources designed to build strong fundamentals.
+                        Directly aligned with JEE, NEET, and CBSE curriculum.
                     </p>
                 </motion.div>
 
                 {/* Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
                     {ncertResources.map((resource, index) => (
                         <ResourceCard key={resource.id} resource={resource} index={index} />
                     ))}

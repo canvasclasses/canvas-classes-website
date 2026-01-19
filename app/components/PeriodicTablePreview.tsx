@@ -6,9 +6,12 @@ import { motion } from 'framer-motion';
 import { Atom, Sparkles, TrendingUp, Palette, BookOpen, ArrowRight, Target } from 'lucide-react';
 
 // Mini periodic table elements for preview (subset)
+// Mini periodic table elements for preview (subset)
 const PREVIEW_ELEMENTS = [
+    // Period 1
     { symbol: 'H', color: '#22d3ee', col: 1, row: 1 },
     { symbol: 'He', color: '#a78bfa', col: 18, row: 1 },
+    // Period 2
     { symbol: 'Li', color: '#f87171', col: 1, row: 2 },
     { symbol: 'Be', color: '#fbbf24', col: 2, row: 2 },
     { symbol: 'B', color: '#34d399', col: 13, row: 2 },
@@ -17,6 +20,7 @@ const PREVIEW_ELEMENTS = [
     { symbol: 'O', color: '#22d3ee', col: 16, row: 2 },
     { symbol: 'F', color: '#22d3ee', col: 17, row: 2 },
     { symbol: 'Ne', color: '#a78bfa', col: 18, row: 2 },
+    // Period 3
     { symbol: 'Na', color: '#f87171', col: 1, row: 3 },
     { symbol: 'Mg', color: '#fbbf24', col: 2, row: 3 },
     { symbol: 'Al', color: '#60a5fa', col: 13, row: 3 },
@@ -25,11 +29,25 @@ const PREVIEW_ELEMENTS = [
     { symbol: 'S', color: '#22d3ee', col: 16, row: 3 },
     { symbol: 'Cl', color: '#22d3ee', col: 17, row: 3 },
     { symbol: 'Ar', color: '#a78bfa', col: 18, row: 3 },
+    // Period 4 (Full)
     { symbol: 'K', color: '#f87171', col: 1, row: 4 },
     { symbol: 'Ca', color: '#fbbf24', col: 2, row: 4 },
+    { symbol: 'Sc', color: '#3b82f6', col: 3, row: 4 },
+    { symbol: 'Ti', color: '#3b82f6', col: 4, row: 4 },
+    { symbol: 'V', color: '#3b82f6', col: 5, row: 4 },
+    { symbol: 'Cr', color: '#3b82f6', col: 6, row: 4 },
+    { symbol: 'Mn', color: '#3b82f6', col: 7, row: 4 },
     { symbol: 'Fe', color: '#3b82f6', col: 8, row: 4 },
+    { symbol: 'Co', color: '#3b82f6', col: 9, row: 4 },
+    { symbol: 'Ni', color: '#3b82f6', col: 10, row: 4 },
     { symbol: 'Cu', color: '#3b82f6', col: 11, row: 4 },
     { symbol: 'Zn', color: '#3b82f6', col: 12, row: 4 },
+    { symbol: 'Ga', color: '#60a5fa', col: 13, row: 4 },
+    { symbol: 'Ge', color: '#34d399', col: 14, row: 4 },
+    { symbol: 'As', color: '#22d3ee', col: 15, row: 4 },
+    { symbol: 'Se', color: '#22d3ee', col: 16, row: 4 },
+    { symbol: 'Br', color: '#22d3ee', col: 17, row: 4 },
+    { symbol: 'Kr', color: '#a78bfa', col: 18, row: 4 },
 ];
 
 const FEATURES = [
@@ -123,9 +141,12 @@ export default function PeriodicTablePreview() {
                                 ))}
                             </div>
 
-                            {/* Overlay hint */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent rounded-2xl flex items-end justify-center pb-4 pointer-events-none">
-                                <span className="text-gray-400 text-sm">Hover to preview • Click to explore</span>
+                            {/* Hint below the table */}
+                            <div className="mt-4 text-center">
+                                <span className="text-gray-500 text-sm flex items-center justify-center gap-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
+                                    Hover to preview • Click to explore
+                                </span>
                             </div>
                         </div>
                     </motion.div>
@@ -146,13 +167,13 @@ export default function PeriodicTablePreview() {
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.5 + idx * 0.1 }}
                                 className={`flex items-start gap-4 p-4 rounded-xl border transition-all group ${'highlight' in feature && feature.highlight
-                                        ? 'bg-gradient-to-r from-orange-500/10 to-amber-500/10 border-orange-500/40 hover:border-orange-400'
-                                        : 'bg-gray-800/30 border-gray-700/30 hover:border-cyan-500/30 hover:bg-gray-800/50'
+                                    ? 'bg-gradient-to-r from-orange-500/10 to-amber-500/10 border-orange-500/40 hover:border-orange-400'
+                                    : 'bg-gray-800/30 border-gray-700/30 hover:border-cyan-500/30 hover:bg-gray-800/50'
                                     }`}
                             >
                                 <div className={`p-2 rounded-lg transition-colors ${'highlight' in feature && feature.highlight
-                                        ? 'bg-orange-500/20 group-hover:bg-orange-500/30'
-                                        : 'bg-cyan-500/10 group-hover:bg-cyan-500/20'
+                                    ? 'bg-orange-500/20 group-hover:bg-orange-500/30'
+                                    : 'bg-cyan-500/10 group-hover:bg-cyan-500/20'
                                     }`}>
                                     <feature.icon className={'highlight' in feature && feature.highlight ? 'text-orange-400' : 'text-cyan-400'} size={24} />
                                 </div>

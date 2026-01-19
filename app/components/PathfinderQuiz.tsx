@@ -6,39 +6,40 @@ import Link from 'next/link';
 import {
     GraduationCap, Stethoscope, BookOpen, Sparkles,
     Rocket, Brain, Zap, PlayCircle, FileText,
-    ArrowRight, RotateCcw, CheckCircle2
+    ArrowRight, RotateCcw, CheckCircle2,
+    Compass
 } from 'lucide-react';
 
 // Quiz questions and options
 const QUESTIONS = [
     {
         id: 'exam',
-        question: "What's your exam?",
-        subtitle: "Select your target",
+        question: "What's your target exam?",
+        subtitle: "We'll tailor the content for your goal",
         options: [
-            { id: 'jee', label: 'JEE', desc: 'Main + Advanced', icon: GraduationCap, color: 'blue' },
-            { id: 'neet', label: 'NEET', desc: 'UG Medical', icon: Stethoscope, color: 'emerald' },
-            { id: 'cbse', label: 'CBSE 12', desc: 'Board Exams', icon: BookOpen, color: 'purple' },
+            { id: 'jee', label: 'JEE Main & Adv', desc: 'Engineering', icon: GraduationCap, color: 'blue' },
+            { id: 'neet', label: 'NEET UG', desc: 'Medical', icon: Stethoscope, color: 'emerald' },
+            { id: 'cbse', label: 'CBSE Class 12', desc: 'Board Exams', icon: BookOpen, color: 'purple' },
         ]
     },
     {
         id: 'stage',
-        question: "Where are you in prep?",
-        subtitle: "Be honest, we'll help you!",
+        question: "Current preparation level?",
+        subtitle: "Be honest, we'll help you catch up!",
         options: [
-            { id: 'beginner', label: 'Just Starting', desc: 'Need basics', icon: Sparkles, color: 'amber' },
+            { id: 'beginner', label: 'Just Starting', desc: 'Need fundamentals', icon: Sparkles, color: 'amber' },
             { id: 'intermediate', label: 'Covered Basics', desc: 'Need practice', icon: Brain, color: 'cyan' },
-            { id: 'advanced', label: 'Final Revision', desc: 'Exam is near!', icon: Zap, color: 'rose' },
+            { id: 'advanced', label: 'Final Revision', desc: 'Exam ready', icon: Zap, color: 'rose' },
         ]
     },
     {
         id: 'style',
-        question: "How do you learn best?",
-        subtitle: "Pick your superpower",
+        question: "Preferred learning style?",
+        subtitle: "How do you grasp concepts best?",
         options: [
-            { id: 'video', label: 'Watch Videos', desc: 'Detailed lectures', icon: PlayCircle, color: 'violet' },
-            { id: 'quick', label: 'Quick Content', desc: 'One-shots & shorts', icon: Rocket, color: 'orange' },
-            { id: 'notes', label: 'Read & Practice', desc: 'Notes & flashcards', icon: FileText, color: 'teal' },
+            { id: 'video', label: 'Video Lectures', desc: 'Deep understanding', icon: PlayCircle, color: 'violet' },
+            { id: 'quick', label: 'Quick Recap', desc: 'One-shots & shorts', icon: Rocket, color: 'orange' },
+            { id: 'notes', label: 'Self Study', desc: 'Notes & flashcards', icon: FileText, color: 'teal' },
         ]
     }
 ];
@@ -59,7 +60,6 @@ const getRecommendations = (answers: Record<string, string>) => {
             recommendations.push({ title: 'One-Shot Lectures', href: '/one-shot-lectures', desc: 'Quick chapter revision', primary: true });
         }
     } else if (exam === 'neet') {
-        // NEET Crash Course is always primary for all NEET aspirants
         recommendations.push({ title: 'NEET Crash Course', href: '/neet-crash-course', desc: 'Complete NEET Chemistry prep', primary: true });
         if (stage === 'beginner') {
             recommendations.push({ title: 'Detailed Lectures', href: '/detailed-lectures', desc: 'Build strong foundations' });
@@ -68,23 +68,23 @@ const getRecommendations = (answers: Record<string, string>) => {
         recommendations.push({ title: 'NCERT Revision', href: '/cbse-12-ncert-revision', desc: 'Chapter-wise summaries', primary: true });
     }
 
-    // Secondary recommendations based on learning style
+    // Secondary recommendations
     if (style === 'notes') {
-        recommendations.push({ title: 'Flashcards', href: '/flashcards', desc: 'Quick recall practice' });
-        recommendations.push({ title: 'Handwritten Notes', href: '/handwritten-notes', desc: 'By Paaras Sir' });
+        recommendations.push({ title: 'Flashcards', href: '/flashcards', desc: 'Active recall practice' });
+        recommendations.push({ title: 'Handwritten Notes', href: '/handwritten-notes', desc: 'Premium notes by Paaras Sir' });
     } else if (style === 'quick') {
-        recommendations.push({ title: '2 Minute Chemistry', href: '/2-minute-chemistry', desc: 'Quick concept videos' });
+        recommendations.push({ title: '2 Minute Chemistry', href: '/2-minute-chemistry', desc: 'Bite-sized concept videos' });
         recommendations.push({ title: 'One-Shot Lectures', href: '/one-shot-lectures', desc: 'Full chapter in 1 video' });
     } else {
         recommendations.push({ title: 'Detailed Lectures', href: '/detailed-lectures', desc: 'In-depth explanations' });
     }
 
-    // Always recommend organic reactions for advanced students
+    // Organic reactions for advanced/intermediate
     if (stage === 'advanced' || stage === 'intermediate') {
-        recommendations.push({ title: 'Organic Reactions', href: '/organic-name-reactions', desc: 'Named reactions' });
+        recommendations.push({ title: 'Organic Reactions', href: '/organic-name-reactions', desc: 'Master named reactions' });
     }
 
-    // Remove duplicates and limit to 3
+    // Remove duplicates and limit
     const unique = recommendations.filter((rec, idx, self) =>
         idx === self.findIndex(r => r.href === rec.href)
     ).slice(0, 3);
@@ -92,17 +92,17 @@ const getRecommendations = (answers: Record<string, string>) => {
     return unique;
 };
 
-// Color mapping for options
-const colorClasses: Record<string, { bg: string; border: string; text: string; glow: string }> = {
-    blue: { bg: 'bg-blue-500/20', border: 'border-blue-500/50 hover:border-blue-400', text: 'text-blue-400', glow: 'hover:shadow-blue-500/20' },
-    emerald: { bg: 'bg-emerald-500/20', border: 'border-emerald-500/50 hover:border-emerald-400', text: 'text-emerald-400', glow: 'hover:shadow-emerald-500/20' },
-    purple: { bg: 'bg-purple-500/20', border: 'border-purple-500/50 hover:border-purple-400', text: 'text-purple-400', glow: 'hover:shadow-purple-500/20' },
-    amber: { bg: 'bg-amber-500/20', border: 'border-amber-500/50 hover:border-amber-400', text: 'text-amber-400', glow: 'hover:shadow-amber-500/20' },
-    cyan: { bg: 'bg-cyan-500/20', border: 'border-cyan-500/50 hover:border-cyan-400', text: 'text-cyan-400', glow: 'hover:shadow-cyan-500/20' },
-    rose: { bg: 'bg-rose-500/20', border: 'border-rose-500/50 hover:border-rose-400', text: 'text-rose-400', glow: 'hover:shadow-rose-500/20' },
-    violet: { bg: 'bg-violet-500/20', border: 'border-violet-500/50 hover:border-violet-400', text: 'text-violet-400', glow: 'hover:shadow-violet-500/20' },
-    orange: { bg: 'bg-orange-500/20', border: 'border-orange-500/50 hover:border-orange-400', text: 'text-orange-400', glow: 'hover:shadow-orange-500/20' },
-    teal: { bg: 'bg-teal-500/20', border: 'border-teal-500/50 hover:border-teal-400', text: 'text-teal-400', glow: 'hover:shadow-teal-500/20' },
+// Refined Color mapping
+const colorClasses: Record<string, { bg: string; border: string; text: string; shadow: string; gradient: string }> = {
+    blue: { bg: 'bg-blue-500/10', border: 'border-blue-500/30', text: 'text-blue-400', shadow: 'shadow-blue-500/10', gradient: 'from-blue-500 to-indigo-600' },
+    emerald: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-400', shadow: 'shadow-emerald-500/10', gradient: 'from-emerald-500 to-teal-600' },
+    purple: { bg: 'bg-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-400', shadow: 'shadow-purple-500/10', gradient: 'from-purple-500 to-violet-600' },
+    amber: { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-400', shadow: 'shadow-amber-500/10', gradient: 'from-amber-500 to-orange-600' },
+    cyan: { bg: 'bg-cyan-500/10', border: 'border-cyan-500/30', text: 'text-cyan-400', shadow: 'shadow-cyan-500/10', gradient: 'from-cyan-500 to-sky-600' },
+    rose: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-400', shadow: 'shadow-rose-500/10', gradient: 'from-rose-500 to-pink-600' },
+    violet: { bg: 'bg-violet-500/10', border: 'border-violet-500/30', text: 'text-violet-400', shadow: 'shadow-violet-500/10', gradient: 'from-violet-500 to-fuchsia-600' },
+    orange: { bg: 'bg-orange-500/10', border: 'border-orange-500/30', text: 'text-orange-400', shadow: 'shadow-orange-500/10', gradient: 'from-orange-500 to-red-600' },
+    teal: { bg: 'bg-teal-500/10', border: 'border-teal-500/30', text: 'text-teal-400', shadow: 'shadow-teal-500/10', gradient: 'from-teal-500 to-emerald-600' },
 };
 
 export default function PathfinderQuiz() {
@@ -113,7 +113,6 @@ export default function PathfinderQuiz() {
     const handleAnswer = (questionId: string, answerId: string) => {
         setAnswers(prev => ({ ...prev, [questionId]: answerId }));
 
-        // Move to next question or show result
         if (currentStep < QUESTIONS.length - 1) {
             setTimeout(() => setCurrentStep(prev => prev + 1), 300);
         } else {
@@ -131,121 +130,131 @@ export default function PathfinderQuiz() {
     const progress = ((currentStep + (showResult ? 1 : 0)) / QUESTIONS.length) * 100;
 
     return (
-        <section className="py-12 md:py-16 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-800 overflow-hidden">
-            <div className="container mx-auto px-4">
+        <section className="py-24 bg-black relative overflow-hidden">
+            {/* Background Effects */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-gradient-to-b from-slate-900 via-black to-black opacity-80" />
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px]" />
+            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[100px]" />
+
+            <div className="container mx-auto px-4 relative z-10">
                 {/* Header */}
+                <div className="text-center mb-16">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/50 border border-slate-700/50 text-slate-300 text-sm font-medium mb-6 backdrop-blur-sm"
+                    >
+                        <Compass className="w-4 h-4 text-cyan-400" />
+                        <span>Not sure where to start?</span>
+                    </motion.div>
+
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className="text-4xl md:text-5xl font-bold text-white mb-4"
+                    >
+                        Find Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Perfect Approach</span>
+                    </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="text-slate-400 text-lg max-w-xl mx-auto"
+                    >
+                        Answer 3 quick questions to get a personalized study roadmap tailored to your exam and goals.
+                    </motion.p>
+                </div>
+
+                {/* Quiz Card */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center mb-6"
+                    transition={{ delay: 0.3 }}
+                    className="max-w-4xl mx-auto"
                 >
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-1">
-                        Find Your{' '}
-                        <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                            Perfect Path
-                        </span>
-                    </h2>
-                    <p className="text-slate-400 text-sm">Answer 3 quick questions</p>
-                </motion.div>
-
-                {/* Quiz Container */}
-                <div className="max-w-2xl mx-auto">
-                    {/* Progress Bar */}
-                    <div className="mb-6">
-                        <div className="flex justify-between text-xs text-slate-500 mb-1">
-                            <span>Question {Math.min(currentStep + 1, QUESTIONS.length)} of {QUESTIONS.length}</span>
-                            <span>{Math.round(progress)}%</span>
-                        </div>
-                        <div className="h-1.5 bg-slate-700 rounded-full overflow-hidden">
+                    <div className="relative bg-slate-900/40 backdrop-blur-xl rounded-3xl border border-slate-800 p-8 md:p-12 shadow-2xl overflow-hidden">
+                        {/* Progress Bar inside card */}
+                        <div className="absolute top-0 left-0 w-full h-1 bg-slate-800">
                             <motion.div
-                                className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"
+                                className="h-full bg-gradient-to-r from-cyan-500 to-blue-500"
                                 initial={{ width: 0 }}
                                 animate={{ width: `${progress}%` }}
-                                transition={{ duration: 0.3 }}
+                                transition={{ duration: 0.5, ease: "easeInOut" }}
                             />
                         </div>
-                    </div>
 
-                    {/* Question/Result Area */}
-                    <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-5 md:p-6 min-h-[300px]">
                         <AnimatePresence mode="wait">
                             {!showResult ? (
-                                // Question View
                                 <motion.div
                                     key={`question-${currentStep}`}
-                                    initial={{ opacity: 0, x: 50 }}
+                                    initial={{ opacity: 0, x: 20 }}
                                     animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -50 }}
+                                    exit={{ opacity: 0, x: -20 }}
                                     transition={{ duration: 0.3 }}
                                 >
-                                    <div className="text-center mb-5">
-                                        <h3 className="text-xl md:text-2xl font-bold text-white mb-1">
-                                            {QUESTIONS[currentStep].question}
-                                        </h3>
-                                        <p className="text-slate-400 text-sm">
-                                            {QUESTIONS[currentStep].subtitle}
-                                        </p>
-                                    </div>
+                                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 text-center">
+                                        {QUESTIONS[currentStep].question}
+                                    </h3>
+                                    <p className="text-slate-400 text-center mb-10">
+                                        {QUESTIONS[currentStep].subtitle}
+                                    </p>
 
-                                    {/* Options */}
-                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                        {QUESTIONS[currentStep].options.map((option) => {
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        {QUESTIONS[currentStep].options.map((option, idx) => {
                                             const colors = colorClasses[option.color];
                                             const isSelected = answers[QUESTIONS[currentStep].id] === option.id;
 
                                             return (
                                                 <motion.button
                                                     key={option.id}
+                                                    initial={{ opacity: 0, y: 20 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    transition={{ delay: idx * 0.1 }}
                                                     onClick={() => handleAnswer(QUESTIONS[currentStep].id, option.id)}
-                                                    className={`relative p-4 rounded-xl border-2 transition-all ${colors.border} ${colors.glow} hover:shadow-lg ${isSelected ? colors.bg : 'bg-slate-800/50'}`}
-                                                    whileHover={{ scale: 1.02 }}
-                                                    whileTap={{ scale: 0.98 }}
+                                                    className={`group relative flex flex-col items-center p-6 rounded-2xl border transition-all duration-300 ${isSelected
+                                                        ? `bg-slate-800 border-${option.color}-500 ring-2 ring-${option.color}-500/20`
+                                                        : 'bg-slate-800/30 border-slate-700/50 hover:bg-slate-800 hover:border-slate-600'
+                                                        }`}
                                                 >
-                                                    <div className={`w-10 h-10 ${colors.bg} rounded-lg flex items-center justify-center mx-auto mb-2`}>
-                                                        <option.icon className={colors.text} size={22} />
+                                                    <div className={`w-14 h-14 rounded-2xl mb-4 flex items-center justify-center transition-all duration-300 ${colors.bg} group-hover:scale-110`}>
+                                                        <option.icon className={colors.text} size={28} />
                                                     </div>
-                                                    <div className="font-bold text-white text-sm">{option.label}</div>
-                                                    <div className="text-slate-400 text-xs">{option.desc}</div>
-
-                                                    {isSelected && (
-                                                        <div className="absolute top-2 right-2">
-                                                            <CheckCircle2 className="text-green-400" size={16} />
-                                                        </div>
-                                                    )}
+                                                    <div className="text-lg font-semibold text-white mb-1">{option.label}</div>
+                                                    <div className="text-slate-500 text-sm">{option.desc}</div>
                                                 </motion.button>
                                             );
                                         })}
                                     </div>
                                 </motion.div>
                             ) : (
-                                // Result View
                                 <motion.div
                                     key="result"
-                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    transition={{ duration: 0.4 }}
                                     className="text-center"
                                 >
-                                    {/* Celebration */}
                                     <motion.div
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
-                                        transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-                                        className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-cyan-500/30"
+                                        transition={{ delay: 0.2, type: 'spring' }}
+                                        className="w-20 h-20 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-cyan-500/20"
                                     >
-                                        <Sparkles className="text-white" size={32} />
+                                        <Sparkles className="text-white w-10 h-10" />
                                     </motion.div>
 
-                                    <h3 className="text-xl font-bold text-white mb-1">
-                                        Perfect! Here's your path 🎯
+                                    <h3 className="text-3xl font-bold text-white mb-2">
+                                        Your Personalized Roadmap
                                     </h3>
-                                    <p className="text-slate-400 text-sm mb-5">
-                                        Based on your answers, we recommend:
+                                    <p className="text-slate-400 mb-8 max-w-lg mx-auto">
+                                        Based on your goals, here are the best resources to maximize your score.
                                     </p>
 
-                                    {/* Recommendations */}
-                                    <div className="space-y-2 mb-5">
+                                    <div className="grid md:grid-cols-3 gap-4 mb-8">
                                         {recommendations.map((rec, idx) => (
                                             <motion.div
                                                 key={rec.href}
@@ -253,38 +262,38 @@ export default function PathfinderQuiz() {
                                                 animate={{ opacity: 1, y: 0 }}
                                                 transition={{ delay: 0.3 + idx * 0.1 }}
                                             >
-                                                <Link href={rec.href}>
-                                                    <div className={`flex items-center justify-between p-3 rounded-xl border transition-all group ${rec.primary
-                                                        ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border-cyan-500/50 hover:border-cyan-400'
-                                                        : 'bg-slate-700/50 border-slate-600 hover:border-slate-500'
+                                                <Link href={rec.href} className="block h-full">
+                                                    <div className={`h-full p-6 rounded-2xl border text-left transition-all hover:-translate-y-1 ${rec.primary
+                                                        ? 'bg-gradient-to-b from-slate-800/80 to-slate-900/80 border-cyan-500/30 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/10'
+                                                        : 'bg-slate-900/50 border-slate-800 hover:bg-slate-800 hover:border-slate-700'
                                                         }`}>
-                                                        <div className="text-left">
-                                                            <div className="font-semibold text-white text-sm flex items-center gap-2">
-                                                                {rec.primary && <span className="text-xs bg-cyan-500 text-white px-1.5 py-0.5 rounded">TOP PICK</span>}
-                                                                {rec.title}
+                                                        {rec.primary && (
+                                                            <div className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-500/10 text-cyan-400 mb-3 border border-cyan-500/20 uppercase tracking-wider">
+                                                                Highly Recommended
                                                             </div>
-                                                            <div className="text-slate-400 text-xs">{rec.desc}</div>
+                                                        )}
+                                                        <div className="font-bold text-white text-lg mb-2">{rec.title}</div>
+                                                        <p className="text-slate-400 text-sm mb-4">{rec.desc}</p>
+                                                        <div className="flex items-center text-cyan-400 text-sm font-medium gap-1 group">
+                                                            Start Now <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                                         </div>
-                                                        <ArrowRight className="text-slate-400 group-hover:text-white group-hover:translate-x-1 transition-all" size={18} />
                                                     </div>
                                                 </Link>
                                             </motion.div>
                                         ))}
                                     </div>
 
-                                    {/* Retake Button */}
                                     <button
                                         onClick={resetQuiz}
-                                        className="inline-flex items-center gap-2 text-slate-400 hover:text-white text-sm transition-colors"
+                                        className="text-slate-500 hover:text-white transition-colors text-sm flex items-center gap-2 mx-auto"
                                     >
-                                        <RotateCcw size={14} />
-                                        Take quiz again
+                                        <RotateCcw size={14} /> Start Over
                                     </button>
                                 </motion.div>
                             )}
                         </AnimatePresence>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );
