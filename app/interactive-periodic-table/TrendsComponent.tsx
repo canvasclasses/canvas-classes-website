@@ -109,102 +109,248 @@ export default function TrendsComponent() {
 
                 {/* Main Grid: Property List | Graph | Notes */}
                 <div className="grid lg:grid-cols-12 gap-5">
-                    {/* Property List */}
-                    <div className="lg:col-span-2 flex flex-col gap-2">
-                        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Select Property</h3>
-                        {plotableRows.map((row, idx) => (
-                            <button
-                                key={idx}
-                                onClick={() => setSelectedPropertyIndex(idx)}
-                                className={`text-left px-3 py-2 rounded-lg text-sm transition-all ${activePropertyRow === row
-                                    ? `bg-gradient-to-r ${colors.gradient} text-white shadow-md font-semibold`
-                                    : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700 hover:text-white'
-                                    }`}
-                            >
-                                {row.name.length > 20 ? row.name.slice(0, 18) + '...' : row.name}
-                            </button>
-                        ))}
+                    {/* Property Selector */}
+                    <div className="lg:col-span-2">
+                        {/* Mobile Dropdown */}
+                        <div className="block lg:hidden mb-4">
+                            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 block">Select Property</label>
+                            <div className="relative">
+                                <select
+                                    value={selectedPropertyIndex}
+                                    onChange={(e) => setSelectedPropertyIndex(Number(e.target.value))}
+                                    className="w-full appearance-none bg-gray-800/50 text-white border border-gray-700 rounded-xl px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                                >
+                                    {plotableRows.map((row, idx) => (
+                                        <option key={idx} value={idx}>
+                                            {row.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                                    <TrendingUp size={16} />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Desktop List */}
+                        <div className="hidden lg:flex flex-col gap-2">
+                            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Select Property</h3>
+                            {plotableRows.map((row, idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => setSelectedPropertyIndex(idx)}
+                                    className={`text-left px-3 py-2 rounded-lg text-sm transition-all ${activePropertyRow === row
+                                        ? `bg-gradient-to-r ${colors.gradient} text-white shadow-md font-semibold`
+                                        : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700 hover:text-white'
+                                        }`}
+                                >
+                                    {row.name.length > 20 ? row.name.slice(0, 18) + '...' : row.name}
+                                </button>
+                            ))}
+                        </div>
                     </div>
 
                     {/* Graph */}
                     <div className="lg:col-span-6">
                         {activePropertyRow && validPoints.length > 1 ? (
-                            <div className="relative h-[380px] bg-gray-800/30 rounded-xl border border-gray-700/40 p-4">
-                                <div className="absolute top-3 left-4 text-sm text-gray-400 font-medium">{activePropertyRow.name}</div>
-                                <svg viewBox="0 0 300 100" className="w-full h-full overflow-visible" preserveAspectRatio="xMidYMid meet">
-                                    {/* Grid */}
-                                    {[10, 50, 90].map(y => <line key={y} x1="5%" y1={y} x2="95%" y2={y} stroke="#374151" strokeDasharray="2" strokeWidth="0.3" />)}
+                            <>
+                                {/* Mobile View (Tall Graph) */}
+                                <div className="block md:hidden relative h-[500px] bg-gray-900/40 rounded-xl border border-gray-700/40 p-2">
+                                    <div className="absolute top-3 left-4 text-sm text-gray-400 font-medium">{activePropertyRow.name}</div>
+                                    <svg viewBox="0 0 300 450" className="w-full h-full overflow-visible">
+                                        {/* Grid */}
+                                        {[40, 225, 410].map(y => <line key={y} x1="5%" y1={y} x2="95%" y2={y} stroke="#374151" strokeDasharray="2" strokeWidth="0.5" />)}
 
-                                    {/* Gradient Def */}
-                                    <defs>
-                                        <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
-                                            <stop offset="0%" stopColor="#f472b6" />
-                                            <stop offset="50%" stopColor="#fb923c" />
-                                            <stop offset="100%" stopColor="#a3e635" />
-                                        </linearGradient>
-                                    </defs>
+                                        <defs>
+                                            <linearGradient id="lineGradientMobile" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stopColor="#f472b6" />
+                                                <stop offset="50%" stopColor="#fb923c" />
+                                                <stop offset="100%" stopColor="#a3e635" />
+                                            </linearGradient>
+                                        </defs>
 
-                                    {/* Line - only connect valid points */}
-                                    <motion.path
-                                        initial={{ pathLength: 0 }}
-                                        animate={{ pathLength: 1 }}
-                                        transition={{ duration: 1 }}
-                                        d={`M ${validPoints.map((p) => {
-                                            const originalIndex = plotData.findIndex(d => d.label === p.label);
-                                            const x = 20 + (originalIndex / Math.max(plotData.length - 1, 1)) * 260;
-                                            const y = 12 + (normalize(p.value) / 100) * 76;
-                                            return `${x},${y}`;
-                                        }).join(' L ')}`}
-                                        fill="none"
-                                        stroke="url(#lineGradient)"
-                                        strokeWidth="3"
-                                        strokeLinecap="round"
-                                    />
+                                        {/* Line */}
+                                        <motion.path
+                                            initial={{ pathLength: 0 }}
+                                            animate={{ pathLength: 1 }}
+                                            transition={{ duration: 1 }}
+                                            d={`M ${validPoints.map((p) => {
+                                                const originalIndex = plotData.findIndex(d => d.label === p.label);
+                                                const x = 25 + (originalIndex / Math.max(plotData.length - 1, 1)) * 250;
+                                                const y = 40 + (normalize(p.value) / 100) * 370; // 370px active range
+                                                return `${x},${y}`;
+                                            }).join(' L ')}`}
+                                            fill="none"
+                                            stroke="url(#lineGradientMobile)"
+                                            strokeWidth="3"
+                                            strokeLinecap="round"
+                                        />
 
-                                    {/* All X-axis labels + Points only for valid data */}
-                                    {plotData.map((point, i) => {
-                                        const x = 20 + (i / Math.max(plotData.length - 1, 1)) * 260;
-                                        const hasValue = point.value !== null;
-                                        const y = hasValue ? 12 + (normalize(point.value!) / 100) * 76 : 50;
-                                        const isH = hoveredPoint === i;
-                                        return (
-                                            <g key={i}>
-                                                {/* Only show point if has valid value */}
-                                                {hasValue && (
-                                                    <>
-                                                        <circle cx={x} cy={y} r={isH ? 4 : 3} className="fill-white stroke-pink-400 stroke-[0.5] cursor-pointer transition-all"
-                                                            onMouseEnter={() => setHoveredPoint(i)} onMouseLeave={() => setHoveredPoint(null)} />
-                                                        {(isH || plotData.filter(d => d.value !== null).length <= 10) && (
-                                                            <text x={x} y={y - 8} textAnchor="middle" fill="white" fontSize="9" fontWeight="500">
+                                        {/* Points & Labels */}
+                                        {plotData.map((point, i) => {
+                                            const x = 25 + (i / Math.max(plotData.length - 1, 1)) * 250;
+                                            const hasValue = point.value !== null;
+                                            const y = hasValue ? 40 + (normalize(point.value!) / 100) * 370 : 225;
+                                            const isH = hoveredPoint === i;
+
+                                            // Alternate label heights for mobile density
+                                            const xAxisLabelY = 430 + (i % 2 === 0 ? 0 : 10);
+
+                                            // Smart Label Positioning
+                                            let isValley = false;
+                                            if (hasValue) {
+                                                // Find nearest valid neighbors
+                                                const getVal = (dir: 1 | -1) => {
+                                                    let p = i + dir;
+                                                    while (p >= 0 && p < plotData.length) {
+                                                        if (plotData[p].value !== null) return plotData[p].value;
+                                                        p += dir;
+                                                    }
+                                                    return null;
+                                                };
+                                                const prev = getVal(-1);
+                                                const next = getVal(1);
+                                                // If strictly lower than both neighbors, it's a valley -> Place label below
+                                                if (prev !== null && next !== null && point.value! < prev && point.value! < next) {
+                                                    isValley = true;
+                                                }
+                                            }
+                                            const valLabelY = y + (isValley ? 25 : -15);
+
+                                            return (
+                                                <g key={i}>
+                                                    {hasValue && (
+                                                        <>
+                                                            <circle cx={x} cy={y} r={isH ? 6 : 4} className="fill-white stroke-pink-400 stroke-[1.5] cursor-pointer transition-all"
+                                                                onMouseEnter={() => setHoveredPoint(i)} onMouseLeave={() => setHoveredPoint(null)} />
+                                                            <text
+                                                                x={x}
+                                                                y={valLabelY}
+                                                                textAnchor="middle"
+                                                                fill="white"
+                                                                fontSize="13"
+                                                                fontWeight="600"
+                                                                className="drop-shadow-md relative z-10"
+                                                                stroke="#111827"
+                                                                strokeWidth="4"
+                                                                strokeLinejoin="round"
+                                                                style={{ paintOrder: 'stroke' }}
+                                                            >
                                                                 {point.displayValue}
                                                             </text>
-                                                        )}
-                                                    </>
-                                                )}
-                                                {/* Show "-" for missing values */}
-                                                {!hasValue && (
-                                                    <text x={x} y={50} textAnchor="middle" fill="#6b7280" fontSize="8">
-                                                        –
+                                                        </>
+                                                    )}
+                                                    {!hasValue && <text x={x} y={225} textAnchor="middle" fill="#6b7280" fontSize="12">–</text>}
+                                                    <text x={x} y={xAxisLabelY} textAnchor="middle" fill="#9ca3af" fontSize="13">
+                                                        {point.label}
                                                     </text>
-                                                )}
-                                                {/* Always show x-axis label */}
-                                                <text x={x} y={98} textAnchor="middle" fill="#9ca3af" fontSize="9">
-                                                    {point.label}
-                                                </text>
-                                            </g>
-                                        );
-                                    })}
-                                </svg>
-                            </div>
+                                                </g>
+                                            );
+                                        })}
+                                    </svg>
+                                </div>
+
+                                {/* Desktop View (Wide Graph) */}
+                                <div className="hidden md:block relative h-[500px] bg-gray-900/40 rounded-xl border border-gray-700/40 p-5">
+                                    <div className="absolute top-3 left-6 text-sm text-gray-400 font-medium">{activePropertyRow.name}</div>
+                                    <svg viewBox="0 0 600 375" className="w-full h-full overflow-visible">
+                                        {/* Grid */}
+                                        {[40, 188, 335].map(y => <line key={y} x1="3%" y1={y} x2="97%" y2={y} stroke="#374151" strokeDasharray="2" strokeWidth="0.5" />)}
+
+                                        <defs>
+                                            <linearGradient id="lineGradientDesktop" x1="0" y1="0" x2="1" y2="0">
+                                                <stop offset="0%" stopColor="#f472b6" />
+                                                <stop offset="50%" stopColor="#fb923c" />
+                                                <stop offset="100%" stopColor="#a3e635" />
+                                            </linearGradient>
+                                        </defs>
+
+                                        {/* Line */}
+                                        <motion.path
+                                            initial={{ pathLength: 0 }}
+                                            animate={{ pathLength: 1 }}
+                                            transition={{ duration: 1 }}
+                                            d={`M ${validPoints.map((p) => {
+                                                const originalIndex = plotData.findIndex(d => d.label === p.label);
+                                                const x = 30 + (originalIndex / Math.max(plotData.length - 1, 1)) * 540;
+                                                const y = 40 + (normalize(p.value) / 100) * 295;
+                                                return `${x},${y}`;
+                                            }).join(' L ')}`}
+                                            fill="none"
+                                            stroke="url(#lineGradientDesktop)"
+                                            strokeWidth="3"
+                                            strokeLinecap="round"
+                                        />
+
+                                        {/* Points & Labels */}
+                                        {plotData.map((point, i) => {
+                                            const x = 30 + (i / Math.max(plotData.length - 1, 1)) * 540;
+                                            const hasValue = point.value !== null;
+                                            const y = hasValue ? 40 + (normalize(point.value!) / 100) * 295 : 188;
+                                            const isH = hoveredPoint === i;
+
+                                            // Smart Label Positioning (Desktop)
+                                            let isValley = false;
+                                            if (hasValue) {
+                                                const getVal = (dir: 1 | -1) => {
+                                                    let p = i + dir;
+                                                    while (p >= 0 && p < plotData.length) {
+                                                        if (plotData[p].value !== null) return plotData[p].value;
+                                                        p += dir;
+                                                    }
+                                                    return null;
+                                                };
+                                                const prev = getVal(-1);
+                                                const next = getVal(1);
+                                                if (prev !== null && next !== null && point.value! < prev && point.value! < next) {
+                                                    isValley = true;
+                                                }
+                                            }
+                                            const valLabelY = y + (isValley ? 20 : -15);
+
+                                            return (
+                                                <g key={i}>
+                                                    {hasValue && (
+                                                        <>
+                                                            <circle cx={x} cy={y} r={isH ? 5 : 3.5} className="fill-white stroke-pink-400 stroke-[1.5] cursor-pointer transition-all"
+                                                                onMouseEnter={() => setHoveredPoint(i)} onMouseLeave={() => setHoveredPoint(null)} />
+                                                            {(isH || plotData.length <= 10) && (
+                                                                <text
+                                                                    x={x}
+                                                                    y={valLabelY}
+                                                                    textAnchor="middle"
+                                                                    fill="white"
+                                                                    fontSize="15"
+                                                                    fontWeight="500"
+                                                                    stroke="#111827"
+                                                                    strokeWidth="3"
+                                                                    strokeLinejoin="round"
+                                                                    style={{ paintOrder: 'stroke' }}
+                                                                >
+                                                                    {point.displayValue}
+                                                                </text>
+                                                            )}
+                                                        </>
+                                                    )}
+                                                    {!hasValue && <text x={x} y={188} textAnchor="middle" fill="#6b7280" fontSize="15">–</text>}
+                                                    <text x={x} y={360} textAnchor="middle" fill="#9ca3af" fontSize="15">
+                                                        {point.label}
+                                                    </text>
+                                                </g>
+                                            );
+                                        })}
+                                    </svg>
+                                </div>
+                            </>
                         ) : (
-                            <div className="h-[380px] flex items-center justify-center text-gray-500 bg-gray-800/20 rounded-xl">Select a property with numeric data</div>
+                            <div className="h-[400px] flex items-center justify-center text-gray-500 bg-gray-800/20 rounded-xl">Select a property with numeric data</div>
                         )}
                     </div>
 
                     {/* Notes - Right side on desktop, below on mobile */}
                     <div className="lg:col-span-4">
                         {currentTable?.notes && currentTable.notes.length > 0 && (
-                            <div className="bg-gray-800/30 rounded-xl border border-gray-700/40 p-4 h-full">
+                            <div className="bg-gray-800/30 rounded-xl border border-gray-700/40 p-5 h-full">
                                 <h4 className="text-base font-semibold text-yellow-400 flex items-center gap-2 mb-4">
                                     <Info size={18} />
                                     Key Observations
