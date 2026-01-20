@@ -27,7 +27,16 @@ import {
     Check,
     BookOpen,
     Zap,
+    Network,
 } from 'lucide-react';
+import SaltAnalysisHero from './SaltAnalysisHero';
+import FlameTestSimulator from './FlameTestSimulator';
+import DryHeatingTest from './DryHeatingTest';
+import BoraxBeadTest from './BoraxBeadTest';
+import CationFlowchartSimulator from './CationFlowchartSimulator';
+import AnionFlowchartSimulator from './AnionFlowchartSimulator';
+import CationSchemeFlowchart from './CationSchemeFlowchart';
+import ReagentReactionTables from './ReagentReactionTables';
 import SaltAnalysisGuide from './SaltAnalysisGuide';
 import {
     ANIONS,
@@ -42,6 +51,8 @@ import {
     type Anion,
     type Cation,
 } from '../lib/saltAnalysisData';
+import SaltAnalysisQuiz from './SaltAnalysisQuiz';
+
 
 type GameMode = 'learning' | 'practice' | 'exam';
 type GameState = 'idle' | 'playing' | 'finished';
@@ -56,63 +67,8 @@ interface Observation {
 }
 
 // Mode selection cards
-const ModeCard = ({ mode, icon: Icon, title, desc, color, onStart }: { mode: GameMode; icon: any; title: string; desc: string; color: string; onStart: (mode: GameMode) => void }) => {
-    // Extract base color class for conditional styling
-    const getBaseColor = (colorClass: string) => {
-        if (colorClass.includes('cyan')) return 'cyan';
-        if (colorClass.includes('orange')) return 'orange';
-        return 'red';
-    };
+// Mode selection cards
 
-    const baseColor = getBaseColor(color);
-
-    const styles = {
-        cyan: {
-            bg: 'bg-gradient-to-br from-gray-800 to-cyan-900/40',
-            border: 'border-cyan-500/30 hover:border-cyan-400',
-            iconBg: 'bg-cyan-500/20',
-            iconText: 'text-cyan-400',
-            glow: 'group-hover:shadow-[0_0_20px_-5px_rgba(34,211,238,0.3)]'
-        },
-        orange: {
-            bg: 'bg-gradient-to-br from-gray-800 to-orange-900/40',
-            border: 'border-orange-500/30 hover:border-orange-400',
-            iconBg: 'bg-orange-500/20',
-            iconText: 'text-orange-400',
-            glow: 'group-hover:shadow-[0_0_20px_-5px_rgba(251,146,60,0.3)]'
-        },
-        red: {
-            bg: 'bg-gradient-to-br from-gray-800 to-red-900/40',
-            border: 'border-red-500/30 hover:border-red-400',
-            iconBg: 'bg-red-500/20',
-            iconText: 'text-red-400',
-            glow: 'group-hover:shadow-[0_0_20px_-5px_rgba(248,113,113,0.3)]'
-        }
-    }[baseColor];
-
-    return (
-        <motion.button
-            onClick={() => onStart(mode)}
-            whileHover={{ scale: 1.02, y: -5 }}
-            whileTap={{ scale: 0.98 }}
-            className={`text-left p-6 rounded-2xl border-2 transition-all duration-300 ${styles.bg} ${styles.border} ${styles.glow} group relative overflow-hidden`}
-        >
-            <div className={`absolute top-0 right-0 p-32 opacity-10 bg-gradient-to-br from-transparent to-${baseColor}-500 blur-3xl rounded-full translate-x-12 -translate-y-12 transition-opacity group-hover:opacity-20`} />
-
-            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 ${styles.iconBg}`}>
-                <Icon className={styles.iconText} size={28} />
-            </div>
-
-            <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">{title}</h3>
-            <p className="text-base text-gray-400 leading-relaxed mb-6">{desc}</p>
-
-            <div className="flex items-center gap-2 text-base font-bold group-hover:gap-3 transition-all">
-                <span className={styles.iconText}>Start Now</span>
-                <ArrowRight size={20} className={styles.iconText} />
-            </div>
-        </motion.button>
-    );
-};
 
 // Test button component
 const TestButton = ({ id, name, procedure, onPerform, isExpanded, onToggle }: { id: string; name: string; procedure: string; onPerform: () => void; isExpanded: boolean; onToggle: () => void }) => (
@@ -151,39 +107,152 @@ const TestButton = ({ id, name, procedure, onPerform, isExpanded, onToggle }: { 
     </div>
 );
 
-// Stat Card Component
-const StatCard = ({ label, value, icon: Icon, color, delay }: { label: string; value: number; icon: any; color: string; delay: number }) => {
-    const styles = {
-        cyan: { text: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20', glow: 'shadow-cyan-500/10', iconBg: 'bg-cyan-500/20' },
-        green: { text: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20', glow: 'shadow-green-500/10', iconBg: 'bg-green-500/20' },
-        purple: { text: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20', glow: 'shadow-purple-500/10', iconBg: 'bg-purple-500/20' },
-    }[color] || { text: 'text-gray-400', bg: 'bg-gray-500/10', border: 'border-gray-500/20', glow: 'shadow-gray-500/10', iconBg: 'bg-gray-500/20' };
 
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay, duration: 0.5 }}
-            className={`relative flex flex-col items-center justify-center p-5 rounded-2xl border ${styles.bg} ${styles.border} backdrop-blur-sm shadow-lg ${styles.glow} group hover:-translate-y-1 transition-all duration-300 overflow-hidden`}
-        >
-            <div className={`absolute -right-6 -top-6 w-24 h-24 rounded-full ${styles.iconBg} blur-2xl opacity-20 group-hover:opacity-40 transition-opacity`} />
 
-            <div className={`p-3 rounded-xl ${styles.iconBg} mb-3 group-hover:scale-110 transition-transform duration-300 ring-1 ring-white/10`}>
-                <Icon className={styles.text} size={24} />
-            </div>
+const CONCEPTUAL_QUESTIONS = [
+    {
+        id: 'pb',
+        label: 'The Ambiguous Behaviour of Lead',
+        color: 'text-purple-400',
+        question: 'Why does Lead (Pb²⁺) partially precipitate in Group I and then reappear in Group II analysis?',
+        answer: `<strong>Simple Explanation:</strong> Lead chloride (PbCl₂) is a bit of a "drama queen" among salts – it doesn't fully dissolve, but it also doesn't fully precipitate!<br/><br/>
 
-            <div className={`text-3xl font-bold ${styles.text} mb-1 tracking-tight`}>
-                {value}
-            </div>
+<strong>What happens step by step:</strong><br/>
+1. When you add dilute HCl (Group I reagent) to your salt solution, PbCl₂ forms as a white precipitate.<br/>
+2. But here's the catch – PbCl₂ is <em>slightly soluble</em> in cold water. So not all of it settles down.<br/>
+3. Some Pb²⁺ ions escape into the filtrate (the liquid that passes through).<br/>
+4. When this filtrate reaches Group II (where we pass H₂S in acidic medium), these remaining Pb²⁺ ions form black PbS precipitate.<br/><br/>
 
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
-                {label}
-            </div>
-        </motion.div>
-    );
-};
+<strong>Pro Tip:</strong> This is why Lead can appear in <em>both</em> Group I and Group II! In exams, if you see white ppt in Group I AND black ppt in Group II, think of Lead first.`
+    },
+    {
+        id: 'group2',
+        label: 'Separating Group II Sub-groups',
+        color: 'text-yellow-400',
+        question: 'How can we chemically distinguish and separate the Copper Group (IIA) from the Arsenic Group (IIB)?',
+        answer: `<strong>The Problem:</strong> Group II has too many cations! So we divide it into two sub-groups:<br/>
+• <strong>Group IIA (Copper Group):</strong> Cu²⁺, Pb²⁺, Bi³⁺, Cd²⁺, Hg²⁺<br/>
+• <strong>Group IIB (Arsenic Group):</strong> As³⁺, Sb³⁺, Sn²⁺, Sn⁴⁺<br/><br/>
+
+<strong>The Magic Reagent:</strong> Yellow Ammonium Polysulphide [(NH₄)₂Sₓ]<br/><br/>
+
+<strong>How it works:</strong><br/>
+1. Take all the Group II sulphide precipitates.<br/>
+2. Add Yellow Ammonium Polysulphide to them.<br/>
+3. <strong>Group IIB sulphides dissolve</strong> – they form soluble "thio-salts" (sulphur-containing complexes).<br/>
+4. <strong>Group IIA sulphides don't dissolve</strong> – they remain as residue.<br/><br/>
+
+<strong>Why does this happen?</strong> The Arsenic group metals (As, Sb, Sn) are acidic in nature and can form thio-anions. Copper group metals cannot do this.<br/><br/>
+
+<strong>Easy Memory Trick:</strong> "A-S-S" dissolve (As, Sb, Sn) = Arsenic group = Soluble in yellow ammonium sulphide!`
+    },
+    {
+        id: 'h2s_medium',
+        label: 'The Role of pH in Precipitation',
+        color: 'text-green-400',
+        question: 'Why is H₂S passed in an acidic medium for Group II but strictly alkaline medium for Group IV?',
+        answer: `<strong>This is the MOST important concept in Salt Analysis!</strong><br/><br/>
+
+<strong>The Key Principle:</strong> Ksp (Solubility Product)<br/>
+• Every sparingly soluble salt has a Ksp value.<br/>
+• <em>Precipitation happens only when Ionic Product > Ksp</em><br/><br/>
+
+<strong>For Group II (Acidic Medium – add HCl):</strong><br/>
+• Group II sulphides (CuS, PbS, etc.) have <strong>very low Ksp</strong> values.<br/>
+• This means even a <em>tiny amount</em> of S²⁻ ions is enough to precipitate them.<br/>
+• HCl keeps the medium acidic, which <strong>suppresses the ionization of H₂S</strong> (Common Ion Effect with H⁺).<br/>
+• So we get low [S²⁻], but it's still enough for Group II!<br/><br/>
+
+<strong>For Group IV (Alkaline Medium – add NH₄OH):</strong><br/>
+• Group IV sulphides (ZnS, NiS, CoS, MnS) have <strong>high Ksp</strong> values.<br/>
+• They need a <strong>lot of S²⁻ ions</strong> to precipitate.<br/>
+• NH₄OH makes the medium basic, which <strong>increases the ionization of H₂S</strong>.<br/>
+• More H₂S breaks down → More S²⁻ ions → Group IV precipitates!<br/><br/>
+
+<strong>Think of it like this:</strong> Group II cations are "easy to catch" (low Ksp), Group IV cations are "hard to catch" (high Ksp). You need more S²⁻ "bait" for Group IV!`
+    },
+    {
+        id: 'nh4cl_group3',
+        label: 'Control of Hydroxide Concentration',
+        color: 'text-pink-400',
+        question: 'What is the specific role of NH₄Cl when adding NH₄OH during Group III Analysis?',
+        answer: `<strong>The Situation:</strong> In Group III, we want to precipitate Fe(OH)₃, Al(OH)₃, and Cr(OH)₃ using NH₄OH.<br/><br/>
+
+<strong>The Problem:</strong> If we add only NH₄OH, it gives too many OH⁻ ions! This would also precipitate:<br/>
+• Mg(OH)₂ (which belongs to Group VI)<br/>
+• Group IV cations as hydroxides<br/><br/>
+
+<strong>The Solution:</strong> Add NH₄Cl along with NH₄OH!<br/><br/>
+
+<strong>How NH₄Cl helps (Common Ion Effect):</strong><br/>
+1. NH₄OH ⇌ NH₄⁺ + OH⁻ (this equilibrium gives us OH⁻)<br/>
+2. When we add NH₄Cl, it fully dissociates: NH₄Cl → NH₄⁺ + Cl⁻<br/>
+3. Now there's extra NH₄⁺ from NH₄Cl!<br/>
+4. According to Le Chatelier's Principle, the equilibrium shifts LEFT.<br/>
+5. This <strong>reduces the [OH⁻] concentration</strong> in solution.<br/><br/>
+
+<strong>Result:</strong><br/>
+• The reduced [OH⁻] is just enough to exceed the Ksp of Group III hydroxides (which have low Ksp).<br/>
+• But NOT enough to precipitate Mg(OH)₂ and Group IV hydroxides (which have higher Ksp).<br/><br/>
+
+<strong>Simple Analogy:</strong> Think of NH₄Cl as a "brake" that controls how much OH⁻ is released. Without the brake, too many unwanted cations would precipitate!`
+    },
+    {
+        id: 'prevention_mg',
+        label: 'Preventing Premature Precipitation',
+        color: 'text-cyan-400',
+        question: 'How does the Common Ion Effect protect Magnesium and Group IV cations from interfering early?',
+        answer: `<strong>Why Magnesium is Special:</strong> Mg²⁺ belongs to Group VI, but Mg(OH)₂ can precipitate if [OH⁻] is too high during Group III or IV analysis!<br/><br/>
+
+<strong>The Danger:</strong><br/>
+• During Group III (NH₄OH + NH₄Cl), if [OH⁻] is not controlled, Mg(OH)₂ precipitates.<br/>
+• During Group IV (H₂S + NH₄OH), same problem can occur.<br/>
+• This would <strong>contaminate</strong> our Group III and IV precipitates!<br/><br/>
+
+<strong>How Common Ion Effect Saves the Day:</strong><br/>
+1. We add NH₄Cl in Group III (provides extra NH₄⁺).<br/>
+2. We add NH₄Cl in Group V analysis too (when using (NH₄)₂CO₃).<br/>
+3. The extra NH₄⁺ suppresses OH⁻ concentration.<br/>
+4. Mg(OH)₂ has a relatively high Ksp, so this lower [OH⁻] won't precipitate it.<br/><br/>
+
+<strong>Similarly for Group IV cations:</strong><br/>
+• Zn(OH)₂, Mn(OH)₂, Ni(OH)₂, Co(OH)₂ all have higher Ksp than Group III hydroxides.<br/>
+• The controlled [OH⁻] only precipitates Group III, leaving Group IV in solution for later.<br/><br/>
+
+<strong>Key Takeaway:</strong> NH₄Cl is your "bodyguard" in salt analysis – it protects later groups from precipitating early!`
+    },
+    {
+        id: 'zero',
+        label: 'The Zero Group Exception',
+        color: 'text-blue-400',
+        question: 'Why must Ammonium (NH₄⁺) be analyzed in the original solution unlike all other cations?',
+        answer: `<strong>The Unique Problem with NH₄⁺:</strong> During salt analysis, we add many ammonium-containing reagents:<br/>
+• NH₄Cl (in Group III, IV, V)<br/>
+• NH₄OH (in Group III, IV)<br/>
+• (NH₄)₂CO₃ (in Group V)<br/>
+• (NH₄)₂SO₄, (NH₄)₂C₂O₄ (in confirmatory tests)<br/><br/>
+
+<strong>What happens if we test for NH₄⁺ after Group analysis?</strong><br/>
+• All these added reagents contain NH₄⁺!<br/>
+• The test would show <strong>positive result even if NH₄⁺ was not originally present</strong> in your salt!<br/>
+• This is called a <strong>"False Positive"</strong> – a disaster in exams!<br/><br/>
+
+<strong>The Solution:</strong><br/>
+1. Test for NH₄⁺ in the <strong>original solution</strong> BEFORE starting group analysis.<br/>
+2. Take a small portion of your original salt solution.<br/>
+3. Add NaOH and heat gently.<br/>
+4. If NH₄⁺ is present: NH₄⁺ + OH⁻ → NH₃↑ + H₂O<br/>
+5. The ammonia gas has a sharp, pungent smell and turns moist red litmus paper blue.<br/><br/>
+
+<strong>This is why NH₄⁺ is called "Zero Group":</strong> It must be tested at the very beginning (position zero), before we add any reagents that could interfere.<br/><br/>
+
+<strong>Exam Tip:</strong> Always write "Test for NH₄⁺ in original solution" in your practical record!`
+    }
+];
+
 
 export default function SaltAnalysisClient() {
+    const [openFAQ, setOpenFAQ] = useState<string | null>(null);
     const [gameMode, setGameMode] = useState<GameMode>('learning');
     const [gameState, setGameState] = useState<GameState>('idle');
     const [currentSalt, setCurrentSalt] = useState<Salt | null>(null);
@@ -337,94 +406,125 @@ export default function SaltAnalysisClient() {
     };
 
 
-
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white pt-24 sm:pt-28">
-            <div className="container mx-auto px-4 py-8">
-                {/* Header */}
-                <div className="text-center mb-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500/20 to-cyan-500/20 rounded-full mb-4 border border-green-500/30"
-                    >
-                        <span className="text-sm font-medium text-green-300">End your Salt Analysis struggles forever!</span>
-                    </motion.div>
+        <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white pb-32">
+            <SaltAnalysisHero />
 
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-green-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent mb-4">
-                        Salt Analysis Simulator
-                    </h1>
-
-                    <p className="text-gray-300 mt-2 text-lg sm:text-xl max-w-2xl mx-auto">
-                        Master NCERT qualitative analysis with confidence. Practice like a pro, score like a topper! 🎯
-                    </p>
-                </div>
-
+            <div className="container mx-auto px-4 py-8 relative z-20 -mt-20">
                 <AnimatePresence mode="wait">
                     {/* Mode Selection */}
                     {gameState === 'idle' && (
                         <motion.div
+                            id="mode-selection"
                             key="idle"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
                             className="max-w-4xl mx-auto"
                         >
-                            <div className="text-center mb-8">
-                                <h2 className="text-xl font-semibold text-white mb-2">Select Your Mode</h2>
-                                <p className="text-gray-400">Choose how you want to practice</p>
-                            </div>
+                            <div className="relative">
+                                {/* Decorative Background Elements */}
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-4xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 blur-3xl rounded-full -z-10" />
 
-                            <div className="grid md:grid-cols-3 gap-4">
-                                <ModeCard
-                                    mode="learning"
-                                    icon={GraduationCap}
-                                    title="Learning Mode"
-                                    desc="Step-by-step guided analysis with hints and explanations"
-                                    color="bg-gray-800/50 border-cyan-500/30 hover:border-cyan-400"
-                                    onStart={startGame}
-                                />
-                                <ModeCard
-                                    mode="practice"
-                                    icon={Target}
-                                    title="Practice Mode"
-                                    desc="Random salt, self-paced analysis without time limit"
-                                    color="bg-gray-800/50 border-orange-500/30 hover:border-orange-400"
-                                    onStart={startGame}
-                                />
-                                <ModeCard
-                                    mode="exam"
-                                    icon={Timer}
-                                    title="Exam Mode"
-                                    desc="Timed analysis simulating CBSE practical exam"
-                                    color="bg-gray-800/50 border-red-500/30 hover:border-red-400"
-                                    onStart={startGame}
-                                />
+                                <div className="text-center mb-12">
+                                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+                                        Choose Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">Path</span>
+                                    </h2>
+                                    <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                                        Whether you're just starting or preparing for finals, we have a mode for you.
+                                    </p>
+                                </div>
+
+                                <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+                                    {/* Learning Mode */}
+                                    <button
+                                        onClick={() => startGame('learning')}
+                                        className="group relative bg-gray-900/40 hover:bg-gray-800/60 border border-gray-700/50 hover:border-cyan-500/50 rounded-3xl p-8 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.3)] flex flex-col items-center text-center overflow-hidden"
+                                    >
+                                        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                                        <div className="w-20 h-20 bg-gray-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-gray-700 group-hover:border-cyan-500/50 shadow-lg">
+                                            <GraduationCap size={40} className="text-cyan-400" />
+                                        </div>
+
+                                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">The Apprentice</h3>
+                                        <p className="text-cyan-500 text-xs font-bold uppercase tracking-widest mb-4">Learning Mode</p>
+                                        <p className="text-gray-400 text-sm leading-relaxed mb-8">
+                                            Step-by-step guidance with real-time hints. Perfect for your first analysis.
+                                        </p>
+
+                                        <div className="mt-auto flex items-center gap-2 text-cyan-400 font-bold group-hover:gap-3 transition-all">
+                                            Start Journey <ArrowRight size={18} />
+                                        </div>
+                                    </button>
+
+                                    {/* Practice Mode */}
+                                    <button
+                                        onClick={() => startGame('practice')}
+                                        className="group relative bg-gray-900/40 hover:bg-gray-800/60 border border-gray-700/50 hover:border-purple-500/50 rounded-3xl p-8 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(168,85,247,0.3)] flex flex-col items-center text-center overflow-hidden"
+                                    >
+                                        <div className="absolute inset-0 bg-gradient-to-b from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                                        <div className="w-20 h-20 bg-gray-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-gray-700 group-hover:border-purple-500/50 shadow-lg">
+                                            <FlaskConical size={40} className="text-purple-400" />
+                                        </div>
+
+                                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">The Analyst</h3>
+                                        <p className="text-purple-500 text-xs font-bold uppercase tracking-widest mb-4">Practice Mode</p>
+                                        <p className="text-gray-400 text-sm leading-relaxed mb-8">
+                                            Self-paced analysis with random salts. No hints, just you and the logic.
+                                        </p>
+
+                                        <div className="mt-auto flex items-center gap-2 text-purple-400 font-bold group-hover:gap-3 transition-all">
+                                            Begin Analysis <ArrowRight size={18} />
+                                        </div>
+                                    </button>
+
+                                    {/* Exam Mode */}
+                                    <button
+                                        onClick={() => startGame('exam')}
+                                        className="group relative bg-gray-900/40 hover:bg-gray-800/60 border border-gray-700/50 hover:border-red-500/50 rounded-3xl p-8 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(239,68,68,0.3)] flex flex-col items-center text-center overflow-hidden"
+                                    >
+                                        <div className="absolute inset-0 bg-gradient-to-b from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                                        <div className="w-20 h-20 bg-gray-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-gray-700 group-hover:border-red-500/50 shadow-lg">
+                                            <Timer size={40} className="text-red-400" />
+                                        </div>
+
+                                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-red-300 transition-colors">The Expert</h3>
+                                        <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-4">Exam Mode</p>
+                                        <p className="text-gray-400 text-sm leading-relaxed mb-8">
+                                            High stakes. Timed conditions. Simulate the real CBSE practical exam.
+                                        </p>
+
+                                        <div className="mt-auto flex items-center gap-2 text-red-400 font-bold group-hover:gap-3 transition-all">
+                                            Start Exam <ArrowRight size={18} />
+                                        </div>
+                                    </button>
+                                </div>
                             </div>
 
                             {/* Quick Stats */}
-                            <div className="mt-12 grid grid-cols-3 gap-4 sm:gap-6">
-                                <StatCard
-                                    label="Anions"
-                                    value={ANIONS.length}
-                                    icon={Zap}
-                                    color="cyan"
-                                    delay={0.1}
-                                />
-                                <StatCard
-                                    label="Cations"
-                                    value={CATIONS.length}
-                                    icon={Sparkles}
-                                    color="green"
-                                    delay={0.2}
-                                />
-                                <StatCard
-                                    label="Salts"
-                                    value={SALTS.length}
-                                    icon={FlaskConical}
-                                    color="purple"
-                                    delay={0.3}
-                                />
+                            {/* Quick Stats (Subtle) */}
+                            <div className="mt-10 flex flex-wrap justify-center gap-4 opacity-50 hover:opacity-100 transition-opacity duration-500">
+                                <div className="px-4 py-2 bg-gray-900/30 rounded-full border border-white/5 flex items-center gap-3">
+                                    <Zap size={14} className="text-cyan-500" />
+                                    <span className="text-gray-300 font-mono text-sm">
+                                        <span className="text-white font-bold">{ANIONS.length}</span> ANIONS
+                                    </span>
+                                </div>
+                                <div className="px-4 py-2 bg-gray-900/30 rounded-full border border-white/5 flex items-center gap-3">
+                                    <Sparkles size={14} className="text-emerald-500" />
+                                    <span className="text-gray-300 font-mono text-sm">
+                                        <span className="text-white font-bold">{CATIONS.length}</span> CATIONS
+                                    </span>
+                                </div>
+                                <div className="px-4 py-2 bg-gray-900/30 rounded-full border border-white/5 flex items-center gap-3">
+                                    <FlaskConical size={14} className="text-purple-500" />
+                                    <span className="text-gray-300 font-mono text-sm">
+                                        <span className="text-white font-bold">{SALTS.length}</span> SALTS
+                                    </span>
+                                </div>
                             </div>
                         </motion.div>
                     )}
@@ -816,8 +916,198 @@ export default function SaltAnalysisClient() {
                     )}
                 </AnimatePresence>
             </div>
-            {/* Revision Guide Section */}
+
+            {/* ========== SECTION 2: REVISION GUIDE ========== */}
             <SaltAnalysisGuide />
+
+            {/* ========== SECTION 3: ANION SIMULATOR ========== */}
+            <section id="anion-simulator" className="py-20 bg-gray-900 border-t border-gray-800">
+                <div className="container mx-auto px-4 max-w-7xl">
+                    <div className="text-center mb-10">
+                        <span className="inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 mb-4 shadow-[0_0_15px_-3px_rgba(6,182,212,0.2)]">
+                            STEP 1: Anion Analysis
+                        </span>
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                            Anion Identification <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Simulator</span>
+                        </h2>
+                        <p className="text-gray-400 max-w-2xl mx-auto">
+                            Select an anion and simulate its identification using dilute and concentrated H₂SO₄ group tests.
+                        </p>
+                    </div>
+                    <AnionFlowchartSimulator />
+                </div>
+            </section>
+
+            {/* ========== SECTION 4: DRY TESTS (Flame, Dry Heating, Borax) ========== */}
+            <section id="dry-tests" className="py-20 bg-gradient-to-b from-gray-900 to-gray-800 border-t border-gray-800">
+                <div className="container mx-auto px-4 max-w-7xl">
+                    <div className="text-center mb-16">
+                        <span className="inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-orange-500/10 text-orange-400 border border-orange-500/20 mb-4 shadow-[0_0_15px_-3px_rgba(251,146,60,0.2)]">
+                            Preliminary Tests
+                        </span>
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                            Dry Tests & <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">Flame Analysis</span>
+                        </h2>
+                        <p className="text-gray-400 max-w-2xl mx-auto">
+                            Master the preliminary dry tests that help narrow down the possible cations before wet analysis.
+                        </p>
+                    </div>
+
+                    {/* Dry Heating Test */}
+                    <DryHeatingTest />
+
+                    {/* Flame Test Simulator */}
+                    <FlameTestSimulator />
+
+                    {/* Borax Bead Test Simulator */}
+                    <BoraxBeadTest />
+                </div>
+            </section>
+
+            {/* ========== SECTION 5: CATION FLOWCHART ========== */}
+            <section id="cation-flowchart" className="py-20 bg-gray-900 border-t border-gray-800">
+                <div className="container mx-auto px-4 max-w-7xl">
+                    <div className="text-center mb-16">
+                        <span className="inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-purple-500/10 text-purple-400 border border-purple-500/20 mb-4 shadow-[0_0_15px_-3px_rgba(168,85,247,0.2)]">
+                            Systematic Analysis
+                        </span>
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                            Cation Flowchart <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">for Wet Tests</span>
+                        </h2>
+
+                        {/* Educational Intro */}
+                        <div className="text-left max-w-5xl mx-auto mb-12">
+                            <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                                <BookOpen className="text-purple-400" size={28} />
+                                Understanding Systematic Analysis
+                            </h3>
+                            <div className="text-gray-300 text-lg leading-relaxed space-y-4">
+                                <p>
+                                    Wet tests are carried out in solution. This method relies on the <strong>Separation of Cations into Groups</strong> using specific <em>Group Reagents</em>.
+                                    A group reagent precipitates a set of cations (e.g., Dilute HCl precipitates Group I chlorides like PbCl₂).
+                                </p>
+                                <p>
+                                    <strong>Crucial Rule:</strong> You must strictly follow the order. Only after completely precipitating and separating one group can you proceed to the next.
+                                    <em> If a cation from a previous group remains, it will interfere with subsequent tests.</em>
+                                </p>
+                            </div>
+
+                            <div className="flex flex-col md:flex-row gap-4 mt-8">
+                                <div className="flex-1 bg-gray-800/30 border-l-4 border-purple-500 p-4 rounded-r-lg">
+                                    <h4 className="font-bold text-white mb-1">Step 1: Precipitation</h4>
+                                    <p className="text-sm text-gray-400">Add Group Reagent. If a ppt forms, the cation belongs to that group.</p>
+                                </div>
+                                <div className="flex-1 bg-gray-800/30 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                                    <h4 className="font-bold text-white mb-1">Step 2: Filtration</h4>
+                                    <p className="text-sm text-gray-400">Filter out the ppt. Use the <strong>filtrate</strong> for the next group.</p>
+                                </div>
+                                <div className="flex-1 bg-gray-800/30 border-l-4 border-green-500 p-4 rounded-r-lg">
+                                    <h4 className="font-bold text-white mb-1">Step 3: Sequence</h4>
+                                    <p className="text-sm text-gray-400">Never skip a group. Identify, separate, then proceed.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Interactive Flowchart */}
+                    <CationSchemeFlowchart />
+                </div>
+            </section>
+
+            {/* ========== SECTION 6: CATION SIMULATOR ========== */}
+            <section id="cation-simulator" className="py-20 bg-gradient-to-b from-gray-900 to-gray-800 border-t border-gray-800">
+                <div className="container mx-auto px-4 max-w-7xl">
+                    <div className="text-center mb-10">
+                        <span className="inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-green-500/10 text-green-400 border border-green-500/20 mb-4 shadow-[0_0_15px_-3px_rgba(74,222,128,0.2)]">
+                            STEP 2: Cation Analysis
+                        </span>
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                            Cation Identification <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500">Simulator</span>
+                        </h2>
+                        <p className="text-gray-400 max-w-2xl mx-auto">
+                            Select a cation and trace its path through the systematic group analysis from Group I to Group VI.
+                        </p>
+                    </div>
+                    <CationFlowchartSimulator />
+                </div>
+            </section>
+
+            {/* ========== QUICK REFERENCE TABLES ========== */}
+            <section className="py-16 bg-gray-800/50 border-t border-gray-800">
+                <div className="container mx-auto px-4 max-w-7xl">
+                    <ReagentReactionTables />
+                </div>
+            </section>
+
+            {/* ========== SECTION 7: QUESTION PRACTICE ========== */}
+            <section id="question-practice" className="py-20 bg-gray-900 border-t border-gray-800">
+                <div className="container mx-auto px-4 max-w-7xl">
+                    <div className="text-center mb-16">
+                        <span className="inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 mb-4 shadow-[0_0_15px_-3px_rgba(234,179,8,0.2)]">
+                            Test Your Knowledge
+                        </span>
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                            Question <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">Practice</span>
+                        </h2>
+                        <p className="text-gray-400 max-w-2xl mx-auto">
+                            Test your understanding of Salt Analysis with conceptual MCQs and tricky questions.
+                        </p>
+                    </div>
+
+                    {/* Quiz Component */}
+                    <div className="mb-20">
+                        <SaltAnalysisQuiz />
+                    </div>
+
+                    {/* Conceptual Questions (Tricky Points) - Expandable */}
+                    <div className="max-w-4xl mx-auto">
+                        <h3 className="text-2xl font-bold text-white mb-8 text-center">Frequently Asked Conceptual Questions</h3>
+                        <div className="space-y-6">
+                            {CONCEPTUAL_QUESTIONS.map((item) => {
+                                const isOpen = openFAQ === item.id;
+                                return (
+                                    <div key={item.id} className="bg-gray-800/30 rounded-2xl border border-gray-700/50 overflow-hidden">
+                                        <button
+                                            onClick={() => setOpenFAQ(isOpen ? null : item.id)}
+                                            className="w-full text-left p-6 group flex items-start justify-between gap-6 hover:bg-gray-800/50 transition-colors"
+                                        >
+                                            <div className="flex flex-col gap-2">
+                                                <h4 className={`font-bold ${item.color} text-xs uppercase tracking-wider`}>
+                                                    {item.label}
+                                                </h4>
+                                                <h5 className="text-lg font-bold text-white group-hover:text-purple-300 transition-colors">
+                                                    {item.question}
+                                                </h5>
+                                            </div>
+                                            <div className={`mt-1 p-1.5 rounded-full border border-gray-700 transition-all duration-300 shrink-0 ${isOpen ? 'bg-purple-500/20 rotate-180 border-purple-500/50' : 'bg-gray-800'}`}>
+                                                <ChevronDown className={isOpen ? 'text-purple-400' : 'text-gray-400'} size={20} />
+                                            </div>
+                                        </button>
+
+                                        <AnimatePresence>
+                                            {isOpen && (
+                                                <motion.div
+                                                    initial={{ opacity: 0, height: 0 }}
+                                                    animate={{ opacity: 1, height: 'auto' }}
+                                                    exit={{ opacity: 0, height: 0 }}
+                                                    className="overflow-hidden"
+                                                >
+                                                    <div className="px-6 pb-6">
+                                                        <p
+                                                            className="text-gray-300 text-base leading-loose"
+                                                            dangerouslySetInnerHTML={{ __html: item.answer }}
+                                                        />
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 }

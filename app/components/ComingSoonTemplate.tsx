@@ -141,7 +141,7 @@ export default function ComingSoonTemplate({
                                 Class 12 Revision
                             </Link>
                             <Link
-                                href="/flashcards"
+                                href="/chemistry-flashcards"
                                 className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/5 transition-colors"
                             >
                                 <Sparkles className="w-5 h-5" />

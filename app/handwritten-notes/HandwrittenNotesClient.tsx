@@ -12,30 +12,30 @@ const categoryStyles: Record<string, { icon: React.ElementType; gradient: string
     'Organic Chemistry': {
         icon: FlaskConical,
         gradient: 'from-pink-500 to-rose-500',
-        bg: 'bg-pink-100',
-        text: 'text-pink-600',
-        border: 'border-pink-200 hover:border-pink-400'
+        bg: 'bg-pink-500/10',
+        text: 'text-pink-400',
+        border: 'border-pink-500/20 hover:border-pink-500/50'
     },
     'Inorganic Chemistry': {
         icon: Atom,
         gradient: 'from-purple-500 to-indigo-500',
-        bg: 'bg-purple-100',
-        text: 'text-purple-600',
-        border: 'border-purple-200 hover:border-purple-400'
+        bg: 'bg-purple-500/10',
+        text: 'text-purple-400',
+        border: 'border-purple-500/20 hover:border-purple-500/50'
     },
     'Physical Chemistry': {
         icon: Sparkles,
         gradient: 'from-cyan-500 to-blue-500',
-        bg: 'bg-cyan-100',
-        text: 'text-cyan-600',
-        border: 'border-cyan-200 hover:border-cyan-400'
+        bg: 'bg-cyan-500/10',
+        text: 'text-cyan-400',
+        border: 'border-cyan-500/20 hover:border-cyan-500/50'
     },
     'General chemistry': {
         icon: BookOpen,
         gradient: 'from-amber-500 to-orange-500',
-        bg: 'bg-amber-100',
-        text: 'text-amber-600',
-        border: 'border-amber-200 hover:border-amber-400'
+        bg: 'bg-amber-500/10',
+        text: 'text-amber-400',
+        border: 'border-amber-500/20 hover:border-amber-500/50'
     }
 };
 
@@ -64,7 +64,7 @@ export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNote
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 font-sans">
+        <div className="min-h-screen bg-slate-950 font-sans">
             {/* PDF Reader Modal */}
             <AnimatePresence>
                 {viewingNote && (
@@ -118,21 +118,25 @@ export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNote
             </AnimatePresence>
 
             {/* Hero Section */}
-            <section className="pt-32 pb-16 px-4" style={{ background: 'linear-gradient(135deg, #b45309 0%, #d97706 50%, #f59e0b 100%)' }}>
-                <div className="max-w-6xl mx-auto text-center">
+            <section className="pt-32 pb-16 px-4 relative overflow-hidden">
+                {/* Background Blobs */}
+                <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
+                <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
+
+                <div className="max-w-6xl mx-auto text-center relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-6">
+                        <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
                             <FileText size={16} />
                             Free Resources
                         </div>
                         <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
                             Handwritten Notes
                         </h1>
-                        <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
+                        <p className="text-lg text-slate-400 mb-8 max-w-2xl mx-auto">
                             Download my personal handwritten notes, highlighted NCERTs, and revision sheets
                             for <span className="font-semibold">JEE, NEET & CBSE</span> Chemistry
                         </p>
@@ -141,10 +145,10 @@ export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNote
                     {/* Stats Cards */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mt-8">
                         {[
-                            { label: 'Total Notes', value: stats.total, icon: FileText, color: 'bg-white/20 hover:bg-white/30' },
-                            { label: 'Organic', value: stats.organic, icon: FlaskConical, color: 'bg-pink-500/30 hover:bg-pink-500/50' },
-                            { label: 'Inorganic', value: stats.inorganic, icon: Atom, color: 'bg-purple-500/30 hover:bg-purple-500/50' },
-                            { label: 'Physical', value: stats.physical, icon: Sparkles, color: 'bg-blue-500/30 hover:bg-blue-500/50' },
+                            { label: 'Total Notes', value: stats.total, icon: FileText, color: 'bg-slate-800/50 border border-white/5 hover:bg-slate-800' },
+                            { label: 'Organic', value: stats.organic, icon: FlaskConical, color: 'bg-pink-500/10 border border-pink-500/20 hover:bg-pink-500/20' },
+                            { label: 'Inorganic', value: stats.inorganic, icon: Atom, color: 'bg-purple-500/10 border border-purple-500/20 hover:bg-purple-500/20' },
+                            { label: 'Physical', value: stats.physical, icon: Sparkles, color: 'bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/20' },
                         ].map((stat, i) => (
                             <motion.div
                                 key={stat.label}
@@ -166,7 +170,7 @@ export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNote
             {/* Search & Filter Bar */}
             <section className="px-4 py-8 -mt-6 relative z-10">
                 <div className="max-w-4xl mx-auto">
-                    <div className="bg-white rounded-2xl shadow-xl p-4 border border-gray-100">
+                    <div className="bg-slate-900/80 backdrop-blur-md rounded-2xl shadow-xl p-4 border border-white/10">
                         <div className="flex flex-col md:flex-row gap-4">
                             {/* Search Input */}
                             <div className="relative flex-1">
@@ -176,7 +180,7 @@ export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNote
                                     placeholder="Search notes..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-12 pr-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100 transition-all"
+                                    className="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 pl-12 pr-4 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 transition-all"
                                 />
                             </div>
 
@@ -186,7 +190,7 @@ export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNote
                                 <select
                                     value={categoryFilter}
                                     onChange={(e) => setCategoryFilter(e.target.value)}
-                                    className="appearance-none bg-gray-50 border border-gray-200 rounded-xl py-3 pl-12 pr-10 text-gray-800 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100 transition-all cursor-pointer min-w-[200px]"
+                                    className="appearance-none bg-slate-800 border border-slate-700 rounded-xl py-3 pl-12 pr-10 text-white focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 transition-all cursor-pointer min-w-[200px]"
                                 >
                                     <option value="all">All Categories</option>
                                     {categories.map(cat => (
@@ -222,7 +226,7 @@ export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNote
                                             initial={{ opacity: 0, y: 10 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             transition={{ delay: index * 0.03 }}
-                                            className={`group relative flex items-center justify-between bg-white rounded-xl p-4 border border-gray-200 hover:border-amber-300 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer`}
+                                            className={`group relative flex items-center justify-between bg-white/5 rounded-xl p-4 border border-white/5 hover:border-amber-500/30 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer`}
                                         >
                                             <div className="flex items-center gap-3 overflow-hidden flex-1">
                                                 {/* Icon Box */}
@@ -232,11 +236,11 @@ export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNote
 
                                                 {/* Text Info */}
                                                 <div className="flex flex-col min-w-0 flex-1">
-                                                    <h3 className="text-sm md:text-base font-bold text-gray-800 group-hover:text-amber-600 transition-colors truncate">
+                                                    <h3 className="text-sm md:text-base font-bold text-slate-200 group-hover:text-amber-400 transition-colors truncate">
                                                         {note.title}
                                                     </h3>
                                                     <div className="flex items-center gap-2 mt-1">
-                                                        <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200 group-hover:bg-amber-50 group-hover:text-amber-600 group-hover:border-amber-100 transition-colors">
+                                                        <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 group-hover:bg-amber-500/10 group-hover:text-amber-400 group-hover:border-amber-500/20 transition-colors">
                                                             {note.category}
                                                         </span>
                                                     </div>
@@ -252,11 +256,11 @@ export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNote
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="text-center py-16 bg-white rounded-2xl border border-gray-200"
+                                className="text-center py-16 bg-slate-900/50 rounded-2xl border border-white/5"
                             >
-                                <FileText size={48} className="mx-auto mb-4 text-gray-300" />
-                                <h3 className="text-xl font-semibold text-gray-700 mb-2">No notes found</h3>
-                                <p className="text-gray-500 mb-4">Try adjusting your search or filter</p>
+                                <FileText size={48} className="mx-auto mb-4 text-slate-700" />
+                                <h3 className="text-xl font-semibold text-slate-200 mb-2">No notes found</h3>
+                                <p className="text-slate-500 mb-4">Try adjusting your search or filter</p>
                                 <button
                                     onClick={() => {
                                         setSearchQuery('');

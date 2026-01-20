@@ -70,7 +70,7 @@ const getRecommendations = (answers: Record<string, string>) => {
 
     // Secondary recommendations
     if (style === 'notes') {
-        recommendations.push({ title: 'Flashcards', href: '/flashcards', desc: 'Active recall practice' });
+        recommendations.push({ title: 'Flashcards', href: '/chemistry-flashcards', desc: 'Active recall practice' });
         recommendations.push({ title: 'Handwritten Notes', href: '/handwritten-notes', desc: 'Premium notes by Paaras Sir' });
     } else if (style === 'quick') {
         recommendations.push({ title: '2 Minute Chemistry', href: '/2-minute-chemistry', desc: 'Bite-sized concept videos' });

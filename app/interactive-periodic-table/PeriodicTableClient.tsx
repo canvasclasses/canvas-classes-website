@@ -234,8 +234,8 @@ export default function PeriodicTableClient() {
         );
     };
 
-    // Block Info Modal - Shows NCERT tables for each block
-    const BlockInfoModal = () => {
+    // Block Info Section - Embedded component showing NCERT tables for each block
+    const BlockInfoSection = () => {
         if (!selectedBlock || !BLOCK_DATA[selectedBlock]) return null;
         const blockInfo = BLOCK_DATA[selectedBlock];
 
@@ -248,101 +248,122 @@ export default function PeriodicTableClient() {
 
         return (
             <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-                onClick={() => setSelectedBlock(null)}
+                id="block-info-section"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                className={`mt-8 bg-gradient-to-br ${blockColors[selectedBlock] || 'from-gray-500/20 to-gray-600/20 border-gray-500/40'} bg-gray-900 border border-gray-700 rounded-2xl overflow-hidden scroll-mt-24`}
             >
-                <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.9, opacity: 0 }}
-                    className={`bg-gradient-to-br ${blockColors[selectedBlock] || 'from-gray-500/20 to-gray-600/20 border-gray-500/40'} bg-gray-900 border rounded-2xl max-w-4xl max-h-[85vh] overflow-y-auto`}
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    {/* Header */}
-                    <div className="sticky top-0 bg-gray-900/95 backdrop-blur-sm p-4 border-b border-gray-700 flex items-center justify-between">
-                        <div className="flex items-center gap-3">
+                {/* Header */}
+                <div className="bg-gray-900/50 backdrop-blur-sm p-6 border-b border-gray-700/50 flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                        <div className="p-3 rounded-xl bg-gray-800/50 border border-gray-700/50">
                             <BookOpen className="text-cyan-400" size={24} />
-                            <div>
-                                <h2 className="text-xl font-bold text-white">{blockInfo.name}</h2>
-                                <p className="text-sm text-gray-400">{blockInfo.description}</p>
-                            </div>
                         </div>
-                        <button
-                            onClick={() => setSelectedBlock(null)}
-                            className="text-gray-400 hover:text-white p-2 hover:bg-gray-700 rounded-lg transition-colors"
-                        >
-                            <X size={24} />
-                        </button>
+                        <div>
+                            <h2 className="text-2xl font-bold text-white">{blockInfo.name}</h2>
+                            <p className="text-gray-400">{blockInfo.description}</p>
+                        </div>
                     </div>
+                    <button
+                        onClick={() => setSelectedBlock(null)}
+                        className="text-gray-400 hover:text-white p-2 hover:bg-gray-700/50 rounded-lg transition-colors"
+                        title="Close Section"
+                    >
+                        <X size={24} />
+                    </button>
+                </div>
 
-                    {/* Key Points */}
-                    {blockInfo.keyPoints && blockInfo.keyPoints.length > 0 && (
-                        <div className="p-4 bg-gray-800/50">
-                            <h3 className="text-sm font-semibold text-cyan-300 mb-2">Key Points:</h3>
-                            <ul className="grid grid-cols-1 md:grid-cols-2 gap-1">
-                                {blockInfo.keyPoints.map((point, idx) => (
-                                    <li key={idx} className="text-sm text-gray-300 flex items-start gap-2">
-                                        <span className="text-cyan-400">•</span> {point}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
+                {/* Key Points */}
+                {blockInfo.keyPoints && blockInfo.keyPoints.length > 0 && (
+                    <div className="p-4 bg-gray-800/50">
+                        <h3 className="text-sm font-semibold text-cyan-300 mb-2">Key Points:</h3>
+                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-1">
+                            {blockInfo.keyPoints.map((point, idx) => (
+                                <li key={idx} className="text-sm text-gray-300 flex items-start gap-2">
+                                    <span className="text-cyan-400">•</span> {point}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
 
-                    {/* Tables */}
-                    <div className="p-4 space-y-6">
-                        {blockInfo.tables.map((table, tableIdx) => (
-                            <div key={tableIdx} className="bg-gray-800/60 rounded-xl overflow-hidden">
-                                {/* Table Title */}
-                                <div className="bg-gray-700/50 px-4 py-3 flex items-center justify-between">
-                                    <h3 className="font-semibold text-white">{table.title}</h3>
-                                    <span className="text-xs text-cyan-400 bg-cyan-500/20 px-2 py-1 rounded">{table.source}</span>
-                                </div>
+                {/* Tables */}
+                <div className="p-4 space-y-6">
+                    {blockInfo.tables.map((table, tableIdx) => (
+                        <div key={tableIdx} className="bg-gray-800/60 rounded-xl overflow-hidden">
+                            {/* Table Title */}
+                            <div className="bg-gray-700/50 px-4 py-3 flex items-center justify-between">
+                                <h3 className="font-semibold text-white">{table.title}</h3>
+                                <span className="text-xs text-cyan-400 bg-cyan-500/20 px-2 py-1 rounded">{table.source}</span>
+                            </div>
 
-                                {/* Table Content */}
-                                <div className="overflow-x-auto">
-                                    <table className="w-full text-sm">
-                                        <thead>
-                                            <tr className="bg-gray-700/30">
-                                                {table.headers.map((header, idx) => (
-                                                    <th key={idx} className="px-3 py-2 text-left text-cyan-200 font-medium whitespace-nowrap">
-                                                        {header}
-                                                    </th>
-                                                ))}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {table.rows.map((row, rowIdx) => (
-                                                <tr key={rowIdx} className="border-t border-gray-700/50 hover:bg-gray-700/20">
-                                                    {row.map((cell, cellIdx) => (
+                            {/* Table Content */}
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-sm">
+                                    <thead>
+                                        <tr className="bg-gray-700/30">
+                                            {table.headers.map((header, idx) => (
+                                                <th key={idx} className="px-3 py-2 text-left text-cyan-200 font-medium whitespace-nowrap">
+                                                    {header}
+                                                </th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {table.rows.map((row, rowIdx) => (
+                                            <tr key={rowIdx} className="border-t border-gray-700/50 hover:bg-gray-700/20">
+                                                {row.map((cell, cellIdx) => {
+                                                    let prefix = null;
+                                                    // Add color icon for the "Coloured Compounds" table's first column
+                                                    if (table.title.includes("Coloured Compounds") && cellIdx === 0) {
+                                                        const lower = String(cell).toLowerCase();
+                                                        let colorClass = "bg-gray-500";
+
+                                                        if (lower.includes('canary')) colorClass = "bg-yellow-200";
+                                                        else if (lower.includes('greenish yellow')) colorClass = "bg-lime-300";
+                                                        else if (lower.includes('yellow')) colorClass = "bg-yellow-400";
+                                                        else if (lower.includes('black')) colorClass = "bg-neutral-900 border border-gray-600";
+                                                        else if (lower.includes('white')) colorClass = "bg-white border border-gray-300 text-black"; // ensure visibility if text is over it? no just icon.
+                                                        else if (lower.includes('green')) colorClass = "bg-green-500";
+                                                        else if (lower.includes('reddish brown')) colorClass = "bg-rose-800";
+                                                        else if (lower.includes('brown')) colorClass = "bg-amber-900";
+                                                        else if (lower.includes('peach') || lower.includes('flesh')) colorClass = "bg-orange-300";
+                                                        else if (lower.includes('purple')) colorClass = "bg-purple-600";
+                                                        else if (lower.includes('orange')) colorClass = "bg-orange-500";
+                                                        else if (lower.includes('blue')) colorClass = "bg-blue-500";
+                                                        else if (lower.includes('pink')) colorClass = "bg-pink-500";
+                                                        else if (lower.includes('colourless')) colorClass = "bg-transparent border border-gray-500 border-dashed";
+
+                                                        prefix = <span className={`inline-block w-3 h-3 rounded-full mr-2 align-middle ${colorClass}`} />;
+                                                    }
+
+                                                    return (
                                                         <td key={cellIdx} className={`px-3 py-2 ${cellIdx === 0 ? 'text-white font-medium' : 'text-gray-300'}`}>
-                                                            {cell}
+                                                            {prefix}{cell}
                                                         </td>
-                                                    ))}
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                {/* Notes */}
-                                {table.notes && table.notes.length > 0 && (
-                                    <div className="px-4 py-3 bg-gray-700/20 border-t border-gray-700/50">
-                                        <div className="text-xs text-yellow-300/80 font-medium mb-1">📝 Important Notes:</div>
-                                        <ul className="space-y-0.5">
-                                            {table.notes.map((note, idx) => (
-                                                <li key={idx} className="text-xs text-gray-400">• {note}</li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
+                                                    );
+                                                })}
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
                             </div>
-                        ))}
-                    </div>
-                </motion.div>
+
+                            {/* Notes */}
+                            {table.notes && table.notes.length > 0 && (
+                                <div className="px-4 py-3 bg-gray-700/20 border-t border-gray-700/50">
+                                    <div className="text-xs text-yellow-300/80 font-medium mb-1">📝 Important Notes:</div>
+                                    <ul className="space-y-0.5">
+                                        {table.notes.map((note, idx) => (
+                                            <li key={idx} className="text-xs text-gray-400">• {note}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
             </motion.div>
         );
     };
@@ -806,17 +827,34 @@ export default function PeriodicTableClient() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white pt-28">
-            {/* Header */}
-            <div className="container mx-auto px-4 py-6">
-                <div className="text-center mb-6">
-                    <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                        Interactive Periodic Table
+        <div className="min-h-screen bg-gray-950 text-white selection:bg-cyan-500/30">
+            {/* Hero Header */}
+            <section className="relative pt-32 pb-12 md:pt-40 md:pb-16 overflow-hidden">
+                {/* Background gradient */}
+                <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-gray-900 to-gray-950" />
+                <div className="absolute top-20 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+                <div className="absolute top-40 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+
+                <div className="relative container mx-auto px-4 text-center">
+                    {/* Badge */}
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 mb-6 backdrop-blur-sm">
+                        <Sparkles size={16} className="text-blue-400" />
+                        <span className="text-sm font-medium text-blue-400">NCERT Data Visualizations</span>
+                    </div>
+
+                    <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 tracking-tight">
+                        <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                            Interactive Periodic Table
+                        </span>
                     </h1>
-                    <p className="text-gray-400 mt-2">
-                        Explore trends, compare properties, and discover exceptions. <span className="text-blue-400 font-medium">Trained on NCERT data and a must for JEE, NEET & CBSE exams.</span>
+                    <p className="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto mb-8 leading-relaxed">
+                        Explore trends, compare properties, and discover exceptions. <span className="text-blue-400 font-medium">Trained on NCERT data for JEE, NEET & CBSE.</span>
                     </p>
                 </div>
+            </section>
+
+            {/* Main Content */}
+            <div className="container mx-auto px-4 pb-20 relative z-10">
 
 
 
@@ -915,29 +953,53 @@ export default function PeriodicTableClient() {
                         {/* Block selector buttons */}
                         <div className="flex flex-wrap gap-2 mb-3 justify-center">
                             <button
-                                onClick={() => setSelectedBlock('s')}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/20 hover:bg-red-500/40 border border-red-500/40 rounded-lg text-red-300 text-sm transition-colors"
+                                onClick={() => {
+                                    setSelectedBlock('s');
+                                    setTimeout(() => document.getElementById('block-info-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                                }}
+                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-all ${selectedBlock === 's'
+                                    ? 'bg-red-500/30 text-red-200 border border-red-500/50 shadow-[0_0_10px_rgba(239,68,68,0.2)]'
+                                    : 'bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-300'
+                                    }`}
                             >
                                 <BookOpen size={14} />
                                 <span>s-Block Tables</span>
                             </button>
                             <button
-                                onClick={() => setSelectedBlock('p')}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-green-500/20 hover:bg-green-500/40 border border-green-500/40 rounded-lg text-green-300 text-sm transition-colors"
+                                onClick={() => {
+                                    setSelectedBlock('p');
+                                    setTimeout(() => document.getElementById('block-info-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                                }}
+                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-all ${selectedBlock === 'p'
+                                    ? 'bg-green-500/30 text-green-200 border border-green-500/50 shadow-[0_0_10px_rgba(34,197,94,0.2)]'
+                                    : 'bg-green-500/10 hover:bg-green-500/20 border border-green-500/20 text-green-300'
+                                    }`}
                             >
                                 <BookOpen size={14} />
                                 <span>p-Block Tables</span>
                             </button>
                             <button
-                                onClick={() => setSelectedBlock('d')}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/40 border border-blue-500/40 rounded-lg text-blue-300 text-sm transition-colors"
+                                onClick={() => {
+                                    setSelectedBlock('d');
+                                    setTimeout(() => document.getElementById('block-info-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                                }}
+                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-all ${selectedBlock === 'd'
+                                    ? 'bg-blue-500/30 text-blue-200 border border-blue-500/50 shadow-[0_0_10px_rgba(59,130,246,0.2)]'
+                                    : 'bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 text-blue-300'
+                                    }`}
                             >
                                 <BookOpen size={14} />
                                 <span>d-Block Tables</span>
                             </button>
                             <button
-                                onClick={() => setSelectedBlock('f')}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/40 border border-purple-500/40 rounded-lg text-purple-300 text-sm transition-colors"
+                                onClick={() => {
+                                    setSelectedBlock('f');
+                                    setTimeout(() => document.getElementById('block-info-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                                }}
+                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-all ${selectedBlock === 'f'
+                                    ? 'bg-purple-500/30 text-purple-200 border border-purple-500/50 shadow-[0_0_10px_rgba(168,85,247,0.2)]'
+                                    : 'bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/20 text-purple-300'
+                                    }`}
                             >
                                 <BookOpen size={14} />
                                 <span>f-Block Tables</span>
@@ -1095,9 +1157,9 @@ export default function PeriodicTableClient() {
                     </motion.div>
                 )}
 
-                {/* Block Info Modal */}
+                {/* Block Info Section (Embedded) */}
                 <AnimatePresence>
-                    {selectedBlock && <BlockInfoModal />}
+                    {selectedBlock && <BlockInfoSection />}
                 </AnimatePresence>
             </div>
         </div >

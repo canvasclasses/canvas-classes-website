@@ -47,7 +47,7 @@ const revisionResources: RevisionResource[] = [
     {
         icon: Layers,
         title: 'Flashcards',
-        href: '/flashcards',
+        href: '/chemistry-flashcards',
         color: 'from-violet-500 to-purple-600',
     },
     {
