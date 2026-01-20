@@ -147,7 +147,7 @@ export default function FlashcardsChapterClient({
                 <div className="relative container mx-auto px-4">
                     {/* Back link */}
                     <Link
-                        href="/flashcards"
+                        href="/chemistry-flashcards"
                         className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition-colors"
                     >
                         <ChevronLeft className="w-4 h-4" />

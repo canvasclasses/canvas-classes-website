@@ -24,6 +24,17 @@ const nextConfig: NextConfig = {
         destination: 'https://www.canvasclasses.in/:path*',
         permanent: true,
       },
+      // Permanent redirect for old flashcards URL to new SEO-friendly URL
+      {
+        source: '/flashcards',
+        destination: '/chemistry-flashcards',
+        permanent: true,
+      },
+      {
+        source: '/flashcards/:slug*',
+        destination: '/chemistry-flashcards/:slug*',
+        permanent: true,
+      },
     ];
   },
 };

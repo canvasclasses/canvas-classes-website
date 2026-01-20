@@ -40,7 +40,7 @@ const offerings = [
         iconColor: '#8b5cf6', // violet-500
         pastelBg: '#f5f3ff', // violet-50
         cta: 'Start Practicing',
-        href: '/flashcards',
+        href: '/chemistry-flashcards',
         span: 'lg:col-span-1'
     },
     {

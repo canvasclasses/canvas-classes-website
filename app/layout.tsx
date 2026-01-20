@@ -84,7 +84,7 @@ export const metadata: Metadata = {
     creator: "@canvasclasses",
   },
   verification: {
-    google: "your-google-verification-code", // Replace with actual code
+    // google: "your-google-verification-code", // Replace with actual code
   },
   category: "Education",
 };

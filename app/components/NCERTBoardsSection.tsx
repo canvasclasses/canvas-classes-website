@@ -87,7 +87,7 @@ const ncertResources: NCERTResource[] = [
         title: 'Flashcards',
         subtitle: 'Active Recall',
         description: 'Boost your retention with spaced repetition flashcards. The smartest way to memorize formulas and facts.',
-        href: '/flashcards',
+        href: '/chemistry-flashcards',
         gradient: 'from-rose-500 to-pink-600',
         iconColor: 'rose',
         features: ['Spaced Repetition', 'Smart Algorithms', 'Track Progress'],

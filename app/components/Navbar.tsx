@@ -21,7 +21,7 @@ const ncertBoardsLinks = [
 ];
 
 const revisionToolsLinks = [
-  { label: 'Flashcards', href: '/flashcards', external: false },
+  { label: 'Flashcards', href: '/chemistry-flashcards', external: false },
   { label: 'Assertion & Reason', href: '/assertion-reason', external: false },
   { label: 'Interactive P Table', href: '/interactive-periodic-table', external: false },
   { label: 'Periodic Trends', href: '/periodic-trends', external: false },

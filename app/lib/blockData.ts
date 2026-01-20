@@ -28,152 +28,6 @@ export const pBlockData: BlockInfo = {
     ],
     tables: [
         {
-            title: "G13",
-            source: "Table 11.2",
-            headers: ["Property", "B", "Al", "Ga", "In", "Tl"],
-            rows: [
-                ["Atomic number", 5, 13, 31, 49, 81],
-                ["Atomic mass (g mol⁻¹)", 10.81, 26.98, 69.72, 114.82, 204.38],
-                ["Atomic radius / pm", 85, 143, 135, 167, 170],
-                ["Ionic radius M³⁺ / pm", 27, 53.5, 62.0, 80.0, 88.5],
-                ["Ionic radius M⁺ / pm", "-", "-", 120, 140, 150],
-                ["1st Ionisation Energy (kJ/mol)", 801, 577, 579, 558, 589],
-                ["2nd Ionisation Energy (kJ/mol)", 2427, 1816, 1979, 1820, 1971],
-                ["3rd Ionisation Energy (kJ/mol)", 3659, 2744, 2962, 2704, 2877],
-                ["Electronegativity", 2.0, 1.5, 1.6, 1.7, 1.8],
-                ["Density / g cm⁻³", 2.35, 2.70, 5.90, 7.31, 11.85],
-                ["Melting point / K", 2453, 933, 303, 430, 576],
-                ["Boiling point / K", 3923, 2740, 2676, 2353, 1730],
-                ["E⊖ (M³⁺/M) / V", "-", -1.66, -0.56, -0.34, 1.26],
-                ["E⊖ (M⁺/M) / V", "-", 0.55, -0.79, -0.18, -0.34]
-            ],
-            notes: [
-                "Boron is a metalloid; Al, Ga, In, Tl are metals.",
-                "Ga has anomalously low melting point (303 K) due to weak metallic bonding.",
-                "Tl shows +1 state predominantly due to inert pair effect.",
-                "First ionization enthalpy trend is irregular due to d/f-orbital shielding."
-            ]
-        },
-        {
-            title: "G14",
-            source: "Table 11.3",
-            headers: ["Property", "C", "Si", "Ge", "Sn", "Pb"],
-            rows: [
-                ["Atomic number", 6, 14, 32, 50, 82],
-                ["Atomic mass (g mol⁻¹)", 12.01, 28.09, 72.60, 118.71, 207.2],
-                ["Covalent radius / pm", 77, 118, 122, 140, 146],
-                ["Ionic radius M⁴⁺ / pm", "-", 40, 53, 69, 78],
-                ["Ionic radius M²⁺ / pm", "-", "-", 73, 118, 119],
-                ["1st Ionisation Energy (kJ/mol)", 1086, 786, 761, 708, 715],
-                ["2nd Ionisation Energy (kJ/mol)", 2352, 1577, 1537, 1411, 1450],
-                ["3rd Ionisation Energy (kJ/mol)", 4620, 3228, 3300, 2942, 3081],
-                ["4th Ionisation Energy (kJ/mol)", 6220, 4354, 4409, 3929, 4082],
-                ["Electronegativity", 2.5, 1.8, 1.8, 1.8, 1.9],
-                ["Density / g cm⁻³", 3.51, 2.34, 5.32, 7.26, 11.34],
-                ["Melting point / K", 4373, 1693, 1218, 505, 600],
-                ["Boiling point / K", "-", 3550, 3123, 2896, 2024]
-            ],
-            notes: [
-                "C exists as diamond/graphite; Si and Ge are semiconductors.",
-                "Sn and Pb show +2 state predominantly (inert pair effect).",
-                "Melting point decreases down the group (except Pb > Sn).",
-                "Carbon has highest electronegativity in the group."
-            ]
-        },
-        {
-            title: "G15",
-            source: "Table 7.1",
-            headers: ["Property", "N", "P", "As", "Sb", "Bi"],
-            rows: [
-                ["Atomic number", 7, 15, 33, 51, 83],
-                ["Atomic mass (g mol⁻¹)", 14.01, 30.97, 74.92, 121.75, 208.98],
-                ["1st Ionisation Energy (kJ/mol)", 1402, 1012, 947, 834, 703],
-                ["2nd Ionisation Energy (kJ/mol)", 2856, 1903, 1798, 1595, 1610],
-                ["3rd Ionisation Energy (kJ/mol)", 4577, 2910, 2736, 2443, 2466],
-                ["Electronegativity", 3.0, 2.1, 2.0, 1.9, 1.9],
-                ["Covalent radius / pm", 70, 110, 121, 141, 148],
-                ["Ionic radius / pm", 171, 212, 222, 76, 103],
-                ["Melting point / K", 63, 317, 1089, 904, 544],
-                ["Boiling point / K", 77.2, 554, 888, 1860, 1837],
-                ["Density / g cm⁻³", 0.879, 1.823, 5.778, 6.697, 9.808]
-            ],
-            notes: [
-                "N₂ is a diatomic gas; P exists as P₄ (white/red phosphorus).",
-                "Ionisation energy decreases down the group due to increasing size.",
-                "Bi is the most metallic element in the group.",
-                "N has highest electronegativity (3.0) in this group."
-            ]
-        },
-        {
-            title: "G16",
-            source: "Table 7.6",
-            headers: ["Property", "O", "S", "Se", "Te", "Po"],
-            rows: [
-                ["Atomic number", 8, 16, 34, 52, 84],
-                ["Atomic mass (g mol⁻¹)", 16.00, 32.06, 78.96, 127.60, 210.00],
-                ["Covalent radius / pm", 66, 104, 117, 137, 146],
-                ["Ionic radius E²⁻ / pm", 140, 184, 198, 221, 230],
-                ["Electron gain enthalpy (kJ/mol)", -141, -200, -195, -190, -174],
-                ["1st Ionisation Energy (kJ/mol)", 1314, 1000, 941, 869, 813],
-                ["Electronegativity", 3.50, 2.44, 2.48, 2.01, 1.76],
-                ["Density / g cm⁻³", 1.32, 2.06, 4.19, 6.25, "-"],
-                ["Melting point / K", 55, 393, 490, 725, 520],
-                ["Boiling point / K", 90, 718, 958, 1260, 1235]
-            ],
-            notes: [
-                "O is the most electronegative element in this group.",
-                "Electron gain enthalpy is most negative for S (not O) due to small size of O.",
-                "Metallic character increases: O < S < Se < Te < Po.",
-                "Po is radioactive and behaves as a metal."
-            ]
-        },
-        {
-            title: "G17",
-            source: "Table 7.8",
-            headers: ["Property", "F", "Cl", "Br", "I", "At"],
-            rows: [
-                ["Atomic number", 9, 17, 35, 53, 85],
-                ["Atomic mass (g mol⁻¹)", 19.00, 35.45, 79.90, 126.90, 210],
-                ["Covalent radius / pm", 64, 99, 114, 133, "-"],
-                ["Ionic radius X⁻ / pm", 133, 184, 196, 220, "-"],
-                ["1st Ionisation Energy (kJ/mol)", 1680, 1256, 1142, 1008, "-"],
-                ["Electron gain enthalpy (kJ/mol)", -333, -349, -325, -296, "-"],
-                ["Electronegativity", 4.0, 3.2, 3.0, 2.7, 2.2],
-                ["ΔHyd H(X⁻) / kJ mol⁻¹", 515, 381, 347, 305, "-"],
-                ["Melting point / K", 54.4, 172.0, 265.8, 386.6, "-"],
-                ["Boiling point / K", 84.9, 239.0, 332.5, 458.2, "-"],
-                ["Distance X-X / pm", 143, 199, 228, 266, "-"],
-                ["Bond dissociation enthalpy (kJ/mol)", 158.8, 242.6, 192.8, 151.1, "-"],
-                ["E⊖ / V", 2.87, 1.36, 1.09, 0.54, "-"]
-            ],
-            notes: [
-                "F has highest electronegativity (4.0) of all elements.",
-                "Cl has most negative electron gain enthalpy (not F) due to small size of F.",
-                "F-F bond is weak due to lone pair repulsion in small atom.",
-                "At is radioactive; most properties are estimated."
-            ]
-        },
-        {
-            title: "G18",
-            source: "Table 7.12",
-            headers: ["Property", "He", "Ne", "Ar", "Kr", "Xe", "Rn"],
-            rows: [
-                ["Atomic number", 2, 10, 18, 36, 54, 86],
-                ["Atomic mass (g mol⁻¹)", 4.00, 20.18, 39.95, 83.80, 131.30, 222.00],
-                ["Atomic radius / pm", 120, 160, 190, 200, 220, "-"],
-                ["1st Ionisation Energy (kJ/mol)", 2372, 2080, 1520, 1351, 1170, 1037],
-                ["Electron gain enthalpy (kJ/mol)", 48, 116, 96, 96, 77, 68],
-                ["Melting point / K", "-", 24.6, 83.8, 115.9, 161.3, 211],
-                ["Boiling point / K", 4.2, 27.1, 87.2, 119.7, 165.0, "-"]
-            ],
-            notes: [
-                "Noble gases have completely filled outermost shells.",
-                "He has highest ionisation energy due to small size.",
-                "Xe forms compounds with F and O (e.g., XeF₂, XeF₄).",
-                "Rn is radioactive with very short half-life."
-            ]
-        },
-        {
             title: "Properties of Hydrides of Group 15",
             source: "Table 7.2",
             headers: ["Property", "NH₃", "PH₃", "AsH₃", "SbH₃", "BiH₃"],
@@ -228,6 +82,46 @@ export const pBlockData: BlockInfo = {
                 "Acidic strength: HF < HCl < HBr < HI",
                 "Bond dissociation enthalpy decreases → easier to release H⁺",
             ]
+        },
+        // Restored Tables
+        {
+            title: "Oxoacids of Phosphorus",
+            source: "Table 7.5",
+            headers: ["Name", "Formula", "O.S.", "P-OH bonds", "Preparation"],
+            rows: [
+                ["Hypophosphorous", "H₃PO₂", "+1", "1 P-OH, 2 P-H", "White P₄ + alkali"],
+                ["Orthophosphorous", "H₃PO₃", "+3", "2 P-OH, 1 P-H", "P₂O₃ + H₂O"],
+                ["Pyrophosphorous", "H₄P₂O₅", "+3", "2 P-OH, 2 P-H", "PCl₃ + H₃PO₃"],
+                ["Hypophosphoric", "H₄P₂O₆", "+4", "4 P-OH, 1 P-P", "Red P₄ + alkali"],
+                ["Orthophosphoric", "H₃PO₄", "+5", "3 P-OH", "P₄O₁₀ + H₂O"],
+                ["Pyrophosphoric", "H₄P₂O₇", "+5", "4 P-OH", "Heat H₃PO₄"],
+                ["Metaphosphoric", "(HPO₃)n", "+5", "3 P-OH (per unit)", "H₃PO₄ + Br₂, heat"]
+            ],
+            notes: [
+                "Basicity = number of P-OH bonds",
+                "P-H bonds don't ionize in water",
+                "H₃PO₂ is monobasic despite having 3 H atoms",
+                "H₃PO₄ is tribasic (3 P-OH bonds)"
+            ]
+        },
+        {
+            title: "Oxides of Nitrogen",
+            source: "Table 7.3",
+            headers: ["Name", "Formula", "O.S.", "Preparation", "Appearance"],
+            rows: [
+                ["Dinitrogen oxide", "N₂O", "+1", "NH₄NO₃ →Heat→ N₂O + 2H₂O", "Colourless gas, neutral"],
+                ["Nitrogen monoxide", "NO", "+2", "2NaNO₂ + 2FeSO₄ + 3H₂SO₄ → ...", "Colourless gas, neutral"],
+                ["Dinitrogen trioxide", "N₂O₃", "+3", "2NO + N₂O₄ →250K→ 2N₂O₃", "Blue solid, acidic"],
+                ["Nitrogen dioxide", "NO₂", "+4", "2Pb(NO₃)₂ →673K→ 4NO₂ + 2PbO", "Brown gas, acidic"],
+                ["Dinitrogen tetroxide", "N₂O₄", "+4", "2NO₂ ⇌ N₂O₄ (cool/heat)", "Colourless solid, acidic"],
+                ["Dinitrogen pentoxide", "N₂O₅", "+5", "4HNO₃ + P₄O₁₀ → 2N₂O₅ + 4HPO₃", "Colourless solid, acidic"]
+            ],
+            notes: [
+                "N₂O is used as anaesthetic (laughing gas)",
+                "NO₂ is brown due to unpaired electron",
+                "N₂O₄ ⇌ 2NO₂ equilibrium is temperature dependent",
+                "Higher oxidation state = more acidic oxide"
+            ]
         }
     ]
 };
@@ -280,6 +174,75 @@ export const dBlockData: BlockInfo = {
                 "Cu has positive E⊖ for M²⁺/M, hence doesn't liberate H₂ from acids.",
                 "Mn³⁺/Mn²⁺ has high positive E⊖ → Mn³⁺ is a strong oxidant.",
                 "Co³⁺/Co²⁺ has very high E⊖ → Co³⁺ is unstable in aqueous solution."
+            ]
+        },
+        {
+            title: "Colours of Some Common Ions of First Transition Series",
+            source: "Table 8.8",
+            headers: ["Configuration", "Example Ion", "Colour", "Configuration", "Example Ion", "Colour"],
+            rows: [
+                ["3d⁰", "Sc³⁺", "Colourless", "3d⁵", "Mn²⁺", "Pink"],
+                ["3d⁰", "Ti⁴⁺", "Colourless", "3d⁵", "Fe³⁺", "Yellow"],
+                ["3d¹", "Ti³⁺", "Purple", "3d⁶", "Fe²⁺", "Green"],
+                ["3d¹", "V⁴⁺", "Blue", "3d⁶", "Co³⁺", "Blue (in complex)"],
+                ["3d²", "V³⁺", "Green", "3d⁷", "Co²⁺", "Pink"],
+                ["3d³", "V²⁺", "Violet", "3d⁸", "Ni²⁺", "Green"],
+                ["3d³", "Cr³⁺", "Violet", "3d⁹", "Cu²⁺", "Blue"],
+                ["3d⁴", "Mn³⁺", "Violet", "3d¹⁰", "Zn²⁺", "Colourless"],
+                ["3d⁴", "Cr²⁺", "Blue", "", "", ""]
+            ],
+            notes: [
+                "Colour arises due to d-d transition of electrons.",
+                "Ions with d⁰ or d¹⁰ configuration are colourless.",
+                "The colour observed corresponds to the complementary colour of the light absorbed."
+            ]
+        },
+        {
+            title: "Oxides of 3d Metals",
+            source: "Table 8.6",
+            headers: ["Element", "Oxides Formed", "Nature"],
+            rows: [
+                ["Sc", "Sc₂O₃", "Basic"],
+                ["Ti", "TiO, Ti₂O₃, TiO₂", "Amphoteric"],
+                ["V", "VO, V₂O₃, V₂O₄, V₂O₅", "V₂O₃ basic → V₂O₅ amphoteric"],
+                ["Cr", "CrO, Cr₂O₃, CrO₂, CrO₃", "CrO basic, Cr₂O₃ amph, CrO₃ acidic"],
+                ["Mn", "MnO, Mn₂O₃, MnO₂, Mn₂O₇", "Basic → Neutral → Acidic"],
+                ["Fe", "FeO, Fe₂O₃, Fe₃O₄", "Basic"],
+                ["Co", "CoO, Co₃O₄", "Basic"],
+                ["Ni", "NiO", "Basic"],
+                ["Cu", "Cu₂O, CuO", "Basic"],
+                ["Zn", "ZnO", "Amphoteric"]
+            ],
+            notes: [
+                "Oxidation state increases → Acidic character increases",
+                "Lowest oxidation state oxides are basic",
+                "Highest oxidation state oxides are acidic/amphoteric"
+            ]
+        },
+        {
+            title: "Coloured Compounds - Quick Revision",
+            source: "NCERT Notes",
+            headers: ["Colour", "Compounds"],
+            rows: [
+                ["Yellow (ppt)", "PbCrO₄, BaCrO₄, As₂S₃, PbI₂, AgI, SnS₂, CdS"],
+                ["Yellow (soln)", "K₂CrO₄, Na₂CrO₄, (NH₄)₂S₂, K₃[Co(NO₂)₆], K₄[Fe(CN)₆]"],
+                ["Canary Yellow", "(NH₄)₃[As(Mo₃O₁₀)₄], (NH₄)₃[P(Mo₃O₁₀)₄]"],
+                ["Greenish Yellow", "Cl₂ gas"],
+                ["Yellow when hot", "ZnO"],
+                ["Black", "FeS, CoS, NiS, CuS, Ag₂S, PbS, MnO₂"],
+                ["White", "ZnS, CuSO₄(anh.), Cu⁺ salts, BaSO₃, BaSO₄, NH₄Cl, AgCl, CaC₂O₄, SrSO₄, PbSO₄, Mn(OH)₂, Mg(NH₄)PO₄"],
+                ["Green", "Cr(OH)₃, Fe(OH)₂, Ni(OH)₂, Cr(OH)₄⁻, Cr₂(SO₄)₃, MnO₄²⁻"],
+                ["Reddish Brown", "Fe(OH)₃"],
+                ["Brown/Black", "PbS, MnO₂"],
+                ["Peach/Flesh", "MnS"],
+                ["Dark Purple", "KMnO₄"],
+                ["Orange", "Cr₂O₇²⁻, K₂Cr₂O₇"]
+            ],
+            notes: [
+                "Br₂ vapour turns starch paper yellow",
+                "Chromate (CrO₄²⁻) is yellow, Dichromate (Cr₂O₇²⁻) is orange",
+                "Fe²⁺ compounds are generally green, Fe³⁺ are yellow/brown",
+                "Most sulfides of transition metals are black"
             ]
         }
     ]

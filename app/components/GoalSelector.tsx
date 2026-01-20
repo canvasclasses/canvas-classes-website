@@ -8,7 +8,7 @@ import { ArrowRight, BookOpen, Video, FileText, PlayCircle, Brain, Layers } from
 // Quick revision pill links for 3-click access
 const quickRevisionLinks = [
     { label: 'NCERT Summary', href: '/cbse-12-ncert-revision', icon: FileText, desc: 'Chapter-wise notes' },
-    { label: 'Flashcards', href: '/flashcards', icon: Brain, desc: 'Quick recall practice' },
+    { label: 'Flashcards', href: '/chemistry-flashcards', icon: Brain, desc: 'Quick recall practice' },
     { label: 'One-Shots', href: '/one-shot-lectures', icon: PlayCircle, desc: 'Full chapter in 1 video' },
     { label: 'Organic Reactions', href: '/organic-name-reactions', icon: Layers, desc: 'Named reactions' },
 ];

@@ -3,8 +3,8 @@ import FlashcardsClient from './FlashcardsClient';
 import { fetchFlashcards } from '../lib/revisionData';
 
 export const metadata: Metadata = {
-    title: 'Chemistry Flashcards - Class 12 NCERT | Canvas Classes',
-    description: 'Practice Chemistry flashcards for Class 12 CBSE, JEE & NEET. Interactive spaced repetition cards covering Physical, Organic & Inorganic Chemistry - Solutions, Electrochemistry, Biomolecules & more.',
+    title: 'Mastering NCERT Chemistry with well researched Flashcards, made by Paaras Sir | Canvas Classes',
+    description: 'Master Class 12 NCERT Chemistry with well-researched flashcards made by Paaras Sir. Interactive spaced repetition for Solutions, Electrochemistry, Organic & Inorganic. Perfect for CBSE, JEE & NEET prep.',
     keywords: [
         'chemistry flashcards',
         'class 12 flashcards',
@@ -15,10 +15,12 @@ export const metadata: Metadata = {
         'organic chemistry flashcards',
         'inorganic chemistry flashcards',
         'spaced repetition chemistry',
-        'NCERT chemistry revision'
+        'NCERT chemistry revision',
+        'Paaras Sir chemistry',
+        'Canvas Classes flashcards'
     ],
     alternates: {
-        canonical: '/flashcards',
+        canonical: '/chemistry-flashcards',
     },
 };
 

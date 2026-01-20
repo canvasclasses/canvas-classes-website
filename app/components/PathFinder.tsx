@@ -100,7 +100,7 @@ const pathTree: PathOption[] = [
                 description: 'Revise formulas, definitions, and key facts instantly',
                 gradient: 'from-violet-500 to-purple-600',
                 iconBg: 'bg-violet-400/50',
-                href: '/flashcards',
+                href: '/chemistry-flashcards',
             },
             {
                 id: 'top-50',

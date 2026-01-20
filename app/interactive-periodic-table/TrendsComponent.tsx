@@ -320,7 +320,7 @@ export default function TrendsComponent() {
                                                                     y={valLabelY}
                                                                     textAnchor="middle"
                                                                     fill="white"
-                                                                    fontSize="15"
+                                                                    fontSize="18"
                                                                     fontWeight="500"
                                                                     stroke="#111827"
                                                                     strokeWidth="3"
@@ -332,8 +332,8 @@ export default function TrendsComponent() {
                                                             )}
                                                         </>
                                                     )}
-                                                    {!hasValue && <text x={x} y={188} textAnchor="middle" fill="#6b7280" fontSize="15">–</text>}
-                                                    <text x={x} y={360} textAnchor="middle" fill="#9ca3af" fontSize="15">
+                                                    {!hasValue && <text x={x} y={188} textAnchor="middle" fill="#6b7280" fontSize="18">–</text>}
+                                                    <text x={x} y={360} textAnchor="middle" fill="#9ca3af" fontSize="18">
                                                         {point.label}
                                                     </text>
                                                 </g>
