@@ -217,26 +217,26 @@ export default function AnionFlowchartSimulator() {
     };
 
     return (
-        <div className="w-full max-w-7xl mx-auto my-12 px-4">
-            <div className="bg-gray-900 border border-gray-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col lg:flex-row min-h-[750px]">
+        <div className="w-full max-w-7xl mx-auto my-8 md:my-12 px-2 md:px-4">
+            <div className="bg-gray-900 border border-gray-800 rounded-xl md:rounded-3xl overflow-hidden shadow-2xl flex flex-col lg:flex-row lg:min-h-[750px]">
 
                 {/* SIDEBAR */}
-                <div className="lg:w-1/3 bg-gray-950 border-r border-gray-800 p-6 flex flex-col">
-                    <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
-                        <Droplets className="text-cyan-500" />
+                <div className="lg:w-1/3 bg-gray-950 border-b lg:border-b-0 lg:border-r border-gray-800 p-3 md:p-6 flex flex-col">
+                    <h2 className="text-lg md:text-2xl font-bold text-white mb-1 md:mb-2 flex items-center gap-2">
+                        <Droplets className="text-cyan-500" size={18} />
                         Anion Analysis
                     </h2>
-                    <p className="text-gray-500 text-sm mb-6">Select an anion to simulate its identification.</p>
+                    <p className="text-gray-500 text-xs md:text-sm mb-4 md:mb-6">Select an anion to simulate its identification.</p>
 
                     {/* Anion Selection */}
-                    <div className="mb-8">
-                        <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 block">Select Anion</label>
-                        <div className="grid grid-cols-3 gap-2">
+                    <div className="mb-4 md:mb-8">
+                        <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 md:mb-3 block">Select Anion</label>
+                        <div className="grid grid-cols-4 md:grid-cols-3 gap-1.5 md:gap-2">
                             {ANIONS_DATA.map((anion) => (
                                 <button
                                     key={anion.id}
                                     onClick={() => handleSelectAnion(anion)}
-                                    className={`p-2 rounded-lg text-sm font-bold transition-all border ${selectedAnion?.id === anion.id
+                                    className={`p-1.5 md:p-2 rounded-lg text-xs md:text-sm font-bold transition-all border ${selectedAnion?.id === anion.id
                                         ? 'bg-cyan-600 text-white border-cyan-500 shadow-lg scale-105'
                                         : 'bg-gray-800 text-gray-400 border-gray-700 hover:bg-gray-700 hover:border-gray-600'
                                         }`}
@@ -247,8 +247,8 @@ export default function AnionFlowchartSimulator() {
                         </div>
                     </div>
 
-                    {/* Scheme Mini-Map */}
-                    <div className="flex-1 overflow-y-auto pr-2">
+                    {/* Scheme Mini-Map - Hidden on mobile, shown after selection */}
+                    <div className="hidden lg:block flex-1 overflow-y-auto pr-2">
                         <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4 block">Analysis Scheme</label>
                         <div className="space-y-4 relative">
                             <div className="absolute left-[15px] top-4 bottom-4 w-0.5 bg-gray-800 -z-10" />
@@ -280,24 +280,24 @@ export default function AnionFlowchartSimulator() {
                 </div>
 
                 {/* VISUALIZER */}
-                <div className="flex-1 bg-gradient-to-br from-gray-900 via-gray-900 to-black relative p-8 flex flex-col items-center justify-between overflow-hidden min-h-[500px]">
+                <div id="anion-visualizer" className="flex-1 bg-gradient-to-br from-gray-900 via-gray-900 to-black relative p-4 md:p-8 flex flex-col items-center justify-between overflow-hidden min-h-[400px] md:min-h-[500px]">
 
                     {!selectedAnion ? (
-                        <div className="flex flex-col items-center justify-center h-full text-center text-gray-500">
-                            <FlaskConical size={64} className="mx-auto mb-4 opacity-20" />
-                            <p className="text-lg">Select an anion from the sidebar to start the simulation.</p>
+                        <div className="flex flex-col items-center justify-center h-full text-center text-gray-500 py-8">
+                            <FlaskConical size={48} className="mx-auto mb-3 opacity-20" />
+                            <p className="text-sm md:text-lg">Select an anion above to start.</p>
                         </div>
                     ) : (
                         <>
-                            {/* Title */}
-                            <div className="w-full text-center z-10 mt-4 mb-8">
-                                <h3 className="text-3xl font-bold text-white mb-2">{currentStage.title}</h3>
-                                <p className="text-gray-400">Add <span className="text-cyan-400 font-bold">{currentStage.reagent}</span> to the salt.</p>
+                            {/* Title - Compact on mobile */}
+                            <div className="w-full text-center z-10 mt-2 md:mt-4 mb-4 md:mb-8">
+                                <h3 className="text-xl md:text-3xl font-bold text-white mb-1 md:mb-2">{currentStage.title}</h3>
+                                <p className="text-sm md:text-base text-gray-400">Add <span className="text-cyan-400 font-bold">{currentStage.reagent}</span></p>
                             </div>
 
-                            {/* Animated Test Tube */}
-                            <div className="relative w-full flex-1 flex items-center justify-center min-h-[250px]">
-                                <div className="relative w-24 h-64">
+                            {/* Animated Test Tube - Smaller on mobile */}
+                            <div className="relative w-full flex-1 flex items-center justify-center min-h-[180px] md:min-h-[250px]">
+                                <div className="relative w-16 md:w-24 h-44 md:h-64">
                                     {/* SVG Test Tube Shape */}
                                     <svg
                                         viewBox="0 0 80 220"
@@ -436,8 +436,8 @@ export default function AnionFlowchartSimulator() {
                                 </AnimatePresence>
                             </div>
 
-                            {/* Controls & Feedback */}
-                            <div className="w-full max-w-xl px-4 mt-8 pb-4 z-20 min-h-[150px] flex items-end justify-center">
+                            {/* Controls & Feedback - Compact on mobile */}
+                            <div className="w-full max-w-xl px-2 md:px-4 mt-4 md:mt-8 pb-2 md:pb-4 z-20 min-h-[120px] md:min-h-[150px] flex items-end justify-center">
                                 <AnimatePresence mode="wait">
                                     {!gasEvolved && !isAnimating && history.length === 0 || (!gasEvolved && !isAnimating && !history[history.length - 1]?.includes('Positive')) ? (
                                         // Show Add Reagent only if we haven't found gas OR need to proceed
@@ -448,9 +448,9 @@ export default function AnionFlowchartSimulator() {
                                                 animate={{ y: 0, opacity: 1 }}
                                                 exit={{ y: -20, opacity: 0 }}
                                                 onClick={performTest}
-                                                className="w-full py-4 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-900/50 flex items-center justify-center gap-2 text-lg transform transition active:scale-95"
+                                                className="w-full py-3 md:py-4 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-lg md:rounded-xl shadow-lg shadow-cyan-900/50 flex items-center justify-center gap-2 text-sm md:text-lg transform transition active:scale-95"
                                             >
-                                                <Beaker /> Add {currentStage.reagent}
+                                                <Beaker size={18} /> Add {currentStage.reagent.split(' ')[0]}
                                             </motion.button>
                                         ) : (
                                             <motion.div key="no-reaction" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="w-full flex flex-col gap-3">
@@ -473,42 +473,36 @@ export default function AnionFlowchartSimulator() {
                                             key="result"
                                             initial={{ scale: 0.9, opacity: 0 }}
                                             animate={{ scale: 1, opacity: 1 }}
-                                            className="bg-gray-800 border border-green-500/50 p-6 rounded-2xl shadow-2xl backdrop-blur-xl w-full"
+                                            className="bg-gray-800 border border-green-500/50 p-3 md:p-5 rounded-xl md:rounded-2xl shadow-2xl backdrop-blur-xl w-full"
                                         >
-                                            <div className="flex items-start gap-4">
-                                                <div className="p-3 bg-green-500/20 rounded-full text-green-400 shrink-0">
-                                                    <CheckCircle2 size={32} />
+                                            {/* Header row with icon, title, and symbol */}
+                                            <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+                                                <div className="p-1.5 md:p-2 bg-green-500/20 rounded-full text-green-400 shrink-0">
+                                                    <CheckCircle2 size={18} />
                                                 </div>
-                                                <div className="flex-1">
-                                                    <h4 className="text-xl font-bold text-white mb-1">Positive Test!</h4>
-                                                    <p className="text-gray-300 mb-3 text-sm">
-                                                        This indicates <strong className={getColorForGroup(selectedAnion.group)}>{selectedAnion.symbol}</strong> ({selectedAnion.name}) is present.
-                                                    </p>
-
-                                                    <div className="mb-4 bg-gray-900/50 p-3 rounded-lg border border-gray-700">
-                                                        <span className="text-xs font-bold text-gray-500 uppercase block mb-1">Observation</span>
-                                                        <p className="text-base font-semibold text-white leading-relaxed">{selectedAnion.observation}</p>
-                                                    </div>
-
-                                                    {selectedAnion.gasEvolved && (
-                                                        <div className="flex items-center gap-2 mb-4 text-sm">
-                                                            <Wind className="text-cyan-400" size={18} />
-                                                            <span className="text-gray-400">Gas Evolved: <strong className="text-white">{selectedAnion.gasEvolved}</strong></span>
-                                                        </div>
-                                                    )}
-
-                                                    <div className="p-3 bg-black/40 rounded-lg text-sm text-gray-400 border border-gray-700/50">
-                                                        <strong className="text-yellow-400">Confirmatory:</strong> {selectedAnion.confirmatoryHint}
-                                                    </div>
-
-                                                    <button
-                                                        onClick={reset}
-                                                        className="mt-4 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-bold text-sm w-full transition flex items-center justify-center gap-2"
-                                                    >
-                                                        <RefreshCcw size={16} /> Test Another Anion
-                                                    </button>
-                                                </div>
+                                                <h4 className="text-base md:text-xl font-bold text-white flex-1">Positive Test!</h4>
+                                                <span className={`text-base md:text-lg font-bold ${getColorForGroup(selectedAnion.group)}`}>{selectedAnion.symbol}</span>
                                             </div>
+
+                                            {/* Observation text - full width, no box */}
+                                            <p className="text-xs md:text-sm text-gray-200 leading-relaxed mb-2 md:mb-3">{selectedAnion.observation}</p>
+
+                                            {/* Gas info inline */}
+                                            {selectedAnion.gasEvolved && (
+                                                <p className="text-xs text-gray-400 mb-2">Gas: <span className="text-cyan-400 font-bold">{selectedAnion.gasEvolved}</span></p>
+                                            )}
+
+                                            {/* Confirmatory - Hidden on mobile */}
+                                            <div className="hidden md:block p-2 bg-black/40 rounded-lg text-xs text-gray-400 border border-gray-700/50 mb-3">
+                                                <strong className="text-yellow-400">Confirmatory:</strong> {selectedAnion.confirmatoryHint}
+                                            </div>
+
+                                            <button
+                                                onClick={reset}
+                                                className="py-2 md:py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-bold text-xs md:text-sm w-full transition flex items-center justify-center gap-1.5"
+                                            >
+                                                <RefreshCcw size={14} /> Test Another
+                                            </button>
                                         </motion.div>
                                     ) : (
                                         <div className="text-center text-gray-500 animate-pulse">

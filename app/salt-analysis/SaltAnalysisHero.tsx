@@ -64,9 +64,10 @@ export default function SaltAnalysisHero() {
 
 function FeatureBadge({ icon: Icon, text }: { icon: any, text: string }) {
     return (
-        <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg backdrop-blur-sm">
-            <Icon size={16} className="text-cyan-400" />
-            <span className="text-gray-200 font-medium">{text}</span>
+        <div className="flex items-center gap-2 px-3 py-2 md:px-4 md:py-2 bg-white/5 border border-white/10 rounded-lg backdrop-blur-sm">
+            <Icon size={14} className="text-cyan-400 md:hidden" />
+            <Icon size={16} className="text-cyan-400 hidden md:block" />
+            <span className="text-xs md:text-base text-gray-200 font-medium">{text}</span>
         </div>
     );
 }
