@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Beaker,
@@ -30,14 +31,7 @@ import {
     Network,
 } from 'lucide-react';
 import SaltAnalysisHero from './SaltAnalysisHero';
-import FlameTestSimulator from './FlameTestSimulator';
-import DryHeatingTest from './DryHeatingTest';
-import BoraxBeadTest from './BoraxBeadTest';
-import CationFlowchartSimulator from './CationFlowchartSimulator';
-import AnionFlowchartSimulator from './AnionFlowchartSimulator';
-import CationSchemeFlowchart from './CationSchemeFlowchart';
-import ReagentReactionTables from './ReagentReactionTables';
-import SaltAnalysisGuide from './SaltAnalysisGuide';
+import FloatingNav from './FloatingNav';
 import {
     ANIONS,
     CATIONS,
@@ -51,7 +45,60 @@ import {
     type Anion,
     type Cation,
 } from '../lib/saltAnalysisData';
-import SaltAnalysisQuiz from './SaltAnalysisQuiz';
+
+// Loading skeleton component
+const LoadingSkeleton = () => (
+    <div className="w-full h-64 bg-gray-800/50 rounded-xl animate-pulse flex items-center justify-center">
+        <div className="text-gray-500">Loading...</div>
+    </div>
+);
+
+// Dynamic imports for heavy components - these load on-demand
+const FlameTestSimulator = dynamic(() => import('./FlameTestSimulator'), {
+    loading: () => <LoadingSkeleton />,
+    ssr: false
+});
+
+const DryHeatingTest = dynamic(() => import('./DryHeatingTest'), {
+    loading: () => <LoadingSkeleton />,
+    ssr: false
+});
+
+const BoraxBeadTest = dynamic(() => import('./BoraxBeadTest'), {
+    loading: () => <LoadingSkeleton />,
+    ssr: false
+});
+
+const CationFlowchartSimulator = dynamic(() => import('./CationFlowchartSimulator'), {
+    loading: () => <LoadingSkeleton />,
+    ssr: false
+});
+
+const AnionFlowchartSimulator = dynamic(() => import('./AnionFlowchartSimulator'), {
+    loading: () => <LoadingSkeleton />,
+    ssr: false
+});
+
+const CationSchemeFlowchart = dynamic(() => import('./CationSchemeFlowchart'), {
+    loading: () => <LoadingSkeleton />,
+    ssr: false
+});
+
+const ReagentReactionTables = dynamic(() => import('./ReagentReactionTables'), {
+    loading: () => <LoadingSkeleton />,
+    ssr: false
+});
+
+const SaltAnalysisGuide = dynamic(() => import('./SaltAnalysisGuide'), {
+    loading: () => <LoadingSkeleton />,
+    ssr: false
+});
+
+const SaltAnalysisQuiz = dynamic(() => import('./SaltAnalysisQuiz'), {
+    loading: () => <LoadingSkeleton />,
+    ssr: false
+});
+
 
 
 type GameMode = 'learning' | 'practice' | 'exam';
@@ -72,10 +119,10 @@ interface Observation {
 
 // Test button component
 const TestButton = ({ id, name, procedure, onPerform, isExpanded, onToggle }: { id: string; name: string; procedure: string; onPerform: () => void; isExpanded: boolean; onToggle: () => void }) => (
-    <div className="bg-gray-700/50 rounded-xl overflow-hidden">
+    <div className="bg-gray-700/50 rounded-lg md:rounded-xl overflow-hidden border border-gray-600/30">
         <button
             onClick={onToggle}
-            className="w-full flex items-center justify-between p-4 hover:bg-gray-600/50 transition-colors"
+            className="w-full flex items-center justify-between p-3 md:p-4 hover:bg-gray-600/50 transition-colors text-left"
         >
             <span className="text-base font-semibold text-white">{name}</span>
             <ChevronDown
@@ -410,7 +457,10 @@ export default function SaltAnalysisClient() {
         <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white pb-32">
             <SaltAnalysisHero />
 
-            <div className="container mx-auto px-4 py-8 relative z-20 -mt-20">
+            {/* Floating Navigation for Mobile */}
+            <FloatingNav />
+
+            <div className="container mx-auto px-4 py-8 relative z-20 mt-10 md:-mt-20">
                 <AnimatePresence mode="wait">
                     {/* Mode Selection */}
                     {gameState === 'idle' && (
@@ -426,79 +476,82 @@ export default function SaltAnalysisClient() {
                                 {/* Decorative Background Elements */}
                                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-4xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 blur-3xl rounded-full -z-10" />
 
-                                <div className="text-center mb-12">
-                                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+                                <div className="text-center mb-6 md:mb-12 mt-4 md:mt-0">
+                                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-2 md:mb-4 tracking-tight">
                                         Choose Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">Path</span>
                                     </h2>
-                                    <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                                    <p className="text-gray-400 text-sm md:text-lg max-w-2xl mx-auto">
                                         Whether you're just starting or preparing for finals, we have a mode for you.
                                     </p>
                                 </div>
 
-                                <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
-                                    {/* Learning Mode */}
+                                <div className="grid md:grid-cols-3 gap-3 md:gap-6 max-w-6xl mx-auto px-2 md:px-4">
+                                    {/* Learning Mode - Compact on mobile */}
                                     <button
                                         onClick={() => startGame('learning')}
-                                        className="group relative bg-gray-900/40 hover:bg-gray-800/60 border border-gray-700/50 hover:border-cyan-500/50 rounded-3xl p-8 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.3)] flex flex-col items-center text-center overflow-hidden"
+                                        className="group relative bg-gray-900/40 hover:bg-gray-800/60 border border-gray-700/50 hover:border-cyan-500/50 rounded-2xl md:rounded-3xl p-4 md:p-8 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.3)] flex flex-col items-center text-center overflow-hidden"
                                     >
                                         <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                                        <div className="w-20 h-20 bg-gray-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-gray-700 group-hover:border-cyan-500/50 shadow-lg">
-                                            <GraduationCap size={40} className="text-cyan-400" />
+                                        <div className="w-12 h-12 md:w-20 md:h-20 bg-gray-800 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform duration-300 border border-gray-700 group-hover:border-cyan-500/50 shadow-lg">
+                                            <GraduationCap size={24} className="text-cyan-400 md:hidden" />
+                                            <GraduationCap size={40} className="text-cyan-400 hidden md:block" />
                                         </div>
 
-                                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">The Apprentice</h3>
-                                        <p className="text-cyan-500 text-xs font-bold uppercase tracking-widest mb-4">Learning Mode</p>
-                                        <p className="text-gray-400 text-sm leading-relaxed mb-8">
+                                        <h3 className="text-lg md:text-2xl font-bold text-white mb-1 md:mb-2 group-hover:text-cyan-300 transition-colors">The Apprentice</h3>
+                                        <p className="text-cyan-500 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-2 md:mb-4">Learning Mode</p>
+                                        <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-4 md:mb-8 hidden md:block">
                                             Step-by-step guidance with real-time hints. Perfect for your first analysis.
                                         </p>
 
-                                        <div className="mt-auto flex items-center gap-2 text-cyan-400 font-bold group-hover:gap-3 transition-all">
-                                            Start Journey <ArrowRight size={18} />
+                                        <div className="mt-auto flex items-center gap-1.5 md:gap-2 text-cyan-400 font-bold text-sm md:text-base group-hover:gap-3 transition-all">
+                                            Start <ArrowRight size={14} className="md:hidden" /><ArrowRight size={18} className="hidden md:block" />
                                         </div>
                                     </button>
 
-                                    {/* Practice Mode */}
+                                    {/* Practice Mode - Compact on mobile */}
                                     <button
                                         onClick={() => startGame('practice')}
-                                        className="group relative bg-gray-900/40 hover:bg-gray-800/60 border border-gray-700/50 hover:border-purple-500/50 rounded-3xl p-8 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(168,85,247,0.3)] flex flex-col items-center text-center overflow-hidden"
+                                        className="group relative bg-gray-900/40 hover:bg-gray-800/60 border border-gray-700/50 hover:border-purple-500/50 rounded-2xl md:rounded-3xl p-4 md:p-8 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(168,85,247,0.3)] flex flex-col items-center text-center overflow-hidden"
                                     >
                                         <div className="absolute inset-0 bg-gradient-to-b from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                                        <div className="w-20 h-20 bg-gray-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-gray-700 group-hover:border-purple-500/50 shadow-lg">
-                                            <FlaskConical size={40} className="text-purple-400" />
+                                        <div className="w-12 h-12 md:w-20 md:h-20 bg-gray-800 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform duration-300 border border-gray-700 group-hover:border-purple-500/50 shadow-lg">
+                                            <FlaskConical size={24} className="text-purple-400 md:hidden" />
+                                            <FlaskConical size={40} className="text-purple-400 hidden md:block" />
                                         </div>
 
-                                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">The Analyst</h3>
-                                        <p className="text-purple-500 text-xs font-bold uppercase tracking-widest mb-4">Practice Mode</p>
-                                        <p className="text-gray-400 text-sm leading-relaxed mb-8">
+                                        <h3 className="text-lg md:text-2xl font-bold text-white mb-1 md:mb-2 group-hover:text-purple-300 transition-colors">The Analyst</h3>
+                                        <p className="text-purple-500 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-2 md:mb-4">Practice Mode</p>
+                                        <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-4 md:mb-8 hidden md:block">
                                             Self-paced analysis with random salts. No hints, just you and the logic.
                                         </p>
 
-                                        <div className="mt-auto flex items-center gap-2 text-purple-400 font-bold group-hover:gap-3 transition-all">
-                                            Begin Analysis <ArrowRight size={18} />
+                                        <div className="mt-auto flex items-center gap-1.5 md:gap-2 text-purple-400 font-bold text-sm md:text-base group-hover:gap-3 transition-all">
+                                            Analyze <ArrowRight size={14} className="md:hidden" /><ArrowRight size={18} className="hidden md:block" />
                                         </div>
                                     </button>
 
-                                    {/* Exam Mode */}
+                                    {/* Exam Mode - Compact on mobile */}
                                     <button
                                         onClick={() => startGame('exam')}
-                                        className="group relative bg-gray-900/40 hover:bg-gray-800/60 border border-gray-700/50 hover:border-red-500/50 rounded-3xl p-8 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(239,68,68,0.3)] flex flex-col items-center text-center overflow-hidden"
+                                        className="group relative bg-gray-900/40 hover:bg-gray-800/60 border border-gray-700/50 hover:border-red-500/50 rounded-2xl md:rounded-3xl p-4 md:p-8 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(239,68,68,0.3)] flex flex-col items-center text-center overflow-hidden"
                                     >
                                         <div className="absolute inset-0 bg-gradient-to-b from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                                        <div className="w-20 h-20 bg-gray-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-gray-700 group-hover:border-red-500/50 shadow-lg">
-                                            <Timer size={40} className="text-red-400" />
+                                        <div className="w-12 h-12 md:w-20 md:h-20 bg-gray-800 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform duration-300 border border-gray-700 group-hover:border-red-500/50 shadow-lg">
+                                            <Timer size={24} className="text-red-400 md:hidden" />
+                                            <Timer size={40} className="text-red-400 hidden md:block" />
                                         </div>
 
-                                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-red-300 transition-colors">The Expert</h3>
-                                        <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-4">Exam Mode</p>
-                                        <p className="text-gray-400 text-sm leading-relaxed mb-8">
+                                        <h3 className="text-lg md:text-2xl font-bold text-white mb-1 md:mb-2 group-hover:text-red-300 transition-colors">The Expert</h3>
+                                        <p className="text-red-500 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-2 md:mb-4">Exam Mode</p>
+                                        <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-4 md:mb-8 hidden md:block">
                                             High stakes. Timed conditions. Simulate the real CBSE practical exam.
                                         </p>
 
-                                        <div className="mt-auto flex items-center gap-2 text-red-400 font-bold group-hover:gap-3 transition-all">
-                                            Start Exam <ArrowRight size={18} />
+                                        <div className="mt-auto flex items-center gap-1.5 md:gap-2 text-red-400 font-bold text-sm md:text-base group-hover:gap-3 transition-all">
+                                            Exam <ArrowRight size={14} className="md:hidden" /><ArrowRight size={18} className="hidden md:block" />
                                         </div>
                                     </button>
                                 </div>
@@ -569,7 +622,7 @@ export default function SaltAnalysisClient() {
                                 {/* Left: Salt Sample & Tests */}
                                 <div className="lg:col-span-2 space-y-4">
                                     {/* Salt Sample Card */}
-                                    <div className="bg-gradient-to-br from-gray-800/80 to-cyan-900/30 backdrop-blur-sm rounded-2xl p-6 border border-cyan-500/30 shadow-lg shadow-cyan-500/10">
+                                    <div className="bg-gradient-to-br from-gray-800/80 to-cyan-900/30 backdrop-blur-sm rounded-xl md:rounded-2xl p-3 md:p-6 border border-cyan-500/30 shadow-lg shadow-cyan-500/10">
                                         <div className="flex items-center justify-between mb-4">
                                             <div className="flex items-center gap-3">
                                                 <h3 className="text-xl font-bold text-white flex items-center gap-2">
@@ -918,7 +971,9 @@ export default function SaltAnalysisClient() {
             </div>
 
             {/* ========== SECTION 2: REVISION GUIDE ========== */}
-            <SaltAnalysisGuide />
+            <div id="revision-guide">
+                <SaltAnalysisGuide />
+            </div>
 
             {/* ========== SECTION 3: ANION SIMULATOR ========== */}
             <section id="anion-simulator" className="py-20 bg-gray-900 border-t border-gray-800">
@@ -939,7 +994,7 @@ export default function SaltAnalysisClient() {
             </section>
 
             {/* ========== SECTION 4: DRY TESTS (Flame, Dry Heating, Borax) ========== */}
-            <section id="dry-tests" className="py-20 bg-gradient-to-b from-gray-900 to-gray-800 border-t border-gray-800">
+            <section id="dry-tests" className="py-10 md:py-20 bg-gradient-to-b from-gray-900 to-gray-800 border-t border-gray-800">
                 <div className="container mx-auto px-4 max-w-7xl">
                     <div className="text-center mb-16">
                         <span className="inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-orange-500/10 text-orange-400 border border-orange-500/20 mb-4 shadow-[0_0_15px_-3px_rgba(251,146,60,0.2)]">
@@ -954,10 +1009,14 @@ export default function SaltAnalysisClient() {
                     </div>
 
                     {/* Dry Heating Test */}
-                    <DryHeatingTest />
+                    <div id="dry-heating">
+                        <DryHeatingTest />
+                    </div>
 
                     {/* Flame Test Simulator */}
-                    <FlameTestSimulator />
+                    <div id="flame-test">
+                        <FlameTestSimulator />
+                    </div>
 
                     {/* Borax Bead Test Simulator */}
                     <BoraxBeadTest />
@@ -1040,7 +1099,7 @@ export default function SaltAnalysisClient() {
             </section>
 
             {/* ========== SECTION 7: QUESTION PRACTICE ========== */}
-            <section id="question-practice" className="py-20 bg-gray-900 border-t border-gray-800">
+            <section id="quiz-section" className="py-20 bg-gray-900 border-t border-gray-800">
                 <div className="container mx-auto px-4 max-w-7xl">
                     <div className="text-center mb-16">
                         <span className="inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 mb-4 shadow-[0_0_15px_-3px_rgba(234,179,8,0.2)]">

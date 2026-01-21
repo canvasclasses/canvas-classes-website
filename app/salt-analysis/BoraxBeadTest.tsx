@@ -71,45 +71,45 @@ export default function BoraxBeadTest() {
     const currentStyle = viewState === 'hot' ? flameData?.styleHot : flameData?.styleCold;
 
     return (
-        <div className="w-full max-w-6xl mx-auto my-16 px-4">
-            <div className="bg-gray-900/50 backdrop-blur-xl border border-gray-700/50 rounded-3xl overflow-hidden shadow-2xl">
+        <div className="w-full max-w-6xl mx-auto my-8 md:my-16 px-2 md:px-4">
+            <div className="bg-gray-900/50 backdrop-blur-xl border border-gray-700/50 rounded-xl md:rounded-3xl overflow-hidden shadow-2xl">
 
                 {/* Header */}
-                <div className="p-8 pb-0 grid lg:grid-cols-2 gap-12">
+                <div className="p-3 md:p-8 pb-0 grid lg:grid-cols-2 gap-6 md:gap-12">
                     <div>
-                        <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
-                            <div className="p-3 bg-teal-500/20 rounded-xl">
-                                <div className="w-8 h-8 rounded-full border-4 border-teal-400 shadow-[0_0_15px_#2dd4bf]" />
+                        <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 md:mb-6 flex items-center gap-3">
+                            <div className="p-2 md:p-3 bg-teal-500/20 rounded-xl">
+                                <div className="w-6 h-6 md:w-8 md:h-8 rounded-full border-4 border-teal-400 shadow-[0_0_15px_#2dd4bf]" />
                             </div>
                             Borax Bead Test
                         </h2>
-                        <div className="space-y-4 text-gray-300 text-sm">
-                            <p>
+                        <div className="space-y-4 text-gray-200 text-base md:text-sm">
+                            <p className="leading-relaxed">
                                 The Borax Bead Test is used to identify metal ions. A transparent glassy bead of borax (Sodium Metaborate) reacts with metal salts to form characteristic coloured beads.
                             </p>
-                            <p className="text-gray-400">
+                            <p className="text-gray-400 text-sm">
                                 Select a metal salt and flame type below to observe the bead colour.
                             </p>
                         </div>
                     </div>
 
-                    <div className="bg-gray-800/30 rounded-2xl p-6 border border-gray-700/50">
-                        <h3 className="font-bold text-white mb-4 flex items-center gap-2">
+                    <div className="bg-gray-800/30 rounded-xl md:rounded-2xl p-3 md:p-6 border border-gray-700/50">
+                        <h3 className="font-bold text-white mb-2 md:mb-4 flex items-center gap-2 text-sm md:text-base">
                             <Info size={18} className="text-teal-400" />
                             Reaction Example (Copper)
                         </h3>
-                        <div className="space-y-4 font-mono text-base">
-                            <div>
-                                <p className="text-gray-400 text-sm mb-1">Oxidizing Flame (Non-luminous)</p>
-                                <p className="text-green-300">CuSO₄ + B₂O₃ → Cu(BO₂)₂ + SO₃</p>
-                                <p className="text-right text-sm text-green-500 italic">Cupric metaborate (Blue-Green)</p>
+                        <div className="space-y-3 md:space-y-4 font-mono text-xs md:text-base w-full overflow-x-auto">
+                            <div className="min-w-0">
+                                <p className="text-gray-400 text-xs mb-1">Oxidizing Flame</p>
+                                <p className="text-green-300 whitespace-nowrap md:whitespace-normal">CuSO₄ + B₂O₃ → Cu(BO₂)₂ + SO₃</p>
+                                <p className="text-green-500 italic mt-1">Cupric metaborate (Blue-Green)</p>
                             </div>
                             <div className="pt-2 border-t border-gray-700">
-                                <p className="text-gray-400 text-sm mb-1">Reducing Flame (Luminous)</p>
-                                <div className="space-y-2">
-                                    <p className="text-red-300 text-sm">2Cu(BO₂)₂ + 2NaBO₂ + C → 2CuBO₂ + Na₂B₄O₇ + CO</p>
-                                    <p className="text-gray-400 text-sm leading-relaxed">
-                                        Reduces to colourless <strong className="text-gray-200">Cuprous metaborate</strong> or red opaque <strong className="text-red-500">Metallic Copper</strong>.
+                                <p className="text-gray-400 text-xs mb-1">Reducing Flame</p>
+                                <div className="space-y-1">
+                                    <p className="text-red-300 whitespace-nowrap md:whitespace-normal">2Cu(BO₂)₂ + 2NaBO₂ + C → ...</p>
+                                    <p className="text-gray-400 leading-relaxed">
+                                        Reduces to colourless <strong className="text-gray-200">Cuprous metaborate</strong>.
                                     </p>
                                 </div>
                             </div>
@@ -118,92 +118,93 @@ export default function BoraxBeadTest() {
                 </div>
 
                 {/* Simulator Area */}
-                <div className="p-8 border-t border-gray-700/50 mt-8 bg-black/20">
-                    <div className="grid lg:grid-cols-12 gap-8">
+                <div className="p-3 md:p-8 border-t border-gray-700/50 mt-6 md:mt-8 bg-black/20">
+                    <div className="grid lg:grid-cols-12 gap-6 md:gap-8">
 
                         {/* Controls */}
-                        <div className="lg:col-span-4 space-y-8">
-                            {/* Salt Selection */}
+                        <div className="lg:col-span-4 space-y-4 md:space-y-8">
+                            {/* Salt Selection - Compact Grid */}
                             <div>
-                                <label className="block text-sm font-bold text-teal-400 uppercase tracking-wider mb-4">1. Select Metal Salt</label>
-                                <div className="grid grid-cols-2 gap-3">
+                                <label className="block text-xs md:text-sm font-bold text-teal-400 uppercase tracking-wider mb-2 md:mb-4">1. Select Metal Salt</label>
+                                <div className="grid grid-cols-4 md:grid-cols-2 gap-2 md:gap-3">
                                     {SIMPLIFIED_DATA.map((salt) => (
                                         <button
                                             key={salt.id}
                                             onClick={() => setSelectedSalt(salt.id)}
-                                            className={`p-4 rounded-xl text-left transition-all duration-300 relative overflow-hidden group ${selectedSalt === salt.id
-                                                    ? 'bg-teal-900/40 border border-teal-500/60 shadow-[0_0_15px_rgba(20,184,166,0.2)]'
-                                                    : 'bg-gray-800/40 border border-gray-700 hover:bg-gray-800 hover:border-gray-500'
+                                            className={`p-2 md:p-4 rounded-lg md:rounded-xl text-center md:text-left transition-all duration-300 relative overflow-hidden group ${selectedSalt === salt.id
+                                                ? 'bg-teal-900/40 border border-teal-500/60 shadow-[0_0_15px_rgba(20,184,166,0.2)]'
+                                                : 'bg-gray-800/40 border border-gray-700 hover:bg-gray-800 hover:border-gray-500'
                                                 }`}
                                         >
-                                            <span className={`font-semibold block ${selectedSalt === salt.id ? 'text-white' : 'text-gray-300'}`}>
-                                                {salt.name}
+                                            <span className={`font-bold text-xs md:text-base block ${selectedSalt === salt.id ? 'text-white' : 'text-gray-300'}`}>
+                                                {salt.id} <span className="hidden md:inline">({salt.name.split(' ')[0]})</span>
                                             </span>
                                             {selectedSalt === salt.id && (
-                                                <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-teal-400 shadow-[0_0_5px_#2dd4bf]" />
+                                                <div className="absolute top-1 right-1 md:top-2 md:right-2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-teal-400 shadow-[0_0_5px_#2dd4bf]" />
                                             )}
                                         </button>
                                     ))}
                                 </div>
                             </div>
 
-                            {/* Flame Type */}
-                            <div>
-                                <label className="block text-sm font-bold text-teal-400 uppercase tracking-wider mb-4">2. Flame Type</label>
-                                <div className="flex bg-gray-900/50 p-1.5 rounded-xl border border-gray-700">
-                                    <button
-                                        onClick={() => setFlameType('oxidizing')}
-                                        className={`flex-1 py-3 px-4 rounded-lg text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 ${flameType === 'oxidizing'
-                                                ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50'
-                                                : 'text-gray-400 hover:text-white hover:bg-white/5'
-                                            }`}
-                                    >
-                                        Oxidizing (Blue)
-                                    </button>
-                                    <button
-                                        onClick={() => setFlameType('reducing')}
-                                        className={`flex-1 py-3 px-4 rounded-lg text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 ${flameType === 'reducing'
-                                                ? 'bg-yellow-600 text-white shadow-lg shadow-yellow-900/50'
-                                                : 'text-gray-400 hover:text-white hover:bg-white/5'
-                                            }`}
-                                    >
-                                        Reducing (Yellow)
-                                    </button>
+                            <div className="grid grid-cols-2 gap-3 lg:block lg:space-y-8">
+                                {/* Flame Type */}
+                                <div>
+                                    <label className="block text-xs md:text-sm font-bold text-teal-400 uppercase tracking-wider mb-2 md:mb-4">2. Flame Type</label>
+                                    <div className="flex lg:flex-row flex-col gap-2 bg-gray-900/50 p-1.5 rounded-xl border border-gray-700">
+                                        <button
+                                            onClick={() => setFlameType('oxidizing')}
+                                            className={`flex-1 py-1 md:py-3 px-1 md:px-4 rounded-lg text-[10px] md:text-sm font-bold transition-all ${flameType === 'oxidizing'
+                                                ? 'bg-blue-600 text-white shadow-lg'
+                                                : 'text-gray-400 hover:bg-white/5'
+                                                }`}
+                                        >
+                                            Oxidizing
+                                        </button>
+                                        <button
+                                            onClick={() => setFlameType('reducing')}
+                                            className={`flex-1 py-1 md:py-3 px-1 md:px-4 rounded-lg text-[10px] md:text-sm font-bold transition-all ${flameType === 'reducing'
+                                                ? 'bg-yellow-600 text-white shadow-lg'
+                                                : 'text-gray-400 hover:bg-white/5'
+                                                }`}
+                                        >
+                                            Reducing
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* State Toggle */}
-                            <div>
-                                <label className="block text-sm font-bold text-teal-400 uppercase tracking-wider mb-4">3. Observation State</label>
-                                <div className="flex bg-gray-900/50 p-1.5 rounded-xl border border-gray-700">
-                                    <button
-                                        onClick={() => setViewState('hot')}
-                                        className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-300 ${viewState === 'hot'
+                                {/* State Toggle */}
+                                <div>
+                                    <label className="block text-xs md:text-sm font-bold text-teal-400 uppercase tracking-wider mb-2 md:mb-4">3. Observe</label>
+                                    <div className="flex lg:flex-row flex-col gap-2 bg-gray-900/50 p-1.5 rounded-xl border border-gray-700">
+                                        <button
+                                            onClick={() => setViewState('hot')}
+                                            className={`flex-1 py-1 md:py-2 px-1 md:px-4 rounded-lg text-[10px] md:text-sm font-medium transition-all ${viewState === 'hot'
                                                 ? 'bg-red-600/80 text-white shadow'
                                                 : 'text-gray-400 hover:text-white'
-                                            }`}
-                                    >
-                                        Hot
-                                    </button>
-                                    <button
-                                        onClick={() => setViewState('cold')}
-                                        className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-300 ${viewState === 'cold'
+                                                }`}
+                                        >
+                                            Hot
+                                        </button>
+                                        <button
+                                            onClick={() => setViewState('cold')}
+                                            className={`flex-1 py-1 md:py-2 px-1 md:px-4 rounded-lg text-[10px] md:text-sm font-medium transition-all ${viewState === 'cold'
                                                 ? 'bg-blue-500/40 text-white shadow border border-blue-400/30'
                                                 : 'text-gray-400 hover:text-white'
-                                            }`}
-                                    >
-                                        Cold (Final)
-                                    </button>
+                                                }`}
+                                        >
+                                            Cold
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
 
                         {/* VISUALIZER - Side View */}
-                        <div className="lg:col-span-8 relative min-h-[500px] bg-gradient-to-br from-gray-900 to-black rounded-2xl border border-gray-800 flex flex-col items-center justify-center overflow-hidden">
+                        <div className="lg:col-span-8 relative min-h-[400px] md:min-h-[500px] bg-gradient-to-br from-gray-900 to-black rounded-xl md:rounded-2xl border border-gray-800 flex flex-col items-center justify-center overflow-hidden">
 
                             {/* Realistic Flame (Static but pulsing) */}
-                            <div className="absolute bottom-[-50px] w-64 h-[400px] flex justify-center items-end opacity-80 pointer-events-none">
+                            <div className="absolute bottom-0 md:bottom-[-20px] w-64 h-[300px] md:h-[400px] flex justify-center items-end opacity-80 pointer-events-none">
                                 <div className={`w-24 h-full blur-2xl rounded-t-[50%] mix-blend-screen opacity-60 animate-pulse-slow ${flameType === 'oxidizing' ? 'bg-blue-600' : 'bg-yellow-600'
                                     }`} />
                                 <div className={`absolute bottom-0 w-12 h-[80%] blur-xl rounded-t-[50%] mix-blend-screen opacity-80 ${flameType === 'oxidizing' ? 'bg-cyan-400' : 'bg-orange-500'
@@ -211,9 +212,9 @@ export default function BoraxBeadTest() {
                             </div>
 
                             {/* Wire Loop System */}
-                            <div className="relative z-30 w-[400px] h-[200px] flex items-center justify-center group cursor-pointer" onClick={() => setViewState(v => v === 'hot' ? 'cold' : 'hot')}>
+                            <div className="relative z-30 w-full max-w-[400px] h-[200px] flex items-center justify-center group cursor-pointer" onClick={() => setViewState(v => v === 'hot' ? 'cold' : 'hot')}>
                                 {/* SVG Wire Shape */}
-                                <svg width="400" height="150" viewBox="0 0 400 150" className="drop-shadow-2xl">
+                                <svg width="100%" height="150" viewBox="0 0 400 150" className="drop-shadow-2xl">
                                     <defs>
                                         <linearGradient id="wireGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                                             <stop offset="0%" stopColor="#9ca3af" />
@@ -269,13 +270,13 @@ export default function BoraxBeadTest() {
                                 </div>
                             </div>
 
-                            {/* Result Label */}
+                            {/* Result Label - Full width on mobile */}
                             <AnimatePresence mode="wait">
                                 <motion.div
                                     key={`${selectedSalt}-${flameType}-${viewState}`}
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    className="absolute top-8 right-8 bg-black/90 text-white p-5 rounded-xl border border-gray-700 shadow-2xl min-w-[200px]"
+                                    className="absolute top-4 left-4 right-4 md:top-8 md:auto md:left-auto md:right-8 bg-black/90 text-white p-4 md:p-5 rounded-xl border border-gray-700 shadow-2xl min-w-[200px]"
                                 >
                                     <div className="flex justify-between items-center mb-2">
                                         <span className="text-xs font-bold tracking-wider text-gray-500 uppercase">Observation</span>
@@ -284,19 +285,19 @@ export default function BoraxBeadTest() {
                                             {viewState}
                                         </span>
                                     </div>
-                                    <div className="text-2xl font-bold leading-tight text-white mb-1">
+                                    <div className="text-xl md:text-2xl font-bold leading-tight text-white mb-1">
                                         {viewState === 'hot' ? flameData?.hot : flameData?.cold}
                                     </div>
-                                    <div className="text-sm text-gray-400 mt-2 pt-2 border-t border-gray-800 flex justify-between">
+                                    <div className="text-xs md:text-sm text-gray-400 mt-2 pt-2 border-t border-gray-800 flex justify-between">
                                         <span>{currentSaltData?.name}</span>
                                     </div>
                                 </motion.div>
                             </AnimatePresence>
 
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </div >
+                </div >
+            </div >
+        </div >
     );
 }
