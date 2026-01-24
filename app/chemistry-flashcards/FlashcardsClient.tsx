@@ -277,6 +277,7 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                     <div className="flex flex-wrap gap-2 mb-8">
                                         {[
                                             { id: 'All', label: 'All Chapters', icon: Layers, color: 'from-purple-500 to-pink-500' },
+                                            { id: 'JEE PYQ', label: 'JEE PYQ', icon: Target, color: 'from-amber-400 to-orange-500' },
                                             { id: 'Physical Chemistry', label: 'Physical', icon: FlaskConical, color: 'from-green-500 to-emerald-500' },
                                             { id: 'Organic Chemistry', label: 'Organic', icon: Beaker, color: 'from-purple-500 to-pink-500' },
                                             { id: 'Inorganic Chemistry', label: 'Inorganic', icon: Atom, color: 'from-orange-500 to-amber-500' },
@@ -318,8 +319,10 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                                 // Get category colors
                                                 const catColors: Record<string, { gradient: string; badge: string }> = {
                                                     'Physical Chemistry': { gradient: 'from-green-500 to-emerald-500', badge: 'bg-green-500/20 text-green-400' },
+                                                    'JEE PYQ': { gradient: 'from-amber-400 to-orange-500', badge: 'bg-amber-500/20 text-amber-400' },
                                                     'Organic Chemistry': { gradient: 'from-purple-500 to-pink-500', badge: 'bg-purple-500/20 text-purple-400' },
                                                     'Inorganic Chemistry': { gradient: 'from-orange-500 to-amber-500', badge: 'bg-orange-500/20 text-orange-400' },
+                                                    // 'JEE PYQ' moved up
                                                 };
                                                 const colors = catColors[group.category] || catColors['Physical Chemistry'];
 
