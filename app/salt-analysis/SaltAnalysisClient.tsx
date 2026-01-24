@@ -623,20 +623,20 @@ export default function SaltAnalysisClient() {
                                 <div className="lg:col-span-2 space-y-4">
                                     {/* Salt Sample Card */}
                                     <div className="bg-gradient-to-br from-gray-800/80 to-cyan-900/30 backdrop-blur-sm rounded-xl md:rounded-2xl p-3 md:p-6 border border-cyan-500/30 shadow-lg shadow-cyan-500/10">
-                                        <div className="flex items-center justify-between mb-4">
-                                            <div className="flex items-center gap-3">
+                                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                                            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                                                 <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                                                    <FlaskConical size={24} className="text-cyan-400" />
+                                                    <FlaskConical size={24} className="text-cyan-400 shrink-0" />
                                                     Unknown Salt Sample
                                                 </h3>
-                                                <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${gameMode === 'learning' ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30' :
+                                                <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider w-fit ${gameMode === 'learning' ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30' :
                                                     gameMode === 'practice' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' :
                                                         'bg-red-500/20 text-red-400 border border-red-500/30 animate-pulse'
                                                     }`}>
                                                     {gameMode} Mode
                                                 </span>
                                             </div>
-                                            <div className="flex gap-2">
+                                            <div className="flex gap-2 self-end md:self-auto">
                                                 {gameMode === 'exam' && (
                                                     <div className="flex items-center gap-2 px-3 py-1 bg-red-500/10 rounded-lg border border-red-500/20 text-red-400">
                                                         <Clock size={16} />
@@ -657,9 +657,9 @@ export default function SaltAnalysisClient() {
                                         </div>
 
                                         {/* Salt Visual */}
-                                        <div className="flex items-center gap-6">
+                                        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 text-center sm:text-left">
                                             <div
-                                                className="w-24 h-24 rounded-2xl border-2 border-gray-600 flex items-center justify-center"
+                                                className="w-24 h-24 rounded-2xl border-2 border-gray-600 flex items-center justify-center shrink-0"
                                                 style={{ backgroundColor: currentSalt.colorHex + '40' }}
                                             >
                                                 <div
