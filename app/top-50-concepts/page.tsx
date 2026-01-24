@@ -1,18 +1,7 @@
 import { Metadata } from 'next';
 import Top50Client from './Top50Client';
 
-// Fetch data from the API route
-async function fetchTop50Data() {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://canvasclasses.in';
-    try {
-        const response = await fetch(`${baseUrl}/api/top-50`, { next: { revalidate: 3600 } });
-        const data = await response.json();
-        return data.concepts || [];
-    } catch (error) {
-        console.error('Failed to fetch top 50 data:', error);
-        return [];
-    }
-}
+import { fetchTop50Data } from '@/app/lib/top50Data';
 
 export const metadata: Metadata = {
     title: 'Top 50 Must-Know Chemistry Concepts for JEE & NEET 2025 | Canvas Classes',

@@ -1,18 +1,7 @@
 import { Metadata } from 'next';
 import TwoMinClient from './TwoMinClient';
 
-// Fetch data from the API route
-async function fetchTwoMinData() {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://canvasclasses.in';
-    try {
-        const response = await fetch(`${baseUrl}/api/2-min-chemistry`, { next: { revalidate: 3600 } });
-        const data = await response.json();
-        return data.videos || [];
-    } catch (error) {
-        console.error('Failed to fetch 2 minute chemistry data:', error);
-        return [];
-    }
-}
+import { fetch2MinData } from '../lib/twoMinData';
 
 export const metadata: Metadata = {
     title: '2 Minute Chemistry - Quick Lessons for JEE & NEET | Canvas Classes',
@@ -35,6 +24,6 @@ export const metadata: Metadata = {
 
 // Server-side data fetching for SEO
 export default async function TwoMinChemistryPage() {
-    const videos = await fetchTwoMinData();
+    const videos = await fetch2MinData();
     return <TwoMinClient initialVideos={videos} />;
 }
