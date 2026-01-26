@@ -1,6 +1,7 @@
 'use client';
 
 import TrendsComponent from '../interactive-periodic-table/TrendsComponent';
+import TopInorganicTrends from './TopInorganicTrends';
 import { TrendingUp, Sparkles, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -70,6 +71,9 @@ export default function PeriodicTrendsPage() {
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
                 <TrendsComponent />
             </section>
+
+            {/* Top 50 Trends Section */}
+            <TopInorganicTrends />
 
             {/* SEO Content Section */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
