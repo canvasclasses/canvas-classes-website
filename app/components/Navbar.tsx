@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, ChevronDown, X } from 'lucide-react';
+import { Menu, ChevronDown, X, Search } from 'lucide-react';
 
 const jeeNeetLinks = [
   { label: 'Detailed Lectures', href: '/detailed-lectures', external: false },
@@ -176,6 +176,13 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
           </div>
         </div>
         <Link href="/handwritten-notes" className="px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all">My Notes</Link>
+        <button
+          onClick={() => window.dispatchEvent(new Event('openCommandPalette'))}
+          className="ml-2 p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-teal-600 transition-colors"
+          aria-label="Search"
+        >
+          <Search className="w-5 h-5" />
+        </button>
         <div className="ml-2">
           {authButton}
         </div>
