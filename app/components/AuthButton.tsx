@@ -6,6 +6,18 @@ import { LogOut, User } from 'lucide-react'
 export async function AuthButton() {
     const supabase = await createClient()
 
+    // If Supabase is not configured, show login button
+    if (!supabase) {
+        return (
+            <Link
+                href="/login"
+                className="px-5 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-full text-sm font-bold shadow-lg shadow-purple-500/20 transition-all transform hover:-translate-y-0.5"
+            >
+                Sign In
+            </Link>
+        )
+    }
+
     const {
         data: { user },
     } = await supabase.auth.getUser()
@@ -13,6 +25,7 @@ export async function AuthButton() {
     const signOut = async () => {
         'use server'
         const supabase = await createClient()
+        if (!supabase) return redirect('/')
         await supabase.auth.signOut()
         return redirect('/')
     }

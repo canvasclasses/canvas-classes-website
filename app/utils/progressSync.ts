@@ -23,6 +23,11 @@ export async function syncProgressWithCloud(
 ): Promise<ProgressMap> {
     const supabase = createClient();
 
+    // If Supabase is not configured, return local data
+    if (!supabase) {
+        return localData;
+    }
+
     // Check if user is logged in
     const { data: { session } } = await supabase.auth.getSession();
     if (!session?.user) {
@@ -129,6 +134,12 @@ export async function saveProgressItemToCloud(
     progress: CardProgress
 ) {
     const supabase = createClient();
+
+    // If Supabase is not configured, skip
+    if (!supabase) {
+        return;
+    }
+
     const { data: { session } } = await supabase.auth.getSession();
 
     if (!session?.user) return;

@@ -8,6 +8,10 @@ import { createClient } from '@/app/utils/supabase/server'
 export async function login(formData: FormData) {
     const supabase = await createClient()
 
+    if (!supabase) {
+        return { error: 'Authentication service not configured' }
+    }
+
     const email = formData.get('email') as string
     const password = formData.get('password') as string
 
@@ -26,6 +30,10 @@ export async function login(formData: FormData) {
 
 export async function signup(formData: FormData) {
     const supabase = await createClient()
+
+    if (!supabase) {
+        return { error: 'Authentication service not configured' }
+    }
 
     const email = formData.get('email') as string
     const password = formData.get('password') as string
@@ -46,6 +54,10 @@ export async function signup(formData: FormData) {
 
 export async function signInWithGoogle() {
     const supabase = await createClient()
+
+    if (!supabase) {
+        redirect('/login?error=Authentication service not configured')
+    }
 
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
