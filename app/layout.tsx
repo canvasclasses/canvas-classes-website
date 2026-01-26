@@ -4,6 +4,8 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { CommandPalette } from "./components/CommandPalette";
+import { getSearchItems } from "./lib/searchIndices";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -88,6 +90,11 @@ export const metadata: Metadata = {
     // google: "your-google-verification-code", // Replace with actual code
   },
   category: "Education",
+  icons: {
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
+  },
 };
 
 // Structured Data (JSON-LD)
@@ -131,6 +138,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <CommandPalette itemsPromise={getSearchItems()} />
         <Navbar authButton={<AuthButton />} />
         {children}
         <Footer />
