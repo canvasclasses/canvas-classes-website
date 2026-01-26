@@ -925,13 +925,7 @@ export default function PeriodicTableClient() {
                         Exceptions ({exceptionElements.length})
                     </button>
 
-                    <a
-                        href="#trends-section"
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow-lg hover:opacity-90"
-                    >
-                        <BarChart3 size={18} />
-                        NCERT Graphs ↓
-                    </a>
+
                 </div>
 
                 {/* Selected property info */}
@@ -1102,7 +1096,7 @@ export default function PeriodicTableClient() {
                 <ComparisonPanel />
 
                 {/* Link to NCERT Trends Page */}
-                <div className="mt-8">
+                <div id="trends-section" className="mt-8">
                     <a href="/periodic-trends" className="block bg-gradient-to-r from-violet-900/40 to-fuchsia-900/40 rounded-2xl border border-violet-500/30 p-6 hover:border-violet-500/60 transition-all group">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-4">
@@ -1150,7 +1144,7 @@ export default function PeriodicTableClient() {
                                         <span className="text-sm text-gray-400">{el.name}</span>
                                     </div>
                                     <div className="text-xs text-yellow-400">{el.exceptionType}</div>
-                                    <p className="text-xs text-gray-500 mt-1 line-clamp-2">{el.exceptionExplanation}</p>
+                                    <p className="text-sm text-gray-400 mt-1 line-clamp-2">{el.exceptionExplanation}</p>
                                 </button>
                             ))}
                         </div>

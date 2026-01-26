@@ -183,7 +183,19 @@ export default function AnionFlowchartSimulator() {
 
     const handleSelectAnion = (anion: AnionData) => {
         reset();
-        setTimeout(() => setSelectedAnion(anion), 50);
+        setTimeout(() => {
+            setSelectedAnion(anion);
+            // Auto-skip logic for Independent anions
+            if (anion.group === 'independent') {
+                const independentStageIndex = STAGES.findIndex(s => s.id === 'independent');
+                if (independentStageIndex !== -1) {
+                    setCurrentStageIndex(independentStageIndex);
+                    // Pre-fill history to show skipped steps as not verified or just start fresh? 
+                    // Let's just start there. Maybe add a note in history?
+                    // actually, better to just let it start there.
+                }
+            }
+        }, 50);
     };
 
     const performTest = () => {
@@ -260,13 +272,13 @@ export default function AnionFlowchartSimulator() {
 
                                 return (
                                     <div key={stage.id} className={`relative flex items-start gap-4 transition-opacity duration-300 ${isActive ? 'opacity-100' : isPassed ? 'opacity-50' : 'opacity-30'}`}>
-                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 border-2 transition-all ${isActive
+                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-[10px] shrink-0 border-2 transition-all ${isActive
                                             ? 'bg-cyan-500 border-cyan-400 text-white shadow-[0_0_15px_rgba(6,182,212,0.5)]'
                                             : isPassed
                                                 ? result?.includes('Positive') ? 'bg-green-900 border-green-700 text-green-400' : 'bg-gray-800 border-gray-700 text-gray-500'
                                                 : 'bg-gray-900 border-gray-800 text-gray-600'
                                             }`}>
-                                            {isPassed && result?.includes('Positive') ? <CheckCircle2 size={14} /> : stage.id}
+                                            {isPassed && result?.includes('Positive') ? <CheckCircle2 size={14} /> : (stage.id === 'independent' ? 'Ind' : stage.id)}
                                         </div>
                                         <div className={`flex-1 p-3 rounded-xl border ${isActive ? 'bg-cyan-900/20 border-cyan-500/30' : 'bg-gray-900/50 border-gray-800'}`}>
                                             <span className={`font-bold text-sm ${isActive ? 'text-cyan-300' : 'text-gray-400'}`}>{stage.title}</span>

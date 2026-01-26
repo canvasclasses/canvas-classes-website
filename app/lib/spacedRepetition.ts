@@ -97,8 +97,8 @@ export type MasteryLevel = 'new' | 'learning' | 'reviewing' | 'mastered';
 
 export function getMasteryLevel(progress: CardProgress): MasteryLevel {
     if (progress.repetitions === 0) return 'new';
-    if (progress.interval < 7) return 'learning';
-    if (progress.interval < 21) return 'reviewing';
+    if (progress.interval < 2) return 'learning';
+    if (progress.interval < 6) return 'reviewing';
     return 'mastered';
 }
 

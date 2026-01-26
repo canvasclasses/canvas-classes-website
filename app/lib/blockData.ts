@@ -7,6 +7,7 @@ export interface BlockTableData {
     headers: string[];
     rows: (string | number)[][];
     notes?: string[];
+    isTextOnly?: boolean;
 }
 
 export interface BlockInfo {
@@ -28,6 +29,172 @@ export const pBlockData: BlockInfo = {
     ],
     tables: [
         {
+            title: "Atomic and Physical Properties of Group 13 Elements",
+            source: "Table 11.2",
+            headers: ["Property", "Boron B", "Aluminium Al", "Gallium Ga", "Indium In", "Thallium Tl"],
+            rows: [
+                ["Atomic number", 5, 13, 31, 49, 81],
+                ["Atomic mass(g mol⁻¹)", 10.81, 26.98, 69.72, 114.82, 204.38],
+                ["Electronic configuration", "[He]2s²2p¹", "[Ne]3s²3p¹", "[Ar]3d¹⁰4s²4p¹", "[Kr]4d¹⁰5s²5p¹", "[Xe]4f¹⁴5d¹⁰6s²6p¹"],
+                ["Atomic radius/pm", 85, 143, 135, 167, 170],
+                ["Ionic radius M³⁺/pm", 27, 53.5, 62.0, 80.0, 88.5],
+                ["Ionic radius M⁺/pm", "-", "-", 120, 140, 150],
+                ["Ionization enthalpy (I) / kJ mol⁻¹", 801, 577, 579, 558, 589],
+                ["Ionization enthalpy (II) / kJ mol⁻¹", 2427, 1816, 1979, 1820, 1971],
+                ["Ionization enthalpy (III) / kJ mol⁻¹", 3659, 2744, 2962, 2704, 2877],
+                ["Electronegativity", 2.0, 1.5, 1.6, 1.7, 1.8],
+                ["Density / g cm⁻³", 2.35, 2.70, 5.90, 7.31, 11.85],
+                ["Melting point / K", 2453, 933, 303, 430, 576],
+                ["Boiling point / K", 3923, 2740, 2676, 2353, 1730],
+                ["E⊖ / V for (M³⁺/M)", "-", -1.66, -0.56, -0.34, +1.26],
+                ["E⊖ / V for (M⁺/M)", "-", +0.55, -0.79, -0.18, -0.34]
+            ],
+            notes: [
+                "Atomic radius of Ga is less than Al due to poor shielding of d-electrons.",
+                "Ga, In and Tl show +1 and +3 oxidation states but For Thallium +1 oxidation state is more stable than +3 due to inert pair effect. This makes Tl (+3) a good oxidising agent.",
+                "Ionization Enthalpy 1: Max = B, Min = In",
+                "Ionization Enthalpy 2: Max = B, Min = Al",
+                "Ionization Enthalpy 3: Max = B, Min = In",
+                "Density increases down the group.",
+                "Melting point decreases upto Ga then increases.",
+                "Boiling point decreases down the group."
+            ]
+        },
+        {
+            title: "Atomic and Physical Properties of Group 14 Elements",
+            source: "Table 11.3",
+            headers: ["Property", "Carbon C", "Silicon Si", "Germanium Ge", "Tin Sn", "Lead Pb"],
+            rows: [
+                ["Atomic Number", 6, 14, 32, 50, 82],
+                ["Atomic mass (g mol⁻¹)", 12.01, 28.09, 72.60, 118.71, 207.2],
+                ["Electronic configuration", "[He]2s²2p²", "[Ne]3s²3p²", "[Ar]3d¹⁰4s²4p²", "[Kr]4d¹⁰5s²5p²", "[Xe]4f¹⁴5d¹⁰6s²6p²"],
+                ["Covalent radius/pm", 77, 118, 122, 140, 146],
+                ["Ionic radius M⁴⁺/pm", "-", 40, 53, 69, 78],
+                ["Ionic radius M²⁺/pm", "-", "-", 73, 118, 119],
+                ["Ionization enthalpy (I) / kJ mol⁻¹", 1086, 786, 761, 708, 715],
+                ["Ionization enthalpy (II) / kJ mol⁻¹", 2352, 1577, 1537, 1411, 1450],
+                ["Ionization enthalpy (III) / kJ mol⁻¹", 4620, 3228, 3300, 2942, 3081],
+                ["Ionization enthalpy (IV) / kJ mol⁻¹", 6220, 4354, 4409, 3929, 4082],
+                ["Electronegativity", 2.5, 1.8, 1.8, 1.8, 1.9],
+                ["Density / g cm⁻³", 3.51, 2.34, 5.32, 7.26, 11.34],
+                ["Melting point/K", 4373, 1693, 1218, 505, 600],
+                ["Boiling point/K", "-", 3550, 3123, 2896, 2024],
+                ["Electrical resistivity / ohm cm", "10¹⁴-10¹⁶", 50, 50, "10⁻⁵", "2×10⁻⁵"]
+            ],
+            notes: [
+                "Carbon has highest melting and boiling points due to strong covalent bonding.",
+                "Electronegativity is nearly constant from Si to Pb (1.8 - 1.9).",
+                "Stability of +2 oxidation state increases down the group (Pb²⁺ > Pb⁴⁺).",
+                "Pb(+4) is a good oxidising agent e.g. PbO₂",
+                "Ionization Enthalpy 1: Max = C, Min = Sn",
+                "Density increases down the group.",
+                "Melting point decreases from C to Sn then increases."
+            ]
+        },
+        {
+            title: "Atomic and Physical Properties of Group 15 Elements",
+            source: "Table 7.1",
+            headers: ["Property", "N", "P", "As", "Sb", "Bi"],
+            rows: [
+                ["Atomic number", 7, 15, 33, 51, 83],
+                ["Atomic mass/g mol⁻¹", 14.01, 30.97, 74.92, 121.75, 208.98],
+                ["Electronic configuration", "[He]2s²2p³", "[Ne]3s²3p³", "[Ar]3d¹⁰4s²4p³", "[Kr]4d¹⁰5s²5p³", "[Xe]4f¹⁴5d¹⁰6s²6p³"],
+                ["Ionisation enthalpy (I) / kJ mol⁻¹", 1402, 1012, 947, 834, 703],
+                ["Ionisation enthalpy (II) / kJ mol⁻¹", 2856, 1903, 1798, 1595, 1610],
+                ["Ionisation enthalpy (III) / kJ mol⁻¹", 4577, 2910, 2736, 2443, 2466],
+                ["Electronegativity", 3.0, 2.1, 2.0, 1.9, 1.9],
+                ["Covalent radius/pm", 70, 110, 121, 141, 148],
+                ["Ionic radius/pm", 171, 212, 222, 76, 103],
+                ["Melting point/K", 63, 317, 1089, 904, 544],
+                ["Boiling point/K", 77.2, 554, 888, 1860, 1837],
+                ["Density / g cm⁻³", 0.879, 1.823, 5.778, 6.697, 9.808]
+            ],
+            notes: [
+                "Nitrogen has unexpectedly high ionization enthalpy.",
+                "Ionization Enthalpy 1: Max = N, Min = Bi (Decreases down the group)",
+                "Density increases down the group.",
+                "Melting point increases upto As then decreases.",
+                "Boiling point increases upto Sb then decreases (Bi < Sb)."
+            ]
+        },
+        {
+            title: "Atomic and Physical Properties of Group 16 Elements",
+            source: "Table 7.6",
+            headers: ["Property", "O", "S", "Se", "Te", "Po"],
+            rows: [
+                ["Atomic number", 8, 16, 34, 52, 84],
+                ["Atomic mass/g mol⁻¹", 16.00, 32.06, 78.96, 127.60, 210.00],
+                ["Electronic configuration", "[He]2s²2p⁴", "[Ne]3s²3p⁴", "[Ar]3d¹⁰4s²4p⁴", "[Kr]4d¹⁰5s²5p⁴", "[Xe]4f¹⁴5d¹⁰6s²6p⁴"],
+                ["Covalent radius/pm", 66, 104, 117, 137, 146],
+                ["Ionic radius E²⁻/pm", 140, 184, 198, 221, 230],
+                ["Electron gain enthalpy / kJ mol⁻¹", -141, -200, -195, -190, -174],
+                ["Ionisation enthalpy (I) / kJ mol⁻¹", 1314, 1000, 941, 869, 813],
+                ["Electronegativity", 3.50, 2.44, 2.48, 2.01, 1.76],
+                ["Density / g cm⁻³", 1.32, 2.06, 4.19, 6.25, "-"],
+                ["Melting point/K", 55, 393, 490, 725, 520],
+                ["Boiling point/K", 90, 718, 958, 1260, 1235],
+                ["Oxidation states", "-2,-1,1,2", "-2,2,4,6", "-2,2,4,6", "-2,2,4,6", "2,4"]
+            ],
+            notes: [
+                "Oxygen has high electronegativity next to Fluorine.",
+                "Electron gain enthalpy of Oxygen is less negative than Sulphur due to small size.",
+                "Ionization Enthalpy 1: Max = O, Min = Po (Decreases down the group)",
+                "Density increases down the group.",
+                "Melting point increases upto Te then decreases.",
+                "Boiling point increases upto Te then decreases."
+            ]
+        },
+        {
+            title: "Atomic and Physical Properties of Halogens (Group 17)",
+            source: "Table 7.8",
+            headers: ["Property", "F", "Cl", "Br", "I", "At"],
+            rows: [
+                ["Atomic number", 9, 17, 35, 53, 85],
+                ["Atomic mass/g mol⁻¹", 19.00, 35.45, 79.90, 126.90, 210],
+                ["Electronic configuration", "[He]2s²2p⁵", "[Ne]3s²3p⁵", "[Ar]3d¹⁰4s²4p⁵", "[Kr]4d¹⁰5s²5p⁵", "[Xe]4f¹⁴5d¹⁰6s²6p⁵"],
+                ["Covalent radius/pm", 64, 99, 114, 133, "-"],
+                ["Ionic radius X⁻/pm", 133, 184, 196, 220, "-"],
+                ["Ionisation enthalpy / kJ mol⁻¹", 1680, 1256, 1142, 1008, "-"],
+                ["Electron gain enthalpy / kJ mol⁻¹", -333, -349, -325, -296, "-"],
+                ["Electronegativity", 4.0, 3.2, 3.0, 2.7, 2.2],
+                ["Hydration Enthalpy / kJ mol⁻¹", 515, 381, 347, 305, "-"],
+                ["Melting point/K", 54.4, 172.0, 265.8, 386.6, "-"],
+                ["Boiling point/K", 84.9, 239.0, 332.5, 458.2, "-"],
+                ["Density / g cm⁻³", 1.5, 1.66, 3.19, 4.94, "-"],
+                ["Bond dissociation enthalpy / kJ mol⁻¹", 158.8, 242.6, 192.8, 151.1, "-"],
+                ["Standard Electrode Potential E⊖ / V", 2.87, 1.36, 1.09, 0.54, "-"]
+            ],
+            notes: [
+                "F has unique properties due to small size and high electronegativity.",
+                "Bond dissociation enthalpy: Cl₂ > Br₂ > F₂ > I₂ (F₂ is unexpectedly low due to repulsion).",
+                "Electron gain enthalpy: Cl > F > Br > I (F is less negative than Cl).",
+                "Melting and Boiling points increase down the group."
+            ]
+        },
+        {
+            title: "Atomic and Physical Properties of Group 18 Elements",
+            source: "Table 7.12",
+            headers: ["Property", "He", "Ne", "Ar", "Kr", "Xe", "Rn"],
+            rows: [
+                ["Atomic number", 2, 10, 18, 36, 54, 86],
+                ["Atomic mass/g mol⁻¹", 4.00, 20.18, 39.95, 83.80, 131.30, 222.00],
+                ["Electronic configuration", "1s²", "[He]2s²2p⁶", "[Ne]3s²3p⁶", "[Ar]3d¹⁰4s²4p⁶", "[Kr]4d¹⁰5s²5p⁶", "[Xe]4f¹⁴5d¹⁰6s²6p⁶"],
+                ["Atomic radius/pm", 120, 160, 190, 200, 220, "-"],
+                ["Ionisation enthalpy / kJ mol⁻¹", 2372, 2080, 1520, 1351, 1170, 1037],
+                ["Electron gain enthalpy / kJ mol⁻¹", 48, 116, 96, 96, 77, 68],
+                ["Density (at STP) / g cm⁻³", "1.8×10⁻⁴", "9.0×10⁻⁴", "1.8×10⁻³", "3.7×10⁻³", "5.9×10⁻³", "9.7×10⁻³"],
+                ["Melting point/K", "-", 24.6, 83.8, 115.9, 161.3, 202],
+                ["Boiling point/K", 4.2, 27.1, 87.2, 119.7, 165.0, 211],
+                ["Atmospheric content (% by volume)", "5.24×10⁻⁴", "1.82×10⁻³", 0.934, "1.14×10⁻⁴", "8.7×10⁻⁶", "-"]
+            ],
+            notes: [
+                "Noble gases have very high ionization enthalpies due to stable configuration.",
+                "Atomic radius increases down the group.",
+                "Boiling points are very low (weak dispersion forces), increasing down the group.",
+                "Argon is the most abundant noble gas in atmosphere."
+            ]
+        },
+        {
             title: "Properties of Hydrides of Group 15",
             source: "Table 7.2",
             headers: ["Property", "NH₃", "PH₃", "AsH₃", "SbH₃", "BiH₃"],
@@ -40,7 +207,7 @@ export const pBlockData: BlockInfo = {
                 ["ΔdissH°(E-H)/kJ mol⁻¹", 389, 322, 297, 255, "-"]
             ],
             notes: [
-                "NH₃ has highest boiling point due to hydrogen bonding",
+                "NH₃ has unexpectedly high boiling point and highest melting point due to hydrogen bonding",
                 "Bond angle decreases down the group (less s-character)",
                 "Stability decreases down the group (ΔfH° becomes more positive)",
                 "Bond dissociation enthalpy decreases down the group"
@@ -60,9 +227,9 @@ export const pBlockData: BlockInfo = {
                 ["Dissociation constant", "1.8×10⁻¹⁶", "1.3×10⁻⁷", "1.3×10⁻⁴", "2.3×10⁻³"]
             ],
             notes: [
-                "H₂O has anomalously high m.p and b.p due to hydrogen bonding",
-                "Acidic strength increases: H₂O < H₂S < H₂Se < H₂Te",
-                "Bond angle decreases due to decreasing electronegativity",
+                "H₂O has highest melting and boiling points among group 16 hydrides due to H-Bonding",
+                "Acidic strength increases down the group: H₂O < H₂S < H₂Se < H₂Te",
+                "Bond angle decreases down the group due to decreasing electronegativity",
                 "Reducing character increases down the group"
             ]
         },
@@ -78,35 +245,17 @@ export const pBlockData: BlockInfo = {
                 ["pKa", 3.2, -7.0, -9.5, -10.0]
             ],
             notes: [
-                "HF has highest b.p due to strong hydrogen bonding",
-                "Acidic strength: HF < HCl < HBr < HI",
-                "Bond dissociation enthalpy decreases → easier to release H⁺",
+                "HF has highest b.p (due to H-bonding) but HI has highest m.p",
+                "Acidic strength increases down the group: HF < HCl < HBr < HI",
+                "Bond dissociation enthalpy decreases down the group → easier to release H⁺",
             ]
         },
         // Restored Tables
-        {
-            title: "Oxoacids of Phosphorus",
-            source: "Table 7.5",
-            headers: ["Name", "Formula", "O.S.", "P-OH bonds", "Preparation"],
-            rows: [
-                ["Hypophosphorous", "H₃PO₂", "+1", "1 P-OH, 2 P-H", "White P₄ + alkali"],
-                ["Orthophosphorous", "H₃PO₃", "+3", "2 P-OH, 1 P-H", "P₂O₃ + H₂O"],
-                ["Pyrophosphorous", "H₄P₂O₅", "+3", "2 P-OH, 2 P-H", "PCl₃ + H₃PO₃"],
-                ["Hypophosphoric", "H₄P₂O₆", "+4", "4 P-OH, 1 P-P", "Red P₄ + alkali"],
-                ["Orthophosphoric", "H₃PO₄", "+5", "3 P-OH", "P₄O₁₀ + H₂O"],
-                ["Pyrophosphoric", "H₄P₂O₇", "+5", "4 P-OH", "Heat H₃PO₄"],
-                ["Metaphosphoric", "(HPO₃)n", "+5", "3 P-OH (per unit)", "H₃PO₄ + Br₂, heat"]
-            ],
-            notes: [
-                "Basicity = number of P-OH bonds",
-                "P-H bonds don't ionize in water",
-                "H₃PO₂ is monobasic despite having 3 H atoms",
-                "H₃PO₄ is tribasic (3 P-OH bonds)"
-            ]
-        },
+
         {
             title: "Oxides of Nitrogen",
             source: "Table 7.3",
+            isTextOnly: true,
             headers: ["Name", "Formula", "O.S.", "Preparation", "Appearance"],
             rows: [
                 ["Dinitrogen oxide", "N₂O", "+1", "NH₄NO₃ →Heat→ N₂O + 2H₂O", "Colourless gas, neutral"],
@@ -121,6 +270,27 @@ export const pBlockData: BlockInfo = {
                 "NO₂ is brown due to unpaired electron",
                 "N₂O₄ ⇌ 2NO₂ equilibrium is temperature dependent",
                 "Higher oxidation state = more acidic oxide"
+            ]
+        },
+        {
+            title: "Oxoacids of Phosphorus",
+            source: "Table 7.5",
+            isTextOnly: true,
+            headers: ["Name", "Formula", "O.S.", "Characteristic bonds", "Preparation"],
+            rows: [
+                ["Hypophosphorous (Phosphinic)", "H₃PO₂", "+1", "One P-OH, Two P-H, One P=O", "white P₄ + alkali"],
+                ["Orthophosphorous (Phosphonic)", "H₃PO₃", "+3", "Two P-OH, One P-H, One P=O", "P₂O₃ + H₂O"],
+                ["Pyrophosphorous", "H₄P₂O₅", "+3", "Two P-OH, Two P-H, Two P=O", "PCl₃ + H₃PO₃"],
+                ["Hypophosphoric", "H₄P₂O₆", "+4", "Four P-OH, Two P=O, One P-P", "red P₄ + alkali"],
+                ["Orthophosphoric", "H₃PO₄", "+5", "Three P-OH, One P=O", "P₄O₁₀ + H₂O"],
+                ["Pyrophosphoric", "H₄P₂O₇", "+5", "Four P-OH, Two P=O, One P-O-P", "heat phosphoric acid"],
+                ["Metaphosphoric", "(HPO₃)ₙ", "+5", "Three P-OH, Three P=O, Three P-O-P", "phosphorus acid + Br₂, heat in sealed tube"]
+            ],
+            notes: [
+                "Exists in polymeric forms only (Metaphosphoric)",
+                "Acids with P-H bonds have strong reducing properties (e.g., H₃PO₂)",
+                "P-H bonds do not ionize to give H⁺",
+                "Only P-OH hydrogens are ionizable (basicity)"
             ]
         }
     ]
@@ -156,7 +326,7 @@ export const dBlockData: BlockInfo = {
             ],
             notes: [
                 "Ionization enthalpy generally increases across the series.",
-                "Cr and Cu have anomalous electronic configurations (half-filled/full d-orbitals).",
+                "Cr and Cu have unexpected electronic configurations (half-filled/full d-orbitals).",
                 "Zn has the highest first IE due to fully filled stable 3d¹⁰ configuration.",
                 "Cu has a positive E° (noble, does not react with dilute acids).",
                 "Atomic radii decrease initially, then become nearly constant."
@@ -168,7 +338,7 @@ export const dBlockData: BlockInfo = {
             headers: ["Property", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn"],
             rows: [
                 ["E⊖ (M²⁺/M) / V", "-", -1.63, -1.2, -0.91, -1.18, -0.44, -0.28, -0.26, 0.34, -0.76],
-                ["E⊖ (M³⁺/M²⁺) / V", "-", 0.37, 0.26, -0.41, 1.51, 0.77, 1.82, "-", "-", "-"]
+                ["E⊖ (M³⁺/M²⁺) / V", "-", -0.37, -0.26, -0.41, 1.51, 0.77, 1.82, "-", "-", "-"]
             ],
             notes: [
                 "Cu has positive E⊖ for M²⁺/M, hence doesn't liberate H₂ from acids.",
@@ -179,6 +349,7 @@ export const dBlockData: BlockInfo = {
         {
             title: "Colours of Some Common Ions of First Transition Series",
             source: "Table 8.8",
+            isTextOnly: true,
             headers: ["Configuration", "Example Ion", "Colour", "Configuration", "Example Ion", "Colour"],
             rows: [
                 ["3d⁰", "Sc³⁺", "Colourless", "3d⁵", "Mn²⁺", "Pink"],
@@ -222,6 +393,7 @@ export const dBlockData: BlockInfo = {
         {
             title: "Coloured Compounds - Quick Revision",
             source: "NCERT Notes",
+            isTextOnly: true,
             headers: ["Colour", "Compounds"],
             rows: [
                 ["Yellow (ppt)", "PbCrO₄, BaCrO₄, As₂S₃, PbI₂, AgI, SnS₂, CdS"],
@@ -280,7 +452,7 @@ export const sBlockData: BlockInfo = {
             notes: [
                 "Ionization enthalpy decreases down the group due to increased size.",
                 "Hydration enthalpy decreases with increase in ionic size (Li⁺ has max hydration).",
-                "Density generally increases down the group, but K is lighter than Na.",
+                "Density generally increases down the group, but K is unexpectedly lighter than Na.",
                 "Li has most negative E⊖ (strongest reducing agent in aqueous solution) due to high hydration energy."
             ]
         },
@@ -306,7 +478,7 @@ export const sBlockData: BlockInfo = {
             notes: [
                 "Higher ionization enthalpies than Group 1 due to smaller size.",
                 "Hydration enthalpies > Group 1 ions; compounds are more hydrated (e.g., MgCl₂·6H₂O).",
-                "M.P/B.P do not show regular trends due to crystal structure variations.",
+                "Melting and boiling points do not show regular trends due to crystal structure variations.",
                 "Be and Mg are kinetically inert to oxygen and water due to oxide film."
             ]
         },
