@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { CATION_GROUPS, ANION_GROUPS, ANIONS } from '../lib/saltAnalysisData';
 
 export default function SaltAnalysisGuide() {
-    const [activeTab, setActiveTab] = useState<'anions' | 'cations' | null>(null);
+    const [activeTab, setActiveTab] = useState<'anions' | 'cations'>('anions');
 
     return (
         <div className="w-full max-w-6xl mx-auto mt-16 mb-8">
@@ -25,7 +25,7 @@ export default function SaltAnalysisGuide() {
                 {/* Tabs */}
                 <div className="flex border-b border-gray-800">
                     <button
-                        onClick={() => setActiveTab(activeTab === 'anions' ? null : 'anions')}
+                        onClick={() => setActiveTab('anions')}
                         className={`flex-1 py-4 text-sm font-semibold transition-colors relative ${activeTab === 'anions' ? 'text-cyan-400' : 'text-gray-400 hover:text-gray-300'
                             }`}
                     >
@@ -38,7 +38,7 @@ export default function SaltAnalysisGuide() {
                         )}
                     </button>
                     <button
-                        onClick={() => setActiveTab(activeTab === 'cations' ? null : 'cations')}
+                        onClick={() => setActiveTab('cations')}
                         className={`flex-1 py-4 text-sm font-semibold transition-colors relative ${activeTab === 'cations' ? 'text-purple-400' : 'text-gray-400 hover:text-gray-300'
                             }`}
                     >

@@ -103,6 +103,7 @@ export default function FlameTestSimulator() {
     const [isBurning, setIsBurning] = useState(false);
     const [viewMode, setViewMode] = useState<'naked' | 'blue-glass'>('naked');
     const [showProcedure, setShowProcedure] = useState(false);
+    const [showExplanation, setShowExplanation] = useState(false);
 
     const handleTest = (id: string) => {
         setIsBurning(false);
@@ -327,51 +328,72 @@ export default function FlameTestSimulator() {
                     </div>
                 </div>
 
-                {/* Science Explanation - Collapsible on mobile */}
+                {/* Science Explanation - Collapsible */}
                 <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-gray-700/50">
-                    <h3 className="text-base md:text-xl font-bold text-white mb-4 md:mb-6 flex items-center gap-2">
-                        <span className="text-xl md:text-2xl">💡</span> Why do elements show characteristic colors?
-                    </h3>
+                    <button
+                        onClick={() => setShowExplanation(!showExplanation)}
+                        className="w-full flex items-center justify-between group"
+                    >
+                        <h3 className="text-base md:text-xl font-bold text-white mb-4 md:mb-6 flex items-center gap-2 group-hover:text-cyan-400 transition-colors">
+                            <span className="text-xl md:text-2xl">💡</span> Why do elements show characteristic colors?
+                        </h3>
+                        <ChevronDown
+                            className={`text-gray-400 transition-transform duration-300 ${showExplanation ? 'rotate-180' : ''}`}
+                            size={24}
+                        />
+                    </button>
 
-                    <div className="flex flex-col gap-6 md:gap-12">
-                        {/* Text Explanation - Smaller cards on mobile */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
-                            <div className="bg-gray-800/40 p-3 md:p-5 rounded-lg md:rounded-xl border border-gray-700/50 hover:bg-gray-800/60 transition-colors">
-                                <h4 className="flex items-center gap-2 md:gap-3 font-bold text-cyan-400 mb-2 md:mb-3 text-sm md:text-lg">
-                                    <span className="flex items-center justify-center w-6 md:w-8 h-6 md:h-8 rounded-full bg-cyan-400/20 text-xs md:text-sm">1</span>
-                                    Electron Excitation
-                                </h4>
-                                <p className="text-xs md:text-base text-gray-300">
-                                    Heat energy causes valence electrons to jump to higher energy levels.
-                                </p>
-                            </div>
+                    <AnimatePresence>
+                        {showExplanation && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                                className="overflow-hidden"
+                            >
+                                <div className="flex flex-col gap-6 md:gap-12 pb-4">
+                                    {/* Text Explanation - Smaller cards on mobile */}
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
+                                        <div className="bg-gray-800/40 p-3 md:p-5 rounded-lg md:rounded-xl border border-gray-700/50 hover:bg-gray-800/60 transition-colors">
+                                            <h4 className="flex items-center gap-2 md:gap-3 font-bold text-cyan-400 mb-2 md:mb-3 text-sm md:text-lg">
+                                                <span className="flex items-center justify-center w-6 md:w-8 h-6 md:h-8 rounded-full bg-cyan-400/20 text-xs md:text-sm">1</span>
+                                                Electron Excitation
+                                            </h4>
+                                            <p className="text-xs md:text-base text-gray-300">
+                                                Heat energy causes valence electrons to jump to higher energy levels.
+                                            </p>
+                                        </div>
 
-                            <div className="bg-gray-800/40 p-3 md:p-5 rounded-lg md:rounded-xl border border-gray-700/50 hover:bg-gray-800/60 transition-colors">
-                                <h4 className="flex items-center gap-2 md:gap-3 font-bold text-purple-400 mb-2 md:mb-3 text-sm md:text-lg">
-                                    <span className="flex items-center justify-center w-6 md:w-8 h-6 md:h-8 rounded-full bg-purple-400/20 text-xs md:text-sm">2</span>
-                                    Photon Emission
-                                </h4>
-                                <p className="text-xs md:text-base text-gray-300">
-                                    Electrons fall back and release energy as light photons.
-                                </p>
-                            </div>
+                                        <div className="bg-gray-800/40 p-3 md:p-5 rounded-lg md:rounded-xl border border-gray-700/50 hover:bg-gray-800/60 transition-colors">
+                                            <h4 className="flex items-center gap-2 md:gap-3 font-bold text-purple-400 mb-2 md:mb-3 text-sm md:text-lg">
+                                                <span className="flex items-center justify-center w-6 md:w-8 h-6 md:h-8 rounded-full bg-purple-400/20 text-xs md:text-sm">2</span>
+                                                Photon Emission
+                                            </h4>
+                                            <p className="text-xs md:text-base text-gray-300">
+                                                Electrons fall back and release energy as light photons.
+                                            </p>
+                                        </div>
 
-                            <div className="bg-gray-800/40 p-3 md:p-5 rounded-lg md:rounded-xl border border-gray-700/50 hover:bg-gray-800/60 transition-colors">
-                                <h4 className="flex items-center gap-2 md:gap-3 font-bold text-orange-400 mb-2 md:mb-3 text-sm md:text-lg">
-                                    <span className="flex items-center justify-center w-6 md:w-8 h-6 md:h-8 rounded-full bg-orange-400/20 text-xs md:text-sm">3</span>
-                                    Unique Fingerprint
-                                </h4>
-                                <p className="text-xs md:text-base text-gray-300">
-                                    Each element has unique energy gaps = unique flame color.
-                                </p>
-                            </div>
-                        </div>
+                                        <div className="bg-gray-800/40 p-3 md:p-5 rounded-lg md:rounded-xl border border-gray-700/50 hover:bg-gray-800/60 transition-colors">
+                                            <h4 className="flex items-center gap-2 md:gap-3 font-bold text-orange-400 mb-2 md:mb-3 text-sm md:text-lg">
+                                                <span className="flex items-center justify-center w-6 md:w-8 h-6 md:h-8 rounded-full bg-orange-400/20 text-xs md:text-sm">3</span>
+                                                Unique Fingerprint
+                                            </h4>
+                                            <p className="text-xs md:text-base text-gray-300">
+                                                Each element has unique energy gaps = unique flame color.
+                                            </p>
+                                        </div>
+                                    </div>
 
-                        {/* Visual Animation */}
-                        <div className="w-full">
-                            <AtomicProcessVisualizer />
-                        </div>
-                    </div>
+                                    {/* Visual Animation */}
+                                    <div className="w-full">
+                                        <AtomicProcessVisualizer />
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
         </div>

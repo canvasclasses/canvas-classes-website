@@ -56,11 +56,13 @@ export default function CationFlowchartSimulator() {
     const [isAnimating, setIsAnimating] = useState(false);
     const [pptFormed, setPptFormed] = useState(false);
     const [history, setHistory] = useState<string[]>([]);
+    const [resultCation, setResultCation] = useState<CationData | null>(null);
 
     const currentStage = STAGES[currentStageIndex];
 
     const reset = () => {
         setSelectedCation(null);
+        setResultCation(null);
         setCurrentStageIndex(0);
         setPptFormed(false);
         setHistory([]);
@@ -78,13 +80,16 @@ export default function CationFlowchartSimulator() {
 
         setIsAnimating(true);
 
-        // Check if precipitate should form
-        const shouldFormPpt = selectedCation.group === currentStage.id;
+        // Find if the selected cation (by symbol) has a reaction in the current group
+        // This handles cases like Pb²⁺ which appears in both Group I and Group II
+        const matchingCation = CATIONS.find(c => c.symbol === selectedCation.symbol && c.group === currentStage.id);
+        const shouldFormPpt = !!matchingCation;
 
         // Sequence: Add Reagent -> Wait -> Result
         setTimeout(() => {
-            if (shouldFormPpt) {
+            if (shouldFormPpt && matchingCation) {
                 setPptFormed(true);
+                setResultCation(matchingCation);
                 setHistory(prev => [...prev, `Group ${currentStage.id}: Precipitate Formed`]);
             } else {
                 setHistory(prev => [...prev, `Group ${currentStage.id}: No Precipitate`]);
@@ -95,6 +100,7 @@ export default function CationFlowchartSimulator() {
 
     const nextStage = () => {
         setPptFormed(false);
+        setResultCation(null);
         if (currentStageIndex < STAGES.length - 1) {
             setCurrentStageIndex(prev => prev + 1);
         } else {
@@ -216,12 +222,12 @@ export default function CationFlowchartSimulator() {
                                     >
                                         {/* Precipitate Layer */}
                                         <AnimatePresence>
-                                            {pptFormed && (
+                                            {pptFormed && resultCation && (
                                                 <motion.div
                                                     initial={{ opacity: 0, y: 20 }}
                                                     animate={{ opacity: 1, y: 0 }}
                                                     transition={{ duration: 1 }}
-                                                    className={`absolute bottom-0 w-full h-1/2 ${selectedCation.precipitateColor} blur-[1px] opacity-90`}
+                                                    className={`absolute bottom-0 w-full h-1/2 ${resultCation.precipitateColor} blur-[1px] opacity-90`}
                                                 >
                                                     {/* Particles for realism */}
                                                     <div className="w-full h-full opacity-50 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
@@ -271,7 +277,7 @@ export default function CationFlowchartSimulator() {
                                         >
                                             <Beaker /> Add {currentStage.reagent}
                                         </motion.button>
-                                    ) : pptFormed ? (
+                                    ) : pptFormed && resultCation ? (
                                         <motion.div
                                             key="result"
                                             initial={{ scale: 0.9, opacity: 0 }}
@@ -285,14 +291,14 @@ export default function CationFlowchartSimulator() {
                                                 <div className="flex-1">
                                                     <h4 className="text-lg md:text-xl font-bold text-white mb-1">Precipitate Formed!</h4>
                                                     <p className="text-gray-300 mb-2 md:mb-3 text-xs md:text-sm">
-                                                        <strong className="text-green-400">{selectedCation.symbol}</strong> found in <strong className="text-purple-300">Group {selectedCation.group}</strong>.
+                                                        <strong className="text-green-400">{selectedCation.symbol}</strong> found in <strong className="text-purple-300">Group {resultCation.group}</strong>.
                                                     </p>
 
                                                     {/* Enhanced Observation Text */}
                                                     <div className="mb-3 md:mb-4 bg-gray-900/50 p-2 md:p-3 rounded-lg border border-gray-700">
                                                         <span className="text-[10px] md:text-xs font-bold text-gray-500 uppercase block mb-1">Observation</span>
                                                         <p className="text-sm md:text-lg font-bold text-white tracking-wide">
-                                                            {selectedCation.precipitateName}
+                                                            {resultCation.precipitateName}
                                                         </p>
                                                     </div>
 
@@ -305,6 +311,7 @@ export default function CationFlowchartSimulator() {
                                                 </div>
                                             </div>
                                         </motion.div>
+
                                     ) : (
                                         isAnimating && (
                                             <div className="text-center text-gray-500 animate-pulse text-sm md:text-base">

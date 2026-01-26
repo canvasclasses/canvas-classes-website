@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
     CheckCircle2, XCircle, Trophy, RefreshCcw, ChevronRight, ChevronDown,
     BrainCircuit, GraduationCap, ArrowRight, Eye, Zap, BookOpen,
-    Filter, Clock, Sparkles, RotateCcw, Shuffle
+    Filter, Clock, Sparkles, RotateCcw, Shuffle, Info
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { MASTERY_QUESTIONS } from './quizData';
@@ -562,10 +562,19 @@ export default function SaltAnalysisQuiz() {
                             <p className="text-2xl font-bold text-white">{mcqStats.learning + mcqStats.reviewing + flashcardStats.learning + flashcardStats.reviewing}</p>
                             <p className="text-xs text-gray-400 uppercase tracking-wider">Learning</p>
                         </div>
-                        <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 text-center">
+                        <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 text-center relative group/info">
                             <Trophy className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
                             <p className="text-2xl font-bold text-white">{mcqStats.mastered + flashcardStats.mastered}</p>
-                            <p className="text-xs text-gray-400 uppercase tracking-wider">Mastered</p>
+                            <p className="text-xs text-gray-400 uppercase tracking-wider flex items-center justify-center gap-1">
+                                Mastered
+                                <Info size={12} className="text-gray-500 hover:text-gray-300 cursor-help" />
+                            </p>
+
+                            {/* Tooltip */}
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-3 bg-gray-900 border border-gray-700 rounded-lg shadow-xl text-xs text-gray-300 opacity-0 group-hover/info:opacity-100 transition-opacity pointer-events-none z-50">
+                                Answer correctly 2 times in a row to master a topic!
+                                <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-gray-900"></div>
+                            </div>
                         </div>
                     </div>
                 )}
