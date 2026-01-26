@@ -10,8 +10,11 @@ import {
     getMasteryLevel,
     MasteryLevel
 } from '../lib/spacedRepetition';
+import { syncProgressWithCloud, saveProgressItemToCloud } from '../utils/progressSync';
+import { createClient } from '../utils/supabase/client';
 
 const STORAGE_KEY = 'canvas_flashcard_progress';
+const FEATURE_TYPE = 'flashcard';
 
 interface ProgressMap {
     [cardId: string]: CardProgress;
@@ -27,26 +30,51 @@ interface Statistics {
 }
 
 /**
- * Hook for managing flashcard progress with LocalStorage persistence
+ * Hook for managing flashcard progress with LocalStorage persistence AND Supabase Cloud Sync
  */
 export function useCardProgress() {
     const [progressMap, setProgressMap] = useState<ProgressMap>({});
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isSyncing, setIsSyncing] = useState(false);
 
-    // Load progress from LocalStorage on mount
+    // Initial Load & Sync
     useEffect(() => {
-        try {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                setProgressMap(JSON.parse(stored));
+        const loadAndSync = async () => {
+            let initialData: ProgressMap = {};
+
+            // 1. Load Local
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    initialData = JSON.parse(stored);
+                    setProgressMap(initialData);
+                }
+            } catch (error) {
+                console.error('Error loading flashcard progress:', error);
             }
-        } catch (error) {
-            console.error('Error loading flashcard progress:', error);
-        }
-        setIsLoaded(true);
+            setIsLoaded(true);
+
+            // 2. Sync with Cloud
+            setIsSyncing(true);
+            try {
+                const mergedData = await syncProgressWithCloud(FEATURE_TYPE, initialData);
+
+                // Only update if different
+                if (JSON.stringify(mergedData) !== JSON.stringify(initialData)) {
+                    setProgressMap(mergedData);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedData));
+                }
+            } catch (err) {
+                console.error('Sync failed:', err);
+            } finally {
+                setIsSyncing(false);
+            }
+        };
+
+        loadAndSync();
     }, []);
 
-    // Save to LocalStorage whenever progressMap changes
+    // Save to LocalStorage whenever progressMap changes (backup)
     useEffect(() => {
         if (isLoaded) {
             try {
@@ -71,6 +99,10 @@ export function useCardProgress() {
         setProgressMap(prev => {
             const currentProgress = prev[cardId] || createInitialProgress(cardId);
             const newProgress = calculateNextReview(currentProgress, quality);
+
+            // Fire and forget cloud save
+            saveProgressItemToCloud(FEATURE_TYPE, newProgress);
+
             return { ...prev, [cardId]: newProgress };
         });
     }, []);
@@ -159,6 +191,7 @@ export function useCardProgress() {
         sortByPriority,
         getStatistics,
         resetAllProgress,
-        hasAnyProgress
+        hasAnyProgress,
+        isSyncing
     };
 }

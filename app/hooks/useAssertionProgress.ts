@@ -10,9 +10,11 @@ import {
     getMasteryLevel,
     MasteryLevel
 } from '../lib/spacedRepetition';
+import { syncProgressWithCloud, saveProgressItemToCloud } from '../utils/progressSync';
 
 // Separate storage key for assertion-reason progress (keeps flashcard data separate)
 const STORAGE_KEY = 'canvas_assertion_progress';
+const FEATURE_TYPE = 'assertion_reason';
 
 interface ProgressMap {
     [questionId: string]: CardProgress;
@@ -28,24 +30,49 @@ interface Statistics {
 }
 
 /**
- * Hook for managing assertion-reason question progress with LocalStorage persistence
+ * Hook for managing assertion-reason question progress with LocalStorage persistence AND Supabase Sync
  * Mirrors useCardProgress but with separate storage for assertion-reason questions
  */
 export function useAssertionProgress() {
     const [progressMap, setProgressMap] = useState<ProgressMap>({});
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isSyncing, setIsSyncing] = useState(false);
 
-    // Load progress from LocalStorage on mount
+    // Initial Load & Sync
     useEffect(() => {
-        try {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                setProgressMap(JSON.parse(stored));
+        const loadAndSync = async () => {
+            let initialData: ProgressMap = {};
+
+            // 1. Load Local
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    initialData = JSON.parse(stored);
+                    setProgressMap(initialData);
+                }
+            } catch (error) {
+                console.error('Error loading assertion progress:', error);
             }
-        } catch (error) {
-            console.error('Error loading assertion progress:', error);
-        }
-        setIsLoaded(true);
+            setIsLoaded(true);
+
+            // 2. Sync with Cloud
+            setIsSyncing(true);
+            try {
+                const mergedData = await syncProgressWithCloud(FEATURE_TYPE, initialData);
+
+                // Only update if different
+                if (JSON.stringify(mergedData) !== JSON.stringify(initialData)) {
+                    setProgressMap(mergedData);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedData));
+                }
+            } catch (err) {
+                console.error('Sync failed:', err);
+            } finally {
+                setIsSyncing(false);
+            }
+        };
+
+        loadAndSync();
     }, []);
 
     // Save to LocalStorage whenever progressMap changes
@@ -73,6 +100,10 @@ export function useAssertionProgress() {
         setProgressMap(prev => {
             const currentProgress = prev[questionId] || createInitialProgress(questionId);
             const newProgress = calculateNextReview(currentProgress, quality);
+
+            // Fire and forget cloud save
+            saveProgressItemToCloud(FEATURE_TYPE, newProgress);
+
             return { ...prev, [questionId]: newProgress };
         });
     }, []);
@@ -161,6 +192,7 @@ export function useAssertionProgress() {
         sortByPriority,
         getStatistics,
         resetAllProgress,
-        hasAnyProgress
+        hasAnyProgress,
+        isSyncing
     };
 }
