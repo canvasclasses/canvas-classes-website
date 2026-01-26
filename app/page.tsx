@@ -5,6 +5,7 @@ import PeriodicTrendsTeaser from "./components/PeriodicTrendsTeaser";
 import PathfinderQuiz from "./components/PathfinderQuiz";
 import MyNotesSection from "./components/MyNotesSection";
 import NCERTBoardsSection from "./components/NCERTBoardsSection";
+import SaltAnalysisTeaser from "./components/SaltAnalysisTeaser";
 
 export const metadata: Metadata = {
   title: "Canvas Classes - Free JEE & NEET Chemistry Preparation",
@@ -27,6 +28,7 @@ export default function Home() {
       <PeriodicTrendsTeaser />
       <PathfinderQuiz />
       <NCERTBoardsSection />
+      <SaltAnalysisTeaser />
     </main>
   );
 }

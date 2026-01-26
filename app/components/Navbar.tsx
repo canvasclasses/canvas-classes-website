@@ -28,7 +28,7 @@ const revisionToolsLinks = [
   { label: 'Salt Analysis', href: '/salt-analysis', external: false },
 ];
 
-export default function Navbar() {
+export default function Navbar({ authButton }: { authButton: React.ReactNode }) {
   const [jeeDropdownOpen, setJeeDropdownOpen] = useState(false);
   const [ncertDropdownOpen, setNcertDropdownOpen] = useState(false);
   const [revisionDropdownOpen, setRevisionDropdownOpen] = useState(false);
@@ -176,6 +176,9 @@ export default function Navbar() {
           </div>
         </div>
         <Link href="/handwritten-notes" className="px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all">My Notes</Link>
+        <div className="ml-2">
+          {authButton}
+        </div>
       </div>
 
       {/* Mobile Menu Button */}
@@ -296,6 +299,9 @@ export default function Navbar() {
             >
               My Notes
             </Link>
+            <div className="px-5 py-3">
+              {authButton}
+            </div>
           </div>
         </div>
       </div>

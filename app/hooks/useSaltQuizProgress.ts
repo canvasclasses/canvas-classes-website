@@ -10,6 +10,7 @@ import {
     getMasteryLevel,
     MasteryLevel
 } from '../lib/spacedRepetition';
+import { syncProgressWithCloud, saveProgressItemToCloud } from '../utils/progressSync';
 
 // Separate storage keys for MCQs and Flashcards
 const MCQ_STORAGE_KEY = 'canvas_salt_quiz_mcq_progress';
@@ -29,27 +30,53 @@ interface Statistics {
 }
 
 /**
- * Hook for managing Salt Analysis quiz progress with LocalStorage persistence
+ * Hook for managing Salt Analysis quiz progress with LocalStorage persistence AND Supabase Sync
  * Supports both MCQ questions and Mastery flashcards with separate storage
  */
 export function useSaltQuizProgress(type: 'mcq' | 'flashcard' = 'mcq') {
     const STORAGE_KEY = type === 'mcq' ? MCQ_STORAGE_KEY : FLASHCARD_STORAGE_KEY;
+    const FEATURE_TYPE = type === 'mcq' ? 'salt_mcq' : 'salt_flashcard';
 
     const [progressMap, setProgressMap] = useState<ProgressMap>({});
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isSyncing, setIsSyncing] = useState(false);
 
-    // Load progress from LocalStorage on mount
+    // Initial Load & Sync
     useEffect(() => {
-        try {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                setProgressMap(JSON.parse(stored));
+        const loadAndSync = async () => {
+            let initialData: ProgressMap = {};
+
+            // 1. Load Local
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    initialData = JSON.parse(stored);
+                    setProgressMap(initialData);
+                }
+            } catch (error) {
+                console.error('Error loading salt quiz progress:', error);
             }
-        } catch (error) {
-            console.error('Error loading salt quiz progress:', error);
-        }
-        setIsLoaded(true);
-    }, [STORAGE_KEY]);
+            setIsLoaded(true);
+
+            // 2. Sync with Cloud
+            setIsSyncing(true);
+            try {
+                const mergedData = await syncProgressWithCloud(FEATURE_TYPE, initialData);
+
+                // Only update if different
+                if (JSON.stringify(mergedData) !== JSON.stringify(initialData)) {
+                    setProgressMap(mergedData);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedData));
+                }
+            } catch (err) {
+                console.error('Sync failed:', err);
+            } finally {
+                setIsSyncing(false);
+            }
+        };
+
+        loadAndSync();
+    }, [STORAGE_KEY, FEATURE_TYPE]);
 
     // Save to LocalStorage whenever progressMap changes
     useEffect(() => {
@@ -76,9 +103,13 @@ export function useSaltQuizProgress(type: 'mcq' | 'flashcard' = 'mcq') {
         setProgressMap(prev => {
             const currentProgress = prev[cardId] || createInitialProgress(cardId);
             const newProgress = calculateNextReview(currentProgress, quality);
+
+            // Fire and forget cloud save
+            saveProgressItemToCloud(FEATURE_TYPE, newProgress);
+
             return { ...prev, [cardId]: newProgress };
         });
-    }, []);
+    }, [FEATURE_TYPE]);
 
     /**
      * Simple correct/incorrect update (maps to quality 4 or 1)
@@ -226,6 +257,7 @@ export function useSaltQuizProgress(type: 'mcq' | 'flashcard' = 'mcq') {
         getStatistics,
         getCardMasteryLevel,
         resetAllProgress,
-        hasAnyProgress
+        hasAnyProgress,
+        isSyncing
     };
 }
