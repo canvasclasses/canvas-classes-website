@@ -61,7 +61,7 @@ const journeyCards = [
 export default function AboutPage() {
     return (
         <main className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-            <Navbar />
+            <Navbar authButton={null} />
 
             {/* Hero Section */}
             <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
