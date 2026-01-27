@@ -317,6 +317,16 @@ export default function TrendsComponent() {
                                         {/* Desktop View (Wide Graph) */}
                                         <div className="hidden md:block relative h-[500px] bg-gray-900/40 rounded-xl border border-gray-700/40 p-5">
                                             <div className="absolute top-3 left-6 text-base text-gray-200 font-bold">{activePropertyRow.name}</div>
+                                            {/* Electronic config legend below graph for long values */}
+                                            {activePropertyRow.name.toLowerCase().includes('electronic') && (
+                                                <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-4 text-sm text-gray-400 flex-wrap px-4">
+                                                    {plotData.map((point, i) => (
+                                                        <span key={i} className="whitespace-nowrap">
+                                                            <span className="text-gray-300 font-medium">{point.label}:</span> {point.displayValue}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            )}
                                             <svg viewBox="0 0 600 375" className="w-full h-full overflow-visible">
                                                 {/* Grid */}
                                                 {[40, 188, 335].map(y => <line key={y} x1="3%" y1={y} x2="97%" y2={y} stroke="#374151" strokeDasharray="2" strokeWidth="0.5" />)}
@@ -372,19 +382,25 @@ export default function TrendsComponent() {
                                                     }
                                                     const valLabelY = y + (isValley ? 20 : -15);
 
+                                                    // For electronic config, hide all inline labels (show in legend below)
+                                                    const isElectronicConfig = activePropertyRow.name.toLowerCase().includes('electronic');
+                                                    // Use uniform font size of 14 for all labels
+                                                    const fontSize = isElectronicConfig ? "14" : "18";
+
                                                     return (
                                                         <g key={i}>
                                                             {hasValue && (
                                                                 <>
                                                                     <circle cx={x} cy={y} r={isH ? 5 : 3.5} className="fill-white stroke-pink-400 stroke-[1.5] cursor-pointer transition-all"
                                                                         onMouseEnter={() => setHoveredPoint(i)} onMouseLeave={() => setHoveredPoint(null)} />
-                                                                    {(isH || plotData.length <= 10) && (
+                                                                    {/* For electronic config: show on hover only. For others: show always if <=10 points */}
+                                                                    {(isH || (!isElectronicConfig && plotData.length <= 10)) && (
                                                                         <text
                                                                             x={x}
                                                                             y={valLabelY}
                                                                             textAnchor="middle"
                                                                             fill="white"
-                                                                            fontSize="18"
+                                                                            fontSize={fontSize}
                                                                             fontWeight="500"
                                                                             stroke="#111827"
                                                                             strokeWidth="3"

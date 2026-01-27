@@ -114,7 +114,9 @@ export const pBlockData: BlockInfo = {
                 "Ionization Enthalpy 1: Max = N, Min = Bi (Decreases down the group)",
                 "Density increases down the group.",
                 "Melting point increases upto As then decreases.",
-                "Boiling point increases upto Sb then decreases (Bi < Sb)."
+                "Boiling point increases upto Sb then decreases (Bi < Sb).",
+                "N₂ has a triple bond (941.4 kJ/mol) - very strong. P, As, Sb form single bonds; Bi forms metallic bonds.",
+                "Single N-N bond is weaker than P-P bond due to lone pair repulsion (small bond length). So catenation is weaker in nitrogen."
             ]
         },
         {
