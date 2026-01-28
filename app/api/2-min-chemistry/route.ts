@@ -19,5 +19,5 @@ export async function GET() {
     }
 }
 
-// Enable ISR - revalidate every hour
-export const revalidate = 3600;
+// Enable ISR - revalidate every 24 hours
+export const revalidate = 86400;

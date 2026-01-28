@@ -80,7 +80,7 @@ export async function fetchNcertBooksData(): Promise<NcertBooksData> {
     };
 
     try {
-        const response = await fetch(CSV_URL, { next: { revalidate: 3600 } }); // Cache for 1 hour
+        const response = await fetch(CSV_URL, { next: { revalidate: 86400 } }); // Cache for 24 hours
         const csvText = await response.text();
         const rows = parseCSVRobust(csvText);
 

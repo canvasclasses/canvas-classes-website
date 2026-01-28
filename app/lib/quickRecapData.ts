@@ -80,7 +80,7 @@ function parseDuration(duration: string): number {
 // Fetch and parse Quick Recap data
 export async function fetchQuickRecapData(): Promise<QuickRecapVideo[]> {
     try {
-        const response = await fetch(CSV_URL, { next: { revalidate: 3600 } });
+        const response = await fetch(CSV_URL, { next: { revalidate: 86400 } }); // 24 hours
         const csvText = await response.text();
         const lines = csvText.split('\n').filter(line => line.trim());
 

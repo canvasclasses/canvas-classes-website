@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { fetchSamplePapers } from '../../lib/samplePapersData';
 
-export const revalidate = 3600;
+export const revalidate = 86400; // 24 hours
 
 export async function GET() {
     try {

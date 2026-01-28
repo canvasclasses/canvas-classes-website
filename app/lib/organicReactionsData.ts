@@ -53,7 +53,7 @@ function parseCSVRobust(text: string): string[][] {
 
 export async function fetchOrganicReactions(): Promise<OrganicReaction[]> {
     try {
-        const response = await fetch(CSV_URL, { next: { revalidate: 3600 } });
+        const response = await fetch(CSV_URL, { next: { revalidate: 86400 } }); // 24 hours
         const text = await response.text();
 
         const rows = parseCSVRobust(text);

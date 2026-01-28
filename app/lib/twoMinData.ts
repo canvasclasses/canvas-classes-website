@@ -93,7 +93,7 @@ function formatDuration(seconds: number): string {
 // Fetch and parse 2 Minute Chemistry data
 export async function fetch2MinData(): Promise<ShortVideo[]> {
     try {
-        const response = await fetch(CSV_URL, { next: { revalidate: 3600 } });
+        const response = await fetch(CSV_URL, { next: { revalidate: 86400 } }); // 24 hours
         const csvText = await response.text();
         const lines = csvText.split('\n').filter(line => line.trim());
 
