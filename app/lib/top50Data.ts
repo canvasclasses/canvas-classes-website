@@ -70,7 +70,7 @@ function getYoutubeId(url: string): string | null {
 // Fetch and parse Top 50 Concepts data
 export async function fetchTop50Data(): Promise<Concept[]> {
     try {
-        const response = await fetch(CSV_URL, { next: { revalidate: 3600 } });
+        const response = await fetch(CSV_URL, { next: { revalidate: 86400 } }); // 24 hours
         const csvText = await response.text();
         const lines = csvText.split('\n').filter(line => line.trim());
 

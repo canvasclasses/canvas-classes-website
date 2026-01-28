@@ -45,7 +45,7 @@ function parseCSVLine(line: string): string[] {
 // Fetch and parse NCERT Solutions data
 export async function fetchNCERTData(): Promise<NCERTQuestion[]> {
     try {
-        const response = await fetch(CSV_URL, { next: { revalidate: 3600 } });
+        const response = await fetch(CSV_URL, { next: { revalidate: 86400 } }); // 24 hours
         const csvText = await response.text();
         const lines = csvText.split('\n').filter(line => line.trim());
 

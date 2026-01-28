@@ -70,7 +70,7 @@ function parseCSVRobust(text: string): string[][] {
 
 export async function fetchNeetCrashCourseData(): Promise<NeetChapter[]> {
     try {
-        const response = await fetch(CSV_URL, { next: { revalidate: 60 } });
+        const response = await fetch(CSV_URL, { next: { revalidate: 86400 } }); // 24 hours
         const text = await response.text();
         const rows = parseCSVRobust(text);
 

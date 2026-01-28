@@ -25,4 +25,4 @@ export default async function ChapterPage({ params }: PageProps) {
 }
 
 // Enable ISR
-export const revalidate = 3600;
+export const revalidate = 86400; // 24 hours
