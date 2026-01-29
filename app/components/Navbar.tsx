@@ -177,6 +177,7 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
           </div>
         </div>
         <Link href="/handwritten-notes" className="px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all">My Notes</Link>
+        <Link href="/blog" className="px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all font-semibold text-purple-600 bg-purple-50/50">Blog</Link>
         <button
           onClick={() => window.dispatchEvent(new Event('openCommandPalette'))}
           className="ml-2 p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-teal-600 transition-colors"

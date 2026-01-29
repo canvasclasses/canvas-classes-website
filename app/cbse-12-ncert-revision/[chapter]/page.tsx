@@ -175,13 +175,13 @@ export default function ChapterPage() {
         },
         // Unordered Lists → Bullet Points with Checkmarks
         ul: ({ children }: any) => <ul className="space-y-2 mb-4 ml-0">{children}</ul>,
-        // Paragraphs - Handle colon-based headings
+        // Paragraphs - Smart handling for Headings and Image Layouts
         p: ({ node, children, ...props }: any) => {
             // Check for colon-based headings (e.g., "Key Concepts:")
             const textContent = typeof children === 'string' ? children :
                 (Array.isArray(children) ? children.map((c: any) => typeof c === 'string' ? c : '').join('') : '');
 
-            // If paragraph ends with colon and is short, treat as subheading
+            // 1. Heading Detection
             if (textContent.trim().endsWith(':') && textContent.length < 80) {
                 return (
                     <p className="mb-3 mt-6 text-gray-900 font-semibold text-base" {...props}>
@@ -190,31 +190,59 @@ export default function ChapterPage() {
                 );
             }
 
+            // 2. Image Gallery Detection
+            // Check if paragraph contains only images (ignoring whitespace)
+            const hasImages = node?.children?.some((child: any) => child.tagName === 'img');
+            if (hasImages) {
+                const nonImageChildren = node?.children?.filter((child: any) =>
+                    !(child.tagName === 'img' || (child.type === 'text' && !child.value.trim()))
+                );
+
+                if (!nonImageChildren || nonImageChildren.length === 0) {
+                    // Filter out whitespace from React children for proper grid rendering
+                    const validChildren = React.Children.toArray(children).filter(child =>
+                        !(typeof child === 'string' && !child.trim())
+                    );
+
+                    // Grid Layout for multiple images - Override default image sizing
+                    if (validChildren.length > 1) {
+                        return (
+                            <div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl mx-auto" {...props}>
+                                {React.Children.map(validChildren, (child: any) =>
+                                    React.cloneElement(child, { className: 'w-full h-full' })
+                                )}
+                            </div>
+                        );
+                    }
+
+                    // Single image - Let the img component handle its own sizing (default max-w-2xl)
+                    return <>{children}</>;
+                }
+            }
+
             return <p className="mb-4 text-gray-700 leading-relaxed text-[15px]" {...props}>{children}</p>;
         },
         // Bold Text
         strong: ({ children }: any) => <strong className="text-gray-900 font-semibold">{children}</strong>,
         // Italic Text
         em: ({ children }: any) => <em className="text-gray-800 italic">{children}</em>,
-        // Images with Captions - Constrained width on desktop
-        img: ({ src, alt }: any) => (
-            <div className="my-8 flex justify-center">
-                <div
-                    className="max-w-2xl w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg bg-white cursor-pointer group relative"
-                    onClick={() => setLightboxImage(src)}
-                >
-                    <img src={src} alt={alt || ''} className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]" />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center pointer-events-none">
-                        <div className="bg-black/60 text-white text-xs font-bold px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0">
-                            <ZoomIn size={14} /> Tap to Expand
-                        </div>
+        // Images with Captions - Default to "Single Card" style (Constrained & Centered)
+        img: ({ src, alt, className }: any) => (
+            <div
+                className={`rounded-xl overflow-hidden border border-gray-200 shadow-lg bg-white cursor-pointer group relative ${className || 'max-w-2xl w-full mx-auto my-8'}`}
+                onClick={() => setLightboxImage(src)}
+            >
+                <img src={src} alt={alt || ''} className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center pointer-events-none">
+                    <div className="bg-black/60 text-white text-xs font-bold px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0">
+                        <ZoomIn size={14} /> Tap to Expand
                     </div>
-                    {alt && (
-                        <p className="text-center text-sm text-gray-600 py-3 px-4 bg-gray-50 border-t border-gray-100 font-medium relative z-10">
-                            {alt}
-                        </p>
-                    )}
                 </div>
+                {alt && (
+                    <p className="text-center text-sm text-gray-600 py-3 px-4 bg-gray-50 border-t border-gray-100 font-medium relative z-10">
+                        {alt}
+                    </p>
+                )}
             </div>
         ),
         // Headers (if used directly in markdown)
@@ -234,6 +262,60 @@ export default function ChapterPage() {
                 {children}
             </blockquote>
         ),
+    };
+
+    // Custom Rehype Plugin to group consecutive images into a single paragraph
+    // This allows images on separate lines to still be rendered in the grid layout
+    const rehypeImageGrouper = () => {
+        return (tree: any) => {
+            const newChildren: any[] = [];
+            let bufferedImages: any[] = [];
+
+            const isImageNode = (node: any) => node.tagName === 'img';
+            const isWhitespace = (node: any) => node.type === 'text' && !node.value.trim();
+
+            // Helper to check if a paragraph contains ONLY images (and optional whitespace)
+            const isImageParagraph = (node: any) => {
+                if (node.tagName !== 'p') return false;
+                if (!node.children) return false;
+
+                const meaningfulChildren = node.children.filter((child: any) => !isWhitespace(child));
+                return meaningfulChildren.length > 0 && meaningfulChildren.every(isImageNode);
+            };
+
+            tree.children.forEach((child: any) => {
+                if (isImageParagraph(child)) {
+                    // Extract proper image nodes
+                    const images = child.children.filter(isImageNode);
+                    bufferedImages.push(...images);
+                } else {
+                    // Flush buffer if we hit non-image content
+                    if (bufferedImages.length > 0) {
+                        // create new p with all images
+                        newChildren.push({
+                            type: 'element',
+                            tagName: 'p',
+                            properties: {},
+                            children: [...bufferedImages]
+                        });
+                        bufferedImages = [];
+                    }
+                    newChildren.push(child);
+                }
+            });
+
+            // Flush remaining buffer
+            if (bufferedImages.length > 0) {
+                newChildren.push({
+                    type: 'element',
+                    tagName: 'p',
+                    properties: {},
+                    children: [...bufferedImages]
+                });
+            }
+
+            tree.children = newChildren;
+        };
     };
 
     return (
@@ -335,7 +417,7 @@ export default function ChapterPage() {
                                 <div className="max-w-none">
                                     <ReactMarkdown
                                         remarkPlugins={[remarkMath]}
-                                        rehypePlugins={[rehypeKatex, rehypeRaw]}
+                                        rehypePlugins={[rehypeKatex, rehypeRaw, rehypeImageGrouper]}
                                         components={markdownComponents}
                                     >
                                         {chapterData.summary}
