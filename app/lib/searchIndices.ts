@@ -115,8 +115,61 @@ export async function getSearchItems(): Promise<SearchItem[]> {
             keywords: ['test', 'quiz', 'assertion', 'reason', c.name]
         }));
 
+        // Static Tools & Pages
+        const staticTools: SearchItem[] = [
+            {
+                id: 'tool-ksp',
+                title: 'Solubility Product (Ksp) Calculator',
+                subtitle: 'Calculate Solubility & Precipitates',
+                category: 'Tools',
+                url: '/solubility-product-ksp-calculator',
+                keywords: ['ksp', 'solubility', 'equilibrium', 'calculator', 'ionic', 'salt']
+            },
+            {
+                id: 'tool-ptable',
+                title: 'Interactive Periodic Table',
+                subtitle: 'Visual Element Properties',
+                category: 'Tools',
+                url: '/interactive-periodic-table',
+                keywords: ['periodic', 'table', 'elements', 'trends', 'chemistry']
+            },
+            {
+                id: 'tool-trends',
+                title: 'Periodic Trends Visualizer',
+                subtitle: 'Compare Atomic Properties',
+                category: 'Tools',
+                url: '/periodic-trends',
+                keywords: ['trends', 'radius', 'energy', 'electronegativity', 'graph']
+            },
+            {
+                id: 'tool-salt',
+                title: 'Salt Analysis Simulator',
+                subtitle: 'Virtual Lab Experiments',
+                category: 'Tools',
+                url: '/salt-analysis',
+                keywords: ['salt', 'analysis', 'cation', 'anion', 'lab', 'practical']
+            },
+            {
+                id: 'tool-flashcards',
+                title: 'Chemistry Flashcards',
+                subtitle: 'Topic-wise Revision',
+                category: 'Tools',
+                url: '/chemistry-flashcards',
+                keywords: ['flashcards', 'revision', 'memory', 'practice']
+            },
+            {
+                id: 'tool-assertion',
+                title: 'Assertion & Reason',
+                subtitle: 'Reasoning Questions',
+                category: 'Tools',
+                url: '/assertion-reason',
+                keywords: ['assertion', 'reason', 'quiz', 'practice', 'aiims']
+            }
+        ];
+
         // Combine all items
         return [
+            ...staticTools,
             ...reactionItems,
             ...detailedItems,
             ...oneShotItems,

@@ -2,16 +2,44 @@
 
 import { useState } from 'react';
 import { kspData, categories } from '../lib/kspData';
-import KspTable from './components/KspTable';
-import KspGraph from './components/KspGraph';
-import SolubilityCalculator from './components/SolubilityCalculator';
-import ComparisonTool from './components/ComparisonTool';
-import CommonIonSimulation from './components/CommonIonSimulation';
+import dynamic from 'next/dynamic';
+import { Sparkles, Calculator, ArrowRight, FlaskConical, Loader2 } from 'lucide-react';
+import Link from 'next/link';
+
+// Lazy load heavy components
+const KspTable = dynamic(() => import('./components/KspTable'), {
+    loading: () => <LoadingSkeleton />
+});
+const KspGraph = dynamic(() => import('./components/KspGraph'), {
+    loading: () => <LoadingSkeleton />
+});
+const SolubilityCalculator = dynamic(() => import('./components/SolubilityCalculator'), {
+    loading: () => <LoadingSkeleton />
+});
+const ComparisonTool = dynamic(() => import('./components/ComparisonTool'), {
+    loading: () => <LoadingSkeleton />
+});
+const CommonIonSimulation = dynamic(() => import('./components/CommonIonSimulation'), {
+    loading: () => <LoadingSkeleton />
+});
+const QuizMode = dynamic(() => import('./components/QuizMode'), {
+    loading: () => <LoadingSkeleton />
+});
+
+// Static components (lighter weight)
 import SolubilityFAQ from './components/SolubilityFAQ';
 import SolubilityExplanation from './components/SolubilityExplanation';
-import QuizMode from './components/QuizMode';
-import { Sparkles, Calculator, ArrowRight, FlaskConical } from 'lucide-react';
-import Link from 'next/link';
+
+function LoadingSkeleton() {
+    return (
+        <div className="w-full h-96 flex items-center justify-center bg-gray-900/30 rounded-2xl border border-gray-800 animate-pulse">
+            <div className="flex flex-col items-center gap-3">
+                <Loader2 className="animate-spin text-purple-500" size={32} />
+                <span className="text-gray-500 text-sm font-medium">Loading component...</span>
+            </div>
+        </div>
+    );
+}
 
 type Tab = 'graph' | 'table' | 'calculator' | 'compare' | 'quiz' | 'simulation';
 
