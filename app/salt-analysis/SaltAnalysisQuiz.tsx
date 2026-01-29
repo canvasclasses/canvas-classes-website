@@ -124,7 +124,7 @@ const QUIZ_QUESTIONS = [
             "The salt is composed of a strong acid and a weak base."
         ],
         correctAnswer: 1,
-        explanation: "Basic salts generally result from the hydrolysis of a Strong Base and Weak Acid. Carbonates and Sulphides hydrolyze to release OH⁻ ions."
+        explanation: "Basic salts generally result from the neutralisation of a Strong Base and Weak Acid. Carbonates and Sulphides hydrolyze to release OH⁻ ions."
     },
     {
         id: 12,
