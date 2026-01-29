@@ -25,6 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { path: '/interactive-periodic-table', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/periodic-trends', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/salt-analysis', priority: 0.9, changeFrequency: 'weekly' as const },
+        { path: '/solubility-product-ksp-calculator', priority: 0.9, changeFrequency: 'weekly' as const },
     ];
 
     const staticEntries = staticPages.map((page) => ({
