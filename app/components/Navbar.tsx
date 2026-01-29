@@ -26,6 +26,7 @@ const revisionToolsLinks = [
   { label: 'Interactive P Table', href: '/interactive-periodic-table', external: false },
   { label: 'Periodic Trends', href: '/periodic-trends', external: false },
   { label: 'Salt Analysis', href: '/salt-analysis', external: false },
+  { label: 'Ksp Calculator', href: '/solubility-product-ksp-calculator', external: false },
 ];
 
 export default function Navbar({ authButton }: { authButton: React.ReactNode }) {
