@@ -92,22 +92,24 @@ export default function KspCalculatorClient() {
             </section>
 
             {/* Tab Navigation - Modern Pill Style */}
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-                <div className="bg-white/5 backdrop-blur-xl rounded-full border border-white/10 p-1.5 inline-flex gap-1 shadow-xl shadow-black/20">
-                    {tabs.map(tab => (
-                        <button
-                            key={tab.id}
-                            onClick={() => setActiveTab(tab.id as Tab)}
-                            className={`relative flex items-center gap-2.5 px-6 py-3 font-medium transition-all duration-300 whitespace-nowrap text-base rounded-full
-                                ${activeTab === tab.id
-                                    ? 'bg-white text-gray-900 shadow-lg'
-                                    : 'text-gray-400 hover:text-white'
-                                }`}
-                        >
-                            <span className="text-lg">{typeof tab.icon === 'string' ? tab.icon : tab.icon}</span>
-                            <span className="hidden sm:inline">{tab.label}</span>
-                        </button>
-                    ))}
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 overflow-x-auto">
+                <div className="flex justify-start md:justify-center min-w-max mx-auto">
+                    <div className="bg-white/5 backdrop-blur-xl rounded-full border border-white/10 p-1.5 inline-flex gap-1 shadow-xl shadow-black/20">
+                        {tabs.map(tab => (
+                            <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id as Tab)}
+                                className={`relative flex items-center gap-2.5 px-6 py-3 font-medium transition-all duration-300 whitespace-nowrap text-base rounded-full
+                                    ${activeTab === tab.id
+                                        ? 'bg-white text-gray-900 shadow-lg'
+                                        : 'text-gray-400 hover:text-white'
+                                    }`}
+                            >
+                                <span className="text-lg">{typeof tab.icon === 'string' ? tab.icon : tab.icon}</span>
+                                <span className="hidden sm:inline">{tab.label}</span>
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </section>
 
