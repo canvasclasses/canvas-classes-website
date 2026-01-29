@@ -113,8 +113,8 @@ export async function fetchRevisionData(): Promise<RevisionChapter[]> {
 
 export async function fetchRevisionTopics(): Promise<RevisionTopic[]> {
     try {
-        // Fetch with no-cache to ensure fresh data
-        const response = await fetch(TOPICS_CSV_URL, { cache: 'no-store' });
+        // Fetch with ISR - revalidate every 24 hours
+        const response = await fetch(TOPICS_CSV_URL, { next: { revalidate: 86400 } });
         const text = await response.text();
         const rows = parseCSVRobust(text);
 
