@@ -308,6 +308,13 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
             >
               My Notes
             </Link>
+            <Link
+              href="/blog"
+              className="block px-5 py-3 font-bold text-purple-600 bg-purple-50/50 hover:bg-purple-100/50 rounded-2xl transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Blog
+            </Link>
             <div className="px-5 py-3">
               {authButton}
             </div>
