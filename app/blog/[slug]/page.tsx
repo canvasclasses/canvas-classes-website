@@ -24,6 +24,58 @@ export async function generateStaticParams() {
 // Given the lightbox requirement, let's make the content renderer a Client Component.
 
 import BlogPostContent from './BlogPostContent';
+import { Metadata } from 'next';
+
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const params = await props.params;
+    const { slug } = params;
+    const post = getPostBySlug(slug);
+
+    if (!post) {
+        return {
+            title: 'Post Not Found',
+        };
+    }
+
+    const ogImage = post.image
+        ? `https://www.canvasclasses.in${post.image}`
+        : 'https://www.canvasclasses.in/og-image.png'; // Fallback image if you have one
+
+    return {
+        title: post.title,
+        description: post.excerpt,
+        openGraph: {
+            title: post.title,
+            description: post.excerpt,
+            url: `https://www.canvasclasses.in/blog/${slug}`,
+            siteName: 'Canvas Classes',
+            locale: 'en_US',
+            type: 'article',
+            publishedTime: post.date,
+            authors: [post.author],
+            section: 'Education',
+            tags: post.tags,
+            images: [
+                {
+                    url: ogImage,
+                    width: 1200,
+                    height: 630,
+                    alt: post.title,
+                },
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: post.title,
+            description: post.excerpt,
+            images: [ogImage],
+            creator: '@canvasclasses',
+        },
+        alternates: {
+            canonical: `https://www.canvasclasses.in/blog/${slug}`,
+        },
+    };
+}
 
 export default async function PostPage(props: { params: Promise<{ slug: string }> }) {
     const params = await props.params; // await the params promise
