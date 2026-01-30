@@ -758,7 +758,7 @@ const SpecialChemistry = ({ element }: { element: Element }) => {
             )}
 
             {/* Other Chemistry (Redox, etc) - for non-d-block or additional info */}
-            {element.block !== 'd' && (
+            {(element.block as string) !== 'd' && (
                 <>
                     {/* Redox & Oxidation Behavior */}
                     {(element.redoxNature || element.stableOxidationState !== undefined) && (
@@ -801,7 +801,7 @@ const SpecialChemistry = ({ element }: { element: Element }) => {
                     )}
 
                     {/* Oxides for non-d-block */}
-                    {(element.oxides || element.oxideNature) && element.block !== 'd' && (
+                    {(element.oxides || element.oxideNature) && (element.block as string) !== 'd' && (
                         <div className="bg-indigo-900/10 rounded-xl p-5 border border-indigo-500/20">
                             <h3 className="text-lg font-semibold text-indigo-400 mb-4 flex items-center gap-2">
                                 <Atom size={20} /> Oxide Chemistry
