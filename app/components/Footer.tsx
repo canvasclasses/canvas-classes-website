@@ -88,6 +88,7 @@ export default function Footer() {
                             <li><Link href="/handwritten-notes" className="text-gray-400 hover:text-white transition-colors">Notes</Link></li>
                             <li><Link href="/one-shot-lectures" className="text-gray-400 hover:text-white transition-colors">One Shots</Link></li>
                             <li><Link href="/top-50-concepts" className="text-gray-400 hover:text-white transition-colors">Top 50 Concepts</Link></li>
+                            <li><Link href="/chemistry-questions" className="text-gray-400 hover:text-white transition-colors">Question Bank</Link></li>
                             <li><Link href="/blog" className="text-gray-400 hover:text-white transition-colors">Blog</Link></li>
                             <li><Link href="/about" className="text-gray-400 hover:text-white transition-colors">About Us</Link></li>
                         </ul>

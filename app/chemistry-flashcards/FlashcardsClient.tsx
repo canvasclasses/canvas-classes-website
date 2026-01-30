@@ -200,7 +200,7 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
         <main className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
 
             {/* Hero Section */}
-            <section className="relative pt-28 pb-12 overflow-hidden">
+            <section className="relative pt-48 pb-12 overflow-hidden">
                 <div className="absolute top-20 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl" />
                 <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl" />
 
@@ -280,7 +280,7 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                             { id: 'JEE PYQ', label: 'JEE PYQ', icon: Target, color: 'from-amber-400 to-orange-500' },
                                             { id: 'Physical Chemistry', label: 'Physical', icon: FlaskConical, color: 'from-green-500 to-emerald-500' },
                                             { id: 'Organic Chemistry', label: 'Organic', icon: Beaker, color: 'from-purple-500 to-pink-500' },
-                                            { id: 'Inorganic Chemistry', label: 'Inorganic', icon: Atom, color: 'from-orange-500 to-amber-500' },
+                                            { id: 'Inorganic Chemistry', label: 'Inorganic', icon: Atom, color: 'from-blue-500 to-cyan-500' },
                                         ].map((cat) => {
                                             const count = cat.id === 'All'
                                                 ? chapterGroups.length
@@ -316,15 +316,15 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                                 const stats = getStatistics(chapterCardIds);
                                                 const dueCount = stats.dueToday;
 
-                                                // Get category colors
-                                                const catColors: Record<string, { gradient: string; badge: string }> = {
-                                                    'Physical Chemistry': { gradient: 'from-green-500 to-emerald-500', badge: 'bg-green-500/20 text-green-400' },
-                                                    'JEE PYQ': { gradient: 'from-amber-400 to-orange-500', badge: 'bg-amber-500/20 text-amber-400' },
-                                                    'Organic Chemistry': { gradient: 'from-purple-500 to-pink-500', badge: 'bg-purple-500/20 text-purple-400' },
-                                                    'Inorganic Chemistry': { gradient: 'from-orange-500 to-amber-500', badge: 'bg-orange-500/20 text-orange-400' },
-                                                    // 'JEE PYQ' moved up
+                                                // Get category styling
+                                                const catStyles: Record<string, { color: string; iconColor: string; borderHex: string }> = {
+                                                    'Physical Chemistry': { color: 'text-emerald-400', iconColor: 'text-emerald-500', borderHex: '#10b981' },
+                                                    'JEE PYQ': { color: 'text-amber-400', iconColor: 'text-amber-500', borderHex: '#f59e0b' },
+                                                    'Organic Chemistry': { color: 'text-purple-400', iconColor: 'text-purple-500', borderHex: '#a855f7' },
+                                                    'Inorganic Chemistry': { color: 'text-blue-400', iconColor: 'text-blue-500', borderHex: '#3b82f6' },
                                                 };
-                                                const colors = catColors[group.category] || catColors['Physical Chemistry'];
+                                                // Default style
+                                                const styles = catStyles[group.category] || catStyles['Physical Chemistry'];
 
                                                 return (
                                                     <motion.button
@@ -336,53 +336,43 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                                             setSelectedChapter(group.chapterName);
                                                             setSelectedTopics([]);
                                                         }}
-                                                        className="group p-5 bg-slate-800/50 hover:bg-slate-800 border border-white/5 hover:border-purple-500/30 rounded-2xl text-left transition-all"
+                                                        className={`group relative p-5 bg-slate-900/40 hover:bg-slate-900/80 border-y border-r border-white/5 hover:border-white/10 border-l-4 rounded-xl text-left transition-all overflow-hidden`}
+                                                        style={{ borderLeftColor: styles.borderHex }}
                                                     >
-                                                        <div className="flex items-start justify-between mb-3">
-                                                            <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${colors.gradient} flex items-center justify-center`}>
-                                                                <Layers className="w-5 h-5 text-white" />
-                                                            </div>
-                                                            <div className="flex items-center gap-2">
+                                                        <div className="flex flex-col h-full">
+                                                            {/* Header Level: Title & Due Badge */}
+                                                            <div className="flex items-start justify-between mb-3 gap-4">
+                                                                <h3 className="text-lg font-bold text-white group-hover:text-white/90 leading-tight">
+                                                                    {group.chapterName}
+                                                                </h3>
                                                                 {dueCount > 0 && (
-                                                                    <span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs font-medium rounded-full">
+                                                                    <span className={`shrink-0 px-2 py-0.5 ${styles.color} bg-white/5 rounded text-xs font-medium border border-white/5`}>
                                                                         {dueCount} due
                                                                     </span>
                                                                 )}
-                                                                <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-purple-400 transition-colors" />
                                                             </div>
-                                                        </div>
 
-                                                        {/* Category Badge */}
-                                                        <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium mb-2 ${colors.badge}`}>
-                                                            {group.category.replace(' Chemistry', '')}
-                                                        </span>
+                                                            {/* Meta Level: Icon, Category name, Card count */}
+                                                            <div className="flex items-center gap-3 text-sm text-slate-500 mb-4 mt-auto">
+                                                                <Layers className={`w-4 h-4 ${styles.iconColor} opacity-80`} />
+                                                                <span>{group.category.replace(' Chemistry', '')}</span>
+                                                                <span className="w-1 h-1 rounded-full bg-slate-700" />
+                                                                <span>{group.cards.length} cards</span>
+                                                            </div>
 
-                                                        <h3 className="text-white font-semibold mb-1">{group.chapterName}</h3>
-                                                        <p className="text-slate-500 text-sm mb-3">{group.cards.length} cards • {group.topics.length} topics</p>
-
-                                                        {/* Mini progress bar */}
-                                                        {stats.mastered + stats.reviewing + stats.learning > 0 && (
-                                                            <div className="h-1.5 bg-slate-700 rounded-full overflow-hidden flex">
+                                                            {/* Progress Bar (Neat & Thin) */}
+                                                            <div className="h-1 bg-slate-800 rounded-full overflow-hidden w-full flex">
                                                                 {stats.mastered > 0 && (
-                                                                    <div
-                                                                        className="h-full bg-emerald-500"
-                                                                        style={{ width: `${(stats.mastered / stats.total) * 100}%` }}
-                                                                    />
+                                                                    <div className="h-full bg-emerald-500/60" style={{ width: `${(stats.mastered / stats.total) * 100}%` }} />
                                                                 )}
                                                                 {stats.reviewing > 0 && (
-                                                                    <div
-                                                                        className="h-full bg-blue-500"
-                                                                        style={{ width: `${(stats.reviewing / stats.total) * 100}%` }}
-                                                                    />
+                                                                    <div className="h-full bg-blue-500/60" style={{ width: `${(stats.reviewing / stats.total) * 100}%` }} />
                                                                 )}
                                                                 {stats.learning > 0 && (
-                                                                    <div
-                                                                        className="h-full bg-amber-500"
-                                                                        style={{ width: `${(stats.learning / stats.total) * 100}%` }}
-                                                                    />
+                                                                    <div className="h-full bg-amber-500/60" style={{ width: `${(stats.learning / stats.total) * 100}%` }} />
                                                                 )}
                                                             </div>
-                                                        )}
+                                                        </div>
                                                     </motion.button>
                                                 );
                                             })}
@@ -551,6 +541,10 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                                         <ReactMarkdown
                                                             remarkPlugins={[remarkMath]}
                                                             rehypePlugins={[rehypeKatex]}
+                                                            components={{
+                                                                strong: ({ node, ...props }) => <span className="text-amber-300 font-bold" {...props} />,
+                                                                p: ({ node, ...props }) => <p className="mb-4 last:mb-0" {...props} />
+                                                            }}
                                                         >
                                                             {isFlipped ? currentCard.answer : currentCard.question}
                                                         </ReactMarkdown>
