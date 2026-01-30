@@ -130,7 +130,7 @@ export default function PathfinderQuiz() {
     const progress = ((currentStep + (showResult ? 1 : 0)) / QUESTIONS.length) * 100;
 
     return (
-        <section className="py-24 bg-black relative overflow-hidden">
+        <section id="approach" className="py-24 bg-black relative overflow-hidden">
             {/* Background Effects */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-gradient-to-b from-slate-900 via-black to-black opacity-80" />
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px]" />
@@ -216,7 +216,7 @@ export default function PathfinderQuiz() {
                                                     animate={{ opacity: 1, y: 0 }}
                                                     transition={{ delay: idx * 0.1 }}
                                                     onClick={() => handleAnswer(QUESTIONS[currentStep].id, option.id)}
-                                                    className={`group relative flex flex-col items-center p-6 rounded-2xl border transition-all duration-300 ${isSelected
+                                                    className={`cursor-pointer group relative flex flex-col items-center p-6 rounded-2xl border transition-all duration-300 ${isSelected
                                                         ? `bg-slate-800 border-${option.color}-500 ring-2 ring-${option.color}-500/20`
                                                         : 'bg-slate-800/30 border-slate-700/50 hover:bg-slate-800 hover:border-slate-600'
                                                         }`}

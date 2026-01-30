@@ -116,12 +116,51 @@ const jsonLd = {
     "https://www.youtube.com/@canvasclasses",
     "https://www.instagram.com/canvasclasses",
   ],
+  foundingDate: "2014",
   founder: {
     "@type": "Person",
     name: "Paaras Sir",
+    alternateName: "Paaras Thakur",
+    jobTitle: "Founder & Chemistry Educator",
+    description: "15+ years experienced Chemistry educator for JEE & NEET. Ex-Allen, Ex-Unacademy.",
+    image: `${siteUrl}/paaras-sir.jpg`, // Assuming an image exists or will be added, otherwise logo
+    sameAs: [
+      "https://www.youtube.com/@canvasclasses",
+      "https://www.instagram.com/canvasclasses",
+      // Add other social profiles if available
+    ],
+    worksFor: {
+      "@type": "EducationalOrganization",
+      name: "Canvas Classes"
+    }
   },
-  areaServed: "India",
+  areaServed: {
+    "@type": "Country",
+    name: "India"
+  },
   teaches: ["Chemistry", "JEE Chemistry", "NEET Chemistry", "CBSE Chemistry"],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Chemistry Courses",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Course",
+          name: "JEE/NEET Chemistry",
+          description: "Complete Chemistry Video Lectures for JEE Main, Advanced & NEET"
+        }
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Course",
+          name: "NCERT Solutions",
+          description: "Chapter-wise NCERT Solutions for Class 11 & 12 Chemistry"
+        }
+      }
+    ]
+  }
 };
 
 import { AuthButton } from "./components/AuthButton";
