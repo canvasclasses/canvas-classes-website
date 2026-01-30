@@ -49,6 +49,45 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Error fetching flashcard chapters for sitemap:', error);
     }
 
-    return [...staticEntries, ...flashcardChapterEntries];
+    // Programmatic SEO: Question Pages
+    let questionEntries: MetadataRoute.Sitemap = [];
+    try {
+        const { getAllSEOQuestions } = await import('./lib/seoData');
+        const questions = await getAllSEOQuestions();
+
+        // Add Directory Page
+        questionEntries.push({
+            url: `${BASE_URL}/chemistry-questions`,
+            lastModified: new Date(),
+            changeFrequency: 'daily' as const,
+            priority: 0.9,
+        });
+
+        // Add Chapter Index Pages
+        const distinctChapters = Array.from(new Set(questions.map(q => q.chapterSlug)));
+        distinctChapters.forEach(slug => {
+            questionEntries.push({
+                url: `${BASE_URL}/chemistry-questions/${slug}`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly' as const,
+                priority: 0.8,
+            });
+        });
+
+        // Add Individual Question Pages
+        const specializedEntries = questions.map((q) => ({
+            url: `${BASE_URL}/chemistry-questions/${q.chapterSlug}/${q.slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.6,
+        }));
+
+        questionEntries = [...questionEntries, ...specializedEntries];
+
+    } catch (error) {
+        console.error('Error fetching SEO questions for sitemap:', error);
+    }
+
+    return [...staticEntries, ...flashcardChapterEntries, ...questionEntries];
 }
 

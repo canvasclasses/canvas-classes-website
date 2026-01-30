@@ -24,7 +24,6 @@ import {
     type Element,
     type CategoryType,
 } from '../lib/elementsData';
-import { BLOCK_DATA } from '../lib/blockData';
 import PeriodicTableQuiz from './PeriodicTableQuiz';
 
 type ViewMode = 'category' | 'property' | 'exceptions';
@@ -38,7 +37,6 @@ export default function PeriodicTableClient() {
     const [selectedElement, setSelectedElement] = useState<Element | null>(null);
     const [compareElements, setCompareElements] = useState<Element[]>([]);
     const [showPropertyDropdown, setShowPropertyDropdown] = useState(false);
-    const [selectedBlock, setSelectedBlock] = useState<string | null>(null);
 
     const comparisonRef = useRef<HTMLDivElement>(null);
 
@@ -205,81 +203,7 @@ export default function PeriodicTableClient() {
 
 
 
-    // Block Info Section
-    const BlockInfoSection = () => {
-        if (!selectedBlock || !BLOCK_DATA[selectedBlock]) return null;
-        const blockInfo = BLOCK_DATA[selectedBlock];
 
-        const blockColors: Record<string, string> = {
-            's': 'from-red-500/20 to-orange-500/20 border-red-500/40',
-            'p': 'from-green-500/20 to-teal-500/20 border-green-500/40',
-            'd': 'from-blue-500/20 to-cyan-500/20 border-blue-500/40',
-            'f': 'from-purple-500/20 to-pink-500/20 border-purple-500/40'
-        };
-
-        return (
-            <motion.div
-                id="block-info-section"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                className={`mt-8 bg-gradient-to-br ${blockColors[selectedBlock] || 'from-gray-500/20 to-gray-600/20 border-gray-500/40'} bg-gray-900 border border-gray-700 rounded-2xl overflow-hidden scroll-mt-24`}
-            >
-                <div className="bg-gray-900/50 backdrop-blur-sm p-6 border-b border-gray-700/50 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <div className="p-3 rounded-xl bg-gray-800/50 border border-gray-700/50">
-                            <BookOpen className="text-cyan-400" size={24} />
-                        </div>
-                        <div>
-                            <h2 className="text-2xl font-bold text-white">{blockInfo.name}</h2>
-                            <p className="text-gray-400">{blockInfo.description}</p>
-                        </div>
-                    </div>
-                    <button
-                        onClick={() => setSelectedBlock(null)}
-                        className="text-gray-400 hover:text-white p-2 hover:bg-gray-700/50 rounded-lg transition-colors"
-                    >
-                        <X size={24} />
-                    </button>
-                </div>
-
-                <div className="p-4 space-y-6">
-                    {blockInfo.tables.map((table, tableIdx) => (
-                        <div key={tableIdx} className="bg-gray-800/60 rounded-xl overflow-hidden">
-                            <div className="bg-gray-700/50 px-4 py-3 flex items-center justify-between">
-                                <h3 className="font-semibold text-white">{table.title}</h3>
-                                <span className="text-xs text-cyan-400 bg-cyan-500/20 px-2 py-1 rounded">{table.source}</span>
-                            </div>
-                            <div className="overflow-x-auto">
-                                <table className="w-full text-sm">
-                                    <thead>
-                                        <tr className="bg-gray-700/30">
-                                            {table.headers.map((header, idx) => (
-                                                <th key={idx} className="px-3 py-2 text-left text-cyan-200 font-medium whitespace-nowrap">
-                                                    {header}
-                                                </th>
-                                            ))}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {table.rows.map((row, rowIdx) => (
-                                            <tr key={rowIdx} className="border-t border-gray-700/50 hover:bg-gray-700/20">
-                                                {row.map((cell, cellIdx) => (
-                                                    <td key={cellIdx} className={`px-3 py-2 ${cellIdx === 0 ? 'text-white font-medium' : 'text-gray-300'}`}>
-                                                        {cell}
-                                                    </td>
-                                                ))}
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </motion.div>
-        );
-    };
 
     // Comparison panel
     const ComparisonPanel = () => {
@@ -404,23 +328,23 @@ export default function PeriodicTableClient() {
             </AnimatePresence>
 
             {/* Hero Header */}
-            <section className="relative pt-32 pb-12 md:pt-40 md:pb-16 overflow-hidden">
+            <section className="relative pt-32 pb-6 md:pt-40 md:pb-8 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-gray-900 to-gray-950" />
                 <div className="absolute top-20 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
                 <div className="absolute top-40 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
 
                 <div className="relative container mx-auto px-4 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 mb-6 backdrop-blur-sm">
-                        <Sparkles size={16} className="text-blue-400" />
-                        <span className="text-sm font-medium text-blue-400">NCERT Data Visualizations</span>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 mb-4 backdrop-blur-sm">
+                        <Sparkles size={14} className="text-blue-400" />
+                        <span className="text-xs font-medium text-blue-400">NCERT Data Visualizations</span>
                     </div>
 
-                    <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 tracking-tight">
+                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight">
                         <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                             Interactive Periodic Table
                         </span>
                     </h1>
-                    <p className="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto mb-8 leading-relaxed">
+                    <p className="text-gray-400 text-base md:text-lg max-w-3xl mx-auto mb-6 leading-relaxed">
                         Explore trends, compare properties, and discover exceptions. <span className="text-blue-400 font-medium">Trained on NCERT data for JEE, NEET & CBSE.</span>
                     </p>
                 </div>
@@ -429,7 +353,7 @@ export default function PeriodicTableClient() {
             {/* Main Content */}
             <div className="container mx-auto px-4 pb-20 relative z-10">
                 {/* Mode selector */}
-                <div className="flex flex-wrap justify-center gap-2 mb-4">
+                <div className="flex flex-wrap justify-center gap-2 mb-2">
                     <button
                         onClick={() => setViewMode('category')}
                         className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${viewMode === 'category'
@@ -497,7 +421,7 @@ export default function PeriodicTableClient() {
 
                 {/* Selected property info */}
                 {viewMode === 'property' && (
-                    <div className="text-center mb-4">
+                    <div className="text-center mb-2">
                         <span className="text-lg font-semibold text-blue-400">
                             {PROPERTY_INFO[selectedProperty]?.name}
                         </span>
@@ -508,64 +432,10 @@ export default function PeriodicTableClient() {
                 )}
 
                 {/* Main grid layout */}
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
                     {/* Table */}
                     <div className="overflow-x-auto pb-4">
-                        {/* Block selector buttons */}
-                        <div className="flex flex-wrap gap-2 mb-3 justify-center">
-                            <button
-                                onClick={() => {
-                                    setSelectedBlock('s');
-                                    setTimeout(() => document.getElementById('block-info-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                                }}
-                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-all ${selectedBlock === 's'
-                                    ? 'bg-red-500/30 text-red-200 border border-red-500/50 shadow-[0_0_10px_rgba(239,68,68,0.2)]'
-                                    : 'bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-300'
-                                    }`}
-                            >
-                                <BookOpen size={14} />
-                                <span>s-Block Tables</span>
-                            </button>
-                            <button
-                                onClick={() => {
-                                    setSelectedBlock('p');
-                                    setTimeout(() => document.getElementById('block-info-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                                }}
-                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-all ${selectedBlock === 'p'
-                                    ? 'bg-green-500/30 text-green-200 border border-green-500/50 shadow-[0_0_10px_rgba(34,197,94,0.2)]'
-                                    : 'bg-green-500/10 hover:bg-green-500/20 border border-green-500/20 text-green-300'
-                                    }`}
-                            >
-                                <BookOpen size={14} />
-                                <span>p-Block Tables</span>
-                            </button>
-                            <button
-                                onClick={() => {
-                                    setSelectedBlock('d');
-                                    setTimeout(() => document.getElementById('block-info-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                                }}
-                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-all ${selectedBlock === 'd'
-                                    ? 'bg-blue-500/30 text-blue-200 border border-blue-500/50 shadow-[0_0_10px_rgba(59,130,246,0.2)]'
-                                    : 'bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 text-blue-300'
-                                    }`}
-                            >
-                                <BookOpen size={14} />
-                                <span>d-Block Tables</span>
-                            </button>
-                            <button
-                                onClick={() => {
-                                    setSelectedBlock('f');
-                                    setTimeout(() => document.getElementById('block-info-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                                }}
-                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-all ${selectedBlock === 'f'
-                                    ? 'bg-purple-500/30 text-purple-200 border border-purple-500/50 shadow-[0_0_10px_rgba(168,85,247,0.2)]'
-                                    : 'bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/20 text-purple-300'
-                                    }`}
-                            >
-                                <BookOpen size={14} />
-                                <span>f-Block Tables</span>
-                            </button>
-                        </div>
+
 
                         <div
                             className="grid gap-0.5 sm:gap-1 min-w-[700px] mx-auto max-w-7xl"
@@ -641,10 +511,7 @@ export default function PeriodicTableClient() {
                     <PeriodicTableQuiz />
                 </div>
 
-                {/* Block Info Section (Embedded) */}
-                <AnimatePresence>
-                    {selectedBlock && <BlockInfoSection />}
-                </AnimatePresence>
+
             </div>
         </div >
     );

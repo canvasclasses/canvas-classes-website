@@ -139,7 +139,7 @@ export async function fetchRevisionTopics(): Promise<RevisionTopic[]> {
 
 export async function fetchFlashcards(): Promise<FlashcardItem[]> {
     try {
-        const response = await fetch(FLASHCARDS_CSV_URL, { next: { revalidate: 3600 } });
+        const response = await fetch(FLASHCARDS_CSV_URL, { next: { revalidate: 60 } });
         const text = await response.text();
         const rows = parseCSVRobust(text);
 
