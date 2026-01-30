@@ -13,6 +13,23 @@ const BLOCK_COLORS: Record<string, { gradient: string, accent: string, bg: strin
     f: { gradient: 'from-pink-600 to-rose-600', accent: 'text-pink-300', bg: 'bg-pink-500/10', label: 'F Block' },
 };
 
+const getColorForCell = (text: string) => {
+    const t = text.toLowerCase();
+    if (t.includes('colourless') || t.includes('colorless')) return 'transparent';
+    if (t.includes('purple') || t.includes('violet')) return '#8B5CF6';
+    if (t.includes('blue')) return '#3B82F6';
+    if (t.includes('pink')) return '#EC4899';
+    if (t.includes('green')) return '#22C55E';
+    if (t.includes('yellow')) return '#EAB308';
+    if (t.includes('orange')) return '#F97316';
+    if (t.includes('red')) return '#EF4444';
+    if (t.includes('black')) return '#000000';
+    if (t.includes('white')) return '#FFFFFF';
+    if (t.includes('brown')) return '#78350F';
+    if (t.includes('peach') || t.includes('flesh')) return '#FDBA74';
+    return null;
+};
+
 export default function TrendsComponent() {
     const [selectedBlock, setSelectedBlock] = useState('s');
     const [selectedTableIndex, setSelectedTableIndex] = useState(0);
@@ -162,7 +179,25 @@ export default function TrendsComponent() {
                                             <tr key={rowIdx} className="hover:bg-white/5 transition-colors group">
                                                 {row.map((cell, cellIdx) => (
                                                     <td key={cellIdx} className={`p-4 text-sm text-gray-300 ${cellIdx === 0 ? 'font-medium text-white' : ''}`}>
-                                                        {cell}
+                                                        <div className="flex items-center gap-2">
+                                                            {(() => {
+                                                                const header = currentTable?.headers[cellIdx] || '';
+                                                                if (header.toLowerCase().includes('colour') || header.toLowerCase().includes('color')) {
+                                                                    const color = getColorForCell(String(cell));
+                                                                    if (color) {
+                                                                        return (
+                                                                            <span
+                                                                                className="w-3 h-3 rounded-full border border-gray-600 shrink-0 inline-block"
+                                                                                style={{ backgroundColor: color }}
+                                                                                aria-hidden="true"
+                                                                            />
+                                                                        );
+                                                                    }
+                                                                }
+                                                                return null;
+                                                            })()}
+                                                            <span>{cell}</span>
+                                                        </div>
                                                     </td>
                                                 ))}
                                             </tr>

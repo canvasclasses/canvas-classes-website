@@ -87,40 +87,28 @@ export default function Hero() {
 
                             {/* CTA Buttons */}
                             <div className="flex flex-wrap gap-4 mb-10">
-                                <motion.button
-                                    whileHover={{ scale: 1.03 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold px-7 py-3.5 rounded-xl transition-all shadow-lg shadow-purple-500/25"
-                                >
-                                    <Play className="w-5 h-5" />
-                                    Start Learning Free
-                                </motion.button>
+                                <Link href="#approach">
+                                    <motion.button
+                                        whileHover={{ scale: 1.03 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        className="cursor-pointer flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold px-7 py-3.5 rounded-xl transition-all shadow-lg shadow-purple-500/25"
+                                    >
+                                        <Play className="w-5 h-5" />
+                                        Start Learning Free
+                                    </motion.button>
+                                </Link>
                                 <Link href="/about">
                                     <motion.button
                                         whileHover={{ scale: 1.03 }}
                                         whileTap={{ scale: 0.98 }}
-                                        className="border-2 border-purple-500/50 text-purple-400 hover:bg-purple-500/10 hover:border-purple-500 font-semibold px-7 py-3.5 rounded-xl transition-all"
+                                        className="cursor-pointer border-2 border-purple-500/50 text-purple-400 hover:bg-purple-500/10 hover:border-purple-500 font-semibold px-7 py-3.5 rounded-xl transition-all"
                                     >
                                         Meet Paaras Sir
                                     </motion.button>
                                 </Link>
                             </div>
 
-                            {/* Instructor Card */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.5 }}
-                                className="flex items-center gap-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-4"
-                            >
-                                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                                    P
-                                </div>
-                                <div>
-                                    <p className="text-white font-semibold text-lg">Paaras Thakur</p>
-                                    <p className="text-slate-400 text-sm">JEE Chemistry Expert • Ex - Allen, Resonance, Unacademy, PW</p>
-                                </div>
-                            </motion.div>
+
                         </motion.div>
 
                         {/* Right Side - Photo Card */}
@@ -130,12 +118,12 @@ export default function Hero() {
                             transition={{ duration: 0.8, delay: 0.3 }}
                             className="hidden lg:flex justify-end flex-1 items-start pt-0"
                         >
-                            <div className="relative w-[400px] xl:w-[450px]">
+                            <div className="relative w-[350px] xl:w-[400px]">
                                 {/* Glow behind card */}
                                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-3xl blur-2xl scale-105" />
 
                                 <div className="relative bg-slate-900/50 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
-                                    <div className="relative h-[480px] xl:h-[520px] w-full">
+                                    <div className="relative h-[420px] xl:h-[480px] w-full">
                                         <Image
                                             src="/paaras_hero.webp"
                                             alt="Paaras Sir - Chemistry Expert"
@@ -149,6 +137,23 @@ export default function Hero() {
                                         ✨ EdTech Pioneer Since 2014
                                     </div>
                                 </div>
+
+                                {/* Instructor Info - Moved here */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.6 }}
+                                    className="mt-6 flex items-center gap-4 bg-slate-900/40 backdrop-blur-md border border-white/5 rounded-2xl p-5"
+                                >
+                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg shadow-lg flex-shrink-0">
+                                        P
+                                    </div>
+                                    <div>
+                                        <p className="text-white font-bold text-lg leading-tight">Paaras Thakur</p>
+                                        <p className="text-slate-400 text-sm mt-0.5 font-medium">JEE Chemistry Expert</p>
+                                        <p className="text-slate-500 text-xs mt-1">Ex - Allen, Resonance, Unacademy, PW</p>
+                                    </div>
+                                </motion.div>
                             </div>
                         </motion.div>
 
@@ -163,12 +168,12 @@ export default function Hero() {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="relative z-10 lg:hidden flex justify-center px-6 pb-8"
             >
-                <div className="relative w-72 sm:w-80">
+                <div className="relative w-64 sm:w-72">
                     {/* Glow */}
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-3xl blur-2xl scale-105" />
 
                     <div className="relative bg-slate-900/50 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
-                        <div className="relative h-[360px] sm:h-[400px] w-full">
+                        <div className="relative h-[300px] sm:h-[360px] w-full">
                             <Image
                                 src="/paaras_hero.webp"
                                 alt="Paaras Sir - Chemistry Expert"
@@ -178,12 +183,22 @@ export default function Hero() {
                             />
                         </div>
 
-                        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full font-semibold text-xs shadow-lg whitespace-nowrap">
-                            ✨ EdTech Pioneer Since 2014
-                        </div>
+                    </div>
+                </div>
+
+                {/* Instructor Info - Mobile */}
+                <div className="mt-6 flex items-center gap-4 bg-slate-900/40 backdrop-blur-md border border-white/5 rounded-2xl p-5">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg shadow-lg flex-shrink-0">
+                        P
+                    </div>
+                    <div>
+                        <p className="text-white font-bold text-lg leading-tight">Paaras Thakur</p>
+                        <p className="text-slate-400 text-sm mt-0.5 font-medium">JEE Chemistry Expert</p>
+                        <p className="text-slate-500 text-xs mt-1">Ex - Allen, Resonance, Unacademy, PW</p>
                     </div>
                 </div>
             </motion.div>
+
 
             {/* Stats Section */}
             <div className="relative z-10 py-10 border-t border-white/5 bg-slate-950/80 backdrop-blur-sm">
@@ -211,6 +226,6 @@ export default function Hero() {
                     </div>
                 </div>
             </div>
-        </section>
+        </section >
     );
 }

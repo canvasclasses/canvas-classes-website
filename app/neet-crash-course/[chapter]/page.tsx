@@ -85,7 +85,7 @@ export default function NeetChapterPage() {
                 </div>
 
                 {/* Navigation Tabs - Sticky */}
-                <div className="sticky top-24 md:top-32 z-30 bg-gray-950/95 backdrop-blur-xl border-b border-gray-800 mb-8 overflow-x-auto scroller-none -mx-4 md:mx-0 px-4 md:px-0 transition-all">
+                <div className="bg-gray-950/95 border-b border-gray-800 mb-8 overflow-x-auto scroller-none -mx-4 md:mx-0 px-4 md:px-0 transition-all">
                     <div className="flex items-center gap-2 min-w-max py-2">
                         <TabButton
                             active={activeTab === 'lectures'}

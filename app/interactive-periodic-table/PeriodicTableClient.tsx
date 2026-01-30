@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Atom,
@@ -11,7 +11,6 @@ import {
     X,
     Sparkles,
     TrendingUp,
-    HelpCircle,
     BarChart3,
     BookOpen,
 } from 'lucide-react';
@@ -19,17 +18,14 @@ import {
     ELEMENTS,
     CATEGORY_COLORS,
     PROPERTY_INFO,
-    EXCEPTION_TYPES,
     getPropertyValue,
     getPropertyRange,
     getColorForValue,
     type Element,
     type CategoryType,
 } from '../lib/elementsData';
-import { BLOCK_DATA, type BlockInfo } from '../lib/blockData';
+import { BLOCK_DATA } from '../lib/blockData';
 import PeriodicTableQuiz from './PeriodicTableQuiz';
-
-
 
 type ViewMode = 'category' | 'property' | 'exceptions';
 
@@ -40,10 +36,20 @@ export default function PeriodicTableClient() {
     const [selectedProperty, setSelectedProperty] = useState('electronegativity');
     const [hoveredElement, setHoveredElement] = useState<Element | null>(null);
     const [selectedElement, setSelectedElement] = useState<Element | null>(null);
-    const [showExceptionsOnly, setShowExceptionsOnly] = useState(false);
     const [compareElements, setCompareElements] = useState<Element[]>([]);
     const [showPropertyDropdown, setShowPropertyDropdown] = useState(false);
     const [selectedBlock, setSelectedBlock] = useState<string | null>(null);
+
+    const comparisonRef = useRef<HTMLDivElement>(null);
+
+    // Auto-scroll to comparison when elements are added
+    useEffect(() => {
+        if (compareElements.length > 0) {
+            setTimeout(() => {
+                comparisonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+    }, [compareElements.length]);
 
     // Get property range for heatmap coloring
     const propertyRange = useMemo(() => {
@@ -83,26 +89,20 @@ export default function PeriodicTableClient() {
 
     // Check if a color is light (needs dark text)
     const isLightColor = (color: string): boolean => {
-        // Handle hex colors
         if (color.startsWith('#')) {
             const hex = color.slice(1);
             const r = parseInt(hex.slice(0, 2), 16);
             const g = parseInt(hex.slice(2, 4), 16);
             const b = parseInt(hex.slice(4, 6), 16);
-            // Calculate relative luminance
             const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
             return luminance > 0.5;
         }
-        // Handle hsl colors - convert to RGB for accurate brightness check
         if (color.startsWith('hsl')) {
-            // Match various HSL formats: hsl(h, s%, l%) or hsl(h,s%,l%)
             const match = color.match(/hsl\((\d+(?:\.\d+)?),\s*(\d+(?:\.\d+)?)%,\s*(\d+(?:\.\d+)?)%\)/);
             if (match) {
                 const h = parseFloat(match[1]) / 360;
                 const s = parseFloat(match[2]) / 100;
                 const l = parseFloat(match[3]) / 100;
-
-                // Convert HSL to RGB
                 let r, g, b;
                 if (s === 0) {
                     r = g = b = l;
@@ -121,8 +121,6 @@ export default function PeriodicTableClient() {
                     g = hue2rgb(p, q, h);
                     b = hue2rgb(p, q, h - 1 / 3);
                 }
-
-                // Calculate perceived brightness (same formula as hex)
                 const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
                 return luminance > 0.5;
             }
@@ -130,18 +128,9 @@ export default function PeriodicTableClient() {
         return false;
     };
 
-    // Get text color based on background
-    const getTextColor = (bgColor: string): string => {
-        return isLightColor(bgColor) ? 'text-gray-900' : 'text-white';
-    };
-
-    const getTextOpacity = (bgColor: string, opacity: string): string => {
-        return isLightColor(bgColor) ? opacity.replace('white', 'gray-900') : opacity;
-    };
-
     // Render a single element cell
     const ElementCell = ({ element }: { element: Element }) => {
-        const isHovered = hoveredElement?.atomicNumber === element.atomicNumber;
+        // const isHovered = hoveredElement?.atomicNumber === element.atomicNumber; // Unused
         const isSelected = selectedElement?.atomicNumber === element.atomicNumber;
         const isComparing = compareElements.some(e => e.atomicNumber === element.atomicNumber);
         const bgColor = getElementColor(element);
@@ -156,7 +145,7 @@ export default function PeriodicTableClient() {
                 className={`
           relative cursor-pointer rounded-md p-1 sm:p-1.5 
           transition-all duration-200 select-none
-          ${isSelected ? 'ring-2 ring-white ring-offset-2 ring-offset-gray-900' : ''}
+          opacity-100 
           ${isComparing ? 'ring-2 ring-cyan-400' : ''}
         `}
                 style={{
@@ -166,16 +155,12 @@ export default function PeriodicTableClient() {
                 }}
                 whileHover={{ scale: 1.15, zIndex: 10 }}
                 onMouseEnter={() => {
-                    // Don't update hover state if an element is already selected (prevents re-renders)
                     if (!selectedElement) setHoveredElement(element);
                 }}
                 onMouseLeave={() => {
-                    // Don't update hover state if an element is already selected
                     if (!selectedElement) setHoveredElement(null);
                 }}
                 onClick={() => setSelectedElement(element)}
-                onDoubleClick={() => toggleCompare(element)}
-                layout
             >
                 {/* Exception indicator */}
                 {element.isException && viewMode !== 'exceptions' && (
@@ -214,27 +199,13 @@ export default function PeriodicTableClient() {
                         {element.name}
                     </div>
                 )}
-
-                {/* Unit label (only in property mode on larger screens) */}
-                {viewMode === 'property' && propertyValue !== undefined ? (
-                    <div
-                        className={`hidden sm:block text-[6px] leading-none ${isDark ? 'text-white/60' : 'text-gray-700/70'}`}
-                    >
-                        {propertyInfo?.unit || ''}
-                    </div>
-                ) : (
-                    /* Atomic mass (shown in category/exceptions mode) */
-                    <div
-                        className={`text-[7px] sm:text-[8px] leading-none ${isDark ? 'text-white/70' : 'text-gray-700/80'}`}
-                    >
-                        {element.atomicMass.toFixed(element.atomicMass < 10 ? 3 : 2)}
-                    </div>
-                )}
             </motion.div>
         );
     };
 
-    // Block Info Section - Embedded component showing NCERT tables for each block
+
+
+    // Block Info Section
     const BlockInfoSection = () => {
         if (!selectedBlock || !BLOCK_DATA[selectedBlock]) return null;
         const blockInfo = BLOCK_DATA[selectedBlock];
@@ -254,7 +225,6 @@ export default function PeriodicTableClient() {
                 exit={{ opacity: 0, y: 20 }}
                 className={`mt-8 bg-gradient-to-br ${blockColors[selectedBlock] || 'from-gray-500/20 to-gray-600/20 border-gray-500/40'} bg-gray-900 border border-gray-700 rounded-2xl overflow-hidden scroll-mt-24`}
             >
-                {/* Header */}
                 <div className="bg-gray-900/50 backdrop-blur-sm p-6 border-b border-gray-700/50 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                         <div className="p-3 rounded-xl bg-gray-800/50 border border-gray-700/50">
@@ -268,37 +238,18 @@ export default function PeriodicTableClient() {
                     <button
                         onClick={() => setSelectedBlock(null)}
                         className="text-gray-400 hover:text-white p-2 hover:bg-gray-700/50 rounded-lg transition-colors"
-                        title="Close Section"
                     >
                         <X size={24} />
                     </button>
                 </div>
 
-                {/* Key Points */}
-                {blockInfo.keyPoints && blockInfo.keyPoints.length > 0 && (
-                    <div className="p-4 bg-gray-800/50">
-                        <h3 className="text-sm font-semibold text-cyan-300 mb-2">Key Points:</h3>
-                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-1">
-                            {blockInfo.keyPoints.map((point, idx) => (
-                                <li key={idx} className="text-sm text-gray-300 flex items-start gap-2">
-                                    <span className="text-cyan-400">•</span> {point}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
-
-                {/* Tables */}
                 <div className="p-4 space-y-6">
                     {blockInfo.tables.map((table, tableIdx) => (
                         <div key={tableIdx} className="bg-gray-800/60 rounded-xl overflow-hidden">
-                            {/* Table Title */}
                             <div className="bg-gray-700/50 px-4 py-3 flex items-center justify-between">
                                 <h3 className="font-semibold text-white">{table.title}</h3>
                                 <span className="text-xs text-cyan-400 bg-cyan-500/20 px-2 py-1 rounded">{table.source}</span>
                             </div>
-
-                            {/* Table Content */}
                             <div className="overflow-x-auto">
                                 <table className="w-full text-sm">
                                     <thead>
@@ -313,54 +264,16 @@ export default function PeriodicTableClient() {
                                     <tbody>
                                         {table.rows.map((row, rowIdx) => (
                                             <tr key={rowIdx} className="border-t border-gray-700/50 hover:bg-gray-700/20">
-                                                {row.map((cell, cellIdx) => {
-                                                    let prefix = null;
-                                                    // Add color icon for the "Coloured Compounds" table's first column
-                                                    if (table.title.includes("Coloured Compounds") && cellIdx === 0) {
-                                                        const lower = String(cell).toLowerCase();
-                                                        let colorClass = "bg-gray-500";
-
-                                                        if (lower.includes('canary')) colorClass = "bg-yellow-200";
-                                                        else if (lower.includes('greenish yellow')) colorClass = "bg-lime-300";
-                                                        else if (lower.includes('yellow')) colorClass = "bg-yellow-400";
-                                                        else if (lower.includes('black')) colorClass = "bg-neutral-900 border border-gray-600";
-                                                        else if (lower.includes('white')) colorClass = "bg-white border border-gray-300 text-black"; // ensure visibility if text is over it? no just icon.
-                                                        else if (lower.includes('green')) colorClass = "bg-green-500";
-                                                        else if (lower.includes('reddish brown')) colorClass = "bg-rose-800";
-                                                        else if (lower.includes('brown')) colorClass = "bg-amber-900";
-                                                        else if (lower.includes('peach') || lower.includes('flesh')) colorClass = "bg-orange-300";
-                                                        else if (lower.includes('purple')) colorClass = "bg-purple-600";
-                                                        else if (lower.includes('orange')) colorClass = "bg-orange-500";
-                                                        else if (lower.includes('blue')) colorClass = "bg-blue-500";
-                                                        else if (lower.includes('pink')) colorClass = "bg-pink-500";
-                                                        else if (lower.includes('colourless')) colorClass = "bg-transparent border border-gray-500 border-dashed";
-
-                                                        prefix = <span className={`inline-block w-3 h-3 rounded-full mr-2 align-middle ${colorClass}`} />;
-                                                    }
-
-                                                    return (
-                                                        <td key={cellIdx} className={`px-3 py-2 ${cellIdx === 0 ? 'text-white font-medium' : 'text-gray-300'}`}>
-                                                            {prefix}{cell}
-                                                        </td>
-                                                    );
-                                                })}
+                                                {row.map((cell, cellIdx) => (
+                                                    <td key={cellIdx} className={`px-3 py-2 ${cellIdx === 0 ? 'text-white font-medium' : 'text-gray-300'}`}>
+                                                        {cell}
+                                                    </td>
+                                                ))}
                                             </tr>
                                         ))}
                                     </tbody>
                                 </table>
                             </div>
-
-                            {/* Notes */}
-                            {table.notes && table.notes.length > 0 && (
-                                <div className="px-4 py-3 bg-gray-700/20 border-t border-gray-700/50">
-                                    <div className="text-xs text-yellow-300/80 font-medium mb-1">📝 Important Notes:</div>
-                                    <ul className="space-y-0.5">
-                                        {table.notes.map((note, idx) => (
-                                            <li key={idx} className="text-xs text-gray-400">• {note}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
                         </div>
                     ))}
                 </div>
@@ -368,389 +281,22 @@ export default function PeriodicTableClient() {
         );
     };
 
-    // Element detail panel - only shows clicked/selected element, ignores hover
-    const ElementDetailPanel = () => {
-        // Only show detail panel for clicked elements, not hovered
-        const element = selectedElement;
-        if (!element) return null;
-
-        return (
-            <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                className="bg-gray-800/90 backdrop-blur-sm rounded-xl p-4 sm:p-5 border border-gray-700"
-            >
-                <div className="flex items-start justify-between mb-3">
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <span
-                                className="w-4 h-4 rounded"
-                                style={{ backgroundColor: CATEGORY_COLORS[element.category as CategoryType] }}
-                            />
-                            <span className="text-xs text-gray-400">{element.category}</span>
-                        </div>
-                        <h2 className="text-2xl sm:text-3xl font-bold text-white mt-1">
-                            {element.symbol} <span className="text-lg font-normal text-gray-400">({element.atomicNumber})</span>
-                        </h2>
-                        <p className="text-gray-300">{element.name}</p>
-                    </div>
-                    {selectedElement && (
-                        <button
-                            onClick={() => setSelectedElement(null)}
-                            className="text-gray-400 hover:text-white"
-                        >
-                            <X size={20} />
-                        </button>
-                    )}
-                </div>
-
-                {/* Exception badge */}
-                {element.isException && (
-                    <div className="bg-yellow-500/20 border border-yellow-500/50 rounded-lg p-3 mb-4">
-                        <div className="flex items-center gap-2 text-yellow-400 font-medium mb-1">
-                            <AlertTriangle size={16} />
-                            Exception: {element.exceptionType}
-                        </div>
-                        <p className="text-sm text-yellow-200/80">{element.exceptionExplanation}</p>
-                    </div>
-                )}
-
-                {/* Properties grid */}
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div className="bg-gray-700/50 rounded-lg p-2">
-                        <div className="text-gray-400 text-xs">Atomic Mass</div>
-                        <div className="text-white font-medium">{element.atomicMass} u</div>
-                    </div>
-                    <div className="bg-gray-700/50 rounded-lg p-2">
-                        <div className="text-gray-400 text-xs">Electron Config</div>
-                        <div className="text-white font-medium text-xs">{element.electronConfig}</div>
-                    </div>
-                    {element.atomicRadius && (
-                        <div className="bg-gray-700/50 rounded-lg p-2">
-                            <div className="text-gray-400 text-xs">Atomic Radius</div>
-                            <div className="text-white font-medium">{element.atomicRadius} pm</div>
-                        </div>
-                    )}
-                    {element.ionizationEnergy && (
-                        <div className="bg-gray-700/50 rounded-lg p-2">
-                            <div className="text-gray-400 text-xs">Ionization Energy</div>
-                            <div className="text-white font-medium">{element.ionizationEnergy} kJ/mol</div>
-                        </div>
-                    )}
-                    {element.electronegativity && (
-                        <div className="bg-gray-700/50 rounded-lg p-2">
-                            <div className="text-gray-400 text-xs">Electronegativity</div>
-                            <div className="text-white font-medium">{element.electronegativity}</div>
-                        </div>
-                    )}
-                    {element.electronAffinity !== undefined && (
-                        <div className="bg-gray-700/50 rounded-lg p-2">
-                            <div className="text-gray-400 text-xs">Electron Affinity</div>
-                            <div className="text-white font-medium">{element.electronAffinity} kJ/mol</div>
-                        </div>
-                    )}
-                    {element.density && (
-                        <div className="bg-gray-700/50 rounded-lg p-2">
-                            <div className="text-gray-400 text-xs">Density</div>
-                            <div className="text-white font-medium">{element.density} g/cm³</div>
-                        </div>
-                    )}
-                    {element.meltingPoint && (
-                        <div className="bg-gray-700/50 rounded-lg p-2">
-                            <div className="text-gray-400 text-xs">Melting Point</div>
-                            <div className="text-white font-medium">{element.meltingPoint} K</div>
-                        </div>
-                    )}
-                    {element.boilingPoint && (
-                        <div className="bg-gray-700/50 rounded-lg p-2">
-                            <div className="text-gray-400 text-xs">Boiling Point</div>
-                            <div className="text-white font-medium">{element.boilingPoint} K</div>
-                        </div>
-                    )}
-                    {element.standardReductionPotential !== undefined && (
-                        <div className="bg-gray-700/50 rounded-lg p-2">
-                            <div className="text-gray-400 text-xs">SRP (E°)</div>
-                            <div className="text-white font-medium">{element.standardReductionPotential} V</div>
-                        </div>
-                    )}
-                </div>
-
-                {/* Flame Color, Gas Color, Compounds Info - Special Properties */}
-                {(element.flameColor || element.gasColor || element.compoundsInfo) && (
-                    <div className="mt-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
-                        <h3 className="text-yellow-300 font-semibold text-base mb-3 flex items-center gap-2">
-                            🔥 Colors & Compounds
-                        </h3>
-
-                        {/* Flame Color */}
-                        {element.flameColor && (
-                            <div className="mb-3 flex items-center gap-3">
-                                <span className="text-sm text-yellow-200/80">Flame Color:</span>
-                                <span
-                                    className="w-5 h-5 rounded-full border-2 border-white/40"
-                                    style={{
-                                        backgroundColor: element.flameColor.hexColor,
-                                        boxShadow: `0 0 10px ${element.flameColor.hexColor}`
-                                    }}
-                                />
-                                <span className="text-yellow-100 text-base font-medium">{element.flameColor.color}</span>
-                            </div>
-                        )}
-
-                        {/* Gas Color */}
-                        {element.gasColor && (
-                            <div className="mb-3 flex items-center gap-3">
-                                <span className="text-sm text-yellow-200/80">Gas ({element.gasColor.formula}):</span>
-                                <span
-                                    className="w-5 h-5 rounded-full border-2 border-white/40"
-                                    style={{
-                                        backgroundColor: element.gasColor.hexColor === 'transparent' ? 'rgba(255,255,255,0.15)' : element.gasColor.hexColor,
-                                        boxShadow: element.gasColor.hexColor !== 'transparent' ? `0 0 8px ${element.gasColor.hexColor}` : 'none'
-                                    }}
-                                />
-                                <span className="text-yellow-100 text-base">{element.gasColor.color}</span>
-                            </div>
-                        )}
-
-                        {/* Compounds Info - Simple list, no nested boxes */}
-                        {element.compoundsInfo && element.compoundsInfo.length > 0 && (
-                            <div className="mt-3">
-                                <div className="text-sm text-yellow-200/80 mb-2">Compounds:</div>
-                                <div className="space-y-1.5">
-                                    {element.compoundsInfo.map((compound, idx) => (
-                                        <div key={idx} className="flex items-center gap-2 text-sm">
-                                            <span className={`font-medium ${compound.nature === 'acidic' ? 'text-red-300' :
-                                                compound.nature === 'basic' ? 'text-blue-300' :
-                                                    'text-gray-300'
-                                                }`}>
-                                                {compound.formula}
-                                            </span>
-                                            <span className="text-gray-400">→</span>
-                                            <span className="text-white">{compound.color}</span>
-                                            {compound.nature && (
-                                                <span className={`text-xs ${compound.nature === 'acidic' ? 'text-red-400' :
-                                                    compound.nature === 'basic' ? 'text-blue-400' :
-                                                        'text-gray-400'
-                                                    }`}>
-                                                    ({compound.nature})
-                                                </span>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                )}
-                {element.block === 'f' && (
-                    <div className="mt-4 bg-purple-500/10 border border-purple-500/30 rounded-lg p-3">
-                        <h3 className="text-purple-300 font-semibold text-sm mb-2 flex items-center gap-2">
-                            📚 NCERT Exam Focus
-                        </h3>
-
-                        {/* Ion Configurations */}
-                        {element.ionConfigs && (
-                            <div className="mb-3">
-                                <div className="text-xs text-purple-200/70 mb-1">Ion Configurations:</div>
-                                <div className="flex flex-wrap gap-2">
-                                    {element.ionConfigs.M2plus && (
-                                        <span className="bg-purple-500/20 px-2 py-1 rounded text-xs text-purple-200">
-                                            M²⁺: {element.ionConfigs.M2plus}
-                                        </span>
-                                    )}
-                                    {element.ionConfigs.M3plus && (
-                                        <span className="bg-purple-500/20 px-2 py-1 rounded text-xs text-purple-200">
-                                            M³⁺: {element.ionConfigs.M3plus}
-                                        </span>
-                                    )}
-                                    {element.ionConfigs.M4plus && (
-                                        <span className="bg-purple-500/20 px-2 py-1 rounded text-xs text-purple-200">
-                                            M⁴⁺: {element.ionConfigs.M4plus}
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Ionic Radii */}
-                        {element.ionicRadii && (
-                            <div className="mb-3">
-                                <div className="text-xs text-purple-200/70 mb-1">Ionic Radii:</div>
-                                <div className="flex flex-wrap gap-2">
-                                    {element.ionicRadii.M3plus && (
-                                        <span className="bg-purple-500/20 px-2 py-1 rounded text-xs text-purple-200">
-                                            M³⁺: {element.ionicRadii.M3plus} pm
-                                        </span>
-                                    )}
-                                    {element.ionicRadii.M4plus && (
-                                        <span className="bg-purple-500/20 px-2 py-1 rounded text-xs text-purple-200">
-                                            M⁴⁺: {element.ionicRadii.M4plus} pm
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Oxidation States */}
-                        {element.oxidationStates && (
-                            <div className="mb-3">
-                                <div className="text-xs text-purple-200/70 mb-1">Oxidation States:</div>
-                                <div className="flex flex-wrap gap-1 items-center">
-                                    {element.oxidationStates.map(os => (
-                                        <span
-                                            key={os}
-                                            className={`px-2 py-0.5 rounded text-xs ${os === element.stableOxidationState
-                                                ? 'bg-green-500/30 text-green-200 font-bold'
-                                                : 'bg-purple-500/20 text-purple-200'
-                                                }`}
-                                        >
-                                            +{os}{os === element.stableOxidationState && ' ✓'}
-                                        </span>
-                                    ))}
-                                    <span className="text-xs text-gray-400 ml-1">(stable: +{element.stableOxidationState})</span>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* f-Subshell Info */}
-                        {element.fSubshellInfo && (
-                            <div className="mb-3">
-                                <div className="text-xs text-purple-200/70 mb-1">f-Subshell:</div>
-                                <div className="text-sm text-purple-100">{element.fSubshellInfo}</div>
-                            </div>
-                        )}
-
-                        {/* Redox Nature */}
-                        {element.redoxNature && (
-                            <div className="mb-1">
-                                <div className="text-xs text-purple-200/70 mb-1">Redox Behavior:</div>
-                                <div className={`inline-flex items-center gap-2 px-2 py-1 rounded text-sm font-medium ${element.redoxNature === 'oxidizing'
-                                    ? 'bg-red-500/20 text-red-200'
-                                    : element.redoxNature === 'reducing'
-                                        ? 'bg-blue-500/20 text-blue-200'
-                                        : 'bg-gray-500/20 text-gray-200'
-                                    }`}>
-                                    {element.redoxNature === 'oxidizing' && '⬇️ Oxidizing Agent'}
-                                    {element.redoxNature === 'reducing' && '⬆️ Reducing Agent'}
-                                    {element.redoxNature === 'both' && '↕️ Both'}
-                                </div>
-                                {element.redoxExplanation && (
-                                    <div className="text-xs text-purple-200/60 mt-1">{element.redoxExplanation}</div>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                )}
-
-                {/* D-Block Specific Section - Ion Colors, Oxides, Halides */}
-                {element.block === 'd' && (element.ionColors || element.oxides || element.halides) && (
-                    <div className="mt-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3">
-                        <h3 className="text-cyan-300 font-semibold text-sm mb-2 flex items-center gap-2">
-                            🧪 Transition Metal Chemistry
-                        </h3>
-
-                        {/* Ion Colors */}
-                        {element.ionColors && element.ionColors.length > 0 && (
-                            <div className="mb-3">
-                                <div className="text-xs text-cyan-200/70 mb-1">Aquated Ion Colors:</div>
-                                <div className="flex flex-wrap gap-2">
-                                    {element.ionColors.map((ic, idx) => (
-                                        <span
-                                            key={idx}
-                                            className="flex items-center gap-1.5 bg-gray-800/50 px-2 py-1 rounded text-xs"
-                                        >
-                                            <span
-                                                className="w-3 h-3 rounded-full border border-white/30"
-                                                style={{
-                                                    backgroundColor: ic.hexColor === 'transparent' ? 'rgba(255,255,255,0.1)' : ic.hexColor,
-                                                    boxShadow: ic.hexColor !== 'transparent' ? `0 0 4px ${ic.hexColor}` : 'none'
-                                                }}
-                                            />
-                                            <span className="text-cyan-200">{ic.ion}</span>
-                                            <span className="text-gray-400">({ic.config})</span>
-                                            <span className="text-gray-300">→ {ic.color}</span>
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Oxides Formed */}
-                        {element.oxides && element.oxides.length > 0 && (
-                            <div className="mb-3">
-                                <div className="text-xs text-cyan-200/70 mb-1">Oxides Formed:</div>
-                                <div className="flex flex-wrap gap-1.5">
-                                    {element.oxides.map((ox, idx) => (
-                                        <span key={idx} className="bg-orange-500/20 text-orange-200 px-2 py-0.5 rounded text-xs">
-                                            {ox}
-                                        </span>
-                                    ))}
-                                </div>
-                                {element.oxideNature && (
-                                    <div className="mt-1.5 flex items-center gap-2">
-                                        <span className={`text-xs px-2 py-0.5 rounded font-medium ${element.oxideNature === 'acidic' ? 'bg-red-500/20 text-red-200' :
-                                            element.oxideNature === 'basic' ? 'bg-blue-500/20 text-blue-200' :
-                                                element.oxideNature === 'amphoteric' ? 'bg-purple-500/20 text-purple-200' :
-                                                    'bg-gray-500/20 text-gray-200'
-                                            }`}>
-                                            {element.oxideNature.charAt(0).toUpperCase() + element.oxideNature.slice(1)} Oxide
-                                        </span>
-                                    </div>
-                                )}
-                                {element.oxideNatureDetails && (
-                                    <div className="text-xs text-cyan-200/60 mt-1">{element.oxideNatureDetails}</div>
-                                )}
-                            </div>
-                        )}
-
-                        {/* Halides Formed */}
-                        {element.halides && element.halides.length > 0 && (
-                            <div className="mb-1">
-                                <div className="text-xs text-cyan-200/70 mb-1">Halides Formed:</div>
-                                <div className="flex flex-wrap gap-1.5">
-                                    {element.halides.map((hal, idx) => (
-                                        <span key={idx} className="bg-green-500/20 text-green-200 px-2 py-0.5 rounded text-xs">
-                                            {hal}
-                                        </span>
-                                    ))}
-                                </div>
-                                <div className="text-xs text-gray-400 mt-1">X = F, Cl, Br, I (unless specified)</div>
-                            </div>
-                        )}
-                    </div>
-                )}
-
-                {/* Compare button */}
-                <button
-                    onClick={() => toggleCompare(element)}
-                    className={`mt-4 w-full py-2 rounded-lg font-medium transition-colors ${compareElements.some(e => e.atomicNumber === element.atomicNumber)
-                        ? 'bg-cyan-500 text-white'
-                        : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                        }`}
-                >
-                    {compareElements.some(e => e.atomicNumber === element.atomicNumber)
-                        ? '✓ Comparing'
-                        : 'Add to Compare'}
-                </button>
-            </motion.div>
-        );
-    };
-
     // Comparison panel
     const ComparisonPanel = () => {
-        if (compareElements.length < 2) return null;
+        if (compareElements.length < 1) return null; // Changed to 1 to show even single element in list
 
         return (
             <motion.div
+                ref={comparisonRef}
+                id="comparison-section" // ID for specific scrolling targeting
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-gray-800/90 backdrop-blur-sm rounded-xl p-4 border border-gray-700 mt-4"
+                className="bg-gray-800/90 backdrop-blur-sm rounded-xl p-4 border border-gray-700 mt-8 scroll-mt-32"
             >
                 <div className="flex items-center justify-between mb-3">
                     <h3 className="text-lg font-bold text-white flex items-center gap-2">
                         <BarChart3 size={20} />
-                        Comparing {compareElements.length} Elements
+                        Comparing Elements
                     </h3>
                     <button
                         onClick={() => setCompareElements([])}
@@ -760,28 +306,44 @@ export default function PeriodicTableClient() {
                     </button>
                 </div>
 
-                {/* Comparison table */}
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                         <thead>
                             <tr className="border-b border-gray-700">
-                                <th className="text-left text-gray-400 py-2 px-2">Property</th>
+                                <th className="text-left text-gray-400 py-4 px-4 bg-gray-900/50 sticky left-0 z-10 w-40">Property</th>
                                 {compareElements.map(el => (
-                                    <th key={el.atomicNumber} className="text-center text-white py-2 px-2">
-                                        {el.symbol}
+                                    <th key={el.atomicNumber} className="text-center text-white py-4 px-4 min-w-[120px]">
+                                        <div className="flex flex-col items-center gap-2">
+                                            <div
+                                                className="w-10 h-10 rounded-lg flex items-center justify-center text-lg font-bold shadow-lg"
+                                                style={{ backgroundColor: getElementColor(el), color: isLightColor(getElementColor(el)) ? 'black' : 'white' }}
+                                            >
+                                                {el.symbol}
+                                            </div>
+                                            <span className="text-sm font-normal text-gray-400">{el.name}</span>
+                                            <button
+                                                onClick={() => toggleCompare(el)}
+                                                className="text-gray-600 hover:text-red-400 p-1"
+                                            >
+                                                <X size={14} />
+                                            </button>
+                                        </div>
                                     </th>
                                 ))}
                             </tr>
                         </thead>
                         <tbody>
-                            {PROPERTIES.slice(0, 6).map(prop => (
-                                <tr key={prop} className="border-b border-gray-700/50">
-                                    <td className="text-gray-400 py-2 px-2">{PROPERTY_INFO[prop].name}</td>
+                            {PROPERTIES.map(prop => (
+                                <tr key={prop} className="border-b border-gray-700/50 hover:bg-gray-700/20 transition-colors">
+                                    <td className="text-gray-300 py-3 px-4 bg-gray-900/50 sticky left-0 font-medium">
+                                        {PROPERTY_INFO[prop].name}
+                                        <div className="text-[10px] text-gray-500 font-normal">{PROPERTY_INFO[prop].unit}</div>
+                                    </td>
                                     {compareElements.map(el => {
                                         const val = getPropertyValue(el, prop);
                                         return (
-                                            <td key={el.atomicNumber} className="text-center text-white py-2 px-2">
-                                                {val !== undefined ? val : '-'}
+                                            <td key={el.atomicNumber} className="text-center text-white py-3 px-4">
+                                                {val !== undefined ? val : <span className="text-gray-600">-</span>}
                                             </td>
                                         );
                                     })}
@@ -794,7 +356,6 @@ export default function PeriodicTableClient() {
         );
     };
 
-    // Category legend
     const CategoryLegend = () => (
         <div className="flex flex-wrap gap-2 justify-center">
             {Object.entries(CATEGORY_COLORS).map(([category, color]) => (
@@ -806,7 +367,6 @@ export default function PeriodicTableClient() {
         </div>
     );
 
-    // Property heatmap legend
     const PropertyLegend = () => {
         const info = PROPERTY_INFO[selectedProperty];
         return (
@@ -828,15 +388,28 @@ export default function PeriodicTableClient() {
 
     return (
         <div className="min-h-screen bg-gray-950 text-white selection:bg-cyan-500/30">
+            {/* Expanded Element Modal */}
+            <AnimatePresence>
+                {selectedElement && (
+                    <ElementModalContent
+                        key={`modal-${selectedElement.atomicNumber}`}
+                        element={selectedElement}
+                        bgColor={getElementColor(selectedElement)}
+                        isDark={!isLightColor(getElementColor(selectedElement))}
+                        compareElements={compareElements}
+                        toggleCompare={toggleCompare}
+                        onClose={() => setSelectedElement(null)}
+                    />
+                )}
+            </AnimatePresence>
+
             {/* Hero Header */}
             <section className="relative pt-32 pb-12 md:pt-40 md:pb-16 overflow-hidden">
-                {/* Background gradient */}
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-gray-900 to-gray-950" />
                 <div className="absolute top-20 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
                 <div className="absolute top-40 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
 
                 <div className="relative container mx-auto px-4 text-center">
-                    {/* Badge */}
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 mb-6 backdrop-blur-sm">
                         <Sparkles size={16} className="text-blue-400" />
                         <span className="text-sm font-medium text-blue-400">NCERT Data Visualizations</span>
@@ -855,9 +428,6 @@ export default function PeriodicTableClient() {
 
             {/* Main Content */}
             <div className="container mx-auto px-4 pb-20 relative z-10">
-
-
-
                 {/* Mode selector */}
                 <div className="flex flex-wrap justify-center gap-2 mb-4">
                     <button
@@ -887,7 +457,6 @@ export default function PeriodicTableClient() {
                             <ChevronDown size={16} />
                         </button>
 
-                        {/* Property dropdown */}
                         <AnimatePresence>
                             {showPropertyDropdown && viewMode === 'property' && (
                                 <motion.div
@@ -924,8 +493,6 @@ export default function PeriodicTableClient() {
                         <AlertTriangle size={18} />
                         Exceptions ({exceptionElements.length})
                     </button>
-
-
                 </div>
 
                 {/* Selected property info */}
@@ -941,9 +508,9 @@ export default function PeriodicTableClient() {
                 )}
 
                 {/* Main grid layout */}
-                <div className="flex flex-col lg:flex-row gap-4">
+                <div className="flex flex-col gap-4">
                     {/* Table */}
-                    <div className="flex-1 overflow-x-auto pb-4">
+                    <div className="overflow-x-auto pb-4">
                         {/* Block selector buttons */}
                         <div className="flex flex-wrap gap-2 mb-3 justify-center">
                             <button
@@ -999,8 +566,9 @@ export default function PeriodicTableClient() {
                                 <span>f-Block Tables</span>
                             </button>
                         </div>
+
                         <div
-                            className="grid gap-0.5 sm:gap-1 min-w-[700px]"
+                            className="grid gap-0.5 sm:gap-1 min-w-[700px] mx-auto max-w-7xl"
                             style={{
                                 gridTemplateColumns: 'repeat(18, minmax(32px, 1fr))',
                                 gridTemplateRows: 'repeat(10, minmax(40px, auto))',
@@ -1018,18 +586,8 @@ export default function PeriodicTableClient() {
                             ))}
 
                             {/* Lanthanide/Actinide placeholders in main table */}
-                            <div
-                                className="text-[10px] text-gray-500 flex items-center justify-center"
-                                style={{ gridColumn: 3, gridRow: 6 }}
-                            >
-                                57-71
-                            </div>
-                            <div
-                                className="text-[10px] text-gray-500 flex items-center justify-center"
-                                style={{ gridColumn: 3, gridRow: 7 }}
-                            >
-                                89-103
-                            </div>
+                            <div className="text-[10px] text-gray-500 flex items-center justify-center" style={{ gridColumn: 3, gridRow: 6 }}>57-71</div>
+                            <div className="text-[10px] text-gray-500 flex items-center justify-center" style={{ gridColumn: 3, gridRow: 7 }}>89-103</div>
 
                             {/* Render all elements */}
                             {ELEMENTS.map(element => (
@@ -1037,20 +595,8 @@ export default function PeriodicTableClient() {
                             ))}
 
                             {/* Lanthanide label */}
-                            <div
-                                className="text-xs text-pink-400 flex items-center"
-                                style={{ gridColumn: 1, gridRow: 8 }}
-                            >
-                                Lanthanides
-                            </div>
-
-                            {/* Actinide label */}
-                            <div
-                                className="text-xs text-purple-400 flex items-center"
-                                style={{ gridColumn: 1, gridRow: 9 }}
-                            >
-                                Actinides
-                            </div>
+                            <div className="text-xs text-pink-400 flex items-center" style={{ gridColumn: 1, gridRow: 8 }}>Lanthanides</div>
+                            <div className="text-xs text-purple-400 flex items-center" style={{ gridColumn: 1, gridRow: 9 }}>Actinides</div>
                         </div>
 
                         {/* Legend */}
@@ -1063,32 +609,6 @@ export default function PeriodicTableClient() {
                                 </p>
                             )}
                         </div>
-                    </div>
-
-                    {/* Detail panel */}
-                    <div className="lg:w-80">
-                        <AnimatePresence mode="wait">
-                            {selectedElement && (
-                                <ElementDetailPanel key={`selected-${selectedElement.atomicNumber}`} />
-                            )}
-                        </AnimatePresence>
-
-                        {/* Instructions when no element selected */}
-                        {!hoveredElement && !selectedElement && (
-                            <div className="bg-gray-800/50 rounded-xl p-5 border border-gray-700">
-                                <div className="flex items-center gap-2 text-gray-400 mb-3">
-                                    <Info size={20} />
-                                    <span className="font-medium">How to Use</span>
-                                </div>
-                                <ul className="text-sm text-gray-500 space-y-2">
-                                    <li>• <strong>Hover</strong> over elements to see details</li>
-                                    <li>• <strong>Click</strong> to pin an element</li>
-                                    <li>• <strong>Double-click</strong> to compare (up to 4)</li>
-                                    <li>• Use <strong>Trends</strong> to see property heatmaps</li>
-                                    <li>• <strong>Exceptions</strong> mode shows chemistry exceptions</li>
-                                </ul>
-                            </div>
-                        )}
                     </div>
                 </div>
 
@@ -1121,36 +641,6 @@ export default function PeriodicTableClient() {
                     <PeriodicTableQuiz />
                 </div>
 
-                {/* Exception list when in exceptions mode */}
-                {viewMode === 'exceptions' && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="mt-6 bg-gray-800/50 rounded-xl p-5 border border-gray-700"
-                    >
-                        <h3 className="text-lg font-bold text-yellow-400 mb-4 flex items-center gap-2">
-                            <Sparkles size={20} />
-                            Chemistry Exceptions to Remember
-                        </h3>
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                            {exceptionElements.map(el => (
-                                <button
-                                    key={el.atomicNumber}
-                                    onClick={() => setSelectedElement(el)}
-                                    className="bg-gray-700/50 hover:bg-gray-700 rounded-lg p-3 text-left transition-colors"
-                                >
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <span className="text-xl font-bold text-white">{el.symbol}</span>
-                                        <span className="text-sm text-gray-400">{el.name}</span>
-                                    </div>
-                                    <div className="text-xs text-yellow-400">{el.exceptionType}</div>
-                                    <p className="text-sm text-gray-400 mt-1 line-clamp-2">{el.exceptionExplanation}</p>
-                                </button>
-                            ))}
-                        </div>
-                    </motion.div>
-                )}
-
                 {/* Block Info Section (Embedded) */}
                 <AnimatePresence>
                     {selectedBlock && <BlockInfoSection />}
@@ -1159,3 +649,388 @@ export default function PeriodicTableClient() {
         </div >
     );
 }
+
+// --- Extracted Components ---
+
+const DetailItem = ({ label, value }: { label: string, value: string | number | undefined }) => (
+    <div className="bg-gray-800/50 p-3 sm:p-4 rounded-xl border border-gray-700/50 flex flex-col justify-center">
+        <div className="text-sm text-gray-400 mb-1 font-medium">{label}</div>
+        <div className="text-white text-lg font-semibold truncate" title={String(value)}>{value ?? '-'}</div>
+    </div>
+);
+
+const SpecialChemistry = ({ element }: { element: Element }) => {
+    const getNatureColor = (nature: string | undefined) => {
+        if (!nature) return 'bg-gray-700 text-gray-200';
+        const n = nature.toLowerCase();
+        if (n.includes('acidic')) return 'bg-red-900/40 text-red-200 border-red-700/50';
+        if (n.includes('basic')) return 'bg-blue-900/40 text-blue-200 border-blue-700/50';
+        if (n.includes('amphoteric')) return 'bg-purple-900/40 text-purple-200 border-purple-700/50';
+        return 'bg-gray-700 text-gray-200';
+    };
+
+    const hasData = element.flameColor || element.gasColor || element.block === 'd' || element.oxides || element.redoxNature || element.compoundsInfo;
+
+    if (!hasData) return null;
+
+    return (
+        <div className="space-y-6 text-base">
+            {/* Transition Metal Chemistry (Specific Layout) */}
+            {element.block === 'd' && (
+                <div className="bg-cyan-950/30 rounded-xl p-5 border border-cyan-500/30">
+                    <h3 className="text-xl font-bold text-cyan-400 mb-5 flex items-center gap-2">
+                        <span className="text-2xl">🧪</span> Transition Metal Chemistry
+                    </h3>
+
+                    <div className="space-y-6">
+                        {/* 1. Aquated Ion Colors */}
+                        {element.ionColors && element.ionColors.length > 0 && (
+                            <div>
+                                <h4 className="text-cyan-200/80 font-medium mb-3">Aquated Ion Colors:</h4>
+                                <div className="space-y-3 pl-2">
+                                    {element.ionColors.map((ion, i) => (
+                                        <div key={i} className="flex items-center gap-3">
+                                            <div
+                                                className="w-5 h-5 rounded-full border border-white/20 shadow-sm"
+                                                style={{ backgroundColor: ion.hexColor === 'transparent' ? '#1f2937' : ion.hexColor }}
+                                            />
+                                            <div className="flex items-baseline gap-2 text-gray-200">
+                                                <span className="font-bold text-lg">{formatFormula(ion.ion)}</span>
+                                                {ion.config && <span className="text-gray-500 font-mono text-sm">({ion.config})</span>}
+                                                <span className="text-gray-500">→</span>
+                                                <span className={`${ion.hexColor !== 'transparent' ? 'text-white' : 'text-gray-400'}`}>
+                                                    {ion.color}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 2. Oxides Formed */}
+                        {(element.oxides || element.oxideNature) && (
+                            <div>
+                                {element.oxides && (
+                                    <>
+                                        <h4 className="text-cyan-200/80 font-medium mb-3">Oxides Formed:</h4>
+                                        <div className="flex flex-wrap gap-2 mb-3">
+                                            {element.oxides.map(oxide => (
+                                                <span key={oxide} className="bg-orange-900/30 text-orange-200 border border-orange-700/30 px-3 py-1.5 rounded-lg text-base font-mono">
+                                                    {formatFormula(oxide)}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
+
+                                {element.oxideNature && (
+                                    <div className="mt-2">
+                                        <span className={`px-3 py-1 rounded-md text-sm font-semibold border ${getNatureColor(element.oxideNature)}`}>
+                                            {element.oxideNature.charAt(0).toUpperCase() + element.oxideNature.slice(1)} Oxide
+                                        </span>
+                                        {element.oxideNatureDetails && (
+                                            <p className="mt-2 text-cyan-100/70 text-sm leading-relaxed">
+                                                {formatFormula(element.oxideNatureDetails)}
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* 3. Halides Formed (New Section) */}
+                        {element.halides && element.halides.length > 0 && (
+                            <div>
+                                <h4 className="text-cyan-200/80 font-medium mb-3">Halides Formed:</h4>
+                                <div className="flex flex-wrap gap-2 mb-2">
+                                    {element.halides.map(halide => (
+                                        <span key={halide} className="bg-green-900/30 text-green-200 border border-green-700/30 px-3 py-1.5 rounded-lg text-base font-mono">
+                                            {formatFormula(halide)}
+                                        </span>
+                                    ))}
+                                </div>
+                                <p className="text-gray-500 text-sm italic">X = F, Cl, Br, I (unless specified)</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {/* Other Chemistry (Redox, etc) - for non-d-block or additional info */}
+            {element.block !== 'd' && (
+                <>
+                    {/* Redox & Oxidation Behavior */}
+                    {(element.redoxNature || element.stableOxidationState !== undefined) && (
+                        <div className="bg-orange-900/10 rounded-xl p-5 border border-orange-500/20">
+                            <h3 className="text-lg font-semibold text-orange-400 mb-4 flex items-center gap-2">
+                                <Zap size={20} /> Oxidation & Reactivity
+                            </h3>
+                            <div className="space-y-3">
+                                {element.stableOxidationState !== undefined && (
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-gray-400 w-32">Stable State:</span>
+                                        <span className="text-white font-mono text-lg">+{element.stableOxidationState}</span>
+                                    </div>
+                                )}
+                                {element.oxidationStates && (
+                                    <div className="flex items-start gap-2">
+                                        <span className="text-gray-400 w-32">Common States:</span>
+                                        <span className="text-gray-300 font-mono text-lg">{element.oxidationStates.map(s => (s > 0 ? `+${s}` : s)).join(', ')}</span>
+                                    </div>
+                                )}
+                                {element.redoxNature && (
+                                    <div className="flex items-start gap-2 mt-2">
+                                        <span className="text-gray-400 w-32">Nature:</span>
+                                        <div>
+                                            <span className={`font-semibold uppercase text-sm tracking-wider px-2 py-0.5 rounded ${element.redoxNature === 'oxidizing' ? 'bg-red-500/20 text-red-300' :
+                                                element.redoxNature === 'reducing' ? 'bg-green-500/20 text-green-300' : 'bg-gray-700 text-gray-300'
+                                                }`}>
+                                                {element.redoxNature} Agent
+                                            </span>
+                                            {element.redoxExplanation && (
+                                                <p className="text-gray-400 mt-2 leading-relaxed">
+                                                    {element.redoxExplanation}
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Oxides for non-d-block */}
+                    {(element.oxides || element.oxideNature) && element.block !== 'd' && (
+                        <div className="bg-indigo-900/10 rounded-xl p-5 border border-indigo-500/20">
+                            <h3 className="text-lg font-semibold text-indigo-400 mb-4 flex items-center gap-2">
+                                <Atom size={20} /> Oxide Chemistry
+                            </h3>
+                            {element.oxides && (
+                                <div className="flex flex-wrap gap-2 mb-3">
+                                    {element.oxides.map(oxide => (
+                                        <span key={oxide} className="bg-indigo-500/10 text-indigo-200 px-3 py-1 rounded-lg font-mono border border-indigo-500/20">
+                                            {formatFormula(oxide)}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
+                            {element.oxideNatureDetails && (
+                                <div className="text-gray-300 leading-relaxed pl-3 border-l-2 border-indigo-500/30">
+                                    <span className={`font-semibold mr-2 ${getNatureColor(element.oxideNature) === 'bg-gray-700 text-gray-200' ? 'text-indigo-300' : 'px-2 py-0.5 rounded text-xs ' + getNatureColor(element.oxideNature)}`}>
+                                        {element.oxideNature ? element.oxideNature.charAt(0).toUpperCase() + element.oxideNature.slice(1) : ''} Nature
+                                    </span>
+                                    <span className="block mt-1">{formatFormula(element.oxideNatureDetails)}</span>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </>
+            )}
+
+            {/* Flame/Gas Colors (General) */}
+            {(element.flameColor || element.gasColor) && (
+                <div className="bg-gray-800/30 rounded-xl p-5 border border-gray-700">
+                    <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                        <Sparkles className="text-yellow-400" size={20} /> Physical Appearance
+                    </h3>
+                    <div className="space-y-4">
+                        {element.flameColor && (
+                            <div className="flex items-center gap-3">
+                                <span className="text-gray-400 w-32">Flame Color:</span>
+                                <div className="flex items-center gap-2">
+                                    <div
+                                        className="w-6 h-6 rounded-full border border-white/20 shadow-[0_0_10px_currentColor]"
+                                        style={{ color: element.flameColor.hexColor, backgroundColor: element.flameColor.hexColor }}
+                                    />
+                                    <span className="text-white text-lg">{element.flameColor.color}</span>
+                                </div>
+                            </div>
+                        )}
+                        {element.gasColor && (
+                            <div className="flex items-center gap-3">
+                                <span className="text-gray-400 w-32">Gas Color:</span>
+                                <div className="flex items-center gap-2">
+                                    <div
+                                        className="w-6 h-6 rounded-full border border-white/20"
+                                        style={{ backgroundColor: element.gasColor.hexColor }}
+                                    />
+                                    <span className="text-white text-lg">{element.gasColor.color} ({formatFormula(element.gasColor.formula)})</span>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {/* Common Compounds (General) */}
+            {element.compoundsInfo && element.compoundsInfo.length > 0 && (
+                <div className="bg-emerald-900/10 rounded-xl p-5 border border-emerald-500/20">
+                    <h3 className="text-lg font-semibold text-emerald-400 mb-4">Important Compounds</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {element.compoundsInfo.map((comp, i) => (
+                            <div key={i} className="bg-gray-800/40 p-3 rounded-lg flex flex-col gap-1 border border-gray-700/50">
+                                <div className="flex justify-between items-start">
+                                    <span className="text-white font-mono font-bold text-lg">{formatFormula(comp.formula)}</span>
+                                    {comp.nature && (
+                                        <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded ${comp.nature.includes('acidic') ? 'bg-red-900/40 text-red-300' :
+                                            comp.nature.includes('basic') ? 'bg-blue-900/40 text-blue-300' :
+                                                'bg-gray-700 text-gray-300'
+                                            }`}>
+                                            {comp.nature}
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="flex items-center gap-2 mt-1">
+                                    {comp.hexColor && (
+                                        <div
+                                            className="w-3 h-3 rounded-full border border-gray-600 shrink-0"
+                                            style={{ backgroundColor: comp.hexColor }}
+                                        />
+                                    )}
+                                    <span className="text-gray-400 text-sm">{comp.color}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+// Helper to format chemical formulas (subscript numbers)
+const formatFormula = (formula: string) => {
+    return formula.split(/(\d+)/).map((part, index) =>
+        /^\d+$/.test(part) ? <sub key={index} className="text-[0.7em]">{part}</sub> : part
+    );
+};
+
+const ElementModalContent = ({
+    element,
+    bgColor,
+    isDark,
+    compareElements,
+    toggleCompare,
+    onClose
+}: {
+    element: Element,
+    bgColor: string,
+    isDark: boolean,
+    compareElements: Element[],
+    toggleCompare: (el: Element) => void,
+    onClose: () => void
+}) => {
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 pointer-events-none">
+            {/* Backdrop */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-black/60 backdrop-blur-md pointer-events-auto"
+                onClick={onClose}
+            />
+
+            {/* Card Wrapper */}
+            <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+                className="relative w-full max-w-2xl max-h-[90vh] pointer-events-auto flex flex-col"
+            >
+                {/* Static Close Button - Outside */}
+                <button
+                    onClick={onClose}
+                    className="absolute -top-3 -right-3 sm:-right-8 p-1.5 rounded-full bg-red-500 hover:bg-red-600 text-white shadow-lg transition-colors z-50 flex items-center justify-center border-2 border-white/20"
+                    title="Close"
+                >
+                    <X size={20} strokeWidth={2.5} />
+                </button>
+
+                {/* Scrollable Content Container */}
+                <div
+                    className="w-full h-full overflow-y-auto bg-gray-900 rounded-2xl shadow-2xl border border-gray-700"
+                    style={{ backgroundColor: '#111827' }}
+                >
+                    {/* Header Colored Strip */}
+                    <div
+                        className="p-6 md:p-8 relative"
+                        style={{ backgroundColor: bgColor }}
+                    >
+
+                        <div className="flex justify-between items-start">
+                            <div>
+                                <div className={`text-6xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                                    {element.symbol}
+                                </div>
+                                <div className={`text-2xl font-medium ${isDark ? 'text-white/90' : 'text-gray-900/90'}`}>
+                                    {element.name}
+                                </div>
+                                <div className={`text-lg opacity-80 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                                    {element.category}
+                                </div>
+                            </div>
+                            <div className={`text-right mt-8 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                                <div className="text-4xl font-bold opacity-50">{element.atomicNumber}</div>
+                                <div className="text-xl font-medium opacity-80">{element.atomicMass} u</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Content Body */}
+                    <div className="p-6 md:p-8 bg-gray-900 text-white">
+                        {/* Comparison Action */}
+                        <div className="flex gap-3 mb-8">
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleCompare(element);
+                                }}
+                                className={`flex-1 py-3 px-4 rounded-xl font-bold text-center transition-all flex items-center justify-center gap-2
+                                ${compareElements.some(e => e.atomicNumber === element.atomicNumber)
+                                        ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
+                                        : 'bg-cyan-500 hover:bg-cyan-400 text-black'
+                                    }`}
+                            >
+                                {compareElements.some(e => e.atomicNumber === element.atomicNumber)
+                                    ? <><X size={20} /> Remove from Compare</>
+                                    : <><BarChart3 size={20} /> Compare Element</>
+                                }
+                            </button>
+                        </div>
+
+                        {/* Exception Alert */}
+                        {element.isException && (
+                            <div className="bg-yellow-500/10 border border-yellow-500/40 rounded-xl p-5 mb-8">
+                                <div className="flex items-center gap-2 text-yellow-400 font-bold text-lg mb-2">
+                                    <AlertTriangle size={20} />
+                                    Exception: {element.exceptionType}
+                                </div>
+                                <p className="text-yellow-100/80 leading-relaxed">{element.exceptionExplanation}</p>
+                            </div>
+                        )}
+
+                        {/* Properties Grid */}
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+                            <DetailItem label="Electron Config" value={element.electronConfig} />
+                            <DetailItem label="Atomic Radius" value={element.atomicRadius ? `${element.atomicRadius} pm` : '-'} />
+                            <DetailItem label="Ionization Energy" value={element.ionizationEnergy ? `${element.ionizationEnergy} kJ/mol` : '-'} />
+                            <DetailItem label="Electronegativity" value={element.electronegativity} />
+                            <DetailItem label="Electron Affinity" value={element.electronAffinity !== undefined ? `${element.electronAffinity} kJ/mol` : '-'} />
+                            <DetailItem label="Density" value={element.density ? `${element.density} g/cm³` : '-'} />
+                            <DetailItem label="Melting Point" value={element.meltingPoint ? `${element.meltingPoint} K` : '-'} />
+                            <DetailItem label="Boiling Point" value={element.boilingPoint ? `${element.boilingPoint} K` : '-'} />
+                            <DetailItem label="Standard Potential" value={element.standardReductionPotential ? `${element.standardReductionPotential} V` : '-'} />
+                        </div>
+
+                        {/* Special Chemistry Sections */}
+                        <SpecialChemistry element={element} />
+                    </div>
+                </div>
+            </motion.div>
+        </div>
+    );
+};
+

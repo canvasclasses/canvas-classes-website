@@ -9,9 +9,9 @@ export default function Footer() {
         <footer className="bg-gray-900 border-t border-gray-800">
             <div className="max-w-6xl mx-auto px-6 py-12">
                 {/* Main Footer Content */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-                    {/* Brand Section */}
-                    <div className="md:col-span-2">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10">
+                    {/* Brand Section - 5 Columns */}
+                    <div className="md:col-span-5">
                         <Link href="/" className="inline-block bg-white rounded-xl px-4 py-2 mb-4">
                             <Image
                                 src="/logo.webp"
@@ -26,15 +26,15 @@ export default function Footer() {
                         </p>
 
                         {/* Stats Badges */}
-                        <div className="flex flex-wrap gap-3 mb-6">
-                            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-500/10 text-teal-400 text-xs font-medium border border-teal-500/20">
-                                <Users size={14} /> 1M+ Students
+                        <div className="flex flex-wrap gap-2 mb-6">
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-teal-500/10 text-teal-400 text-[10px] font-medium border border-teal-500/20">
+                                <Users size={12} /> 1M+ Students
                             </span>
-                            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-400 text-xs font-medium border border-purple-500/20">
-                                <Video size={14} /> 2000+ Videos
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 text-[10px] font-medium border border-purple-500/20">
+                                <Video size={12} /> 2000+ Videos
                             </span>
-                            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-rose-500/10 text-rose-400 text-xs font-medium border border-rose-500/20">
-                                <Award size={14} /> 15+ Years
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 text-[10px] font-medium border border-rose-500/20">
+                                <Award size={12} /> 15+ Years
                             </span>
                         </div>
 
@@ -44,38 +44,52 @@ export default function Footer() {
                                 href="https://www.youtube.com/@canvasclasses"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-2.5 rounded-full bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-all"
+                                className="p-2 rounded-full bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-all"
                                 aria-label="YouTube"
                             >
-                                <Youtube size={18} />
+                                <Youtube size={16} />
                             </a>
                             <a
-                                href="mailto:contact@canvasclasses.in"
-                                className="p-2.5 rounded-full bg-teal-500/20 text-teal-400 hover:bg-teal-500/30 transition-all"
+                                href="mailto:paaras.thakur07@gmail.com"
+                                className="p-2 rounded-full bg-teal-500/20 text-teal-400 hover:bg-teal-500/30 transition-all"
                                 aria-label="Email"
                             >
-                                <Mail size={18} />
+                                <Mail size={16} />
                             </a>
                         </div>
                     </div>
 
-                    {/* Courses */}
-                    <div>
-                        <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Courses</h4>
-                        <ul className="space-y-3 text-sm">
+                    {/* Courses - Horizontal Links */}
+                    <div className="md:col-span-2">
+                        <h4 className="text-white font-semibold mb-3 text-xs uppercase tracking-wider">Courses</h4>
+                        <ul className="space-y-2 text-sm">
                             <li><Link href="/detailed-lectures" className="text-gray-400 hover:text-white transition-colors">JEE/NEET Prep</Link></li>
                             <li><Link href="/ncert-solutions" className="text-gray-400 hover:text-white transition-colors">NCERT Solutions</Link></li>
                             <li><Link href="/cbse-12-ncert-revision" className="text-gray-400 hover:text-white transition-colors">CBSE Revision</Link></li>
                         </ul>
                     </div>
 
-                    {/* Resources */}
-                    <div>
-                        <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Resources</h4>
-                        <ul className="space-y-3 text-sm">
-                            <li><Link href="/handwritten-notes" className="text-gray-400 hover:text-white transition-colors">Handwritten Notes</Link></li>
-                            <li><Link href="/one-shot-lectures" className="text-gray-400 hover:text-white transition-colors">One Shot Lectures</Link></li>
+                    {/* Interactive Tools - Horizontal Links */}
+                    <div className="md:col-span-3">
+                        <h4 className="text-white font-semibold mb-3 text-xs uppercase tracking-wider">Interactive Tools</h4>
+                        <ul className="space-y-2 text-sm">
+                            <li><Link href="/interactive-periodic-table" className="text-gray-400 hover:text-white transition-colors">Periodic Table</Link></li>
+                            <li><Link href="/salt-analysis" className="text-gray-400 hover:text-white transition-colors">Salt Analysis</Link></li>
+                            <li><Link href="/chemistry-flashcards" className="text-gray-400 hover:text-white transition-colors">Flashcards</Link></li>
+                            <li><Link href="/assertion-reason" className="text-gray-400 hover:text-white transition-colors">Circuit Breaker</Link></li>
+                            <li><Link href="/solubility-product-ksp-calculator" className="text-gray-400 hover:text-white transition-colors">Ksp Calculator</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Resources & More - Horizontal Links */}
+                    <div className="md:col-span-2">
+                        <h4 className="text-white font-semibold mb-3 text-xs uppercase tracking-wider">Resources</h4>
+                        <ul className="space-y-2 text-sm">
+                            <li><Link href="/handwritten-notes" className="text-gray-400 hover:text-white transition-colors">Notes</Link></li>
+                            <li><Link href="/one-shot-lectures" className="text-gray-400 hover:text-white transition-colors">One Shots</Link></li>
                             <li><Link href="/top-50-concepts" className="text-gray-400 hover:text-white transition-colors">Top 50 Concepts</Link></li>
+                            <li><Link href="/blog" className="text-gray-400 hover:text-white transition-colors">Blog</Link></li>
+                            <li><Link href="/about" className="text-gray-400 hover:text-white transition-colors">About Us</Link></li>
                         </ul>
                     </div>
                 </div>

@@ -51,7 +51,7 @@ export default function SaltAnalysisTeaser() {
                                 </div>
 
                                 <div className="pt-4">
-                                    <button className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 group-hover:from-purple-500 group-hover:to-blue-500 text-white font-bold rounded-xl shadow-lg shadow-purple-900/20 transition-all transform group-hover:-translate-y-1">
+                                    <button className="cursor-pointer flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 group-hover:from-purple-500 group-hover:to-blue-500 text-white font-bold rounded-xl shadow-lg shadow-purple-900/20 transition-all transform group-hover:-translate-y-1">
                                         Enter Virtual Lab
                                         <ArrowRight className="group-hover:translate-x-1 transition-transform" />
                                     </button>

@@ -17,7 +17,8 @@ import {
     Quote,
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import FAQSection from '../components/FAQSection';
+
 
 // Stats data
 const stats = [
@@ -251,6 +252,9 @@ export default function AboutPage() {
                 </div>
             </section>
 
+            {/* FAQ Section */}
+            <FAQSection />
+
             {/* CTA Section */}
             <section className="py-16 md:py-20 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-pink-600/20">
                 <div className="container mx-auto px-4">
@@ -284,7 +288,50 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            <Footer />
+            {/* FAQ Schema */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "FAQPage",
+                        "mainEntity": [
+                            {
+                                "@type": "Question",
+                                "name": "Who is Paaras Sir?",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "Paaras Thakur (Paaras Sir) is a renowned Chemistry educator with over 15 years of experience. A mechanical engineering graduate from NIT Hamirpur, he has mentored lakhs of students for JEE & NEET."
+                                }
+                            },
+                            {
+                                "@type": "Question",
+                                "name": "Does Canvas Classes offer free content?",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "Yes! In addition to comprehensive video lectures and notes, we offer interactive tools for visualising inorganic chemistry concepts, Interactive P-Table, Salt Analysis, Flashcards, Assertion-Reason practice and much more. This is the first such platform in India bringing Tech closer to Ed."
+                                }
+                            },
+                            {
+                                "@type": "Question",
+                                "name": "Is the content suitable for JEE and NEET?",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "Absolutely. The content is specifically designed to cover the syllabi of JEE Main, JEE Advanced, and NEET, ranging from fundamental concepts to advanced problem-solving."
+                                }
+                            },
+                            {
+                                "@type": "Question",
+                                "name": "How can I contact Paaras Sir?",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "You can connect with us through our contact page or email us at paaras.thakur07@gmail.com."
+                                }
+                            }
+                        ]
+                    })
+                }}
+            />
         </main>
     );
 }
