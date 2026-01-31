@@ -111,8 +111,9 @@ export default function PeriodicTablePreview() {
                         className="relative"
                     >
                         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
+                            {/* Desktop View - Full Table */}
                             <div
-                                className="grid gap-1"
+                                className="hidden md:grid gap-1"
                                 style={{
                                     gridTemplateColumns: 'repeat(18, 1fr)',
                                     gridTemplateRows: 'repeat(4, 1fr)',
@@ -135,6 +136,38 @@ export default function PeriodicTablePreview() {
                                         }}
                                         onMouseEnter={() => setHoveredElement(el.symbol)}
                                         onMouseLeave={() => setHoveredElement(null)}
+                                    >
+                                        {el.symbol}
+                                    </motion.div>
+                                ))}
+                            </div>
+
+                            {/* Mobile View - Compact Table (Main Groups Only) */}
+                            <div
+                                className="grid md:hidden gap-1"
+                                style={{
+                                    gridTemplateColumns: 'repeat(8, 1fr)',
+                                    gridTemplateRows: 'repeat(4, 1fr)',
+                                }}
+                            >
+                                {PREVIEW_ELEMENTS.filter(el => el.col <= 2 || el.col >= 13).map((el, idx) => (
+                                    <motion.div
+                                        key={el.symbol}
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: 0.4 + idx * 0.02 }}
+                                        className="aspect-square rounded-md flex items-center justify-center text-[10px] sm:text-xs font-bold cursor-pointer transition-all duration-200 hover:scale-110 hover:z-10"
+                                        style={{
+                                            // Map columns 1-2 to 1-2, and 13-18 to 3-8
+                                            gridColumn: el.col <= 2 ? el.col : el.col - 10,
+                                            gridRow: el.row,
+                                            backgroundColor: hoveredElement === el.symbol ? el.color : `${el.color}40`,
+                                            color: hoveredElement === el.symbol ? '#000' : '#fff',
+                                            boxShadow: hoveredElement === el.symbol ? `0 0 20px ${el.color}` : 'none',
+                                        }}
+                                        onTouchStart={() => setHoveredElement(el.symbol)}
+                                        onTouchEnd={() => setHoveredElement(null)}
                                     >
                                         {el.symbol}
                                     </motion.div>

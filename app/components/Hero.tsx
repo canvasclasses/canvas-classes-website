@@ -39,6 +39,9 @@ export default function Hero() {
                 <div className="w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8 xl:gap-16 py-4 lg:py-6">
 
+
+
+
                         {/* Left Side - Text Content */}
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
@@ -108,6 +111,42 @@ export default function Hero() {
                                 </Link>
                             </div>
 
+                            {/* Mobile Photo Card - Below Buttons */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 40 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 0.3 }}
+                                className="relative z-10 lg:hidden flex flex-col items-center justify-center px-0 pb-2 mt-12 w-full"
+                            >
+                                <div className="relative w-64 sm:w-72 mb-6">
+                                    {/* Glow */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-3xl blur-2xl scale-105" />
+                                    <div className="relative bg-slate-900/50 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+                                        <div className="relative h-[300px] sm:h-[360px] w-full">
+                                            <Image
+                                                src="/paaras_hero.webp"
+                                                alt="Paaras Sir - Chemistry Expert"
+                                                fill
+                                                className="object-contain object-bottom"
+                                                priority
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Instructor Info - Mobile - Wider & Narrower */}
+                                <div className="flex items-center gap-3 bg-slate-900/60 backdrop-blur-md border border-white/5 rounded-xl p-3 w-full shadow-lg">
+                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-base shadow-lg flex-shrink-0">
+                                        P
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-white font-bold text-base leading-tight truncate">Paaras Thakur</p>
+                                        <p className="text-slate-400 text-xs font-medium truncate">JEE Chemistry Expert</p>
+                                        <p className="text-slate-500 text-[10px] mt-0.5 truncate">Ex - Allen, Resonance, Unacademy, PW</p>
+                                    </div>
+                                </div>
+                            </motion.div>
+
 
                         </motion.div>
 
@@ -161,43 +200,7 @@ export default function Hero() {
                 </div>
             </div>
 
-            {/* Mobile Photo Card */}
-            <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="relative z-10 lg:hidden flex justify-center px-6 pb-8"
-            >
-                <div className="relative w-64 sm:w-72">
-                    {/* Glow */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-3xl blur-2xl scale-105" />
 
-                    <div className="relative bg-slate-900/50 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
-                        <div className="relative h-[300px] sm:h-[360px] w-full">
-                            <Image
-                                src="/paaras_hero.webp"
-                                alt="Paaras Sir - Chemistry Expert"
-                                fill
-                                className="object-contain object-bottom"
-                                priority
-                            />
-                        </div>
-
-                    </div>
-                </div>
-
-                {/* Instructor Info - Mobile */}
-                <div className="mt-6 flex items-center gap-4 bg-slate-900/40 backdrop-blur-md border border-white/5 rounded-2xl p-5">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg shadow-lg flex-shrink-0">
-                        P
-                    </div>
-                    <div>
-                        <p className="text-white font-bold text-lg leading-tight">Paaras Thakur</p>
-                        <p className="text-slate-400 text-sm mt-0.5 font-medium">JEE Chemistry Expert</p>
-                        <p className="text-slate-500 text-xs mt-1">Ex - Allen, Resonance, Unacademy, PW</p>
-                    </div>
-                </div>
-            </motion.div>
 
 
             {/* Stats Section */}
