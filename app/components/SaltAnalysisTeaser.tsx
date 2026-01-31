@@ -76,10 +76,10 @@ export default function SaltAnalysisTeaser() {
                                     {/* Simulator Content */}
                                     <div className="flex-1 p-5 flex gap-6 relative">
                                         {/* Left: Flame/Test Tube Area */}
-                                        <div className="flex-1 flex flex-col items-center justify-end relative pb-4">
+                                        <div className="flex-1 flex flex-col items-center justify-end relative pb-12">
 
                                             {/* Custom Flame */}
-                                            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-12 h-32 pointer-events-none">
+                                            <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-12 h-32 pointer-events-none">
                                                 <motion.div
                                                     animate={{
                                                         height: ["60%", "80%", "60%"],
