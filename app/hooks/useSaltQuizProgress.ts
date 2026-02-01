@@ -63,8 +63,8 @@ export function useSaltQuizProgress(type: 'mcq' | 'flashcard' = 'mcq') {
             try {
                 const mergedData = await syncProgressWithCloud(FEATURE_TYPE, initialData);
 
-                // Only update if different
-                if (JSON.stringify(mergedData) !== JSON.stringify(initialData)) {
+                // Simple length or shallow comparison before deep stringify if needed
+                if (Object.keys(mergedData).length !== Object.keys(initialData).length) {
                     setProgressMap(mergedData);
                     localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedData));
                 }

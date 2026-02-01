@@ -14,6 +14,7 @@ export interface Chapter {
     slug: string;
     class: '11' | '12';
     difficulty: string;
+    classification: 'Physical' | 'Organic' | 'Inorganic';
     notesLink: string;
     keyTopics: string[];
     lectures: Lecture[];
@@ -127,11 +128,19 @@ export async function fetchLecturesData(): Promise<Chapter[]> {
             const chapterKey = `${currentClass}-${currentChapter}`;
 
             if (!chaptersMap.has(chapterKey)) {
+                let classification: 'Physical' | 'Organic' | 'Inorganic' = 'Physical';
+                if (row['Classification']) {
+                    const rawClass = row['Classification'].trim();
+                    if (rawClass.includes('Organic') && !rawClass.includes('Inorganic')) classification = 'Organic';
+                    else if (rawClass.includes('Inorganic')) classification = 'Inorganic';
+                }
+
                 chaptersMap.set(chapterKey, {
                     name: currentChapter,
                     slug: slugify(currentChapter),
                     class: currentClass,
                     difficulty: currentDifficulty || 'Moderate',
+                    classification,
                     notesLink: currentNotesLink,
                     keyTopics: currentKeyTopics,
                     lectures: [],
