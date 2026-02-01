@@ -26,7 +26,7 @@ export default function SaltAnalysisGuide() {
                 <div className="flex border-b border-gray-800">
                     <button
                         onClick={() => setActiveTab('anions')}
-                        className={`flex-1 py-4 text-sm font-semibold transition-colors relative ${activeTab === 'anions' ? 'text-cyan-400' : 'text-gray-400 hover:text-gray-300'
+                        className={`flex-1 py-4 text-sm font-semibold transition-colors relative cursor-pointer ${activeTab === 'anions' ? 'text-cyan-400' : 'text-gray-400 hover:text-gray-300'
                             }`}
                     >
                         <span className="flex items-center justify-center gap-2">
@@ -39,7 +39,7 @@ export default function SaltAnalysisGuide() {
                     </button>
                     <button
                         onClick={() => setActiveTab('cations')}
-                        className={`flex-1 py-4 text-sm font-semibold transition-colors relative ${activeTab === 'cations' ? 'text-purple-400' : 'text-gray-400 hover:text-gray-300'
+                        className={`flex-1 py-4 text-sm font-semibold transition-colors relative cursor-pointer ${activeTab === 'cations' ? 'text-purple-400' : 'text-gray-400 hover:text-gray-300'
                             }`}
                     >
                         <span className="flex items-center justify-center gap-2">

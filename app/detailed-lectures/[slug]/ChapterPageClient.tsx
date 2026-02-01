@@ -228,9 +228,12 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-3xl md:text-4xl font-bold text-white mb-2 md:mb-4"
+                        className="text-3xl md:text-4xl font-bold text-white mb-2 md:mb-4 flex flex-wrap items-center justify-between gap-3 w-full"
                     >
                         {chapter.name}
+                        <span className={`px-2.5 py-1 rounded-lg text-xs md:text-sm font-medium border align-middle ${diffStyle.bg} ${diffStyle.text} ${diffStyle.border}`}>
+                            {chapter.difficulty}
+                        </span>
                     </motion.h1>
 
                     {/* Meta info */}
@@ -238,21 +241,15 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="flex flex-wrap items-center gap-4 mb-6"
+                        className="flex flex-wrap items-center gap-3 md:gap-4 mb-6"
                     >
-                        <span className={`px-3 py-1.5 rounded-lg text-sm font-medium border ${diffStyle.bg} ${diffStyle.text} ${diffStyle.border}`}>
-                            {chapter.difficulty}
-                        </span>
-                        <span className="flex items-center gap-2 text-gray-400">
-                            <PlayCircle className="w-5 h-5" />
+                        <span className="flex items-center gap-1.5 text-gray-400 text-xs md:text-base">
+                            <PlayCircle className="w-4 h-4 md:w-5 md:h-5 text-gray-500" />
                             {chapter.videoCount} videos
                         </span>
-                        <span className="flex items-center gap-2 text-gray-400">
-                            <Clock className="w-5 h-5" />
+                        <span className="flex items-center gap-1.5 text-gray-400 text-xs md:text-base">
+                            <Clock className="w-4 h-4 md:w-5 md:h-5 text-gray-500" />
                             {chapter.totalDuration}
-                        </span>
-                        <span className="px-3 py-1.5 bg-gray-800/50 text-gray-300 rounded-lg text-sm border border-gray-700/50">
-                            Class {chapter.class}
                         </span>
                     </motion.div>
 

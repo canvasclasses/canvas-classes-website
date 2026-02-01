@@ -460,7 +460,7 @@ export default function SaltAnalysisClient() {
             {/* Floating Navigation for Mobile */}
             <FloatingNav />
 
-            <div className="container mx-auto px-4 py-8 relative z-20 mt-10 md:-mt-20">
+            <div className="container mx-auto px-4 pt-0 pb-8 relative z-20 mt-8">
                 <AnimatePresence mode="popLayout">
                     {/* Mode Selection */}
                     {gameState === 'idle' && (
@@ -473,110 +473,165 @@ export default function SaltAnalysisClient() {
                             className="max-w-4xl mx-auto"
                         >
                             <div className="relative">
-                                {/* Decorative Background Elements */}
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-4xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 blur-3xl rounded-full -z-10" />
+                                {/* Subtle Professional Background Accent */}
+                                <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-emerald-500/5 blur-[120px] rounded-full -z-10" />
 
-                                <div className="text-center mb-6 md:mb-12 mt-4 md:mt-0">
-                                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-2 md:mb-4 tracking-tight">
-                                        Choose Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">Path</span>
+                                <div className="text-center mb-10 md:mb-16 mt-0">
+                                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+                                        Choose Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200">Path</span>
                                     </h2>
-                                    <p className="text-gray-400 text-sm md:text-lg max-w-2xl mx-auto">
-                                        Whether you're just starting or preparing for finals, we have a mode for you.
+                                    <p className="text-slate-400 text-sm md:text-lg max-w-2xl mx-auto font-medium">
+                                        Structured learning tracks designed for every stage of your preparation.
                                     </p>
                                 </div>
 
-                                <div className="grid md:grid-cols-3 gap-3 md:gap-6 max-w-6xl mx-auto px-2 md:px-4">
-                                    {/* Learning Mode - Compact on mobile */}
-                                    <button
+                                <div className="grid md:grid-cols-3 gap-4 md:gap-6 max-w-7xl mx-auto px-4">
+                                    {/* Learning Mode - The Apprentice */}
+                                    <div
                                         onClick={() => startGame('learning')}
-                                        className="group relative bg-gray-900/40 hover:bg-gray-800/60 border border-gray-700/50 hover:border-cyan-500/50 rounded-2xl md:rounded-3xl p-4 md:p-8 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.3)] flex flex-col items-center text-center overflow-hidden"
+                                        className="group relative bg-slate-900/40 border border-white/5 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-8 flex flex-col transition-all duration-500 hover:border-emerald-500/30 hover:bg-slate-900/60 hover:shadow-[0_20px_50px_-12px_rgba(16,185,129,0.15)] overflow-hidden cursor-pointer"
                                     >
-                                        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                                        <div className="w-12 h-12 md:w-20 md:h-20 bg-gray-800 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform duration-300 border border-gray-700 group-hover:border-cyan-500/50 shadow-lg">
-                                            <GraduationCap size={24} className="text-cyan-400 md:hidden" />
-                                            <GraduationCap size={40} className="text-cyan-400 hidden md:block" />
+                                        <div className="flex items-start justify-between mb-6 md:mb-8">
+                                            <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                                                <GraduationCap size={28} className="text-emerald-400 md:w-8 md:h-8" />
+                                            </div>
+                                            <span className="px-2.5 py-1 md:px-3 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold uppercase tracking-widest border border-emerald-500/20">
+                                                Foundation
+                                            </span>
                                         </div>
 
-                                        <h3 className="text-lg md:text-2xl font-bold text-white mb-1 md:mb-2 group-hover:text-cyan-300 transition-colors">The Apprentice</h3>
-                                        <p className="text-cyan-500 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-2 md:mb-4">Learning Mode</p>
-                                        <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-4 md:mb-8 hidden md:block">
-                                            Step-by-step guidance with real-time hints. Perfect for your first analysis.
+                                        <h3 className="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">The Apprentice</h3>
+                                        <p className="text-slate-400 text-sm mb-6 md:mb-8 leading-relaxed">
+                                            Perfect for beginners. Master the fundamentals of systematic analysis with guided assistance.
                                         </p>
 
-                                        <div className="mt-auto flex items-center gap-1.5 md:gap-2 text-cyan-400 font-bold text-sm md:text-base group-hover:gap-3 transition-all">
-                                            Start <ArrowRight size={14} className="md:hidden" /><ArrowRight size={18} className="hidden md:block" />
-                                        </div>
-                                    </button>
+                                        <ul className="space-y-3 md:space-y-4 mb-6 md:mb-10">
+                                            {[
+                                                'Step-by-step guidance',
+                                                'Real-time hints & help',
+                                                'Complete walkthroughs'
+                                            ].map((feature, i) => (
+                                                <li key={i} className="flex items-center gap-3 text-sm text-slate-300">
+                                                    <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
+                                                        <Check size={12} className="text-emerald-400" />
+                                                    </div>
+                                                    {feature}
+                                                </li>
+                                            ))}
+                                        </ul>
 
-                                    {/* Practice Mode - Compact on mobile */}
-                                    <button
+                                        <div
+                                            className="mt-auto w-full py-3 md:py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl md:rounded-2xl flex items-center justify-center gap-2 transition-all group-active:scale-95 shadow-lg shadow-emerald-500/20"
+                                        >
+                                            Start Learning <ArrowRight size={18} className="md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+                                        </div>
+                                    </div>
+
+                                    {/* Practice Mode - The Analyst */}
+                                    <div
                                         onClick={() => startGame('practice')}
-                                        className="group relative bg-gray-900/40 hover:bg-gray-800/60 border border-gray-700/50 hover:border-purple-500/50 rounded-2xl md:rounded-3xl p-4 md:p-8 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(168,85,247,0.3)] flex flex-col items-center text-center overflow-hidden"
+                                        className="group relative bg-slate-900/40 border border-white/5 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-8 flex flex-col transition-all duration-500 hover:border-indigo-500/30 hover:bg-slate-900/60 hover:shadow-[0_20px_50px_-12px_rgba(99,102,241,0.15)] overflow-hidden cursor-pointer"
                                     >
-                                        <div className="absolute inset-0 bg-gradient-to-b from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                                        <div className="w-12 h-12 md:w-20 md:h-20 bg-gray-800 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform duration-300 border border-gray-700 group-hover:border-purple-500/50 shadow-lg">
-                                            <FlaskConical size={24} className="text-purple-400 md:hidden" />
-                                            <FlaskConical size={40} className="text-purple-400 hidden md:block" />
+                                        <div className="flex items-start justify-between mb-6 md:mb-8">
+                                            <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                                                <FlaskConical size={28} className="text-indigo-400 md:w-8 md:h-8" />
+                                            </div>
+                                            <span className="px-2.5 py-1 md:px-3 rounded-full bg-indigo-500/10 text-indigo-400 text-[10px] font-bold uppercase tracking-widest border border-indigo-500/20">
+                                                Mastery
+                                            </span>
                                         </div>
 
-                                        <h3 className="text-lg md:text-2xl font-bold text-white mb-1 md:mb-2 group-hover:text-purple-300 transition-colors">The Analyst</h3>
-                                        <p className="text-purple-500 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-2 md:mb-4">Practice Mode</p>
-                                        <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-4 md:mb-8 hidden md:block">
-                                            Self-paced analysis with random salts. No hints, just you and the logic.
+                                        <h3 className="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors">The Analyst</h3>
+                                        <p className="text-slate-400 text-sm mb-6 md:mb-8 leading-relaxed">
+                                            Scale your skills. Independent analysis with randomized salts to build your logic.
                                         </p>
 
-                                        <div className="mt-auto flex items-center gap-1.5 md:gap-2 text-purple-400 font-bold text-sm md:text-base group-hover:gap-3 transition-all">
-                                            Analyze <ArrowRight size={14} className="md:hidden" /><ArrowRight size={18} className="hidden md:block" />
-                                        </div>
-                                    </button>
+                                        <ul className="space-y-3 md:space-y-4 mb-6 md:mb-10">
+                                            {[
+                                                'Random salt generation',
+                                                'Independent procedures',
+                                                'Logic-based deductions'
+                                            ].map((feature, i) => (
+                                                <li key={i} className="flex items-center gap-3 text-sm text-slate-300">
+                                                    <div className="w-5 h-5 rounded-full bg-indigo-500/20 flex items-center justify-center shrink-0">
+                                                        <Check size={12} className="text-indigo-400" />
+                                                    </div>
+                                                    {feature}
+                                                </li>
+                                            ))}
+                                        </ul>
 
-                                    {/* Exam Mode - Compact on mobile */}
-                                    <button
+                                        <div
+                                            className="mt-auto w-full py-3 md:py-4 bg-indigo-500 hover:bg-indigo-400 text-white font-bold rounded-xl md:rounded-2xl flex items-center justify-center gap-2 transition-all group-active:scale-95 shadow-lg shadow-indigo-500/20"
+                                        >
+                                            Analyze Now <ArrowRight size={18} className="md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+                                        </div>
+                                    </div>
+
+                                    {/* Exam Mode - The Expert */}
+                                    <div
                                         onClick={() => startGame('exam')}
-                                        className="group relative bg-gray-900/40 hover:bg-gray-800/60 border border-gray-700/50 hover:border-red-500/50 rounded-2xl md:rounded-3xl p-4 md:p-8 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(239,68,68,0.3)] flex flex-col items-center text-center overflow-hidden"
+                                        className="group relative bg-slate-900/40 border border-white/5 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-8 flex flex-col transition-all duration-500 hover:border-amber-500/30 hover:bg-slate-900/60 hover:shadow-[0_20px_50px_-12px_rgba(245,158,11,0.15)] overflow-hidden cursor-pointer"
                                     >
-                                        <div className="absolute inset-0 bg-gradient-to-b from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        <div className="absolute inset-0 bg-gradient-to-b from-amber-500/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                                        <div className="w-12 h-12 md:w-20 md:h-20 bg-gray-800 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform duration-300 border border-gray-700 group-hover:border-red-500/50 shadow-lg">
-                                            <Timer size={24} className="text-red-400 md:hidden" />
-                                            <Timer size={40} className="text-red-400 hidden md:block" />
+                                        <div className="flex items-start justify-between mb-6 md:mb-8">
+                                            <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                                                <Timer size={28} className="text-amber-400 md:w-8 md:h-8" />
+                                            </div>
+                                            <span className="px-2.5 py-1 md:px-3 rounded-full bg-amber-500/10 text-amber-400 text-[10px] font-bold uppercase tracking-widest border border-amber-500/20">
+                                                Precision
+                                            </span>
                                         </div>
 
-                                        <h3 className="text-lg md:text-2xl font-bold text-white mb-1 md:mb-2 group-hover:text-red-300 transition-colors">The Expert</h3>
-                                        <p className="text-red-500 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-2 md:mb-4">Exam Mode</p>
-                                        <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-4 md:mb-8 hidden md:block">
-                                            High stakes. Timed conditions. Simulate the real CBSE practical exam.
+                                        <h3 className="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">The Expert</h3>
+                                        <p className="text-slate-400 text-sm mb-6 md:mb-8 leading-relaxed">
+                                            Final preparation. Timed conditions following exact CBSE practical exam marking.
                                         </p>
 
-                                        <div className="mt-auto flex items-center gap-1.5 md:gap-2 text-red-400 font-bold text-sm md:text-base group-hover:gap-3 transition-all">
-                                            Exam <ArrowRight size={14} className="md:hidden" /><ArrowRight size={18} className="hidden md:block" />
+                                        <ul className="space-y-3 md:space-y-4 mb-6 md:mb-10">
+                                            {[
+                                                '10 Minute time limit',
+                                                'Official marking scheme',
+                                                'Performance reports'
+                                            ].map((feature, i) => (
+                                                <li key={i} className="flex items-center gap-3 text-sm text-slate-300">
+                                                    <div className="w-5 h-5 rounded-full bg-amber-500/20 flex items-center justify-center shrink-0">
+                                                        <Check size={12} className="text-amber-400" />
+                                                    </div>
+                                                    {feature}
+                                                </li>
+                                            ))}
+                                        </ul>
+
+                                        <div
+                                            className="mt-auto w-full py-3 md:py-4 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl md:rounded-2xl flex items-center justify-center gap-2 transition-all group-active:scale-95 shadow-lg shadow-amber-500/20"
+                                        >
+                                            Begin Exam <ArrowRight size={18} className="md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
                                         </div>
-                                    </button>
+                                    </div>
                                 </div>
                             </div>
 
-                            {/* Quick Stats */}
-                            {/* Quick Stats (Subtle) */}
-                            <div className="mt-10 flex flex-wrap justify-center gap-4 opacity-50 hover:opacity-100 transition-opacity duration-500">
-                                <div className="px-4 py-2 bg-gray-900/30 rounded-full border border-white/5 flex items-center gap-3">
-                                    <Zap size={14} className="text-cyan-500" />
-                                    <span className="text-gray-300 font-mono text-sm">
-                                        <span className="text-white font-bold">{ANIONS.length}</span> ANIONS
-                                    </span>
+                            {/* Quick Stats (Professional & Refined) */}
+                            <div className="mt-8 md:mt-16 grid grid-cols-3 md:flex md:justify-center gap-2 md:gap-16 px-2">
+                                <div className="flex flex-col items-center text-center">
+                                    <span className="text-3xl font-bold text-white mb-1">{ANIONS.length}</span>
+                                    <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">Anions</span>
                                 </div>
-                                <div className="px-4 py-2 bg-gray-900/30 rounded-full border border-white/5 flex items-center gap-3">
-                                    <Sparkles size={14} className="text-emerald-500" />
-                                    <span className="text-gray-300 font-mono text-sm">
-                                        <span className="text-white font-bold">{CATIONS.length}</span> CATIONS
-                                    </span>
+                                <div className="w-px h-12 bg-white/10 hidden md:block" />
+                                <div className="flex flex-col items-center text-center">
+                                    <span className="text-3xl font-bold text-white mb-1">{CATIONS.length}</span>
+                                    <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest">Cations</span>
                                 </div>
-                                <div className="px-4 py-2 bg-gray-900/30 rounded-full border border-white/5 flex items-center gap-3">
-                                    <FlaskConical size={14} className="text-purple-500" />
-                                    <span className="text-gray-300 font-mono text-sm">
-                                        <span className="text-white font-bold">{SALTS.length}</span> SALTS
-                                    </span>
+                                <div className="w-px h-12 bg-white/10 hidden md:block" />
+                                <div className="flex flex-col items-center text-center">
+                                    <span className="text-3xl font-bold text-white mb-1">{SALTS.length}</span>
+                                    <span className="text-[10px] font-bold text-amber-500 uppercase tracking-widest">Combinations</span>
                                 </div>
                             </div>
                         </motion.div>

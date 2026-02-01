@@ -486,21 +486,21 @@ export default function PeriodicTableClient() {
                 <ComparisonPanel />
 
                 {/* Link to NCERT Trends Page */}
-                <div id="trends-section" className="mt-8">
-                    <a href="/periodic-trends" className="block bg-gradient-to-r from-violet-900/40 to-fuchsia-900/40 rounded-2xl border border-violet-500/30 p-6 hover:border-violet-500/60 transition-all group">
+                <div id="trends-section" className="mt-8 px-2 sm:px-0">
+                    <a href="/periodic-trends" className="block bg-gradient-to-r from-violet-900/40 to-fuchsia-900/40 rounded-xl border border-violet-500/30 p-4 sm:p-5 hover:border-violet-500/60 transition-all group">
                         <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                                <div className="p-3 rounded-xl bg-violet-500/20 border border-violet-500/30">
-                                    <TrendingUp size={24} className="text-violet-400" />
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 sm:p-2.5 rounded-lg bg-violet-500/20 border border-violet-500/30">
+                                    <TrendingUp size={20} className="text-violet-400" />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold text-white group-hover:text-violet-300 transition-colors">Periodic Trends & Exceptions</h3>
-                                    <p className="text-gray-400 text-sm">Interactive graphs from NCERT for s, p, d, f blocks</p>
+                                    <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-violet-300 transition-colors">Periodic Trends & Exceptions</h3>
+                                    <p className="text-gray-400 text-xs">Master all NCERT data with interactive graphs</p>
                                 </div>
                             </div>
                             <div className="hidden sm:flex items-center gap-2 text-violet-400 group-hover:translate-x-1 transition-transform">
-                                <span className="font-medium">Explore</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                                <span className="text-sm font-medium">Explore</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                             </div>
                         </div>
                     </a>
@@ -520,9 +520,9 @@ export default function PeriodicTableClient() {
 // --- Extracted Components ---
 
 const DetailItem = ({ label, value }: { label: string, value: string | number | undefined }) => (
-    <div className="bg-gray-800/50 p-3 sm:p-4 rounded-xl border border-gray-700/50 flex flex-col justify-center">
-        <div className="text-sm text-gray-400 mb-1 font-medium">{label}</div>
-        <div className="text-white text-lg font-semibold truncate" title={String(value)}>{value ?? '-'}</div>
+    <div className="bg-gray-800/50 p-2.5 sm:p-3 rounded-lg border border-gray-700/50 flex flex-col justify-center">
+        <div className="text-[10px] sm:text-xs text-gray-400 mb-0.5 font-medium uppercase tracking-wider">{label}</div>
+        <div className="text-white text-sm sm:text-base font-semibold truncate" title={String(value)}>{value ?? '-'}</div>
     </div>
 );
 
@@ -823,47 +823,46 @@ const ElementModalContent = ({
                 >
                     {/* Header Colored Strip */}
                     <div
-                        className="p-6 md:p-8 relative"
+                        className="p-5 md:p-6 relative"
                         style={{ backgroundColor: bgColor }}
                     >
-
                         <div className="flex justify-between items-start">
                             <div>
-                                <div className={`text-6xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                                <div className={`text-4xl md:text-5xl font-bold mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                                     {element.symbol}
                                 </div>
-                                <div className={`text-2xl font-medium ${isDark ? 'text-white/90' : 'text-gray-900/90'}`}>
+                                <div className={`text-lg md:text-xl font-medium ${isDark ? 'text-white/90' : 'text-gray-900/90'}`}>
                                     {element.name}
                                 </div>
-                                <div className={`text-lg opacity-80 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                                <div className={`text-xs md:text-sm font-medium opacity-80 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                                     {element.category}
                                 </div>
                             </div>
-                            <div className={`text-right mt-8 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                                <div className="text-4xl font-bold opacity-50">{element.atomicNumber}</div>
-                                <div className="text-xl font-medium opacity-80">{element.atomicMass} u</div>
+                            <div className={`text-right mt-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                                <div className="text-2xl md:text-3xl font-bold opacity-50 leading-none">{element.atomicNumber}</div>
+                                <div className="text-sm md:text-base font-medium opacity-80 mt-1">{element.atomicMass} u</div>
                             </div>
                         </div>
                     </div>
 
                     {/* Content Body */}
-                    <div className="p-6 md:p-8 bg-gray-900 text-white">
+                    <div className="p-4 md:p-6 bg-gray-900 text-white">
                         {/* Comparison Action */}
-                        <div className="flex gap-3 mb-8">
+                        <div className="flex gap-3 mb-6">
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     toggleCompare(element);
                                 }}
-                                className={`flex-1 py-3 px-4 rounded-xl font-bold text-center transition-all flex items-center justify-center gap-2
+                                className={`flex-1 py-2 sm:py-2.5 px-4 rounded-lg font-bold text-center transition-all flex items-center justify-center gap-2 text-sm
                                 ${compareElements.some(e => e.atomicNumber === element.atomicNumber)
                                         ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
                                         : 'bg-cyan-500 hover:bg-cyan-400 text-black'
                                     }`}
                             >
                                 {compareElements.some(e => e.atomicNumber === element.atomicNumber)
-                                    ? <><X size={20} /> Remove from Compare</>
-                                    : <><BarChart3 size={20} /> Compare Element</>
+                                    ? <><X size={18} /> Remove from Compare</>
+                                    : <><BarChart3 size={18} /> Compare Element</>
                                 }
                             </button>
                         </div>

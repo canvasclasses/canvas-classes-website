@@ -13,6 +13,7 @@ import {
     XCircle,
     Lightbulb,
     ChevronRight,
+    X,
 } from 'lucide-react';
 import { ELEMENTS, type Element } from '../lib/elementsData';
 
@@ -172,21 +173,33 @@ export default function PeriodicTableQuiz() {
     return (
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 p-4 sm:p-6">
             {/* Header */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
                 <div className="flex items-center gap-2">
-                    <Target className="text-cyan-400" size={24} />
-                    <h2 className="text-lg sm:text-xl font-bold text-white">Memory Practice</h2>
+                    <Target className="text-cyan-400 shrink-0" size={20} />
+                    <h2 className="text-base sm:text-xl font-bold text-white whitespace-nowrap">Memory Practice</h2>
                 </div>
                 {gameState === 'playing' && (
-                    <div className="flex items-center gap-4 text-sm">
-                        <div className="flex items-center gap-1 text-green-400">
-                            <CheckCircle2 size={16} />
-                            <span>{score}/{totalElements}</span>
+                    <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
+                        <div className="flex items-center gap-3 text-xs sm:text-sm">
+                            <div className="flex items-center gap-1 text-green-400 whitespace-nowrap">
+                                <CheckCircle2 size={14} />
+                                <span>{score}/{totalElements}</span>
+                            </div>
+                            <div className="flex items-center gap-1 text-orange-400 whitespace-nowrap">
+                                <Zap size={14} />
+                                <span>Streak: {streak}</span>
+                            </div>
                         </div>
-                        <div className="flex items-center gap-1 text-orange-400">
-                            <Zap size={16} />
-                            <span>Streak: {streak}</span>
-                        </div>
+
+                        {/* Stop Button */}
+                        <button
+                            onClick={() => setGameState('idle')}
+                            className="bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg border border-red-500/20 transition-all flex items-center gap-1.5 px-2 py-1 sm:px-2.5"
+                            title="Stop Practice"
+                        >
+                            <X size={14} />
+                            <span className="text-[10px] sm:text-xs font-semibold">Stop</span>
+                        </button>
                     </div>
                 )}
             </div>

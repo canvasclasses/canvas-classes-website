@@ -79,10 +79,10 @@ function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: strin
 
 // Category tab configurations - match sheet category names
 const categoryTabs = [
-    { id: 'All', label: 'All Chapters', icon: Layers, color: 'from-gray-500 to-slate-500' },
-    { id: 'Organic Chemistry', label: 'Organic', icon: Beaker, color: 'from-purple-500 to-pink-500' },
-    { id: 'Inorganic Chemistry', label: 'Inorganic', icon: Atom, color: 'from-orange-500 to-amber-500' },
-    { id: 'Physical Chemistry', label: 'Physical', icon: FlaskConical, color: 'from-green-500 to-emerald-500' },
+    { id: 'All', label: 'All Chapters', icon: Layers, color: 'from-blue-600 to-indigo-600', iconColor: 'text-blue-400', iconBg: 'bg-blue-500/10' },
+    { id: 'Organic Chemistry', label: 'Organic', icon: Beaker, color: 'from-purple-600 to-pink-600', iconColor: 'text-purple-400', iconBg: 'bg-purple-500/10' },
+    { id: 'Inorganic Chemistry', label: 'Inorganic', icon: Atom, color: 'from-orange-600 to-amber-600', iconColor: 'text-orange-400', iconBg: 'bg-orange-500/10' },
+    { id: 'Physical Chemistry', label: 'Physical', icon: FlaskConical, color: 'from-green-600 to-emerald-600', iconColor: 'text-green-400', iconBg: 'bg-green-500/10' },
 ];
 
 // Category colors for dark theme
@@ -153,8 +153,8 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                 <div className="absolute top-40 left-10 w-72 h-72 bg-red-500/10 rounded-full blur-3xl" />
 
                 <div className="relative container mx-auto px-6">
-                    {/* Breadcrumb */}
-                    <div className="flex items-center gap-2 text-gray-400 text-sm mb-6">
+                    {/* Breadcrumb - Hidden on mobile */}
+                    <div className="hidden md:flex items-center gap-2 text-gray-400 text-sm mb-6">
                         <Link href="/" className="hover:text-violet-400 transition-colors">Home</Link>
                         <ChevronRight className="w-4 h-4" />
                         <span className="text-violet-400">One Shot Lectures</span>
@@ -167,7 +167,7 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 rounded-full mb-6"
+                                className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 rounded-full mb-6"
                             >
                                 <span className="w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse" />
                                 <span className="text-red-400 font-semibold text-sm tracking-wide">STOP WASTING 6-8 HOURS!</span>
@@ -178,7 +178,7 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
-                                className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight"
+                                className="text-5xl md:text-7xl lg:text-8xl font-black mb-4 md:mb-6 leading-tight"
                             >
                                 <span className="text-white">One Shots</span>
                                 <br />
@@ -192,19 +192,48 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 }}
-                                className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed"
+                                className="text-lg md:text-2xl text-gray-300 mb-6 md:mb-8 leading-relaxed"
                             >
-                                Learn complete chapters in{' '}
+                                Revise complete chapters in{' '}
                                 <span className="text-violet-400 font-bold">30-120 minutes</span>
-                                {' '}— not 8 hours.
+                                {' '}— not 6-8 hours.
                             </motion.p>
+
+                            {/* Mobile Category Grid */}
+                            <div className="grid grid-cols-2 gap-3 mb-4 md:hidden">
+                                {categoryTabs.map((tab) => {
+                                    const isActive = selectedCategory === tab.id;
+                                    const count = categoryStats[tab.id] || 0;
+                                    return (
+                                        <button
+                                            key={tab.id}
+                                            onClick={() => {
+                                                setSelectedCategory(tab.id);
+                                                document.getElementById('video-grid')?.scrollIntoView({ behavior: 'smooth' });
+                                            }}
+                                            className={`flex items-center gap-3 px-3 py-4 rounded-2xl transition-all duration-300 relative overflow-hidden ${isActive
+                                                ? `bg-gradient-to-r ${tab.color} text-white shadow-lg`
+                                                : 'bg-gray-800/40 text-gray-400 border border-gray-700/50'
+                                                }`}
+                                        >
+                                            <div className={`p-2 rounded-xl shrink-0 ${isActive ? 'bg-white/20' : tab.iconBg}`}>
+                                                <tab.icon className={`w-5 h-5 ${isActive ? 'text-white' : tab.iconColor}`} />
+                                            </div>
+                                            <div className="flex flex-col items-start leading-tight overflow-hidden relative z-10">
+                                                <span className="text-[17px] font-bold truncate w-full text-left">{tab.label.split(' ')[0]}</span>
+                                                <span className="text-[11px] opacity-70">{count} Videos</span>
+                                            </div>
+                                        </button>
+                                    );
+                                })}
+                            </div>
 
                             {/* CTA Buttons */}
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.3 }}
-                                className="flex flex-wrap gap-4 mb-8"
+                                className="hidden md:flex flex-wrap gap-4 mb-8"
                             >
                                 <button
                                     onClick={() => document.getElementById('video-grid')?.scrollIntoView({ behavior: 'smooth' })}
@@ -230,7 +259,7 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.4 }}
-                                className="flex items-center gap-6 text-gray-400 text-sm"
+                                className="hidden md:flex items-center gap-6 text-gray-400 text-sm"
                             >
                                 <div className="flex items-center gap-2">
                                     <div className="flex -space-x-2">
@@ -254,7 +283,7 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                             initial={{ opacity: 0, x: 50 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.3, type: "spring", stiffness: 80 }}
-                            className="relative"
+                            className="relative hidden lg:block"
                         >
                             {/* VS Badge */}
                             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white font-black text-xl shadow-xl shadow-orange-500/30">
@@ -334,10 +363,10 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                         </motion.div>
                     </div>
                 </div>
-            </section>
+            </section >
 
-            {/* Stats Cards */}
-            <section className="relative py-8">
+            {/* Stats Cards - Hidden on mobile */}
+            < section className="relative py-8 hidden md:block" >
                 <div className="container mx-auto px-6">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {[
@@ -366,12 +395,12 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                         ))}
                     </div>
                 </div>
-            </section>
+            </section >
 
-            {/* Category Tabs */}
-            <section className="py-6">
+            {/* Category Tabs (Desktop Only) & Search */}
+            < section className="py-6" >
                 <div className="container mx-auto px-6">
-                    <div className="flex flex-wrap gap-3 mb-6">
+                    <div className="hidden md:flex md:flex-wrap gap-3 mb-6">
                         {categoryTabs.map((tab) => {
                             const isActive = selectedCategory === tab.id;
                             const count = categoryStats[tab.id] || 0;
@@ -381,7 +410,7 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                                     onClick={() => setSelectedCategory(tab.id)}
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
-                                    className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all duration-300 ${isActive
+                                    className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all duration-300 whitespace-nowrap ${isActive
                                         ? `bg-gradient-to-r ${tab.color} text-white shadow-lg`
                                         : 'bg-gray-800/50 text-gray-400 border border-gray-700/50 hover:border-gray-600 hover:text-white'
                                         }`}
@@ -414,85 +443,87 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                         Showing <span className="font-bold text-white">{filteredVideos.length}</span> one shot lectures
                     </p>
                 </div>
-            </section>
+            </section >
 
             {/* Modal Video Player */}
             <AnimatePresence>
-                {activeVideo && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
-                        onClick={() => setActiveVideo(null)}
-                    >
-                        {/* Backdrop */}
-                        <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" />
-
-                        {/* Modal Content */}
+                {
+                    activeVideo && (
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                            transition={{ type: "spring", damping: 25 }}
-                            className="relative w-full max-w-5xl"
-                            onClick={(e) => e.stopPropagation()}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
+                            onClick={() => setActiveVideo(null)}
                         >
-                            {/* Header */}
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-3 h-3 bg-violet-500 rounded-full animate-pulse" />
-                                    <h3 className="text-white font-semibold text-lg line-clamp-1">
-                                        {activeVideo.title}
-                                    </h3>
-                                </div>
-                                <button
-                                    onClick={() => setActiveVideo(null)}
-                                    className="p-2.5 bg-gray-800 text-gray-400 rounded-full hover:bg-gray-700 hover:text-white transition-colors"
-                                >
-                                    <X className="w-5 h-5" />
-                                </button>
-                            </div>
+                            {/* Backdrop */}
+                            <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" />
 
-                            {/* Video Player */}
-                            <div className="aspect-video w-full rounded-2xl overflow-hidden border border-gray-700 shadow-2xl shadow-violet-500/10">
-                                <iframe
-                                    src={`https://www.youtube.com/embed/${getYoutubeId(activeVideo.youtubeUrl)}?autoplay=1&rel=0`}
-                                    className="w-full h-full"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                    title={activeVideo.title}
-                                />
-                            </div>
-
-                            {/* Footer Info */}
-                            <div className="flex items-center justify-between mt-4">
-                                <div className="flex items-center gap-4">
-                                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium border ${getCategoryStyle(activeVideo.category).bg} ${getCategoryStyle(activeVideo.category).text} ${getCategoryStyle(activeVideo.category).border}`}>
-                                        {activeVideo.category}
-                                    </span>
-                                    <span className="flex items-center gap-1.5 text-gray-400 text-sm">
-                                        <Clock className="w-4 h-4" />
-                                        {activeVideo.duration}
-                                    </span>
+                            {/* Modal Content */}
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                                transition={{ type: "spring", damping: 25 }}
+                                className="relative w-full max-w-5xl"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                {/* Header */}
+                                <div className="flex items-center justify-between mb-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-3 h-3 bg-violet-500 rounded-full animate-pulse" />
+                                        <h3 className="text-white font-semibold text-lg line-clamp-1">
+                                            {activeVideo.title}
+                                        </h3>
+                                    </div>
+                                    <button
+                                        onClick={() => setActiveVideo(null)}
+                                        className="p-2.5 bg-gray-800 text-gray-400 rounded-full hover:bg-gray-700 hover:text-white transition-colors"
+                                    >
+                                        <X className="w-5 h-5" />
+                                    </button>
                                 </div>
-                                <a
-                                    href={activeVideo.youtubeUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center gap-2 px-4 py-2 bg-red-500/20 text-red-400 rounded-xl border border-red-500/30 hover:bg-red-500 hover:text-white hover:border-transparent transition-all text-sm font-medium"
-                                >
-                                    <Youtube className="w-4 h-4" />
-                                    Open in YouTube
-                                </a>
-                            </div>
+
+                                {/* Video Player */}
+                                <div className="aspect-video w-full rounded-2xl overflow-hidden border border-gray-700 shadow-2xl shadow-violet-500/10">
+                                    <iframe
+                                        src={`https://www.youtube.com/embed/${getYoutubeId(activeVideo.youtubeUrl)}?autoplay=1&rel=0`}
+                                        className="w-full h-full"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                        title={activeVideo.title}
+                                    />
+                                </div>
+
+                                {/* Footer Info */}
+                                <div className="flex items-center justify-between mt-4">
+                                    <div className="flex items-center gap-4">
+                                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium border ${getCategoryStyle(activeVideo.category).bg} ${getCategoryStyle(activeVideo.category).text} ${getCategoryStyle(activeVideo.category).border}`}>
+                                            {activeVideo.category}
+                                        </span>
+                                        <span className="flex items-center gap-1.5 text-gray-400 text-sm">
+                                            <Clock className="w-4 h-4" />
+                                            {activeVideo.duration}
+                                        </span>
+                                    </div>
+                                    <a
+                                        href={activeVideo.youtubeUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-2 px-4 py-2 bg-red-500/20 text-red-400 rounded-xl border border-red-500/30 hover:bg-red-500 hover:text-white hover:border-transparent transition-all text-sm font-medium"
+                                    >
+                                        <Youtube className="w-4 h-4" />
+                                        Open in YouTube
+                                    </a>
+                                </div>
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                    )
+                }
+            </AnimatePresence >
 
             {/* Video Grid */}
-            <section id="video-grid" className="py-8 pb-24">
+            < section id="video-grid" className="py-8 pb-24" >
                 <div className="container mx-auto px-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                         {filteredVideos.map((video, index) => {
@@ -560,10 +591,10 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                         })}
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* CTA Section */}
-            <section className="py-16">
+            < section className="py-16" >
                 <div className="container mx-auto px-6">
                     <div className="relative bg-gradient-to-r from-violet-600 to-purple-600 rounded-3xl p-12 text-center overflow-hidden">
                         {/* Background glow */}
@@ -598,10 +629,10 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* FAQ Section for SEO */}
-            <section className="py-16 border-t border-white/5">
+            < section className="py-16 border-t border-white/5" >
                 <div className="container mx-auto px-6 max-w-4xl">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -654,7 +685,7 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                         </div>
                     </motion.div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     );
 }

@@ -96,26 +96,31 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                         transition={{ delay: 0.2 }}
                         className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed"
                     >
-                        Master every named reaction from Class 11 & 12 NCERT with detailed mechanisms, key points, and regular updates.
+                        Master every named reaction from Class 11 & 12 NCERT with handwritten reaction mechanisms and key-points that make your revision highly effective.
                     </motion.p>
 
                     {/* Stats Cards */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-4xl mx-auto">
                         {[
-                            { label: 'Total Reactions', value: stats.total, color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
-                            { label: 'Class 11', value: stats.class11, color: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' },
-                            { label: 'Class 12', value: stats.class12, color: 'text-teal-400', bg: 'bg-teal-500/10', border: 'border-teal-500/20' },
-                            { label: 'Reaction Types', value: stats.uniqueTypes, color: 'text-indigo-400', bg: 'bg-indigo-500/10', border: 'border-indigo-500/20' }
+                            { label: 'Total Reactions', value: stats.total, icon: Layers, color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
+                            { label: 'Class 11', value: stats.class11, icon: BookOpen, color: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' },
+                            { label: 'Class 12', value: stats.class12, icon: FlaskConical, color: 'text-teal-400', bg: 'bg-teal-500/10', border: 'border-teal-500/20' },
+                            { label: 'Reaction Types', value: stats.uniqueTypes, icon: Filter, color: 'text-indigo-400', bg: 'bg-indigo-500/10', border: 'border-indigo-500/20' }
                         ].map((stat, i) => (
                             <motion.div
                                 key={stat.label}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.3 + (i * 0.1) }}
-                                className={`rounded-2xl p-4 border ${stat.bg} ${stat.border} backdrop-blur-sm`}
+                                className={`group rounded-xl md:rounded-2xl p-3 md:p-5 border ${stat.bg} ${stat.border} backdrop-blur-sm transition-all duration-300 hover:bg-opacity-20 hover:border-emerald-500/30 flex items-center gap-3`}
                             >
-                                <div className={`text-3xl font-bold ${stat.color} mb-1`}>{stat.value}</div>
-                                <div className="text-gray-400 text-sm font-medium">{stat.label}</div>
+                                <div className={`w-10 h-10 md:w-11 md:h-11 rounded-lg flex items-center justify-center shrink-0 ${stat.bg} border ${stat.border} group-hover:scale-110 transition-transform`}>
+                                    <stat.icon size={20} className={stat.color} />
+                                </div>
+                                <div className="text-left">
+                                    <div className={`text-xl md:text-2xl font-bold ${stat.color} leading-none`}>{stat.value}</div>
+                                    <div className="text-gray-400 text-[10px] md:text-xs font-medium uppercase tracking-wider mt-0.5">{stat.label}</div>
+                                </div>
                             </motion.div>
                         ))}
                     </div>
@@ -124,49 +129,49 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
 
             {/* Filter Bar */}
             <section className="px-4 -mt-8 relative z-20">
-                <div className="max-w-4xl mx-auto bg-gray-900/80 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/50 p-4 md:p-6 border border-gray-700/50">
-                    <div className="flex flex-col md:flex-row gap-4">
+                <div className="max-w-4xl mx-auto bg-gray-900/80 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/50 p-3 md:p-5 border border-gray-700/50">
+                    <div className="flex flex-col md:flex-row gap-3">
                         {/* Search */}
                         <div className="relative flex-1">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
                             <input
                                 type="text"
                                 placeholder="Search reactions (e.g., 'Aldol', 'Cannizzaro')..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full pl-12 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all shadow-inner"
+                                className="w-full pl-11 pr-4 py-2.5 bg-gray-800/40 border border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500/50 transition-all text-sm md:text-base"
                             />
                         </div>
 
                         {/* Filters */}
-                        <div className="flex gap-3 flex-wrap">
-                            <div className="relative">
+                        <div className="flex items-center gap-2">
+                            <div className="relative flex-1 md:flex-none">
                                 <select
                                     value={classFilter}
                                     onChange={(e) => setClassFilter(e.target.value as 'all' | '11' | '12')}
-                                    className="appearance-none pl-10 pr-10 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 cursor-pointer hover:bg-gray-700/50 transition-colors"
+                                    className="appearance-none w-full md:w-auto pl-10 pr-9 py-2.5 bg-gray-800/40 border border-gray-700/50 rounded-xl text-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 cursor-pointer hover:bg-gray-700/40 transition-colors"
                                 >
                                     <option value="all">All Classes</option>
                                     <option value="11">Class 11</option>
                                     <option value="12">Class 12</option>
                                 </select>
-                                <BookOpen className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 pointer-events-none" />
-                                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 pointer-events-none" />
+                                <BookOpen className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 w-3.5 h-3.5 pointer-events-none" />
+                                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 w-3.5 h-3.5 pointer-events-none" />
                             </div>
 
-                            <div className="relative">
+                            <div className="relative flex-1 md:flex-none">
                                 <select
                                     value={difficultyFilter}
                                     onChange={(e) => setDifficultyFilter(e.target.value as 'all' | 'Easy' | 'Moderate' | 'Hard')}
-                                    className="appearance-none pl-10 pr-10 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 cursor-pointer hover:bg-gray-700/50 transition-colors"
+                                    className="appearance-none w-full md:w-auto pl-10 pr-9 py-2.5 bg-gray-800/40 border border-gray-700/50 rounded-xl text-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 cursor-pointer hover:bg-gray-700/40 transition-colors"
                                 >
                                     <option value="all">All Levels</option>
                                     <option value="Easy">Easy</option>
                                     <option value="Moderate">Moderate</option>
                                     <option value="Hard">Hard</option>
                                 </select>
-                                <Layers className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 pointer-events-none" />
-                                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 pointer-events-none" />
+                                <Layers className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 w-3.5 h-3.5 pointer-events-none" />
+                                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 w-3.5 h-3.5 pointer-events-none" />
                             </div>
                         </div>
                     </div>
@@ -189,33 +194,32 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                                     {/* Collapsed Header */}
                                     <button
                                         onClick={() => toggleExpand(reaction.id)}
-                                        className="cursor-pointer w-full p-6 flex items-center gap-4 text-left hover:bg-gray-800/30 transition-colors focus:outline-none focus:bg-gray-800/30"
+                                        className="cursor-pointer w-full p-4 md:p-6 flex items-center gap-4 text-left hover:bg-gray-800/30 transition-colors focus:outline-none focus:bg-gray-800/30"
                                     >
                                         <div className="flex-1 min-w-0">
-                                            <div className="flex items-center gap-3 mb-2">
-                                                <h3 className="font-bold text-white text-xl truncate group-hover:text-emerald-400 transition-colors">
+                                            <div className="flex items-center gap-3 mb-1.5 md:mb-2">
+                                                <h3 className="font-bold text-white text-lg md:text-xl truncate group-hover:text-emerald-400 transition-colors">
                                                     {reaction.reactionName}
                                                 </h3>
-                                                {/* New/Important Badges could go here */}
                                             </div>
 
-                                            <div className="flex flex-wrap items-center gap-2">
-                                                <span className="px-2.5 py-0.5 rounded-md bg-gray-800 border border-gray-700 text-gray-400 text-xs font-medium">
+                                            <div className="flex flex-wrap items-center gap-1.5 md:gap-2">
+                                                <span className="px-2 py-0.5 rounded-md bg-gray-800 border border-gray-700 text-gray-400 text-[10px] md:text-xs font-medium">
                                                     {reaction.reactionType}
                                                 </span>
-                                                <span className={`px-2.5 py-0.5 rounded-md text-xs font-medium border ${getDifficultyColor(reaction.difficulty)}`}>
+                                                <span className={`px-2 py-0.5 rounded-md text-[10px] md:text-xs font-medium border ${getDifficultyColor(reaction.difficulty)}`}>
                                                     {reaction.difficulty}
                                                 </span>
-                                                <span className="px-2.5 py-0.5 rounded-md bg-gray-800 border border-gray-700 text-gray-400 text-xs font-medium">
+                                                <span className="px-2 py-0.5 rounded-md bg-gray-800 border border-gray-700 text-gray-400 text-[10px] md:text-xs font-medium">
                                                     Class {reaction.classNum}
                                                 </span>
                                             </div>
                                         </div>
-                                        <div className="flex-shrink-0 text-gray-500 group-hover:text-emerald-400 transition-colors bg-gray-800/50 p-2 rounded-full">
+                                        <div className="flex-shrink-0 text-gray-500 group-hover:text-emerald-400 transition-colors bg-gray-800/30 p-1.5 md:p-2 rounded-full">
                                             {expandedId === reaction.id ? (
-                                                <ChevronUp size={20} />
+                                                <ChevronUp size={18} className="md:w-5 md:h-5" />
                                             ) : (
-                                                <ChevronDown size={20} />
+                                                <ChevronDown size={18} className="md:w-5 md:h-5" />
                                             )}
                                         </div>
                                     </button>
