@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -9,11 +9,19 @@ import {
     Clock,
     PlayCircle,
     ChevronRight,
+    ChevronDown,
     FileText,
     ExternalLink,
     BookOpen,
     X,
+    CheckCircle,
+    AlertCircle,
+    HelpCircle,
+    Play,
+    ZoomIn,
+    Search,
 } from 'lucide-react';
+import { getNcertChapterName } from '@/app/lib/ncertMapping';
 
 interface Lecture {
     lectureNumber: number;
@@ -21,6 +29,18 @@ interface Lecture {
     description: string;
     youtubeUrl: string;
     duration: string;
+}
+
+interface NCERTQuestion {
+    id: number;
+    classNum: number;
+    chapter: string;
+    questionNumber: string;
+    questionText: string;
+    difficulty: string;
+    solutionContent: string;
+    solutionType: string;
+    youtubeUrl: string;
 }
 
 interface Chapter {
@@ -33,6 +53,7 @@ interface Chapter {
     lectures: Lecture[];
     totalDuration: string;
     videoCount: number;
+    classification?: string;
 }
 
 interface ChapterPageClientProps {
@@ -54,6 +75,19 @@ function getEmbeddablePdfUrl(driveUrl: string): string | null {
     return null;
 }
 
+// Helper to extract YouTube ID and create embed URL (for solutions)
+const getYouTubeEmbedUrl = (url: string) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    const videoId = (match && match[2].length === 11) ? match[2] : null;
+    return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : null;
+};
+
+// Format solution content
+const formatSolution = (content: string) => {
+    return content.replace(/<br>/g, '\n').replace(/\|/g, '').trim();
+};
+
 // Difficulty badge colors
 const difficultyColors: Record<string, { bg: string; text: string; border: string }> = {
     'Easy': { bg: 'bg-emerald-500/20', text: 'text-emerald-400', border: 'border-emerald-500/30' },
@@ -62,13 +96,67 @@ const difficultyColors: Record<string, { bg: string; text: string; border: strin
     'Easy to Moderate': { bg: 'bg-teal-500/20', text: 'text-teal-400', border: 'border-teal-500/30' },
 };
 
+// NCERT Difficulty colors (for solutions)
+const ncertDifficultyColors: Record<string, { bg: string; text: string; border: string; icon: typeof CheckCircle }> = {
+    'Easy': { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30', icon: CheckCircle },
+    'Moderate': { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30', icon: AlertCircle },
+    'Hard': { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30', icon: HelpCircle },
+};
+
 export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
-    const [activeTab, setActiveTab] = useState<'lectures' | 'notes'>('lectures');
+    const [activeTab, setActiveTab] = useState<'lectures' | 'notes' | 'solutions'>('lectures');
     const [activeLecture, setActiveLecture] = useState<Lecture | null>(null);
     const diffStyle = difficultyColors[chapter.difficulty] || difficultyColors['Moderate'];
     const pdfUrl = chapter.notesLink ? getEmbeddablePdfUrl(chapter.notesLink) : null;
 
     const activeVideoId = activeLecture ? getYoutubeId(activeLecture.youtubeUrl) : null;
+
+    // NCERT Solutions State
+    const [questions, setQuestions] = useState<NCERTQuestion[]>([]);
+    const [loadingSolutions, setLoadingSolutions] = useState(false);
+    const [expandedQuestion, setExpandedQuestion] = useState<number | null>(null);
+    const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+    const [playingVideo, setPlayingVideo] = useState<number | null>(null);
+    const dataFetchedRef = useState(false); // To prevent double fetch if strict mode
+
+    // Fetch NCERT Data when tab is changed to solutions
+    const [hasFetchedSolutions, setHasFetchedSolutions] = useState(false);
+
+    useEffect(() => {
+        if (activeTab === 'solutions' && !hasFetchedSolutions) {
+            setLoadingSolutions(true);
+            fetch('/api/ncert-solutions')
+                .then(res => res.json())
+                .then(data => {
+                    const allQuestions: NCERTQuestion[] = data.questions;
+                    // Normalize and filter
+                    const targetChapterName = getNcertChapterName(chapter.slug);
+
+                    const matchingQuestions = allQuestions.filter((q: NCERTQuestion) => {
+                        // If we have a direct mapping, use exact string match on chapter name
+                        if (targetChapterName) {
+                            return parseInt(chapter.class) === q.classNum && q.chapter === targetChapterName;
+                        }
+
+                        // Fallback to slug matching if no mapping found (legacy behavior)
+                        const slug = q.chapter.toLowerCase()
+                            .trim()
+                            .replace(/[^a-z0-9]+/g, '-')
+                            .replace(/^-+|-+$/g, '');
+
+                        return parseInt(chapter.class) === q.classNum && slug === chapter.slug;
+                    });
+                    setQuestions(matchingQuestions);
+                    setHasFetchedSolutions(true);
+                })
+                .catch(err => console.error(err))
+                .finally(() => setLoadingSolutions(false));
+        }
+    }, [activeTab, hasFetchedSolutions, chapter]);
+
+    const getNcertDifficultyStyle = (difficulty: string) => {
+        return ncertDifficultyColors[difficulty] || ncertDifficultyColors['Easy'];
+    };
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
@@ -131,24 +219,7 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                         </span>
                     </motion.div>
 
-                    {/* Topic Pills */}
-                    {chapter.keyTopics.length > 0 && (
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                            className="flex flex-wrap gap-2"
-                        >
-                            {chapter.keyTopics.map((topic, i) => (
-                                <span
-                                    key={i}
-                                    className="px-3 py-1 bg-gray-800/50 text-gray-300 text-sm rounded-full border border-gray-700/50"
-                                >
-                                    {topic}
-                                </span>
-                            ))}
-                        </motion.div>
-                    )}
+
                 </div>
             </section>
 
@@ -178,6 +249,16 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                                 Chapter Notes
                             </button>
                         )}
+                        <button
+                            onClick={() => setActiveTab('solutions')}
+                            className={`py-4 px-2 text-base font-semibold border-b-2 transition-colors ${activeTab === 'solutions'
+                                ? 'text-teal-400 border-teal-400'
+                                : 'text-gray-400 border-transparent hover:text-white'
+                                }`}
+                        >
+                            <BookOpen className="w-5 h-5 inline mr-2" />
+                            NCERT Solutions
+                        </button>
                     </div>
                 </div>
             </section>
@@ -186,7 +267,7 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
             <section className="py-12 pb-24">
                 <div className="container mx-auto px-6">
                     {activeTab === 'lectures' ? (
-                        <div className="space-y-6">
+                        <div className="space-y-6 max-w-5xl mx-auto">
                             {/* Inline Video Player */}
                             <AnimatePresence>
                                 {activeLecture && activeVideoId && (
@@ -318,7 +399,8 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                                 })}
                             </div>
                         </div>
-                    ) : (
+
+                    ) : activeTab === 'notes' ? (
                         /* PDF Notes Viewer */
                         <div className="bg-gray-800/40 rounded-2xl border border-gray-700/50 overflow-hidden">
                             <div className="flex items-center justify-between p-4 border-b border-gray-700/50">
@@ -345,9 +427,203 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                                 />
                             )}
                         </div>
+                    ) : (
+                        /* NCERT Solutions Tab */
+                        <div className="space-y-6 max-w-4xl mx-auto">
+                            {loadingSolutions ? (
+                                <div className="space-y-4">
+                                    {[1, 2, 3].map(i => (
+                                        <div key={i} className="bg-gray-800/40 rounded-2xl p-6 animate-pulse">
+                                            <div className="h-5 bg-gray-700 rounded w-1/4 mb-3" />
+                                            <div className="h-4 bg-gray-700 rounded w-3/4" />
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : questions.length === 0 ? (
+                                <div className="text-center py-16 bg-gray-800/20 rounded-2xl border border-gray-800">
+                                    <BookOpen className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                                    <p className="text-gray-400 text-lg">No NCERT solutions found for this chapter yet.</p>
+                                </div>
+                            ) : (
+                                <div className="space-y-3">
+                                    {questions.map((question, idx) => {
+                                        const isExpanded = expandedQuestion === question.id;
+                                        const diffStyle = getNcertDifficultyStyle(question.difficulty);
+                                        const DiffIcon = diffStyle.icon;
+                                        const isVideoPlaying = playingVideo === question.id;
+
+                                        return (
+                                            <motion.div
+                                                key={question.id}
+                                                initial={{ opacity: 0, y: 20 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: 0.03 * Math.min(idx, 10) }}
+                                                className="bg-gray-800/40 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden"
+                                            >
+                                                {/* Question Header */}
+                                                <button
+                                                    onClick={() => setExpandedQuestion(isExpanded ? null : question.id)}
+                                                    className="w-full flex items-baseline gap-2 p-3 md:p-6 text-left hover:bg-gray-800/60 transition-colors"
+                                                >
+                                                    <span className="shrink-0 text-teal-200 font-bold text-base md:text-lg">
+                                                        {question.questionNumber}
+                                                    </span>
+                                                    <div className="flex-1 min-w-0">
+                                                        <p className="text-teal-200 leading-relaxed mb-2 font-medium text-base md:text-lg">
+                                                            {question.questionText}
+                                                        </p>
+                                                        <div className="flex items-center gap-2 md:gap-3 justify-end">
+                                                            {question.youtubeUrl && (
+                                                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] md:text-xs font-medium bg-red-500/20 text-red-400 border border-red-500/30">
+                                                                    <Play className="w-3 h-3" />
+                                                                    Video
+                                                                </span>
+                                                            )}
+                                                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] md:text-xs font-medium border ${diffStyle.bg} ${diffStyle.text} ${diffStyle.border}`}>
+                                                                <DiffIcon className="w-3 h-3" />
+                                                                {question.difficulty}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div className={`shrink-0 w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center transition-transform duration-300 ${isExpanded ? 'rotate-180 bg-teal-500/20 text-teal-400' : 'text-gray-400'}`}>
+                                                        <ChevronDown className="w-5 h-5" />
+                                                    </div>
+                                                </button>
+
+                                                {/* Solution */}
+                                                <AnimatePresence>
+                                                    {isExpanded && (
+                                                        <motion.div
+                                                            initial={{ height: 0, opacity: 0 }}
+                                                            animate={{ height: 'auto', opacity: 1 }}
+                                                            exit={{ height: 0, opacity: 0 }}
+                                                            transition={{ duration: 0.3 }}
+                                                            className="border-t border-gray-700/50"
+                                                        >
+                                                            <div className="p-3 md:p-6 bg-gray-900/30">
+                                                                <h4 className="text-teal-400 font-semibold mb-3 flex items-center gap-2 text-xs md:text-sm uppercase tracking-wide">
+                                                                    <CheckCircle className="w-4 h-4" />
+                                                                    Solution
+                                                                </h4>
+                                                                <div className="text-gray-300 leading-loose whitespace-pre-wrap text-base font-sans tracking-wide">
+                                                                    {formatSolution(question.solutionContent).split('\n').map((line, i) => {
+                                                                        const isImageUrl = line.trim().match(/^https?:\/\/.*\.(png|jpg|jpeg|gif|webp)(\?.*)?$/i);
+
+                                                                        if (isImageUrl) {
+                                                                            return (
+                                                                                <div
+                                                                                    key={i}
+                                                                                    className="my-6 relative group cursor-pointer rounded-xl overflow-hidden border border-gray-700/50 hover:border-teal-500/30 transition-colors shadow-lg"
+                                                                                    onClick={() => setLightboxImage(line.trim())}
+                                                                                >
+                                                                                    <img
+                                                                                        src={line.trim()}
+                                                                                        alt={`Solution diagram for Q${question.questionNumber}`}
+                                                                                        className="w-full h-auto"
+                                                                                        loading="lazy"
+                                                                                    />
+                                                                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center pointer-events-none">
+                                                                                        <div className="bg-black/70 backdrop-blur-sm text-white text-xs font-bold px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 flex items-center gap-2 shadow-xl">
+                                                                                            <ZoomIn size={14} /> Tap to Expand
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            );
+                                                                        }
+                                                                        return <div key={i} className="mb-1">{line}</div>;
+                                                                    })}
+                                                                </div>
+
+                                                                {question.youtubeUrl && (
+                                                                    <div className="mt-6">
+                                                                        {!isVideoPlaying ? (
+                                                                            <button
+                                                                                onClick={() => setPlayingVideo(question.id)}
+                                                                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-500/10 text-red-400 rounded-xl text-sm font-bold border border-red-500/20 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all group w-full md:w-auto justify-center"
+                                                                            >
+                                                                                <Play className="w-4 h-4 group-hover:fill-current" />
+                                                                                Watch Video Solution
+                                                                            </button>
+                                                                        ) : (
+                                                                            <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-gray-700 bg-black shadow-2xl">
+                                                                                <iframe
+                                                                                    src={getYouTubeEmbedUrl(question.youtubeUrl) || ''}
+                                                                                    title={`Video solution for Q${question.questionNumber}`}
+                                                                                    className="absolute inset-0 w-full h-full"
+                                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                                    allowFullScreen
+                                                                                />
+                                                                                <button
+                                                                                    onClick={() => setPlayingVideo(null)}
+                                                                                    className="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full backdrop-blur-md hover:bg-red-500 transition-colors"
+                                                                                    title="Close Video"
+                                                                                >
+                                                                                    <X size={16} />
+                                                                                </button>
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        </motion.div>
+                                                    )}
+                                                </AnimatePresence>
+                                            </motion.div>
+                                        );
+                                    })}
+                                </div>
+                            )}
+                        </div>
                     )}
                 </div>
-            </section>
-        </div>
+            </section >
+
+
+            {/* Topics Covered Section (Moved from text) */}
+            {
+                chapter.keyTopics.length > 0 && (
+                    <section className="py-8 border-t border-gray-800/50">
+                        <div className="container mx-auto px-6">
+                            <h3 className="text-gray-400 text-sm font-semibold uppercase tracking-wider mb-4">Topics Covered</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {chapter.keyTopics.map((topic, i) => (
+                                    <span
+                                        key={i}
+                                        className="px-3 py-1 bg-gray-900 text-gray-400 text-sm rounded-full border border-gray-800"
+                                    >
+                                        {topic}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )
+            }
+            {/* Lightbox */}
+            <AnimatePresence>
+                {lightboxImage && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 cursor-zoom-out"
+                        onClick={() => setLightboxImage(null)}
+                    >
+                        <button className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors bg-white/10 p-2 rounded-full hover:bg-white/20">
+                            <X size={24} />
+                        </button>
+                        <motion.img
+                            src={lightboxImage || ''}
+                            alt="Full screen solution"
+                            className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl cursor-default"
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div >
     );
 }

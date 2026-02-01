@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Menu, ChevronDown, X, Search } from 'lucide-react';
 
 const jeeNeetLinks = [
+  { label: 'Top 500 PYQs', href: '/jee-pyqs', external: false },
   { label: 'Detailed Lectures', href: '/detailed-lectures', external: false },
   { label: 'One Shot Lectures', href: '/one-shot-lectures', external: false },
   { label: 'Top 50 Concepts', href: '/top-50-concepts', external: false },

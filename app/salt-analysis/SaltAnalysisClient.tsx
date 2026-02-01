@@ -461,7 +461,7 @@ export default function SaltAnalysisClient() {
             <FloatingNav />
 
             <div className="container mx-auto px-4 py-8 relative z-20 mt-10 md:-mt-20">
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="popLayout">
                     {/* Mode Selection */}
                     {gameState === 'idle' && (
                         <motion.div
@@ -851,7 +851,7 @@ export default function SaltAnalysisClient() {
                                             <div className="space-y-3 max-h-[400px] overflow-y-auto">
                                                 {observations.map((obs, idx) => (
                                                     <motion.div
-                                                        key={idx}
+                                                        key={`${obs.testName}-${idx}`}
                                                         initial={{ opacity: 0, x: 20 }}
                                                         animate={{ opacity: 1, x: 0 }}
                                                         className="p-3 bg-gray-700/50 rounded-xl"

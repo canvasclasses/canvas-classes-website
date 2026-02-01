@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, GraduationCap, Target, Video, X, Play } from 'lucide-react';
+import Image from 'next/image';
 
 export default function SaltAnalysisHero() {
     const [showVideo, setShowVideo] = useState(false);
@@ -46,10 +47,14 @@ export default function SaltAnalysisHero() {
         <div className="relative w-full h-[800px] overflow-hidden">
             {/* Background Image */}
             <div className="absolute inset-0">
-                <img
+                <Image
                     src="/salt_analysis_hero.png"
                     alt="Chemistry Laboratory"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    priority
+                    sizes="100vw"
+                    quality={90}
                 />
                 {/* Gradient Overlays */}
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/90 to-transparent" />
