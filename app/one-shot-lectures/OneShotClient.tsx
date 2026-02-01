@@ -20,6 +20,7 @@ import {
     Beaker,
     Atom,
     FlaskConical,
+    Check,
 } from 'lucide-react';
 
 interface OneShotVideo {
@@ -145,7 +146,7 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
             {/* Hero Header - Impactful Design */}
-            <section className="relative pt-28 pb-16 overflow-hidden">
+            <section className="relative pt-20 md:pt-28 pb-12 overflow-hidden">
                 {/* Animated Background elements */}
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-900/30 via-transparent to-transparent" />
                 <div className="absolute top-10 right-1/4 w-[500px] h-[500px] bg-violet-500/20 rounded-full blur-3xl animate-pulse" />
@@ -153,254 +154,100 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                 <div className="absolute top-40 left-10 w-72 h-72 bg-red-500/10 rounded-full blur-3xl" />
 
                 <div className="relative container mx-auto px-6">
-                    {/* Breadcrumb - Hidden on mobile */}
-                    <div className="hidden md:flex items-center gap-2 text-gray-400 text-sm mb-6">
-                        <Link href="/" className="hover:text-violet-400 transition-colors">Home</Link>
-                        <ChevronRight className="w-4 h-4" />
-                        <span className="text-violet-400">One Shot Lectures</span>
-                    </div>
-
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
-                        {/* Left Content */}
-                        <div>
-                            {/* Attention-grabbing Badge */}
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 rounded-full mb-6"
-                            >
-                                <span className="w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse" />
-                                <span className="text-red-400 font-semibold text-sm tracking-wide">STOP WASTING 6-8 HOURS!</span>
-                            </motion.div>
-
-                            {/* Main Title - Larger and Bolder */}
-                            <motion.h1
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
-                                className="text-5xl md:text-7xl lg:text-8xl font-black mb-4 md:mb-6 leading-tight"
-                            >
-                                <span className="text-white">One Shots</span>
-                                <br />
-                                <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                                    That Work
-                                </span>
-                            </motion.h1>
-
-                            {/* Subtitle with Impact */}
-                            <motion.p
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.2 }}
-                                className="text-lg md:text-2xl text-gray-300 mb-6 md:mb-8 leading-relaxed"
-                            >
-                                Revise complete chapters in{' '}
-                                <span className="text-violet-400 font-bold">30-120 minutes</span>
-                                {' '}— not 6-8 hours.
-                            </motion.p>
-
-                            {/* Mobile Category Grid */}
-                            <div className="grid grid-cols-2 gap-3 mb-4 md:hidden">
-                                {categoryTabs.map((tab) => {
-                                    const isActive = selectedCategory === tab.id;
-                                    const count = categoryStats[tab.id] || 0;
-                                    return (
-                                        <button
-                                            key={tab.id}
-                                            onClick={() => {
-                                                setSelectedCategory(tab.id);
-                                                document.getElementById('video-grid')?.scrollIntoView({ behavior: 'smooth' });
-                                            }}
-                                            className={`flex items-center gap-3 px-3 py-4 rounded-2xl transition-all duration-300 relative overflow-hidden ${isActive
-                                                ? `bg-gradient-to-r ${tab.color} text-white shadow-lg`
-                                                : 'bg-gray-800/40 text-gray-400 border border-gray-700/50'
-                                                }`}
-                                        >
-                                            <div className={`p-2 rounded-xl shrink-0 ${isActive ? 'bg-white/20' : tab.iconBg}`}>
-                                                <tab.icon className={`w-5 h-5 ${isActive ? 'text-white' : tab.iconColor}`} />
-                                            </div>
-                                            <div className="flex flex-col items-start leading-tight overflow-hidden relative z-10">
-                                                <span className="text-[17px] font-bold truncate w-full text-left">{tab.label.split(' ')[0]}</span>
-                                                <span className="text-[11px] opacity-70">{count} Videos</span>
-                                            </div>
-                                        </button>
-                                    );
-                                })}
-                            </div>
-
-                            {/* CTA Buttons */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.3 }}
-                                className="hidden md:flex flex-wrap gap-4 mb-8"
-                            >
-                                <button
-                                    onClick={() => document.getElementById('video-grid')?.scrollIntoView({ behavior: 'smooth' })}
-                                    className="group flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-bold rounded-2xl shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:scale-105 transition-all duration-300"
-                                >
-                                    <Play className="w-5 h-5" fill="currentColor" />
-                                    Start Learning
-                                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                </button>
-                                <a
-                                    href="https://www.youtube.com/@CanvasClassesOfficial"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center gap-2 px-6 py-4 bg-gray-800/60 text-white font-semibold rounded-2xl border border-gray-700/50 hover:border-gray-600 hover:bg-gray-800 transition-all"
-                                >
-                                    <Youtube className="w-5 h-5 text-red-500" />
-                                    YouTube Channel
-                                </a>
-                            </motion.div>
-
-                            {/* Trust Indicators */}
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.4 }}
-                                className="hidden md:flex items-center gap-6 text-gray-400 text-sm"
-                            >
-                                <div className="flex items-center gap-2">
-                                    <div className="flex -space-x-2">
-                                        {[1, 2, 3, 4].map((i) => (
-                                            <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 border-2 border-gray-900 flex items-center justify-center text-white text-xs font-bold">
-                                                {['P', 'S', 'R', 'A'][i - 1]}
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <span>1000+ Students</span>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <span className="text-yellow-400">★★★★★</span>
-                                    <span>Loved by JEE/NEET Toppers</span>
-                                </div>
-                            </motion.div>
-                        </div>
-
-                        {/* Right Side - Visual Comparison */}
+                    <div className="flex flex-col items-center text-center mb-6 max-w-5xl mx-auto">
+                        {/* Attention-grabbing Badge */}
                         <motion.div
-                            initial={{ opacity: 0, x: 50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.3, type: "spring", stiffness: 80 }}
-                            className="relative hidden lg:block"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 rounded-full mb-8"
                         >
-                            {/* VS Badge */}
-                            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white font-black text-xl shadow-xl shadow-orange-500/30">
-                                VS
-                            </div>
+                            <span className="w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse" />
+                            <span className="text-red-400 font-semibold text-sm tracking-wide">STOP WASTING 6-8 HOURS!</span>
+                        </motion.div>
 
-                            <div className="grid grid-cols-2 gap-4">
-                                {/* Others Card - Bad */}
-                                <div className="bg-gradient-to-br from-red-950/50 to-gray-900/50 rounded-2xl p-6 border border-red-500/30 relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-20 h-20 bg-red-500/10 rounded-full blur-xl" />
-                                    <div className="relative">
-                                        <div className="text-red-400 text-xs font-bold uppercase tracking-wider mb-3">Others</div>
-                                        <div className="text-4xl font-black text-red-400 mb-2">6-8 hrs</div>
-                                        <div className="text-gray-400 text-sm mb-4">per chapter</div>
-                                        <ul className="space-y-2 text-sm">
-                                            <li className="flex items-center gap-2 text-gray-400">
-                                                <X className="w-4 h-4 text-red-500" />
-                                                <span>Exhausting marathon</span>
-                                            </li>
-                                            <li className="flex items-center gap-2 text-gray-400">
-                                                <X className="w-4 h-4 text-red-500" />
-                                                <span>Poor retention</span>
-                                            </li>
-                                            <li className="flex items-center gap-2 text-gray-400">
-                                                <X className="w-4 h-4 text-red-500" />
-                                                <span>Marketing gimmick</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                        {/* Main Title - Optimized Size */}
+                        <motion.h1
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
+                            className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight whitespace-nowrap"
+                        >
+                            <span className="text-white">One Shots</span>
+                            <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 bg-clip-text text-transparent ml-3">
+                                That Work
+                            </span>
+                        </motion.h1>
 
-                                {/* Canvas Classes Card - Good */}
-                                <div className="bg-gradient-to-br from-emerald-950/50 to-gray-900/50 rounded-2xl p-6 border border-emerald-500/30 relative overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                                    <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/10 rounded-full blur-xl" />
-                                    <div className="absolute -top-1 -right-1 px-3 py-1 bg-gradient-to-r from-emerald-500 to-green-500 text-white text-xs font-bold rounded-bl-xl rounded-tr-xl">
-                                        ✓ BETTER
-                                    </div>
-                                    <div className="relative">
-                                        <div className="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-3">Canvas Classes</div>
-                                        <div className="text-4xl font-black text-emerald-400 mb-2">30-120m</div>
-                                        <div className="text-gray-400 text-sm mb-4">per chapter</div>
-                                        <ul className="space-y-2 text-sm">
-                                            <li className="flex items-center gap-2 text-gray-300">
-                                                <div className="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center">
-                                                    <span className="text-white text-xs">✓</span>
-                                                </div>
-                                                <span>Crisp & focused</span>
-                                            </li>
-                                            <li className="flex items-center gap-2 text-gray-300">
-                                                <div className="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center">
-                                                    <span className="text-white text-xs">✓</span>
-                                                </div>
-                                                <span>High-yield topics</span>
-                                            </li>
-                                            <li className="flex items-center gap-2 text-gray-300">
-                                                <div className="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center">
-                                                    <span className="text-white text-xs">✓</span>
-                                                </div>
-                                                <span>Paaras Sir's voice</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                        {/* Subtitle with Impact */}
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="text-base md:text-xl text-gray-300 mb-10 leading-relaxed max-w-3xl mx-auto"
+                        >
+                            Stop wasting hours on fluff. Master entire chapters with laser-focused content designed for <span className="text-violet-400 font-bold">maximum retention</span> in the <span className="text-violet-400 font-bold">shortest time possible.</span>
+                        </motion.p>
 
-                            {/* Bottom Tagline */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.5 }}
-                                className="mt-6 text-center"
+                        {/* CTA Buttons */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                            className="flex flex-wrap justify-center gap-4 mb-12"
+                        >
+                            <button
+                                onClick={() => document.getElementById('video-grid')?.scrollIntoView({ behavior: 'smooth' })}
+                                className="group flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-bold rounded-2xl shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:scale-105 transition-all duration-300"
                             >
-                                <p className="text-gray-400 text-sm">
-                                    🎯 <span className="text-white font-semibold">Same content, better format</span> — Conceptual clarity in less time
-                                </p>
-                            </motion.div>
+                                <Play className="w-5 h-5" fill="currentColor" />
+                                Start Learning
+                                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            </button>
+                            <a
+                                href="https://www.youtube.com/@CanvasClassesOfficial"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 px-6 py-4 bg-gray-800/60 text-white font-semibold rounded-2xl border border-gray-700/50 hover:border-gray-600 hover:bg-gray-800 transition-all"
+                            >
+                                <Youtube className="w-5 h-5 text-red-500" />
+                                YouTube Channel
+                            </a>
+                        </motion.div>
+
+                        {/* Trust Indicators */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.4 }}
+                            className="hidden md:flex justify-center items-center gap-8 text-gray-400 text-sm mb-12"
+                        >
+                            <div className="flex items-center gap-3">
+                                <div className="flex -space-x-3">
+                                    {[1, 2, 3, 4].map((i) => (
+                                        <div key={i} className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 border-2 border-gray-900 flex items-center justify-center text-white text-xs font-bold ring-2 ring-gray-900">
+                                            {['P', 'S', 'R', 'A'][i - 1]}
+                                        </div>
+                                    ))}
+                                </div>
+                                <span className="font-medium">1000+ Students</span>
+                            </div>
+                            <div className="w-px h-4 bg-gray-700/50" />
+                            <div className="flex items-center gap-2">
+                                <span className="text-yellow-400 text-base">★★★★★</span>
+                                <span className="font-medium">Loved by JEE/NEET Toppers</span>
+                            </div>
                         </motion.div>
                     </div>
-                </div>
-            </section >
 
-            {/* Stats Cards - Hidden on mobile */}
-            < section className="relative py-8 hidden md:block" >
-                <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {[
-                            { icon: PlayCircle, label: 'One Shot Videos', value: stats.totalVideos, suffix: '', color: 'from-violet-500 to-purple-500', hoverBg: 'hover:border-violet-500/50 hover:shadow-violet-500/20' },
-                            { icon: Beaker, label: 'Organic Chemistry', value: stats.organicCount, suffix: '', color: 'from-purple-500 to-pink-500', hoverBg: 'hover:border-purple-500/50 hover:shadow-purple-500/20' },
-                            { icon: Atom, label: 'Inorganic Chemistry', value: stats.inorganicCount, suffix: '', color: 'from-orange-500 to-amber-500', hoverBg: 'hover:border-orange-500/50 hover:shadow-orange-500/20' },
-                            { icon: FlaskConical, label: 'Physical Chemistry', value: stats.physicalCount, suffix: '', color: 'from-green-500 to-emerald-500', hoverBg: 'hover:border-green-500/50 hover:shadow-green-500/20' },
-                        ].map((stat, i) => (
-                            <motion.div
-                                key={stat.label}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 * i }}
-                                className={`group bg-gray-800/40 backdrop-blur-sm rounded-2xl p-5 border border-gray-700/50 cursor-pointer transition-all duration-300 hover:bg-gray-800/60 hover:shadow-2xl ${stat.hoverBg}`}
-                            >
-                                <div
-                                    className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110`}
-                                >
-                                    <stat.icon className="w-5 h-5 text-white" />
-                                </div>
-                                <div className="text-2xl font-bold text-white">
-                                    <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                                </div>
-                                <div className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors">{stat.label}</div>
-                            </motion.div>
-                        ))}
-                    </div>
                 </div>
-            </section >
+            </section>
+
+
 
             {/* Category Tabs (Desktop Only) & Search */}
-            < section className="py-6" >
-                <div className="container mx-auto px-6">
-                    <div className="hidden md:flex md:flex-wrap gap-3 mb-6">
+            <section className="py-6">
+                <div className="container mx-auto px-6 flex flex-col items-center">
+                    <div className="hidden md:flex md:flex-wrap justify-center gap-3 mb-6">
                         {categoryTabs.map((tab) => {
                             const isActive = selectedCategory === tab.id;
                             const count = categoryStats[tab.id] || 0;
@@ -427,7 +274,7 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                     </div>
 
                     {/* Search Bar */}
-                    <div className="relative max-w-md">
+                    <div className="relative w-full max-w-md">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                         <input
                             type="text"
@@ -439,11 +286,11 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                     </div>
 
                     {/* Video Count */}
-                    <p className="text-gray-400 mt-6">
+                    <p className="text-gray-400 mt-6 text-center">
                         Showing <span className="font-bold text-white">{filteredVideos.length}</span> one shot lectures
                     </p>
                 </div>
-            </section >
+            </section>
 
             {/* Modal Video Player */}
             <AnimatePresence>
