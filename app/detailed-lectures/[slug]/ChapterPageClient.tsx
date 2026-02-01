@@ -20,6 +20,9 @@ import {
     Play,
     ZoomIn,
     Search,
+    Map,
+    Info,
+    Sparkles,
 } from 'lucide-react';
 import { getNcertChapterName } from '@/app/lib/ncertMapping';
 
@@ -53,6 +56,7 @@ interface Chapter {
     lectures: Lecture[];
     totalDuration: string;
     videoCount: number;
+    hasMindmap: boolean;
     classification?: string;
 }
 
@@ -104,7 +108,7 @@ const ncertDifficultyColors: Record<string, { bg: string; text: string; border: 
 };
 
 export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
-    const [activeTab, setActiveTab] = useState<'lectures' | 'notes' | 'solutions'>('lectures');
+    const [activeTab, setActiveTab] = useState<'lectures' | 'notes' | 'solutions' | 'mindmap'>('lectures');
     const [activeLecture, setActiveLecture] = useState<Lecture | null>(null);
     const diffStyle = difficultyColors[chapter.difficulty] || difficultyColors['Moderate'];
     const pdfUrl = chapter.notesLink ? getEmbeddablePdfUrl(chapter.notesLink) : null;
@@ -117,6 +121,7 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
     const [expandedQuestion, setExpandedQuestion] = useState<number | null>(null);
     const [lightboxImage, setLightboxImage] = useState<string | null>(null);
     const [playingVideo, setPlayingVideo] = useState<number | null>(null);
+    const [selectedNode, setSelectedNode] = useState<{ name: string; detail: string } | null>(null);
     const dataFetchedRef = useState(false); // To prevent double fetch if strict mode
 
     // Fetch NCERT Data when tab is changed to solutions
@@ -152,7 +157,39 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                 .catch(err => console.error(err))
                 .finally(() => setLoadingSolutions(false));
         }
+
+        // Listen for mindmap node clicks
+        const handleMessage = (event: MessageEvent) => {
+            if (event.data?.type === 'MINDMAP_NODE_CLICK') {
+                const nodeName = event.data.nodeName;
+                const detail = saltAnalysisDetails[nodeName] || "Additional technical details for this section are coming soon. Stay tuned!";
+                setSelectedNode({ name: nodeName, detail });
+            }
+        };
+
+        window.addEventListener('message', handleMessage);
+        return () => window.removeEventListener('message', handleMessage);
     }, [activeTab, hasFetchedSolutions, chapter]);
+
+    const saltAnalysisDetails: Record<string, string> = {
+        "Flame Test": "A qualitative test to identify metal ions based on characteristic flame colors. \n\n• Li: Crimson Red \n• Na: Golden Yellow \n• K: Violet \n• Ca: Brick Red \n• Sr: Crimson \n• Ba: Apple Green \n• Cu: Bluish Green",
+        "Borax Bead Test": "Used mainly for transition metals. A borax bead (sodium metaborate and boric anhydride) forms characteristic colored metaborates in oxidizing/reducing flames. \n\n• Cu: Blue (Oxidizing), Red (Reducing) \n• Fe: Yellow (Hot), Brown (Cold) \n• Cr: Green",
+        "Charcoal Cavity Test": "Heated salt in a charcoal cavity with Na2CO3. \n\n• Pb: White incrustation, malleable bead \n• Zn: Yellow (hot), White (cold) \n• Sn: White incrustation, malleable bead",
+        "Cobalt Nitrate Test": "Performed on residues from charcoal cavity test. \n\n• Al: Blue mass (Thenard's Blue) \n• Zn: Green mass (Rinmann's Green) \n• Mg: Pink mass",
+        "Zero Group": "Contains Ammonium (NH4+). \n\n• Test: Heat with NaOH → Pungent smell of Ammonia (NH3). \n• Confirmatory: White fumes with HCl-dipped rod; Nessler's Reagent → Reddish Brown ppt.",
+        "Group I": "Contains Lead (Pb2+). \n\n• Group Reagent: Dilute HCl. \n• Observation: White ppt of PbCl2. \n• Confirmatory: Soluble in hot water; Potassium Chromate → Yellow ppt.",
+        "Group II": "Contains Pb2+, Cu2+ (Group IIA) and As3+ (Group IIB). \n\n• Group Reagent: H2S gas in presence of Dilute HCl. \n• Observation: Black (Pb, Cu) or Yellow (As) sulphides.",
+        "Group III": "Contains Iron (Fe3+) and Aluminium (Al3+). \n\n• Group Reagent: NH4OH in presence of NH4Cl. \n• Observation: Brown ppt (Fe) or White gelatinous ppt (Al).",
+        "Group IV": "Contains Zn2+, Mn2+, Ni2+, Co2+. \n\n• Group Reagent: H2S in presence of NH4OH. \n• Observation: White (Zn), Flesh colored (Mn), Black (Ni, Co).",
+        "Group V": "Contains Ba2+, Sr2+, Ca2+. \n\n• Group Reagent: (NH4)2CO3 in presence of NH4Cl and NH4OH. \n• Observation: White ppts of carbonates.",
+        "Group VI": "Contains Magnesium (Mg2+). \n\n• Test: Add Disodium hydrogen phosphate (Na2HPO4). \n• Observation: White crystalline precipitate.",
+        "Dilute H2SO4 Group": "Tests for anions like CO3(2-), S(2-), SO3(2-), NO2(-). \n\n• Carbonate: Colorless gas turns lime water milky. \n• Sulphide: Smell of rotten eggs (H2S), turns Lead Acetate paper black.",
+        "Acetate (CH3COO -)": "Tests for Acetate ion. \n\n• Smell of Vinegar on heating with dilute H2SO4. \n• Ferric Chloride Test: Deep red color (formed Ferric Acetate).",
+        "Sulphate (SO4 2-)": "Part of Special Group for anions. \n\n• Barium Chloride Test: White ppt of BaSO4 insoluble in all acids. \n• Lead Acetate Test: White ppt of PbSO4.",
+        "Qualitative vs Quantitative": "Qualitative analysis focuses on 'What' is present (identifying elements/ions). Quantitative analysis focuses on 'How much' is present (measuring amounts/concentrations).",
+        "Solubility Product": "The equilibrium constant for the dissolution of a sparingly soluble ionic compound. Precipitaiton occurs when Ionic Product (Qsp) > Solubility Product (Ksp).",
+        "Common Ion Effect": "The suppression of the degree of dissociation of a weak electrolyte by the addition of a strong electrolyte containing a common ion. Essential in Buffer and salt precipitation.",
+    };
 
     const getNcertDifficultyStyle = (difficulty: string) => {
         return ncertDifficultyColors[difficulty] || ncertDifficultyColors['Easy'];
@@ -259,6 +296,18 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                             <BookOpen className="w-5 h-5 inline mr-2" />
                             NCERT Solutions
                         </button>
+                        {chapter.hasMindmap && (
+                            <button
+                                onClick={() => setActiveTab('mindmap')}
+                                className={`py-4 px-2 text-base font-semibold border-b-2 transition-colors ${activeTab === 'mindmap'
+                                    ? 'text-teal-400 border-teal-400'
+                                    : 'text-gray-400 border-transparent hover:text-white'
+                                    }`}
+                            >
+                                <Map className="w-5 h-5 inline mr-2" />
+                                Mindmap
+                            </button>
+                        )}
                     </div>
                 </div>
             </section>
@@ -427,6 +476,73 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                                 />
                             )}
                         </div>
+                    ) : activeTab === 'mindmap' ? (
+                        /* Mindmap Viewer */
+                        <div className="max-w-6xl mx-auto space-y-6">
+                            <div className="bg-gray-800/40 rounded-2xl border border-gray-700/50 overflow-hidden">
+                                <div className="flex items-center justify-between p-4 border-b border-gray-700/50">
+                                    <div className="flex items-center gap-3">
+                                        <Map className="w-5 h-5 text-teal-400" />
+                                        <span className="font-semibold text-white">{chapter.name} - Interactive Mindmap</span>
+                                    </div>
+                                    <span className="text-xs text-gray-400 bg-gray-700/30 px-2 py-1 rounded">Interactive View</span>
+                                </div>
+                                <div className="relative w-full h-[600px] md:h-[850px] bg-[#f3f4f6]">
+                                    <iframe
+                                        src={`/mindmaps/${chapter.slug}.html?v=2`}
+                                        className="absolute inset-0 w-full h-full border-0"
+                                        title={`${chapter.name} Mindmap`}
+                                    />
+                                </div>
+                                <div className="p-4 bg-gray-800/20 text-gray-400 text-xs text-center border-t border-gray-700/50">
+                                    Tip: You can zoom and drag the mindmap. Click on any node to see more details below!
+                                </div>
+                            </div>
+
+                            {/* Node Details View */}
+                            <AnimatePresence>
+                                {selectedNode && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.95 }}
+                                        className="bg-gray-800/60 rounded-2xl border border-teal-500/30 p-6 shadow-2xl backdrop-blur-md relative overflow-hidden"
+                                    >
+                                        <div className="absolute top-0 right-0 p-4">
+                                            <button
+                                                onClick={() => setSelectedNode(null)}
+                                                className="p-2 bg-gray-700/50 text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white transition-colors"
+                                            >
+                                                <X className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                        <div className="flex items-start gap-4">
+                                            <div className="w-12 h-12 rounded-xl bg-teal-500/20 flex items-center justify-center shrink-0 border border-teal-500/30">
+                                                <Sparkles className="w-6 h-6 text-teal-400" />
+                                            </div>
+                                            <div className="flex-1">
+                                                <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                                                    {selectedNode.name}
+                                                </h4>
+                                                <div className="text-gray-300 leading-relaxed whitespace-pre-wrap font-medium">
+                                                    {selectedNode.detail}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                )}
+                                {!selectedNode && chapter.slug === 'salt-analysis' && (
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        className="py-12 text-center border-2 border-dashed border-gray-800 rounded-2xl"
+                                    >
+                                        <Info className="w-8 h-8 text-gray-600 mx-auto mb-3" />
+                                        <p className="text-gray-500 font-medium">Click on any section of the mindmap above to see high-yield details here.</p>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
                     ) : (
                         /* NCERT Solutions Tab */
                         <div className="space-y-6 max-w-4xl mx-auto">
@@ -513,7 +629,7 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                                                                             return (
                                                                                 <div
                                                                                     key={i}
-                                                                                    className="my-6 relative group cursor-pointer rounded-xl overflow-hidden border border-gray-700/50 hover:border-teal-500/30 transition-colors shadow-lg"
+                                                                                    className="my-6 relative group cursor-pointer rounded-xl overflow-hidden border border-gray-700/50 hover:border-teal-500/30 transition-colors shadow-lg max-w-2xl mx-auto"
                                                                                     onClick={() => setLightboxImage(line.trim())}
                                                                                 >
                                                                                     <img

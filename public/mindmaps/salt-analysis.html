@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Salt Analysis Mindmap | Canvas Classes</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    }
+
+    #mindmap {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      background: #f3f4f6;
+    }
+
+    .markmap {
+      background: #f3f4f6;
+      color: #1f2937;
+    }
+
+    /* Style for clickable nodes to indicate interactivity */
+    .markmap-node {
+      cursor: pointer;
+    }
+
+    .markmap-node:hover circle {
+      fill: #2dd4bf !important;
+      stroke: #14b8a6 !important;
+      stroke-width: 3px !important;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+
+<body>
+  <svg id="mindmap"></svg>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.12/dist/browser/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/index.js"></script>
+  <script>((r) => {
+      setTimeout(r);
+    })(() => {
+      const { markmap, mm } = window;
+      const toolbar = new markmap.Toolbar();
+      toolbar.attach(mm);
+      const el = toolbar.render();
+      el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+      document.body.append(el);
+    })</script>
+  <script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+
+              // Click Listener for Interactivity
+              const svg = document.querySelector('#mindmap');
+              svg.addEventListener('click', (e) => {
+                const node = e.target.closest('.markmap-node');
+                if (node) {
+                  const d = d3.select(node).datum();
+                  if (d && d.content) {
+                    window.parent.postMessage({
+                      type: 'MINDMAP_NODE_CLICK',
+                      nodeName: d.content
+                    }, '*');
+                  }
+                }
+              });
+
+            })(() => window.markmap, null, { "content": "Systematic Qualitative Analysis", "children": [{ "content": "General Principles", "children": [{ "content": "Qualitative vs Quantitative", "children": [], "payload": { "tag": "h3", "lines": "3,4" } }, { "content": "Solubility Product", "children": [], "payload": { "tag": "h3", "lines": "4,5" } }, { "content": "Common Ion Effect", "children": [], "payload": { "tag": "h3", "lines": "5,6" } }], "payload": { "tag": "h2", "lines": "2,3" } }, { "content": "Analysis Scales", "children": [{ "content": "Macro Analysis", "children": [], "payload": { "tag": "h3", "lines": "8,9" } }, { "content": "Semimicro Analysis", "children": [], "payload": { "tag": "h3", "lines": "9,10" } }, { "content": "Micro Analysis", "children": [], "payload": { "tag": "h3", "lines": "10,11" } }], "payload": { "tag": "h2", "lines": "7,8" } }, { "content": "Preliminary Examination", "children": [{ "content": "Physical Properties", "children": [{ "content": "Colour", "children": [], "payload": { "tag": "h4", "lines": "14,15" } }, { "content": "Smell", "children": [], "payload": { "tag": "h4", "lines": "15,16" } }, { "content": "Solubility", "children": [], "payload": { "tag": "h4", "lines": "16,17" } }], "payload": { "tag": "h3", "lines": "13,14" } }, { "content": "Dry Tests", "children": [{ "content": "Flame Test", "children": [], "payload": { "tag": "h4", "lines": "18,19" } }, { "content": "Borax Bead Test", "children": [], "payload": { "tag": "h4", "lines": "19,20" } }, { "content": "Charcoal Cavity Test", "children": [], "payload": { "tag": "h4", "lines": "20,21" } }, { "content": "Cobalt Nitrate Test", "children": [], "payload": { "tag": "h4", "lines": "21,22" } }], "payload": { "tag": "h3", "lines": "17,18" } }], "payload": { "tag": "h2", "lines": "12,13" } }, { "content": "Anion Analysis", "children": [{ "content": "Dilute H2SO4 Group", "children": [{ "content": "Carbonate (CO3 2-)", "children": [], "payload": { "tag": "h4", "lines": "25,26" } }, { "content": "Sulphide (S 2-)", "children": [], "payload": { "tag": "h4", "lines": "26,27" } }, { "content": "Sulphite (SO3 2-)", "children": [], "payload": { "tag": "h4", "lines": "27,28" } }, { "content": "Nitrite (NO2 -)", "children": [], "payload": { "tag": "h4", "lines": "28,29" } }, { "content": "Acetate (CH3COO -)", "children": [], "payload": { "tag": "h4", "lines": "29,30" } }], "payload": { "tag": "h3", "lines": "24,25" } }, { "content": "Special Group", "children": [{ "content": "Sulphate (SO4 2-)", "children": [], "payload": { "tag": "h4", "lines": "31,32" } }, { "content": "Phosphate (PO4 3-)", "children": [], "payload": { "tag": "h4", "lines": "32,33" } }], "payload": { "tag": "h3", "lines": "30,31" } }], "payload": { "tag": "h2", "lines": "23,24" } }, { "content": "Cation Analysis", "children": [{ "content": "Zero Group", "children": [{ "content": "Ammonium (NH4+)", "children": [], "payload": { "tag": "h4", "lines": "36,37" } }], "payload": { "tag": "h3", "lines": "35,36" } }, { "content": "Group I", "children": [{ "content": "Lead (Pb2+)", "children": [], "payload": { "tag": "h4", "lines": "38,39" } }], "payload": { "tag": "h3", "lines": "37,38" } }, { "content": "Group II", "children": [{ "content": "Group IIA (Pb2+, Cu2+)", "children": [], "payload": { "tag": "h4", "lines": "40,41" } }, { "content": "Group IIB (As3+)", "children": [], "payload": { "tag": "h4", "lines": "41,42" } }], "payload": { "tag": "h3", "lines": "39,40" } }, { "content": "Group III", "children": [{ "content": "Iron (Fe3+)", "children": [], "payload": { "tag": "h4", "lines": "43,44" } }, { "content": "Aluminium (Al3+)", "children": [], "payload": { "tag": "h4", "lines": "44,45" } }], "payload": { "tag": "h3", "lines": "42,43" } }, { "content": "Group IV", "children": [{ "content": "Zinc (Zn2+)", "children": [], "payload": { "tag": "h4", "lines": "46,47" } }, { "content": "Manganese (Mn2+)", "children": [], "payload": { "tag": "h4", "lines": "47,48" } }, { "content": "Nickel (Ni2+)", "children": [], "payload": { "tag": "h4", "lines": "48,49" } }, { "content": "Cobalt (Co2+)", "children": [], "payload": { "tag": "h4", "lines": "49,50" } }], "payload": { "tag": "h3", "lines": "45,46" } }, { "content": "Group V", "children": [{ "content": "Barium (Ba2+)", "children": [], "payload": { "tag": "h4", "lines": "51,52" } }, { "content": "Strontium (Sr2+)", "children": [], "payload": { "tag": "h4", "lines": "52,53" } }, { "content": "Calcium (Ca2+)", "children": [], "payload": { "tag": "h4", "lines": "53,54" } }], "payload": { "tag": "h3", "lines": "50,51" } }, { "content": "Group VI", "children": [{ "content": "Magnesium (Mg2+)", "children": [], "payload": { "tag": "h4", "lines": "55,56" } }], "payload": { "tag": "h3", "lines": "54,55" } }], "payload": { "tag": "h2", "lines": "34,35" } }, { "content": "Laboratory Procedures", "children": [{ "content": "Sodium Carbonate Extract", "children": [], "payload": { "tag": "h3", "lines": "58,59" } }, { "content": "Original Solution Preparation", "children": [], "payload": { "tag": "h3", "lines": "59,60" } }, { "content": "Confirmatory Wet Tests", "children": [], "payload": { "tag": "h3", "lines": "60,61" } }, { "content": "Safety Precautions", "children": [], "payload": { "tag": "h3", "lines": "61,62" } }], "payload": { "tag": "h2", "lines": "57,58" } }], "payload": { "tag": "h1", "lines": "0,1" } }, null)</script>
+</body>
+
+</html>

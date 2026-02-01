@@ -3,6 +3,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
     BookOpen,
     Clock,
@@ -15,6 +16,7 @@ import {
     Download,
     HelpCircle,
     Sparkles,
+    Map,
 } from 'lucide-react';
 
 // Animated Counter Component
@@ -82,6 +84,7 @@ interface Chapter {
     lectures: Lecture[];
     totalDuration: string;
     videoCount: number;
+    hasMindmap: boolean;
     classification?: 'Physical' | 'Organic' | 'Inorganic';
 }
 
@@ -142,6 +145,23 @@ export default function LecturesClient({ initialChapters, initialStats }: Lectur
             answer: "Dedicate 2-3 hours daily to Chemistry. Focus on understanding concepts rather than rote learning. Use our chapter-wise lectures to maintain steady progress alongside Physics and Maths preparation."
         },
     ];
+
+    // Image mapping overrides
+    const imageMapping: Record<string, string> = {
+        'haloalkanes-alcohols-ethers': 'haloalkanes-haloarenes.webp',
+        'aldehydes-ketones': 'carbonyl-compounds.webp',
+        'carboxylic-acids-derivatives': 'carboxylic-acids.webp',
+        'p-block-group-13-14': 'p-block.webp',
+        'p-block-12th': 'p-block.webp',
+        'salt-analysis': 'salt.webp'
+    };
+
+    const getChapterImage = (slug: string) => {
+        if (imageMapping[slug]) {
+            return `/chapter-card-images/${imageMapping[slug]}`;
+        }
+        return `/chapter-card-images/${slug}.webp`;
+    };
 
     // Filter chapters by class and search
     const filteredChapters = useMemo(() => {
@@ -231,12 +251,44 @@ export default function LecturesClient({ initialChapters, initialStats }: Lectur
                         If you want highest quality lectures for in-depth clarity, problem solving skills and especially relevant for JEE Advanced preparation. This is Premium Content made by Paaras Sir.
                     </motion.p>
 
+                    {/* Stats Cards - Moved here */}
+                    <div className="w-full max-w-3xl mb-8 md:mb-10">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 text-left">
+                            {[
+                                { icon: Layers, label: 'Chapters', value: stats.chapterCount, suffix: '', color: 'from-teal-500 to-cyan-500', hoverBg: 'hover:border-teal-500/50 hover:shadow-teal-500/20' },
+                                { icon: PlayCircle, label: 'Lectures', value: stats.videoCount, suffix: '', color: 'from-violet-500 to-purple-500', hoverBg: 'hover:border-violet-500/50 hover:shadow-violet-500/20' },
+                                { icon: Clock, label: 'Content', value: stats.totalHours, suffix: 'h', color: 'from-amber-500 to-orange-500', hoverBg: 'hover:border-amber-500/50 hover:shadow-amber-500/20' },
+                                { icon: FileText, label: 'Notes', value: stats.chapterCount, suffix: '', color: 'from-rose-500 to-pink-500', hoverBg: 'hover:border-rose-500/50 hover:shadow-rose-500/20' },
+                            ].map((stat, i) => (
+                                <motion.div
+                                    key={stat.label}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.1 * i }}
+                                    className={`group bg-gray-800/40 backdrop-blur-sm rounded-xl md:rounded-2xl p-3 md:p-5 border border-gray-700/50 cursor-pointer transition-all duration-300 hover:bg-gray-800/60 hover:shadow-2xl ${stat.hoverBg} flex items-center gap-3`}
+                                >
+                                    <div
+                                        className={`w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110`}
+                                    >
+                                        <stat.icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                                    </div>
+                                    <div className="text-left">
+                                        <div className="text-xl md:text-2xl font-bold text-white leading-none">
+                                            <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                                        </div>
+                                        <div className="text-gray-400 text-xs md:text-sm font-medium leading-tight group-hover:text-gray-300 transition-colors mt-0.5">{stat.label}</div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+
                     {/* Class Toggle - Compact on mobile */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="inline-flex items-center justify-center bg-gray-800/50 rounded-xl p-1 border border-gray-700/50 mb-6 md:mb-10 w-full md:w-auto"
+                        className="inline-flex items-center justify-center bg-gray-800/50 rounded-xl p-1 border border-gray-700/50 mb-2 md:mb-4 w-full md:w-auto"
                     >
                         {(['11', '12'] as const).map((classNum) => (
                             <button
@@ -254,39 +306,7 @@ export default function LecturesClient({ initialChapters, initialStats }: Lectur
                 </div>
             </section>
 
-            {/* Stats Cards - Compact Horizontal Layout */}
-            <section className="relative py-2 md:py-4">
-                <div className="container mx-auto px-4 md:px-6 max-w-5xl">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-                        {[
-                            { icon: Layers, label: 'Chapters', value: stats.chapterCount, suffix: '', color: 'from-teal-500 to-cyan-500', hoverBg: 'hover:border-teal-500/50 hover:shadow-teal-500/20' },
-                            { icon: PlayCircle, label: 'Lectures', value: stats.videoCount, suffix: '', color: 'from-violet-500 to-purple-500', hoverBg: 'hover:border-violet-500/50 hover:shadow-violet-500/20' },
-                            { icon: Clock, label: 'Content', value: stats.totalHours, suffix: 'h', color: 'from-amber-500 to-orange-500', hoverBg: 'hover:border-amber-500/50 hover:shadow-amber-500/20' },
-                            { icon: FileText, label: 'Notes', value: stats.chapterCount, suffix: '', color: 'from-rose-500 to-pink-500', hoverBg: 'hover:border-rose-500/50 hover:shadow-rose-500/20' },
-                        ].map((stat, i) => (
-                            <motion.div
-                                key={stat.label}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 * i }}
-                                className={`group bg-gray-800/40 backdrop-blur-sm rounded-xl md:rounded-2xl p-3 md:p-5 border border-gray-700/50 cursor-pointer transition-all duration-300 hover:bg-gray-800/60 hover:shadow-2xl ${stat.hoverBg} flex items-center gap-3`}
-                            >
-                                <div
-                                    className={`w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110`}
-                                >
-                                    <stat.icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                                </div>
-                                <div className="text-left">
-                                    <div className="text-xl md:text-2xl font-bold text-white leading-none">
-                                        <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                                    </div>
-                                    <div className="text-gray-400 text-xs md:text-sm font-medium leading-tight group-hover:text-gray-300 transition-colors mt-0.5">{stat.label}</div>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+
 
             {/* Search & Filter - Reduced vertical space */}
             <section className="py-2 md:py-8">
@@ -331,58 +351,88 @@ export default function LecturesClient({ initialChapters, initialStats }: Lectur
                                         transition={{ delay: 0.05 * index }}
                                     >
                                         <div className="group h-full bg-[#111827] border border-gray-800 rounded-2xl overflow-hidden hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/40 hover:border-gray-700 transition-all duration-300 flex flex-col relative shadow-lg shadow-black/20">
-                                            {/* Left Colored Bar - Based on Classification */}
-                                            <div className={`absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-300 group-hover:w-2 bg-gradient-to-b ${classification === 'Organic' ? 'from-emerald-500 to-teal-600' :
-                                                classification === 'Inorganic' ? 'from-orange-500 to-amber-600' :
-                                                    'from-cyan-500 to-blue-600' // Physical (Default)
-                                                }`}></div>
 
-                                            {/* Content */}
-                                            <div className="p-5 pl-7 flex flex-col h-full">
-                                                {/* Header: Title + Difficulty */}
-                                                <div className="flex justify-between items-start gap-4 mb-3">
-                                                    <h3 className={`text-lg md:text-xl font-bold text-gray-200 leading-tight transition-colors line-clamp-2 ${classification === 'Organic' ? 'group-hover:text-emerald-300' :
+                                            {/* Top Image Section */}
+                                            <div className="relative h-48 w-full shrink-0 overflow-hidden bg-gray-900">
+                                                <Image
+                                                    src={getChapterImage(chapter.slug)}
+                                                    alt={chapter.name}
+                                                    fill
+                                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                />
+                                                {/* Gradient Overlay */}
+                                                <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/60 to-transparent" />
+
+                                                {/* Title Overlay */}
+                                                <div className="absolute bottom-4 left-4 right-4 z-10">
+                                                    <h3 className={`text-xl md:text-2xl font-bold text-gray-100 leading-tight drop-shadow-lg ${classification === 'Organic' ? 'group-hover:text-emerald-300' :
                                                         classification === 'Inorganic' ? 'group-hover:text-orange-300' :
                                                             'group-hover:text-blue-300'
-                                                        }`}>
+                                                        } transition-colors duration-300`}>
                                                         {chapter.name}
                                                     </h3>
-                                                    <span className={`shrink-0 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide border shadow-sm ${classification === 'Organic' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                                                        classification === 'Inorganic' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' :
-                                                            'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                                                </div>
+
+                                                {/* Top Badge Container */}
+                                                <div className="absolute top-3 right-3 flex flex-col items-end gap-2 z-10">
+                                                    <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide border shadow-sm backdrop-blur-md ${classification === 'Organic' ? 'bg-emerald-950/40 text-emerald-400 border-emerald-500/30' :
+                                                        classification === 'Inorganic' ? 'bg-orange-950/40 text-orange-400 border-orange-500/30' :
+                                                            'bg-blue-950/40 text-blue-400 border-blue-500/30'
                                                         }`}>
                                                         {chapter.difficulty}
                                                     </span>
+
+                                                    {chapter.hasMindmap && (
+                                                        <motion.div
+                                                            animate={{
+                                                                scale: [1, 1.05, 1],
+                                                                opacity: [0.9, 1, 0.9]
+                                                            }}
+                                                            transition={{
+                                                                duration: 2,
+                                                                repeat: Infinity,
+                                                                ease: "easeInOut"
+                                                            }}
+                                                        >
+                                                            <span className="px-2 py-1 bg-teal-950/60 text-teal-300 text-[10px] font-bold rounded-md border border-teal-500/30 flex items-center gap-1.5 shadow-lg backdrop-blur-md">
+                                                                <Sparkles className="w-3 h-3 text-teal-400 animate-pulse" />
+                                                                MINDMAP
+                                                            </span>
+                                                        </motion.div>
+                                                    )}
                                                 </div>
+                                            </div>
+
+                                            {/* Bottom Content Section */}
+                                            <div className="p-5 flex flex-col flex-grow">
 
                                                 {/* Metadata Row */}
-                                                <div className="flex items-center gap-4 text-xs font-medium text-gray-500 mb-4">
-                                                    <span className="flex items-center gap-1.5"><PlayCircle className="w-3.5 h-3.5 text-teal-500/70" /> {chapter.videoCount} Lectures</span>
-                                                    <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-blue-500/70" /> {chapter.totalDuration}</span>
+                                                <div className="flex items-center gap-4 text-xs font-medium text-gray-400 mb-4 border-b border-gray-800 pb-3">
+                                                    <span className="flex items-center gap-1.5"><PlayCircle className="w-3.5 h-3.5 text-teal-500" /> {chapter.videoCount} Lectures</span>
+                                                    <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-blue-500" /> {chapter.totalDuration}</span>
                                                 </div>
 
                                                 {/* Tags */}
-                                                <div className="flex flex-wrap gap-1.5 mb-6 flex-grow content-start">
+                                                <div className="flex flex-wrap gap-1.5 mb-6 flex-grow content-start min-h-[1.5rem]">
                                                     {chapter.keyTopics.slice(0, 3).map((topic, i) => (
-                                                        <span key={i} className="px-1.5 py-0.5 bg-gray-800 text-gray-400 text-[10px] rounded border border-gray-700/50">
+                                                        <span key={i} className="px-2 py-1 bg-gray-800/50 text-gray-400 text-[10px] rounded border border-gray-700/50 group-hover:border-gray-600 transition-colors">
                                                             {topic}
                                                         </span>
                                                     ))}
                                                     {chapter.keyTopics.length > 3 && (
-                                                        <span className="px-1.5 py-0.5 bg-gray-800 text-gray-500 text-[10px] rounded border border-gray-700/50">
+                                                        <span className="px-2 py-1 bg-gray-800/50 text-gray-500 text-[10px] rounded border border-gray-700/50">
                                                             +{chapter.keyTopics.length - 3}
                                                         </span>
                                                     )}
                                                 </div>
 
                                                 {/* Buttons */}
-
-                                                {/* Buttons */}
-                                                <div className="flex gap-3 mt-auto">
+                                                <div className="flex gap-3 mt-auto pt-2">
                                                     <Link href={`/detailed-lectures/${chapter.slug}`} className="flex-[1.5]">
-                                                        <button className={`w-full py-2.5 rounded-lg font-bold text-xs md:text-sm text-white transition-all duration-300 flex items-center justify-center gap-2 hover:shadow-lg active:scale-95 cursor-pointer shadow-sm ${classification === 'Organic' ? 'bg-gradient-to-r from-emerald-500 to-teal-600 hover:shadow-emerald-500/20' :
-                                                            classification === 'Inorganic' ? 'bg-gradient-to-r from-orange-500 to-amber-600 hover:shadow-orange-500/20' :
-                                                                'bg-gradient-to-r from-cyan-500 to-blue-600 hover:shadow-blue-500/20'
+                                                        <button className={`w-full py-2.5 rounded-xl font-bold text-xs md:text-sm text-white transition-all duration-300 flex items-center justify-center gap-2 hover:shadow-lg active:scale-95 cursor-pointer shadow-md ${classification === 'Organic' ? 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:shadow-emerald-500/20' :
+                                                            classification === 'Inorganic' ? 'bg-gradient-to-r from-orange-600 to-amber-600 hover:shadow-orange-500/20' :
+                                                                'bg-gradient-to-r from-cyan-600 to-blue-600 hover:shadow-blue-500/20'
                                                             }`}>
                                                             Start Learning <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                                                         </button>
@@ -392,7 +442,7 @@ export default function LecturesClient({ initialChapters, initialStats }: Lectur
                                                             href={chapter.notesLink}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
-                                                            className="flex-1 px-3 py-2.5 rounded-lg border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-800 transition-colors flex items-center justify-center gap-2 font-medium text-xs md:text-sm"
+                                                            className="flex-1 px-3 py-2.5 rounded-xl border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-800 transition-colors flex items-center justify-center gap-2 font-medium text-xs md:text-sm"
                                                             title="Download Notes"
                                                         >
                                                             <Download className="w-4 h-4" /> Notes
