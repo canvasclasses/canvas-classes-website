@@ -198,14 +198,14 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
             {/* Header */}
-            <section className="relative pt-32 pb-12 overflow-hidden">
+            <section className="relative pt-24 pb-6 md:pt-32 md:pb-12 overflow-hidden">
                 {/* Background */}
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-teal-900/20 via-transparent to-transparent" />
                 <div className="absolute top-20 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
 
                 <div className="relative container mx-auto px-6">
                     {/* Breadcrumb */}
-                    <div className="flex items-center gap-2 text-gray-400 text-sm mb-8">
+                    <div className="hidden md:flex items-center gap-2 text-gray-400 text-sm mb-8">
                         <Link href="/" className="hover:text-teal-400 transition-colors">Home</Link>
                         <ChevronRight className="w-4 h-4" />
                         <Link href="/detailed-lectures" className="hover:text-teal-400 transition-colors">Lectures</Link>
@@ -218,7 +218,7 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                     {/* Back button */}
                     <Link
                         href="/detailed-lectures"
-                        className="inline-flex items-center gap-2 text-gray-400 hover:text-teal-400 transition-colors mb-6"
+                        className="inline-flex items-center gap-2 text-gray-400 hover:text-teal-400 transition-colors mb-4 md:mb-6"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         Back to Lectures
@@ -228,7 +228,7 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-3xl md:text-4xl font-bold text-white mb-4"
+                        className="text-3xl md:text-4xl font-bold text-white mb-2 md:mb-4"
                     >
                         {chapter.name}
                     </motion.h1>
@@ -263,48 +263,48 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
             {/* Tabs */}
             <section className="border-b border-gray-800">
                 <div className="container mx-auto px-6">
-                    <div className="flex gap-8">
+                    <div className="flex gap-2 md:gap-8 overflow-x-auto no-scrollbar">
                         <button
                             onClick={() => setActiveTab('lectures')}
-                            className={`py-4 px-2 text-base font-semibold border-b-2 transition-colors ${activeTab === 'lectures'
+                            className={`py-3 px-2 text-xs md:text-base font-semibold border-b-2 transition-colors whitespace-nowrap ${activeTab === 'lectures'
                                 ? 'text-teal-400 border-teal-400'
                                 : 'text-gray-400 border-transparent hover:text-white'
                                 }`}
                         >
-                            <PlayCircle className="w-5 h-5 inline mr-2" />
-                            Video Lectures ({chapter.videoCount})
+                            <PlayCircle className="w-4 h-4 md:w-5 md:h-5 inline mr-1.5 md:mr-2" />
+                            Lectures ({chapter.videoCount})
                         </button>
                         {pdfUrl && (
                             <button
                                 onClick={() => setActiveTab('notes')}
-                                className={`py-4 px-2 text-base font-semibold border-b-2 transition-colors ${activeTab === 'notes'
+                                className={`py-3 px-2 text-xs md:text-base font-semibold border-b-2 transition-colors whitespace-nowrap ${activeTab === 'notes'
                                     ? 'text-teal-400 border-teal-400'
                                     : 'text-gray-400 border-transparent hover:text-white'
                                     }`}
                             >
-                                <FileText className="w-5 h-5 inline mr-2" />
-                                Chapter Notes
+                                <FileText className="w-4 h-4 md:w-5 md:h-5 inline mr-1.5 md:mr-2" />
+                                Notes
                             </button>
                         )}
                         <button
                             onClick={() => setActiveTab('solutions')}
-                            className={`py-4 px-2 text-base font-semibold border-b-2 transition-colors ${activeTab === 'solutions'
+                            className={`py-3 px-2 text-xs md:text-base font-semibold border-b-2 transition-colors whitespace-nowrap ${activeTab === 'solutions'
                                 ? 'text-teal-400 border-teal-400'
                                 : 'text-gray-400 border-transparent hover:text-white'
                                 }`}
                         >
-                            <BookOpen className="w-5 h-5 inline mr-2" />
+                            <BookOpen className="w-4 h-4 md:w-5 md:h-5 inline mr-1.5 md:mr-2" />
                             NCERT Solutions
                         </button>
                         {chapter.hasMindmap && (
                             <button
                                 onClick={() => setActiveTab('mindmap')}
-                                className={`py-4 px-2 text-base font-semibold border-b-2 transition-colors ${activeTab === 'mindmap'
+                                className={`py-3 px-2 text-xs md:text-base font-semibold border-b-2 transition-colors whitespace-nowrap ${activeTab === 'mindmap'
                                     ? 'text-teal-400 border-teal-400'
                                     : 'text-gray-400 border-transparent hover:text-white'
                                     }`}
                             >
-                                <Map className="w-5 h-5 inline mr-2" />
+                                <Map className="w-4 h-4 md:w-5 md:h-5 inline mr-1.5 md:mr-2" />
                                 Mindmap
                             </button>
                         )}
@@ -313,7 +313,7 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
             </section>
 
             {/* Content */}
-            <section className="py-12 pb-24">
+            <section className="py-4 md:py-12 pb-24">
                 <div className="container mx-auto px-6">
                     {activeTab === 'lectures' ? (
                         <div className="space-y-6 max-w-5xl mx-auto">
