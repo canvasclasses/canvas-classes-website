@@ -70,7 +70,7 @@ function getYoutubeId(url: string): string | null {
 // Fetch and parse Top 50 Concepts data
 export async function fetchTop50Data(): Promise<Concept[]> {
     try {
-        const response = await fetch(CSV_URL, { next: { revalidate: 86400 } }); // 24 hours
+        const response = await fetch(CSV_URL, { next: { revalidate: 0 } }); // No cache for testing
         const csvText = await response.text();
         const lines = csvText.split('\n').filter(line => line.trim());
 
@@ -80,11 +80,17 @@ export async function fetchTop50Data(): Promise<Concept[]> {
 
         for (let i = 1; i < lines.length; i++) {
             const values = parseCSVLine(lines[i]);
-            const [videoNumber, title, url, views] = values;
+            // Destructure columns based on actual CSV Header: Video Number, Title, Classification, Youtube URL, views
+            const [videoNumber, title, classification, url, views] = values;
 
             if (!title || !url) continue;
 
             const videoId = getYoutubeId(url);
+
+            // Use classification if valid, else fallback to keyword-based categorization
+            const category = (classification && classification.trim())
+                ? classification.trim()
+                : categorizeVideo(title);
 
             concepts.push({
                 id: i,
@@ -95,7 +101,7 @@ export async function fetchTop50Data(): Promise<Concept[]> {
                 thumbnailUrl: videoId
                     ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
                     : '/placeholder-video.jpg',
-                category: categorizeVideo(title),
+                category: category,
             });
         }
 

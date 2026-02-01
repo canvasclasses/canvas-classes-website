@@ -22,6 +22,7 @@ import {
 interface ChapterGroup {
     chapter: string;
     classNum: number;
+    classification?: string;
     questions: { id: number; difficulty: string }[];
     category?: string;
 }
@@ -80,18 +81,18 @@ function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: strin
 
 // Premium Gradients Palette (Lighter/Softer)
 const CHAPTER_GRADIENTS = [
-    'from-blue-500 to-indigo-600',
-    'from-emerald-400 to-teal-600',
-    'from-orange-400 to-red-500',
-    'from-purple-500 to-fuchsia-600',
-    'from-pink-400 to-rose-500',
-    'from-cyan-400 to-blue-500',
-    'from-violet-500 to-purple-600',
-    'from-amber-400 to-orange-500',
-    'from-teal-400 to-emerald-500',
-    'from-indigo-500 to-violet-600',
-    'from-rose-400 to-pink-500',
-    'from-sky-400 to-blue-500',
+    'from-blue-600 to-indigo-900',
+    'from-emerald-600 to-teal-900',
+    'from-orange-600 to-red-900',
+    'from-purple-600 to-fuchsia-900',
+    'from-pink-600 to-rose-900',
+    'from-cyan-600 to-blue-900',
+    'from-violet-600 to-purple-900',
+    'from-amber-600 to-orange-900',
+    'from-teal-600 to-emerald-900',
+    'from-indigo-600 to-violet-900',
+    'from-rose-600 to-pink-900',
+    'from-sky-600 to-blue-900',
 ];
 
 // Helper to deterministically get a gradient based on string
@@ -174,7 +175,7 @@ export default function NCERTSolutionsClient({ initialChapters, initialStats }: 
     const chapters = useMemo(() => {
         return initialChapters.map(ch => ({
             ...ch,
-            category: getChapterCategory(ch.chapter),
+            category: ch.classification || getChapterCategory(ch.chapter),
         }));
     }, [initialChapters]);
 
@@ -217,22 +218,13 @@ export default function NCERTSolutionsClient({ initialChapters, initialStats }: 
                 <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl" />
 
                 <div className="relative container mx-auto px-6 text-center">
-                    {/* Breadcrumb */}
-                    <div className="flex items-center justify-center gap-2 text-gray-400 text-sm mb-8">
-                        <Link href="/" className="hover:text-blue-400 transition-colors">Home</Link>
-                        <ChevronRight className="w-4 h-4" />
-                        <span className="text-gray-500">NCERT & Boards</span>
-                        <ChevronRight className="w-4 h-4" />
-                        <span className="text-blue-400">NCERT Solutions</span>
-                    </div>
-
                     {/* Title */}
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+                        className="text-4xl md:text-5xl lg:text-6xl font-black mb-6"
                     >
-                        <span className="text-white">Complete NCERT Chemistry </span>
+                        <span className="text-white">Complete NCERT </span>
                         <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                             Solutions
                         </span>
@@ -242,42 +234,44 @@ export default function NCERTSolutionsClient({ initialChapters, initialStats }: 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-gray-400 text-lg max-w-2xl mx-auto mb-12"
+                        className="text-gray-400 text-sm md:text-lg max-w-2xl mx-auto mb-8 md:mb-12 font-medium"
                     >
                         Step-by-step solutions for all NCERT Chemistry questions. Master every concept
                         with detailed explanations and learn the right approach to solve problems.
                     </motion.p>
 
-                    {/* Stats Cards */}
+                    {/* Stats Section - Compact like other pages */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto"
+                        className="flex flex-wrap items-center justify-center gap-2 md:gap-4 max-w-4xl mx-auto"
                     >
                         {[
-                            { icon: Layers, label: 'Chemistry Chapters', value: stats.totalChapters, suffix: '', color: 'from-blue-500 to-cyan-500', hoverBg: 'hover:border-blue-500/50 hover:shadow-blue-500/20' },
-                            { icon: HelpCircle, label: 'NCERT Questions', value: stats.totalQuestions, suffix: '', color: 'from-purple-500 to-pink-500', hoverBg: 'hover:border-purple-500/50 hover:shadow-purple-500/20' },
-                            { icon: CheckCircle, label: 'NCERT Coverage', value: 100, suffix: '%', color: 'from-emerald-500 to-teal-500', hoverBg: 'hover:border-emerald-500/50 hover:shadow-emerald-500/20' },
-                            { icon: Sparkles, label: 'All Solutions', value: 0, suffix: 'FREE', color: 'from-amber-500 to-orange-500', isText: true, hoverBg: 'hover:border-amber-500/50 hover:shadow-amber-500/20' },
+                            { icon: Layers, label: 'Chapters', value: stats.totalChapters, suffix: '', color: 'from-blue-500 to-cyan-500', hoverBg: 'hover:border-blue-500/50 hover:shadow-blue-500/20' },
+                            { icon: HelpCircle, label: 'Questions', value: stats.totalQuestions, suffix: '', color: 'from-purple-500 to-pink-500', hoverBg: 'hover:border-purple-500/50 hover:shadow-purple-500/20' },
+                            { icon: CheckCircle, label: 'Coverage', value: 100, suffix: '%', color: 'from-emerald-500 to-teal-500', hoverBg: 'hover:border-emerald-500/50 hover:shadow-emerald-500/20' },
+                            { icon: Sparkles, label: 'Solutions', value: 0, suffix: 'FREE', color: 'from-amber-500 to-orange-500', isText: true, hoverBg: 'hover:border-amber-500/50 hover:shadow-amber-500/20' },
                         ].map((stat, i) => (
                             <div
                                 key={stat.label}
-                                className={`group bg-gray-800/60 backdrop-blur-sm rounded-2xl p-5 border border-gray-700/50 cursor-pointer transition-all duration-300 hover:bg-gray-800/80 hover:shadow-2xl ${stat.hoverBg}`}
+                                className={`group bg-gray-800/40 backdrop-blur-sm rounded-xl md:rounded-2xl p-3 md:p-5 border border-white/5 cursor-pointer transition-all duration-300 hover:bg-gray-800/60 flex items-center gap-3 md:gap-4 min-w-[140px] md:min-w-0 ${stat.hoverBg}`}
                             >
                                 <div
-                                    className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mx-auto mb-3 transition-transform duration-300 group-hover:scale-110`}
+                                    className={`w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shrink-0`}
                                 >
-                                    <stat.icon className="w-6 h-6 text-white" />
+                                    <stat.icon size={16} className="md:w-6 md:h-6 text-white" />
                                 </div>
-                                <div className="text-3xl font-bold text-white mb-1">
-                                    {stat.isText ? (
-                                        stat.suffix
-                                    ) : (
-                                        <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                                    )}
+                                <div className="text-left">
+                                    <div className="text-lg md:text-3xl font-black text-white leading-none">
+                                        {stat.isText ? (
+                                            stat.suffix
+                                        ) : (
+                                            <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                                        )}
+                                    </div>
+                                    <div className="text-[10px] md:text-xs text-gray-400 font-bold uppercase tracking-tight group-hover:text-gray-300 transition-colors">{stat.label}</div>
                                 </div>
-                                <div className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors">{stat.label}</div>
                             </div>
                         ))}
                     </motion.div>
@@ -285,18 +279,18 @@ export default function NCERTSolutionsClient({ initialChapters, initialStats }: 
             </section>
 
             {/* Class Toggle + Filters */}
-            <section className="py-8">
+            <section className="pt-2 pb-8">
                 <div className="container mx-auto px-6">
                     {/* Class Toggle Pills */}
-                    <div className="flex justify-center mb-8">
-                        <div className="inline-flex bg-gray-800/50 rounded-full p-1.5 border border-gray-700/50">
+                    <div className="flex justify-center mb-6">
+                        <div className="inline-flex bg-gray-800/50 rounded-full p-1 border border-white/10 shadow-inner">
                             {[11, 12].map((cls) => (
                                 <button
                                     key={cls}
                                     onClick={() => setSelectedClass(cls as 11 | 12)}
-                                    className={`px-8 py-3 rounded-full font-semibold text-base transition-all duration-300 ${selectedClass === cls
-                                        ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/25'
-                                        : 'text-gray-400 hover:text-white'
+                                    className={`px-6 py-2 rounded-full font-black text-sm transition-all duration-500 ${selectedClass === cls
+                                        ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/40 scale-105'
+                                        : 'text-gray-500 hover:text-gray-300'
                                         }`}
                                 >
                                     Class {cls}
@@ -338,7 +332,7 @@ export default function NCERTSolutionsClient({ initialChapters, initialStats }: 
             <section className="py-8 pb-24">
                 <div className="container mx-auto px-6">
                     {(
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                             {filteredChapters.map((chapter, idx) => {
                                 const chapterSlug = getChapterSlug(chapter.chapter, chapter.classNum);
                                 const gradient = getChapterGradient(chapter.chapter);
@@ -355,54 +349,59 @@ export default function NCERTSolutionsClient({ initialChapters, initialStats }: 
                                     >
                                         <Link
                                             href={chapterSlug}
-                                            className="group flex flex-col h-full bg-gray-800/40 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10"
+                                            className="group flex flex-row md:flex-col h-full bg-gray-900/60 backdrop-blur-sm rounded-xl md:rounded-2xl overflow-hidden border border-white/5 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10"
                                         >
-                                            {/* Chapter Header (Top Half) */}
-                                            <div className={`relative h-44 bg-gradient-to-br ${gradient} p-6 flex flex-col justify-between overflow-hidden`}>
-                                                {/* Decorative Background */}
-                                                <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
-                                                <div className="absolute -right-6 -bottom-6 opacity-10 transform rotate-12 group-hover:scale-110 transition-transform duration-500">
+                                            {/* Chapter Color Accent: Strip on Mobile, Header on Desktop */}
+                                            <div className={`relative w-1.5 md:w-full h-auto md:h-44 bg-gradient-to-b md:bg-gradient-to-br ${gradient} shrink-0 overflow-hidden`}>
+                                                {/* Desktop Decorative Elements */}
+                                                <div className="hidden md:block absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
+                                                <div className="hidden md:block absolute -right-6 -bottom-6 opacity-10 transform rotate-12 group-hover:scale-110 transition-transform duration-500">
                                                     <CategoryIcon className="w-32 h-32 text-white" />
                                                 </div>
 
-                                                {/* Category Badge */}
-                                                <div className="relative z-10 flex justify-between items-start">
-                                                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-md text-white border border-white/20 shadow-sm">
+                                                {/* Category Badge - Desktop Only */}
+                                                <div className="hidden md:flex relative z-10 p-6 justify-between items-start">
+                                                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-md text-white border border-white/20 shadow-sm uppercase tracking-wider">
                                                         {chapter.category}
                                                     </span>
                                                 </div>
-
-                                                {/* Title */}
-                                                <h3 className="relative z-10 text-2xl font-bold text-white leading-tight drop-shadow-md">
-                                                    {chapter.chapter}
-                                                </h3>
                                             </div>
 
-                                            {/* Chapter Body (Bottom Half) */}
-                                            <div className="flex-1 p-6 flex flex-col">
-                                                {/* Description */}
-                                                <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-2">
+                                            {/* Chapter Content */}
+                                            <div className="flex-1 p-4 md:p-6 flex flex-col justify-center">
+                                                {/* Title - Full visibility on mobile */}
+                                                <h3 className="text-sm md:text-2xl font-black text-white leading-tight md:mb-3 group-hover:text-blue-400 transition-colors">
+                                                    {chapter.chapter}
+                                                </h3>
+
+                                                {/* Category Badge - Mobile Only (Inline/Small) */}
+                                                <div className="md:hidden flex items-center gap-2 mt-1 mb-2">
+                                                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{chapter.category}</span>
+                                                </div>
+
+                                                {/* Description - Desktop Only */}
+                                                <p className="hidden md:block text-gray-400 text-sm leading-relaxed mb-6 line-clamp-2 font-medium">
                                                     {description}
                                                 </p>
 
-                                                <div className="mt-auto">
-                                                    {/* Stats */}
-                                                    <div className="flex items-center justify-between mb-5 border-t border-gray-700/50 pt-4">
-                                                        <div className="flex items-center gap-2 text-gray-300 text-sm font-medium">
-                                                            <HelpCircle className="w-4 h-4 text-gray-500" />
+                                                <div className="mt-2 md:mt-auto">
+                                                    {/* Stats Container */}
+                                                    <div className="flex items-center justify-between border-t border-white/5 pt-3 md:pt-4">
+                                                        <div className="flex items-center gap-2 text-gray-300 text-[10px] md:text-sm font-bold">
+                                                            <HelpCircle size={14} className="text-gray-500 md:w-4 md:h-4" />
                                                             <span>{chapter.questions.length} Questions</span>
                                                         </div>
-                                                        <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold bg-emerald-500/10 px-2 py-1 rounded-md">
-                                                            <CheckCircle className="w-3.5 h-3.5" />
-                                                            <span>100% Solved</span>
+                                                        <div className="flex items-center gap-1.5 md:gap-2 text-emerald-400 text-[10px] md:text-xs font-black bg-emerald-500/10 px-2 py-0.5 md:py-1 rounded-md uppercase tracking-wider">
+                                                            <CheckCircle size={12} className="md:w-3.5 md:h-3.5" />
+                                                            <span>Solved</span>
                                                         </div>
                                                     </div>
 
-                                                    {/* View Solutions Button */}
-                                                    <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-700/50 text-white border border-gray-600/50 rounded-xl font-medium text-sm transition-all group-hover:bg-blue-600 group-hover:border-blue-500 group-hover:text-white shadow-sm">
-                                                        <span>View Chapter Solutions</span>
-                                                        <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                                                    </button>
+                                                    {/* Desktop Action Button */}
+                                                    <div className="hidden md:flex w-full mt-4 items-center justify-center gap-2 px-4 py-3 bg-gray-700/50 text-white border border-gray-600/50 rounded-xl font-black text-xs uppercase tracking-widest transition-all group-hover:bg-blue-600 group-hover:border-blue-500 group-hover:text-white shadow-sm">
+                                                        <span>View Solutions</span>
+                                                        <ChevronRight size={14} />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </Link>

@@ -131,7 +131,7 @@ export default function BoraxBeadTest() {
                                         <button
                                             key={salt.id}
                                             onClick={() => setSelectedSalt(salt.id)}
-                                            className={`p-2 md:p-4 rounded-lg md:rounded-xl text-center md:text-left transition-all duration-300 relative overflow-hidden group ${selectedSalt === salt.id
+                                            className={`p-2 md:p-4 rounded-lg md:rounded-xl text-center md:text-left transition-all duration-300 relative overflow-hidden group cursor-pointer ${selectedSalt === salt.id
                                                 ? 'bg-teal-900/40 border border-teal-500/60 shadow-[0_0_15px_rgba(20,184,166,0.2)]'
                                                 : 'bg-gray-800/40 border border-gray-700 hover:bg-gray-800 hover:border-gray-500'
                                                 }`}
@@ -154,7 +154,7 @@ export default function BoraxBeadTest() {
                                     <div className="flex lg:flex-row flex-col gap-2 bg-gray-900/50 p-1.5 rounded-xl border border-gray-700">
                                         <button
                                             onClick={() => setFlameType('oxidizing')}
-                                            className={`flex-1 py-1 md:py-3 px-1 md:px-4 rounded-lg text-[10px] md:text-sm font-bold transition-all ${flameType === 'oxidizing'
+                                            className={`flex-1 py-1 md:py-3 px-1 md:px-4 rounded-lg text-[10px] md:text-sm font-bold transition-all cursor-pointer ${flameType === 'oxidizing'
                                                 ? 'bg-blue-600 text-white shadow-lg'
                                                 : 'text-gray-400 hover:bg-white/5'
                                                 }`}
@@ -163,7 +163,7 @@ export default function BoraxBeadTest() {
                                         </button>
                                         <button
                                             onClick={() => setFlameType('reducing')}
-                                            className={`flex-1 py-1 md:py-3 px-1 md:px-4 rounded-lg text-[10px] md:text-sm font-bold transition-all ${flameType === 'reducing'
+                                            className={`flex-1 py-1 md:py-3 px-1 md:px-4 rounded-lg text-[10px] md:text-sm font-bold transition-all cursor-pointer ${flameType === 'reducing'
                                                 ? 'bg-yellow-600 text-white shadow-lg'
                                                 : 'text-gray-400 hover:bg-white/5'
                                                 }`}
@@ -179,7 +179,7 @@ export default function BoraxBeadTest() {
                                     <div className="flex lg:flex-row flex-col gap-2 bg-gray-900/50 p-1.5 rounded-xl border border-gray-700">
                                         <button
                                             onClick={() => setViewState('hot')}
-                                            className={`flex-1 py-1 md:py-2 px-1 md:px-4 rounded-lg text-[10px] md:text-sm font-medium transition-all ${viewState === 'hot'
+                                            className={`flex-1 py-1 md:py-2 px-1 md:px-4 rounded-lg text-[10px] md:text-sm font-medium transition-all cursor-pointer ${viewState === 'hot'
                                                 ? 'bg-red-600/80 text-white shadow'
                                                 : 'text-gray-400 hover:text-white'
                                                 }`}
@@ -188,7 +188,7 @@ export default function BoraxBeadTest() {
                                         </button>
                                         <button
                                             onClick={() => setViewState('cold')}
-                                            className={`flex-1 py-1 md:py-2 px-1 md:px-4 rounded-lg text-[10px] md:text-sm font-medium transition-all ${viewState === 'cold'
+                                            className={`flex-1 py-1 md:py-2 px-1 md:px-4 rounded-lg text-[10px] md:text-sm font-medium transition-all cursor-pointer ${viewState === 'cold'
                                                 ? 'bg-blue-500/40 text-white shadow border border-blue-400/30'
                                                 : 'text-gray-400 hover:text-white'
                                                 }`}

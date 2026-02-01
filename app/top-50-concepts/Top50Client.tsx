@@ -82,6 +82,15 @@ const categoryColors: Record<string, { bg: string; text: string; border: string 
     'General Chemistry': { bg: 'bg-cyan-500/20', text: 'text-cyan-400', border: 'border-cyan-500/30' },
 };
 
+// Helper to get category colors safetly (fallback for new Sheet categories)
+const getCategoryStyle = (category: string) => {
+    return categoryColors[category] || {
+        bg: 'bg-slate-700/50',
+        text: 'text-slate-300',
+        border: 'border-slate-600/50'
+    };
+};
+
 interface Top50ClientProps {
     initialConcepts: Concept[];
 }
@@ -143,19 +152,13 @@ export default function Top50Client({ initialConcepts }: Top50ClientProps) {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
             {/* Hero Header */}
-            <section className="relative pt-32 pb-12 overflow-hidden">
+            <section className="relative pt-32 md:pt-40 pb-8 overflow-hidden">
                 {/* Background elements */}
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-900/20 via-transparent to-transparent" />
                 <div className="absolute top-20 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
                 <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl" />
 
-                <div className="relative container mx-auto px-6">
-                    {/* Breadcrumb */}
-                    <div className="flex items-center gap-2 text-gray-400 text-sm mb-8">
-                        <Link href="/" className="hover:text-amber-400 transition-colors">Home</Link>
-                        <ChevronRight className="w-4 h-4" />
-                        <span className="text-amber-400">Top 50 Concepts</span>
-                    </div>
+                <div className="relative container mx-auto px-6 flex flex-col items-center text-center">
 
                     {/* Title */}
                     <motion.h1
@@ -173,76 +176,71 @@ export default function Top50Client({ initialConcepts }: Top50ClientProps) {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-gray-400 text-lg max-w-2xl mb-10"
+                        className="hidden md:block text-gray-400 text-lg max-w-2xl mx-auto mb-10"
                     >
                         Master the most important chemistry concepts for JEE & NEET. These handpicked
                         topics are frequently asked in exams and essential for your preparation.
                     </motion.p>
 
                     {/* Tab Toggle */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="inline-flex items-center bg-gray-800/50 rounded-2xl p-1.5 border border-gray-700/50 mb-10"
-                    >
+                    {/* Redesigned Tab Toggle */}
+                    <div className="relative inline-flex bg-gray-900/40 backdrop-blur-sm p-1.5 rounded-2xl border border-gray-800 mb-8">
+                        {/* Sliding Background */}
+                        <motion.div
+                            className="absolute inset-y-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 shadow-lg"
+                            initial={false}
+                            animate={{
+                                x: activeTab === 'videos' ? 0 : '100%',
+                                width: '50%' // Assuming 2 tabs of equal width
+                            }}
+                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                            style={{ left: 6, right: 'auto' }} // Adjust based on padding
+                        />
+
                         <button
                             onClick={() => setActiveTab('videos')}
-                            className={`px-6 py-3 rounded-xl font-semibold text-base transition-all duration-300 flex items-center gap-2 ${activeTab === 'videos'
-                                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/25'
-                                : 'text-gray-400 hover:text-white'
+                            className={`relative z-10 flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-colors duration-300 ${activeTab === 'videos' ? 'text-white' : 'text-gray-400 hover:text-white'
                                 }`}
                         >
-                            <PlayCircle className="w-5 h-5" />
-                            Video Lectures
+                            <PlayCircle className={`w-5 h-5 ${activeTab === 'videos' ? 'text-white' : 'text-gray-500'}`} />
+                            Lectures
                         </button>
                         <button
                             onClick={() => setActiveTab('notes')}
-                            className={`px-6 py-3 rounded-xl font-semibold text-base transition-all duration-300 flex items-center gap-2 ${activeTab === 'notes'
-                                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/25'
-                                : 'text-gray-400 hover:text-white'
+                            className={`relative z-10 flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-colors duration-300 ${activeTab === 'notes' ? 'text-white' : 'text-gray-400 hover:text-white'
                                 }`}
                         >
-                            <FileText className="w-5 h-5" />
+                            <FileText className={`w-5 h-5 ${activeTab === 'notes' ? 'text-white' : 'text-gray-500'}`} />
                             PDF Notes
                         </button>
-                    </motion.div>
+                    </div>
+
+                    {/* Mobile Category Grid Removed - Unified with Desktop Filter Grid */}
                 </div>
             </section>
 
             {activeTab === 'videos' ? (
                 <>
-                    {/* Stats Cards */}
-                    <section className="relative py-8">
-                        <div className="container mx-auto px-6">
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {/* Filter Buttons - Replaces Stats Cards on Desktop & Mobile Grid */}
+                    <section className="relative py-4 md:py-8">
+                        <div className="container mx-auto max-w-5xl px-6">
+                            <div className="grid grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-3 md:gap-4">
                                 {[
-                                    { icon: Lightbulb, label: 'Key Concepts', value: stats.totalConcepts, suffix: '', color: 'from-amber-500 to-orange-500', hoverBg: 'hover:border-amber-500/50 hover:shadow-amber-500/20' },
-                                    { icon: Layers, label: 'Categories', value: stats.totalCategories, suffix: '', color: 'from-violet-500 to-purple-500', hoverBg: 'hover:border-violet-500/50 hover:shadow-violet-500/20' },
-                                    { icon: Eye, label: 'Total Views', value: stats.totalViews, suffix: 'K+', color: 'from-teal-500 to-cyan-500', hoverBg: 'hover:border-teal-500/50 hover:shadow-teal-500/20' },
-                                    { icon: Trophy, label: 'Exam Essential', value: 0, suffix: '100%', color: 'from-rose-500 to-pink-500', hoverBg: 'hover:border-rose-500/50 hover:shadow-rose-500/20', isText: true },
-                                ].map((stat, i) => (
-                                    <motion.div
-                                        key={stat.label}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.1 * i }}
-                                        className={`group bg-gray-800/40 backdrop-blur-sm rounded-2xl p-5 border border-gray-700/50 cursor-pointer transition-all duration-300 hover:bg-gray-800/60 hover:shadow-2xl ${stat.hoverBg}`}
+                                    { label: 'All Lectures', value: 'All Categories', color: 'from-cyan-500 to-blue-600', shadow: 'shadow-cyan-500/20' },
+                                    { label: 'Physical', value: 'Physical Chemistry', color: 'from-violet-500 to-purple-600', shadow: 'shadow-violet-500/20' },
+                                    { label: 'Organic', value: 'Organic Chemistry', color: 'from-amber-500 to-orange-600', shadow: 'shadow-orange-500/20' },
+                                    { label: 'Inorganic', value: 'Inorganic Chemistry', color: 'from-emerald-500 to-teal-600', shadow: 'shadow-emerald-500/20' }
+                                ].map((btn) => (
+                                    <button
+                                        key={btn.label}
+                                        onClick={() => setSelectedCategory(btn.value)}
+                                        className={`px-4 md:px-8 py-3 md:py-4 rounded-xl font-bold text-sm md:text-base transition-all duration-300 w-full md:w-auto h-full ${selectedCategory === btn.value
+                                            ? `bg-gradient-to-r ${btn.color} text-white shadow-lg ${btn.shadow} scale-[1.02] md:scale-105 border border-transparent`
+                                            : 'bg-gray-800/40 text-gray-400 border border-gray-700/50 hover:bg-gray-800/80 hover:text-white hover:border-gray-600'
+                                            }`}
                                     >
-                                        <div
-                                            className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110`}
-                                        >
-                                            <stat.icon className="w-5 h-5 text-white" />
-                                        </div>
-                                        <div className="text-2xl font-bold text-white">
-                                            {stat.isText ? (
-                                                stat.suffix
-                                            ) : (
-                                                <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                                            )}
-                                        </div>
-                                        <div className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors">{stat.label}</div>
-                                    </motion.div>
+                                        {btn.label}
+                                    </button>
                                 ))}
                             </div>
                         </div>
@@ -251,8 +249,8 @@ export default function Top50Client({ initialConcepts }: Top50ClientProps) {
                     {/* Search & Filter Bar */}
                     <section className="py-8">
                         <div className="container mx-auto px-6">
-                            <div className="flex flex-col md:flex-row gap-4 items-center">
-                                <div className="relative flex-1 w-full">
+                            <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
+                                <div className="relative w-full max-w-lg">
                                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                                     <input
                                         type="text"
@@ -262,15 +260,19 @@ export default function Top50Client({ initialConcepts }: Top50ClientProps) {
                                         className="w-full bg-gray-800/50 border border-gray-700/50 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder-gray-400 focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 transition-all"
                                     />
                                 </div>
-                                <select
-                                    value={selectedCategory}
-                                    onChange={(e) => setSelectedCategory(e.target.value)}
-                                    className="bg-gray-800/50 border border-gray-700/50 rounded-xl py-3.5 px-4 text-gray-300 focus:outline-none focus:border-amber-500/50 min-w-[180px]"
-                                >
-                                    {categories.map(cat => (
-                                        <option key={cat} value={cat}>{cat}</option>
-                                    ))}
-                                </select>
+
+                                <div className="w-full md:w-auto">
+                                    {/* Desktop: Dropdown */}
+                                    <select
+                                        value={selectedCategory}
+                                        onChange={(e) => setSelectedCategory(e.target.value)}
+                                        className="hidden md:block bg-gray-800/50 border border-gray-700/50 rounded-xl py-3.5 px-4 text-gray-300 focus:outline-none focus:border-amber-500/50 min-w-[180px]"
+                                    >
+                                        {categories.map(cat => (
+                                            <option key={cat} value={cat}>{cat}</option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
                             <p className="text-gray-400 mt-6">
                                 Showing <span className="font-bold text-white">{filteredConcepts.length}</span> concepts
@@ -329,53 +331,49 @@ export default function Top50Client({ initialConcepts }: Top50ClientProps) {
                                             key={concept.id}
                                             initial={{ opacity: 0, y: 20 }}
                                             animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: 0.02 * Math.min(index, 12) }}
-                                            className={`group bg-gray-800/50 rounded-xl overflow-hidden border transition-all duration-200 cursor-pointer ${isActive
-                                                ? 'border-amber-500 ring-1 ring-amber-500/30'
-                                                : 'border-gray-700/30 hover:border-amber-500/40 hover:bg-gray-800/70'
-                                                }`}
-                                            onClick={() => setActiveVideo(isActive ? null : concept)}
+                                            transition={{ delay: index * 0.05 }}
+                                            onClick={() => setActiveVideo(concept)}
+                                            className="group bg-gray-800/40 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/50 cursor-pointer hover:border-amber-500/50 hover:shadow-2xl transition-all duration-300 flex flex-col"
                                         >
-                                            {/* Thumbnail */}
+                                            {/* Thumbnail Container */}
                                             <div className="relative aspect-video overflow-hidden">
                                                 <Image
                                                     src={concept.thumbnailUrl}
                                                     alt={concept.title}
                                                     fill
-                                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                                                 />
-                                                {/* Rank Badge */}
-                                                <div className="absolute top-2 left-2 px-2 py-1 rounded bg-gradient-to-br from-amber-400 to-orange-500 text-gray-900 font-bold text-xs flex items-center gap-1">
-                                                    <Trophy className="w-3 h-3" />
-                                                    #{concept.videoNumber}
-                                                </div>
-                                                {/* Views Badge */}
-                                                <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-black/80 text-white text-xs font-medium rounded flex items-center gap-1">
-                                                    <Eye className="w-3 h-3" />
+                                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
+                                                <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-md px-2 py-1 rounded-lg text-xs font-bold text-white flex items-center gap-1.5 border border-white/10">
+                                                    <Eye className="w-3 h-3 text-amber-400" />
                                                     {concept.views}
                                                 </div>
-                                                {/* Play Overlay */}
-                                                <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
-                                                    <div className="w-12 h-12 rounded-full bg-amber-500/90 flex items-center justify-center">
-                                                        <Play className="w-5 h-5 text-white ml-0.5" fill="currentColor" />
+
+                                                {/* Play Button Overlay */}
+                                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                    <div className="w-12 h-12 bg-amber-500/90 rounded-full flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform duration-300 shadow-lg">
+                                                        <Play className="w-5 h-5 text-white fill-white ml-1" />
                                                     </div>
                                                 </div>
-                                                {isActive && (
-                                                    <div className="absolute top-2 right-2 flex items-center gap-1.5 px-2 py-1 bg-amber-500 text-white text-xs font-medium rounded">
-                                                        <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                                                        Playing
-                                                    </div>
-                                                )}
                                             </div>
 
-                                            {/* Info - Compact */}
-                                            <div className="p-3">
-                                                <h3 className="font-bold text-white text-base leading-snug line-clamp-2 mb-2 group-hover:text-amber-400 transition-colors">
+                                            {/* Content */}
+                                            <div className="p-5 flex flex-col flex-1">
+                                                <div className="flex gap-2 mb-3">
+                                                    <span className={`text-[10px] font-bold px-2 py-1 rounded-full border ${catStyle.bg} ${catStyle.text} ${catStyle.border}`}>
+                                                        {concept.category}
+                                                    </span>
+                                                </div>
+                                                <h3 className="text-white font-bold text-lg mb-2 line-clamp-2 leading-tight group-hover:text-amber-400 transition-colors">
                                                     {concept.title}
                                                 </h3>
-                                                <div className="flex items-center justify-between">
-                                                    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${catStyle.bg} ${catStyle.text}`}>
-                                                        {concept.category.replace(' Chemistry', '')}
+                                                <div className="mt-auto pt-4 flex items-center justify-between text-xs text-gray-500 border-t border-gray-700/50">
+                                                    <span className="flex items-center gap-1.5">
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                                                        Concept #{concept.videoNumber}
+                                                    </span>
+                                                    <span className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity text-amber-400 font-medium">
+                                                        Watch Now <ChevronRight className="w-3 h-3" />
                                                     </span>
                                                 </div>
                                             </div>
@@ -429,7 +427,8 @@ export default function Top50Client({ initialConcepts }: Top50ClientProps) {
                         </motion.div>
                     </div>
                 </section>
-            )}
+            )
+            }
 
             {/* CTA Section */}
             <section className="py-16">
@@ -466,6 +465,6 @@ export default function Top50Client({ initialConcepts }: Top50ClientProps) {
                     </div>
                 </div>
             </section>
-        </div>
+        </div >
     );
 }

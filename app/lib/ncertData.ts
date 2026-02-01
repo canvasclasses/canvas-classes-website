@@ -11,11 +11,13 @@ export interface NCERTQuestion {
     solutionType: string;
     youtubeUrl: string;
     altText: string;
+    classification: string;
 }
 
 export interface ChapterGroup {
     chapter: string;
     classNum: number;
+    classification: string;
     questions: NCERTQuestion[];
 }
 
@@ -55,7 +57,7 @@ export async function fetchNCERTData(): Promise<NCERTQuestion[]> {
 
         for (let i = 1; i < lines.length; i++) {
             const values = parseCSVLine(lines[i]);
-            const [classNum, chapter, questionNumber, questionText, difficulty, solutionContent, solutionType, youtubeUrl, altText] = values;
+            const [classNum, classification, chapter, questionNumber, questionText, difficulty, solutionContent, solutionType, youtubeUrl, altText] = values;
 
             if (!chapter || !questionText) continue;
 
@@ -70,6 +72,7 @@ export async function fetchNCERTData(): Promise<NCERTQuestion[]> {
                 solutionType: solutionType || 'Text',
                 youtubeUrl: youtubeUrl || '',
                 altText: altText || '',
+                classification: classification || '',
             });
         }
 
@@ -79,6 +82,33 @@ export async function fetchNCERTData(): Promise<NCERTQuestion[]> {
         return [];
     }
 }
+
+// Custom order for NCERT Chapters (Official NCERT Sequence)
+const CHAPTER_ORDER: Record<string, number> = {
+    // Class 11
+    'Some Basic Concepts of Chemistry': 1,
+    'Structure of Atom': 2,
+    'Classification of Elements and Periodicity in Properties': 3,
+    'Chemical Bonding and Molecular Structure': 4,
+    'Thermodynamics': 5,
+    'Equilibrium': 6,
+    'Redox Reactions': 7,
+    'Organic Chemistry – Some Basic Principles and Techniques': 8,
+    'Hydrocarbons': 9,
+
+    // Class 12
+    'Solutions': 1,
+    'Electrochemistry': 2,
+    'Chemical Kinetics': 3,
+    'The d-and f-Block Elements': 4,
+    'The d- and f- Block Elements': 4, // Alternative spelling check
+    'Coordination Compounds': 5,
+    'Haloalkanes and Haloarenes': 6,
+    'Alcohols, Phenols and Ethers': 7,
+    'Aldehydes, Ketones and Carboxylic Acids': 8,
+    'Amines': 9,
+    'Biomolecules': 10
+};
 
 // Group questions by chapter
 export async function getChapterGroups(): Promise<ChapterGroup[]> {
@@ -91,6 +121,7 @@ export async function getChapterGroups(): Promise<ChapterGroup[]> {
             chapterMap.set(key, {
                 chapter: q.chapter,
                 classNum: q.classNum,
+                classification: q.classification,
                 questions: [],
             });
         }
@@ -99,6 +130,40 @@ export async function getChapterGroups(): Promise<ChapterGroup[]> {
 
     return Array.from(chapterMap.values()).sort((a, b) => {
         if (a.classNum !== b.classNum) return a.classNum - b.classNum;
+
+        const getOrder = (chapter: string, classNum: number) => {
+            if (CHAPTER_ORDER[chapter]) return CHAPTER_ORDER[chapter];
+
+            const lower = chapter.toLowerCase();
+            if (classNum === 11) {
+                if (lower.includes('basic concept')) return 1;
+                if (lower.includes('structure of atom')) return 2;
+                if (lower.includes('periodicity')) return 3;
+                if (lower.includes('bonding')) return 4;
+                if (lower.includes('thermo')) return 5;
+                if (lower.includes('equilibrium')) return 6;
+                if (lower.includes('redox')) return 7;
+                if (lower.includes('organic chemistry')) return 8;
+                if (lower.includes('hydrocarbon')) return 9;
+            } else {
+                if (lower.includes('solution')) return 1;
+                if (lower.includes('electro')) return 2;
+                if (lower.includes('kinetic')) return 3;
+                if (lower.includes('block')) return 4;
+                if (lower.includes('coordination')) return 5;
+                if (lower.includes('halo')) return 6;
+                if (lower.includes('alcohol')) return 7;
+                if (lower.includes('aldehyde')) return 8;
+                if (lower.includes('amine')) return 9;
+                if (lower.includes('bio')) return 10;
+            }
+            return 999;
+        };
+
+        const orderA = getOrder(a.chapter, a.classNum);
+        const orderB = getOrder(b.chapter, b.classNum);
+
+        if (orderA !== orderB) return orderA - orderB;
         return a.chapter.localeCompare(b.chapter);
     });
 }

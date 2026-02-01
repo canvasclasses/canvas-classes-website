@@ -110,24 +110,27 @@ export default function NcertBooksClient({ initialData }: NcertBooksClientProps)
 
                 {/* Tabs */}
                 <div className="flex justify-center mb-10">
-                    <div className="flex items-center gap-2 md:gap-4 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+                    <div className="flex items-center gap-2 p-1.5 bg-gray-900/50 border border-gray-800 rounded-2xl overflow-x-auto scrollbar-hide">
                         <TabButton
                             active={activeTab === 'textbook'}
                             onClick={() => setActiveTab('textbook')}
                             icon={Book}
                             label="Textbooks"
+                            gradient="from-indigo-600 to-purple-600 shadow-indigo-500/20"
                         />
                         <TabButton
                             active={activeTab === 'exemplar'}
                             onClick={() => setActiveTab('exemplar')}
                             icon={FileText}
                             label="Exemplar"
+                            gradient="from-teal-600 to-cyan-600 shadow-teal-500/20"
                         />
                         <TabButton
                             active={activeTab === 'lab-manual'}
                             onClick={() => setActiveTab('lab-manual')}
                             icon={Beaker}
                             label="Lab Manual"
+                            gradient="from-orange-600 to-amber-600 shadow-orange-500/20"
                         />
                     </div>
                 </div>
@@ -257,17 +260,24 @@ function ChapterRow({
     );
 }
 
-function TabButton({ active, onClick, icon: Icon, label }: { active: boolean; onClick: () => void; icon: React.ElementType; label: string }) {
+function TabButton({ active, onClick, icon: Icon, label, gradient }: { active: boolean; onClick: () => void; icon: React.ElementType; label: string; gradient: string }) {
     return (
         <button
             onClick={onClick}
-            className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold transition-all ${active
-                ? 'bg-white text-gray-950 shadow-lg shadow-white/10'
-                : 'bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white border border-gray-800'
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all relative overflow-hidden whitespace-nowrap ${active
+                ? 'text-white'
+                : 'text-gray-400 hover:text-white'
                 }`}
         >
-            <Icon size={16} />
-            {label}
+            {active && (
+                <motion.div
+                    layoutId="bookshelf-tab"
+                    className={`absolute inset-0 bg-gradient-to-r ${gradient} shadow-lg z-0`}
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+            )}
+            <Icon size={16} className={`relative z-10 ${active ? 'text-white' : 'text-gray-500'}`} />
+            <span className="relative z-10">{label}</span>
         </button>
     );
 }

@@ -117,7 +117,7 @@ export default function DryHeatingTest() {
                                     <button
                                         key={salt.id}
                                         onClick={() => handleSelect(salt.id)}
-                                        className={`p-2.5 md:p-4 rounded-lg md:rounded-xl border text-left transition-all group relative overflow-hidden ${selectedSalt === salt.id
+                                        className={`p-2.5 md:p-4 rounded-lg md:rounded-xl border text-left transition-all group relative overflow-hidden cursor-pointer ${selectedSalt === salt.id
                                             ? 'bg-gray-800 border-yellow-500/50 shadow-lg shadow-yellow-500/10'
                                             : 'bg-gray-800/40 border-gray-700 hover:bg-gray-700/60'
                                             }`}
@@ -137,7 +137,7 @@ export default function DryHeatingTest() {
                         {/* Procedure - Collapsible on mobile */}
                         <div className="bg-gray-800/30 rounded-lg md:rounded-xl border border-gray-700 overflow-hidden">
                             <button
-                                className="w-full p-3 md:p-5 flex items-center justify-between md:cursor-default"
+                                className="w-full p-3 md:p-5 flex items-center justify-between cursor-pointer"
                                 onClick={() => setShowProcedure(!showProcedure)}
                             >
                                 <h4 className="flex items-center gap-2 text-yellow-400 font-bold text-sm md:text-base">
@@ -166,8 +166,8 @@ export default function DryHeatingTest() {
                                 ${!selectedSalt
                                         ? 'bg-gray-800 text-gray-500 cursor-not-allowed'
                                         : isHeating
-                                            ? 'bg-red-500/20 text-red-400 border border-red-500/50 hover:bg-red-500/30'
-                                            : 'bg-yellow-500 hover:bg-yellow-400 text-black shadow-lg shadow-yellow-500/20'
+                                            ? 'bg-red-500/20 text-red-400 border border-red-500/50 hover:bg-red-500/30 cursor-pointer'
+                                            : 'bg-yellow-500 hover:bg-yellow-400 text-black shadow-lg shadow-yellow-500/20 cursor-pointer'
                                     }`}
                             >
                                 {isHeating ? (
@@ -179,7 +179,7 @@ export default function DryHeatingTest() {
 
                             <button
                                 onClick={reset}
-                                className="px-4 md:px-6 bg-gray-700 hover:bg-gray-600 text-white rounded-lg md:rounded-xl transition-colors"
+                                className="px-4 md:px-6 bg-gray-700 hover:bg-gray-600 text-white rounded-lg md:rounded-xl transition-colors cursor-pointer"
                             >
                                 <RotateCcw size={18} />
                             </button>

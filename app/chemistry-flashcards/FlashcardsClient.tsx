@@ -200,7 +200,7 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
         <main className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
 
             {/* Hero Section */}
-            <section className="relative pt-48 pb-12 overflow-hidden">
+            <section className="relative pt-28 pb-8 md:pt-48 md:pb-12 overflow-hidden">
                 <div className="absolute top-20 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl" />
                 <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl" />
 
@@ -210,9 +210,9 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/10 rounded-full border border-purple-500/20 mb-6">
-                            <Brain className="w-4 h-4 text-purple-400" />
-                            <span className="text-purple-400 font-semibold text-sm">Active Recall & Spaced Repetition</span>
+                        <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-purple-500/10 rounded-full border border-purple-500/20 mb-4 md:mb-6">
+                            <Brain className="w-3.5 h-3.5 md:w-4 md:h-4 text-purple-400" />
+                            <span className="text-purple-400 font-semibold text-xs md:text-sm">Active Recall & Spaced Repetition</span>
                         </div>
 
                         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
@@ -222,30 +222,30 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                             </span>
                         </h1>
 
-                        <p className="text-slate-400 text-lg max-w-2xl mx-auto mb-8">
+                        <p className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto mb-6 md:mb-8 px-4">
                             Master chemistry concepts with spaced repetition. The algorithm remembers what you know and shows you what you need to review.
                         </p>
 
                         {/* Global Stats */}
                         {globalStats && progressLoaded && (
-                            <div className="flex flex-wrap justify-center gap-3 mb-4">
-                                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg border border-white/10">
-                                    <Layers className="w-4 h-4 text-purple-400" />
-                                    <span className="text-white font-medium">{allFlashcards.length} Cards</span>
+                            <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-4">
+                                <div className="flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/5 rounded-lg border border-white/10">
+                                    <Layers className="w-3.5 h-3.5 md:w-4 md:h-4 text-purple-400" />
+                                    <span className="text-white font-medium text-xs md:text-sm">{allFlashcards.length} Cards</span>
                                 </div>
-                                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg border border-white/10">
-                                    <BookOpen className="w-4 h-4 text-blue-400" />
-                                    <span className="text-white font-medium">{chapterGroups.length} Chapters</span>
+                                <div className="flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/5 rounded-lg border border-white/10">
+                                    <BookOpen className="w-3.5 h-3.5 md:w-4 md:h-4 text-blue-400" />
+                                    <span className="text-white font-medium text-xs md:text-sm">{chapterGroups.length} Chapters</span>
                                 </div>
                                 {hasAnyProgress() && (
                                     <>
-                                        <div className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 rounded-lg border border-amber-500/20">
-                                            <Clock className="w-4 h-4 text-amber-400" />
-                                            <span className="text-amber-400 font-medium">{globalStats.dueToday} Due Today</span>
+                                        <div className="flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-amber-500/10 rounded-lg border border-amber-500/20">
+                                            <Clock className="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-400" />
+                                            <span className="text-amber-400 font-medium text-xs md:text-sm">{globalStats.dueToday} Due Today</span>
                                         </div>
-                                        <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
-                                            <Trophy className="w-4 h-4 text-emerald-400" />
-                                            <span className="text-emerald-400 font-medium">{globalStats.mastered} Mastered</span>
+                                        <div className="flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
+                                            <Trophy className="w-3.5 h-3.5 md:w-4 md:h-4 text-emerald-400" />
+                                            <span className="text-emerald-400 font-medium text-xs md:text-sm">{globalStats.mastered} Mastered</span>
                                         </div>
                                     </>
                                 )}
@@ -256,7 +256,7 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
             </section>
 
             {/* Main Content */}
-            <section className="py-12">
+            <section className="py-6 md:py-12">
                 <div className="container mx-auto px-4">
                     {!progressLoaded ? (
                         <div className="flex items-center justify-center py-20">
@@ -271,40 +271,67 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                 >
-                                    <h2 className="text-2xl font-bold text-white mb-6">Select a Chapter</h2>
+                                    <h2 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-6">Select a Chapter</h2>
 
                                     {/* Category Tabs */}
-                                    <div className="flex flex-wrap gap-2 mb-8">
-                                        {[
-                                            { id: 'All', label: 'All Chapters', icon: Layers, color: 'from-purple-500 to-pink-500' },
-                                            { id: 'JEE PYQ', label: 'JEE PYQ', icon: Target, color: 'from-amber-400 to-orange-500' },
-                                            { id: 'Physical Chemistry', label: 'Physical', icon: FlaskConical, color: 'from-green-500 to-emerald-500' },
-                                            { id: 'Organic Chemistry', label: 'Organic', icon: Beaker, color: 'from-purple-500 to-pink-500' },
-                                            { id: 'Inorganic Chemistry', label: 'Inorganic', icon: Atom, color: 'from-blue-500 to-cyan-500' },
-                                        ].map((cat) => {
-                                            const count = cat.id === 'All'
-                                                ? chapterGroups.length
-                                                : chapterGroups.filter(g => g.category === cat.id).length;
-                                            const isActive = selectedCategory === cat.id;
+                                    <div className="flex flex-col gap-3 mb-8">
+                                        {/* Row 1: All and JEE PYQ */}
+                                        <div className="flex gap-2">
+                                            {[
+                                                { id: 'All', label: 'All Chapters', icon: Layers, color: 'from-purple-500 to-pink-500' },
+                                                { id: 'JEE PYQ', label: 'JEE PYQ', icon: Target, color: 'from-amber-400 to-orange-500' },
+                                            ].map((cat) => {
+                                                const count = cat.id === 'All'
+                                                    ? chapterGroups.length
+                                                    : chapterGroups.filter(g => g.category === cat.id).length;
+                                                const isActive = selectedCategory === cat.id;
 
-                                            return (
-                                                <button
-                                                    key={cat.id}
-                                                    onClick={() => setSelectedCategory(cat.id)}
-                                                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all ${isActive
-                                                        ? `bg-gradient-to-r ${cat.color} text-white shadow-lg`
-                                                        : 'bg-slate-800/60 text-slate-400 hover:bg-slate-800 hover:text-white border border-white/5'
-                                                        }`}
-                                                >
-                                                    <cat.icon className="w-4 h-4" />
-                                                    {cat.label}
-                                                    <span className={`px-2 py-0.5 rounded-full text-xs ${isActive ? 'bg-white/20' : 'bg-slate-700'
-                                                        }`}>
-                                                        {count}
-                                                    </span>
-                                                </button>
-                                            );
-                                        })}
+                                                return (
+                                                    <button
+                                                        key={cat.id}
+                                                        onClick={() => setSelectedCategory(cat.id)}
+                                                        className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs md:text-sm font-medium transition-all ${isActive
+                                                            ? `bg-gradient-to-r ${cat.color} ${cat.id === 'JEE PYQ' ? 'text-slate-950/90' : 'text-white'} shadow-lg`
+                                                            : 'bg-slate-800/60 text-slate-400 hover:bg-slate-800 hover:text-white border border-white/5'
+                                                            }`}
+                                                    >
+                                                        <cat.icon className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                                        <span>{cat.label}</span>
+                                                        <span className={`px-1.5 py-0.5 rounded-full text-[10px] md:text-xs ${isActive ? 'bg-white/20' : 'bg-slate-700'}`}>
+                                                            {count}
+                                                        </span>
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+
+                                        {/* Row 2: Subject Sections */}
+                                        <div className="flex gap-2">
+                                            {[
+                                                { id: 'Physical Chemistry', label: 'Physical', icon: FlaskConical, color: 'from-green-500 to-emerald-500' },
+                                                { id: 'Organic Chemistry', label: 'Organic', icon: Beaker, color: 'from-purple-500 to-pink-500' },
+                                                { id: 'Inorganic Chemistry', label: 'Inorganic', icon: Atom, color: 'from-blue-500 to-cyan-500' },
+                                            ].map((cat) => {
+                                                const count = chapterGroups.filter(g => g.category === cat.id).length;
+                                                const isActive = selectedCategory === cat.id;
+
+                                                return (
+                                                    <button
+                                                        key={cat.id}
+                                                        onClick={() => setSelectedCategory(cat.id)}
+                                                        className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-2.5 rounded-xl text-xs md:text-sm font-medium transition-all ${isActive
+                                                            ? `bg-gradient-to-r ${cat.color} ${cat.id === 'Physical Chemistry' ? 'text-slate-950/90' : 'text-white'} shadow-lg`
+                                                            : 'bg-slate-800/60 text-slate-400 hover:bg-slate-800 hover:text-white border border-white/5'
+                                                            }`}
+                                                    >
+                                                        <span className="truncate">{cat.label}</span>
+                                                        <span className={`px-1 py-0.5 rounded-full text-[9px] md:text-xs ${isActive ? 'bg-white/20' : 'bg-slate-700'}`}>
+                                                            {count}
+                                                        </span>
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
                                     </div>
 
                                     {/* Filtered Chapters Grid */}
@@ -336,7 +363,7 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                                             setSelectedChapter(group.chapterName);
                                                             setSelectedTopics([]);
                                                         }}
-                                                        className={`group relative p-5 bg-slate-900/40 hover:bg-slate-900/80 border-y border-r border-white/5 hover:border-white/10 border-l-4 rounded-xl text-left transition-all overflow-hidden`}
+                                                        className={`group relative p-4 md:p-5 bg-slate-900/40 hover:bg-slate-900/80 border-y border-r border-white/5 hover:border-white/10 border-l-4 rounded-xl text-left transition-all overflow-hidden`}
                                                         style={{ borderLeftColor: styles.borderHex }}
                                                     >
                                                         <div className="flex flex-col h-full">

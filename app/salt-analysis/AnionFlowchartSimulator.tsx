@@ -248,7 +248,7 @@ export default function AnionFlowchartSimulator() {
                                 <button
                                     key={anion.id}
                                     onClick={() => handleSelectAnion(anion)}
-                                    className={`p-1.5 md:p-2 rounded-lg text-xs md:text-sm font-bold transition-all border ${selectedAnion?.id === anion.id
+                                    className={`p-1.5 md:p-2 rounded-lg text-xs md:text-sm font-bold transition-all border cursor-pointer ${selectedAnion?.id === anion.id
                                         ? 'bg-cyan-600 text-white border-cyan-500 shadow-lg scale-105'
                                         : 'bg-gray-800 text-gray-400 border-gray-700 hover:bg-gray-700 hover:border-gray-600'
                                         }`}
@@ -460,7 +460,7 @@ export default function AnionFlowchartSimulator() {
                                                 animate={{ y: 0, opacity: 1 }}
                                                 exit={{ y: -20, opacity: 0 }}
                                                 onClick={performTest}
-                                                className="w-full py-3 md:py-4 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-lg md:rounded-xl shadow-lg shadow-cyan-900/50 flex items-center justify-center gap-2 text-sm md:text-lg transform transition active:scale-95"
+                                                className="w-full py-3 md:py-4 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-lg md:rounded-xl shadow-lg shadow-cyan-900/50 flex items-center justify-center gap-2 text-sm md:text-lg transform transition active:scale-95 cursor-pointer"
                                             >
                                                 <Beaker size={18} /> Add {currentStage.reagent.split(' ')[0]}
                                             </motion.button>
@@ -473,7 +473,7 @@ export default function AnionFlowchartSimulator() {
                                                 {currentStageIndex < STAGES.length - 1 && (
                                                     <button
                                                         onClick={nextStage}
-                                                        className="w-full py-4 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-white font-bold rounded-xl flex items-center justify-center gap-2"
+                                                        className="w-full py-4 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-white font-bold rounded-xl flex items-center justify-center gap-2 cursor-pointer"
                                                     >
                                                         Proceed to {STAGES[currentStageIndex + 1]?.title} <ArrowRight size={16} />
                                                     </button>
@@ -511,7 +511,7 @@ export default function AnionFlowchartSimulator() {
 
                                             <button
                                                 onClick={reset}
-                                                className="py-2 md:py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-bold text-xs md:text-sm w-full transition flex items-center justify-center gap-1.5"
+                                                className="py-2 md:py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-bold text-xs md:text-sm w-full transition flex items-center justify-center gap-1.5 cursor-pointer"
                                             >
                                                 <RefreshCcw size={14} /> Test Another
                                             </button>

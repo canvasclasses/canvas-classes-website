@@ -148,7 +148,7 @@ export default function FlameTestSimulator() {
                                     <button
                                         key={item.id}
                                         onClick={() => handleTest(item.id)}
-                                        className={`p-2 md:p-4 rounded-lg md:rounded-xl border text-center md:text-left transition-all relative overflow-hidden group ${selectedIon === item.id
+                                        className={`p-2 md:p-4 rounded-lg md:rounded-xl border text-center md:text-left transition-all relative overflow-hidden group cursor-pointer ${selectedIon === item.id
                                             ? 'bg-gray-800 border-white/50 shadow-lg shadow-white/5 scale-[1.02]'
                                             : 'bg-gray-800/40 border-gray-700 hover:bg-gray-700/60 hover:border-gray-600'
                                             }`}
@@ -171,7 +171,7 @@ export default function FlameTestSimulator() {
                         <div className="bg-blue-900/20 border border-blue-500/20 rounded-lg md:rounded-xl relative overflow-hidden">
                             <div className="absolute top-0 right-0 p-16 bg-blue-500/5 rounded-full blur-2xl" />
                             <button
-                                className="w-full p-3 md:p-5 flex items-center justify-between md:cursor-default relative z-10"
+                                className="w-full p-3 md:p-5 flex items-center justify-between cursor-pointer relative z-10"
                                 onClick={() => setShowProcedure(!showProcedure)}
                             >
                                 <h4 className="flex items-center gap-2 text-blue-400 font-bold text-sm md:text-base">
@@ -195,7 +195,7 @@ export default function FlameTestSimulator() {
                         {/* Reset Button - Smaller on mobile */}
                         <button
                             onClick={reset}
-                            className="w-full py-2.5 md:py-3 bg-gray-800/80 hover:bg-gray-700 text-gray-300 rounded-lg md:rounded-xl font-medium transition-colors flex items-center justify-center gap-2 border border-gray-700 text-sm md:text-base"
+                            className="w-full py-2.5 md:py-3 bg-gray-800/80 hover:bg-gray-700 text-gray-300 rounded-lg md:rounded-xl font-medium transition-colors flex items-center justify-center gap-2 border border-gray-700 text-sm md:text-base cursor-pointer"
                         >
                             <RotateCcw size={16} />
                             Reset Burner
@@ -298,7 +298,7 @@ export default function FlameTestSimulator() {
                                 className={`flex items-center gap-1.5 md:gap-2 px-2.5 md:px-4 py-1.5 md:py-2 rounded-lg md:rounded-xl border backdrop-blur-md transition-all shadow-lg text-xs md:text-sm ${viewMode === 'blue-glass'
                                     ? 'bg-blue-600 text-white border-blue-400 ring-2 ring-blue-500/50'
                                     : 'bg-white/10 text-white border-white/20 hover:bg-white/20'
-                                    }`}
+                                    } cursor-pointer`}
                             >
                                 <Glasses size={14} />
                                 <span className="font-semibold hidden md:inline">
@@ -332,7 +332,7 @@ export default function FlameTestSimulator() {
                 <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-gray-700/50">
                     <button
                         onClick={() => setShowExplanation(!showExplanation)}
-                        className="w-full flex items-center justify-between group"
+                        className="w-full flex items-center justify-between group cursor-pointer"
                     >
                         <h3 className="text-base md:text-xl font-bold text-white mb-4 md:mb-6 flex items-center gap-2 group-hover:text-cyan-400 transition-colors">
                             <span className="text-xl md:text-2xl">💡</span> Why do elements show characteristic colors?

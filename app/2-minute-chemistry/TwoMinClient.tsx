@@ -158,8 +158,8 @@ export default function TwoMinClient({ initialVideos }: TwoMinClientProps) {
                 <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl" />
 
                 <div className="relative container mx-auto px-6">
-                    {/* Breadcrumb */}
-                    <div className="flex items-center gap-2 text-gray-400 text-sm mb-8">
+                    {/* Breadcrumb - Hidden on mobile */}
+                    <div className="hidden md:flex items-center gap-2 text-gray-400 text-sm mb-8">
                         <Link href="/" className="hover:text-rose-400 transition-colors">Home</Link>
                         <ChevronRight className="w-4 h-4" />
                         <span className="text-rose-400">2 Minute Chemistry</span>
@@ -171,10 +171,10 @@ export default function TwoMinClient({ initialVideos }: TwoMinClientProps) {
                         animate={{ opacity: 1, y: 0 }}
                         className="flex items-center gap-3 mb-4"
                     >
-                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center shadow-lg shadow-rose-500/25">
-                            <Zap className="w-7 h-7 text-white" />
+                        <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center shadow-lg shadow-rose-500/25">
+                            <Zap className="w-5 h-5 md:w-7 md:h-7 text-white" />
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-bold">
+                        <h1 className="text-3xl md:text-5xl font-bold">
                             <span className="text-white">2 Minute </span>
                             <span className="bg-gradient-to-r from-rose-400 to-pink-400 bg-clip-text text-transparent">
                                 Chemistry
@@ -186,40 +186,46 @@ export default function TwoMinClient({ initialVideos }: TwoMinClientProps) {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-gray-400 text-lg max-w-2xl mb-10"
+                        className="text-gray-400 text-base md:text-lg max-w-2xl mb-6 md:mb-10"
                     >
-                        Quick, bite-sized chemistry lessons perfect for revision on the go.
-                        Master complex concepts in under 5 minutes with focused, visual explanations.
+                        Bite-sized chemistry lessons for revision on the go.
+                        Master concepts in under 5 minutes.
                     </motion.p>
                 </div>
             </section>
 
-            {/* Stats Cards */}
-            <section className="relative py-8">
-                <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {/* Stats Cards - Optimized row for mobile */}
+            <section className="relative py-4 md:py-8">
+                <div className="container mx-auto px-2 md:px-6">
+                    <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-4">
                         {[
-                            { icon: Zap, label: 'Quick Videos', value: stats.totalVideos, suffix: '', color: 'from-rose-500 to-pink-500', hoverBg: 'hover:border-rose-500/50 hover:shadow-rose-500/20' },
-                            { icon: Layers, label: 'Categories', value: stats.totalCategories, suffix: '', color: 'from-violet-500 to-purple-500', hoverBg: 'hover:border-violet-500/50 hover:shadow-violet-500/20' },
-                            { icon: TrendingUp, label: 'Total Views', value: stats.totalViews, suffix: 'K+', color: 'from-teal-500 to-cyan-500', hoverBg: 'hover:border-teal-500/50 hover:shadow-teal-500/20' },
-                            { icon: Timer, label: 'Avg Duration', value: stats.avgDuration, suffix: ' min', color: 'from-amber-500 to-orange-500', hoverBg: 'hover:border-amber-500/50 hover:shadow-amber-500/20' },
+                            { icon: Zap, label: 'Videos', value: stats.totalVideos, suffix: '', color: 'from-rose-500 to-pink-500', hoverBg: 'hover:border-rose-500/50 hover:shadow-rose-500/20' },
+                            // { icon: Layers, label: 'Topics', value: stats.totalCategories, suffix: '', color: 'from-violet-500 to-purple-500', hoverBg: 'hover:border-violet-500/50 hover:shadow-violet-500/20' },
+                            { icon: TrendingUp, label: 'Views', value: stats.totalViews, suffix: 'K+', color: 'from-teal-500 to-cyan-500', hoverBg: 'hover:border-teal-500/50 hover:shadow-teal-500/20' },
+                            { icon: Timer, label: 'Avg Time', value: stats.avgDuration, suffix: 'm', color: 'from-amber-500 to-orange-500', hoverBg: 'hover:border-amber-500/50 hover:shadow-amber-500/20' },
                         ].map((stat, i) => (
                             <motion.div
                                 key={stat.label}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.1 * i }}
-                                className={`group bg-gray-800/40 backdrop-blur-sm rounded-2xl p-5 border border-gray-700/50 cursor-pointer transition-all duration-300 hover:bg-gray-800/60 hover:shadow-2xl ${stat.hoverBg}`}
+                                className={`group bg-gray-800/40 backdrop-blur-sm rounded-lg md:rounded-2xl p-3 md:p-5 border border-gray-700/50 cursor-pointer transition-all duration-300 hover:bg-gray-800/60 hover:shadow-2xl ${stat.hoverBg}`}
                             >
-                                <div
-                                    className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110`}
-                                >
-                                    <stat.icon className="w-5 h-5 text-white" />
+                                <div className="flex flex-row md:flex-col items-center md:items-start gap-2.5 md:gap-3 h-full">
+                                    <div
+                                        className={`w-7 h-7 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shrink-0`}
+                                    >
+                                        <stat.icon className="w-4 h-4 md:w-5 md:h-5 text-white" />
+                                    </div>
+                                    <div className="flex flex-col min-w-0">
+                                        <div className="text-[16px] sm:text-lg md:text-2xl font-bold text-white leading-none">
+                                            <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                                        </div>
+                                        <div className="text-gray-400 text-[11px] md:text-sm group-hover:text-gray-300 transition-colors truncate mt-1 md:mt-0.5">
+                                            {stat.label}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="text-2xl font-bold text-white">
-                                    <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                                </div>
-                                <div className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors">{stat.label}</div>
                             </motion.div>
                         ))}
                     </div>

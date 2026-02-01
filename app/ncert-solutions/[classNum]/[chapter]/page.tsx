@@ -110,26 +110,16 @@ export default function ChapterSolutionsPage() {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
             {/* Hero Header */}
-            <section className="relative pt-32 pb-12 overflow-hidden">
+            <section className="relative pt-24 pb-6 md:pt-32 md:pb-10 overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent" />
                 <div className="absolute top-20 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
 
                 <div className="relative container mx-auto px-6">
-                    {/* Breadcrumb */}
-                    <div className="flex items-center gap-2 text-gray-400 text-sm mb-6">
-                        <Link href="/" className="hover:text-blue-400 transition-colors">Home</Link>
-                        <ChevronRight className="w-4 h-4" />
-                        <Link href="/ncert-solutions" className="hover:text-blue-400 transition-colors">NCERT Solutions</Link>
-                        <ChevronRight className="w-4 h-4" />
-                        <span className="text-gray-500">Class {classNum}</span>
-                        <ChevronRight className="w-4 h-4" />
-                        <span className="text-blue-400 line-clamp-1">{chapterName || 'Loading...'}</span>
-                    </div>
 
                     {/* Back Button */}
                     <Link
                         href="/ncert-solutions"
-                        className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6"
+                        className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         Back to Chapters
@@ -139,31 +129,22 @@ export default function ChapterSolutionsPage() {
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex items-start gap-4 mb-6"
+                        className="flex items-start gap-4 mb-2"
                     >
-                        <div className="w-14 h-14 shrink-0 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/25">
-                            <BookOpen className="w-7 h-7 text-white" />
+                        <div className="w-11 h-11 md:w-12 md:h-12 shrink-0 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/25 ring-1 ring-white/10">
+                            <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-white" />
                         </div>
                         <div>
-                            <p className="text-blue-400 font-medium mb-1">Class {classNum} Chemistry</p>
-                            <h1 className="text-3xl md:text-4xl font-bold text-white">
+                            <p className="text-blue-400 font-medium mb-1 text-sm">Class {classNum} Chemistry</p>
+                            <h1 className="text-2xl md:text-3xl font-bold text-white leading-tight">
                                 {loading ? (
-                                    <span className="inline-block w-64 h-10 bg-gray-700 rounded animate-pulse" />
+                                    <span className="inline-block w-64 h-8 bg-gray-700 rounded animate-pulse" />
                                 ) : (
                                     chapterName
                                 )}
                             </h1>
                         </div>
                     </motion.div>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="text-gray-400 text-lg max-w-2xl"
-                    >
-                        {loading ? 'Loading...' : `${questions.length} questions with detailed step-by-step solutions`}
-                    </motion.p>
                 </div>
             </section>
 
