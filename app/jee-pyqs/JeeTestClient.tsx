@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { JEEQuestion } from '../../lib/jee-pyqs/data';
+import { JEEQuestion } from '@/app/lib/jee-pyqs/data';
 import { LayoutGrid, CheckCircle, Clock, Video, FileText, ChevronLeft, ChevronRight, Play, Flag, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -20,7 +20,7 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
     const [answers, setAnswers] = useState<Record<string, string>>({}); // valid options are 'A'|'B'|'C'|'D'
     const [marked, setMarked] = useState<Record<string, boolean>>({});
     const [showSolution, setShowSolution] = useState(false);
-    
+
     // Timer Logic for Test Mode
     const [seconds, setSeconds] = useState(0);
     const [isActive, setIsActive] = useState(false);
@@ -45,8 +45,8 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
 
     const handleOptionSelect = (optionId: string) => {
         setAnswers(prev => ({ ...prev, [questions[currentQIndex].id]: optionId }));
-        if(mode === 'practice'){
-             setShowSolution(true); // Instant feedback in practice
+        if (mode === 'practice') {
+            setShowSolution(true); // Instant feedback in practice
         }
     };
 
@@ -86,15 +86,15 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
                             {formatTime(seconds)}
                         </div>
                     )}
-                    
+
                     <div className="flex bg-slate-900 p-1 rounded-lg border border-white/10">
-                        <button 
+                        <button
                             onClick={() => { setMode('practice'); setIsActive(false); }}
                             className={`px-3 py-1 text-sm rounded-md transition-all ${mode === 'practice' ? 'bg-slate-700 text-white shadow' : 'text-slate-400 hover:text-white'}`}
                         >
                             Practice
                         </button>
-                        <button 
+                        <button
                             onClick={() => { setMode('test'); setIsActive(true); setSeconds(0); setAnswers({}); setShowSolution(false); }}
                             className={`px-3 py-1 text-sm rounded-md transition-all ${mode === 'test' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-white'}`}
                         >
@@ -117,7 +117,7 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
                             <span className="text-xs font-semibold px-2 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
                                 {currentQ.year}
                             </span>
-                             <span className="text-xs font-semibold px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            <span className="text-xs font-semibold px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                                 {currentQ.difficulty}
                             </span>
                         </div>
@@ -129,7 +129,7 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
                             </p>
                             {currentQ.hasImage && (
                                 <div className="mt-4 relative w-full h-[300px] bg-white/5 rounded-xl overflow-hidden border border-white/10">
-                                    <Image 
+                                    <Image
                                         src={`/jee-pyqs/images/${currentQ.id}.webp`}
                                         alt="Question Diagram"
                                         fill
@@ -145,24 +145,24 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
                                 const isSelected = answers[currentQ.id] === opt.id;
                                 const isCorrect = currentQ.correctOption === opt.id;
                                 const showResult = (mode === 'practice' && showSolution) || (mode === 'test' && false); // Hide result in test mode until end
-                                
+
                                 let borderClass = "border-white/10 hover:border-blue-500/50";
                                 let bgClass = "bg-slate-900/50";
-                                
+
                                 if (isSelected) {
                                     borderClass = "border-blue-500";
                                     bgClass = "bg-blue-500/10";
                                 }
-                                
+
                                 // Reveal Color in practice mode
                                 if (showResult) {
-                                  if(isCorrect) {
-                                     borderClass = "border-emerald-500";
-                                     bgClass = "bg-emerald-500/20";
-                                  } else if (isSelected && !isCorrect) {
-                                     borderClass = "border-red-500";
-                                     bgClass = "bg-red-500/10";
-                                  }
+                                    if (isCorrect) {
+                                        borderClass = "border-emerald-500";
+                                        bgClass = "bg-emerald-500/20";
+                                    } else if (isSelected && !isCorrect) {
+                                        borderClass = "border-red-500";
+                                        bgClass = "bg-red-500/10";
+                                    }
                                 }
 
                                 return (
@@ -179,11 +179,11 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
                                             {opt.text && <span className="text-slate-200">{opt.text}</span>}
                                             {opt.hasImage && (
                                                 <div className="relative h-16 w-32 mt-2">
-                                                    <Image 
-                                                        src={`/jee-pyqs/images/${currentQ.id}_${opt.id}.webp`} 
+                                                    <Image
+                                                        src={`/jee-pyqs/images/${currentQ.id}_${opt.id}.webp`}
                                                         alt={`Option ${opt.id}`}
-                                                        fill 
-                                                        className="object-contain" 
+                                                        fill
+                                                        className="object-contain"
                                                     />
                                                 </div>
                                             )}
@@ -192,10 +192,10 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
                                 );
                             })}
                         </div>
-                        
+
                         {/* Control Bar (Mobile Sticky) */}
-                         <div className="flex items-center justify-between gap-4 mt-8 pb-4 border-t border-white/10 pt-6">
-                            <button 
+                        <div className="flex items-center justify-between gap-4 mt-8 pb-4 border-t border-white/10 pt-6">
+                            <button
                                 onClick={() => {
                                     setCurrentQIndex(Math.max(0, currentQIndex - 1));
                                     setShowSolution(answers[questions[currentQIndex - 1]?.id] ? true : false);
@@ -205,9 +205,9 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
                             >
                                 <ChevronLeft className="w-4 h-4" /> Prev
                             </button>
-                            
+
                             <div className="flex gap-2">
-                                <button 
+                                <button
                                     onClick={toggleMark}
                                     className={`p-2 rounded-lg transition-colors ${marked[currentQ.id] ? 'text-purple-400 bg-purple-400/10' : 'text-slate-500 hover:bg-slate-800'}`}
                                     title="Mark for Review"
@@ -215,16 +215,16 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
                                     <Flag className="w-5 h-5 fill-current" />
                                 </button>
                                 {mode === 'practice' && (
-                                    <button 
+                                    <button
                                         onClick={() => setShowSolution(!showSolution)}
                                         className={`px-4 py-2 rounded-lg border border-amber-500/30 text-amber-400 hover:bg-amber-500/10 transition-colors flex items-center gap-2`}
                                     >
-                                        {showSolution ? <><Video className="w-4 h-4"/> Hide Solution</> : <><Video className="w-4 h-4"/> Video Solution</>}
+                                        {showSolution ? <><Video className="w-4 h-4" /> Hide Solution</> : <><Video className="w-4 h-4" /> Video Solution</>}
                                     </button>
                                 )}
                             </div>
 
-                            <button 
+                            <button
                                 onClick={() => {
                                     setCurrentQIndex(Math.min(questions.length - 1, currentQIndex + 1));
                                     const nextQId = questions[currentQIndex + 1]?.id;
@@ -236,11 +236,11 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
                                 Next <ChevronRight className="w-4 h-4" />
                             </button>
                         </div>
-                        
+
                         {/* Detailed Solution (Practice Mode Only) */}
                         <AnimatePresence>
                             {mode === 'practice' && showSolution && (
-                                <motion.div 
+                                <motion.div
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0 }}
@@ -250,7 +250,7 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
                                         <CheckCircle className="w-5 h-5 text-emerald-500" />
                                         Answer & Explanation
                                     </h3>
-                                    
+
                                     <div className="mb-4 text-emerald-400 font-semibold">
                                         Correct Option: {currentQ.correctOption}
                                     </div>
@@ -265,9 +265,9 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
                                         <div className="relative aspect-video rounded-lg overflow-hidden bg-black/50 border border-white/5">
                                             {/* Simplified Video Placeholder or Embed */}
                                             <div className="absolute inset-0 flex items-center justify-center flex-col gap-2 text-slate-500">
-                                                 <Play className="w-12 h-12 text-slate-600" />
-                                                 <p className="text-sm">Video Player Placeholder for {currentQ.videoSolutionUrl}</p>
-                                                 {/* In production, embed YouTube iframe here */}
+                                                <Play className="w-12 h-12 text-slate-600" />
+                                                <p className="text-sm">Video Player Placeholder for {currentQ.videoSolutionUrl}</p>
+                                                {/* In production, embed YouTube iframe here */}
                                             </div>
                                         </div>
                                     )}
@@ -292,13 +292,13 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
                             </button>
                         ))}
                     </div>
-                    
+
                     {/* Legend */}
                     <div className="mt-8 space-y-3">
                         <div className="flex items-center gap-3 text-xs text-slate-400">
                             <div className="w-3 h-3 rounded-full bg-emerald-600"></div> Answered
                         </div>
-                         <div className="flex items-center gap-3 text-xs text-slate-400">
+                        <div className="flex items-center gap-3 text-xs text-slate-400">
                             <div className="w-3 h-3 rounded-full bg-slate-800 border border-slate-700"></div> Not Answered
                         </div>
                         <div className="flex items-center gap-3 text-xs text-slate-400">

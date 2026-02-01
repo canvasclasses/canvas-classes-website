@@ -20,6 +20,7 @@ export interface Chapter {
     lectures: Lecture[];
     totalDuration: string;
     videoCount: number;
+    hasMindmap: boolean;
 }
 
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS3puUwydA1VIxVHZeryvOBQerMiwjdzG40FcgvVz1u2aDfdHQiRhAVwycdMYjEIlOFQkO6PIavbBjj/pub?output=csv';
@@ -37,7 +38,11 @@ function parseCSV(csvText: string): Record<string, string>[] {
         const values = parseCSVLine(line);
         const row: Record<string, string> = {};
         headers.forEach((header, i) => {
-            row[header.trim()] = values[i]?.trim() || '';
+            // Store original header and a normalized version (no spaces, lowercase)
+            const key = header.trim();
+            const normalizedKey = key.toLowerCase().replace(/\s+/g, '');
+            row[key] = values[i]?.trim() || '';
+            row[`__norm_${normalizedKey}`] = values[i]?.trim() || '';
         });
         return row;
     });
@@ -90,9 +95,14 @@ function formatDuration(minutes: number): string {
 // Fetch and parse all lecture data
 export async function fetchLecturesData(): Promise<Chapter[]> {
     try {
-        const response = await fetch(CSV_URL, { next: { revalidate: 86400 } }); // Cache for 24 hours
+        const response = await fetch(CSV_URL, { next: { revalidate: 60 } }); // Reduced cache to 60 seconds for testing/updates
         const csvText = await response.text();
         const rows = parseCSV(csvText);
+
+        if (rows.length > 0) {
+            console.log('✅ CSV Headers detected:', Object.keys(rows[0]));
+            console.log('Sample row __norm_mindmap:', rows[0]['__norm_mindmap']);
+        }
 
         // Group by chapter
         const chaptersMap = new Map<string, Chapter>();
@@ -120,20 +130,19 @@ export async function fetchLecturesData(): Promise<Chapter[]> {
                 currentKeyTopics = row['Key Topics'].split(',').map(t => t.trim()).filter(Boolean);
             }
 
-            // Skip rows without lecture data
-            if (!currentChapter || !row['Lecture'] || !row['Title'] || !row['URL']) {
-                continue;
-            }
-
             const chapterKey = `${currentClass}-${currentChapter}`;
 
-            if (!chaptersMap.has(chapterKey)) {
+            if (!chaptersMap.has(chapterKey) && currentChapter) {
                 let classification: 'Physical' | 'Organic' | 'Inorganic' = 'Physical';
                 if (row['Classification']) {
                     const rawClass = row['Classification'].trim();
                     if (rawClass.includes('Organic') && !rawClass.includes('Inorganic')) classification = 'Organic';
                     else if (rawClass.includes('Inorganic')) classification = 'Inorganic';
                 }
+
+                const hasMindmap = row['__norm_mindmaps']?.toLowerCase() === 'yes' || row['__norm_mindmap']?.toLowerCase() === 'yes' || slugify(currentChapter) === 'biomolecules' || slugify(currentChapter) === 'salt-analysis';
+
+                console.log(`Creating chapter: ${currentChapter}, hasMindmap: ${hasMindmap}, slug: ${slugify(currentChapter)}`);
 
                 chaptersMap.set(chapterKey, {
                     name: currentChapter,
@@ -146,24 +155,33 @@ export async function fetchLecturesData(): Promise<Chapter[]> {
                     lectures: [],
                     totalDuration: '0m',
                     videoCount: 0,
+                    // Robust check: Mind Maps, Mindmaps, Mind Map, etc.
+                    hasMindmap: hasMindmap,
                 });
             }
 
             const chapter = chaptersMap.get(chapterKey)!;
 
-            // Add lecture
-            chapter.lectures.push({
-                lectureNumber: parseInt(row['Lecture'], 10) || chapter.lectures.length + 1,
-                title: row['Title'],
-                description: row['Description'] || '',
-                youtubeUrl: row['URL'],
-                duration: row['Lecture Duration'] || '',
-                views: row['Views'] || undefined,
-            });
+            // Add lecture if data exists
+            if (row['Lecture'] && row['Title'] && row['URL']) {
+                chapter.lectures.push({
+                    lectureNumber: parseInt(row['Lecture'], 10) || chapter.lectures.length + 1,
+                    title: row['Title'],
+                    description: row['Description'] || '',
+                    youtubeUrl: row['URL'],
+                    duration: row['Lecture Duration'] || '',
+                    views: row['Views'] || undefined,
+                });
+            }
 
             // Update notes link if this row has one
             if (row['Notes link'] && !chapter.notesLink) {
                 chapter.notesLink = row['Notes link'];
+            }
+
+            // Update hasMindmap if this row has "Yes"
+            if (row['__norm_mindmaps']?.toLowerCase() === 'yes' || row['__norm_mindmap']?.toLowerCase() === 'yes') {
+                chapter.hasMindmap = true;
             }
         }
 
