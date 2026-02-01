@@ -116,7 +116,19 @@ interface LecturesClientProps {
 
 // Data is now fetched on the server and passed as props for SEO
 export default function LecturesClient({ initialChapters, initialStats }: LecturesClientProps) {
-    const [activeClass, setActiveClass] = useState<'11' | '12'>('11');
+    const [activeClass, setActiveClass] = useState<'11' | '12'>('12');
+
+    // Persist active class selection
+    useEffect(() => {
+        const saved = sessionStorage.getItem('activeClass');
+        if (saved === '11' || saved === '12') {
+            setActiveClass(saved);
+        }
+    }, []);
+
+    useEffect(() => {
+        sessionStorage.setItem('activeClass', activeClass);
+    }, [activeClass]);
     const [searchQuery, setSearchQuery] = useState('');
     const [chapters] = useState<Chapter[]>(initialChapters);
     const [stats] = useState<Stats>(initialStats);
@@ -353,7 +365,7 @@ export default function LecturesClient({ initialChapters, initialStats }: Lectur
                                         <div className="group h-full bg-[#111827] border border-gray-800 rounded-2xl overflow-hidden hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/40 hover:border-gray-700 transition-all duration-300 flex flex-col relative shadow-lg shadow-black/20">
 
                                             {/* Top Image Section */}
-                                            <div className="relative h-48 w-full shrink-0 overflow-hidden bg-gray-900">
+                                            <div className="relative h-32 md:h-48 w-full shrink-0 overflow-hidden bg-gray-900">
                                                 <Image
                                                     src={getChapterImage(chapter.slug)}
                                                     alt={chapter.name}
@@ -405,7 +417,7 @@ export default function LecturesClient({ initialChapters, initialStats }: Lectur
                                             </div>
 
                                             {/* Bottom Content Section */}
-                                            <div className="p-5 flex flex-col flex-grow">
+                                            <div className="p-3 md:p-5 flex flex-col flex-grow">
 
                                                 {/* Metadata Row */}
                                                 <div className="flex items-center gap-4 text-xs font-medium text-gray-400 mb-4 border-b border-gray-800 pb-3">
@@ -414,7 +426,7 @@ export default function LecturesClient({ initialChapters, initialStats }: Lectur
                                                 </div>
 
                                                 {/* Tags */}
-                                                <div className="flex flex-wrap gap-1.5 mb-6 flex-grow content-start min-h-[1.5rem]">
+                                                <div className="hidden md:flex flex-wrap gap-1.5 mb-6 flex-grow content-start min-h-[1.5rem]">
                                                     {chapter.keyTopics.slice(0, 3).map((topic, i) => (
                                                         <span key={i} className="px-2 py-1 bg-gray-800/50 text-gray-400 text-[10px] rounded border border-gray-700/50 group-hover:border-gray-600 transition-colors">
                                                             {topic}

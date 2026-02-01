@@ -1,20 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Biomolecules Mindmap | Canvas Classes</title>
   <style>
     * {
       margin: 0;
       padding: 0;
-    }
-
-    html {
-      font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
     }
 
     #mindmap {
@@ -24,12 +19,7 @@
       background: #f3f4f6;
     }
 
-    .markmap {
-      background: #f3f4f6;
-      color: #1f2937;
-    }
-
-    /* Style for clickable nodes to indicate interactivity */
+    /* Style for clickable nodes */
     .markmap-node {
       cursor: pointer;
     }
@@ -40,165 +30,131 @@
       stroke-width: 3px !important;
     }
   </style>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.16.1/dist/style.css">
 </head>
 
 <body>
   <svg id="mindmap"></svg>
+
+  <!-- Load D3 first as it is a dependency -->
   <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.12/dist/browser/index.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/index.js"></script>
-  <script>((r) => {
-      setTimeout(r);
-    })(() => {
-      const { markmap, mm } = window;
-      const toolbar = new markmap.Toolbar();
-      toolbar.attach(mm);
-      const el = toolbar.render();
-      el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
-      document.body.append(el);
-    })</script>
-  <script>((getMarkmap, getOptions, root2, jsonOptions) => {
-              const markmap = getMarkmap();
-              window.mm = markmap.Markmap.create(
-                "svg#mindmap",
-                (getOptions || markmap.deriveOptions)({ ...jsonOptions }),
-                root2
-              );
-            })(() => window.markmap, null, {
-              "content": "Biomolecules",
-              "children": [
-                {
-                  "content": "Carbohydrates",
-                  "children": [
-                    {
-                      "content": "Classification by Hydrolysis",
-                      "children": [
-                        { "content": "Monosaccharides (Glucose, Fructose)" },
-                        { "content": "Oligosaccharides (Sucrose, Lactose, Maltose)" },
-                        { "content": "Polysaccharides (Starch, Cellulose, Glycogen)" }
-                      ]
-                    },
-                    {
-                      "content": "Chemical Nature",
-                      "children": [
-                        { "content": "Optically active polyhydroxy aldehydes/ketones" },
-                        { "content": "Reducing sugars have hemiacetal group like Glucose, Fructose, lactose, maltose" }
-                      ]
-                    },
-                    {
-                      "content": "Glycosidic linkage",
-                      "children": [
-                        { "content": "Maltose/Starch: Glucose + Glucose (&#x3b1;-1,4 linkage)" },
-                        { "content": "Sucrose: Glucose + Fructose (&#x3b1;-1,2 linkage)" },
-                        { "content": "Glycosidic linkage" }
-                      ]
-                    },
-                    {
-                      "content": "Importance",
-                      "children": [
-                        { "content": "Energy source (Glucose, Honey)" },
-                        { "content": "Storage (Starch, Glycogen)" }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "content": "Proteins",
-                  "children": [
-                    {
-                      "content": "Building Blocks",
-                      "children": [
-                        { "content": "Macromolecules made of Alpha-Amino Acids" },
-                        { "content": "vital for structure, enzymes, transport, and defense" },
-                        { "content": "Peptide linkage connects two amino acids" },
-                        { "content": "Zwitter ion (Amphoteric behavior)" },
-                        { "content": "isoelectric point is the pH when molecule has zero net electrical charge" }
-                      ]
-                    },
-                    {
-                      "content": "Structure Levels",
-                      "children": [
-                        { "content": "Primary (The specific sequence of amino acids in a polypeptide chain)" },
-                        { "content": "Secondary (Local folding into patterns like alpha-helices and beta-sheets, stabilized by hydrogen bonds)" },
-                        { "content": "Tertiary (Overall folding formed by ionic, disulfide bridges interactions)" },
-                        { "content": "Quaternary (Subunit arrangement) like hemoglobin" }
-                      ]
-                    },
-                    {
-                      "content": "Classification",
-                      "children": [
-                        { "content": "Fibrous (Keratin, Myosin)" },
-                        { "content": "Globular (Insulin, Albumin)" }
-                      ]
-                    },
-                    { "content": "Denaturation (Loss of activity via heat/pH)" }
-                  ]
-                },
-                {
-                  "content": "Enzymes",
-                  "children": [
-                    { "content": "Biocatalysts (Globular proteins)" },
-                    { "content": "Highly specific and selective" },
-                    { "content": "Reduce activation energy" }
-                  ]
-                },
-                {
-                  "content": "Vitamins",
-                  "children": [
-                    {
-                      "content": "Fat Soluble",
-                      "children": [
-                        { "content": "Vitamins A, D, E, K" }
-                      ]
-                    },
-                    {
-                      "content": "Water Soluble",
-                      "children": [
-                        { "content": "B group and Vitamin C" }
-                      ]
-                    },
-                    { "content": "Deficiency Diseases (Scurvy, Beri beri, Rickets)" }
-                  ]
-                },
-                {
-                  "content": "Nucleic Acids",
-                  "children": [
-                    {
-                      "content": "Components",
-                      "children": [
-                        { "content": "Pentose Sugar (Ribose/Deoxyribose)" },
-                        { "content": "Phosphoric Acid" },
-                        { "content": "Nitrogenous Bases (A, G, C, T, U)" }
-                      ]
-                    },
-                    {
-                      "content": "Types",
-                      "children": [
-                        {
-                          "content": "DNA (Double helix, heredity carrier)",
-                          "children": [
-                            { "content": "stores long-term genetic blueprints" },
-                            { "content": "uses deoxyribose sugar, and has bases A, T, C, G" },
-                            { "content": "Very stable, good for information storage" }
-                          ]
-                        },
-                        {
-                          "content": "RNA (Single stranded, Translates DNA code into proteins, carries out cellular functions)",
-                          "children": [
-                            { "content": "carries out protein instructions" },
-                            { "content": "uses ribose sugar, and has bases A, U, C, G" },
-                            { "content": "functions like protein synthesis (mRNA, tRNA, rRNA)" },
-                            { "content": "More reactive and less stable, designed for short-term use" }
-                          ]
-                        }
-                      ]
-                    },
-                    { "content": "DNA Fingerprinting (Unique base sequences)" }
-                  ]
-                }
-              ]
-            })</script>
+
+  <!-- Load markmap-lib and back it up immediately -->
+  <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.16.1/dist/browser/index.min.js"></script>
+  <script>
+    window.markmapLib = window.markmap;
+  </script>
+
+  <!-- Load markmap-view which might overwrite window.markmap -->
+  <script src="https://cdn.jsdelivr.net/npm/markmap-view@0.16.1/dist/browser/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.16.1/dist/index.min.js"></script>
+
+  <script>
+    const markdown = `# Biomolecules
+
+## Carbohydrates
+- Classification by Hydrolysis
+    - Monosaccharides (Glucose, Fructose)
+    - Oligosaccharides (Sucrose, Lactose, Maltose)
+    - Polysaccharides (Starch, Cellulose, Glycogen)
+- Chemical Nature
+    - Optically active polyhydroxy aldehydes/ketones
+    - Reducing sugars have hemiacetal group like Glucose, Fructose, lactose, maltose
+- Glycosidic linkage
+    - Maltose/Starch: Glucose + Glucose (α-1,4 linkage)
+    - Sucrose: Glucose + Fructose (α-1,2 linkage)
+    - Glycosidic linkage
+- Importance
+    - Energy source (Glucose, Honey)
+    - Storage (Starch, Glycogen)
+
+## Proteins
+- Building Blocks
+    - Macromolecules made of Alpha-Amino Acids
+    - vital for structure, enzymes, transport, and defense
+    - Peptide linkage connects two amino acids
+    - Zwitter ion (Amphoteric behavior)
+    - isoelectric point is the pH when molecule has zero net electrical charge
+- Structure Levels
+    - Primary (The specific sequence of amino acids in a polypeptide chain)
+    - Secondary (Local folding into patterns like alpha-helices and beta-sheets, stabilized by hydrogen bonds)
+    - Tertiary (Overall folding formed by ionic, disulfide bridges interactions)
+    - Quaternary (Subunit arrangement) like hemoglobin
+- Classification
+    - Fibrous (Keratin, Myosin)
+    - Globular (Insulin, Albumin)
+- Denaturation (Loss of activity via heat/pH)
+
+## Enzymes
+- Biocatalysts (Globular proteins)
+- Highly specific and selective
+- Reduce activation energy
+
+## Vitamins
+- Fat Soluble
+    - Vitamins A, D, E, K
+- Water Soluble
+    - B group and Vitamin C
+- Deficiency Diseases (Scurvy, Beri beri, Rickets)
+
+## Nucleic Acids
+- Components
+    - Pentose Sugar (Ribose/Deoxyribose)
+    - Phosphoric Acid
+    - Nitrogenous Bases (A, G, C, T, U)
+- Types
+    - DNA (Double helix, heredity carrier)
+        - stores long-term genetic blueprints
+        - uses deoxyribose sugar, and has bases A, T, C, G
+        - Very stable, good for information storage
+    - RNA (Single stranded, Translates DNA code into proteins, carries out cellular functions)
+        - carries out protein instructions
+        - uses ribose sugar, and has bases A, U, C, G
+        - functions like protein synthesis (mRNA, tRNA, rRNA)
+        - More reactive and less stable, designed for short-term use
+- DNA Fingerprinting (Unique base sequences)`;
+
+    // Main initialization logic
+    window.onload = () => {
+      // Recover Transformer from our backup
+      const Transformer = window.markmapLib.Transformer;
+      // Get Markmap and Toolbar from the global scope (populated by markmap-view/toolbar)
+      const { Markmap, Toolbar } = window.markmap;
+
+      // Transform
+      const transformer = new Transformer();
+      const { root, features } = transformer.transform(markdown);
+
+      // Render
+      const mm = Markmap.create('#mindmap', null, root);
+      window.mm = mm; // Expose for debugging
+
+      // Toolbar
+      if (Toolbar) {
+        const toolbar = new Toolbar();
+        toolbar.attach(mm);
+        const el = toolbar.render();
+        el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+        document.body.append(el);
+      }
+
+      // Interactivity
+      const svg = document.querySelector('#mindmap');
+      svg.addEventListener('click', (e) => {
+        const node = e.target.closest('.markmap-node');
+        if (node) {
+          // Use global d3 to select the node
+          const d = d3.select(node).datum();
+          if (d && d.content) {
+            window.parent.postMessage({
+              type: 'MINDMAP_NODE_CLICK',
+              nodeName: d.content
+            }, '*');
+          }
+        }
+      });
+    };
+  </script>
 </body>
 
 </html>
