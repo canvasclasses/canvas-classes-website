@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Trophy, Flame, Target, Play, Pause, ArrowRight, Menu, X, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Trophy, Flame, Target, Play, Pause, ArrowRight, Menu, X, CheckCircle2, TrendingUp, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { Question } from '@/app/the-crucible/types';
 import QuestionCard from '@/components/question-bank/QuestionCard';
 import FeedbackOverlay from '@/components/question-bank/FeedbackOverlay';
 import SolutionViewer from '@/components/question-bank/SolutionViewer';
+import { useCrucibleProgress } from '@/hooks/useCrucibleProgress';
 
 interface QuestionBankGameProps {
     initialQuestions: Question[];
@@ -38,7 +39,24 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
     // Question Status Tracking (for Navigator colors AND progress calculation)
     const [questionStatus, setQuestionStatus] = useState<Record<number, 'solved' | 'incorrect' | 'skipped' | 'marked' | null>>({});
 
+    // Progress Tracking Hook (persisted in localStorage)
+    const {
+        progress,
+        isLoaded: progressLoaded,
+        recordAttempt,
+        initializeChapterTotals,
+        getChapterStats,
+        overallAccuracy,
+    } = useCrucibleProgress();
+
     const chapters = Array.from(new Set(initialQuestions.map(q => q.chapterId).filter(Boolean)));
+
+    // Initialize chapter totals once questions are loaded
+    useEffect(() => {
+        if (initialQuestions.length > 0 && progressLoaded) {
+            initializeChapterTotals(initialQuestions);
+        }
+    }, [initialQuestions, progressLoaded, initializeChapterTotals]);
 
     // Get tags for selected chapter
     const availableTags = Array.from(new Set(
@@ -91,6 +109,17 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         setSelectedOptionId(optionId);
         setIsCorrect(correct);
         setQuestionStatus(prev => ({ ...prev, [currentIndex]: correct ? 'solved' : 'incorrect' }));
+
+        // Record attempt in persistent progress
+        const currentQuestion = filteredQuestions[currentIndex];
+        if (currentQuestion) {
+            recordAttempt(
+                currentQuestion.id,
+                currentQuestion.chapterId || 'Unknown',
+                currentQuestion.difficulty,
+                correct
+            );
+        }
 
         if (correct) {
             setStreak(prev => prev + 1);
@@ -400,17 +429,39 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                             )}
                         </div>
 
-                        {/* Personalization / History Card */}
+                        {/* Progress Stats Card - Dynamic data from localStorage */}
                         <div className="w-full max-w-2xl mb-8 lg:mb-10">
-                            <div className="p-5 bg-gradient-to-r from-blue-900/20 to-cyan-900/20 border border-blue-500/20 rounded-2xl backdrop-blur-sm flex items-center gap-4">
-                                <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 shrink-0">
-                                    <Trophy size={20} />
+                            <div className="p-5 bg-gradient-to-r from-blue-900/20 to-cyan-900/20 border border-blue-500/20 rounded-2xl backdrop-blur-sm">
+                                <div className="flex items-center gap-4 mb-4">
+                                    <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 shrink-0">
+                                        <TrendingUp size={20} />
+                                    </div>
+                                    <div className="text-left flex-1">
+                                        <h4 className="text-xs font-bold text-blue-300 uppercase tracking-widest mb-1">Your Progress</h4>
+                                        <p className="text-sm text-gray-400">
+                                            {progress.totalAttempted > 0
+                                                ? `${progress.totalAttempted} questions attempted with ${overallAccuracy}% accuracy`
+                                                : 'Start practicing to track your progress!'
+                                            }
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className="text-left">
-                                    <h4 className="text-xs font-bold text-blue-300 uppercase tracking-widest mb-1">Personal Best</h4>
-                                    <p className="text-sm text-gray-400 leading-snug">
-                                        Your last score in <span className="text-white font-bold">{selectedChapter}</span> was <span className="text-emerald-400 font-bold">65%</span>. Let's aim for <span className="text-white font-bold">75%</span> today!
-                                    </p>
+                                {/* Stats Grid */}
+                                <div className="grid grid-cols-3 gap-3 pt-3 border-t border-white/5">
+                                    <div className="text-center">
+                                        <div className="text-emerald-400 font-bold text-xl">{progress.totalCorrect}</div>
+                                        <div className="text-[10px] text-gray-500 uppercase tracking-wide">Correct</div>
+                                    </div>
+                                    <div className="text-center">
+                                        <div className="text-amber-400 font-bold text-xl">{progress.totalIncorrect}</div>
+                                        <div className="text-[10px] text-gray-500 uppercase tracking-wide">Incorrect</div>
+                                    </div>
+                                    <div className="text-center">
+                                        <div className="text-purple-400 font-bold text-xl flex items-center justify-center gap-1">
+                                            {progress.bestStreak} <Zap size={14} />
+                                        </div>
+                                        <div className="text-[10px] text-gray-500 uppercase tracking-wide">Best Streak</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

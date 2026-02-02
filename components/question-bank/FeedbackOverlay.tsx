@@ -60,14 +60,12 @@ export default function FeedbackOverlay({ isOpen, isCorrect, trap, onNext, onVie
                     </div>
 
                     <div className="flex items-center gap-3 w-full md:w-auto">
-                        {!isCorrect && (
-                            <button
-                                onClick={onViewSolution}
-                                className="flex-1 md:flex-none px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl transition flex items-center justify-center gap-2"
-                            >
-                                <BookOpen size={18} /> Explain Why
-                            </button>
-                        )}
+                        <button
+                            onClick={onViewSolution}
+                            className={`flex-1 md:flex-none px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl transition flex items-center justify-center gap-2`}
+                        >
+                            <BookOpen size={18} /> {isCorrect ? 'View Solution' : 'Explain Why'}
+                        </button>
                         <button
                             onClick={onNext}
                             className={`flex-1 md:flex-none px-6 md:px-8 py-2.5 md:py-3 font-bold rounded-xl transition flex items-center justify-center gap-2 shadow-lg text-sm md:text-base ${isCorrect
