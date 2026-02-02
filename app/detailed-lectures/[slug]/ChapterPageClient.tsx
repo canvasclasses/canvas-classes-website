@@ -24,7 +24,7 @@ import {
     Info,
     Sparkles,
 } from 'lucide-react';
-import { getNcertChapterName } from '@/app/lib/ncertMapping';
+import { getNcertChapterNames } from '@/app/lib/ncertMapping';
 
 interface Lecture {
     lectureNumber: number;
@@ -134,13 +134,13 @@ export default function ChapterPageClient({ chapter }: ChapterPageClientProps) {
                 .then(res => res.json())
                 .then(data => {
                     const allQuestions: NCERTQuestion[] = data.questions;
-                    // Normalize and filter
-                    const targetChapterName = getNcertChapterName(chapter.slug);
+                    // Get array of target NCERT chapter names (supports combined chapters)
+                    const targetChapterNames = getNcertChapterNames(chapter.slug);
 
                     const matchingQuestions = allQuestions.filter((q: NCERTQuestion) => {
-                        // If we have a direct mapping, use exact string match on chapter name
-                        if (targetChapterName) {
-                            return parseInt(chapter.class) === q.classNum && q.chapter === targetChapterName;
+                        // If we have mapped chapter names, check if question's chapter is in the list
+                        if (targetChapterNames && targetChapterNames.length > 0) {
+                            return parseInt(chapter.class) === q.classNum && targetChapterNames.includes(q.chapter);
                         }
 
                         // Fallback to slug matching if no mapping found (legacy behavior)
