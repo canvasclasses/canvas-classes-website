@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Menu, ChevronDown, X, Search } from 'lucide-react';
 
 const jeeNeetLinks = [
-  { label: 'Top 500 PYQs', href: '/jee-pyqs', external: false },
+  { label: 'The Crucible', href: '/the-crucible', external: false },
   { label: 'Detailed Lectures', href: '/detailed-lectures', external: false },
   { label: 'One Shot Lectures', href: '/one-shot-lectures', external: false },
   { label: 'Top 50 Concepts', href: '/top-50-concepts', external: false },
@@ -36,6 +37,8 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
   const [revisionDropdownOpen, setRevisionDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const pathname = usePathname();
+
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -62,6 +65,8 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  if (pathname?.startsWith('/the-crucible')) return null;
 
   return (
     <nav className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[98%] max-w-[1400px] flex items-center justify-between px-4 md:px-6 py-2.5 rounded-2xl bg-white/70 backdrop-blur-xl shadow-lg shadow-black/5 border border-white/50 transition-all duration-300 ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-[200%] opacity-0 pointer-events-none'
