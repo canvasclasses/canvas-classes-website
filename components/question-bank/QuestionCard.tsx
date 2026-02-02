@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
@@ -21,6 +21,11 @@ interface QuestionCardProps {
 
 export default function QuestionCard({ question, onAnswerSubmit, showFeedback, selectedOptionId, layout = 'grid' }: QuestionCardProps) {
     const [numericInput, setNumericInput] = useState('');
+
+    // Reset numeric input when question changes (fixes bug where value persists across questions)
+    useEffect(() => {
+        setNumericInput('');
+    }, [question.id]);
 
     const handleOptionClick = (optionId: string) => {
         if (showFeedback) return;
