@@ -39,6 +39,59 @@
       transform: translateY(-20px);
     }
   }
+
+  @keyframes float-slow {
+
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+      transform: translateY(-30px) rotate(5deg);
+    }
+  }
+
+  @keyframes float-medium {
+
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+      transform: translateY(-20px) rotate(-3deg);
+    }
+  }
+
+  @keyframes float-fast {
+
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+      transform: translateY(-15px) rotate(3deg);
+    }
+  }
+
+  --animate-float-slow: float-slow 12s ease-in-out infinite;
+  --animate-float-medium: float-medium 8s ease-in-out infinite;
+  --animate-float-fast: float-fast 5s ease-in-out infinite;
+}
+
+/* Chemistry Icon Animations */
+.animate-float-slow {
+  animation: float-slow 12s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 8s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-fast 5s ease-in-out infinite;
 }
 
 :root {
@@ -65,8 +118,46 @@ body {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+}
+
+/* Markdown Table Global Styles */
+.markdown-table-wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9em;
+  min-width: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.markdown-table-wrapper th {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  text-align: left;
+  font-weight: bold;
+}
+
+.markdown-table-wrapper th,
+.markdown-table-wrapper td {
+  padding: 12px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.markdown-table-wrapper tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.markdown-table-wrapper tr:nth-of-type(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.markdown-table-wrapper tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
 }
