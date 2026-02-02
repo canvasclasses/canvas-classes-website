@@ -23,7 +23,12 @@ const CATIONS: CationData[] = [
     // Group II
     { symbol: 'Pb²⁺', name: 'Lead', group: 'II', precipitateColor: 'bg-black', precipitateName: 'Black ppt (PbS)', description: 'Lead ions not precipitated in Group I (due to solubility) precipitate here.' },
     { symbol: 'Cu²⁺', name: 'Copper', group: 'II', precipitateColor: 'bg-black', precipitateName: 'Black ppt (CuS)', description: 'Copper sulfide precipitates in acidic medium.' },
-    { symbol: 'As³⁺', name: 'Arsenic', group: 'II', precipitateColor: 'bg-yellow-400', precipitateName: 'Yellow ppt (As₂S₃)', description: 'Arsenic sulfide is yellow.' },
+    { symbol: 'Hg²⁺', name: 'Mercury(II)', group: 'II', precipitateColor: 'bg-black', precipitateName: 'Black ppt (HgS)', description: 'Mercury(II) sulfide is black.' },
+    { symbol: 'Bi³⁺', name: 'Bismuth', group: 'II', precipitateColor: 'bg-yellow-900', precipitateName: 'Brown/Black ppt (Bi₂S₃)', description: 'Bismuth sulfide is dark brown/black.' },
+    { symbol: 'Cd²⁺', name: 'Cadmium', group: 'II', precipitateColor: 'bg-yellow-400', precipitateName: 'Yellow ppt (CdS)', description: 'Cadmium sulfide is distinctively yellow.' },
+    { symbol: 'As³⁺', name: 'Arsenic', group: 'II', precipitateColor: 'bg-yellow-300', precipitateName: 'Yellow ppt (As₂S₃)', description: 'Arsenic sulfide is yellow.' },
+    { symbol: 'Sb³⁺', name: 'Antimony', group: 'II', precipitateColor: 'bg-orange-500', precipitateName: 'Orange ppt (Sb₂S₃)', description: 'Antimony sulfide is orange.' },
+    { symbol: 'Sn²⁺', name: 'Tin(II)', group: 'II', precipitateColor: 'bg-yellow-900', precipitateName: 'Brown ppt (SnS)', description: 'Tin(II) sulfide is brown.' },
     // Group III
     { symbol: 'Fe³⁺', name: 'Iron', group: 'III', precipitateColor: 'bg-red-800', precipitateName: 'Reddish Brown ppt', description: 'Ferric hydroxide forms a gelatinous reddish-brown precipitate.' },
     { symbol: 'Al³⁺', name: 'Aluminium', group: 'III', precipitateColor: 'bg-white/80', precipitateName: 'Gelatinous White ppt', description: 'Aluminium hydroxide forms a white gelatinous precipitate.' },
