@@ -398,18 +398,22 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                             <div className="inline-flex items-center gap-3 bg-gradient-to-r from-indigo-900/40 to-purple-900/40 border border-white/10 rounded-xl p-2.5 pr-4 hover:from-indigo-900/60 hover:to-purple-900/60 transition cursor-pointer group mx-auto">
                                 {/* Multicolor Waveform */}
                                 <div className="flex items-center gap-[3px] h-8 px-1">
-                                    {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-                                        <div
-                                            key={i}
-                                            className="w-[3px] rounded-full animate-pulse"
-                                            style={{
-                                                height: `${12 + Math.sin(i * 0.8) * 8}px`,
-                                                background: `linear-gradient(to top, ${['#818cf8', '#a78bfa', '#c084fc', '#e879f9', '#f472b6', '#fb7185', '#fbbf24'][i]}, ${['#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#f43f5e', '#f59e0b'][i]})`,
-                                                animationDelay: `${i * 0.1}s`,
-                                                animationDuration: `${0.4 + Math.random() * 0.3}s`
-                                            }}
-                                        />
-                                    ))}
+                                    {[0, 1, 2, 3, 4, 5, 6].map((i) => {
+                                        const heights = [16, 12, 20, 14, 18, 10, 15];
+                                        const durations = [0.5, 0.6, 0.45, 0.55, 0.5, 0.65, 0.4];
+                                        return (
+                                            <div
+                                                key={i}
+                                                className="w-[3px] rounded-full animate-pulse"
+                                                style={{
+                                                    height: `${heights[i]}px`,
+                                                    background: `linear-gradient(to top, ${['#818cf8', '#a78bfa', '#c084fc', '#e879f9', '#f472b6', '#fb7185', '#fbbf24'][i]}, ${['#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#f43f5e', '#f59e0b'][i]})`,
+                                                    animationDelay: `${i * 0.1}s`,
+                                                    animationDuration: `${durations[i]}s`
+                                                }}
+                                            />
+                                        );
+                                    })}
                                 </div>
                                 <div className="flex flex-col text-left">
                                     <span className="text-[9px] md:text-[10px] font-bold text-white uppercase tracking-wider">Sir's Strategy Tip</span>
