@@ -1,7 +1,7 @@
 import { createClient } from './supabase/client';
 import { CardProgress, isCardDue } from '../lib/spacedRepetition';
 
-type FeatureType = 'flashcard' | 'salt_mcq' | 'salt_flashcard' | 'assertion_reason';
+type FeatureType = 'flashcard' | 'salt_mcq' | 'salt_flashcard' | 'assertion_reason' | 'crucible_item' | 'crucible_stats';
 
 interface ProgressMap {
     [itemId: string]: CardProgress;

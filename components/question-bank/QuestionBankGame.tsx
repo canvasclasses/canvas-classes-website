@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { ArrowLeft, Trophy, Flame, Target, Play, Pause, ArrowRight, Menu, X, CheckCircle2, TrendingUp, Zap } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { ArrowLeft, Trophy, Flame, Target, Play, Pause, ArrowRight, Menu, X, CheckCircle2, TrendingUp, Zap, BookOpen, Star, CheckCircle, Pencil, Trash2, HelpCircle, AlertTriangle, Rocket } from 'lucide-react';
 import Link from 'next/link';
 import { Question } from '@/app/the-crucible/types';
 import QuestionCard from '@/components/question-bank/QuestionCard';
@@ -13,14 +13,43 @@ interface QuestionBankGameProps {
     initialQuestions: Question[];
 }
 
+// Utility to shuffle questions
+function shuffleArray<T>(array: T[]): T[] {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+}
+
 export default function QuestionBankGame({ initialQuestions }: QuestionBankGameProps) {
     const [mode, setMode] = useState<'menu' | 'playing' | 'completed'>('menu');
+    const [gameMode, setGameMode] = useState<'practice' | 'exam'>('practice');
     const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [showSolution, setShowSolution] = useState(false);
+    const [showShloka, setShowShloka] = useState(false); // Transition state
     const [showMobileNav, setShowMobileNav] = useState(false);
+    const [isReviewing, setIsReviewing] = useState(false);
+    const [examAnswers, setExamAnswers] = useState<Record<number, string>>({});
+
+    // Initialize/Reset
+    useEffect(() => {
+        if (initialQuestions.length > 0) {
+            setFilteredQuestions(initialQuestions);
+        }
+    }, [initialQuestions]);
+
+    // Curation Filters
+    const [hideMastered, setHideMastered] = useState(true);
+    const [onlyStarred, setOnlyStarred] = useState(false);
+
+    // User Notes State
+    const [editingNote, setEditingNote] = useState(false);
+    const [noteText, setNoteText] = useState('');
 
     // Stats
     const [streak, setStreak] = useState(0);
@@ -32,14 +61,14 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
     const [selectedDifficulty, setSelectedDifficulty] = useState('Any Difficulty');
     const [questionLimit, setQuestionLimit] = useState('10');
 
-    // Timer State (must be at top level for hooks rules)
+    // Timer State
     const [timerSeconds, setTimerSeconds] = useState(0);
     const [timerActive, setTimerActive] = useState(true);
 
-    // Question Status Tracking (for Navigator colors AND progress calculation)
-    const [questionStatus, setQuestionStatus] = useState<Record<number, 'solved' | 'incorrect' | 'skipped' | 'marked' | null>>({});
+    // Question Status Tracking
+    const [questionStatus, setQuestionStatus] = useState<Record<number, 'solved' | 'incorrect' | 'skipped' | 'marked' | 'answered' | null>>({});
 
-    // Progress Tracking Hook (persisted in localStorage)
+    // Progress Hook
     const {
         progress,
         isLoaded: progressLoaded,
@@ -47,39 +76,32 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         initializeChapterTotals,
         getChapterStats,
         overallAccuracy,
+        toggleStar,
+        toggleMaster,
+        saveNote,
     } = useCrucibleProgress();
 
     const chapters = Array.from(new Set(initialQuestions.map(q => q.chapterId).filter(Boolean)));
 
-    // Initialize chapter totals once questions are loaded
+    // Initialize chapter totals
     useEffect(() => {
         if (initialQuestions.length > 0 && progressLoaded) {
             initializeChapterTotals(initialQuestions);
         }
     }, [initialQuestions, progressLoaded, initializeChapterTotals]);
 
-    // Get tags for selected chapter
-    const availableTags = Array.from(new Set(
-        initialQuestions
-            .filter(q => selectedChapter === 'All Chapters' || q.chapterId === selectedChapter)
-            .map(q => q.tagId)
-            .filter(Boolean)
-    ));
-
     // Reset tags when chapter changes
     useEffect(() => {
         setSelectedTags([]);
     }, [selectedChapter]);
 
-    // Cleanup global footer on this page
+    // Cleanup global footer
     useEffect(() => {
         const footer = document.querySelector('footer');
         if (footer) {
-            const originalDisplay = footer.style.display;
+            const display = footer.style.display;
             footer.style.display = 'none';
-            return () => {
-                footer.style.display = originalDisplay;
-            };
+            return () => { footer.style.display = display; };
         }
     }, []);
 
@@ -92,65 +114,86 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         return () => clearInterval(interval);
     }, [mode, timerActive]);
 
+    const activeQuestion = filteredQuestions[currentIndex];
+    const isLastQuestion = currentIndex === filteredQuestions.length - 1;
+
+    // Load existing note when question changes
+    useEffect(() => {
+        if (activeQuestion) {
+            setNoteText(progress.userNotes?.[activeQuestion.id] || '');
+            setEditingNote(false);
+        }
+    }, [currentIndex, activeQuestion, progress.userNotes]);
+
     const formatTime = (secs: number) => {
         const mins = Math.floor(secs / 60);
         const s = secs % 60;
         return `${mins}:${s.toString().padStart(2, '0')}`;
     };
 
-    const activeQuestion = filteredQuestions[currentIndex];
-    const isLastQuestion = currentIndex === filteredQuestions.length - 1;
-
-    // Calculate ACTUAL progress based on attempted/skipped questions
-    const attemptedCount = Object.values(questionStatus).filter(s => s === 'solved' || s === 'incorrect' || s === 'skipped').length;
-    const progressPercentage = filteredQuestions.length > 0 ? (attemptedCount / filteredQuestions.length) * 100 : 0;
-
     const handleAnswerSubmit = (correct: boolean, optionId: string) => {
-        setSelectedOptionId(optionId);
-        setIsCorrect(correct);
-        setQuestionStatus(prev => ({ ...prev, [currentIndex]: correct ? 'solved' : 'incorrect' }));
+        setExamAnswers(prev => ({ ...prev, [currentIndex]: optionId }));
 
-        // Record attempt in persistent progress
-        const currentQuestion = filteredQuestions[currentIndex];
-        if (currentQuestion) {
-            recordAttempt(
-                currentQuestion.id,
-                currentQuestion.chapterId || 'Unknown',
-                currentQuestion.difficulty,
-                correct
-            );
-        }
+        if (gameMode === 'practice') {
+            setSelectedOptionId(optionId);
+            setIsCorrect(correct);
+            setQuestionStatus(prev => ({ ...prev, [currentIndex]: correct ? 'solved' : 'incorrect' }));
 
-        if (correct) {
-            setStreak(prev => prev + 1);
-            setScore(prev => prev + 10 + (streak * 2));
+            if (activeQuestion) {
+                recordAttempt(activeQuestion.id, activeQuestion.chapterId || 'Unknown', activeQuestion.difficulty, correct);
+            }
+
+            if (correct) {
+                setStreak(prev => prev + 1);
+                setScore(prev => prev + 10 + (streak * 2));
+            } else {
+                setStreak(0);
+            }
         } else {
-            setStreak(0);
+            setSelectedOptionId(optionId);
+            setQuestionStatus(prev => ({ ...prev, [currentIndex]: 'answered' }));
         }
+    };
+
+    const resetState = (index: number) => {
+        if (gameMode === 'exam' || isReviewing) {
+            setSelectedOptionId(examAnswers[index] || null);
+        } else {
+            setSelectedOptionId(null);
+        }
+        setIsCorrect(null);
+        setShowSolution(isReviewing);
     };
 
     const handleNext = () => {
+        // If skipping (no answer selected) and not in review mode
+        if (!isReviewing && selectedOptionId === null) {
+            setQuestionStatus(prev => ({
+                ...prev,
+                [currentIndex]: prev[currentIndex] === 'marked' ? 'marked' : 'skipped'
+            }));
+        }
+
         if (!isLastQuestion) {
-            setCurrentIndex(prev => prev + 1);
-            resetState();
+            const nextIndex = currentIndex + 1;
+            setCurrentIndex(nextIndex);
+            resetState(nextIndex);
         } else {
-            // Session Complete!
-            setMode('completed');
+            handleSubmitTest();
         }
     };
 
-    const handleFinish = () => {
-        setMode('completed');
-    };
-
     const handleSubmitTest = () => {
+        if (gameMode === 'exam') {
+            filteredQuestions.forEach((q, idx) => {
+                const answer = examAnswers[idx];
+                if (answer) {
+                    const isCorrect = q.options.find(o => o.id === answer)?.isCorrect;
+                    recordAttempt(q.id, q.chapterId || 'Unknown', q.difficulty, !!isCorrect);
+                }
+            });
+        }
         setMode('completed');
-    };
-
-    const resetState = () => {
-        setSelectedOptionId(null);
-        setIsCorrect(null);
-        setShowSolution(false);
     };
 
     const resetSession = () => {
@@ -160,136 +203,190 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         setTimerSeconds(0);
         setStreak(0);
         setScore(0);
-        resetState();
+        setIsReviewing(false);
+        setExamAnswers({});
+        resetState(0);
     };
 
-    // Filter Logic for Preview (includes tag filter)
-    const previewQuestions = initialQuestions.filter(q => {
-        if (filteredQuestions.length > 0 && mode === 'playing') return true;
-
-        const chapterMatch = selectedChapter === 'All Chapters' || q.chapterId === selectedChapter;
-        const tagMatch = selectedTags.length === 0 || (q.tagId && selectedTags.includes(q.tagId));
-        const diffMatch = selectedDifficulty === 'Any Difficulty' ||
-            (selectedDifficulty === 'NEET' ? (q.difficulty !== 'Mains' && q.difficulty !== 'Advanced') : q.difficulty === selectedDifficulty);
-
-        return chapterMatch && tagMatch && diffMatch;
-    });
-
-    const totalPreview = previewQuestions.length;
-    const questionsToPlay = previewQuestions.slice(0, questionLimit === 'Max' ? undefined : Number(questionLimit));
-    const mainsCount = questionsToPlay.filter(q => q.difficulty === 'Mains').length;
-    const advCount = questionsToPlay.filter(q => q.difficulty === 'Advanced').length;
-    const neetCount = questionsToPlay.length - mainsCount - advCount;
-    const estTime = questionsToPlay.length * 2; // Approx 2 mins per question
+    const startReview = () => {
+        setMode('playing');
+        setCurrentIndex(0);
+        setIsReviewing(true);
+        setShowSolution(true);
+        resetState(0);
+    };
 
     const startPractice = () => {
-        if (totalPreview === 0) {
-            alert("No questions match your current filters.");
+        const previewSizeQuery = initialQuestions.filter(q => {
+            const chapterMatch = selectedChapter === 'All Chapters' || q.chapterId === selectedChapter;
+            const tagMatch = selectedTags.length === 0 || (q.tagId && selectedTags.includes(q.tagId));
+            const diffMatch = selectedDifficulty === 'Any Difficulty' ||
+                (selectedDifficulty === 'NEET' ? (q.difficulty !== 'Mains' && q.difficulty !== 'Advanced') : q.difficulty === selectedDifficulty);
+
+            const isMastered = progress.masteredIds?.includes(q.id);
+            const isStarred = progress.starredIds?.includes(q.id);
+
+            if (hideMastered && isMastered && !onlyStarred) return false;
+            if (onlyStarred && !isStarred) return false;
+
+            return chapterMatch && tagMatch && diffMatch;
+        });
+
+        if (previewSizeQuery.length === 0) {
+            alert("No questions match your selection.");
             return;
         }
 
-        setFilteredQuestions(questionsToPlay);
-        setMode('playing');
-        setCurrentIndex(0);
-        setQuestionStatus({});
-        setTimerSeconds(0);
-        resetState();
+        const playSet = previewSizeQuery.slice(0, questionLimit === 'Max' ? undefined : Number(questionLimit));
+
+        // Trigger Shloka Transition
+        setShowShloka(true);
+
+        setTimeout(() => {
+            setShowShloka(false);
+            setFilteredQuestions(shuffleArray(playSet));
+            setMode('playing');
+            setCurrentIndex(0);
+            setQuestionStatus({});
+            setTimerSeconds(0);
+            resetState(0);
+        }, 2000);
     };
 
-    // === COMPLETED MODE ===
-    if (mode === 'completed') {
-        const solvedCount = Object.values(questionStatus).filter(s => s === 'solved').length;
-        const incorrectCount = Object.values(questionStatus).filter(s => s === 'incorrect').length;
-        const skippedCount = Object.values(questionStatus).filter(s => s === 'skipped').length;
-        const accuracy = (solvedCount + incorrectCount) > 0 ? Math.round((solvedCount / (solvedCount + incorrectCount)) * 100) : 0;
+    const availableTags = Array.from(new Set(
+        initialQuestions
+            .filter(q => selectedChapter === 'All Chapters' || q.chapterId === selectedChapter)
+            .map(q => q.tagId)
+            .filter(Boolean)
+    ));
 
+    if (showShloka) {
         return (
-            <div className="min-h-screen bg-[#0F172A] text-gray-100 flex items-center justify-center p-4">
-                <div className="bg-[#1E293B] border border-white/10 rounded-3xl p-8 md:p-12 max-w-lg w-full text-center">
-                    <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <CheckCircle2 size={40} className="text-white" />
-                    </div>
-                    <h2 className="text-3xl font-black text-white mb-2">Session Complete!</h2>
-                    <p className="text-gray-400 mb-8">Great effort! Here&apos;s your performance summary.</p>
-
-                    <div className="grid grid-cols-3 gap-4 mb-8">
-                        <div className="bg-white/5 rounded-xl p-4 border border-white/5">
-                            <div className="text-2xl font-black text-emerald-400">{solvedCount}</div>
-                            <div className="text-[10px] text-gray-500 uppercase font-bold">Correct</div>
-                        </div>
-                        <div className="bg-white/5 rounded-xl p-4 border border-white/5">
-                            <div className="text-2xl font-black text-red-400">{incorrectCount}</div>
-                            <div className="text-[10px] text-gray-500 uppercase font-bold">Incorrect</div>
-                        </div>
-                        <div className="bg-white/5 rounded-xl p-4 border border-white/5">
-                            <div className="text-2xl font-black text-gray-400">{skippedCount}</div>
-                            <div className="text-[10px] text-gray-500 uppercase font-bold">Skipped</div>
-                        </div>
-                    </div>
-
-                    <div className="bg-gradient-to-r from-purple-900/30 to-indigo-900/30 border border-purple-500/20 rounded-xl p-6 mb-8">
-                        <div className="text-5xl font-black text-white mb-2">{accuracy}%</div>
-                        <div className="text-sm text-gray-400">Accuracy</div>
-                        <div className="text-xs text-gray-500 mt-2">Time: {formatTime(timerSeconds)} | Score: {score}</div>
-                    </div>
-
-                    <button
-                        onClick={resetSession}
-                        className="w-full py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl font-bold text-white shadow-lg transition-all"
-                    >
-                        Practice Again
-                    </button>
+            <div className="fixed inset-0 bg-black z-50 flex items-center justify-center animate-in fade-in duration-300">
+                <div className="text-center space-y-6">
+                    <h1 className="text-3xl md:text-5xl font-black text-amber-400 tracking-wider leading-relaxed drop-shadow-[0_0_15px_rgba(251,191,36,0.5)]">
+                        उद्यमेन हि सिध्यन्ति<br />कार्याणि न मनोरथैः
+                    </h1>
+                    <p className="text-gray-500 text-sm md:text-base uppercase tracking-[0.3em] font-medium">Focus on the effort, not the result</p>
                 </div>
             </div>
         );
     }
 
-    // === MENU MODE ===
+    if (mode === 'completed') {
+        let solvedCount = 0;
+        let incorrectCount = 0;
+        let skippedCount = 0;
+
+        filteredQuestions.forEach((q, idx) => {
+            const answer = examAnswers[idx];
+            if (!answer) skippedCount++;
+            else {
+                const correct = q.options.find(o => o.id === answer)?.isCorrect;
+                if (correct) solvedCount++;
+                else incorrectCount++;
+            }
+        });
+
+        const accuracy = (solvedCount + incorrectCount) > 0 ? Math.round((solvedCount / (solvedCount + incorrectCount)) * 100) : 0;
+
+        return (
+            <div className="min-h-screen bg-[#0F172A] text-gray-100 flex items-center justify-center p-4">
+                <div className="bg-[#1E293B] border border-white/10 rounded-3xl p-8 md:p-12 max-w-lg w-full text-center shadow-2xl relative overflow-hidden">
+                    <div className="absolute -top-24 -right-24 w-48 h-48 bg-purple-500/10 rounded-full blur-[80px]" />
+                    <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-[80px]" />
+
+                    <div className="relative z-10 text-center">
+                        <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <Trophy size={40} className="text-white" />
+                        </div>
+                        <h2 className="text-3xl font-black text-white mb-2">Crucible Summarized</h2>
+                        <div className="grid grid-cols-3 gap-4 mb-8 mt-8">
+                            <div className="bg-white/5 rounded-2xl p-4 border border-white/5">
+                                <div className="text-2xl font-black text-emerald-400">{solvedCount}</div>
+                                <div className="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Correct</div>
+                            </div>
+                            <div className="bg-white/5 rounded-2xl p-4 border border-white/5">
+                                <div className="text-2xl font-black text-red-400">{incorrectCount}</div>
+                                <div className="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Wrong</div>
+                            </div>
+                            <div className="bg-white/5 rounded-2xl p-4 border border-white/5">
+                                <div className="text-2xl font-black text-gray-400">{skippedCount}</div>
+                                <div className="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Skipped</div>
+                            </div>
+                        </div>
+                        <div className="bg-gradient-to-r from-purple-900/30 to-indigo-900/30 border border-purple-500/20 rounded-2xl p-6 mb-8">
+                            <div className="text-5xl font-black text-white mb-1">{accuracy}%</div>
+                            <div className="text-[10px] text-purple-300 uppercase font-black tracking-widest">Accuracy</div>
+                        </div>
+                        <div className="flex flex-col gap-3">
+                            <button onClick={startReview} className="w-full py-4 bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl font-bold flex items-center justify-center gap-2">
+                                <BookOpen size={18} /> Review All Solutions
+                            </button>
+                            <button onClick={resetSession} className="w-full py-4 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl font-bold text-white shadow-xl">
+                                Back to Menu
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     if (mode === 'menu') {
+        const previewQuestions = initialQuestions.filter(q => {
+            const ch = selectedChapter === 'All Chapters' || q.chapterId === selectedChapter;
+            const tg = selectedTags.length === 0 || (q.tagId && selectedTags.includes(q.tagId));
+            const df = selectedDifficulty === 'Any Difficulty' || (selectedDifficulty === 'NEET' ? (q.difficulty !== 'Mains' && q.difficulty !== 'Advanced') : q.difficulty === selectedDifficulty);
+            const mast = progress.masteredIds?.includes(q.id);
+            const star = progress.starredIds?.includes(q.id);
+            if (hideMastered && mast && !onlyStarred) return false;
+            if (onlyStarred && !star) return false;
+            return ch && tg && df;
+        });
+        const previewSize = previewQuestions.length;
+        const questionsToPlay = previewQuestions.slice(0, questionLimit === 'Max' ? undefined : Number(questionLimit));
+        const mainsCount = questionsToPlay.filter(q => q.difficulty === 'Mains').length;
+        const advCount = questionsToPlay.filter(q => q.difficulty === 'Advanced').length;
+        const neetCount = questionsToPlay.filter(q => q.difficulty !== 'Mains' && q.difficulty !== 'Advanced').length;
+        const estTime = questionsToPlay.length * 2;
+
         return (
             <div className="flex flex-col md:flex-row min-h-screen bg-[#0F172A] text-gray-100 font-sans overflow-hidden">
-                {/* Left Sidebar - Command Center */}
-                <aside className="w-full md:w-80 lg:w-96 flex-shrink-0 border-b md:border-b-0 md:border-r border-white/5 bg-[#1E293B] flex flex-col z-20 shadow-2xl">
+                <aside className="w-full md:w-80 lg:w-96 flex-shrink-0 border-r border-white/5 bg-[#1E293B] flex flex-col z-20 shadow-2xl overflow-y-auto">
                     <div className="p-6 md:p-8 border-b border-white/5">
-                        <Link href="/" className="flex items-center gap-2 text-gray-500 hover:text-white transition mb-4 md:mb-6 text-xs uppercase tracking-widest font-bold">
+                        <Link href="/" className="flex items-center gap-2 text-gray-500 hover:text-white transition mb-6 text-xs uppercase tracking-widest font-bold">
                             <ArrowLeft size={14} /> Back to Hub
                         </Link>
-                        <h1 className="text-2xl md:text-3xl font-black bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                            The Crucible
-                        </h1>
-                        <p className="text-gray-500 text-sm mt-2">Forge your concepts in fire.</p>
+                        <h1 className="text-2xl md:text-3xl font-black bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">The Crucible</h1>
+                        <p className="text-xs text-gray-500 mt-2 font-medium">Configure your mission parameters.</p>
                     </div>
-
-                    <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 custom-scrollbar">
-                        {/* 1. Chapter Selection */}
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+                    <div className="flex-1 p-6 md:p-8 space-y-6 md:space-y-8">
+                        {/* Chapter Config */}
+                        <div className="space-y-4">
+                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
                                 Target Chapter
                             </label>
-                            <select
-                                value={selectedChapter}
-                                onChange={(e) => setSelectedChapter(e.target.value)}
-                                className="w-full bg-gray-900/50 border border-gray-800 rounded-xl px-4 py-3 text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition text-gray-200"
-                            >
+                            <select value={selectedChapter} onChange={(e) => setSelectedChapter(e.target.value)} className="w-full bg-gray-900 border border-gray-800 rounded-xl px-4 py-3.5 text-sm font-medium outline-none focus:border-purple-500 transition-all shadow-inner">
                                 <option>All Chapters</option>
                                 {chapters.map(ch => <option key={ch}>{ch}</option>)}
                             </select>
                         </div>
 
-                        {/* 2. Sub-Topic (Tag) Selection */}
+                        {/* Sub-Topics (Horizontal Scroll on Mobile) */}
                         {selectedChapter !== 'All Chapters' && availableTags.length > 0 && (
-                            <div className="space-y-2">
-                                <label className="text-sm font-bold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+                            <div className="space-y-4 pt-2">
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] flex items-center gap-2">
                                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
-                                    Sub-Topic
+                                    Sub-Topics
                                 </label>
-                                <div className="flex flex-wrap gap-2 p-1">
+                                <div className="flex overflow-x-auto pb-2 scrollbar-none gap-2 -mx-2 px-2 snap-x">
                                     <button
                                         onClick={() => setSelectedTags([])}
-                                        className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition ${selectedTags.length === 0
-                                            ? 'bg-cyan-500/20 border-cyan-500/30 text-cyan-400'
-                                            : 'bg-transparent border-gray-700 text-gray-400 hover:border-gray-500'
+                                        className={`px-4 py-2 rounded-xl text-[11px] font-bold border transition-all duration-300 snap-start whitespace-nowrap ${selectedTags.length === 0
+                                            ? 'bg-cyan-500/20 border-cyan-500/30 text-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.15)]'
+                                            : 'bg-white/5 border-white/5 text-gray-500 hover:border-white/10'
                                             }`}
                                     >
                                         All Topics
@@ -304,9 +401,9 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                                     setSelectedTags([...selectedTags, tag!]);
                                                 }
                                             }}
-                                            className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition ${selectedTags.includes(tag!)
+                                            className={`px-4 py-2 rounded-xl text-[11px] font-bold border transition-all duration-300 snap-start whitespace-nowrap ${selectedTags.includes(tag!)
                                                 ? 'bg-cyan-500/20 border-cyan-500/30 text-cyan-400'
-                                                : 'bg-transparent border-gray-700 text-gray-400 hover:border-gray-500'
+                                                : 'bg-white/5 border-white/5 text-gray-500 hover:border-white/10'
                                                 }`}
                                         >
                                             {tag!.replace(/_/g, ' ')}
@@ -316,189 +413,207 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                             </div>
                         )}
 
-                        {/* 3. Difficulty */}
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+                        {/* Difficulty Level */}
+                        <div className="space-y-4 pt-2">
+                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
                                 Difficulty Level
                             </label>
-                            <div className="grid grid-cols-2 gap-2">
-                                {['Any Difficulty', 'Mains', 'Advanced', 'NEET'].map((diff) => (
+                            <div className="grid grid-cols-2 gap-3">
+                                {[
+                                    { id: 'Any Difficulty', label: 'Mixed', color: 'border-white/20 hover:border-white/40', active: 'bg-white/10 text-white border-white shadow-[0_0_20px_rgba(255,255,255,0.1)]' },
+                                    { id: 'Mains', label: 'JEE Mains', color: 'border-blue-500/20 hover:border-blue-500/40', active: 'bg-blue-600 text-white border-blue-400 shadow-[0_0_15px_rgba(37,99,235,0.3)]' },
+                                    { id: 'Advanced', label: 'Advanced', color: 'border-red-500/20 hover:border-red-500/40', active: 'bg-red-600 text-white border-red-400 shadow-[0_0_15px_rgba(220,38,38,0.3)]' },
+                                    { id: 'NEET', label: 'NEET Level', color: 'border-emerald-500/20 hover:border-emerald-500/40', active: 'bg-emerald-600 text-white border-emerald-400 shadow-[0_0_15px_rgba(5,150,105,0.3)]' }
+                                ].map(diff => (
                                     <button
-                                        key={diff}
-                                        onClick={() => setSelectedDifficulty(diff)}
-                                        className={`px-2 py-2 rounded-lg text-xs font-bold border transition ${selectedDifficulty === diff
-                                            ? 'bg-white/10 border-white/20 text-white'
-                                            : 'bg-transparent border-gray-700 text-gray-400 hover:border-gray-500'
-                                            }`}
+                                        key={diff.id}
+                                        onClick={() => setSelectedDifficulty(diff.id)}
+                                        className={`py-2 rounded-xl text-[11px] font-black border transition-all duration-300 ${selectedDifficulty === diff.id ? diff.active : `${diff.color} text-gray-500`}`}
                                     >
-                                        {diff === 'Any Difficulty' ? 'Mixed' : diff}
+                                        {diff.label}
                                     </button>
                                 ))}
                             </div>
                         </div>
 
-                        {/* 4. Question Count */}
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+                        {/* Question Count */}
+                        <div className="space-y-4 pt-2">
+                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                                Question Limit
+                                Question Count
                             </label>
-                            <div className="flex gap-2 bg-gray-900/50 p-1 rounded-xl border border-gray-800">
+                            <div className="flex gap-2 bg-black/40 p-1 rounded-xl border border-white/5 shadow-inner">
                                 {['5', '10', '20', 'Max'].map(count => (
-                                    <button
-                                        key={count}
-                                        onClick={() => setQuestionLimit(count)}
-                                        className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition ${questionLimit === count
-                                            ? 'bg-purple-600 text-white shadow-lg'
-                                            : 'text-gray-500 hover:text-white'
-                                            }`}
-                                    >
+                                    <button key={count} onClick={() => setQuestionLimit(count)} className={`flex-1 py-2 rounded-lg text-[11px] font-black transition-all duration-300 ${questionLimit === count ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-400'}`}>
                                         {count}
                                     </button>
                                 ))}
                             </div>
                         </div>
-                    </div>
 
-                    {/* Mobile Enter Arena Button */}
-                    <div className="p-4 md:p-6 border-t border-white/5 bg-gradient-to-t from-[#0F172A] to-[#1E293B] md:hidden">
-                        <button
-                            onClick={startPractice}
-                            disabled={totalPreview === 0}
-                            className="w-full py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-2xl font-black text-lg text-white shadow-2xl shadow-purple-900/40 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
-                        >
-                            Ignite <Flame size={20} />
-                        </button>
-                        <p className="text-center text-[10px] text-gray-500 mt-3 uppercase tracking-wider">
-                            {totalPreview === 0 ? 'No Matching Questions' : `${questionsToPlay.length} Questions Ready`}
-                        </p>
-                    </div>
+                        {/* Collection Filters */}
+                        <div className="space-y-4 pt-4 border-t border-white/5">
+                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] block">Collection Filters</label>
+                            <div className="space-y-3">
+                                <button onClick={() => setHideMastered(!hideMastered)} className="flex items-center justify-between group w-full text-left">
+                                    <div className="flex items-center gap-2">
+                                        <span className={`text-[13px] font-bold transition-colors ${hideMastered ? 'text-white' : 'text-gray-500 hover:text-gray-400'}`}>Exclude Mastered</span>
+                                        <div className="group/tooltip relative">
+                                            <HelpCircle size={12} className="text-gray-600" />
+                                            <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-48 bg-gray-900 border border-white/10 p-2 rounded-lg text-[10px] text-gray-400 hidden group-hover/tooltip:block z-50 shadow-xl">
+                                                Hides questions you have already answered correctly in previous sessions.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={`w-8 h-4 rounded-full relative transition-colors cursor-pointer ${hideMastered ? 'bg-purple-600 shadow-[0_0_8px_rgba(147,51,234,0.3)]' : 'bg-gray-800'}`}>
+                                        <div className={`absolute top-0.5 w-3 h-3 bg-white rounded-full transition-transform duration-300 ${hideMastered ? 'translate-x-4.5' : 'translate-x-0.5'}`} />
+                                    </div>
+                                </button>
+                                <button onClick={() => setOnlyStarred(!onlyStarred)} className="flex items-center justify-between group w-full text-left">
+                                    <span className={`text-[13px] font-bold transition-colors ${onlyStarred ? 'text-amber-400' : 'text-gray-500 hover:text-gray-400'}`}>Starred Focus</span>
+                                    <div className={`w-8 h-4 rounded-full relative transition-colors cursor-pointer ${onlyStarred ? 'bg-amber-600 shadow-[0_0_8px_rgba(217,119,6,0.3)]' : 'bg-gray-800'}`}>
+                                        <div className={`absolute top-0.5 w-3 h-3 bg-white rounded-full transition-transform duration-300 ${onlyStarred ? 'translate-x-4.5' : 'translate-x-0.5'}`} />
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
 
-                    {/* Desktop Footer */}
-                    <div className="hidden md:block p-6 md:p-8 border-t border-white/5 bg-[#1E293B]">
-                        <p className="text-center text-xs text-gray-500 uppercase tracking-wider">
-                            Configure & Check Stats
-                        </p>
+                        {/* Game Mode */}
+                        <div className="space-y-4 pt-4 border-t border-white/5">
+                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Crucible Mode</label>
+                            <div className="grid grid-cols-2 gap-2 bg-black/40 p-1 rounded-xl border border-white/5">
+                                <button onClick={() => setGameMode('practice')} className={`py-3 rounded-lg flex flex-col items-center gap-1 transition-all duration-300 ${gameMode === 'practice' ? 'bg-purple-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-400'}`}>
+                                    <span className="text-[11px] font-black uppercase tracking-widest">Practice</span>
+                                </button>
+                                <button onClick={() => setGameMode('exam')} className={`py-3 rounded-lg flex flex-col items-center gap-1 transition-all duration-300 ${gameMode === 'exam' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-400'}`}>
+                                    <span className="text-[11px] font-black uppercase tracking-widest">Exam</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* MOBILE ONLY IGNITE BUTTON - High Visibility Positioning */}
+                        <div className="pt-6 md:hidden">
+                            <button
+                                onClick={startPractice}
+                                disabled={previewSize === 0}
+                                className="w-full py-4 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl font-black text-white shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-transform"
+                            >
+                                <span className="tracking-widest uppercase text-sm">Ignite Mission</span>
+                                <Rocket size={20} />
+                            </button>
+                        </div>
                     </div>
                 </aside>
 
-                {/* Right Main Dashboard - Mission Briefing (Hidden on mobile) */}
-                <main className="hidden md:flex flex-1 min-h-full overflow-y-auto flex-col relative bg-black/40">
-                    <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
-                    <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-600/5 rounded-full blur-[80px] pointer-events-none" />
-
-                    <div className="flex-1 flex flex-col items-center justify-center p-8 lg:p-12 text-center relative z-10">
-                        <div className="mb-8 lg:mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                            <span className="text-purple-400 font-bold tracking-[0.2em] text-xs uppercase mb-4 block">Ready to Practice?</span>
-                            <h2 className="text-4xl lg:text-6xl font-black text-white tracking-tight mb-4">
-                                {selectedChapter === 'All Chapters' ? 'The Crucible' : selectedChapter}
-                            </h2>
-                            {selectedChapter === 'All Chapters' && (
-                                <p className="text-lg md:text-xl text-purple-300 font-medium tracking-wide mb-6">"Forge your concepts in fire."</p>
-                            )}
-                            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                                You are about to tackle <span className="text-white font-bold">{questionsToPlay.length}</span> high-quality problems.
-                            </p>
-                        </div>
-
-                        <div className="grid grid-cols-3 gap-4 lg:gap-6 w-full max-w-2xl mb-8 lg:mb-10">
-                            <div className="bg-gray-900/40 border border-white/5 p-4 lg:p-6 rounded-2xl backdrop-blur-md">
-                                <div className="text-orange-400 font-bold text-2xl lg:text-3xl mb-1">
-                                    {mainsCount}
-                                </div>
-                                <div className="text-[10px] lg:text-xs text-gray-500 uppercase font-bold tracking-wider">Mains Level</div>
-                            </div>
-                            <div className="bg-gray-900/40 border border-white/5 p-4 lg:p-6 rounded-2xl backdrop-blur-md">
-                                <div className="text-red-400 font-bold text-2xl lg:text-3xl mb-1">
-                                    {advCount}
-                                </div>
-                                <div className="text-[10px] lg:text-xs text-gray-500 uppercase font-bold tracking-wider">Advanced</div>
+                {/* MAIN CONTENT DASHBOARD */}
+                <main className="flex-1 overflow-y-auto bg-[#0F172A] relative">
+                    <div className="max-w-5xl mx-auto p-4 md:p-8 lg:p-12 pb-32">
+                        {/* Header Section - CENTERED */}
+                        <div className="flex flex-col items-center text-center gap-4 md:gap-6 mb-8 md:mb-10">
+                            <div className="space-y-2 md:space-y-3 flex flex-col items-center">
+                                <h2 className="text-3xl md:text-6xl font-black text-white tracking-tight leading-tight px-4">
+                                    {selectedChapter}
+                                </h2>
+                                <div className="h-1 md:h-1.5 w-16 md:w-32 bg-purple-500 rounded-full shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
+                                <p className="text-gray-500 font-medium text-xs md:text-base max-w-sm md:max-w-lg">
+                                    {questionLimit} Problems • {selectedDifficulty === 'Any Difficulty' ? 'Adaptive' : selectedDifficulty} Mode
+                                </p>
                             </div>
 
-                            {neetCount > 0 ? (
-                                <div className="bg-gray-900/40 border border-white/5 p-4 lg:p-6 rounded-2xl backdrop-blur-md">
-                                    <div className="text-blue-400 font-bold text-2xl lg:text-3xl mb-1">{neetCount}</div>
-                                    <div className="text-[10px] lg:text-xs text-gray-500 uppercase font-bold tracking-wider">NEET</div>
-                                </div>
-                            ) : (
-                                <div className="bg-gray-900/40 border border-white/5 p-4 lg:p-6 rounded-2xl backdrop-blur-md">
-                                    <div className="text-purple-400 font-bold text-2xl lg:text-3xl mb-1">~{estTime}m</div>
-                                    <div className="text-[10px] lg:text-xs text-gray-500 uppercase font-bold tracking-wider">Est. Time</div>
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Progress Stats Card - Dynamic data from localStorage */}
-                        <div className="w-full max-w-2xl mb-8 lg:mb-10">
-                            <div className="p-5 bg-gradient-to-r from-blue-900/20 to-cyan-900/20 border border-blue-500/20 rounded-2xl backdrop-blur-sm">
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 shrink-0">
-                                        <TrendingUp size={20} />
+                            {/* Guru Mantra */}
+                            <div className="shrink-0 mt-2">
+                                <div className="inline-flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl p-2 pr-5 hover:bg-white/10 transition cursor-pointer group shadow-xl backdrop-blur-sm">
+                                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-indigo-500 flex items-center justify-center shrink-0">
+                                        <Play size={14} className="fill-white text-white ml-0.5" />
                                     </div>
-                                    <div className="text-left flex-1">
-                                        <h4 className="text-xs font-bold text-blue-300 uppercase tracking-widest mb-1">Your Progress</h4>
-                                        <p className="text-sm text-gray-400">
-                                            {progress.totalAttempted > 0
-                                                ? `${progress.totalAttempted} questions attempted with ${overallAccuracy}% accuracy`
-                                                : 'Start practicing to track your progress!'
-                                            }
-                                        </p>
-                                    </div>
-                                </div>
-                                {/* Stats Grid */}
-                                <div className="grid grid-cols-3 gap-3 pt-3 border-t border-white/5">
-                                    <div className="text-center">
-                                        <div className="text-emerald-400 font-bold text-xl">{progress.totalCorrect}</div>
-                                        <div className="text-[10px] text-gray-500 uppercase tracking-wide">Correct</div>
-                                    </div>
-                                    <div className="text-center">
-                                        <div className="text-amber-400 font-bold text-xl">{progress.totalIncorrect}</div>
-                                        <div className="text-[10px] text-gray-500 uppercase tracking-wide">Incorrect</div>
-                                    </div>
-                                    <div className="text-center">
-                                        <div className="text-purple-400 font-bold text-xl flex items-center justify-center gap-1">
-                                            {progress.bestStreak} <Zap size={14} />
-                                        </div>
-                                        <div className="text-[10px] text-gray-500 uppercase tracking-wide">Best Streak</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="w-full max-w-2xl">
-                            {/* Focus Concepts or Sub-topics Summary */}
-                            <div className="mb-6">
-                                <h4 className="text-xs font-bold text-gray-600 uppercase tracking-widest mb-3">Focus Concepts</h4>
-                                <div className="flex flex-wrap justify-center gap-2">
-                                    {selectedTags.length > 0 ? (
-                                        <div className="px-5 py-2 bg-purple-500/10 border border-purple-500/20 rounded-full text-sm text-purple-200 shadow-[0_0_15px_rgba(168,85,247,0.1)]">
-                                            <span className="font-bold">{selectedTags[0].replace(/_/g, ' ')}</span>
-                                            {selectedTags.length > 1 && <span className="opacity-70 ml-1">+{selectedTags.length - 1} others</span>}
-                                        </div>
-                                    ) : (
-                                        Array.from(new Set(previewQuestions.slice(0, 8).map(q => q.tagId).filter(Boolean))).map(tag => (
-                                            <span key={tag} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs text-gray-300">
-                                                {tag!.replace(/_/g, ' ')}
+                                    <div className="flex flex-col text-left">
+                                        <div className="flex items-center gap-2">
+                                            <span className="flex gap-0.5">
+                                                {[...Array(6)].map((_, i) => (
+                                                    <div key={i} className={`w-0.5 h-2.5 rounded-full ${i < 3 ? 'bg-indigo-400 animate-pulse' : 'bg-gray-700'}`} style={{ animationDelay: `${i * 0.1}s` }} />
+                                                ))}
                                             </span>
-                                        ))
-                                    )}
+                                            <span className="text-[10px] font-mono text-gray-500">0:42</span>
+                                        </div>
+                                        <span className="text-[10px] md:text-[11px] font-bold text-gray-300 group-hover:text-white transition uppercase tracking-wider">Sir's Strategy Tip</span>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
 
+                        {/* DESKTOP ONLY IGNITE ACTION */}
+                        <div className="hidden md:flex flex-col items-center gap-4 mb-12">
                             <button
                                 onClick={startPractice}
-                                disabled={totalPreview === 0}
-                                className="w-full py-4 md:py-5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-2xl font-black text-xl text-white shadow-2xl shadow-purple-900/40 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 group"
+                                disabled={previewSize === 0}
+                                className="w-auto px-12 py-5 md:max-w-md bg-gradient-to-br from-indigo-600 to-purple-700 rounded-3xl font-black text-white shadow-[0_20px_40px_-15px_rgba(79,70,229,0.5)] hover:shadow-[0_25px_50px_-12px_rgba(79,70,229,0.6)] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-4 text-xl group border border-white/10"
                             >
-                                Ignite <Flame size={24} className="group-hover:translate-x-1 transition-transform" />
+                                <span className="tracking-widest uppercase">Ignite Mission</span>
+                                <Rocket size={26} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                             </button>
-                            <p className="text-center text-xs text-gray-500 mt-4 uppercase tracking-wider font-medium">
-                                {totalPreview === 0
-                                    ? 'No Matching Questions'
-                                    : `Launching ${questionsToPlay.length} High-Quality Questions${neetCount > 0 ? ` (~${estTime}m)` : ''}`
-                                }
-                            </p>
+                            <div className="flex items-center gap-2 text-gray-500 font-bold uppercase tracking-wider text-[10px]">
+                                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                                Mission Ready • {previewSize} Strategic Problems
+                            </div>
+                        </div>
+
+                        {/* Stats Cards (Compact on Mobile) */}
+                        <div className="grid grid-cols-3 gap-2 md:gap-6 mb-6 md:mb-8">
+                            <div className="bg-gray-900/40 border border-white/5 p-3 md:p-6 rounded-2xl md:rounded-3xl backdrop-blur-md relative overflow-hidden group">
+                                <div className="text-blue-400 font-black text-xl md:text-4xl mb-0.5">{mainsCount}</div>
+                                <div className="text-[8px] md:text-[10px] text-gray-600 uppercase font-black tracking-widest">Mains</div>
+                            </div>
+                            <div className="bg-gray-900/40 border border-white/5 p-3 md:p-6 rounded-2xl md:rounded-3xl backdrop-blur-md relative overflow-hidden group">
+                                <div className="text-red-400 font-black text-xl md:text-4xl mb-0.5">{advCount}</div>
+                                <div className="text-[8px] md:text-[10px] text-gray-600 uppercase font-black tracking-widest">Advanced</div>
+                            </div>
+                            <div className="bg-gray-900/40 border border-white/5 p-3 md:p-6 rounded-2xl md:rounded-3xl backdrop-blur-md relative overflow-hidden group">
+                                <div className="text-purple-400 font-black text-xl md:text-4xl mb-0.5 text-center transition group-hover:scale-105">
+                                    {neetCount > 0 ? neetCount : `~${estTime}m`}
+                                </div>
+                                <div className="text-[8px] md:text-[10px] text-gray-600 uppercase font-black tracking-widest text-center">
+                                    {neetCount > 0 ? 'NEET' : 'Est. Time'}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Tactical Insight Card (Streamlined for Mobile) */}
+                        <div className="bg-slate-900/80 border border-white/10 rounded-2xl md:rounded-[32px] p-5 md:p-8 mb-6 md:mb-10 shadow-2xl relative overflow-hidden backdrop-blur-md">
+                            <div className="absolute top-0 right-0 w-32 h-32 md:w-64 md:h-64 bg-indigo-500/5 rounded-full blur-2xl md:blur-3xl pointer-events-none" />
+
+                            <div className="flex flex-col md:flex-row gap-6 md:gap-8 relative z-10">
+                                <div className="flex items-start gap-3 md:gap-4 md:w-1/2">
+                                    <div className="w-10 h-10 md:w-12 md:h-12 bg-indigo-500/10 border border-indigo-500/20 rounded-xl md:rounded-2xl flex items-center justify-center text-indigo-400 shrink-0">
+                                        <TrendingUp size={18} />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <h4 className="text-[9px] md:text-[11px] font-black text-indigo-400 uppercase tracking-widest">Tactical Insight</h4>
+                                        <div className="text-[12px] md:text-sm text-gray-400 leading-relaxed font-medium">
+                                            {progress.totalAttempted > 0 ? (
+                                                overallAccuracy < 50 ? (
+                                                    <p><span className="text-amber-500 font-bold">Heads Up:</span> Focus on basics first.</p>
+                                                ) : <p><span className="text-emerald-500 font-bold">Mastery:</span> Scaling difficulty up.</p>
+                                            ) : <p>Complete a session to unlock data.</p>}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="md:w-1/2 md:border-l border-white/5 md:pl-8 pt-4 md:pt-0 border-t md:border-t-0">
+                                    <h5 className="text-[9px] md:text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3" >Focus Areas</h5>
+                                    <div className="flex flex-wrap gap-1.5 md:gap-2">
+                                        {selectedTags.length > 0 ? (
+                                            selectedTags.slice(0, 3).map(tag => (
+                                                <div key={tag} className="px-2 py-1 bg-white/5 border border-white/10 rounded-lg text-[9px] md:text-[11px] font-bold text-gray-400">
+                                                    {tag.replace(/_/g, ' ')}
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className="text-[9px] text-gray-600 font-bold uppercase tracking-widest">Adaptive Analysis Pending</div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </main>
@@ -506,264 +621,164 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         );
     }
 
-    // === PLAYING MODE ===
-    if (!activeQuestion) {
-        return (
-            <div className="min-h-screen bg-black text-white flex items-center justify-center">
-                <div className="text-center">
-                    <p className="mb-4">No questions available for this selection.</p>
-                    <button onClick={resetSession} className="px-6 py-2 bg-purple-600 rounded-full">Back to Menu</button>
-                </div>
-            </div>
-        );
-    }
+    if (!activeQuestion) return null;
 
-    const handleMarkForReview = () => {
-        setQuestionStatus(prev => ({ ...prev, [currentIndex]: 'marked' }));
-    };
-
-    const handleSkip = () => {
-        setQuestionStatus(prev => ({ ...prev, [currentIndex]: 'skipped' }));
-        handleNext();
-    };
-
-    const getStatusColor = (idx: number) => {
-        const status = questionStatus[idx];
-        if (idx === currentIndex) return 'ring-2 ring-purple-500 bg-purple-500 text-white';
-        switch (status) {
-            case 'solved': return 'bg-emerald-500 text-white';
-            case 'incorrect': return 'bg-red-500 text-white';
-            case 'skipped': return 'bg-gray-500 text-white';
-            case 'marked': return 'bg-amber-500 text-white';
-            default: return 'bg-white/10 text-gray-400 hover:bg-white/20';
-        }
-    };
+    const attemptedTotal = Object.keys(examAnswers).length;
+    const progressPercent = (attemptedTotal / filteredQuestions.length) * 100;
 
     return (
-        <div className="h-screen bg-[#0F172A] text-gray-100 font-sans flex flex-col overflow-hidden relative">
-            {/* === MOBILE NAVIGATOR DRAWER === */}
-            {showMobileNav && (
-                <div className="fixed inset-0 z-50 md:hidden">
-                    <div className="absolute inset-0 bg-black/80" onClick={() => setShowMobileNav(false)} />
-                    <div className="absolute right-0 top-0 h-full w-72 bg-[#0a0a16] p-4 overflow-y-auto">
-                        <div className="flex justify-between items-center mb-4">
-                            <h4 className="text-sm font-bold text-white">Question Palette</h4>
-                            <button onClick={() => setShowMobileNav(false)} className="text-gray-400">
-                                <X size={20} />
-                            </button>
-                        </div>
-                        <div className="grid grid-cols-5 gap-2 mb-6">
-                            {filteredQuestions.map((_, idx) => (
-                                <button
-                                    key={idx}
-                                    onClick={() => { setCurrentIndex(idx); resetState(); setShowMobileNav(false); }}
-                                    className={`w-10 h-10 rounded-full text-xs font-bold transition-all ${getStatusColor(idx)}`}
-                                >
-                                    {idx + 1}
-                                </button>
-                            ))}
-                        </div>
-                        <div className="space-y-2 text-[10px] text-gray-400 mb-6">
-                            <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-emerald-500"></span> Correct</div>
-                            <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-red-500"></span> Incorrect</div>
-                            <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-amber-500"></span> Marked</div>
-                            <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-gray-500"></span> Skipped</div>
-                        </div>
-                        <button
-                            onClick={handleSubmitTest}
-                            className="w-full py-3 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold rounded-xl text-sm md:text-base shadow-lg"
-                        >
-                            Submit Test
-                        </button>
-                    </div>
-                </div>
-            )}
-
-            {/* === HEADER BAR === */}
-            <header className="h-12 md:h-14 bg-[#0a0a16]/90 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-3 md:px-6 shrink-0 z-10">
-                <div className="flex items-center gap-2 md:gap-4">
-                    <button onClick={resetSession} className="text-gray-500 hover:text-white transition flex items-center gap-1 text-[10px] md:text-xs font-bold uppercase tracking-wider">
-                        <ArrowLeft size={14} /> <span className="hidden sm:inline">Exit</span>
+        <div className="h-screen bg-[#0F172A] text-gray-100 flex flex-col overflow-hidden relative">
+            <header className="h-14 bg-[#0a0a16]/90 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-6 shrink-0 z-20">
+                <div className="flex items-center gap-4">
+                    <button onClick={resetSession} className="text-gray-500 hover:text-white transition flex items-center gap-2 text-xs font-black uppercase">
+                        <ArrowLeft size={16} /> Exit
                     </button>
-                    <div className="h-4 w-px bg-white/10 hidden sm:block"></div>
-                    <span className="text-xs md:text-sm font-semibold text-purple-400 truncate max-w-[100px] md:max-w-none">
-                        {selectedChapter === 'All Chapters' ? 'Practice' : selectedChapter}
-                    </span>
+                    <div className="h-4 w-px bg-white/10" />
+                    <span className="text-sm font-black text-purple-400 uppercase tracking-widest">{currentIndex + 1} / {filteredQuestions.length}</span>
                 </div>
-
-                {/* Progress Counter */}
-                <div className="flex items-center gap-1 text-xs text-gray-400">
-                    <span className="font-bold text-white">{currentIndex + 1}</span>
-                    <span>of</span>
-                    <span>{filteredQuestions.length}</span>
+                <div className="flex items-center gap-4 font-mono text-sm text-gray-500">
+                    <Pause size={14} /> {formatTime(timerSeconds)}
+                    {gameMode === 'practice' && (
+                        <div className="flex items-center gap-1 bg-orange-500/10 px-3 py-1 rounded-lg border border-orange-500/20">
+                            <Flame size={14} className="text-orange-500" />
+                            <span className="font-black text-orange-400">{streak}</span>
+                        </div>
+                    )}
                 </div>
-
-                <div className="flex items-center gap-2 md:gap-4">
-                    {/* Timer */}
-                    <button
-                        onClick={() => setTimerActive(!timerActive)}
-                        className={`flex items-center gap-1 px-2 md:px-3 py-1 md:py-1.5 rounded-lg border text-[10px] md:text-xs font-mono transition ${timerActive ? 'bg-purple-500/20 text-purple-400 border-purple-500/30' : 'bg-white/5 text-gray-500 border-white/10'
-                            }`}
-                    >
-                        {timerActive ? <Pause size={10} /> : <Play size={10} />}
-                        {formatTime(timerSeconds)}
-                    </button>
-                    {/* Streak */}
-                    <div className="flex items-center gap-1 px-2 py-1 bg-orange-500/10 border border-orange-500/20 rounded-lg">
-                        <Flame size={12} className={streak > 1 ? 'text-orange-500' : 'text-gray-600'} />
-                        <span className="font-bold text-xs text-orange-400">{streak}</span>
-                    </div>
-                    {/* Mobile Nav Toggle */}
-                    <button onClick={() => setShowMobileNav(true)} className="md:hidden p-1.5 hover:bg-white/5 rounded-lg">
-                        <Menu size={18} className="text-gray-400" />
-                    </button>
-                </div>
+                <button onClick={() => setShowMobileNav(!showMobileNav)} className="md:hidden"><Menu /></button>
             </header>
 
-            {/* Progress Bar (Actual Progress) */}
-            <div className="h-1 bg-white/5">
-                <div
-                    className="h-full bg-gradient-to-r from-purple-500 to-cyan-500 transition-all duration-500"
-                    style={{ width: `${progressPercentage}%` }}
-                />
+            <div className="h-1 bg-white/5 z-20">
+                <div className="h-full bg-gradient-to-r from-purple-500 to-cyan-500 transition-all duration-500" style={{ width: `${progressPercent}%` }} />
             </div>
 
-            {/* === MAIN CONTENT: Split Screen === */}
-            <div className="flex-1 flex overflow-hidden relative z-10">
-                {/* ZONE A: The Learning Canvas */}
-                <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-10 pb-40 md:pb-64">
-                    <div className="max-w-2xl mx-auto">
-                        {/* Question Meta */}
-                        <div className="flex flex-wrap items-center gap-2 mb-4">
-                            <span className="text-[10px] md:text-xs font-bold text-purple-400 bg-purple-500/20 px-2 py-0.5 md:px-2.5 md:py-1 rounded-full border border-purple-500/30">
-                                Q.{currentIndex + 1}
-                            </span>
-                            <span className="text-[10px] md:text-xs text-gray-400 bg-white/5 px-2 py-0.5 md:px-2.5 md:py-1 rounded-full border border-white/5">
-                                {activeQuestion?.tagId?.replace(/_/g, ' ') || 'General'}
-                            </span>
-                            <span className={`text-[10px] md:text-xs px-2 py-0.5 md:px-2.5 md:py-1 rounded-full font-medium border ${activeQuestion?.difficulty === 'Advanced' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                                activeQuestion?.difficulty === 'Mains' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' :
-                                    'bg-blue-500/10 text-blue-400 border-blue-500/20'
-                                }`}>
-                                {activeQuestion?.difficulty}
-                            </span>
+            <div className="flex-1 flex overflow-hidden">
+                <main className="flex-1 overflow-y-auto p-6 md:p-12 lg:p-16 pb-32 scroll-smooth">
+                    <div className="max-w-3xl mx-auto">
+                        <div className="flex items-center gap-4 mb-8">
+                            <span className="px-3 py-1 bg-purple-500/20 border border-purple-500/30 rounded-full text-[10px] font-black text-purple-400 uppercase tracking-widest">Q.{currentIndex + 1}</span>
+                            <span className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-black text-gray-400 uppercase tracking-widest">{activeQuestion.difficulty}</span>
                         </div>
 
-                        {/* Question Card */}
-                        <div className="p-0">
+                        <div className="flex items-center gap-4 mb-8 border-b border-white/5 pb-6">
+                            <button onClick={() => toggleStar(activeQuestion.id)} className={`flex items-center gap-2 px-4 py-2 rounded-full text-[10px] font-black uppercase transition-all ${progress.starredIds?.includes(activeQuestion.id) ? 'bg-amber-500 text-white shadow-lg' : 'bg-white/5 text-gray-500 hover:bg-white/10'}`}>
+                                <Star size={14} fill={progress.starredIds?.includes(activeQuestion.id) ? "currentColor" : "none"} />
+                                {progress.starredIds?.includes(activeQuestion.id) ? 'Starred' : 'Star for Revision'}
+                            </button>
+                            <button onClick={() => toggleMaster(activeQuestion.id)} className={`flex items-center gap-2 px-4 py-2 rounded-full text-[10px] font-black uppercase transition-all ${progress.masteredIds?.includes(activeQuestion.id) ? 'bg-emerald-600 text-white shadow-lg' : 'bg-white/5 text-gray-500 hover:bg-white/10'}`}>
+                                <CheckCircle size={14} />
+                                {progress.masteredIds?.includes(activeQuestion.id) ? 'Mastered' : 'Easy - Hide'}
+                            </button>
+                            <div className="flex-1" />
+                            <button onClick={() => setEditingNote(true)} className={`flex items-center gap-2 px-4 py-2 rounded-full text-[10px] font-black uppercase transition-all ${progress.userNotes?.[activeQuestion.id] ? 'bg-indigo-500 text-white shadow-lg' : 'bg-white/5 text-gray-500 hover:bg-white/10'}`}>
+                                <Pencil size={14} />
+                                {progress.userNotes?.[activeQuestion.id] ? 'My Note' : 'Add Note'}
+                            </button>
+                        </div>
+
+                        {(progress.userNotes?.[activeQuestion.id] || editingNote) && (
+                            <div className="mb-10 animate-in slide-in-from-top-4 duration-300">
+                                <div className="bg-[#FFF982] p-6 shadow-2xl relative transform rotate-1 border-l-8 border-amber-400/50">
+                                    <div className="absolute top-2 right-2 flex gap-1">
+                                        {editingNote ? (
+                                            <button onClick={() => { saveNote(activeQuestion.id, noteText); setEditingNote(false); }} className="p-2 text-emerald-700 hover:bg-black/5 rounded"><CheckCircle2 size={18} /></button>
+                                        ) : (
+                                            <button onClick={() => { saveNote(activeQuestion.id, ''); setEditingNote(false); }} className="p-2 text-red-700 hover:bg-black/5 rounded"><Trash2 size={18} /></button>
+                                        )}
+                                    </div>
+                                    <label className="text-[9px] font-black text-amber-900/40 uppercase tracking-[0.2em] mb-3 block">Personal Strategy</label>
+                                    {editingNote ? (
+                                        <textarea value={noteText} onChange={(e) => setNoteText(e.target.value)} autoFocus className="w-full bg-transparent border-none focus:ring-0 text-lg font-handwritten text-gray-900 leading-relaxed h-32 resize-none" placeholder="Mental shortcuts or key observations..." />
+                                    ) : (
+                                        <p className="text-lg font-handwritten text-gray-900 leading-relaxed">{progress.userNotes?.[activeQuestion.id]}</p>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        <div className={isReviewing ? 'pointer-events-none' : ''}>
                             <QuestionCard
                                 question={activeQuestion}
                                 onAnswerSubmit={handleAnswerSubmit}
-                                showFeedback={isCorrect !== null}
+                                showFeedback={(gameMode === 'practice' || isReviewing) && (isCorrect !== null || isReviewing)}
                                 selectedOptionId={selectedOptionId}
                             />
                         </div>
 
-                        {/* Action Bar */}
-                        <div className="flex items-center justify-between mt-4 md:mt-6">
-                            <button
-                                onClick={handleMarkForReview}
-                                className={`px-3 md:px-5 py-2 md:py-2.5 rounded-xl border text-xs md:text-sm font-semibold transition ${questionStatus[currentIndex] === 'marked'
-                                    ? 'bg-amber-500/20 border-amber-500/30 text-amber-400'
-                                    : 'border-white/10 text-gray-400 hover:bg-white/5'
-                                    }`}
-                            >
-                                {questionStatus[currentIndex] === 'marked' ? '✓ Marked' : 'Mark'}
+                        <div className="mt-8 flex items-center justify-between gap-4">
+                            <button onClick={() => setQuestionStatus(prev => ({ ...prev, [currentIndex]: 'marked' }))} className={`px-5 py-2.5 rounded-xl border text-xs font-black uppercase tracking-widest transition ${questionStatus[currentIndex] === 'marked' ? 'bg-amber-500/10 border-amber-500/30 text-amber-500' : 'border-white/10 text-gray-500'}`}>
+                                Mark for Review
                             </button>
 
-                            <div className="flex gap-2">
-                                {selectedOptionId === null && (
-                                    <button
-                                        onClick={handleSkip}
-                                        className="px-3 md:px-5 py-2 md:py-2.5 rounded-xl border border-white/10 text-gray-400 hover:bg-white/5 text-xs md:text-sm font-semibold transition"
-                                    >
-                                        Skip
-                                    </button>
-                                )}
-                                {isCorrect !== null && (
+                            <div className="flex gap-3">
+                                {!isReviewing && selectedOptionId === null && (
                                     <button
                                         onClick={handleNext}
-                                        className="px-4 md:px-6 py-2 md:py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold text-sm md:text-base shadow-lg transition-all flex items-center gap-1"
+                                        className="px-6 py-2.5 rounded-xl border border-white/10 text-gray-400 hover:bg-white/5 text-[10px] font-black uppercase tracking-widest transition"
                                     >
-                                        {isLastQuestion ? 'Finish' : 'Next'} <ArrowRight size={14} />
+                                        Skip Question
+                                    </button>
+                                )}
+                                {(selectedOptionId !== null || isReviewing) && (
+                                    <button onClick={handleNext} className="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl font-black text-white shadow-xl flex items-center gap-2 hover:scale-[1.05] transition-transform">
+                                        {isLastQuestion ? 'Review Stats' : 'Proceed'} <ArrowRight size={18} />
                                     </button>
                                 )}
                             </div>
                         </div>
 
-                        {/* Solution Drawer */}
                         {showSolution && (
-                            <div className="mt-6 md:mt-8 mb-48 animate-in slide-in-from-bottom-4 duration-500 overflow-hidden">
+                            <div id="solution-viewer-container" className="mt-16 bg-black/20 rounded-[40px] border border-white/5 overflow-hidden animate-in fade-in duration-1000">
                                 <SolutionViewer solution={activeQuestion.solution} />
                             </div>
                         )}
                     </div>
                 </main>
 
-                {/* ZONE B: The Navigator (Right Sidebar - Desktop Only) */}
-                <aside className="w-64 lg:w-72 bg-[#0a0a16]/80 backdrop-blur-xl border-l border-white/5 flex-col shrink-0 hidden md:flex">
-                    {/* Stats Card */}
-                    <div className="p-4 border-b border-white/5">
-                        <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Accuracy</h4>
-                        <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-full border-3 border-emerald-500 flex items-center justify-center bg-emerald-500/10">
-                                <span className="text-sm font-black text-emerald-400">
-                                    {Object.values(questionStatus).filter(s => s === 'solved').length > 0
-                                        ? Math.round((Object.values(questionStatus).filter(s => s === 'solved').length / (Object.values(questionStatus).filter(s => s === 'solved' || s === 'incorrect').length || 1)) * 100)
-                                        : 0}%
-                                </span>
-                            </div>
-                            <div className="text-[10px] text-gray-400">
-                                <p><span className="font-bold text-emerald-400">{Object.values(questionStatus).filter(s => s === 'solved').length}</span> Correct</p>
-                                <p><span className="font-bold text-red-400">{Object.values(questionStatus).filter(s => s === 'incorrect').length}</span> Wrong</p>
-                            </div>
+                <aside className="w-80 bg-[#0a0a16]/80 border-l border-white/5 hidden lg:flex flex-col z-20">
+                    <div className="p-8 flex-1 overflow-y-auto section-scrollbar">
+                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-6 block">Question Palette</label>
+                        <div className="grid grid-cols-5 gap-3">
+                            {filteredQuestions.map((_, idx) => {
+                                const status = questionStatus[idx];
+                                let style = 'bg-white/5 text-gray-600';
+                                if (idx === currentIndex) style = 'ring-2 ring-purple-500 bg-purple-500 text-white shadow-[0_0_20px_rgba(168,85,247,0.3)]';
+                                else if (gameMode === 'practice') {
+                                    if (status === 'solved') style = 'bg-emerald-500 text-white';
+                                    else if (status === 'incorrect') style = 'bg-red-500 text-white';
+                                } else if (status === 'answered') style = 'bg-indigo-500 text-white';
+
+                                if (status === 'marked') style = 'bg-amber-500 text-white';
+                                if (status === 'skipped') style = 'bg-gray-700 text-white';
+
+                                return (
+                                    <button key={idx} onClick={() => { setCurrentIndex(idx); resetState(idx); }} className={`w-10 h-10 rounded-xl text-xs font-black transition-all ${style}`}>
+                                        {idx + 1}
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
-
-                    {/* Question Palette */}
-                    <div className="p-4 flex-1 overflow-y-auto section-scrollbar">
-                        <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Questions</h4>
-                        <div className="grid grid-cols-5 gap-1.5">
-                            {filteredQuestions.map((_, idx) => (
-                                <button
-                                    key={idx}
-                                    onClick={() => { setCurrentIndex(idx); resetState(); }}
-                                    className={`w-8 h-8 rounded-full text-[10px] font-bold transition-all ${getStatusColor(idx)}`}
-                                >
-                                    {idx + 1}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Legend */}
-                    <div className="p-3 border-t border-white/5 text-xs grid grid-cols-2 gap-2 text-gray-400">
-                        <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Correct</div>
-                        <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-red-500"></span> Wrong</div>
-                        <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Marked</div>
-                        <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-gray-500"></span> Skipped</div>
-                    </div>
-
-                    {/* Submit Button */}
-                    <div className="p-3 border-t border-white/5">
-                        <button
-                            onClick={handleSubmitTest}
-                            className="w-full py-2.5 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all text-sm md:text-base"
-                        >
-                            Submit Test
+                    <div className="p-8 border-t border-white/5">
+                        <button onClick={handleSubmitTest} className="w-full py-4 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-2xl font-black text-white shadow-xl transition-all hover:brightness-110">
+                            TERMINATE MISSION
                         </button>
                     </div>
                 </aside>
             </div>
 
-            {/* Feedback Overlay */}
-            <FeedbackOverlay
-                isOpen={isCorrect !== null}
-                isCorrect={!!isCorrect}
-                trap={activeQuestion?.trap}
-                onNext={handleNext}
-                onViewSolution={() => setShowSolution(true)}
-            />
+            {gameMode === 'practice' && (
+                <FeedbackOverlay
+                    isOpen={isCorrect !== null}
+                    isCorrect={!!isCorrect}
+                    trap={activeQuestion?.trap}
+                    onNext={handleNext}
+                    onViewSolution={() => {
+                        setShowSolution(true);
+                        setTimeout(() => document.getElementById('solution-viewer-container')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                    }}
+                />
+            )}
         </div>
     );
 }

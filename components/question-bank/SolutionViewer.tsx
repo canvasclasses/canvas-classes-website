@@ -106,22 +106,22 @@ export default function SolutionViewer({ solution }: SolutionViewerProps) {
 
                             {/* Main Solution Text */}
                             <div className="prose prose-invert prose-lg max-w-none 
-                                prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-6 prose-p:font-light
-                                prose-headings:text-white prose-headings:font-serif prose-headings:font-medium prose-headings:mb-4 prose-headings:mt-8
-                                prose-strong:text-white prose-strong:font-semibold
-                                prose-code:text-emerald-300 prose-code:bg-emerald-950/30 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-mono prose-code:text-[0.9em]
-                                prose-li:text-gray-300 prose-li:marker:text-gray-500
-                                prose-hr:border-white/10 prose-hr:my-8
+                                prose-p:text-gray-300/90 prose-p:leading-[2] prose-p:mb-10 prose-p:font-light prose-p:text-[17px]
+                                prose-headings:text-white prose-headings:font-serif prose-headings:font-normal prose-headings:mb-6 prose-headings:mt-16 prose-headings:tracking-tight
+                                prose-strong:text-indigo-300 prose-strong:font-bold
+                                prose-code:text-emerald-300 prose-code:bg-emerald-950/20 prose-code:px-2 prose-code:py-1 prose-code:rounded-lg prose-code:font-mono prose-code:text-[0.85em]
+                                prose-li:text-gray-300 prose-li:marker:text-gray-600 prose-li:mb-3
+                                prose-hr:border-white/5 prose-hr:my-16
                                 markdown-table-wrapper select-text">
                                 <ReactMarkdown
                                     remarkPlugins={[remarkMath, remarkGfm]}
                                     rehypePlugins={[rehypeKatex, rehypeRaw]}
                                     components={{
                                         // Custom styling for specific elements to improve "calligraphy" / feel
-                                        h1: ({ children }) => <h1 className="text-2xl md:text-3xl font-serif text-white mb-6 border-b border-white/10 pb-2">{children}</h1>,
-                                        h2: ({ children }) => <h2 className="text-xl md:text-2xl font-serif text-white mt-8 mb-4">{children}</h2>,
-                                        h3: ({ children }) => <h3 className="text-lg md:text-xl font-serif text-indigo-200 mt-6 mb-3 flex items-center gap-2">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 inline-block"></span>
+                                        h1: ({ children }) => <h1 className="text-3xl md:text-5xl font-serif text-white mb-12 pb-6 border-b border-white/5">{children}</h1>,
+                                        h2: ({ children }) => <h2 className="text-2xl md:text-4xl font-serif text-white mt-16 mb-8 italic opacity-95">{children}</h2>,
+                                        h3: ({ children }) => <h3 className="text-sm md:text-base font-black text-indigo-400 mt-16 mb-6 flex items-center gap-4 uppercase tracking-[0.4em]">
+                                            <span className="w-12 h-px bg-indigo-500/30"></span>
                                             {children}
                                         </h3>,
                                         p: ({ children }) => {
@@ -130,8 +130,8 @@ export default function SolutionViewer({ solution }: SolutionViewerProps) {
                                             // Highlight Formulas (clean, minimal highlighting)
                                             if (content.includes('$$') || (content.length < 60 && content.includes('='))) {
                                                 return (
-                                                    <div className="my-6 py-4 px-6 bg-white/5 rounded-lg border-l-2 border-emerald-500/50 text-center font-medium text-emerald-100 overflow-x-auto">
-                                                        {children}
+                                                    <div className="my-12 py-10 px-8 bg-white/[0.015] rounded-[32px] border border-white/5 text-center font-medium text-emerald-100/90 overflow-x-auto shadow-inner">
+                                                        <div className="text-xl md:text-2xl tracking-tight">{children}</div>
                                                     </div>
                                                 );
                                             }
@@ -139,13 +139,13 @@ export default function SolutionViewer({ solution }: SolutionViewerProps) {
                                             // Key Notes (subtle)
                                             if (content.toLowerCase().startsWith('note:') || content.toLowerCase().startsWith('key point')) {
                                                 return (
-                                                    <div className="my-6 pl-4 border-l-2 border-indigo-500/50 text-indigo-100/90 italic text-[0.95em]">
+                                                    <div className="my-12 p-8 bg-indigo-500/[0.03] border-l border-indigo-500/30 rounded-r-2xl text-indigo-100/80 italic text-[17px] leading-relaxed font-medium">
                                                         {children}
                                                     </div>
                                                 );
                                             }
 
-                                            return <p className="mb-5 leading-7 tracking-wide text-[1.05rem] text-gray-300">{children}</p>;
+                                            return <p className="mb-8 leading-9 tracking-wide text-[17px] text-gray-300/90">{children}</p>;
                                         },
                                         ul: ({ children }) => <ul className="list-disc pl-5 mb-6 space-y-2 text-gray-300">{children}</ul>,
                                         ol: ({ children }) => <ol className="list-decimal pl-5 mb-6 space-y-2 text-gray-300">{children}</ol>,
