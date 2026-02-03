@@ -22,10 +22,10 @@ interface QuestionCardProps {
 export default function QuestionCard({ question, onAnswerSubmit, showFeedback, selectedOptionId, layout = 'grid' }: QuestionCardProps) {
     const [numericInput, setNumericInput] = useState('');
 
-    // Reset numeric input when question changes (fixes bug where value persists across questions)
+    // Reset or restore numeric input when question changes
     useEffect(() => {
-        setNumericInput('');
-    }, [question.id]);
+        setNumericInput(selectedOptionId || '');
+    }, [question.id, selectedOptionId]);
 
     const handleOptionClick = (optionId: string) => {
         if (showFeedback) return;
