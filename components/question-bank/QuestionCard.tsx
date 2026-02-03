@@ -42,9 +42,9 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
     return (
         <div className="w-full max-w-2xl mx-auto">
             {/* Question Stem */}
-            <div className="p-0 mb-6 md:mb-8">
-                <span className="inline-block px-2 md:px-3 py-0.5 md:py-1 bg-purple-500/20 text-purple-300 text-[10px] md:text-xs font-bold rounded-full mb-3 md:mb-4 border border-purple-500/30">
-                    {question.tagId.split('_').pop()} • {question.difficulty}
+            <div className="p-0 mb-4 md:mb-8">
+                <span className="inline-block px-2 md:px-3 py-0.5 md:py-1 bg-purple-500/20 text-purple-300 text-[10px] md:text-xs font-bold rounded-full mb-2 md:mb-4 border border-purple-500/30">
+                    {question.tagId.split('_').pop()?.replace(/([A-Z])/g, ' $1').trim()}
                 </span>
                 <div className="text-sm md:text-base lg:text-lg font-medium text-white leading-relaxed prose prose-invert max-w-none prose-p:text-white prose-headings:text-white markdown-table-wrapper">
                     <ReactMarkdown remarkPlugins={[remarkMath, remarkGfm]} rehypePlugins={[rehypeKatex, rehypeRaw]}>
@@ -104,53 +104,54 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                 </div>
             ) : (
                 /* MCQ Options Grid */
-                <div className={`grid gap-2 md:gap-3 ${layout === 'grid' ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'}`}>
+                <div className={`grid gap-2 ${layout === 'grid' ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'}`}>
                     {question.options.map((option) => {
                         const isSelected = selectedOptionId === option.id;
                         const isCorrect = option.isCorrect;
 
                         // Determine styling based on state
-                        let buttonStyle = "bg-gray-800/50 hover:bg-gray-700/50 border-gray-700 text-gray-300";
+                        let buttonStyle = "bg-gray-800/40 hover:bg-gray-700/50 border-gray-700/50 text-gray-300";
                         if (showFeedback) {
                             if (isCorrect) {
-                                buttonStyle = "bg-emerald-900/30 border-emerald-500 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)]";
+                                buttonStyle = "bg-emerald-900/20 border-emerald-500/50 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]";
                             } else if (isSelected && !isCorrect) {
-                                buttonStyle = "bg-amber-900/30 border-amber-500 text-amber-400";
+                                buttonStyle = "bg-amber-900/20 border-amber-500/50 text-amber-400";
                             } else {
-                                buttonStyle = "bg-gray-900/10 border-gray-800 text-gray-500 opacity-50";
+                                buttonStyle = "bg-transparent border-white/5 text-gray-600 opacity-40";
                             }
                         } else if (isSelected) {
-                            buttonStyle = "bg-purple-600 border-purple-500 text-white shadow-lg scale-102";
+                            buttonStyle = "bg-indigo-600/20 border-indigo-500 text-white shadow-[0_0_15px_rgba(99,102,241,0.2)] ring-1 ring-indigo-500/50";
                         }
 
                         return (
                             <motion.button
                                 key={option.id}
-                                whileTap={!showFeedback ? { scale: 0.98 } : {}}
+                                whileTap={!showFeedback ? { scale: 0.99 } : {}}
                                 onClick={() => handleOptionClick(option.id)}
-                                className={`p-3 md:p-4 rounded-lg md:rounded-xl border-2 text-left transition-all duration-200 relative overflow-hidden group ${buttonStyle}`}
+                                className={`p-2.5 md:p-3.5 rounded-xl border-2 text-left transition-all duration-200 relative overflow-hidden group ${buttonStyle}`}
                             >
-                                <div className="flex items-start gap-3">
-                                    <span className={`flex-shrink-0 w-6 h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center font-bold text-xs md:text-sm border ${showFeedback && isCorrect ? 'bg-emerald-500 border-emerald-400 text-black' :
+                                <div className="flex items-center gap-3">
+                                    <span className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center font-bold text-[10px] md:text-xs border transition-colors ${showFeedback && isCorrect ? 'bg-emerald-500 border-emerald-400 text-black' :
                                         showFeedback && isSelected && !isCorrect ? 'bg-amber-500 border-amber-400 text-white' :
-                                            'bg-gray-700 border-gray-600 group-hover:bg-gray-600'
+                                            isSelected ? 'bg-indigo-500 border-indigo-400 text-white' :
+                                                'bg-white/5 border-white/10 group-hover:bg-white/10 text-gray-500'
                                         }`}>
-                                        {option.id}
+                                        {option.id.split('_').pop()?.toUpperCase()}
                                     </span>
-                                    <span className="flex-1 text-sm md:text-base font-medium text-left">
+                                    <span className="flex-1 text-xs md:text-sm font-medium text-left">
                                         <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex, rehypeRaw]} components={{ p: 'span' }}>
                                             {option.text}
                                         </ReactMarkdown>
                                     </span>
 
-                                    {showFeedback && isCorrect && (
-                                        <div className="absolute top-3 right-3 md:top-4 md:right-4 text-emerald-400">
-                                            <Check size={16} className="md:w-5 md:h-5" />
+                                    {showFeedback && isCorrect && (isSelected || true) && (
+                                        <div className="shrink-0 text-emerald-400">
+                                            <Check size={14} />
                                         </div>
                                     )}
                                     {showFeedback && isSelected && !isCorrect && (
-                                        <div className="absolute top-3 right-3 md:top-4 md:right-4 text-amber-400">
-                                            <X size={16} className="md:w-5 md:h-5" />
+                                        <div className="shrink-0 text-amber-400">
+                                            <X size={14} />
                                         </div>
                                     )}
                                 </div>
