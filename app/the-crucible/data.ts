@@ -12,7 +12,7 @@ export const QUESTIONS: Question[] = [
             { id: 'd', text: '72.05%', isCorrect: false },
         ],
         tagId: 'PC_Mole_Stoichiometry',
-        difficulty: 'Advanced',
+        difficulty: 'Hard',
         examSource: 'Pyrolusite Sample Problem',
         solution: {
             audioExplanationUrl: '/audio/q_mole_17.mp3',
@@ -57,7 +57,7 @@ $= \\frac{47.4}{85.8} \\times 100 \\approx 55.24\\%$.
             { id: 'd', text: '2.05 M', isCorrect: true },
         ],
         tagId: 'PC_Mole_ConcentrationTerms',
-        difficulty: 'Mains',
+        difficulty: 'Medium',
         examSource: 'AIEEE 2012',
         solution: {
             audioExplanationUrl: '/audio/q_mole_30.mp3',
@@ -91,7 +91,7 @@ $= \\frac{47.4}{85.8} \\times 100 \\approx 55.24\\%$.
             { id: 'D', text: '12 mL', isCorrect: false },
         ],
         tagId: 'PC_Mole_ConcentrationTerms',
-        difficulty: 'Advanced',
+        difficulty: 'Hard',
         examSource: 'IIT-JEE 2012',
         solution: {
             audioExplanationUrl: '/audio/q_mole_7.mp3',
