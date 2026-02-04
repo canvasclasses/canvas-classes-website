@@ -1,0 +1,3229 @@
+[
+  {
+    "_id": "MC_STO_ADV_001",
+    "text_markdown": "$MnO_2$ on ignition converts into $Mn_3O_4$. A sample of pyrolusite having 75% $MnO_2$, 20% inert impurities and the rest water is ignited in air to constant weight. What is the percentage of Mn in the ignited sample? [At. mass of Mn = 55]",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "69.6%",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "49.9%",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "55.24%",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "72.05%",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_STOICHIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "Other",
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "\n**Step 1:** Let weight of sample $= 100g$.\n*   $MnO_2 = 75g$\n*   Inert Impurities $= 20g$\n*   Water $= 5g$ (rest)\n\n**Step 2:** Moles of $MnO_2 = \\frac{75}{87} \\approx 0.862$ mol.\nWeight of Mn in sample $= \\frac{75}{87} \\times 55 \\approx 47.4g$.\n\n**Step 3:** Reaction: $3MnO_2 \\rightarrow Mn_3O_4 + O_2$\nMoles of $MnO_2$ converting to $Mn_3O_4 = 0.862$.\nMoles of $Mn_3O_4$ produced $= \\frac{1}{3} \\times 0.862 = 0.287$ mol.\nMass of $Mn_3O_4 = 0.287 \\times 229 \\approx 65.8g$.\n\n**Step 4:** Total weight of residue (ignited sample):\nSince water evaporates, residue = Mass of $Mn_3O_4$ + Mass of Inert Impurities\n$= 65.8g + 20g = 85.8g$.\n\n**Step 5:** % of Mn in residue:\n$= \\frac{\\text{Mass of Mn}}{\\text{Total Mass of Residue}} \\times 100$\n$= \\frac{47.4}{85.8} \\times 100 \\approx 55.24\\%$.\n            ",
+      "video_url": null,
+      "audio_url": "/audio/q_mole_17.mp3",
+      "image_url": null
+    },
+    "trap": {
+      "likely_wrong_choice_id": "a",
+      "message": "Did you forget to include the weight of the inert impurities in the final residue? Or maybe you forgot water evaporates?",
+      "concept_gap_tag": "TAG_PC_MOLE_STOICHIOMETRY"
+    }
+  },
+  {
+    "_id": "MC_CON_MAI_001",
+    "text_markdown": "The density of a solution prepared by dissolving 120 g of urea (molar mass = 60 u) in 1000 g of water is $1.15 \\text{ g mL}^{-1}$. The molarity of the solution is:",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "0.50 M",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "1.78 M",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "1.02 M",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "2.05 M",
+        "isCorrect": true
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_CONCENTRATION_TERMS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2012,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "\n**Formula:** $Molarity (M) = \\frac{\\text{Moles of Solute}}{\\text{Volume of Solution (L)}}$\n\n1.  **Moles of Urea:** $\\frac{120}{60} = 2$ moles.\n2.  **Total Mass of Solution:** Mass of Solute + Mass of Solvent\n    $= 120g + 1000g = 1120g$.\n3.  **Volume of Solution:**\n    $V = \\frac{\\text{Mass}}{\\text{Density}} = \\frac{1120}{1.15} = 973.9 \\text{ mL}$.\n4.  **Molarity:**\n    $M = \\frac{2 \\text{ moles}}{0.9739 \\text{ L}} = 2.05 \\text{ M}$.\n            ",
+      "video_url": null,
+      "audio_url": "/audio/q_mole_30.mp3",
+      "image_url": null
+    },
+    "trap": {
+      "likely_wrong_choice_id": "c",
+      "message": "Watch out! Did you use the mass of water (1000g) as the volume? Density applies to the *total* solution mass (1120g), not just the solvent.",
+      "concept_gap_tag": "TAG_PC_MOLE_CONCENTRATIONTERMS"
+    }
+  },
+  {
+    "_id": "MC_CON_ADV_001",
+    "text_markdown": "29.2% (w/w) HCl stock solution has density of $1.25 \\text{ g mL}^{-1}$. The molecular weight of HCl is $36.5 \\text{ g mol}^{-1}$. The volume (mL) of stock solution required to prepare a 200 mL solution of 0.4 M HCl is:",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "A",
+        "text": "2 mL",
+        "isCorrect": false
+      },
+      {
+        "id": "B",
+        "text": "4 mL",
+        "isCorrect": false
+      },
+      {
+        "id": "C",
+        "text": "8 mL",
+        "isCorrect": true
+      },
+      {
+        "id": "D",
+        "text": "12 mL",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_CONCENTRATION_TERMS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "Other",
+      "year": 2012,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "\n**Step 1: Calculate Molarity of Stock Solution ($M_1$)**\nFormula: $M = \\frac{\\% w/w \\times d \\times 10}{MM}$\n$M_1 = \\frac{29.2 \\times 1.25 \\times 10}{36.5}$\n$M_1 = \\frac{365}{36.5} = 10 \\text{ M}$.\n\n**Step 2: Apply Dilution Formula ($M_1V_1 = M_2V_2$)**\n*   $M_1 = 10 \\text{ M}$\n*   $V_1 = ?$\n*   $M_2 = 0.4 \\text{ M}$\n*   $V_2 = 200 \\text{ mL}$\n\n$10 \\times V_1 = 0.4 \\times 200$\n$10 V_1 = 80$\n$V_1 = 8 \\text{ mL}$.\n            ",
+      "video_url": null,
+      "audio_url": "/audio/q_mole_7.mp3",
+      "image_url": null
+    },
+    "trap": {
+      "likely_wrong_choice_id": "B",
+      "message": "Check your calculation for the stock molarity. Remember the shortcut formula: $M = \\frac{\\% \\times d \\times 10}{MW}$.",
+      "concept_gap_tag": null
+    }
+  },
+  {
+    "_id": "MC_SIG_BAS_001",
+    "text_markdown": "Two students performed the same experiment separately and each one of them recorded two readings, which are given below. Correct reading of mass is 3.0 g. On the basis of given data mark the correct option out of the following statements.\n\n| Student | Readings i) | Readings ii) |\n| :--- | :---: | :---: |\n| **A** | 3.01 | 2.99 |\n| **B** | 3.05 | 2.95 |\n",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Results of both the students are neither accurate nor precise",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "Results of student A are both precise and accurate",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Results of student B are neither precise nor accurate",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Results of student B are both precise and accurate",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_SIGNIFICANT_FIGURES",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "Other",
+      "year": null,
+      "difficulty": "Easy",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "Student A readings are close to 3.00 (accurate) and close to each other (precise).",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_SIG_BAS_002",
+    "text_markdown": "How many significant figures are present in the following: 0.0025, 208, 5005, 126000, 500.0, 2.0034?",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "1, 2, 4, 5, 3, 2",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "2, 3, 4, 3, 4, 5",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "3, 2, 4, 4, 3, 5",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "3, 4, 2, 4, 3, 3",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_SIGNIFICANT_FIGURES",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "Other",
+      "year": null,
+      "difficulty": "Easy",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "Rules of significant figures applied.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_SIG_BAS_003",
+    "text_markdown": "An electronic balance used in the mailroom displays tenths of a kilogram from 0 to 140 kg. How many significant figures should be used to express the mass of any packages whose mass is between 80.2 and 83.5 kg?",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "3",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "5",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "4",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "2",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_SIGNIFICANT_FIGURES",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "Other",
+      "year": null,
+      "difficulty": "Easy",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "The balance measures to tenths (0.1 kg). Values like 80.2 have 3 significant figures.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MOL_BAS_001",
+    "text_markdown": "Which of the following statements indicates that law of multiple proportion is being followed?",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Sample of CO2 taken from any source will always have C & O in the ratio 1:2",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "In CO2 and CO, masses of oxygen which combine with fixed mass of C are in the ratio 2:1",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "When Mg burns in oxygen, amount of Mg taken equals amount in MgO",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "At constant T and P, 200 ml H2 combines with 100 ml O2",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_MOLE_BASICS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "Other",
+      "year": null,
+      "difficulty": "Easy",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "Law of multiple proportions deals with two elements forming multiple compounds (CO and CO2).",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MOL_MAI_001",
+    "text_markdown": "Which of the following statements indicates that law of multiple proportion is being followed?\n",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "sample of $\\mathrm{CO}_2$ taken from any source will always have $\\mathrm{C} \\& \\mathrm{O}$ in the ratio $1: 2$",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "In $\\mathrm{CO}_2$ and CO , masses of oxygen which combine with fixed mass of C are in the ratio $2: 1$",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "When $M g$ burns in the oxygen, the amount of $M g$ taken for the reaction is equal to the amount of Mg in MgO formed.",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "At constant $T$ and $P_1, 200 \\mathrm{ml}$ of $\\mathrm{H}_2$ will combine with $100 \\mathrm{ml} \\mathrm{O}_2$ to produce 200 ml of water vapour.",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_MOLE_BASICS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "Wait for solution...",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MVD_MAI_001",
+    "text_markdown": "Four 1 Litre flasks are separately filled with $\\mathrm{SO}_2, \\mathrm{SO}_3, \\mathrm{Ar}$ and $\\mathrm{CH}_4$ gases at same temperature and pressure. The ratio of total number of atoms of these gases present in the flasks is:\n\n",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$1: 1: 1: 1$",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "$2: 3: 4: 1$",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "$3: 4: 2: 5$",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "$3: 4: 1: 5$",
+        "isCorrect": true
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_MOLAR_MASS_VAPOR_DENSITY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "Wait for solution...",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EMF_MAI_001",
+    "text_markdown": "The mass \\% of Nitrogen in histamine is $\\_\\_\\_\\_$\n",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "37.8",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "42.6",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "16.6",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "21.7",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_EMPIRICAL_MOLECULAR_FORMULA",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "\nAns: Sol. (37.84)\n<svg version='1.1' baseProfile='full' xmlns='http://www.w3.org/2000/svg' width='288px' height='126px' viewBox='0 0 288 126'>\n<path class='bond-0 atom-6 atom-4' d='M 77.5,100.6 L 88.1,47.6' style='fill:none;fill-rule:evenodd;stroke:#FFFFFF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-0 atom-6 atom-4' d='M 70.5,92.6 L 78.8,51.2' style='fill:none;fill-rule:evenodd;stroke:#FFFFFF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-1 atom-3 atom-2' d='M 7.8,47.6 L 26.6,37.0' style='fill:none;fill-rule:evenodd;stroke:#FFFFFF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-1 atom-3 atom-2' d='M 26.6,37.0 L 45.4,26.3' style='fill:none;fill-rule:evenodd;stroke:#a855f7;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-1 atom-3 atom-2' d='M 17.8,51.6 L 33.7,42.6' style='fill:none;fill-rule:evenodd;stroke:#FFFFFF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-1 atom-3 atom-2' d='M 33.7,42.6 L 49.5,33.7' style='fill:none;fill-rule:evenodd;stroke:#a855f7;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-2 atom-1 atom-3' d='M 21.6,93.9 L 14.7,70.7' style='fill:none;fill-rule:evenodd;stroke:#a855f7;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-2 atom-1 atom-3' d='M 14.7,70.7 L 7.8,47.6' style='fill:none;fill-rule:evenodd;stroke:#FFFFFF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-3 atom-0 atom-5' d='M 177.5,47.6 L 211.4,36.1' style='fill:none;fill-rule:evenodd;stroke:#FFFFFF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-3 atom-0 atom-5' d='M 211.4,36.1 L 245.3,24.5' style='fill:none;fill-rule:evenodd;stroke:#a855f7;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-4 atom-6 atom-1' d='M 77.5,100.6 L 54.9,101.9' style='fill:none;fill-rule:evenodd;stroke:#FFFFFF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-4 atom-6 atom-1' d='M 54.9,101.9 L 32.4,103.2' style='fill:none;fill-rule:evenodd;stroke:#a855f7;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-5 atom-0 atom-7' d='M 177.5,47.6 L 138.1,17.3' style='fill:none;fill-rule:evenodd;stroke:#FFFFFF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-6 atom-4 atom-7' d='M 88.1,47.6 L 138.1,17.3' style='fill:none;fill-rule:evenodd;stroke:#FFFFFF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-7 atom-4 atom-2' d='M 88.1,47.6 L 74.6,37.7' style='fill:none;fill-rule:evenodd;stroke:#FFFFFF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path class='bond-7 atom-4 atom-2' d='M 74.6,37.7 L 61.2,27.7' style='fill:none;fill-rule:evenodd;stroke:#a855f7;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />\n<path d='M 179.2,47.0 L 177.5,47.6 L 175.5,46.1' style='fill:none;stroke:#FFFFFF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;' />\n<path d='M 8.8,47.1 L 7.8,47.6 L 8.2,48.8' style='fill:none;stroke:#FFFFFF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;' />\n<path d='M 78.0,98.0 L 77.5,100.6 L 76.4,100.7' style='fill:none;stroke:#FFFFFF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;' />\n<path d='M 140.1,18.8 L 138.1,17.3 L 135.6,18.8' style='fill:none;stroke:#FFFFFF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;' />\n<path class='atom-1' d='M 2.9 95.7 L 5.0 95.7 L 5.0 102.5 L 13.2 102.5 L 13.2 95.7 L 15.3 95.7 L 15.3 111.6 L 13.2 111.6 L 13.2 104.3 L 5.0 104.3 L 5.0 111.6 L 2.9 111.6 L 2.9 95.7' fill='#a855f7'/>\n<path class='atom-1' d='M 21.0 95.7 L 26.2 104.1 Q 26.7 105.0, 27.5 106.5 Q 28.4 108.0, 28.4 108.1 L 28.4 95.7 L 30.5 95.7 L 30.5 111.6 L 28.3 111.6 L 22.8 102.4 Q 22.1 101.3, 21.4 100.1 Q 20.7 98.8, 20.5 98.5 L 20.5 111.6 L 18.5 111.6 L 18.5 95.7 L 21.0 95.7' fill='#a855f7'/>\n<path class='atom-2' d='M 49.8 13.9 L 55.0 22.3 Q 55.5 23.2, 56.3 24.7 Q 57.1 26.2, 57.2 26.3 L 57.2 13.9 L 59.3 13.9 L 59.3 29.8 L 57.1 29.8 L 51.5 20.6 Q 50.9 19.5, 50.2 18.3 Q 49.5 17.1, 49.3 16.7 L 49.3 29.8 L 47.2 29.8 L 47.2 13.9 L 49.8 13.9' fill='#a855f7'/>\n<path class='atom-5' d='M 249.7 13.9 L 254.9 22.3 Q 255.4 23.2, 256.3 24.7 Q 257.1 26.2, 257.1 26.3 L 257.1 13.9 L 259.2 13.9 L 259.2 29.8 L 257.1 29.8 L 251.5 20.6 Q 250.8 19.5, 250.1 18.3 Q 249.4 17.1, 249.2 16.7 L 249.2 29.8 L 247.2 29.8 L 247.2 13.9 L 249.7 13.9' fill='#a855f7'/>\n<path class='atom-5' d='M 262.3 13.9 L 264.4 13.9 L 264.4 20.7 L 272.6 20.7 L 272.6 13.9 L 274.7 13.9 L 274.7 29.8 L 272.6 29.8 L 272.6 22.5 L 264.4 22.5 L 264.4 29.8 L 262.3 29.8 L 262.3 13.9' fill='#a855f7'/>\n<path class='atom-5' d='M 277.8 29.3 Q 278.2 28.3, 279.1 27.7 Q 280.1 27.2, 281.3 27.2 Q 282.9 27.2, 283.8 28.0 Q 284.7 28.9, 284.7 30.4 Q 284.7 32.0, 283.5 33.4 Q 282.4 34.9, 280.0 36.6 L 284.9 36.6 L 284.9 37.8 L 277.8 37.8 L 277.8 36.8 Q 279.8 35.4, 280.9 34.3 Q 282.1 33.3, 282.7 32.4 Q 283.2 31.4, 283.2 30.5 Q 283.2 29.5, 282.7 28.9 Q 282.2 28.3, 281.3 28.3 Q 280.5 28.3, 279.9 28.7 Q 279.4 29.0, 279.0 29.8 L 277.8 29.3' fill='#a855f7'/>\n</svg>\n\n**Histamine**\n\nMolecular formula $= \\mathrm{C}_5 \\mathrm{H}_9 \\mathrm{N}_3$. Molecular mass $= 111$\nNumber of nitrogen atoms per molecule $= 3$\nMass due to $\\mathrm{N} = 3 \\times 14 = 42$\n\n$$\\% \\text { of } N = \\frac{42}{111} \\times 100 = 37.84 \\%$$\n\nThe value has a range from 37.80 to 38.20.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_STO_MAI_001",
+    "text_markdown": "$\\mathrm{MnO}_2$ on ignition converts into $\\mathrm{Mn}_2\\mathrm{O}_4$. A sample of Pyrolusite having 75% $\\mathrm{MnO}_2$, 20% inert impurities and the rest water is ignited in air to constant weight. What is the % of Mn in ignited sample? (At. mass of Mn = 55)",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "63.6 %",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "49.9 %",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "55.24 %",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "72.05 %",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_STOICHIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (c)**\n\nLet the weight of sample be $x$ g. Therefore, weight of $\\mathrm{MnO}_2$ is $0.75x$ g\n\nMoles of $\\mathrm{MnO}_2 = \\frac{0.75x}{87}$\n\nWeight of Mn $= \\frac{0.75x}{87} \\times 55 = 0.474x$\n\nThe reaction is: $3\\mathrm{MnO}_2 \\rightarrow \\mathrm{Mn}_2\\mathrm{O}_4 + \\mathrm{O}_2$; $\\mathrm{Mn}_2\\mathrm{O}_4 = 229$ g mol$^{-1}$\n\nWeight of $\\mathrm{Mn}_2\\mathrm{O}_4$ produced $= \\frac{0.75x}{87} \\times \\frac{1}{3} \\times 229 = 0.658x$ g\n\nTotal weight of residue $= 0.658x + 0.2x$ (wt. of impurities)\n\n% of Mn in residue $= \\frac{0.474x}{0.858x} \\times 100 = 55.24\\%$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EMF_MAI_002",
+    "text_markdown": "A welding fuel gas contains C and H only. Burning a small sample of it in oxygen gives 3.38 g $\\mathrm{CO}_2$, 0.69 g of water and no other product. A volume of 10 L (at STP) of this welding gas is found to weigh 11.6g. The molecular formula of the compound is:",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "CH",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "$\\mathrm{CH}_2$",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "$\\mathrm{C}_2\\mathrm{H}_2$",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "$\\mathrm{CH}_4$",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_EMPIRICAL_MOLECULAR_FORMULA",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (c)**\n\n(i) 44 g $\\mathrm{CO}_2$ contains 12 g carbon\n\n$3.38$ g $\\mathrm{CO}_2$ contains $\\frac{12}{44} \\times 3.38$ g $= 0.9218$ g carbon\n\n18 g $\\mathrm{H}_2\\mathrm{O}$ contains 2 g hydrogen\n\n$0.690$ g $\\mathrm{H}_2\\mathrm{O}$ contains $\\frac{2}{18} \\times 0.690$ g $= 0.0767$ g hydrogen\n\nAs the compound contains only carbon and hydrogen, the total mass of compound $= 0.9218 + 0.0767 = 0.9985$ g\n\nPercentage of C in the compound $= \\frac{0.9218}{0.9985} \\times 100 = 92.32$\n\nPercentage of H in the compound $= \\frac{0.0767}{0.9985} \\times 100 = 7.68$\n\nHence, empirical formula = CH\n\n(ii) **Calculation for molar mass of the gas:**\n\n10.0 L of the given gas at STP weigh = 11.6 g\n\n$\\therefore$ 22.4 L of the gas at STP will weigh $= \\frac{11.6 \\times 22.4}{10} = 25.984$ g\n\nMolar mass $= 25.984 \\approx 26$ g mol$^{-1}$\n\n(iii) **Empirical formula mass** (CH) $= 12 + 1 = 13$\n\n$\\therefore n = \\frac{\\text{molecular mass}}{\\text{empirical formula mass}} = \\frac{26}{13} = 2$\n\nHence, molecular formula $= n \\times$ CH $= 2 \\times$ CH $= \\mathrm{C}_2\\mathrm{H}_2$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EUD_ADV_001",
+    "text_markdown": "The ratio of mass percentages of 'C' and 'H' and 'C' and 'O' of a saturated acyclic organic compound X are 4:1 and 3:4 respectively. Then the moles of $\\mathrm{O}_2(\\mathrm{g})$ required for complete combustion of 2 moles of organic compound X is ______",
+    "type": "INTEGER",
+    "options": [
+      {
+        "id": "a",
+        "text": "Option A",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "Option B",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Option C",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Option D",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": "5",
+    "tags": [
+      {
+        "tag_id": "TAG_EUDIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (5)**\n\nFor the molecular formula, $\\mathrm{C}_n\\mathrm{H}_{n+2}\\mathrm{O}_2$ ($M =$ Molar mass)\n\n$\\mathrm{C}\\% = \\frac{12n}{M} \\times 100$, $\\mathrm{H}\\% = \\frac{2n+2}{M} \\times 100$, $\\mathrm{O}\\% = \\frac{32}{M} \\times 100$\n\nTo be saturated and alicyclic, $n = 2$, is,\n\n$\\mathrm{C}\\% = \\frac{24}{M} \\times 100$, $\\mathrm{H}\\% = \\frac{6}{M} \\times 100$ and $\\mathrm{O}\\% = \\frac{32}{M} \\times 100$\n\n$\\Rightarrow$ $\\mathrm{C}\\% : \\mathrm{H}\\% = 24 : 6 = 4 : 1$\n\n$\\mathrm{C}\\% : \\mathrm{O}\\% = 24 : 32 = 3 : 4$\n\nSo, X is $\\mathrm{C}_2\\mathrm{H}_6\\mathrm{O}_2$ and its combination equation is\n\n$\\mathrm{C}_2\\mathrm{H}_6\\mathrm{O}_2 + \\left(2 + \\frac{6}{4} - \\frac{1}{2}\\right)\\mathrm{O}_2 \\longrightarrow 2\\mathrm{CO}_2 + \\frac{6}{2}\\mathrm{H}_2\\mathrm{O}$\n\n$\\Rightarrow$ $\\mathrm{C}_2\\mathrm{H}_6\\mathrm{O}_2 + \\frac{5}{2}\\mathrm{O}_2 \\longrightarrow 2\\mathrm{CO}_2 + 3\\mathrm{H}_2\\mathrm{O}$\n\n1 mol | $\\frac{5}{2}$ mol\n\n2 mol of compound X required $\\frac{5}{2} \\times 2$ mol of $\\mathrm{O}_2$\n\n$= 5$ mol of $\\mathrm{O}_2$ will be required.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_LRY_MAI_001",
+    "text_markdown": "$\\mathrm{AgNO}_3$ reacts with $\\mathrm{FeCl}_3$ to produce $\\mathrm{AgCl}$ and $\\mathrm{Fe(NO}_3)_3$. A solution containing $18$ g of $\\mathrm{AgNO}_3$ was mixed with a solution containing $32.4$ g of $\\mathrm{FeCl}_3$. How many grams of which reactant remain after the reaction is over?",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$12.9$ g $\\mathrm{AgNO}_3$",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "$20.1$ g $\\mathrm{FeCl}_3$",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "$6.8$ g $\\mathrm{AgNO}_3$",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "$26.7$ g $\\mathrm{FeCl}_3$",
+        "isCorrect": true
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_LIMITING_REAGENT_YIELD",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (d)**\n\n$3\\mathrm{AgNO}_3 + \\mathrm{FeCl}_3 \\rightarrow 3\\mathrm{AgCl} + \\mathrm{Fe(NO}_3)_3$\n\nThe amount of $\\mathrm{FeCl}_3$ that is required to react completely with all of the available silver nitrate is\n\n$= (18.0$ g $\\mathrm{AgNO}_3) \\left(\\frac{1 \\text{ mol } \\mathrm{AgNO}_3}{169.87 \\text{ g } \\mathrm{AgNO}_3}\\right) \\left(\\frac{1 \\text{ mol } \\mathrm{FeCl}_3}{3 \\text{ mol } \\mathrm{AgNO}_3}\\right) \\left(\\frac{162.21 \\text{ g } \\mathrm{FeCl}_3}{1 \\text{ mol } \\mathrm{FeCl}_3}\\right)$\n\n$= 5.73$ g $\\mathrm{FeCl}_3$\n\nSince more than this minimum amount is available, $\\mathrm{FeCl}_3$ is present in excess, and $\\mathrm{AgNO}_3$ must be the limiting reactant.\n\nWe know that only $5.73$ g $\\mathrm{FeCl}_3$ will be used. Therefore, the amount left unused is:\n\n$32.4$ g total $- 5.73$ g used $= 26.7$ g $\\mathrm{FeCl}_3$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_LRY_ADV_001",
+    "text_markdown": "In the given reaction: $\\mathrm{MnI}_2(\\mathrm{s}) + \\mathrm{F}_2(\\mathrm{g}) \\rightarrow \\mathrm{MnF}_3(\\mathrm{s}) + \\mathrm{IF}_5(\\mathrm{l})$. If the % yield of $\\mathrm{MnF}_3$ is always approx. 56%, how many grams of $\\mathrm{IF}_5$ can be expected if 10g of each reactant is used in an experiment? (At wt of I = 127, Mn = 55, F = 19)",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "8 g",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "4 g",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "14.3 g",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "10 g",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_LIMITING_REAGENT_YIELD",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (a)**\n\n**Balanced chemical equation:**\n\n$2\\mathrm{MnI}_2(\\mathrm{s}) + 13\\mathrm{F}_2(\\mathrm{g}) \\rightarrow 2\\mathrm{MnF}_3(\\mathrm{s}) + 4\\mathrm{IF}_5(\\mathrm{l})$\n\nMoles of $\\mathrm{MnI}_2$ taken $= \\frac{10}{309}$ mol, Moles of $\\mathrm{F}_2$ taken $= \\frac{10}{38}$ mol\n\nIn this reaction, $\\mathrm{MnI}_2$ is the limiting reagent, so, theoretical yield of $\\mathrm{IF}_5 = \\frac{10}{309} \\times 2 = \\frac{20}{309}$ mol\n\nThus experimental yield $= \\frac{20}{309} \\times 222$ g $= 8.0$ g",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_RDX_MAI_001",
+    "text_markdown": "20 ml of a solution containing 0.2 g of impure sample of $\\mathrm{H}_2\\mathrm{O}_2$ reacts with 0.316g of $\\mathrm{KMnO}_4$ in presence of $\\mathrm{H}_2\\mathrm{SO}_4$ as per the reaction:\n\n$\\mathrm{KMnO}_4 + \\mathrm{H}_2\\mathrm{O}_2 + \\mathrm{H}_2\\mathrm{SO}_4 \\longrightarrow \\mathrm{MnSO}_4 + \\mathrm{O}_2 + \\mathrm{H}_2\\mathrm{O}$\n\nFind the purity of $\\mathrm{H}_2\\mathrm{O}_2$ solution.",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "85%",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "82%",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "86%",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "83%",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_REDOX_TITRATION",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (a)**\n\n**Balanced chemical equation:**\n\n$2\\mathrm{KMnO}_4 + 5\\mathrm{H}_2\\mathrm{O}_2 \\xrightarrow{\\mathrm{H}^+} 2\\mathrm{MnSO}_4 + 5\\mathrm{O}_2$\n\n**Using stoichiometry:**\n\n$\\frac{n_{\\mathrm{KMnO}_4}}{2} = \\frac{n_{\\mathrm{H}_2\\mathrm{O}_2}}{5}$\n\n$\\Rightarrow \\frac{0.316}{158 \\times 2} = \\frac{x}{34 \\times 5}$\n\n$\\therefore x = 0.17$ g\n\nSo the amount of impurities $= 0.2 - 0.17 = 0.03$ g\n\n% purity of $\\mathrm{H}_2\\mathrm{O}_2 = \\frac{0.17}{0.2} \\times 100 = 85\\%$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_STO_MAI_002",
+    "text_markdown": "Calculate the amount of oxygen required to produce enough $\\mathrm{CO}$ on reaction with $\\mathrm{C}$, which can reduce $1.6\\text{ kg } \\mathrm{Fe}_2\\mathrm{O}_3$.",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "480",
+    "tags": [
+      {
+        "tag_id": "TAG_STOICHIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (480)**\n\n**Method 1: Mole Concept Method**\n\n$\\mathrm{Fe}_2\\mathrm{O}_3 + 3\\mathrm{CO} \\longrightarrow 2\\mathrm{Fe} + 3\\mathrm{CO}_2$\n\n160 g $\\mathrm{Fe}_2\\mathrm{O}_3$ requires $3 \\times 28$ g $\\mathrm{CO}$.\n\n$\\mathrm{CO}$ required to reduce $1600$ g $\\mathrm{Fe}_2\\mathrm{O}_3 = \\frac{1600}{160} \\times 3 \\times 28 = 840$ g.\n\nReaction for CO production:\n$\\mathrm{C} + \\frac{1}{2} \\mathrm{O}_2 \\longrightarrow \\mathrm{CO}$\n\n$\\therefore \\mathrm{O}_2$ required to produce $840$ g $\\mathrm{CO} = \\frac{16}{28} \\times 840 = 480$ g.\n\n**Method 2: Equivalent Method**\n\n$\\mathrm{C} + \\mathrm{O}_2 \\longrightarrow \\mathrm{CO}$  ;  $\\mathrm{CO} + \\mathrm{Fe}_2\\mathrm{O}_3 \\longrightarrow \\mathrm{Fe} + \\mathrm{CO}_2$\n\n$\\text{Eq. of } \\mathrm{O}_2 = \\text{Eq. of } \\mathrm{CO} \\text{ produced} = \\text{Eq. of } \\mathrm{Fe}_2\\mathrm{O}_3 \\text{ reduced}$\n\n$\\text{Eq. of } \\mathrm{O}_2 = \\text{Eq. of } \\mathrm{Fe}_2\\mathrm{O}_3$\n\n$\\frac{W}{8} = \\frac{1600}{160/6} \\implies W = 480$ g.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_RDX_ADV_001",
+    "text_markdown": "In order to oxidise a mixture of 1 mole of each of $\\mathrm{FeC}_2\\mathrm{O}_4$, $\\mathrm{Fe}_2(\\mathrm{C}_2\\mathrm{O}_4)_3$, $\\mathrm{FeSO}_4$ and $\\mathrm{Fe}_2(\\mathrm{SO}_4)_3$ in acidic medium, the number of moles of $\\mathrm{KMnO}_4$ required is:",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "2",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "1",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "3",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "1.5",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": "2",
+    "tags": [
+      {
+        "tag_id": "TAG_REDOX_TITRATION",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (a)**\n\nThe oxidation reactions in acidic medium with $\\mathrm{KMnO}_4$ are:\n\n(i) $\\mathrm{FeC}_2\\mathrm{O}_4 + \\mathrm{KMnO}_4 \\longrightarrow \\mathrm{Fe}^{3+} + \\mathrm{CO}_2 + \\mathrm{Mn}^{2+}$ ($n$-factor $= 3$)\n(ii) $\\mathrm{Fe}_2(\\mathrm{C}_2\\mathrm{O}_4)_3 + \\mathrm{KMnO}_4 \\longrightarrow \\mathrm{Fe}^{3+} + \\mathrm{CO}_2 + \\mathrm{Mn}^{2+}$ ($n$-factor $= 6$)\n(iii) $\\mathrm{FeSO}_4 + \\mathrm{KMnO}_4 \\longrightarrow \\mathrm{Fe}^{3+} + \\mathrm{SO}_4^{2-} + \\mathrm{Mn}^{2+}$ ($n$-factor $= 1$)\n\nNote: $\\mathrm{Fe}_2(\\mathrm{SO}_4)_3$ is already in its highest oxidation state and will not be oxidized.\n\nUsing Law of Equivalence:\n$n_{\\text{eq}}(\\mathrm{KMnO}_4) = n_{\\text{eq}}(\\mathrm{FeC}_2\\mathrm{O}_4) + n_{\\text{eq}}(\\mathrm{Fe}_2(\\mathrm{C}_2\\mathrm{O}_4)_3) + n_{\\text{eq}}(\\mathrm{FeSO}_4)$\n\n$n \\times 5 = (1 \\times 3) + (1 \\times 6) + (1 \\times 1)$\n$5n = 10 \\implies n = 2$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EQV_ADV_001",
+    "text_markdown": "How much quantity of $\\mathrm{Zn}$ (in grams) will have to be reacted with excess of dil. $\\mathrm{HCl}$ solution to produce sufficient $\\mathrm{H}_2(\\mathrm{g})$ for completely reacting with the $\\mathrm{O}_2(\\mathrm{g})$ obtained by decomposing $5.104$ g of $\\mathrm{KClO}_3$?",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "8.12",
+    "tags": [
+      {
+        "tag_id": "TAG_EQUIVALENT_CONCEPT",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (8.124)**\n\n1. $\\mathrm{Zn} + 2\\mathrm{HCl} \\longrightarrow \\mathrm{ZnCl}_2 + \\mathrm{H}_2$ ($n$-factor of $\\mathrm{Zn} = 2$)\n2. $\\mathrm{KClO}_3 \\xrightarrow{\\Delta} \\mathrm{KCl} + \\frac{3}{2}\\mathrm{O}_2$ ($n$-factor of $\\mathrm{KClO}_3$ for oxidation of $\\mathrm{H}_2$ is $6$)\n3. $\\mathrm{H}_2 + \\frac{1}{2}\\mathrm{O}_2 \\longrightarrow \\mathrm{H}_2\\mathrm{O}$\n\nUsing Law of Equivalence:\n$\\text{Eq. of } \\mathrm{Zn} = \\text{Eq. of } \\mathrm{H}_2 = \\text{Eq. of } \\mathrm{O}_2 = \\text{Eq. of } \\mathrm{KClO}_3$\n\n$\\frac{\\text{wt. of } \\mathrm{Zn}}{65} \\times 2 = \\frac{5.104}{122.5} \\times 6$\n\n$\\text{wt. (Zn)} = \\frac{5.104 \\times 6 \\times 65}{122.5 \\times 2} \\approx 8.124$ g",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_VOL_MAI_001",
+    "text_markdown": "$34$ g of $\\mathrm{H}_2\\mathrm{O}_2$ is present in $1120$ ml solution. This solution is ______ volume $\\mathrm{H}_2\\mathrm{O}_2$.",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "10",
+    "tags": [
+      {
+        "tag_id": "TAG_VOLUME_STRENGTH_H2O2",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (10)**\n\nAmount of $\\mathrm{H}_2\\mathrm{O}_2$ in $1$ ml solution $= \\frac{34}{1120}$ g.\n\nFrom decomposition reaction:\n$2\\mathrm{H}_2\\mathrm{O}_2 \\longrightarrow 2\\mathrm{H}_2\\mathrm{O} + \\mathrm{O}_2$\n$68$ g of $\\mathrm{H}_2\\mathrm{O}_2$ produce $22400$ ml $\\mathrm{O}_2$ at STP.\n\n$\\therefore \\frac{34}{1120}$ g of $\\mathrm{H}_2\\mathrm{O}_2$ will produce:\n$= \\frac{22400}{68} \\times \\frac{34}{1120} = 10$ ml $\\mathrm{O}_2$.\n\nSince $1$ ml of $\\mathrm{H}_2\\mathrm{O}_2$ solution gives $10$ ml of $\\mathrm{O}_2$ gas, it is a **10 volume** $\\mathrm{H}_2\\mathrm{O}_2$ solution.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_VOL_MAI_002",
+    "text_markdown": "$20$ ml of $\\mathrm{H}_2\\mathrm{O}_2$ solution is reacted with $80$ ml of $0.05$ M $\\mathrm{KMnO}_4$ in acidic medium then what is the volume strength of $\\mathrm{H}_2\\mathrm{O}_2$?",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "2.8",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "5.6",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "11.2",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "None of these",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": "5.6",
+    "tags": [
+      {
+        "tag_id": "TAG_VOLUME_STRENGTH_H2O2",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (b)**\n\n$\\mathrm{KMnO}_4$ oxidises $\\mathrm{H}_2\\mathrm{O}_2$ to $\\mathrm{O}_2(\\mathrm{g})$ in acidic medium.\n\nUsing Equivalent Concept:\n$n_{\\text{meq}}(\\mathrm{H}_2\\mathrm{O}_2) = n_{\\text{meq}}(\\mathrm{KMnO}_4)$\n$20 \\times N = 0.05 \\times 5 \\times 80$\n$20N = 20 \\implies N = 1$\n\nVolume strength of $\\mathrm{H}_2\\mathrm{O}_2 = N \\times 5.6$\n$\\text{Vol. strength} = 1 \\times 5.6 = 5.6$\n\nAns: (b) 5.6",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_RDX_ADV_002",
+    "text_markdown": "$15$ g $\\mathrm{Ba(MnO}_4)_2$ sample containing impurity is completely reacting with $100$ ml of $11.2$ V $\\mathrm{H}_2\\mathrm{O}_2$, then what will be the % purity of $\\mathrm{Ba(MnO}_4)_2$ in the sample?",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "5%",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "10%",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "50%",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "28%",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_REDOX_TITRATION",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (c)**\n\n$N = \\frac{11.2}{5.6} = 2$\n\n$n_{\\text{eq}}$ of $\\mathrm{Ba(MnO}_4)_2 = n_{\\text{eq}}$ of $\\mathrm{H}_2\\mathrm{O}_2$\n\n$\\Rightarrow 2 \\times 100 = 0.2$ Eq.\n\n$n$-factor per $\\mathrm{MnO}_4^-$ is $5$. For $\\mathrm{Ba(MnO}_4)_2$, $n$-factor $= 10$\n\n$\\therefore$ no. of moles of $\\mathrm{Ba(MnO}_4)_2 = \\frac{0.2}{10} = 0.02$\n\n$\\therefore$ wt. of $\\mathrm{Ba(MnO}_4)_2 = 0.02 \\times 375 = 7.5$ g\n\n$\\therefore$ % Purity $= \\frac{7.5}{15} \\times 100 = 50\\%$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EUD_MAI_001",
+    "text_markdown": "What volume of air having $21\\%$ oxygen by volume is required to completely burn $1$ kg of carbon containing $100\\%$ combustible substances?",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$8998$ L",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "$8888$ L",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "$8778$ L",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "$8989$ L",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_EUDIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (b)**\n\nCombustion of carbon may be given as:\n\n$\\mathrm{C}(\\mathrm{s}) + \\mathrm{O}_2(\\mathrm{g}) \\longrightarrow \\mathrm{CO}_2(\\mathrm{g})$\n\n1 mol | 1 mol\n\n12 g | 1 mol\n\n$\\therefore$ 12 g carbon requires 1 mole of $\\mathrm{O}_2$ for complete combustion.\n\n$\\therefore$ 1000 g carbon will require $\\frac{1}{12} \\times 1000$ mol $\\mathrm{O}_2$ for combustion, i.e. 83.33 mol $\\mathrm{O}_2$\n\nVolume of $\\mathrm{O}_2$ at NTP $= 83.33 \\times 22.4$ L $= 1866.592$ L\n\n$\\because$ 21 L $\\mathrm{O}_2$ is present in 100 L air\n\n$\\therefore$ 1866.592 L $\\mathrm{O}_2$ will be present in $\\frac{100}{21} \\times 1866.592$ L air\n\n$= 8888.5$ L $= 8.8885 \\times 10^3$ L",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MVD_ADV_001",
+    "text_markdown": "The mass of $\\mathrm{O}_2$ that must be mixed with $20$ g of oxygen such that $27$ ml of a sample of resulting mixture would contain equal number of molecules of each gas",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$13.75$ g",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "$27.50$ g",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "$41.25$ g",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "$55$ g",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_MOLAR_MASS_VAPOR_DENSITY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (b)**\n\nAns: $\\frac{W_2}{44} = \\frac{20}{32}$\n\n$\\Rightarrow W = 27.50$ g",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MOL_ADV_001",
+    "text_markdown": "$0.05$ cm thick coating of silver is deposited on a plate of $0.05$ m² area. The no. of silver atoms deposited on plate are ______ $\\times 10^{22}$ (At. mass of Ag $= 108$, $d = 7.9$ g cm⁻³)",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "11",
+    "tags": [
+      {
+        "tag_id": "TAG_MOLE_BASICS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (11)**\n\nVol. of silver coating $= 0.05 \\times 0.05 \\times 10^4$ (area)\n\n$= 2.5$ cm³\n\nMass of Silver deposited $=$ density $\\times$ volume\n\n$= 7.9 \\times 2.5$ g\n\n$\\therefore$ Moles of Ag atoms $= \\frac{2.5 \\times 7.9}{108}$\n\nNo. of atoms $= \\frac{2.5 \\times 7.9}{108} \\times N_A$\n\n$= 11.01 \\times 10^{22}$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MOL_MAI_002",
+    "text_markdown": "Haemoglobin contains $0.34\\%$ Fe by mass. The no. of Fe atoms in $3.3$ g of Haemoglobin is ______",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "1.21",
+    "tags": [
+      {
+        "tag_id": "TAG_MOLE_BASICS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution ($1.21 \\times 10^{20}$)**\n\nAns:\n\n$100$ g Hb contains $0.34$ g Fe\n\n$3.3$ g Hb contains $\\frac{0.34}{100} \\times 3.3$ g Fe\n\nNo. of Fe atoms $= \\frac{0.34 \\times 3.3}{100 \\times 56} \\times N_A$\n\n$= 1.21 \\times 10^{20}$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MIX_ADV_001",
+    "text_markdown": "A $1.85$ g sample of mixture of $\\mathrm{CuCl}_2$ and $\\mathrm{CuBr}_2$ was dissolved in water and mixed thoroughly with $1.8$ g portion of $\\mathrm{AgCl}$. After reaction, the solid which now contains $\\mathrm{AgCl}$ and $\\mathrm{AgBr}$ was filtered, dried and weighed to be $2.052$ g. What was the % by weight of $\\mathrm{CuBr}_2$ in the mixture?",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "24.18",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "34.18",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "54.8",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "65.2",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_MIXTURE_ANALYSIS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (a)**\n\nMoles of Ag are conserved:\n\n$2.052 - x = \\mathrm{AgCl}$\n\n$x$ g $= \\mathrm{AgBr}$\n\n$\\therefore \\frac{1.8}{143.5} = \\frac{x}{188} + \\frac{2.052-x}{143.5}$\n\n$\\Rightarrow x = 1.06$ g\n\nWt of $\\mathrm{CuBr}_2 =$ Mole of $\\mathrm{CuBr}_2 \\times 223$\n\n$= \\frac{x}{188} \\times \\frac{1}{2} \\times 223$\n\n$= 0.628$ g\n\n% of $\\mathrm{CuBr}_2 = \\frac{0.628}{1.85} \\times 100 = 34\\%$\n\nKsp of $\\mathrm{AgBr} >$ Ksp of $\\mathrm{AgCl}$ $\\therefore$ all of $\\mathrm{Br}^-$ will get precipitated",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EMF_MAI_003",
+    "text_markdown": "A compound contains $36\\%$ carbon by mass. If each molecule contains two carbon atoms, the no. of moles of compound in its $10$ g is",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "66.67",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "0.15",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "0.30",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "1.5",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_EMPIRICAL_MOLECULAR_FORMULA",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (b)**\n\n$\\frac{24}{M} = \\frac{36}{100}$\n\n$\\Rightarrow M = 66.67$\n\n$\\therefore$ no. of moles $= \\frac{10}{66.67} = 0.15$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_LRY_ADV_002",
+    "text_markdown": "______ grams of 3-hydroxypropanol (MW = 74) must be dehydrated to produce $7.8$ g of acrolein (MW = 56) $\\mathrm{C}_3\\mathrm{H}_4\\mathrm{O}$, if the % yield is 64.",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "16.10",
+    "tags": [
+      {
+        "tag_id": "TAG_LIMITING_REAGENT_YIELD",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (16.10)**\n\n$\\ce{CH2OH-CH2-CHO} \\xrightarrow{-H_2O} \\mathrm{C}_3\\mathrm{H}_4\\mathrm{O}$\n\n74 g → 56 g (100% yield)\n\n56 g × 64/100 g (64% yield)\n\n64 × 56/100 g Requires 74 g\n\n7.8 g → $\\frac{74 \\times 100 \\times 7.8}{64 \\times 56}$ g\n\n$= 16.10$ g",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_LRY_MAI_002",
+    "text_markdown": "$\\mathrm{N}_2(\\mathrm{g}) + 3\\mathrm{H}_2(\\mathrm{g}) \\rightleftharpoons 2\\mathrm{NH}_3(\\mathrm{g})$\n\nIf $20$ g $\\mathrm{N}_2$ reacts with $5$ g $\\mathrm{H}_2$, then the limiting reagent of the reaction and the no. of moles of $\\mathrm{NH}_3$ formed respectively are",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\mathrm{H}_2$, 1.42 moles",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "$\\mathrm{H}_2$, 0.71 moles",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "$\\mathrm{N}_2$, 1.42 moles",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "$\\mathrm{N}_2$, 0.71 moles",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_LIMITING_REAGENT_YIELD",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (c)**\n\n$\\mathrm{N}_2 + 3\\mathrm{H}_2 \\rightleftharpoons 2\\mathrm{NH}_3$\n\nReq: 28 g | 6 g\n\nGiven: $\\frac{20}{28}$ | $\\frac{5}{2} \\times \\frac{1}{3}$\n\n= 0.71 | 0.83\n\n$\\mathrm{N}_2$ is the limiting reagent (LR)\n\n$\\therefore$ Fraction of S remained $= \\frac{56-32}{56} = 0.428$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_LRY_MAI_003",
+    "text_markdown": "Equal masses of Fe and S are heated together to form FeS. What fraction of the original mass of excess reactant is left unreacted?",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "0.22",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "0.43",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "0.86",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "0.57",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_LIMITING_REAGENT_YIELD",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (b)**\n\n$\\mathrm{Fe} + \\mathrm{S} \\longrightarrow \\mathrm{FeS}$\n\n56 g | 32 g\n\nLR\n\n$\\therefore$ Fraction of S remained $= \\frac{56-32}{56} = 0.428$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_STO_ADV_002",
+    "text_markdown": "A $1.84$ mg sample of polyhydric alcoholic compound 'X' of molar mass $92$ g/mol gave $1.344$ ml of $\\mathrm{H}_2$ gas at STP. The no. of alcoholic hydrogen present in compound X is:",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "6",
+    "tags": [
+      {
+        "tag_id": "TAG_STOICHIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (6)**\n\nAns:\n\n$2\\mathrm{R}(\\mathrm{OH})_x + 2x\\mathrm{Na} \\longrightarrow 2\\mathrm{R}(\\mathrm{ONa}^+)_x + \\frac{x}{2}\\mathrm{H}_2$\n\n1 mole → $\\frac{x}{2}$ mole $\\mathrm{H}_2$\n\nmole of $\\mathrm{H}_2(\\mathrm{g})$ produced $= \\frac{1.344}{22400} = 6 \\times 10^{-5}$\n\nmole of alcohol $= \\frac{1.84 \\times 10^{-3}}{92} = 2 \\times 10^{-5}$\n\n$\\therefore 2 \\times 10^{-5} \\times \\frac{x}{2} = 6 \\times 10^{-5}$\n\n$\\therefore x = 6$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EUD_ADV_002",
+    "text_markdown": "A $10$ mg effervescent tablet containing $\\mathrm{NaHCO}_3$ and oxalic acid releases $0.25$ ml of $\\mathrm{CO}_2$ at $298.15$ K and $1$ bar. If molar volume of $\\mathrm{CO}_2$ is $25$ L under such condition, what is the % of $\\mathrm{NaHCO}_3$ in each tablet? (Molar mass of $\\mathrm{NaHCO}_3 = 84$ g mol⁻¹)",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "8.4",
+    "tags": [
+      {
+        "tag_id": "TAG_EUDIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (8.4)**\n\nAns:\n\n$\\ce{COOH-COOH + 2NaHCO3 -> COONa-COONa + 2CO2 + 2H2O}$\n\n$\\therefore n_{\\mathrm{NaHCO}_3} = n_{\\mathrm{CO}_2}$\n\n$\\frac{x}{84} = \\frac{0.25 \\times 10^{-3}}{25}$\n\n$\\Rightarrow x = 84 \\times 10^{-5}$\n\nwt of $\\mathrm{NaHCO}_3 = 0.84$ mg\n\n% of $\\mathrm{NaHCO}_3 = \\frac{0.84}{10} \\times 100 = 8.4\\%$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_STO_ADV_003",
+    "text_markdown": "S combines with $\\mathrm{O}_2$ to form $\\mathrm{SO}_2$ and $\\mathrm{SO}_3$. If $10$ g of S is mixed with $12$ g of $\\mathrm{O}_2$, what mass of $\\mathrm{SO}_2$ & $\\mathrm{SO}_3$ will be formed, so that neither S or O will be left at the end of reaction.",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$12$ g $\\mathrm{SO}_2$ + $10$ g $\\mathrm{SO}_3$",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "$10$ g $\\mathrm{SO}_2$ + $12$ g $\\mathrm{SO}_3$",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "$14$ g $\\mathrm{SO}_2$ + $8$ g $\\mathrm{SO}_3$",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "$8$ g $\\mathrm{SO}_2$ + $14$ g $\\mathrm{SO}_3$",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_STOICHIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (a)**\n\n$\\mathrm{S} + \\mathrm{O}_2 \\longrightarrow \\mathrm{SO}_2 + \\mathrm{SO}_3$\n\n10 g | 12 g | $x$ g | $(22-x)$ g\n\nMoles of S are conserved:\n\n$\\frac{10}{32} = \\frac{x}{64} + \\frac{22-x}{80}$\n\n$\\Rightarrow x = 12$ g",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MVD_ADV_002",
+    "text_markdown": "A sample of hydrogen gas is collected and it is observed that it contains only H and D atoms in the atomic ratio $6000:1$. The no. of neutrons in $3$ g of such a sample should be nearly",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "0.0005",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "$3.01 \\times 10^{20}$",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "$1.80 \\times 10^{24}$",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "1.0",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_MOLAR_MASS_VAPOR_DENSITY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (b)**\n\nAns: b\n\nNo. of neutrons = No. of D-atoms\n\n6001 atoms → 1 D-atom | Avg. atomic wt = $1$ g/mol⁻¹\n\n$3 \\times 6.022 \\times 10^{23}$ atoms → $\\frac{1}{6001} \\times 3 \\times 6.022 \\times 10^{23}$\n\n$= 3.01 \\times 10^{20}$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_LRY_MAI_004",
+    "text_markdown": "Production of Fe in blast furnace follows the following equation:\n\n$\\mathrm{Fe}_3\\mathrm{O}_4(\\mathrm{s}) + 4\\mathrm{CO}(\\mathrm{g}) \\longrightarrow 3\\mathrm{Fe}(\\ell) + 4\\mathrm{CO}_2(\\mathrm{g})$\n\nWhen $4.64$ kg of $\\mathrm{Fe}_3\\mathrm{O}_4$ and $2.52$ kg of $\\mathrm{CO}$ are allowed to react then the amount of iron (in g) produced is:",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "1400",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "2200",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "3360",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "4200",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_LIMITING_REAGENT_YIELD",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (c)**\n\nMoles of $\\mathrm{Fe}_3\\mathrm{O}_4 = \\frac{4.64 \\times 10^3}{232} = 20$ (LR)\n\nmoles of $\\mathrm{CO} = \\frac{2.52 \\times 10^3}{28} = 90$\n\n$\\therefore$ moles of Fe formed $= 60$\n\nwt of Fe $= 60 \\times 56 = 3360$ g",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_CON_ADV_002",
+    "text_markdown": "Molality of an aq. solution containing $x$ g of anh. $\\mathrm{CuSO}_4$ in $500$ ml solution at $32°\\mathrm{C}$ is $2 \\times 10^{-1}$ M. Its molality will be ______ $\\times 10^{-3}$ m. ($d = 1.25$ g/ml)",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "164",
+    "tags": [
+      {
+        "tag_id": "TAG_CONCENTRATION_TERMS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (164)**\n\nAns: 164\n\n$m = \\frac{1000 \\times \\text{Molarity}}{1000d - \\text{Molarity} \\times \\text{mol.wt (Solute)}}$\n\n$= \\frac{1000 \\times 0.2}{1250 - 0.2 \\times 159.6} = 0.164$\n\n$= 164 \\times 10^{-3}$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_CON_ADV_003",
+    "text_markdown": "A compound $\\mathrm{H}_x\\mathrm{X}$ with molar mass of $80$ g is dissolved in a solvent having density of $0.4$ g ml⁻¹. Assuming no change in volume upon dissolution, the molality of a $3.2$ M solution is ______",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "8",
+    "tags": [
+      {
+        "tag_id": "TAG_CONCENTRATION_TERMS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (8)**\n\nAns: 8\n\n$m = \\frac{1000 \\times 3.2}{1000 \\times 0.656 - 3.2 \\times 80} = 8$\n\n3.2 M is $3.2 \\times 80 = 256$ g solute in 1000 ml\n\n$\\therefore (0.4 + 0.256)$ g in 1 ml\n\n$\\therefore d = 0.656$ g ml⁻¹",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EMF_ADV_001",
+    "text_markdown": "A metal chloride contains $55\\%$ of chlorine by weight. $100$ ml vapours of the metal chloride at STP weigh $0.57$ g. The molecular formula of the metal chloride is",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\mathrm{MCl}_4$",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "$\\mathrm{MCl}_3$",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "$\\mathrm{MCl}_2$",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "$\\mathrm{MCl}$",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_EMPIRICAL_MOLECULAR_FORMULA",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (c)**\n\nAns: c\n\n$100$ ml $\\longrightarrow 0.57$ g\n\n$22400$ ml $\\longrightarrow 127.68$ g (Mol. wt.)\n\n$\\mathrm{Cl} = 127.68 \\times \\frac{55}{100} = 70.22$ g i.e. 2 Cl atoms.\n\n$\\therefore \\mathrm{MCl}_2$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_CON_ADV_004",
+    "text_markdown": "The molality of a $10\\%$ (v/v) solution of dibromine solution in $\\mathrm{CCl}_4$ is $x$.\n\n$x = $ ______ $\\times 10^{-2}$ M. (Mol.wt of $\\mathrm{Br}_2 = 160$ g/mol, density of $\\mathrm{Br}_2 = 3.2$ g/ml, density of $\\mathrm{CCl}_4 = 1.6$ g/ml)",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "139",
+    "tags": [
+      {
+        "tag_id": "TAG_CONCENTRATION_TERMS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (139)**\n\nAns: 139\n\n$10$ ml solute $+ 90$ ml solvent (ideal case)\n\nmass of solute $= 10 \\times 3.2 = 32$ g\n\nof solvent $= 90 \\times 1.6 = 144$ g\n\n$\\therefore m = \\frac{32/160}{0.144} = 1.388$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EUD_ADV_003",
+    "text_markdown": "Complete combustion of $750$ g of an organic compound provides $420$ g of $\\mathrm{CO}_2$ and $210$ g of $\\mathrm{H}_2\\mathrm{O}$. The % composition of C and H in organic compound is $15.2$ and ______.",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "3",
+    "tags": [
+      {
+        "tag_id": "TAG_EUDIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (3)**\n\nAns: 3\n\nmole of C $=$ mole of $\\mathrm{CO}_2 = \\frac{420}{44} = 9.5$\n\nmole of H $= 2 \\times$ mole of $\\mathrm{H}_2\\mathrm{O} = \\frac{210}{18} \\times 2 = 23.33$\n\n$\\frac{9.5 \\times 12}{750} \\times 100 = 15.2\\%$ Carbon\n\n$\\therefore \\frac{23.33 \\times 1}{750} \\times 100 = 3.11\\%$ Hydrogen",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EUD_ADV_004",
+    "text_markdown": "The formula of a gaseous hydrocarbon which requires $6$ times of its own volume of $\\mathrm{O}_2$ for complete oxidation and produces $4$ times its own volume of $\\mathrm{CO}_2$ is $\\mathrm{C}_x\\mathrm{H}_y$. The value of $y$ is ______",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "8",
+    "tags": [
+      {
+        "tag_id": "TAG_EUDIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (8)**\n\nAns: 8\n\n$\\mathrm{C}_x\\mathrm{H}_y + 6\\mathrm{O}_2 \\longrightarrow x\\mathrm{CO}_2 + \\frac{y}{2}\\mathrm{H}_2\\mathrm{O}$\n\n$2x + \\frac{y}{2} = 12$ → $x = 4$\n\n$\\therefore \\frac{y}{2} = 12 - 8 = 4$ → $y = 8$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EUD_ADV_005",
+    "text_markdown": "The ratio of the mass percentages of C & H and C & O of a saturated acyclic organic compound X are $4:1$ and $3:4$ respectively. Then, the no. of moles of oxygen gas required for complete combustion of two moles of organic compound X is ______",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "5",
+    "tags": [
+      {
+        "tag_id": "TAG_EUDIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (5)**\n\nAns: 5\n\n$\\frac{\\mathrm{C}}{\\mathrm{H}} = \\frac{4}{1}$ → $\\frac{\\mathrm{C}}{\\mathrm{O}} = \\frac{3}{4}$\n\n$12\\mathrm{g} : 3\\mathrm{g}$ | $12\\mathrm{g} : 16\\mathrm{g}$ → i.e. $\\mathrm{C}_1\\mathrm{H}_3\\mathrm{O}_1$ or $\\mathrm{CH}_3\\mathrm{O}$\n\n→ $\\mathrm{C}_2\\mathrm{H}_6\\mathrm{O}_2$\n\n$\\therefore \\mathrm{C}_2\\mathrm{H}_6\\mathrm{O}_2 + \\frac{5}{2}\\mathrm{O}_2 \\longrightarrow 2\\mathrm{CO}_2 + 3\\mathrm{H}_2\\mathrm{O}$\n\n$\\therefore$ for 2 mole $\\mathrm{C}_2\\mathrm{H}_6\\mathrm{O}_2$ we require 5 mole $\\mathrm{O}_2$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_RDX_MAI_002",
+    "text_markdown": "A $20$ ml solution containing $0.2$ g impure $\\mathrm{H}_2\\mathrm{O}_2$ reacts completely with $0.316$ g of $\\mathrm{KMnO}_4$ in acid solution. The purity of $\\mathrm{H}_2\\mathrm{O}_2$ (in %) is ______ (Mol. wt of $\\mathrm{KMnO}_4 = 158$)",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "85",
+    "tags": [
+      {
+        "tag_id": "TAG_REDOX_TITRATION",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (85)**\n\nEq of $\\mathrm{H}_2\\mathrm{O}_2$ = Eq of $\\mathrm{KMnO}_4$\n\nmole $\\times 2 = \\frac{0.316}{158} \\times 5$\n\n$\\therefore$ mole of $\\mathrm{H}_2\\mathrm{O}_2 = 0.005$\n\nwt of $\\mathrm{H}_2\\mathrm{O}_2 = 0.005 \\times 34 = 0.17$ g\n\n$\\therefore$ % Purity $= \\frac{0.17}{0.2} \\times 100 = 85\\%$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EQV_MAI_001",
+    "text_markdown": "The number of equivalents in $196$ g of $\\mathrm{H}_3\\mathrm{PO}_4$ are ______\n(Given $n$-factor = 3).",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "6",
+    "tags": [
+      {
+        "tag_id": "TAG_EQUIVALENT_CONCEPT",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (6)**\n\n$n = \\frac{196}{98} = 2$\n\nEquivalents $=$ Moles $\\times n$-factor $= 2 \\times 3 = 6$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_STO_MAI_003",
+    "text_markdown": "In the reaction $\\mathrm{CO}(\\mathrm{g}) + 2\\mathrm{H}_2(\\mathrm{g}) \\rightarrow \\mathrm{CH}_3\\mathrm{OH}(\\mathrm{g})$, the number of moles of $\\mathrm{H}_2$ required to react completely with $2$ mol of $\\mathrm{CO}$ is ______.",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "4",
+    "tags": [
+      {
+        "tag_id": "TAG_STOICHIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (4)**\n\nFrom the reaction, we have 1 mol of CO reacts with 2 mol of $\\mathrm{H}_2$; so, 2 mol of CO will react with $2 \\times 2 = 4$ mol of $\\mathrm{H}_2$.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_LRY_ADV_003",
+    "text_markdown": "Two moles of $50\\%$ pure $\\mathrm{Ca(HCO}_3)_2$ on heating forms $1$ mol of $\\mathrm{CO}_2$. The percentage yield of $\\mathrm{CO}_2$ is ______.",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "100",
+    "tags": [
+      {
+        "tag_id": "TAG_LIMITING_REAGENT_YIELD",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (100)**\n\n$\\mathrm{Ca(HCO}_3)_2 \\xrightarrow{\\Delta} \\mathrm{CaCO}_3 + \\mathrm{H}_2\\mathrm{O} + \\mathrm{CO}_2 \\uparrow$\n\n1 mol $\\mathrm{Ca(HCO}_3)_2$ gives 1 mol $\\mathrm{CO}_2$.\n\nGiven 2 moles of 50% purity, effectively 1 mole of pure $\\mathrm{Ca(HCO}_3)_2$.\n\nFrom 1 mole pure reactant, theoretical yield is 1 mole $\\mathrm{CO}_2$. Observed is 1 mole.\n\nHence, the yield is $100\\%$.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_SIG_MAI_001",
+    "text_markdown": "The number of significant figures in Avogadro's constant ($6.023 \\times 10^{23}$) is ______.",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "4",
+    "tags": [
+      {
+        "tag_id": "TAG_SIGNIFICANT_FIGURES",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (4)**\n\n$6.023 \\times 10^{23}$ has four significant figures. The exponential term does not add to the number of significant figures.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MOL_MAI_003",
+    "text_markdown": "The number of gram atoms in $24$ g of magnesium is ______.",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "1",
+    "tags": [
+      {
+        "tag_id": "TAG_MOLE_BASICS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (1)**\n\n$n = \\frac{w}{\\text{Atomic weight}} = \\frac{24 \\text{ g}}{24 \\text{ g mol}^{-1}} = 1$ mol",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_ABT_MAI_001",
+    "text_markdown": "$4.48$ L of ammonia at STP is neutralized using $100$ mL of a solution of $\\mathrm{H}_2\\mathrm{SO}_4$. The molarity of acid is ______.",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "1",
+    "tags": [
+      {
+        "tag_id": "TAG_ACID_BASE_TITRATION",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (1)**\n\nBy equating equivalents, we get\n\n$\\frac{4.48}{22.4} \\times 1000 = 100 \\times M \\times 2$\n\n$200 = 200M \\implies M = 1$ M",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EMF_MAI_004",
+    "text_markdown": "Molecular formula of acetic acid is $\\mathrm{CH}_3\\mathrm{COOH}$. The number of atoms present in its empirical formula is ______.",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "4",
+    "tags": [
+      {
+        "tag_id": "TAG_EMPIRICAL_MOLECULAR_FORMULA",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (4)**\n\nEmpirical formula $= \\frac{\\mathrm{CH}_3\\mathrm{COOH}}{2}$ or $\\frac{\\mathrm{C}_2\\mathrm{H}_4\\mathrm{O}_2}{2} = \\mathrm{CH}_2\\mathrm{O}$\n\nThe number of atoms in empirical formula is four.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_LRY_ADV_004",
+    "text_markdown": "A sample of clay was partially dried and then analyzed to $50\\%$ silica and $7\\%$ water. The original clay contained $12\\%$ water. Find the % of silica in the original sample.",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "47.3",
+    "tags": [
+      {
+        "tag_id": "TAG_LIMITING_REAGENT_YIELD",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (47.3%)**\n\n% of silica / % of impurities = constant\n\nRatio after drying = ratio in original sample\n\n$\\frac{50}{43} = \\frac{x}{88-x}$\n\n$\\Rightarrow x = 47.3\\%$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EQV_MAI_002",
+    "text_markdown": "$1.60$ g of Ca and $2.60$ g of Zn when treated with an acid separately, produced the same amount of $\\mathrm{H}_2$. If the equivalent wt. of Zn is $32.6$, what is the equivalent wt of Ca?",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "20",
+    "tags": [
+      {
+        "tag_id": "TAG_EQUIVALENT_CONCEPT",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (20)**\n\nSince both Ca & Zn produce same amount of $\\mathrm{H}_2$ with an acid separately,\n\nEq. of Ca = Eq. of Zn = Eq. of $\\mathrm{H}_2$\n\n$\\frac{1.60}{E_{\\mathrm{Ca}}} = \\frac{2.60}{32.6}$\n\n$\\Rightarrow E_{\\mathrm{Ca}} = 20$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_STO_ADV_004",
+    "text_markdown": "$27.6$ g of $\\mathrm{K}_2\\mathrm{CO}_3$ was treated by a series of reagents so as to convert all of its carbon to $\\mathrm{K}_2\\mathrm{Zn}_3[\\mathrm{Fe(CN)}_6]_2$. Calculate the weight of the product. (in g)",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "11.6",
+    "tags": [
+      {
+        "tag_id": "TAG_STOICHIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (11.6 g)**\n\n$\\mathrm{K}_2\\mathrm{CO}_3 \\longrightarrow \\dots \\longrightarrow \\mathrm{K}_2\\mathrm{Zn}_3[\\mathrm{Fe(CN)}_6]_2$\n\n$1 \\times$ moles of $\\mathrm{K}_2\\mathrm{CO}_3 = 12 \\times$ moles of complex\n\n$\\frac{27.6}{138} = 12 \\times \\frac{\\text{wt}}{698}$\n\n$\\Rightarrow \\text{wt of complex} = 11.6$ g",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MOL_MAI_004",
+    "text_markdown": "It has been estimated that $93\\%$ of all atoms in the entire universe are hydrogen and that the vast majority of those remaining are helium. Based on only these two elements, estimate the mass percentage composition of hydrogen in the universe.",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "76.86",
+    "tags": [
+      {
+        "tag_id": "TAG_MOLE_BASICS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (76.86%)**\n\nGiven that out of 100 atoms of H and He, 93 atoms are of H and 7 atoms are of He.\n\nMass of H $= 93 \\times 1 = 93$ g.\n\nMass of He $= 7 \\times 4 = 28$ g.\n\n$\\therefore$ mass percentage of H $= \\frac{93}{93+28} \\times 100 = 76.86\\%$.\n\n$\\therefore$ mass percentage of He $= 23.14\\%$.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MOL_MAI_005",
+    "text_markdown": "At room temperature, the density of water is $1.0$ g/mL and the density of ethanol is $0.789$ g/mL. What volume of ethanol contains the same number of molecules as are present in $175$ mL of water?",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "566.82",
+    "tags": [
+      {
+        "tag_id": "TAG_MOLE_BASICS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (566.82 mL)**\n\nLet the volume of ethanol be $v$ mL. As given,\n\nmoles of $\\mathrm{C}_2\\mathrm{H}_5\\mathrm{OH}$ in $v$ mL = moles of $\\mathrm{H}_2\\mathrm{O}$ in 175 mL\n\n$\\frac{\\text{wt. of } \\mathrm{C}_2\\mathrm{H}_5\\mathrm{OH}}{\\text{mol. wt. of } \\mathrm{C}_2\\mathrm{H}_5\\mathrm{OH}} = \\frac{\\text{wt. of } \\mathrm{H}_2\\mathrm{O}}{\\text{mol. wt. of } \\mathrm{H}_2\\mathrm{O}}$\n\n$\\frac{0.789 \\times v}{46} = \\frac{1.0 \\times 175}{18}$\n\n$\\therefore v = 566.82$ mL.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_LRY_MAI_005",
+    "text_markdown": "What is the number of moles of $\\mathrm{Fe(OH)}_3$ (s) that can be produced by allowing $1$ mole of $\\mathrm{Fe}_2\\mathrm{S}_3$, $2$ moles of $\\mathrm{H}_2\\mathrm{O}$ and $3$ moles of $\\mathrm{O}_2$ to react?\n\n$2\\mathrm{Fe}_2\\mathrm{S}_3(\\mathrm{s}) + 6\\mathrm{H}_2\\mathrm{O}(\\ell) + 3\\mathrm{O}_2(\\mathrm{g}) \\longrightarrow 4\\mathrm{Fe(OH)}_3(\\mathrm{s}) + 6\\mathrm{S}(\\mathrm{s})$",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "1.34",
+    "tags": [
+      {
+        "tag_id": "TAG_LIMITING_REAGENT_YIELD",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (1.34)**\n\nFrom the given mole ratio of $\\mathrm{Fe}_2\\mathrm{S}_3$, $\\mathrm{H}_2\\mathrm{O}$ and $\\mathrm{O}_2$ (i.e., $1:2:3$) and mole ratio in the reaction (i.e., $2:6:3$), it is clear that $\\mathrm{H}_2\\mathrm{O}$ is the limiting reagent as $\\mathrm{H}_2\\mathrm{O}$ shall be fully consumed in the reaction. Thus,\n\nmoles of $\\mathrm{Fe(OH)}_3$ produced by 2 moles of $\\mathrm{H}_2\\mathrm{O} = \\frac{4}{6} \\times 2 = 1.34$.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_STO_MAI_004",
+    "text_markdown": "Calculate the weight of lime ($\\mathrm{CaO}$) that can be prepared by heating $200$ kg of limestone ($\\mathrm{CaCO}_3$) which is $95\\%$ pure. (in kg)",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "106.4",
+    "tags": [
+      {
+        "tag_id": "TAG_STOICHIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (106.4)**\n\n$\\mathrm{CaCO}_3 \\longrightarrow \\mathrm{CaO} + \\mathrm{CO}_2$\n\nActual amount of $\\mathrm{CaCO}_3 = \\frac{95}{100} \\times 200000$ g $= 190000$ g.\n\nSince Ca atoms are conserved, applying POAC for Ca atoms,\n\nmoles of Ca in $\\mathrm{CaCO}_3$ = moles of Ca in $\\mathrm{CaO}$\n\n$1 \\times$ moles of $\\mathrm{CaCO}_3 = 1 \\times$ moles of $\\mathrm{CaO}$\n\n$\\frac{190000}{100} = \\frac{\\text{wt. of } \\mathrm{CaO}}{56}$\n\nWt. of $\\mathrm{CaO} = 106400$ g $= 106.4$ kg.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_STO_ADV_005",
+    "text_markdown": "Equal weights of $\\mathrm{Zn}$ metal and iodine are mixed together and the iodine is completely converted to $\\mathrm{ZnI}_2$. What fraction by weight of the original zinc remains unreacted? ($Zn = 65, I = 127$)",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "0.74",
+    "tags": [
+      {
+        "tag_id": "TAG_STOICHIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (0.74)**\n\nLet $x$ g be the initial weight of the Zn metal and iodine each. Since $\\mathrm{I}_2$ is completely converted to $\\mathrm{ZnI}_2$, we have,\n\n$\\mathrm{Zn} + \\mathrm{I}_2 \\longrightarrow \\mathrm{ZnI}_2$\n\nInitial moles: $\\frac{x}{65}$ | $\\frac{x}{254}$ | 0\n\nMoles at end: $\\left(\\frac{x}{65} - \\frac{x}{254}\\right)$ | 0 | $\\frac{x}{254}$\n\n$\\therefore$ fraction of Zn remained unreacted $= \\frac{\\frac{x}{65} - \\frac{x}{254}}{\\frac{x}{65}} = 0.74$",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MIX_ADV_002",
+    "text_markdown": "A $1$-g mixture of cuprous oxide and cupric oxide was quantitatively reduced to $0.839$ g of metallic copper. What was the weight of cupric oxide in the original sample? ($\\mathrm{Cu} = 63.5, \\mathrm{O} = 16$)",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "0.55",
+    "tags": [
+      {
+        "tag_id": "TAG_MIXTURE_ANALYSIS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (0.55)**\n\nLet the weight of $\\mathrm{CuO}$ be $x$ g. The weight of $\\mathrm{Cu}_2\\mathrm{O}$ will be $(1-x)$ g. As the Cu atoms are conserved, applying POAC for Cu atoms,\n\nmoles of Cu in $\\mathrm{CuO}$ + moles of Cu in $\\mathrm{Cu}_2\\mathrm{O}$ = moles of Cu in the product\n\n$1 \\times$ moles of $\\mathrm{CuO} + 2 \\times$ moles of $\\mathrm{Cu}_2\\mathrm{O}$ = moles of Cu\n\n$\\frac{x}{79.5} + 2 \\times \\frac{1-x}{143} = \\frac{0.839}{63.5}$\n\n$\\Rightarrow x = 0.55$ g.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EUD_MAI_002",
+    "text_markdown": "$20$ mL of $\\mathrm{CO}$ was mixed with $50$ mL of oxygen and the mixture was exploded. On cooling, the resulting mixture was shaken with KOH. Find the volume of the gas that is left (in mL).",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "40",
+    "tags": [
+      {
+        "tag_id": "TAG_EUDIOMETRY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (40)**\n\n$\\mathrm{CO} + \\frac{1}{2}\\mathrm{O}_2 \\longrightarrow \\mathrm{CO}_2$\n\napplying POAC for C and O atoms, we get respectively\n\nmoles of $\\mathrm{CO}$ = moles of $\\mathrm{CO}_2$ ... (1)\n\nand moles of $\\mathrm{CO} + 2 \\times$ moles of $\\mathrm{O}_2 = 2 \\times$ moles of $\\mathrm{CO}_2$. ... (2)\n\nFrom eqns (1) and (2),\n\nmoles of $\\mathrm{CO} = 2 \\times$ moles of $\\mathrm{O}_2$\n\nor $\\frac{\\text{volume of } \\mathrm{CO}}{\\text{volume of } \\mathrm{O}_2} = 2$ (Avogadro's law)\n\nSince volume of $\\mathrm{CO}$ is twice that of $\\mathrm{O}_2$,\n\nfor 20 mL of $\\mathrm{CO}$ the volume of $\\mathrm{O}_2$ will be 10 mL, which will react with 20 mL of $\\mathrm{CO}$. Thus, the volume of $\\mathrm{O}_2$ remaining unreacted is $50 - 10 = 40$ mL. Further, as KOH absorbs $\\mathrm{CO}_2$ produced in the reaction, the only gas left is $\\mathrm{O}_2$, the volume of which is 40 mL.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MIX_ADV_003",
+    "text_markdown": "A mixture of formic acid and oxalic acid is heated with concentrated $\\mathrm{H}_2\\mathrm{SO}_4$. The gas produced is collected and on its treatment with KOH solution the volume of the gas decreased by one-sixth. Calculate the molar ratio of the two acids in the original mixture ($x:1$, find x).",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "4",
+    "tags": [
+      {
+        "tag_id": "TAG_MIXTURE_ANALYSIS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (4)**\n\nThe decomposition of the acids takes place as follows:\n\n$\\mathrm{HCOOH} \\xrightarrow{\\mathrm{H}_2\\mathrm{SO}_4} \\mathrm{H}_2\\mathrm{O} + \\mathrm{CO}$\n\n$a$ moles $\\rightarrow a$ moles $\\mathrm{CO}$ (after decomposition)\n\n$\\mathrm{H}_2\\mathrm{C}_2\\mathrm{O}_4 \\xrightarrow{\\mathrm{H}_2\\mathrm{SO}_4} \\mathrm{H}_2\\mathrm{O} + \\mathrm{CO} + \\mathrm{CO}_2$\n\n$b$ moles $\\rightarrow b$ moles $\\mathrm{CO} + b$ moles $\\mathrm{CO}_2$ (after decomposition)\n\n$\\mathrm{H}_2\\mathrm{O}$ is absorbed by $\\mathrm{H}_2\\mathrm{SO}_4$ and $\\mathrm{CO}_2$ is absorbed by KOH.\n\nThus, as given,\n\n$\\frac{\\text{volume of } \\mathrm{CO}_2}{\\text{total volume of } (\\mathrm{CO} + \\mathrm{CO}_2)} = \\frac{b}{a+b+b} = \\frac{1}{6}$\n\nor $\\frac{b}{a+2b} = \\frac{1}{6} \\implies 6b = a+2b \\implies a = 4b \\implies \\frac{a}{b} = 4$.\n\nThe molar ratio of $\\mathrm{HCOOH}$ and $\\mathrm{H}_2\\mathrm{C}_2\\mathrm{O}_4 = 4:1$.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MVD_MAI_002",
+    "text_markdown": "A Dumas bulb was filled with $0.4524$ g of vapour at $136^\\circ\\mathrm{C}$ and $758$ mm of pressure. Calculate molecular weight of the vapour if the capacity of the bulb is $127$ mL.",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "119.8",
+    "tags": [
+      {
+        "tag_id": "TAG_MOLAR_MASS_VAPOR_DENSITY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (119.8)**\n\nVolume of vapour at NTP $= \\frac{758 \\times 127 \\times 273}{409 \\times 760} = 84.57$ mL.\n\nMole of vapour $= \\frac{84.57}{22400}$.\n\n$\\therefore$ molecular weight $= 0.4524 \\times \\frac{22400}{84.57} = 119.8$.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EQV_MAI_003",
+    "text_markdown": "$12$ g of an element combines with $32$ g of oxygen. What is the equivalent weight of the element if the equivalent weight of oxygen is $8$?",
+    "type": "INTEGER",
+    "options": [],
+    "integer_answer": "3",
+    "tags": [
+      {
+        "tag_id": "TAG_EQUIVALENT_CONCEPT",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (3)**\n\nSuppose the element is M.\n\nNo. of eq. of M = no. of eq. of O\n\n$\\frac{\\text{wt. of M}}{E_{\\mathrm{M}}} = \\frac{\\text{wt. of oxygen}}{E_{\\mathrm{O}}}$\n\n$\\frac{12}{E_{\\mathrm{M}}} = \\frac{32}{8}$\n\n$E_{\\mathrm{M}} = \\frac{12 \\times 8}{32} = 3$.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EQV_ADV_002",
+    "text_markdown": "The two acids $\\mathrm{H}_2\\mathrm{SO}_4$ and $\\mathrm{H}_3\\mathrm{PO}_4$ are neutralised separately by the same amount of an alkali when sulphate and dihydrogen orthophosphate are formed respectively. Find the ratio of the masses of $\\mathrm{H}_2\\mathrm{SO}_4$ and $\\mathrm{H}_3\\mathrm{PO}_4$.",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "1:1",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "1:2",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "2:1",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "1:3",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_EQUIVALENT_CONCEPT",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": null,
+      "year": null,
+      "difficulty": "Hard",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": false,
+    "is_top_pyq": false,
+    "solution": {
+      "text_latex": "**Solution (b)**\n\n$\\mathrm{H}_2\\mathrm{SO}_4 \\longrightarrow 2\\mathrm{H}^+ + \\mathrm{SO}_4^{2-}$\n\n$\\mathrm{H}_3\\mathrm{PO}_4 \\longrightarrow \\mathrm{H}^+ + \\mathrm{H}_2\\mathrm{PO}_4^-$\n\nThe basicity of $\\mathrm{H}_2\\mathrm{SO}_4$ is 2 and that of $\\mathrm{H}_3\\mathrm{PO}_4$ is 1.\n\nEq. of alkali = eq. of $\\mathrm{H}_2\\mathrm{SO}_4$ = eq. of $\\mathrm{H}_3\\mathrm{PO}_4$.\n\n$\\therefore \\frac{\\text{wt. of } \\mathrm{H}_2\\mathrm{SO}_4}{\\text{eq. wt. of } \\mathrm{H}_2\\mathrm{SO}_4} = \\frac{\\text{wt. of } \\mathrm{H}_3\\mathrm{PO}_4}{\\text{eq. wt. of } \\mathrm{H}_3\\mathrm{PO}_4}$\n\n$\\therefore \\text{wt. of } \\mathrm{H}_2\\mathrm{SO}_4 / \\text{wt. of } \\mathrm{H}_3\\mathrm{PO}_4 = \\frac{49}{98} = \\frac{1}{2}$.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EMF_MAI_005",
+    "text_markdown": "On combustion 0.210 g of an organic compound containing C, H and O gave 0.127 g $\\mathrm{H}_2\\mathrm{O}$ and 0.307 g $\\mathrm{CO}_2$. The percentages of hydrogen and oxygen in the given organic compound respectively are:",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "7.55, 43.85",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "6.72, 53.41",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "6.72, 39.87",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "53.41, 39.6",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_EMPIRICAL_MOLECULAR_FORMULA",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2025,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": true,
+    "is_top_pyq": true,
+    "solution": {
+      "text_latex": "**Solution (b)**\n\nMass of C in $\\mathrm{CO}_2$: $\\frac{12}{44} \\times 0.307 = 0.0837$ g\n\nMass of H in $\\mathrm{H}_2\\mathrm{O}$: $\\frac{2}{18} \\times 0.127 = 0.0141$ g\n\n% C $= \\frac{0.0837}{0.210} \\times 100 = 39.85\\%$\n\n% H $= \\frac{0.0141}{0.210} \\times 100 = 6.72\\%$\n\n% O $= 100 - (39.85 + 6.72) = 53.43\\%$\n\nClosest option: 6.72, 53.41.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_STO_MAI_005",
+    "text_markdown": "Mass of magnesium required to produce 220 mL of hydrogen gas at STP on reaction with excess of dil. HCl is\n\nGiven: Molar mass of Mg is 24 g mol$^{-1}$.",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "0.24 mg",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "235.7 g",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "2.444 g",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "236 mg",
+        "isCorrect": true
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_STOICHIOMETRY_POAC",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2025,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": true,
+    "is_top_pyq": true,
+    "solution": {
+      "text_latex": "**Solution (d)**\n\n$\\mathrm{Mg} + 2\\mathrm{HCl} \\longrightarrow \\mathrm{MgCl}_2 + \\mathrm{H}_2$\n\n1 mol Mg gives 1 mol $\\mathrm{H}_2$ ($22400$ mL at STP).\n\nMoles of $\\mathrm{H}_2 = \\frac{220}{22400} = 0.00982$ mol.\n\nMoles of Mg required $= 0.00982$ mol.\n\nMass of Mg $= 0.00982 \\times 24 = 0.2357$ g $= 235.7$ mg $\\approx 236$ mg.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_ABT_MAI_002",
+    "text_markdown": "10 mL of 2 M NaOH solution is added to 20 mL of 1 M HCl solution kept in a beaker. Now, 10 mL of this mixture is poured into a volumetric flask of 100 mL containing 2 moles of HCl and made the volume upto the mark with distilled water. The solution in this flask is :",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "0.2 M NaCl",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "20 M HCl",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "Neutral",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "10 M HCl",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_ACID_BASE_TITRATION",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2025,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": true,
+    "is_top_pyq": true,
+    "solution": {
+      "text_latex": "**Solution (b)**\n\n**Step 1:** Mixing NaOH and HCl.\n$n_{\\mathrm{NaOH}} = 10 \\times 2 = 20$ mmol\n$n_{\\mathrm{HCl}} = 20 \\times 1 = 20$ mmol\nThe mixture is Neutral (NaCl + H2O). 10 mL of this neutral mixture contains 0 moles of acid/base.\n\n**Step 2:** Poured into flask.\nFlask contains 2 moles of HCl.\nTotal Acid $= 2$ moles (Since the added mixture contributes 0).\nFinal Volume $= 100$ mL $= 0.1$ L.\n\nMolarity $= \\frac{2 \\text{ mol}}{0.1 \\text{ L}} = 20$ M.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MVD_MAI_003",
+    "text_markdown": "In Dumas' method for estimation of nitrogen 0.4 g of an organic compound gave 60 mL of nitrogen collected at 300 K temperature and 715 mm Hg pressure. The percentage composition of nitrogen in the compound is (Given : Aqueous tension at 300 K = 15 mmHg )",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "15.71%",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "17.46%",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "7.85%",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "20.95%",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_MOLAR_MASS_VAPOR_DENSITY",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2025,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": true,
+    "is_top_pyq": true,
+    "solution": {
+      "text_latex": "**Solution (a)**\n\n$P_{\\text{dry}} = 715 - 15 = 700$ mm Hg.\n\n$V = 60$ mL, $T = 300$ K.\n\n$PV = nRT \\Rightarrow n = \\frac{PV}{RT}$\n\n$n = \\frac{(700/760) \\times (60/1000)}{0.0821 \\times 300}$\n\n$n \\approx 0.00224$ mol.\n\nMass of Nitrogen $= 0.00224 \\times 28 = 0.0628$ g.\n\n% N $= \\frac{0.0628}{0.4} \\times 100 = 15.71\\%$.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MOL_MAI_006",
+    "text_markdown": "Among $10^{-9}$ g (each) of the following elements, which one will have the highest number of atoms?\n\nElement: Pb, Po, Pr and Pt",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Pr",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "Pt",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Po",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "Pb",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_MOLE_BASICS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2025,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": true,
+    "is_top_pyq": true,
+    "solution": {
+      "text_latex": "**Solution (a)**\n\nNumber of atoms $= \\frac{\\text{Given Mass}}{\\text{Molar Mass}} \\times N_A$.\n\nSince mass is constant, No. of atoms $\\propto \\frac{1}{\\text{Molar Mass}}$.\n\nThe element with the lowest atomic mass will have the highest number of atoms.\n\n*   Pr (Praseodymium) $\\approx 141$\n*   Pt (Platinum) $\\approx 195$\n*   Pb (Lead) $\\approx 207$\n*   Po (Polonium) $\\approx 209$\n\nPr has the lowest mass, so highest atoms.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_LRY_MAI_006",
+    "text_markdown": "$\\mathrm{CaCO}_3(\\mathrm{s}) + 2\\mathrm{HCl}(\\mathrm{aq}) \\rightarrow \\mathrm{CaCl}_2(\\mathrm{aq}) + \\mathrm{CO}_2(\\mathrm{g}) + \\mathrm{H}_2\\mathrm{O}(\\mathrm{l})$\n\nConsider the above reaction, what mass of $\\mathrm{CaCl}_2$ will be formed if 250 mL of 0.76 M HCl reacts with 1000 g of $\\mathrm{CaCO}_3$ ?\n\n(Given : Molar mass of Ca, C, O, H and Cl are 40, 12, 16, 1 and 35.5 g mol$^{-1}$, respectively)",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "3.908 g",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "2.636 g",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "10.545 g",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "5.272 g",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_LIMITING_REAGENT_YIELD",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2025,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": true,
+    "is_top_pyq": true,
+    "solution": {
+      "text_latex": "**Solution (c)**\n\n1. **Moles:** $n_{\\mathrm{CaCO}_3} = \\frac{1000}{100} = 10$ mol. $n_{\\mathrm{HCl}} = 0.76 \\times 0.25 = 0.19$ mol.\n2. **Limiting Reagent:** Reaction consumes HCl and CaCO3 in 2:1 ratio. We need 20 mol HCl for 10 mol CaCO3. We have only 0.19. $\\therefore$ **HCl is LR**.\n3. **Product:** $n_{\\mathrm{CaCl}_2} = \\frac{1}{2} n_{\\mathrm{HCl}} = \\frac{0.19}{2} = 0.095$ mol.\n4. **Mass:** $0.095 \\times 111 = 10.545$ g.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EMF_MAI_006",
+    "text_markdown": "On complete combustion 1.0 g of an organic compound (X) gave 1.46 g of $\\mathrm{CO}_2$ and 0.567 g of $\\mathrm{H}_2\\mathrm{O}$. The empirical formula mass of compound (X) is ______ g. (Given molar mass in g mol$^{-1}$ C: 12, H: 1, O: 16)",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "60",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "45",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "30",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "15",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_EMPIRICAL_MOLECULAR_FORMULA",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2025,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": true,
+    "is_top_pyq": true,
+    "solution": {
+      "text_latex": "**Solution (c)**\n\n*   **C:** $\\frac{12}{44} \\times 1.46 = 0.398$ g $\\approx 0.033$ mol\n*   **H:** $\\frac{2}{18} \\times 0.567 = 0.063$ g $\\approx 0.063$ mol\n*   **O:** $1.0 - (0.398 + 0.063) = 0.539$ g $\\approx \\frac{0.539}{16} = 0.0337$ mol\n\nRatio C:H:O $\\approx$ 0.033 : 0.063 : 0.033 $\\approx$ 1 : 2 : 1\n\nEmpirical Formula: $\\mathrm{CH}_2\\mathrm{O}$.\n\nMass: $12 + 2(1) + 16 = 30$ g.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_SIG_MAI_002",
+    "text_markdown": "Choose the **correct** statements.\n\n(A) Weight of a substance is the amount of matter present in it.\n(B) Mass is the force exerted by gravity on an object.\n(C) Volume is the amount of space occupied by a substance.\n(D) Temperatures below 0°C are possible in Celsius scale, but in Kelvin scale negative temperature is not possible.\n(E) Precision refers to the closeness of various measurements for the same quantity.\n\nChoose the **correct** answer from the options given below :",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "(B), (C) and (D) Only",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "(A), (B) and (C) Only",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "(C), (D) and (E) Only",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "(A), (D) and (E) Only",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_SIGNIFICANT_FIGURES",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2025,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": true,
+    "is_top_pyq": true,
+    "solution": {
+      "text_latex": "**Solution (c)**\n\n*   (A) Incorrect. Amount of matter is **Mass**, not Weight.\n*   (B) Incorrect. Force exerted by gravity is **Weight**, not Mass.\n*   (C) Correct. Definition of Volume.\n*   (D) Correct. Abs zero is 0 K.\n*   (E) Correct. Definition of Precision.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_CON_MAI_002",
+    "text_markdown": "Concentrated nitric acid is labelled as 75% by mass. The volume in mL of the solution which contains 30 g of nitric acid is ______.\n\nGiven : Density of nitric acid solution is 1.25 g/mL.",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "32",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "40",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "55",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "45",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": "32",
+    "tags": [
+      {
+        "tag_id": "TAG_CONCENTRATION_TERMS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2025,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": true,
+    "is_top_pyq": true,
+    "solution": {
+      "text_latex": "**Solution (a)**\n\n1.  **Mass of Solution:** 75g acid is in 100g solution. We need 30g acid.\n    $m_{\\text{sol}} = \\frac{100}{75} \\times 30 = 40$ g.\n2.  **Volume:** $V = \\frac{\\text{Mass}}{\\text{Density}} = \\frac{40}{1.25} = 32$ mL.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_EMF_MAI_007",
+    "text_markdown": "The elemental composition of a compound is 54.2% C, 9.2% H and 36.6% O. If the molar mass of the compound is 132 g mol$^{-1}$, the molecular formula of the compound is : [Given : The relative atomic mass of C : H : O = 12 : 1 : 16 ]",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\mathrm{C}_4\\mathrm{H}_8\\mathrm{O}_2$",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "$\\mathrm{C}_6\\mathrm{H}_{12}\\mathrm{O}_6$",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "$\\mathrm{C}_4\\mathrm{H}_9\\mathrm{O}_3$",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "$\\mathrm{C}_6\\mathrm{H}_{12}\\mathrm{O}_3$",
+        "isCorrect": true
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_EMPIRICAL_MOLECULAR_FORMULA",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2025,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": true,
+    "is_top_pyq": true,
+    "solution": {
+      "text_latex": "**Solution (d)**\n\n1.  **Moles Ratio:**\n    *   C: $54.2/12 = 4.51$\n    *   H: $9.2/1 = 9.2$\n    *   O: $36.6/16 = 2.28$\n2.  **Simplest Ratio:** Divide by 2.28 -> C(2) : H(4) : O(1).\n3.  **Empirical Formula:** $\\mathrm{C}_2\\mathrm{H}_4\\mathrm{O}$ (Mass = $24+4+16=44$).\n4.  **Molecular Formula:** $n = 132/44 = 3$. MF = $(\\mathrm{C}_2\\mathrm{H}_4\\mathrm{O})_3 = \\mathrm{C}_6\\mathrm{H}_{12}\\mathrm{O}_3$.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_MOL_MAI_007",
+    "text_markdown": "$2.8 \\times 10^{-3}$ mol of $\\mathrm{CO}_2$ is left after removing $10^{21}$ molecules from its '$x$' mg sample. The mass of $\\mathrm{CO}_2$ taken initially is Given: $N_A = 6.02 \\times 10^{23}$ mol$^{-1}$",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "98.3 mg",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "196.2 mg",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "150.4 mg",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "48.2 mg",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_MOLE_BASICS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2025,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": true,
+    "is_top_pyq": true,
+    "solution": {
+      "text_latex": "**Solution (b)**\n\n1.  **Moles Removed:** $n_{\\text{removed}} = \\frac{10^{21}}{6.02 \\times 10^{23}} \\approx 0.166 \\times 10^{-2} = 1.66 \\times 10^{-3}$ mol.\n2.  **Total Moles:** $n_{\\text{total}} = n_{\\text{left}} + n_{\\text{removed}} = 2.8 \\times 10^{-3} + 1.66 \\times 10^{-3} = 4.46 \\times 10^{-3}$ mol.\n3.  **Mass:** $4.46 \\times 10^{-3} \\times 44 \\text{ g} = 0.1962 \\text{ g} = 196.2$ mg.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_CON_MAI_003",
+    "text_markdown": "Density of 3 M NaCl solution is 1.25 g/mL. The molality of the solution is :",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "2.79 m",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "2 m",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "1.79 m",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "3 m",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_CONCENTRATION_TERMS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2025,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": true,
+    "is_top_pyq": true,
+    "solution": {
+      "text_latex": "**Solution (a)**\n\nConsider 1 L solution:\n1.  **Mass of Solution:** $1000 \\times 1.25 = 1250$ g.\n2.  **Mass of Solute:** $3 \\text{ mol} \\times 58.5 = 175.5$ g.\n3.  **Mass of Solvent:** $1250 - 175.5 = 1074.5$ g = 1.0745 kg.\n4.  **Molality:** $m = \\frac{3}{1.0745} \\approx 2.79$ m.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_STO_MAI_006",
+    "text_markdown": "Combustion of glucose ($\\mathrm{C}_6\\mathrm{H}_{12}\\mathrm{O}_6$) produces $\\mathrm{CO}_2$ and water. The amount of oxygen (in g) required for the complete combustion of 900 g of glucose is : [Molar mass of glucose in g mol$^{-1}$ = 180]",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "32",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "480",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "800",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "960",
+        "isCorrect": true
+      }
+    ],
+    "integer_answer": null,
+    "tags": [
+      {
+        "tag_id": "TAG_STOICHIOMETRY_POAC",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2024,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": true,
+    "is_top_pyq": true,
+    "solution": {
+      "text_latex": "**Solution (d)**\n\nReaction: $\\mathrm{C}_6\\mathrm{H}_{12}\\mathrm{O}_6 + 6\\mathrm{O}_2 \\rightarrow 6\\mathrm{CO}_2 + 6\\mathrm{H}_2\\mathrm{O}$\n\n1.  **Moles Glucose:** $\\frac{900}{180} = 5$ mol.\n2.  **Moles Oxygen:** $1 \\text{ mol glc} \\rightarrow 6 \\text{ mol O}_2$. So, $5 \\times 6 = 30$ mol $\\mathrm{O}_2$.\n3.  **Mass Oxygen:** $30 \\times 32 = 960$ g.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  },
+  {
+    "_id": "MC_CON_MAI_004",
+    "text_markdown": "The density of '$x$' M solution ('$x$' molar) of NaOH is 1.12 g mL$^{-1}$, while in molality, the concentration of the solution is 3 m ( 3 molal). Then $x$ is (Given : Molar mass of NaOH is 40 g/mol)",
+    "type": "MCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "3.8",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "3.0",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "3.5",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "2.8",
+        "isCorrect": false
+      }
+    ],
+    "integer_answer": "3",
+    "tags": [
+      {
+        "tag_id": "TAG_CONCENTRATION_TERMS",
+        "weight": 1
+      }
+    ],
+    "meta": {
+      "exam": "JEE Mains",
+      "year": 2024,
+      "difficulty": "Medium",
+      "avg_time_sec": 120
+    },
+    "chapter_id": "Mole Concept",
+    "is_pyq": true,
+    "is_top_pyq": true,
+    "solution": {
+      "text_latex": "**Solution (b)**\n\nConsider 1 kg (1000 g) of solvent (water):\n1.  **Moles Solute:** 3 mol NaOH.\n2.  **Mass Solute:** $3 \\times 40 = 120$ g.\n3.  **Total Solution Mass:** $1000 + 120 = 1120$ g.\n4.  **Volume of Solution:** $\\frac{1120 \\text{ g}}{1.12 \\text{ g/mL}} = 1000$ mL = 1 L.\n5.  **Molarity:** $\\frac{3 \\text{ mol}}{1 \\text{ L}} = 3.0$ M.",
+      "video_url": null,
+      "audio_url": null,
+      "image_url": null
+    },
+    "trap": null
+  }
+]

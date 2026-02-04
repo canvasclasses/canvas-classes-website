@@ -43,9 +43,6 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
         <div className="w-full max-w-2xl mx-auto">
             {/* Question Stem */}
             <div className="p-0 mb-4 md:mb-8">
-                <span className="inline-block px-2 md:px-3 py-0.5 md:py-1 bg-purple-500/20 text-purple-300 text-[10px] md:text-xs font-bold rounded-full mb-2 md:mb-4 border border-purple-500/30">
-                    {question.tagId.split('_').pop()?.replace(/([A-Z])/g, ' $1').trim()}
-                </span>
                 <div className="text-sm md:text-base lg:text-lg font-medium text-white leading-relaxed prose prose-invert max-w-none prose-p:text-white prose-headings:text-white markdown-table-wrapper">
                     <ReactMarkdown remarkPlugins={[remarkMath, remarkGfm]} rehypePlugins={[rehypeKatex, rehypeRaw]}>
                         {question.textMarkdown}

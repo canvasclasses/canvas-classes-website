@@ -1,5 +1,5 @@
 export type QuestionType = 'MCQ' | 'Integer' | 'Matrix';
-export type Difficulty = 'Mains' | 'Advanced' | 'Foundation';
+export type Difficulty = 'Easy' | 'Medium' | 'Hard';
 export type SolutionType = 'Video' | 'AudioImage' | 'Text';
 
 export interface SolutionAsset {
