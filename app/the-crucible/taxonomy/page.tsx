@@ -37,7 +37,7 @@ export default function TaxonomyAdminPage() {
     const fetchTaxonomy = async () => {
         setLoading(true);
         try {
-            const res = await fetch('/api/taxonomy/patch');
+            const res = await fetch('/api/taxonomy');
             const data = await res.json();
             setTaxonomy(data.taxonomy || []);
             setStats(data.stats || null);
@@ -71,7 +71,7 @@ export default function TaxonomyAdminPage() {
         setMessage(null);
 
         try {
-            const res = await fetch('/api/taxonomy/patch', {
+            const res = await fetch('/api/taxonomy', {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -182,7 +182,7 @@ export default function TaxonomyAdminPage() {
                 {/* Message */}
                 {message && (
                     <div className={`mb-6 p-4 rounded-lg flex items-center gap-3 ${message.type === 'success' ? 'bg-green-500/10 border border-green-500/30 text-green-400' :
-                            'bg-red-500/10 border border-red-500/30 text-red-400'
+                        'bg-red-500/10 border border-red-500/30 text-red-400'
                         }`}>
                         {message.type === 'success' ? <Check size={18} /> : <AlertCircle size={18} />}
                         {message.text}

@@ -1,14 +1,20 @@
 /**
- * The Crucible - Activity Logger API
+ * The Crucible - Activity Logger API (MongoDB Edition)
  * 
  * POST /api/activity/log
  * 
- * Records every question attempt to the ActivityLog collection
- * and updates the User's mastery_map in real-time.
+ * Records every question attempt to MongoDB ActivityLog collection
+ * and updates the UserMastery document in real-time.
+ * 
+ * HYBRID MODEL:
+ * - Auth: Supabase (Gatekeeper)
+ * - Data: MongoDB (Brain)
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/app/utils/supabase/server';
+import connectToDatabase from '@/lib/mongodb';
+import { Question, ActivityLog, UserMastery, IWeightedTag } from '@/lib/models';
 
 // Types for the request
 interface LogActivityRequest {
@@ -21,12 +27,6 @@ interface LogActivityRequest {
     mode?: 'practice' | 'exam' | 'review' | 'challenge';
 }
 
-// Types for question tags (from our migrated schema)
-interface WeightedTag {
-    tag_id: string;
-    weight: number;
-}
-
 // Mastery status thresholds
 const MASTERY_THRESHOLDS = {
     GREEN: 80,  // ≥80% accuracy = GREEN
@@ -36,22 +36,24 @@ const MASTERY_THRESHOLDS = {
 
 export async function POST(request: NextRequest) {
     try {
-        const supabase = await createClient();
-
-        // Guard against null supabase client
-        if (!supabase) {
+        // Connect to MongoDB (The Brain)
+        const db = await connectToDatabase();
+        if (!db) {
             return NextResponse.json(
-                { error: 'Database connection failed' },
+                { error: 'MongoDB connection failed. Check MONGODB_URI in .env.local' },
                 { status: 500 }
             );
         }
 
-        // Check authentication
-        const { data: { user }, error: authError } = await supabase.auth.getUser();
+        // Check authentication via Supabase (The Gatekeeper)
+        const supabase = await createClient();
+        let userId = 'anonymous';
 
-        if (authError || !user) {
-            // Allow anonymous logging but without mastery updates
-            console.log('Anonymous activity log - mastery not updated');
+        if (supabase) {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                userId = user.id;
+            }
         }
 
         const body: LogActivityRequest = await request.json();
@@ -73,37 +75,42 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Fetch the question to get its tags
-        // In production, this would be from MongoDB. For now, we'll use the JSON file.
-        const questionsData = await import('@/app/the-crucible/questions.json');
-        const questions = questionsData.default as any[];
-        const question = questions.find(q => q.id === questionId);
+        // Fetch the question from MongoDB to get its tags
+        let question = await Question.findById(questionId).lean();
 
+        // Fallback to JSON file if not in MongoDB yet (during migration)
         if (!question) {
-            return NextResponse.json(
-                { error: `Question not found: ${questionId}` },
-                { status: 404 }
-            );
+            const questionsData = await import('@/app/the-crucible/questions.json');
+            const questions = questionsData.default as any[];
+            const jsonQuestion = questions.find(q => q.id === questionId);
+
+            if (!jsonQuestion) {
+                return NextResponse.json(
+                    { error: `Question not found: ${questionId}` },
+                    { status: 404 }
+                );
+            }
+
+            // Convert to expected format
+            question = {
+                _id: jsonQuestion.id,
+                tags: jsonQuestion.tagId ? [{
+                    tag_id: 'TAG_' + jsonQuestion.tagId.toUpperCase().replace(/[^A-Z0-9]/g, '_'),
+                    weight: 1.0
+                }] : [],
+                meta: {
+                    difficulty: jsonQuestion.difficulty || 'Medium'
+                }
+            } as any;
         }
 
-        // Extract tags (handle both old and new schema)
-        let tagsAffected: string[] = [];
-        let tagWeights: WeightedTag[] = [];
-
-        if (question.tags && Array.isArray(question.tags)) {
-            // New schema with weighted tags
-            tagWeights = question.tags;
-            tagsAffected = question.tags.map((t: WeightedTag) => t.tag_id);
-        } else if (question.tagId) {
-            // Old schema with single tag
-            const normalizedTag = 'TAG_' + question.tagId.toUpperCase().replace(/[^A-Z0-9]/g, '_');
-            tagsAffected = [normalizedTag];
-            tagWeights = [{ tag_id: normalizedTag, weight: 1.0 }];
-        }
+        // Extract tags
+        const tagsAffected = question.tags?.map((t: IWeightedTag) => t.tag_id) || [];
+        const tagWeights = question.tags || [];
 
         // Create activity log entry
-        const activityLog = {
-            user_id: user?.id || 'anonymous',
+        const activityLog = new ActivityLog({
+            user_id: userId,
             question_id: questionId,
             session_id: sessionId,
             mode: mode,
@@ -112,61 +119,61 @@ export async function POST(request: NextRequest) {
             is_correct: isCorrect,
             time_spent_sec: timeSpentSec || 0,
             tags_affected: tagsAffected,
-            difficulty: question.difficulty || question.meta?.difficulty || 'Medium',
+            difficulty: question.meta?.difficulty || 'Medium',
             viewed_solution: false,
             marked_for_review: false,
-            attempted_at: new Date().toISOString()
-        };
+            flagged_issue: false,
+            attempted_at: new Date()
+        });
 
-        // Store in Supabase (activity_logs table)
-        const { error: logError } = await supabase
-            .from('activity_logs')
-            .insert(activityLog);
+        // Save to MongoDB
+        await activityLog.save();
 
-        if (logError) {
-            console.error('Failed to insert activity log:', logError);
-            // Don't fail the request - continue to update mastery
-        }
-
-        // Update user's mastery_map if logged in
+        // Update user's mastery map if logged in
         let masteryUpdates: Record<string, any> = {};
 
-        if (user) {
-            // Fetch current user progress
-            const { data: userProgress, error: progressError } = await supabase
-                .from('user_progress')
-                .select('data')
-                .eq('user_id', user.id)
-                .eq('feature_type', 'mastery_map')
-                .eq('item_id', 'global')
-                .single();
+        if (userId !== 'anonymous') {
+            // Find or create UserMastery document
+            let userMastery = await UserMastery.findById(userId);
 
-            // Get current mastery map or create new one
-            const currentMastery: Record<string, any> = userProgress?.data || {};
+            if (!userMastery) {
+                userMastery = new UserMastery({
+                    _id: userId,
+                    mastery_map: new Map(),
+                    stats: {
+                        total_questions_attempted: 0,
+                        total_correct: 0,
+                        total_time_spent_sec: 0,
+                        current_streak: 0,
+                        best_streak: 0
+                    },
+                    starred_questions: [],
+                    mastered_questions: [],
+                    notes: new Map()
+                });
+            }
 
             // Update mastery for each affected tag
             for (const tagWeight of tagWeights) {
                 const tagId = tagWeight.tag_id;
                 const weight = tagWeight.weight;
 
-                const current = currentMastery[tagId] || {
+                const current = userMastery.mastery_map.get(tagId) || {
                     accuracy: 0,
                     attempts: 0,
                     correct: 0,
                     status: 'UNRATED',
-                    last_attempt: null
+                    ease_factor: 2.5,
+                    interval_days: 1
                 };
 
-                // Calculate weighted attempt (if a question is 80% Stoichiometry, count as 0.8 attempt)
-                const weightedAttempt = weight;
-                const weightedCorrect = isCorrect ? weight : 0;
-
-                current.attempts += weightedAttempt;
-                current.correct += weightedCorrect;
+                // Calculate weighted attempt
+                current.attempts += weight;
+                if (isCorrect) current.correct += weight;
                 current.accuracy = Math.round((current.correct / current.attempts) * 100);
-                current.last_attempt = new Date().toISOString();
+                current.last_attempt = new Date();
 
-                // Determine status based on accuracy and minimum attempts
+                // Determine status
                 if (current.attempts < 3) {
                     current.status = 'UNRATED';
                 } else if (current.accuracy >= MASTERY_THRESHOLDS.GREEN) {
@@ -177,31 +184,39 @@ export async function POST(request: NextRequest) {
                     current.status = 'RED';
                 }
 
-                currentMastery[tagId] = current;
+                userMastery.mastery_map.set(tagId, current);
                 masteryUpdates[tagId] = current;
             }
 
-            // Upsert the mastery map
-            const { error: upsertError } = await supabase
-                .from('user_progress')
-                .upsert({
-                    user_id: user.id,
-                    feature_type: 'mastery_map',
-                    item_id: 'global',
-                    data: currentMastery,
-                    updated_at: new Date().toISOString()
-                }, { onConflict: 'user_id, feature_type, item_id' });
-
-            if (upsertError) {
-                console.error('Failed to update mastery map:', upsertError);
+            // Update aggregate stats
+            userMastery.stats.total_questions_attempted += 1;
+            if (isCorrect) {
+                userMastery.stats.total_correct += 1;
+                userMastery.stats.current_streak += 1;
+                userMastery.stats.best_streak = Math.max(
+                    userMastery.stats.best_streak,
+                    userMastery.stats.current_streak
+                );
+            } else {
+                userMastery.stats.current_streak = 0;
             }
+            userMastery.stats.total_time_spent_sec += timeSpentSec || 0;
+            userMastery.stats.last_session_date = new Date();
+
+            // Save
+            await userMastery.save();
         }
 
         return NextResponse.json({
             success: true,
-            logged: activityLog,
+            logged: {
+                question_id: questionId,
+                is_correct: isCorrect,
+                tags_affected: tagsAffected,
+                session_id: sessionId
+            },
             masteryUpdates: masteryUpdates,
-            message: user
+            message: userId !== 'anonymous'
                 ? `Activity logged and mastery updated for ${tagsAffected.length} tags`
                 : 'Activity logged (anonymous - no mastery update)'
         });
@@ -215,15 +230,23 @@ export async function POST(request: NextRequest) {
     }
 }
 
-// GET endpoint to fetch user's mastery map
+// GET endpoint to fetch user's mastery map from MongoDB
 export async function GET(request: NextRequest) {
     try {
-        const supabase = await createClient();
+        // Connect to MongoDB
+        const db = await connectToDatabase();
+        if (!db) {
+            return NextResponse.json(
+                { error: 'MongoDB connection failed' },
+                { status: 500 }
+            );
+        }
 
-        // Guard against null supabase client
+        // Get user from Supabase
+        const supabase = await createClient();
         if (!supabase) {
             return NextResponse.json(
-                { error: 'Database connection failed' },
+                { error: 'Authentication service unavailable' },
                 { status: 500 }
             );
         }
@@ -237,22 +260,24 @@ export async function GET(request: NextRequest) {
             );
         }
 
-        // Fetch mastery map
-        const { data: userProgress, error } = await supabase
-            .from('user_progress')
-            .select('data, updated_at')
-            .eq('user_id', user.id)
-            .eq('feature_type', 'mastery_map')
-            .eq('item_id', 'global')
-            .single();
+        // Fetch mastery from MongoDB
+        const userMastery = await UserMastery.findById(user.id).lean();
 
-        if (error && error.code !== 'PGRST116') {
-            throw error;
+        if (!userMastery) {
+            return NextResponse.json({
+                masteryMap: {},
+                stats: {
+                    total_questions_attempted: 0,
+                    total_correct: 0
+                },
+                summary: { total: 0, green: 0, yellow: 0, red: 0, unrated: 0 }
+            });
         }
 
-        const masteryMap = userProgress?.data || {};
+        // Convert Map to object for JSON
+        const masteryMap = Object.fromEntries(userMastery.mastery_map || new Map());
 
-        // Calculate summary stats
+        // Calculate summary
         const tags = Object.keys(masteryMap);
         const greenTags = tags.filter(t => masteryMap[t].status === 'GREEN').length;
         const yellowTags = tags.filter(t => masteryMap[t].status === 'YELLOW').length;
@@ -261,14 +286,14 @@ export async function GET(request: NextRequest) {
 
         return NextResponse.json({
             masteryMap,
+            stats: userMastery.stats,
             summary: {
                 total: tags.length,
                 green: greenTags,
                 yellow: yellowTags,
                 red: redTags,
                 unrated: unratedTags
-            },
-            lastUpdated: userProgress?.updated_at
+            }
         });
 
     } catch (error) {
