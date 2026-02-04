@@ -8,6 +8,7 @@ import QuestionCard from '@/components/question-bank/QuestionCard';
 import FeedbackOverlay from '@/components/question-bank/FeedbackOverlay';
 import SolutionViewer from '@/components/question-bank/SolutionViewer';
 import { useCrucibleProgress } from '@/hooks/useCrucibleProgress';
+import { useActivityLogger } from '@/hooks/useActivityLogger';
 
 interface QuestionBankGameProps {
     initialQuestions: Question[];
@@ -81,6 +82,13 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         saveNote,
     } = useCrucibleProgress();
 
+    // Activity Logger for 4-Bucket Architecture
+    const {
+        logQuestionAttempt,
+        startQuestionTimer,
+        startNewSession,
+    } = useActivityLogger();
+
     const chapters = Array.from(new Set(initialQuestions.map(q => q.chapterId).filter(Boolean)));
 
     // Initialize chapter totals
@@ -141,6 +149,14 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
 
             if (activeQuestion) {
                 recordAttempt(activeQuestion.id, activeQuestion.chapterId || 'Unknown', activeQuestion.difficulty, correct);
+
+                // Log to backend API for 4-Bucket Architecture
+                logQuestionAttempt(
+                    activeQuestion.id,
+                    correct,
+                    optionId,
+                    'practice'
+                );
             }
 
             if (correct) {
@@ -164,6 +180,9 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         }
         setIsCorrect(null);
         setShowSolution(reviewActive);
+
+        // Start timing for this question (4-Bucket Architecture)
+        startQuestionTimer();
     };
 
     const handleBack = () => {
@@ -199,6 +218,9 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                 if (answer) {
                     const isCorrect = q.options.find(o => o.id === answer)?.isCorrect;
                     recordAttempt(q.id, q.chapterId || 'Unknown', q.difficulty, !!isCorrect);
+
+                    // Log to backend API for 4-Bucket Architecture (exam mode)
+                    logQuestionAttempt(q.id, !!isCorrect, answer, 'exam');
                 }
             });
         }
@@ -228,8 +250,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         const previewSizeQuery = initialQuestions.filter(q => {
             const chapterMatch = selectedChapter === 'All Chapters' || q.chapterId === selectedChapter;
             const tagMatch = selectedTags.length === 0 || (q.tagId && selectedTags.includes(q.tagId));
-            const diffMatch = selectedDifficulty === 'Any Difficulty' ||
-                (selectedDifficulty === 'NEET' ? (q.difficulty !== 'Mains' && q.difficulty !== 'Advanced') : q.difficulty === selectedDifficulty);
+            const diffMatch = selectedDifficulty === 'Any Difficulty' || q.difficulty === selectedDifficulty;
 
             const isMastered = progress.masteredIds?.includes(q.id);
             const isStarred = progress.starredIds?.includes(q.id);
@@ -249,6 +270,9 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
 
         // Trigger Shloka Transition
         setShowShloka(true);
+
+        // Start a new session for activity logging (4-Bucket Architecture)
+        startNewSession();
 
         setTimeout(() => {
             setShowShloka(false);
@@ -345,7 +369,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         const previewQuestions = initialQuestions.filter(q => {
             const ch = selectedChapter === 'All Chapters' || q.chapterId === selectedChapter;
             const tg = selectedTags.length === 0 || (q.tagId && selectedTags.includes(q.tagId));
-            const df = selectedDifficulty === 'Any Difficulty' || (selectedDifficulty === 'NEET' ? (q.difficulty !== 'Mains' && q.difficulty !== 'Advanced') : q.difficulty === selectedDifficulty);
+            const df = selectedDifficulty === 'Any Difficulty' || q.difficulty === selectedDifficulty;
             const mast = progress.masteredIds?.includes(q.id);
             const star = progress.starredIds?.includes(q.id);
             if (hideMastered && mast && !onlyStarred) return false;
@@ -354,9 +378,10 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         });
         const previewSize = previewQuestions.length;
         const questionsToPlay = previewQuestions.slice(0, questionLimit === 'Max' ? undefined : Number(questionLimit));
-        const mainsCount = questionsToPlay.filter(q => q.difficulty === 'Mains').length;
-        const advCount = questionsToPlay.filter(q => q.difficulty === 'Advanced').length;
-        const neetCount = questionsToPlay.filter(q => q.difficulty !== 'Mains' && q.difficulty !== 'Advanced').length;
+        // Use database difficulty tags directly: Easy, Medium, Hard
+        const easyCount = questionsToPlay.filter(q => q.difficulty === 'Easy').length;
+        const mediumCount = questionsToPlay.filter(q => q.difficulty === 'Medium').length;
+        const hardCount = questionsToPlay.filter(q => q.difficulty === 'Hard').length;
         const estTime = questionsToPlay.length * 2;
 
         return (
@@ -365,7 +390,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                 <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0F172A]/90 backdrop-blur-xl border-t border-white/10 p-4 safe-area-pb">
                     <div className="text-center text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-2 flex items-center justify-center gap-2">
                         <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                        {mainsCount} Mains • {advCount} Adv • {neetCount > 0 ? `${neetCount} NEET` : `~${estTime}m`}
+                        {easyCount} Easy • {mediumCount} Med • {hardCount} Hard
                     </div>
                     <button
                         onClick={startPractice}
@@ -377,20 +402,30 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                     </button>
                 </div>
 
-                <aside className="w-full md:w-80 lg:w-96 flex-shrink-0 border-r border-white/5 bg-[#1E293B] flex flex-col z-20 shadow-2xl overflow-y-auto pb-36 md:pb-8">
+                {/* MINIMAL LEFT NAV - Desktop only */}
+                <aside className="hidden md:flex w-20 flex-shrink-0 border-r border-white/5 bg-[#1E293B] flex-col items-center py-8 gap-6">
+                    <Link href="/" className="p-3 rounded-xl hover:bg-white/5 transition text-gray-400 hover:text-white" title="Home">
+                        <ArrowLeft size={22} />
+                    </Link>
+                    <div className="flex-1" />
+                    <div className="text-[9px] text-gray-600 font-bold uppercase tracking-widest rotate-180 [writing-mode:vertical-lr]">The Crucible</div>
+                </aside>
+
+                {/* MOBILE SIDEBAR - Full config on mobile */}
+                <aside className="md:hidden w-full flex-shrink-0 border-r border-white/5 bg-[#1E293B] flex flex-col z-20 shadow-2xl overflow-y-auto pb-36">
                     {/* Header with Chevron Back */}
-                    <div className="p-4 md:p-8 border-b border-white/5 flex items-center justify-between">
+                    <div className="p-4 border-b border-white/5 flex items-center justify-between">
                         <Link href="/" className="p-2 -ml-2 rounded-xl hover:bg-white/5 transition text-gray-400 hover:text-white">
                             <ArrowLeft size={22} />
                         </Link>
-                        <h1 className="text-lg md:text-2xl font-black bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">The Crucible</h1>
-                        <div className="w-6" /> {/* Spacer for centering */}
+                        <h1 className="text-lg font-black bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">The Crucible</h1>
+                        <div className="w-6" />
                     </div>
 
                     {/* CONTEXT FIRST: Chapter Title & Audio Tip (Mobile Priority) */}
-                    <div className="p-4 md:p-6 border-b border-white/5 bg-[#0F172A]/50">
+                    <div className="p-4 border-b border-white/5 bg-[#0F172A]/50">
                         <div className="text-center space-y-3">
-                            <h2 className="text-2xl md:text-3xl font-black text-white leading-tight">
+                            <h2 className="text-2xl font-black text-white leading-tight">
                                 {selectedChapter}
                             </h2>
                             <div className="h-1 w-12 bg-purple-500 rounded-full mx-auto"></div>
@@ -416,7 +451,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                     })}
                                 </div>
                                 <div className="flex flex-col text-left">
-                                    <span className="text-[9px] md:text-[10px] font-bold text-white uppercase tracking-wider">Sir's Strategy Tip</span>
+                                    <span className="text-[9px] font-bold text-white uppercase tracking-wider">Sir's Strategy Tip</span>
                                     <span className="text-[9px] text-gray-400">0:42</span>
                                 </div>
                             </div>
@@ -424,7 +459,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                     </div>
 
                     {/* INSIGHT SECOND: Dynamic Tactical Tip */}
-                    <div className="p-4 md:p-6 border-b border-white/5">
+                    <div className="p-4 border-b border-white/5">
                         <div className="flex items-start gap-3 bg-slate-900/60 border border-white/5 rounded-xl p-3">
                             <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${progress.totalAttempted > 0 ? (overallAccuracy >= 70 ? 'bg-emerald-500/20 border border-emerald-500/30 text-emerald-400' : overallAccuracy >= 50 ? 'bg-blue-500/20 border border-blue-500/30 text-blue-400' : 'bg-amber-500/20 border border-amber-500/30 text-amber-400') : 'bg-gray-500/20 border border-gray-500/30 text-gray-400'}`}>
                                 {progress.totalAttempted > 0 ? (overallAccuracy >= 70 ? <TrendingUp size={14} /> : overallAccuracy >= 50 ? <Target size={14} /> : <AlertTriangle size={14} />) : <HelpCircle size={14} />}
@@ -446,8 +481,8 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                         </div>
                     </div>
 
-                    {/* CONFIGURATION SECTION */}
-                    <div className="flex-1 p-4 md:p-6 space-y-5">
+                    {/* MOBILE CONFIGURATION SECTION */}
+                    <div className="flex-1 p-4 space-y-5">
                         {/* Chapter Config */}
                         <div className="space-y-3">
                             <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] flex items-center gap-2">
@@ -460,7 +495,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                             </select>
                         </div>
 
-                        {/* Sub-Topics: 2-COLUMN GRID */}
+                        {/* Sub-Topics */}
                         {selectedChapter !== 'All Chapters' && (
                             <div className="space-y-3">
                                 <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] flex items-center gap-2">
@@ -475,13 +510,13 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                             : 'bg-white/5 border-white/5 hover:border-white/10'
                                             }`}
                                     >
-                                        <div className={`text-[10px] font-black uppercase tracking-wider ${selectedTags.length === 0 ? 'text-cyan-400' : 'text-gray-400'}`}>🎯 All Topics Mixed</div>
-                                        <div className="text-[9px] text-gray-500 mt-0.5">Random problems from entire chapter</div>
+                                        <div className={`text-[11px] font-black uppercase tracking-wider ${selectedTags.length === 0 ? 'text-cyan-400' : 'text-gray-300'}`}>🎯 All Topics Mixed</div>
+                                        <div className="text-[10px] text-gray-400 mt-1">Random problems from entire chapter</div>
                                     </button>
                                     {[
-                                        { id: 'Basics', title: '⚗️ Stoichiometry & Mole', desc: 'Mole, % Composition, Empirical Formula, Limiting Reagent', tags: ['Percentage_Composition', 'Empirical_Formula', 'Stoichiometry', 'Limiting_Reagent', 'Average_Atomic_Mass'] },
-                                        { id: 'Solutions', title: '🧪 Concentration & Mixing', desc: 'Molarity, Molality, Normality, Dilution, Solution Mixing', tags: ['Molarity', 'Molality', 'Normality', 'Mixing_of_Solutions', 'Dilution'] },
-                                        { id: 'Advanced', title: '🔥 Redox & Gas Analysis', desc: 'Eudiometry, POAC, n-Factor, Equivalent Concept', tags: ['Eudiometry', 'POAC', 'n_Factor', 'Equivalent_Concept'] }
+                                        { id: 'Fundamentals', title: '📐 Fundamentals', desc: 'Mole, % Composition, Empirical Formula, Limiting Reagent', tags: ['Percentage_Composition', 'Empirical_Formula', 'Stoichiometry', 'Limiting_Reagent', 'Average_Atomic_Mass'] },
+                                        { id: 'Concentrations', title: '🧪 Concentrations', desc: 'Molarity, Molality, Normality, Dilution, Solution Mixing', tags: ['Molarity', 'Molality', 'Normality', 'Mixing_of_Solutions', 'Dilution'] },
+                                        { id: 'Advanced', title: '🔥 Advanced', desc: 'Eudiometry, POAC, n-Factor, Equivalent Concept', tags: ['Eudiometry', 'POAC', 'n_Factor', 'Equivalent_Concept'] }
                                     ].map(group => {
                                         const isActive = group.tags.every(t => selectedTags.includes(t)) && selectedTags.length === group.tags.length;
                                         return (
@@ -493,8 +528,8 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                                     : 'bg-white/5 border-white/5 hover:border-white/10'
                                                     }`}
                                             >
-                                                <div className={`text-[10px] font-black uppercase tracking-wider ${isActive ? 'text-cyan-400' : 'text-gray-400'}`}>{group.title}</div>
-                                                <div className="text-[9px] text-gray-500 mt-0.5">{group.desc}</div>
+                                                <div className={`text-[11px] font-black uppercase tracking-wider ${isActive ? 'text-cyan-400' : 'text-gray-300'}`}>{group.title}</div>
+                                                <div className="text-[10px] text-gray-400 mt-1">{group.desc}</div>
                                             </button>
                                         );
                                     })}
@@ -511,14 +546,14 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                             <div className="grid grid-cols-4 gap-2">
                                 {[
                                     { id: 'Any Difficulty', label: 'Mix', active: 'bg-white/10 text-white border-white' },
-                                    { id: 'Mains', label: 'Mains', active: 'bg-blue-600 text-white border-blue-400' },
-                                    { id: 'Advanced', label: 'Adv', active: 'bg-red-600 text-white border-red-400' },
-                                    { id: 'NEET', label: 'NEET', active: 'bg-emerald-600 text-white border-emerald-400' }
+                                    { id: 'Easy', label: 'Easy', active: 'bg-emerald-600 text-white border-emerald-400' },
+                                    { id: 'Medium', label: 'Med', active: 'bg-amber-600 text-white border-amber-400' },
+                                    { id: 'Hard', label: 'Hard', active: 'bg-red-600 text-white border-red-400' }
                                 ].map(diff => (
                                     <button
                                         key={diff.id}
                                         onClick={() => setSelectedDifficulty(diff.id)}
-                                        className={`py-2 rounded-lg text-[10px] font-black border transition-all duration-300 ${selectedDifficulty === diff.id ? diff.active : 'border-white/10 text-gray-500'}`}
+                                        className={`py-2.5 rounded-lg text-[11px] font-black border transition-all duration-300 ${selectedDifficulty === diff.id ? diff.active : 'border-white/10 text-gray-400 bg-white/5'}`}
                                     >
                                         {diff.label}
                                     </button>
@@ -541,142 +576,296 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                             </div>
                         </div>
 
-                        {/* Collection Filters */}
-                        <div className="space-y-3 pt-3 border-t border-white/5">
-                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] block">Filters</label>
+                        <div className="space-y-3 pt-4 border-t border-white/10">
+                            <div className="flex items-center justify-between">
+                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] block">Refine Set</label>
+                                <div className="group/info relative">
+                                    <HelpCircle size={14} className="text-gray-600" />
+                                    <div className="absolute right-0 bottom-full mb-2 w-64 p-3 bg-gray-900 border border-white/20 rounded-xl text-[13px] text-gray-200 leading-relaxed shadow-2xl opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all z-50">
+                                        <strong className="text-cyan-400 font-bold">Hide Known:</strong> Skip questions you've already mastered.<br />
+                                        <strong className="text-amber-400 font-bold">Starred:</strong> Focus only on your bookmarked questions.
+                                    </div>
+                                </div>
+                            </div>
                             <div className="grid grid-cols-2 gap-2">
-                                <button onClick={() => setHideMastered(!hideMastered)} className={`p-2 rounded-lg border text-[10px] font-bold transition-all flex items-center justify-center gap-1 ${hideMastered ? 'bg-purple-600/20 border-purple-500/30 text-purple-300' : 'border-white/10 text-gray-500'}`}>
-                                    <CheckCircle size={12} /> Hide Mastered
+                                <button onClick={() => setHideMastered(!hideMastered)} className={`p-3 rounded-xl border text-[11px] font-bold transition-all flex items-center justify-center gap-1.5 ${hideMastered ? 'bg-purple-600/20 border-purple-500/40 text-purple-300' : 'border-white/10 text-gray-400 bg-white/5'}`}>
+                                    <CheckCircle size={14} /> Hide Known
                                 </button>
-                                <button onClick={() => setOnlyStarred(!onlyStarred)} className={`p-2 rounded-lg border text-[10px] font-bold transition-all flex items-center justify-center gap-1 ${onlyStarred ? 'bg-amber-600/20 border-amber-500/30 text-amber-300' : 'border-white/10 text-gray-500'}`}>
-                                    <Star size={12} /> Starred Only
+                                <button onClick={() => setOnlyStarred(!onlyStarred)} className={`p-3 rounded-xl border text-[11px] font-bold transition-all flex items-center justify-center gap-1.5 ${onlyStarred ? 'bg-amber-600/20 border-amber-500/40 text-amber-300' : 'border-white/10 text-gray-400 bg-white/5'}`}>
+                                    <Star size={14} /> Starred Only
                                 </button>
                             </div>
                         </div>
 
                         {/* Game Mode */}
-                        <div className="space-y-3 pt-3 border-t border-white/5">
-                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Crucible Mode</label>
-                            <div className="grid grid-cols-2 gap-2 bg-black/40 p-1 rounded-xl border border-white/5">
-                                <button onClick={() => setGameMode('practice')} className={`py-2.5 rounded-lg flex flex-col items-center gap-1 transition-all duration-300 ${gameMode === 'practice' ? 'bg-purple-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-400'}`}>
-                                    <span className="text-[10px] font-black uppercase tracking-widest">Practice</span>
+                        <div className="space-y-4 pt-4 border-t border-white/10">
+                            <div className="flex items-center justify-between">
+                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Crucible Mode</label>
+                                <div className="group/info relative">
+                                    <HelpCircle size={14} className="text-gray-600" />
+                                    <div className="absolute right-0 bottom-full mb-2 w-64 p-3 bg-gray-900 border border-white/20 rounded-xl text-[13px] text-gray-200 leading-relaxed shadow-2xl opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all z-50">
+                                        <strong className="text-purple-400 font-bold">Practice:</strong> See answers after each question. Learn at your pace.<br />
+                                        <strong className="text-indigo-400 font-bold">Exam:</strong> No answers until the end. Simulates real test conditions.
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2 bg-black/40 p-1.5 rounded-2xl border border-white/10 shadow-inner">
+                                <button onClick={() => setGameMode('practice')} className={`py-3.5 rounded-xl flex flex-col items-center gap-1 transition-all duration-300 ${gameMode === 'practice' ? 'bg-purple-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-400'}`}>
+                                    <span className="text-[11px] font-black uppercase tracking-widest">Practice Mode</span>
                                 </button>
-                                <button onClick={() => setGameMode('exam')} className={`py-2.5 rounded-lg flex flex-col items-center gap-1 transition-all duration-300 ${gameMode === 'exam' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-400'}`}>
-                                    <span className="text-[10px] font-black uppercase tracking-widest">Exam</span>
+                                <button onClick={() => setGameMode('exam')} className={`py-3.5 rounded-xl flex flex-col items-center gap-1 transition-all duration-300 ${gameMode === 'exam' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-400'}`}>
+                                    <span className="text-[11px] font-black uppercase tracking-widest">Exam Mode</span>
                                 </button>
                             </div>
                         </div>
                     </div>
                 </aside>
 
-                {/* MAIN CONTENT DASHBOARD - Desktop Only */}
-                <main className="hidden md:flex flex-1 overflow-y-auto bg-[#0F172A] relative">
-                    <div className="max-w-5xl mx-auto p-8 lg:p-12 pb-32 w-full">
-                        {/* Header Section - CENTERED */}
-                        <div className="flex flex-col items-center text-center gap-6 mb-10">
-                            <div className="space-y-3 flex flex-col items-center">
-                                <h2 className="text-6xl font-black text-white tracking-tight leading-tight px-4">
+                {/* ═══════════════════════════════════════════════════════════════════════════════
+                    DESKTOP CENTER STAGE: "MISSION CONTROL" LAYOUT
+                    - Top Header: Chapter Title + Audio Tip
+                    - Tactical Grid: 2-column (Topic Scope | Parameters)
+                    - Mission Payload: Color-coded stats bar
+                    - Ignite Button: Primary CTA
+                ═══════════════════════════════════════════════════════════════════════════════ */}
+                <main className="hidden md:flex flex-1 flex-col overflow-y-auto bg-[#0F172A] relative">
+                    <div className="max-w-4xl mx-auto p-8 lg:p-12 w-full flex-1 flex flex-col">
+
+                        {/* ─────────────────────────────────────────────────────────────────
+                            TOP HEADER: Chapter Title + Voice Tip (Compact Row)
+                        ───────────────────────────────────────────────────────────────── */}
+                        <div className="flex items-center justify-between gap-6 mb-10">
+                            <div className="flex-1">
+                                <h1 className="text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
                                     {selectedChapter}
-                                </h2>
-                                <div className="h-1.5 w-32 bg-purple-500 rounded-full shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-                                <p className="text-gray-500 font-medium text-base max-w-lg">
-                                    {questionLimit} Problems • {selectedDifficulty === 'Any Difficulty' ? 'Adaptive' : selectedDifficulty} Mode
-                                </p>
+                                </h1>
+                                <div className="h-1 w-20 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full mt-3"></div>
                             </div>
 
-                            {/* Guru Mantra */}
-                            <div className="shrink-0 mt-2">
-                                <div className="inline-flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl p-2 pr-5 hover:bg-white/10 transition cursor-pointer group shadow-xl backdrop-blur-sm">
-                                    <div className="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center shrink-0">
-                                        <Play size={14} className="fill-white text-white ml-0.5" />
+                            {/* Voice Tip Pill */}
+                            <div className="shrink-0">
+                                <div className="inline-flex items-center gap-3 bg-gradient-to-r from-indigo-900/50 to-purple-900/50 border border-white/10 rounded-2xl p-3 pr-5 hover:from-indigo-900/70 hover:to-purple-900/70 transition cursor-pointer group shadow-xl backdrop-blur-sm">
+                                    <div className="flex items-center gap-[3px] h-8 px-1">
+                                        {[0, 1, 2, 3, 4, 5, 6].map((i) => {
+                                            const heights = [16, 12, 20, 14, 18, 10, 15];
+                                            const durations = [0.5, 0.6, 0.45, 0.55, 0.5, 0.65, 0.4];
+                                            return (
+                                                <div
+                                                    key={i}
+                                                    className="w-[3px] rounded-full animate-pulse"
+                                                    style={{
+                                                        height: `${heights[i]}px`,
+                                                        background: `linear-gradient(to top, ${['#818cf8', '#a78bfa', '#c084fc', '#e879f9', '#f472b6', '#fb7185', '#fbbf24'][i]}, ${['#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#f43f5e', '#f59e0b'][i]})`,
+                                                        animationDelay: `${i * 0.1}s`,
+                                                        animationDuration: `${durations[i]}s`
+                                                    }}
+                                                />
+                                            );
+                                        })}
                                     </div>
                                     <div className="flex flex-col text-left">
-                                        <div className="flex items-center gap-2">
-                                            <span className="flex gap-0.5">
-                                                {[...Array(6)].map((_, i) => (
-                                                    <div key={i} className={`w-0.5 h-2.5 rounded-full ${i < 3 ? 'bg-indigo-400 animate-pulse' : 'bg-gray-700'}`} style={{ animationDelay: `${i * 0.1}s` }} />
-                                                ))}
-                                            </span>
-                                            <span className="text-[10px] font-mono text-gray-500">0:42</span>
-                                        </div>
-                                        <span className="text-[11px] font-bold text-gray-300 group-hover:text-white transition uppercase tracking-wider">Sir's Strategy Tip</span>
+                                        <span className="text-[10px] font-bold text-white uppercase tracking-wider">Sir's Strategy Tip</span>
+                                        <span className="text-[10px] text-gray-400">0:42</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* DESKTOP ONLY IGNITE ACTION */}
-                        <div className="flex flex-col items-center gap-4 mb-12">
+                        {/* ─────────────────────────────────────────────────────────────────
+                            TACTICAL GRID: 2-Column Layout
+                            Left: Topic Scope | Right: Mission Parameters
+                        ───────────────────────────────────────────────────────────────── */}
+                        <div className="grid grid-cols-2 gap-8 mb-10">
+
+                            {/* LEFT COLUMN: Topic Scope */}
+                            <div className="bg-gray-900/40 border border-white/5 rounded-3xl p-6 space-y-5">
+                                <h3 className="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em] flex items-center gap-2">
+                                    <Target size={14} className="text-cyan-400" />
+                                    Topic Scope
+                                </h3>
+
+                                {/* Chapter Dropdown */}
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Chapter</label>
+                                    <select value={selectedChapter} onChange={(e) => setSelectedChapter(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm font-medium outline-none focus:border-purple-500 transition-all">
+                                        <option>All Chapters</option>
+                                        {chapters.map(ch => <option key={ch}>{ch}</option>)}
+                                    </select>
+                                </div>
+
+                                {/* Focus Areas with Expandable Subtopics */}
+                                {selectedChapter !== 'All Chapters' && (
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Focus Area</label>
+                                        <div className="space-y-2">
+                                            <button
+                                                onClick={() => setSelectedTags([])}
+                                                className={`w-full px-3 py-2.5 rounded-xl text-left transition-all border ${selectedTags.length === 0
+                                                    ? 'bg-cyan-500/20 border-cyan-500/30'
+                                                    : 'bg-white/5 border-white/5 hover:border-white/10'
+                                                    }`}
+                                            >
+                                                <span className={`text-xs font-bold ${selectedTags.length === 0 ? 'text-cyan-400' : 'text-gray-400'}`}>🎯 All Topics</span>
+                                            </button>
+                                            {[
+                                                { id: 'Fundamentals', title: '📐 Fundamentals', subtopics: ['Mole Concept', '% Composition', 'Empirical Formula', 'Limiting Reagent', 'Avg Atomic Mass'], tags: ['Percentage_Composition', 'Empirical_Formula', 'Stoichiometry', 'Limiting_Reagent', 'Average_Atomic_Mass'] },
+                                                { id: 'Concentrations', title: '🧪 Concentrations', subtopics: ['Molarity', 'Molality', 'Normality', 'Dilution', 'Mixing Solutions'], tags: ['Molarity', 'Molality', 'Normality', 'Mixing_of_Solutions', 'Dilution'] },
+                                                { id: 'Advanced', title: '🔥 Advanced', subtopics: ['Eudiometry', 'POAC', 'n-Factor', 'Equivalent Concept'], tags: ['Eudiometry', 'POAC', 'n_Factor', 'Equivalent_Concept'] }
+                                            ].map(group => {
+                                                const isActive = group.tags.every(t => selectedTags.includes(t)) && selectedTags.length === group.tags.length;
+                                                return (
+                                                    <div key={group.id} className="group/focus">
+                                                        <button
+                                                            onClick={() => setSelectedTags(group.tags)}
+                                                            className={`w-full px-3 py-2.5 rounded-xl text-left transition-all border ${isActive
+                                                                ? 'bg-cyan-500/20 border-cyan-500/30'
+                                                                : 'bg-white/5 border-white/5 hover:border-white/10'
+                                                                }`}
+                                                        >
+                                                            <div className="flex items-center justify-between">
+                                                                <span className={`text-xs font-bold ${isActive ? 'text-cyan-400' : 'text-gray-400'}`}>{group.title}</span>
+                                                                <span className="text-[10px] text-gray-400 font-medium">{group.subtopics.length} topics</span>
+                                                            </div>
+                                                        </button>
+                                                        {/* Subtopics on hover */}
+                                                        <div className="hidden group-hover/focus:block mt-2 ml-2 pl-3 border-l-2 border-white/20">
+                                                            <div className="flex flex-wrap gap-1.5">
+                                                                {group.subtopics.map(sub => (
+                                                                    <span key={sub} className="text-xs text-gray-200 bg-white/10 px-2.5 py-1.5 rounded-md font-medium">{sub}</span>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* RIGHT COLUMN: Mission Parameters */}
+                            <div className="bg-gray-900/40 border border-white/5 rounded-3xl p-6 space-y-5">
+                                <h3 className="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em] flex items-center gap-2">
+                                    <Zap size={14} className="text-amber-400" />
+                                    Parameters
+                                </h3>
+
+                                {/* Difficulty - JEE Main Only */}
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Difficulty</label>
+                                    <div className="grid grid-cols-4 gap-2">
+                                        {[
+                                            { id: 'Any Difficulty', label: 'Mix', color: 'bg-white/10 text-white border-white/30' },
+                                            { id: 'Easy', label: 'Easy', color: 'bg-emerald-600 text-white border-emerald-400' },
+                                            { id: 'Medium', label: 'Med', color: 'bg-amber-600 text-white border-amber-400' },
+                                            { id: 'Hard', label: 'Hard', color: 'bg-red-600 text-white border-red-400' }
+                                        ].map(diff => (
+                                            <button
+                                                key={diff.id}
+                                                onClick={() => setSelectedDifficulty(diff.id)}
+                                                className={`py-2.5 rounded-xl text-xs font-black border transition-all ${selectedDifficulty === diff.id ? diff.color : 'border-white/10 text-gray-500 hover:border-white/20'}`}
+                                            >
+                                                {diff.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Question Count */}
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Count</label>
+                                    <div className="flex gap-2 bg-black/40 p-1 rounded-xl border border-white/5">
+                                        {['5', '10', '20', 'Max'].map(count => (
+                                            <button key={count} onClick={() => setQuestionLimit(count)} className={`flex-1 py-2.5 rounded-lg text-xs font-black transition-all ${questionLimit === count ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-500 hover:text-white'}`}>
+                                                {count}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Refine Set Toggle with Info Tooltips */}
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-2">
+                                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Refine Set</label>
+                                        <div className="group/info relative">
+                                            <HelpCircle size={12} className="text-gray-600 cursor-help" />
+                                            <div className="absolute left-0 bottom-full mb-2 w-64 p-3 bg-gray-900 border border-white/20 rounded-xl text-[13px] text-gray-200 leading-relaxed shadow-2xl opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all z-50">
+                                                <strong className="text-cyan-400 font-bold">Hide Known:</strong> Skip questions you've already mastered.<br />
+                                                <strong className="text-amber-400 font-bold">Starred:</strong> Focus only on your bookmarked questions.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <button onClick={() => setHideMastered(!hideMastered)} className={`flex-1 py-2.5 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-2 ${hideMastered ? 'bg-purple-500/20 border-purple-500/30 text-purple-300' : 'border-white/10 text-gray-500 hover:border-white/20'}`}>
+                                            <CheckCircle size={14} /> Hide Known
+                                        </button>
+                                        <button onClick={() => setOnlyStarred(!onlyStarred)} className={`flex-1 py-2.5 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-2 ${onlyStarred ? 'bg-amber-500/20 border-amber-500/30 text-amber-300' : 'border-white/10 text-gray-500 hover:border-white/20'}`}>
+                                            <Star size={14} /> Starred
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Mode Toggle with Info Tooltip */}
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-2">
+                                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Mode</label>
+                                        <div className="group/info relative">
+                                            <HelpCircle size={12} className="text-gray-600 cursor-help" />
+                                            <div className="absolute left-0 bottom-full mb-2 w-64 p-3 bg-gray-900 border border-white/20 rounded-xl text-[13px] text-gray-200 leading-relaxed shadow-2xl opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all z-50">
+                                                <strong className="text-purple-400 font-bold">Practice:</strong> See answers after each question. Learn at your pace.<br />
+                                                <strong className="text-indigo-400 font-bold">Exam:</strong> No answers until the end. Simulates real test conditions.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-2 bg-black/40 p-1 rounded-xl border border-white/5">
+                                        <button onClick={() => setGameMode('practice')} className={`py-2.5 rounded-lg text-xs font-black transition-all ${gameMode === 'practice' ? 'bg-purple-600 text-white shadow-lg' : 'text-gray-500 hover:text-white'}`}>
+                                            Practice
+                                        </button>
+                                        <button onClick={() => setGameMode('exam')} className={`py-2.5 rounded-lg text-xs font-black transition-all ${gameMode === 'exam' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-500 hover:text-white'}`}>
+                                            Exam
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* ─────────────────────────────────────────────────────────────────
+                            IGNITE SECTION: Compact Payload + CTA
+                        ───────────────────────────────────────────────────────────────── */}
+                        <div className="bg-gradient-to-br from-gray-900/80 to-gray-900/40 border border-white/10 rounded-3xl p-6 mt-6">
+                            {/* Payload Summary - Compact Inline */}
+                            <div className="flex items-center justify-center gap-4 mb-4 flex-wrap">
+                                <div className="flex items-center gap-1.5 text-sm">
+                                    <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                                    <span className="text-emerald-400 font-bold">{easyCount}</span>
+                                    <span className="text-gray-400">Easy</span>
+                                </div>
+                                <span className="text-gray-500">•</span>
+                                <div className="flex items-center gap-1.5 text-sm">
+                                    <div className="w-2 h-2 rounded-full bg-amber-500"></div>
+                                    <span className="text-amber-400 font-bold">{mediumCount}</span>
+                                    <span className="text-gray-400">Medium</span>
+                                </div>
+                                <span className="text-gray-500">•</span>
+                                <div className="flex items-center gap-1.5 text-sm">
+                                    <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                                    <span className="text-red-400 font-bold">{hardCount}</span>
+                                    <span className="text-gray-400">Hard</span>
+                                </div>
+                                <span className="text-gray-500">•</span>
+                                <span className="text-white font-black text-sm">{previewSize} Total</span>
+                                <span className="text-gray-400 text-xs">~{estTime}min</span>
+                            </div>
+
+                            {/* Ignite Button */}
                             <button
                                 onClick={startPractice}
                                 disabled={previewSize === 0}
-                                className="w-auto px-12 py-5 md:max-w-md bg-gradient-to-br from-indigo-600 to-purple-700 rounded-3xl font-black text-white shadow-[0_20px_40px_-15px_rgba(79,70,229,0.5)] hover:shadow-[0_25px_50px_-12px_rgba(79,70,229,0.6)] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-4 text-xl group border border-white/10"
+                                className="w-full py-4 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-2xl font-black text-white text-lg shadow-[0_15px_30px_-10px_rgba(79,70,229,0.5)] hover:shadow-[0_20px_40px_-10px_rgba(79,70,229,0.6)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 group border border-white/10"
                             >
                                 <span className="tracking-widest uppercase">Ignite Mission</span>
-                                <Rocket size={26} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                <Rocket size={22} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                             </button>
-                            <div className="flex items-center gap-2 text-gray-500 font-bold uppercase tracking-wider text-[10px]">
-                                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                                Mission Ready • {previewSize} Strategic Problems
-                            </div>
-                        </div>
-
-                        {/* Stats Cards */}
-                        <div className="grid grid-cols-3 gap-6 mb-8">
-                            <div className="bg-gray-900/40 border border-white/5 p-6 rounded-3xl backdrop-blur-md relative overflow-hidden group">
-                                <div className="text-blue-400 font-black text-4xl mb-0.5">{mainsCount}</div>
-                                <div className="text-[10px] text-gray-600 uppercase font-black tracking-widest">Mains</div>
-                            </div>
-                            <div className="bg-gray-900/40 border border-white/5 p-6 rounded-3xl backdrop-blur-md relative overflow-hidden group">
-                                <div className="text-red-400 font-black text-4xl mb-0.5">{advCount}</div>
-                                <div className="text-[10px] text-gray-600 uppercase font-black tracking-widest">Advanced</div>
-                            </div>
-                            <div className="bg-gray-900/40 border border-white/5 p-6 rounded-3xl backdrop-blur-md relative overflow-hidden group">
-                                <div className="text-purple-400 font-black text-4xl mb-0.5 text-center transition group-hover:scale-105">
-                                    {neetCount > 0 ? neetCount : `~${estTime}m`}
-                                </div>
-                                <div className="text-[10px] text-gray-600 uppercase font-black tracking-widest text-center">
-                                    {neetCount > 0 ? 'NEET' : 'Est. Time'}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Tactical Insight Card */}
-                        <div className="bg-slate-900/80 border border-white/10 rounded-[32px] p-8 mb-10 shadow-2xl relative overflow-hidden backdrop-blur-md">
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
-
-                            <div className="flex flex-row gap-8 relative z-10">
-                                <div className="flex items-start gap-4 w-1/2">
-                                    <div className="w-12 h-12 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl flex items-center justify-center text-indigo-400 shrink-0">
-                                        <TrendingUp size={18} />
-                                    </div>
-                                    <div className="space-y-1">
-                                        <h4 className="text-[11px] font-black text-indigo-400 uppercase tracking-widest">Tactical Insight</h4>
-                                        <div className="text-sm text-gray-400 leading-relaxed font-medium">
-                                            {progress.totalAttempted > 0 ? (
-                                                overallAccuracy < 50 ? (
-                                                    <p><span className="text-amber-500 font-bold">Heads Up:</span> Focus on basics first.</p>
-                                                ) : <p><span className="text-emerald-500 font-bold">Mastery:</span> Scaling difficulty up.</p>
-                                            ) : <p>Complete a session to unlock data.</p>}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="w-1/2 border-l border-white/5 pl-8">
-                                    <h5 className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Focus Areas</h5>
-                                    <div className="flex flex-wrap gap-2">
-                                        {selectedTags.length > 0 ? (
-                                            selectedTags.slice(0, 3).map(tag => (
-                                                <div key={tag} className="px-2 py-1 bg-white/5 border border-white/10 rounded-lg text-[11px] font-bold text-gray-400">
-                                                    {tag.replace(/_/g, ' ')}
-                                                </div>
-                                            ))
-                                        ) : (
-                                            <div className="text-[9px] text-gray-600 font-bold uppercase tracking-widest">Adaptive Analysis Pending</div>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </main>
@@ -718,47 +907,73 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
             <div className="flex-1 flex overflow-hidden">
                 <main className="flex-1 overflow-y-auto p-4 md:p-12 lg:p-16 pb-32 scroll-smooth">
                     <div className="max-w-3xl mx-auto">
-                        {/* ULTRA-COMPACT CONTROL STRIP */}
-                        <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/5">
-                            <div className="flex flex-col">
-                                <span className="text-xl font-black text-white leading-tight">Q.{currentIndex + 1}</span>
-                                <span className="text-[9px] font-bold text-indigo-400/50 uppercase tracking-widest">{activeQuestion.difficulty}</span>
+                        {/* QUESTION CONTROL STRIP */}
+                        <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
+                            {/* Question Number + Difficulty */}
+                            <div className="flex items-center gap-3">
+                                <span className="text-2xl font-black text-white leading-tight">Q.{currentIndex + 1}</span>
+                                <span className="text-[10px] font-bold text-gray-600 uppercase tracking-wider bg-white/5 px-2.5 py-1 rounded-lg">{activeQuestion.difficulty}</span>
                             </div>
 
-                            <div className="flex items-center bg-white/5 rounded-lg p-0.5 border border-white/5 shadow-inner">
-                                <button
-                                    onClick={() => {
-                                        toggleStar(activeQuestion.id);
-                                        if (!progress.starredIds?.includes(activeQuestion.id) && progress.masteredIds?.includes(activeQuestion.id)) {
-                                            toggleMaster(activeQuestion.id);
-                                        }
-                                    }}
-                                    className={`p-2 rounded-md transition-all ${progress.starredIds?.includes(activeQuestion.id) ? 'bg-amber-500 text-white shadow-md' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
-                                    title="Star for Revision"
-                                >
-                                    <Star size={14} fill={progress.starredIds?.includes(activeQuestion.id) ? "currentColor" : "none"} />
-                                </button>
-                                <div className="w-px h-3 bg-white/10 mx-0.5" />
-                                <button
-                                    onClick={() => {
-                                        toggleMaster(activeQuestion.id);
-                                        if (!progress.masteredIds?.includes(activeQuestion.id) && progress.starredIds?.includes(activeQuestion.id)) {
+                            {/* 3-Button Toolbar with Hover Tooltips */}
+                            <div className="flex items-center gap-2">
+                                {/* Bookmark Button */}
+                                <div className="group/btn relative">
+                                    <button
+                                        onClick={() => {
                                             toggleStar(activeQuestion.id);
-                                        }
-                                    }}
-                                    className={`p-2 rounded-md transition-all ${progress.masteredIds?.includes(activeQuestion.id) ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
-                                    title="Easy - Hide"
-                                >
-                                    <CheckCircle size={14} />
-                                </button>
-                                <div className="w-px h-3 bg-white/10 mx-0.5" />
-                                <button
-                                    onClick={() => setEditingNote(true)}
-                                    className={`p-2 rounded-md transition-all ${progress.userNotes?.[activeQuestion.id] ? 'bg-indigo-500 text-white shadow-md' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
-                                    title="Add Strategy Note"
-                                >
-                                    <Pencil size={14} />
-                                </button>
+                                            if (!progress.starredIds?.includes(activeQuestion.id) && progress.masteredIds?.includes(activeQuestion.id)) {
+                                                toggleMaster(activeQuestion.id);
+                                            }
+                                        }}
+                                        className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all text-xs font-bold ${progress.starredIds?.includes(activeQuestion.id)
+                                            ? 'bg-amber-500/20 border-amber-500/40 text-amber-300'
+                                            : 'bg-white/5 border-white/10 text-gray-500 hover:text-white hover:border-white/20'}`}
+                                    >
+                                        <Star size={15} className={progress.starredIds?.includes(activeQuestion.id) ? 'fill-amber-400' : ''} />
+                                        <span className="hidden sm:inline">{progress.starredIds?.includes(activeQuestion.id) ? 'Bookmarked' : 'Bookmark'}</span>
+                                    </button>
+                                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-44 p-2.5 bg-gray-900 border border-white/20 rounded-xl text-xs text-gray-100 font-medium text-center shadow-2xl opacity-0 invisible group-hover/btn:opacity-100 group-hover/btn:visible transition-all z-50">
+                                        Save for revision
+                                    </div>
+                                </div>
+
+                                {/* Mastered Button */}
+                                <div className="group/btn relative">
+                                    <button
+                                        onClick={() => {
+                                            toggleMaster(activeQuestion.id);
+                                            if (!progress.masteredIds?.includes(activeQuestion.id) && progress.starredIds?.includes(activeQuestion.id)) {
+                                                toggleStar(activeQuestion.id);
+                                            }
+                                        }}
+                                        className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all text-xs font-bold ${progress.masteredIds?.includes(activeQuestion.id)
+                                            ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
+                                            : 'bg-white/5 border-white/10 text-gray-500 hover:text-white hover:border-white/20'}`}
+                                    >
+                                        <CheckCircle size={15} />
+                                        <span className="hidden sm:inline">{progress.masteredIds?.includes(activeQuestion.id) ? 'Mastered' : 'Got It'}</span>
+                                    </button>
+                                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-48 p-2.5 bg-gray-900 border border-white/20 rounded-xl text-xs text-gray-100 font-medium text-center shadow-2xl opacity-0 invisible group-hover/btn:opacity-100 group-hover/btn:visible transition-all z-50">
+                                        Too easy - hide next time
+                                    </div>
+                                </div>
+
+                                {/* Note Button */}
+                                <div className="group/btn relative">
+                                    <button
+                                        onClick={() => setEditingNote(true)}
+                                        className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all text-xs font-bold ${progress.userNotes?.[activeQuestion.id]
+                                            ? 'bg-indigo-500/20 border-indigo-500/40 text-indigo-300'
+                                            : 'bg-white/5 border-white/10 text-gray-500 hover:text-white hover:border-white/20'}`}
+                                    >
+                                        <Pencil size={15} />
+                                        <span className="hidden sm:inline">Note</span>
+                                    </button>
+                                    <div className="absolute bottom-full right-0 mb-3 w-44 p-2.5 bg-gray-900 border border-white/20 rounded-xl text-xs text-gray-100 font-medium text-center shadow-2xl opacity-0 invisible group-hover/btn:opacity-100 group-hover/btn:visible transition-all z-50">
+                                        Add strategy notes
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -801,6 +1016,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                         </div>
 
                         <div className="mt-8 flex items-center justify-between gap-4">
+                            {/* Left: Back button (if reviewing) */}
                             <div className="flex gap-2">
                                 {isReviewing && currentIndex > 0 && (
                                     <button
@@ -810,12 +1026,16 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                         Back
                                     </button>
                                 )}
-                                <button onClick={() => setQuestionStatus(prev => ({ ...prev, [currentIndex]: 'marked' }))} className={`px-4 py-2 md:px-5 md:py-2.5 rounded-lg md:rounded-xl border text-[10px] md:text-xs font-black uppercase tracking-widest transition ${questionStatus[currentIndex] === 'marked' ? 'bg-amber-500/10 border-amber-500/30 text-amber-500' : 'border-white/10 text-gray-500'}`}>
-                                    Mark for Review
-                                </button>
                             </div>
 
+                            {/* Right: Mark for Review + Skip + Proceed - all together */}
                             <div className="flex gap-2 md:gap-3">
+                                {/* Mark for Review */}
+                                <button onClick={() => setQuestionStatus(prev => ({ ...prev, [currentIndex]: 'marked' }))} className={`px-4 py-2 md:px-5 md:py-2.5 rounded-lg md:rounded-xl border text-[10px] md:text-xs font-black uppercase tracking-widest transition ${questionStatus[currentIndex] === 'marked' ? 'bg-amber-500/10 border-amber-500/30 text-amber-500' : 'border-white/10 text-gray-500 hover:bg-white/5'}`}>
+                                    Mark
+                                </button>
+
+                                {/* Skip (when no answer selected) */}
                                 {!isReviewing && selectedOptionId === null && (
                                     <button
                                         onClick={handleNext}
@@ -824,6 +1044,8 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                         Skip
                                     </button>
                                 )}
+
+                                {/* Proceed (when answer selected or reviewing) */}
                                 {(selectedOptionId !== null || isReviewing) && (
                                     <button onClick={handleNext} className="px-6 py-2 md:px-8 md:py-3 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg md:rounded-xl font-black text-white shadow-xl flex items-center gap-2 hover:brightness-110 transition-all text-xs md:text-base">
                                         {isLastQuestion ? (isReviewing ? 'Finish Review' : 'Review Stats') : 'Proceed'} <ArrowRight size={16} />

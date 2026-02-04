@@ -48,7 +48,7 @@ export default function AdminPage() {
             ],
             integerAnswer: "", // Blank by default
             tagId: 'Unassigned',
-            difficulty: 'Mains',
+            difficulty: 'Medium',
             chapterId: defaultChapter,
             isTopPYQ: false,
             isPYQ: false,
@@ -404,13 +404,13 @@ export default function AdminPage() {
                                                 <select
                                                     value={q.difficulty}
                                                     onChange={(e) => handleUpdate(q.id, 'difficulty', e.target.value)}
-                                                    className={`bg-gray-900 border border-gray-600 rounded px-2 py-1 w-full text-[10px] focus:border-purple-500 outline-none ${q.difficulty === 'Advanced' ? 'text-red-400' : q.difficulty === 'Mains' ? 'text-orange-400' : 'text-blue-400'
+                                                    className={`bg-gray-900 border border-gray-600 rounded px-2 py-1 w-full text-[10px] focus:border-purple-500 outline-none ${q.difficulty === 'Hard' ? 'text-red-400' : q.difficulty === 'Medium' ? 'text-orange-400' : 'text-emerald-400'
                                                         }`}
                                                     onClick={(e) => e.stopPropagation()}
                                                 >
-                                                    <option value="NEET">NEET</option>
-                                                    <option value="Mains">Mains</option>
-                                                    <option value="Advanced">Advanced</option>
+                                                    <option value="Easy">Easy</option>
+                                                    <option value="Medium">Medium</option>
+                                                    <option value="Hard">Hard</option>
                                                 </select>
                                             </td>
                                             <td className="p-3 align-top text-center">
@@ -462,9 +462,9 @@ export default function AdminPage() {
                         <div className="mb-6 flex items-center justify-between bg-gray-900/50 p-4 rounded-xl border border-gray-800 shadow-lg">
                             <span className="text-xs text-gray-400 font-mono tracking-wider">{selectedQuestion.id}</span>
                             <div className="flex gap-2">
-                                <span className={`text-[10px] uppercase font-black px-2.5 py-1 rounded-md border ${selectedQuestion.difficulty === 'Advanced' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                                    selectedQuestion.difficulty === 'Mains' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' :
-                                        'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                                <span className={`text-[10px] uppercase font-black px-2.5 py-1 rounded-md border ${selectedQuestion.difficulty === 'Hard' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
+                                    selectedQuestion.difficulty === 'Medium' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' :
+                                        'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
                                     }`}>
                                     {selectedQuestion.difficulty}
                                 </span>
