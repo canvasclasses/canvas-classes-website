@@ -37,6 +37,7 @@ export interface SolutionAsset {
 export interface QuestionOption {
     id: string;
     text: string; // Supports Latex/Images
+    imageScale?: number; // Valid: 10-100 (percentage)
     isCorrect: boolean;
 }
 
@@ -75,6 +76,8 @@ export interface SourceReference {
 export interface Question {
     id: string;
     textMarkdown: string; // The question stem (Analysis supports Latex)
+    images?: string[]; // Legacy support or gallery
+    imageScale?: number; // Valid: 10-100 (percentage)
     options: QuestionOption[];
 
     // --- Core Metadata ---
@@ -107,12 +110,14 @@ export interface Question {
 
     // --- The "Feedback Card" Logic ---
     trap?: TrapInfo;
+    solutionImageScale?: number; // Valid: 10-100 (percentage)
+    traps?: TrapInfo[];
 
     // --- Admin/Review Flags ---
     needsReview?: boolean;     // Flag for admin to review tags
     reviewNotes?: string;      // Admin notes about the question
 
-    // --- NEW: Source References ---
+    // --- Source References ---
     // Track where this question concept originated from (NCERT or earlier PYQs)
     sourceReferences?: SourceReference[];
 }

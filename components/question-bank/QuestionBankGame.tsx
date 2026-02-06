@@ -1285,7 +1285,11 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                                         <BookOpen size={18} />
                                                         <span className="text-sm font-bold uppercase tracking-widest">Detailed Solution</span>
                                                     </div>
-                                                    <SolutionViewer solution={question.solution} sourceReferences={question.sourceReferences} />
+                                                    <SolutionViewer
+                                                        solution={question.solution}
+                                                        sourceReferences={question.sourceReferences}
+                                                        imageScale={question.solutionImageScale}
+                                                    />
                                                 </div>
                                             )}
                                         </div>

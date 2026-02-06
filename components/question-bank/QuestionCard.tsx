@@ -49,7 +49,19 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                         remarkPlugins={[remarkMath, remarkGfm]}
                         rehypePlugins={[rehypeKatex, rehypeRaw]}
                         components={{
-                            p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                            img: (props) => (
+                                <img
+                                    {...props}
+                                    style={{
+                                        maxWidth: question.imageScale ? `${question.imageScale}%` : '100%',
+                                        height: 'auto',
+                                        display: 'block',
+                                        margin: '0 auto'
+                                    }}
+                                    className="rounded-lg border border-white/5 my-3"
+                                />
+                            ),
+                            p: ({ children }) => <p className="mb-4">{children}</p>,
                             table: ({ children }) => (
                                 <div className="my-2 overflow-x-auto rounded-lg border border-gray-700">
                                     <table className="w-full text-sm text-left">{children}</table>
@@ -176,7 +188,25 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                                                 })}
                                             </span>
                                         ) : (
-                                            <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex, rehypeRaw]} components={{ p: 'span' }}>
+                                            <ReactMarkdown
+                                                remarkPlugins={[remarkMath]}
+                                                rehypePlugins={[rehypeKatex, rehypeRaw]}
+                                                components={{
+                                                    p: 'span',
+                                                    img: (props) => (
+                                                        <img
+                                                            {...props}
+                                                            style={{
+                                                                maxWidth: option.imageScale ? `${option.imageScale}%` : '100%',
+                                                                height: 'auto',
+                                                                display: 'block',
+                                                                margin: '0 auto'
+                                                            }}
+                                                            className="rounded border border-gray-700/50 my-2"
+                                                        />
+                                                    )
+                                                }}
+                                            >
                                                 {option.text}
                                             </ReactMarkdown>
                                         )}
