@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>OCL Renderer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: sans-serif;
+        }
+
+        svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        #error {
+            color: #f87171;
+            font-family: monospace;
+            font-size: 10px;
+            display: none;
+            text-align: center;
+            padding: 10px;
+            background: rgba(50, 0, 0, 0.5);
+            border-radius: 4px;
+        }
+
+        #loading {
+            color: #64748b;
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" style="width: 100%; height: 100%;"></div>
+    <div id="loading">Loading Engine...</div>
+    <div id="error"></div>
+
+    <script>
+        // Fallback loader
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const s = document.createElement('script');
+                s.src = src;
+                s.onload = resolve;
+                s.onerror = reject;
+                document.head.appendChild(s);
+            });
+        }
+
+        async function init() {
+            if (typeof OCL === 'undefined') {
+                try {
+                    await loadScript('https://unpkg.com/openchemlib@8.7.0/dist/openchemlib-full.min.js');
+                } catch (e) {
+                    try {
+                        await loadScript('https://cdn.jsdelivr.net/npm/openchemlib@8.7.0/dist/openchemlib-full.min.js');
+                    } catch (e2) {
+                        showError("Failed to load Chemistry Engine from CDNs");
+                        return;
+                    }
+                }
+            }
+            document.getElementById('loading').style.display = 'none';
+            render();
+        }
+
+        function render() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const smiles = urlParams.get('smiles');
+                const theme = urlParams.get('theme') || 'dark';
+
+                if (!smiles) return;
+                if (typeof OCL === 'undefined') { showError("OCL Library failed"); return; }
+
+                const molecule = OCL.Molecule.fromSmiles(smiles);
+
+                // ROTATION LOGIC
+                const rotateDeg = parseInt(urlParams.get('rotate')) || 0;
+                if (rotateDeg !== 0 && molecule.getAllAtoms() > 0) {
+                    const angle = rotateDeg * Math.PI / 180;
+                    const cos = Math.cos(angle);
+                    const sin = Math.sin(angle);
+
+                    // Find Bounding Box Center
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    const atomCount = molecule.getAllAtoms();
+                    for (let i = 0; i < atomCount; i++) {
+                        const x = molecule.getAtomX(i);
+                        const y = molecule.getAtomY(i);
+                        if (x < minX) minX = x; if (x > maxX) maxX = x;
+                        if (y < minY) minY = y; if (y > maxY) maxY = y;
+                    }
+                    const cx = (minX + maxX) / 2;
+                    const cy = (minY + maxY) / 2;
+
+                    // Rotate
+                    for (let i = 0; i < atomCount; i++) {
+                        const x = molecule.getAtomX(i) - cx;
+                        const y = molecule.getAtomY(i) - cy;
+                        const nx = x * cos - y * sin + cx;
+                        const ny = x * sin + y * cos + cy;
+                        molecule.setAtomX(i, nx);
+                        molecule.setAtomY(i, ny);
+                    }
+                }
+
+                const width = parseInt(urlParams.get('width')) || 300;
+                const height = parseInt(urlParams.get('height')) || 200;
+                const svgString = molecule.toSVG(width, height);
+
+                let styledSvg = svgString;
+
+                // Remove Warnings
+                styledSvg = styledSvg.replace(/<text[^>]*>unknown chirality<\/text>/gi, '');
+
+                if (theme === 'dark') {
+                    // Base molecule lines and text
+                    styledSvg = styledSvg.replace(/stroke="rgb\(0,0,0\)"/g, 'stroke="#e2e8f0"');
+                    styledSvg = styledSvg.replace(/fill="rgb\(0,0,0\)"/g, 'fill="#e2e8f0"');
+
+                    // Global string replacement for colors (handles fill, stroke, and style attributes)
+                    const colorMap = {
+                        'rgb(255,0,0)': '#FDE68A', 'rgb(255, 0, 0)': '#FDE68A',     // Oxygen: Red -> Light Yellow
+                        'rgb(0,0,255)': '#A5B4FC', 'rgb(0, 0, 255)': '#A5B4FC',     // Nitrogen: Blue -> Soft Indigo
+                        'rgb(255,191,0)': '#FBBF24', 'rgb(255, 191, 0)': '#FBBF24', // Sulfur: Orange/Yellow -> Amber
+                        'rgb(255,127,0)': '#FB923C', 'rgb(255, 127, 0)': '#FB923C', // Phosphorus: Orange -> Soft Orange
+                        'rgb(0,255,0)': '#86EFAC', 'rgb(0, 255, 0)': '#86EFAC',     // Chlorine: Green -> Light Green
+                        'rgb(165,42,42)': '#FCA5A5', 'rgb(165, 42, 42)': '#FCA5A5', // Bromine: Brown -> Soft Coral
+                        'rgb(148,0,211)': '#D8B4FE', 'rgb(148, 0, 211)': '#D8B4FE', // Iodine: Violet -> Soft Purple
+                    };
+
+                    Object.keys(colorMap).forEach(oldColor => {
+                        styledSvg = styledSvg.split(oldColor).join(colorMap[oldColor]);
+                    });
+                }
+
+                const container = document.getElementById('container');
+                container.innerHTML = styledSvg;
+                container.style.display = 'block';
+
+                const svgEl = container.querySelector('svg');
+                if (svgEl) {
+                    svgEl.removeAttribute('width');
+                    svgEl.removeAttribute('height');
+                    svgEl.style.width = '100%';
+                    svgEl.style.height = '100%';
+                }
+
+            } catch (e) {
+                console.error(e);
+                showError("Error: " + e.message);
+            }
+        }
+
+        function showError(msg) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('container').style.display = 'none';
+            const el = document.getElementById('error');
+            el.innerText = msg;
+            el.style.display = 'block';
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200">
+  <defs>
+    <linearGradient id="bond-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8080a0"/>
+      <stop offset="100%" style="stop-color:#a0a0c0"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="#1a1a2e" rx="8"/>
+  
+  <!-- Bonds -->
+  <g stroke="url(#bond-grad)" stroke-width="2" stroke-linecap="round">
+    <line x1="68.03847577293368" y1="3.0384757729336798" x2="94.01923788646684" y2="18.03847577293368"/>
+    <line x1="91.42116167511352" y1="19.53847577293368" x2="106.42116167511352" y2="45.51923788646684"/>
+    <line x1="96.61731409782016" y1="16.53847577293368" x2="111.61731409782016" y2="42.51923788646684"/>
+    <line x1="109.01923788646684" y1="44.01923788646684" x2="135" y2="59.01923788646684"/>
+    <line x1="135" y1="59.01923788646684" x2="150" y2="85"/>
+    <line x1="150" y1="85" x2="175.98076211353316" y2="100"/>
+    <line x1="175.98076211353316" y1="100" x2="190.98076211353316" y2="125.98076211353316"/>
+    <line x1="190.98076211353316" y1="125.98076211353316" x2="216.96152422706632" y2="140.98076211353316"/>
+    <line x1="216.96152422706632" y1="140.98076211353316" x2="231.96152422706632" y2="166.96152422706632"/>
+    <line x1="231.96152422706632" y1="166.96152422706632" x2="231.96152422706632" y2="196.96152422706632"/>
+  </g>
+  
+  <!-- Atoms -->
+  <g font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="central">
+    <circle cx="135" cy="59.01923788646684" r="12" fill="#1a1a2e"/>
+    <text x="135" y="59.01923788646684" fill="#ff6b6b">O</text>
+  </g>
+  
+  <!-- Label -->
+  <text x="150" y="185" text-anchor="middle" fill="#6060a0" font-family="Arial" font-size="10">Propyl cyclohexyl ketone</text>
+</svg>

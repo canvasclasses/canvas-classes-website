@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200">
+  <defs>
+    <linearGradient id="bond-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8080a0"/>
+      <stop offset="100%" style="stop-color:#a0a0c0"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="#1a1a2e" rx="8"/>
+  
+  <!-- Bonds -->
+  <g stroke="url(#bond-grad)" stroke-width="2" stroke-linecap="round">
+    <line x1="47.03847577293368" y1="82.10769515458674" x2="73.01923788646684" y2="67.10769515458674"/>
+    <line x1="44.03847577293368" y1="76.9115427318801" x2="70.01923788646684" y2="61.911542731880104"/>
+    <line x1="71.51923788646684" y1="64.50961894323342" x2="101.51923788646684" y2="64.50961894323342"/>
+    <line x1="101.51923788646684" y1="64.50961894323342" x2="127.5" y2="79.50961894323342"/>
+    <line x1="127.5" y1="79.50961894323342" x2="142.5" y2="105.49038105676658"/>
+    <line x1="142.5" y1="105.49038105676658" x2="168.48076211353316" y2="120.49038105676658"/>
+    <line x1="168.48076211353316" y1="120.49038105676658" x2="198.48076211353316" y2="120.49038105676658"/>
+    <line x1="198.48076211353316" y1="120.49038105676658" x2="224.46152422706632" y2="135.49038105676658"/>
+    <line x1="224.46152422706632" y1="135.49038105676658" x2="254.46152422706632" y2="135.49038105676658"/>
+  </g>
+  
+  <!-- Atoms -->
+  <g font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="central">
+    <circle cx="45.53847577293368" cy="79.50961894323342" r="12" fill="#1a1a2e"/>
+    <text x="45.53847577293368" y="79.50961894323342" fill="#4ecdc4">N</text>
+    <circle cx="101.51923788646684" cy="64.50961894323342" r="12" fill="#1a1a2e"/>
+    <text x="101.51923788646684" y="64.50961894323342" fill="#ff6b6b">O</text>
+  </g>
+  
+  <!-- Label -->
+  <text x="150" y="185" text-anchor="middle" fill="#6060a0" font-family="Arial" font-size="10">Cyclohexanecarboxamide</text>
+</svg>

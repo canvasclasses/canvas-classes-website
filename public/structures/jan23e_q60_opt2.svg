@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200">
+  <defs>
+    <linearGradient id="bond-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8080a0"/>
+      <stop offset="100%" style="stop-color:#a0a0c0"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="#1a1a2e" rx="8"/>
+  
+  <!-- Bonds -->
+  <g stroke="url(#bond-grad)" stroke-width="2" stroke-linecap="round">
+    <line x1="81.02885682970026" y1="51.51923788646684" x2="107.00961894323342" y2="66.51923788646684"/>
+    <line x1="107.00961894323342" y1="66.51923788646684" x2="122.00961894323342" y2="92.5"/>
+    <line x1="122.00961894323342" y1="92.5" x2="147.99038105676658" y2="107.5"/>
+    <line x1="147.99038105676658" y1="107.5" x2="177.99038105676658" y2="107.5"/>
+    <line x1="177.99038105676658" y1="107.5" x2="203.97114317029974" y2="122.5"/>
+    <line x1="203.97114317029974" y1="122.5" x2="218.97114317029974" y2="148.48076211353316"/>
+  </g>
+  
+  <!-- Atoms -->
+  <g font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="central">
+  </g>
+  
+  <!-- Label -->
+  <text x="150" y="185" text-anchor="middle" fill="#6060a0" font-family="Arial" font-size="10">1-Bromo-1,3-dimethylcyclopentane</text>
+</svg>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200">
+  <defs>
+    <linearGradient id="bond-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8080a0"/>
+      <stop offset="100%" style="stop-color:#a0a0c0"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="#1a1a2e" rx="8"/>
+  
+  <!-- Bonds -->
+  <g stroke="url(#bond-grad)" stroke-width="2" stroke-linecap="round">
+    <line x1="53.03847577293368" y1="64.50961894323342" x2="79.01923788646684" y2="79.50961894323342"/>
+    <line x1="79.01923788646684" y1="79.50961894323342" x2="94.01923788646684" y2="105.49038105676658"/>
+    <line x1="94.01923788646684" y1="105.49038105676658" x2="120" y2="120.49038105676658"/>
+    <line x1="120" y1="120.49038105676658" x2="150" y2="120.49038105676658"/>
+    <line x1="150" y1="120.49038105676658" x2="175.98076211353316" y2="135.49038105676658"/>
+    <line x1="175.98076211353316" y1="135.49038105676658" x2="205.98076211353316" y2="135.49038105676658"/>
+    <line x1="205.98076211353316" y1="135.49038105676658" x2="231.96152422706632" y2="120.49038105676658"/>
+    <line x1="231.96152422706632" y1="120.49038105676658" x2="246.96152422706632" y2="94.50961894323342"/>
+  </g>
+  
+  <!-- Atoms -->
+  <g font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="central">
+    <circle cx="53.03847577293368" cy="64.50961894323342" r="12" fill="#1a1a2e"/>
+    <text x="53.03847577293368" y="64.50961894323342" fill="#ff6b6b">O</text>
+    <circle cx="94.01923788646684" cy="105.49038105676658" r="12" fill="#1a1a2e"/>
+    <text x="94.01923788646684" y="105.49038105676658" fill="#ff6b6b">O</text>
+  </g>
+  
+  <!-- Label -->
+  <text x="150" y="185" text-anchor="middle" fill="#6060a0" font-family="Arial" font-size="10">Cyclohexanecarboxylic acid</text>
+</svg>

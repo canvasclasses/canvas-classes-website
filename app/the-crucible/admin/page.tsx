@@ -1,11 +1,27 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay } from 'lucide-react';
-import { Question } from '../types';
+import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen } from 'lucide-react';
+import { Question, JEEQuestionType, WeightedTag } from '../types';
 import { getQuestions, saveQuestion, deleteQuestion } from '../actions';
 import Link from 'next/link';
 import { fetchLecturesData, Chapter } from '../../lib/lecturesData';
+
+import { getTagsForChapter, GENERIC_TAGS, ALL_TAGS } from '../taxonomy/chapter-concepts';
+import TagManager from './TagManager';
+import AudioRecorder from './AudioRecorder';
+
+// Helper to get all unique tags if needed for display, but strictly we use filtered lists now.
+
+
+const QUESTION_TYPES: { id: JEEQuestionType; name: string; color: string }[] = [
+    { id: 'SCQ', name: 'Single Correct', color: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' },
+    { id: 'MCQ', name: 'Multi Correct', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30' },
+    { id: 'NVT', name: 'Numerical', color: 'bg-purple-500/20 text-purple-400 border-purple-500/30' },
+    { id: 'AR', name: 'Assertion-Reason', color: 'bg-orange-500/20 text-orange-400 border-orange-500/30' },
+    { id: 'MST', name: 'Multi-Statement', color: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30' },
+    { id: 'MTC', name: 'Match Column', color: 'bg-pink-500/20 text-pink-400 border-pink-500/30' },
+];
 
 export default function AdminPage() {
     const [questions, setQuestions] = useState<Question[]>([]);
@@ -17,6 +33,7 @@ export default function AdminPage() {
     const [selectedChapterFilter, setSelectedChapterFilter] = useState<string>('all');
     const [selectedTypeFilter, setSelectedTypeFilter] = useState<string>('all');
     const [selectedSourceFilter, setSelectedSourceFilter] = useState<string>('all');
+    const [selectedShiftFilter, setSelectedShiftFilter] = useState<string>('all');
 
     useEffect(() => {
         loadData();
@@ -38,7 +55,7 @@ export default function AdminPage() {
 
         const newQuestion: Question = {
             id: newId,
-            type: 'MCQ', // Default
+            questionType: 'SCQ',
             textMarkdown: "New Question Text",
             options: [
                 { id: 'a', text: 'Option A', isCorrect: true },
@@ -46,8 +63,9 @@ export default function AdminPage() {
                 { id: 'c', text: 'Option C', isCorrect: false },
                 { id: 'd', text: 'Option D', isCorrect: false }
             ],
-            integerAnswer: "", // Blank by default
-            tagId: 'Unassigned',
+            integerAnswer: "",
+            tagId: 'TAG_MOLE_BASICS',
+            conceptTags: [{ tagId: 'TAG_MOLE_BASICS', weight: 1.0 }],
             difficulty: 'Medium',
             chapterId: defaultChapter,
             isTopPYQ: false,
@@ -55,7 +73,9 @@ export default function AdminPage() {
             examSource: '',
             solution: {
                 textSolutionLatex: "Wait for solution..."
-            }
+            },
+            needsReview: true,
+            reviewNotes: ''
         };
 
         setQuestions(prev => [newQuestion, ...prev]);
@@ -124,27 +144,45 @@ export default function AdminPage() {
 
     const selectedQuestion = questions.find(q => q.id === selectedQuestionId);
 
-    // Filter questions based on selected chapter
+    // Extract unique exam sources for shift-wise filtering
+    const examSourcesRaw = questions.map(q => q.examSource).filter((src): src is string => !!src && src.trim() !== '');
+    const uniqueExamSources = Array.from(new Set(examSourcesRaw)).sort((a, b) => b.localeCompare(a));
+
+    // Group sources by year for organized display
+    const shiftGroups = {
+        '2026': uniqueExamSources.filter(s => s.includes('2026')),
+        '2025': uniqueExamSources.filter(s => s.includes('2025')),
+        '2024': uniqueExamSources.filter(s => s.includes('2024')),
+        'Older': uniqueExamSources.filter(s => !s.includes('2026') && !s.includes('2025') && !s.includes('2024'))
+    };
+
+    // Count questions per shift
+    const getShiftCount = (shift: string) => questions.filter(q => q.examSource === shift).length;
+
     // Filter questions based on selected filters
     const filteredQuestions = questions.filter(q => {
         // Chapter Filter
         if (selectedChapterFilter !== 'all' && q.chapterId !== selectedChapterFilter) return false;
 
         // Type Filter
-        if (selectedTypeFilter !== 'all' && q.type !== selectedTypeFilter) return false;
+        if (selectedTypeFilter !== 'all' && q.questionType !== selectedTypeFilter) return false;
 
-        // Source Filter
-        if (selectedSourceFilter !== 'all') {
+        // Shift Filter (NEW - takes priority over source filter)
+        if (selectedShiftFilter !== 'all') {
+            if (q.examSource !== selectedShiftFilter) return false;
+        }
+        // Source Filter (only if shift filter is not active)
+        else if (selectedSourceFilter !== 'all') {
             if (selectedSourceFilter === 'mains_pyq') {
                 if (!q.isPYQ) return false;
                 const src = (q.examSource || '').toLowerCase();
-                // Check for Main
                 if (!src.includes('main')) return false;
             } else if (selectedSourceFilter === 'adv_pyq') {
                 if (!q.isPYQ) return false;
                 const src = (q.examSource || '').toLowerCase();
-                // Check for Advanced
                 if (!src.includes('adv')) return false;
+            } else if (selectedSourceFilter === 'non_pyq') {
+                if (q.isPYQ) return false;
             }
         }
 
@@ -198,27 +236,51 @@ export default function AdminPage() {
                             </select>
                         </div>
 
-                        <div className="w-32 shrink-0">
+                        <div className="w-36 shrink-0">
                             <select
                                 value={selectedTypeFilter}
                                 onChange={(e) => setSelectedTypeFilter(e.target.value)}
                                 className="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-sm focus:border-purple-500 outline-none transition"
                             >
                                 <option value="all">Any Type</option>
-                                <option value="MCQ">MCQ</option>
-                                <option value="INTEGER">Integer</option>
+                                {QUESTION_TYPES.map(qt => (
+                                    <option key={qt.id} value={qt.id}>{qt.id}</option>
+                                ))}
                             </select>
                         </div>
 
                         <div className="w-40 shrink-0">
                             <select
                                 value={selectedSourceFilter}
-                                onChange={(e) => setSelectedSourceFilter(e.target.value)}
+                                onChange={(e) => { setSelectedSourceFilter(e.target.value); setSelectedShiftFilter('all'); }}
                                 className="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-sm focus:border-purple-500 outline-none transition"
                             >
                                 <option value="all">Any Source</option>
                                 <option value="mains_pyq">JEE Mains PYQ</option>
                                 <option value="adv_pyq">JEE Adv PYQ</option>
+                                <option value="non_pyq">Non-PYQs</option>
+                            </select>
+                        </div>
+
+                        {/* NEW: Shift-wise Filter */}
+                        <div className="w-64 shrink-0">
+                            <select
+                                value={selectedShiftFilter}
+                                onChange={(e) => { setSelectedShiftFilter(e.target.value); if (e.target.value !== 'all') setSelectedSourceFilter('all'); }}
+                                className={`w-full bg-gray-900 border rounded-lg px-3 py-2 text-sm outline-none transition ${selectedShiftFilter !== 'all' ? 'border-indigo-500 text-indigo-300' : 'border-gray-600'}`}
+                            >
+                                <option value="all">📄 All Shifts ({uniqueExamSources.length} sources)</option>
+                                {Object.entries(shiftGroups).map(([year, shifts]) => (
+                                    shifts.length > 0 && (
+                                        <optgroup key={year} label={`── ${year} ──`}>
+                                            {shifts.map(shift => (
+                                                <option key={shift} value={shift}>
+                                                    {shift} ({getShiftCount(shift)} Qs)
+                                                </option>
+                                            ))}
+                                        </optgroup>
+                                    )
+                                ))}
                             </select>
                         </div>
 
@@ -226,6 +288,15 @@ export default function AdminPage() {
                             <div className="px-3 py-1 bg-purple-500/10 border border-purple-500/30 rounded text-xs text-purple-300 whitespace-nowrap">
                                 Default: <b>{selectedChapterFilter}</b>
                             </div>
+                        )}
+
+                        {selectedShiftFilter !== 'all' && (
+                            <button
+                                onClick={() => setSelectedShiftFilter('all')}
+                                className="px-3 py-1 bg-indigo-500/10 border border-indigo-500/30 rounded text-xs text-indigo-300 whitespace-nowrap hover:bg-indigo-500/20 transition"
+                            >
+                                ✕ Clear Shift
+                            </button>
                         )}
                     </div>
                 </header>
@@ -235,9 +306,9 @@ export default function AdminPage() {
                         <table className="w-full text-left">
                             <thead className="bg-gray-800 border-b border-gray-700">
                                 <tr>
-                                    <th className="p-3 text-gray-400 font-medium text-[10px] uppercase tracking-wider w-20">ID</th>
+                                    <th className="p-3 text-gray-400 font-medium text-[10px] uppercase tracking-wider w-48">ID</th>
                                     <th className="p-3 text-gray-400 font-medium text-[10px] uppercase tracking-wider">Question Content</th>
-                                    <th className="p-3 text-gray-400 font-medium text-[10px] uppercase tracking-wider w-20">PYQ</th>
+                                    <th className="p-3 text-gray-400 font-medium text-[10px] uppercase tracking-wider w-20 text-center">Source</th>
                                     <th className="p-3 text-gray-400 font-medium text-[10px] uppercase tracking-wider w-20">Diff</th>
                                     <th className="p-3 text-gray-400 font-medium text-[10px] uppercase tracking-wider w-12 text-center">Top</th>
                                     <th className="p-3 text-gray-400 font-medium text-[10px] uppercase tracking-wider w-16 text-center">Status</th>
@@ -262,25 +333,26 @@ export default function AdminPage() {
                                                     type="text"
                                                     value={q.id}
                                                     onChange={(e) => handleUpdate(q.id, 'id', e.target.value)}
-                                                    className="bg-gray-900 border border-gray-600 rounded px-2 py-1 w-full text-[10px] font-mono focus:border-purple-500 outline-none"
+                                                    className="bg-gray-900 border border-gray-600 rounded px-2 py-1 w-full text-xs font-mono focus:border-purple-500 outline-none"
                                                     onClick={(e) => e.stopPropagation()}
                                                 />
                                                 <div className="mt-2 text-[10px]">
                                                     <div className="flex justify-between items-center mb-1">
                                                         <span className="text-gray-500">
-                                                            {q.type === 'INTEGER' ? 'Value:' : 'Ans:'}
+                                                            {q.questionType === 'NVT' ? 'Value:' : 'Ans:'}
                                                         </span>
                                                         <select
                                                             className="bg-gray-900 border border-gray-700 text-[9px] rounded px-1 text-gray-400"
-                                                            value={q.type || 'MCQ'}
-                                                            onChange={(e) => handleUpdate(q.id, 'type', e.target.value)}
+                                                            value={q.questionType || 'SCQ'}
+                                                            onChange={(e) => handleUpdate(q.id, 'questionType', e.target.value as JEEQuestionType)}
                                                         >
-                                                            <option value="MCQ">MCQ</option>
-                                                            <option value="INTEGER">INT</option>
+                                                            {QUESTION_TYPES.map(qt => (
+                                                                <option key={qt.id} value={qt.id}>{qt.id}</option>
+                                                            ))}
                                                         </select>
                                                     </div>
 
-                                                    {q.type === 'INTEGER' ? (
+                                                    {q.questionType === 'NVT' ? (
                                                         <input
                                                             type="text"
                                                             value={q.integerAnswer || ''}
@@ -329,7 +401,7 @@ export default function AdminPage() {
                                                     />
 
                                                     {/* Editable Options */}
-                                                    {q.type !== 'INTEGER' && (
+                                                    {q.questionType !== 'NVT' && (
                                                         <div className="grid grid-cols-2 gap-2 mt-2">
                                                             {q.options.map((opt) => (
                                                                 <div key={opt.id} className="flex items-center gap-1 bg-gray-900/50 p-1 rounded border border-gray-700">
@@ -346,18 +418,41 @@ export default function AdminPage() {
                                                         </div>
                                                     )}
 
-                                                    <div className="flex gap-2 items-center">
-                                                        <input
-                                                            type="text"
-                                                            value={q.tagId}
-                                                            placeholder="Tag / Concept ID"
-                                                            onChange={(e) => handleUpdate(q.id, 'tagId', e.target.value)}
-                                                            className="bg-gray-900 border border-gray-600 rounded px-2 py-1 flex-1 text-[14.5px] text-purple-300 focus:border-purple-500 outline-none"
+                                                    {/* Weighted Concept Tags */}
+                                                    <div className="mt-2 p-2 bg-gray-900/50 rounded-lg border border-gray-700/50">
+                                                        <div className="flex items-center gap-2 mb-2">
+                                                            <Tag size={12} className="text-purple-400" />
+                                                            <span className="text-[10px] font-bold text-purple-400 uppercase">Concept Tags</span>
+                                                            {q.needsReview && (
+                                                                <span className="ml-auto flex items-center gap-1 text-[9px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded">
+                                                                    <AlertTriangle size={10} /> Review
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        {/* Concept Tags Manager */}
+                                                        <div className="mb-2">
+                                                            <TagManager
+                                                                question={q}
+                                                                onUpdate={(field, val) => handleUpdate(q.id, field, val)}
+                                                                chapterName={q.chapterId || (selectedChapterFilter !== 'all' ? selectedChapterFilter : '')}
+                                                            />
+                                                        </div>
+                                                        {/* Primary tag dropdown for quick editing */}
+                                                        <select
+                                                            value={q.tagId || ''}
+                                                            onChange={(e) => {
+                                                                handleUpdate(q.id, 'tagId', e.target.value);
+                                                            }}
+                                                            className="mt-2 w-full bg-gray-900 border border-gray-600 rounded px-2 py-1 text-[11px] text-purple-300 focus:border-purple-500 outline-none"
                                                             onClick={(e) => e.stopPropagation()}
-                                                        />
+                                                        >
+                                                            <option value="">Select Primary Tag</option>
+                                                            {getTagsForChapter(q.chapterId || (selectedChapterFilter !== 'all' ? selectedChapterFilter : '')).map(tag => (
+                                                                <option key={tag.id} value={tag.id}>{tag.name}</option>
+                                                            ))}
+                                                        </select>
                                                     </div>
 
-                                                    {/* Solution Editor */}
                                                     <textarea
                                                         value={q.solution.textSolutionLatex}
                                                         onChange={(e) => handleSolutionChange(q, e.target.value)}
@@ -365,10 +460,202 @@ export default function AdminPage() {
                                                         className="bg-gray-900/30 border border-gray-700/50 rounded px-2 py-1 w-full h-32 text-[13px] text-gray-400 focus:border-purple-500 outline-none resize-y font-mono italic"
                                                         onClick={(e) => e.stopPropagation()}
                                                     />
+
+                                                    {/* Audio Recorder Integration */}
+                                                    <div className="mt-2" onClick={(e) => e.stopPropagation()}>
+                                                        <AudioRecorder
+                                                            questionId={q.id}
+                                                            existingAudioUrl={q.solution.audioExplanationUrl}
+                                                            onUploadComplete={(url) => {
+                                                                handleUpdate(q.id, 'solution', { ...q.solution, audioExplanationUrl: url });
+                                                            }}
+                                                        />
+                                                    </div>
+
+                                                    {/* Source References Manager */}
+                                                    <details className="mt-2" onClick={(e) => e.stopPropagation()}>
+                                                        <summary className="cursor-pointer text-[11px] text-gray-500 hover:text-emerald-400 transition select-none flex items-center gap-1.5 focus:outline-none group">
+                                                            <div className="p-1 rounded bg-gray-800 group-hover:bg-emerald-500/10">
+                                                                <BookOpen size={10} />
+                                                            </div>
+                                                            <span>Manage Sources ({q.sourceReferences?.length || 0})</span>
+                                                        </summary>
+
+                                                        <div className="mt-2 p-3 bg-gray-950/50 rounded-lg border border-gray-800 space-y-3 animate-in fade-in slide-in-from-top-2">
+                                                            {(q.sourceReferences || []).map((ref, idx) => (
+                                                                <div key={idx} className="bg-black/40 border border-gray-800 rounded p-2 text-[10px]">
+                                                                    <div className="flex items-center justify-between mb-2">
+                                                                        <div className="flex items-center gap-2">
+                                                                            <select
+                                                                                value={ref.type}
+                                                                                onChange={(e) => {
+                                                                                    const newRefs = [...(q.sourceReferences || [])];
+                                                                                    newRefs[idx] = { ...ref, type: e.target.value as any };
+                                                                                    handleUpdate(q.id, 'sourceReferences', newRefs);
+                                                                                }}
+                                                                                className="bg-gray-800 border-none rounded px-1.5 py-0.5 text-emerald-400 focus:ring-1 focus:ring-emerald-500"
+                                                                            >
+                                                                                <option value="NCERT">NCERT</option>
+                                                                                <option value="PYQ">PYQ</option>
+                                                                                <option value="COACHING">Coaching</option>
+                                                                            </select>
+
+                                                                            <select
+                                                                                value={ref.similarity || 'concept'}
+                                                                                onChange={(e) => {
+                                                                                    const newRefs = [...(q.sourceReferences || [])];
+                                                                                    newRefs[idx] = { ...ref, similarity: e.target.value as any };
+                                                                                    handleUpdate(q.id, 'sourceReferences', newRefs);
+                                                                                }}
+                                                                                className="bg-gray-800 border-none rounded px-1.5 py-0.5 text-gray-400 focus:ring-1 focus:ring-emerald-500"
+                                                                            >
+                                                                                <option value="exact">Exact</option>
+                                                                                <option value="similar">Similar</option>
+                                                                                <option value="concept">Concept</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <button
+                                                                            onClick={() => {
+                                                                                const newRefs = q.sourceReferences?.filter((_, i) => i !== idx);
+                                                                                handleUpdate(q.id, 'sourceReferences', newRefs);
+                                                                            }}
+                                                                            className="text-red-900 hover:text-red-400 transition"
+                                                                        >
+                                                                            <Trash2 size={10} />
+                                                                        </button>
+                                                                    </div>
+
+                                                                    <div className="grid grid-cols-2 gap-1.5 mb-1.5">
+                                                                        {ref.type === 'NCERT' && (
+                                                                            <>
+                                                                                <input
+                                                                                    type="text"
+                                                                                    placeholder="Book"
+                                                                                    value={ref.ncertBook || ''}
+                                                                                    onChange={(e) => {
+                                                                                        const newRefs = [...(q.sourceReferences || [])];
+                                                                                        newRefs[idx] = { ...ref, ncertBook: e.target.value };
+                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
+                                                                                    }}
+                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
+                                                                                />
+                                                                                <input
+                                                                                    type="text"
+                                                                                    placeholder="Chapter"
+                                                                                    value={ref.ncertChapter || ''}
+                                                                                    onChange={(e) => {
+                                                                                        const newRefs = [...(q.sourceReferences || [])];
+                                                                                        newRefs[idx] = { ...ref, ncertChapter: e.target.value };
+                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
+                                                                                    }}
+                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
+                                                                                />
+                                                                                <input
+                                                                                    type="text"
+                                                                                    placeholder="Page/Ex"
+                                                                                    value={ref.ncertPage || ''}
+                                                                                    onChange={(e) => {
+                                                                                        const newRefs = [...(q.sourceReferences || [])];
+                                                                                        newRefs[idx] = { ...ref, ncertPage: e.target.value };
+                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
+                                                                                    }}
+                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
+                                                                                />
+                                                                                <input
+                                                                                    type="text"
+                                                                                    placeholder="Topic"
+                                                                                    value={ref.ncertTopic || ''}
+                                                                                    onChange={(e) => {
+                                                                                        const newRefs = [...(q.sourceReferences || [])];
+                                                                                        newRefs[idx] = { ...ref, ncertTopic: e.target.value };
+                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
+                                                                                    }}
+                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
+                                                                                />
+                                                                            </>
+                                                                        )}
+
+                                                                        {ref.type === 'PYQ' && (
+                                                                            <>
+                                                                                <input
+                                                                                    type="text"
+                                                                                    placeholder="Exam"
+                                                                                    value={ref.pyqExam || 'JEE Main'}
+                                                                                    onChange={(e) => {
+                                                                                        const newRefs = [...(q.sourceReferences || [])];
+                                                                                        newRefs[idx] = { ...ref, pyqExam: e.target.value };
+                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
+                                                                                    }}
+                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
+                                                                                />
+                                                                                <input
+                                                                                    type="number"
+                                                                                    placeholder="Year"
+                                                                                    value={ref.pyqYear || ''}
+                                                                                    onChange={(e) => {
+                                                                                        const newRefs = [...(q.sourceReferences || [])];
+                                                                                        newRefs[idx] = { ...ref, pyqYear: parseInt(e.target.value) || undefined };
+                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
+                                                                                    }}
+                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
+                                                                                />
+                                                                                <input
+                                                                                    type="text"
+                                                                                    placeholder="Shift"
+                                                                                    value={ref.pyqShift || ''}
+                                                                                    onChange={(e) => {
+                                                                                        const newRefs = [...(q.sourceReferences || [])];
+                                                                                        newRefs[idx] = { ...ref, pyqShift: e.target.value };
+                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
+                                                                                    }}
+                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
+                                                                                />
+                                                                                <input
+                                                                                    type="text"
+                                                                                    placeholder="Q. No"
+                                                                                    value={ref.pyqQuestionNo || ''}
+                                                                                    onChange={(e) => {
+                                                                                        const newRefs = [...(q.sourceReferences || [])];
+                                                                                        newRefs[idx] = { ...ref, pyqQuestionNo: e.target.value };
+                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
+                                                                                    }}
+                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
+                                                                                />
+                                                                            </>
+                                                                        )}
+                                                                    </div>
+
+                                                                    <input
+                                                                        type="text"
+                                                                        placeholder="Description"
+                                                                        value={ref.description || ''}
+                                                                        onChange={(e) => {
+                                                                            const newRefs = [...(q.sourceReferences || [])];
+                                                                            newRefs[idx] = { ...ref, description: e.target.value };
+                                                                            handleUpdate(q.id, 'sourceReferences', newRefs);
+                                                                        }}
+                                                                        className="w-full bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-400 placeholder:text-gray-800"
+                                                                    />
+                                                                </div>
+                                                            ))}
+
+                                                            <button
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    const newRefs = [...(q.sourceReferences || [])];
+                                                                    newRefs.push({ type: 'NCERT', similarity: 'concept' });
+                                                                    handleUpdate(q.id, 'sourceReferences', newRefs);
+                                                                }}
+                                                                className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded border border-dashed border-gray-800 text-gray-500 hover:text-emerald-400 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition text-[10px]"
+                                                            >
+                                                                <Plus size={10} /> Add Source Reference
+                                                            </button>
+                                                        </div>
+                                                    </details>
                                                 </div>
                                             </td>
 
-                                            {/* PYQ Column */}
+                                            {/* Source Column */}
                                             <td className="p-3 align-top">
                                                 <div className="flex flex-col gap-2">
                                                     <label className="flex items-center gap-2 cursor-pointer" onClick={(e) => e.stopPropagation()}>
@@ -381,22 +668,22 @@ export default function AdminPage() {
                                                         <span className="text-[10px] text-gray-400">is PYQ?</span>
                                                     </label>
 
-                                                    {q.isPYQ && (
-                                                        <div className="animate-in fade-in slide-in-from-top-1 duration-200">
-                                                            <div className="flex items-center gap-1 mb-1">
-                                                                <Calendar size={10} className="text-gray-500" />
-                                                                <span className="text-[9px] text-gray-500 uppercase">Year / Exam</span>
-                                                            </div>
-                                                            <input
-                                                                type="text"
-                                                                value={q.examSource || ''}
-                                                                placeholder="e.g. 2024"
-                                                                onChange={(e) => handleUpdate(q.id, 'examSource', e.target.value)}
-                                                                className="bg-gray-900 border border-gray-600 rounded px-2 py-1 w-full text-[10px] text-white focus:border-purple-500 outline-none"
-                                                                onClick={(e) => e.stopPropagation()}
-                                                            />
+                                                    <div className="animate-in fade-in slide-in-from-top-1 duration-200">
+                                                        <div className="flex items-center gap-1 mb-1">
+                                                            <Calendar size={10} className="text-gray-500" />
+                                                            <span className="text-[9px] text-gray-500 uppercase">
+                                                                {q.isPYQ ? 'Year / Exam' : 'Ref / Source'}
+                                                            </span>
                                                         </div>
-                                                    )}
+                                                        <input
+                                                            type="text"
+                                                            value={q.examSource || ''}
+                                                            placeholder={q.isPYQ ? "e.g. 2024" : "e.g. NCERT"}
+                                                            onChange={(e) => handleUpdate(q.id, 'examSource', e.target.value)}
+                                                            className="bg-gray-900 border border-gray-600 rounded px-2 py-1 w-full text-[10px] text-white focus:border-purple-500 outline-none"
+                                                            onClick={(e) => e.stopPropagation()}
+                                                        />
+                                                    </div>
                                                 </div>
                                             </td>
 
@@ -521,7 +808,7 @@ function PreviewCard({ question }: { question: Question }) {
                     Solution Preview
                 </h3>
                 <div className="bg-gray-950/50 rounded-2xl border border-gray-800/50 backdrop-blur-sm p-2 shadow-2xl">
-                    <SolutionViewer solution={question.solution} />
+                    <SolutionViewer solution={question.solution} sourceReferences={question.sourceReferences} />
                 </div>
             </div>
         </div>
