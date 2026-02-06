@@ -9,6 +9,7 @@ import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import { Check, X, AlertCircle } from 'lucide-react';
 import { Question } from '@/app/the-crucible/types';
+import ChemicalStructure from '../ChemicalStructure';
 import 'katex/dist/katex.min.css';
 
 interface QuestionCardProps {
@@ -43,15 +44,28 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
         <div className="w-full max-w-2xl mx-auto">
             {/* Question Stem */}
             <div className="p-0 mb-4 md:mb-8">
-                <div className="text-sm md:text-base lg:text-lg font-medium text-white leading-relaxed prose prose-invert max-w-none prose-p:text-white prose-headings:text-white markdown-table-wrapper">
-                    <ReactMarkdown remarkPlugins={[remarkMath, remarkGfm]} rehypePlugins={[rehypeKatex, rehypeRaw]}>
+                <div className="text-sm md:text-base lg:text-lg font-medium text-white leading-relaxed prose prose-invert max-w-none prose-p:text-white prose-headings:text-white">
+                    <ReactMarkdown
+                        remarkPlugins={[remarkMath, remarkGfm]}
+                        rehypePlugins={[rehypeKatex, rehypeRaw]}
+                        components={{
+                            p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                            table: ({ children }) => (
+                                <div className="my-2 overflow-x-auto rounded-lg border border-gray-700">
+                                    <table className="w-full text-sm text-left">{children}</table>
+                                </div>
+                            ),
+                            th: ({ children }) => <th className="px-4 py-2 bg-gray-800 font-bold border-b border-gray-700">{children}</th>,
+                            td: ({ children }) => <td className="px-4 py-2 border-b border-gray-800">{children}</td>,
+                        }}
+                    >
                         {question.textMarkdown}
                     </ReactMarkdown>
                 </div>
             </div>
 
-            {/* Render Logic: MCQ vs INTEGER */}
-            {question.type === 'INTEGER' ? (
+            {/* Render Logic: MCQ vs NVT (Numerical Value Type) */}
+            {question.questionType === 'NVT' ? (
                 <div className="max-w-md mx-auto">
                     <div className="flex flex-col gap-4">
                         <input
@@ -101,7 +115,7 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                 </div>
             ) : (
                 /* MCQ Options Grid */
-                <div className={`grid gap-2 ${layout === 'grid' ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'}`}>
+                <div className={`grid gap-2 ${layout === 'grid' || question.options.some(o => o.text.includes('[smiles:') || o.text.includes('![')) ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'}`}>
                     {question.options.map((option) => {
                         const isSelected = selectedOptionId === option.id;
                         const isCorrect = option.isCorrect;
@@ -136,9 +150,36 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                                         {option.id.split('_').pop()?.toUpperCase()}
                                     </span>
                                     <span className="flex-1 text-xs md:text-sm font-medium text-left">
-                                        <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex, rehypeRaw]} components={{ p: 'span' }}>
-                                            {option.text}
-                                        </ReactMarkdown>
+                                        {option.text.includes('[smiles:') ? (
+                                            <span className="flex flex-col gap-2">
+                                                {option.text.split(/(\[smiles:(?:[^\[\]]|\[[^\]]*\])*\])/).map((part, idx) => {
+                                                    if (part.startsWith('[smiles:') && part.endsWith(']')) {
+                                                        const inner = part.slice(8, -1);
+                                                        const [code, ...params] = inner.split('|');
+                                                        let rotate = 0;
+                                                        params.forEach(p => {
+                                                            if (p.startsWith('rotate=')) rotate = parseInt(p.split('=')[1]) || 0;
+                                                        });
+
+                                                        return (
+                                                            <div key={idx} className="bg-gray-900/50 rounded-lg p-2 border border-gray-700/50 inline-block w-fit">
+                                                                <ChemicalStructure smiles={code} rotate={rotate} />
+                                                            </div>
+                                                        );
+                                                    }
+                                                    if (!part.trim()) return null;
+                                                    return (
+                                                        <ReactMarkdown key={idx} remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex, rehypeRaw]} components={{ p: 'span' }}>
+                                                            {part}
+                                                        </ReactMarkdown>
+                                                    );
+                                                })}
+                                            </span>
+                                        ) : (
+                                            <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex, rehypeRaw]} components={{ p: 'span' }}>
+                                                {option.text}
+                                            </ReactMarkdown>
+                                        )}
                                     </span>
 
                                     {showFeedback && isCorrect && (isSelected || true) && (

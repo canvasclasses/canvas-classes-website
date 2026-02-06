@@ -1,9 +1,16 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Youtube, Mail, Users, Video, Award } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+    const pathname = usePathname();
+    const isCrucibleAdmin = pathname?.startsWith('/the-crucible/admin');
     const currentYear = new Date().getFullYear();
+
+    if (isCrucibleAdmin) return null;
 
     return (
         <footer className="bg-gray-900 border-t border-gray-800">

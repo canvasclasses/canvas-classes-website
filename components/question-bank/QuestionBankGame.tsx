@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, Trophy, Flame, Target, Play, Pause, ArrowRight, Menu, X, CheckCircle2, TrendingUp, Zap, BookOpen, Star, CheckCircle, Pencil, Trash2, HelpCircle, AlertTriangle, Rocket } from 'lucide-react';
+import { ArrowLeft, Trophy, Flame, Target, Play, Pause, ArrowRight, Menu, X, CheckCircle2, TrendingUp, Zap, BookOpen, Star, CheckCircle, Pencil, Trash2, HelpCircle, AlertTriangle, Rocket, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { Question } from '@/app/the-crucible/types';
 import QuestionCard from '@/components/question-bank/QuestionCard';
@@ -52,6 +52,17 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
     const [editingNote, setEditingNote] = useState(false);
     const [noteText, setNoteText] = useState('');
 
+    // Expanded Groups for Topic Scope
+    const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
+
+    const toggleGroup = (groupId: string) => {
+        setExpandedGroups(prev =>
+            prev.includes(groupId)
+                ? prev.filter(id => id !== groupId)
+                : [...prev, groupId]
+        );
+    };
+
     // Stats
     const [streak, setStreak] = useState(0);
     const [score, setScore] = useState(0);
@@ -61,6 +72,10 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [selectedDifficulty, setSelectedDifficulty] = useState('Any Difficulty');
     const [questionLimit, setQuestionLimit] = useState('10');
+
+    // New Filter Mode State
+    const [filterMode, setFilterMode] = useState<'chapter' | 'paper'>('chapter');
+    const [selectedExamSource, setSelectedExamSource] = useState('All Papers');
 
     // Timer State
     const [timerSeconds, setTimerSeconds] = useState(0);
@@ -89,7 +104,22 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         startNewSession,
     } = useActivityLogger();
 
-    const chapters = Array.from(new Set(initialQuestions.map(q => q.chapterId).filter(Boolean)));
+    const chapters = Array.from(new Set(initialQuestions.map(q => q.chapterId).filter((id): id is string => !!id)));
+
+    // Grouped and Filtered Exam Sources
+    const examSources = Array.from(new Set(initialQuestions.map(q => q.examSource).filter((src): src is string => !!src)))
+        .filter(src => {
+            const s = src.toLowerCase();
+            return (s.includes('jee main') || s.includes('aieee') || s.includes('2026')) && !s.includes('iit');
+        })
+        .sort((a, b) => b.localeCompare(a));
+
+    const paperGroups = {
+        '2026 Shift-wise': examSources.filter(s => s.includes('2026')),
+        '2025 Shift-wise': examSources.filter(s => s.includes('2025')),
+        '2024 Shift-wise': examSources.filter(s => s.includes('2024')),
+        'Older Papers': examSources.filter(s => !s.includes('2026') && !s.includes('2025') && !s.includes('2024'))
+    };
 
     // Initialize chapter totals
     useEffect(() => {
@@ -101,7 +131,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
     // Reset tags when chapter changes
     useEffect(() => {
         setSelectedTags([]);
-    }, [selectedChapter]);
+    }, [selectedChapter, filterMode, selectedExamSource]);
 
     // Cleanup global footer
     useEffect(() => {
@@ -248,8 +278,17 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
 
     const startPractice = () => {
         const previewSizeQuery = initialQuestions.filter(q => {
-            const chapterMatch = selectedChapter === 'All Chapters' || q.chapterId === selectedChapter;
-            const tagMatch = selectedTags.length === 0 || (q.tagId && selectedTags.includes(q.tagId));
+            const isChapterMode = filterMode === 'chapter';
+
+            // Filter Logic
+            const scopeMatch = isChapterMode
+                ? (selectedChapter === 'All Chapters' || q.chapterId === selectedChapter)
+                : (selectedExamSource === 'All Papers' || q.examSource === selectedExamSource);
+
+            const tagMatch = isChapterMode
+                ? (selectedTags.length === 0 || (q.tagId && selectedTags.includes(q.tagId)))
+                : true; // Disable tag filtering in Paper mode for now, or keep it optional
+
             const diffMatch = selectedDifficulty === 'Any Difficulty' || q.difficulty === selectedDifficulty;
 
             const isMastered = progress.masteredIds?.includes(q.id);
@@ -258,7 +297,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
             if (hideMastered && isMastered && !onlyStarred) return false;
             if (onlyStarred && !isStarred) return false;
 
-            return chapterMatch && tagMatch && diffMatch;
+            return scopeMatch && tagMatch && diffMatch;
         });
 
         if (previewSizeQuery.length === 0) {
@@ -287,7 +326,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
 
     const availableTags = Array.from(new Set(
         initialQuestions
-            .filter(q => selectedChapter === 'All Chapters' || q.chapterId === selectedChapter)
+            .filter(q => filterMode === 'chapter' ? (selectedChapter === 'All Chapters' || q.chapterId === selectedChapter) : (selectedExamSource === 'All Papers' || q.examSource === selectedExamSource))
             .map(q => q.tagId)
             .filter(Boolean)
     ));
@@ -367,14 +406,18 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
 
     if (mode === 'menu') {
         const previewQuestions = initialQuestions.filter(q => {
-            const ch = selectedChapter === 'All Chapters' || q.chapterId === selectedChapter;
-            const tg = selectedTags.length === 0 || (q.tagId && selectedTags.includes(q.tagId));
+            const isChapterMode = filterMode === 'chapter';
+            const scopeMatch = isChapterMode
+                ? (selectedChapter === 'All Chapters' || q.chapterId === selectedChapter)
+                : (selectedExamSource === 'All Papers' || q.examSource === selectedExamSource);
+
+            const tg = isChapterMode ? (selectedTags.length === 0 || (q.tagId && selectedTags.includes(q.tagId))) : true;
             const df = selectedDifficulty === 'Any Difficulty' || q.difficulty === selectedDifficulty;
             const mast = progress.masteredIds?.includes(q.id);
             const star = progress.starredIds?.includes(q.id);
             if (hideMastered && mast && !onlyStarred) return false;
             if (onlyStarred && !star) return false;
-            return ch && tg && df;
+            return scopeMatch && tg && df;
         });
         const previewSize = previewQuestions.length;
         const questionsToPlay = previewQuestions.slice(0, questionLimit === 'Max' ? undefined : Number(questionLimit));
@@ -425,10 +468,28 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                     {/* CONTEXT FIRST: Chapter Title & Audio Tip (Mobile Priority) */}
                     <div className="p-4 border-b border-white/5 bg-[#0F172A]/50">
                         <div className="text-center space-y-3">
-                            <h2 className="text-2xl font-black text-white leading-tight">
-                                {selectedChapter}
-                            </h2>
-                            <div className="h-1 w-12 bg-purple-500 rounded-full mx-auto"></div>
+                            {(() => {
+                                const fullTitle = filterMode === 'chapter' ? selectedChapter : selectedExamSource;
+                                const parts = fullTitle.split(' - ');
+                                if (parts.length > 1) {
+                                    return (
+                                        <>
+                                            <h2 className="text-xl font-black text-white leading-tight">
+                                                {parts[0]}
+                                            </h2>
+                                            <h3 className="text-[13px] font-bold text-indigo-400/80 mt-1 uppercase tracking-wider">
+                                                {parts.slice(1).join(' - ')}
+                                            </h3>
+                                        </>
+                                    );
+                                }
+                                return (
+                                    <h2 className="text-xl font-black text-white leading-tight">
+                                        {fullTitle}
+                                    </h2>
+                                );
+                            })()}
+                            <div className="h-1 w-12 bg-purple-500 rounded-full mx-auto mt-2"></div>
                             {/* Guru Mantra - Animated Waveform Audio Pill */}
                             <div className="inline-flex items-center gap-3 bg-gradient-to-r from-indigo-900/40 to-purple-900/40 border border-white/10 rounded-xl p-2.5 pr-4 hover:from-indigo-900/60 hover:to-purple-900/60 transition cursor-pointer group mx-auto">
                                 {/* Multicolor Waveform */}
@@ -483,20 +544,49 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
 
                     {/* MOBILE CONFIGURATION SECTION */}
                     <div className="flex-1 p-4 space-y-5">
-                        {/* Chapter Config */}
+                        {/* Scope Config */}
                         <div className="space-y-3">
+                            <div className="flex bg-black/40 p-1 rounded-xl border border-white/10 mb-2">
+                                <button onClick={() => setFilterMode('chapter')} className={`flex-1 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${filterMode === 'chapter' ? 'bg-purple-600 text-white shadow-lg' : 'text-gray-500'}`}>Chapter Wise</button>
+                                <button onClick={() => setFilterMode('paper')} className={`flex-1 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${filterMode === 'paper' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-500'}`}>Past Papers</button>
+                            </div>
+
                             <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
-                                Target Chapter
+                                {filterMode === 'chapter' ? 'Target Chapter' : 'Select Paper'}
                             </label>
-                            <select value={selectedChapter} onChange={(e) => setSelectedChapter(e.target.value)} className="w-full bg-gray-900 border border-gray-800 rounded-xl px-4 py-3 text-sm font-medium outline-none focus:border-purple-500 transition-all shadow-inner">
-                                <option>All Chapters</option>
-                                {chapters.map(ch => <option key={ch}>{ch}</option>)}
-                            </select>
+                            <div className="relative group/select">
+                                {filterMode === 'chapter' ? (
+                                    <select
+                                        value={selectedChapter}
+                                        onChange={(e) => setSelectedChapter(e.target.value)}
+                                        className="w-full bg-gray-900 border border-gray-800 rounded-xl pl-4 pr-10 py-3 text-sm font-medium outline-none focus:border-purple-500 transition-all shadow-inner appearance-none"
+                                    >
+                                        <option>All Chapters</option>
+                                        {chapters.map(ch => <option key={ch}>{ch}</option>)}
+                                    </select>
+                                ) : (
+                                    <select
+                                        value={selectedExamSource}
+                                        onChange={(e) => setSelectedExamSource(e.target.value)}
+                                        className="w-full bg-gray-900 border border-gray-800 rounded-xl pl-4 pr-10 py-3 text-sm font-medium outline-none focus:border-indigo-500 transition-all shadow-inner appearance-none"
+                                    >
+                                        <option>All Papers</option>
+                                        {Object.entries(paperGroups).map(([groupName, papers]) => (
+                                            papers.length > 0 && (
+                                                <optgroup key={groupName} label={groupName} className="bg-gray-900 text-indigo-400 font-bold uppercase text-[10px]">
+                                                    {papers.map(src => <option key={src} value={src} className="text-gray-100 font-normal normal-case text-sm">{src}</option>)}
+                                                </optgroup>
+                                            )
+                                        ))}
+                                    </select>
+                                )}
+                                <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 group-focus-within/select:text-purple-500 transition-colors" />
+                            </div>
                         </div>
 
-                        {/* Sub-Topics */}
-                        {selectedChapter !== 'All Chapters' && (
+                        {/* Sub-Topics (Only for Chapter Mode) */}
+                        {filterMode === 'chapter' && selectedChapter !== 'All Chapters' && (
                             <div className="space-y-3">
                                 <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] flex items-center gap-2">
                                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
@@ -510,7 +600,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                             : 'bg-white/5 border-white/5 hover:border-white/10'
                                             }`}
                                     >
-                                        <div className={`text-[11px] font-black uppercase tracking-wider ${selectedTags.length === 0 ? 'text-cyan-400' : 'text-gray-300'}`}>🎯 All Topics Mixed</div>
+                                        <div className={`text-[12px] font-black uppercase tracking-wider ${selectedTags.length === 0 ? 'text-cyan-400' : 'text-gray-300'}`}>🎯 All Topics Mixed</div>
                                         <div className="text-[10px] text-gray-400 mt-1">Random problems from entire chapter</div>
                                     </button>
                                     {[
@@ -528,7 +618,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                                     : 'bg-white/5 border-white/5 hover:border-white/10'
                                                     }`}
                                             >
-                                                <div className={`text-[11px] font-black uppercase tracking-wider ${isActive ? 'text-cyan-400' : 'text-gray-300'}`}>{group.title}</div>
+                                                <div className={`text-[12px] font-black uppercase tracking-wider ${isActive ? 'text-cyan-400' : 'text-gray-300'}`}>{group.title}</div>
                                                 <div className="text-[10px] text-gray-400 mt-1">{group.desc}</div>
                                             </button>
                                         );
@@ -636,9 +726,27 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                         ───────────────────────────────────────────────────────────────── */}
                         <div className="flex items-center justify-between gap-6 mb-10">
                             <div className="flex-1">
-                                <h1 className="text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-                                    {selectedChapter}
-                                </h1>
+                                {(() => {
+                                    const fullTitle = filterMode === 'chapter' ? selectedChapter : selectedExamSource;
+                                    const parts = fullTitle.split(' - ');
+                                    if (parts.length > 1) {
+                                        return (
+                                            <>
+                                                <h1 className="text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight">
+                                                    {parts[0]}
+                                                </h1>
+                                                <h2 className="text-lg lg:text-xl font-bold text-indigo-400/80 mt-1 tracking-wide">
+                                                    {parts.slice(1).join(' - ')}
+                                                </h2>
+                                            </>
+                                        );
+                                    }
+                                    return (
+                                        <h1 className="text-2xl lg:text-4xl font-black text-white tracking-tight leading-tight">
+                                            {fullTitle}
+                                        </h1>
+                                    );
+                                })()}
                                 <div className="h-1 w-20 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full mt-3"></div>
                             </div>
 
@@ -684,17 +792,44 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                     Topic Scope
                                 </h3>
 
-                                {/* Chapter Dropdown */}
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Chapter</label>
-                                    <select value={selectedChapter} onChange={(e) => setSelectedChapter(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm font-medium outline-none focus:border-purple-500 transition-all">
-                                        <option>All Chapters</option>
-                                        {chapters.map(ch => <option key={ch}>{ch}</option>)}
-                                    </select>
+                                <div className="space-y-3">
+                                    <div className="flex bg-black/40 p-1 rounded-xl border border-white/10">
+                                        <button onClick={() => setFilterMode('chapter')} className={`flex-1 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-wider transition-all ${filterMode === 'chapter' ? 'bg-purple-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-300'}`}>Chapter Wise</button>
+                                        <button onClick={() => setFilterMode('paper')} className={`flex-1 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-wider transition-all ${filterMode === 'paper' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-300'}`}>Past Papers</button>
+                                    </div>
+
+                                    <div className="relative group/select">
+                                        {filterMode === 'chapter' ? (
+                                            <select
+                                                value={selectedChapter}
+                                                onChange={(e) => setSelectedChapter(e.target.value)}
+                                                className="w-full bg-black/40 border border-white/10 rounded-xl pl-4 pr-10 py-3 text-sm font-medium outline-none focus:border-purple-500 transition-all appearance-none text-white"
+                                            >
+                                                <option>All Chapters</option>
+                                                {chapters.map(ch => <option key={ch}>{ch}</option>)}
+                                            </select>
+                                        ) : (
+                                            <select
+                                                value={selectedExamSource}
+                                                onChange={(e) => setSelectedExamSource(e.target.value)}
+                                                className="w-full bg-black/40 border border-white/10 rounded-xl pl-4 pr-10 py-3 text-sm font-medium outline-none focus:border-indigo-500 transition-all appearance-none text-white"
+                                            >
+                                                <option>All Papers</option>
+                                                {Object.entries(paperGroups).map(([groupName, papers]) => (
+                                                    papers.length > 0 && (
+                                                        <optgroup key={groupName} label={groupName} className="bg-gray-900 text-indigo-400 font-black uppercase text-[10px]">
+                                                            {papers.map(src => <option key={src} value={src} className="text-gray-100 font-normal normal-case text-sm">{src}</option>)}
+                                                        </optgroup>
+                                                    )
+                                                ))}
+                                            </select>
+                                        )}
+                                        <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 group-focus-within/select:text-purple-500 transition-colors" />
+                                    </div>
                                 </div>
 
-                                {/* Focus Areas with Expandable Subtopics */}
-                                {selectedChapter !== 'All Chapters' && (
+                                {/* Focus Areas with Expandable Subtopics (Only in Chapter Mode) */}
+                                {filterMode === 'chapter' && selectedChapter !== 'All Chapters' && (
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Focus Area</label>
                                         <div className="space-y-2">
@@ -705,7 +840,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                                     : 'bg-white/5 border-white/5 hover:border-white/10'
                                                     }`}
                                             >
-                                                <span className={`text-xs font-bold ${selectedTags.length === 0 ? 'text-cyan-400' : 'text-gray-400'}`}>🎯 All Topics</span>
+                                                <span className={`text-[13px] font-bold ${selectedTags.length === 0 ? 'text-cyan-400' : 'text-gray-400'}`}>🎯 All Topics</span>
                                             </button>
                                             {[
                                                 { id: 'Fundamentals', title: '📐 Fundamentals', subtopics: ['Mole Concept', '% Composition', 'Empirical Formula', 'Limiting Reagent', 'Avg Atomic Mass'], tags: ['Percentage_Composition', 'Empirical_Formula', 'Stoichiometry', 'Limiting_Reagent', 'Average_Atomic_Mass'] },
@@ -723,18 +858,28 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                                                 }`}
                                                         >
                                                             <div className="flex items-center justify-between">
-                                                                <span className={`text-xs font-bold ${isActive ? 'text-cyan-400' : 'text-gray-400'}`}>{group.title}</span>
-                                                                <span className="text-[10px] text-gray-400 font-medium">{group.subtopics.length} topics</span>
+                                                                <span className={`text-[13px] font-bold ${isActive ? 'text-cyan-400' : 'text-gray-400'}`}>{group.title}</span>
+                                                                <span
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        toggleGroup(group.id);
+                                                                    }}
+                                                                    className={`text-[10px] px-2 py-1 rounded-lg border transition-all cursor-pointer ${expandedGroups.includes(group.id) ? 'bg-cyan-500/20 border-cyan-500/30 text-cyan-400' : 'bg-white/5 border-white/10 text-gray-400 hover:text-gray-300'}`}
+                                                                >
+                                                                    {group.subtopics.length} topics
+                                                                </span>
                                                             </div>
                                                         </button>
-                                                        {/* Subtopics on hover */}
-                                                        <div className="hidden group-hover/focus:block mt-2 ml-2 pl-3 border-l-2 border-white/20">
-                                                            <div className="flex flex-wrap gap-1.5">
-                                                                {group.subtopics.map(sub => (
-                                                                    <span key={sub} className="text-xs text-gray-200 bg-white/10 px-2.5 py-1.5 rounded-md font-medium">{sub}</span>
-                                                                ))}
+                                                        {/* Subtopics on click */}
+                                                        {expandedGroups.includes(group.id) && (
+                                                            <div className="mt-2 ml-2 pl-3 border-l-2 border-white/20 animate-in slide-in-from-top-2 duration-200">
+                                                                <div className="flex flex-wrap gap-1.5">
+                                                                    {group.subtopics.map(sub => (
+                                                                        <span key={sub} className="text-xs text-gray-200 bg-white/10 px-2.5 py-1.5 rounded-md font-medium">{sub}</span>
+                                                                    ))}
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        )}
                                                     </div>
                                                 );
                                             })}
@@ -933,7 +1078,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                         <Star size={15} className={progress.starredIds?.includes(activeQuestion.id) ? 'fill-amber-400' : ''} />
                                         <span className="hidden sm:inline">{progress.starredIds?.includes(activeQuestion.id) ? 'Bookmarked' : 'Bookmark'}</span>
                                     </button>
-                                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-44 p-2.5 bg-gray-900 border border-white/20 rounded-xl text-xs text-gray-100 font-medium text-center shadow-2xl opacity-0 invisible group-hover/btn:opacity-100 group-hover/btn:visible transition-all z-50">
+                                    <div className="absolute md:bottom-full bottom-auto md:top-auto top-full left-1/2 -translate-x-1/2 md:mb-3 mt-3 w-44 p-2.5 bg-gray-900 border border-white/20 rounded-xl text-xs text-gray-100 font-medium text-center shadow-2xl opacity-0 invisible group-hover/btn:opacity-100 group-hover/btn:visible transition-all z-50">
                                         Save for revision
                                     </div>
                                 </div>
@@ -954,7 +1099,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                         <CheckCircle size={15} />
                                         <span className="hidden sm:inline">{progress.masteredIds?.includes(activeQuestion.id) ? 'Mastered' : 'Got It'}</span>
                                     </button>
-                                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-48 p-2.5 bg-gray-900 border border-white/20 rounded-xl text-xs text-gray-100 font-medium text-center shadow-2xl opacity-0 invisible group-hover/btn:opacity-100 group-hover/btn:visible transition-all z-50">
+                                    <div className="absolute md:bottom-full bottom-auto md:top-auto top-full left-1/2 -translate-x-1/2 md:mb-3 mt-3 w-48 p-2.5 bg-gray-900 border border-white/20 rounded-xl text-xs text-gray-100 font-medium text-center shadow-2xl opacity-0 invisible group-hover/btn:opacity-100 group-hover/btn:visible transition-all z-50">
                                         Too easy - hide next time
                                     </div>
                                 </div>
@@ -970,7 +1115,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                         <Pencil size={15} />
                                         <span className="hidden sm:inline">Note</span>
                                     </button>
-                                    <div className="absolute bottom-full right-0 mb-3 w-44 p-2.5 bg-gray-900 border border-white/20 rounded-xl text-xs text-gray-100 font-medium text-center shadow-2xl opacity-0 invisible group-hover/btn:opacity-100 group-hover/btn:visible transition-all z-50">
+                                    <div className="absolute md:bottom-full bottom-auto md:top-auto top-full right-0 md:mb-3 mt-3 w-44 p-2.5 bg-gray-900 border border-white/20 rounded-xl text-xs text-gray-100 font-medium text-center shadow-2xl opacity-0 invisible group-hover/btn:opacity-100 group-hover/btn:visible transition-all z-50">
                                         Add strategy notes
                                     </div>
                                 </div>
@@ -1056,7 +1201,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
 
                         {showSolution && (
                             <div id="solution-viewer-container" className="mt-16 bg-black/20 rounded-[40px] border border-white/5 overflow-hidden animate-in fade-in duration-1000">
-                                <SolutionViewer solution={activeQuestion.solution} />
+                                <SolutionViewer solution={activeQuestion.solution} sourceReferences={activeQuestion.sourceReferences} />
                             </div>
                         )}
                     </div>
