@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import LecturesClient from './LecturesClient';
 import { fetchLecturesData, getLecturesStats } from '../lib/lecturesData';
 
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
     title: 'JEE & NEET Chemistry Video Lectures - Complete Course Free | Canvas Classes',
     description: 'Free Chemistry video lectures for JEE & NEET. Complete Class 11 & 12 course covering NCERT with detailed explanations and handwritten notes. CBSE, JEE Mains & Advanced preparation.',

@@ -1,6 +1,8 @@
 import AssertionReasonClient from './AssertionReasonClient';
 import { fetchAssertionReasonQuestions } from '../lib/assertionReasonData';
 
+export const revalidate = 86400;
+
 export const metadata = {
     title: 'Assertion & Reason Questions Chemistry Class 12 - Practice for CBSE, NEET | Canvas Classes',
     description: 'Practice NCERT assertion-reason questions for Chemistry Class 12 with our unique 3-step decision flow. Spaced repetition for CBSE Boards & NEET 2025-26 preparation.',

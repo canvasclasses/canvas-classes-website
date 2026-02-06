@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import FlashcardsClient from './FlashcardsClient';
 import { fetchFlashcards } from '../lib/revisionData';
 
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
     title: 'Mastering NCERT Chemistry with well researched Flashcards, made by Paaras Sir | Canvas Classes',
     description: 'Master Class 12 NCERT Chemistry with well-researched flashcards made by Paaras Sir. Interactive spaced repetition for Solutions, Electrochemistry, Organic & Inorganic. Perfect for CBSE, JEE & NEET prep.',

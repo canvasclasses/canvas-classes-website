@@ -4220,7 +4220,8 @@
     "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
     "isPYQ": true,
     "solution": {
-      "textSolutionLatex": "![Solution](/questions/jee_2026_jan21m_q74_solution.svg)"
+      "textSolutionLatex": "![Solution](/questions/jee_2026_jan21m_q74_solution.svg)",
+      "audioExplanationUrl": "/audio/jee_2026_jan21m_q74.webm"
     },
     "chapterId": "Aromatic Compounds"
   },
@@ -4246,7 +4247,18 @@
     "isPYQ": true,
     "solution": {
       "textSolutionLatex": "**Reaction Analysis:**\n\n**Reaction 1:**\n$$4NaCl + K_2Cr_2O_7 + 6H_2SO_4 \\rightarrow 2CrO_2Cl_2 + ...$$\n**A = $CrO_2Cl_2$ (Chromyl chloride)**\n\n**Reaction 2:**\n$$CrO_2Cl_2 + 4NaOH \\rightarrow Na_2CrO_4 + 2NaCl + 2H_2O$$\n**B = $Na_2CrO_4$ (Sodium chromate)**\n\n**Reaction 3:**\n$$2Na_2CrO_4 + 3H_2SO_4 + 4H_2O_2 \\rightarrow 2CrO_5 + 2Na_2SO_4 + 5H_2O$$\n**C = $CrO_5$ (Chromium peroxide, \"Blue color\")**\n\n**Structure of CrO₅:**\n- Contains 1 oxo group (O²⁻) and 2 peroxo groups ($O_2^{2-}$)\n- Formula: $Cr(O)(O_2)_2$\n\n**Calculations:**\n- **X** = Number of $O_2^{2-}$ units = **2**\n- **Y** = Total oxygen atoms = 1 + 2(2) = **5**\n- **Z** = Oxidation state of Cr = **+6**\n\n$$X + Y + Z = 2 + 5 + 6 = 13$$\n\n**Answer: 13**"
-    }
+    },
+    "sourceReferences": [
+      {
+        "type": "NCERT",
+        "similarity": "exact",
+        "ncertBook": "NCERT Lab Manual",
+        "ncertChapter": "Unit 7 - Systematic Qualitative Analysis",
+        "ncertPage": "Page 59",
+        "ncertTopic": "Test for Chloride ions (Chromyl Chloride Test)"
+      }
+    ],
+    "chapterId": "Salt Analysis"
   },
   {
     "id": "jee_2026_jan21m_q68",
