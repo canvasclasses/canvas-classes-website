@@ -95,46 +95,49 @@ export function useCrucibleProgress() {
 
     // Sync from cloud and merge with local data
     const syncFromCloud = async (uid: string, localData: CrucibleProgress) => {
-        const supabase = createClient();
-        if (!supabase) return;
-
         setIsSyncing(true);
         try {
-            // Fetch cloud progress
-            const { data: cloudRecord, error } = await supabase
-                .from('user_progress')
-                .select('data, updated_at')
-                .eq('user_id', uid)
-                .eq('feature_type', 'crucible_stats')
-                .eq('item_id', 'global')
-                .single();
+            // Fetch cloud progress from our MongoDB API
+            const response = await fetch('/api/activity/log', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
 
-            if (error && error.code !== 'PGRST116') {
-                console.error('Error fetching cloud progress:', error);
+            if (!response.ok) {
+                console.error('Error fetching cloud progress:', response.statusText);
                 return;
             }
 
-            if (cloudRecord?.data) {
-                const cloudData = cloudRecord.data as CrucibleProgress;
+            const data = await response.json();
 
-                // Merge strategy: take higher values for stats, merge arrays
-                const merged: CrucibleProgress = {
-                    questionHistory: { ...cloudData.questionHistory, ...localData.questionHistory },
-                    totalAttempted: Math.max(cloudData.totalAttempted || 0, localData.totalAttempted || 0),
-                    totalCorrect: Math.max(cloudData.totalCorrect || 0, localData.totalCorrect || 0),
-                    totalIncorrect: Math.max(cloudData.totalIncorrect || 0, localData.totalIncorrect || 0),
-                    currentStreak: localData.currentStreak || 0, // Local is current session
-                    bestStreak: Math.max(cloudData.bestStreak || 0, localData.bestStreak || 0),
-                    lastSessionDate: localData.lastSessionDate || cloudData.lastSessionDate || '',
-                    chapterStats: { ...cloudData.chapterStats, ...localData.chapterStats },
-                    starredIds: [...new Set([...(cloudData.starredIds || []), ...(localData.starredIds || [])])],
-                    masteredIds: [...new Set([...(cloudData.masteredIds || []), ...(localData.masteredIds || [])])],
-                    userNotes: { ...(cloudData.userNotes || {}), ...(localData.userNotes || {}) },
-                };
+            // Transform MongoDB format to CrucibleProgress format if needed
+            // The API returns { masteryMap, stats, summary }
+            // We need to map this back to our local state structure
 
-                setProgress(merged);
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
-            }
+            // For now, let's trust the local storage as primary for session data (like question status)
+            // but use cloud stats for total counts if they are higher.
+            // And definitely use mastery map.
+
+            const cloudStats = data.stats || {};
+            const cloudMastery = data.masteryMap || {};
+
+            const masteredIds = Object.keys(cloudMastery).filter(k => cloudMastery[k].status === 'GREEN');
+
+            // Merge strategy: take higher values for stats
+            const merged: CrucibleProgress = {
+                ...localData,
+                totalAttempted: Math.max(cloudStats.total_questions_attempted || 0, localData.totalAttempted || 0),
+                totalCorrect: Math.max(cloudStats.total_correct || 0, localData.totalCorrect || 0),
+                currentStreak: localData.currentStreak || cloudStats.current_streak || 0,
+                bestStreak: Math.max(cloudStats.best_streak || 0, localData.bestStreak || 0),
+                masteredIds: [...new Set([...masteredIds, ...(localData.masteredIds || [])])],
+            };
+
+            setProgress(merged);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+
         } catch (err) {
             console.error('Cloud sync error:', err);
         } finally {
@@ -142,30 +145,11 @@ export function useCrucibleProgress() {
         }
     };
 
-    // Save to cloud (debounced)
+    // Save to cloud (deprecated - handled by Activity Logger)
     const saveToCloud = useCallback(async (data: CrucibleProgress) => {
-        if (!userId) return;
-
-        const supabase = createClient();
-        if (!supabase) return;
-
-        try {
-            await supabase
-                .from('user_progress')
-                .upsert({
-                    user_id: userId,
-                    feature_type: 'crucible_stats',
-                    item_id: 'global',
-                    data: data,
-                    mastery_level: data.totalAttempted > 0
-                        ? (data.totalCorrect / data.totalAttempted >= 0.8 ? 'mastered' : 'learning')
-                        : 'new',
-                    updated_at: new Date().toISOString()
-                }, { onConflict: 'user_id, feature_type, item_id' });
-        } catch (error) {
-            console.error('Failed to save to cloud:', error);
-        }
-    }, [userId]);
+        // We no longer save directly to Supabase from here.
+        // Activity Logger handles all writes to MongoDB via /api/activity/log
+    }, []);
 
     // Debounced cloud save
     const debouncedCloudSave = useCallback((data: CrucibleProgress) => {
