@@ -4205,18 +4205,14 @@
   },
   {
     "id": "jee_2026_jan21m_q74",
-    "textMarkdown": "Consider the following reaction sequence:\n\n![Reaction Sequence](/graphs/jee2026_jan21m_q74_reaction.jpg)\n\nThe percentage of nitrogen in product 'T' formed is ______ %. (Nearest integer)\n\n(Given molar mass in g mol⁻¹: H:1, C:12, N:14, O:16)",
+    "textMarkdown": "Consider the following reaction sequence:\n\n![Reaction Sequence](/questions/jee_2026_jan21m_q74.svg)\n\nThe percentage of nitrogen in product 'T' formed is ______ %. (Nearest integer)\n\n(Given molar mass in g mol⁻¹: H:1, C:12, N:14, O:16)",
     "options": [],
     "questionType": "NVT",
     "integerAnswer": "20",
     "conceptTags": [
       {
-        "tagId": "TAG_MOLE_COMPOSITION",
-        "weight": 0.6
-      },
-      {
-        "tagId": "TAG_SKILL_CALCULATION",
-        "weight": 0.4
+        "tagId": "TAG_CUSTOM_ELECTROPHILIC_AROMATIC_SUBSTITUTION",
+        "weight": 1
       }
     ],
     "tagId": "TAG_MOLE_COMPOSITION",
@@ -4224,8 +4220,9 @@
     "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
     "isPYQ": true,
     "solution": {
-      "textSolutionLatex": "Based on the reaction sequence, product T is likely an amine or amide.\n\nIf T is benzamide ($C_7H_7NO$):\n- Molar mass = 7(12) + 7(1) + 14 + 16 = 121 g/mol\n- % N = $\\frac{14}{121} \\times 100$ = 11.6%\n\nIf T is aniline ($C_6H_7N$):\n- Molar mass = 6(12) + 7(1) + 14 = 93 g/mol\n- % N = $\\frac{14}{93} \\times 100$ = 15.05%\n\nIf T is a urea derivative ($C_3H_8N_2O$):\n- Molar mass = 88 g/mol\n- % N = $\\frac{28}{88} \\times 100$ = 31.8%\n\nBased on the answer key, **% N = 20%**\n\nThis corresponds to a compound with formula where:\n$$\\frac{14}{M} \\times 100 = 20$$\n$$M = 70$$ g/mol\n\n**Answer: 20%**"
-    }
+      "textSolutionLatex": "![Solution](/questions/jee_2026_jan21m_q74_solution.svg)"
+    },
+    "chapterId": "Aromatic Compounds"
   },
   {
     "id": "jee_2026_jan21m_q75",
