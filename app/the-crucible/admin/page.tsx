@@ -392,25 +392,65 @@ export default function AdminPage() {
                                                         </select>
                                                     )}
 
-                                                    <textarea
-                                                        value={q.textMarkdown}
-                                                        onChange={(e) => handleUpdate(q.id, 'textMarkdown', e.target.value)}
-                                                        placeholder="Question Text (Markdown/Latex)"
-                                                        className="bg-gray-900 border border-gray-600 rounded px-2 py-1 w-full h-32 text-[14.5px] focus:border-purple-500 outline-none resize-y font-mono"
-                                                        onClick={(e) => e.stopPropagation()}
-                                                    />
+                                                    <div className="flex items-center gap-2 mb-1">
+                                                        <textarea
+                                                            value={q.textMarkdown}
+                                                            onChange={(e) => handleUpdate(q.id, 'textMarkdown', e.target.value)}
+                                                            placeholder="Question Text (Markdown/Latex)"
+                                                            className="bg-gray-900 border border-gray-600 rounded px-2 py-1 w-full h-32 text-[14.5px] focus:border-purple-500 outline-none resize-y font-mono"
+                                                            onClick={(e) => e.stopPropagation()}
+                                                        />
+                                                        <div className="flex flex-col gap-1 w-16">
+                                                            <label className="text-[9px] text-gray-500 text-center">Img Scale</label>
+                                                            <input
+                                                                type="number"
+                                                                min="10"
+                                                                max="100"
+                                                                value={q.imageScale || 100}
+                                                                onChange={(e) => handleUpdate(q.id, 'imageScale', parseInt(e.target.value) || 100)}
+                                                                className="bg-gray-800 border border-gray-600 rounded px-1 py-0.5 text-[10px] text-center text-white"
+                                                                onClick={(e) => e.stopPropagation()}
+                                                            />
+                                                            <input
+                                                                type="range"
+                                                                min="10"
+                                                                max="100"
+                                                                value={q.imageScale || 100}
+                                                                onChange={(e) => handleUpdate(q.id, 'imageScale', parseInt(e.target.value) || 100)}
+                                                                className="accent-purple-500 h-10 w-2 mt-2 -rotate-90 origin-center translate-y-2 translate-x-5"
+                                                                onClick={(e) => e.stopPropagation()}
+                                                            />
+                                                        </div>
+                                                    </div>
 
                                                     {/* Editable Options */}
                                                     {q.questionType !== 'NVT' && (
                                                         <div className="grid grid-cols-2 gap-2 mt-2">
                                                             {q.options.map((opt) => (
-                                                                <div key={opt.id} className="flex items-center gap-1 bg-gray-900/50 p-1 rounded border border-gray-700">
-                                                                    <span className="text-[9px] font-bold text-gray-500 w-4">{opt.id.toUpperCase()}</span>
-                                                                    <input
-                                                                        type="text"
+                                                                <div key={opt.id} className="items-center gap-1 bg-gray-900/50 p-1.5 rounded border border-gray-700">
+                                                                    <div className="flex justify-between items-center mb-1">
+                                                                        <span className="text-[9px] font-bold text-gray-500">{opt.id.toUpperCase()}</span>
+                                                                        <div className="flex items-center gap-1">
+                                                                            <span className="text-[8px] text-gray-600">Scale:</span>
+                                                                            <input
+                                                                                type="number"
+                                                                                min="10"
+                                                                                max="100"
+                                                                                placeholder="100"
+                                                                                value={opt.imageScale || 100}
+                                                                                onChange={(e) => {
+                                                                                    const newOpts = q.options.map(o => o.id === opt.id ? { ...o, imageScale: parseInt(e.target.value) || 100 } : o);
+                                                                                    handleUpdate(q.id, 'options', newOpts);
+                                                                                }}
+                                                                                className="bg-black border border-gray-800 rounded w-10 text-[9px] text-center text-gray-400"
+                                                                                onClick={(e) => e.stopPropagation()}
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                    <textarea
                                                                         value={opt.text}
                                                                         onChange={(e) => handleOptionTextChange(q, opt.id, e.target.value)}
-                                                                        className="bg-transparent border-none p-0 text-[13px] w-full focus:outline-none focus:text-purple-300"
+                                                                        className="bg-transparent border-none p-0 text-[13px] w-full focus:outline-none focus:text-purple-300 h-10 resize-none font-mono"
                                                                         onClick={(e) => e.stopPropagation()}
                                                                     />
                                                                 </div>
@@ -453,13 +493,36 @@ export default function AdminPage() {
                                                         </select>
                                                     </div>
 
-                                                    <textarea
-                                                        value={q.solution.textSolutionLatex}
-                                                        onChange={(e) => handleSolutionChange(q, e.target.value)}
-                                                        placeholder="Explanation / Solution (Markdown/Latex)"
-                                                        className="bg-gray-900/30 border border-gray-700/50 rounded px-2 py-1 w-full h-32 text-[13px] text-gray-400 focus:border-purple-500 outline-none resize-y font-mono italic"
-                                                        onClick={(e) => e.stopPropagation()}
-                                                    />
+                                                    <div className="flex items-center gap-2">
+                                                        <textarea
+                                                            value={q.solution.textSolutionLatex}
+                                                            onChange={(e) => handleSolutionChange(q, e.target.value)}
+                                                            placeholder="Explanation / Solution (Markdown/Latex)"
+                                                            className="bg-gray-900/30 border border-gray-700/50 rounded px-2 py-1 w-full h-32 text-[13px] text-gray-400 focus:border-purple-500 outline-none resize-y font-mono italic"
+                                                            onClick={(e) => e.stopPropagation()}
+                                                        />
+                                                        <div className="flex flex-col gap-1 w-16">
+                                                            <label className="text-[9px] text-gray-500 text-center">Sol Scale</label>
+                                                            <input
+                                                                type="number"
+                                                                min="10"
+                                                                max="100"
+                                                                value={q.solutionImageScale || 100}
+                                                                onChange={(e) => handleUpdate(q.id, 'solutionImageScale', parseInt(e.target.value) || 100)}
+                                                                className="bg-gray-800 border border-gray-600 rounded px-1 py-0.5 text-[10px] text-center text-white"
+                                                                onClick={(e) => e.stopPropagation()}
+                                                            />
+                                                            <input
+                                                                type="range"
+                                                                min="10"
+                                                                max="100"
+                                                                value={q.solutionImageScale || 100}
+                                                                onChange={(e) => handleUpdate(q.id, 'solutionImageScale', parseInt(e.target.value) || 100)}
+                                                                className="accent-emerald-500 h-10 w-2 mt-2 -rotate-90 origin-center translate-y-2 translate-x-5"
+                                                                onClick={(e) => e.stopPropagation()}
+                                                            />
+                                                        </div>
+                                                    </div>
 
                                                     {/* Audio Recorder Integration */}
                                                     <div className="mt-2" onClick={(e) => e.stopPropagation()}>
@@ -722,10 +785,10 @@ export default function AdminPage() {
                                                     )}
                                                     <button
                                                         onClick={(e) => { e.stopPropagation(); handleDelete(q.id); }}
-                                                        className={`transition flex items-center justify-center gap-1 p-1 rounded ${deletingId === q.id ? 'bg-red-900/50 text-red-200' : 'text-gray-500 hover:text-red-400 hover:bg-gray-700'}`}
+                                                        className={`transition flex items-center justify-center gap-1 p-1 rounded ${deletingId === q.id ? 'bg-red-600 text-white font-bold w-12' : 'text-gray-500 hover:text-red-400 hover:bg-gray-700'}`}
                                                         title="Delete"
                                                     >
-                                                        {deletingId === q.id ? <span className="text-[10px]">?</span> : <Trash2 size={14} />}
+                                                        {deletingId === q.id ? <span className="text-[10px]">CONFIRM</span> : <Trash2 size={14} />}
                                                     </button>
                                                 </div>
                                             </td>

@@ -27,11 +27,16 @@ import 'katex/dist/katex.min.css';
 interface SolutionViewerProps {
     solution: SolutionAsset;
     sourceReferences?: SourceReference[];
+    imageScale?: number;
 }
 
 type TabType = 'analysis' | 'video' | 'handwritten';
 
-export default function SolutionViewer({ solution, sourceReferences }: SolutionViewerProps) {
+export default function SolutionViewer({
+    solution,
+    sourceReferences,
+    imageScale
+}: SolutionViewerProps) {
     const hasVideo = !!solution.videoUrl;
     const hasHandwritten = !!solution.handwrittenSolutionImageUrl;
     const [activeTab, setActiveTab] = useState<TabType>('analysis');
@@ -129,6 +134,18 @@ export default function SolutionViewer({ solution, sourceReferences }: SolutionV
                                         h3: ({ children }) => <h3 className="text-base font-bold text-indigo-400 mt-4 mb-2 uppercase tracking-wider">
                                             {children}
                                         </h3>,
+                                        img: (props) => (
+                                            <img
+                                                {...props}
+                                                style={{
+                                                    maxWidth: imageScale ? `${imageScale}%` : '100%',
+                                                    height: 'auto',
+                                                    display: 'block',
+                                                    margin: '0 auto'
+                                                }}
+                                                className="rounded-lg border border-white/5 my-4"
+                                            />
+                                        ),
                                         p: ({ children }) => {
                                             const content = children?.toString() || "";
 
