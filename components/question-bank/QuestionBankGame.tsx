@@ -172,6 +172,70 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         return () => clearInterval(interval);
     }, [mode, timerActive]);
 
+    // Session Persistence Key
+    const SESSION_KEY = 'crucible_session_v1';
+
+    // Restore Session Effect
+    useEffect(() => {
+        if (!initialQuestions.length) return;
+
+        try {
+            const savedSession = localStorage.getItem(SESSION_KEY);
+            if (savedSession) {
+                const session = JSON.parse(savedSession);
+                // Basic validation: check if timestamp is within 24 hours
+                const isRecent = (Date.now() - session.lastUpdated) < 86400000;
+
+                if (session.isActive && isRecent) {
+                    setMode(session.mode);
+                    setGameMode(session.gameMode);
+                    setCurrentIndex(session.currentIndex);
+                    setExamAnswers(session.answers || {});
+                    setQuestionStatus(session.status || {});
+                    setTimerSeconds(session.timer || 0);
+                    setStreak(session.streak || 0);
+                    setScore(session.score || 0);
+                    setIsReviewing(session.isReviewing || false);
+
+                    if (session.questionIds && session.questionIds.length > 0) {
+                        const restoredQuestions = session.questionIds
+                            .map((id: string) => initialQuestions.find(q => q.id === id))
+                            .filter((q: Question | undefined): q is Question => !!q);
+
+                        if (restoredQuestions.length > 0) {
+                            setFilteredQuestions(restoredQuestions);
+                        }
+                    }
+                }
+            }
+        } catch (err) {
+            console.error('Failed to restore session:', err);
+        }
+    }, [initialQuestions]);
+
+    // Save Session Effect
+    useEffect(() => {
+        if (mode === 'playing') {
+            const sessionData = {
+                isActive: true,
+                mode,
+                gameMode,
+                currentIndex,
+                answers: examAnswers,
+                status: questionStatus,
+                timer: timerSeconds,
+                streak,
+                score,
+                isReviewing,
+                questionIds: filteredQuestions.map(q => q.id),
+                lastUpdated: Date.now()
+            };
+            localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
+        } else if (mode === 'completed') {
+            localStorage.removeItem(SESSION_KEY);
+        }
+    }, [mode, gameMode, currentIndex, examAnswers, questionStatus, timerSeconds, streak, score, isReviewing, filteredQuestions]);
+
     const activeQuestion = filteredQuestions[currentIndex];
     const isLastQuestion = currentIndex === filteredQuestions.length - 1;
 
@@ -287,6 +351,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         setIsReviewing(false);
         setExamAnswers({});
         resetState(0);
+        localStorage.removeItem('crucible_session_v1');
     };
 
     const startReview = () => {

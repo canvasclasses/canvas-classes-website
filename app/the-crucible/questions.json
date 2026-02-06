@@ -4233,12 +4233,12 @@
     "integerAnswer": "13",
     "conceptTags": [
       {
-        "tagId": "TAG_CH_D_BLOCK",
-        "weight": 0.7
+        "tagId": "TAG_SALT_WET_ANION_2",
+        "weight": 1
       },
       {
-        "tagId": "TAG_DBLOCK_CR",
-        "weight": 0.3
+        "tagId": "TAG_CUSTOM_CHROMYL_CHLORIDE_TEST",
+        "weight": 1
       }
     ],
     "tagId": "TAG_CH_D_BLOCK",
@@ -4246,7 +4246,7 @@
     "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
     "isPYQ": true,
     "solution": {
-      "textSolutionLatex": "**Reaction Analysis:**\n\n**Reaction 1:**\n$$4NaCl + K_2Cr_2O_7 + 6H_2SO_4 \\rightarrow 2CrO_2Cl_2 + ...$$\n**A = $CrO_2Cl_2$ (Chromyl chloride)**\n\n**Reaction 2:**\n$$CrO_2Cl_2 + 4NaOH \\rightarrow Na_2CrO_4 + 2NaCl + 2H_2O$$\n**B = $Na_2CrO_4$ (Sodium chromate)**\n\n**Reaction 3:**\n$$2Na_2CrO_4 + 3H_2SO_4 + 4H_2O_2 \\rightarrow 2CrO_5 + 2Na_2SO_4 + 5H_2O$$\n**C = $CrO_5$ (Chromium peroxide, \"Blue color\")**\n\n**Structure of CrO₅:**\n- Contains 1 oxo group (O²⁻) and 2 peroxo groups ($O_2^{2-}$)\n- Formula: $Cr(O)(O_2)_2$\n\n**Calculations:**\n- **X** = Number of $O_2^{2-}$ units = **2**\n- **Y** = Total oxygen atoms = 1 + 2(2) = **5**\n- **Z** = Oxidation state of Cr = **+6**\n\n$$X + Y + Z = 2 + 5 + 6 = 13$$\n\n**Answer: 13**"
+      "textSolutionLatex": "**Chromyl Chloride Test (Identification of Chloride Ion):**\n\n**1. Preparation of Chromyl Chloride:**\nMix a little amount of salt containing chloride and an equal amount of solid potassium dichromate ($K_2Cr_2O_7$) in a test tube and add conc. $H_2SO_4$ to it. Heat the test tube. Red vapours of Chromyl Chloride are evolved.\n\n$$4NaCl + K_2Cr_2O_7 + 6H_2SO_4 \\rightarrow 2KHSO_4 + 2CrO_2Cl_2 \\text{ (Chromyl chloride)} + 4NaHSO_4 + 3H_2O$$\n**A = $CrO_2Cl_2$**\n\n**2. Reaction with NaOH:**\nPass the evolved gas through sodium hydroxide solution. A yellow solution of sodium chromate is obtained.\n\n$$CrO_2Cl_2 + 4NaOH \\rightarrow Na_2CrO_4 \\text{ (Yellow Solution)} + 2NaCl + 2H_2O$$\n**B = $Na_2CrO_4$**\n\n**3. Confirmatory Tests:**\n\n**Lead Chromate Test:**\nAcidify one part of the solution with acetic acid and add lead acetate solution. A yellow precipitate of lead chromate confirms chloride ions.\n\n$$(CH_3COO)_2Pb + Na_2CrO_4 \\rightarrow PbCrO_4 \\downarrow \\text{ (Yellow Precipitate)} + 2CH_3COONa$$\n\n**Chromium Pentoxide Test:**\nAcidify the second part with dilute sulphuric acid and add small amounts of amyl alcohol and then 1 mL of 10% hydrogen peroxide solution. On gentle shaking, the organic layer turns blue due to the formation of Chromium Pentoxide ($CrO_5$).\n\n$$CrO_4^{2-} + 2H^+ + 2H_2O_2 \\rightarrow CrO_5 \\text{ (Deep Blue, Butterfly Structure)} + 3H_2O$$\n**C = $CrO_5$**\n\n**Calculations for X, Y, Z:**\nStructure of $CrO_5$:\n- Contains one oxo oxygen ($O^{2-}$)\n- Contains two peroxo bonds, i.e., 4 oxygen atoms as peroxide ($O_2^{2-}$). So, **X = 2**.\n- Total Oxygen atoms (**Y**) = 1 + 4 = **5**.\n- Oxidation state of Cr (**Z**): $x + 1(-2) + 4(-1) = 0 \\Rightarrow x = +6$. So, **Z = +6**.\n\n**Result:**\n$$X + Y + Z = 2 + 5 + 6 = 13$$"
     },
     "sourceReferences": [
       {
@@ -4308,7 +4308,7 @@
   },
   {
     "id": "jee_2026_jan21m_q69",
-    "textMarkdown": "For the reaction $N_2O_4 \\rightleftharpoons 2NO_2$, graph is plotted as shown below. Identify correct statements.\n\n![Gibbs Energy Graph](/graphs/jee2026_jan21m_q69_graph.jpg)\n\nA. Standard free energy change for the reaction is $-5.40$ kJ mol⁻¹.\nB. As $\\Delta G^⊖$ in graph is positive, $N_2O_4$ will not dissociate into $NO_2$ at all.\nC. Reverse reaction will go to completion.\nD. When 1 mole of $N_2O_4$ changes into equilibrium mixture, value of $\\Delta G = -0.84$ kJ mol⁻¹\nE. When 2 mole of $NO_2$ changes into equilibrium mixture, $\\Delta G$ for equilibrium mixture is $-6.24$ kJ mol⁻¹.",
+    "textMarkdown": "For the reaction $N_2O_4 \\rightleftharpoons 2NO_2$, graph is plotted as shown below. Identify correct statements.\n\n![Gibbs Energy Graph](/questions/jee_2026_jan21m_q69.svg)\n\nA. Standard free energy change for the reaction is $-5.40$ kJ mol⁻¹.\n\nB. As $\\Delta G^⊖$ in graph is positive, $N_2O_4$ will not dissociate into $NO_2$ at all.\n\nC. Reverse reaction will go to completion.\n\nD. When 1 mole of $N_2O_4$ changes into equilibrium mixture, value of $\\Delta G = -0.84$ kJ mol⁻¹\n\nE. When 2 mole of $NO_2$ changes into equilibrium mixture, $\\Delta G$ for equilibrium mixture is $-6.24$ kJ mol⁻¹.",
     "options": [
       {
         "id": "1",
@@ -4347,7 +4347,7 @@
     "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
     "isPYQ": true,
     "solution": {
-      "textSolutionLatex": "**Analysis:**\n\nThe graph shows Gibbs energy vs extent of reaction.\n\n- At equilibrium, $\\Delta G = 0$\n- $\\Delta G^⊖$ is read from the graph at standard conditions\n\n**Statement A:** Incorrect - Need to read from graph\n**Statement B:** Incorrect - Positive $\\Delta G^⊖$ doesn't mean no reaction\n**Statement C:** Incorrect - Reaction reaches equilibrium, not completion\n**Statement D:** ✓ Correct - Read from graph\n**Statement E:** ✓ Correct - Read from graph\n\n**Answer: D and E only**"
+      "textSolutionLatex": "**Analysis:**\n\nThe graph shows Gibbs energy vs extent of reaction.\n\n- At equilibrium, $\\Delta G = 0$\n- $\\Delta G^⊖$ is read from the graph at standard conditions\n\n**Statement A:** Incorrect - $\\Delta G^⊖$ is positive as shown in graph.\n\n**Statement B:** Incorrect - Positive $\\Delta G^⊖$ doesn't mean no reaction\n\n**Statement C:** Incorrect - Reaction reaches equilibrium, not completion\n\n**Statement D:** ✓ Correct - Read from graph\n\n**Statement E:** ✓ Correct - Read from graph\n\n**Answer: D and E only**"
     }
   },
   {
