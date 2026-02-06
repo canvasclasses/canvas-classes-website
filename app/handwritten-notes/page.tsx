@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import HandwrittenNotesClient from "./HandwrittenNotesClient";
 import { fetchHandwrittenNotes } from "../lib/handwrittenNotesData";
 
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
     title: "Handwritten Notes for JEE, NEET & CBSE Chemistry",
     description:

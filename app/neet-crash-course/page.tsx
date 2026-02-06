@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import NeetCrashCourseClient from './NeetCrashCourseClient';
 import { fetchNeetCrashCourseData } from '@/app/lib/neetCrashCourseData';
 
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
     title: 'NEET Chemistry Crash Course 2025 - Free Complete Course | Canvas Classes',
     description: 'Free NEET Chemistry crash course with high-yield lectures, DPP, and video solutions. Complete Class 11 & 12 revision for NEET 2025 preparation.',

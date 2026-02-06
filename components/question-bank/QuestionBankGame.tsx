@@ -1375,7 +1375,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                             <QuestionCard
                                 question={activeQuestion}
                                 onAnswerSubmit={handleAnswerSubmit}
-                                showFeedback={(gameMode === 'practice' || isReviewing) && (isCorrect !== null || isReviewing)}
+                                showFeedback={isReviewing && (isCorrect !== null || isReviewing)}
                                 selectedOptionId={selectedOptionId}
                             />
                         </div>
@@ -1428,11 +1428,11 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                             {filteredQuestions.map((_, idx) => {
                                 const status = questionStatus[idx];
                                 let style = 'bg-white/5 text-gray-600';
-                                if (idx === currentIndex) style = 'ring-2 ring-purple-500 bg-purple-500 text-white shadow-[0_0_20px_rgba(168,85,247,0.3)]';
-                                else if (gameMode === 'practice') {
-                                    if (status === 'solved') style = 'bg-emerald-500 text-white';
-                                    else if (status === 'incorrect') style = 'bg-red-500 text-white';
-                                } else if (status === 'answered') style = 'bg-indigo-500 text-white';
+                                if (idx === currentIndex) {
+                                    style = 'ring-2 ring-purple-500 bg-purple-500 text-white shadow-[0_0_20px_rgba(168,85,247,0.3)]';
+                                } else if (status === 'answered') {
+                                    style = 'bg-indigo-500 text-white';
+                                }
 
                                 if (status === 'marked') style = 'bg-amber-500 text-white';
                                 if (status === 'skipped') style = 'bg-gray-700 text-white';
@@ -1452,18 +1452,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                     </div>
                 </aside>
             </div>
-            );     {gameMode === 'practice' && (
-                <FeedbackOverlay
-                    isOpen={isCorrect !== null}
-                    isCorrect={!!isCorrect}
-                    trap={activeQuestion?.trap}
-                    onNext={handleNext}
-                    onViewSolution={() => {
-                        setShowSolution(true);
-                        setTimeout(() => document.getElementById('solution-viewer-container')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                    }}
-                />
-            )}
+            {/* Practice mode feedback removed from Exam Mode */}
         </div>
     );
 }
