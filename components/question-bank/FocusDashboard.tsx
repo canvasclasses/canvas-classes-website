@@ -2,7 +2,8 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Play, Filter, BookOpen, CheckCircle2, X, Sparkles, Target, Zap, Atom, Brain, HelpCircle, Calculator, List, Info, Clock, Bookmark, FileText, LayoutGrid, Sun, Quote, Lightbulb, ChevronDown, Diamond, Layers, Rocket, Settings, Orbit, Crosshair, Hexagon, ShieldAlert, Cpu } from 'lucide-react';
+import { Search, Play, Filter, BookOpen, CheckCircle2, X, Sparkles, Target, Zap, Atom, Brain, HelpCircle, Calculator, List, Info, Clock, Bookmark, FileText, LayoutGrid, Sun, Quote, Lightbulb, ChevronDown, Diamond, Layers, Rocket, Settings, Orbit, Crosshair, Hexagon, ShieldAlert, Cpu, Home, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 import { Question } from '@/app/the-crucible/types';
 import { DAILY_QUOTES } from './quotes';
 
@@ -392,6 +393,16 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                         <div className="absolute top-1/2 left-20 -translate-y-1/2 w-72 h-40 bg-indigo-500/20 blur-[80px] rounded-full pointer-events-none mix-blend-screen" />
 
                         <div className="flex flex-col gap-4 w-full md:w-auto z-10 relative">
+                            {/* Home Navigation */}
+                            <Link
+                                href="/"
+                                className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors group w-fit"
+                            >
+                                <div className="p-1.5 rounded-lg bg-gray-800/50 group-hover:bg-gray-700/50 transition-colors">
+                                    <ArrowLeft size={14} />
+                                </div>
+                                <span className="text-[10px] font-medium uppercase tracking-wide">Canvas Home</span>
+                            </Link>
                             <div className="flex flex-col items-center md:items-start pl-1">
                                 {/* CRUCIBLE Logo with Animated U */}
                                 <h1 className="text-4xl md:text-[3rem] font-black tracking-tighter leading-none select-none filter contrast-125 flex items-baseline">
@@ -663,11 +674,6 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
 
                                         {/* Content (Right - Balanced) */}
                                         <div className="flex-1 min-w-0 flex flex-col gap-3">
-                                            <div className="flex items-center justify-center lg:justify-start gap-2 mb-1">
-                                                <Target size={14} className="text-amber-500" />
-                                                <span className="text-[10px] font-black text-amber-500 uppercase tracking-[0.2em]">Daily Strategy</span>
-                                            </div>
-
                                             {/* Sanskrit */}
                                             <h3 className="text-lg md:text-xl font-serif text-amber-50/95 leading-relaxed font-medium drop-shadow-md">
                                                 {todaysQuote?.sanskrit || "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन"}
