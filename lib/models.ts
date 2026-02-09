@@ -112,6 +112,7 @@ export interface IQuestion {
     options: IOption[];
     integer_answer?: string;
     tags: IWeightedTag[];
+    tag_id?: string; // Primary tag ID for quick reference
     meta: IMeta;
     chapter_id?: string;
     is_pyq: boolean;
@@ -196,7 +197,8 @@ const QuestionSchema = new Schema<IQuestion>({
     exam_source: { type: String },
     source_references: [SourceReferenceSchema],
     solution: { type: SolutionSchema, required: true },
-    trap: TrapSchema
+    trap: TrapSchema,
+    tag_id: { type: String } // Primary tag for quick lookup
 }, {
     timestamps: true,
     collection: 'questions'
