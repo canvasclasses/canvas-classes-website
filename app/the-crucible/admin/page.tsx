@@ -34,6 +34,7 @@ export default function AdminPage() {
     const [selectedTypeFilter, setSelectedTypeFilter] = useState<string>('all');
     const [selectedSourceFilter, setSelectedSourceFilter] = useState<string>('all');
     const [selectedShiftFilter, setSelectedShiftFilter] = useState<string>('all');
+    const [selectedTopPYQFilter, setSelectedTopPYQFilter] = useState<string>('all');
 
     useEffect(() => {
         loadData();
@@ -254,6 +255,12 @@ export default function AdminPage() {
             }
         }
 
+        // TopPYQ Filter
+        if (selectedTopPYQFilter !== 'all') {
+            if (selectedTopPYQFilter === 'top' && !q.isTopPYQ) return false;
+            if (selectedTopPYQFilter === 'not-top' && q.isTopPYQ) return false;
+        }
+
         return true;
     });
 
@@ -375,6 +382,19 @@ export default function AdminPage() {
                                 ✕ Clear Shift
                             </button>
                         )}
+
+                        {/* TopPYQ Filter */}
+                        <div className="w-32 shrink-0">
+                            <select
+                                value={selectedTopPYQFilter}
+                                onChange={(e) => setSelectedTopPYQFilter(e.target.value)}
+                                className={`w-full bg-gray-900 border rounded-lg px-3 py-2 text-sm outline-none transition ${selectedTopPYQFilter !== 'all' ? 'border-amber-500 text-amber-300' : 'border-gray-600'}`}
+                            >
+                                <option value="all">⭐ All</option>
+                                <option value="top">⭐ Top PYQ Only</option>
+                                <option value="not-top">Non-Top</option>
+                            </select>
+                        </div>
                     </div>
                 </header>
 
@@ -839,6 +859,18 @@ export default function AdminPage() {
                                                         />
                                                         <span className="text-[10px] text-gray-400">is PYQ?</span>
                                                     </label>
+
+                                                    {q.isPYQ && (
+                                                        <label className="flex items-center gap-2 cursor-pointer" onClick={(e) => e.stopPropagation()}>
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={!!q.isTopPYQ}
+                                                                onChange={(e) => handleUpdate(q.id, 'isTopPYQ', e.target.checked)}
+                                                                className="rounded border-amber-600 bg-gray-900 text-amber-500 focus:ring-amber-500 h-4 w-4"
+                                                            />
+                                                            <span className="text-[10px] text-amber-400 font-bold">⭐ Top PYQ</span>
+                                                        </label>
+                                                    )}
 
                                                     <div className="animate-in fade-in slide-in-from-top-1 duration-200">
                                                         <div className="flex items-center gap-1 mb-1">
