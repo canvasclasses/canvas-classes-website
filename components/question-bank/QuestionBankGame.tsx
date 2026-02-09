@@ -438,7 +438,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
             setQuestionStatus({});
             setTimerSeconds(0);
             resetState(0);
-        }, 2000);
+        }, 3000);
     };
 
     const availableTags = Array.from(new Set(
@@ -450,12 +450,45 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
 
     if (showShloka) {
         return (
-            <div className="fixed inset-0 bg-black z-50 flex items-center justify-center animate-in fade-in duration-300">
-                <div className="text-center space-y-6">
-                    <h1 className="text-3xl md:text-5xl font-black text-amber-400 tracking-wider leading-relaxed drop-shadow-[0_0_15px_rgba(251,191,36,0.5)]">
+            <div className="fixed inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0d0d0d] to-[#0a0a0a] z-50 flex items-center justify-center animate-in fade-in duration-500">
+                {/* Subtle glow effects */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-amber-500/5 blur-[120px] rounded-full animate-pulse" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[200px] bg-orange-500/10 blur-[80px] rounded-full" />
+
+                <div className="text-center space-y-8 relative z-10 px-6">
+                    {/* Om Symbol */}
+                    <div className="text-amber-500/20 text-6xl font-serif animate-pulse">ॐ</div>
+
+                    {/* Decorative top line */}
+                    <div className="flex items-center justify-center gap-4">
+                        <div className="w-16 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
+                        <div className="w-2 h-2 rounded-full bg-amber-500/30" />
+                        <div className="w-16 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
+                    </div>
+
+                    {/* Sanskrit Quote */}
+                    <h1 className="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-amber-200 via-amber-400 to-orange-500 tracking-wide leading-relaxed" style={{ fontFamily: 'serif' }}>
                         उद्यमेन हि सिध्यन्ति<br />कार्याणि न मनोरथैः
                     </h1>
-                    <p className="text-gray-500 text-sm md:text-base uppercase tracking-[0.3em] font-medium">Focus on the effort, not the result</p>
+
+                    {/* Decorative bottom line */}
+                    <div className="flex items-center justify-center gap-4">
+                        <div className="w-16 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
+                        <div className="w-2 h-2 rounded-full bg-amber-500/30" />
+                        <div className="w-16 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
+                    </div>
+
+                    {/* Translation */}
+                    <p className="text-amber-200/60 text-sm md:text-base tracking-[0.2em] font-medium max-w-md mx-auto">
+                        Tasks are accomplished through effort, not by mere wishes.
+                    </p>
+
+                    {/* Loading indicator */}
+                    <div className="flex items-center justify-center gap-3 mt-8">
+                        <div className="w-2 h-2 rounded-full bg-amber-500 animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <div className="w-2 h-2 rounded-full bg-amber-500 animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <div className="w-2 h-2 rounded-full bg-amber-500 animate-bounce" style={{ animationDelay: '300ms' }} />
+                    </div>
                 </div>
             </div>
         );
@@ -557,18 +590,26 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                         return;
                     }
 
-                    setFilteredQuestions(playSet);
-                    setMode('playing');
-                    setGameMode(config.mode); // 'practice' or 'exam'
-                    setCurrentIndex(0);
-                    setQuestionStatus({});
-                    setTimerSeconds(0);
+                    // Show Shloka transition for 3 seconds
+                    setShowShloka(true);
+                    startNewSession();
 
-                    if (config.mode === 'exam') {
-                        setTimerActive(true);
-                    } else {
-                        setTimerActive(false);
-                    }
+                    setTimeout(() => {
+                        setShowShloka(false);
+                        setFilteredQuestions(playSet);
+                        setMode('playing');
+                        setGameMode(config.mode); // 'practice' or 'exam'
+                        setCurrentIndex(0);
+                        setQuestionStatus({});
+                        setTimerSeconds(0);
+                        resetState(0);
+
+                        if (config.mode === 'exam') {
+                            setTimerActive(true);
+                        } else {
+                            setTimerActive(false);
+                        }
+                    }, 3000);
                 }}
             />
         );

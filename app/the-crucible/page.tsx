@@ -3,7 +3,8 @@ import QuestionBankGame from '@/components/question-bank/QuestionBankGame';
 import { Metadata } from 'next';
 import Script from 'next/script';
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-static';
+export const revalidate = 3600; // Revalidate every 1 hour (3600 seconds)
 
 export const metadata: Metadata = {
     title: 'The Crucible | Personalized JEE Question Bank by Paaras Sir',
