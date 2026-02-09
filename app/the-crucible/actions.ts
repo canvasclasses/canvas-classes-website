@@ -39,51 +39,51 @@ const mapDocToQuestion = (doc: any): QuestionPageType => ({
 });
 
 // Helper to map Question (camelCase) -> DB Document (snake_case)
-const mapQuestionToDoc = (q: QuestionPageType) => ({
-    _id: q.id,
-    text_markdown: q.textMarkdown,
-    type: q.questionType,
-    options: q.options,
-    integer_answer: q.integerAnswer,
-    tags: q.conceptTags?.map(t => ({
-        tag_id: t.tagId,
-        weight: t.weight
-    })),
-    meta: {
-        difficulty: q.difficulty,
-        // Extract exam name (e.g., "JEE Main" from "JEE Main 2026 - Jan 21 Morning Shift")
-        exam: q.examSource?.match(/^([A-Za-z\s]+)\d/)?.[1]?.trim() || 'Other',
-        // Extract year (e.g., 2026 from "JEE Main 2026 - Jan 21 Morning Shift")
-        year: parseInt(q.examSource?.match(/(\d{4})/)?.[1] || '0') || undefined,
-        avg_time_sec: 120
-    },
-    chapter_id: q.chapterId,
-    is_pyq: q.isPYQ,
-    is_top_pyq: q.isTopPYQ,
-    exam_source: q.examSource,
-    solution: {
-        text_latex: q.solution.textSolutionLatex,
-        video_url: q.solution.videoUrl,
-        video_timestamp_start: q.solution.videoTimestampStart,
-        audio_url: q.solution.audioExplanationUrl,
-        image_url: q.solution.handwrittenSolutionImageUrl
-    },
-    tag_id: q.tagId,
-    source_references: q.sourceReferences
-});
+const mapQuestionToDoc = (q: QuestionPageType) => {
+    // SINGLE SOURCE OF TRUTH: Always derive tags from tagId
+    // This ensures consistency and prevents the conceptTags/tagId mismatch bug
+    const tags = q.tagId ? [{ tag_id: q.tagId, weight: 1.0 }] : [];
+
+    return {
+        _id: q.id,
+        text_markdown: q.textMarkdown,
+        type: q.questionType,
+        options: q.options,
+        integer_answer: q.integerAnswer,
+        tags,
+        meta: {
+            difficulty: q.difficulty,
+            // Extract exam name (e.g., "JEE Main" from "JEE Main 2026 - Jan 21 Morning Shift")
+            exam: q.examSource?.match(/^([A-Za-z\s]+)\d/)?.[1]?.trim() || 'Other',
+            // Extract year (e.g., 2026 from "JEE Main 2026 - Jan 21 Morning Shift")
+            year: parseInt(q.examSource?.match(/(\d{4})/)?.[1] || '0') || undefined,
+            avg_time_sec: 120
+        },
+        chapter_id: q.chapterId,
+        is_pyq: q.isPYQ,
+        is_top_pyq: q.isTopPYQ,
+        exam_source: q.examSource,
+        solution: {
+            text_latex: q.solution.textSolutionLatex,
+            video_url: q.solution.videoUrl,
+            video_timestamp_start: q.solution.videoTimestampStart,
+            audio_url: q.solution.audioExplanationUrl,
+            image_url: q.solution.handwrittenSolutionImageUrl
+        },
+        tag_id: q.tagId,
+        source_references: q.sourceReferences
+    };
+};
 
 export async function getQuestions(): Promise<QuestionPageType[]> {
     try {
         await connectToDatabase();
         let docs = await QuestionModel.find({}).lean();
 
-        // AUTO-RECOVERY: If MongoDB is empty, attempt to sync from Supabase
-        if (!docs || docs.length === 0) {
-            const synced = await syncSupabaseToMongo();
-            if (synced.success) {
-                docs = await QuestionModel.find({}).lean();
-            }
-        }
+        // REMOVED: Auto-recovery on read is dangerous and can cause usage spikes.
+        // if (!docs || docs.length === 0) {
+        //    await syncSupabaseToMongo(); ...
+        // }
 
         return (docs || []).map(mapDocToQuestion);
     } catch (error) {

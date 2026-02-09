@@ -21,12 +21,14 @@ export default function TagManager({ question, onUpdate, chapterName, taxonomy }
     const availableTags = useMemo(() => {
         if (!chapterName) return [];
 
-        // Find matching chapter node (Normalize for safety)
-        const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
-        const targetSlug = normalize(chapterName);
-
+        // Find matching chapter node (Robust Match: ID -> Name -> Slug)
         const chapterNode = taxonomy.find(n =>
-            n.type === 'chapter' && (normalize(n.name) === targetSlug || n.id === `chapter_${targetSlug}`)
+            n.type === 'chapter' && (
+                n.id === chapterName || // Direct ID match
+                n.name === chapterName || // Direct Name match
+                // Normalize match (fallback)
+                n.name.toLowerCase().replace(/[^a-z0-9]/g, '') === chapterName.toLowerCase().replace(/[^a-z0-9]/g, '')
+            )
         );
 
         if (!chapterNode) return [];
@@ -45,8 +47,7 @@ export default function TagManager({ question, onUpdate, chapterName, taxonomy }
 
             // 1. Check Chapter Concepts
             availableTags.forEach(tag => {
-                // Simple keyword matching - splitting tag name into words for better recall? 
-                // No, whole phrase is safer, or at least significant parts.
+                // Whole phrase matching
                 if (text.includes(tag.name.toLowerCase())) {
                     foundTags.push({ tagId: tag.id, weight: 0.5 });
                 }
@@ -88,14 +89,13 @@ export default function TagManager({ question, onUpdate, chapterName, taxonomy }
     };
 
     const handleAdd = () => {
-        const tagId = customTagName.trim() ? `TAG_CUSTOM_${customTagName.trim().toUpperCase().replace(/\s+/g, '_')}` : selectedTagId;
-        const finalWeight = parseInt(weight) / 100;
+        if (!selectedTagId) return;
 
-        if (!tagId) return;
+        const finalWeight = parseInt(weight) / 100;
 
         // Check format
         const newTag: WeightedTag = {
-            tagId: tagId,
+            tagId: selectedTagId,
             weight: isNaN(finalWeight) ? 1.0 : finalWeight
         };
 
@@ -103,16 +103,15 @@ export default function TagManager({ question, onUpdate, chapterName, taxonomy }
         const updatedTags = [...currentTags, newTag];
         onUpdate('conceptTags', updatedTags);
 
-        // If it's the first tag, or user wants, maybe set primary? 
+        // If it's the first tag, or user wants, maybe set primary?
         // For now, we just add to the breakdown. If primary is empty, set it.
         if (!question.tagId) {
-            onUpdate('tagId', tagId);
+            onUpdate('tagId', selectedTagId);
         }
 
         // Reset
         setIsAdding(false);
         setSelectedTagId('');
-        setCustomTagName('');
         setWeight('100');
     };
 
@@ -122,9 +121,7 @@ export default function TagManager({ question, onUpdate, chapterName, taxonomy }
     };
 
     const getTagName = (id: string) => {
-        if (id.startsWith('TAG_CUSTOM_')) {
-            return id.replace('TAG_CUSTOM_', '').replace(/_/g, ' ');
-        }
+        if (id === 'TAG_SKILL_CALCULATION') return 'Calculation Skill';
         return taxonomy.find(t => t.id === id)?.name || id;
     };
 
@@ -194,29 +191,14 @@ export default function TagManager({ question, onUpdate, chapterName, taxonomy }
                         <div className="space-y-1">
                             <select
                                 value={selectedTagId}
-                                onChange={(e) => {
-                                    setSelectedTagId(e.target.value);
-                                    if (e.target.value === 'custom') setCustomTagName('');
-                                }}
+                                onChange={(e) => setSelectedTagId(e.target.value)}
                                 className="w-full bg-gray-800 border border-gray-600 rounded px-2 py-1 text-[10px] text-gray-200 outline-none focus:border-purple-500"
                             >
                                 <option value="">Select Concept...</option>
                                 {availableTags.map(tag => (
                                     <option key={tag.id} value={tag.id}>{tag.name}</option>
                                 ))}
-                                <option value="custom" className="font-bold text-indigo-400">+ New Custom Tag</option>
                             </select>
-
-                            {selectedTagId === 'custom' && (
-                                <input
-                                    type="text"
-                                    placeholder="Enter custom tag name..."
-                                    value={customTagName}
-                                    onChange={(e) => setCustomTagName(e.target.value)}
-                                    className="w-full bg-gray-800 border border-indigo-500/50 rounded px-2 py-1 text-[10px] text-indigo-300 outline-none placeholder:text-gray-600"
-                                    autoFocus
-                                />
-                            )}
                         </div>
 
                         {/* Weight Input */}
@@ -244,7 +226,7 @@ export default function TagManager({ question, onUpdate, chapterName, taxonomy }
                         </button>
                         <button
                             onClick={handleAdd}
-                            disabled={!selectedTagId && !customTagName}
+                            disabled={!selectedTagId}
                             className="px-3 py-1 rounded bg-purple-600 hover:bg-purple-500 text-white text-[10px] font-bold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             Add Tag

@@ -188,100 +188,176 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
     };
 
     // -------------------------------------------------------------------------
-    // RENDER HELPER
+    // RENDER HELPER: CONFIG PANEL (Professional Redesign)
     // -------------------------------------------------------------------------
     const renderConfigPanel = () => (
-        <div className="space-y-6 md:space-y-8 text-gray-300">
-            <div className="space-y-2 md:space-y-3">
-                <label className="text-xs font-black text-gray-300 uppercase tracking-[0.15em] flex items-center gap-2 cursor-help"><Target size={14} className="text-indigo-400" /> Target Scope</label>
+        <div className="space-y-5 text-gray-300">
+            {/* Target Scope */}
+            <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-400 flex items-center gap-2">
+                    <Target size={16} className="text-indigo-500" />
+                    Target Scope
+                </label>
                 {selectedItems.length > 0 ? (
-                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-gradient-to-br from-indigo-900/40 to-purple-900/40 border border-indigo-500/30 rounded-xl p-4 md:p-5 relative group overflow-hidden backdrop-blur-md shadow-lg shadow-indigo-900/20">
-                        <div className="absolute inset-0 bg-indigo-500/5 group-hover:bg-indigo-500/10 transition-colors" />
-                        <div className="flex justify-between items-start mb-3 relative z-10"><div><span className="text-4xl font-black text-white block leading-none tracking-tight drop-shadow-md">{selectedItems.length}</span><span className="text-[10px] text-indigo-300 font-bold uppercase tracking-wider mt-1 block opacity-90">Active Modules</span></div><div className="h-9 w-9 rounded-full bg-indigo-500/30 flex items-center justify-center text-indigo-300 border border-indigo-500/40 shadow-[0_0_15px_rgba(99,102,241,0.3)]"><BookOpen size={16} /></div></div>
-                        <div className="flex flex-wrap gap-1.5 relative z-10">
-                            {selectedItems.slice(0, 3).map(i => (<span key={i} className="text-[10px] bg-black/50 text-indigo-100 px-2.5 py-1 rounded border border-indigo-500/30 truncate max-w-[120px] font-medium shadow-sm">{i}</span>))}
-                            {selectedItems.length > 3 && <span className="text-[10px] text-indigo-400 px-1 self-center font-bold">+ {selectedItems.length - 3}</span>}
+                    <div className="bg-gray-900 border border-indigo-500/30 rounded-xl p-5 relative overflow-hidden group">
+                        <div className="flex justify-between items-center mb-3 relative z-10">
+                            <div>
+                                <span className="text-3xl font-bold text-white block leading-none">{selectedItems.length}</span>
+                                <span className="text-sm text-indigo-400 font-medium px-0.5">Active Modules</span>
+                            </div>
+                            <div className="h-10 w-10 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 border border-indigo-500/20">
+                                <BookOpen size={20} />
+                            </div>
                         </div>
-                    </motion.div>
+                        <div className="flex flex-wrap gap-2 relative z-10">
+                            {selectedItems.slice(0, 3).map(i => (
+                                <span key={i} className="text-xs font-medium bg-black/40 text-gray-300 px-2 py-1 rounded border border-gray-700 truncate max-w-[120px]">
+                                    {i}
+                                </span>
+                            ))}
+                            {selectedItems.length > 3 && (
+                                <span className="text-xs text-gray-500 font-medium self-center pl-1">
+                                    + {selectedItems.length - 3} more
+                                </span>
+                            )}
+                        </div>
+                    </div>
                 ) : (
-                    <div className="border border-dashed border-gray-700 bg-gray-900/20 rounded-xl p-5 md:p-6 text-center group hover:border-gray-500 transition-colors backdrop-blur-sm cursor-pointer"><p className="text-xs text-gray-500 font-bold group-hover:text-gray-400 tracking-wide">Select chapters to initialize system.</p></div>
+                    <div className="border border-dashed border-gray-800 bg-gray-900/50 rounded-xl p-6 text-center text-gray-500 hover:border-gray-600 transition-colors cursor-pointer">
+                        <p className="text-sm font-medium">Select chapters to begin.</p>
+                    </div>
                 )}
             </div>
 
-            <div className="space-y-2 md:space-y-3">
-                <label className="text-xs font-black text-gray-300 uppercase tracking-[0.15em] flex items-center gap-2"><Diamond size={14} className="text-purple-400" /> Curation Priority</label>
-                <div className="grid grid-cols-2 gap-2 p-1 bg-black/20 rounded-xl border border-white/5">
+            {/* Curation Priority */}
+            <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-400 flex items-center gap-2">
+                    <Diamond size={16} className="text-purple-500" />
+                    Curation Priority
+                </label>
+                <div className="grid grid-cols-2 gap-3">
                     {[
-                        { id: 'standard', label: 'Standard', tooltip: 'All Questions', icon: Layers },
-                        { id: 'high-yield', label: 'Top 50 PYQ', tooltip: 'Top 50 PYQs per chapter', icon: Sparkles }
+                        { id: 'standard', label: 'Standard', desc: 'Full Mastery', icon: Layers },
+                        { id: 'high-yield', label: 'Top 50 PYQ', desc: 'Rapid Review', icon: Sparkles }
                     ].map(opt => {
                         const Icon = opt.icon;
                         const isActive = selectionTier === opt.id;
                         return (
-                            <motion.button
+                            <button
                                 key={opt.id}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
                                 onClick={() => setSelectionTier(opt.id as any)}
-                                title={opt.tooltip}
-                                className={`relative flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer ${isActive ? 'bg-purple-900/40 border-purple-500/50 text-white shadow-lg' : 'bg-white/5 border-transparent text-gray-500 hover:bg-white/10'}`}
+                                className={`flex flex-col gap-1 p-3 rounded-lg border text-left transition-all ${isActive ? 'bg-purple-900/20 border-purple-500/50' : 'bg-gray-900 border-gray-800 hover:border-gray-600'}`}
                             >
-                                <div className={`p-1.5 rounded-md ${isActive ? 'bg-purple-500 text-white' : 'bg-gray-800'}`}>
-                                    <Icon size={14} />
+                                <div className="flex justify-between items-start mb-1">
+                                    <Icon size={16} className={isActive ? 'text-purple-400' : 'text-gray-500'} />
+                                    {isActive && <div className="w-2 h-2 rounded-full bg-purple-500" />}
                                 </div>
-                                <div className="text-left">
-                                    <span className="block text-xs font-black uppercase tracking-wider">{opt.label}</span>
-                                </div>
-                            </motion.button>
+                                <span className={`text-sm font-bold ${isActive ? 'text-white' : 'text-gray-300'}`}>{opt.label}</span>
+                                <span className="text-xs text-gray-500">{opt.desc}</span>
+                            </button>
                         );
                     })}
                 </div>
             </div>
 
-            <div className="space-y-2 md:space-y-3">
-                <label className="text-xs font-black text-gray-300 uppercase tracking-[0.15em] flex items-center gap-2"><Zap size={14} className="text-amber-400" /> Intensity</label>
-                <div className="grid grid-cols-4 gap-2 bg-black/20 p-1.5 rounded-xl border border-white/5 backdrop-blur-md">
-                    {[{ id: 'Mix', label: 'Mix', active: 'bg-indigo-700 border-indigo-500' }, { id: 'Easy', label: 'Easy', active: 'bg-emerald-700 border-emerald-500' }, { id: 'Medium', label: 'Medium', active: 'bg-amber-700 border-amber-500' }, { id: 'Hard', label: 'Hard', active: 'bg-red-700 border-red-500' }].map(opt => (
-                        <motion.button key={opt.id} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setDifficulty(opt.id as any)} className={`py-2 md:py-2.5 rounded-lg text-xs font-black uppercase tracking-wider transition-all cursor-pointer border border-transparent ${difficulty === opt.id ? `${opt.active} text-white shadow-lg` : 'text-gray-500 hover:text-gray-200 hover:bg-white/10'}`}>{opt.label}</motion.button>
+            {/* Intensity */}
+            <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-400 flex items-center gap-2">
+                    <Zap size={16} className="text-amber-500" />
+                    Intensity
+                </label>
+                <div className="grid grid-cols-4 gap-2 p-1 bg-gray-900 rounded-lg border border-gray-800">
+                    {[{ id: 'Mix', label: 'Mix' }, { id: 'Easy', label: 'Easy' }, { id: 'Medium', label: 'Med' }, { id: 'Hard', label: 'Hard' }].map(opt => (
+                        <button
+                            key={opt.id}
+                            onClick={() => setDifficulty(opt.id as any)}
+                            className={`py-2 rounded-md text-xs font-semibold transition-all ${difficulty === opt.id ? 'bg-gray-800 text-white shadow-sm border border-gray-700' : 'text-gray-500 hover:text-gray-300'}`}
+                        >
+                            {opt.label}
+                        </button>
                     ))}
                 </div>
             </div>
-            <div className="space-y-2 md:space-y-2.5">
-                <label className="text-xs font-black text-gray-300 uppercase tracking-[0.15em] flex items-center gap-2"><HelpCircle size={14} className="text-emerald-400" /> Question Type</label>
-                <div className="grid grid-cols-3 gap-1.5 p-1">
-                    {[{ id: 'Mix', label: 'Mix', icon: Sparkles }, { id: 'MCQ', label: 'MCQ', icon: CheckCircle2 }, { id: 'Numerical', label: 'Integer', icon: Calculator }, { id: 'Statement', label: 'Stmt', icon: List }, { id: 'Assertion', label: 'A/R', icon: Brain }].map(type => {
-                        const Icon = type.icon;
+
+            {/* Question Type */}
+            <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-400 flex items-center gap-2">
+                    <HelpCircle size={16} className="text-emerald-500" />
+                    Question Type
+                </label>
+                <div className="flex flex-wrap gap-2">
+                    {[{ id: 'Mix', label: 'Mix' }, { id: 'MCQ', label: 'MCQ' }, { id: 'Numerical', label: 'Numeric' }, { id: 'Statement', label: 'Statement' }, { id: 'Assertion', label: 'A/R' }].map(type => {
                         const isActive = questionType === type.id;
                         return (
-                            <motion.button key={type.id} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setQuestionType(type.id as any)} className={`relative h-8 md:h-9 rounded-md text-xs font-black uppercase tracking-wider transition-all cursor-pointer border flex items-center justify-center gap-1.5 ${isActive ? 'bg-emerald-700 border-emerald-600 text-white shadow-md z-10' : 'bg-white/5 border-transparent text-gray-500 hover:bg-white/10 hover:text-gray-300'} ${type.id === 'Assertion' ? 'col-span-1' : ''}`}>
-                                <Icon size={14} strokeWidth={2.5} className={isActive ? 'drop-shadow-sm' : 'opacity-70'} /><span>{type.label}</span>
-                            </motion.button>
+                            <button
+                                key={type.id}
+                                onClick={() => setQuestionType(type.id as any)}
+                                className={`px-3 py-1.5 rounded-md text-xs font-semibold border transition-all ${isActive ? 'bg-emerald-900/20 border-emerald-500/50 text-emerald-100' : 'bg-gray-900 border-gray-800 text-gray-500 hover:border-gray-600'}`}
+                            >
+                                {type.label}
+                            </button>
                         )
                     })}
                 </div>
             </div>
-            <div className="space-y-2 md:space-y-3">
-                <div className="flex items-center justify-between"><label className="text-xs font-black text-gray-300 uppercase tracking-[0.15em] flex items-center gap-2"><Atom size={14} className="text-cyan-400" /> Quantity</label><div className={`px-2.5 py-0.5 rounded border text-sm font-black tracking-wider transition-colors duration-300 ${questionCount > 50 ? 'bg-cyan-500 text-black border-cyan-400 animate-pulse' : 'bg-cyan-900/30 border-cyan-500/30 text-cyan-300'}`}>{questionCount > 50 ? 'MAX' : questionCount}</div></div>
-                <div className="relative pt-6 pb-2 px-1 group h-20">
-                    <input type="range" min="5" max="55" step="5" value={questionCount} onChange={(e) => setQuestionCount(Number(e.target.value))} className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-cyan-500 hover:accent-cyan-400 transition-all focus:outline-none relative z-20" style={{ background: `linear-gradient(to right, #06b6d4 0%, #06b6d4 ${((questionCount - 5) / 50) * 100}%, #374151 ${((questionCount - 5) / 50) * 100}%, #374151 100%)` }} />
-                    <div className="absolute top-12 left-0 w-full h-4 z-10 text-xs font-bold text-gray-400 group-hover:text-gray-300 select-none uppercase tracking-wider transition-colors pointer-events-none">
-                        <span className="absolute left-0 -translate-x-0">5</span>
-                        <span className="absolute left-1/2 -translate-x-1/2">30</span>
-                        {/* FIX: Moved 50 to left-[85%] to prevent overlap with Max */}
-                        <span className="absolute left-[85%] -translate-x-1/2">50</span>
-                        <span className={`absolute right-0 translate-x-0 ${questionCount > 50 ? 'text-cyan-400' : ''}`}>Max</span>
-                    </div>
+
+            {/* Quantity */}
+            <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                    <label className="text-sm font-medium text-gray-400 flex items-center gap-2">
+                        <Atom size={16} className="text-cyan-500" />
+                        Quantity
+                    </label>
+                    <span className="text-lg font-bold text-white font-mono">
+                        {questionCount > 50 ? 'MAX' : questionCount}
+                    </span>
+                </div>
+                <input
+                    type="range"
+                    min="5"
+                    max="55"
+                    step="5"
+                    value={questionCount}
+                    onChange={(e) => setQuestionCount(Number(e.target.value))}
+                    className="w-full h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-cyan-500 hover:accent-cyan-400"
+                />
+                <div className="flex justify-between text-xs text-gray-600 font-medium px-1">
+                    <span>5</span>
+                    <span>30</span>
+                    <span>Max</span>
                 </div>
             </div>
-            <div className="space-y-2 md:space-y-3">
-                <label className="text-xs font-black text-gray-300 uppercase tracking-[0.15em] flex items-center gap-2"><Brain size={14} className="text-pink-400" /> Simulation Mode</label>
-                <div className="grid grid-cols-2 gap-3">{['practice', 'exam'].map(mode => (<motion.button key={mode} whileHover={{ scale: 1.02, y: -1 }} whileTap={{ scale: 0.98 }} onClick={() => setTimerMode(mode as any)} className={`group py-3 px-4 rounded-xl border transition-all cursor-pointer relative overflow-hidden backdrop-blur-md shadow-lg flex items-center justify-center gap-3 ${timerMode === mode ? (mode === 'practice' ? 'bg-indigo-700 border-indigo-600 text-white' : 'bg-violet-700 border-violet-600 text-white') : 'bg-black/20 border-white/10 text-gray-500 hover:bg-white/5 hover:text-gray-300'}`}>{mode === 'practice' ? <BookOpen size={18} /> : <Clock size={18} />}<span className="text-xs font-black uppercase tracking-wider relative z-10">{mode === 'practice' ? 'Practice' : 'Exam Mode'}</span></motion.button>))}</div>
+
+            {/* Mode */}
+            <div className="space-y-2 pb-3 border-b border-gray-800">
+                <label className="text-sm font-medium text-gray-400 flex items-center gap-2">
+                    <Brain size={16} className="text-pink-500" />
+                    Simulation Mode
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                    {['practice', 'exam'].map(mode => (
+                        <button
+                            key={mode}
+                            onClick={() => setTimerMode(mode as any)}
+                            className={`py-3 px-4 rounded-xl border transition-all flex items-center justify-center gap-2 ${timerMode === mode ? (mode === 'practice' ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-red-600 border-red-500 text-white') : 'bg-gray-900 border-gray-800 text-gray-500 hover:bg-gray-800'}`}
+                        >
+                            {mode === 'practice' ? <BookOpen size={16} /> : <Clock size={16} />}
+                            <span className="text-sm font-bold capitalize">{mode}</span>
+                        </button>
+                    ))}
+                </div>
             </div>
-            <div className="pt-4 md:pt-6">
-                <motion.button whileHover={{ scale: 1.02, boxShadow: "0 20px 25px -5px rgba(79, 70, 229, 0.4)" }} whileTap={{ scale: 0.98 }} onClick={handleStart} disabled={selectedItems.length === 0} className="w-full py-4 bg-gradient-to-r from-indigo-700 via-violet-700 to-purple-700 hover:from-indigo-600 hover:via-violet-600 hover:to-purple-600 text-white rounded-2xl font-black text-sm uppercase tracking-[0.25em] shadow-xl shadow-indigo-900/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 border border-white/20 cursor-pointer group relative overflow-hidden backdrop-blur-xl">
-                    <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" /><Play size={18} fill="currentColor" className="group-hover:scale-110 transition-transform relative z-10 drop-shadow-md" /><span className="relative z-10 drop-shadow-md">Initialize</span>
-                </motion.button>
-                <div className="flex items-center justify-center gap-2 mt-3 md:mt-4 opacity-60"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /><p className="text-[10px] text-gray-400 font-bold tracking-widest uppercase">System Ready</p></div>
+
+            {/* Start Button */}
+            <div className="pt-4">
+                <button
+                    onClick={handleStart}
+                    disabled={selectedItems.length === 0}
+                    className="w-full py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-black rounded-xl font-black text-sm uppercase tracking-wide shadow-xl shadow-orange-500/20 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:from-gray-700 disabled:to-gray-600 disabled:shadow-none flex items-center justify-center gap-2"
+                >
+                    <Play size={18} fill="currentColor" />
+                    {selectedItems.length === 0 ? 'Select Chapters to Begin' : 'Begin Session'}
+                </button>
             </div>
         </div>
     );
@@ -311,20 +387,81 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
 
             <div className="w-full max-w-[1700px] flex flex-col md:flex-row h-auto md:h-screen overflow-visible md:overflow-hidden bg-[#080C10]/80 backdrop-blur-2xl shadow-2xl shadow-black border-x border-gray-900 relative z-10">
                 <main className="flex-1 flex flex-col min-w-0 border-r border-gray-800 relative bg-transparent h-full md:h-auto overflow-visible md:overflow-hidden">
-                    <div className="px-6 py-4 md:px-10 md:py-6 z-20 border-b border-gray-900/50 bg-[#080C10]/95 backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-6 md:gap-10 shrink-0">
-                        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} className="flex flex-col gap-2 shrink-0 w-full md:w-auto items-center md:items-start text-center md:text-left">
-                            <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-200 to-gray-500 uppercase tracking-tighter leading-none select-none drop-shadow-sm filter contrast-125">Crucible</h1>
-                            <div className="flex items-center gap-3"><div className="h-1 w-12 md:w-16 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.6)] animate-pulse"></div><h2 className="text-[10px] md:text-xs font-mono font-bold tracking-[0.4em] text-amber-500 uppercase drop-shadow-[0_0_10px_rgba(245,158,11,0.5)]">Forge Your Rank</h2></div>
-                        </motion.div>
+                    <div className="px-6 py-6 md:px-10 md:py-8 z-20 border-b border-gray-900/50 bg-[#0B0F15]/95 backdrop-blur-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-10 shrink-0 relative overflow-visible">
+                        {/* Glow Effect */}
+                        <div className="absolute top-1/2 left-20 -translate-y-1/2 w-72 h-40 bg-indigo-500/20 blur-[80px] rounded-full pointer-events-none mix-blend-screen" />
+
+                        <div className="flex flex-col gap-4 w-full md:w-auto z-10 relative">
+                            <div className="flex flex-col items-center md:items-start pl-1">
+                                {/* CRUCIBLE Logo with Animated U */}
+                                <h1 className="text-4xl md:text-[3rem] font-black tracking-tighter leading-none select-none filter contrast-125 flex items-baseline">
+                                    <span style={{ background: 'linear-gradient(to top, #f97316 0%, #fb923c 30%, #fef3c7 60%, #ffffff 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }} className="drop-shadow-[0_2px_25px_rgba(251,146,60,0.4)]">
+                                        CR
+                                    </span>
+                                    {/* Animated U - Crucible with rising light */}
+                                    <span className="relative inline-block mx-[-2px]">
+                                        <span style={{ background: 'linear-gradient(to top, #f97316 0%, #fb923c 30%, #fef3c7 60%, #ffffff 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }} className="relative z-10 drop-shadow-[0_2px_25px_rgba(251,146,60,0.4)]">
+                                            U
+                                        </span>
+                                        {/* Inner glow - Lightning Blue rising animation */}
+                                        <span
+                                            className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none"
+                                            style={{ clipPath: 'inset(25% 20% 20% 20% round 0 0 40% 40%)' }}
+                                        >
+                                            <span className="w-[50%] h-[60%] bg-gradient-to-t from-cyan-500 via-sky-400 to-white rounded-t-full opacity-80 blur-[3px] animate-crucible-glow" />
+                                        </span>
+                                        {/* Electric sparkles - cyan/blue */}
+                                        <span className="absolute top-[30%] left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-cyan-300 rounded-full animate-sparkle shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
+                                        <span className="absolute top-[35%] left-[30%] w-1 h-1 bg-sky-300 rounded-full animate-sparkle-delay-1 shadow-[0_0_4px_rgba(125,211,252,0.8)]" />
+                                        <span className="absolute top-[32%] left-[70%] w-1 h-1 bg-white rounded-full animate-sparkle-delay-2 shadow-[0_0_4px_rgba(255,255,255,0.8)]" />
+                                    </span>
+                                    <span style={{ background: 'linear-gradient(to top, #f97316 0%, #fb923c 30%, #fef3c7 60%, #ffffff 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }} className="drop-shadow-[0_2px_25px_rgba(251,146,60,0.4)]">
+                                        CIBLE
+                                    </span>
+                                </h1>
+                                <div className="mt-2 flex items-center gap-3">
+                                    <div className="w-8 h-px bg-gradient-to-r from-transparent via-orange-500/60 to-transparent" />
+                                    <p className="text-[9px] font-bold text-orange-400/90 uppercase tracking-[0.35em]">
+                                        Forge Your Rank
+                                    </p>
+                                    <div className="w-8 h-px bg-gradient-to-r from-transparent via-orange-500/60 to-transparent" />
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                            {/* Guide - Redesigned as inline info card */}
+                            <div className="hidden md:flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-indigo-900/40 to-purple-900/40 rounded-lg border border-indigo-500/30 backdrop-blur-sm">
+                                <div className="w-5 h-5 rounded-full bg-indigo-500/20 flex items-center justify-center">
+                                    <HelpCircle size={12} className="text-indigo-400" />
+                                </div>
+                                <span className="text-[10px] text-gray-300">
+                                    Select chapters → Configure session → <span className="text-indigo-400 font-semibold">Begin</span>
+                                </span>
+                            </div>
+
+                            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-gray-900/80 rounded-full border border-gray-800/50 backdrop-blur-sm">
+                                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Online</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="hidden lg:flex px-6 md:px-10 pt-4 md:pt-6 pb-2 border-b border-gray-800/50 items-center justify-center md:justify-start gap-4 md:gap-6 overflow-x-auto custom-scrollbar cursor-pointer">
+                    <div className="hidden lg:flex px-6 md:px-10 border-b border-gray-800 bg-[#0B0F15] items-center gap-8 overflow-x-auto custom-scrollbar">
                         {[{ id: 'chapter', label: 'Chapters', icon: LayoutGrid }, { id: 'pyq', label: 'Previous Papers', icon: FileText }, { id: 'saved', label: 'Saved', icon: Bookmark }].map(tab => {
                             const Icon = tab.icon;
                             const isActive = selectedTab === tab.id;
                             return (
-                                <button key={tab.id} onClick={() => { setSelectedTab(tab.id as any); setSelectedItems([]); }} className={`relative pb-3 px-1 text-xs md:text-sm font-black uppercase tracking-widest transition-colors flex items-center gap-2 group shrink-0 cursor-pointer ${isActive ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}>
-                                    <Icon size={14} strokeWidth={2.5} className={isActive ? 'text-indigo-400' : 'opacity-60 group-hover:opacity-100'} />{tab.label}{isActive && <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.8)]" />}
+                                <button
+                                    key={tab.id}
+                                    onClick={() => { setSelectedTab(tab.id as any); setSelectedItems([]); }}
+                                    className={`relative py-4 text-sm font-medium flex items-center gap-2 transition-colors ${isActive ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                >
+                                    <Icon size={16} strokeWidth={2} className={isActive ? 'text-indigo-400' : 'opacity-60'} />
+                                    {tab.label}
+                                    {isActive && <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-500" />}
                                 </button>
                             );
                         })}
@@ -402,9 +539,9 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                                 <div className="grid grid-cols-1 xl:grid-cols-2 divide-y xl:divide-y-0 xl:divide-x border-gray-800 h-full">
                                     {/* Column Left (Class 11) */}
                                     <div className="bg-transparent flex flex-col h-full">
-                                        <div className="bg-gray-800/20 px-6 py-2 border-b border-gray-800 text-[10px] uppercase font-bold text-gray-500 tracking-widest hidden xl:block">Class 11</div>
+                                        <div className="bg-gray-900/50 px-6 py-3 border-b border-gray-800 text-xs font-semibold text-gray-400 uppercase tracking-wider hidden xl:block">Class 11</div>
                                         {/* Class 11 Vertical Split Container */}
-                                        <div className="grid grid-cols-1 md:grid-cols-2 bg-gray-800/30 h-full divide-y md:divide-y-0 md:divide-x border-gray-800/50">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 bg-gray-900/20 h-full divide-y md:divide-y-0 md:divide-x border-gray-800/50">
                                             {/* Left Sub-Column (1-6) */}
                                             <div className="flex flex-col">
                                                 {CLASS_11_CHAPTERS.slice(0, 6).map(item => renderGridItem(item))}
@@ -418,9 +555,9 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
 
                                     {/* Column Right (Class 12) */}
                                     <div className="bg-transparent flex flex-col h-full">
-                                        <div className="bg-gray-800/20 px-6 py-2 border-b border-gray-800 text-[10px] uppercase font-bold text-gray-500 tracking-widest hidden xl:block">Class 12</div>
+                                        <div className="bg-gray-900/50 px-6 py-3 border-b border-gray-800 text-xs font-semibold text-gray-400 uppercase tracking-wider hidden xl:block">Class 12</div>
                                         {/* Class 12 Vertical Split Container */}
-                                        <div className="grid grid-cols-1 md:grid-cols-2 bg-gray-800/30 h-full divide-y md:divide-y-0 md:divide-x border-gray-800/50">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 bg-gray-900/20 h-full divide-y md:divide-y-0 md:divide-x border-gray-800/50">
                                             <div className="flex flex-col">
                                                 {CLASS_12_CHAPTERS.slice(0, 7).map(item => renderGridItem(item))}
                                             </div>
@@ -431,7 +568,7 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                                     </div>
                                 </div>
                             ) : selectedTab === 'pyq' ? (
-                                <div className="mb-0 space-y-2 p-4">
+                                <div className="mb-0 space-y-2 p-6 max-w-5xl mx-auto">
                                     {(() => {
                                         // Group exam sources by year
                                         const allSources = Array.from(new Set(initialQuestions.map(q => q.examSource).filter(Boolean) as string[]));
@@ -451,20 +588,22 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                                             const questionCount = shifts.reduce((acc, src) => acc + initialQuestions.filter(q => q.examSource === src).length, 0);
 
                                             return (
-                                                <div key={year} className="rounded-xl border border-gray-800/50 overflow-hidden bg-[#080C10]">
+                                                <div key={year} className="rounded-xl border border-gray-800 overflow-hidden bg-[#0F0F12]">
                                                     <button
                                                         onClick={() => setExpandedPYQYears(prev =>
                                                             prev.includes(year) ? prev.filter(y => y !== year) : [...prev, year]
                                                         )}
-                                                        className="w-full flex items-center justify-between px-5 py-4 bg-gray-900/50 hover:bg-gray-800/50 transition-colors"
+                                                        className="w-full flex items-center justify-between px-6 py-4 bg-gray-900/30 hover:bg-gray-800/50 transition-colors"
                                                     >
-                                                        <div className="flex items-center gap-3">
-                                                            <motion.div animate={{ rotate: isExpanded ? 90 : 0 }} transition={{ duration: 0.2 }}>
-                                                                <ChevronDown size={18} className="text-indigo-400" />
-                                                            </motion.div>
-                                                            <span className="text-sm font-black text-white">JEE Main {year}</span>
-                                                            <span className="text-[10px] text-gray-500 font-bold bg-gray-800 px-2 py-0.5 rounded-full">{shifts.length} shifts</span>
-                                                            <span className="text-[10px] text-indigo-400 font-bold">{questionCount} Qs</span>
+                                                        <div className="flex items-center gap-4">
+                                                            <div className={`p-1.5 rounded-lg ${isExpanded ? 'bg-indigo-900/30 text-indigo-400' : 'bg-gray-800 text-gray-500'}`}>
+                                                                <ChevronDown size={18} className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+                                                            </div>
+                                                            <span className="text-base font-bold text-white">JEE Main {year}</span>
+                                                            <div className="flex gap-2">
+                                                                <span className="text-xs text-gray-400 font-medium bg-gray-800 px-2.5 py-1 rounded-full">{shifts.length} shifts</span>
+                                                                <span className="text-xs text-indigo-300 font-medium bg-indigo-900/20 px-2.5 py-1 rounded-full border border-indigo-500/20">{questionCount} Qs</span>
+                                                            </div>
                                                         </div>
                                                     </button>
                                                     <AnimatePresence>
@@ -476,20 +615,20 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                                                                 transition={{ duration: 0.2 }}
                                                                 className="overflow-hidden"
                                                             >
-                                                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-800/30">
+                                                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-800/50">
                                                                     {shifts.map(shift => {
                                                                         const shiftQCount = initialQuestions.filter(q => q.examSource === shift).length;
                                                                         const isSelected = selectedItems.includes(shift);
-                                                                        // Extract shift name (e.g., "Jan 21 Morning Shift" from "JEE Main 2026 - Jan 21 Morning Shift")
+                                                                        // Extract shift name
                                                                         const shiftName = shift.replace(/JEE Main \d{4}\s*-?\s*/, '').trim() || shift;
                                                                         return (
                                                                             <div
                                                                                 key={shift}
                                                                                 onClick={() => setSelectedItems([shift])}
-                                                                                className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-colors border-b border-gray-800/30 ${isSelected ? 'bg-indigo-900/30 border-l-2 border-l-indigo-500' : 'bg-[#0A0E14] hover:bg-white/[0.02]'}`}
+                                                                                className={`flex items-center justify-between px-5 py-4 cursor-pointer transition-colors border-b border-gray-800/30 ${isSelected ? 'bg-indigo-900/20 border-l-2 border-l-indigo-500' : 'bg-[#0F0F12] hover:bg-white/[0.02]'}`}
                                                                             >
-                                                                                <span className={`text-xs font-bold ${isSelected ? 'text-white' : 'text-gray-400'}`}>{shiftName}</span>
-                                                                                <span className="text-[10px] text-gray-500 font-mono">{shiftQCount} Qs</span>
+                                                                                <span className={`text-sm font-medium ${isSelected ? 'text-white' : 'text-gray-400'}`}>{shiftName}</span>
+                                                                                <span className="text-xs text-gray-600 font-mono group-hover:text-gray-500">{shiftQCount} Qs</span>
                                                                             </div>
                                                                         );
                                                                     })}
@@ -519,7 +658,7 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                                         {/* Graphic (Left - Compact) */}
                                         <div className="shrink-0 w-24 h-24 md:w-32 md:h-32 lg:w-28 lg:h-28 relative rounded-full overflow-hidden border border-amber-500/20 shadow-lg shadow-amber-900/20 group-hover:scale-105 transition-transform duration-500">
                                             <div className="absolute inset-0 bg-amber-500/10 z-10 mix-blend-overlay" />
-                                            <img src="/arjuna_focus_v2.png" alt="Target" className="w-full h-full object-cover scale-110 opacity-90" />
+                                            <img src="/arjuna_focus_v2.png" alt="Target" className="w-full h-full object-cover scale-90 opacity-90" />
                                         </div>
 
                                         {/* Content (Right - Balanced) */}
@@ -555,8 +694,8 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                 </main>
 
                 <aside className="hidden md:flex w-[380px] lg:w-[440px] bg-[#0B0F15]/70 backdrop-blur-3xl border-l border-white/5 flex-col shrink-0 z-30 relative shadow-2xl">
-                    <div className="h-28 border-b border-gray-800 flex items-center px-10 shrink-0 relative overflow-hidden bg-gradient-to-b from-white/[0.02] to-transparent"><div className="absolute top-0 right-0 p-24 bg-purple-600/5 blur-3xl rounded-full animate-pulse" /><div className="relative z-10"><h2 className="text-sm font-black text-gray-300 uppercase tracking-[0.25em] flex items-center gap-3 drop-shadow-md"><Filter size={16} className="text-indigo-400" />System Config</h2><p className="text-[11px] text-gray-500 font-bold mt-1.5 tracking-wide">Set mission parameters.</p></div></div>
-                    <div className="flex-1 px-8 py-8 lg:p-10 overflow-y-auto custom-scrollbar">{renderConfigPanel()}</div>
+                    <div className="h-16 border-b border-gray-800 flex items-center px-8 shrink-0 relative overflow-hidden bg-gradient-to-b from-white/[0.02] to-transparent"><div className="relative z-10 flex items-center gap-3"><div className="p-2 rounded-lg bg-indigo-500/10 border border-indigo-500/20"><Filter size={14} className="text-indigo-400" /></div><div><h2 className="text-xs font-black text-gray-300 uppercase tracking-[0.2em]">Session Config</h2><p className="text-[9px] text-gray-500 font-medium mt-0.5">Configure your practice session</p></div></div></div>
+                    <div className="flex-1 px-6 py-5 lg:px-8 lg:py-6 overflow-y-auto custom-scrollbar">{renderConfigPanel()}</div>
                 </aside>
 
                 <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-[#080C10]/95 backdrop-blur-xl border-t border-gray-800 z-50 safe-area-bottom"><motion.button whileTap={{ scale: 0.95 }} onClick={() => setShowMobileConfig(true)} className="w-full py-4 bg-white text-black font-black uppercase tracking-widest text-xs rounded-xl shadow-xl flex items-center justify-center gap-2"><Filter size={14} strokeWidth={3} />Configure Mission {selectedItems.length > 0 && `(${selectedItems.length})`}</motion.button></div>
@@ -572,162 +711,137 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                 </AnimatePresence>
 
                 {/* --- ONBOARDING MODAL (V9.27) --- */}
+                {/* --- ONBOARDING MODAL (Professional Redesign) --- */}
                 <AnimatePresence>
                     {showOnboarding && (
-                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-[#05070a]/80 backdrop-blur-md">
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
                             <motion.div
-                                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                                initial={{ opacity: 0, scale: 0.95, y: 10 }}
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                                exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                                className="relative w-full max-w-2xl bg-[#0B0F15] border border-indigo-500/30 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(79,70,229,0.2)]"
+                                exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                                className="w-full max-w-3xl bg-[#0F0F12] border border-gray-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
                             >
                                 {/* Header */}
-                                <div className="px-8 py-6 border-b border-white/5 flex items-center justify-between bg-gradient-to-r from-indigo-500/10 to-transparent">
-                                    <div className="flex items-center gap-3">
-                                        <div className="p-2 bg-indigo-500 rounded-lg text-white shadow-lg shadow-indigo-500/20">
-                                            <Sparkles size={20} />
-                                        </div>
-                                        <div>
-                                            <h4 className="text-lg font-black text-white uppercase tracking-tighter">Crucible Guide</h4>
-                                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">System Onboarding</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex gap-1">
+                                <div className="px-8 py-5 border-b border-gray-800 bg-[#0F0F12] flex items-center justify-between shrink-0">
+                                    <h4 className="text-base font-semibold text-white tracking-wide">Crucible Guide</h4>
+                                    <div className="flex gap-2">
                                         {[0, 1, 2, 3].map(i => (
-                                            <div key={i} className={`h-1 rounded-full transition-all duration-300 ${onboardingSlide === i ? 'w-6 bg-indigo-500' : 'w-2 bg-gray-800'}`} />
+                                            <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${onboardingSlide === i ? 'w-8 bg-indigo-500' : 'w-2 bg-gray-800'}`} />
                                         ))}
                                     </div>
                                 </div>
 
-                                {/* Slide Content */}
-                                <div className="px-8 py-10 min-h-[380px] flex flex-col justify-center">
+                                {/* Content */}
+                                <div className="p-8 md:p-12 overflow-y-auto">
                                     <AnimatePresence mode="wait">
                                         <motion.div
                                             key={onboardingSlide}
-                                            initial={{ opacity: 0, scale: 0.98 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            exit={{ opacity: 0, scale: 1.02 }}
-                                            className="space-y-8"
+                                            initial={{ opacity: 0, x: 20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            exit={{ opacity: 0, x: -20 }}
+                                            transition={{ duration: 0.2 }}
+                                            className="h-full flex flex-col justify-center min-h-[300px]"
                                         >
                                             {onboardingSlide === 0 && (
-                                                <div className="space-y-6 text-center">
-                                                    <div className="mx-auto w-20 h-20 bg-indigo-500/10 rounded-2xl flex items-center justify-center border border-indigo-500/20 shadow-inner">
-                                                        <Orbit size={40} className="text-indigo-400 animate-[spin_10s_linear_infinite]" />
+                                                <div className="text-center space-y-6 max-w-lg mx-auto">
+                                                    <div className="mx-auto w-16 h-16 bg-indigo-500/10 rounded-2xl flex items-center justify-center border border-indigo-500/20 text-indigo-400">
+                                                        <Sparkles size={32} />
                                                     </div>
                                                     <div className="space-y-3">
-                                                        <h2 className="text-2xl md:text-3xl font-black text-white leading-tight">The Gold Standard of Practice</h2>
-                                                        <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-lg mx-auto italic">"Crucible is an extreme-focus environment built to take your rank beyond the top 1% limit."</p>
-                                                    </div>
-                                                    <div className="inline-block p-4 bg-indigo-500/5 rounded-2xl border border-indigo-500/10 text-indigo-300 text-[10px] font-black uppercase tracking-widest">
-                                                        Initialize your mission in 3 phases
+                                                        <h2 className="text-3xl font-bold text-white tracking-tight">Welcome to Crucible</h2>
+                                                        <p className="text-gray-400 text-lg leading-relaxed">
+                                                            A high-performance practice environment designed to optimize your rank through focused problem solving.
+                                                        </p>
                                                     </div>
                                                 </div>
                                             )}
 
                                             {onboardingSlide === 1 && (
-                                                <div className="space-y-6">
-                                                    <div className="flex items-center gap-3 text-amber-500">
-                                                        <Crosshair size={24} />
-                                                        <h2 className="text-xl font-bold uppercase tracking-tight">1. Target & Priority</h2>
+                                                <div className="space-y-8">
+                                                    <div className="space-y-2">
+                                                        <h2 className="text-2xl font-bold text-white">Target & Scope</h2>
+                                                        <p className="text-gray-400">Define exactly what you want to practice.</p>
                                                     </div>
 
-                                                    <div className="space-y-4">
-                                                        {/* UI Mirror: Priority */}
-                                                        <div className="bg-black/40 p-4 rounded-2xl border border-white/5 space-y-3">
-                                                            <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Curation Tier</span>
-                                                            <div className="flex gap-2">
-                                                                <div className="flex-1 flex items-center gap-2 p-2 bg-purple-900/40 border border-purple-500/50 rounded-lg">
-                                                                    <div className="p-1 bg-purple-500 rounded text-white"><Layers size={10} /></div>
-                                                                    <span className="text-[9px] font-black text-white uppercase">Standard</span>
-                                                                </div>
-                                                                <div className="flex-1 flex items-center gap-2 p-2 bg-white/5 border border-transparent rounded-lg opacity-50">
-                                                                    <div className="p-1 bg-gray-800 rounded text-gray-400"><Hexagon size={10} /></div>
-                                                                    <span className="text-[9px] font-black text-gray-400 uppercase">Top 30</span>
-                                                                </div>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                        <div className="p-6 rounded-xl bg-gray-900 border border-gray-800 space-y-3">
+                                                            <div className="w-10 h-10 rounded-lg bg-indigo-900/30 flex items-center justify-center text-indigo-400 mb-2">
+                                                                <Target size={20} />
                                                             </div>
-                                                            <p className="text-[11px] text-gray-400 leading-relaxed pt-1">Use **Top 30** for high-yield problems or **Standard** for full subject mastery.</p>
+                                                            <h3 className="text-white font-medium">Select Scope</h3>
+                                                            <p className="text-sm text-gray-400 leading-relaxed">
+                                                                Choose specific chapters, browse previous year papers, or review your saved questions.
+                                                            </p>
                                                         </div>
-
-                                                        {/* UI Mirror: Scope */}
-                                                        <div className="bg-black/40 p-4 rounded-2xl border border-white/5 space-y-3">
-                                                            <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Active Scope</span>
-                                                            <div className="flex items-center gap-3 p-3 bg-indigo-900/20 border border-indigo-500/40 rounded-xl">
-                                                                <div className="p-1.5 bg-indigo-500 rounded-lg text-white"><LayoutGrid size={14} /></div>
-                                                                <span className="text-xs font-bold text-white uppercase tracking-tight">Chapters Selected</span>
-                                                                <ChevronDown size={14} className="ml-auto text-indigo-400" />
+                                                        <div className="p-6 rounded-xl bg-gray-900 border border-gray-800 space-y-3">
+                                                            <div className="w-10 h-10 rounded-lg bg-pink-900/30 flex items-center justify-center text-pink-400 mb-2">
+                                                                <Layers size={20} />
                                                             </div>
-                                                            <p className="text-[11px] text-gray-400 leading-relaxed">Switch between **Chapters**, **PYQs**, and **Saved** from the scope dropdown.</p>
+                                                            <h3 className="text-white font-medium">Curation Tier</h3>
+                                                            <p className="text-sm text-gray-400 leading-relaxed">
+                                                                Use <strong>Standard</strong> for comprehensive coverage or <strong>Top 30</strong> for rapid high-yield revision.
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             )}
 
                                             {onboardingSlide === 2 && (
-                                                <div className="space-y-6">
-                                                    <div className="flex items-center gap-3 text-emerald-500">
-                                                        <Cpu size={24} />
-                                                        <h2 className="text-xl font-bold uppercase tracking-tight">2. Fine-Tune Parameters</h2>
+                                                <div className="space-y-8">
+                                                    <div className="space-y-2">
+                                                        <h2 className="text-2xl font-bold text-white">Parameters</h2>
+                                                        <p className="text-gray-400">Fine-tune the difficulty and depth of your session.</p>
                                                     </div>
 
-                                                    <div className="space-y-4">
-                                                        {/* Intensity Mirror */}
-                                                        <div className="bg-black/40 p-4 rounded-2xl border border-white/5 space-y-4">
-                                                            <div className="flex justify-between items-center">
-                                                                <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">System Intensity</span>
-                                                                <span className="text-[9px] font-bold text-amber-500 uppercase">Mix Mode</span>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                        <div className="p-6 rounded-xl bg-gray-900 border border-gray-800 space-y-3">
+                                                            <div className="w-10 h-10 rounded-lg bg-amber-900/30 flex items-center justify-center text-amber-400 mb-2">
+                                                                <Zap size={20} />
                                                             </div>
-                                                            <div className="flex gap-1.5">
-                                                                {['Mix', 'Easy', 'Med', 'Hard'].map((l, i) => (
-                                                                    <div key={l} className={`flex-1 py-1.5 rounded-md text-center text-[8px] font-black uppercase border ${i === 0 ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-white/5 border-transparent text-gray-600'}`}>{l}</div>
-                                                                ))}
-                                                            </div>
+                                                            <h3 className="text-white font-medium">Intensity</h3>
+                                                            <p className="text-sm text-gray-400 leading-relaxed">
+                                                                <strong>Mix Mode</strong> is recommended for exposing widespread weaknesses. Use specific difficulties as needed.
+                                                            </p>
                                                         </div>
-
-                                                        {/* Quantity Mirror */}
-                                                        <div className="bg-black/40 p-4 rounded-2xl border border-white/5 space-y-4">
-                                                            <div className="flex justify-between items-center">
-                                                                <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Mission Depth</span>
-                                                                <span className="text-xs font-black text-cyan-400">20</span>
+                                                        <div className="p-6 rounded-xl bg-gray-900 border border-gray-800 space-y-3">
+                                                            <div className="w-10 h-10 rounded-lg bg-cyan-900/30 flex items-center justify-center text-cyan-400 mb-2">
+                                                                <Atom size={20} />
                                                             </div>
-                                                            <div className="h-1.5 w-full bg-gray-800 rounded-full relative overflow-hidden">
-                                                                <div className="absolute top-0 left-0 h-full w-[40%] bg-cyan-500" />
-                                                            </div>
-                                                            <div className="flex justify-between text-[8px] font-bold text-gray-600 uppercase">
-                                                                <span>5</span>
-                                                                <span>30</span>
-                                                                <span>Max</span>
-                                                            </div>
+                                                            <h3 className="text-white font-medium">Quantity</h3>
+                                                            <p className="text-sm text-gray-400 leading-relaxed">
+                                                                Short sprints (10-20 Qs) are often more effective than long marathons. Consistency is key.
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             )}
 
                                             {onboardingSlide === 3 && (
-                                                <div className="space-y-6">
-                                                    <div className="flex items-center gap-3 text-indigo-500">
-                                                        <Rocket size={24} />
-                                                        <h2 className="text-xl font-bold uppercase tracking-tight">3. Strategic Deployment</h2>
+                                                <div className="space-y-8">
+                                                    <div className="space-y-2">
+                                                        <h2 className="text-2xl font-bold text-white">Choose Mode</h2>
+                                                        <p className="text-gray-400">Select your simulation environment.</p>
                                                     </div>
 
-                                                    <div className="bg-gradient-to-b from-indigo-500/10 to-transparent p-6 rounded-3xl border border-indigo-500/20 space-y-6">
-                                                        <div className="flex gap-3">
-                                                            <div className="flex-1 p-3 rounded-xl border border-indigo-500/40 bg-indigo-700 text-center space-y-1">
-                                                                <span className="block text-[10px] font-black text-white uppercase">Practice</span>
-                                                                <span className="block text-[8px] text-indigo-200 uppercase font-medium">Safe Mode</span>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                        <button className="group text-left p-6 rounded-xl bg-indigo-900/10 border border-indigo-500/20 hover:border-indigo-500/50 hover:bg-indigo-900/20 transition-all">
+                                                            <div className="w-10 h-10 rounded-lg bg-indigo-500 flex items-center justify-center text-white mb-4 shadow-lg shadow-indigo-500/20">
+                                                                <BookOpen size={20} />
                                                             </div>
-                                                            <div className="flex-1 p-3 rounded-xl border border-white/5 bg-black/40 text-center opacity-50 space-y-1">
-                                                                <span className="block text-[10px] font-black text-gray-400 uppercase">Exam</span>
-                                                                <span className="block text-[8px] text-gray-600 uppercase font-medium">Pressure</span>
+                                                            <h3 className="text-white font-bold text-lg mb-2">Practice Mode</h3>
+                                                            <p className="text-sm text-indigo-200/70 leading-relaxed">
+                                                                Immediate feedback, infinite retries, and explanations. Best for learning concepts.
+                                                            </p>
+                                                        </button>
+                                                        <button className="group text-left p-6 rounded-xl bg-gray-900/50 border border-gray-800 hover:border-violet-500/30 hover:bg-violet-900/10 transition-all opacity-75 hover:opacity-100">
+                                                            <div className="w-10 h-10 rounded-lg bg-violet-900/30 flex items-center justify-center text-violet-400 mb-4">
+                                                                <Clock size={20} />
                                                             </div>
-                                                        </div>
-                                                        <p className="text-sm text-gray-400 leading-relaxed text-center px-4">
-                                                            Use **Practice** for infinite learning with instant results, or **Exam Mode** for a high-stakes timed simulation.
-                                                        </p>
-                                                        <div className="pt-2">
-                                                            <div className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl text-center text-[10px] font-black text-white uppercase tracking-widest shadow-lg shadow-indigo-500/20">
-                                                                Initialize Mission
-                                                            </div>
-                                                        </div>
+                                                            <h3 className="text-white font-bold text-lg mb-2">Exam Mode</h3>
+                                                            <p className="text-sm text-gray-400 leading-relaxed">
+                                                                Timed environment with no hints. Simulates actual exam pressure.
+                                                            </p>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             )}
@@ -736,29 +850,31 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                                 </div>
 
                                 {/* Footer */}
-                                <div className="px-8 py-6 border-t border-white/5 flex items-center justify-between bg-black/40">
+                                <div className="px-8 py-6 bg-gray-900/50 border-t border-gray-800 flex items-center justify-between shrink-0">
                                     <button
                                         onClick={() => setNeverShowOnboarding(!neverShowOnboarding)}
-                                        className="flex items-center gap-2 group transition-colors"
+                                        className="flex items-center gap-3 text-sm text-gray-400 hover:text-gray-200 transition-colors"
                                     >
-                                        <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${neverShowOnboarding ? 'bg-indigo-500 border-indigo-500' : 'border-gray-700 group-hover:border-gray-500'}`}>
-                                            {neverShowOnboarding && <div className="w-1.5 h-1.5 bg-white rounded-sm" />}
+                                        <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all ${neverShowOnboarding ? 'bg-indigo-500 border-indigo-500' : 'border-gray-600 bg-transparent'}`}>
+                                            {neverShowOnboarding && <CheckCircle2 size={12} className="text-white" />}
                                         </div>
-                                        <span className="text-[10px] font-black uppercase tracking-widest text-gray-500 group-hover:text-gray-400">Don't show again</span>
+                                        <span>Don't show again</span>
                                     </button>
 
-                                    <div className="flex gap-3">
+                                    <div className="flex gap-4">
                                         {onboardingSlide > 0 && (
                                             <button
                                                 onClick={() => setOnboardingSlide(prev => prev - 1)}
-                                                className="px-6 py-2.5 rounded-xl border border-white/5 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:bg-white/5 active:scale-95 transition-all"
-                                            > Back </button>
+                                                className="px-6 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
+                                            >
+                                                Back
+                                            </button>
                                         )}
                                         <button
                                             onClick={() => onboardingSlide < 3 ? setOnboardingSlide(prev => prev + 1) : dismissOnboarding()}
-                                            className="px-8 py-2.5 rounded-xl bg-indigo-500 text-white text-[10px] font-black uppercase tracking-widest shadow-lg shadow-indigo-500/20 hover:bg-indigo-400 active:scale-95 transition-all"
+                                            className="px-8 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-lg shadow-indigo-900/20 transition-all active:scale-[0.98]"
                                         >
-                                            {onboardingSlide < 3 ? 'Next' : 'Launch Crucible'}
+                                            {onboardingSlide < 3 ? 'Next' : 'Get Started'}
                                         </button>
                                     </div>
                                 </div>

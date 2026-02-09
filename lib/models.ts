@@ -180,15 +180,7 @@ const QuestionSchema = new Schema<IQuestion>({
     integer_answer: { type: String },
     tags: {
         type: [WeightedTagSchema],
-        required: true,
-        validate: {
-            validator: function (tags: IWeightedTag[]) {
-                if (!tags || tags.length === 0) return false;
-                const totalWeight = tags.reduce((sum, t) => sum + t.weight, 0);
-                return Math.abs(totalWeight - 1.0) < 0.01;
-            },
-            message: 'Tags must sum to 1.0'
-        }
+        default: []
     },
     meta: { type: MetaSchema, required: true },
     chapter_id: { type: String },

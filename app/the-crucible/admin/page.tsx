@@ -7,7 +7,6 @@ import { Question, JEEQuestionType, WeightedTag } from '../types';
 import { getQuestions, saveQuestion, deleteQuestion, getTaxonomy, TaxonomyNode, syncSupabaseToMongo } from '../actions';
 import Link from 'next/link';
 import { fetchLecturesData, Chapter } from '../../lib/lecturesData';
-import TagManager from './TagManager';
 import AudioRecorder from './AudioRecorder';
 import SmartUploader from '../../../components/admin/SmartUploader';
 import { uploadAsset } from '../../../lib/uploadUtils';
@@ -137,7 +136,10 @@ export default function AdminPage() {
         setQuestions(prev => prev.map(q => q.id === id ? updated : q));
 
         setSavingId(id);
-        await saveQuestion(updated);
+        const result = await saveQuestion(updated);
+        if (!result.success) {
+            alert(`Save failed: ${result.message}`);
+        }
         setTimeout(() => setSavingId(null), 1000);
     };
 
@@ -265,727 +267,476 @@ export default function AdminPage() {
     });
 
     return (
-        <div className="flex min-h-screen bg-gray-900 text-white">
-            {/* Left Panel: Table Editor */}
-            <div className="flex-1 flex flex-col w-1/2 h-screen">
-                <header className="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-xl border-b border-gray-800 p-8 space-y-4 shadow-2xl shrink-0">
-                    <div className="flex justify-between items-start">
-                        <div>
-                            <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
-                                The Crucible Admin
-                            </h1>
-                            <p className="text-gray-400 text-sm mt-1">Manage Chapter, Difficulty, and NEET/Top Qs.</p>
-                        </div>
-                        <div className="flex gap-3">
-                            <button
-                                onClick={handleSync}
-                                disabled={isSyncing}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${isSyncing ? 'bg-gray-800 text-gray-500' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/20'}`}
-                            >
-                                <MonitorPlay size={14} className={isSyncing ? 'animate-pulse' : ''} />
-                                {isSyncing ? 'Syncing...' : 'Sync Legacy Data'}
-                            </button>
+        <div className="flex flex-col h-screen bg-gray-900 text-white overflow-hidden">
+            {/* TOP BAR: Single row with all controls */}
+            <header className="shrink-0 bg-gray-950 border-b border-gray-800 px-4 py-2.5">
+                <div className="flex items-center gap-3">
+                    {/* Left: Title + Actions */}
+                    <h1 className="text-lg font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent shrink-0">Admin</h1>
+                    <span className="text-gray-500 text-[10px] shrink-0">{questions.length}</span>
 
-                            <button
-                                onClick={handleAddQuestion}
-                                className="flex items-center gap-2 px-6 py-2 bg-indigo-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-indigo-500/20 hover:bg-indigo-400 active:scale-95 transition-all"
-                            >
-                                <Plus size={18} /> Add Question
-                            </button>
-                            <Link href="/the-crucible" className="px-4 py-2 bg-gray-800 rounded-lg text-sm hover:bg-gray-700 transition">
-                                View Live
-                            </Link>
-                        </div>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                        <button
+                            onClick={handleAddQuestion}
+                            className="flex items-center gap-1 px-2.5 py-1 bg-indigo-600 text-white rounded text-[10px] font-bold hover:bg-indigo-500 transition"
+                        >
+                            <Plus size={10} /> Add
+                        </button>
+                        <button
+                            onClick={handleSync}
+                            disabled={isSyncing}
+                            className="px-2 py-1 bg-gray-800 text-gray-400 rounded text-[10px] hover:bg-gray-700 transition"
+                        >
+                            {isSyncing ? '...' : 'Sync'}
+                        </button>
+                        <Link href="/the-crucible" className="px-2 py-1 bg-gray-800 text-gray-400 rounded text-[10px] hover:bg-gray-700 transition">
+                            Live
+                        </Link>
                     </div>
 
-                    {/* Global Filter Bar */}
-                    <div className="flex items-center gap-4 bg-gray-800/80 p-3 rounded-xl border border-gray-700 overflow-x-auto">
-                        <div className="flex items-center gap-2 text-purple-400 shrink-0">
-                            <Filter size={18} />
-                            <span className="font-bold text-sm">Filters:</span>
-                        </div>
+                    {/* Divider */}
+                    <div className="w-px h-5 bg-gray-700 shrink-0" />
 
-                        <div className="flex-1 min-w-[200px]">
-                            <select
-                                value={selectedChapterFilter}
-                                onChange={(e) => setSelectedChapterFilter(e.target.value)}
-                                className="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-sm focus:border-purple-500 outline-none transition"
+                    {/* Question Selector + Navigation - NOW ON LEFT */}
+                    <select
+                        value={selectedQuestionId || ''}
+                        onChange={(e) => setSelectedQuestionId(e.target.value)}
+                        className="w-64 bg-gray-900 border border-gray-700 rounded px-2 py-1 text-[10px] focus:border-purple-500 outline-none shrink-0"
+                    >
+                        <option value="">Question ({filteredQuestions.length})</option>
+                        {filteredQuestions.map(q => (
+                            <option key={q.id} value={q.id}>
+                                {q.id} - {q.textMarkdown.substring(0, 30)}...
+                            </option>
+                        ))}
+                    </select>
+
+                    {selectedQuestion && (
+                        <div className="flex items-center gap-1.5 shrink-0">
+                            <button
+                                onClick={() => {
+                                    const idx = filteredQuestions.findIndex(q => q.id === selectedQuestionId);
+                                    if (idx > 0) setSelectedQuestionId(filteredQuestions[idx - 1].id);
+                                }}
+                                className="px-3 py-1.5 bg-indigo-600 text-white rounded text-xs font-medium hover:bg-indigo-500 transition shadow-sm"
                             >
-                                <option value="all">All Chapters ({questions.length} Qs)</option>
-                                {chapters.map(ch => (
-                                    <option key={ch.slug} value={ch.name}>
-                                        {ch.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        <div className="w-36 shrink-0">
-                            <select
-                                value={selectedTypeFilter}
-                                onChange={(e) => setSelectedTypeFilter(e.target.value)}
-                                className="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-sm focus:border-purple-500 outline-none transition"
+                                ← Prev
+                            </button>
+                            <button
+                                onClick={() => {
+                                    const idx = filteredQuestions.findIndex(q => q.id === selectedQuestionId);
+                                    if (idx < filteredQuestions.length - 1) setSelectedQuestionId(filteredQuestions[idx + 1].id);
+                                }}
+                                className="px-3 py-1.5 bg-indigo-600 text-white rounded text-xs font-medium hover:bg-indigo-500 transition shadow-sm"
                             >
-                                <option value="all">Any Type</option>
-                                {QUESTION_TYPES.map(qt => (
-                                    <option key={qt.id} value={qt.id}>{qt.id}</option>
-                                ))}
-                            </select>
+                                Next →
+                            </button>
                         </div>
+                    )}
 
-                        <div className="w-40 shrink-0">
-                            <select
-                                value={selectedSourceFilter}
-                                onChange={(e) => { setSelectedSourceFilter(e.target.value); setSelectedShiftFilter('all'); }}
-                                className="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-sm focus:border-purple-500 outline-none transition"
+                    {/* Divider */}
+                    <div className="w-px h-5 bg-gray-700 shrink-0" />
+
+                    {/* Filters: Spread evenly - NOW ON RIGHT */}
+                    <div className="flex items-center gap-2 flex-1">
+                        <Filter size={10} className="text-purple-400 shrink-0" />
+
+                        <select
+                            value={selectedChapterFilter}
+                            onChange={(e) => setSelectedChapterFilter(e.target.value)}
+                            className="w-32 bg-gray-900 border border-gray-700 rounded px-2 py-1 text-[10px] focus:border-purple-500 outline-none truncate"
+                        >
+                            <option value="all">Chapter</option>
+                            {chapters.map(ch => (
+                                <option key={ch.slug} value={ch.name}>{ch.name}</option>
+                            ))}
+                        </select>
+
+                        <select
+                            value={selectedTypeFilter}
+                            onChange={(e) => setSelectedTypeFilter(e.target.value)}
+                            className="w-20 bg-gray-900 border border-gray-700 rounded px-2 py-1 text-[10px] focus:border-purple-500 outline-none"
+                        >
+                            <option value="all">Type</option>
+                            {QUESTION_TYPES.map(qt => (
+                                <option key={qt.id} value={qt.id}>{qt.id}</option>
+                            ))}
+                        </select>
+
+                        <select
+                            value={selectedSourceFilter}
+                            onChange={(e) => { setSelectedSourceFilter(e.target.value); setSelectedShiftFilter('all'); }}
+                            className="w-24 bg-gray-900 border border-gray-700 rounded px-2 py-1 text-[10px] focus:border-purple-500 outline-none"
+                        >
+                            <option value="all">Source</option>
+                            <option value="mains_pyq">Mains</option>
+                            <option value="adv_pyq">Adv</option>
+                            <option value="non_pyq">Non-PYQ</option>
+                        </select>
+
+                        <select
+                            value={selectedShiftFilter}
+                            onChange={(e) => { setSelectedShiftFilter(e.target.value); if (e.target.value !== 'all') setSelectedSourceFilter('all'); }}
+                            className={`w-36 bg-gray-900 border rounded px-2 py-1 text-[10px] outline-none truncate ${selectedShiftFilter !== 'all' ? 'border-indigo-500 text-indigo-300' : 'border-gray-700'}`}
+                        >
+                            <option value="all">Shift</option>
+                            {Object.entries(shiftGroups).map(([year, shifts]) => (
+                                shifts.length > 0 && (
+                                    <optgroup key={year} label={year}>
+                                        {shifts.map(shift => (
+                                            <option key={shift} value={shift}>
+                                                {shift.replace('JEE Main ', '').replace('JEE Advanced ', '')} ({getShiftCount(shift)})
+                                            </option>
+                                        ))}
+                                    </optgroup>
+                                )
+                            ))}
+                        </select>
+
+                        <select
+                            value={selectedTopPYQFilter}
+                            onChange={(e) => setSelectedTopPYQFilter(e.target.value)}
+                            className={`w-16 bg-gray-900 border rounded px-1.5 py-1 text-[10px] outline-none ${selectedTopPYQFilter !== 'all' ? 'border-amber-500 text-amber-300' : 'border-gray-700'}`}
+                        >
+                            <option value="all">All</option>
+                            <option value="top">⭐Top</option>
+                            <option value="not-top">Other</option>
+                        </select>
+
+                        {(selectedChapterFilter !== 'all' || selectedTypeFilter !== 'all' || selectedSourceFilter !== 'all' || selectedShiftFilter !== 'all' || selectedTopPYQFilter !== 'all') && (
+                            <button
+                                onClick={() => {
+                                    setSelectedChapterFilter('all');
+                                    setSelectedTypeFilter('all');
+                                    setSelectedSourceFilter('all');
+                                    setSelectedShiftFilter('all');
+                                    setSelectedTopPYQFilter('all');
+                                }}
+                                className="text-[9px] text-red-400 hover:text-red-300 shrink-0"
                             >
-                                <option value="all">Any Source</option>
-                                <option value="mains_pyq">JEE Mains PYQ</option>
-                                <option value="adv_pyq">JEE Adv PYQ</option>
-                                <option value="non_pyq">Non-PYQs</option>
-                            </select>
-                        </div>
+                                ✕
+                            </button>
+                        )}
+                    </div>
 
-                        {/* NEW: Shift-wise Filter */}
-                        <div className="w-64 shrink-0">
-                            <select
-                                value={selectedShiftFilter}
-                                onChange={(e) => { setSelectedShiftFilter(e.target.value); if (e.target.value !== 'all') setSelectedSourceFilter('all'); }}
-                                className={`w-full bg-gray-900 border rounded-lg px-3 py-2 text-sm outline-none transition ${selectedShiftFilter !== 'all' ? 'border-indigo-500 text-indigo-300' : 'border-gray-600'}`}
-                            >
-                                <option value="all">📄 All Shifts ({uniqueExamSources.length} sources)</option>
-                                {Object.entries(shiftGroups).map(([year, shifts]) => (
-                                    shifts.length > 0 && (
-                                        <optgroup key={year} label={`── ${year} ──`}>
-                                            {shifts.map(shift => (
-                                                <option key={shift} value={shift}>
-                                                    {shift} ({getShiftCount(shift)} Qs)
-                                                </option>
-                                            ))}
-                                        </optgroup>
-                                    )
-                                ))}
-                            </select>
-                        </div>
+                    {/* Save Status */}
+                    {savingId && <span className="text-[10px] text-yellow-400 flex items-center gap-1 shrink-0"><Save size={10} className="animate-spin" /></span>}
+                </div>
+            </header>
 
-                        {selectedChapterFilter !== 'all' && (
-                            <div className="px-3 py-1 bg-purple-500/10 border border-purple-500/30 rounded text-xs text-purple-300 whitespace-nowrap">
-                                Default: <b>{selectedChapterFilter}</b>
+            {/* MAIN AREA: 65/35 split - Editor + Preview */}
+            <div className="flex-1 flex overflow-hidden">
+                {/* LEFT: Editor (65%) */}
+                <div className="w-[65%] flex flex-col overflow-hidden border-r border-gray-800">
+                    {selectedQuestion ? (
+                        <div className="flex-1 overflow-y-auto p-4">
+                            {/* Header: ID + Type + Difficulty + Actions */}
+                            <div className="flex items-center gap-3 mb-3 pb-3 border-b border-gray-800">
+                                <input
+                                    type="text"
+                                    value={selectedQuestion.id}
+                                    onChange={(e) => handleUpdate(selectedQuestion.id, 'id', e.target.value)}
+                                    className="bg-gray-800 border border-gray-700 rounded px-2 py-1 text-sm font-mono focus:border-purple-500 outline-none w-44"
+                                />
+                                <select
+                                    value={selectedQuestion.questionType || 'SCQ'}
+                                    onChange={(e) => handleUpdate(selectedQuestion.id, 'questionType', e.target.value as JEEQuestionType)}
+                                    className="bg-gray-800 border border-gray-700 rounded px-2 py-1 text-sm"
+                                >
+                                    {QUESTION_TYPES.map(qt => (
+                                        <option key={qt.id} value={qt.id}>{qt.name}</option>
+                                    ))}
+                                </select>
+                                <select
+                                    value={selectedQuestion.difficulty}
+                                    onChange={(e) => handleUpdate(selectedQuestion.id, 'difficulty', e.target.value)}
+                                    className={`bg-gray-800 border rounded px-2 py-1 text-sm ${selectedQuestion.difficulty === 'Hard' ? 'border-red-500/50 text-red-400' : selectedQuestion.difficulty === 'Medium' ? 'border-orange-500/50 text-orange-400' : 'border-emerald-500/50 text-emerald-400'}`}
+                                >
+                                    <option value="Easy">Easy</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Hard">Hard</option>
+                                </select>
+
+                                <div className="flex items-center gap-3 ml-auto">
+                                    <label className="flex items-center gap-2 cursor-pointer px-2 py-1 rounded bg-gray-800/50 hover:bg-gray-700/50 transition">
+                                        <input
+                                            type="checkbox"
+                                            checked={!!selectedQuestion.isPYQ}
+                                            onChange={(e) => handleUpdate(selectedQuestion.id, 'isPYQ', e.target.checked)}
+                                            className="h-4 w-4 accent-blue-500"
+                                        />
+                                        <span className="text-xs text-gray-300 font-medium">PYQ</span>
+                                    </label>
+                                    <button
+                                        onClick={() => handleUpdate(selectedQuestion.id, 'isTopPYQ', !selectedQuestion.isTopPYQ)}
+                                        className={`p-1.5 rounded transition ${selectedQuestion.isTopPYQ ? 'bg-amber-500/20 text-amber-400' : 'bg-gray-800/50 text-gray-500 hover:text-amber-400 hover:bg-gray-700/50'}`}
+                                        title="Mark as Top PYQ"
+                                    >
+                                        <Star size={18} fill={selectedQuestion.isTopPYQ ? "currentColor" : "none"} />
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(selectedQuestion.id)}
+                                        className={`p-1.5 rounded transition ${deletingId === selectedQuestion.id ? 'bg-red-500 text-white' : 'bg-gray-800/50 text-gray-500 hover:text-red-400 hover:bg-red-500/20'}`}
+                                        title="Delete question"
+                                    >
+                                        <Trash2 size={18} />
+                                    </button>
+                                </div>
                             </div>
-                        )}
 
-                        {selectedShiftFilter !== 'all' && (
-                            <button
-                                onClick={() => setSelectedShiftFilter('all')}
-                                className="px-3 py-1 bg-indigo-500/10 border border-indigo-500/30 rounded text-xs text-indigo-300 whitespace-nowrap hover:bg-indigo-500/20 transition"
-                            >
-                                ✕ Clear Shift
-                            </button>
-                        )}
+                            {/* Row: Chapter + Tag + Source */}
+                            <div className="grid grid-cols-3 gap-3 mb-3">
+                                <div>
+                                    <label className="text-[10px] text-gray-500 mb-1 block">Chapter</label>
+                                    <select
+                                        value={selectedQuestion.chapterId || ''}
+                                        onChange={(e) => handleUpdate(selectedQuestion.id, 'chapterId', e.target.value)}
+                                        className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs focus:border-purple-500 outline-none"
+                                    >
+                                        <option value="">Select</option>
+                                        {taxonomy.filter(n => n.type === 'chapter').sort((a, b) => (a.sequence_order || 999) - (b.sequence_order || 999)).map(ch => (
+                                            <option key={ch.id} value={ch.id}>{ch.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-[10px] text-gray-500 mb-1 block">Primary Tag</label>
+                                    <select
+                                        value={selectedQuestion.tagId || ''}
+                                        onChange={(e) => handleUpdate(selectedQuestion.id, 'tagId', e.target.value)}
+                                        className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs text-purple-300 focus:border-purple-500 outline-none"
+                                    >
+                                        <option value="">Select</option>
+                                        {(() => {
+                                            const cName = selectedQuestion.chapterId || '';
+                                            const chapterNode = taxonomy.find(n =>
+                                                n.type === 'chapter' && (n.id === cName || n.name === cName || n.name.toLowerCase().replace(/[^a-z0-9]/g, '') === cName.toLowerCase().replace(/[^a-z0-9]/g, ''))
+                                            );
+                                            const availableTags = chapterNode ? taxonomy.filter(n => n.type === 'topic' && n.parent_id === chapterNode.id) : [];
+                                            if (selectedQuestion.tagId && !availableTags.find(t => t.id === selectedQuestion.tagId)) {
+                                                const currentTag = taxonomy.find(t => t.id === selectedQuestion.tagId);
+                                                if (currentTag) availableTags.push(currentTag);
+                                            }
+                                            return availableTags.map(tag => (
+                                                <option key={tag.id} value={tag.id}>{tag.name}</option>
+                                            ));
+                                        })()}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-[10px] text-gray-500 mb-1 block">{selectedQuestion.isPYQ ? 'Exam Source' : 'Reference'}</label>
+                                    <input
+                                        type="text"
+                                        value={selectedQuestion.examSource || ''}
+                                        placeholder={selectedQuestion.isPYQ ? "JEE Main 2026..." : "NCERT, etc."}
+                                        onChange={(e) => handleUpdate(selectedQuestion.id, 'examSource', e.target.value)}
+                                        className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs focus:border-purple-500 outline-none"
+                                    />
+                                </div>
+                            </div>
 
-                        {/* TopPYQ Filter */}
-                        <div className="w-32 shrink-0">
-                            <select
-                                value={selectedTopPYQFilter}
-                                onChange={(e) => setSelectedTopPYQFilter(e.target.value)}
-                                className={`w-full bg-gray-900 border rounded-lg px-3 py-2 text-sm outline-none transition ${selectedTopPYQFilter !== 'all' ? 'border-amber-500 text-amber-300' : 'border-gray-600'}`}
-                            >
-                                <option value="all">⭐ All</option>
-                                <option value="top">⭐ Top PYQ Only</option>
-                                <option value="not-top">Non-Top</option>
-                            </select>
-                        </div>
-                    </div>
-                </header>
+                            {/* Question Text - Side by side with uploader */}
+                            <div className="mb-3">
+                                <div className="flex items-center justify-between mb-1">
+                                    <label className="text-[10px] text-gray-500">Question Text</label>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-[8px] text-gray-500">Scale:</span>
+                                        <input
+                                            type="number"
+                                            min="10"
+                                            max="100"
+                                            value={selectedQuestion.imageScale || 100}
+                                            onChange={(e) => handleUpdate(selectedQuestion.id, 'imageScale', parseInt(e.target.value) || 100)}
+                                            className="bg-gray-900 border border-gray-700 rounded w-10 text-[9px] text-center px-0.5"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex gap-2 items-stretch h-36">
+                                    <textarea
+                                        value={selectedQuestion.textMarkdown}
+                                        onPaste={(e) => handlePaste(e, selectedQuestion, 'textMarkdown')}
+                                        onChange={(e) => handleUpdate(selectedQuestion.id, 'textMarkdown', e.target.value)}
+                                        className="flex-1 bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm focus:border-purple-500 outline-none resize-none font-mono"
+                                    />
+                                    <div className="w-24 shrink-0">
+                                        <SmartUploader
+                                            questionId={selectedQuestion.id}
+                                            onUploadComplete={(url) => handleUploadComplete(url, selectedQuestion, 'textMarkdown')}
+                                            className="h-full w-full text-[8px]"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
 
-                <div className="p-8 flex-1 overflow-y-auto">
-                    <div className="bg-gray-800/50 rounded-xl border border-gray-700 overflow-hidden">
-                        <table className="w-full text-left">
-                            <thead className="bg-gray-800 border-b border-gray-700">
-                                <tr>
-                                    <th className="p-3 text-gray-400 font-medium text-[10px] uppercase tracking-wider w-48">ID</th>
-                                    <th className="p-3 text-gray-400 font-medium text-[10px] uppercase tracking-wider">Question Content</th>
-                                    <th className="p-3 text-gray-400 font-medium text-[10px] uppercase tracking-wider w-20 text-center">Source</th>
-                                    <th className="p-3 text-gray-400 font-medium text-[10px] uppercase tracking-wider w-20">Diff</th>
-                                    <th className="p-3 text-gray-400 font-medium text-[10px] uppercase tracking-wider w-12 text-center">Top</th>
-                                    <th className="p-3 text-gray-400 font-medium text-[10px] uppercase tracking-wider w-16 text-center">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-700">
-                                {filteredQuestions.length === 0 ? (
-                                    <tr>
-                                        <td colSpan={6} className="p-8 text-center text-gray-500 italic">
-                                            No questions found for this chapter. Add one to get started!
-                                        </td>
-                                    </tr>
-                                ) : (
-                                    filteredQuestions.map(q => (
-                                        <tr
-                                            key={q.id}
-                                            className={`hover:bg-gray-700/30 transition cursor-pointer ${selectedQuestionId === q.id ? 'bg-purple-900/10 border-l-2 border-purple-500' : ''}`}
-                                            onClick={() => setSelectedQuestionId(q.id)}
-                                        >
-                                            <td className="p-3 align-top">
+                            {/* Options (non-NVT) OR Numerical Answer */}
+                            {selectedQuestion.questionType !== 'NVT' ? (
+                                <div className="mb-3">
+                                    <label className="text-[10px] text-gray-500 mb-1 block">Options</label>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {selectedQuestion.options.map((opt) => (
+                                            <div key={opt.id} className={`p-2 rounded border ${opt.isCorrect ? 'bg-green-900/20 border-green-600/50' : 'bg-gray-800/50 border-gray-700'}`}>
+                                                <div className="flex items-center justify-between mb-1">
+                                                    <button
+                                                        onClick={() => handleAnswerChange(selectedQuestion, opt.id)}
+                                                        className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${opt.isCorrect ? 'bg-green-500 text-white' : 'bg-gray-700 text-gray-400 hover:bg-gray-600'}`}
+                                                    >
+                                                        {opt.id.toUpperCase()} {opt.isCorrect && '✓'}
+                                                    </button>
+                                                    <div className="flex items-center gap-1">
+                                                        <span className="text-[8px] text-gray-500">Scale:</span>
+                                                        <input
+                                                            type="number"
+                                                            min="10"
+                                                            max="100"
+                                                            value={opt.imageScale || 100}
+                                                            onChange={(e) => {
+                                                                const newOpts = selectedQuestion.options.map(o => o.id === opt.id ? { ...o, imageScale: parseInt(e.target.value) || 100 } : o);
+                                                                handleUpdate(selectedQuestion.id, 'options', newOpts);
+                                                            }}
+                                                            className="bg-gray-900 border border-gray-700 rounded w-10 text-[9px] text-center px-0.5"
+                                                        />
+                                                    </div>
+                                                </div>
                                                 <input
                                                     type="text"
-                                                    value={q.id}
-                                                    onChange={(e) => handleUpdate(q.id, 'id', e.target.value)}
-                                                    className="bg-gray-900 border border-gray-600 rounded px-2 py-1 w-full text-xs font-mono focus:border-purple-500 outline-none"
-                                                    onClick={(e) => e.stopPropagation()}
+                                                    value={opt.text}
+                                                    onChange={(e) => handleOptionTextChange(selectedQuestion, opt.id, e.target.value)}
+                                                    className="w-full bg-transparent text-xs focus:outline-none focus:text-purple-300 font-mono"
+                                                    placeholder="Option text or SVG URL..."
                                                 />
-                                                <div className="mt-2 text-[10px]">
-                                                    <div className="flex justify-between items-center mb-1">
-                                                        <span className="text-gray-500">
-                                                            {q.questionType === 'NVT' ? 'Value:' : 'Ans:'}
-                                                        </span>
-                                                        <select
-                                                            className="bg-gray-900 border border-gray-700 text-[9px] rounded px-1 text-gray-400"
-                                                            value={q.questionType || 'SCQ'}
-                                                            onChange={(e) => handleUpdate(q.id, 'questionType', e.target.value as JEEQuestionType)}
-                                                        >
-                                                            {QUESTION_TYPES.map(qt => (
-                                                                <option key={qt.id} value={qt.id}>{qt.id}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="mb-3">
+                                    <label className="text-[10px] text-gray-500 mb-1 block">Numerical Answer</label>
+                                    <input
+                                        type="text"
+                                        value={selectedQuestion.integerAnswer || ''}
+                                        onChange={(e) => handleUpdate(selectedQuestion.id, 'integerAnswer', e.target.value)}
+                                        className="w-full bg-gray-800 border border-gray-700 rounded px-3 py-2 text-xl font-bold text-blue-400 focus:border-purple-500 outline-none"
+                                        placeholder="Enter numerical answer"
+                                    />
+                                </div>
+                            )}
 
-                                                    {q.questionType === 'NVT' ? (
-                                                        <input
-                                                            type="text"
-                                                            value={q.integerAnswer || ''}
-                                                            placeholder="e.g. 5"
-                                                            onChange={(e) => handleUpdate(q.id, 'integerAnswer', e.target.value)}
-                                                            className="bg-gray-900 border border-gray-600 rounded px-1 py-0.5 w-full text-blue-400 font-bold focus:border-purple-500 outline-none"
-                                                            onClick={(e) => e.stopPropagation()}
-                                                        />
-                                                    ) : (
-                                                        <select
-                                                            value={q.options.find(o => o.isCorrect)?.id || ''}
-                                                            onChange={(e) => handleAnswerChange(q, e.target.value)}
-                                                            className="bg-gray-900 border border-gray-600 rounded px-1 py-0.5 w-full text-green-400 font-bold focus:border-purple-500 outline-none"
-                                                            onClick={(e) => e.stopPropagation()}
-                                                        >
-                                                            {q.options.map(opt => (
-                                                                <option key={opt.id} value={opt.id}>{opt.id.toUpperCase()}</option>
-                                                            ))}
-                                                        </select>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td className="p-3 align-top">
-                                                <div className="space-y-2">
-                                                    {/* Only show chapter selector if filtering is NOT active or showing all, otherwise it's redundant but useful for moving questions */}
-                                                    {selectedChapterFilter === 'all' && (
-                                                        <select
-                                                            value={q.chapterId || ''}
-                                                            onChange={(e) => handleUpdate(q.id, 'chapterId', e.target.value)}
-                                                            className="bg-gray-900 border border-gray-600 rounded px-2 py-1 w-full text-[14.5px] text-blue-300 focus:border-purple-500 outline-none mb-1"
-                                                            onClick={(e) => e.stopPropagation()}
-                                                        >
-                                                            <option value="">Select Chapter</option>
-                                                            {chapters.map(ch => (
-                                                                <option key={ch.slug} value={ch.name}>{ch.name}</option>
-                                                            ))}
-                                                        </select>
-                                                    )}
+                            {/* Solution - Side by side with uploader */}
+                            <div className="mb-3">
+                                <label className="text-[10px] text-gray-500 mb-1 block">Solution</label>
+                                <div className="flex gap-2 items-stretch h-44">
+                                    <textarea
+                                        value={selectedQuestion.solution.textSolutionLatex}
+                                        onPaste={(e) => handlePaste(e, selectedQuestion, 'solution')}
+                                        onChange={(e) => handleSolutionChange(selectedQuestion, e.target.value)}
+                                        className="flex-1 bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm focus:border-purple-500 outline-none resize-none font-mono"
+                                    />
+                                    <div className="w-24 shrink-0">
+                                        <SmartUploader
+                                            questionId={selectedQuestion.id}
+                                            onUploadComplete={(url) => handleUploadComplete(url, selectedQuestion, 'solution')}
+                                            className="h-full w-full text-[8px]"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
 
-                                                    <div className="w-full">
-                                                        {/* Smart Upload Zone */}
-                                                        <div className="mb-1">
-                                                            <SmartUploader
-                                                                questionId={q.id}
-                                                                onUploadComplete={(url) => handleUploadComplete(url, q, 'textMarkdown')}
-                                                                className="py-2 px-2 text-[10px]"
-                                                            />
-                                                        </div>
-                                                        <textarea
-                                                            value={q.textMarkdown}
-                                                            onPaste={(e) => handlePaste(e, q, 'textMarkdown')}
-                                                            onChange={(e) => handleUpdate(q.id, 'textMarkdown', e.target.value)}
-                                                            placeholder="Question Text (Markdown/Latex)"
-                                                            className="bg-gray-900 border border-gray-600 rounded px-2 py-1 w-full h-32 text-[14.5px] focus:border-purple-500 outline-none resize-y font-mono"
-                                                            onClick={(e) => e.stopPropagation()}
-                                                        />
-                                                        <div className="flex flex-col gap-1 w-16">
-                                                            <label className="text-[9px] text-gray-500 text-center">Img Scale</label>
-                                                            <input
-                                                                type="number"
-                                                                min="10"
-                                                                max="100"
-                                                                value={q.imageScale || 100}
-                                                                onChange={(e) => handleUpdate(q.id, 'imageScale', parseInt(e.target.value) || 100)}
-                                                                className="bg-gray-800 border border-gray-600 rounded px-1 py-0.5 text-[10px] text-center text-white"
-                                                                onClick={(e) => e.stopPropagation()}
-                                                            />
-                                                            <input
-                                                                type="range"
-                                                                min="10"
-                                                                max="100"
-                                                                value={q.imageScale || 100}
-                                                                onChange={(e) => handleUpdate(q.id, 'imageScale', parseInt(e.target.value) || 100)}
-                                                                className="accent-purple-500 h-10 w-2 mt-2 -rotate-90 origin-center translate-y-2 translate-x-5"
-                                                                onClick={(e) => e.stopPropagation()}
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    {/* Editable Options */}
-                                                    {q.questionType !== 'NVT' && (
-                                                        <div className="grid grid-cols-2 gap-2 mt-2">
-                                                            {q.options.map((opt) => (
-                                                                <div key={opt.id} className="items-center gap-1 bg-gray-900/50 p-1.5 rounded border border-gray-700">
-                                                                    <div className="flex justify-between items-center mb-1">
-                                                                        <span className="text-[9px] font-bold text-gray-500">{opt.id.toUpperCase()}</span>
-                                                                        <div className="flex items-center gap-1">
-                                                                            <span className="text-[8px] text-gray-600">Scale:</span>
-                                                                            <input
-                                                                                type="number"
-                                                                                min="10"
-                                                                                max="100"
-                                                                                placeholder="100"
-                                                                                value={opt.imageScale || 100}
-                                                                                onChange={(e) => {
-                                                                                    const newOpts = q.options.map(o => o.id === opt.id ? { ...o, imageScale: parseInt(e.target.value) || 100 } : o);
-                                                                                    handleUpdate(q.id, 'options', newOpts);
-                                                                                }}
-                                                                                className="bg-black border border-gray-800 rounded w-10 text-[9px] text-center text-gray-400"
-                                                                                onClick={(e) => e.stopPropagation()}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-                                                                    <textarea
-                                                                        value={opt.text}
-                                                                        onChange={(e) => handleOptionTextChange(q, opt.id, e.target.value)}
-                                                                        className="bg-transparent border-none p-0 text-[13px] w-full focus:outline-none focus:text-purple-300 h-10 resize-none font-mono"
-                                                                        onClick={(e) => e.stopPropagation()}
-                                                                    />
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    )}
-
-                                                    {/* Weighted Concept Tags */}
-                                                    <div className="mt-2 p-2 bg-gray-900/50 rounded-lg border border-gray-700/50">
-                                                        <div className="flex items-center gap-2 mb-2">
-                                                            <Tag size={12} className="text-purple-400" />
-                                                            <span className="text-[10px] font-bold text-purple-400 uppercase">Concept Tags</span>
-                                                            {q.needsReview && (
-                                                                <span className="ml-auto flex items-center gap-1 text-[9px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded">
-                                                                    <AlertTriangle size={10} /> Review
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                        {/* Concept Tags Manager */}
-                                                        <div className="mb-2">
-                                                            <TagManager
-                                                                question={q}
-                                                                onUpdate={(field, val) => handleUpdate(q.id, field, val)}
-                                                                chapterName={q.chapterId || (selectedChapterFilter !== 'all' ? selectedChapterFilter : '')}
-                                                                taxonomy={taxonomy}
-                                                            />
-                                                        </div>
-                                                        {/* Primary tag dropdown for quick editing */}
-                                                        <select
-                                                            value={q.tagId || ''}
-                                                            onChange={(e) => {
-                                                                handleUpdate(q.id, 'tagId', e.target.value);
-                                                            }}
-                                                            className="mt-2 w-full bg-gray-900 border border-gray-600 rounded px-2 py-1 text-[11px] text-purple-300 focus:border-purple-500 outline-none"
-                                                            onClick={(e) => e.stopPropagation()}
-                                                        >
-                                                            <option value="">Select Primary Tag</option>
-                                                            {(() => {
-                                                                const cName = q.chapterId || (selectedChapterFilter !== 'all' ? selectedChapterFilter : '');
-                                                                const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
-                                                                const targetSlug = normalize(cName);
-                                                                const chapterNode = taxonomy.find(n => n.type === 'chapter' && (normalize(n.name) === targetSlug || n.id === `chapter_${targetSlug}`));
-
-                                                                const availableTags = chapterNode
-                                                                    ? taxonomy.filter(n => n.type === 'topic' && n.parent_id === chapterNode.id)
-                                                                    : [];
-
-                                                                return availableTags.map(tag => (
-                                                                    <option key={tag.id} value={tag.id}>{tag.name}</option>
-                                                                ));
-                                                            })()}
-                                                        </select>
-                                                    </div>
-
-                                                    <div className="w-full">
-                                                        {/* Solution Upload Zone */}
-                                                        <div className="mb-1">
-                                                            <SmartUploader
-                                                                questionId={q.id}
-                                                                onUploadComplete={(url) => handleUploadComplete(url, q, 'solution')}
-                                                                className="py-2 px-2 text-[10px]"
-                                                            />
-                                                        </div>
-                                                        <div className="flex items-center gap-2">
-                                                            <textarea
-                                                                value={q.solution.textSolutionLatex}
-                                                                onPaste={(e) => handlePaste(e, q, 'solution')}
-                                                                onChange={(e) => handleSolutionChange(q, e.target.value)}
-                                                                placeholder="Explanation / Solution (Markdown/Latex)"
-                                                                className="bg-gray-900/30 border border-gray-700/50 rounded px-2 py-1 w-full h-32 text-[13px] text-gray-400 focus:border-purple-500 outline-none resize-y font-mono italic"
-                                                                onClick={(e) => e.stopPropagation()}
-                                                            />
-                                                            <div className="flex flex-col gap-1 w-16">
-                                                                <label className="text-[9px] text-gray-500 text-center">Sol Scale</label>
-                                                                <input
-                                                                    type="number"
-                                                                    min="10"
-                                                                    max="100"
-                                                                    value={q.solutionImageScale || 100}
-                                                                    onChange={(e) => handleUpdate(q.id, 'solutionImageScale', parseInt(e.target.value) || 100)}
-                                                                    className="bg-gray-800 border border-gray-600 rounded px-1 py-0.5 text-[10px] text-center text-white"
-                                                                    onClick={(e) => e.stopPropagation()}
-                                                                />
-                                                                <input
-                                                                    type="range"
-                                                                    min="10"
-                                                                    max="100"
-                                                                    value={q.solutionImageScale || 100}
-                                                                    onChange={(e) => handleUpdate(q.id, 'solutionImageScale', parseInt(e.target.value) || 100)}
-                                                                    className="accent-emerald-500 h-10 w-2 mt-2 -rotate-90 origin-center translate-y-2 translate-x-5"
-                                                                    onClick={(e) => e.stopPropagation()}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* Audio Recorder Integration */}
-                                                    <div className="mt-2" onClick={(e) => e.stopPropagation()}>
-                                                        <AudioRecorder
-                                                            questionId={q.id}
-                                                            existingAudioUrl={q.solution.audioExplanationUrl}
-                                                            onUploadComplete={(url) => {
-                                                                handleUpdate(q.id, 'solution', { ...q.solution, audioExplanationUrl: url });
-                                                            }}
-                                                        />
-                                                    </div>
-
-                                                    {/* Source References Manager */}
-                                                    <details className="mt-2" onClick={(e) => e.stopPropagation()}>
-                                                        <summary className="cursor-pointer text-[11px] text-gray-500 hover:text-emerald-400 transition select-none flex items-center gap-1.5 focus:outline-none group">
-                                                            <div className="p-1 rounded bg-gray-800 group-hover:bg-emerald-500/10">
-                                                                <BookOpen size={10} />
-                                                            </div>
-                                                            <span>Manage Sources ({q.sourceReferences?.length || 0})</span>
-                                                        </summary>
-
-                                                        <div className="mt-2 p-3 bg-gray-950/50 rounded-lg border border-gray-800 space-y-3 animate-in fade-in slide-in-from-top-2">
-                                                            {(q.sourceReferences || []).map((ref, idx) => (
-                                                                <div key={idx} className="bg-black/40 border border-gray-800 rounded p-2 text-[10px]">
-                                                                    <div className="flex items-center justify-between mb-2">
-                                                                        <div className="flex items-center gap-2">
-                                                                            <select
-                                                                                value={ref.type}
-                                                                                onChange={(e) => {
-                                                                                    const newRefs = [...(q.sourceReferences || [])];
-                                                                                    newRefs[idx] = { ...ref, type: e.target.value as any };
-                                                                                    handleUpdate(q.id, 'sourceReferences', newRefs);
-                                                                                }}
-                                                                                className="bg-gray-800 border-none rounded px-1.5 py-0.5 text-emerald-400 focus:ring-1 focus:ring-emerald-500"
-                                                                            >
-                                                                                <option value="NCERT">NCERT</option>
-                                                                                <option value="PYQ">PYQ</option>
-                                                                                <option value="COACHING">Coaching</option>
-                                                                            </select>
-
-                                                                            <select
-                                                                                value={ref.similarity || 'concept'}
-                                                                                onChange={(e) => {
-                                                                                    const newRefs = [...(q.sourceReferences || [])];
-                                                                                    newRefs[idx] = { ...ref, similarity: e.target.value as any };
-                                                                                    handleUpdate(q.id, 'sourceReferences', newRefs);
-                                                                                }}
-                                                                                className="bg-gray-800 border-none rounded px-1.5 py-0.5 text-gray-400 focus:ring-1 focus:ring-emerald-500"
-                                                                            >
-                                                                                <option value="exact">Exact</option>
-                                                                                <option value="similar">Similar</option>
-                                                                                <option value="concept">Concept</option>
-                                                                            </select>
-                                                                        </div>
-                                                                        <button
-                                                                            onClick={() => {
-                                                                                const newRefs = q.sourceReferences?.filter((_, i) => i !== idx);
-                                                                                handleUpdate(q.id, 'sourceReferences', newRefs);
-                                                                            }}
-                                                                            className="text-red-900 hover:text-red-400 transition"
-                                                                        >
-                                                                            <Trash2 size={10} />
-                                                                        </button>
-                                                                    </div>
-
-                                                                    <div className="grid grid-cols-2 gap-1.5 mb-1.5">
-                                                                        {ref.type === 'NCERT' && (
-                                                                            <>
-                                                                                <input
-                                                                                    type="text"
-                                                                                    placeholder="Book"
-                                                                                    value={ref.ncertBook || ''}
-                                                                                    onChange={(e) => {
-                                                                                        const newRefs = [...(q.sourceReferences || [])];
-                                                                                        newRefs[idx] = { ...ref, ncertBook: e.target.value };
-                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
-                                                                                    }}
-                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
-                                                                                />
-                                                                                <input
-                                                                                    type="text"
-                                                                                    placeholder="Chapter"
-                                                                                    value={ref.ncertChapter || ''}
-                                                                                    onChange={(e) => {
-                                                                                        const newRefs = [...(q.sourceReferences || [])];
-                                                                                        newRefs[idx] = { ...ref, ncertChapter: e.target.value };
-                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
-                                                                                    }}
-                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
-                                                                                />
-                                                                                <input
-                                                                                    type="text"
-                                                                                    placeholder="Page/Ex"
-                                                                                    value={ref.ncertPage || ''}
-                                                                                    onChange={(e) => {
-                                                                                        const newRefs = [...(q.sourceReferences || [])];
-                                                                                        newRefs[idx] = { ...ref, ncertPage: e.target.value };
-                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
-                                                                                    }}
-                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
-                                                                                />
-                                                                                <input
-                                                                                    type="text"
-                                                                                    placeholder="Topic"
-                                                                                    value={ref.ncertTopic || ''}
-                                                                                    onChange={(e) => {
-                                                                                        const newRefs = [...(q.sourceReferences || [])];
-                                                                                        newRefs[idx] = { ...ref, ncertTopic: e.target.value };
-                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
-                                                                                    }}
-                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
-                                                                                />
-                                                                            </>
-                                                                        )}
-
-                                                                        {ref.type === 'PYQ' && (
-                                                                            <>
-                                                                                <input
-                                                                                    type="text"
-                                                                                    placeholder="Exam"
-                                                                                    value={ref.pyqExam || 'JEE Main'}
-                                                                                    onChange={(e) => {
-                                                                                        const newRefs = [...(q.sourceReferences || [])];
-                                                                                        newRefs[idx] = { ...ref, pyqExam: e.target.value };
-                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
-                                                                                    }}
-                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
-                                                                                />
-                                                                                <input
-                                                                                    type="number"
-                                                                                    placeholder="Year"
-                                                                                    value={ref.pyqYear || ''}
-                                                                                    onChange={(e) => {
-                                                                                        const newRefs = [...(q.sourceReferences || [])];
-                                                                                        newRefs[idx] = { ...ref, pyqYear: parseInt(e.target.value) || undefined };
-                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
-                                                                                    }}
-                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
-                                                                                />
-                                                                                <input
-                                                                                    type="text"
-                                                                                    placeholder="Shift"
-                                                                                    value={ref.pyqShift || ''}
-                                                                                    onChange={(e) => {
-                                                                                        const newRefs = [...(q.sourceReferences || [])];
-                                                                                        newRefs[idx] = { ...ref, pyqShift: e.target.value };
-                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
-                                                                                    }}
-                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
-                                                                                />
-                                                                                <input
-                                                                                    type="text"
-                                                                                    placeholder="Q. No"
-                                                                                    value={ref.pyqQuestionNo || ''}
-                                                                                    onChange={(e) => {
-                                                                                        const newRefs = [...(q.sourceReferences || [])];
-                                                                                        newRefs[idx] = { ...ref, pyqQuestionNo: e.target.value };
-                                                                                        handleUpdate(q.id, 'sourceReferences', newRefs);
-                                                                                    }}
-                                                                                    className="bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-300 placeholder:text-gray-700"
-                                                                                />
-                                                                            </>
-                                                                        )}
-                                                                    </div>
-
-                                                                    <input
-                                                                        type="text"
-                                                                        placeholder="Description"
-                                                                        value={ref.description || ''}
-                                                                        onChange={(e) => {
-                                                                            const newRefs = [...(q.sourceReferences || [])];
-                                                                            newRefs[idx] = { ...ref, description: e.target.value };
-                                                                            handleUpdate(q.id, 'sourceReferences', newRefs);
-                                                                        }}
-                                                                        className="w-full bg-gray-900 border-gray-700 rounded px-1.5 py-0.5 text-gray-400 placeholder:text-gray-800"
-                                                                    />
-                                                                </div>
-                                                            ))}
-
-                                                            <button
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    const newRefs = [...(q.sourceReferences || [])];
-                                                                    newRefs.push({ type: 'NCERT', similarity: 'concept' });
-                                                                    handleUpdate(q.id, 'sourceReferences', newRefs);
-                                                                }}
-                                                                className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded border border-dashed border-gray-800 text-gray-500 hover:text-emerald-400 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition text-[10px]"
-                                                            >
-                                                                <Plus size={10} /> Add Source Reference
-                                                            </button>
-                                                        </div>
-                                                    </details>
-                                                </div>
-                                            </td>
-
-                                            {/* Source Column */}
-                                            <td className="p-3 align-top">
-                                                <div className="flex flex-col gap-2">
-                                                    <label className="flex items-center gap-2 cursor-pointer" onClick={(e) => e.stopPropagation()}>
-                                                        <input
-                                                            type="checkbox"
-                                                            checked={!!q.isPYQ}
-                                                            onChange={(e) => handleUpdate(q.id, 'isPYQ', e.target.checked)}
-                                                            className="rounded border-gray-600 bg-gray-900 text-purple-600 focus:ring-purple-500 h-4 w-4"
-                                                        />
-                                                        <span className="text-[10px] text-gray-400">is PYQ?</span>
-                                                    </label>
-
-                                                    {q.isPYQ && (
-                                                        <label className="flex items-center gap-2 cursor-pointer" onClick={(e) => e.stopPropagation()}>
-                                                            <input
-                                                                type="checkbox"
-                                                                checked={!!q.isTopPYQ}
-                                                                onChange={(e) => handleUpdate(q.id, 'isTopPYQ', e.target.checked)}
-                                                                className="rounded border-amber-600 bg-gray-900 text-amber-500 focus:ring-amber-500 h-4 w-4"
-                                                            />
-                                                            <span className="text-[10px] text-amber-400 font-bold">⭐ Top PYQ</span>
-                                                        </label>
-                                                    )}
-
-                                                    <div className="animate-in fade-in slide-in-from-top-1 duration-200">
-                                                        <div className="flex items-center gap-1 mb-1">
-                                                            <Calendar size={10} className="text-gray-500" />
-                                                            <span className="text-[9px] text-gray-500 uppercase">
-                                                                {q.isPYQ ? 'Year / Exam' : 'Ref / Source'}
-                                                            </span>
-                                                        </div>
-                                                        <input
-                                                            type="text"
-                                                            value={q.examSource || ''}
-                                                            placeholder={q.isPYQ ? "e.g. 2024" : "e.g. NCERT"}
-                                                            onChange={(e) => handleUpdate(q.id, 'examSource', e.target.value)}
-                                                            className="bg-gray-900 border border-gray-600 rounded px-2 py-1 w-full text-[10px] text-white focus:border-purple-500 outline-none"
-                                                            onClick={(e) => e.stopPropagation()}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                            <td className="p-3 align-top">
+                            {/* Audio + References (collapsed) */}
+                            <div className="flex gap-4">
+                                <div className="flex-1">
+                                    <AudioRecorder
+                                        questionId={selectedQuestion.id}
+                                        existingAudioUrl={selectedQuestion.solution.audioExplanationUrl}
+                                        onUploadComplete={(url) => {
+                                            handleUpdate(selectedQuestion.id, 'solution', { ...selectedQuestion.solution, audioExplanationUrl: url });
+                                        }}
+                                    />
+                                </div>
+                                <details className="flex-1">
+                                    <summary className="text-[10px] text-gray-500 cursor-pointer hover:text-gray-300 flex items-center gap-1">
+                                        <BookOpen size={10} /> Refs ({selectedQuestion.sourceReferences?.length || 0})
+                                    </summary>
+                                    <div className="mt-2 space-y-1 text-xs">
+                                        {(selectedQuestion.sourceReferences || []).map((ref, idx) => (
+                                            <div key={idx} className="flex gap-1 items-center">
                                                 <select
-                                                    value={q.difficulty}
-                                                    onChange={(e) => handleUpdate(q.id, 'difficulty', e.target.value)}
-                                                    className={`bg-gray-900 border border-gray-600 rounded px-2 py-1 w-full text-[10px] focus:border-purple-500 outline-none ${q.difficulty === 'Hard' ? 'text-red-400' : q.difficulty === 'Medium' ? 'text-orange-400' : 'text-emerald-400'
-                                                        }`}
-                                                    onClick={(e) => e.stopPropagation()}
+                                                    value={ref.type}
+                                                    onChange={(e) => {
+                                                        const newRefs = [...(selectedQuestion.sourceReferences || [])];
+                                                        newRefs[idx] = { ...ref, type: e.target.value as any };
+                                                        handleUpdate(selectedQuestion.id, 'sourceReferences', newRefs);
+                                                    }}
+                                                    className="bg-gray-800 border border-gray-700 rounded px-1 py-0.5 text-[10px]"
                                                 >
-                                                    <option value="Easy">Easy</option>
-                                                    <option value="Medium">Medium</option>
-                                                    <option value="Hard">Hard</option>
+                                                    <option value="NCERT">NCERT</option>
+                                                    <option value="PYQ">PYQ</option>
+                                                    <option value="COACHING">Coaching</option>
+                                                    <option value="OTHER">Other</option>
                                                 </select>
-                                            </td>
-                                            <td className="p-3 align-top text-center">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Desc"
+                                                    value={ref.description || ''}
+                                                    onChange={(e) => {
+                                                        const newRefs = [...(selectedQuestion.sourceReferences || [])];
+                                                        newRefs[idx] = { ...ref, description: e.target.value };
+                                                        handleUpdate(selectedQuestion.id, 'sourceReferences', newRefs);
+                                                    }}
+                                                    className="flex-1 bg-gray-800 border border-gray-700 rounded px-1 py-0.5 text-[10px]"
+                                                />
                                                 <button
-                                                    onClick={(e) => { e.stopPropagation(); handleUpdate(q.id, 'isTopPYQ', !q.isTopPYQ); }}
-                                                    className={`transition p-2 rounded-full ${q.isTopPYQ ? 'text-yellow-400 bg-yellow-400/10' : 'text-gray-600 hover:text-gray-400'}`}
-                                                    title="Mark as Top PYQ"
+                                                    onClick={() => {
+                                                        const newRefs = (selectedQuestion.sourceReferences || []).filter((_, i) => i !== idx);
+                                                        handleUpdate(selectedQuestion.id, 'sourceReferences', newRefs);
+                                                    }}
+                                                    className="text-red-400 hover:text-red-300 p-0.5"
                                                 >
-                                                    <Star size={18} fill={q.isTopPYQ ? "currentColor" : "none"} />
+                                                    <Trash2 size={10} />
                                                 </button>
-                                            </td>
-                                            <td className="p-3 align-top">
-                                                <div className="flex flex-col gap-2 items-center">
-                                                    {savingId === q.id ? (
-                                                        <span className="flex items-center gap-1 text-[10px] text-yellow-400">
-                                                            <Save size={10} className="animate-spin" />
-                                                        </span>
-                                                    ) : (
-                                                        <span className="flex items-center gap-1 text-[10px] text-green-400">
-                                                            <Check size={10} />
-                                                        </span>
-                                                    )}
-                                                    <button
-                                                        onClick={(e) => { e.stopPropagation(); handleDelete(q.id); }}
-                                                        className={`transition flex items-center justify-center gap-1 p-1 rounded ${deletingId === q.id ? 'bg-red-600 text-white font-bold w-12' : 'text-gray-500 hover:text-red-400 hover:bg-gray-700'}`}
-                                                        title="Delete"
-                                                    >
-                                                        {deletingId === q.id ? <span className="text-[10px]">CONFIRM</span> : <Trash2 size={14} />}
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    )))}
-                            </tbody>
-                        </table>
+                                            </div>
+                                        ))}
+                                        <button
+                                            onClick={() => {
+                                                const newRefs = [...(selectedQuestion.sourceReferences || []), { type: 'NCERT' as any, similarity: 'concept' as any }];
+                                                handleUpdate(selectedQuestion.id, 'sourceReferences', newRefs);
+                                            }}
+                                            className="w-full py-1 border border-dashed border-gray-700 rounded text-gray-500 hover:text-gray-300 text-[10px]"
+                                        >
+                                            <Plus size={10} className="inline mr-1" /> Add Ref
+                                        </button>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="flex-1 flex items-center justify-center text-gray-600">
+                            <div className="text-center">
+                                <MonitorPlay size={40} className="mx-auto mb-3 opacity-30" />
+                                <p className="text-sm">Select a question to edit</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                {/* RIGHT: Live Preview (35%) */}
+                <div className="w-[35%] flex flex-col overflow-hidden bg-gray-950">
+                    <div className="p-3 border-b border-gray-800 bg-gray-900/50">
+                        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+                            <MonitorPlay size={12} /> Live Preview
+                        </h3>
+                    </div>
+                    <div className="flex-1 overflow-y-auto p-4">
+                        {selectedQuestion ? (
+                            <PreviewCard question={selectedQuestion} />
+                        ) : (
+                            <div className="h-full flex items-center justify-center text-gray-600">
+                                <p className="text-sm">No question selected</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
-
-            {/* Right Panel: Live Preview */}
-            <div className="w-[45%] border-l border-gray-800 bg-gray-950/20 backdrop-blur-xl p-8 pt-24 sticky top-0 h-screen overflow-y-auto no-scrollbar">
-                <h2 className="text-lg font-bold text-gray-300 mb-8 flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_10px_#22c55e] animate-pulse"></span>
-                    Live Preview
-                </h2>
-
-                {selectedQuestion ? (
-                    <div className="animate-in fade-in slide-in-from-right-4 duration-500">
-                        <div className="mb-6 flex items-center justify-between bg-gray-900/50 p-4 rounded-xl border border-gray-800 shadow-lg">
-                            <span className="text-xs text-gray-400 font-mono tracking-wider">{selectedQuestion.id}</span>
-                            <div className="flex gap-2">
-                                <span className={`text-[10px] uppercase font-black px-2.5 py-1 rounded-md border ${selectedQuestion.difficulty === 'Hard' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                                    selectedQuestion.difficulty === 'Medium' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' :
-                                        'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                                    }`}>
-                                    {selectedQuestion.difficulty}
-                                </span>
-                                {selectedQuestion.isTopPYQ && (
-                                    <span className="bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 text-[10px] px-2.5 py-1 rounded-md flex items-center gap-1 font-bold">
-                                        <Star size={10} fill="currentColor" /> Top PYQ
-                                    </span>
-                                )}
-                                {selectedQuestion.isPYQ && selectedQuestion.examSource && (
-                                    <span className="bg-purple-500/10 text-purple-400 border border-purple-500/20 text-[10px] px-2.5 py-1 rounded-md flex items-center gap-1 font-bold italic">
-                                        <Calendar size={10} /> {selectedQuestion.examSource}
-                                    </span>
-                                )}
-                            </div>
-                        </div>
-                        <PreviewCard question={selectedQuestion} />
-                    </div>
-                ) : (
-                    <div className="h-[60vh] flex flex-col items-center justify-center text-gray-600 gap-4 border-2 border-dashed border-gray-800/50 rounded-3xl">
-                        <div className="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center border border-gray-800">
-                            <MonitorPlay size={32} className="opacity-40" />
-                        </div>
-                        <div className="text-center">
-                            <p className="text-lg font-bold text-gray-500">No Question Selected</p>
-                            <p className="text-sm">Select a question from the table to see the live preview here.</p>
-                        </div>
-                    </div>
-                )}
-            </div>
-        </div >
+        </div>
     );
 }
 
@@ -995,7 +746,7 @@ import SolutionViewer from '../../../components/question-bank/SolutionViewer';
 
 function PreviewCard({ question }: { question: Question }) {
     return (
-        <div className="space-y-6">
+        <div className="space-y-4">
             <div className="pointer-events-none">
                 <QuestionCard
                     question={question}
@@ -1006,15 +757,13 @@ function PreviewCard({ question }: { question: Question }) {
                 />
             </div>
 
-            <div className="mt-8 border-t border-gray-800 pt-8">
-                <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_#a855f7]"></span>
-                    Solution Preview
-                </h3>
-                <div className="bg-gray-950/50 rounded-2xl border border-gray-800/50 backdrop-blur-sm p-2 shadow-2xl">
+            <div className="border-t border-gray-800 pt-4">
+                <h4 className="text-xs font-bold text-gray-500 uppercase mb-3">Solution</h4>
+                <div className="bg-gray-900/50 rounded-xl border border-gray-800/50 p-2">
                     <SolutionViewer solution={question.solution} sourceReferences={question.sourceReferences} />
                 </div>
             </div>
         </div>
     );
 }
+
