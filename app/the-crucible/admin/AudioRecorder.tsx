@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Mic, Square, Play, Upload, Check, RefreshCw, Settings } from 'lucide-react';
+import { uploadAsset } from '../../../lib/uploadUtils';
 
 interface AudioRecorderProps {
     questionId: string;
@@ -105,25 +106,17 @@ export default function AudioRecorder({ questionId, onUploadComplete, existingAu
         setUploading(true);
 
         try {
-            const formData = new FormData();
-            formData.append('file', audioBlob);
-            formData.append('filename', questionId); // Automagically named after the question!
+            const filename = `${questionId}_audio.webm`;
+            const file = new File([audioBlob], filename, { type: 'audio/webm' });
 
-            const res = await fetch('/api/upload-audio', {
-                method: 'POST',
-                body: formData
-            });
+            // Use Supabase Storage
+            const { url } = await uploadAsset(file, 'audio', questionId);
 
-            const data = await res.json();
-            if (data.success) {
-                onUploadComplete(data.url);
-                setAudioBlob(null); // Reset after success
-            } else {
-                alert('Upload failed: ' + data.error);
-            }
+            onUploadComplete(url);
+            setAudioBlob(null); // Reset after success
         } catch (err) {
             console.error('Upload error:', err);
-            alert('Upload failed due to network error.');
+            alert('Upload failed: ' + (err instanceof Error ? err.message : 'Unknown error'));
         } finally {
             setUploading(false);
         }
@@ -167,8 +160,8 @@ export default function AudioRecorder({ questionId, onUploadComplete, existingAu
                     <button
                         onClick={isRecording ? stopRecording : startRecording}
                         className={`flex-1 py-2 px-4 rounded-lg flex items-center justify-center gap-2 text-sm font-bold transition-all ${isRecording
-                                ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse'
-                                : 'bg-gray-800 hover:bg-gray-700 text-gray-300'
+                            ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse'
+                            : 'bg-gray-800 hover:bg-gray-700 text-gray-300'
                             }`}
                     >
                         {isRecording ? (

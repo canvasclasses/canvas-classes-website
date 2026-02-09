@@ -1,25 +1,40 @@
-'use client';
-
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Plus, X, Tag, Sparkles } from 'lucide-react';
 import { Question, WeightedTag } from '../types';
-import { getTagsForChapter, ConceptTag, GENERIC_TAGS, ALL_TAGS } from '../taxonomy/chapter-concepts';
+import { TaxonomyNode } from '../actions';
 
 interface TagManagerProps {
     question: Question;
     onUpdate: (field: keyof Question, value: any) => void;
     chapterName: string;
+    taxonomy: TaxonomyNode[];
 }
 
-export default function TagManager({ question, onUpdate, chapterName }: TagManagerProps) {
+export default function TagManager({ question, onUpdate, chapterName, taxonomy }: TagManagerProps) {
     const [isAdding, setIsAdding] = useState(false);
     const [selectedTagId, setSelectedTagId] = useState('');
     const [customTagName, setCustomTagName] = useState('');
     const [weight, setWeight] = useState('100');
-
     const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-    const availableTags = getTagsForChapter(chapterName);
+    // Derived state for available tags
+    const availableTags = useMemo(() => {
+        if (!chapterName) return [];
+
+        // Find matching chapter node (Normalize for safety)
+        const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const targetSlug = normalize(chapterName);
+
+        const chapterNode = taxonomy.find(n =>
+            n.type === 'chapter' && (normalize(n.name) === targetSlug || n.id === `chapter_${targetSlug}`)
+        );
+
+        if (!chapterNode) return [];
+
+        // Get children tags
+        return taxonomy.filter(n => n.type === 'topic' && n.parent_id === chapterNode.id);
+    }, [chapterName, taxonomy]);
+
     const currentTags = question.conceptTags || [];
 
     const handleAutoAnalyze = () => {
@@ -110,7 +125,7 @@ export default function TagManager({ question, onUpdate, chapterName }: TagManag
         if (id.startsWith('TAG_CUSTOM_')) {
             return id.replace('TAG_CUSTOM_', '').replace(/_/g, ' ');
         }
-        return ALL_TAGS.find(t => t.id === id)?.name || id;
+        return taxonomy.find(t => t.id === id)?.name || id;
     };
 
     return (
