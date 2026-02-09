@@ -3,16 +3,14 @@
 import { useState, useEffect } from 'react';
 import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen } from 'lucide-react';
 import { Question, JEEQuestionType, WeightedTag } from '../types';
-import { getQuestions, saveQuestion, deleteQuestion } from '../actions';
+
+import { getQuestions, saveQuestion, deleteQuestion, getTaxonomy, TaxonomyNode, syncSupabaseToMongo } from '../actions';
 import Link from 'next/link';
 import { fetchLecturesData, Chapter } from '../../lib/lecturesData';
-
-import { getTagsForChapter, GENERIC_TAGS, ALL_TAGS } from '../taxonomy/chapter-concepts';
 import TagManager from './TagManager';
 import AudioRecorder from './AudioRecorder';
-
-// Helper to get all unique tags if needed for display, but strictly we use filtered lists now.
-
+import SmartUploader from '../../../components/admin/SmartUploader';
+import { uploadAsset } from '../../../lib/uploadUtils';
 
 const QUESTION_TYPES: { id: JEEQuestionType; name: string; color: string }[] = [
     { id: 'SCQ', name: 'Single Correct', color: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' },
@@ -26,7 +24,9 @@ const QUESTION_TYPES: { id: JEEQuestionType; name: string; color: string }[] = [
 export default function AdminPage() {
     const [questions, setQuestions] = useState<Question[]>([]);
     const [chapters, setChapters] = useState<Chapter[]>([]);
+    const [taxonomy, setTaxonomy] = useState<TaxonomyNode[]>([]); // New state
     const [loading, setLoading] = useState(true);
+    const [isSyncing, setIsSyncing] = useState(false);
     const [savingId, setSavingId] = useState<string | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
@@ -40,13 +40,33 @@ export default function AdminPage() {
     }, []);
 
     const loadData = async () => {
-        const [qData, cData] = await Promise.all([
+        const [qData, cData, tData] = await Promise.all([
             getQuestions(),
-            fetchLecturesData()
+            fetchLecturesData(),
+            getTaxonomy() // Fetch DB taxonomy
         ]);
         setQuestions(qData);
         setChapters(cData);
+        setTaxonomy(tData);
         setLoading(false);
+    };
+
+    const handleSync = async () => {
+        if (!confirm('This will pull all questions from Supabase into MongoDB. Proceed?')) return;
+        setIsSyncing(true);
+        try {
+            const result = await syncSupabaseToMongo();
+            if (result.success) {
+                alert(result.message);
+                loadData(); // Reload the list
+            } else {
+                alert("Sync failed: " + result.message);
+            }
+        } catch (e) {
+            alert("Error: " + String(e));
+        } finally {
+            setIsSyncing(false);
+        }
     };
 
     const handleAddQuestion = async () => {
@@ -140,6 +160,54 @@ export default function AdminPage() {
         handleUpdate(q.id, 'solution', { ...q.solution, textSolutionLatex: text });
     };
 
+    const handlePaste = async (e: React.ClipboardEvent<HTMLTextAreaElement>, q: Question, field: 'textMarkdown' | 'solution') => {
+        const items = e.clipboardData.items;
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                e.preventDefault();
+                const file = items[i].getAsFile();
+                if (!file) continue;
+
+                // Optimistic UI feedback could go here (e.g. "Uploading...")
+                // For now, we rely on the async insert
+
+                try {
+                    // Upload
+                    const { url } = await uploadAsset(file, 'questions', q.id);
+
+                    // Insert Markdown at cursor
+                    const textarea = e.currentTarget;
+                    const start = textarea.selectionStart;
+                    const end = textarea.selectionEnd;
+                    const text = textarea.value;
+                    const before = text.substring(0, start);
+                    const after = text.substring(end, text.length);
+                    const newText = `${before}\n![Image](${url})\n${after}`;
+
+                    if (field === 'solution') {
+                        handleUpdate(q.id, 'solution', { ...q.solution, textSolutionLatex: newText });
+                    } else {
+                        handleUpdate(q.id, field, newText);
+                    }
+                } catch (error) {
+                    console.error("Paste upload failed:", error);
+                    alert("Failed to upload pasted image");
+                }
+            }
+        }
+    };
+
+    const handleUploadComplete = (url: string, q: Question, field: 'textMarkdown' | 'solution') => {
+        const currentText = field === 'solution' ? q.solution.textSolutionLatex : q.textMarkdown;
+        const newText = `${currentText || ''}\n![Image](${url})`;
+
+        if (field === 'solution') {
+            handleUpdate(q.id, 'solution', { ...q.solution, textSolutionLatex: newText });
+        } else {
+            handleUpdate(q.id, field, newText);
+        }
+    };
+
     if (loading) return <div className="p-8 text-white">Loading Admin...</div>;
 
     const selectedQuestion = questions.find(q => q.id === selectedQuestionId);
@@ -203,8 +271,17 @@ export default function AdminPage() {
                         </div>
                         <div className="flex gap-3">
                             <button
+                                onClick={handleSync}
+                                disabled={isSyncing}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${isSyncing ? 'bg-gray-800 text-gray-500' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/20'}`}
+                            >
+                                <MonitorPlay size={14} className={isSyncing ? 'animate-pulse' : ''} />
+                                {isSyncing ? 'Syncing...' : 'Sync Legacy Data'}
+                            </button>
+
+                            <button
                                 onClick={handleAddQuestion}
-                                className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 rounded-lg text-sm font-bold transition shadow-lg shadow-purple-900/20"
+                                className="flex items-center gap-2 px-6 py-2 bg-indigo-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-indigo-500/20 hover:bg-indigo-400 active:scale-95 transition-all"
                             >
                                 <Plus size={18} /> Add Question
                             </button>
@@ -392,9 +469,18 @@ export default function AdminPage() {
                                                         </select>
                                                     )}
 
-                                                    <div className="flex items-center gap-2 mb-1">
+                                                    <div className="w-full">
+                                                        {/* Smart Upload Zone */}
+                                                        <div className="mb-1">
+                                                            <SmartUploader
+                                                                questionId={q.id}
+                                                                onUploadComplete={(url) => handleUploadComplete(url, q, 'textMarkdown')}
+                                                                className="py-2 px-2 text-[10px]"
+                                                            />
+                                                        </div>
                                                         <textarea
                                                             value={q.textMarkdown}
+                                                            onPaste={(e) => handlePaste(e, q, 'textMarkdown')}
                                                             onChange={(e) => handleUpdate(q.id, 'textMarkdown', e.target.value)}
                                                             placeholder="Question Text (Markdown/Latex)"
                                                             className="bg-gray-900 border border-gray-600 rounded px-2 py-1 w-full h-32 text-[14.5px] focus:border-purple-500 outline-none resize-y font-mono"
@@ -475,6 +561,7 @@ export default function AdminPage() {
                                                                 question={q}
                                                                 onUpdate={(field, val) => handleUpdate(q.id, field, val)}
                                                                 chapterName={q.chapterId || (selectedChapterFilter !== 'all' ? selectedChapterFilter : '')}
+                                                                taxonomy={taxonomy}
                                                             />
                                                         </div>
                                                         {/* Primary tag dropdown for quick editing */}
@@ -487,40 +574,62 @@ export default function AdminPage() {
                                                             onClick={(e) => e.stopPropagation()}
                                                         >
                                                             <option value="">Select Primary Tag</option>
-                                                            {getTagsForChapter(q.chapterId || (selectedChapterFilter !== 'all' ? selectedChapterFilter : '')).map(tag => (
-                                                                <option key={tag.id} value={tag.id}>{tag.name}</option>
-                                                            ))}
+                                                            {(() => {
+                                                                const cName = q.chapterId || (selectedChapterFilter !== 'all' ? selectedChapterFilter : '');
+                                                                const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+                                                                const targetSlug = normalize(cName);
+                                                                const chapterNode = taxonomy.find(n => n.type === 'chapter' && (normalize(n.name) === targetSlug || n.id === `chapter_${targetSlug}`));
+
+                                                                const availableTags = chapterNode
+                                                                    ? taxonomy.filter(n => n.type === 'topic' && n.parent_id === chapterNode.id)
+                                                                    : [];
+
+                                                                return availableTags.map(tag => (
+                                                                    <option key={tag.id} value={tag.id}>{tag.name}</option>
+                                                                ));
+                                                            })()}
                                                         </select>
                                                     </div>
 
-                                                    <div className="flex items-center gap-2">
-                                                        <textarea
-                                                            value={q.solution.textSolutionLatex}
-                                                            onChange={(e) => handleSolutionChange(q, e.target.value)}
-                                                            placeholder="Explanation / Solution (Markdown/Latex)"
-                                                            className="bg-gray-900/30 border border-gray-700/50 rounded px-2 py-1 w-full h-32 text-[13px] text-gray-400 focus:border-purple-500 outline-none resize-y font-mono italic"
-                                                            onClick={(e) => e.stopPropagation()}
-                                                        />
-                                                        <div className="flex flex-col gap-1 w-16">
-                                                            <label className="text-[9px] text-gray-500 text-center">Sol Scale</label>
-                                                            <input
-                                                                type="number"
-                                                                min="10"
-                                                                max="100"
-                                                                value={q.solutionImageScale || 100}
-                                                                onChange={(e) => handleUpdate(q.id, 'solutionImageScale', parseInt(e.target.value) || 100)}
-                                                                className="bg-gray-800 border border-gray-600 rounded px-1 py-0.5 text-[10px] text-center text-white"
+                                                    <div className="w-full">
+                                                        {/* Solution Upload Zone */}
+                                                        <div className="mb-1">
+                                                            <SmartUploader
+                                                                questionId={q.id}
+                                                                onUploadComplete={(url) => handleUploadComplete(url, q, 'solution')}
+                                                                className="py-2 px-2 text-[10px]"
+                                                            />
+                                                        </div>
+                                                        <div className="flex items-center gap-2">
+                                                            <textarea
+                                                                value={q.solution.textSolutionLatex}
+                                                                onPaste={(e) => handlePaste(e, q, 'solution')}
+                                                                onChange={(e) => handleSolutionChange(q, e.target.value)}
+                                                                placeholder="Explanation / Solution (Markdown/Latex)"
+                                                                className="bg-gray-900/30 border border-gray-700/50 rounded px-2 py-1 w-full h-32 text-[13px] text-gray-400 focus:border-purple-500 outline-none resize-y font-mono italic"
                                                                 onClick={(e) => e.stopPropagation()}
                                                             />
-                                                            <input
-                                                                type="range"
-                                                                min="10"
-                                                                max="100"
-                                                                value={q.solutionImageScale || 100}
-                                                                onChange={(e) => handleUpdate(q.id, 'solutionImageScale', parseInt(e.target.value) || 100)}
-                                                                className="accent-emerald-500 h-10 w-2 mt-2 -rotate-90 origin-center translate-y-2 translate-x-5"
-                                                                onClick={(e) => e.stopPropagation()}
-                                                            />
+                                                            <div className="flex flex-col gap-1 w-16">
+                                                                <label className="text-[9px] text-gray-500 text-center">Sol Scale</label>
+                                                                <input
+                                                                    type="number"
+                                                                    min="10"
+                                                                    max="100"
+                                                                    value={q.solutionImageScale || 100}
+                                                                    onChange={(e) => handleUpdate(q.id, 'solutionImageScale', parseInt(e.target.value) || 100)}
+                                                                    className="bg-gray-800 border border-gray-600 rounded px-1 py-0.5 text-[10px] text-center text-white"
+                                                                    onClick={(e) => e.stopPropagation()}
+                                                                />
+                                                                <input
+                                                                    type="range"
+                                                                    min="10"
+                                                                    max="100"
+                                                                    value={q.solutionImageScale || 100}
+                                                                    onChange={(e) => handleUpdate(q.id, 'solutionImageScale', parseInt(e.target.value) || 100)}
+                                                                    className="accent-emerald-500 h-10 w-2 mt-2 -rotate-90 origin-center translate-y-2 translate-x-5"
+                                                                    onClick={(e) => e.stopPropagation()}
+                                                                />
+                                                            </div>
                                                         </div>
                                                     </div>
 

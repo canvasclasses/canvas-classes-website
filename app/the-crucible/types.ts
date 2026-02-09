@@ -131,10 +131,10 @@ export interface ConceptNode {
 
 // Tag Definition for the Master Taxonomy
 export interface TagDefinition {
-    _id: string;           // e.g., "TAG_MOLE_STOICHIOMETRY"
+    id: string;           // e.g., "TAG_MOLE_STOICHIOMETRY"
     name: string;          // e.g., "Stoichiometry"
     parent_id: string | null;
-    level: 'BRANCH' | 'CHAPTER' | 'TOPIC';
+    type: 'chapter' | 'topic' | 'unit';
 }
 
 // Analytics Helper Types

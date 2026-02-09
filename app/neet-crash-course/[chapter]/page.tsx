@@ -180,7 +180,7 @@ export default function NeetChapterPage() {
                                         </div>
                                         <iframe
                                             src={chapter.dppPdfUrl}
-                                            className="w-full flex-1 bg-gray-800"
+                                            className="w-full h-[70vh] bg-gray-800"
                                             title="DPP PDF Viewer"
                                         />
                                     </>
@@ -221,7 +221,7 @@ export default function NeetChapterPage() {
                                         </div>
                                         <iframe
                                             src={chapter.chapterNotesUrl}
-                                            className="w-full flex-1 bg-gray-800"
+                                            className="w-full h-[70vh] bg-gray-800"
                                             title="Chapter Notes Viewer"
                                         />
                                     </>

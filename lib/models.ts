@@ -90,6 +90,21 @@ export interface ITrap {
     concept_gap_tag?: string;
 }
 
+export interface ISourceReference {
+    type: 'NCERT' | 'PYQ' | 'COACHING' | 'OTHER';
+    ncertBook?: string;
+    ncertChapter?: string;
+    ncertPage?: string;
+    ncertTopic?: string;
+    pyqExam?: string;
+    pyqShift?: string;
+    pyqYear?: number;
+    pyqQuestionNo?: string;
+    sourceName?: string;
+    description?: string;
+    similarity?: 'exact' | 'similar' | 'concept';
+}
+
 export interface IQuestion {
     _id: string;
     text_markdown: string;
@@ -101,6 +116,8 @@ export interface IQuestion {
     chapter_id?: string;
     is_pyq: boolean;
     is_top_pyq: boolean;
+    exam_source?: string; // Full reference string (e.g., "JEE 2026 - Jan 21 Morning Shift")
+    source_references?: ISourceReference[];
     solution: ISolution;
     trap?: ITrap;
     createdAt?: Date;
@@ -133,6 +150,21 @@ const MetaSchema = new Schema<IMeta>({
     avg_time_sec: { type: Number, default: 120 }
 }, { _id: false });
 
+const SourceReferenceSchema = new Schema<ISourceReference>({
+    type: { type: String, enum: ['NCERT', 'PYQ', 'COACHING', 'OTHER'], required: true },
+    ncertBook: { type: String },
+    ncertChapter: { type: String },
+    ncertPage: { type: String },
+    ncertTopic: { type: String },
+    pyqExam: { type: String },
+    pyqShift: { type: String },
+    pyqYear: { type: Number },
+    pyqQuestionNo: { type: String },
+    sourceName: { type: String },
+    description: { type: String },
+    similarity: { type: String, enum: ['exact', 'similar', 'concept'] }
+}, { _id: false });
+
 const TrapSchema = new Schema<ITrap>({
     likely_wrong_choice_id: { type: String },
     message: { type: String },
@@ -161,6 +193,8 @@ const QuestionSchema = new Schema<IQuestion>({
     chapter_id: { type: String },
     is_pyq: { type: Boolean, default: false },
     is_top_pyq: { type: Boolean, default: false },
+    exam_source: { type: String },
+    source_references: [SourceReferenceSchema],
     solution: { type: SolutionSchema, required: true },
     trap: TrapSchema
 }, {

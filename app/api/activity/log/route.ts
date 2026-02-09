@@ -78,28 +78,40 @@ export async function POST(request: NextRequest) {
         // Fetch the question from MongoDB to get its tags
         let question = await Question.findById(questionId).lean();
 
-        // Fallback to JSON file if not in MongoDB yet (during migration)
         if (!question) {
-            const questionsData = await import('@/app/the-crucible/questions.json');
-            const questions = questionsData.default as any[];
-            const jsonQuestion = questions.find(q => q.id === questionId);
+            if (!supabase) {
+                return NextResponse.json(
+                    { error: 'Content DB unavailable' },
+                    { status: 503 }
+                );
+            }
 
-            if (!jsonQuestion) {
+            // Updated Fallback: Fetch from Supabase (instead of local JSON)
+            const { data: supaQuestion, error } = await supabase
+                .from('questions')
+                .select('*')
+                .eq('id', questionId)
+                .single();
+
+            if (error || !supaQuestion) {
                 return NextResponse.json(
                     { error: `Question not found: ${questionId}` },
                     { status: 404 }
                 );
             }
 
-            // Convert to expected format
+            // Convert Supabase Snake_Case -> MongoDB Schema Format
+            // Note: MongoDB 'tags' are weighted, Supabase 'concept_tags' are JSONB
+            const conceptTags = supaQuestion.concept_tags || [];
+
             question = {
-                _id: jsonQuestion.id,
-                tags: jsonQuestion.tagId ? [{
-                    tag_id: 'TAG_' + jsonQuestion.tagId.toUpperCase().replace(/[^A-Z0-9]/g, '_'),
-                    weight: 1.0
-                }] : [],
+                _id: supaQuestion.id,
+                tags: conceptTags.map((tag: any) => ({
+                    tag_id: tag.tagId || tag.tag_id, // Handle likely variations
+                    weight: tag.weight || 1.0
+                })),
                 meta: {
-                    difficulty: jsonQuestion.difficulty || 'Medium'
+                    difficulty: supaQuestion.difficulty || 'Medium'
                 }
             } as any;
         }

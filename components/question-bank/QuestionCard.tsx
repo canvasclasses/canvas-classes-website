@@ -81,12 +81,12 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                 <div className="max-w-md mx-auto">
                     <div className="flex flex-col gap-4">
                         <input
-                            type="text"
+                            type="number"
                             value={numericInput}
                             onChange={(e) => setNumericInput(e.target.value)}
                             disabled={showFeedback}
-                            placeholder="Enter numerical value"
-                            className={`w-full p-4 rounded-xl text-center text-2xl font-bold bg-gray-900 border-2 outline-none transition-all ${showFeedback
+                            placeholder="Enter Value"
+                            className={`w-48 p-3 rounded-xl text-center text-xl font-bold bg-gray-900 border-2 outline-none transition-all mx-auto ${showFeedback
                                 ? (numericInput.trim() === question.integerAnswer?.trim()
                                     ? 'border-green-500 text-green-400 bg-green-900/20'
                                     : 'border-red-500 text-red-400 bg-red-900/20')
