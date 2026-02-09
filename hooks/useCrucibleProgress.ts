@@ -4,12 +4,20 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { createClient } from '@/app/utils/supabase/client';
 
 // Types for progress tracking
+export interface SpacedRepetitionData {
+    interval: number;       // Days until next review (starts at 1)
+    easeFactor: number;     // 2.5 default, min 1.3
+    nextReviewDate: string; // ISO date string (YYYY-MM-DD)
+    repetitions: number;    // Number of successful reviews
+}
+
 export interface QuestionProgress {
     questionId: string;
     chapterId: string;
     difficulty: string;
     isCorrect: boolean;
     attemptedAt: number;
+    sr?: SpacedRepetitionData; // Spaced repetition data
 }
 
 export interface ChapterStats {
@@ -35,6 +43,53 @@ export interface CrucibleProgress {
 }
 
 const STORAGE_KEY = 'crucible_progress';
+
+// SM-2 Algorithm Helper Functions
+function addDays(date: Date, days: number): string {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result.toISOString().split('T')[0];
+}
+
+function calculateNextReview(
+    isCorrect: boolean,
+    quality: 1 | 2 | 3 | 4, // 1=Again, 2=Hard, 3=Good, 4=Easy
+    currentSR?: SpacedRepetitionData
+): SpacedRepetitionData {
+    const now = new Date();
+    const sr = currentSR || { interval: 1, easeFactor: 2.5, repetitions: 0, nextReviewDate: '' };
+
+    if (!isCorrect || quality === 1) {
+        // Reset on incorrect or "Again"
+        return {
+            interval: 1,
+            easeFactor: Math.max(1.3, sr.easeFactor - 0.2),
+            repetitions: 0,
+            nextReviewDate: addDays(now, 1),
+        };
+    }
+
+    // Calculate new interval based on repetitions
+    let newInterval: number;
+    if (sr.repetitions === 0) newInterval = 1;
+    else if (sr.repetitions === 1) newInterval = 6;
+    else newInterval = Math.round(sr.interval * sr.easeFactor);
+
+    // Adjust interval based on quality
+    if (quality === 2) newInterval = Math.max(1, Math.round(newInterval * 0.8)); // Hard: shorter interval
+    if (quality === 4) newInterval = Math.round(newInterval * 1.3); // Easy: longer interval
+
+    // Adjust ease factor based on quality (SM-2 formula)
+    const efChange = 0.1 - (4 - quality) * 0.08;
+    const newEF = Math.max(1.3, sr.easeFactor + efChange);
+
+    return {
+        interval: newInterval,
+        easeFactor: newEF,
+        repetitions: sr.repetitions + 1,
+        nextReviewDate: addDays(now, newInterval),
+    };
+}
 
 const DEFAULT_PROGRESS: CrucibleProgress = {
     questionHistory: {},
@@ -340,12 +395,96 @@ export function useCrucibleProgress() {
         }));
     }, []);
 
+    // Record attempt with Spaced Repetition (SM-2)
+    const recordAttemptWithSR = useCallback((
+        questionId: string,
+        chapterId: string,
+        difficulty: string,
+        isCorrect: boolean,
+        quality: 1 | 2 | 3 | 4 // 1=Again, 2=Hard, 3=Good, 4=Easy
+    ) => {
+        setProgress(prev => {
+            const existingEntry = prev.questionHistory[questionId];
+            const newSR = calculateNextReview(isCorrect, quality, existingEntry?.sr);
+
+            const isFirstAttempt = !existingEntry;
+            const wasCorrectBefore = existingEntry?.isCorrect || false;
+
+            const newQuestionHistory = {
+                ...prev.questionHistory,
+                [questionId]: {
+                    questionId,
+                    chapterId,
+                    difficulty,
+                    isCorrect,
+                    attemptedAt: Date.now(),
+                    sr: newSR,
+                },
+            };
+
+            let newTotalAttempted = prev.totalAttempted;
+            let newTotalCorrect = prev.totalCorrect;
+            let newTotalIncorrect = prev.totalIncorrect;
+
+            if (isFirstAttempt) {
+                newTotalAttempted += 1;
+                if (isCorrect) newTotalCorrect += 1;
+                else newTotalIncorrect += 1;
+            } else if (wasCorrectBefore !== isCorrect) {
+                if (isCorrect) {
+                    newTotalCorrect += 1;
+                    newTotalIncorrect -= 1;
+                } else {
+                    newTotalCorrect -= 1;
+                    newTotalIncorrect += 1;
+                }
+            }
+
+            const newCurrentStreak = isCorrect ? prev.currentStreak + 1 : 0;
+            const newBestStreak = Math.max(prev.bestStreak, newCurrentStreak);
+
+            return {
+                ...prev,
+                questionHistory: newQuestionHistory,
+                totalAttempted: newTotalAttempted,
+                totalCorrect: newTotalCorrect,
+                totalIncorrect: newTotalIncorrect,
+                currentStreak: newCurrentStreak,
+                bestStreak: newBestStreak,
+                lastSessionDate: new Date().toISOString().split('T')[0],
+            };
+        });
+    }, []);
+
+    // Get questions due for review today
+    const getDueQuestions = useCallback((allQuestionIds: string[]): string[] => {
+        const today = new Date().toISOString().split('T')[0];
+        return allQuestionIds.filter(qId => {
+            const entry = progress.questionHistory[qId];
+            if (!entry?.sr) return false; // Not started SR yet
+            return entry.sr.nextReviewDate <= today;
+        });
+    }, [progress.questionHistory]);
+
+    // Get SR data for a question
+    const getQuestionSRData = useCallback((questionId: string): SpacedRepetitionData | null => {
+        return progress.questionHistory[questionId]?.sr || null;
+    }, [progress.questionHistory]);
+
+    // Count due questions
+    const dueCount = Object.values(progress.questionHistory).filter(entry => {
+        if (!entry?.sr) return false;
+        const today = new Date().toISOString().split('T')[0];
+        return entry.sr.nextReviewDate <= today;
+    }).length;
+
     return {
         progress,
         isLoaded,
         isSyncing,
         isLoggedIn: !!userId,
         recordAttempt,
+        recordAttemptWithSR,
         initializeChapterTotals,
         getChapterStats,
         isQuestionAttempted,
@@ -355,5 +494,8 @@ export function useCrucibleProgress() {
         toggleStar,
         toggleMaster,
         saveNote,
+        getDueQuestions,
+        getQuestionSRData,
+        dueCount,
     };
 }

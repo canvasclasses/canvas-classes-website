@@ -93,6 +93,7 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
     const [questionType, setQuestionType] = useState<'Mix' | 'MCQ' | 'Numerical' | 'Statement' | 'Assertion'>('Mix');
     const [showMobileConfig, setShowMobileConfig] = useState(false);
     const [isScopeDropdownOpen, setIsScopeDropdownOpen] = useState(false);
+    const [expandedPYQYears, setExpandedPYQYears] = useState<string[]>(['2026']); // 2026 expanded by default
     const [showOnboarding, setShowOnboarding] = useState(false);
     const [onboardingSlide, setOnboardingSlide] = useState(0);
     const [neverShowOnboarding, setNeverShowOnboarding] = useState(false);
@@ -212,7 +213,7 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                 <div className="grid grid-cols-2 gap-2 p-1 bg-black/20 rounded-xl border border-white/5">
                     {[
                         { id: 'standard', label: 'Standard', tooltip: 'All Questions', icon: Layers },
-                        { id: 'high-yield', label: 'Top 30', tooltip: 'Top 30 Questions', icon: Sparkles }
+                        { id: 'high-yield', label: 'Top 50 PYQ', tooltip: 'Top 50 PYQs per chapter', icon: Sparkles }
                     ].map(opt => {
                         const Icon = opt.icon;
                         const isActive = selectionTier === opt.id;
@@ -429,17 +430,82 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                                         </div>
                                     </div>
                                 </div>
-                            ) : (
-                                <div className="mb-0">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 divide-y md:divide-y-0 md:gap-px bg-gray-800/30">
-                                        {selectedTab === 'pyq' && (
-                                            Array.from(new Set(initialQuestions.map(q => q.examSource).filter(Boolean) as string[])).sort().reverse().map(item => (
-                                                <div key={item} onClick={() => { setSelectedItems([item]); }} className={`group relative flex items-center gap-4 px-6 py-4 cursor-pointer transition-colors duration-150 select-none border-b border-r border-gray-800/50 bg-[#080C10] hover:bg-white/[0.02]`}>
-                                                    <span className={`text-sm font-bold text-gray-400 group-hover:text-gray-200`}>{item}</span>
+                            ) : selectedTab === 'pyq' ? (
+                                <div className="mb-0 space-y-2 p-4">
+                                    {(() => {
+                                        // Group exam sources by year
+                                        const allSources = Array.from(new Set(initialQuestions.map(q => q.examSource).filter(Boolean) as string[]));
+                                        const yearGroups: Record<string, string[]> = {};
+                                        allSources.forEach(src => {
+                                            const yearMatch = src.match(/(\d{4})/);
+                                            const year = yearMatch ? yearMatch[1] : 'Other';
+                                            if (!yearGroups[year]) yearGroups[year] = [];
+                                            yearGroups[year].push(src);
+                                        });
+                                        // Sort years descending
+                                        const sortedYears = Object.keys(yearGroups).sort((a, b) => b.localeCompare(a));
+
+                                        return sortedYears.map(year => {
+                                            const shifts = yearGroups[year].sort().reverse();
+                                            const isExpanded = expandedPYQYears.includes(year);
+                                            const questionCount = shifts.reduce((acc, src) => acc + initialQuestions.filter(q => q.examSource === src).length, 0);
+
+                                            return (
+                                                <div key={year} className="rounded-xl border border-gray-800/50 overflow-hidden bg-[#080C10]">
+                                                    <button
+                                                        onClick={() => setExpandedPYQYears(prev =>
+                                                            prev.includes(year) ? prev.filter(y => y !== year) : [...prev, year]
+                                                        )}
+                                                        className="w-full flex items-center justify-between px-5 py-4 bg-gray-900/50 hover:bg-gray-800/50 transition-colors"
+                                                    >
+                                                        <div className="flex items-center gap-3">
+                                                            <motion.div animate={{ rotate: isExpanded ? 90 : 0 }} transition={{ duration: 0.2 }}>
+                                                                <ChevronDown size={18} className="text-indigo-400" />
+                                                            </motion.div>
+                                                            <span className="text-sm font-black text-white">JEE Main {year}</span>
+                                                            <span className="text-[10px] text-gray-500 font-bold bg-gray-800 px-2 py-0.5 rounded-full">{shifts.length} shifts</span>
+                                                            <span className="text-[10px] text-indigo-400 font-bold">{questionCount} Qs</span>
+                                                        </div>
+                                                    </button>
+                                                    <AnimatePresence>
+                                                        {isExpanded && (
+                                                            <motion.div
+                                                                initial={{ height: 0, opacity: 0 }}
+                                                                animate={{ height: 'auto', opacity: 1 }}
+                                                                exit={{ height: 0, opacity: 0 }}
+                                                                transition={{ duration: 0.2 }}
+                                                                className="overflow-hidden"
+                                                            >
+                                                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-800/30">
+                                                                    {shifts.map(shift => {
+                                                                        const shiftQCount = initialQuestions.filter(q => q.examSource === shift).length;
+                                                                        const isSelected = selectedItems.includes(shift);
+                                                                        // Extract shift name (e.g., "Jan 21 Morning Shift" from "JEE Main 2026 - Jan 21 Morning Shift")
+                                                                        const shiftName = shift.replace(/JEE Main \d{4}\s*-?\s*/, '').trim() || shift;
+                                                                        return (
+                                                                            <div
+                                                                                key={shift}
+                                                                                onClick={() => setSelectedItems([shift])}
+                                                                                className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-colors border-b border-gray-800/30 ${isSelected ? 'bg-indigo-900/30 border-l-2 border-l-indigo-500' : 'bg-[#0A0E14] hover:bg-white/[0.02]'}`}
+                                                                            >
+                                                                                <span className={`text-xs font-bold ${isSelected ? 'text-white' : 'text-gray-400'}`}>{shiftName}</span>
+                                                                                <span className="text-[10px] text-gray-500 font-mono">{shiftQCount} Qs</span>
+                                                                            </div>
+                                                                        );
+                                                                    })}
+                                                                </div>
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
                                                 </div>
-                                            ))
-                                        )}
-                                    </div>
+                                            );
+                                        });
+                                    })()}
+                                </div>
+                            ) : (
+                                <div className="p-6 text-center text-gray-500">
+                                    <Bookmark size={32} className="mx-auto mb-2 opacity-50" />
+                                    <p className="text-sm font-bold">Saved questions will appear here</p>
                                 </div>
                             )}
                         </div>

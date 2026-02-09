@@ -126,6 +126,11 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         startNewSession,
     } = useActivityLogger();
 
+    const {
+        recordAttemptWithSR,
+        getDueQuestions
+    } = useCrucibleProgress();
+
     const chapters = Array.from(new Set(initialQuestions.map(q => q.chapterId).filter((id): id is string => !!id)));
 
     // Grouped and Filtered Exam Sources
@@ -258,33 +263,58 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
     const handleAnswerSubmit = (correct: boolean, optionId: string) => {
         setExamAnswers(prev => ({ ...prev, [currentIndex]: optionId }));
 
-        if (gameMode === 'practice') {
-            setSelectedOptionId(optionId);
-            setIsCorrect(correct);
-            setQuestionStatus(prev => ({ ...prev, [currentIndex]: correct ? 'solved' : 'incorrect' }));
+        // Mark as answered locally
+        setSelectedOptionId(optionId);
+        setIsCorrect(correct);
+        setQuestionStatus(prev => ({ ...prev, [currentIndex]: correct ? 'solved' : 'incorrect' }));
 
-            if (activeQuestion) {
-                recordAttempt(activeQuestion.id, activeQuestion.chapterId || 'Unknown', activeQuestion.difficulty, correct);
-
-                // Log to backend API for 4-Bucket Architecture
-                logQuestionAttempt(
-                    activeQuestion.id,
-                    correct,
-                    optionId,
-                    'practice'
-                );
-            }
-
-            if (correct) {
-                setStreak(prev => prev + 1);
-                setScore(prev => prev + 10 + (streak * 2));
-            } else {
-                setStreak(0);
-            }
-        } else {
-            setSelectedOptionId(optionId);
-            setQuestionStatus(prev => ({ ...prev, [currentIndex]: 'answered' }));
+        if (gameMode === 'exam') {
+            // In exam mode, we don't show immediate feedback or do SR
+            return;
         }
+
+        // Practice Mode Logic
+        if (activeQuestion) {
+            // We DON'T record attempt immediately for SR in practice mode
+            // We wait for the quality rating (Again/Hard/Good/Easy)
+
+            // Log to backend API for analytics (still do this)
+            logQuestionAttempt(
+                activeQuestion.id,
+                correct,
+                optionId,
+                'practice'
+            );
+        }
+
+        if (correct) {
+            setStreak(prev => prev + 1);
+            setScore(prev => prev + 10 + (streak * 2));
+        } else {
+            setStreak(0);
+        }
+    };
+
+    const handleSRSubmit = (quality: 1 | 2 | 3 | 4) => {
+        if (!activeQuestion) return;
+
+        const correct = isCorrect === true; // Should be true if they are rating it, but handle edge cases
+
+        recordAttemptWithSR(
+            activeQuestion.id,
+            activeQuestion.chapterId || 'Unknown',
+            activeQuestion.difficulty,
+            correct,
+            quality
+        );
+
+        // Move to next question after short delay
+        setTimeout(() => {
+            handleNext();
+            // Reset state for next Q
+            setSelectedOptionId(null);
+            setIsCorrect(null);
+        }, 300);
     };
 
     const resetState = (index: number, forceReviewMode?: boolean) => {
@@ -513,7 +543,14 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                     }
 
                     // 3. Limit & Shuffle
-                    const playSet = shuffleArray(filtered).slice(0, config.questionCount === 'Max' ? filtered.length : Number(config.questionCount));
+                    let playSet = shuffleArray(filtered);
+
+                    if (config.selectionTier === 'high-yield') {
+                        playSet = playSet.filter(q => q.isTopPYQ);
+                    }
+
+                    // Apply count limit
+                    playSet = playSet.slice(0, config.questionCount === 'Max' ? filtered.length : Number(config.questionCount));
 
                     if (playSet.length === 0) {
                         alert("No questions found.");
@@ -766,12 +803,38 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                         <QuestionCard
                                             question={filteredQuestions[currentIndex]}
                                             onAnswerSubmit={(cor, optId) => {
-                                                setQuestionStatus(prev => ({ ...prev, [currentIndex]: cor ? 'solved' : 'incorrect' }));
                                                 handleAnswerSubmit(cor, optId);
                                             }}
-                                            showFeedback={questionStatus[currentIndex] === 'solved' || questionStatus[currentIndex] === 'incorrect'}
+                                            showFeedback={!!selectedOptionId} // Just show visual feedback
                                             selectedOptionId={filteredQuestions[currentIndex].id === activeQuestion.id ? selectedOptionId : null}
                                         />
+
+                                        {/* Spaced Repetition Controls */}
+                                        {gameMode === 'practice' && selectedOptionId && (
+                                            <div className="mt-6 pt-6 border-t border-white/5 animate-in fade-in slide-in-from-bottom-4 duration-300">
+                                                <div className="text-center mb-4">
+                                                    <span className="text-xs uppercase tracking-widest text-slate-400 font-bold">Rate Difficulty</span>
+                                                </div>
+                                                <div className="grid grid-cols-4 gap-3">
+                                                    <button onClick={() => handleSRSubmit(1)} className="group flex flex-col items-center gap-1 p-3 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 transition-all active:scale-95">
+                                                        <span className="text-sm font-black text-red-400 group-hover:text-red-300">Again</span>
+                                                        <span className="text-[10px] text-red-500/70 font-mono text-center">&lt; 1 min</span>
+                                                    </button>
+                                                    <button onClick={() => handleSRSubmit(2)} className="group flex flex-col items-center gap-1 p-3 rounded-lg bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 transition-all active:scale-95">
+                                                        <span className="text-sm font-black text-orange-400 group-hover:text-orange-300">Hard</span>
+                                                        <span className="text-[10px] text-orange-500/70 font-mono text-center">2 days</span>
+                                                    </button>
+                                                    <button onClick={() => handleSRSubmit(3)} className="group flex flex-col items-center gap-1 p-3 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 transition-all active:scale-95">
+                                                        <span className="text-sm font-black text-blue-400 group-hover:text-blue-300">Good</span>
+                                                        <span className="text-[10px] text-blue-500/70 font-mono text-center">4 days</span>
+                                                    </button>
+                                                    <button onClick={() => handleSRSubmit(4)} className="group flex flex-col items-center gap-1 p-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 transition-all active:scale-95">
+                                                        <span className="text-sm font-black text-emerald-400 group-hover:text-emerald-300">Easy</span>
+                                                        <span className="text-[10px] text-emerald-500/70 font-mono text-center">7 days</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* Actions */}
