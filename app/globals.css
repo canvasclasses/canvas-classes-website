@@ -194,3 +194,50 @@ body {
 .markdown-table-wrapper tr:hover {
   background-color: rgba(255, 255, 255, 0.05);
 }
+
+/* ======================================== */
+/* KaTeX Global Overrides                   */
+/* ======================================== */
+
+/* Base KaTeX size bump — ensures inline math is readable */
+.katex {
+  font-size: 1.15em !important;
+}
+
+/* Force fractions to render in displaystyle (larger numerator/denominator) */
+.katex .mfrac .frac-line {
+  border-bottom-width: 0.06em !important;
+}
+
+.katex .mfrac .mfrac {
+  font-size: 85% !important;
+}
+
+/* Make fraction numerator and denominator text larger */
+.katex .mfrac > span > span {
+  font-size: 100% !important;
+}
+
+/* Inside option buttons: extra size boost for legibility */
+button .katex,
+[role="button"] .katex {
+  font-size: 1.25em !important;
+}
+
+/* Ensure KaTeX inherits text color properly in dark theme */
+.katex,
+.katex .mathnormal,
+.katex .mathit {
+  color: inherit !important;
+}
+
+/* Prevent KaTeX from overflowing small containers */
+.katex-html {
+  white-space: normal !important;
+  word-wrap: break-word;
+}
+
+/* Spacing fix for inline fractions so they don't clip */
+.katex .mfrac {
+  padding: 0.1em 0;
+}

@@ -161,7 +161,7 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                                         }`}>
                                         {option.id.split('_').pop()?.toUpperCase()}
                                     </span>
-                                    <span className="flex-1 text-xs md:text-sm font-medium text-left">
+                                    <span className="flex-1 text-sm md:text-base font-medium text-left">
                                         {option.text.includes('[smiles:') ? (
                                             <span className="flex flex-col gap-2">
                                                 {option.text.split(/(\[smiles:(?:[^\[\]]|\[[^\]]*\])*\])/).map((part, idx) => {
