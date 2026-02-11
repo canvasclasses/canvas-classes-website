@@ -42,9 +42,13 @@ const mapDocToQuestion = (doc: any): QuestionPageType => ({
 
 // Helper to map Question (camelCase) -> DB Document (snake_case)
 const mapQuestionToDoc = (q: QuestionPageType) => {
-    // SINGLE SOURCE OF TRUTH: Always derive tags from tagId
-    // This ensures consistency and prevents the conceptTags/tagId mismatch bug
-    const tags = q.tagId ? [{ tag_id: q.tagId, weight: 1.0 }] : [];
+    // Priority: conceptTags (Rich) > tagId (Legacy/Simple)
+    let tags = [];
+    if (q.conceptTags && q.conceptTags.length > 0) {
+        tags = q.conceptTags.map(t => ({ tag_id: t.tagId, weight: t.weight }));
+    } else if (q.tagId) {
+        tags = [{ tag_id: q.tagId, weight: 1.0 }];
+    }
 
     return {
         _id: q.id,
@@ -143,7 +147,7 @@ export async function getTaxonomy(): Promise<TaxonomyNode[]> {
             id: doc._id || doc.id,
             name: doc.name,
             parent_id: doc.parent_id,
-            type: doc.type || 'chapter',
+            type: doc.type || (doc.parent_id ? 'topic' : 'chapter'),
             sequence_order: doc.sequence_order,
             class_level: doc.class_level
         }));
