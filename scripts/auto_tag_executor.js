@@ -96,7 +96,7 @@ async function run() {
                 }
             }
 
-            if (resolvedChNode && !resolvedTag) {
+            if (resolvedChNode) {
                 const possibleTags = tagsByParentId[resolvedChNode._id] || [];
                 for (const tag of possibleTags) {
                     const tagNameLower = tag.name.toLowerCase();
@@ -106,6 +106,27 @@ async function run() {
                         resolvedTag = tag;
                         break;
                     }
+                }
+            }
+
+            // Fallback: Search ALL tags if still not found (expensive but thorough for PYQs)
+            if (!resolvedTag) {
+                for (const chId in tagsByParentId) {
+                    if (resolvedChNode && chId === resolvedChNode._id) continue; // Skip already checked
+
+                    for (const tag of tagsByParentId[chId]) {
+                        const tagNameLower = tag.name.toLowerCase();
+                        // Stricter check for global search to avoid false positives
+                        if (tagNameLower.length < 5) continue;
+
+                        const regex = new RegExp('\\b' + tagNameLower.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+                        if (regex.test(qText)) {
+                            resolvedTag = tag;
+                            resolvedChNode = chapterById[chId]; // Update chapter too!
+                            break;
+                        }
+                    }
+                    if (resolvedTag) break;
                 }
             }
 
@@ -135,7 +156,10 @@ async function run() {
             console.log(`Applying updates for ${updates.length} questions...`);
             const updateOps = updates.map(u => {
                 const setDoc = { chapter_id: u.newChId };
-                if (u.newTagId) setDoc.tag_id = u.newTagId;
+                if (u.newTagId) {
+                    setDoc.tag_id = u.newTagId;
+                    setDoc.tags = [{ tag_id: u.newTagId, weight: 1.0 }];
+                }
                 return {
                     updateOne: {
                         filter: { _id: u.qId },
