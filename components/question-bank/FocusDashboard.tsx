@@ -170,18 +170,26 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
     const handleStart = () => {
         if (selectedItems.length === 0) return;
 
-        // Resolve selected Display Names back to actual DB Chapter IDs
-        const resolvedChapterIds = new Set<string>();
-        selectedItems.forEach(displayName => {
-            const ids = mappedChapterIds[displayName];
-            ids?.forEach(id => resolvedChapterIds.add(id));
-        });
+        let selectedScope: string[] = [];
+
+        if (selectedTab === 'chapter') {
+            // Resolve selected Display Names back to actual DB Chapter IDs
+            const resolvedChapterIds = new Set<string>();
+            selectedItems.forEach(displayName => {
+                const ids = mappedChapterIds[displayName];
+                ids?.forEach(id => resolvedChapterIds.add(id));
+            });
+            selectedScope = Array.from(resolvedChapterIds);
+        } else if (selectedTab === 'pyq') {
+            // For PYQ mode, selectedItems already contain exam source names
+            selectedScope = [...selectedItems];
+        }
 
         onStart({
             mode: timerMode,
             questionCount: questionCount > 50 ? 'Max' : questionCount,
             difficulty,
-            selectedScope: Array.from(resolvedChapterIds), // Pass actual IDs
+            selectedScope,
             filterType: selectedTab,
             questionType,
             selectionTier,
@@ -680,7 +688,7 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                                             </h3>
 
                                             {/* Translation */}
-                                            <p className="text-sm text-gray-400 italic font-serif leading-relaxed px-4 lg:px-0">
+                                            <p className="text-base text-slate-300/90 italic leading-relaxed px-4 lg:px-0 tracking-wide">
                                                 "{todaysQuote?.translation || "You have a right to perform your prescribed duties, but you are not entitled to the fruits of your actions."}"
                                             </p>
 

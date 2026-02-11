@@ -15,6 +15,10 @@ const TaxonomySchema = new Schema({
     // Display name
     name: { type: String, required: true },
 
+    // Node type: chapter, topic, or unit
+    // Note: 'type' key uses nested syntax to avoid Mongoose reserved word conflict
+    type: { type: String, enum: ['chapter', 'topic', 'unit'], default: 'chapter' },
+
     // Hierarchy: What parent concept does this belong to?
     parent_id: { type: String, ref: 'Taxonomy', default: null },
 

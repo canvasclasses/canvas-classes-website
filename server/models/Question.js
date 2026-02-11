@@ -28,7 +28,8 @@ const WeightedTagSchema = new Schema({
 const OptionSchema = new Schema({
     id: { type: String, required: true }, // 'a', 'b', 'c', 'd'
     text: { type: String, required: true }, // Supports LaTeX
-    isCorrect: { type: Boolean, required: true, default: false }
+    isCorrect: { type: Boolean, required: true, default: false },
+    imageScale: { type: Number, min: 10, max: 100 } // Image display scale percentage
 }, { _id: false });
 
 // Sub-schema for solution (Hybrid Engine)
@@ -42,7 +43,7 @@ const SolutionSchema = new Schema({
 
 // Sub-schema for meta information
 const MetaSchema = new Schema({
-    exam: { type: String, enum: ['JEE Mains', 'JEE Advanced', 'NEET', 'CBSE', 'Other'] },
+    exam: { type: String, enum: ['JEE Mains', 'JEE Main', 'JEE Advanced', 'NEET', 'CBSE', 'Other'] },
     year: { type: Number, min: 1990, max: 2100 },
     difficulty: { type: String, enum: ['Easy', 'Medium', 'Hard'], required: true },
     avg_time_sec: { type: Number, default: 120 } // Default 2 minutes
@@ -62,9 +63,10 @@ const QuestionSchema = new Schema({
 
     // Content
     text_markdown: { type: String, required: true },
-    type: { type: String, enum: ['MCQ', 'INTEGER', 'MATRIX'], default: 'MCQ' },
+    type: { type: String, enum: ['MCQ', 'SCQ', 'NVT', 'AR', 'MST', 'MTC', 'INTEGER', 'MATRIX'], default: 'SCQ' },
     options: [OptionSchema],
     integer_answer: { type: String }, // For INTEGER type
+    image_scale: { type: Number, min: 10, max: 100 }, // Question image display scale
 
     // Taxonomy (Weighted Tags) - THE KEY UPGRADE
     tags: {
@@ -83,11 +85,30 @@ const QuestionSchema = new Schema({
     // Metadata
     meta: { type: MetaSchema, required: true },
     chapter_id: { type: String },
+    tag_id: { type: String }, // Primary tag ID (references Taxonomy)
     is_pyq: { type: Boolean, default: false },
     is_top_pyq: { type: Boolean, default: false },
+    exam_source: { type: String }, // Full exam source string e.g. "JEE Main 2026 - Jan 21 Morning Shift"
 
     // Solution Engine
     solution: { type: SolutionSchema, required: true },
+    solution_image_scale: { type: Number, min: 10, max: 100 }, // Solution image display scale
+
+    // Source References (NCERT, PYQ origins, etc.)
+    source_references: [{
+        type: { type: String, enum: ['NCERT', 'PYQ', 'COACHING', 'OTHER'] },
+        ncertBook: String,
+        ncertChapter: String,
+        ncertPage: String,
+        ncertTopic: String,
+        pyqExam: String,
+        pyqShift: String,
+        pyqYear: Number,
+        pyqQuestionNo: String,
+        sourceName: String,
+        description: String,
+        similarity: { type: String, enum: ['exact', 'similar', 'concept'] }
+    }],
 
     // Feedback System
     trap: TrapSchema
