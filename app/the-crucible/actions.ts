@@ -86,7 +86,7 @@ const mapQuestionToDoc = (q: QuestionPageType) => {
 export async function getQuestions(): Promise<QuestionPageType[]> {
     try {
         await connectToDatabase();
-        let docs = await QuestionModel.find({}).lean();
+        let docs = await QuestionModel.find({}).sort({ _id: 1 }).lean();
 
         // REMOVED: Auto-recovery on read is dangerous and can cause usage spikes.
         // if (!docs || docs.length === 0) {
