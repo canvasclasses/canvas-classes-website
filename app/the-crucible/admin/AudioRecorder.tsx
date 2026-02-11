@@ -128,80 +128,77 @@ export default function AudioRecorder({ questionId, onUploadComplete, existingAu
     };
 
     return (
-        <div className="bg-gray-900/50 rounded-xl border border-gray-700 p-4 space-y-4">
-            <div className="flex items-center justify-between">
-                <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                    <Mic size={14} /> Audio Note
-                </h3>
-                {permissionGranted ? (
-                    <div className="flex items-center gap-2">
-                        <Settings size={12} className="text-gray-600" />
+        <div className="bg-gray-900/50 rounded-lg border border-gray-700 p-2 space-y-2">
+            <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-1.5 min-w-0">
+                    <Mic size={12} className="text-gray-400 shrink-0" />
+                    {permissionGranted ? (
                         <select
                             value={selectedDeviceId}
                             onChange={(e) => setSelectedDeviceId(e.target.value)}
-                            className="bg-transparent text-[10px] text-gray-400 border-none outline-none max-w-[150px] truncate"
+                            className="bg-transparent text-[10px] text-gray-500 border-none outline-none truncate max-w-[80px]"
                         >
                             {devices.map(device => (
                                 <option key={device.deviceId} value={device.deviceId}>
-                                    {device.label || `Microphone ${device.deviceId.slice(0, 5)}...`}
+                                    {device.label || `Mic ${device.deviceId.slice(0, 3)}`}
                                 </option>
                             ))}
                         </select>
-                    </div>
-                ) : (
-                    <button onClick={requestPermissions} className="text-[10px] text-blue-400 hover:underline">
-                        Enable Mic
-                    </button>
-                )}
-            </div>
+                    ) : (
+                        <button onClick={requestPermissions} className="text-[10px] text-blue-400 hover:underline">
+                            Mic
+                        </button>
+                    )}
+                </div>
 
-            {!audioBlob ? (
-                <div className="flex items-center gap-3">
+                {!audioBlob && (
                     <button
                         onClick={isRecording ? stopRecording : startRecording}
-                        className={`flex-1 py-2 px-4 rounded-lg flex items-center justify-center gap-2 text-sm font-bold transition-all ${isRecording
+                        className={`py-1 px-3 rounded-md flex items-center justify-center gap-1.5 text-[10px] font-bold transition-all ${isRecording
                             ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse'
                             : 'bg-gray-800 hover:bg-gray-700 text-gray-300'
                             }`}
                     >
                         {isRecording ? (
                             <>
-                                <Square size={16} fill="currentColor" /> Stop Recording
+                                <Square size={10} fill="currentColor" /> Stop
                             </>
                         ) : (
                             <>
-                                <div className="w-3 h-3 rounded-full bg-red-500"></div> Record Audio
+                                <div className="w-2 h-2 rounded-full bg-red-500"></div> Record
                             </>
                         )}
                     </button>
-                </div>
-            ) : (
-                <div className="space-y-3 animate-in fade-in slide-in-from-top-2">
-                    <div className="bg-black/40 rounded-lg p-2 flex items-center gap-3 border border-gray-800">
+                )}
+            </div>
+
+            {audioBlob && (
+                <div className="space-y-2 animate-in fade-in slide-in-from-top-1">
+                    <div className="bg-black/40 rounded-md p-1.5 flex items-center gap-2 border border-gray-800">
                         <button
                             onClick={() => { const a = new Audio(audioUrl!); a.play(); }}
-                            className="w-8 h-8 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center hover:bg-green-500/30 transition"
+                            className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center hover:bg-green-500/30 transition"
                         >
-                            <Play size={14} fill="currentColor" />
+                            <Play size={10} fill="currentColor" />
                         </button>
                         <div className="h-1 flex-1 bg-gray-800 rounded-full overflow-hidden">
                             <div className="h-full w-full bg-green-500/50"></div>
                         </div>
-                        <span className="text-xs text-green-400 font-mono">Recorded</span>
+                        <span className="text-[10px] text-green-400 font-mono">Recorded</span>
                     </div>
 
                     <div className="flex gap-2">
                         <button
                             onClick={handleUpload}
                             disabled={uploading}
-                            className="flex-1 py-1.5 bg-green-600 hover:bg-green-500 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_12px_rgba(22,163,74,0.3)]"
+                            className="flex-1 py-1 bg-green-600 hover:bg-green-500 text-white rounded-md text-[10px] font-bold flex items-center justify-center gap-1.5 transition disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {uploading ? (
-                                <RefreshCw size={12} className="animate-spin" />
+                                <RefreshCw size={10} className="animate-spin" />
                             ) : (
-                                <Upload size={12} />
+                                <Upload size={10} />
                             )}
-                            {uploading ? 'Uploading...' : 'Save Audio Note'}
+                            {uploading ? '...' : 'Save Audio'}
                         </button>
 
                         <button
