@@ -24,6 +24,7 @@ export interface ITaxonomy {
     avg_accuracy: number;
     avg_time_sec: number;
     is_active: boolean;
+    type: 'chapter' | 'topic' | 'unit';
     is_chapter_tag?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
@@ -45,6 +46,7 @@ const TaxonomySchema = new Schema<ITaxonomy>({
     avg_accuracy: { type: Number, default: 0 },
     avg_time_sec: { type: Number, default: 120 },
     is_active: { type: Boolean, default: true },
+    type: { type: String, enum: ['chapter', 'topic', 'unit'], default: 'chapter' },
     is_chapter_tag: { type: Boolean, default: false }
 }, {
     timestamps: true,
@@ -67,6 +69,7 @@ export interface IOption {
     id: string;
     text: string;
     isCorrect: boolean;
+    imageScale?: number;
 }
 
 export interface ISolution {
@@ -75,10 +78,11 @@ export interface ISolution {
     video_timestamp_start?: number;
     audio_url?: string;
     image_url?: string;
+    image_scale?: number;
 }
 
 export interface IMeta {
-    exam?: 'JEE Mains' | 'JEE Advanced' | 'NEET' | 'CBSE' | 'Other';
+    exam?: 'JEE Mains' | 'JEE Main' | 'JEE Advanced' | 'NEET' | 'CBSE' | 'Other';
     year?: number;
     difficulty: 'Easy' | 'Medium' | 'Hard';
     avg_time_sec: number;
@@ -108,9 +112,10 @@ export interface ISourceReference {
 export interface IQuestion {
     _id: string;
     text_markdown: string;
-    type: 'MCQ' | 'INTEGER' | 'MATRIX';
+    type: 'MCQ' | 'SCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'INTEGER' | 'MATRIX';
     options: IOption[];
     integer_answer?: string;
+    image_scale?: number;
     tags: IWeightedTag[];
     tag_id?: string; // Primary tag ID for quick reference
     meta: IMeta;
@@ -120,6 +125,7 @@ export interface IQuestion {
     exam_source?: string; // Full reference string (e.g., "JEE 2026 - Jan 21 Morning Shift")
     source_references?: ISourceReference[];
     solution: ISolution;
+    solution_image_scale?: number;
     trap?: ITrap;
     createdAt?: Date;
     updatedAt?: Date;
@@ -133,7 +139,8 @@ const WeightedTagSchema = new Schema<IWeightedTag>({
 const OptionSchema = new Schema<IOption>({
     id: { type: String, required: true },
     text: { type: String, required: true },
-    isCorrect: { type: Boolean, required: true, default: false }
+    isCorrect: { type: Boolean, required: true, default: false },
+    imageScale: { type: Number, min: 10, max: 100 }
 }, { _id: false });
 
 const SolutionSchema = new Schema<ISolution>({
@@ -141,11 +148,12 @@ const SolutionSchema = new Schema<ISolution>({
     video_url: { type: String },
     video_timestamp_start: { type: Number },
     audio_url: { type: String },
-    image_url: { type: String }
+    image_url: { type: String },
+    image_scale: { type: Number, min: 10, max: 100 }
 }, { _id: false });
 
 const MetaSchema = new Schema<IMeta>({
-    exam: { type: String, enum: ['JEE Mains', 'JEE Advanced', 'NEET', 'CBSE', 'Other'] },
+    exam: { type: String, enum: ['JEE Mains', 'JEE Main', 'JEE Advanced', 'NEET', 'CBSE', 'Other'] },
     year: { type: Number, min: 1990, max: 2100 },
     difficulty: { type: String, enum: ['Easy', 'Medium', 'Hard'], required: true },
     avg_time_sec: { type: Number, default: 120 }
@@ -175,9 +183,10 @@ const TrapSchema = new Schema<ITrap>({
 const QuestionSchema = new Schema<IQuestion>({
     _id: { type: String, required: true },
     text_markdown: { type: String, required: true },
-    type: { type: String, enum: ['MCQ', 'INTEGER', 'MATRIX'], default: 'MCQ' },
+    type: { type: String, enum: ['MCQ', 'SCQ', 'NVT', 'AR', 'MST', 'MTC', 'INTEGER', 'MATRIX'], default: 'SCQ' },
     options: [OptionSchema],
     integer_answer: { type: String },
+    image_scale: { type: Number, min: 10, max: 100 },
     tags: {
         type: [WeightedTagSchema],
         default: []
@@ -189,6 +198,7 @@ const QuestionSchema = new Schema<IQuestion>({
     exam_source: { type: String },
     source_references: [SourceReferenceSchema],
     solution: { type: SolutionSchema, required: true },
+    solution_image_scale: { type: Number, min: 10, max: 100 },
     trap: TrapSchema,
     tag_id: { type: String } // Primary tag for quick lookup
 }, {

@@ -34,6 +34,7 @@ export default function AdminPage() {
     const [selectedSourceFilter, setSelectedSourceFilter] = useState<string>('all');
     const [selectedShiftFilter, setSelectedShiftFilter] = useState<string>('all');
     const [selectedTopPYQFilter, setSelectedTopPYQFilter] = useState<string>('all');
+    const [selectedTagStatusFilter, setSelectedTagStatusFilter] = useState<string>('all');
 
     useEffect(() => {
         loadData();
@@ -263,8 +264,22 @@ export default function AdminPage() {
             if (selectedTopPYQFilter === 'not-top' && q.isTopPYQ) return false;
         }
 
+        // Tag Status Filter
+        if (selectedTagStatusFilter !== 'all') {
+            const hasChapter = !!q.chapterId;
+            const hasTag = !!q.tagId;
+            if (selectedTagStatusFilter === 'untagged' && hasChapter && hasTag) return false;
+            if (selectedTagStatusFilter === 'no-chapter' && hasChapter) return false;
+            if (selectedTagStatusFilter === 'no-tag' && (!hasChapter || hasTag)) return false;
+        }
+
         return true;
     });
+
+    // Tag status counts
+    const untaggedCount = questions.filter(q => !q.chapterId || !q.tagId).length;
+    const noChapterCount = questions.filter(q => !q.chapterId).length;
+    const noTagCount = questions.filter(q => q.chapterId && !q.tagId).length;
 
     return (
         <div className="flex flex-col h-screen bg-gray-900 text-white overflow-hidden">
@@ -304,11 +319,14 @@ export default function AdminPage() {
                         className="w-64 bg-gray-900 border border-gray-700 rounded px-2 py-1 text-[10px] focus:border-purple-500 outline-none shrink-0"
                     >
                         <option value="">Question ({filteredQuestions.length})</option>
-                        {filteredQuestions.map(q => (
-                            <option key={q.id} value={q.id}>
-                                {q.id} - {q.textMarkdown.substring(0, 30)}...
-                            </option>
-                        ))}
+                        {filteredQuestions.map(q => {
+                            const dot = !q.chapterId ? '🔴' : !q.tagId ? '🟡' : '🟢';
+                            return (
+                                <option key={q.id} value={q.id}>
+                                    {dot} {q.id} - {q.textMarkdown.substring(0, 28)}...
+                                </option>
+                            );
+                        })}
                     </select>
 
                     {selectedQuestion && (
@@ -403,7 +421,18 @@ export default function AdminPage() {
                             <option value="not-top">Other</option>
                         </select>
 
-                        {(selectedChapterFilter !== 'all' || selectedTypeFilter !== 'all' || selectedSourceFilter !== 'all' || selectedShiftFilter !== 'all' || selectedTopPYQFilter !== 'all') && (
+                        <select
+                            value={selectedTagStatusFilter}
+                            onChange={(e) => setSelectedTagStatusFilter(e.target.value)}
+                            className={`w-24 bg-gray-900 border rounded px-1.5 py-1 text-[10px] outline-none ${selectedTagStatusFilter !== 'all' ? 'border-red-500 text-red-300' : 'border-gray-700'}`}
+                        >
+                            <option value="all">Tags ✓</option>
+                            <option value="untagged">⚠ Untagged ({untaggedCount})</option>
+                            <option value="no-chapter">🔴 No Chapter ({noChapterCount})</option>
+                            <option value="no-tag">🟡 No Tag ({noTagCount})</option>
+                        </select>
+
+                        {(selectedChapterFilter !== 'all' || selectedTypeFilter !== 'all' || selectedSourceFilter !== 'all' || selectedShiftFilter !== 'all' || selectedTopPYQFilter !== 'all' || selectedTagStatusFilter !== 'all') && (
                             <button
                                 onClick={() => {
                                     setSelectedChapterFilter('all');
@@ -411,6 +440,7 @@ export default function AdminPage() {
                                     setSelectedSourceFilter('all');
                                     setSelectedShiftFilter('all');
                                     setSelectedTopPYQFilter('all');
+                                    setSelectedTagStatusFilter('all');
                                 }}
                                 className="text-[9px] text-red-400 hover:text-red-300 shrink-0"
                             >

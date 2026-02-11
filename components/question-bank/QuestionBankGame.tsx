@@ -661,8 +661,8 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                 {/* Master-Detail Content */}
                 <div className="flex-1 flex overflow-hidden relative">
                     {/* LEFT PANEL: Question List (60% Desktop, 100% Mobile) */}
-                    <div className="w-full lg:w-[60%] h-full overflow-y-auto p-4 md:p-6 pb-32 scroll-smooth border-r border-white/5">
-                        <div className="max-w-4xl mx-auto space-y-4">
+                    <div className="w-full lg:w-[60%] h-full overflow-y-auto p-2 md:p-6 pb-32 scroll-smooth border-r border-white/5">
+                        <div className="max-w-4xl mx-auto space-y-2 md:space-y-4">
                             {filteredQuestions.map((question, idx) => {
                                 const isActive = idx === currentIndex;
                                 const status = questionStatus[idx];
@@ -690,7 +690,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                             // User requested "Desktop" specifically. I'll maintain inline expansion for mobile logic if clicked.
                                             if (window.innerWidth < 1024) toggleExpand(idx);
                                         }}
-                                        className={`rounded-xl border p-5 cursor-pointer transition-all duration-200 ${cardBg} ${borderClass} shadow-sm group`}
+                                        className={`rounded-lg md:rounded-xl border p-3 md:p-5 cursor-pointer transition-all duration-200 ${cardBg} ${borderClass} shadow-sm group`}
                                     >
                                         <div className="flex items-start gap-4">
                                             <div className="shrink-0 mt-0.5 w-8 h-8 flex items-center justify-center rounded-lg bg-black/20">
@@ -726,7 +726,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                         {/* Mobile: Inline Expansion */}
                                         <div className="lg:hidden">
                                             {isExpanded && (
-                                                <div className="mt-4 pt-4 border-t border-white/5 animate-in slide-in-from-top-2">
+                                                <div className="mt-3 pt-3 border-t border-white/5 animate-in slide-in-from-top-2">
                                                     <QuestionCard
                                                         question={question}
                                                         onAnswerSubmit={(cor, optId) => {
@@ -744,7 +744,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                                         {showSolutions[idx] ? 'Hide Solution' : 'View Solution'}
                                                     </button>
                                                     {showSolutions[idx] && (
-                                                        <div className="mt-4 p-4 bg-black/20 rounded-lg">
+                                                        <div className="mt-3 p-3 bg-black/20 rounded-lg">
                                                             <SolutionViewer solution={question.solution} sourceReferences={question.sourceReferences} imageScale={question.solutionImageScale} />
                                                         </div>
                                                     )}
@@ -931,22 +931,34 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
             {/* LEFT PANEL: QUESTION AREA (Flex Grow) */}
             <div className="flex-1 flex flex-col h-full relative z-10 min-w-0">
                 {/* Exam Header */}
-                <header className="h-14 bg-[#0F172A]/90 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-6 shrink-0 z-20">
-                    <div className="flex items-center gap-4">
-                        <span className="text-sm font-bold text-slate-400">Section 1: Chemistry</span>
-                        <div className="h-4 w-px bg-white/10" />
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-white/5 text-slate-500 border border-white/5">
-                            Single Correct
-                        </span>
+                <header className="h-12 md:h-14 bg-[#0F172A]/90 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-3 md:px-6 shrink-0 z-20">
+                    <div className="flex items-center gap-2 md:gap-4">
+                        <button onClick={isReviewing ? () => { setMode('completed'); setIsReviewing(false); } : resetSession} className="p-1.5 md:p-2 rounded-lg hover:bg-white/5 text-slate-400 hover:text-red-400 transition-all" title={isReviewing ? "Back to Results" : "Quit Exam"}>
+                            <X size={18} />
+                        </button>
+                        {isReviewing ? (
+                            <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                Reviewing Solutions
+                            </span>
+                        ) : (
+                            <>
+                                <span className="text-xs md:text-sm font-bold text-slate-400 hidden sm:inline">Section 1: Chemistry</span>
+                                <span className="px-1.5 py-0.5 rounded text-[9px] md:text-[10px] font-bold uppercase tracking-wider bg-white/5 text-slate-500 border border-white/5">
+                                    Single Correct
+                                </span>
+                            </>
+                        )}
                     </div>
 
-                    <div className="flex items-center gap-6 font-mono text-sm font-medium text-slate-300">
-                        <div className={`flex items-center gap-2 ${timerSeconds < 300 ? 'text-red-400 animate-pulse' : 'text-slate-300'}`}>
-                            <div className="w-8 h-8 rounded-lg bg-black/20 flex items-center justify-center border border-white/5">
-                                <Pause size={14} />
+                    <div className="flex items-center gap-2 md:gap-6 font-mono text-sm font-medium text-slate-300">
+                        {!isReviewing && (
+                            <div className={`flex items-center gap-1.5 ${timerSeconds < 300 ? 'text-red-400 animate-pulse' : 'text-slate-300'}`}>
+                                <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-black/20 flex items-center justify-center border border-white/5">
+                                    <Pause size={12} />
+                                </div>
+                                <span className="text-base md:text-lg tracking-widest">{formatTime(timerSeconds)}</span>
                             </div>
-                            <span className="text-lg tracking-widest">{formatTime(timerSeconds)}</span>
-                        </div>
+                        )}
                     </div>
                 </header>
 
@@ -957,14 +969,15 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
 
                 {/* Main Scrollable Question Area */}
                 <main className="flex-1 overflow-y-auto scroll-smooth relative">
-                    <div className="max-w-[1200px] mx-auto p-6 md:p-10 pb-32">
+                    <div className="max-w-[1200px] mx-auto px-3 py-3 md:p-10 pb-28">
                         {/* Question Header Strip */}
-                        <div className="flex items-start justify-between mb-8 pb-6 border-b border-white/5">
-                            <div className="flex items-center gap-4">
-                                <span className="text-2xl font-bold text-slate-100">Question {currentIndex + 1}</span>
-                                <div className="flex gap-2">
-                                    <span className="text-[11px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-1 rounded">+4 Correct</span>
-                                    <span className="text-[11px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-1 rounded">-1 Wrong</span>
+                        <div className="flex items-center justify-between mb-3 md:mb-8 pb-3 md:pb-6 border-b border-white/5">
+                            <div className="flex items-center gap-2 md:gap-4">
+                                <span className="text-base md:text-2xl font-bold text-slate-100">Q{currentIndex + 1}</span>
+                                <span className="text-[10px] text-slate-500 font-medium">/ {filteredQuestions.length}</span>
+                                <div className="flex gap-1.5 md:gap-2">
+                                    <span className="text-[9px] md:text-[11px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1.5 md:px-2 py-0.5 md:py-1 rounded">+4</span>
+                                    <span className="text-[9px] md:text-[11px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20 px-1.5 md:px-2 py-0.5 md:py-1 rounded">-1</span>
                                 </div>
                             </div>
 
@@ -1014,54 +1027,102 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                         )}
 
                         {/* The Question */}
-                        <div className="bg-[#151E32] rounded-2xl border border-white/5 p-6 md:p-8 shadow-sm">
+                        <div className="bg-[#151E32] rounded-xl md:rounded-2xl border border-white/5 p-3 md:p-8 shadow-sm">
                             <QuestionCard
                                 question={activeQuestion}
                                 onAnswerSubmit={handleAnswerSubmit}
-                                showFeedback={false} // Exam mode: No immediate feedback
+                                showFeedback={isReviewing} // Show feedback in review mode
                                 selectedOptionId={selectedOptionId}
                             />
                         </div>
+
+                        {/* Solution Viewer (Review Mode Only) */}
+                        {isReviewing && (
+                            <div className="mt-4 md:mt-6 animate-in fade-in slide-in-from-bottom-4">
+                                <div className="bg-emerald-900/10 border border-emerald-500/20 rounded-xl p-4 md:p-6 relative overflow-hidden">
+                                    <h3 className="text-emerald-400 text-xs font-black uppercase tracking-widest mb-4">Solution</h3>
+                                    <SolutionViewer
+                                        solution={activeQuestion.solution}
+                                        sourceReferences={activeQuestion.sourceReferences}
+                                        imageScale={activeQuestion.solutionImageScale}
+                                    />
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </main>
 
                 {/* Sticky Action Footer */}
-                <footer className="bg-[#0F172A] border-t border-white/5 p-4 md:px-8 z-30 flex items-center justify-between shrink-0">
-                    <div className="flex items-center gap-3">
-                        <button
-                            onClick={() => { setSelectedOptionId(null); setIsCorrect(null); setQuestionStatus(prev => ({ ...prev, [currentIndex]: 'skipped' })); }}
-                            className="px-4 py-2.5 rounded-xl border border-white/10 text-slate-400 hover:text-white hover:bg-white/5 text-xs font-bold uppercase tracking-wider transition-all"
-                        >
-                            Clear Response
-                        </button>
-                        <button
-                            onClick={() => {
-                                setQuestionStatus(prev => ({ ...prev, [currentIndex]: 'marked' }));
-                                handleNext();
-                            }}
-                            className="px-4 py-2.5 rounded-xl border border-purple-500/30 text-purple-400 hover:bg-purple-500/10 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2"
-                        >
-                            <div className="w-2 h-2 rounded-full bg-purple-500"></div> Mark & Next
-                        </button>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                        {currentIndex > 0 && (
+                <footer className="bg-[#0F172A] border-t border-white/5 px-2 py-2 md:p-4 md:px-8 z-30 flex items-center justify-between shrink-0 gap-1">
+                    {isReviewing ? (
+                        /* Review Mode Footer */
+                        <>
                             <button
-                                onClick={handleBack}
-                                className="px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-bold transition-all"
+                                onClick={() => { setMode('completed'); setIsReviewing(false); }}
+                                className="px-3 py-2 md:px-4 md:py-2.5 rounded-lg md:rounded-xl border border-white/10 text-slate-400 hover:text-white hover:bg-white/5 text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all"
                             >
-                                <ArrowLeft size={18} />
+                                ← Results
                             </button>
-                        )}
-                        <button
-                            onClick={handleNext}
-                            className="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold text-white shadow-lg shadow-indigo-500/20 transition-all flex items-center gap-2"
-                        >
-                            {isLastQuestion ? 'Submit Test' : 'Save & Next'}
-                            {!isLastQuestion && <ArrowRight size={18} />}
-                        </button>
-                    </div>
+                            <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
+                                Q{currentIndex + 1} / {filteredQuestions.length}
+                            </div>
+                            <div className="flex items-center gap-1.5 md:gap-3">
+                                <button
+                                    onClick={handleBack}
+                                    disabled={currentIndex === 0}
+                                    className="px-3 py-2 md:px-5 md:py-3 rounded-lg md:rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-bold transition-all disabled:opacity-30"
+                                >
+                                    <ArrowLeft size={16} />
+                                </button>
+                                <button
+                                    onClick={() => { if (!isLastQuestion) { setCurrentIndex(currentIndex + 1); resetState(currentIndex + 1, true); } }}
+                                    disabled={isLastQuestion}
+                                    className="px-3 py-2 md:px-5 md:py-3 rounded-lg md:rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-all disabled:opacity-30 flex items-center gap-1.5"
+                                >
+                                    <ArrowRight size={16} />
+                                </button>
+                            </div>
+                        </>
+                    ) : (
+                        /* Exam Mode Footer */
+                        <>
+                            <div className="flex items-center gap-1.5 md:gap-3">
+                                <button
+                                    onClick={() => { setSelectedOptionId(null); setIsCorrect(null); setQuestionStatus(prev => ({ ...prev, [currentIndex]: 'skipped' })); }}
+                                    className="px-2.5 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl border border-white/10 text-slate-400 hover:text-white hover:bg-white/5 text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all"
+                                >
+                                    Clear
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setQuestionStatus(prev => ({ ...prev, [currentIndex]: 'marked' }));
+                                        handleNext();
+                                    }}
+                                    className="px-2.5 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl border border-purple-500/30 text-purple-400 hover:bg-purple-500/10 text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5"
+                                >
+                                    <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-purple-500"></div> Mark
+                                </button>
+                            </div>
+
+                            <div className="flex items-center gap-1.5 md:gap-3">
+                                {currentIndex > 0 && (
+                                    <button
+                                        onClick={handleBack}
+                                        className="px-3 py-2 md:px-5 md:py-3 rounded-lg md:rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-bold transition-all"
+                                    >
+                                        <ArrowLeft size={16} />
+                                    </button>
+                                )}
+                                <button
+                                    onClick={handleNext}
+                                    className="px-4 py-2 md:px-8 md:py-3 bg-indigo-600 hover:bg-indigo-500 rounded-lg md:rounded-xl font-bold text-white text-sm md:text-base shadow-lg shadow-indigo-500/20 transition-all flex items-center gap-1.5"
+                                >
+                                    {isLastQuestion ? 'Submit' : 'Save & Next'}
+                                    {!isLastQuestion && <ArrowRight size={16} />}
+                                </button>
+                            </div>
+                        </>
+                    )}
                 </footer>
             </div>
 

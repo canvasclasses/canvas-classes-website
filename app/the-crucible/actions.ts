@@ -35,6 +35,8 @@ const mapDocToQuestion = (doc: any): QuestionPageType => ({
         weight: t.weight
     })),
     tagId: doc.tag_id || doc.tagId,
+    imageScale: doc.image_scale || doc.imageScale,
+    solutionImageScale: doc.solution_image_scale || doc.solutionImageScale,
     sourceReferences: doc.source_references
 });
 
@@ -71,6 +73,8 @@ const mapQuestionToDoc = (q: QuestionPageType) => {
             image_url: q.solution.handwrittenSolutionImageUrl
         },
         tag_id: q.tagId,
+        image_scale: q.imageScale,
+        solution_image_scale: q.solutionImageScale,
         source_references: q.sourceReferences
     };
 };
