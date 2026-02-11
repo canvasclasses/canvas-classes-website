@@ -147,16 +147,25 @@ export default function SolutionViewer({
                                             />
                                         ),
                                         p: ({ children }) => {
-                                            const content = children?.toString() || "";
+                                            const childrenArray = React.Children.toArray(children);
+                                            const firstChild = childrenArray[0];
+                                            const isHighlighted = typeof firstChild === 'string' && firstChild.trimStart().startsWith('!!');
 
-                                            // Highlight Formulas (clean, minimal highlighting)
-                                            if (content.includes('$$') || (content.length < 60 && content.includes('='))) {
+                                            if (isHighlighted) {
+                                                // Strip the "!!" from the first child
+                                                const newFirstChild = (firstChild as string).replace(/^\s*!!\s*/, '');
+                                                const newChildren = [newFirstChild, ...childrenArray.slice(1)];
+
                                                 return (
                                                     <div className="my-4 py-3 px-4 bg-white/[0.015] rounded-xl border border-white/5 text-center font-medium text-emerald-100/90 overflow-x-auto shadow-inner">
-                                                        <div className="text-lg md:text-xl tracking-tight">{children}</div>
+                                                        <div className="text-lg md:text-xl tracking-tight">
+                                                            {newChildren}
+                                                        </div>
                                                     </div>
                                                 );
                                             }
+
+                                            const content = children?.toString() || "";
 
                                             // Key Notes (subtle)
                                             if (content.toLowerCase().startsWith('note:') || content.toLowerCase().startsWith('key point')) {

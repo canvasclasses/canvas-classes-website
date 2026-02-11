@@ -43,7 +43,7 @@ const mapDocToQuestion = (doc: any): QuestionPageType => ({
 // Helper to map Question (camelCase) -> DB Document (snake_case)
 const mapQuestionToDoc = (q: QuestionPageType) => {
     // Priority: conceptTags (Rich) > tagId (Legacy/Simple)
-    let tags = [];
+    let tags: { tag_id: string; weight: number }[] = [];
     if (q.conceptTags && q.conceptTags.length > 0) {
         tags = q.conceptTags.map(t => ({ tag_id: t.tagId, weight: t.weight }));
     } else if (q.tagId) {

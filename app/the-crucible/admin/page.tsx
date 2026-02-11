@@ -457,7 +457,7 @@ export default function AdminPage() {
             {/* MAIN AREA: 65/35 split - Editor + Preview */}
             <div className="flex-1 flex overflow-hidden">
                 {/* LEFT: Editor (65%) */}
-                <div className="w-[65%] flex flex-col overflow-hidden border-r border-gray-800">
+                <div className="w-[60%] flex flex-col overflow-hidden border-r border-gray-800">
                     {selectedQuestion ? (
                         <div className="flex-1 overflow-y-auto p-4">
                             {/* Header: ID + Type + Difficulty + Actions */}
@@ -581,12 +581,12 @@ export default function AdminPage() {
                                         />
                                     </div>
                                 </div>
-                                <div className="flex gap-2 items-stretch h-36">
+                                <div className="flex gap-2 items-stretch h-72">
                                     <textarea
                                         value={selectedQuestion.textMarkdown}
                                         onPaste={(e) => handlePaste(e, selectedQuestion, 'textMarkdown')}
                                         onChange={(e) => handleUpdate(selectedQuestion.id, 'textMarkdown', e.target.value)}
-                                        className="flex-1 bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm focus:border-purple-500 outline-none resize-none font-mono"
+                                        className="flex-1 bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm leading-tight focus:border-purple-500 outline-none resize-none font-mono"
                                     />
                                     <div className="w-24 shrink-0">
                                         <SmartUploader
@@ -654,12 +654,12 @@ export default function AdminPage() {
                             {/* Solution - Side by side with uploader */}
                             <div className="mb-3">
                                 <label className="text-[10px] text-gray-500 mb-1 block">Solution</label>
-                                <div className="flex gap-2 items-stretch h-44">
+                                <div className="flex gap-2 items-stretch h-88">
                                     <textarea
                                         value={selectedQuestion.solution.textSolutionLatex}
                                         onPaste={(e) => handlePaste(e, selectedQuestion, 'solution')}
                                         onChange={(e) => handleSolutionChange(selectedQuestion, e.target.value)}
-                                        className="flex-1 bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm focus:border-purple-500 outline-none resize-none font-mono"
+                                        className="flex-1 bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm leading-tight focus:border-purple-500 outline-none resize-none font-mono"
                                     />
                                     <div className="w-24 shrink-0">
                                         <SmartUploader
@@ -749,7 +749,7 @@ export default function AdminPage() {
                 </div>
 
                 {/* RIGHT: Live Preview (35%) */}
-                <div className="w-[35%] flex flex-col overflow-hidden bg-gray-950">
+                <div className="w-[40%] flex flex-col overflow-hidden bg-gray-950">
                     <div className="p-3 border-b border-gray-800 bg-gray-900/50">
                         <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
                             <MonitorPlay size={12} /> Live Preview

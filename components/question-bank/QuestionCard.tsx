@@ -61,7 +61,7 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                                     className="rounded-lg border border-white/5 my-3"
                                 />
                             ),
-                            p: ({ children }) => <p className="mb-4">{children}</p>,
+                            p: ({ children }) => <p className="mb-2 leading-tight tracking-normal text-gray-300/90">{children}</p>,
                             table: ({ children }) => (
                                 <div className="my-2 overflow-x-auto rounded-lg border border-gray-700">
                                     <table className="w-full text-sm text-left">{children}</table>
@@ -151,7 +151,7 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                                 key={option.id}
                                 whileTap={!showFeedback ? { scale: 0.99 } : {}}
                                 onClick={() => handleOptionClick(option.id)}
-                                className={`p-2.5 md:p-3.5 rounded-xl border-2 text-left transition-all duration-200 relative overflow-hidden group ${buttonStyle}`}
+                                className={`py-1.5 px-3 md:py-2 md:px-4 rounded-xl border-2 text-left transition-all duration-200 relative overflow-hidden group ${buttonStyle}`}
                             >
                                 <div className="flex items-center gap-3">
                                     <span className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center font-bold text-[10px] md:text-xs border transition-colors ${showFeedback && isCorrect ? 'bg-emerald-500 border-emerald-400 text-black' :
