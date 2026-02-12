@@ -127,7 +127,33 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                 </div>
             ) : (
                 /* MCQ Options Grid */
-                <div className={`grid gap-2 ${layout === 'grid' || question.options.some(o => o.text.includes('[smiles:') || o.text.includes('![')) ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'}`}>
+                <div className={`grid gap-2 ${(() => {
+                    // Logic: Determine whether to show 2-column grid or 1-column list
+                    const hasMedia = question.options.some(o => o.text.includes('[smiles:') || o.text.includes('!['));
+
+                    // If options contain chemical structures or images, grid is usually better (as per user preference)
+                    if (hasMedia) return 'grid-cols-1 md:grid-cols-2';
+
+                    // If explicitly requested as list
+                    if (layout === 'list') return 'grid-cols-1';
+
+                    // Heuristic for "complexity": switch to list if text wraps awkwardly or is dense
+                    const isComplex = question.options.some(o => {
+                        const text = o.text;
+                        // 1. Explicit line breaks
+                        if (text.includes('\n') || text.includes('\\\\')) return true;
+                        // 2. High character count (likely to wrap)
+                        if (text.length > 60) return true;
+                        // 3. Dense comparison symbols (like Image 1: I- > O- > F-)
+                        if ((text.match(/>/g) || []).length >= 2) return true;
+                        // 4. Long words that won't wrap well
+                        if (text.split(' ').some(word => word.length > 20)) return true;
+
+                        return false;
+                    });
+
+                    return isComplex ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2';
+                })()}`}>
                     {question.options.map((option) => {
                         const isSelected = selectedOptionId === option.id;
                         const isCorrect = option.isCorrect;

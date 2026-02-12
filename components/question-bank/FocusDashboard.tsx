@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Play, Filter, BookOpen, CheckCircle2, X, Sparkles, Target, Zap, Atom, Brain, HelpCircle, Calculator, List, Info, Clock, Bookmark, FileText, LayoutGrid, Sun, Quote, Lightbulb, ChevronDown, Diamond, Layers, Rocket, Settings, Orbit, Crosshair, Hexagon, ShieldAlert, Cpu, Home, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { Question } from '@/app/the-crucible/types';
+import { Question, TaxonomyNode } from '@/app/the-crucible/types';
 import { DAILY_QUOTES } from './quotes';
 
 // STRICT USER-DEFINED LISTS (Display Names)
@@ -76,10 +76,11 @@ const CHAPTER_MAPPINGS: Record<string, string[]> = {
 
 interface FocusDashboardProps {
     initialQuestions: Question[];
+    taxonomy?: TaxonomyNode[];
     onStart: (config: any) => void;
 }
 
-export default function FocusDashboard({ initialQuestions, onStart }: FocusDashboardProps) {
+export default function FocusDashboard({ initialQuestions, taxonomy = [], onStart }: FocusDashboardProps) {
     // -------------------------------------------------------------------------
     // STATE
     // -------------------------------------------------------------------------
@@ -129,12 +130,23 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
 
         // Helper to find matching DB chapters for a Display Name
         const findMatches = (displayName: string) => {
-            const searchTerms = CHAPTER_MAPPINGS[displayName] || [displayName];
             const matches = new Set<string>();
 
+            // 1. Try exact match in taxonomy if available
+            if (taxonomy && taxonomy.length > 0) {
+                const taxNode = taxonomy.find(t => t.name === displayName && t.type === 'chapter');
+                if (taxNode) {
+                    matches.add(taxNode.id || (taxNode as any)._id);
+                }
+            }
+
+            // 2. Fuzzy match as backup
+            const searchTerms = CHAPTER_MAPPINGS[displayName] || [displayName];
             searchTerms.forEach(term => {
+                const normalizedTerm = term.toLowerCase().replace(/[^a-z0-9]/g, '');
                 availableChapters.forEach(dbChapter => {
-                    if (dbChapter.toLowerCase().includes(term.toLowerCase())) {
+                    const normalizedDB = dbChapter.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    if (normalizedDB.includes(normalizedTerm)) {
                         matches.add(dbChapter);
                     }
                 });
@@ -147,7 +159,7 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
         });
 
         return mapping;
-    }, [initialQuestions]);
+    }, [initialQuestions, taxonomy]);
 
     // Check if a display chapter has any questions
     const getQuestionCountForChapter = (displayName: string) => {
@@ -208,32 +220,32 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                     Target Scope
                 </label>
                 {selectedItems.length > 0 ? (
-                    <div className="bg-gray-900 border border-indigo-500/30 rounded-xl p-5 relative overflow-hidden group">
-                        <div className="flex justify-between items-center mb-3 relative z-10">
+                    <div className="bg-gray-900 border border-indigo-500/30 rounded-xl p-3 md:p-5 relative overflow-hidden group">
+                        <div className="flex justify-between items-center mb-2 md:mb-3 relative z-10">
                             <div>
-                                <span className="text-3xl font-bold text-white block leading-none">{selectedItems.length}</span>
-                                <span className="text-sm text-indigo-400 font-medium px-0.5">Active Modules</span>
+                                <span className="text-2xl md:text-3xl font-bold text-white block leading-none">{selectedItems.length}</span>
+                                <span className="text-[10px] md:text-sm text-indigo-400 font-medium px-0.5">Active Modules</span>
                             </div>
-                            <div className="h-10 w-10 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 border border-indigo-500/20">
-                                <BookOpen size={20} />
+                            <div className="h-8 w-8 md:h-10 md:w-10 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 border border-indigo-500/20">
+                                <BookOpen size={18} className="md:w-5 md:h-5" />
                             </div>
                         </div>
-                        <div className="flex flex-wrap gap-2 relative z-10">
+                        <div className="flex flex-wrap gap-1.5 md:gap-2 relative z-10">
                             {selectedItems.slice(0, 3).map(i => (
-                                <span key={i} className="text-xs font-medium bg-black/40 text-gray-300 px-2 py-1 rounded border border-gray-700 truncate max-w-[120px]">
+                                <span key={i} className="text-[10px] md:text-xs font-medium bg-black/40 text-gray-300 px-1.5 md:px-2 py-0.5 md:py-1 rounded border border-gray-700 truncate max-w-[100px] md:max-w-[120px]">
                                     {i}
                                 </span>
                             ))}
                             {selectedItems.length > 3 && (
-                                <span className="text-xs text-gray-500 font-medium self-center pl-1">
+                                <span className="text-[10px] md:text-xs text-gray-500 font-medium self-center pl-1">
                                     + {selectedItems.length - 3} more
                                 </span>
                             )}
                         </div>
                     </div>
                 ) : (
-                    <div className="border border-dashed border-gray-800 bg-gray-900/50 rounded-xl p-6 text-center text-gray-500 hover:border-gray-600 transition-colors cursor-pointer">
-                        <p className="text-sm font-medium">Select chapters to begin.</p>
+                    <div className="border border-dashed border-gray-800 bg-gray-900/50 rounded-xl p-4 md:p-6 text-center text-gray-500 hover:border-gray-600 transition-colors cursor-pointer">
+                        <p className="text-xs md:text-sm font-medium">Select chapters to begin.</p>
                     </div>
                 )}
             </div>
@@ -247,7 +259,7 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                 <div className="grid grid-cols-2 gap-3">
                     {[
                         { id: 'standard', label: 'Standard', desc: 'Full Mastery', icon: Layers },
-                        { id: 'high-yield', label: 'Top 50 PYQ', desc: 'Rapid Review', icon: Sparkles }
+                        { id: 'high-yield', label: 'Top PYQ', desc: 'Rapid Review', icon: Sparkles }
                     ].map(opt => {
                         const Icon = opt.icon;
                         const isActive = selectionTier === opt.id;
@@ -255,14 +267,14 @@ export default function FocusDashboard({ initialQuestions, onStart }: FocusDashb
                             <button
                                 key={opt.id}
                                 onClick={() => setSelectionTier(opt.id as any)}
-                                className={`flex flex-col gap-1 p-3 rounded-lg border text-left transition-all ${isActive ? 'bg-purple-900/20 border-purple-500/50' : 'bg-gray-900 border-gray-800 hover:border-gray-600'}`}
+                                className={`flex flex-col gap-0.5 md:gap-1 p-2.5 rounded-lg border text-left transition-all ${isActive ? 'bg-purple-900/20 border-purple-500/50' : 'bg-gray-900 border-gray-800 hover:border-gray-600'}`}
                             >
-                                <div className="flex justify-between items-start mb-1">
-                                    <Icon size={16} className={isActive ? 'text-purple-400' : 'text-gray-500'} />
-                                    {isActive && <div className="w-2 h-2 rounded-full bg-purple-500" />}
+                                <div className="flex justify-between items-start mb-0.5">
+                                    <Icon size={14} className={`md:w-4 md:h-4 ${isActive ? 'text-purple-400' : 'text-gray-500'}`} />
+                                    {isActive && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />}
                                 </div>
-                                <span className={`text-sm font-bold ${isActive ? 'text-white' : 'text-gray-300'}`}>{opt.label}</span>
-                                <span className="text-xs text-gray-500">{opt.desc}</span>
+                                <span className={`text-xs md:text-sm font-bold ${isActive ? 'text-white' : 'text-gray-300'}`}>{opt.label}</span>
+                                <span className="text-[10px] text-gray-500">{opt.desc}</span>
                             </button>
                         );
                     })}
