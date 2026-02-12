@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen } from 'lucide-react';
-import { Question, JEEQuestionType, WeightedTag } from '../types';
+import { Question, JEEQuestionType, WeightedTag, TaxonomyNode } from '../types';
 
-import { getQuestions, saveQuestion, deleteQuestion, getTaxonomy, TaxonomyNode, syncSupabaseToMongo } from '../actions';
+import { getQuestions, saveQuestion, deleteQuestion, getTaxonomy, syncSupabaseToMongo } from '../actions';
 import Link from 'next/link';
 import { fetchLecturesData, Chapter } from '../../lib/lecturesData';
 import AudioRecorder from './AudioRecorder';

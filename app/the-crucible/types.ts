@@ -147,3 +147,13 @@ export interface ConceptScore {
     questionCount: number;
 }
 
+// Concept Taxonomy Node
+export interface TaxonomyNode {
+    id: string;
+    name: string;
+    parent_id: string | null;
+    type: 'chapter' | 'topic' | 'unit';
+    sequence_order?: number;
+    class_level?: '11' | '12';
+}
+

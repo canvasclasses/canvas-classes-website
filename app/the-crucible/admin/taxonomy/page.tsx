@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getTaxonomy, saveTaxonomyNode, deleteTaxonomyNode, TaxonomyNode } from '../../actions';
+import { getTaxonomy, saveTaxonomyNode, deleteTaxonomyNode } from '../../actions';
+import { TaxonomyNode } from '../../types';
 import { Loader, Plus, Trash2, Edit2, Save, X, Folder, Tag, ChevronRight } from 'lucide-react';
 
 export default function TaxonomyPage() {
