@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
@@ -27,6 +27,15 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
     useEffect(() => {
         setNumericInput(selectedOptionId || '');
     }, [question.id, selectedOptionId]);
+
+    const processContent = (content: string) => {
+        if (!content) return "";
+        // 1. Only convert \n to real newline if NOT followed by a letter (preserves \nu, \neq, etc.)
+        // 2. We use whitespace-pre-wrap in the CSS instead of aggressive replacement where possible
+        return content.replace(/\\n(?![a-zA-Z])/g, '\n');
+    };
+
+    const processedText = useMemo(() => processContent(question.textMarkdown), [question.textMarkdown]);
 
     const handleOptionClick = (optionId: string) => {
         if (showFeedback) return;
@@ -61,7 +70,7 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                                     className="rounded-lg border border-white/5 my-3"
                                 />
                             ),
-                            p: ({ children }) => <p className="mb-2 leading-tight tracking-normal text-gray-300/90">{children}</p>,
+                            p: ({ children }) => <p className="mb-2 leading-tight tracking-normal text-gray-300/90 whitespace-pre-wrap">{children}</p>,
                             table: ({ children }) => (
                                 <div className="my-2 overflow-x-auto rounded-lg border border-gray-700">
                                     <table className="w-full text-sm text-left">{children}</table>
@@ -71,7 +80,7 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                             td: ({ children }) => <td className="px-4 py-2 border-b border-gray-800">{children}</td>,
                         }}
                     >
-                        {question.textMarkdown}
+                        {processedText}
                     </ReactMarkdown>
                 </div>
             </div>
@@ -207,15 +216,15 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                                                     }
                                                     if (!part.trim()) return null;
                                                     return (
-                                                        <ReactMarkdown key={idx} remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex, rehypeRaw]} components={{ p: 'span' }}>
-                                                            {part}
+                                                        <ReactMarkdown key={idx} remarkPlugins={[remarkMath, remarkGfm]} rehypePlugins={[rehypeKatex, rehypeRaw]} components={{ p: 'span' }}>
+                                                            {processContent(part)}
                                                         </ReactMarkdown>
                                                     );
                                                 })}
                                             </span>
                                         ) : (
                                             <ReactMarkdown
-                                                remarkPlugins={[remarkMath]}
+                                                remarkPlugins={[remarkMath, remarkGfm]}
                                                 rehypePlugins={[rehypeKatex, rehypeRaw]}
                                                 components={{
                                                     p: 'span',
@@ -233,7 +242,7 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                                                     )
                                                 }}
                                             >
-                                                {option.text}
+                                                {processContent(option.text)}
                                             </ReactMarkdown>
                                         )}
                                     </span>

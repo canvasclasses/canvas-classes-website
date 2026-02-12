@@ -43,8 +43,9 @@ export default function SolutionViewer({
 
     // Process solution text - simpler processing, focusing on clean markdown
     const processedContent = useMemo(() => {
-        let content = solution.textSolutionLatex;
-        // Basic cleanup if needed, but keeping it raw allows the markdown renderer to do its job cleanly
+        let content = solution.textSolutionLatex || "";
+        // 1. Convert literal \n to real newlines ONLY if not followed by a letter (preserves LaTeX like \nu, \neq)
+        content = content.replace(/\\n(?![a-zA-Z])/g, '\n');
         return content;
     }, [solution.textSolutionLatex]);
 
@@ -179,7 +180,7 @@ export default function SolutionViewer({
                                             // Remove empty paragraphs
                                             if (!content || content.trim() === '') return null;
 
-                                            return <p className="mb-1 leading-snug tracking-normal text-[15px] text-gray-300/90">{children}</p>;
+                                            return <p className="mb-1 leading-snug tracking-normal text-[15px] text-gray-300/90 whitespace-pre-wrap">{children}</p>;
                                         },
                                         ul: ({ children }) => <ul className="list-disc pl-5 mb-2 space-y-1 text-gray-300">{children}</ul>,
                                         ol: ({ children }) => <ol className="list-decimal pl-5 mb-2 space-y-1 text-gray-300">{children}</ol>,
