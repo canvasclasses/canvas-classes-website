@@ -216,8 +216,16 @@ export default function AdminPage() {
 
     const selectedQuestion = questions.find(q => q.id === selectedQuestionId);
 
-    // Extract unique exam sources for shift-wise filtering
-    const examSourcesRaw = questions.map(q => q.examSource).filter((src): src is string => !!src && src.trim() !== '');
+    // Extract unique exam sources for shift-wise filtering (ONLY for the selected PYQ source)
+    const examSourcesRaw = questions
+        .filter(q => q.isPYQ)
+        .filter(q => {
+            if (selectedSourceFilter === 'mains_pyq') return q.examSource?.toLowerCase().includes('main');
+            if (selectedSourceFilter === 'adv_pyq') return q.examSource?.toLowerCase().includes('adv');
+            return false; // Don't show shifts if not specifically in a PYQ source
+        })
+        .map(q => q.examSource)
+        .filter((src): src is string => !!src && src.trim() !== '');
     const uniqueExamSources = Array.from(new Set(examSourcesRaw)).sort((a, b) => b.localeCompare(a));
 
     // Group sources by year for organized display
@@ -239,12 +247,8 @@ export default function AdminPage() {
         // Type Filter
         if (selectedTypeFilter !== 'all' && q.questionType !== selectedTypeFilter) return false;
 
-        // Shift Filter (NEW - takes priority over source filter)
-        if (selectedShiftFilter !== 'all') {
-            if (q.examSource !== selectedShiftFilter) return false;
-        }
-        // Source Filter (only if shift filter is not active)
-        else if (selectedSourceFilter !== 'all') {
+        // Source Filter
+        if (selectedSourceFilter !== 'all') {
             if (selectedSourceFilter === 'mains_pyq') {
                 if (!q.isPYQ) return false;
                 const src = (q.examSource || '').toLowerCase();
@@ -256,6 +260,11 @@ export default function AdminPage() {
             } else if (selectedSourceFilter === 'non_pyq') {
                 if (q.isPYQ) return false;
             }
+        }
+
+        // Shift Filter (Sub-filter of Source)
+        if (selectedShiftFilter !== 'all') {
+            if (q.examSource !== selectedShiftFilter) return false;
         }
 
         // TopPYQ Filter
@@ -365,8 +374,8 @@ export default function AdminPage() {
                             className="w-32 bg-gray-900 border border-gray-700 rounded px-2 py-1 text-[10px] focus:border-purple-500 outline-none truncate"
                         >
                             <option value="all">Chapter</option>
-                            {chapters.map(ch => (
-                                <option key={ch.slug} value={ch.name}>{ch.name}</option>
+                            {taxonomy.filter(n => n.type === 'chapter').sort((a, b) => (a.sequence_order || 999) - (b.sequence_order || 999)).map(ch => (
+                                <option key={ch.id} value={ch.id}>{ch.name}</option>
                             ))}
                         </select>
 
@@ -392,24 +401,26 @@ export default function AdminPage() {
                             <option value="non_pyq">Non-PYQ</option>
                         </select>
 
-                        <select
-                            value={selectedShiftFilter}
-                            onChange={(e) => { setSelectedShiftFilter(e.target.value); if (e.target.value !== 'all') setSelectedSourceFilter('all'); }}
-                            className={`w-36 bg-gray-900 border rounded px-2 py-1 text-[10px] outline-none truncate ${selectedShiftFilter !== 'all' ? 'border-indigo-500 text-indigo-300' : 'border-gray-700'}`}
-                        >
-                            <option value="all">Shift</option>
-                            {Object.entries(shiftGroups).map(([year, shifts]) => (
-                                shifts.length > 0 && (
-                                    <optgroup key={year} label={year}>
-                                        {shifts.map(shift => (
-                                            <option key={shift} value={shift}>
-                                                {shift.replace('JEE Main ', '').replace('JEE Advanced ', '')} ({getShiftCount(shift)})
-                                            </option>
-                                        ))}
-                                    </optgroup>
-                                )
-                            ))}
-                        </select>
+                        {(selectedSourceFilter === 'mains_pyq' || selectedSourceFilter === 'adv_pyq') && (
+                            <select
+                                value={selectedShiftFilter}
+                                onChange={(e) => setSelectedShiftFilter(e.target.value)}
+                                className={`w-36 bg-gray-900 border rounded px-2 py-1 text-[10px] outline-none truncate ${selectedShiftFilter !== 'all' ? 'border-indigo-500 text-indigo-300' : 'border-gray-700'}`}
+                            >
+                                <option value="all">Shift</option>
+                                {Object.entries(shiftGroups).map(([year, shifts]) => (
+                                    shifts.length > 0 && (
+                                        <optgroup key={year} label={year}>
+                                            {shifts.map(shift => (
+                                                <option key={shift} value={shift}>
+                                                    {shift.replace('JEE Main ', '').replace('JEE Advanced ', '')} ({getShiftCount(shift)})
+                                                </option>
+                                            ))}
+                                        </optgroup>
+                                    )
+                                ))}
+                            </select>
+                        )}
 
                         <select
                             value={selectedTopPYQFilter}
@@ -553,15 +564,75 @@ export default function AdminPage() {
                                         })()}
                                     </select>
                                 </div>
-                                <div>
-                                    <label className="text-[10px] text-gray-500 mb-1 block">{selectedQuestion.isPYQ ? 'Exam Source' : 'Reference'}</label>
-                                    <input
-                                        type="text"
-                                        value={selectedQuestion.examSource || ''}
-                                        placeholder={selectedQuestion.isPYQ ? "JEE Main 2026..." : "NCERT, etc."}
-                                        onChange={(e) => handleUpdate(selectedQuestion.id, 'examSource', e.target.value)}
-                                        className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs focus:border-purple-500 outline-none"
-                                    />
+                                <div className="col-span-1">
+                                    <label className="text-[10px] text-gray-500 mb-1 block">
+                                        {selectedQuestion.isPYQ ? 'Categorization (Auto-fills Source)' : 'Reference'}
+                                    </label>
+
+                                    {selectedQuestion.isPYQ ? (
+                                        <div className="space-y-2">
+                                            <div className="flex gap-1">
+                                                <select
+                                                    className="flex-1 bg-gray-800 border border-gray-700 rounded px-1.5 py-1 text-[10px] outline-none"
+                                                    onChange={(e) => {
+                                                        const current = selectedQuestion.examSource || '';
+                                                        const parts = current.split(' ');
+                                                        let exam = e.target.value; // "JEE Main" or "JEE Advanced"
+                                                        let year = parts.find(p => /^\d{4}$/.test(p)) || '2025';
+                                                        let shift = current.split(' - ')[1] || '';
+                                                        handleUpdate(selectedQuestion.id, 'examSource', `${exam} ${year}${shift ? ` - ${shift}` : ''}`);
+                                                    }}
+                                                    value={selectedQuestion.examSource?.includes('Advanced') ? 'JEE Advanced' : 'JEE Main'}
+                                                >
+                                                    <option value="JEE Main">JEE Main</option>
+                                                    <option value="JEE Advanced">JEE Advanced</option>
+                                                </select>
+
+                                                <input
+                                                    type="text"
+                                                    placeholder="Year"
+                                                    className="w-14 bg-gray-800 border border-gray-700 rounded px-1.5 py-1 text-[10px] outline-none"
+                                                    value={selectedQuestion.examSource?.match(/\d{4}/)?.[0] || ''}
+                                                    onChange={(e) => {
+                                                        const current = selectedQuestion.examSource || '';
+                                                        const exam = current.includes('Advanced') ? 'JEE Advanced' : 'JEE Main';
+                                                        const year = e.target.value;
+                                                        const shift = current.split(' - ')[1] || '';
+                                                        handleUpdate(selectedQuestion.id, 'examSource', `${exam} ${year}${shift ? ` - ${shift}` : ''}`);
+                                                    }}
+                                                />
+                                            </div>
+                                            <input
+                                                type="text"
+                                                placeholder="Shift e.g. Jan 27 Morning Shift"
+                                                className="w-full bg-gray-800 border border-gray-700 rounded px-1.5 py-1 text-[10px] outline-none"
+                                                value={selectedQuestion.examSource?.split(' - ')[1] || ''}
+                                                onChange={(e) => {
+                                                    const current = selectedQuestion.examSource || '';
+                                                    const prefix = current.split(' - ')[0] || 'JEE Main 2025';
+                                                    const shift = e.target.value;
+                                                    handleUpdate(selectedQuestion.id, 'examSource', shift ? `${prefix} - ${shift}` : prefix);
+                                                }}
+                                            />
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-[9px] text-gray-600">Actual Source:</span>
+                                                <input
+                                                    type="text"
+                                                    value={selectedQuestion.examSource || ''}
+                                                    onChange={(e) => handleUpdate(selectedQuestion.id, 'examSource', e.target.value)}
+                                                    className="flex-1 bg-transparent border-none p-0 text-[10px] text-gray-400 font-mono outline-none"
+                                                />
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <input
+                                            type="text"
+                                            value={selectedQuestion.examSource || ''}
+                                            placeholder="NCERT, etc."
+                                            onChange={(e) => handleUpdate(selectedQuestion.id, 'examSource', e.target.value)}
+                                            className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs focus:border-purple-500 outline-none"
+                                        />
+                                    )}
                                 </div>
                             </div>
 

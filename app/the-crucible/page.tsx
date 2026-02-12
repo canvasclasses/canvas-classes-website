@@ -1,4 +1,4 @@
-import { getQuestions } from './actions';
+import { getQuestions, getTaxonomy } from './actions';
 import QuestionBankGame from '@/components/question-bank/QuestionBankGame';
 import { Metadata } from 'next';
 import Script from 'next/script';
@@ -35,6 +35,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
     const questions = await getQuestions();
+    const taxonomy = await getTaxonomy();
 
     const jsonLd = {
         '@context': 'https://schema.org',
@@ -67,7 +68,7 @@ export default async function Page() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            <QuestionBankGame initialQuestions={questions} />
+            <QuestionBankGame initialQuestions={questions} taxonomy={taxonomy} />
         </>
     );
 }
