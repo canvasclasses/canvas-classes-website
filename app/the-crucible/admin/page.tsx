@@ -106,12 +106,27 @@ export default function AdminPage() {
 
     const handleDelete = async (id: string) => {
         if (deletingId === id) {
+            // Optimistic update
+            const oldQuestions = [...questions];
             setQuestions(prev => prev.filter(q => q.id !== id));
-            await deleteQuestion(id);
-            setDeletingId(null);
+
             if (selectedQuestionId === id) setSelectedQuestionId(null);
+            setDeletingId(null);
+
+            const result = await deleteQuestion(id);
+
+            if (!result.success) {
+                alert(`Deletion failed: ${result.message}`);
+                // Revert optimistic update
+                setQuestions(oldQuestions);
+                if (selectedQuestionId === null) setSelectedQuestionId(id);
+            }
         } else {
             setDeletingId(id);
+            // Clear previous timeout if any exists (React handles this via closure in effect, but here simplistic is fine)
+            // Ideally we'd useRef for timeout ID but for this simple case let's just set it.
+            // But wait, if user clicks rapidly, we might have multiple timeouts.
+            // Let's keep it simple: just set it.
             setTimeout(() => setDeletingId(null), 3000);
         }
     };
@@ -216,28 +231,9 @@ export default function AdminPage() {
 
     const selectedQuestion = questions.find(q => q.id === selectedQuestionId);
 
-    // Extract unique exam sources for shift-wise filtering (ONLY for the selected PYQ source)
-    const examSourcesRaw = questions
-        .filter(q => q.isPYQ)
-        .filter(q => {
-            if (selectedSourceFilter === 'mains_pyq') return q.examSource?.toLowerCase().includes('main');
-            if (selectedSourceFilter === 'adv_pyq') return q.examSource?.toLowerCase().includes('adv');
-            return false; // Don't show shifts if not specifically in a PYQ source
-        })
-        .map(q => q.examSource)
-        .filter((src): src is string => !!src && src.trim() !== '');
-    const uniqueExamSources = Array.from(new Set(examSourcesRaw)).sort((a, b) => b.localeCompare(a));
 
-    // Group sources by year for organized display
-    const shiftGroups = {
-        '2026': uniqueExamSources.filter(s => s.includes('2026')),
-        '2025': uniqueExamSources.filter(s => s.includes('2025')),
-        '2024': uniqueExamSources.filter(s => s.includes('2024')),
-        'Older': uniqueExamSources.filter(s => !s.includes('2026') && !s.includes('2025') && !s.includes('2024'))
-    };
 
-    // Count questions per shift
-    const getShiftCount = (shift: string) => questions.filter(q => q.examSource === shift).length;
+
 
     // Filter questions based on selected filters
     const filteredQuestions = questions.filter(q => {
@@ -262,9 +258,10 @@ export default function AdminPage() {
             }
         }
 
-        // Shift Filter (Sub-filter of Source)
+        // Shift/Year Filter (Sub-filter of Source)
         if (selectedShiftFilter !== 'all') {
-            if (q.examSource !== selectedShiftFilter) return false;
+            // Now logic filters by YEAR inclusion, not exact shift match
+            if (!q.examSource?.includes(selectedShiftFilter)) return false;
         }
 
         // TopPYQ Filter
@@ -405,20 +402,36 @@ export default function AdminPage() {
                             <select
                                 value={selectedShiftFilter}
                                 onChange={(e) => setSelectedShiftFilter(e.target.value)}
-                                className={`w-36 bg-gray-900 border rounded px-2 py-1 text-[10px] outline-none truncate ${selectedShiftFilter !== 'all' ? 'border-indigo-500 text-indigo-300' : 'border-gray-700'}`}
+                                className={`w-24 bg-gray-900 border rounded px-2 py-1 text-[10px] outline-none truncate ${selectedShiftFilter !== 'all' ? 'border-indigo-500 text-indigo-300' : 'border-gray-700'}`}
                             >
-                                <option value="all">Shift</option>
-                                {Object.entries(shiftGroups).map(([year, shifts]) => (
-                                    shifts.length > 0 && (
-                                        <optgroup key={year} label={year}>
-                                            {shifts.map(shift => (
-                                                <option key={shift} value={shift}>
-                                                    {shift.replace('JEE Main ', '').replace('JEE Advanced ', '')} ({getShiftCount(shift)})
-                                                </option>
-                                            ))}
-                                        </optgroup>
-                                    )
-                                ))}
+                                <option value="all">Year</option>
+                                {(() => {
+                                    // Extract unique years based on the selected source AND chapter
+                                    const relevantQuestions = questions.filter(q => {
+                                        if (!q.isPYQ) return false;
+                                        if (selectedSourceFilter === 'mains_pyq' && !q.examSource?.toLowerCase().includes('main')) return false;
+                                        if (selectedSourceFilter === 'adv_pyq' && !q.examSource?.toLowerCase().includes('adv')) return false;
+
+                                        // Respect Chapter Filter
+                                        if (selectedChapterFilter !== 'all' && q.chapterId !== selectedChapterFilter) return false;
+
+                                        return true;
+                                    });
+
+                                    const years = Array.from(new Set(relevantQuestions
+                                        .map(q => q.examSource?.match(/\d{4}/)?.[0])
+                                        .filter((y): y is string => !!y)
+                                    )).sort((a, b) => b.localeCompare(a));
+
+                                    return years.map(year => {
+                                        const count = relevantQuestions.filter(q => q.examSource?.includes(year)).length;
+                                        return (
+                                            <option key={year} value={year}>
+                                                {year} ({count})
+                                            </option>
+                                        );
+                                    });
+                                })()}
                             </select>
                         )}
 

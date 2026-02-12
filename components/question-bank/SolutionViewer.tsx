@@ -185,12 +185,12 @@ export default function SolutionViewer({
                                         ul: ({ children }) => <ul className="list-disc pl-5 mb-2 space-y-1 text-gray-300">{children}</ul>,
                                         ol: ({ children }) => <ol className="list-decimal pl-5 mb-2 space-y-1 text-gray-300">{children}</ol>,
                                         table: ({ children }) => (
-                                            <div className="my-4 overflow-x-auto rounded-lg border border-white/10">
-                                                <table className="w-full text-sm text-left">{children}</table>
+                                            <div className="my-6 overflow-x-auto rounded-xl border border-white/10 bg-white/[0.02] shadow-sm">
+                                                <table className="w-full text-sm text-left border-collapse">{children}</table>
                                             </div>
                                         ),
-                                        th: ({ children }) => <th className="px-4 py-3 bg-white/5 font-medium text-white border-b border-white/10 min-w-[120px]">{children}</th>,
-                                        td: ({ children }) => <td className="px-4 py-3 border-b border-white/5 text-gray-400">{children}</td>,
+                                        th: ({ children }) => <th className="px-5 py-4 bg-white/5 font-bold text-indigo-300 border-b border-white/10 uppercase tracking-wider text-xs min-w-[140px]">{children}</th>,
+                                        td: ({ children }) => <td className="px-5 py-4 border-b border-white/5 text-gray-400 leading-relaxed">{children}</td>,
                                         blockquote: ({ children }) => (
                                             <blockquote className="border-l-2 border-gray-600 pl-4 my-3 italic text-gray-400">
                                                 {children}
@@ -202,143 +202,60 @@ export default function SolutionViewer({
                                 </ReactMarkdown>
                             </div>
 
-                            {/* Source References Section */}
+                            {/* Question Origins - Compact & Minimal */}
                             {sourceReferences && sourceReferences.length > 0 && (
-                                <div className="mt-16 pt-8 border-t border-white/5">
-                                    {/* Section Header */}
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center">
-                                            <Sparkles size={16} className="text-amber-400" />
-                                        </div>
-                                        <h3 className="text-sm font-bold text-amber-400 uppercase tracking-[0.2em]">
-                                            Question Origins
+                                <div className="mt-8 border-t border-white/5 pt-4">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <Sparkles size={14} className="text-amber-400" />
+                                        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                                            Reference Source
                                         </h3>
                                     </div>
 
-                                    <p className="text-gray-500 text-sm mb-6 leading-relaxed">
-                                        This question is based on concepts from the following sources. Understanding these connections will help you master similar questions.
-                                    </p>
-
-                                    {/* Reference Cards */}
-                                    <div className="space-y-4">
+                                    <div className="space-y-2">
                                         {sourceReferences.map((ref, idx) => (
-                                            <div
-                                                key={idx}
-                                                className={`relative rounded-xl border p-5 transition-all hover:border-opacity-50 ${ref.type === 'NCERT'
-                                                    ? 'bg-gradient-to-r from-emerald-500/5 to-transparent border-emerald-500/20 hover:border-emerald-500/40'
-                                                    : ref.type === 'PYQ'
-                                                        ? 'bg-gradient-to-r from-blue-500/5 to-transparent border-blue-500/20 hover:border-blue-500/40'
-                                                        : 'bg-gradient-to-r from-purple-500/5 to-transparent border-purple-500/20 hover:border-purple-500/40'
-                                                    }`}
-                                            >
-                                                {/* Type Badge */}
-                                                <div className="flex items-start justify-between mb-3">
-                                                    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${ref.type === 'NCERT'
-                                                        ? 'bg-emerald-500/20 text-emerald-400'
-                                                        : ref.type === 'PYQ'
-                                                            ? 'bg-blue-500/20 text-blue-400'
-                                                            : 'bg-purple-500/20 text-purple-400'
-                                                        }`}>
-                                                        {ref.type === 'NCERT' && <BookOpen size={12} />}
-                                                        {ref.type === 'PYQ' && <History size={12} />}
-                                                        {ref.type}
-                                                    </div>
-
-                                                    {/* Similarity Badge */}
-                                                    {ref.similarity && (
-                                                        <span className={`text-xs px-2 py-1 rounded-full ${ref.similarity === 'exact'
-                                                            ? 'bg-red-500/20 text-red-400'
-                                                            : ref.similarity === 'similar'
-                                                                ? 'bg-yellow-500/20 text-yellow-400'
-                                                                : 'bg-gray-500/20 text-gray-400'
-                                                            }`}>
-                                                            {ref.similarity === 'exact' && '🎯 Exact Match'}
-                                                            {ref.similarity === 'similar' && '≈ Similar'}
-                                                            {ref.similarity === 'concept' && '💡 Same Concept'}
-                                                        </span>
-                                                    )}
+                                            <div key={idx} className="flex items-start gap-3 p-2 rounded bg-white/[0.02] border border-white/5 text-sm hover:bg-white/[0.04] transition-colors">
+                                                {/* Compact Badge */}
+                                                <div className={`shrink-0 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide border ${ref.type === 'NCERT' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
+                                                        ref.type === 'PYQ' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
+                                                            'bg-purple-500/10 text-purple-400 border-purple-500/20'
+                                                    }`}>
+                                                    {ref.type}
                                                 </div>
 
-                                                {/* NCERT Reference Content */}
-                                                {ref.type === 'NCERT' && (
-                                                    <div className="space-y-2">
-                                                        {ref.ncertBook && (
-                                                            <div className="flex items-center gap-2 text-white font-medium">
-                                                                <span className="text-emerald-400">📚</span>
-                                                                {ref.ncertBook}
-                                                            </div>
+                                                {/* Content - Inline */}
+                                                <div className="flex-1 min-w-0">
+                                                    <div className="flex flex-wrap items-center gap-x-2 text-gray-300 text-xs">
+                                                        {ref.type === 'NCERT' && (
+                                                            <>
+                                                                {ref.ncertBook && <span className="font-medium text-emerald-200">{ref.ncertBook}</span>}
+                                                                {ref.ncertChapter && <span className="text-gray-500">/</span>}
+                                                                {ref.ncertChapter && <span>{ref.ncertChapter}</span>}
+                                                                {ref.ncertPage && (
+                                                                    <span className="text-gray-500 ml-auto font-mono text-[10px]">Pg. {ref.ncertPage}</span>
+                                                                )}
+                                                            </>
                                                         )}
-                                                        <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-gray-400">
-                                                            {ref.ncertChapter && (
-                                                                <span className="flex items-center gap-1">
-                                                                    <ArrowRight size={12} className="text-emerald-500" />
-                                                                    {ref.ncertChapter}
-                                                                </span>
-                                                            )}
-                                                            {ref.ncertPage && (
-                                                                <span className="text-emerald-300 font-mono bg-emerald-500/10 px-2 py-0.5 rounded">
-                                                                    {ref.ncertPage}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                        {ref.ncertTopic && (
-                                                            <div className="text-sm text-gray-500 italic mt-2">
-                                                                Topic: {ref.ncertTopic}
-                                                            </div>
+                                                        {ref.type === 'PYQ' && (
+                                                            <>
+                                                                <span className="font-medium text-blue-200">{ref.pyqExam} {ref.pyqYear}</span>
+                                                                {ref.pyqShift && <span className="text-gray-500">- {ref.pyqShift}</span>}
+                                                            </>
+                                                        )}
+                                                        {(ref.type === 'COACHING' || ref.type === 'OTHER') && (
+                                                            <span className="font-medium text-purple-200">{ref.sourceName}</span>
                                                         )}
                                                     </div>
-                                                )}
 
-                                                {/* PYQ Reference Content */}
-                                                {ref.type === 'PYQ' && (
-                                                    <div className="space-y-2">
-                                                        <div className="flex items-center gap-2 text-white font-medium">
-                                                            <span className="text-blue-400">📝</span>
-                                                            {ref.pyqExam}
-                                                            {ref.pyqYear && <span className="text-blue-300 font-mono">({ref.pyqYear})</span>}
+                                                    {/* Concise Description line if exists */}
+                                                    {ref.description && (
+                                                        <div className="mt-1 text-[11px] text-gray-500 line-clamp-1 italic">
+                                                            {ref.description}
                                                         </div>
-                                                        <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-gray-400">
-                                                            {ref.pyqShift && (
-                                                                <span className="flex items-center gap-1">
-                                                                    <ArrowRight size={12} className="text-blue-500" />
-                                                                    {ref.pyqShift}
-                                                                </span>
-                                                            )}
-                                                            {ref.pyqQuestionNo && (
-                                                                <span className="text-blue-300 font-mono bg-blue-500/10 px-2 py-0.5 rounded">
-                                                                    {ref.pyqQuestionNo}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                )}
-
-                                                {/* Other/Coaching Reference */}
-                                                {(ref.type === 'COACHING' || ref.type === 'OTHER') && ref.sourceName && (
-                                                    <div className="text-white font-medium">
-                                                        <span className="text-purple-400">📖</span> {ref.sourceName}
-                                                    </div>
-                                                )}
-
-                                                {/* Description */}
-                                                {ref.description && (
-                                                    <p className="mt-3 text-sm text-gray-400 leading-relaxed border-t border-white/5 pt-3">
-                                                        💡 {ref.description}
-                                                    </p>
-                                                )}
+                                                    )}
+                                                </div>
                                             </div>
                                         ))}
-                                    </div>
-
-                                    {/* Pro Tip */}
-                                    <div className="mt-6 p-4 rounded-lg bg-gradient-to-r from-indigo-500/5 to-purple-500/5 border border-indigo-500/10">
-                                        <div className="flex items-start gap-3">
-                                            <div className="text-indigo-400 mt-0.5">💡</div>
-                                            <div className="text-sm text-gray-400">
-                                                <span className="text-indigo-300 font-medium">Pro Tip:</span> Questions often repeat with minor variations.
-                                                Mastering the source concepts ensures you're prepared for any twist!
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             )}

@@ -72,12 +72,12 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                             ),
                             p: ({ children }) => <p className="mb-2 leading-tight tracking-normal text-gray-300/90 whitespace-pre-wrap">{children}</p>,
                             table: ({ children }) => (
-                                <div className="my-2 overflow-x-auto rounded-lg border border-gray-700">
-                                    <table className="w-full text-sm text-left">{children}</table>
+                                <div className="my-4 overflow-x-auto rounded-xl border border-white/10 bg-white/5 shadow-sm">
+                                    <table className="w-full text-sm text-left border-collapse">{children}</table>
                                 </div>
                             ),
-                            th: ({ children }) => <th className="px-4 py-2 bg-gray-800 font-bold border-b border-gray-700">{children}</th>,
-                            td: ({ children }) => <td className="px-4 py-2 border-b border-gray-800">{children}</td>,
+                            th: ({ children }) => <th className="px-4 py-3 bg-white/10 font-bold border-b border-white/10 text-indigo-300 uppercase tracking-wider text-xs">{children}</th>,
+                            td: ({ children }) => <td className="px-4 py-3 border-b border-white/5 text-gray-300">{children}</td>,
                         }}
                     >
                         {processedText}
