@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Plus, X, Tag, Sparkles } from 'lucide-react';
-import { Question, WeightedTag } from '../types';
-import { TaxonomyNode } from '../actions';
+import { Question, WeightedTag, TaxonomyNode } from '../types';
 
 interface TagManagerProps {
     question: Question;

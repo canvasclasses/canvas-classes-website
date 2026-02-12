@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { getQuestions, getTaxonomy, TaxonomyNode } from '../../actions';
-import { Question, QuestionOption } from '../../types';
+import { getQuestions, getTaxonomy } from '../../actions';
+import { Question, QuestionOption, TaxonomyNode } from '../../types';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';

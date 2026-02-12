@@ -1,6 +1,6 @@
 'use server';
 
-import { Question as QuestionPageType } from './types';
+import { Question as QuestionPageType, TaxonomyNode } from './types';
 import connectToDatabase from '@/lib/mongodb';
 import { Question as QuestionModel, Taxonomy as TaxonomyModel } from '@/lib/models';
 import { supabase } from '../../lib/supabase';
@@ -128,15 +128,6 @@ export async function deleteQuestion(questionId: string): Promise<void> {
 }
 
 // --- Taxonomy Actions ---
-
-export interface TaxonomyNode {
-    id: string;
-    name: string;
-    parent_id: string | null;
-    type: 'chapter' | 'topic' | 'unit';
-    sequence_order?: number;
-    class_level?: '11' | '12';
-}
 
 export async function getTaxonomy(): Promise<TaxonomyNode[]> {
     try {
