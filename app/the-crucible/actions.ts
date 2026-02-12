@@ -140,7 +140,9 @@ export async function getTaxonomy(): Promise<TaxonomyNode[]> {
             parent_id: doc.parent_id,
             type: doc.type || (doc.parent_id ? 'topic' : 'chapter'),
             sequence_order: doc.sequence_order,
-            class_level: doc.class_level
+            class_level: doc.class_level,
+            remedial_video_url: doc.remedial_video_url,
+            remedial_notes_url: doc.remedial_notes_url,
         }));
     } catch (error) {
         console.error("Failed to load taxonomy from MongoDB:", error);
@@ -155,7 +157,7 @@ export async function saveTaxonomyNode(node: TaxonomyNode): Promise<{ success: b
         // Auto-detect type: nodes with parent_id are topics, nodes without are chapters
         const nodeType = node.type || (node.parent_id ? 'topic' : 'chapter');
 
-        const doc = {
+        const doc: any = {
             _id: node.id,
             name: node.name,
             parent_id: node.parent_id,
@@ -163,6 +165,14 @@ export async function saveTaxonomyNode(node: TaxonomyNode): Promise<{ success: b
             sequence_order: node.sequence_order,
             class_level: node.class_level
         };
+
+        // Include remedial fields if provided
+        if (node.remedial_video_url !== undefined) {
+            doc.remedial_video_url = node.remedial_video_url || null;
+        }
+        if (node.remedial_notes_url !== undefined) {
+            doc.remedial_notes_url = node.remedial_notes_url || null;
+        }
 
         await TaxonomyModel.findOneAndUpdate(
             { _id: node.id },

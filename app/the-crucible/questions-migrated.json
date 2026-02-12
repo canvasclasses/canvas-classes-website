@@ -25,7 +25,7 @@
       }
     ],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "Pyrolusite Sample Problem",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -80,7 +80,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "AIEEE 2012",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -135,7 +135,7 @@
       }
     ],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "IIT-JEE 2012",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -189,7 +189,7 @@
       }
     ],
     "difficulty": "Easy",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "Draft Import",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -238,7 +238,7 @@
       }
     ],
     "difficulty": "Easy",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "Draft Import",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -287,7 +287,7 @@
       }
     ],
     "difficulty": "Easy",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "Draft Import",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -336,7 +336,7 @@
       }
     ],
     "difficulty": "Easy",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "Draft Import",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -385,7 +385,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -434,7 +434,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -487,7 +487,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -536,7 +536,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -585,7 +585,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -634,7 +634,7 @@
       }
     ],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -687,7 +687,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -740,7 +740,7 @@
       }
     ],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -793,7 +793,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -825,7 +825,7 @@
     "textMarkdown": "Calculate the amount of oxygen required to produce enough $\\mathrm{CO}$ on reaction with $\\mathrm{C}$, which can reduce $1.6\\text{ kg } \\mathrm{Fe}_2\\mathrm{O}_3$.",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -874,7 +874,7 @@
       }
     ],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -906,7 +906,7 @@
     "textMarkdown": "How much quantity of $\\mathrm{Zn}$ (in grams) will have to be reacted with excess of dil. $\\mathrm{HCl}$ solution to produce sufficient $\\mathrm{H}_2(\\mathrm{g})$ for completely reacting with the $\\mathrm{O}_2(\\mathrm{g})$ obtained by decomposing $5.104$ g of $\\mathrm{KClO}_3$?",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -934,7 +934,7 @@
     "textMarkdown": "$34$ g of $\\mathrm{H}_2\\mathrm{O}_2$ is present in $1120$ ml solution. This solution is ______ volume $\\mathrm{H}_2\\mathrm{O}_2$.",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -987,7 +987,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1040,7 +1040,7 @@
       }
     ],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1093,7 +1093,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1146,7 +1146,7 @@
       }
     ],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1178,7 +1178,7 @@
     "textMarkdown": "$0.05$ cm thick coating of silver is deposited on a plate of $0.05$ m² area. The no. of silver atoms deposited on plate are ______ $\\times 10^{22}$ (At. mass of Ag $= 108$, $d = 7.9$ g cm⁻³)",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1206,7 +1206,7 @@
     "textMarkdown": "Haemoglobin contains $0.34\\%$ Fe by mass. The no. of Fe atoms in $3.3$ g of Haemoglobin is ______",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1255,7 +1255,7 @@
       }
     ],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1308,7 +1308,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1336,7 +1336,7 @@
     "textMarkdown": "______ grams of 3-hydroxypropanol (MW = 74) must be dehydrated to produce $7.8$ g of acrolein (MW = 56) $\\mathrm{C}_3\\mathrm{H}_4\\mathrm{O}$, if the % yield is 64.",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1389,7 +1389,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1442,7 +1442,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1474,7 +1474,7 @@
     "textMarkdown": "A $1.84$ mg sample of polyhydric alcoholic compound 'X' of molar mass $92$ g/mol gave $1.344$ ml of $\\mathrm{H}_2$ gas at STP. The no. of alcoholic hydrogen present in compound X is:",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1502,7 +1502,7 @@
     "textMarkdown": "A $10$ mg effervescent tablet containing $\\mathrm{NaHCO}_3$ and oxalic acid releases $0.25$ ml of $\\mathrm{CO}_2$ at $298.15$ K and $1$ bar. If molar volume of $\\mathrm{CO}_2$ is $25$ L under such condition, what is the % of $\\mathrm{NaHCO}_3$ in each tablet? (Molar mass of $\\mathrm{NaHCO}_3 = 84$ g mol⁻¹)",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1555,7 +1555,7 @@
       }
     ],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1604,7 +1604,7 @@
       }
     ],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1657,7 +1657,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1689,7 +1689,7 @@
     "textMarkdown": "Molality of an aq. solution containing $x$ g of anh. $\\mathrm{CuSO}_4$ in $500$ ml solution at $32°\\mathrm{C}$ is $2 \\times 10^{-1}$ M. Its molality will be ______ $\\times 10^{-3}$ m. ($d = 1.25$ g/ml)",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1717,7 +1717,7 @@
     "textMarkdown": "A compound $\\mathrm{H}_x\\mathrm{X}$ with molar mass of $80$ g is dissolved in a solvent having density of $0.4$ g ml⁻¹. Assuming no change in volume upon dissolution, the molality of a $3.2$ M solution is ______",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1766,7 +1766,7 @@
       }
     ],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1794,7 +1794,7 @@
     "textMarkdown": "The molality of a $10\\%$ (v/v) solution of dibromine solution in $\\mathrm{CCl}_4$ is $x$.\n\n$x = $ ______ $\\times 10^{-2}$ M. (Mol.wt of $\\mathrm{Br}_2 = 160$ g/mol, density of $\\mathrm{Br}_2 = 3.2$ g/ml, density of $\\mathrm{CCl}_4 = 1.6$ g/ml)",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1822,7 +1822,7 @@
     "textMarkdown": "Complete combustion of $750$ g of an organic compound provides $420$ g of $\\mathrm{CO}_2$ and $210$ g of $\\mathrm{H}_2\\mathrm{O}$. The % composition of C and H in organic compound is $15.2$ and ______.",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1854,7 +1854,7 @@
     "textMarkdown": "The formula of a gaseous hydrocarbon which requires $6$ times of its own volume of $\\mathrm{O}_2$ for complete oxidation and produces $4$ times its own volume of $\\mathrm{CO}_2$ is $\\mathrm{C}_x\\mathrm{H}_y$. The value of $y$ is ______",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1886,7 +1886,7 @@
     "textMarkdown": "The ratio of the mass percentages of C & H and C & O of a saturated acyclic organic compound X are $4:1$ and $3:4$ respectively. Then, the no. of moles of oxygen gas required for complete combustion of two moles of organic compound X is ______",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1918,7 +1918,7 @@
     "textMarkdown": "A $20$ ml solution containing $0.2$ g impure $\\mathrm{H}_2\\mathrm{O}_2$ reacts completely with $0.316$ g of $\\mathrm{KMnO}_4$ in acid solution. The purity of $\\mathrm{H}_2\\mathrm{O}_2$ (in %) is ______ (Mol. wt of $\\mathrm{KMnO}_4 = 158$)",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1950,7 +1950,7 @@
     "textMarkdown": "The number of equivalents in $196$ g of $\\mathrm{H}_3\\mathrm{PO}_4$ are ______\n(Given $n$-factor = 3).",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -1978,7 +1978,7 @@
     "textMarkdown": "In the reaction $\\mathrm{CO}(\\mathrm{g}) + 2\\mathrm{H}_2(\\mathrm{g}) \\rightarrow \\mathrm{CH}_3\\mathrm{OH}(\\mathrm{g})$, the number of moles of $\\mathrm{H}_2$ required to react completely with $2$ mol of $\\mathrm{CO}$ is ______.",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2006,7 +2006,7 @@
     "textMarkdown": "Two moles of $50\\%$ pure $\\mathrm{Ca(HCO}_3)_2$ on heating forms $1$ mol of $\\mathrm{CO}_2$. The percentage yield of $\\mathrm{CO}_2$ is ______.",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2038,7 +2038,7 @@
     "textMarkdown": "The number of significant figures in Avogadro's constant ($6.023 \\times 10^{23}$) is ______.",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2066,7 +2066,7 @@
     "textMarkdown": "The number of gram atoms in $24$ g of magnesium is ______.",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2094,7 +2094,7 @@
     "textMarkdown": "$4.48$ L of ammonia at STP is neutralized using $100$ mL of a solution of $\\mathrm{H}_2\\mathrm{SO}_4$. The molarity of acid is ______.",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2126,7 +2126,7 @@
     "textMarkdown": "Molecular formula of acetic acid is $\\mathrm{CH}_3\\mathrm{COOH}$. The number of atoms present in its empirical formula is ______.",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2154,7 +2154,7 @@
     "textMarkdown": "A sample of clay was partially dried and then analyzed to $50\\%$ silica and $7\\%$ water. The original clay contained $12\\%$ water. Find the % of silica in the original sample.",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2186,7 +2186,7 @@
     "textMarkdown": "$1.60$ g of Ca and $2.60$ g of Zn when treated with an acid separately, produced the same amount of $\\mathrm{H}_2$. If the equivalent wt. of Zn is $32.6$, what is the equivalent wt of Ca?",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2214,7 +2214,7 @@
     "textMarkdown": "$27.6$ g of $\\mathrm{K}_2\\mathrm{CO}_3$ was treated by a series of reagents so as to convert all of its carbon to $\\mathrm{K}_2\\mathrm{Zn}_3[\\mathrm{Fe(CN)}_6]_2$. Calculate the weight of the product. (in g)",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2242,7 +2242,7 @@
     "textMarkdown": "It has been estimated that $93\\%$ of all atoms in the entire universe are hydrogen and that the vast majority of those remaining are helium. Based on only these two elements, estimate the mass percentage composition of hydrogen in the universe.",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2270,7 +2270,7 @@
     "textMarkdown": "At room temperature, the density of water is $1.0$ g/mL and the density of ethanol is $0.789$ g/mL. What volume of ethanol contains the same number of molecules as are present in $175$ mL of water?",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2298,7 +2298,7 @@
     "textMarkdown": "What is the number of moles of $\\mathrm{Fe(OH)}_3$ (s) that can be produced by allowing $1$ mole of $\\mathrm{Fe}_2\\mathrm{S}_3$, $2$ moles of $\\mathrm{H}_2\\mathrm{O}$ and $3$ moles of $\\mathrm{O}_2$ to react?\n\n$2\\mathrm{Fe}_2\\mathrm{S}_3(\\mathrm{s}) + 6\\mathrm{H}_2\\mathrm{O}(\\ell) + 3\\mathrm{O}_2(\\mathrm{g}) \\longrightarrow 4\\mathrm{Fe(OH)}_3(\\mathrm{s}) + 6\\mathrm{S}(\\mathrm{s})$",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2330,7 +2330,7 @@
     "textMarkdown": "Calculate the weight of lime ($\\mathrm{CaO}$) that can be prepared by heating $200$ kg of limestone ($\\mathrm{CaCO}_3$) which is $95\\%$ pure. (in kg)",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2358,7 +2358,7 @@
     "textMarkdown": "Equal weights of $\\mathrm{Zn}$ metal and iodine are mixed together and the iodine is completely converted to $\\mathrm{ZnI}_2$. What fraction by weight of the original zinc remains unreacted? ($Zn = 65, I = 127$)",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2386,7 +2386,7 @@
     "textMarkdown": "A $1$-g mixture of cuprous oxide and cupric oxide was quantitatively reduced to $0.839$ g of metallic copper. What was the weight of cupric oxide in the original sample? ($\\mathrm{Cu} = 63.5, \\mathrm{O} = 16$)",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2418,7 +2418,7 @@
     "textMarkdown": "$20$ mL of $\\mathrm{CO}$ was mixed with $50$ mL of oxygen and the mixture was exploded. On cooling, the resulting mixture was shaken with KOH. Find the volume of the gas that is left (in mL).",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2450,7 +2450,7 @@
     "textMarkdown": "A mixture of formic acid and oxalic acid is heated with concentrated $\\mathrm{H}_2\\mathrm{SO}_4$. The gas produced is collected and on its treatment with KOH solution the volume of the gas decreased by one-sixth. Calculate the molar ratio of the two acids in the original mixture ($x:1$, find x).",
     "options": [],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2482,7 +2482,7 @@
     "textMarkdown": "A Dumas bulb was filled with $0.4524$ g of vapour at $136^\\circ\\mathrm{C}$ and $758$ mm of pressure. Calculate molecular weight of the vapour if the capacity of the bulb is $127$ mL.",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2514,7 +2514,7 @@
     "textMarkdown": "$12$ g of an element combines with $32$ g of oxygen. What is the equivalent weight of the element if the equivalent weight of oxygen is $8$?",
     "options": [],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2563,7 +2563,7 @@
       }
     ],
     "difficulty": "Hard",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "",
     "isTopPYQ": false,
     "isPYQ": false,
@@ -2612,7 +2612,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "JEE Main 2025",
     "isTopPYQ": true,
     "isPYQ": true,
@@ -2661,7 +2661,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "JEE Main 2025",
     "isTopPYQ": true,
     "isPYQ": true,
@@ -2714,7 +2714,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "JEE Main 2025",
     "isTopPYQ": true,
     "isPYQ": true,
@@ -2767,7 +2767,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "JEE Main 2025",
     "isTopPYQ": true,
     "isPYQ": true,
@@ -2820,7 +2820,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "JEE Main 2025",
     "isTopPYQ": true,
     "isPYQ": true,
@@ -2869,7 +2869,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "JEE Main 2025",
     "isTopPYQ": true,
     "isPYQ": true,
@@ -2922,7 +2922,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "JEE Main 2025",
     "isTopPYQ": true,
     "isPYQ": true,
@@ -2971,7 +2971,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "JEE Main 2025",
     "isTopPYQ": true,
     "isPYQ": true,
@@ -3020,7 +3020,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "JEE Main 2025",
     "isTopPYQ": true,
     "isPYQ": true,
@@ -3069,7 +3069,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "JEE Main 2025",
     "isTopPYQ": true,
     "isPYQ": true,
@@ -3118,7 +3118,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "JEE Main 2025",
     "isTopPYQ": true,
     "isPYQ": true,
@@ -3167,7 +3167,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "JEE Main 2025",
     "isTopPYQ": true,
     "isPYQ": true,
@@ -3216,7 +3216,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "JEE Main 2024",
     "isTopPYQ": true,
     "isPYQ": true,
@@ -3269,7 +3269,7 @@
       }
     ],
     "difficulty": "Medium",
-    "chapterId": "Mole Concept",
+    "chapterId": "chapter_basic_concepts_mole_concept",
     "examSource": "JEE Main 2024",
     "isTopPYQ": true,
     "isPYQ": true,
@@ -3291,5 +3291,292 @@
     },
     "needsReview": false,
     "reviewNotes": ""
+  },
+  {
+    "id": "jee_main_2019_9april_ii_q1",
+    "textMarkdown": "Which one of the following about an electron occupying the 1s-orbital in a hydrogen atom is incorrect? (The Bohr radius is represented by $a_0$)",
+    "options": [
+      {
+        "id": "a",
+        "text": "The electron can be found at a distance $2a_0$ from the nucleus.",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "The magnitude of the potential energy is double that of its kinetic energy on an average.",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "The probability density of finding the electron is maximum at the nucleus.",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "The total energy of the electron is maximum when it is at a distance $a_0$ from the nucleus.",
+        "isCorrect": true
+      }
+    ],
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "TAG_ATOM_QUANTUM_NUMBERS",
+        "weight": 1
+      }
+    ],
+    "tagId": "TAG_ATOM_QUANTUM_NUMBERS",
+    "difficulty": "Medium",
+    "examSource": "JEE Main 2019 - 9 April Shift 2",
+    "isPYQ": true,
+    "solution": {
+      "textSolutionLatex": "**Statement (d) is incorrect.**\n            \nFor 1s-orbital, the total energy of the electron is constant ($E_1 = -13.6 \\text{ eV}$) regardless of its distance from the nucleus in the Bohr model, or if considering the quantum mechanical model, energy is an eigenvalue of the state. However, the question likely refers to the dependence of probability or potential.\n\nActually, the statement says \"Total energy... is maximum...\". The total energy is negative. Closer to the nucleus, potential energy decreases (becomes more negative) and kinetic energy increases.\n\nLet's look at the options:\n(a) Electron can be found at any distance (probability never zero, just small). True.\n(b) Viral Theorem: $2\\langle KE \\rangle = -\\langle PE \\rangle$ or $|PE| = 2KE$. True.\n(c) Probability density $\\psi^2$ for 1s is maximum at $r=0$. True.\n(d) Total energy is quantized and fixed for the 1s state. It doesn't vary with distance $r$ in the stationary state description. Or if interpreting classically, total energy is constant. If interpreting \"maximum\" as \"least negative\", well, the energy is just $-13.6$ eV.\nBut looking at the provided solution graph:\n\"The graph initially increases and then decreases. It reaches a maximum at a distance very close to the nucleus and then decreases. The maximum in the curve corresponds to the distance at which the probability of finding the electron in maximum.\"\nThis description matches the Radial Probability Distribution ($4\\pi r^2 R^2$).\nThe max for 1s is at $a_0$.\nBUT statement (d) talks about **Total Energy**, not probability.\nSo (d) is definitely the incorrect statement.\n\n**Answer:** (d)"
+    },
+    "chapterId": "chapter_atomic_structure"
+  },
+  {
+    "id": "jee_main_2019_8april_ii_q2",
+    "textMarkdown": "If $p$ is the momentum of the fastest electron ejected from a metal surface after the irradiation of light having wavelength $\\lambda$, then for $1.5p$ momentum of the photoelectron, the wavelength of the light should be:\n        \n(Assume kinetic energy of ejected photoelectron to be very high in comparison to work function)",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\frac{4}{9}\\lambda$",
+        "isCorrect": true
+      },
+      {
+        "id": "b",
+        "text": "$\\frac{3}{4}\\lambda$",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "$\\frac{2}{3}\\lambda$",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "$\\frac{1}{2}\\lambda$",
+        "isCorrect": false
+      }
+    ],
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "TAG_ATOM_PHOTOELECTRIC_EFFECT",
+        "weight": 1
+      }
+    ],
+    "tagId": "TAG_ATOM_PHOTOELECTRIC_EFFECT",
+    "difficulty": "Medium",
+    "examSource": "JEE Main 2019 - 8 April Shift 2",
+    "isPYQ": true,
+    "solution": {
+      "textSolutionLatex": "**Photoelectric Effect:**\n$K.E. = \\frac{hc}{\\lambda} - phi$\nGiven $K.E. >> phi$, so $K.E. \\approx \\frac{hc}{\\lambda}$\n\nAlso $K.E. = \\frac{p^2}{2m}$\nSo, $\\frac{p^2}{2m} = \\frac{hc}{\\lambda} \\implies p^2 \\propto \\frac{1}{\\lambda} \\implies p \\propto \\frac{1}{\\sqrt{\\lambda}}$ or $\\lambda \\propto \\frac{1}{p^2}$\n\nCondition 1: $p$, $\\lambda_1 = \\lambda$\nCondition 2: $p' = 1.5p = \\frac{3}{2}p$, $\\lambda_2 = ?$\n\n$\\frac{\\lambda_2}{\\lambda_1} = \\frac{p_1^2}{p_2^2} = \\left(\\frac{p}{1.5p}\\right)^2 = \\left(\\frac{2}{3}\\right)^2 = \\frac{4}{9}$\n\n$\\lambda_2 = \\frac{4}{9}\\lambda$\n\n**Answer:** (a)"
+    },
+    "chapterId": "chapter_atomic_structure"
+  },
+  {
+    "id": "jee_main_2019_12jan_i_q3",
+    "textMarkdown": "What is the work function of the metal, if the light of wavelength $4000 \\mathring{A}$ generates photoelectron of velocity $6 \\times 10^5 \\text{ ms}^{-1}$ from it?\n        \n(Mass of electron $= 9 \\times 10^{-31} \\text{ kg}$\nVelocity of light $= 3 \\times 10^8 \\text{ ms}^{-1}$\nPlanck's constant $= 6.626 \\times 10^{-34} \\text{ Js}$\nCharge of electron $= 1.6 \\times 10^{-19} \\text{ J eV}^{-1}$)",
+    "options": [
+      {
+        "id": "a",
+        "text": "4.0 eV",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "2.1 eV",
+        "isCorrect": true
+      },
+      {
+        "id": "c",
+        "text": "0.9 eV",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "3.1 eV",
+        "isCorrect": false
+      }
+    ],
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "TAG_ATOM_PHOTOELECTRIC_EFFECT",
+        "weight": 1
+      }
+    ],
+    "tagId": "TAG_ATOM_PHOTOELECTRIC_EFFECT",
+    "difficulty": "Medium",
+    "examSource": "JEE Main 2019 - 12 Jan Shift 1",
+    "isPYQ": true,
+    "solution": {
+      "textSolutionLatex": "**Equation:** $h\\nu = phi + K.E.$\n$phi = \\frac{hc}{\\lambda} - \\frac{1}{2}mv^2$\n\n**Step 1: Calculate Energy of photon (E)**\n$\\lambda = 4000 \\mathring{A} = 4000 \\times 10^{-10} \\text{ m}$\n$E = \\frac{6.626 \\times 10^{-34} \\times 3 \\times 10^8}{4000 \\times 10^{-10}} \\text{ J}$\n$E = \\frac{19.878 \\times 10^{-26}}{4 \\times 10^{-7}} = 4.9695 \\times 10^{-19} \\text{ J}$\nIn eV: $E = \\frac{4.9695 \\times 10^{-19}}{1.6 \\times 10^{-19}} \\approx 3.1 \\text{ eV}$\n\n**Step 2: Calculate Kinetic Energy (KE)**\n$v = 6 \\times 10^5 \\text{ m/s}$\n$KE = \\frac{1}{2} \\times (9 \\times 10^{-31}) \\times (6 \\times 10^5)^2$\n$KE = 0.5 \\times 9 \\times 36 \\times 10^{-21} = 162 \\times 10^{-21} = 1.62 \\times 10^{-19} \\text{ J}$\nIn eV: $KE = \\frac{1.62 \\times 10^{-19}}{1.6 \\times 10^{-19}} \\approx 1.01 \\text{ eV}$\n\n**Step 3: Work Function**\n$phi = E - KE = 3.1 - 1.01 \\approx 2.09 \\text{ eV}$\n\nClosest option is 2.1 eV.\n\n**Answer:** (b)"
+    },
+    "chapterId": "chapter_atomic_structure"
+  },
+  {
+    "id": "jee_main_2019_10jan_ii_q4",
+    "textMarkdown": "The ground state energy of hydrogen atom is $-13.6 \\text{ eV}$. The energy of second excited state of $He^+$ ion in eV is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$-54.4$",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "$-3.4$",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "$-6.04$",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "$-27.2$",
+        "isCorrect": false
+      }
+    ],
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "TAG_ATOM_BOHR_S_MODEL",
+        "weight": 1
+      }
+    ],
+    "tagId": "TAG_ATOM_BOHR_S_MODEL",
+    "difficulty": "Easy",
+    "examSource": "JEE Main 2019 - 10 Jan Shift 2",
+    "isPYQ": true,
+    "solution": {
+      "textSolutionLatex": "**Formula:** $E_n = -13.6 \\times \\frac{Z^2}{n^2} \\text{ eV}$\n\nFor $He^+$: $Z = 2$\nSecond excited state means $n = 3$ (Ground=1, 1st excited=2, 2nd excited=3)\n\n$E_3 = -13.6 \\times \\frac{2^2}{3^2}$\n$E_3 = -13.6 \\times \\frac{4}{9}$\n$E_3 = -13.6 \\times 0.444$\n$E_3 = -6.04 \\text{ eV}$\n\n**Answer:** (c)"
+    },
+    "chapterId": "chapter_atomic_structure"
+  },
+  {
+    "id": "jee_main_2019_10jan_i_q5",
+    "textMarkdown": "Which of the graphs shown below does not represent the relationship between incident light and the electron ejected from metal surface?",
+    "options": [
+      {
+        "id": "a",
+        "text": "K.E. of $e^-$ vs Energy of light (Linear increasing from threshold)",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "K.E. of $e^-$ vs Intensity of light (Constant line)",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "Number of $e^-$ vs Frequency of light (Step function)",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "K.E. of $e^-$ vs Frequency of light (Linear increasing from threshold)",
+        "isCorrect": true
+      }
+    ],
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "TAG_ATOM_PHOTOELECTRIC_EFFECT",
+        "weight": 1
+      }
+    ],
+    "tagId": "TAG_ATOM_PHOTOELECTRIC_EFFECT",
+    "difficulty": "Medium",
+    "examSource": "JEE Main 2019 - 10 Jan Shift 1",
+    "isPYQ": true,
+    "solution": {
+      "textSolutionLatex": "Let's analyze the graphs (based on standard PE effect):\n(a) **K.E. vs Energy ($h\\nu$):** Linear relation $KE = E - phi$. Valid.\n(b) **K.E. vs Intensity:** K.E. depends on frequency, NOT intensity. So K.E. is constant as Intensity increases. Valid.\n(c) **Number of $e^-$ vs Frequency:** Number of ejected electrons depends on Intensity, provided $\\nu > \\nu_0$. If $\\nu$ increases (at constant Intensity), current might change slightly due to experimental factors, but ideally it's independent or requires specific conditions. However, the graph (c) shows Number of e- is zero below some frequency, then constant. This is plausible if intensity is constant.\n(d) **K.E. vs Frequency:** Graph shows KE increasing linearly from origin? No, standard graph is linear starting from $\\nu_0$ (x-intercept).\nWait, let's look at the solution provided in image.\n\"Slope = + h, intercept = -hv0. So, option (d) is not correct.\"\nWait, looking at image 1 option (d): The line starts from Origin! $KE = h\\nu$ implies $phi=0$, which is impossible for metals. The line should cut x-axis at $\\nu_0$.\nSo (d) is the incorrect representation.\n\n**Answer:** (d)"
+    },
+    "chapterId": "chapter_atomic_structure"
+  },
+  {
+    "id": "jee_main_2016_q6",
+    "textMarkdown": "A stream of electrons from a heated filament was passed between two charged plates kept at a potential difference $V$ esu. If $e$ and $m$ are charge and mass of an electron, respectively, then the value of $h/\\lambda$ (where $\\lambda$ is wavelength associated with electron wave) is given by:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2meV$",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "$\\sqrt{meV}$",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "$\\sqrt{2meV}$",
+        "isCorrect": true
+      },
+      {
+        "id": "d",
+        "text": "$meV$",
+        "isCorrect": false
+      }
+    ],
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "TAG_ATOM_DE_BROGLIE_WAVELENGTH",
+        "weight": 1
+      }
+    ],
+    "tagId": "TAG_ATOM_DE_BROGLIE_WAVELENGTH",
+    "difficulty": "Medium",
+    "examSource": "JEE Main 2016",
+    "isPYQ": true,
+    "solution": {
+      "textSolutionLatex": "**De Broglie Wavelength:** $\\lambda = \\frac{h}{p}$\nSo $\\frac{h}{\\lambda} = p$ (momentum).\n\nKinetic Energy $KE = eV$\nAlso $KE = \\frac{p^2}{2m}$\nSo $eV = \\frac{p^2}{2m}$\n$p^2 = 2meV$\n$p = \\sqrt{2meV}$\n\nTherefore, $\\frac{h}{\\lambda} = \\sqrt{2meV}$\n\n**Answer:** (c)"
+    },
+    "chapterId": "chapter_atomic_structure"
+  },
+  {
+    "id": "jee_adv_2002_q7",
+    "textMarkdown": "Rutherford's experiment, which established the nuclear model of the atom, used a beam of:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\beta$-particles, which impinged on a metal foil and got absorbed",
+        "isCorrect": false
+      },
+      {
+        "id": "b",
+        "text": "$\\gamma$-rays, which impinged on a metal foil and got scattered",
+        "isCorrect": false
+      },
+      {
+        "id": "c",
+        "text": "helium atoms, which impinged on a metal foil and got scattered",
+        "isCorrect": false
+      },
+      {
+        "id": "d",
+        "text": "helium nuclei, which impinged on a metal foil and got scattered",
+        "isCorrect": true
+      }
+    ],
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "TAG_ATOM_RUTHERFORD_S_MODEL",
+        "weight": 1
+      }
+    ],
+    "tagId": "TAG_ATOM_RUTHERFORD_S_MODEL",
+    "difficulty": "Easy",
+    "examSource": "JEE Advanced 2002",
+    "isPYQ": true,
+    "solution": {
+      "textSolutionLatex": "Rutherford used $\\alpha$-particles.\n$\\alpha$-particles are doubly ionized helium atoms ($He^{2+}$), i.e., Helium nuclei.\nThey were made to strike a thin gold foil and scattering was observed.\n\n**Answer:** (d)"
+    },
+    "chapterId": "chapter_atomic_structure"
   }
 ]
