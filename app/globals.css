@@ -95,87 +95,95 @@
 }
 
 /* ======================================== */
-/* NewHero Background Animations            */
+/* NewHero Styles                           */
 /* ======================================== */
 
-/* Gradient orb drifting animations — each one unique */
-.hero-orb {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(120px);
-  will-change: transform, opacity;
+/* Background */
+.newhero-bg {
+  background-color: #050505;
 }
 
-.hero-orb-1 {
-  top: -10%;
-  left: -10%;
-  width: 55%;
-  height: 55%;
-  background: radial-gradient(circle, rgba(126, 34, 206, 0.18) 0%, transparent 70%);
-  animation: hero-drift-1 14s ease-in-out infinite;
+/* Gradient text — white to blue tint */
+.newhero-gradient-text {
+  background: linear-gradient(180deg, #fff 0%, rgba(147, 197, 253, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.hero-orb-2 {
-  bottom: -15%;
-  right: -10%;
-  width: 50%;
-  height: 50%;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
-  animation: hero-drift-2 18s ease-in-out infinite;
+/* Fade-up animation */
+.newhero-fade-up {
+  animation: newhero-fadeUp 0.6s ease-out forwards;
+  opacity: 0;
 }
 
-.hero-orb-3 {
-  top: 25%;
-  right: 15%;
-  width: 35%;
-  height: 35%;
-  background: radial-gradient(circle, rgba(219, 39, 119, 0.1) 0%, transparent 70%);
-  animation: hero-drift-3 12s ease-in-out infinite;
+@keyframes newhero-fadeUp {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes hero-drift-1 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
-  33% { transform: translate(4%, 3%) scale(1.05); opacity: 0.85; }
-  66% { transform: translate(-2%, 5%) scale(0.97); opacity: 0.6; }
+/* Subtle pulse */
+.newhero-pulse-subtle {
+  animation: newhero-pulseSubtle 2s ease-in-out infinite;
 }
 
-@keyframes hero-drift-2 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-  50% { transform: translate(-5%, -3%) scale(1.08); opacity: 0.8; }
+@keyframes newhero-pulseSubtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
-@keyframes hero-drift-3 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
-  40% { transform: translate(3%, -4%) scale(1.1); opacity: 0.7; }
-  70% { transform: translate(-3%, 2%) scale(0.95); opacity: 0.4; }
+/* Cursor blink — royal blue */
+.newhero-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: #3b82f6;
+  margin-left: 2px;
+  animation: newhero-blink 1s step-end infinite;
+  vertical-align: text-bottom;
 }
 
-/* Floating molecule SVGs — independent rhythms */
-.hero-float-a {
-  animation: hero-mol-a 16s ease-in-out infinite;
+@keyframes newhero-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
-.hero-float-b {
-  animation: hero-mol-b 20s ease-in-out infinite;
+/* Search focus ring — royal blue glow */
+.newhero-search-ring:focus-within {
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3), 0 0 0 4px rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.4) !important;
 }
 
-.hero-float-c {
-  animation: hero-mol-c 14s ease-in-out infinite;
+/* Bento card */
+.newhero-bento-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-@keyframes hero-mol-a {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(12px, -18px) rotate(8deg); }
+.newhero-bento-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.25);
+  background-color: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 8px 32px rgba(37, 99, 235, 0.08), 0 0 0 1px rgba(59, 130, 246, 0.1);
 }
 
-@keyframes hero-mol-b {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(-15px, 10px) rotate(-6deg); }
+/* Tag pill hover — blue tint */
+.newhero-tag-pill {
+  transition: all 0.15s ease;
 }
 
-@keyframes hero-mol-c {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(8px, 14px) rotate(5deg); }
+.newhero-tag-pill:hover {
+  background-color: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.25);
+  color: #93c5fd;
+}
+
+/* Selection color — royal blue */
+.newhero-bg ::selection {
+  background: rgba(59, 130, 246, 0.35);
+  color: #fff;
 }
 
 /* Crucible Logo Animations */
