@@ -11,8 +11,11 @@ import { DAILY_QUOTES } from './quotes';
 const CLASS_11_CHAPTERS = [
     "Basic Concepts of Chemistry (Mole Concept)",
     "Atomic Structure",
+    "Gaseous State",
     "Periodic Properties",
     "Chemical Bonding",
+    "Hydrogen",
+    "s-Block Elements",
     "Thermodynamics",
     "Chemical equilibrium",
     "Ionic Equilibrium",
@@ -20,7 +23,8 @@ const CLASS_11_CHAPTERS = [
     "P Block (Group 13 & 14)",
     "General Organic Chemistry (GOC)",
     "Stereochemistry",
-    "Hydrocarbons"
+    "Hydrocarbons",
+    "Aromatic Compounds"
 ];
 
 const CLASS_12_CHAPTERS = [
@@ -28,16 +32,22 @@ const CLASS_12_CHAPTERS = [
     "Solutions",
     "Electrochemistry",
     "Chemical Kinetics",
+    "Surface Chemistry",
     "P Block - 12th",
     "D & F Block",
     "Coordination Compounds",
+    "Metallurgy",
+    "Salt Analysis",
+    "Environmental Chemistry",
     "Haloalkanes and Haloarenes",
     "Alcohols, Phenols and Ethers",
     "Aldehydes & Ketones",
     "Carboxylic Acids & Derivatives",
     "Amines",
     "Biomolecules",
-    "Salt Analysis"
+    "Polymers",
+    "Chemistry in Everyday Life",
+    "Practical Organic Chemistry"
 ];
 
 // Mapping Table for Robust Fuzzy Search
@@ -45,8 +55,11 @@ const CHAPTER_MAPPINGS: Record<string, string[]> = {
     // Class 11
     "Basic Concepts of Chemistry (Mole Concept)": ["Basic Concepts", "Mole Concept"],
     "Atomic Structure": ["Atomic Structure"],
+    "Gaseous State": ["Gaseous State", "Gas Laws"],
     "Periodic Properties": ["Periodic Properties", "Periodicity"],
     "Chemical Bonding": ["Chemical Bonding"],
+    "Hydrogen": ["Hydrogen"],
+    "s-Block Elements": ["s-Block", "Alkali Metal", "Alkaline Earth"],
     "Thermodynamics": ["Thermodynamics"],
     "Chemical equilibrium": ["Chemical Equilibrium", "Equilibrium"],
     "Ionic Equilibrium": ["Ionic Equilibrium"],
@@ -54,23 +67,30 @@ const CHAPTER_MAPPINGS: Record<string, string[]> = {
     "P Block (Group 13 & 14)": ["p-Block (Group 13-14)", "Group 13", "Group 14"],
     "General Organic Chemistry (GOC)": ["General Organic Chemistry", "GOC"],
     "Stereochemistry": ["Stereochemistry"],
-    "Hydrocarbons": ["Hydrocarbons", "Alkanes", "Alkenes", "Alkynes", "Aromatic Compounds"],
+    "Hydrocarbons": ["Hydrocarbons", "Alkanes", "Alkenes", "Alkynes"],
+    "Aromatic Compounds": ["Aromatic Compounds", "Benzene"],
 
     // Class 12
     "Solid State": ["Solid State"],
     "Solutions": ["Solutions"],
     "Electrochemistry": ["Electrochemistry"],
     "Chemical Kinetics": ["Chemical Kinetics", "Kinetics"],
+    "Surface Chemistry": ["Surface Chemistry", "Colloids", "Adsorption"],
     "P Block - 12th": ["p-Block (Group 15", "Group 15", "Group 16", "Group 17", "Group 18"], // Catch-all for remaining P-Block
     "D & F Block": ["d and f Block", "D & F Block"],
     "Coordination Compounds": ["Coordination Compounds"],
+    "Metallurgy": ["Metallurgy"],
+    "Salt Analysis": ["Salt Analysis"],
+    "Environmental Chemistry": ["Environmental Chemistry"],
     "Haloalkanes and Haloarenes": ["Haloalkanes", "Haloarenes"],
     "Alcohols, Phenols and Ethers": ["Alcohols", "Phenols", "Ethers"],
     "Aldehydes & Ketones": ["Aldehydes", "Ketones"],
     "Carboxylic Acids & Derivatives": ["Carboxylic Acids"],
     "Amines": ["Amines"],
     "Biomolecules": ["Biomolecules"],
-    "Salt Analysis": ["Salt Analysis"]
+    "Polymers": ["Polymers"],
+    "Chemistry in Everyday Life": ["Everyday Life", "Chemistry in Everyday Life"],
+    "Practical Organic Chemistry": ["Practical Organic"]
 };
 
 
@@ -573,13 +593,13 @@ export default function FocusDashboard({ initialQuestions, taxonomy = [], onStar
                                         <div className="bg-gray-900/50 px-6 py-3 border-b border-gray-800 text-xs font-semibold text-gray-400 uppercase tracking-wider hidden xl:block">Class 11</div>
                                         {/* Class 11 Vertical Split Container */}
                                         <div className="grid grid-cols-1 md:grid-cols-2 bg-gray-900/20 h-full divide-y md:divide-y-0 md:divide-x border-gray-800/50">
-                                            {/* Left Sub-Column (1-6) */}
+                                            {/* Left Sub-Column (1-8) */}
                                             <div className="flex flex-col">
-                                                {CLASS_11_CHAPTERS.slice(0, 6).map(item => renderGridItem(item))}
+                                                {CLASS_11_CHAPTERS.slice(0, 8).map(item => renderGridItem(item))}
                                             </div>
-                                            {/* Right Sub-Column (7-12) */}
+                                            {/* Right Sub-Column (9-16) */}
                                             <div className="flex flex-col border-l border-gray-800/50">
-                                                {CLASS_11_CHAPTERS.slice(6, 12).map(item => renderGridItem(item))}
+                                                {CLASS_11_CHAPTERS.slice(8).map(item => renderGridItem(item))}
                                             </div>
                                         </div>
                                     </div>
@@ -590,10 +610,10 @@ export default function FocusDashboard({ initialQuestions, taxonomy = [], onStar
                                         {/* Class 12 Vertical Split Container */}
                                         <div className="grid grid-cols-1 md:grid-cols-2 bg-gray-900/20 h-full divide-y md:divide-y-0 md:divide-x border-gray-800/50">
                                             <div className="flex flex-col">
-                                                {CLASS_12_CHAPTERS.slice(0, 7).map(item => renderGridItem(item))}
+                                                {CLASS_12_CHAPTERS.slice(0, 10).map(item => renderGridItem(item))}
                                             </div>
                                             <div className="flex flex-col border-l border-gray-800/50">
-                                                {CLASS_12_CHAPTERS.slice(7, 14).map(item => renderGridItem(item))}
+                                                {CLASS_12_CHAPTERS.slice(10).map(item => renderGridItem(item))}
                                             </div>
                                         </div>
                                     </div>
