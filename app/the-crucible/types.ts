@@ -138,6 +138,16 @@ export interface TagDefinition {
 }
 
 // Analytics Helper Types
+export interface TaxonomyNode {
+    id: string;
+    _id?: string; // Optional MongoDB ID
+    name: string;
+    parent_id: string | null;
+    type: 'chapter' | 'topic' | 'unit';
+    sequence_order?: number;
+    class_level?: '11' | '12';
+}
+
 export interface ConceptScore {
     tagId: string;
     tagName: string;
