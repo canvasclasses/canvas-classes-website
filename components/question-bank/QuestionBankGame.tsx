@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ArrowLeft, Trophy, Flame, Target, Play, Pause, ArrowRight, Menu, X, CheckCircle2, TrendingUp, Zap, BookOpen, Star, CheckCircle, Pencil, Trash2, HelpCircle, AlertTriangle, Rocket, ChevronDown, Code } from 'lucide-react';
 import Link from 'next/link';
-import { Question } from '@/app/the-crucible/types';
+import { Question, TaxonomyNode } from '@/app/the-crucible/types';
 import QuestionCard from '@/components/question-bank/QuestionCard';
 import FeedbackOverlay from '@/components/question-bank/FeedbackOverlay';
 import SolutionViewer from '@/components/question-bank/SolutionViewer';
@@ -20,6 +20,7 @@ import FocusDashboard from './FocusDashboard';
 
 interface QuestionBankGameProps {
     initialQuestions: Question[];
+    taxonomy?: TaxonomyNode[];
 }
 
 // Utility to shuffle questions
@@ -32,7 +33,7 @@ function shuffleArray<T>(array: T[]): T[] {
     return newArray;
 }
 
-export default function QuestionBankGame({ initialQuestions }: QuestionBankGameProps) {
+export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: QuestionBankGameProps) {
     const [mode, setMode] = useState<'menu' | 'playing' | 'completed'>('menu');
     const [gameMode, setGameMode] = useState<'practice' | 'exam'>('practice');
     const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
@@ -253,6 +254,21 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
             setEditingNote(false);
         }
     }, [currentIndex, activeQuestion, progress.userNotes]);
+
+    const formatChapterName = (chapterId: string) => {
+        if (!chapterId) return '';
+
+        // 1. Try to find in taxonomy
+        const node = taxonomy?.find(t => t.id === chapterId || t._id === chapterId);
+        if (node?.name) return node.name;
+
+        // 2. Fallback to slug-to-name conversion
+        return chapterId
+            .replace(/^chapter_/, '')
+            .split('_')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    };
 
     const formatTime = (secs: number) => {
         const mins = Math.floor(secs / 60);
@@ -559,6 +575,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
         return (
             <FocusDashboard
                 initialQuestions={initialQuestions}
+                taxonomy={taxonomy}
                 onStart={(config) => {
                     // Filter Logic
                     let filtered = [...initialQuestions];
@@ -702,7 +719,7 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                                     <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border ${question.difficulty === 'Hard' ? 'bg-red-500/5 text-red-400/80 border-red-500/10' : question.difficulty === 'Medium' ? 'bg-amber-500/5 text-amber-400/80 border-amber-500/10' : 'bg-emerald-500/5 text-emerald-400/80 border-emerald-500/10'}`}>
                                                         {question.difficulty}
                                                     </span>
-                                                    {question.chapterId && <span className="text-[10px] text-slate-500 truncate">{question.chapterId}</span>}
+                                                    {question.chapterId && <span className="text-[10px] text-slate-500 truncate">{formatChapterName(question.chapterId)}</span>}
                                                 </div>
 
                                                 {/* Preview Text */}
@@ -710,7 +727,21 @@ export default function QuestionBankGame({ initialQuestions }: QuestionBankGameP
                                                     <ReactMarkdown
                                                         remarkPlugins={[remarkMath, remarkGfm]}
                                                         rehypePlugins={[rehypeKatex, rehypeRaw]}
-                                                        components={{ p: ({ children }) => <span className="inline">{children} </span> }}
+                                                        components={{
+                                                            p: ({ children }) => <span className="inline">{children} </span>,
+                                                            img: (props) => (
+                                                                <img
+                                                                    {...props}
+                                                                    style={{
+                                                                        maxWidth: question.imageScale ? `${question.imageScale}%` : '50%', // List view might need even smaller defaults
+                                                                        height: 'auto',
+                                                                        display: 'block',
+                                                                        margin: '0 auto'
+                                                                    }}
+                                                                    className="rounded border border-white/5 my-2"
+                                                                />
+                                                            )
+                                                        }}
                                                     >
                                                         {question.textMarkdown.split('\n').slice(0, 3).join('\n')}
                                                     </ReactMarkdown>
