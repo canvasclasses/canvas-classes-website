@@ -118,12 +118,32 @@ export async function saveQuestion(updatedQuestion: QuestionPageType): Promise<{
     }
 }
 
-export async function deleteQuestion(questionId: string): Promise<void> {
+export async function deleteQuestion(questionId: string): Promise<{ success: boolean; message: string }> {
     try {
         await connectToDatabase();
-        await QuestionModel.deleteOne({ _id: questionId });
+
+        // 1. Delete from MongoDB (Primary)
+        const result = await QuestionModel.deleteOne({ _id: questionId });
+
+        if (result.deletedCount === 0) {
+            return { success: false, message: 'Question not found in MongoDB' };
+        }
+
+        // 2. Delete from Supabase (Secondary/Legacy) to prevent sync resurrection
+        // We do this best-effort
+        const { error: sbError } = await supabase
+            .from('questions')
+            .delete()
+            .eq('id', questionId);
+
+        if (sbError) {
+            console.warn("Deleted from Mongo but failed to delete from Supabase:", sbError);
+        }
+
+        return { success: true, message: 'Question deleted successfully' };
     } catch (error) {
-        console.error("Failed to delete question from MongoDB:", error);
+        console.error("Failed to delete question:", error);
+        return { success: false, message: 'Failed to delete question' };
     }
 }
 

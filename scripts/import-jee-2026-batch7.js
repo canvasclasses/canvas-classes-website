@@ -415,23 +415,21 @@ P → (i) LiAlH₄ → (ii) PCC → Q → Positive Tollen's test
         examSource: 'JEE Main 2026 - Jan 23 Morning Shift',
         isPYQ: true,
         solution: {
-            textSolutionLatex: `**Reaction sequence analysis:**
+            textSolutionLatex: `**The Reaction Sequence**
 
-**Q gives positive Tollen's test** → Q is an aldehyde
+**Step 1: Work Backwards from the Product**
+The product **Q** gives a positive **Tollen's test**, which confirms that **Q** is an **aldehyde**.
+1. The reagent leading to **Q** is **PCC**.
+2. **PCC** specifically oxidizes a **primary alcohol** into an aldehyde.
+3. Therefore, the intermediate formed before this step must be **Cyclohexylmethanol** (a primary alcohol).
 
-**Step 2:** Alcohol → PCC → Aldehyde
-- PCC oxidizes 1° alcohol to aldehyde
-- So intermediate after LiAlH₄ is a 1° alcohol
+**Step 2: Identify Starting Compound 'P'**
+The reagent used to form the alcohol is **$LiAlH_4$**.
+1. **$LiAlH_4$** is a strong reducing agent that converts a **carboxylic acid** into a primary alcohol.
+2. The reaction specifically reduces the $-COOH$ group to a $-CH_2OH$ group.
+3. Since our intermediate is Cyclohexylmethanol, the starting compound **'P'** must be **Cyclohexanecarboxylic acid**.
 
-**Step 1:** P → LiAlH₄ → 1° alcohol
-- LiAlH₄ reduces carboxylic acid to 1° alcohol
-- $RCOOH \\xrightarrow{LiAlH_4} RCH_2OH$
-
-**Working backwards:**
-- Q = Cyclohexylformaldehyde (aldehyde)
-- Intermediate = Cyclohexylmethanol (1° alcohol)
-- P = **Cyclohexanecarboxylic acid**
-
+**Final Sequence:**
 $$C_6H_{11}COOH \\xrightarrow{LiAlH_4} C_6H_{11}CH_2OH \\xrightarrow{PCC} C_6H_{11}CHO$$
 
 **Answer: Cyclohexanecarboxylic acid**`
@@ -461,23 +459,22 @@ $$C_6H_{11}COOH \\xrightarrow{LiAlH_4} C_6H_{11}CH_2OH \\xrightarrow{PCC} C_6H_{
         examSource: 'JEE Main 2026 - Jan 23 Evening Shift',
         isPYQ: true,
         solution: {
-            textSolutionLatex: `**Reaction: Alkene + HBr → Alkyl bromide**
+            textSolutionLatex: `The reaction of **1,3-dimethylcyclopentene** with **HBr** follows the **electrophilic addition** mechanism, obeying **Markovnikov's Rule**.
 
-$$\\text{1,3-Dimethylcyclopentene} + HBr \\rightarrow \\text{Product}$$
+### Mechanism:
 
-**Markovnikov Addition:**
-- H⁺ adds to less substituted carbon
-- Br⁻ adds to more substituted carbon (forms more stable carbocation)
+**Step 1: Protonation of the double bond**
+The alkene acts as a nucleophile and attacks the $H^+$ from $HBr$. The proton adds to the $C2$ carbon to form the more stable carbocation at $C1$.
+$$
+\text{1,3-dimethylcyclopentene} + H^+ \longrightarrow \text{Tertiary (3}^\circ\text{) Carbocation}
+$$
+The carbocation forms at $C1$ because it is a **tertiary** carbon atom (bonded to three other carbons), making it significantly more stable than a secondary carbocation at $C2$.
 
-**Mechanism:**
-1. Protonation at the double bond
-2. Formation of tertiary carbocation (more stable)
-3. Br⁻ attacks the carbocation
+**Step 2: Nucleophilic attack by $Br^-$**
+The bromide ion ($Br^-$) then attacks the positively charged tertiary carbocation at $C1$ to yield the final product.
 
-**Product:**
-The bromide attaches to the carbon that can form the more stable (tertiary) carbocation.
-
-**1-Bromo-1,3-dimethylcyclopentane**
+### Product:
+The resulting major product is **1-bromo-1,3-dimethylcyclopentane**.
 
 **Answer: Option (2)**`
         }
