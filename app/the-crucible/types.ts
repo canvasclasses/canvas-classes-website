@@ -143,9 +143,11 @@ export interface TaxonomyNode {
     _id?: string; // Optional MongoDB ID
     name: string;
     parent_id: string | null;
-    type: 'chapter' | 'topic' | 'unit';
+    type: 'branch' | 'chapter' | 'topic' | 'unit';
     sequence_order?: number;
     class_level?: '11' | '12';
+    remedial_video_url?: string;
+    remedial_notes_url?: string;
 }
 
 export interface ConceptScore {
@@ -155,15 +157,5 @@ export interface ConceptScore {
     totalPoints: number;
     earnedPoints: number;
     questionCount: number;
-}
-
-// Concept Taxonomy Node
-export interface TaxonomyNode {
-    id: string;
-    name: string;
-    parent_id: string | null;
-    type: 'chapter' | 'topic' | 'unit';
-    sequence_order?: number;
-    class_level?: '11' | '12';
 }
 

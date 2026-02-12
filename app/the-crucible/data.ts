@@ -155,10 +155,10 @@ In the above reactions, A, B and X are respectively:`,
         ],
         questionType: 'SCQ',
         conceptTags: [
-            { tagId: 'TAG_CH_SALT', weight: 0.6 },
+            { tagId: 'chapter_salt_analysis', weight: 0.6 },
             { tagId: 'TAG_SALT_CATION', weight: 0.4 }
         ],
-        tagId: 'TAG_CH_SALT',
+        tagId: 'chapter_salt_analysis',
         difficulty: 'Hard',
         examSource: 'JEE Main 2026 - Jan 21 Morning Shift',
         solution: {
@@ -196,10 +196,10 @@ Choose the correct answer from the option given below.`,
         ],
         questionType: 'SCQ',
         conceptTags: [
-            { tagId: 'TAG_CH_PERIODIC', weight: 0.5 },
+            { tagId: 'chapter_periodic_properties', weight: 0.5 },
             { tagId: 'TAG_PERIODIC_TRENDS', weight: 0.5 }
         ],
-        tagId: 'TAG_CH_PERIODIC',
+        tagId: 'chapter_periodic_properties',
         difficulty: 'Medium',
         examSource: 'JEE Main 2026 - Jan 21 Morning Shift',
         solution: {
@@ -247,11 +247,11 @@ Correct Statements: A, B, D.
         ],
         questionType: 'SCQ',
         conceptTags: [
-            { tagId: 'TAG_CH_HYDROCARBONS', weight: 0.4 },
+            { tagId: 'chapter_hydrocarbons', weight: 0.4 },
             { tagId: 'TAG_HC_ALKENES', weight: 0.3 },
             { tagId: 'TAG_HALIDES_SN', weight: 0.3 }
         ],
-        tagId: 'TAG_CH_HYDROCARBONS',
+        tagId: 'chapter_hydrocarbons',
         difficulty: 'Medium',
         examSource: 'JEE Main 2026 - Jan 21 Morning Shift',
         solution: {
@@ -292,10 +292,10 @@ In the light of the above statement, choose the correct answer from the option g
         ],
         questionType: 'SCQ',
         conceptTags: [
-            { tagId: 'TAG_CH_P_BLOCK_11', weight: 0.6 },
-            { tagId: 'TAG_CH_PERIODIC', weight: 0.4 }
+            { tagId: 'chapter_p_block_group_13_14', weight: 0.6 },
+            { tagId: 'chapter_periodic_properties', weight: 0.4 }
         ],
-        tagId: 'TAG_CH_P_BLOCK_11',
+        tagId: 'chapter_p_block_group_13_14',
         difficulty: 'Medium',
         examSource: 'JEE Main 2026 - Jan 21 Morning Shift',
         solution: {
