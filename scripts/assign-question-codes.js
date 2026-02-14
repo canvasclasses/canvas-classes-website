@@ -5,7 +5,6 @@ require('dotenv').config({ path: '.env.local' });
 const CHAPTER_PREFIXES = {
     // Physical Chemistry
     'chapter_atomic_structure': 'ATOM',
-    'chapter_mole_concept': 'MOLE',
     'chapter_basic_concepts_mole_concept': 'MOLE',
     'chapter_gaseous_state': 'GAS',
     'chapter_thermodynamics': 'THERMO',
@@ -22,36 +21,31 @@ const CHAPTER_PREFIXES = {
     'chapter_periodic_properties': 'PERIODIC',
     'chapter_chemical_bonding': 'BOND',
     'chapter_hydrogen': 'HYDRO',
-    'chapter_s_block': 'SBLOCK',
-    'chapter_p_block_13_14': 'PBLOCK1',
-    'chapter_p_block_15_18': 'PBLOCK2',
-    'chapter_d_and_f_block': 'DFBLOCK',
+    'chapter_s_block_elements': 'SBLOCK',
+    'chapter_p_block_group_13_14': 'PBLOCK1', // Group 13-14
+    'chapter_p_block_12th': 'PBLOCK2',       // Group 15-18
+    'chapter_d_f_block': 'DFBLOCK',
     'chapter_coordination_compounds': 'COORD',
     'chapter_metallurgy': 'METAL',
-    'chapter_qualitative_analysis': 'SALT',
+    'chapter_salt_analysis': 'SALT',
+    'chapter_environmental_chemistry': 'ENV',
 
     // Organic Chemistry
-    'chapter_general_organic_chemistry': 'GOC',
-    'chapter_isomerism': 'ISOM',
+    'chapter_general_organic_chemistry_goc': 'GOC',
     'chapter_hydrocarbons': 'HYDROC',
     'chapter_haloalkanes_and_haloarenes': 'RX',
     'chapter_alcohols_phenols_and_ethers': 'ROH',
-    'chapter_aldehyde_ketone_carboxylic': 'CARB',
+    'chapter_aldehydes_ketones': 'ALD',
+    'chapter_carboxylic_acids_and_derivatives': 'CARB',
     'chapter_amines': 'AMINE',
     'chapter_biomolecules': 'BIO',
     'chapter_polymers': 'POLY',
     'chapter_chemistry_in_everyday_life': 'CHEMLYF',
     'chapter_stereochemistry': 'STEREO',
     'chapter_practical_organic_chemistry': 'POC',
+    'chapter_aromatic_compounds': 'AROM',
 
-    // Mapping Adjustments based on DB Data
-    'chapter_p_block_group_13_14': 'PBLOCK1',
-    'chapter_p_block_12th': 'PBLOCK2',
-    'chapter_d_f_block': 'DFBLOCK',
-    'chapter_salt_analysis': 'SALT',
-
-    // Fallback or Generic
-    'chapter_physics_basic_math': 'MATH',
+    // Fallback
     'default': 'GEN'
 };
 
@@ -69,10 +63,25 @@ async function run() {
         const questions = await collection.find({}).toArray();
         console.log(`Found ${questions.length} total questions.`);
 
+        // 1a. Validate Taxonomy
+        const taxonomyCollection = db.collection('taxonomy');
+        const validChapters = await taxonomyCollection.find({ type: 'chapter' }).toArray();
+        const validChapterIds = new Set(validChapters.map(c => c._id));
+
+        console.log(`\n--- Validating Taxonomy (${validChapters.length} active chapters) ---`);
+        for (const [key, val] of Object.entries(CHAPTER_PREFIXES)) {
+            if (key === 'default') continue;
+            // Some keys in map might be legacy mappings or aliases, but ideally should match DB
+            if (!validChapterIds.has(key)) {
+                console.warn(`WARNING: Script has prefix for '${key}' which is NOT in active taxonomy.`);
+            }
+        }
+
+
         // 2. Group by Chapter
         const byChapter = {};
         for (const q of questions) {
-            const chId = q.chapter_id || 'unknown';
+            const chId = q.chapter_id || q.chapterId || 'unknown';
             if (!byChapter[chId]) byChapter[chId] = [];
             byChapter[chId].push(q);
         }
