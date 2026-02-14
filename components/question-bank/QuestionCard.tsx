@@ -137,37 +137,27 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
             ) : (
                 /* MCQ Options Grid */
                 <div className={`grid gap-2 ${(() => {
-                    // Logic: Determine whether to show 2-column grid or 1-column list
-                    const hasMedia = question.options.some(o => o.text.includes('[smiles:') || o.text.includes('!['));
+                    // Logic: Determine layout based on content
+                    // User Request: "The grid is best when we have 4 images... otherwise keep the text options in one line only"
 
-                    // If options contain chemical structures or images, grid is usually better (as per user preference)
-                    if (hasMedia) return 'grid-cols-1 md:grid-cols-2';
+                    const isAllImages = question.options.every(o =>
+                        o.text.trim().startsWith('![') ||
+                        o.text.includes('<img') ||
+                        o.text.includes('[smiles:')
+                    );
 
-                    // If explicitly requested as list
-                    if (layout === 'list') return 'grid-cols-1';
+                    const isVeryShort = question.options.every(o => o.text.length < 10 && !o.text.includes('\n'));
 
-                    // Heuristic for "complexity": switch to list if text wraps awkwardly or is dense
-                    const isComplex = question.options.some(o => {
-                        const text = o.text;
-                        // 1. Explicit line breaks
-                        if (text.includes('\n') || text.includes('\\\\')) return true;
-                        // 2. High character count (likely to wrap)
-                        if (text.length > 60) return true;
-                        // 3. Dense comparison symbols (like Image 1: I- > O- > F-)
-                        if ((text.match(/>/g) || []).length >= 2) return true;
-                        // 4. Long words that won't wrap well
-                        if (text.split(' ').some(word => word.length > 20)) return true;
+                    // Strict Rule: Grid ONLY if all are images or very short labels
+                    if (isAllImages || isVeryShort) return 'grid-cols-2';
 
-                        return false;
-                    });
-
-                    return isComplex ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2';
+                    // Default to List for everything else (text, mixed content, long formulas)
+                    return 'grid-cols-1';
                 })()}`}>
                     {question.options.map((option) => {
                         const isSelected = selectedOptionId === option.id;
                         const isCorrect = option.isCorrect;
 
-                        // Determine styling based on state
                         let buttonStyle = "bg-gray-800/40 hover:bg-gray-700/50 border-gray-700/50 text-gray-300";
                         if (showFeedback) {
                             if (isCorrect) {
@@ -181,12 +171,13 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                             buttonStyle = "bg-indigo-600/20 border-indigo-500 text-white shadow-[0_0_15px_rgba(99,102,241,0.2)] ring-1 ring-indigo-500/50";
                         }
 
+                        // Remove width-full grid behavior if using flex-col, but here we use grid layout classes
                         return (
                             <motion.button
                                 key={option.id}
                                 whileTap={!showFeedback ? { scale: 0.99 } : {}}
                                 onClick={() => handleOptionClick(option.id)}
-                                className={`py-1.5 px-3 md:py-2 md:px-4 rounded-xl border-2 text-left transition-all duration-200 relative overflow-hidden group ${buttonStyle}`}
+                                className={`w-full text-left rounded-xl border-2 transition-all duration-200 relative overflow-hidden group ${buttonStyle} flex items-start gap-3 p-3 md:p-4`}
                             >
                                 <div className="flex items-center gap-3">
                                     <span className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center font-bold text-[10px] md:text-xs border transition-colors ${showFeedback && isCorrect ? 'bg-emerald-500 border-emerald-400 text-black' :

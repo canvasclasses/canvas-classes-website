@@ -75,6 +75,7 @@ export interface SourceReference {
 
 export interface Question {
     id: string;
+    questionCode?: string; // e.g. "ATOM-001" - Public Reference ID
     textMarkdown: string; // The question stem (Analysis supports Latex)
     images?: string[]; // Legacy support or gallery
     imageScale?: number; // Valid: 10-100 (percentage)
