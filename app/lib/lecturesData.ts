@@ -92,114 +92,122 @@ function formatDuration(minutes: number): string {
     return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
 }
 
+// Cache the promise to prevent multiple simultaneous requests during build
+let lecturesDataPromise: Promise<Chapter[]> | null = null;
+
 // Fetch and parse all lecture data
-export async function fetchLecturesData(): Promise<Chapter[]> {
-    try {
-        const response = await fetch(CSV_URL, { next: { revalidate: 86400 } }); // 24 hours
-        const csvText = await response.text();
-        const rows = parseCSV(csvText);
+export function fetchLecturesData(): Promise<Chapter[]> {
+    if (lecturesDataPromise) return lecturesDataPromise;
 
-        if (rows.length > 0) {
-            console.log('✅ CSV Headers detected:', Object.keys(rows[0]));
-            console.log('Sample row __norm_mindmap:', rows[0]['__norm_mindmap']);
-        }
+    lecturesDataPromise = (async () => {
+        try {
+            const response = await fetch(CSV_URL, { next: { revalidate: 86400 } }); // 24 hours
+            const csvText = await response.text();
+            const rows = parseCSV(csvText);
 
-        // Group by chapter
-        const chaptersMap = new Map<string, Chapter>();
-        let currentChapter: string | null = null;
-        let currentClass: '11' | '12' = '11';
-        let currentDifficulty = '';
-        let currentNotesLink = '';
-        let currentKeyTopics: string[] = [];
-
-        for (const row of rows) {
-            // Update current chapter context if row has chapter info
-            if (row['Class']) {
-                currentClass = row['Class'] as '11' | '12';
-            }
-            if (row['Chapter Name']) {
-                currentChapter = row['Chapter Name'];
-            }
-            if (row['Difficulty Level']) {
-                currentDifficulty = row['Difficulty Level'];
-            }
-            if (row['Notes link']) {
-                currentNotesLink = row['Notes link'];
-            }
-            if (row['Key Topics']) {
-                currentKeyTopics = row['Key Topics'].split(',').map(t => t.trim()).filter(Boolean);
+            if (rows.length > 0) {
+                console.log('✅ CSV Headers detected:', Object.keys(rows[0]));
             }
 
-            const chapterKey = `${currentClass}-${currentChapter}`;
+            // Group by chapter
+            const chaptersMap = new Map<string, Chapter>();
+            let currentChapter: string | null = null;
+            let currentClass: '11' | '12' = '11';
+            let currentDifficulty = '';
+            let currentNotesLink = '';
+            let currentKeyTopics: string[] = [];
 
-            if (!chaptersMap.has(chapterKey) && currentChapter) {
-                let classification: 'Physical' | 'Organic' | 'Inorganic' = 'Physical';
-                if (row['Classification']) {
-                    const rawClass = row['Classification'].trim();
-                    if (rawClass.includes('Organic') && !rawClass.includes('Inorganic')) classification = 'Organic';
-                    else if (rawClass.includes('Inorganic')) classification = 'Inorganic';
+            for (const row of rows) {
+                // Update current chapter context if row has chapter info
+                if (row['Class']) {
+                    currentClass = row['Class'] as '11' | '12';
+                }
+                if (row['Chapter Name']) {
+                    currentChapter = row['Chapter Name'];
+                }
+                if (row['Difficulty Level']) {
+                    currentDifficulty = row['Difficulty Level'];
+                }
+                if (row['Notes link']) {
+                    currentNotesLink = row['Notes link'];
+                }
+                if (row['Key Topics']) {
+                    currentKeyTopics = row['Key Topics'].split(',').map(t => t.trim()).filter(Boolean);
                 }
 
-                const hasMindmap = row['__norm_mindmaps']?.toLowerCase() === 'yes' || row['__norm_mindmap']?.toLowerCase() === 'yes' || slugify(currentChapter) === 'biomolecules' || slugify(currentChapter) === 'salt-analysis';
+                const chapterKey = `${currentClass}-${currentChapter}`;
 
-                console.log(`Creating chapter: ${currentChapter}, hasMindmap: ${hasMindmap}, slug: ${slugify(currentChapter)}`);
+                if (!chaptersMap.has(chapterKey) && currentChapter) {
+                    let classification: 'Physical' | 'Organic' | 'Inorganic' = 'Physical';
+                    if (row['Classification']) {
+                        const rawClass = row['Classification'].trim();
+                        if (rawClass.includes('Organic') && !rawClass.includes('Inorganic')) classification = 'Organic';
+                        else if (rawClass.includes('Inorganic')) classification = 'Inorganic';
+                    }
 
-                chaptersMap.set(chapterKey, {
-                    name: currentChapter,
-                    slug: slugify(currentChapter),
-                    class: currentClass,
-                    difficulty: currentDifficulty || 'Moderate',
-                    classification,
-                    notesLink: currentNotesLink,
-                    keyTopics: currentKeyTopics,
-                    lectures: [],
-                    totalDuration: '0m',
-                    videoCount: 0,
-                    // Robust check: Mind Maps, Mindmaps, Mind Map, etc.
-                    hasMindmap: hasMindmap,
-                });
+                    const hasMindmap = row['__norm_mindmaps']?.toLowerCase() === 'yes' || row['__norm_mindmap']?.toLowerCase() === 'yes' || slugify(currentChapter) === 'biomolecules' || slugify(currentChapter) === 'salt-analysis';
+
+                    chaptersMap.set(chapterKey, {
+                        name: currentChapter,
+                        slug: slugify(currentChapter),
+                        class: currentClass,
+                        difficulty: currentDifficulty || 'Moderate',
+                        classification,
+                        notesLink: currentNotesLink,
+                        keyTopics: currentKeyTopics,
+                        lectures: [],
+                        totalDuration: '0m',
+                        videoCount: 0,
+                        // Robust check: Mind Maps, Mindmaps, Mind Map, etc.
+                        hasMindmap: hasMindmap,
+                    });
+                }
+
+                const chapter = chaptersMap.get(chapterKey)!;
+
+                // Add lecture if data exists
+                if (row['Lecture'] && row['Title'] && row['URL']) {
+                    chapter.lectures.push({
+                        lectureNumber: parseInt(row['Lecture'], 10) || chapter.lectures.length + 1,
+                        title: row['Title'],
+                        description: row['Description'] || '',
+                        youtubeUrl: row['URL'],
+                        duration: row['Lecture Duration'] || '',
+                        views: row['Views'] || undefined,
+                    });
+                }
+
+                // Update notes link if this row has one
+                if (row['Notes link'] && !chapter.notesLink) {
+                    chapter.notesLink = row['Notes link'];
+                }
+
+                // Update hasMindmap if this row has "Yes"
+                if (row['__norm_mindmaps']?.toLowerCase() === 'yes' || row['__norm_mindmap']?.toLowerCase() === 'yes') {
+                    chapter.hasMindmap = true;
+                }
             }
 
-            const chapter = chaptersMap.get(chapterKey)!;
-
-            // Add lecture if data exists
-            if (row['Lecture'] && row['Title'] && row['URL']) {
-                chapter.lectures.push({
-                    lectureNumber: parseInt(row['Lecture'], 10) || chapter.lectures.length + 1,
-                    title: row['Title'],
-                    description: row['Description'] || '',
-                    youtubeUrl: row['URL'],
-                    duration: row['Lecture Duration'] || '',
-                    views: row['Views'] || undefined,
-                });
+            // Calculate totals for each chapter
+            for (const chapter of chaptersMap.values()) {
+                chapter.videoCount = chapter.lectures.length;
+                const totalMinutes = chapter.lectures.reduce(
+                    (sum, lec) => sum + parseDuration(lec.duration),
+                    0
+                );
+                chapter.totalDuration = formatDuration(totalMinutes);
             }
 
-            // Update notes link if this row has one
-            if (row['Notes link'] && !chapter.notesLink) {
-                chapter.notesLink = row['Notes link'];
-            }
-
-            // Update hasMindmap if this row has "Yes"
-            if (row['__norm_mindmaps']?.toLowerCase() === 'yes' || row['__norm_mindmap']?.toLowerCase() === 'yes') {
-                chapter.hasMindmap = true;
-            }
+            return Array.from(chaptersMap.values());
+        } catch (error) {
+            console.error('Error fetching lectures data:', error);
+            // Reset promise on error so we can retry?
+            // lecturesDataPromise = null; // Unsafe to modify from within?
+            return [];
         }
+    })();
 
-        // Calculate totals for each chapter
-        for (const chapter of chaptersMap.values()) {
-            chapter.videoCount = chapter.lectures.length;
-            const totalMinutes = chapter.lectures.reduce(
-                (sum, lec) => sum + parseDuration(lec.duration),
-                0
-            );
-            chapter.totalDuration = formatDuration(totalMinutes);
-        }
-
-        return Array.from(chaptersMap.values());
-    } catch (error) {
-        console.error('Error fetching lectures data:', error);
-        return [];
-    }
+    return lecturesDataPromise;
 }
 
 // Get chapters filtered by class

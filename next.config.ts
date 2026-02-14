@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  staticPageGenerationTimeout: 300,
   async redirects() {
     return [
       // Redirect non-www to www
