@@ -29,6 +29,7 @@ export default function AdminPage() {
     const [savingId, setSavingId] = useState<string | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
+    const [searchQuery, setSearchQuery] = useState<string>(''); // New search state
     const [selectedChapterFilter, setSelectedChapterFilter] = useState<string>('all');
     const [selectedTypeFilter, setSelectedTypeFilter] = useState<string>('all');
     const [selectedSourceFilter, setSelectedSourceFilter] = useState<string>('all');
@@ -237,6 +238,15 @@ export default function AdminPage() {
 
     // Filter questions based on selected filters
     const filteredQuestions = questions.filter(q => {
+        // Search Filter (ID or Code or Text)
+        if (searchQuery) {
+            const query = searchQuery.toLowerCase();
+            const matchId = q.id.toLowerCase().includes(query);
+            const matchCode = (q.questionCode || '').toLowerCase().includes(query);
+            const matchText = q.textMarkdown.toLowerCase().includes(query);
+            if (!matchId && !matchCode && !matchText) return false;
+        }
+
         // Chapter Filter
         if (selectedChapterFilter !== 'all' && q.chapterId !== selectedChapterFilter) return false;
 
@@ -318,6 +328,15 @@ export default function AdminPage() {
                     {/* Divider */}
                     <div className="w-px h-5 bg-gray-700 shrink-0" />
 
+                    {/* Search Input */}
+                    <input
+                        type="text"
+                        placeholder="Search ID, Code, Text..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-32 bg-gray-900 border border-gray-700 rounded px-2 py-1 text-[10px] focus:border-purple-500 outline-none shrink-0"
+                    />
+
                     {/* Question Selector + Navigation - NOW ON LEFT */}
                     <select
                         value={selectedQuestionId || ''}
@@ -329,7 +348,7 @@ export default function AdminPage() {
                             const dot = !q.chapterId ? '🔴' : !q.tagId ? '🟡' : '🟢';
                             return (
                                 <option key={q.id} value={q.id}>
-                                    {dot} {q.id} - {q.textMarkdown.substring(0, 28)}...
+                                    {dot} {q.questionCode || q.id} : {q.textMarkdown.substring(0, 50)}...
                                 </option>
                             );
                         })}
@@ -486,12 +505,25 @@ export default function AdminPage() {
                         <div className="flex-1 overflow-y-auto p-4">
                             {/* Header: ID + Type + Difficulty + Actions */}
                             <div className="flex items-center gap-3 mb-3 pb-3 border-b border-gray-800">
-                                <input
-                                    type="text"
-                                    value={selectedQuestion.id}
-                                    onChange={(e) => handleUpdate(selectedQuestion.id, 'id', e.target.value)}
-                                    className="bg-gray-800 border border-gray-700 rounded px-2 py-1 text-sm font-mono focus:border-purple-500 outline-none w-44"
-                                />
+                                <div className="flex flex-col">
+                                    <span className="text-[10px] text-gray-500">Internal ID</span>
+                                    <input
+                                        type="text"
+                                        value={selectedQuestion.id}
+                                        onChange={(e) => handleUpdate(selectedQuestion.id, 'id', e.target.value)}
+                                        className="bg-gray-800 border border-gray-700 rounded px-2 py-1 text-xs font-mono focus:border-purple-500 outline-none w-32 text-gray-400"
+                                    />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-[10px] text-blue-400 font-bold">Public Code</span>
+                                    <input
+                                        type="text"
+                                        value={selectedQuestion.questionCode || ''}
+                                        onChange={(e) => handleUpdate(selectedQuestion.id, 'questionCode', e.target.value)}
+                                        className="bg-gray-800 border border-blue-500/30 rounded px-2 py-1 text-sm font-bold font-mono text-blue-300 focus:border-blue-500 outline-none w-28"
+                                        placeholder="Generating..."
+                                    />
+                                </div>
                                 <select
                                     value={selectedQuestion.questionType || 'SCQ'}
                                     onChange={(e) => handleUpdate(selectedQuestion.id, 'questionType', e.target.value as JEEQuestionType)}

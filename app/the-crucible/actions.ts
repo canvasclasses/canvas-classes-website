@@ -6,10 +6,20 @@ import { Question as QuestionModel, Taxonomy as TaxonomyModel } from '@/lib/mode
 import { supabase } from '../../lib/supabase';
 
 // Helper to map DB Documents -> Question (camelCase)
+// Helper to safely convert ObjectId to string
+const toString = (val: any) => (val && val.toString ? val.toString() : val);
+
+// Helper to map DB Documents -> Question (camelCase)
 const mapDocToQuestion = (doc: any): QuestionPageType => ({
-    id: doc._id || doc.id,
+    id: toString(doc._id || doc.id),
+    questionCode: doc.question_code,
     textMarkdown: doc.text_markdown || doc.textMarkdown,
-    options: doc.options || [],
+    options: (doc.options || []).map((opt: any) => ({
+        id: toString(opt.id || opt._id),
+        text: opt.text,
+        imageScale: opt.imageScale || opt.image_scale,
+        isCorrect: opt.isCorrect ?? opt.is_correct
+    })),
     integerAnswer: doc.integer_answer || doc.integerAnswer || "",
     solution: {
         textSolutionLatex: doc.solution?.text_latex || doc.solution?.textSolutionLatex || "",
@@ -19,7 +29,7 @@ const mapDocToQuestion = (doc: any): QuestionPageType => ({
         handwrittenSolutionImageUrl: doc.solution?.image_url || doc.solution?.handwrittenSolutionImageUrl
     },
     difficulty: doc.meta?.difficulty || doc.difficulty,
-    chapterId: doc.chapter_id || doc.chapterId,
+    chapterId: toString(doc.chapter_id || doc.chapterId),
     examSource: doc.exam_source || (() => {
         const pyqRef = doc.source_references?.find((r: any) => r.type === 'PYQ');
         if (pyqRef && pyqRef.pyqShift) {
@@ -31,13 +41,16 @@ const mapDocToQuestion = (doc: any): QuestionPageType => ({
     isTopPYQ: doc.is_top_pyq || doc.isTopPYQ,
     questionType: doc.type || doc.questionType || 'SCQ',
     conceptTags: (doc.tags || doc.conceptTags || []).map((t: any) => ({
-        tagId: t.tag_id || t.tagId,
+        tagId: toString(t.tag_id || t.tagId),
         weight: t.weight
     })),
-    tagId: doc.tag_id || doc.tagId,
+    tagId: toString(doc.tag_id || doc.tagId),
     imageScale: doc.image_scale || doc.imageScale,
     solutionImageScale: doc.solution_image_scale || doc.solutionImageScale,
-    sourceReferences: doc.source_references
+    sourceReferences: (doc.source_references || []).map((ref: any) => {
+        const { _id, ...rest } = ref;
+        return rest;
+    })
 });
 
 // Helper to map Question (camelCase) -> DB Document (snake_case)
@@ -52,6 +65,7 @@ const mapQuestionToDoc = (q: QuestionPageType) => {
 
     return {
         _id: q.id,
+        question_code: q.questionCode,
         text_markdown: q.textMarkdown,
         type: q.questionType,
         options: q.options,
@@ -154,16 +168,17 @@ export async function getTaxonomy(): Promise<TaxonomyNode[]> {
         await connectToDatabase();
         const docs = await TaxonomyModel.find({}).sort({ sequence_order: 1, name: 1 }).lean();
 
-        return (docs || []).map((doc: any) => ({
-            id: doc._id || doc.id,
+        const safeDocs = (docs || []).map((doc: any) => ({
+            id: toString(doc._id || doc.id),
             name: doc.name,
-            parent_id: doc.parent_id,
+            parent_id: toString(doc.parent_id),
             type: doc.type || (doc.parent_id ? 'topic' : 'chapter'),
             sequence_order: doc.sequence_order,
             class_level: doc.class_level,
             remedial_video_url: doc.remedial_video_url,
             remedial_notes_url: doc.remedial_notes_url,
         }));
+        return safeDocs;
     } catch (error) {
         console.error("Failed to load taxonomy from MongoDB:", error);
         return [];
