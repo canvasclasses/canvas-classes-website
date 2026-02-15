@@ -52,58 +52,55 @@ async function pushToMongo() {
 
         for (const q of questions) {
             // Map camelCase (JSON) to snake_case (DB)
-            // Note: The JSON I created has camelCase properties mostly, but `import-je...` imports might have mixed.
-            // My import_atomic_structure_md.js created objects with:
-            // id, textMarkdown, options, integerAnswer, questionType, conceptTags, tagId, difficulty, examSource, isPYQ, chapterId, solution
+            const doc = {
+                _id: q.id,
+                text_markdown: q.textMarkdown || q.text_markdown,
+                type: q.questionType || q.type || 'SCQ',
+                options: q.options ? q.options.map(o => ({
+                    id: o.id,
+                    text: o.text,
+                    isCorrect: o.isCorrect,
+                    explanation: o.explanation
+                })) : [],
+                integer_answer: q.integerAnswer || q.integer_answer,
+                tags: (q.conceptTags || q.tags || []).map(t => ({
+                    tag_id: t.tagId || t.tag_id,
+                    weight: t.weight || 1.0
+                })),
+                meta: {
+                    difficulty: q.difficulty || q.meta?.difficulty || 'Medium',
+                    exam: q.examSource?.match(/^([A-Za-z\s]+)\d/)?.[1]?.trim() || 'JEE Main',
+                    year: parseInt(q.examSource?.match(/(\d{4})/)?.[1] || '2025') || undefined,
+                    avg_time_sec: q.meta?.avg_time_sec || 120
+                },
+                chapter_id: q.chapterId || q.chapter_id,
+                is_pyq: q.isPYQ ?? q.is_pyq ?? true,
+                is_top_pyq: q.isTopPYQ ?? q.is_top_pyq ?? false,
+                exam_source: q.examSource || q.exam_source,
+                solution: {
+                    text_latex: q.solution?.textSolutionLatex || q.solution?.text_latex || "",
+                    video_url: q.solution?.videoUrl || q.solution?.video_url,
+                    video_timestamp_start: q.solution?.videoTimestampStart || q.solution?.video_timestamp_start,
+                    audio_url: q.solution?.audioExplanationUrl || q.solution?.audio_url,
+                    image_url: q.solution?.handwrittenSolutionImageUrl || q.solution?.image_url
+                },
+                tag_id: q.tagId || q.tag_id,
+                image_scale: q.imageScale || q.image_scale,
+                solution_image_scale: q.solutionImageScale || q.solution_image_scale,
+                source_references: q.sourceReferences || q.source_references
+            };
 
-            // Check if it's an atomic structure question (to focus on the missing ones)
-            if (q.chapterId === 'chapter_atomic_structure' || q.id.startsWith('atomic_structure_')) {
-
-                const doc = {
-                    _id: q.id,
-                    text_markdown: q.textMarkdown || q.text_markdown,
-                    type: q.questionType || q.type || 'SCQ',
-                    options: q.options,
-                    integer_answer: q.integerAnswer || q.integer_answer,
-                    tags: (q.conceptTags || q.tags || []).map(t => ({
-                        tag_id: t.tagId || t.tag_id,
-                        weight: t.weight
-                    })),
-                    meta: {
-                        difficulty: q.difficulty || q.meta?.difficulty || 'Medium',
-                        exam: q.examSource?.match(/^([A-Za-z\s]+)\d/)?.[1]?.trim() || 'Other',
-                        year: parseInt(q.examSource?.match(/(\d{4})/)?.[1] || '0') || undefined,
-                        avg_time_sec: q.meta?.avg_time_sec || 120
-                    },
-                    chapter_id: q.chapterId || q.chapter_id,
-                    is_pyq: q.isPYQ || q.is_pyq,
-                    is_top_pyq: q.isTopPYQ || q.is_top_pyq || false,
-                    exam_source: q.examSource || q.exam_source,
-                    solution: {
-                        text_latex: q.solution?.textSolutionLatex || q.solution?.text_latex || "",
-                        video_url: q.solution?.videoUrl || q.solution?.video_url,
-                        video_timestamp_start: q.solution?.videoTimestampStart || q.solution?.video_timestamp_start,
-                        audio_url: q.solution?.audioExplanationUrl || q.solution?.audio_url,
-                        image_url: q.solution?.handwrittenSolutionImageUrl || q.solution?.image_url
-                    },
-                    tag_id: q.tagId || q.tag_id,
-                    image_scale: q.imageScale || q.image_scale,
-                    solution_image_scale: q.solutionImageScale || q.solution_image_scale,
-                    source_references: q.sourceReferences || q.source_references
-                };
-
-                try {
-                    await Question.findOneAndUpdate(
-                        { _id: doc._id },
-                        { $set: doc },
-                        { upsert: true }
-                    );
-                    upsertedCount++;
-                    if (upsertedCount % 10 === 0) process.stdout.write('.');
-                } catch (err) {
-                    console.error(`Error upserting ${q.id}:`, err.message);
-                    errorCount++;
-                }
+            try {
+                await Question.findOneAndUpdate(
+                    { _id: doc._id },
+                    { $set: doc },
+                    { upsert: true, new: true }
+                );
+                upsertedCount++;
+                if (upsertedCount % 10 === 0) process.stdout.write('.');
+            } catch (err) {
+                console.error(`Error upserting ${q.id}:`, err.message);
+                errorCount++;
             }
         }
 
