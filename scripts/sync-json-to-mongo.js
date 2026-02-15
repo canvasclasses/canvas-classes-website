@@ -7,10 +7,13 @@
 
 const fs = require('fs');
 const path = require('path');
-const mongoose = require('mongoose');
+require('dotenv').config({ path: '../.env' }); // Load .env from root
+const MONGODB_URI = process.env.MONGODB_URI;
 
-// MongoDB Connection String
-const MONGODB_URI = 'mongodb+srv://REDACTED:REDACTED@REDACTED/crucible?retryWrites=true&w=majority&appName=Crucible-Cluster';
+if (!MONGODB_URI) {
+    console.error("❌ MONGODB_URI not found in .env");
+    process.exit(1);
+}
 
 // Path to the questions file
 const QUESTIONS_PATH = path.join(__dirname, '../app/the-crucible/questions-migrated.json');
