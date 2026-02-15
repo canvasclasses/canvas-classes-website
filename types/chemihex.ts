@@ -32,6 +32,7 @@ export interface Reagent {
     game_logic: GameLogic;
     hint: string;
     exception: string;
+    failure_msg?: string;
 }
 
 export interface MoleculeNodeData {
