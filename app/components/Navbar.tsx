@@ -66,7 +66,7 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  if (pathname?.startsWith('/the-crucible')) return null;
+  if (pathname?.startsWith('/the-crucible') || pathname?.startsWith('/organic-wizard')) return null;
 
   return (
     <nav className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[98%] max-w-[1400px] flex items-center justify-between px-4 md:px-6 py-2.5 rounded-2xl bg-white/70 backdrop-blur-xl shadow-lg shadow-black/5 border border-white/50 transition-all duration-300 ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-[200%] opacity-0 pointer-events-none'

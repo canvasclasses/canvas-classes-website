@@ -1,0 +1,420 @@
+{
+    "columns": [
+        {
+            "id": "alkene",
+            "label": "Alkene"
+        },
+        {
+            "id": "alkyne",
+            "label": "Alkyne"
+        },
+        {
+            "id": "alkyl_halide",
+            "label": "Alkyl Halide"
+        },
+        {
+            "id": "alcohol",
+            "label": "Alcohol"
+        },
+        {
+            "id": "epoxide",
+            "label": "Epoxide"
+        },
+        {
+            "id": "aldehyde",
+            "label": "Aldehyde"
+        },
+        {
+            "id": "ketone",
+            "label": "Ketone"
+        },
+        {
+            "id": "acid_chloride",
+            "label": "Acid Chloride"
+        },
+        {
+            "id": "carboxylic_acid",
+            "label": "Carbox. Acid"
+        },
+        {
+            "id": "ester",
+            "label": "Ester"
+        },
+        {
+            "id": "amide",
+            "label": "Amide"
+        },
+        {
+            "id": "nitrile",
+            "label": "Nitrile"
+        },
+        {
+            "id": "nitro",
+            "label": "Nitro"
+        }
+    ],
+    "rows": [
+        {
+            "reagent": "H_2 / Pt \\text{ or } H_2 / Pd",
+            "mechanism": "Catalytic Hydrogenation (Surface Reaction)",
+            "data": {
+                "alkene": "+",
+                "alkyne": "+",
+                "alkyl_halide": "OH",
+                "alcohol": "+",
+                "epoxide": "+",
+                "aldehyde": "+",
+                "ketone": "+",
+                "acid_chloride": "+",
+                "carboxylic_acid": "-",
+                "ester": "+",
+                "amide": "+",
+                "nitrile": "+",
+                "nitro": "+"
+            },
+            "briefs": {
+                "alkene": "<strong>Mechanism:</strong> Hydrogen adsorbs onto the metal surface, followed by the alkene. <br><strong>Stereochemistry:</strong> Exclusively <em>Syn-Addition</em> (both H atoms add from the same side). <br><strong>Note:</strong> Sensitive to steric hindrance at the double bond.",
+                "alkyne": "<strong>Scope:</strong> Reduces alkynes completely to <strong>Alkanes</strong>. <br><strong>Intermediate:</strong> The alkene intermediate is not isolable under standard conditions as it reduces faster than the alkyne.",
+                "aldehyde": "<strong>Mechanism:</strong> Surface-catalyzed addition of H-H across the C=O pi bond. <br><strong>Product:</strong> Primary Alcohol (R-CH2-OH). <br><strong>Rate:</strong> Generally slower than C=C reduction.",
+                "ketone": "<strong>Mechanism:</strong> Similar to aldehydes, reduces C=O to CH-OH. <br><strong>Stereochemistry:</strong> If a chiral center is formed, a <em>Racemic Mixture</em> is typically obtained.",
+                "acid_chloride": "<strong>Transformation:</strong> Reduces Acid Chlorides to <strong>Primary Alcohols</strong>. <br><strong>Note:</strong> To stop at the aldehyde stage, a catalyst poison (like BaSO4/S - Rosenmund) is required.",
+                "carboxylic_acid": "<strong>No Reaction:</strong> The resonance-stabilized carbonyl of the acid is too inert for standard catalytic hydrogenation. <br><strong>Reason:</strong> Catalyst often gets poisoned or the activation energy is too high.",
+                "ester": "<strong>Conditions:</strong> requires high temperature and pressure. <br><strong>Product:</strong> Cleaves the ester to yield two alcohol molecules. <br><strong>Efficiency:</strong> Not the preferred method for ester reduction (LiAlH4 is better).",
+                "nitro": "<strong>Industrial Use:</strong> Standard method for converting Nitroarenes to Anilines. <br><strong>Condition:</strong> Often run in ethanol or acidic media."
+            }
+        },
+        {
+            "reagent": "H_2 / Pt / BaSO_4",
+            "mechanism": "Lindlar's Catalyst (Poisoned)",
+            "data": {
+                "alkene": "",
+                "alkyne": "+",
+                "alkyl_halide": "",
+                "alcohol": "",
+                "epoxide": "",
+                "aldehyde": "-",
+                "ketone": "-",
+                "acid_chloride": "+",
+                "carboxylic_acid": "",
+                "ester": "",
+                "amide": "",
+                "nitrile": "",
+                "nitro": ""
+            },
+            "briefs": {
+                "alkyne": "<strong>Selectivity:</strong> Partially reduces alkynes to <strong>Alkenes</strong> only. <br><strong>Stereochemistry:</strong> <em>Syn-Addition</em> leads primarily to the <strong>Cis (Z)-Alkene</strong>. <br><strong>Poison:</strong> BaSO4/Quinoline decreases catalyst activity to prevent over-reduction to alkanes.",
+                "acid_chloride": "<strong>Name Reaction:</strong> <em>Rosenmund Reduction</em>. <br><strong>Selectivity:</strong> Stops reduction at the <strong>Aldehyde</strong> stage. <br><strong>Mechanism:</strong> The poison prevents the aldehyde from adsorbing strongly enough to be further reduced."
+            }
+        },
+        {
+            "reagent": "LiAlH_4",
+            "mechanism": "Strong Nucleophilic Hydride",
+            "data": {
+                "alkene": "-",
+                "alkyne": "CH",
+                "alkyl_halide": "+",
+                "alcohol": "OH",
+                "epoxide": "+",
+                "aldehyde": "+",
+                "ketone": "+",
+                "acid_chloride": "+",
+                "carboxylic_acid": "+",
+                "ester": "+",
+                "amide": "+",
+                "nitrile": "+",
+                "nitro": "+"
+            },
+            "briefs": {
+                "alkene": "<strong>Inert:</strong> Isolated C=C bonds are electron-rich and repel the nucleophilic hydride (Al-H bond). <br><strong>Exception:</strong> Can reduce C=C if conjugated with a strong electron-withdrawing group (Michael Addition style).",
+                "aldehyde": "<strong>Mechanism:</strong> Nucleophilic attack of H- on the carbonyl carbon to form an alkoxide, followed by protonation. <br><strong>Product:</strong> Primary Alcohol.",
+                "ketone": "<strong>Mechanism:</strong> H- attacks the Si- or Re-face of the carbonyl. <br><strong>Stereochemistry:</strong> Creates a chiral center; typically produces a racemic mixture unless a chiral auxiliary is used.",
+                "carboxylic_acid": "<strong>Step 1:</strong> Deprotonation to carboxylate salt (vigorous H2 evolution). <br><strong>Step 2:</strong> Reduction of the carboxylate (difficult, requires harsh conditions) to Primary Alcohol.",
+                "ester": "<strong>Mechanism:</strong> Nucleophilic Acyl Substitution followed by Nucleophilic Addition. <br><strong>Outcome:</strong> Cleaves ester into <strong>two alcohols</strong> (one from acyl, one from alkoxy group). <br><strong>Note:</strong> Requires anhydrous conditions.",
+                "amide": "<strong>Unique Transformation:</strong> Reduces C=O completely to CH2. <br><strong>Mechanism:</strong> Unlike esters, the C-N bond is <strong>not broken</strong>. Product is an Amine.",
+                "nitrile": "<strong>Mechanism:</strong> Double addition of hydride to the C≡N triple bond. <br><strong>Product:</strong> Primary Amine (-CH2NH2).",
+                "epoxide": "<strong>Regioselectivity:</strong> Hydride attacks the <strong>less substituted</strong> carbon (SN2-like). <br><strong>Product:</strong> Ring opens to allow formation of the more substituted alcohol (after protonation)."
+            }
+        },
+        {
+            "reagent": "LiAl(OtBu)_3H",
+            "mechanism": "Bulky, Selective Hydride Donor",
+            "data": {
+                "alkene": "-",
+                "alkyne": "-",
+                "alkyl_halide": "",
+                "alcohol": "",
+                "epoxide": "-",
+                "aldehyde": "slow",
+                "ketone": "slow",
+                "acid_chloride": "+",
+                "carboxylic_acid": "-",
+                "ester": "-",
+                "amide": "-",
+                "nitrile": "-",
+                "nitro": "-"
+            },
+            "briefs": {
+                "acid_chloride": "<strong>Selectivity:</strong> The bulky t-butoxy groups sterically hinder the aluminum, making it less reactive. <br><strong>Outcome:</strong> Reduces Acid Chlorides to <strong>Aldehydes</strong> and stops there. <br><strong>Comparison:</strong> A chemical alternative to the Rosenmund Reduction."
+            }
+        },
+        {
+            "reagent": "NaBH_4",
+            "mechanism": "Mild Nucleophilic Hydride",
+            "data": {
+                "alkene": "-",
+                "alkyne": "-",
+                "alkyl_halide": "+",
+                "alcohol": "",
+                "epoxide": "-",
+                "aldehyde": "+",
+                "ketone": "+",
+                "acid_chloride": "+",
+                "carboxylic_acid": "-",
+                "ester": "-",
+                "amide": "-",
+                "nitrile": "-",
+                "nitro": "-"
+            },
+            "briefs": {
+                "aldehyde": "<strong>Selectivity:</strong> Chemoselective for Aldehydes/Ketones in the presence of Esters. <br><strong>Solvent:</strong> Can be used in protic solvents (MeOH, EtOH), unlike LiAlH4.",
+                "ketone": "<strong>Mechanism:</strong> Nucleophilic addition of hydride to C=O. <br><strong>Product:</strong> Secondary Alcohol. <br><strong>Safety:</strong> Much safer and easier to handle than LiAlH4.",
+                "acid_chloride": "<strong>Reactivity:</strong> Reduces Acid Chlorides to Primary Alcohols. <br><strong>Note:</strong> While possible, it's rarely used for this as acid chlorides react violently with the protic solvents typical for NaBH4.",
+                "ester": "<strong>No Reaction:</strong> NaBH4 is generally too mild to reduce the less reactive ester carbonyl. <br><strong>Utility:</strong> Allows selective reduction of a ketone in an ester-containing molecule."
+            }
+        },
+        {
+            "reagent": "B_2H_6, BH_3",
+            "mechanism": "Electrophilic Reduction (Hydroboration)",
+            "data": {
+                "alkene": "+",
+                "alkyne": "+",
+                "alkyl_halide": "",
+                "alcohol": "",
+                "epoxide": "-",
+                "aldehyde": "+",
+                "ketone": "+",
+                "acid_chloride": "+",
+                "carboxylic_acid": "+",
+                "ester": "+",
+                "amide": "+",
+                "nitrile": "+",
+                "nitro": "-"
+            },
+            "briefs": {
+                "alkene": "<strong>Reaction:</strong> Hydroboration-Oxidation. <br><strong>Regiochemistry:</strong> <em>Anti-Markovnikov</em> addition of H-OH. <br><strong>Stereochemistry:</strong> Syn-addition of H-B bond.",
+                "carboxylic_acid": "<strong>Selectivity:</strong> Uniquely potent for Carboxylic Acids. <br><strong>Mechanism:</strong> Coordinates to the carbonyl oxygen (Lewis Acid-Base), activating it for hydride transfer. <br><strong>Note:</strong> Reduces Acids FASTER than esters or even ketones.",
+                "ester": "<strong>Reaction:</strong> Slow reduction to alcohols. <br><strong>Mechanistic Note:</strong> Requires excess diborane. Not the primary use case.",
+                "amide": "<strong>Product:</strong> Reduces Amides to <strong>Amines</strong>. <br><strong>Mechanism:</strong> Similar to LiAlH4, preserves the C-N bond.",
+                "acid_chloride": "<strong>No Reaction:</strong> Does not effectively reduce acid chlorides."
+            }
+        },
+        {
+            "reagent": "Na \\text{ or } Li",
+            "mechanism": "Dissolving Metal Reduction",
+            "data": {
+                "alkene": "",
+                "alkyne": "CH",
+                "alkyl_halide": "",
+                "alcohol": "",
+                "epoxide": "",
+                "aldehyde": "",
+                "ketone": "",
+                "acid_chloride": "",
+                "carboxylic_acid": "",
+                "ester": "",
+                "amide": "",
+                "nitrile": "",
+                "nitro": ""
+            },
+            "briefs": {
+                "alkyne": "<strong>Trans-Reduction:</strong> Na in liquid NH3 reduces alkynes to <strong>TRANS-Alkenes</strong> (Anti-addition) via radical anion mechanism."
+            }
+        },
+        {
+            "reagent": "Na, NH_3",
+            "mechanism": "Birch Reduction",
+            "data": {
+                "alkene": "",
+                "alkyne": "+",
+                "alkyl_halide": "",
+                "alcohol": "",
+                "epoxide": "+",
+                "aldehyde": "",
+                "ketone": "",
+                "acid_chloride": "",
+                "carboxylic_acid": "",
+                "ester": "",
+                "amide": "",
+                "nitrile": "",
+                "nitro": ""
+            },
+            "briefs": {
+                "alkene": "<strong>Birch Reduction:</strong> Reduces aromatic rings to 1,4-cyclohexadienes. Electron Donating Groups (EDG) keep double bond; EWG reduce.",
+                "alkyne": "<strong>Trans-Alkene:</strong> Reduces internal alkynes to trans-alkenes stereoselectively."
+            }
+        },
+        {
+            "reagent": "Sn, Zn, \\text{ or } Fe, HCl",
+            "mechanism": "Metal/Acid Reduction",
+            "data": {
+                "alkene": "",
+                "alkyne": "+",
+                "alkyl_halide": "+",
+                "alcohol": "+",
+                "epoxide": "",
+                "aldehyde": "+",
+                "ketone": "",
+                "acid_chloride": "",
+                "carboxylic_acid": "",
+                "ester": "",
+                "amide": "",
+                "nitrile": "",
+                "nitro": "+"
+            },
+            "briefs": {
+                "nitro": "<strong>Selective Reduction:</strong> Reduces Nitro group (-NO2) to Amine (-NH2). Useful in aromatic chemistry.",
+                "alkyl_halide": "<strong>Reduction:</strong> Reduces halides to alkanes via electron transfer."
+            }
+        },
+        {
+            "reagent": "Zn(Hg), HCl",
+            "mechanism": "Clemmensen Reduction",
+            "data": {
+                "alkene": "",
+                "alkyne": "",
+                "alkyl_halide": "",
+                "alcohol": "",
+                "epoxide": "",
+                "aldehyde": "+",
+                "ketone": "+",
+                "acid_chloride": "",
+                "carboxylic_acid": "",
+                "ester": "",
+                "amide": "",
+                "nitrile": "",
+                "nitro": ""
+            },
+            "briefs": {
+                "aldehyde": "<strong>Deoxygenation:</strong> Reduces C=O completely to CH2 (Alkane).",
+                "ketone": "<strong>Deoxygenation:</strong> Reduces C=O to CH2. <strong>Limitation:</strong> Acidic conditions (HCl) - avoid acid-sensitive groups."
+            }
+        },
+        {
+            "reagent": "NH_2NH_2, OH^-",
+            "mechanism": "Wolff-Kishner Reduction",
+            "data": {
+                "alkene": "",
+                "alkyne": "",
+                "alkyl_halide": "",
+                "alcohol": "",
+                "epoxide": "",
+                "aldehyde": "+",
+                "ketone": "+",
+                "acid_chloride": "hydrol",
+                "carboxylic_acid": "OH",
+                "ester": "",
+                "amide": "",
+                "nitrile": "",
+                "nitro": ""
+            },
+            "briefs": {
+                "aldehyde": "<strong>Deoxygenation:</strong> Reduces C=O completely to CH2 (Alkane) via hydrazone intermediate.",
+                "ketone": "<strong>Deoxygenation:</strong> Reduces C=O to CH2. <strong>Advantage:</strong> Basic conditions - good for acid-sensitive substrates."
+            }
+        },
+        {
+            "reagent": "Mg",
+            "mechanism": "Pinacol Coupling",
+            "data": {
+                "alkene": "",
+                "alkyne": "",
+                "alkyl_halide": "+",
+                "alcohol": "",
+                "epoxide": "",
+                "aldehyde": "",
+                "ketone": "",
+                "acid_chloride": "",
+                "carboxylic_acid": "",
+                "ester": "",
+                "amide": "",
+                "nitrile": "",
+                "nitro": ""
+            },
+            "briefs": {
+                "alkyl_halide": "<strong>Grignard Formation:</strong> Reacts with alkyl halides to form Grignard Reagent (R-Mg-X)."
+            }
+        },
+        {
+            "reagent": "RMgX",
+            "mechanism": "Grignard Reagent",
+            "data": {
+                "alkene": "",
+                "alkyne": "CH",
+                "alkyl_halide": "+",
+                "alcohol": "OH",
+                "epoxide": "+",
+                "aldehyde": "+",
+                "ketone": "+",
+                "acid_chloride": "+",
+                "carboxylic_acid": "OH",
+                "ester": "+",
+                "amide": "?",
+                "nitrile": "+",
+                "nitro": "?"
+            },
+            "briefs": {
+                "aldehyde": "<strong>Nucleophilic Addition:</strong> R- attacks carbonyl carbon. Protonation gives 2° Alcohol.",
+                "ketone": "<strong>Nucleophilic Addition:</strong> R- attacks carbonyl. Gives 3° Alcohol. Careful of steric hindrance.",
+                "ester": "<strong>Double Addition:</strong> Two equivalents of RMgX reactions. First ketone, then 3° Alcohol. Cannot stop at ketone.",
+                "carboxylic_acid": "<strong>Acid-Base only:</strong> R- is a strong base. Deprotonates acid to carboxylate salt. No addition.",
+                "epoxide": "<strong>Ring Opening:</strong> Attacks LESS substituted carbon (SN2 like). Extends carbon chain by 2.",
+                "alcohol": "<strong>Acid-Base:</strong> Destroys reagent (R-H formed). Protect alcohols before using Grignard!"
+            }
+        },
+        {
+            "reagent": "RLi, RNa",
+            "mechanism": "Organolithium",
+            "data": {
+                "alkene": "",
+                "alkyne": "CH",
+                "alkyl_halide": "+",
+                "alcohol": "OH",
+                "epoxide": "",
+                "aldehyde": "+",
+                "ketone": "+",
+                "acid_chloride": "",
+                "carboxylic_acid": "OH",
+                "ester": "",
+                "amide": "",
+                "nitrile": "",
+                "nitro": ""
+            },
+            "briefs": {
+                "carboxylic_acid": "<strong>Ketone Synthesis:</strong> Adds once to form dilithio salt. Hydrolysis gives Ketone (unlike Grignard)."
+            }
+        },
+        {
+            "reagent": "R_2CuLi, R_2Cd",
+            "mechanism": "Gilman Reagent",
+            "data": {
+                "alkene": "",
+                "alkyne": "",
+                "alkyl_halide": "+",
+                "alcohol": "",
+                "epoxide": "",
+                "aldehyde": "slow",
+                "ketone": "slow",
+                "acid_chloride": "+",
+                "carboxylic_acid": "",
+                "ester": "",
+                "amide": "",
+                "nitrile": "",
+                "nitro": ""
+            },
+            "briefs": {
+                "acid_chloride": "<strong>Ketone Synthesis:</strong> Selective reaction. Replaces Cl with R group. Stops at Ketone (does not react with ketone product).",
+                "alkyl_halide": "<strong>Corey-House Synthesis:</strong> Coupling reaction to form alkanes (R-R')."
+            }
+        }
+    ]
+}

@@ -5,6 +5,10 @@
   font-family: var(--font-kalam), 'Kalam', cursive;
 }
 
+.font-outfit {
+  font-family: var(--font-outfit), 'Outfit', sans-serif;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

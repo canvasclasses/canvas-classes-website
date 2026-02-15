@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Kalam } from "next/font/google";
+import { Geist, Geist_Mono, Kalam, Outfit } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import Navbar from "./components/Navbar";
@@ -21,6 +21,12 @@ const kalam = Kalam({
   variable: "--font-kalam",
   subsets: ["latin"],
   weight: ["400", "700"],
+});
+
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const siteUrl = "https://www.canvasclasses.in";
@@ -181,7 +187,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${kalam.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${kalam.variable} ${outfit.variable} antialiased`}
       >
         <CommandPalette itemsPromise={getSearchItems()} />
         <Navbar authButton={<AuthButton />} />

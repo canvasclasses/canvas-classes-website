@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // @ts-expect-error - turbopack options are not yet in the type definition but valid
+    turbopack: {
+      root: process.cwd(),
+    },
+  },
   images: {
     unoptimized: true,
     minimumCacheTTL: 31536000,

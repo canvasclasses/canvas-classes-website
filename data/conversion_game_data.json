@@ -1,0 +1,3620 @@
+[
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_01",
+        "title": "Anti-Markovnikov Hydration",
+        "description": "Convert Propene to Propan-1-ol",
+        "start_smiles": "CC=C",
+        "target_smiles": "CCCO",
+        "difficulty": "Easy",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "r_hbo_01",
+                "reagent_display": "B2H6, H2O2 / OH-",
+                "mechanism_hint": "Hydroboration-Oxidation adds OH to the less hindered carbon."
+            }
+        ],
+        "explanation": "Hydroboration-Oxidation is an Anti-Markovnikov addition of water. It converts Propene to Propan-1-ol by adding OH to the less substituted carbon.",
+        "audio_url": "https://dvwdirpcoipimqyblgbi.supabase.co/storage/v1/object/public/audio/ncert_10_19_01_1771156944167_pn3l0g.webm",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_02",
+        "title": "Alkyne Synthesis (Step Up)",
+        "description": "Convert Ethanol to But-1-yne",
+        "start_smiles": "CCO",
+        "target_smiles": "CCC#C",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "hal_01",
+                "reagent_display": "SOCl2 / Pyridine",
+                "molecule_interim_smiles": "CCCl",
+                "mechanism_hint": "Convert Alcohol to Alkyl Halide first."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 2,
+                "reagent_id": "sub_alkyne",
+                "reagent_display": "HC≡C-Na+",
+                "mechanism_hint": "Nucleophilic substitution with Sodium Acetylide."
+            }
+        ],
+        "explanation": "First, convert Ethanol to Chloroethane using SOCl2. Then, treat with Sodium Acetylide (HC≡C-Na+) to perform nucleophilic substitution, extending the chain to But-1-yne.",
+        "audio_url": "https://dvwdirpcoipimqyblgbi.supabase.co/storage/v1/object/public/audio/ncert_10_19_02_1771156758590_9y3ksp.webm",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_03",
+        "title": "Position Isomerization",
+        "description": "Convert 1-Bromopropane to 2-Bromopropane",
+        "start_smiles": "CCCBr",
+        "target_smiles": "CC(Br)C",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "elim_01",
+                "reagent_display": "alc. KOH / Δ",
+                "molecule_interim_smiles": "CC=C",
+                "mechanism_hint": "Eliminate to form the alkene."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 2,
+                "reagent_id": "add_01",
+                "reagent_display": "HBr (No Peroxide)",
+                "mechanism_hint": "Markovnikov addition moves Br to the internal carbon."
+            }
+        ],
+        "explanation": "Eliminate HBr from 1-Bromopropane using alcoholic KOH to form Propene. Then, add HBr (without peroxide) to follow Markovnikov's rule, placing Br at the more substituted position.",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_04",
+        "title": "Side Chain Oxidation",
+        "description": "Convert Toluene to Benzyl Alcohol",
+        "start_smiles": "Cc1ccccc1",
+        "target_smiles": "OCc1ccccc1",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "rad_01",
+                "reagent_display": "Cl2 / hv (light)",
+                "molecule_interim_smiles": "ClCc1ccccc1",
+                "mechanism_hint": "Free radical substitution attacks the benzylic carbon."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 2,
+                "reagent_id": "sub_aq",
+                "reagent_display": "aq. KOH",
+                "mechanism_hint": "Nucleophilic substitution (OH replaces Cl)."
+            }
+        ],
+        "explanation": "Free radical chlorination (Cl2/hv) targets the benzylic position of Toluene. Subsequent hydrolysis with aqueous KOH replaces the Cl with OH, yielding Benzyl Alcohol.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_05",
+        "title": "Directing Groups",
+        "description": "Convert Benzene to 4-Bromonitrobenzene",
+        "start_smiles": "c1ccccc1",
+        "target_smiles": "O=[N+]([O-])c1ccc(Br)cc1",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "eas_br",
+                "reagent_display": "Br2 / FeBr3",
+                "molecule_interim_smiles": "Brc1ccccc1",
+                "mechanism_hint": "Brominate first because -Br is ortho/para directing."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 2,
+                "reagent_id": "eas_no2",
+                "reagent_display": "HNO3 / H2SO4",
+                "mechanism_hint": "Nitration occurs at the Para position (Major)."
+            }
+        ],
+        "explanation": "Bromination comes first because -Br directs Ortho/Para. If we nitrated first, -NO2 would direct Meta. Nitration of Bromobenzene yields the Para isomer as the major product.",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_06",
+        "title": "Ascent of Series (Carbon Step Up)",
+        "description": "Convert Benzyl Alcohol to 2-Phenylethanoic Acid",
+        "start_smiles": "OCc1ccccc1",
+        "target_smiles": "OC(=O)Cc1ccccc1",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "hal_02",
+                "reagent_display": "PCl5",
+                "molecule_interim_smiles": "ClCc1ccccc1",
+                "mechanism_hint": "Convert OH to Cl."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 2,
+                "reagent_id": "sub_cn",
+                "reagent_display": "KCN (alc)",
+                "molecule_interim_smiles": "N#CCc1ccccc1",
+                "mechanism_hint": "Cyanide adds one carbon."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 3,
+                "reagent_id": "hyd_acid",
+                "reagent_display": "H3O+ / Δ",
+                "mechanism_hint": "Complete hydrolysis of Nitrile gives Carboxylic Acid."
+            }
+        ],
+        "explanation": "Convert Alcohol to Chloride (PCl5). Use KCN to add a carbon (Nitrile). Complete acid hydrolysis of the Nitrile converts -CN to -COOH.",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_07",
+        "title": "Nitrile Synthesis",
+        "description": "Convert Ethanol to Propanenitrile",
+        "start_smiles": "CCO",
+        "target_smiles": "CCC#N",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "hal_01",
+                "reagent_display": "SOCl2",
+                "molecule_interim_smiles": "CCCl",
+                "mechanism_hint": "Activate the alcohol."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 2,
+                "reagent_id": "sub_cn",
+                "reagent_display": "KCN (alc)",
+                "mechanism_hint": "SN2 attack by Cyanide ion."
+            }
+        ],
+        "explanation": "Convert Ethanol to Ethyl Chloride (SOCl2). Then use KCN (alcoholic) for nucleophilic substitution to form Propanenitrile, extending the carbon chain.",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_08",
+        "title": "Sandmeyer Reaction",
+        "description": "Convert Aniline to Chlorobenzene",
+        "start_smiles": "Nc1ccccc1",
+        "target_smiles": "Clc1ccccc1",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "diaz_01",
+                "reagent_display": "NaNO2 + HCl (0-5°C)",
+                "molecule_interim_smiles": "[N+]#Nc1ccccc1",
+                "mechanism_hint": "Diazotization: Forms Benzene Diazonium Chloride."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 2,
+                "reagent_id": "sand_cl",
+                "reagent_display": "CuCl / HCl",
+                "mechanism_hint": "Sandmeyer Reaction."
+            }
+        ],
+        "explanation": "Aniline is diazotized with NaNO2/HCl at 0-5°C to form Benzene Diazonium Chloride. CuCl/HCl (Sandmeyer) then replaces the diazonium group with Chlorine.",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_09",
+        "title": "Wurtz Reaction",
+        "description": "Convert 2-Chlorobutane to 3,4-Dimethylhexane",
+        "start_smiles": "CCC(C)Cl",
+        "target_smiles": "CCC(C)C(C)CC",
+        "difficulty": "Easy",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "wurtz_01",
+                "reagent_display": "2Na / Dry Ether",
+                "mechanism_hint": "Wurtz Reaction doubles the carbon skeleton via the halide."
+            }
+        ],
+        "explanation": "Treating 2-Chlorobutane with Sodium in dry ether couples two alkyl groups together (Wurtz Reaction), doubling the structure to form 3,4-Dimethylhexane.",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_10",
+        "title": "Markovnikov Addition",
+        "description": "Convert 2-Methyl-1-propene to 2-Chloro-2-methylpropane",
+        "start_smiles": "CC(C)=C",
+        "target_smiles": "CC(C)(Cl)C",
+        "difficulty": "Easy",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "add_hcl",
+                "reagent_display": "HCl",
+                "mechanism_hint": "Markovnikov addition: H goes to the carbon with more hydrogens."
+            }
+        ],
+        "explanation": "Addition of HCl to the alkene follows Markovnikov's rule. The H+ adds to the carbon with more hydrogens, placing the Cl- on the tertiary carbocation.",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_11",
+        "title": "Ascent to Acid",
+        "description": "Convert Ethyl Chloride to Propanoic Acid",
+        "start_smiles": "CCCl",
+        "target_smiles": "CCC(=O)O",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "sub_cn",
+                "reagent_display": "KCN (alc)",
+                "molecule_interim_smiles": "CCC#N",
+                "mechanism_hint": "Add a carbon using Cyanide."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 2,
+                "reagent_id": "hyd_acid",
+                "reagent_display": "H3O+ / Δ",
+                "mechanism_hint": "Hydrolysis turns CN into COOH."
+            }
+        ],
+        "explanation": "React Ethyl Chloride with KCN to form Propanenitrile (adding a carbon). Acidic hydrolysis (H3O+) converts the nitrile group (-CN) directly to a carboxylic acid (-COOH).",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_12",
+        "title": "Finkelstein Reaction",
+        "description": "Convert But-1-ene to n-Butyl Iodide",
+        "start_smiles": "CCC=C",
+        "target_smiles": "CCCCI",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "add_hbr_perox",
+                "reagent_display": "HBr / Peroxide",
+                "molecule_interim_smiles": "CCCCBr",
+                "mechanism_hint": "Anti-Markovnikov addition gives 1-Bromobutane."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 2,
+                "reagent_id": "fink_01",
+                "reagent_display": "NaI / Acetone",
+                "mechanism_hint": "Finkelstein Reaction: Halogen exchange."
+            }
+        ],
+        "explanation": "Add HBr with Peroxide (Anti-Markovnikov) to get 1-Bromobutane. Then use NaI in Acetone (Finkelstein Reaction) to exchange Bromine for Iodine via SN2 mechanism.",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_13",
+        "title": "Moving Down the Chain",
+        "description": "Convert 2-Chloropropane to 1-Propanol",
+        "start_smiles": "CC(Cl)C",
+        "target_smiles": "CCCO",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "elim_01",
+                "reagent_display": "alc. KOH / Δ",
+                "molecule_interim_smiles": "CC=C",
+                "mechanism_hint": "Dehydrohalogenation to Propene."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 2,
+                "reagent_id": "hbo_01",
+                "reagent_display": "B2H6, H2O2 / OH-",
+                "mechanism_hint": "Hydroboration gives Anti-Markovnikov Alcohol."
+            }
+        ],
+        "explanation": "Dehydrohalogenation (Alc KOH) forms Propene. Hydroboration-Oxidation then adds water Anti-Markovnikov to give 1-Propanol, effective moving the functional group to the end.",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_14",
+        "title": "Haloform Test",
+        "description": "Convert Isopropyl Alcohol to Iodoform",
+        "start_smiles": "CC(O)C",
+        "target_smiles": "IC(I)I",
+        "difficulty": "Easy",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "haloform_i2",
+                "reagent_display": "I2 + NaOH",
+                "mechanism_hint": "Oxidation followed by cleavage. Only for Methyl Ketones/Alcohols."
+            }
+        ],
+        "explanation": "Iodine and NaOH oxidize the methyl ketone/alcohol to a carboxylate and produce yellow Iodoform (CHI3) precipitate. This is a specific test for methyl carbinols/ketones."
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_15",
+        "title": "Nucleophilic Substitution",
+        "description": "Convert Chlorobenzene to p-Nitrophenol",
+        "start_smiles": "Clc1ccccc1",
+        "target_smiles": "Oc1ccc([N+](=O)[O-])cc1",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "eas_no2",
+                "reagent_display": "HNO3 / H2SO4",
+                "molecule_interim_smiles": "Clc1ccc([N+](=O)[O-])cc1",
+                "mechanism_hint": "Nitration first. NO2 withdraws e-, making C-Cl susceptible."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 2,
+                "reagent_id": "dow_process",
+                "reagent_display": "1. NaOH, 443K 2. H+",
+                "mechanism_hint": "Nucleophilic substitution works now due to -NO2 group."
+            }
+        ],
+        "explanation": "Nitrate Chlorobenzene to introduce -NO2 at Para position. The electron-withdrawing nitro group activates the ring for Nucleophilic Aromatic Substitution (Dow Process) to replace Cl with OH.",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_16",
+        "title": "Isomerization of Halide",
+        "description": "Convert 2-Bromopropane to 1-Bromopropane",
+        "start_smiles": "CC(Br)C",
+        "target_smiles": "CCCBr",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "elim_01",
+                "reagent_display": "alc. KOH / Δ",
+                "molecule_interim_smiles": "CC=C",
+                "mechanism_hint": "Create the alkene first."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 2,
+                "reagent_id": "add_hbr_perox",
+                "reagent_display": "HBr / Peroxide",
+                "mechanism_hint": "Kharasch Effect (Anti-Markovnikov addition)."
+            }
+        ],
+        "explanation": "Eliminate HBr to form Propene. Then apply Kharasch Effect (HBr + Peroxide) for Anti-Markovnikov addition, moving Bromine to the primary carbon."
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_17",
+        "title": "Chain Doubling",
+        "description": "Convert Chloroethane to Butane",
+        "start_smiles": "CCCl",
+        "target_smiles": "CCCC",
+        "difficulty": "Easy",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "wurtz_01",
+                "reagent_display": "2Na / Dry Ether",
+                "mechanism_hint": "Wurtz Reaction connects two ethyl groups."
+            }
+        ],
+        "explanation": "Wurtz Reaction: 2 molecules of Chloroethane react with Sodium in dry ether to form Butane, effectively doubling the carbon chain length."
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_18",
+        "title": "Fittig Reaction",
+        "description": "Convert Benzene to Diphenyl",
+        "start_smiles": "c1ccccc1",
+        "target_smiles": "c1ccccc1-c2ccccc2",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "eas_br",
+                "reagent_display": "Br2 / FeBr3",
+                "molecule_interim_smiles": "Brc1ccccc1",
+                "mechanism_hint": "Make it a halide first."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 2,
+                "reagent_id": "fittig_01",
+                "reagent_display": "2Na / Dry Ether",
+                "mechanism_hint": "Fittig Reaction couples two Aryl halides."
+            }
+        ],
+        "explanation": "First, brominate Benzene. Then, treat Iodobenzene/Bromobenzene with Sodium in dry ether (Fittig Reaction) to couple two phenyl rings, forming Diphenyl (Biphenyl)."
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_19",
+        "title": "Skeletal Rearrangement",
+        "description": "Convert tert-Butyl Bromide to Isobutyl Bromide",
+        "start_smiles": "CC(C)(C)Br",
+        "target_smiles": "CC(C)CBr",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "elim_01",
+                "reagent_display": "alc. KOH / Δ",
+                "molecule_interim_smiles": "CC(C)=C",
+                "mechanism_hint": "Elimination gives Isobutylene."
+            },
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 2,
+                "reagent_id": "add_hbr_perox",
+                "reagent_display": "HBr / Peroxide",
+                "mechanism_hint": "Anti-Markovnikov addition puts Br on the primary carbon."
+            }
+        ],
+        "explanation": "Elimination gives Isobutylene. Anti-Markovnikov addition (HBr/Peroxide) places Br on the primary carbon, converting tert-butyl to isobutyl bromide."
+    },
+    {
+        "chapter": "Haloalkanes & Haloarenes",
+        "id": "ncert_10_19_20",
+        "title": "Carbylamine Test",
+        "description": "Convert Aniline to Phenylisocyanide",
+        "start_smiles": "Nc1ccccc1",
+        "target_smiles": "[C-]#[N+]c1ccccc1",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "chapter": "Haloalkanes & Haloarenes",
+                "step_order": 1,
+                "reagent_id": "carbyl_01",
+                "reagent_display": "CHCl3 + alc. KOH",
+                "mechanism_hint": "Foul smelling Isocyanide formed. Test for Primary Amines."
+            }
+        ],
+        "explanation": "Heating a primary amine (Aniline) with Chloroform and alcoholic KOH yields a foul-smelling Isocyanide (Phenyl Isocyanide). This reaction is specific to primary amines."
+    },
+    {
+        "chapter": "Hydrocarbons",
+        "id": "ncert_conv_2_01",
+        "title": "Directing Effects: Para",
+        "description": "Convert Benzene to p-Nitrobromobenzene",
+        "start_smiles": "c1ccccc1",
+        "target_smiles": "O=[N+]([O-])c1ccc(Br)cc1",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "eas_br",
+                "reagent_display": "Br2 / FeBr3",
+                "molecule_interim_smiles": "Brc1ccccc1",
+                "mechanism_hint": "Brominate FIRST. Bromine is ortho/para directing. If you nitrate first, you get meta."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "eas_no2",
+                "reagent_display": "HNO3 / H2SO4",
+                "mechanism_hint": "Nitration on Bromobenzene gives Para isomer as major product due to steric hindrance at ortho."
+            }
+        ],
+        "explanation": "Brominate benzene first (-Br is o/p directing). Then nitrate. The Para isomer is major due to steric factors. (Nitrating first would give m-Bromonitrobenzene)."
+    },
+    {
+        "chapter": "Hydrocarbons",
+        "id": "ncert_conv_2_02",
+        "title": "Directing Effects: Meta",
+        "description": "Convert Benzene to m-Nitrochlorobenzene",
+        "start_smiles": "c1ccccc1",
+        "target_smiles": "O=[N+]([O-])c1cccc(Cl)c1",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "eas_no2",
+                "reagent_display": "HNO3 / H2SO4",
+                "molecule_interim_smiles": "O=[N+]([O-])c1ccccc1",
+                "mechanism_hint": "Nitrate FIRST. The -NO2 group is Meta directing. If you chlorinate first, you get para."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "eas_cl",
+                "reagent_display": "Cl2 / FeCl3",
+                "mechanism_hint": "Chlorination occurs at the meta position relative to the nitro group."
+            }
+        ],
+        "explanation": "Nitrate benzene first (-NO2 is Meta directing). Then chlorinate. The incoming Cl+ ion attacks the meta position relative to the nitro group."
+    },
+    {
+        "chapter": "Hydrocarbons",
+        "id": "ncert_conv_2_03",
+        "title": "Synthesis of TNT Precursor",
+        "description": "Convert Benzene to p-Nitrotoluene",
+        "start_smiles": "c1ccccc1",
+        "target_smiles": "Cc1ccc([N+](=O)[O-])cc1",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "fc_alk_01",
+                "reagent_display": "CH3Cl / Anhyd. AlCl3",
+                "molecule_interim_smiles": "Cc1ccccc1",
+                "mechanism_hint": "Friedel-Crafts Alkylation adds the Methyl group (activator, o/p director)."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "eas_no2",
+                "reagent_display": "HNO3 / H2SO4",
+                "mechanism_hint": "Nitration yields p-nitrotoluene as the major product."
+            }
+        ],
+        "explanation": "Friedel-Crafts Alkylation adds a Methyl group (o/p director). Nitration then occurs primarily at the Para position (less steric hindrance than ortho)."
+    },
+    {
+        "chapter": "Hydrocarbons",
+        "id": "ncert_conv_2_04",
+        "title": "Ketone Synthesis",
+        "description": "Convert Benzene to Acetophenone",
+        "start_smiles": "c1ccccc1",
+        "target_smiles": "CC(=O)c1ccccc1",
+        "difficulty": "Easy",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "fc_acyl_01",
+                "reagent_display": "CH3COCl / Anhyd. AlCl3",
+                "mechanism_hint": "Friedel-Crafts Acylation directly attaches the acetyl group."
+            }
+        ],
+        "explanation": "Friedel-Crafts Acylation uses Acetyl Chloride (CH3COCl) and AlCl3 to substitute an H on the benzene ring with an Acyl group, forming Acetophenone."
+    },
+    {
+        "chapter": "Hydrocarbons",
+        "id": "ncert_conv_2_05",
+        "title": "Cyclic Polymerization (Easy)",
+        "description": "Convert Ethyne to Benzene",
+        "start_smiles": "C#C",
+        "target_smiles": "c1ccccc1",
+        "difficulty": "Easy",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "poly_fe",
+                "reagent_display": "Red Hot Iron Tube (873K)",
+                "mechanism_hint": "Cyclic polymerization of 3 ethyne molecules."
+            }
+        ],
+        "explanation": "Pass Ethyne through a red-hot iron tube at 873K. Three ethyne molecules undergo cyclic polymerization to form the aromatic Benzene ring."
+    },
+    {
+        "chapter": "Hydrocarbons",
+        "id": "ncert_conv_2_06",
+        "title": "Double Elimination Path",
+        "description": "Convert Ethene to Benzene",
+        "start_smiles": "C=C",
+        "target_smiles": "c1ccccc1",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "add_br2",
+                "reagent_display": "Br2 / CCl4",
+                "molecule_interim_smiles": "BrCCBr",
+                "mechanism_hint": "Convert Alkene to Vicinal Dihalide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "elim_double",
+                "reagent_display": "1. alc KOH  2. NaNH2",
+                "molecule_interim_smiles": "C#C",
+                "mechanism_hint": "Double elimination removes 2 HBr molecules to form Ethyne."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "poly_fe",
+                "reagent_display": "Red Hot Iron Tube",
+                "mechanism_hint": "Polymerize Ethyne to Benzene."
+            }
+        ],
+        "explanation": "Add Bromine to form 1,2-Dibromoethane. Double elimination (Alc KOH then NaNH2) removes 2 HBr molecules to form Ethyne. Then polymerize to Benzene."
+    },
+    {
+        "chapter": "Hydrocarbons",
+        "id": "ncert_conv_2_07",
+        "title": "Aromatization",
+        "description": "Convert Hexane to Benzene",
+        "start_smiles": "CCCCCC",
+        "target_smiles": "c1ccccc1",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "arom_01",
+                "reagent_display": "Cr2O3/V2O5, 773K",
+                "mechanism_hint": "Catalytic reforming (dehydrogenation + cyclization) converts alkanes to aromatics."
+            }
+        ],
+        "explanation": "Catalytic reforming of n-Hexane over Mo2O3/V2O5 oxides at high temp/pressure causes dehydrogenation and cyclization to form Benzene."
+    },
+    {
+        "chapter": "Alcohols, Phenols and Ethers",
+        "id": "ncert_11_alc_01",
+        "title": "Markovnikov Hydration",
+        "description": "Convert Propene to Propan-2-ol",
+        "start_smiles": "CC=C",
+        "target_smiles": "CC(O)C",
+        "difficulty": "Easy",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hyd_acid_01",
+                "reagent_display": "H2O / H+",
+                "mechanism_hint": "Acid-catalyzed hydration follows Markovnikov's rule (OH goes to stable carbocation)."
+            }
+        ],
+        "explanation": "Acid-catalyzed hydration follows Markovnikov's rule. The carbocation intermediate forms on the secondary carbon, leading to Propan-2-ol."
+    },
+    {
+        "chapter": "Alcohols, Phenols and Ethers",
+        "id": "ncert_11_alc_02",
+        "title": "Benzylic Substitution",
+        "description": "Convert Benzyl Chloride to Benzyl Alcohol",
+        "start_smiles": "ClCc1ccccc1",
+        "target_smiles": "OCc1ccccc1",
+        "difficulty": "Easy",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "sub_aq_01",
+                "reagent_display": "aq. KOH / Δ",
+                "mechanism_hint": "Simple Nucleophilic Substitution (SN2/SN1). OH replaces Cl."
+            }
+        ],
+        "explanation": "Benzyl Chloride undergoes hydrolysis with aqueous KOH. The primary benzylic carbocation is somewhat stable, or SN2 occurs, replacing Cl with OH."
+    },
+    {
+        "chapter": "Alcohols, Phenols and Ethers",
+        "id": "ncert_11_alc_03",
+        "title": "Grignard Synthesis (1° Alcohol)",
+        "description": "Convert Ethyl Magnesium Chloride to Propan-1-ol",
+        "start_smiles": "CC[Mg]Cl",
+        "target_smiles": "CCCO",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "grig_hcho",
+                "reagent_display": "1. HCHO (Methanal)",
+                "molecule_interim_smiles": "CCC[O-].[Mg+2]Cl",
+                "mechanism_hint": "Grignard attacks Methanal to extend chain by 1 carbon."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "workup_h3o",
+                "reagent_display": "2. H3O+",
+                "mechanism_hint": "Acidic workup protonates the alkoxide to form alcohol."
+            }
+        ],
+        "explanation": "Grignard reagent attacks Methanal (Formaldehyde) to add one carbon and form a primary alkoxide. Acid workup yields the primary alcohol."
+    },
+    {
+        "chapter": "Alcohols, Phenols and Ethers",
+        "id": "ncert_11_alc_04",
+        "title": "Grignard Synthesis (3° Alcohol)",
+        "description": "Convert Methyl Magnesium Bromide to 2-Methylpropan-2-ol",
+        "start_smiles": "C[Mg]Br",
+        "target_smiles": "CC(C)(O)C",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "grig_acetone",
+                "reagent_display": "1. CH3COCH3 (Acetone)",
+                "molecule_interim_smiles": "CC(C)(C)[O-].[Mg+2]Br",
+                "mechanism_hint": "Grignard attacks Ketone (Acetone) to form a Tertiary Alcohol."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "workup_h3o",
+                "reagent_display": "2. H3O+",
+                "mechanism_hint": "Protonation of the tertiary alkoxide."
+            }
+        ],
+        "explanation": "Grignard reagent attacks Acetone (Ketone). The nucleophilic carbon adds to the carbonyl carbon, forming a tertiary alkoxide, then tertiary alcohol."
+    },
+    {
+        "chapter": "Alcohols, Phenols and Ethers",
+        "id": "ncert_11_alc_05",
+        "title": "Cyclic Hydration",
+        "description": "Synthesize 1-Methylcyclohexanol from appropriate alkene",
+        "start_smiles": "CC1=CCCCC1",
+        "target_smiles": "CC1(O)CCCCC1",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hyd_acid_01",
+                "reagent_display": "H2O / H+",
+                "mechanism_hint": "Start with 1-Methylcyclohexene. Markovnikov addition puts OH on the tertiary carbon."
+            }
+        ],
+        "explanation": "Mechanism follows Markovnikov addition. H+ adds to the double bond to form the stable tertiary cyclic carbocation. Water attacks there to form 1-Methylcyclohexanol."
+    },
+    {
+        "chapter": "Alcohols, Phenols and Ethers",
+        "id": "ncert_11_alc_06",
+        "title": "Symmetrical Hydration",
+        "description": "Synthesize 4-Methylheptan-4-ol from appropriate alkene",
+        "start_smiles": "CCC/C=C(\\C)/CCC",
+        "target_smiles": "CCCC(C)(O)CCC",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hyd_acid_01",
+                "reagent_display": "H2O / H+",
+                "mechanism_hint": "Start with 4-Methylhept-3-ene. Hydration occurs at the more substituted carbon."
+            }
+        ],
+        "explanation": "Hydration of the alkene. The double bond is symmetrical in position but substituents direct formation of the stable tertiary carbocation/alcohol."
+    },
+    {
+        "chapter": "Alcohols, Phenols and Ethers",
+        "id": "ncert_11_alc_07",
+        "title": "Regioselective Hydration",
+        "description": "Synthesize Pentan-2-ol from appropriate alkene",
+        "start_smiles": "CCCC=C",
+        "target_smiles": "CCCC(C)O",
+        "difficulty": "Easy",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hyd_acid_01",
+                "reagent_display": "H2O / H+",
+                "mechanism_hint": "Start with Pent-1-ene. Markovnikov addition gives the secondary alcohol (2-ol)."
+            }
+        ],
+        "explanation": "Markovnikov addition to Pent-1-ene puts the positive charge on C2. Water attacks C2 to form Pentan-2-ol."
+    },
+    {
+        "chapter": "Alcohols, Phenols and Ethers",
+        "id": "ncert_11_alc_08",
+        "title": "Complex Hydration",
+        "description": "Synthesize 2-Cyclohexylbutan-2-ol from appropriate alkene",
+        "start_smiles": "C/C=C(\\C)/C1CCCCC1",
+        "target_smiles": "CCC(C)(O)C1CCCCC1",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hyd_acid_01",
+                "reagent_display": "H2O / H+",
+                "mechanism_hint": "Start with 2-Cyclohexylbut-2-ene. OH attacks the tertiary carbocation."
+            }
+        ],
+        "explanation": "H+ attacks the double bond to form a tertiary carbocation at the branching point. Water attacks to yield the tertiary alcohol."
+    },
+    {
+        "chapter": "Aldehydes, Ketones and Carboxylic Acids",
+        "id": "ncert_12_ald_01",
+        "title": "Synthesis: Methyl Benzoate",
+        "description": "Convert Benzene to Methyl Benzoate (Using reagents with ≤1 Carbon)",
+        "start_smiles": "c1ccccc1",
+        "target_smiles": "COC(=O)c1ccccc1",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "fc_alk_01",
+                "reagent_display": "CH3Cl / Anhyd. AlCl3",
+                "molecule_interim_smiles": "Cc1ccccc1",
+                "mechanism_hint": "Friedel-Crafts Alkylation adds a Methyl group."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ox_kmno4",
+                "reagent_display": "KMnO4 / KOH / Δ",
+                "molecule_interim_smiles": "OC(=O)c1ccccc1",
+                "mechanism_hint": "Strong oxidation converts the side chain to Benzoic Acid."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "ester_01",
+                "reagent_display": "CH3OH / H2SO4",
+                "mechanism_hint": "Fischer Esterification with Methanol."
+            }
+        ],
+        "explanation": "Friedel-Crafts Alkylation gives Toluene. KMnO4 oxidizes the methyl side chain to Benzoic Acid. Fischer Esterification with Methanol gives Methyl Benzoate."
+    },
+    {
+        "chapter": "Aldehydes, Ketones and Carboxylic Acids",
+        "id": "ncert_12_ald_02",
+        "title": "Synthesis: m-Nitrobenzoic Acid",
+        "description": "Convert Benzene to m-Nitrobenzoic Acid",
+        "start_smiles": "c1ccccc1",
+        "target_smiles": "O=[N+]([O-])c1cccc(C(=O)O)c1",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "fc_alk_01",
+                "reagent_display": "CH3Cl / Anhyd. AlCl3",
+                "molecule_interim_smiles": "Cc1ccccc1",
+                "mechanism_hint": "Make Toluene first."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ox_kmno4",
+                "reagent_display": "KMnO4 / KOH / Δ",
+                "molecule_interim_smiles": "OC(=O)c1ccccc1",
+                "mechanism_hint": "Oxidize to Benzoic Acid. -COOH is a META directing group."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "eas_no2",
+                "reagent_display": "HNO3 / H2SO4",
+                "mechanism_hint": "Nitration now occurs at the Meta position."
+            }
+        ],
+        "explanation": "Alkylate to Toluene. Oxidize to Benzoic Acid (-COOH is Meta directing). Nitrate the Benzoic Acid to get the 'meta' nitro group."
+    },
+    {
+        "chapter": "Aldehydes, Ketones and Carboxylic Acids",
+        "id": "ncert_12_ald_03",
+        "title": "Synthesis: p-Nitrobenzoic Acid",
+        "description": "Convert Benzene to p-Nitrobenzoic Acid",
+        "start_smiles": "c1ccccc1",
+        "target_smiles": "O=[N+]([O-])c1ccc(C(=O)O)cc1",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "fc_alk_01",
+                "reagent_display": "CH3Cl / Anhyd. AlCl3",
+                "molecule_interim_smiles": "Cc1ccccc1",
+                "mechanism_hint": "Make Toluene. The Methyl group is Ortho/Para directing."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "eas_no2",
+                "reagent_display": "HNO3 / H2SO4",
+                "molecule_interim_smiles": "Cc1ccc([N+](=O)[O-])cc1",
+                "mechanism_hint": "Nitrate first! We need the Para product before we oxidize."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "ox_kmno4",
+                "reagent_display": "KMnO4 / KOH / Δ",
+                "mechanism_hint": "Now oxidize the methyl group to acid."
+            }
+        ],
+        "explanation": "Alkylate to Toluene (-CH3 is O/P directing). Nitrate Toluene to get p-Nitrotoluene. Then oxidize the methyl group to -COOH using KMnO4."
+    },
+    {
+        "chapter": "Aldehydes, Ketones and Carboxylic Acids",
+        "id": "ncert_12_ald_04",
+        "title": "Conversion: Ketone to Alkene",
+        "description": "Convert Propanone to Propene (Max 2 steps)",
+        "start_smiles": "CC(=O)C",
+        "target_smiles": "CC=C",
+        "difficulty": "Easy",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "red_nabh4",
+                "reagent_display": "NaBH4",
+                "molecule_interim_smiles": "CC(O)C",
+                "mechanism_hint": "Reduce Ketone to Secondary Alcohol."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "dehyd_acid",
+                "reagent_display": "Conc. H2SO4 / Δ",
+                "mechanism_hint": "Dehydration of alcohol yields alkene."
+            }
+        ],
+        "explanation": "Reduce Ketone to Secondary Alcohol using NaBH4. Then dehydrate with conc. H2SO4 to form the alkene."
+    },
+    {
+        "chapter": "Aldehydes, Ketones and Carboxylic Acids",
+        "id": "ncert_12_ald_05",
+        "title": "Conversion: Acid to Aldehyde",
+        "description": "Convert Benzoic Acid to Benzaldehyde",
+        "start_smiles": "OC(=O)c1ccccc1",
+        "target_smiles": "O=Cc1ccccc1",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hal_socl2",
+                "reagent_display": "SOCl2",
+                "molecule_interim_smiles": "ClC(=O)c1ccccc1",
+                "mechanism_hint": "Convert Acid to Acid Chloride."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "red_rosenmund",
+                "reagent_display": "H2 / Pd-BaSO4",
+                "mechanism_hint": "Rosenmund Reduction stops at the Aldehyde."
+            }
+        ],
+        "explanation": "Convert Acid to Acid Chloride with SOCl2. Then perform Rosenmund Reduction (H2/Pd-BaSO4) which selectively stops reduction at the Aldehyde stage."
+    },
+    {
+        "chapter": "Aldehydes, Ketones and Carboxylic Acids",
+        "id": "ncert_12_ald_06",
+        "title": "Conversion: Aldol Formation",
+        "description": "Convert Ethanol to 3-Hydroxybutanal",
+        "start_smiles": "CCO",
+        "target_smiles": "CC(O)CC=O",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "ox_pcc",
+                "reagent_display": "PCC",
+                "molecule_interim_smiles": "CC=O",
+                "mechanism_hint": "Controlled oxidation to Acetaldehyde."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "aldol_dil_base",
+                "reagent_display": "Dilute NaOH",
+                "mechanism_hint": "Aldol Condensation (without heat) gives beta-hydroxy aldehyde."
+            }
+        ],
+        "explanation": "Oxidize Ethanol to Acetaldehyde (PCC). Dilute NaOH induces Aldol Condensation: alpha-hydrogen is removed, enolate attacks another aldehyde molecule."
+    },
+    {
+        "chapter": "Aldehydes, Ketones and Carboxylic Acids",
+        "id": "ncert_12_ald_07",
+        "title": "Conversion: Grignard Addition",
+        "description": "Convert Benzaldehyde to Benzophenone",
+        "start_smiles": "O=Cc1ccccc1",
+        "target_smiles": "O=C(c1ccccc1)c2ccccc2",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "grig_phmgbr",
+                "reagent_display": "1. PhMgBr  2. H3O+",
+                "molecule_interim_smiles": "OC(c1ccccc1)c2ccccc2",
+                "mechanism_hint": "Grignard adds Phenyl group to form Diphenylmethanol."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ox_pcc",
+                "reagent_display": "PCC",
+                "mechanism_hint": "Oxidize secondary alcohol to Ketone."
+            }
+        ],
+        "explanation": "Phenyl Magnesium Bromide attacks Benzaldehyde to form Diphenylmethanol (2° alcohol). Oxidation with PCC yields Benzophenone."
+    },
+    {
+        "chapter": "Aldehydes, Ketones and Carboxylic Acids",
+        "id": "ncert_12_ald_08",
+        "title": "Conversion: Cyanohydrin Path",
+        "description": "Convert Benzaldehyde to α-Hydroxyphenylacetic acid",
+        "start_smiles": "O=Cc1ccccc1",
+        "target_smiles": "OC(C(=O)O)c1ccccc1",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "add_hcn",
+                "reagent_display": "HCN / pH 9-10",
+                "molecule_interim_smiles": "OC(C#N)c1ccccc1",
+                "mechanism_hint": "Nucleophilic addition forms Mandelonitrile (Cyanohydrin)."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "hyd_acid",
+                "reagent_display": "H3O+ / Δ",
+                "mechanism_hint": "Complete hydrolysis of Nitrile gives Carboxylic Acid."
+            }
+        ],
+        "explanation": "Nucleophilic addition of HCN (CN-) to the carbonyl group of Benzaldehyde forms a Cyanohydrin. Acid hydrolysis converts -CN to -COOH."
+    },
+    {
+        "chapter": "Aldehydes, Ketones and Carboxylic Acids",
+        "id": "ncert_12_ald_09",
+        "title": "Conversion: Selective Reduction",
+        "description": "Convert Benzoic Acid to m-Nitrobenzyl alcohol",
+        "start_smiles": "OC(=O)c1ccccc1",
+        "target_smiles": "OCc1cccc([N+](=O)[O-])c1",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "eas_no2",
+                "reagent_display": "HNO3 / H2SO4",
+                "molecule_interim_smiles": "OC(=O)c1cccc([N+](=O)[O-])c1",
+                "mechanism_hint": "Nitrate first. -COOH is Meta directing."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "red_diborane",
+                "reagent_display": "B2H6 / Ether",
+                "mechanism_hint": "Diborane selectively reduces -COOH to -CH2OH without touching the Nitro group."
+            }
+        ],
+        "explanation": "Nitrate Benzoic Acid (Meta product). Diborane (B2H6) selectively reduces Carboxylic Acids to Alcohols, leaving the Nitro group intact."
+    },
+    {
+        "chapter": "Amines",
+        "id": "ncert_13_amin_01",
+        "title": "Step Down Series",
+        "description": "Convert Ethanoic Acid to Methanamine (Remove 1 Carbon)",
+        "start_smiles": "CC(=O)O",
+        "target_smiles": "CN",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "ammonolysis",
+                "reagent_display": "NH3 / Δ",
+                "molecule_interim_smiles": "CC(=O)N",
+                "mechanism_hint": "Convert Acid to Amide (Ethanamide)."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "hoffmann_brom",
+                "reagent_display": "Br2 / KOH",
+                "mechanism_hint": "Hoffmann Bromamide Degradation removes the carbonyl carbon."
+            }
+        ],
+        "explanation": "Convert Acid to Amide (NH3/heat). Hoffmann Bromamide Degradation (Br2/KOH) removes the carbonyl carbon, producing an amine with one less carbon."
+    },
+    {
+        "chapter": "Amines",
+        "id": "ncert_13_amin_02",
+        "title": "Step Down via Nitrile",
+        "description": "Convert Hexanenitrile to 1-Aminopentane",
+        "start_smiles": "CCCCCC#N",
+        "target_smiles": "CCCCCN",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hyd_acid",
+                "reagent_display": "H3O+ / Δ",
+                "molecule_interim_smiles": "CCCCCC(=O)N",
+                "mechanism_hint": "Partial hydrolysis to Amide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "hoffmann_brom",
+                "reagent_display": "Br2 / KOH",
+                "mechanism_hint": "Hoffmann Bromamide Degradation removes one carbon."
+            }
+        ],
+        "explanation": "Partial hydrolysis of nitriles yields Amides. Hoffmann Bromamide Degradation then chops off the carbonyl carbon to give the step-down amine."
+    },
+    {
+        "chapter": "Amines",
+        "id": "ncert_13_amin_03",
+        "title": "Ascent of Series",
+        "description": "Convert Methanol to Ethanoic Acid",
+        "start_smiles": "CO",
+        "target_smiles": "CC(=O)O",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hal_pcl5",
+                "reagent_display": "PCl5",
+                "molecule_interim_smiles": "CCl",
+                "mechanism_hint": "Activate alcohol to alkyl halide (Chloromethane)."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "sub_cn",
+                "reagent_display": "KCN (alc)",
+                "molecule_interim_smiles": "CC#N",
+                "mechanism_hint": "Cyanide adds one carbon."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "hyd_acid",
+                "reagent_display": "H3O+ / Δ",
+                "mechanism_hint": "Complete hydrolysis converts Nitrile to Acid."
+            }
+        ],
+        "explanation": "Methanol -> Chloromethane -> Acetonitrile (add C) -> Hydrolysis to Ethanoic Acid."
+    },
+    {
+        "chapter": "Amines",
+        "id": "ncert_13_amin_04",
+        "title": "Amine Step Down",
+        "description": "Convert Ethanamine to Methanamine",
+        "start_smiles": "CCN",
+        "target_smiles": "CN",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "diaz_hno2",
+                "reagent_display": "HNO2 (NaNO2 + HCl)",
+                "molecule_interim_smiles": "CCO",
+                "mechanism_hint": "Diazotization of aliphatic amine leads to Alcohol."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ox_kmno4",
+                "reagent_display": "KMnO4 / H+",
+                "molecule_interim_smiles": "CC(=O)O",
+                "mechanism_hint": "Oxidize Alcohol to Acid."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "ammonolysis",
+                "reagent_display": "NH3 / Δ",
+                "molecule_interim_smiles": "CC(=O)N",
+                "mechanism_hint": "Convert to Amide."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "hoffmann_brom",
+                "reagent_display": "Br2 / KOH",
+                "mechanism_hint": "Step down using Hoffmann Bromamide."
+            }
+        ],
+        "explanation": "Amine -> Alcohol (HNO2). Alcohol -> Acid (KMnO4). Acid -> Amide. Amide -> Amine (Step Down via Hoffmann)."
+    },
+    {
+        "chapter": "Amines",
+        "id": "ncert_13_amin_05",
+        "title": "Amine Step Up",
+        "description": "Convert Methanamine to Ethanamine",
+        "start_smiles": "CN",
+        "target_smiles": "CCN",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "diaz_hno2",
+                "reagent_display": "HNO2",
+                "molecule_interim_smiles": "CO",
+                "mechanism_hint": "Convert Amine to Alcohol."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "hal_pcl5",
+                "reagent_display": "PCl5",
+                "molecule_interim_smiles": "CCl",
+                "mechanism_hint": "Convert to Alkyl Halide."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "sub_cn",
+                "reagent_display": "KCN (alc)",
+                "molecule_interim_smiles": "CC#N",
+                "mechanism_hint": "Add Carbon (Nitrile formation)."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "red_mendius",
+                "reagent_display": "Na(Hg) / EtOH",
+                "mechanism_hint": "Mendius reduction (or LiAlH4) converts Nitrile to Primary Amine."
+            }
+        ],
+        "explanation": "Amine -> Alcohol. Alcohol -> Chloride. Chloride -> Nitrile (Step Up). Nitrile -> Amine (Reduction)."
+    },
+    {
+        "chapter": "Amines",
+        "id": "ncert_13_amin_06",
+        "title": "Nitro to Amine",
+        "description": "Convert Nitromethane to Dimethylamine",
+        "start_smiles": "C[N+](=O)[O-]",
+        "target_smiles": "CNC",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "red_sn_hcl",
+                "reagent_display": "Sn / HCl",
+                "molecule_interim_smiles": "CN",
+                "mechanism_hint": "Reduce Nitro to Primary Amine."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "carbyl_01",
+                "reagent_display": "CHCl3 / KOH (Carbylamine)",
+                "molecule_interim_smiles": "C[N+]#[C-]",
+                "mechanism_hint": "Convert Primary Amine to Isocyanide."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "red_lah",
+                "reagent_display": "LiAlH4",
+                "mechanism_hint": "Reduction of Isocyanide gives Secondary Amine."
+            }
+        ],
+        "explanation": "Reduce Nitro to Amine (Sn/HCl). Convert to Isocyanide (Carbylamine). Reduce Isocyanide (LiAlH4) to Secondary Amine."
+    },
+    {
+        "chapter": "Amines",
+        "id": "ncert_13_amin_07",
+        "title": "Benzene to m-Bromophenol",
+        "description": "Convert Benzene to m-Bromophenol",
+        "start_smiles": "c1ccccc1",
+        "target_smiles": "Oc1cccc(Br)c1",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "eas_no2",
+                "reagent_display": "HNO3 / H2SO4",
+                "molecule_interim_smiles": "O=[N+]([O-])c1ccccc1",
+                "mechanism_hint": "Nitration first (Meta director)."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "eas_br",
+                "reagent_display": "Br2 / FeBr3",
+                "molecule_interim_smiles": "O=[N+]([O-])c1cccc(Br)c1",
+                "mechanism_hint": "Bromination at Meta position."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "red_sn_hcl",
+                "reagent_display": "Sn / HCl",
+                "molecule_interim_smiles": "Nc1cccc(Br)c1",
+                "mechanism_hint": "Reduce Nitro to Anine."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "diaz_nano2",
+                "reagent_display": "NaNO2 / HCl (0-5°C)",
+                "molecule_interim_smiles": "[N+]#Nc1cccc(Br)c1",
+                "mechanism_hint": "Diazotization."
+            },
+            {
+                "step_order": 5,
+                "reagent_id": "sand_h2o",
+                "reagent_display": "H2O / Δ (Warm)",
+                "mechanism_hint": "Hydrolysis of Diazonium salt yields Phenol."
+            }
+        ],
+        "explanation": "Nitrate (Meta). Brominate (Meta to NO2). Reduce NO2 to NH2. Diazotize. Hydrolyze to OH."
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "ascent_01",
+        "title": "Wurtz Reaction: C1 to C2",
+        "description": "Convert Methane into Ethane",
+        "start_smiles": "C",
+        "target_smiles": "CC",
+        "difficulty": "Easy",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "rad_cl2",
+                "reagent_display": "Cl2 / Light (hv)",
+                "molecule_interim_smiles": "CCl",
+                "mechanism_hint": "Free radical substitution to Methyl Chloride."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "wurtz_na",
+                "reagent_display": "Na / Dry Ether",
+                "mechanism_hint": "Wurtz Reaction doubles the carbon chain."
+            }
+        ],
+        "explanation": "The synthesis starts with chlorination of methane to form methyl chloride. Two molecules of methyl chloride then undergo a Wurtz reaction with sodium in dry ether to form ethane.",
+        "audio_url": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "ascent_02",
+        "title": "Wurtz Reaction: C2 to C4",
+        "description": "Convert Ethane into n-Butane",
+        "start_smiles": "CC",
+        "target_smiles": "CCCC",
+        "difficulty": "Easy",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "rad_br2",
+                "reagent_display": "Br2 / hv",
+                "molecule_interim_smiles": "CCBr",
+                "mechanism_hint": "Bromination to Ethyl Bromide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "wurtz_na",
+                "reagent_display": "Na / Dry Ether",
+                "mechanism_hint": "Wurtz coupling joins two ethyl groups."
+            }
+        ],
+        "explanation": "Ethane is first brominated to ethyl bromide. The chain is then doubled using the Wurtz reaction (Na/Dry Ether) to produce n-butane.",
+        "audio_url": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "ascent_03",
+        "title": "Wurtz on Secondary Halide",
+        "description": "Convert But-1-ene to 3,4-Dimethylhexane",
+        "start_smiles": "CCC=C",
+        "target_smiles": "CCC(C)C(C)CC",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "add_hbr",
+                "reagent_display": "HBr",
+                "molecule_interim_smiles": "CCC(Br)C",
+                "mechanism_hint": "Markovnikov addition gives 2-Bromobutane."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "wurtz_na",
+                "reagent_display": "Na / Dry Ether",
+                "mechanism_hint": "Coupling occurs at the secondary carbon (2-position)."
+            }
+        ],
+        "explanation": "HBr is added to but-1-ene via Markovnikov addition to yield 2-bromobutane. A Wurtz coupling then joins these secondary alkyl groups at the 2-position, forming 3,4-dimethylhexane.",
+        "audio_url": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "ascent_04",
+        "title": "Cyanide Ascent: Halide to Halide",
+        "description": "Convert Methyl Iodide into Ethyl Iodide",
+        "start_smiles": "CI",
+        "target_smiles": "CCI",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "sub_kcn",
+                "reagent_display": "KCN",
+                "molecule_interim_smiles": "CC#N",
+                "mechanism_hint": "Nucleophilic substitution forms Acetonitrile."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "red_na_etoh",
+                "reagent_display": "Na / C2H5OH",
+                "molecule_interim_smiles": "CCN",
+                "mechanism_hint": "Mendius Reduction to Ethylamine."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "diaz_hno2",
+                "reagent_display": "HNO2",
+                "molecule_interim_smiles": "CCO",
+                "mechanism_hint": "Convert Primary Amine to Alcohol."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "hal_p_i2",
+                "reagent_display": "P + I2",
+                "mechanism_hint": "Convert Alcohol back to Iodide."
+            }
+        ],
+        "explanation": "Methyl iodide is converted to acetonitrile using KCN. Reduction with sodium and ethanol gives ethylamine, which is then converted to ethanol via diazotization. Finally, ethanol is converted to ethyl iodide using P+I2.",
+        "audio_url": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "ascent_05",
+        "title": "Cyanide Ascent: Alcohol to Alcohol",
+        "description": "Convert Methanol into Ethanol",
+        "start_smiles": "CO",
+        "target_smiles": "CCO",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hal_p_i2",
+                "reagent_display": "P + I2",
+                "molecule_interim_smiles": "CI",
+                "mechanism_hint": "Activate Alcohol to Alkyl Iodide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "sub_kcn",
+                "reagent_display": "KCN",
+                "molecule_interim_smiles": "CC#N",
+                "mechanism_hint": "Add one carbon via Cyanide."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "red_na_etoh",
+                "reagent_display": "Na / C2H5OH",
+                "molecule_interim_smiles": "CCN",
+                "mechanism_hint": "Reduce to Amine."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "diaz_hno2",
+                "reagent_display": "HNO2",
+                "mechanism_hint": "Diazotization leads to Alcohol."
+            }
+        ],
+        "explanation": "Methanol is activated to methyl iodide. KCN adds a carbon to form acetonitrile. Reduction gives ethylamine, and diazotization with HNO2 yields ethanol.",
+        "audio_url": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "ascent_06",
+        "title": "Ascent of Acid",
+        "description": "Convert Acetic Acid to Propionic Acid",
+        "start_smiles": "CC(=O)O",
+        "target_smiles": "CCC(=O)O",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "red_lah",
+                "reagent_display": "LiAlH4",
+                "molecule_interim_smiles": "CCO",
+                "mechanism_hint": "Reduce Acid to Alcohol first."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "hal_p_i2",
+                "reagent_display": "P + I2",
+                "molecule_interim_smiles": "CCI",
+                "mechanism_hint": "Convert to Iodide."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "sub_kcn",
+                "reagent_display": "KCN",
+                "molecule_interim_smiles": "CCC#N",
+                "mechanism_hint": "Add the extra Carbon."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "hyd_acid",
+                "reagent_display": "H+ / H2O",
+                "mechanism_hint": "Hydrolysis of Nitrile gives Carboxylic Acid."
+            }
+        ],
+        "explanation": "Acetic acid is reduced to ethanol. Following conversion to ethyl iodide, KCN is used to form propionitrile. Acidic hydrolysis then yields propionic acid.",
+        "audio_url": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "ascent_07",
+        "title": "Ascent of Amine",
+        "description": "Convert Methylamine into Ethylamine",
+        "start_smiles": "CN",
+        "target_smiles": "CCN",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "diaz_hno2",
+                "reagent_display": "HNO2",
+                "molecule_interim_smiles": "CO",
+                "mechanism_hint": "Turn Amine into Alcohol."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "hal_p_i2",
+                "reagent_display": "P + I2",
+                "molecule_interim_smiles": "CI",
+                "mechanism_hint": "Turn Alcohol into Iodide."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "sub_kcn",
+                "reagent_display": "KCN",
+                "molecule_interim_smiles": "CC#N",
+                "mechanism_hint": "Add Carbon (Nitrile)."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "red_na_etoh",
+                "reagent_display": "Na / C2H5OH",
+                "mechanism_hint": "Reduce Nitrile to higher Amine."
+            }
+        ],
+        "explanation": "Methylamine is converted to methanol using HNO2. Subsequent steps involve conversion to methyl iodide, nitrile formation with KCN to add a carbon, and reduction to ethylamine.",
+        "audio_url": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "ascent_08",
+        "title": "Grignard Ascent: C1 to C2",
+        "description": "Convert Methanol to Ethanol (via Grignard)",
+        "start_smiles": "CO",
+        "target_smiles": "CCO",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hal_p_i2",
+                "reagent_display": "P + I2",
+                "molecule_interim_smiles": "CI",
+                "mechanism_hint": "Create Alkyl Halide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "grig_mg",
+                "reagent_display": "Mg / Dry Ether",
+                "molecule_interim_smiles": "C[Mg]I",
+                "mechanism_hint": "Form Grignard Reagent."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "grig_hcho",
+                "reagent_display": "1. HCHO  2. H3O+",
+                "mechanism_hint": "Methanal adds 1 Carbon."
+            }
+        ],
+        "explanation": "Methanol is converted to methyl iodide and then to a Grignard reagent (MeMgI). Reaction with formaldehyde followed by workup extends the chain to ethanol.",
+        "audio_url": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "ascent_09",
+        "title": "Grignard Ascent: C1 to C3",
+        "description": "Convert Methanol to 1-Propanol (Epoxide Method)",
+        "start_smiles": "CO",
+        "target_smiles": "CCCO",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hal_pbr3",
+                "reagent_display": "PBr3",
+                "molecule_interim_smiles": "CBr",
+                "mechanism_hint": "Convert to Bromide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "grig_mg",
+                "reagent_display": "Mg / Dry Ether",
+                "molecule_interim_smiles": "C[Mg]Br",
+                "mechanism_hint": "Form Grignard."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "grig_epoxide",
+                "reagent_display": "1. Ethylene Oxide  2. H3O+",
+                "mechanism_hint": "Epoxide adds 2 Carbons to the chain."
+            }
+        ],
+        "explanation": "Methanol is converted to methyl bromide and then to a Grignard reagent. Reaction with ethylene oxide extends the chain by two carbons to form propan-1-ol.",
+        "audio_url": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "ascent_10",
+        "title": "Grignard Ascent: C2 to C3",
+        "description": "Convert Ethanol to 1-Propanol",
+        "start_smiles": "CCO",
+        "target_smiles": "CCCO",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hal_pbr3",
+                "reagent_display": "PBr3",
+                "molecule_interim_smiles": "CCBr",
+                "mechanism_hint": "Convert to Ethyl Bromide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "grig_mg",
+                "reagent_display": "Mg / Dry Ether",
+                "molecule_interim_smiles": "CC[Mg]Br",
+                "mechanism_hint": "Form Ethyl Magnesium Bromide."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "grig_hcho",
+                "reagent_display": "1. HCHO  2. H3O+",
+                "mechanism_hint": "Formaldehyde extends the chain by 1 Carbon."
+            }
+        ],
+        "explanation": "Ethanol is converted to ethyl bromide and then to a Grignard reagent. Reaction with formaldehyde adds one carbon to form propan-1-ol.",
+        "audio_url": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "ascent_11",
+        "title": "Grignard: 2-Propanol Synthesis",
+        "description": "Convert Methanol to 2-Propanol",
+        "start_smiles": "CO",
+        "target_smiles": "CC(O)C",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hal_p_i2",
+                "reagent_display": "P + I2",
+                "molecule_interim_smiles": "CI",
+                "mechanism_hint": "Methyl Iodide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "grig_mg",
+                "reagent_display": "Mg / Dry Ether",
+                "molecule_interim_smiles": "C[Mg]I",
+                "mechanism_hint": "Methyl Magnesium Iodide."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "grig_ch3cho",
+                "reagent_display": "1. CH3CHO (Acetaldehyde) 2. H3O+",
+                "mechanism_hint": "Acetaldehyde + Grignard = Secondary Alcohol."
+            }
+        ],
+        "explanation": "Methanol is converted to methyl iodide and then to a Grignard reagent. Reaction with acetaldehyde yields 2-propanol (secondary alcohol).",
+        "audio_url": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "ascent_12",
+        "title": "Grignard: Oxidize then Add",
+        "description": "Convert Ethanol to 2-Propanol",
+        "start_smiles": "CCO",
+        "target_smiles": "CC(O)C",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "ox_controlled",
+                "reagent_display": "K2Cr2O7 + H2SO4",
+                "molecule_interim_smiles": "CC=O",
+                "mechanism_hint": "Controlled oxidation to Acetaldehyde."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "grig_ch3mgbr",
+                "reagent_display": "1. CH3MgBr  2. H3O+",
+                "mechanism_hint": "Methyl Grignard attacks the aldehyde."
+            }
+        ],
+        "explanation": "Ethanol is oxidized to acetaldehyde. Methyl Grignard then attacks the carbonyl group to form 2-propanol upon workup.",
+        "audio_url": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "ascent_13",
+        "title": "Aldehyde Ascent",
+        "description": "Convert Methanal (Formaldehyde) to Ethanal",
+        "start_smiles": "C=O",
+        "target_smiles": "CC=O",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "grig_ch3mgbr",
+                "reagent_display": "1. CH3MgBr  2. H3O+",
+                "molecule_interim_smiles": "CCO",
+                "mechanism_hint": "Convert Formaldehyde to Ethanol via Grignard."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ox_pcc_cu",
+                "reagent_display": "Cu / 573K",
+                "mechanism_hint": "Dehydrogenation of alcohol to aldehyde."
+            }
+        ],
+        "explanation": "Formaldehyde is reacted with methyl Grignard to form ethanol. Dehydrogenation using copper at 573K then yields acetaldehyde.",
+        "audio_url": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "ascent_14",
+        "title": "Grignard Ascent: C2 to C4",
+        "description": "Convert Ethanol to 1-Butanol",
+        "start_smiles": "CCO",
+        "target_smiles": "CCCCO",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hal_pbr3",
+                "reagent_display": "PBr3",
+                "molecule_interim_smiles": "CCBr",
+                "mechanism_hint": "Convert to Ethyl Bromide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "grig_mg",
+                "reagent_display": "Mg / Dry Ether",
+                "molecule_interim_smiles": "CC[Mg]Br",
+                "mechanism_hint": "Form Ethyl Magnesium Bromide."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "grig_epoxide",
+                "reagent_display": "1. Ethylene Oxide  2. H3O+",
+                "mechanism_hint": "Epoxide adds 2 Carbons to the chain."
+            }
+        ],
+        "explanation": "Ethanol is converted to ethyl bromide and the corresponding Grignard reagent. Reaction with ethylene oxide adds two carbons, yielding 1-butanol.",
+        "audio_url": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "descent_15",
+        "title": "Descent: Ethane to Methane",
+        "description": "Step down series: Convert Ethane into Methane",
+        "start_smiles": "CC",
+        "target_smiles": "C",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "rad_cl2",
+                "reagent_display": "Cl2 / hv",
+                "molecule_interim_smiles": "CCCl",
+                "mechanism_hint": "Chlorination to Ethyl Chloride."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "sub_aq_koh",
+                "reagent_display": "aq. KOH",
+                "molecule_interim_smiles": "CCO",
+                "mechanism_hint": "Hydrolysis to Ethanol."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "ox_strong",
+                "reagent_display": "K2Cr2O7 / H2SO4",
+                "molecule_interim_smiles": "CC(=O)O",
+                "mechanism_hint": "Strong oxidation to Acetic Acid."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "base_naoh",
+                "reagent_display": "NaOH",
+                "molecule_interim_smiles": "CC(=O)[O-].[Na+]",
+                "mechanism_hint": "Neutralization to Sodium Acetate."
+            },
+            {
+                "step_order": 5,
+                "reagent_id": "decarb_sodalime",
+                "reagent_display": "CaO + NaOH / \u0394",
+                "mechanism_hint": "Decarboxylation removes CO2 to form Methane."
+            }
+        ],
+        "explanation": "Ethane is chlorinated to ethyl chloride and then hydrolyzed to ethanol. Strong oxidation yields acetic acid, which is neutralized to sodium acetate. Final decarboxylation with soda lime produces methane.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "descent_16",
+        "title": "Decarboxylation",
+        "description": "Convert Propionic Acid to Ethane",
+        "start_smiles": "CCC(=O)O",
+        "target_smiles": "CC",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "base_naoh",
+                "reagent_display": "NaOH",
+                "molecule_interim_smiles": "CCC(=O)[O-].[Na+]",
+                "mechanism_hint": "Form Sodium Propionate."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "decarb_sodalime",
+                "reagent_display": "CaO + NaOH / \u0394",
+                "mechanism_hint": "Decarboxylation removes one carbon atom."
+            }
+        ],
+        "explanation": "Propionic acid is converted to its sodium salt using NaOH. Heating with soda lime (decarboxylation) removes the carboxyl group as CO2, yielding ethane.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "descent_17",
+        "title": "Hofmann Descent: Halide to Halide",
+        "description": "Convert Ethyl Iodide to Methyl Iodide",
+        "start_smiles": "CCI",
+        "target_smiles": "CI",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "sub_aq_koh",
+                "reagent_display": "aq. KOH",
+                "molecule_interim_smiles": "CCO",
+                "mechanism_hint": "Hydrolysis to Alcohol."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ox_strong",
+                "reagent_display": "K2Cr2O7 / H2SO4",
+                "molecule_interim_smiles": "CC(=O)O",
+                "mechanism_hint": "Oxidize to Acid."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "ammonolysis",
+                "reagent_display": "NH3 / \u0394",
+                "molecule_interim_smiles": "CC(=O)N",
+                "mechanism_hint": "Convert to Amide."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "hoffmann_brom",
+                "reagent_display": "Br2 / KOH",
+                "molecule_interim_smiles": "CN",
+                "mechanism_hint": "Step down: Acetamide to Methylamine."
+            },
+            {
+                "step_order": 5,
+                "reagent_id": "diaz_hno2",
+                "reagent_display": "HNO2",
+                "molecule_interim_smiles": "CO",
+                "mechanism_hint": "Amine to Alcohol."
+            },
+            {
+                "step_order": 6,
+                "reagent_id": "hal_p_i2",
+                "reagent_display": "P + I2",
+                "mechanism_hint": "Alcohol to Iodide."
+            }
+        ],
+        "explanation": "Ethyl iodide is hydrolyzed to ethanol and then oxidized to acetic acid. Ammonolysis forms acetamide, which undergoes Hoffmann bromamide degradation to methylamine. Diazotization gives methanol, which is finally converted to methyl iodide.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "descent_18",
+        "title": "Hofmann Descent: Alcohol to Alcohol",
+        "description": "Convert Ethanol to Methanol",
+        "start_smiles": "CCO",
+        "target_smiles": "CO",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "ox_strong",
+                "reagent_display": "KMnO4 / H+",
+                "molecule_interim_smiles": "CC(=O)O",
+                "mechanism_hint": "Oxidize fully to Acetic Acid."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ammonolysis",
+                "reagent_display": "NH3 / \u0394",
+                "molecule_interim_smiles": "CC(=O)N",
+                "mechanism_hint": "Form Acetamide."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "hoffmann_brom",
+                "reagent_display": "Br2 / KOH",
+                "molecule_interim_smiles": "CN",
+                "mechanism_hint": "Degrade to Methylamine."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "diaz_hno2",
+                "reagent_display": "HNO2",
+                "mechanism_hint": "Convert Amine to Alcohol."
+            }
+        ],
+        "explanation": "Ethanol is oxidized to acetic acid and converted to acetamide. Hoffmann degradation yields methylamine, which is then converted to methanol via diazotization.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "descent_19",
+        "title": "Descent: Aldehyde to Aldehyde",
+        "description": "Convert Acetaldehyde to Formaldehyde",
+        "start_smiles": "CC=O",
+        "target_smiles": "C=O",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "ox_strong",
+                "reagent_display": "K2Cr2O7 / H+",
+                "molecule_interim_smiles": "CC(=O)O",
+                "mechanism_hint": "Oxidize to Acetic Acid."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ammonolysis",
+                "reagent_display": "NH3 / \u0394",
+                "molecule_interim_smiles": "CC(=O)N",
+                "mechanism_hint": "Form Amide."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "hoffmann_brom",
+                "reagent_display": "Br2 / KOH",
+                "molecule_interim_smiles": "CN",
+                "mechanism_hint": "Step down to Amine."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "diaz_hno2",
+                "reagent_display": "HNO2",
+                "molecule_interim_smiles": "CO",
+                "mechanism_hint": "Convert to Methanol."
+            },
+            {
+                "step_order": 5,
+                "reagent_id": "dehyd_cu",
+                "reagent_display": "Cu / 573K",
+                "mechanism_hint": "Dehydrogenation to Formaldehyde."
+            }
+        ],
+        "explanation": "Acetaldehyde is oxidized to acetic acid, then converted to acetamide and methylamine. Diazotization yields methanol, and final dehydrogenation with copper gives formaldehyde.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "descent_20",
+        "title": "Descent: Amine to Amine",
+        "description": "Convert Ethylamine to Methylamine",
+        "start_smiles": "CCN",
+        "target_smiles": "CN",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "diaz_hno2",
+                "reagent_display": "HNO2",
+                "molecule_interim_smiles": "CCO",
+                "mechanism_hint": "Ethylamine to Ethanol."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ox_strong",
+                "reagent_display": "KMnO4",
+                "molecule_interim_smiles": "CC(=O)O",
+                "mechanism_hint": "Ethanol to Acetic Acid."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "ammonolysis",
+                "reagent_display": "NH3 / \u0394",
+                "molecule_interim_smiles": "CC(=O)N",
+                "mechanism_hint": "Acid to Amide."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "hoffmann_brom",
+                "reagent_display": "Br2 / KOH",
+                "mechanism_hint": "Amide to lower Amine."
+            }
+        ],
+        "explanation": "Ethylamine is converted to ethanol and then oxidized to acetic acid. Ammonolysis yields acetamide, which is degraded to methylamine via the Hoffmann bromamide reaction.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "descent_21",
+        "title": "Descent: Amide to Amide",
+        "description": "Convert Propionamide to Acetamide",
+        "start_smiles": "CCC(=O)N",
+        "target_smiles": "CC(=O)N",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hoffmann_brom",
+                "reagent_display": "Br2 / KOH",
+                "molecule_interim_smiles": "CCN",
+                "mechanism_hint": "Step down to Ethylamine."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "diaz_hno2",
+                "reagent_display": "HNO2",
+                "molecule_interim_smiles": "CCO",
+                "mechanism_hint": "Ethylamine to Ethanol."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "ox_strong",
+                "reagent_display": "K2Cr2O7 / H+",
+                "molecule_interim_smiles": "CC(=O)O",
+                "mechanism_hint": "Ethanol to Acetic Acid."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "ammonolysis",
+                "reagent_display": "NH3 / \u0394",
+                "mechanism_hint": "Acetic Acid to Acetamide."
+            }
+        ],
+        "explanation": "Propionamide is converted to ethylamine via Hoffmann degradation. Subsequent steps involve conversion to ethanol, oxidation to acetic acid, and final ammonolysis to yield acetamide.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "descent_22",
+        "title": "Descent: Acid to Acid",
+        "description": "Convert Propionic Acid to Acetic Acid",
+        "start_smiles": "CCC(=O)O",
+        "target_smiles": "CC(=O)O",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "ammonolysis",
+                "reagent_display": "NH3 / \u0394",
+                "molecule_interim_smiles": "CCC(=O)N",
+                "mechanism_hint": "Propionic Acid to Propionamide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "hoffmann_brom",
+                "reagent_display": "Br2 / KOH",
+                "molecule_interim_smiles": "CCN",
+                "mechanism_hint": "Propionamide to Ethylamine."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "diaz_hno2",
+                "reagent_display": "HNO2",
+                "molecule_interim_smiles": "CCO",
+                "mechanism_hint": "Ethylamine to Ethanol."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "ox_strong",
+                "reagent_display": "KMnO4",
+                "mechanism_hint": "Ethanol to Acetic Acid."
+            }
+        ],
+        "explanation": "Propionic acid is converted to propionamide and then to ethylamine. Diazotization yields ethanol, which is then oxidized to acetic acid.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "misc_23",
+        "title": "Acid to Secondary Alcohol",
+        "description": "Convert Propionic Acid to Isopropyl Alcohol",
+        "start_smiles": "CCC(=O)O",
+        "target_smiles": "CC(O)C",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "ammonolysis",
+                "reagent_display": "NH3 / \u0394",
+                "molecule_interim_smiles": "CCC(=O)N",
+                "mechanism_hint": "Form Amide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "hoffmann_brom",
+                "reagent_display": "Br2 / KOH",
+                "molecule_interim_smiles": "CCN",
+                "mechanism_hint": "Step down to Ethylamine."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "diaz_hno2",
+                "reagent_display": "HNO2",
+                "molecule_interim_smiles": "CCO",
+                "mechanism_hint": "To Ethanol."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "ox_controlled",
+                "reagent_display": "K2Cr2O7 / H+",
+                "molecule_interim_smiles": "CC=O",
+                "mechanism_hint": "Oxidize to Acetaldehyde."
+            },
+            {
+                "step_order": 5,
+                "reagent_id": "grig_ch3mgbr",
+                "reagent_display": "1. CH3MgBr  2. H3O+",
+                "mechanism_hint": "Grignard adds Methyl group to form Isopropyl Alcohol."
+            }
+        ],
+        "explanation": "Propionic acid is stepped down to ethanol and then oxidized to acetaldehyde. Reaction with methyl Grignard followed by workup yields isopropyl alcohol.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "misc_24",
+        "title": "Alkyne to Alcohol",
+        "description": "Convert Acetylene to Ethanol",
+        "start_smiles": "C#C",
+        "target_smiles": "CCO",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hyd_hgso4",
+                "reagent_display": "HgSO4 / H2SO4",
+                "molecule_interim_smiles": "CC=O",
+                "mechanism_hint": "Kucherov Reaction (Hydration) to Acetaldehyde."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "red_lah",
+                "reagent_display": "LiAlH4",
+                "mechanism_hint": "Reduce Aldehyde to Alcohol."
+            }
+        ],
+        "explanation": "Hydration of acetylene using HgSO4/H2SO4 gives acetaldehyde. Reduction with LiAlH4 then yields ethanol.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "misc_25",
+        "title": "Alkyne to Acid",
+        "description": "Convert Acetylene to Acetic Acid",
+        "start_smiles": "C#C",
+        "target_smiles": "CC(=O)O",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hyd_hgso4",
+                "reagent_display": "HgSO4 / H2SO4",
+                "molecule_interim_smiles": "CC=O",
+                "mechanism_hint": "Hydration to Acetaldehyde."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ox_strong",
+                "reagent_display": "K2Cr2O7 / H+",
+                "mechanism_hint": "Oxidation to Acid."
+            }
+        ],
+        "explanation": "Acetylene is hydrated to acetaldehyde, which is then oxidized to acetic acid using a strong oxidizing agent.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "misc_26",
+        "title": "Acid to Ketone (Dry Distillation)",
+        "description": "Convert Acetic Acid to Acetone",
+        "start_smiles": "CC(=O)O",
+        "target_smiles": "CC(=O)C",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "base_caoh2",
+                "reagent_display": "Ca(OH)2",
+                "molecule_interim_smiles": "CC(=O)O[Ca]OC(=O)C",
+                "mechanism_hint": "Form Calcium Acetate."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "dry_distil",
+                "reagent_display": "Dry Distillation",
+                "mechanism_hint": "Heating Calcium salt yields Acetone + CaCO3."
+            }
+        ],
+        "explanation": "Acetic acid is neutralized with calcium hydroxide to form calcium acetate. Dry distillation of the salt yields acetone.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "misc_27",
+        "title": "Acid to Aldehyde",
+        "description": "Convert Acetic Acid to Acetaldehyde",
+        "start_smiles": "CC(=O)O",
+        "target_smiles": "CC=O",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hal_pcl5",
+                "reagent_display": "PCl5",
+                "molecule_interim_smiles": "CC(=O)Cl",
+                "mechanism_hint": "Convert to Acetyl Chloride."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "red_rosenmund",
+                "reagent_display": "H2 / Pd-BaSO4",
+                "mechanism_hint": "Rosenmund Reduction stops at Aldehyde."
+            }
+        ],
+        "explanation": "Acetic acid is converted to acetyl chloride using PCl5. Controlled reduction using the Rosenmund method (H2/Pd-BaSO4) yields acetaldehyde.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "misc_28",
+        "title": "Dry Distillation (C1)",
+        "description": "Convert Formic Acid to Formaldehyde",
+        "start_smiles": "OC=O",
+        "target_smiles": "C=O",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "base_caoh2",
+                "reagent_display": "Ca(OH)2",
+                "molecule_interim_smiles": "Calcium Formate",
+                "mechanism_hint": "Form Calcium Formate."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "dry_distil",
+                "reagent_display": "Dry Distillation",
+                "mechanism_hint": "Heating Calcium Formate gives Formaldehyde."
+            }
+        ],
+        "explanation": "Formic acid is converted to calcium formate. Dry distillation of this salt yields formaldehyde.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "misc_29",
+        "title": "Dry Distillation (C3)",
+        "description": "Convert Propionic Acid to 3-Pentanone",
+        "start_smiles": "CCC(=O)O",
+        "target_smiles": "CCC(=O)CC",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "base_caoh2",
+                "reagent_display": "Ca(OH)2",
+                "molecule_interim_smiles": "Calcium Propionate",
+                "mechanism_hint": "Form Calcium Propionate."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "dry_distil",
+                "reagent_display": "Dry Distillation",
+                "mechanism_hint": "Yields 3-Pentanone (Diethyl Ketone)."
+            }
+        ],
+        "explanation": "Propionic acid is converted to calcium propionate. Dry distillation yields 3-pentanone (diethyl ketone).",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "misc_30",
+        "title": "Grignard Carboxylation",
+        "description": "Convert Methyl Bromide to Acetic Acid (Grignard Method)",
+        "start_smiles": "CBr",
+        "target_smiles": "CC(=O)O",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "grig_mg",
+                "reagent_display": "Mg / Dry Ether",
+                "molecule_interim_smiles": "C[Mg]Br",
+                "mechanism_hint": "Form Methyl Magnesium Bromide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "grig_co2",
+                "reagent_display": "1. CO2  2. H3O+",
+                "mechanism_hint": "Grignard attack on CO2 creates a Carboxylic Acid."
+            }
+        ],
+        "explanation": "Methyl bromide is converted to a Grignard reagent (MeMgBr). Reaction with solid CO2 followed by hydrolysis yields acetic acid.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "misc_31",
+        "title": "Position Shift: 1 to 2",
+        "description": "Convert 1-Propanol to 2-Bromopropane",
+        "start_smiles": "CCCO",
+        "target_smiles": "CC(Br)C",
+        "difficulty": "Easy",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "dehyd_acid",
+                "reagent_display": "Conc. H2SO4 / 443K",
+                "molecule_interim_smiles": "CC=C",
+                "mechanism_hint": "Dehydration to Propene."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "add_hbr",
+                "reagent_display": "HBr",
+                "mechanism_hint": "Markovnikov addition places Br on 2\u00b0 Carbon."
+            }
+        ],
+        "explanation": "1-Propanol is dehydrated to propene using conc. H2SO4. Markovnikov addition of HBr then places bromine at the secondary carbon, yielding 2-bromopropane.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "misc_32",
+        "title": "Alkyne Step Up",
+        "description": "Convert Propyne to 2-Butyne",
+        "start_smiles": "CC#C",
+        "target_smiles": "CC#CC",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "base_nanh2",
+                "reagent_display": "NaNH2 / liq NH3",
+                "molecule_interim_smiles": "CC#C[Na]",
+                "mechanism_hint": "Create Sodium Propynide (Acidic H removal)."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "sub_chi",
+                "reagent_display": "CH3I",
+                "mechanism_hint": "SN2 attack adds Methyl group."
+            }
+        ],
+        "explanation": "Propyne is deprotonated by NaNH2 to form sodium propynide. Nucleophilic attack on methyl iodide then adds a methyl group to yield 2-butyne.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "misc_33",
+        "title": "Ascent to Amine",
+        "description": "Convert Ethyl Chloride to n-Propyl Amine",
+        "start_smiles": "CCCl",
+        "target_smiles": "CCCN",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "sub_kcn",
+                "reagent_display": "alc. KCN",
+                "molecule_interim_smiles": "CCC#N",
+                "mechanism_hint": "Form Ethyl Cyanide (Propionitrile)."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "red_lah",
+                "reagent_display": "LiAlH4",
+                "mechanism_hint": "Reduce Nitrile to Primary Amine."
+            }
+        ],
+        "explanation": "Ethyl chloride is converted to propionitrile using KCN, extending the chain by one carbon. Reduction with LiAlH4 yields n-propyl amine.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "misc_34",
+        "title": "Alkane to Alkene",
+        "description": "Convert Propane to Propylene",
+        "start_smiles": "CCC",
+        "target_smiles": "CC=C",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "rad_cl2",
+                "reagent_display": "Cl2 / Sunlight",
+                "molecule_interim_smiles": "CC(Cl)C",
+                "mechanism_hint": "Chlorination (Isopropyl chloride is major)."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "elim_alc_koh",
+                "reagent_display": "alc. KOH / \u0394",
+                "mechanism_hint": "Dehydrohalogenation to Alkene."
+            }
+        ],
+        "explanation": "Free radical chlorination of propane yields isopropyl chloride (major). Dehydrohalogenation with alcoholic KOH then produces propylene.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "misc_35",
+        "title": "Alkene to Alkyne",
+        "description": "Convert Propylene to Propyne",
+        "start_smiles": "CC=C",
+        "target_smiles": "CC#C",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "add_br2",
+                "reagent_display": "Br2 / CCl4",
+                "molecule_interim_smiles": "CC(Br)CBr",
+                "mechanism_hint": "Form Vicinal Dibromide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "elim_double",
+                "reagent_display": "1. alc KOH  2. NaNH2",
+                "mechanism_hint": "Double elimination removes 2 HBr to form Triple Bond."
+            }
+        ],
+        "explanation": "Propylene is brominated to 1,2-dibromopropane. Double elimination using alcoholic KOH and NaNH2 removes two molecules of HBr to form the triple bond of propyne.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_36",
+        "title": "Williamson's Synthesis Path",
+        "description": "Convert Ethyl Alcohol to Diethyl Ether",
+        "start_smiles": "CCO",
+        "target_smiles": "CCOCC",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hal_p_i2",
+                "reagent_display": "P / I2",
+                "molecule_interim_smiles": "CCI",
+                "mechanism_hint": "Convert Alcohol to Ethyl Iodide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "williamson_etona",
+                "reagent_display": "C2H5ONa (Sodium Ethoxide)",
+                "mechanism_hint": "Williamson's Synthesis: Nucleophilic attack by Ethoxide on Alkyl Halide."
+            }
+        ],
+        "explanation": "Ethanol is converted to ethyl iodide using P/I2. Nucleophilic substitution with sodium ethoxide (Williamson's synthesis) then yields diethyl ether.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_37",
+        "title": "HVZ Reaction",
+        "description": "Convert Propionic Acid to Lactic Acid",
+        "start_smiles": "CCC(=O)O",
+        "target_smiles": "CC(O)C(=O)O",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hvz_br2",
+                "reagent_display": "Br2 / Red P",
+                "molecule_interim_smiles": "CC(Br)C(=O)O",
+                "mechanism_hint": "Hell-Volhard-Zelinsky (HVZ) reaction halogenates the alpha-carbon."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "sub_aq_naoh",
+                "reagent_display": "aq. NaOH / Heat",
+                "mechanism_hint": "Nucleophilic substitution replaces Br with OH."
+            }
+        ],
+        "explanation": "Propionic acid undergoes HVZ reaction with Br2/Red P to form alpha-bromopropionic acid. Substitution with aqueous NaOH replaces the bromine with a hydroxyl group to form lactic acid.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_38",
+        "title": "Cyanohydrin Synthesis",
+        "description": "Convert Acetaldehyde to Lactic Acid",
+        "start_smiles": "CC=O",
+        "target_smiles": "CC(O)C(=O)O",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "add_hcn",
+                "reagent_display": "HCN",
+                "molecule_interim_smiles": "CC(O)C#N",
+                "mechanism_hint": "Nucleophilic addition forms Acetaldehyde Cyanohydrin."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "hyd_acid",
+                "reagent_display": "H+ / H2O",
+                "mechanism_hint": "Hydrolysis of Nitrile group gives Carboxylic Acid."
+            }
+        ],
+        "explanation": "Acetaldehyde reacts with HCN to form acetaldehyde cyanohydrin. Acidic hydrolysis of the nitrile group then gives lactic acid.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_39",
+        "title": "Alkyne to Aldol",
+        "description": "Convert Ethyne to 3-Hydroxybutanal",
+        "start_smiles": "C#C",
+        "target_smiles": "CC(O)CC=O",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hyd_hgso4",
+                "reagent_display": "HgSO4 / dil H2SO4",
+                "molecule_interim_smiles": "CC=O",
+                "mechanism_hint": "Hydration of Ethyne gives Acetaldehyde."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "aldol_dil_base",
+                "reagent_display": "dil. NaOH",
+                "mechanism_hint": "Aldol Condensation links two Acetaldehyde molecules."
+            }
+        ],
+        "explanation": "Ethyne is hydrated using HgSO4/dil H2SO4 to form acetaldehyde. Dilute base then catalyzes aldol condensation between two acetaldehyde molecules to yield 3-hydroxybutanal.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_40",
+        "title": "Grignard Oxidation",
+        "description": "Convert Acetaldehyde to Acetone (Method A)",
+        "start_smiles": "CC=O",
+        "target_smiles": "CC(=O)C",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "grig_ch3mgbr",
+                "reagent_display": "1. CH3MgBr  2. H+/H2O",
+                "molecule_interim_smiles": "CC(O)C",
+                "mechanism_hint": "Grignard addition creates Secondary Alcohol (2-Propanol)."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ox_controlled",
+                "reagent_display": "K2Cr2O7 + H2SO4",
+                "mechanism_hint": "Oxidation of Secondary Alcohol yields Ketone."
+            }
+        ],
+        "explanation": "Acetaldehyde reacts with methyl Grignard followed by acidic workup to form 2-propanol. Controlled oxidation of this secondary alcohol yields acetone.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_41",
+        "title": "Aldol Dehydration",
+        "description": "Convert Ethanal to 2-Butenal (Crotonaldehyde)",
+        "start_smiles": "CC=O",
+        "target_smiles": "CC=CC=O",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "aldol_dil_base",
+                "reagent_display": "dil. NaOH",
+                "molecule_interim_smiles": "CC(O)CC=O",
+                "mechanism_hint": "Aldol Condensation to 3-Hydroxybutanal."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "dehyd_heat",
+                "reagent_display": "H+ / H2O, Heat",
+                "mechanism_hint": "Dehydration removes water to form double bond (En-al)."
+            }
+        ],
+        "explanation": "Acetaldehyde undergoes aldol condensation to form 3-hydroxybutanal. Heating with acid causes dehydration of the beta-hydroxy aldehyde to form 2-butenal (crotonaldehyde).",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_42",
+        "title": "Baeyer's Unsaturation",
+        "description": "Convert Ethanol to 1,2-Ethanediol (Glycol)",
+        "start_smiles": "CCO",
+        "target_smiles": "OCCO",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "dehyd_acid",
+                "reagent_display": "Conc. H2SO4 / 443K",
+                "molecule_interim_smiles": "C=C",
+                "mechanism_hint": "Dehydration to Ethylene."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ox_baeyer",
+                "reagent_display": "Cold dil. alk. KMnO4",
+                "mechanism_hint": "Baeyer's Reagent performs Syn-Hydroxylation."
+            }
+        ],
+        "explanation": "Ethanol is dehydrated to ethylene using conc. H2SO4 at 443K. Baeyer's reagent (cold dil. alk. KMnO4) then performs syn-hydroxylation to yield 1,2-ethanediol (glycol).",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_43",
+        "title": "Nitro to Amine Step Up",
+        "description": "Convert Nitromethane to Dimethylamine",
+        "start_smiles": "C[N+](=O)[O-]",
+        "target_smiles": "CNC",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "red_sn_hcl",
+                "reagent_display": "Sn / HCl",
+                "molecule_interim_smiles": "CN",
+                "mechanism_hint": "Reduce Nitro to Primary Amine."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "sub_ch3i",
+                "reagent_display": "CH3I / 373K",
+                "mechanism_hint": "Hofmann's Ammonolysis adds Methyl group."
+            }
+        ],
+        "explanation": "Nitromethane is reduced to methylamine using Sn/HCl. Subsequent alkylation with methyl iodide via Hofmann's ammonolysis yields dimethylamine.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_44",
+        "title": "Methane to Acid",
+        "description": "Convert Methane to Acetic Acid (Ascent)",
+        "start_smiles": "C",
+        "target_smiles": "CC(=O)O",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "rad_br2",
+                "reagent_display": "Br2 / hv",
+                "molecule_interim_smiles": "CBr",
+                "mechanism_hint": "Bromination."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "sub_kcn",
+                "reagent_display": "alc. KCN",
+                "molecule_interim_smiles": "CC#N",
+                "mechanism_hint": "Add Carbon (Acetonitrile)."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "hyd_acid",
+                "reagent_display": "H+ / H2O",
+                "mechanism_hint": "Hydrolysis to Acid."
+            }
+        ],
+        "explanation": "Methane is brominated to methyl bromide. Reaction with alcoholic KCN adds a carbon to form acetonitrile, which is then hydrolyzed to acetic acid.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_45",
+        "title": "Coupling Salts",
+        "description": "Convert Formic Acid to Oxalic Acid",
+        "start_smiles": "OC=O",
+        "target_smiles": "OC(=O)C(=O)O",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "base_naoh",
+                "reagent_display": "NaOH",
+                "molecule_interim_smiles": "O=CO[Na]",
+                "mechanism_hint": "Form Sodium Formate."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "heat_coupling",
+                "reagent_display": "Heat (633K) / -H2",
+                "molecule_interim_smiles": "O=C(O[Na])C(=O)O[Na]",
+                "mechanism_hint": "Thermal coupling releases H2 to form Sodium Oxalate."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "acid_workup",
+                "reagent_display": "Dil. HCl",
+                "mechanism_hint": "Acidification to Oxalic Acid."
+            }
+        ],
+        "explanation": "Formic acid is neutralized to sodium formate. Thermal coupling at 633K releases hydrogen to form sodium oxalate, which is then acidified to oxalic acid.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_46",
+        "title": "Oxidative Cleavage Prep",
+        "description": "Convert Ethylene to Oxalic Acid",
+        "start_smiles": "C=C",
+        "target_smiles": "OC(=O)C(=O)O",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "add_br2",
+                "reagent_display": "Br2 / CCl4",
+                "molecule_interim_smiles": "BrCCBr",
+                "mechanism_hint": "Form 1,2-Dibromoethane."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "elim_alc_koh",
+                "reagent_display": "alc. KOH / Heat",
+                "molecule_interim_smiles": "C#C",
+                "mechanism_hint": "Dehydrobromination to Acetylene."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "ox_kmno4",
+                "reagent_display": "Cold dil. alk. KMnO4",
+                "mechanism_hint": "Oxidative Cleavage (Note: Text says Baeyer's but implies strong oxidation/cleavage path for Oxalic Acid)."
+            }
+        ],
+        "explanation": "Ethylene is brominated to 1,2-dibromoethane and then dehydrobrominated to acetylene. Strong oxidation (cleavage) of acetylene yields oxalic acid.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_47",
+        "title": "Isomerization of Alcohol",
+        "description": "Convert Isobutyl Alcohol to tert-Butyl Alcohol",
+        "start_smiles": "CC(C)CO",
+        "target_smiles": "CC(C)(O)C",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "dehyd_acid",
+                "reagent_display": "Conc H2SO4",
+                "molecule_interim_smiles": "CC(C)=C",
+                "mechanism_hint": "Dehydration to Isobutylene."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "add_hi_mark",
+                "reagent_display": "HI (Markovnikov)",
+                "molecule_interim_smiles": "CC(C)(I)C",
+                "mechanism_hint": "Iodine adds to the Tertiary carbon."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "sub_agoh",
+                "reagent_display": "AgOH",
+                "mechanism_hint": "Nucleophilic substitution (OH replaces I)."
+            }
+        ],
+        "explanation": "Isobutyl alcohol is dehydrated to isobutylene. Markovnikov addition of HI places iodine at the tertiary carbon, and substitution with AgOH yields tert-butyl alcohol.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_48",
+        "title": "Dinitrile Synthesis",
+        "description": "Convert Ethylene to Succinic Acid",
+        "start_smiles": "C=C",
+        "target_smiles": "OC(=O)CCC(=O)O",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "add_br2",
+                "reagent_display": "Br2",
+                "molecule_interim_smiles": "BrCCBr",
+                "mechanism_hint": "Form Dibromide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "sub_kcn_double",
+                "reagent_display": "2 KCN",
+                "molecule_interim_smiles": "N#CCCC#N",
+                "mechanism_hint": "Double substitution to 1,4-Dinitrile (Succinonitrile)."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "hyd_acid",
+                "reagent_display": "H+ / H2O",
+                "mechanism_hint": "Complete hydrolysis of both CN groups."
+            }
+        ],
+        "explanation": "Ethylene is converted to 1,2-dibromoethane. Double substitution with KCN yields succinonitrile, which is then fully hydrolyzed to succinic acid.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_49",
+        "title": "Anti-Markovnikov Shift",
+        "description": "Convert Isopropyl Alcohol to n-Propyl Alcohol",
+        "start_smiles": "CC(O)C",
+        "target_smiles": "CCCO",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "dehyd_acid",
+                "reagent_display": "Conc H2SO4",
+                "molecule_interim_smiles": "CC=C",
+                "mechanism_hint": "Dehydrate to Propene."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "add_hbr_perox",
+                "reagent_display": "HBr / Peroxide",
+                "molecule_interim_smiles": "CCCBr",
+                "mechanism_hint": "Anti-Markovnikov addition (Br goes to end)."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "sub_aq_koh",
+                "reagent_display": "aq. KOH",
+                "mechanism_hint": "Substitution gives Primary Alcohol."
+            }
+        ],
+        "explanation": "Isopropyl alcohol is dehydrated to propene. Anti-Markovnikov addition of HBr (Kharasch effect) yields n-propyl bromide, which is then hydrolyzed to n-propyl alcohol.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_50",
+        "title": "Dry Distillation Path",
+        "description": "Convert Acetaldehyde to Acetone (Method B)",
+        "start_smiles": "CC=O",
+        "target_smiles": "CC(=O)C",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "ox_strong",
+                "reagent_display": "K2Cr2O7 / H2SO4",
+                "molecule_interim_smiles": "CC(=O)O",
+                "mechanism_hint": "Oxidize to Acetic Acid."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "base_caoh2",
+                "reagent_display": "Ca(OH)2",
+                "molecule_interim_smiles": "CC(=O)O[Ca]OC(=O)C",
+                "mechanism_hint": "Form Calcium Acetate."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "dry_distil",
+                "reagent_display": "Dry Distillation",
+                "mechanism_hint": "Heat Calcium salt to release Acetone."
+            }
+        ],
+        "explanation": "Acetaldehyde is oxidized to acetic acid and neutralized to calcium acetate. Dry distillation of the salt yields acetone.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_51",
+        "title": "Markovnikov Shift",
+        "description": "Convert n-Propyl Alcohol to Isopropyl Alcohol",
+        "start_smiles": "CCCO",
+        "target_smiles": "CC(O)C",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "dehyd_acid",
+                "reagent_display": "Conc H2SO4",
+                "molecule_interim_smiles": "CC=C",
+                "mechanism_hint": "Dehydrate to Propene."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "add_hi_mark",
+                "reagent_display": "HI",
+                "molecule_interim_smiles": "CC(I)C",
+                "mechanism_hint": "Markovnikov Addition (I goes to center)."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "sub_agoh",
+                "reagent_display": "AgOH",
+                "mechanism_hint": "Substitution gives Secondary Alcohol."
+            }
+        ],
+        "explanation": "n-Propyl alcohol is dehydrated to propene. Markovnikov addition of HI yields 2-iodopropane, which is then hydrolyzed to isopropyl alcohol.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_52",
+        "title": "Ketone to Amide",
+        "description": "Convert Acetone to Acetamide",
+        "start_smiles": "CC(=O)C",
+        "target_smiles": "CC(=O)N",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "ox_conc_hno3",
+                "reagent_display": "Conc HNO3 [O]",
+                "molecule_interim_smiles": "CC(=O)O",
+                "mechanism_hint": "Strong oxidation of Ketone breaks C-C bond to Acetic Acid."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "hal_socl2",
+                "reagent_display": "SOCl2",
+                "molecule_interim_smiles": "CC(=O)Cl",
+                "mechanism_hint": "Convert to Acetyl Chloride."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "ammonolysis_excess",
+                "reagent_display": "NH3 (excess)",
+                "mechanism_hint": "Ammonolysis yields Acetamide."
+            }
+        ],
+        "explanation": "Acetone undergoes strong oxidation with conc. HNO3, breaking a C-C bond to form acetic acid. This is converted to acetyl chloride and then to acetamide via ammonolysis.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_53",
+        "title": "Grignard: Double Addition",
+        "description": "Convert Acetic Acid to tert-Butyl Alcohol",
+        "start_smiles": "CC(=O)O",
+        "target_smiles": "CC(C)(O)C",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "ester_etoh",
+                "reagent_display": "C2H5OH / H2SO4",
+                "molecule_interim_smiles": "CC(=O)OCC",
+                "mechanism_hint": "Fisher Esterification to Ethyl Acetate."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "grig_excess",
+                "reagent_display": "2 CH3MgBr",
+                "molecule_interim_smiles": "CC(C)(C)O",
+                "mechanism_hint": "Two equivalents of Methyl Grignard attack the ester to form a Tertiary Alcohol."
+            }
+        ],
+        "explanation": "Acetic acid is first converted to ethyl acetate via Fischer esterification. Two equivalents of methyl magnesium bromide (Grignard reagent) then attack the ester carbonyl, followed by acidic workup, to produce tert-butyl alcohol.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_54",
+        "title": "Dry Distillation Path",
+        "description": "Convert Ethanol to Acetone",
+        "start_smiles": "CCO",
+        "target_smiles": "CC(=O)C",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "ox_strong",
+                "reagent_display": "K2Cr2O7 / H+",
+                "molecule_interim_smiles": "CC(=O)O",
+                "mechanism_hint": "Oxidize Alcohol to Acetic Acid."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "base_caoh2",
+                "reagent_display": "Ca(OH)2",
+                "molecule_interim_smiles": "CC(=O)O[Ca]OC(=O)C",
+                "mechanism_hint": "Form Calcium Acetate."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "dry_distil",
+                "reagent_display": "Dry Distillation",
+                "mechanism_hint": "Heat to release Acetone."
+            }
+        ],
+        "explanation": "Ethanol is oxidized to acetic acid using a strong oxidizing agent. Neutralization with calcium hydroxide forms calcium acetate, which upon dry distillation yields acetone.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_55",
+        "title": "Ketone Aldol (Diacetone Alcohol)",
+        "description": "Convert Ethanoic Acid to Diacetone Alcohol",
+        "start_smiles": "CC(=O)O",
+        "target_smiles": "CC(O)(C)CC(=O)C",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "dry_distil_path",
+                "reagent_display": "Ca(OH)2 -> Heat",
+                "molecule_interim_smiles": "CC(=O)C",
+                "mechanism_hint": "Convert Acid to Acetone via Calcium salt."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "aldol_barium",
+                "reagent_display": "Ba(OH)2 or Dil NaOH",
+                "mechanism_hint": "Aldol condensation of Acetone (Ketol formation)."
+            }
+        ],
+        "explanation": "Ethanoic acid is converted to acetone via its calcium salt. Acetone then undergoes base-catalyzed aldol condensation (using Ba(OH)2 or dil. NaOH) to form diacetone alcohol (a ketol).",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_56",
+        "title": "Acid Chloride to Amine",
+        "description": "Convert Propanoic Acid to Ethylamine",
+        "start_smiles": "CCC(=O)O",
+        "target_smiles": "CCN",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hal_socl2",
+                "reagent_display": "SOCl2",
+                "molecule_interim_smiles": "CCC(=O)Cl",
+                "mechanism_hint": "Form Propanoyl Chloride."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ammonolysis",
+                "reagent_display": "NH3 (excess)",
+                "molecule_interim_smiles": "CCC(=O)N",
+                "mechanism_hint": "Form Propionamide."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "hoffmann_brom",
+                "reagent_display": "Br2 / KOH",
+                "mechanism_hint": "Hofmann Bromamide Degradation (Step down)."
+            }
+        ],
+        "explanation": "Propanoic acid is converted to propanoyl chloride using SOCl2, then to propionamide with ammonia. The amide undergoes Hoffmann bromamide degradation (Br2/KOH) to produce ethylamine, stepping down the carbon chain.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_57",
+        "title": "Inorganic to Organic Halide",
+        "description": "Convert Calcium Carbide to Hexachloroethane",
+        "start_smiles": "C#C.[Ca]",
+        "target_smiles": "ClC(Cl)(Cl)C(Cl)(Cl)Cl",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hyd_water",
+                "reagent_display": "H2O",
+                "molecule_interim_smiles": "C#C",
+                "mechanism_hint": "Hydrolysis gives Acetylene."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "red_h2_ni",
+                "reagent_display": "H2 / Ni",
+                "molecule_interim_smiles": "CC",
+                "mechanism_hint": "Reduce to Ethane."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "rad_cl2_excess",
+                "reagent_display": "Cl2 (excess) / Sunlight",
+                "mechanism_hint": "Exhaustive chlorination replaces all H with Cl."
+            }
+        ],
+        "explanation": "Calcium carbide reacts with water to give acetylene, which is reduced to ethane. Exhaustive free-radical chlorination of ethane in excess chlorine and sunlight yields hexachloroethane.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_58",
+        "title": "Organocadmium Synthesis",
+        "description": "Convert Acetic Acid to 2-Butanol",
+        "start_smiles": "CC(=O)O",
+        "target_smiles": "CCC(C)O",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hal_socl2",
+                "reagent_display": "SOCl2",
+                "molecule_interim_smiles": "CC(=O)Cl",
+                "mechanism_hint": "Form Acetyl Chloride."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "cadmium_dialkyl",
+                "reagent_display": "(C2H5)2Cd",
+                "molecule_interim_smiles": "CCC(=O)C",
+                "mechanism_hint": "Organocadmium reagents yield Ketones from Acid Chlorides (won't react further)."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "red_lah",
+                "reagent_display": "LiAlH4",
+                "mechanism_hint": "Reduce Ketone (Butanone) to Secondary Alcohol."
+            }
+        ],
+        "explanation": "Acetic acid is converted to acetyl chloride. Reaction with diethylcadmium yields the ketone (butanone) without further addition. Finally, LiAlH4 reduces the ketone to the secondary alcohol, 2-butanol.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_59",
+        "title": "Claisen Condensation",
+        "description": "Convert Acetaldehyde to Acetoacetic Ester",
+        "start_smiles": "CC=O",
+        "target_smiles": "CC(=O)CC(=O)OCC",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "ox_strong",
+                "reagent_display": "K2Cr2O7 / H+",
+                "molecule_interim_smiles": "CC(=O)O",
+                "mechanism_hint": "Oxidize to Acetic Acid."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ester_etoh",
+                "reagent_display": "C2H5OH / H+",
+                "molecule_interim_smiles": "CC(=O)OCC",
+                "mechanism_hint": "Form Ethyl Acetate."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "claisen_base",
+                "reagent_display": "C2H5ONa (Ethoxide)",
+                "mechanism_hint": "Claisen Condensation forms beta-keto ester."
+            }
+        ],
+        "explanation": "Acetaldehyde is oxidized to acetic acid and then esterified to ethyl acetate. Two molecules of ethyl acetate undergo Claisen condensation in the presence of sodium ethoxide to form acetoacetic ester (a beta-keto ester).",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_60",
+        "title": "Geminal to Vicinal Halide",
+        "description": "Convert 1,1-Dichloroethane to 1,2-Dichloroethane",
+        "start_smiles": "CC(Cl)Cl",
+        "target_smiles": "ClCCCl",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "elim_alc_koh",
+                "reagent_display": "alc. KOH / Heat",
+                "molecule_interim_smiles": "C#C",
+                "mechanism_hint": "Dehydrohalogenation to Ethyne."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "red_lindlar",
+                "reagent_display": "H2 / Lindlar's Catalyst",
+                "molecule_interim_smiles": "C=C",
+                "mechanism_hint": "Partial reduction to Ethene."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "add_cl2",
+                "reagent_display": "Cl2",
+                "mechanism_hint": "Addition of Chlorine gives Vicinal Dichloride."
+            }
+        ],
+        "explanation": "1,1-Dichloroethane is dehydrohalogenated with alcoholic KOH to ethyne. Controlled reduction with Lindlar's catalyst gives ethene, and final addition of chlorine across the double bond yields 1,2-dichloroethane (vicinal dichloride).",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_61",
+        "title": "Alkyne to Ketone",
+        "description": "Convert Acetylene to Acetone",
+        "start_smiles": "C#C",
+        "target_smiles": "CC(=O)C",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "hyd_hgso4",
+                "reagent_display": "HgSO4 / H2SO4",
+                "molecule_interim_smiles": "CC=O",
+                "mechanism_hint": "Hydration to Acetaldehyde."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "ox_strong",
+                "reagent_display": "K2Cr2O7",
+                "molecule_interim_smiles": "CC(=O)O",
+                "mechanism_hint": "Oxidize to Acetic Acid."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "dry_distil_path",
+                "reagent_display": "Ca(OH)2 -> Heat",
+                "mechanism_hint": "Dry distillation of Calcium Acetate."
+            }
+        ],
+        "explanation": "Acetylene is hydrated to acetaldehyde using HgSO4/H2SO4. Acetaldehyde is oxidized to acetic acid, which is then converted to acetone via dry distillation of its calcium salt.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_62",
+        "title": "Vinyl Ester Synthesis",
+        "description": "Convert Ethyl Alcohol to Vinyl Acetate",
+        "start_smiles": "CCO",
+        "target_smiles": "CC(=O)OC=C",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "dehyd_acid",
+                "reagent_display": "Conc H2SO4",
+                "molecule_interim_smiles": "C=C",
+                "mechanism_hint": "Dehydrate to Ethene."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "add_br2",
+                "reagent_display": "Br2",
+                "molecule_interim_smiles": "BrCCBr",
+                "mechanism_hint": "Dibromoethane."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "elim_double",
+                "reagent_display": "alc. KOH",
+                "molecule_interim_smiles": "C#C",
+                "mechanism_hint": "Eliminate to Acetylene."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "add_acid_hg",
+                "reagent_display": "CH3COOH / HgSO4",
+                "mechanism_hint": "Addition of Acetic Acid to Alkyne gives Vinyl Acetate."
+            }
+        ],
+        "explanation": "Ethanol is dehydrated to ethene and then brominated to 1,2-dibromoethane. Double dehydrobromination gives acetylene. Finally, the addition of acetic acid to acetylene in the presence of HgSO4 yields vinyl acetate.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_63",
+        "title": "Inorganic to Aromatic",
+        "description": "Convert Lime (CaCO3) to Benzene",
+        "start_smiles": "C(=O)([O-])[O-].[Ca+2]",
+        "target_smiles": "c1ccccc1",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "heat_carbide",
+                "reagent_display": "1. Heat (-CO2) 2. Carbon/Heat (-CO)",
+                "molecule_interim_smiles": "C#C.[Ca]",
+                "mechanism_hint": "Convert Limestone -> Lime -> Calcium Carbide."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "hyd_water",
+                "reagent_display": "H2O",
+                "molecule_interim_smiles": "C#C",
+                "mechanism_hint": "Hydrolysis to Acetylene."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "poly_cu_tube",
+                "reagent_display": "Red Hot Cu Tube",
+                "mechanism_hint": "Cyclic Polymerization."
+            }
+        ],
+        "explanation": "Calcium carbonate is converted to calcium carbide via lime and carbon. Hydrolysis of the carbide gives acetylene, which undergoes cyclic polymerization in a red-hot copper tube to form benzene.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_64",
+        "title": "Ascent of Amine",
+        "description": "Convert Propanoic Acid to n-Butylamine",
+        "start_smiles": "CCC(=O)O",
+        "target_smiles": "CCCCN",
+        "difficulty": "Hard",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "red_lah",
+                "reagent_display": "LiAlH4",
+                "molecule_interim_smiles": "CCCO",
+                "mechanism_hint": "Reduce to Propanol."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "hal_pbr3",
+                "reagent_display": "PBr3",
+                "molecule_interim_smiles": "CCCBr",
+                "mechanism_hint": "Propyl Bromide."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "sub_kcn",
+                "reagent_display": "alc. KCN",
+                "molecule_interim_smiles": "CCCC#N",
+                "mechanism_hint": "Ascent of series (Butyronitrile)."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "red_lah",
+                "reagent_display": "LiAlH4",
+                "mechanism_hint": "Reduce Nitrile to Amine."
+            }
+        ],
+        "explanation": "Propanoic acid is reduced to 1-propanol and then converted to 1-bromopropane. Reaction with alcoholic KCN extends the chain to butyronitrile, which is reduced with LiAlH4 to n-butylamine.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_65",
+        "title": "Grignard Wurtz Combo",
+        "description": "Convert Formaldehyde to n-Butane",
+        "start_smiles": "C=O",
+        "target_smiles": "CCCC",
+        "difficulty": "Medium",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "grig_ch3mgbr",
+                "reagent_display": "1. CH3MgBr  2. H+",
+                "molecule_interim_smiles": "CCO",
+                "mechanism_hint": "Form Ethanol."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "hal_pbr3",
+                "reagent_display": "PBr3",
+                "molecule_interim_smiles": "CCBr",
+                "mechanism_hint": "Ethyl Bromide."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "wurtz_na",
+                "reagent_display": "Na / Ether",
+                "mechanism_hint": "Wurtz Reaction (2x Ethyl -> Butane)."
+            }
+        ],
+        "explanation": "Formaldehyde reacts with methyl Grignard to form ethanol. Ethanol is converted to ethyl bromide, which then undergoes the Wurtz reaction with sodium in ether to double the carbon chain and form n-butane.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_66",
+        "title": "Oxidative Cleavage of Alkene",
+        "description": "Convert Ethanoic Acid to Methanoic Acid + Diphenyl Ketone",
+        "start_smiles": "CC(=O)O",
+        "target_smiles": "O=C(c1ccccc1)c2ccccc2",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "ester_etoh",
+                "reagent_display": "EtOH / H+",
+                "molecule_interim_smiles": "CC(=O)OCC",
+                "mechanism_hint": "Ethyl Acetate."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "grig_excess_ph",
+                "reagent_display": "2 PhMgBr",
+                "molecule_interim_smiles": "CC(O)(c1ccccc1)c1ccccc1",
+                "mechanism_hint": "Double Grignard adds 2 Phenyl groups (Tertiary Alcohol)."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "dehyd_distil",
+                "reagent_display": "Distillation (-H2O)",
+                "molecule_interim_smiles": "C=C(c1ccccc1)c1ccccc1",
+                "mechanism_hint": "Dehydration to 1,1-Diphenylethylene."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "ox_strong_cleave",
+                "reagent_display": "KMnO4 / [O]",
+                "mechanism_hint": "Oxidative cleavage gives Benzophenone + Formic Acid."
+            }
+        ],
+        "explanation": "Acetic acid is esterified to ethyl acetate. Two equivalents of phenyl Grignard add to the ester to form 1,1-diphenylethanol. Dehydration gives 1,1-diphenylethylene, which undergoes oxidative cleavage with strong KMnO4 to yield benzophenone and methanoic acid.",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    },
+    {
+        "chapter": "Practice More Conversion Reactions",
+        "id": "conv_67",
+        "title": "Aldol from Anhydride",
+        "description": "Convert Ethanoic Anhydride to But-2-enal",
+        "start_smiles": "CC(=O)OC(=O)C",
+        "target_smiles": "CC=CC=O",
+        "difficulty": "Expert",
+        "steps": [
+            {
+                "step_order": 1,
+                "reagent_id": "red_na_etoh",
+                "reagent_display": "Na / C2H5OH",
+                "molecule_interim_smiles": "CCO",
+                "mechanism_hint": "Reduction to Ethanol."
+            },
+            {
+                "step_order": 2,
+                "reagent_id": "dehyd_cu",
+                "reagent_display": "Cu / 773K",
+                "molecule_interim_smiles": "CC=O",
+                "mechanism_hint": "Dehydrogenation to Ethanal."
+            },
+            {
+                "step_order": 3,
+                "reagent_id": "aldol_dil_base",
+                "reagent_display": "Dil NaOH",
+                "molecule_interim_smiles": "CC(O)CC=O",
+                "mechanism_hint": "Aldol Condensation."
+            },
+            {
+                "step_order": 4,
+                "reagent_id": "dehyd_acid",
+                "reagent_display": "Dil HCl / Heat",
+                "mechanism_hint": "Dehydration to Crotonaldehyde."
+            }
+        ],
+        "explanation": "Ethanoic anhydride is reduced to ethanol, which is then dehydrogenated to ethanal. Ethanal undergoes aldol condensation to 3-hydroxybutanal, followed by acidic dehydration to form 2-butenal (crotonaldehyde).",
+        "audio_url": "",
+        "start_svg": "",
+        "target_svg": "",
+        "explanation_svg": ""
+    }
+]

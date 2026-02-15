@@ -1,0 +1,488 @@
+[
+    {
+        "id": "ox_01",
+        "name": "PCC / PDC",
+        "category": "Oxidizing Agent",
+        "description": "Oxidizes alcohols to carbonyls. Mild and selective.",
+        "game_logic": {
+            "valid_inputs": [
+                "primary_alcohol",
+                "secondary_alcohol"
+            ],
+            "output_mapping": {
+                "primary_alcohol": "aldehyde",
+                "secondary_alcohol": "ketone"
+            },
+            "forbidden_groups": [],
+            "mechanism_note": "Stops at the aldehyde stage. Does not affect C=C double bonds."
+        },
+        "hint": "The Gentle Touch. Stops at the aldehyde. Won't touch double bonds.",
+        "exception": "Cannot oxidize Aldehyde to Acid."
+    },
+    {
+        "id": "ox_02",
+        "name": "KMnO4 (Acidic/Heat)",
+        "category": "Oxidizing Agent",
+        "description": "Strong oxidation. Cleaves C=C bonds and oxidizes alcohols/aldehydes fully.",
+        "game_logic": {
+            "valid_inputs": [
+                "primary_alcohol",
+                "secondary_alcohol",
+                "aldehyde",
+                "alkene",
+                "alkyl_benzene"
+            ],
+            "output_mapping": {
+                "primary_alcohol": "carboxylic_acid",
+                "secondary_alcohol": "ketone",
+                "aldehyde": "carboxylic_acid",
+                "alkene": "cleavage_products",
+                "alkyl_benzene": "benzoic_acid"
+            },
+            "forbidden_groups": [],
+            "mechanism_note": "Vigorous oxidation. Ruptures carbon chains at double bonds."
+        },
+        "hint": "The Sledgehammer. If you see a double bond or benzylic H, it breaks/oxidizes to -COOH.",
+        "exception": "Explodes rings. Benzylic H must be present for alkyl benzene oxidation."
+    },
+    {
+        "id": "ox_03",
+        "name": "KMnO4 (Cold, Dilute) (Baeyer’s)",
+        "category": "Oxidizing Agent",
+        "description": "Mild oxidation of alkenes to vicinal diols.",
+        "game_logic": {
+            "valid_inputs": [
+                "alkene",
+                "alkyne"
+            ],
+            "output_mapping": {
+                "alkene": "vicinal_diol",
+                "alkyne": "diketone"
+            },
+            "forbidden_groups": [],
+            "mechanism_note": "Syn-hydroxylation. Purple color disappears (Test for unsaturation)."
+        },
+        "hint": "The Purple Test. Adds two OH groups. Syn-addition.",
+        "exception": "Does not break the sigma bond of the alkene."
+    },
+    {
+        "id": "ox_04",
+        "name": "MnO2",
+        "category": "Oxidizing Agent",
+        "description": "Selectively oxidizes allylic and benzylic alcohols.",
+        "game_logic": {
+            "valid_inputs": [
+                "allylic_alcohol",
+                "benzylic_alcohol"
+            ],
+            "output_mapping": {
+                "allylic_alcohol": "enone",
+                "benzylic_alcohol": "benzaldehyde_derivative"
+            },
+            "forbidden_groups": [
+                "primary_alcohol",
+                "secondary_alcohol"
+            ],
+            "mechanism_note": "radical mechanism preference for stable conjugated positions."
+        },
+        "hint": "The Sniper. Only works if the OH is next to a double bond or benzene ring.",
+        "exception": "Ignores normal 1-degree / 2-degree alcohols completely."
+    },
+    {
+        "id": "ox_05",
+        "name": "O3 / Zn, H2O",
+        "category": "Oxidizing Agent",
+        "description": "Reductive Ozonolysis. Cleaves double bonds to carbonyls.",
+        "game_logic": {
+            "valid_inputs": [
+                "alkene",
+                "alkyne"
+            ],
+            "output_mapping": {
+                "alkene": "aldehyde_or_ketone",
+                "alkyne": "diketone"
+            },
+            "forbidden_groups": [],
+            "mechanism_note": "Breaks both Sigma and Pi bonds of C=C."
+        },
+        "hint": "The Scissor. Draw a line through the double bond and put 'O' on cut ends.",
+        "exception": "Keeps Aldehydes alive (doesn't over-oxidize to acids)."
+    },
+    {
+        "id": "ox_06",
+        "name": "HIO4 (Periodic Acid)",
+        "category": "Oxidizing Agent",
+        "description": "Cleaves vicinal diols to carbonyl compounds.",
+        "game_logic": {
+            "valid_inputs": [
+                "vicinal_diol"
+            ],
+            "output_mapping": {
+                "vicinal_diol": "aldehyde_or_ketone"
+            },
+            "forbidden_groups": [
+                "isolated_alcohol"
+            ],
+            "mechanism_note": "Requires cyclic intermediate formation."
+        },
+        "hint": "The Zipper. Needs OH groups on adjacent carbons to work.",
+        "exception": "If OH groups are not neighbors, this card bounces off."
+    },
+    {
+        "id": "red_01",
+        "name": "LiAlH4 (LAH)",
+        "category": "Reducing Agent",
+        "description": "Strong reducing agent. Reduces almost all carbonyls.",
+        "game_logic": {
+            "valid_inputs": [
+                "aldehyde",
+                "ketone",
+                "carboxylic_acid",
+                "ester",
+                "amide",
+                "cyanide",
+                "epoxide"
+            ],
+            "output_mapping": {
+                "aldehyde": "primary_alcohol",
+                "ketone": "secondary_alcohol",
+                "carboxylic_acid": "primary_alcohol",
+                "ester": "primary_alcohol",
+                "amide": "amine",
+                "cyanide": "primary_amine"
+            },
+            "forbidden_groups": [
+                "acidic_hydrogen_solvent"
+            ],
+            "mechanism_note": "Hydride transfer mechanism."
+        },
+        "hint": "The Nuke. Reduces everything except isolated C=C double bonds.",
+        "exception": "Dangerous! Reacts violently with water/alcohol. Does not reduce isolated C=C."
+    },
+    {
+        "id": "red_02",
+        "name": "NaBH4",
+        "category": "Reducing Agent",
+        "description": "Mild reducing agent. Selective for Aldehydes/Ketones.",
+        "game_logic": {
+            "valid_inputs": [
+                "aldehyde",
+                "ketone",
+                "acid_chloride"
+            ],
+            "output_mapping": {
+                "aldehyde": "primary_alcohol",
+                "ketone": "secondary_alcohol",
+                "acid_chloride": "primary_alcohol"
+            },
+            "forbidden_groups": [
+                "ester",
+                "carboxylic_acid",
+                "amide"
+            ],
+            "mechanism_note": "Less nucleophilic hydride than LAH."
+        },
+        "hint": "The Smart Bomb. Won't touch Esters, Acids, or Amides.",
+        "exception": "Ignores Esters completely."
+    },
+    {
+        "id": "red_03",
+        "name": "DIBAL-H",
+        "category": "Reducing Agent",
+        "description": "Selective reduction of Esters/Nitriles to Aldehydes (at low temp).",
+        "game_logic": {
+            "valid_inputs": [
+                "ester",
+                "cyanide"
+            ],
+            "output_mapping": {
+                "ester": "aldehyde",
+                "cyanide": "aldehyde"
+            },
+            "forbidden_groups": [],
+            "mechanism_note": "Electrophilic reducing agent. Needs -78C."
+        },
+        "hint": "The Freezer. The only reliable way to stop an Ester at the Aldehyde stage.",
+        "exception": "Must be at -78°C. At room temp, it reduces fully to Alcohol."
+    },
+    {
+        "id": "red_04",
+        "name": "H2 / Pd-BaSO4 (Lindlar’s)",
+        "category": "Reducing Agent",
+        "description": "Partial hydrogenation of Alkynes to Alkenes.",
+        "game_logic": {
+            "valid_inputs": [
+                "alkyne",
+                "acid_chloride"
+            ],
+            "output_mapping": {
+                "alkyne": "cis_alkene",
+                "acid_chloride": "aldehyde"
+            },
+            "forbidden_groups": [],
+            "mechanism_note": "Poisoned catalyst prevents full reduction."
+        },
+        "hint": "The Half-Step. Stops at the alkene. Cis-selective.",
+        "exception": "Rosenmund Reduction: Also turns Acid Chloride to Aldehyde."
+    },
+    {
+        "id": "red_05",
+        "name": "Na / Liq. NH3 (Birch)",
+        "category": "Reducing Agent",
+        "description": "Dissolving metal reduction. Alkyne to Trans-Alkene.",
+        "game_logic": {
+            "valid_inputs": [
+                "internal_alkyne",
+                "benzene_ring"
+            ],
+            "output_mapping": {
+                "internal_alkyne": "trans_alkene",
+                "benzene_ring": "1_4_cyclohexadiene"
+            },
+            "forbidden_groups": [
+                "terminal_alkyne"
+            ],
+            "mechanism_note": "Radical anion mechanism. Anti-addition."
+        },
+        "hint": "The Trans-Former. Anti-addition. Also affects benzene rings.",
+        "exception": "Does not work on Terminal Alkynes (forms acidic salt instead)."
+    },
+    {
+        "id": "red_06",
+        "name": "Zn-Hg / HCl (Clemmensen)",
+        "category": "Reducing Agent",
+        "description": "Reduces Carbonyl (C=O) to Methylene (CH2).",
+        "game_logic": {
+            "valid_inputs": [
+                "aldehyde",
+                "ketone"
+            ],
+            "output_mapping": {
+                "aldehyde": "alkane",
+                "ketone": "alkane"
+            },
+            "forbidden_groups": [
+                "acid_sensitive_group",
+                "alcohol"
+            ],
+            "mechanism_note": "Acidic medium reduction."
+        },
+        "hint": "The Eraser. Deletes the oxygen. Acidic medium.",
+        "exception": "Fails if acid-sensitive groups (like -OH or C=C) are present."
+    },
+    {
+        "id": "red_07",
+        "name": "NH2NH2 / KOH (Wolff-Kishner)",
+        "category": "Reducing Agent",
+        "description": "Reduces Carbonyl (C=O) to Methylene (CH2).",
+        "game_logic": {
+            "valid_inputs": [
+                "aldehyde",
+                "ketone"
+            ],
+            "output_mapping": {
+                "aldehyde": "alkane",
+                "ketone": "alkane"
+            },
+            "forbidden_groups": [
+                "base_sensitive_group",
+                "alkyl_halide"
+            ],
+            "mechanism_note": "Basic medium reduction."
+        },
+        "hint": "The Eraser 2.0. Basic medium. Use this if Clemmensen is unsafe.",
+        "exception": "Fails if base-sensitive groups (like Alkyl Halides) are present."
+    },
+    {
+        "id": "cc_01",
+        "name": "R-Mg-X (Grignard)",
+        "category": "C-C Bond Former",
+        "description": "Nucleophilic addition to carbonyls.",
+        "game_logic": {
+            "valid_inputs": [
+                "aldehyde",
+                "ketone",
+                "ester",
+                "epoxide",
+                "co2"
+            ],
+            "output_mapping": {
+                "aldehyde": "secondary_alcohol",
+                "ketone": "tertiary_alcohol",
+                "ester": "tertiary_alcohol",
+                "epoxide": "alcohol_extended_chain",
+                "co2": "carboxylic_acid"
+            },
+            "forbidden_groups": [
+                "acidic_hydrogen",
+                "water",
+                "alcohol",
+                "amine",
+                "terminal_alkyne"
+            ],
+            "mechanism_note": "Strong nucleophile and strong base."
+        },
+        "hint": "The Builder. Always look for acidic H first (it kills the reagent).",
+        "exception": "Deadly: Any acidic H kills it instantly."
+    },
+    {
+        "id": "cc_02",
+        "name": "Alc. KOH / Heat",
+        "category": "Elimination",
+        "description": "Dehydrohalogenation. Forms Alkenes.",
+        "game_logic": {
+            "valid_inputs": [
+                "alkyl_halide"
+            ],
+            "output_mapping": {
+                "alkyl_halide": "alkene"
+            },
+            "forbidden_groups": [],
+            "mechanism_note": "E2 Mechanism. Zaitsev product preferred."
+        },
+        "hint": "The Eliminator. Removes H-X. Follows Saytzeff Rule (Major = More Substituted).",
+        "exception": "Without heat, aqueous KOH does Substitution (OH replaces X)."
+    },
+    {
+        "id": "cc_03",
+        "name": "t-BuOK (Bulky Base)",
+        "category": "Elimination",
+        "description": "Dehydrohalogenation favoring Hofmann product.",
+        "game_logic": {
+            "valid_inputs": [
+                "alkyl_halide"
+            ],
+            "output_mapping": {
+                "alkyl_halide": "less_substituted_alkene"
+            },
+            "forbidden_groups": [],
+            "mechanism_note": "E2 Mechanism. Steric hindrance prevents Zaitsev."
+        },
+        "hint": "The Hofmann Specialist. Too fat to grab inside protons.",
+        "exception": "Forms the Less Substituted alkene."
+    },
+    {
+        "id": "hal_01",
+        "name": "SOCl2 (Thionyl Chloride)",
+        "category": "Halogenator",
+        "description": "Converts Alcohols to Alkyl Chlorides.",
+        "game_logic": {
+            "valid_inputs": [
+                "alcohol",
+                "carboxylic_acid"
+            ],
+            "output_mapping": {
+                "alcohol": "alkyl_chloride",
+                "carboxylic_acid": "acid_chloride"
+            },
+            "forbidden_groups": [],
+            "mechanism_note": "SNi mechanism (Retention of configuration) if no pyridine."
+        },
+        "hint": "The Clean Swap. Best method because byproducts are gases.",
+        "exception": "Retains Stereochemistry (SNi) unless Pyridine is added (then Inversion)."
+    },
+    {
+        "id": "hal_02",
+        "name": "Lucas Reagent (HCl + ZnCl2)",
+        "category": "Halogenator",
+        "description": "Test for Alcohols. Converts ROH to RCl.",
+        "game_logic": {
+            "valid_inputs": [
+                "tertiary_alcohol",
+                "secondary_alcohol"
+            ],
+            "output_mapping": {
+                "tertiary_alcohol": "alkyl_chloride_instant",
+                "secondary_alcohol": "alkyl_chloride_slow"
+            },
+            "forbidden_groups": [
+                "primary_alcohol"
+            ],
+            "mechanism_note": "SN1 mechanism. Carbocation intermediate."
+        },
+        "hint": "The Turbidity Test. 3-degree = Instant. 1-degree = No reaction.",
+        "exception": "Primary alcohols do not react at room temp."
+    },
+    {
+        "id": "hal_03",
+        "name": "NBS (hv / Peroxide)",
+        "category": "Halogenator",
+        "description": "Allylic or Benzylic Bromination.",
+        "game_logic": {
+            "valid_inputs": [
+                "alkene_with_allylic_H",
+                "alkyl_benzene"
+            ],
+            "output_mapping": {
+                "alkene_with_allylic_H": "allylic_bromide",
+                "alkyl_benzene": "benzylic_bromide"
+            },
+            "forbidden_groups": [],
+            "mechanism_note": "Free radical substitution."
+        },
+        "hint": "The Radical Swap. Replaces H next to double bond with Br.",
+        "exception": "If no light/peroxide, it might act as a simple Br2 source (Electrophilic Addition)."
+    },
+    {
+        "id": "spec_01",
+        "name": "NaOH + X2 (Haloform)",
+        "category": "Name Reaction",
+        "description": "Oxidizes Methyl Ketones to Carboxylate + CHX3.",
+        "game_logic": {
+            "valid_inputs": [
+                "methyl_ketone",
+                "methyl_carbinol"
+            ],
+            "output_mapping": {
+                "methyl_ketone": "carboxylic_acid_salt_plus_chx3",
+                "methyl_carbinol": "carboxylic_acid_salt_plus_chx3"
+            },
+            "forbidden_groups": [],
+            "mechanism_note": "Alpha-halogenation followed by cleavage."
+        },
+        "hint": "The Yellow Precipitate (if I2). Needs CH3-C=O or CH3-CH-OH.",
+        "exception": "Specific to Methyl Ketones/Alcohols."
+    },
+    {
+        "id": "spec_02",
+        "name": "Dilute NaOH (Aldol)",
+        "category": "Name Reaction",
+        "description": "Condensation of Aldehydes/Ketones with alpha-H.",
+        "game_logic": {
+            "valid_inputs": [
+                "aldehyde_with_alpha_H",
+                "ketone_with_alpha_H"
+            ],
+            "output_mapping": {
+                "aldehyde_with_alpha_H": "beta_hydroxy_aldehyde",
+                "ketone_with_alpha_H": "beta_hydroxy_ketone"
+            },
+            "forbidden_groups": [
+                "aldehyde_no_alpha_H"
+            ],
+            "mechanism_note": "Enolate ion formation."
+        },
+        "hint": "The Doubler. Connects two molecules. Needs Alpha-Hydrogens.",
+        "exception": "Heating leads to dehydration (Alpha-Beta unsaturated product)."
+    },
+    {
+        "id": "spec_03",
+        "name": "Conc. NaOH (Cannizzaro)",
+        "category": "Name Reaction",
+        "description": "Disproportionation of Aldehydes with NO alpha-H.",
+        "game_logic": {
+            "valid_inputs": [
+                "aldehyde_no_alpha_H"
+            ],
+            "output_mapping": {
+                "aldehyde_no_alpha_H": "alcohol_plus_acid_salt"
+            },
+            "forbidden_groups": [
+                "aldehyde_with_alpha_H"
+            ],
+            "mechanism_note": "Hydride transfer between two molecules."
+        },
+        "hint": "The Self-Redox. One molecule oxidizes, one reduces.",
+        "exception": "Fails if Alpha-Hydrogens are present (does Aldol instead)."
+    }
+]
