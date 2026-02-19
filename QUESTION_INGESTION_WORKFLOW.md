@@ -228,18 +228,72 @@ Examples for "ch11_mole":
 
 **Chapter Codes:**
 ```
-Mole Concept → MOLE-001, MOLE-002, ...
-Structure of Atom → ATOM-001, ATOM-002, ...
-Periodic Table → PERD-001, PERD-002, ...
-Chemical Bonding → BOND-001, BOND-002, ...
-Thermodynamics → THRM-001, THRM-002, ...
-Equilibrium → EQUI-001, EQUI-002, ...
-Solutions → SOLN-001, SOLN-002, ...
-Electrochemistry → ELEC-001, ELEC-002, ...
-Kinetics → KINE-001, KINE-002, ...
+Mole Concept        → MOLE-001, MOLE-002, ...
+Structure of Atom   → ATOM-001, ATOM-002, ...
+Periodic Table      → PERD-001, PERD-002, ...
+Chemical Bonding    → BOND-001, BOND-002, ...
+Thermodynamics      → THRM-001, THRM-002, ...
+Equilibrium         → EQUI-001, EQUI-002, ...
+Solutions           → SOLN-001, SOLN-002, ...
+Electrochemistry    → ELEC-001, ELEC-002, ...
+Kinetics            → KINE-001, KINE-002, ...
+D & F Block         → DNF-001, DNF-002, ...
+Redox Reactions     → REDX-001, REDX-002, ...
+Coordination Cmpds  → CORD-001, CORD-002, ...
 ```
 
+**CRITICAL ID RULES:**
+- ❌ **NEVER** include `PYQ` in the display_id (e.g., `DNF-PYQ-001` is WRONG)
+- ✅ **CORRECT:** `DNF-001`, `MOLE-042`, `ATOM-015`
+- The fact that a question is a PYQ is stored in `metadata.is_pyq: true` — NOT in the ID
+- Exam source/year is stored in `metadata.exam_source` — NOT in the question text
+
 **Auto-increment:** Check existing questions in chapter and use next number.
+
+### **RULE 10: Question Text Cleanliness**
+
+**NEVER embed exam date/year/shift in the question text (`question_text.markdown`).**
+
+- ❌ WRONG: `"The metal that shows... \n\n**[05 Apr 2024 (M)]**"`
+- ❌ WRONG: `"Which of the following... \n\n**[JEE Main PYQ]**"`
+- ❌ WRONG: `"...is:\n\n**[28 Jul 2022 Morning]**"`
+- ✅ CORRECT: Store exam info ONLY in `metadata.exam_source`:
+  ```json
+  "exam_source": { "exam": "JEE Main", "year": 2024, "month": "April", "day": 5, "shift": "Morning" }
+  ```
+- The admin dashboard and practice UI display exam source from metadata — it does NOT need to be in the question text
+- Any `**[...]**` exam date/year/shift lines at the end of question text must be stripped before ingestion
+
+### **RULE 11: Database Collection Target**
+
+⚠️ **CRITICAL — This mistake caused 152 questions to be invisible in the admin dashboard.**
+
+This project has **TWO separate MongoDB collections**:
+
+| Collection | Used by | Schema |
+|---|---|---|
+| `questions` | Old sync script (`sync_json_to_mongo.js`) | Flat: `chapter_id`, `meta.difficulty` |
+| `questions_v2` | Admin dashboard, Crucible practice pages | Nested: `metadata.chapter_id`, `metadata.difficulty` |
+
+**ALL new questions MUST go into `questions_v2`.**
+- `sync_json_to_mongo.js` writes to the WRONG collection — do NOT use it as the sole sync step
+- Use the batch insertion script template (see AI Agent Workflow section) which targets `questions_v2`
+- After insertion, verify questions appear in admin dashboard at `/crucible/admin` filtered by chapter
+
+**Chapter ID verification — ALWAYS look up from `data/chapters/_index.json`, never guess:**
+- D & F Block = `ch12_dblock`
+- Mole Concept = `ch11_mole`
+- Structure of Atom = `ch11_atom`
+
+### **RULE 10: Script Batching — 10 Questions Per File**
+
+**CRITICAL:** When writing question insertion scripts, always write exactly **10 questions per script file**.
+
+- File naming: `insert_<chapter>_b<batch_number>.js` (e.g. `insert_cord_b1.js` for Q1-Q10)
+- Each file is self-contained: includes its own `mongoose.connect`, question array, and `insertMany` call
+- Run each file sequentially and verify count before proceeding to the next batch
+- This prevents token limit errors during generation and keeps scripts reviewable
+- Example batches for 228 questions: b1(Q1-10), b2(Q11-20), ... b23(Q221-228)
 
 ### **RULE 8: LaTeX Validation Checklist**
 
