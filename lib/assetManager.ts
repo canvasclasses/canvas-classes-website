@@ -7,11 +7,13 @@
 import { createClient } from '@supabase/supabase-js';
 import imageCompression from 'browser-image-compression';
 
-// Client-side Supabase client
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+// Client-side Supabase client (lazy-initialized to avoid build-time errors)
+function getSupabaseClient() {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!url || !key) throw new Error('Supabase is not configured');
+    return createClient(url, key);
+}
 
 export interface AssetUploadConfig {
     questionId: string;
@@ -100,6 +102,7 @@ export async function uploadAssetOrganized(
     const path = generateStoragePath(config);
     
     // Upload to Supabase
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase.storage
         .from(bucket)
         .upload(path, fileToUpload, {
@@ -113,7 +116,7 @@ export async function uploadAssetOrganized(
     }
     
     // Get public URL
-    const { data: publicData } = supabase.storage
+    const { data: publicData } = getSupabaseClient().storage
         .from(bucket)
         .getPublicUrl(data.path);
     
@@ -133,7 +136,7 @@ export async function deleteAsset(
     bucket: 'questions' | 'audio',
     path: string
 ): Promise<void> {
-    const { error } = await supabase.storage
+    const { error } = await getSupabaseClient().storage
         .from(bucket)
         .remove([path]);
     
@@ -151,17 +154,18 @@ export async function listQuestionAssets(
 ): Promise<{ images: string[]; audio: string[] }> {
     const prefix = chapterId ? `${chapterId}/${questionId}` : questionId;
     
+    const sb = getSupabaseClient();
     const [imageResult, audioResult] = await Promise.all([
-        supabase.storage.from('questions').list(prefix),
-        supabase.storage.from('audio').list(prefix)
+        sb.storage.from('questions').list(prefix),
+        sb.storage.from('audio').list(prefix)
     ]);
     
-    const images = imageResult.data?.map(f => 
-        supabase.storage.from('questions').getPublicUrl(`${prefix}/${f.name}`).data.publicUrl
+    const images = imageResult.data?.map((f: any) => 
+        sb.storage.from('questions').getPublicUrl(`${prefix}/${f.name}`).data.publicUrl
     ) || [];
     
-    const audio = audioResult.data?.map(f => 
-        supabase.storage.from('audio').getPublicUrl(`${prefix}/${f.name}`).data.publicUrl
+    const audio = audioResult.data?.map((f: any) => 
+        sb.storage.from('audio').getPublicUrl(`${prefix}/${f.name}`).data.publicUrl
     ) || [];
     
     return { images, audio };
@@ -177,17 +181,18 @@ export async function getChapterAssetStats(
     totalAudio: number;
     totalSizeMB: number;
 }> {
+    const sb = getSupabaseClient();
     const [imageResult, audioResult] = await Promise.all([
-        supabase.storage.from('questions').list(chapterId),
-        supabase.storage.from('audio').list(chapterId)
+        sb.storage.from('questions').list(chapterId),
+        sb.storage.from('audio').list(chapterId)
     ]);
     
     const images = imageResult.data || [];
     const audio = audioResult.data || [];
     
     // Calculate sizes (metadata may not always be available)
-    const imageSize = images.reduce((sum, f) => sum + (f.metadata?.size || 0), 0);
-    const audioSize = audio.reduce((sum, f) => sum + (f.metadata?.size || 0), 0);
+    const imageSize = images.reduce((sum: number, f: any) => sum + (f.metadata?.size || 0), 0);
+    const audioSize = audio.reduce((sum: number, f: any) => sum + (f.metadata?.size || 0), 0);
     
     return {
         totalImages: images.length,
@@ -293,9 +298,10 @@ export async function moveQuestionAssets(
     let moved = 0;
     let failed = 0;
     
+    const sb = getSupabaseClient();
     // List and move from both buckets
     for (const bucket of ['questions', 'audio'] as const) {
-        const { data: files } = await supabase.storage.from(bucket).list(oldPrefix);
+        const { data: files } = await sb.storage.from(bucket).list(oldPrefix);
         
         if (!files) continue;
         
@@ -304,7 +310,7 @@ export async function moveQuestionAssets(
             const newPath = `${newPrefix}/${file.name}`;
             
             // Download and re-upload (Supabase doesn't support move directly)
-            const { data: downloadData } = await supabase.storage
+            const { data: downloadData } = await sb.storage
                 .from(bucket)
                 .download(oldPath);
             
@@ -315,7 +321,7 @@ export async function moveQuestionAssets(
             
             try {
                 // Upload to new location
-                await supabase.storage
+                await sb.storage
                     .from(bucket)
                     .upload(newPath, downloadData, {
                         upsert: true,
@@ -323,7 +329,7 @@ export async function moveQuestionAssets(
                     });
                 
                 // Delete old file
-                await supabase.storage.from(bucket).remove([oldPath]);
+                await sb.storage.from(bucket).remove([oldPath]);
                 moved++;
             } catch (error) {
                 console.error(`Failed to move ${oldPath}:`, error);
