@@ -48,7 +48,7 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
 
     const handleOptionClick = (optionId: string) => {
         if (showFeedback) return;
-        const isCorrect = question.options.find(o => o.id === optionId)?.isCorrect || false;
+        const isCorrect = question.options.find((o: any) => o.id === optionId)?.isCorrect || false;
         onAnswerSubmit(isCorrect, optionId);
     };
 
@@ -149,13 +149,13 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                     // Logic: Determine layout based on content
                     // User Request: "The grid is best when we have 4 images... otherwise keep the text options in one line only"
 
-                    const isAllImages = question.options.every(o =>
+                    const isAllImages = question.options.every((o: any) =>
                         o.text.trim().startsWith('![') ||
                         o.text.includes('<img') ||
                         o.text.includes('[smiles:')
                     );
 
-                    const isVeryShort = question.options.every(o => o.text.length < 10 && !o.text.includes('\n'));
+                    const isVeryShort = question.options.every((o: any) => o.text.length < 10 && !o.text.includes('\n'));
 
                     // Strict Rule: Grid ONLY if all are images or very short labels
                     if (isAllImages || isVeryShort) return 'grid-cols-2';
@@ -163,7 +163,7 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                     // Default to List for everything else (text, mixed content, long formulas)
                     return 'grid-cols-1';
                 })()}`}>
-                    {question.options.map((option) => {
+                    {question.options.map((option: any) => {
                         const isSelected = selectedOptionId === option.id;
                         const isCorrect = option.isCorrect;
 
@@ -199,12 +199,12 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                                     <span className="flex-1 text-sm md:text-base font-medium text-left">
                                         {option.text.includes('[smiles:') ? (
                                             <span className="flex flex-col gap-2">
-                                                {option.text.split(/(\[smiles:(?:[^\[\]]|\[[^\]]*\])*\])/).map((part, idx) => {
+                                                {option.text.split(/(\[smiles:(?:[^\[\]]|\[[^\]]*\])*\])/).map((part: string, idx: number) => {
                                                     if (part.startsWith('[smiles:') && part.endsWith(']')) {
                                                         const inner = part.slice(8, -1);
                                                         const [code, ...params] = inner.split('|');
                                                         let rotate = 0;
-                                                        params.forEach(p => {
+                                                        params.forEach((p: string) => {
                                                             if (p.startsWith('rotate=')) rotate = parseInt(p.split('=')[1]) || 0;
                                                         });
 
