@@ -141,14 +141,9 @@ export async function GET(request: NextRequest) {
     
     const total = await QuestionV2.countDocuments(query);
 
-    // Strip solution data from unauthenticated responses to prevent scraping
-    const responseData = isAuthenticated
-      ? questions
-      : questions.map(({ solution, ...rest }: any) => rest);
-    
     return NextResponse.json({
       success: true,
-      data: responseData,
+      data: questions,
       pagination: {
         total,
         limit,

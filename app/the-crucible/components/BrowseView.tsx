@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, Star, Check } from 'lucide-react';
 import { Chapter, Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
@@ -52,7 +52,15 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
     setCardOpt({});
   };
 
-  const renderDetail = (qq: Question, solShown: boolean, setSolShown: (v: boolean) => void, optChosen: string | null, setOptChosen: (v: string | null) => void) => (
+  // Scroll the solution div into view after it renders
+  const scrollSolutionIntoView = useCallback((solDivId: string) => {
+    setTimeout(() => {
+      const el = document.getElementById(solDivId);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 80);
+  }, []);
+
+  const renderDetail = (qq: Question, solShown: boolean, setSolShown: (v: boolean) => void, optChosen: string | null, setOptChosen: (v: string | null) => void, solDivId: string) => (
     <div>
       <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '10px 12px', marginBottom: 10 }}>
         <MathRenderer markdown={qq.question_text.markdown} className="text-sm leading-relaxed" imageScale={qq.svg_scales?.question ?? 100} />
@@ -67,8 +75,7 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
               if (rev && correct) { bc = '#34d399'; bg = 'rgba(52,211,153,0.1)'; } else if (rev && sel && !correct) { bc = '#f87171'; bg = 'rgba(248,113,113,0.08)'; }
               return (
                 <button key={opt.id}
-                  onClick={() => { if (!solShown) { setOptChosen(opt.id); setSolShown(true); } }}
-                  onPointerUp={e => { e.currentTarget.releasePointerCapture(e.pointerId); if (!solShown) { setOptChosen(opt.id); setSolShown(true); } }}
+                  onClick={e => { e.stopPropagation(); if (!solShown) { setOptChosen(opt.id); setSolShown(true); scrollSolutionIntoView(solDivId); } }}
                   style={{ padding: useGrid ? '10px 10px' : '11px 13px', borderRadius: 10, border: `1.5px solid ${bc}`, background: bg, display: 'flex', alignItems: 'center', gap: 8, cursor: solShown ? 'default' : 'pointer', textAlign: 'left', color: '#fff', fontSize: 13, width: '100%', minWidth: 0 }}>
                   <span style={{ width: 22, height: 22, borderRadius: 6, border: `1.5px solid ${bc}`, background: sel ? (rev ? (correct ? '#34d399' : '#f87171') : '#3b82f6') : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: sel ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
                     {rev && correct ? <Check style={{ width: 11, height: 11 }} /> : opt.id.toUpperCase()}
@@ -84,24 +91,27 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
       })()}
       {qq.type === 'NVT' && !solShown && (
         <div style={{ marginBottom: 12 }}>
-          <input type="text" placeholder="Enter integer answer" onKeyDown={e => { if (e.key === 'Enter') setSolShown(true); }} onChange={e => setOptChosen(e.target.value)}
+          <input type="text" placeholder="Enter integer answer" onKeyDown={e => { if (e.key === 'Enter') { setSolShown(true); scrollSolutionIntoView(solDivId); } }} onChange={e => setOptChosen(e.target.value)}
             style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '1.5px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.05)', color: '#fff', fontSize: 15, outline: 'none', boxSizing: 'border-box' }} />
           <button
-            onClick={() => setSolShown(true)}
-            onPointerUp={e => { e.currentTarget.releasePointerCapture(e.pointerId); setSolShown(true); }}
+            onClick={e => { e.stopPropagation(); setSolShown(true); scrollSolutionIntoView(solDivId); }}
             style={{ marginTop: 8, padding: '10px 20px', borderRadius: 10, border: 'none', background: '#7c3aed', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>Submit</button>
         </div>
       )}
       <button
-        onClick={e => { e.stopPropagation(); setSolShown(!solShown); }}
+        onClick={e => { e.stopPropagation(); const next = !solShown; setSolShown(next); if (next) scrollSolutionIntoView(solDivId); }}
         style={{ padding: '9px 16px', borderRadius: 9, border: '1px solid rgba(124,58,237,0.4)', background: solShown ? 'rgba(124,58,237,0.15)' : 'transparent', color: '#a78bfa', fontSize: 12, fontWeight: 700, cursor: 'pointer', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6, touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent', userSelect: 'none' } as any}>
         <ChevronRight style={{ width: 13, height: 13, transform: solShown ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
         {solShown ? 'Hide Solution' : 'View Solution'}
       </button>
-      {solShown && qq.solution.text_markdown && (
-        <div style={{ padding: '10px 12px', borderRadius: 12, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)' }}>
+      {solShown && (
+        <div id={solDivId} style={{ padding: '10px 12px', borderRadius: 12, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)' }}>
           <div style={{ fontSize: 10, fontWeight: 700, color: '#a78bfa', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
-          <MathRenderer markdown={qq.solution.text_markdown} className="text-sm leading-relaxed" imageScale={qq.svg_scales?.solution ?? 100} />
+          {qq.solution?.text_markdown ? (
+            <MathRenderer markdown={qq.solution.text_markdown} className="text-sm leading-relaxed" imageScale={qq.svg_scales?.solution ?? 100} />
+          ) : (
+            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>Solution not available for this question.</div>
+          )}
         </div>
       )}
     </div>
@@ -144,7 +154,7 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
 
   if (isMobile) {
     return (
-      <div style={{ height: '100dvh', minHeight: '-webkit-fill-available', overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column', zIndex: 50 }}>
         {sharedHeader}
         <div style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch' } as any}>
           {pageQuestions.map((qq, i) => {
@@ -170,7 +180,7 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
                 </div>
                 {expanded && (
                   <div style={{ padding: '0 14px 4px' }} onClick={e => e.stopPropagation()}>
-                    {renderDetail(qq, solShown, (v) => setCardSol(s => ({ ...s, [globalIdx]: v })), optChosen, (v) => setCardOpt(s => ({ ...s, [globalIdx]: v })))}
+                    {renderDetail(qq, solShown, (v) => setCardSol(s => ({ ...s, [globalIdx]: v })), optChosen, (v) => setCardOpt(s => ({ ...s, [globalIdx]: v })), `sol-mobile-${globalIdx}`)}
                     <button onClick={(e) => { e.stopPropagation(); setSelIdx(null); }}
                       style={{ width: '100%', marginTop: 8, marginBottom: 12, padding: '10px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, color: 'rgba(255,255,255,0.4)', fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                       <ChevronRight style={{ width: 13, height: 13, transform: 'rotate(-90deg)' }} /> Collapse
@@ -190,7 +200,7 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
   const dq = pageQuestions[desktopIdx - page * PAGE_SIZE] ?? pageQuestions[0];
   const dqGlobalIdx = desktopIdx;
   return (
-    <div style={{ height: '100dvh', minHeight: '-webkit-fill-available', overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column', zIndex: 50 }}>
       {sharedHeader}
       <div style={{ flex: 1, display: 'flex', width: '100%', overflow: 'hidden' }}>
         <div style={{ width: '38%', minWidth: 300, maxWidth: 480, flexShrink: 0, borderRight: '1px solid rgba(255,255,255,0.07)', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
@@ -229,7 +239,7 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
                   <Star style={{ width: 15, height: 15, fill: starred.has(dq.id) ? '#fbbf24' : 'none' }} />
                 </button>
               </div>
-              {renderDetail(dq, showSol, setShowSol, selectedOpt, setSelectedOpt)}
+              {renderDetail(dq, showSol, setShowSol, selectedOpt, setSelectedOpt, 'sol-desktop')}
               <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
                 {dqGlobalIdx > 0 && (
                   <button onClick={() => {
