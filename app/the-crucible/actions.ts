@@ -116,3 +116,38 @@ export async function syncSupabaseToMongo(): Promise<{ success: boolean; message
     // V2: No sync needed - fresh database
     return { success: true, message: 'V2 System: No sync required', count: 0 };
 }
+
+// Fetch all published questions for a single chapter (used by per-chapter pages)
+export async function getChapterQuestions(chapterId: string): Promise<QuestionPageType[]> {
+    try {
+        await connectToDatabase();
+        const { QuestionV2 } = await import('@/lib/models/Question.v2');
+        const docs = await QuestionV2.find({
+            'metadata.chapter_id': chapterId,
+            deleted_at: null,
+        })
+            .sort({ created_at: 1 })
+            .lean();
+
+        return docs.map((q: any) => ({
+            id: toString(q._id),
+            display_id: q.display_id || toString(q._id)?.slice(0, 8)?.toUpperCase() || 'Q',
+            question_text: { markdown: q.question_text?.markdown || '' },
+            type: q.type,
+            options: q.options || [],
+            answer: q.answer || {},
+            solution: { text_markdown: q.solution?.text_markdown || '' },
+            metadata: {
+                difficulty: q.metadata?.difficulty || 'Medium',
+                chapter_id: q.metadata?.chapter_id || '',
+                tags: q.metadata?.tags || [],
+                is_pyq: q.metadata?.is_pyq || false,
+                is_top_pyq: q.metadata?.is_top_pyq || false,
+            },
+            svg_scales: q.svg_scales || {},
+        }));
+    } catch (error) {
+        console.error('Failed to get chapter questions:', error);
+        return [];
+    }
+}

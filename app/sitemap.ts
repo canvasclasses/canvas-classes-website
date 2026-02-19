@@ -89,6 +89,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Error fetching SEO questions for sitemap:', error);
     }
 
-    return [...staticEntries, ...flashcardChapterEntries, ...questionEntries];
+    // Per-chapter Crucible pages — individual URLs for each of the 28 chapters
+    let crucibleChapterEntries: MetadataRoute.Sitemap = [];
+    try {
+        const { getTaxonomy } = await import('./the-crucible/actions');
+        const chapters = await getTaxonomy();
+        crucibleChapterEntries = chapters.map(ch => ({
+            url: `${BASE_URL}/the-crucible/${ch.id}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.85,
+        }));
+    } catch (error) {
+        console.error('Error fetching crucible chapters for sitemap:', error);
+    }
+
+    return [...staticEntries, ...flashcardChapterEntries, ...crucibleChapterEntries, ...questionEntries];
 }
 
