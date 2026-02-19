@@ -42,8 +42,9 @@ export async function middleware(request: NextRequest) {
 
     const { data: { user } } = await supabase.auth.getUser();
 
-    // Not logged in → redirect to /login
-    if (!user) {
+    // Not logged in → redirect to /login (skip on local dev)
+    const isLocalDev = request.nextUrl.hostname === 'localhost' || request.nextUrl.hostname === '127.0.0.1';
+    if (!user && !isLocalDev) {
         const loginUrl = request.nextUrl.clone();
         loginUrl.pathname = '/login';
         loginUrl.searchParams.set('next', pathname);
@@ -51,7 +52,7 @@ export async function middleware(request: NextRequest) {
     }
 
     // /crucible/admin requires email to be in the ADMIN_EMAILS allowlist
-    if (pathname.startsWith('/crucible/admin')) {
+    if (pathname.startsWith('/crucible/admin') && user) {
         const userEmail = user.email || '';
         if (ADMIN_EMAILS.length > 0 && !ADMIN_EMAILS.includes(userEmail)) {
             return NextResponse.json(

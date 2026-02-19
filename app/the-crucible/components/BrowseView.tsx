@@ -103,24 +103,20 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
     </header>
   );
 
-  // Shared pagination bar
+  // Shared pagination bar — compact, never overflows on mobile
   const paginationBar = totalPages > 1 && (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.07)', flexShrink: 0, background: 'rgba(8,10,15,0.97)' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, padding: '10px 14px', borderTop: '1px solid rgba(255,255,255,0.07)', flexShrink: 0, background: 'rgba(8,10,15,0.97)' }}>
       <button onClick={() => changePage(page - 1)} disabled={page === 0}
-        style={{ padding: '7px 14px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: page === 0 ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.7)', fontSize: 12, cursor: page === 0 ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
-        <ChevronLeft style={{ width: 13, height: 13 }} /> Prev
+        style={{ padding: '8px 16px', borderRadius: 9, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: page === 0 ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.8)', fontSize: 13, fontWeight: 600, cursor: page === 0 ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
+        <ChevronLeft style={{ width: 14, height: 14 }} /> Prev
       </button>
-      <div style={{ display: 'flex', gap: 4 }}>
-        {Array.from({ length: totalPages }, (_, i) => (
-          <button key={i} onClick={() => changePage(i)}
-            style={{ width: 28, height: 28, borderRadius: 7, border: `1.5px solid ${i === page ? '#7c3aed' : 'rgba(255,255,255,0.1)'}`, background: i === page ? '#7c3aed' : 'transparent', color: i === page ? '#fff' : 'rgba(255,255,255,0.5)', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
-            {i + 1}
-          </button>
-        ))}
-      </div>
+      <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', fontFamily: 'monospace', flexShrink: 0 }}>
+        {page + 1} / {totalPages}
+        <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', marginLeft: 6 }}>({questions.length} Qs)</span>
+      </span>
       <button onClick={() => changePage(page + 1)} disabled={page === totalPages - 1}
-        style={{ padding: '7px 14px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: page === totalPages - 1 ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.7)', fontSize: 12, cursor: page === totalPages - 1 ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
-        Next <ChevronRight style={{ width: 13, height: 13 }} />
+        style={{ padding: '8px 16px', borderRadius: 9, border: '1px solid rgba(255,255,255,0.1)', background: page === totalPages - 1 ? 'rgba(255,255,255,0.03)' : 'rgba(124,58,237,0.15)', color: page === totalPages - 1 ? 'rgba(255,255,255,0.2)' : '#a78bfa', fontSize: 13, fontWeight: 600, cursor: page === totalPages - 1 ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
+        Next <ChevronRight style={{ width: 14, height: 14 }} />
       </button>
     </div>
   );
