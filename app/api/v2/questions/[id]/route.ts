@@ -165,6 +165,10 @@ export async function PATCH(
       };
     }
     
+    if (body.svg_scales !== undefined) {
+      updates.svg_scales = { ...(existing.svg_scales ?? {}), ...body.svg_scales };
+    }
+
     if (body.status && body.status !== existing.status) {
       changes.push({
         field: 'status',

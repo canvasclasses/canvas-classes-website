@@ -6,7 +6,7 @@ import 'katex/dist/katex.min.css';
 interface MathRendererProps {
   markdown: string;
   className?: string;
-  imageScale?: number;
+  imageScale?: number; // Fixed pixel width for images: scale * 2px (so 100 = 200px, 150 = 300px)
 }
 
 export default function MathRenderer({ markdown, className = '', imageScale = 100 }: MathRendererProps) {
@@ -126,10 +126,12 @@ function processMarkdown(text: string, imageScale: number): string {
       return t;
     });
 
-  // Images
+  // Images — fixed pixel width so size is screen-independent
+  // imageScale 100 = 200px, 150 = 300px, 50 = 100px
+  const pxWidth = Math.round(imageScale * 2);
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_m: string, alt: string, url: string) => {
     const clean = url.replace(/\s+/g, '');
-    return `<img src="${clean}" alt="${alt}" style="max-width:${imageScale}%;height:auto;display:block;margin:8px 0;" />`;
+    return `<img src="${clean}" alt="${alt}" style="width:${pxWidth}px;height:auto;display:block;margin:8px 0;" />`;
   });
 
   // Bold

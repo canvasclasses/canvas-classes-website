@@ -5,18 +5,26 @@ import { RotateCcw } from 'lucide-react';
 
 interface SVGScaleControlsProps {
   imageUrl?: string;
+  initialScale?: number;
   onScaleChange?: (scale: number) => void;
-  step?: number; // Increment step (1 for fine control, 5 for options)
-  compact?: boolean; // Compact mode for options
+  step?: number;
+  compact?: boolean;
 }
 
 export default function SVGScaleControls({ 
   imageUrl = '', 
+  initialScale = 100,
   onScaleChange, 
-  step = 1,
+  step = 5,
   compact = false 
 }: SVGScaleControlsProps) {
-  const [scale, setScale] = useState(100);
+  const [scale, setScale] = useState(initialScale);
+
+  // Sync if parent changes initialScale (e.g. switching questions)
+  const prevInitial = useState(initialScale)[0];
+  if (scale === prevInitial && initialScale !== prevInitial) {
+    setScale(initialScale);
+  }
 
   const handleScaleChange = (newScale: number) => {
     setScale(newScale);
@@ -30,17 +38,20 @@ export default function SVGScaleControls({
 
   if (compact) {
     return (
-      <div className="flex items-center gap-1 p-1.5 bg-gray-800/50 border border-gray-700/50 rounded">
+      <div className="flex items-center gap-1.5 p-1.5 bg-gray-800/50 border border-gray-700/50 rounded">
+        <button onClick={resetScale} className="p-0.5 hover:bg-gray-700 rounded transition" title="Reset to 100%">
+          <RotateCcw size={10} className="text-gray-500" />
+        </button>
         <input
           type="range"
-          min="1"
-          max="100"
+          min="10"
+          max="300"
           step={step}
           value={scale}
           onChange={(e) => handleScaleChange(parseInt(e.target.value))}
-          className="w-16 h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-purple-500"
+          className="w-20 h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-purple-500"
         />
-        <span className="text-xs text-gray-400 font-mono w-8 text-center">{scale}%</span>
+        <span className="text-xs text-gray-400 font-mono w-9 text-right">{scale}%</span>
       </div>
     );
   }
@@ -59,8 +70,8 @@ export default function SVGScaleControls({
       </div>
       <input
         type="range"
-        min="1"
-        max="100"
+        min="10"
+        max="300"
         step={step}
         value={scale}
         onChange={(e) => handleScaleChange(parseInt(e.target.value))}
@@ -70,12 +81,12 @@ export default function SVGScaleControls({
         {scale}%
       </span>
       {imageUrl && (
-        <div className="mt-1">
+        <div className="mt-1 overflow-hidden">
           <img 
             src={imageUrl} 
             alt="Preview" 
-            style={{ transform: `scale(${scale / 100})`, transformOrigin: 'center' }}
-            className="max-h-16 mx-auto transition-transform"
+            style={{ width: `${scale}%`, height: 'auto', display: 'block', margin: '0 auto' }}
+            className="transition-all"
           />
         </div>
       )}

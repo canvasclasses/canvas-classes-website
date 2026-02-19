@@ -63,6 +63,7 @@ interface Question {
     version: number;
     created_at: string;
     updated_at: string;
+    svg_scales?: Record<string, number>;
 }
 
 interface Chapter {
@@ -90,8 +91,9 @@ export default function AdminPage() {
     const [savingId, setSavingId] = useState<string | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
-    const [questionImageScale, setQuestionImageScale] = useState(100);
-    const [solutionImageScale, setSolutionImageScale] = useState(100);
+    // svg_scales are loaded from the selected question's DB record
+    // Keys: 'question', 'solution', 'option_a', 'option_b', 'option_c', 'option_d'
+    const [svgScaleOverrides, setSvgScaleOverrides] = useState<Record<string, number>>({});
     const [reclassifying, setReclassifying] = useState(false);
     
     // Bulk selection
@@ -131,8 +133,34 @@ export default function AdminPage() {
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     
-    // SVG scale state
-    const [svgScales, setSvgScales] = useState<Record<string, number>>({});
+    // Helper: get scale for a field from the selected question or local override
+    const getSvgScale = (field: string): number => {
+        if (svgScaleOverrides[field] !== undefined) return svgScaleOverrides[field];
+        const q = questions.find(q => q._id === selectedQuestionId);
+        return q?.svg_scales?.[field] ?? 100;
+    };
+
+    // Save scale to DB and local state
+    const handleScaleChange = (questionId: string, field: string, scale: number) => {
+        setSvgScaleOverrides(prev => ({ ...prev, [field]: scale }));
+        const q = questions.find(q => q._id === questionId);
+        const newScales = { ...(q?.svg_scales ?? {}), [field]: scale };
+        // Update local questions state immediately
+        setQuestions(prev => prev.map(qq =>
+            qq._id === questionId ? { ...qq, svg_scales: newScales } : qq
+        ));
+        // Persist to DB (debounced via the existing handleUpdate)
+        fetch(`/api/v2/questions/${questionId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ svg_scales: newScales })
+        }).catch(e => console.error('Scale save error:', e));
+    };
+
+    // Reset local scale overrides when switching questions
+    useEffect(() => {
+        setSvgScaleOverrides({});
+    }, [selectedQuestionId]);
 
     useEffect(() => {
         loadData();
@@ -996,8 +1024,9 @@ export default function AdminPage() {
                                             onUploaded={(markdownLink) => handleSVGUploaded(selectedQuestion._id, 'question', markdownLink)}
                                         />
                                         <SVGScaleControls
-                                            step={1}
-                                            onScaleChange={(scale) => setQuestionImageScale(scale)}
+                                            step={5}
+                                            initialScale={getSvgScale('question')}
+                                            onScaleChange={(scale) => handleScaleChange(selectedQuestion._id, 'question', scale)}
                                         />
                                     </div>
                                 </div>
@@ -1084,7 +1113,8 @@ export default function AdminPage() {
                                                 <SVGScaleControls 
                                                     compact={true}
                                                     step={5}
-                                                    onScaleChange={(scale) => console.log(`Option ${opt.id} scale:`, scale)}
+                                                    initialScale={getSvgScale(`option_${opt.id}`)}
+                                                    onScaleChange={(scale) => handleScaleChange(selectedQuestion._id, `option_${opt.id}`, scale)}
                                                 />
                                             </div>
                                         ))}
@@ -1166,8 +1196,9 @@ export default function AdminPage() {
                                             onUploaded={(markdownLink) => handleSVGUploaded(selectedQuestion._id, 'solution', markdownLink)}
                                         />
                                         <SVGScaleControls
-                                            step={1}
-                                            onScaleChange={(scale) => setSolutionImageScale(scale)}
+                                            step={5}
+                                            initialScale={getSvgScale('solution')}
+                                            onScaleChange={(scale) => handleScaleChange(selectedQuestion._id, 'solution', scale)}
                                         />
                                     </div>
                                 </div>
@@ -1230,7 +1261,7 @@ export default function AdminPage() {
                                     <MathRenderer 
                                         markdown={selectedQuestion.question_text.markdown}
                                         className="text-gray-300"
-                                        imageScale={questionImageScale}
+                                        imageScale={getSvgScale('question')}
                                     />
                                     {selectedQuestion.type !== 'NVT' && (() => {
                                         // Intelligent layout: 2x2 grid for images/short text, vertical for long text
@@ -1266,6 +1297,7 @@ export default function AdminPage() {
                                                             <MathRenderer 
                                                                 markdown={opt.text}
                                                                 className="text-gray-300 option-text"
+                                                                imageScale={getSvgScale(`option_${opt.id}`)}
                                                             />
                                                         </div>
                                                     </div>
@@ -1289,7 +1321,7 @@ export default function AdminPage() {
                                     <MathRenderer 
                                         markdown={selectedQuestion.solution.text_markdown}
                                         className="text-gray-300 solution-text"
-                                        imageScale={solutionImageScale}
+                                        imageScale={getSvgScale('solution')}
                                     />
                                 </div>
                             </div>
