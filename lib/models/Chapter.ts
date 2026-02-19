@@ -46,7 +46,6 @@ const ChapterSchema = new Schema<IChapter>({
   _id: { 
     type: String, 
     required: true,
-    match: /^chapter_[a-z_]+$/
   },
   name: { type: String, required: true },
   display_order: { type: Number, required: true },
