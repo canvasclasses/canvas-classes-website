@@ -54,12 +54,17 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
             let bc = sel ? '#3b82f6' : 'rgba(255,255,255,0.1)', bg = sel ? 'rgba(59,130,246,0.1)' : 'rgba(255,255,255,0.03)';
             if (rev && correct) { bc = '#34d399'; bg = 'rgba(52,211,153,0.1)'; } else if (rev && sel && !correct) { bc = '#f87171'; bg = 'rgba(248,113,113,0.08)'; }
             return (
-              <button key={opt.id} onClick={() => { if (!solShown) { setOptChosen(opt.id); setSolShown(true); } }}
-                style={{ padding: '11px 13px', borderRadius: 10, border: `1.5px solid ${bc}`, background: bg, display: 'flex', alignItems: 'center', gap: 10, cursor: solShown ? 'default' : 'pointer', textAlign: 'left', color: '#fff', fontSize: 13, width: '100%' }}>
+              <button key={opt.id}
+                onClick={() => { if (!solShown) { setOptChosen(opt.id); setSolShown(true); } }}
+                onPointerUp={e => { e.currentTarget.releasePointerCapture(e.pointerId); if (!solShown) { setOptChosen(opt.id); setSolShown(true); } }}
+                style={{ padding: '11px 13px', borderRadius: 10, border: `1.5px solid ${bc}`, background: bg, display: 'flex', alignItems: 'center', gap: 10, cursor: solShown ? 'default' : 'pointer', textAlign: 'left', color: '#fff', fontSize: 13, width: '100%', minWidth: 0 }}>
                 <span style={{ width: 24, height: 24, borderRadius: 6, border: `1.5px solid ${bc}`, background: sel ? (rev ? (correct ? '#34d399' : '#f87171') : '#3b82f6') : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: sel ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
                   {rev && correct ? <Check style={{ width: 12, height: 12 }} /> : opt.id.toUpperCase()}
                 </span>
-                <span style={{ flex: 1 }}><MathRenderer markdown={opt.text || ''} className="text-sm" imageScale={qq.svg_scales?.[`option_${opt.id}`] ?? 100} /></span>
+                {/* overflowX:auto lets long equations scroll horizontally on narrow screens */}
+                <span style={{ flex: 1, minWidth: 0, overflowX: 'auto', WebkitOverflowScrolling: 'touch' } as any}>
+                  <MathRenderer markdown={opt.text || ''} className="text-sm" imageScale={qq.svg_scales?.[`option_${opt.id}`] ?? 100} />
+                </span>
               </button>
             );
           })}
@@ -69,11 +74,18 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
         <div style={{ marginBottom: 12 }}>
           <input type="text" placeholder="Enter integer answer" onKeyDown={e => { if (e.key === 'Enter') setSolShown(true); }} onChange={e => setOptChosen(e.target.value)}
             style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '1.5px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.05)', color: '#fff', fontSize: 15, outline: 'none', boxSizing: 'border-box' }} />
-          <button onClick={() => setSolShown(true)} style={{ marginTop: 8, padding: '10px 20px', borderRadius: 10, border: 'none', background: '#7c3aed', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>Submit</button>
+          <button
+            onClick={() => setSolShown(true)}
+            onPointerUp={e => { e.currentTarget.releasePointerCapture(e.pointerId); setSolShown(true); }}
+            style={{ marginTop: 8, padding: '10px 20px', borderRadius: 10, border: 'none', background: '#7c3aed', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>Submit</button>
         </div>
       )}
-      <button onClick={() => setSolShown(!solShown)}
-        style={{ padding: '9px 16px', borderRadius: 9, border: '1px solid rgba(124,58,237,0.4)', background: solShown ? 'rgba(124,58,237,0.15)' : 'transparent', color: '#a78bfa', fontSize: 12, fontWeight: 700, cursor: 'pointer', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
+      {/* View Solution — uses onPointerUp for reliable firing on real iOS/Android Safari
+          where onClick inside a scrollable container can be swallowed by the scroll gesture */}
+      <button
+        onClick={e => { e.stopPropagation(); setSolShown(!solShown); }}
+        onPointerUp={e => { e.stopPropagation(); e.currentTarget.releasePointerCapture(e.pointerId); setSolShown(!solShown); }}
+        style={{ padding: '9px 16px', borderRadius: 9, border: '1px solid rgba(124,58,237,0.4)', background: solShown ? 'rgba(124,58,237,0.15)' : 'transparent', color: '#a78bfa', fontSize: 12, fontWeight: 700, cursor: 'pointer', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6, touchAction: 'manipulation' }}>
         <ChevronRight style={{ width: 13, height: 13, transform: solShown ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
         {solShown ? 'Hide Solution' : 'View Solution'}
       </button>
