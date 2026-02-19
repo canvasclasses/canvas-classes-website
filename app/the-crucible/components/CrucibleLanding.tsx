@@ -66,47 +66,58 @@ function ShlokaScreen({ onDone }: { onDone: () => void }) {
 function ProgressCard({ isLoggedIn }: { isLoggedIn: boolean }) {
   const p = PLACEHOLDER;
   const pct = Math.round((p.attempted / p.totalQ) * 100);
-  const R = 40; const C = 2 * Math.PI * R;
+  const R = 26; const C = 2 * Math.PI * R;
   return (
-    <div style={{ background: 'linear-gradient(145deg,rgba(30,20,60,0.9),rgba(15,12,30,0.95))', border: '1px solid rgba(124,58,237,0.25)', borderRadius: 18, padding: '16px 20px 16px', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: -50, right: -50, width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle,rgba(124,58,237,0.15) 0%,transparent 70%)', pointerEvents: 'none' }} />
-      {/* Top row: label + streak */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-        <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', margin: 0 }}>Your Progress</p>
-        <span style={{ fontSize: 12, fontWeight: 700, color: '#f97316' }}>{String.fromCodePoint(0x1F525)} {p.streak}-day streak</span>
-      </div>
-      {/* Main row: big ring | stats | day dots */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-        {/* Ring — bigger on desktop */}
-        <svg width="96" height="96" viewBox="0 0 96 96" style={{ flexShrink: 0 }}>
-          <circle cx="48" cy="48" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="7"/>
-          <circle cx="48" cy="48" r={R} fill="none" stroke="url(#ring-grad)" strokeWidth="7" strokeLinecap="round"
+    <div style={{ background: 'linear-gradient(145deg,rgba(30,20,60,0.9),rgba(15,12,30,0.95))', border: '1px solid rgba(124,58,237,0.25)', borderRadius: 16, padding: '12px 16px', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle,rgba(124,58,237,0.12) 0%,transparent 70%)', pointerEvents: 'none' }} />
+
+      {/* Single compact row: ring + 4 stats + streak */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+        {/* Ring — compact 64px */}
+        <svg width="64" height="64" viewBox="0 0 64 64" style={{ flexShrink: 0 }}>
+          <circle cx="32" cy="32" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="5"/>
+          <circle cx="32" cy="32" r={R} fill="none" stroke="url(#ring-grad)" strokeWidth="5" strokeLinecap="round"
             strokeDasharray={C} strokeDashoffset={C * (1 - pct / 100)}
-            transform="rotate(-90 48 48)" style={{ transition: 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)' }}
+            transform="rotate(-90 32 32)" style={{ transition: 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)' }}
           />
           <defs><linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#38bdf8"/><stop offset="100%" stopColor="#818cf8"/></linearGradient></defs>
-          <text x="48" y="44" textAnchor="middle" fill="#fff" fontSize="16" fontWeight="800" fontFamily="monospace">{pct}%</text>
-          <text x="48" y="60" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9" fontFamily="sans-serif">complete</text>
+          <text x="32" y="29" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="800" fontFamily="monospace">{pct}%</text>
+          <text x="32" y="40" textAnchor="middle" fill="rgba(255,255,255,0.35)" fontSize="7" fontFamily="sans-serif">done</text>
         </svg>
-        {/* 2×2 stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 28px', flex: 1 }}>
-          <div><div style={{ fontSize: 20, fontWeight: 800, color: '#a78bfa', fontFamily: 'monospace', lineHeight: 1 }}>{p.attempted.toLocaleString()}</div><div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Attempted</div></div>
-          <div><div style={{ fontSize: 20, fontWeight: 800, color: '#38bdf8', fontFamily: 'monospace', lineHeight: 1 }}>{p.totalQ.toLocaleString()}</div><div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Total Qs</div></div>
-          <div><div style={{ fontSize: 20, fontWeight: 800, color: '#34d399', fontFamily: 'monospace', lineHeight: 1 }}>{p.mastered}/{p.masteredOf}</div><div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Mastered</div></div>
-          <div><div style={{ fontSize: 20, fontWeight: 800, color: '#fbbf24', fontFamily: 'monospace', lineHeight: 1 }}>{p.accuracy}%</div><div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Accuracy</div></div>
-        </div>
-        {/* Day dots — vertical column on the right, fills the empty space */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flexShrink: 0, alignItems: 'center' }}>
-          <div style={{ fontSize: 9, fontWeight: 700, color: 'rgba(255,255,255,0.25)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 2 }}>Week</div>
-          {DAYS.map((d, i) => (
-            <div key={i} style={{ width: 30, height: 22, borderRadius: 6, background: p.activeDays.includes(i) ? '#b45309' : 'rgba(255,255,255,0.07)', border: `1px solid ${p.activeDays.includes(i) ? '#d97706' : 'rgba(255,255,255,0.1)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 700, color: p.activeDays.includes(i) ? '#fde68a' : 'rgba(255,255,255,0.3)' }}>{d}</div>
+
+        {/* Stats — 4 pills in a row */}
+        <div style={{ display: 'flex', gap: 6, flex: 1, flexWrap: 'wrap' }}>
+          {[
+            { val: p.attempted.toLocaleString(), label: 'solved', color: '#a78bfa' },
+            { val: `${p.totalQ.toLocaleString()}`, label: 'total Qs', color: '#38bdf8' },
+            { val: `${p.mastered}/${p.masteredOf}`, label: 'chapters mastered', color: '#34d399' },
+            { val: `${p.accuracy}%`, label: 'accuracy', color: '#fbbf24' },
+          ].map(({ val, label, color }) => (
+            <div key={label} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '6px 10px', minWidth: 0 }}>
+              <div style={{ fontSize: 15, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
+              <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', marginTop: 2, whiteSpace: 'nowrap' }}>{label}</div>
+            </div>
           ))}
         </div>
+
+        {/* Streak + day dots — right side */}
+        <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+          <span style={{ fontSize: 11, fontWeight: 700, color: '#f97316', whiteSpace: 'nowrap' }}>{String.fromCodePoint(0x1F525)} {p.streak}d</span>
+          <div style={{ display: 'flex', gap: 3 }}>
+            {DAYS.map((d, i) => (
+              <div key={i} style={{ width: 20, height: 20, borderRadius: 5, background: p.activeDays.includes(i) ? '#b45309' : 'rgba(255,255,255,0.07)', border: `1px solid ${p.activeDays.includes(i) ? '#d97706' : 'rgba(255,255,255,0.09)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, fontWeight: 700, color: p.activeDays.includes(i) ? '#fde68a' : 'rgba(255,255,255,0.25)' }}>{d}</div>
+            ))}
+          </div>
+        </div>
       </div>
+
       {!isLoggedIn && (
-        <button style={{ marginTop: 14, display: 'flex', alignItems: 'center', gap: 7, padding: '7px 16px', background: 'rgba(124,58,237,0.18)', border: '1px solid rgba(124,58,237,0.35)', borderRadius: 10, color: '#a78bfa', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
-          <LogIn style={{ width: 13, height: 13 }} /> Log in to track real progress
-        </button>
+        <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontStyle: 'italic' }}>Showing sample data</span>
+          <button style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: 'rgba(124,58,237,0.18)', border: '1px solid rgba(124,58,237,0.35)', borderRadius: 8, color: '#a78bfa', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
+            <LogIn style={{ width: 12, height: 12 }} /> Log in to track real progress
+          </button>
+        </div>
       )}
     </div>
   );
@@ -195,7 +206,7 @@ function ChapterSheet({ classLevel, chapters, selected, onToggle, onClose, onSel
   );
 }
 
-// ── Class card — clean compact mobile layout ─────────────────────────────────
+// ── Class card ────────────────────────────────────────────────────────────────
 function ClassCard({ classLevel, chapters, selected, onOpen }: {
   classLevel: number; chapters: Chapter[]; selected: Set<string>; onOpen: () => void;
 }) {
@@ -203,34 +214,33 @@ function ClassCard({ classLevel, chapters, selected, onOpen }: {
   const selCount = chapters.filter(c => selected.has(c.id)).length;
   const totalQ   = chapters.reduce((s, c) => s + (c.question_count ?? 0), 0);
   const selQ     = chapters.filter(c => selected.has(c.id)).reduce((s, c) => s + (c.question_count ?? 0), 0);
-  const p        = selCount > 0 ? Math.round((selCount / chapters.length) * 100) : 0;
+  const pct      = selCount > 0 ? Math.round((selCount / chapters.length) * 100) : 0;
   const active   = selCount > 0;
   return (
-    <div onClick={onOpen} style={{ flex: 1, padding: '14px 12px', borderRadius: 16, cursor: 'pointer', background: active ? `${color}10` : 'rgba(255,255,255,0.04)', border: `1.5px solid ${active ? color + '50' : 'rgba(255,255,255,0.09)'}`, transition: 'all 0.2s', userSelect: 'none', position: 'relative', overflow: 'hidden' }}>
-      {/* Header row */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-        <div style={{ width: 28, height: 28, borderRadius: 8, background: color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 900, color: '#000', flexShrink: 0 }}>{classLevel}</div>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', lineHeight: 1.2 }}>Class {classLevel}</div>
-          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', marginTop: 1 }}>{chapters.length} chapters</div>
+    <div onClick={onOpen} style={{ flex: 1, padding: '14px 14px 12px', borderRadius: 16, cursor: 'pointer', background: active ? `${color}0d` : 'rgba(255,255,255,0.04)', border: `1.5px solid ${active ? color + '55' : 'rgba(255,255,255,0.09)'}`, transition: 'all 0.2s', userSelect: 'none', position: 'relative', overflow: 'hidden' }}>
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+        <div>
+          <div style={{ fontSize: 14, fontWeight: 800, color: active ? color : '#fff', lineHeight: 1.1 }}>Class {classLevel}</div>
+          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{chapters.length} chapters</div>
         </div>
-        <ChevronRight style={{ width: 13, height: 13, color: active ? color : 'rgba(255,255,255,0.3)', flexShrink: 0 }} />
+        <ChevronRight style={{ width: 14, height: 14, color: active ? color : 'rgba(255,255,255,0.25)', flexShrink: 0 }} />
       </div>
       {/* Progress bar */}
-      <Bar value={p} color={color} h={2} />
-      {/* Bottom stats */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 8 }}>
+      <Bar value={pct} color={color} h={2} />
+      {/* Bottom: question count left, selection state right */}
+      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginTop: 8 }}>
         <div>
-          <div style={{ fontSize: 16, fontWeight: 800, color: active ? color : 'rgba(255,255,255,0.6)', fontFamily: 'monospace', lineHeight: 1 }}>{totalQ > 0 ? totalQ.toLocaleString() : '—'}</div>
-          <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Total Qs</div>
+          <div style={{ fontSize: 18, fontWeight: 800, color: active ? color : 'rgba(255,255,255,0.7)', fontFamily: 'monospace', lineHeight: 1 }}>{totalQ > 0 ? totalQ.toLocaleString() : '—'}</div>
+          <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.07em' }}>questions</div>
         </div>
         {active ? (
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 16, fontWeight: 800, color: '#fff', fontFamily: 'monospace', lineHeight: 1 }}>{selCount}</div>
-            <div style={{ fontSize: 9, color: color, marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 700 }}>ch selected</div>
+            <div style={{ fontSize: 13, fontWeight: 800, color: '#fff', fontFamily: 'monospace', lineHeight: 1 }}>{selCount}/{chapters.length} ch</div>
+            <div style={{ fontSize: 9, color, marginTop: 2, fontWeight: 700 }}>{selQ.toLocaleString()} Qs selected</div>
           </div>
         ) : (
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)' }}>Tap to select</span>
+          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontStyle: 'italic' }}>tap to select</span>
         )}
       </div>
     </div>
