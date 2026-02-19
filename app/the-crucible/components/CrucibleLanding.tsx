@@ -66,23 +66,23 @@ function ShlokaScreen({ onDone }: { onDone: () => void }) {
 function ProgressCard({ isLoggedIn }: { isLoggedIn: boolean }) {
   const p = PLACEHOLDER;
   const pct = Math.round((p.attempted / p.totalQ) * 100);
-  const R = 26; const C = 2 * Math.PI * R;
+  const R = 33; const C = 2 * Math.PI * R;
   return (
     <div style={{ background: 'linear-gradient(145deg,rgba(30,20,60,0.9),rgba(15,12,30,0.95))', border: '1px solid rgba(124,58,237,0.25)', borderRadius: 16, padding: '12px 16px', position: 'relative', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle,rgba(124,58,237,0.12) 0%,transparent 70%)', pointerEvents: 'none' }} />
 
       {/* Single compact row: ring + 4 stats + streak */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-        {/* Ring — compact 64px */}
-        <svg width="64" height="64" viewBox="0 0 64 64" style={{ flexShrink: 0 }}>
-          <circle cx="32" cy="32" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="5"/>
-          <circle cx="32" cy="32" r={R} fill="none" stroke="url(#ring-grad)" strokeWidth="5" strokeLinecap="round"
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        {/* Ring — 80px */}
+        <svg width="80" height="80" viewBox="0 0 80 80" style={{ flexShrink: 0 }}>
+          <circle cx="40" cy="40" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="6"/>
+          <circle cx="40" cy="40" r={R} fill="none" stroke="url(#ring-grad)" strokeWidth="6" strokeLinecap="round"
             strokeDasharray={C} strokeDashoffset={C * (1 - pct / 100)}
-            transform="rotate(-90 32 32)" style={{ transition: 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)' }}
+            transform="rotate(-90 40 40)" style={{ transition: 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)' }}
           />
           <defs><linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#38bdf8"/><stop offset="100%" stopColor="#818cf8"/></linearGradient></defs>
-          <text x="32" y="29" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="800" fontFamily="monospace">{pct}%</text>
-          <text x="32" y="40" textAnchor="middle" fill="rgba(255,255,255,0.35)" fontSize="7" fontFamily="sans-serif">done</text>
+          <text x="40" y="36" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="800" fontFamily="monospace">{pct}%</text>
+          <text x="40" y="50" textAnchor="middle" fill="rgba(255,255,255,0.35)" fontSize="8" fontFamily="sans-serif">done</text>
         </svg>
 
         {/* Stats — 4 pills in a row */}
@@ -93,9 +93,9 @@ function ProgressCard({ isLoggedIn }: { isLoggedIn: boolean }) {
             { val: `${p.mastered}/${p.masteredOf}`, label: 'chapters mastered', color: '#34d399' },
             { val: `${p.accuracy}%`, label: 'accuracy', color: '#fbbf24' },
           ].map(({ val, label, color }) => (
-            <div key={label} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '6px 10px', minWidth: 0 }}>
-              <div style={{ fontSize: 15, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
-              <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', marginTop: 2, whiteSpace: 'nowrap' }}>{label}</div>
+            <div key={label} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '8px 12px', minWidth: 0, flex: 1 }}>
+              <div style={{ fontSize: 19, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
+              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 3, whiteSpace: 'nowrap' }}>{label}</div>
             </div>
           ))}
         </div>
