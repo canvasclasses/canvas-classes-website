@@ -2,11 +2,13 @@
 import { createClient } from '@supabase/supabase-js';
 import imageCompression from 'browser-image-compression';
 
-// Client-side Supabase client (using public key)
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+// Client-side Supabase client (lazy-initialized to avoid build-time errors)
+function getSupabaseClient() {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!url || !key) throw new Error('Supabase is not configured');
+    return createClient(url, key);
+}
 
 export interface UploadResult {
     url: string;
@@ -49,6 +51,7 @@ export const uploadAsset = async (
     // Unique ID: prefix + timestamp + random
     const uniqueName = `${prefix}_${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
 
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase.storage
         .from(bucket)
         .upload(uniqueName, fileToUpload, {
@@ -60,7 +63,7 @@ export const uploadAsset = async (
         throw error;
     }
 
-    const { data: publicData } = supabase.storage
+    const { data: publicData } = getSupabaseClient().storage
         .from(bucket)
         .getPublicUrl(data.path);
 
