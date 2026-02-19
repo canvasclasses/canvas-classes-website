@@ -82,6 +82,11 @@ export interface IQuestion {
   deleted_by?: string;
   
   asset_ids: string[]; // All assets used in this question
+  svg_scales?: {
+    question?: number;
+    solution?: number;
+    [key: string]: number | undefined; // option_a, option_b, option_c, option_d
+  };
 }
 
 const QuestionTextSchema = new Schema<IQuestionText>({
@@ -181,7 +186,11 @@ const QuestionSchema = new Schema<IQuestion>({
   deleted_at: { type: Date },
   deleted_by: { type: String },
   
-  asset_ids: [{ type: String }]
+  asset_ids: [{ type: String }],
+  svg_scales: {
+    type: Schema.Types.Mixed,
+    default: {}
+  }
 }, {
   timestamps: false, // We manage timestamps manually
   collection: 'questions_v2'
