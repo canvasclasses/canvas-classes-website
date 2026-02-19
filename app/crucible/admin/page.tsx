@@ -207,8 +207,9 @@ export default function AdminPage() {
                 fetch('/api/v2/chapters', { cache: 'no-store' })
             ]);
 
-            // If redirected to login (unauthenticated), send user there
-            if (qRes.redirected || qRes.url.includes('/login') || qRes.status === 401) {
+            // If redirected to login (unauthenticated), send user there — but not on local dev
+            const isDev = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
+            if (!isDev && (qRes.redirected || qRes.url.includes('/login') || qRes.status === 401)) {
                 window.location.href = '/login?next=/crucible/admin';
                 return;
             }

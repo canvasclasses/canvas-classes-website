@@ -114,6 +114,7 @@ export async function GET(request: NextRequest) {
     const type = searchParams.get('type');
     const difficulty = searchParams.get('difficulty');
     const is_pyq = searchParams.get('is_pyq');
+    const is_top_pyq = searchParams.get('is_top_pyq');
     // Authenticated users (admin dashboard) get full list; public gets max 50
     const requestedLimit = parseInt(searchParams.get('limit') || (isAuthenticated ? '5000' : '50'));
     const limit = isAuthenticated ? requestedLimit : Math.min(requestedLimit, 50);
@@ -127,6 +128,7 @@ export async function GET(request: NextRequest) {
     if (type) query.type = type;
     if (difficulty) query['metadata.difficulty'] = difficulty;
     if (is_pyq === 'true') query['metadata.is_pyq'] = true;
+    if (is_top_pyq === 'true') query['metadata.is_top_pyq'] = true;
     
     const questions = await QuestionV2.find(query)
       .sort({ created_at: -1 })
