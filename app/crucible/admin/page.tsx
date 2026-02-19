@@ -489,45 +489,34 @@ export default function AdminPage() {
 
     return (
         <div className="fixed inset-0 z-50 flex flex-col h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden">
-            {/* TOP BAR */}
-            <header className="shrink-0 bg-gray-950/95 backdrop-blur-sm border-b border-gray-800/50 px-4 py-3 shadow-xl">
-                <div className="flex items-center gap-3">
-                    {/* Title */}
-                    <h1 className="text-xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 bg-clip-text text-transparent shrink-0">
-                        The Crucible Admin
+            {/* TOP BAR — two rows */}
+            <header className="shrink-0 bg-gray-950/95 backdrop-blur-sm border-b border-gray-800/50 shadow-xl">
+                {/* Row 1: title + actions + search + selector + nav */}
+                <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-800/40">
+                    <h1 className="text-sm font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 bg-clip-text text-transparent shrink-0">
+                        Crucible Admin
                     </h1>
-                    <span className="text-gray-500 text-xs font-mono shrink-0">
-                        ({questions.length} shown / {totalCount} total
-                        {totalCount > PAGE_SIZE && ` · page ${currentPage + 1}/${Math.ceil(totalCount / PAGE_SIZE)}`})
-                    </span>
+                    <span className="text-gray-600 text-xs font-mono shrink-0">{questions.length}/{totalCount}</span>
 
-                    {/* Actions */}
-                    <div className="flex items-center gap-2 shrink-0">
-                        <button
-                            onClick={handleAddQuestion}
-                            className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg text-xs font-bold hover:from-indigo-500 hover:to-purple-500 transition shadow-lg"
-                        >
-                            <Plus size={12} /> Add Question
-                        </button>
-                        <button
-                            onClick={() => setBulkMode(!bulkMode)}
-                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition shadow-lg ${
-                                bulkMode 
-                                    ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white' 
-                                    : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
-                            }`}
-                        >
-                            {bulkMode ? <CheckSquare size={12} /> : <Square size={12} />} Bulk Mode
-                        </button>
-                        <button
-                            onClick={() => setShowAnalytics(!showAnalytics)}
-                            className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 rounded-lg text-xs font-bold transition shadow-lg"
-                        >
-                            <BarChart3 size={12} /> Analytics
-                        </button>
-                    </div>
+                    <div className="w-px h-4 bg-gray-700/50 shrink-0" />
 
-                    <div className="w-px h-6 bg-gray-700/50 shrink-0" />
+                    {/* Icon-only action buttons with tooltips */}
+                    <button onClick={handleAddQuestion} title="Add Question"
+                        className="flex items-center justify-center w-7 h-7 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-500 hover:to-purple-500 transition shrink-0">
+                        <Plus size={13} />
+                    </button>
+                    <button onClick={() => setBulkMode(!bulkMode)} title="Bulk Mode"
+                        className={`flex items-center justify-center w-7 h-7 rounded-lg transition shrink-0 ${
+                            bulkMode ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white' : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
+                        }`}>
+                        {bulkMode ? <CheckSquare size={13} /> : <Square size={13} />}
+                    </button>
+                    <button onClick={() => setShowAnalytics(!showAnalytics)} title="Analytics"
+                        className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 rounded-lg transition shrink-0">
+                        <BarChart3 size={13} />
+                    </button>
+
+                    <div className="w-px h-4 bg-gray-700/50 shrink-0" />
 
                     {/* Search */}
                     <input
@@ -535,14 +524,14 @@ export default function AdminPage() {
                         placeholder="Search ID, Text..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-40 bg-gray-800/50 border border-gray-700/50 rounded-lg px-3 py-1.5 text-xs focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 outline-none shrink-0 placeholder-gray-500"
+                        className="w-32 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none shrink-0 placeholder-gray-500"
                     />
 
                     {/* Question Selector or Bulk Selection Info */}
                     {bulkMode ? (
-                        <div className="flex items-center gap-2 px-3 py-1.5 bg-green-900/20 border border-green-600/50 rounded-lg shrink-0">
-                            <CheckSquare size={14} className="text-green-400" />
-                            <span className="text-xs font-bold text-green-400">{selectedQuestions.size} selected</span>
+                        <div className="flex items-center gap-2 px-2 py-1 bg-green-900/20 border border-green-600/50 rounded-lg shrink-0">
+                            <CheckSquare size={12} className="text-green-400" />
+                            <span className="text-xs font-bold text-green-400">{selectedQuestions.size} sel</span>
                             {selectedQuestions.size > 0 && (
                                 <>
                                     <select
@@ -552,30 +541,18 @@ export default function AdminPage() {
                                                 handleBulkTagAssignment(chapterId, '');
                                             }
                                         }}
-                                        className="ml-2 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-xs"
+                                        className="bg-gray-800 border border-gray-700 rounded px-2 py-1 text-xs"
                                     >
                                         <option value="">Bulk Assign Chapter</option>
                                         {chapters.map(ch => (
                                             <option key={ch._id} value={ch._id}>{ch.name}</option>
                                         ))}
                                     </select>
-                                    <select
-                                        onChange={(e) => {
-                                            const tagId = e.target.value;
-                                            if (tagId && confirm(`Assign ${selectedQuestions.size} questions this tag?`)) {
-                                                handleBulkTagAssignment('', tagId);
-                                            }
-                                        }}
-                                        className="bg-gray-800 border border-gray-700 rounded px-2 py-1 text-xs font-mono"
-                                        disabled
-                                    >
-                                        <option value="">Bulk Assign Tag (Select chapter first)</option>
-                                    </select>
                                     <button
                                         onClick={() => setSelectedQuestions(new Set())}
-                                        className="ml-2 text-xs text-red-400 hover:text-red-300"
+                                        className="text-xs text-red-400 hover:text-red-300"
                                     >
-                                        Clear Selection
+                                        Clear
                                     </button>
                                 </>
                             )}
@@ -584,7 +561,7 @@ export default function AdminPage() {
                         <select
                             value={selectedQuestionId || ''}
                             onChange={(e) => setSelectedQuestionId(e.target.value || null)}
-                            className="w-72 bg-gray-800/50 border border-gray-700/50 rounded-lg px-3 py-1.5 text-xs focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 outline-none shrink-0"
+                            className="flex-1 min-w-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
                         >
                             <option value="">Select Question ({filteredQuestions.length})</option>
                             {filteredQuestions.map(q => {
@@ -604,13 +581,13 @@ export default function AdminPage() {
 
                     {/* Question navigation */}
                     {selectedQuestion && (
-                        <div className="flex items-center gap-2 shrink-0">
+                        <div className="flex items-center gap-1 shrink-0">
                             <button
                                 onClick={() => {
                                     const idx = filteredQuestions.findIndex(q => q._id === selectedQuestionId);
                                     if (idx > 0) setSelectedQuestionId(filteredQuestions[idx - 1]._id);
                                 }}
-                                className="px-3 py-1.5 bg-indigo-600/80 hover:bg-indigo-600 text-white rounded-lg text-xs font-medium transition"
+                                className="px-2 py-1 bg-indigo-600/80 hover:bg-indigo-600 text-white rounded-lg text-xs font-medium transition"
                             >
                                 ← Prev
                             </button>
@@ -619,154 +596,137 @@ export default function AdminPage() {
                                     const idx = filteredQuestions.findIndex(q => q._id === selectedQuestionId);
                                     if (idx < filteredQuestions.length - 1) setSelectedQuestionId(filteredQuestions[idx + 1]._id);
                                 }}
-                                className="px-3 py-1.5 bg-indigo-600/80 hover:bg-indigo-600 text-white rounded-lg text-xs font-medium transition"
+                                className="px-2 py-1 bg-indigo-600/80 hover:bg-indigo-600 text-white rounded-lg text-xs font-medium transition"
                             >
                                 Next →
                             </button>
                         </div>
                     )}
 
-                    {/* Page navigation — only shown when there are multiple pages */}
+                    {/* Page navigation */}
                     {totalCount > PAGE_SIZE && (
-                        <div className="flex items-center gap-1.5 shrink-0 ml-auto">
+                        <div className="flex items-center gap-1 shrink-0 ml-auto">
                             <button
                                 disabled={currentPage === 0}
                                 onClick={() => loadData(currentPage - 1)}
-                                className="px-2 py-1 bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded text-xs font-medium transition"
-                            >
-                                ‹ Prev page
-                            </button>
-                            <span className="text-xs text-gray-500 font-mono px-1">
-                                {currentPage + 1} / {Math.ceil(totalCount / PAGE_SIZE)}
-                            </span>
+                                className="px-2 py-1 bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded text-xs transition"
+                            >‹</button>
+                            <span className="text-xs text-gray-500 font-mono">{currentPage + 1}/{Math.ceil(totalCount / PAGE_SIZE)}</span>
                             <button
                                 disabled={(currentPage + 1) * PAGE_SIZE >= totalCount}
                                 onClick={() => loadData(currentPage + 1)}
-                                className="px-2 py-1 bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded text-xs font-medium transition"
-                            >
-                                Next page ›
-                            </button>
+                                className="px-2 py-1 bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded text-xs transition"
+                            >›</button>
                         </div>
                     )}
 
-                    <div className="w-px h-6 bg-gray-700/50 shrink-0" />
-
-                    {/* Filters */}
-                    <div className="flex items-center gap-2 flex-1">
-                        <Filter size={12} className="text-purple-400 shrink-0" />
-
-                        <select
-                            value={selectedChapterFilter}
-                            onChange={(e) => setSelectedChapterFilter(e.target.value)}
-                            className="w-36 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                        >
-                            <option value="all">All Chapters</option>
-                            {chapters.map(ch => (
-                                <option key={ch._id} value={ch._id}>{ch.name}</option>
-                            ))}
-                        </select>
-
-                        <select
-                            value={selectedTypeFilter}
-                            onChange={(e) => setSelectedTypeFilter(e.target.value)}
-                            className="w-24 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                        >
-                            <option value="all">All Types</option>
-                            {QUESTION_TYPES.map(qt => (
-                                <option key={qt.id} value={qt.id}>{qt.id}</option>
-                            ))}
-                        </select>
-
-                        <select
-                            value={selectedDifficultyFilter}
-                            onChange={(e) => setSelectedDifficultyFilter(e.target.value)}
-                            className="w-24 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                        >
-                            <option value="all">All Levels</option>
-                            <option value="Easy">Easy</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Hard">Hard</option>
-                        </select>
-
-                        <select
-                            value={selectedSourceFilter}
-                            onChange={(e) => { setSelectedSourceFilter(e.target.value); setSelectedShiftFilter('all'); }}
-                            className="w-28 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                        >
-                            <option value="all">All Sources</option>
-                            <option value="mains_pyq">JEE Main</option>
-                            <option value="adv_pyq">JEE Adv</option>
-                            <option value="non_pyq">Non-PYQ</option>
-                        </select>
-
-                        <select
-                            value={selectedYearFilter}
-                            onChange={(e) => setSelectedYearFilter(e.target.value)}
-                            className="w-20 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                        >
-                            <option value="all">All Years</option>
-                            {[2024,2023,2022,2021,2020,2019,2018,2017,2016,2015].map(y => (
-                                <option key={y} value={String(y)}>{y}</option>
-                            ))}
-                        </select>
-
-                        <select
-                            value={selectedShiftFilter}
-                            onChange={(e) => setSelectedShiftFilter(e.target.value)}
-                            className="w-24 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                        >
-                            <option value="all">All Shifts</option>
-                            <option value="Morning">Morning</option>
-                            <option value="Evening">Evening</option>
-                        </select>
-
-                        <select
-                            value={selectedTopPYQFilter}
-                            onChange={(e) => setSelectedTopPYQFilter(e.target.value)}
-                            className="w-20 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                        >
-                            <option value="all">All</option>
-                            <option value="top">⭐ Top</option>
-                            <option value="not-top">Other</option>
-                        </select>
-
-                        <select
-                            value={selectedTagStatusFilter}
-                            onChange={(e) => setSelectedTagStatusFilter(e.target.value)}
-                            className={`w-32 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs outline-none ${
-                                selectedTagStatusFilter !== 'all' ? 'border-red-500 text-red-300' : 'border-gray-700/50'
-                            }`}
-                        >
-                            <option value="all">Tags ✓</option>
-                            <option value="untagged">⚠ Untagged ({untaggedCount})</option>
-                            <option value="no-chapter">🔴 No Chapter ({noChapterCount})</option>
-                            <option value="no-tag">🟡 No Tag ({noTagCount})</option>
-                        </select>
-
-                        {(selectedChapterFilter !== 'all' || selectedTypeFilter !== 'all' || selectedSourceFilter !== 'all' || selectedTopPYQFilter !== 'all' || selectedDifficultyFilter !== 'all' || selectedTagStatusFilter !== 'all' || selectedYearFilter !== 'all' || selectedShiftFilter !== 'all') && (
-                            <button
-                                onClick={() => {
-                                    setSelectedChapterFilter('all');
-                                    setSelectedTypeFilter('all');
-                                    setSelectedSourceFilter('all');
-                                    setSelectedTopPYQFilter('all');
-                                    setSelectedDifficultyFilter('all');
-                                    setSelectedTagStatusFilter('all');
-                                    setSelectedYearFilter('all');
-                                    setSelectedShiftFilter('all');
-                                }}
-                                className="text-xs text-red-400 hover:text-red-300 shrink-0 px-2"
-                            >
-                                Clear
-                            </button>
-                        )}
-                    </div>
-
                     {/* Save Status */}
                     {savingId && (
-                        <span className="text-xs text-yellow-400 flex items-center gap-1 shrink-0">
+                        <span className="text-xs text-yellow-400 flex items-center gap-1 shrink-0 ml-auto">
                             <Save size={12} className="animate-spin" /> Saving...
                         </span>
+                    )}
+                </div>
+
+                {/* Row 2: horizontally scrollable filter bar */}
+                <div className="flex items-center gap-2 px-3 py-1.5 overflow-x-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as any}>
+                    <Filter size={11} className="text-purple-400 shrink-0" />
+                    <select
+                        value={selectedChapterFilter}
+                        onChange={(e) => setSelectedChapterFilter(e.target.value)}
+                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
+                    >
+                        <option value="all">All Chapters</option>
+                        {chapters.map(ch => (
+                            <option key={ch._id} value={ch._id}>{ch.name}</option>
+                        ))}
+                    </select>
+                    <select
+                        value={selectedTypeFilter}
+                        onChange={(e) => setSelectedTypeFilter(e.target.value)}
+                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
+                    >
+                        <option value="all">All Types</option>
+                        {QUESTION_TYPES.map(qt => (
+                            <option key={qt.id} value={qt.id}>{qt.id}</option>
+                        ))}
+                    </select>
+                    <select
+                        value={selectedDifficultyFilter}
+                        onChange={(e) => setSelectedDifficultyFilter(e.target.value)}
+                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
+                    >
+                        <option value="all">All Levels</option>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                    <select
+                        value={selectedSourceFilter}
+                        onChange={(e) => { setSelectedSourceFilter(e.target.value); setSelectedShiftFilter('all'); }}
+                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
+                    >
+                        <option value="all">All Sources</option>
+                        <option value="mains_pyq">JEE Main</option>
+                        <option value="adv_pyq">JEE Adv</option>
+                        <option value="non_pyq">Non-PYQ</option>
+                    </select>
+                    <select
+                        value={selectedYearFilter}
+                        onChange={(e) => setSelectedYearFilter(e.target.value)}
+                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
+                    >
+                        <option value="all">All Years</option>
+                        {[2024,2023,2022,2021,2020,2019,2018,2017,2016,2015].map(y => (
+                            <option key={y} value={String(y)}>{y}</option>
+                        ))}
+                    </select>
+                    <select
+                        value={selectedShiftFilter}
+                        onChange={(e) => setSelectedShiftFilter(e.target.value)}
+                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
+                    >
+                        <option value="all">All Shifts</option>
+                        <option value="Morning">Morning</option>
+                        <option value="Evening">Evening</option>
+                    </select>
+                    <select
+                        value={selectedTopPYQFilter}
+                        onChange={(e) => setSelectedTopPYQFilter(e.target.value)}
+                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
+                    >
+                        <option value="all">All PYQ</option>
+                        <option value="top">⭐ Top</option>
+                        <option value="not-top">Other</option>
+                    </select>
+                    <select
+                        value={selectedTagStatusFilter}
+                        onChange={(e) => setSelectedTagStatusFilter(e.target.value)}
+                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs outline-none ${
+                            selectedTagStatusFilter !== 'all' ? 'border-red-500 text-red-300' : 'border-gray-700/50'
+                        }`}
+                    >
+                        <option value="all">Tags ✓</option>
+                        <option value="untagged">⚠ Untagged ({untaggedCount})</option>
+                        <option value="no-chapter">🔴 No Chapter ({noChapterCount})</option>
+                        <option value="no-tag">🟡 No Tag ({noTagCount})</option>
+                    </select>
+                    {(selectedChapterFilter !== 'all' || selectedTypeFilter !== 'all' || selectedSourceFilter !== 'all' || selectedTopPYQFilter !== 'all' || selectedDifficultyFilter !== 'all' || selectedTagStatusFilter !== 'all' || selectedYearFilter !== 'all' || selectedShiftFilter !== 'all') && (
+                        <button
+                            onClick={() => {
+                                setSelectedChapterFilter('all');
+                                setSelectedTypeFilter('all');
+                                setSelectedSourceFilter('all');
+                                setSelectedTopPYQFilter('all');
+                                setSelectedDifficultyFilter('all');
+                                setSelectedTagStatusFilter('all');
+                                setSelectedYearFilter('all');
+                                setSelectedShiftFilter('all');
+                            }}
+                            className="shrink-0 text-xs text-red-400 hover:text-red-300 px-2"
+                        >
+                            ✕ Clear
+                        </button>
                     )}
                 </div>
             </header>
