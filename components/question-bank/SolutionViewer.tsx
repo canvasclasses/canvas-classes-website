@@ -21,8 +21,26 @@ import {
     ArrowRight,
     Sparkles
 } from 'lucide-react';
-import { SolutionAsset, SourceReference } from '@/app/the-crucible/types';
 import 'katex/dist/katex.min.css';
+
+// Define Question type inline for compatibility
+interface Question {
+    id: string;
+    textMarkdown: string;
+    chapterId?: string;
+    difficulty?: string;
+    examSource?: string;
+    isTopPYQ?: boolean;
+    [key: string]: any;
+}
+
+interface SolutionAsset {
+    // Add properties for SolutionAsset
+}
+
+interface SourceReference {
+    // Add properties for SourceReference
+}
 
 interface SolutionViewerProps {
     solution: SolutionAsset;

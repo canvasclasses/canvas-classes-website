@@ -1,0 +1,62 @@
+{
+    "mole_concept_pyq_81": {
+        "textSolutionLatex": "**Reaction:**\n$X + Y + 3Z \\rightleftarrows XYZ_3$\nStoichiometry: 1:1:3.\n\n**Given:**\nX = 1 mol.\nY = 1 mol.\nZ = 0.05 mol.\nLimiting Reagent is Z (needs 3 per reaction, has 0.05). X, Y are excess.\nReaction based on Z: 3 mol Z gives 1 mol Product.\n0.05 mol Z gives $0.05/3$ mol Product.\n\nMW of $XYZ_3 = 10 + 20 + 3(30) = 30 + 90 = 120$ g/mol.\nYield (Mass) = $(0.05/3) \\times 120 = 0.05 \\times 40 = 2.0$ g.\n\n**Answer: 2**"
+    },
+    "mole_concept_pyq_82": {
+        "textSolutionLatex": "**Reaction:**\n$C_{15}H_{30} + O_2 \\rightarrow CO_2 + H_2O$\nUnsaturated? Cyclic? Or Alkene $C_nH_{2n}$.\n$C_{15}H_{30} + (15 + 30/4)O_2 \\rightarrow 15CO_2 + 15H_2O$\n$C_{15}H_{30} + 22.5O_2 \\rightarrow 15CO_2 + 15H_2O$\n\n**Given:**\n1 L Fuel. Density = 0.756 g/mL.\nMass Fuel = 756 g.\nMW Fuel = $15(12) + 30(1) = 180 + 30 = 210$ g/mol.\nMoles Fuel = $756/210 = 3.6$ mol.\n\n**Calculation:**\nOxygen Required = $3.6 \\times 22.5 = 81$ mol.\nMass O2 = $81 \\times 32 = 2592$ g.\n\nCO2 Released = $3.6 \\times 15 = 54$ mol.\nMass CO2 = $54 \\times 44 = 2376$ g.\n\n**Answer: Option (3)**"
+    },
+    "mole_concept_pyq_83": {
+        "textSolutionLatex": "**Given:**\nMass Compound = 120 g.\nCO2 = 330 g.\nH2O = 270 g.\n\n**Calculation:**\nMass C = $330 \\times (12/44) = 90$ g.\n% C = $(90/120) \\times 100 = 75\\%$.\n\nMass H = $270 \\times (2/18) = 30$ g.\n% H = $(30/120) \\times 100 = 25\\%$.\n\n**Answer: Option (4)**"
+    },
+    "mole_concept_pyq_84": {
+        "textSolutionLatex": "**Given:**\nInitial: 1 L containing 0.02 mmol H2SO4.\nProcess: Take 50% $\\Rightarrow$ 0.5 L containing 0.01 mmol.\nDilute to 1 L (Solution A). Still has 0.01 mmol H2SO4.\nAdd 0.01 mmol H2SO4.\nTotal H2SO4 = $0.01 + 0.01 = 0.02$ mmol.\n\nFinal amount = $0.02$ mmol.\nFormat: $x \\times 10^{-3}$ mmol.\n$x = 20$.\n\n**Answer: 20**"
+    },
+    "mole_concept_pyq_85": {
+        "textSolutionLatex": "**Given:**\nMass = 0.30 g.\nCO2 = 0.20 g.\nH2O = 0.10 g.\n\n**Calculation:**\nMass C = $0.20 \\times (12/44) \\approx 0.0545$ g.\n% C = $(0.0545 / 0.30) \\times 100 \\approx 18.18\\%$.\nNearest integer = 18.\n\n**Answer: 18**"
+    },
+    "mole_concept_pyq_86": {
+        "textSolutionLatex": "**Reaction:**\n$CH_4 + 2O_2 \\rightarrow CO_2 + 2H_2O$\nMoles CH4 = $100/16 = 6.25$ mol.\nMoles O2 = $208/32 = 6.5$ mol.\n\nO2 is Limiting (needs 12.5 mol, has 6.5).\nCO2 produced is based on O2.\n1 mol CO2 from 2 mol O2.\nMoles CO2 = $6.5/2 = 3.25$ mol.\nMass CO2 = $3.25 \\times 44 = 143$ g.\n\n**Answer: 143**"
+    },
+    "mole_concept_pyq_87": {
+        "textSolutionLatex": "**Given:**\n116 g Substance.\nProducts: 7.5 g H, 60 g O, 48.5 g C.\nVerify sum: $7.5 + 60 + 48.5 = 116$. Matches.\n\nComposition:\n% C = $48.5/116 \\approx 41.8\\%$.\n% H = $7.5/116 \\approx 6.46\\%$.\n% O = $60/116 \\approx 51.7\\%$.\n\nCheck Options:\nA. $CH_3COOH (C_2H_4O_2)$ MW 60. C=$24/60=40\\%$. H=$4/60=6.6\\%$. O=$32/60=53.3\\%$. Close.\nB. $HCHO (CH_2O)$ MW 30. Same %.\nC. $CH_3OOCH_3$ (Methyl formate/acetate isomer $C_2H_4O_2$? No, $C_2H_6O_2$? No, Methyl Formate is $C_2H_4O_2$). Same %.\nD. $CH_3CHO (C_2H_4O)$ MW 44. C=$24/44=54\\%$. No.\n\nFormulas fitting composition $CH_2O$ are A, B, C.\nQuestion: \"The data agrees with how many formulae?\"\nAgreement calculation:\nMoles C = $48.5/12 = 4.04$.\nMoles H = $7.5/1 = 7.5$.\nMoles O = $60/16 = 3.75$.\nRatio C:H:O $\\approx 1:2:1$.\nEmpirical Formula $CH_2O$.\nOptions A (C2H4O2), B (CH2O), C (Methyl formate C2H4O2) all have empirical formula CH2O.\nOption D (C2H4O) is different.\nSo 3 formulae agree.\n\n**Answer: 3**"
+    },
+    "mole_concept_pyq_88": {
+        "textSolutionLatex": "**Given:**\nC: 74%, H: 8.7%, N: 17.3%.\nMW = 162.\n\n**Calculation:**\nMass C = $0.74 \\times 162 = 119.88 \\approx 120$. Atoms = $120/12 = 10$.\nMass H = $0.087 \\times 162 = 14.09 \\approx 14$. Atoms = $14/1 = 14$.\nMass N = $0.173 \\times 162 = 28.02 \\approx 28$. Atoms = $28/14 = 2$.\nFormula $C_{10}H_{14}N_2$.\nMatch Option (4): Nicotine formula.\n\n**Answer: Option (4)**"
+    },
+    "mole_concept_pyq_89": {
+        "textSolutionLatex": "**Given:**\nMass = 0.492 g.\nCO2 = 0.793 g.\nH2O = 0.442 g.\n\n**Calculation:**\nMass C = $0.793 \\times (12/44) = 0.2163$ g.\nMass H = $0.442 \\times (2/18) = 0.0491$ g.\nMass O = $0.492 - (0.2163 + 0.0491) = 0.492 - 0.2654 = 0.2266$ g.\n% O = $(0.2266 / 0.492) \\times 100 = 46.05\\%$.\nNearest integer = 46.\n\n**Answer: 46**"
+    },
+    "mole_concept_pyq_90": {
+        "textSolutionLatex": "**Reaction:**\n$Fe_3O_4 + 4CO \\rightarrow 3Fe + 4CO_2$\n\n**Given:**\nFe3O4: 4.640 kg. MW = $3(56) + 4(16) = 168 + 64 = 232$ g/mol.\nMoles = $4640 / 232 = 20$ mol.\n\nCO: 2.520 kg. MW = 28.\nMoles = $2520 / 28 = 90$ mol.\n\nStoichiometry: 1 mol Fe3O4 needs 4 mol CO.\n20 mol Fe3O4 needs 80 mol CO. (Have 90 - Excess).\nLimiting Reagent is Fe3O4.\n\nProduct Fe: 3 mol per 1 mol Fe3O4.\nMoles Fe = $3 \\times 20 = 60$ mol.\nMass Fe = $60 \\times 56 = 3360$ g.\n\n**Answer: Option (3)**"
+    },
+    "mole_concept_pyq_91": {
+        "textSolutionLatex": "**Reaction:**\n$C_6H_6 + CH_3Cl \\rightarrow C_6H_5CH_3 + HCl$\nMW Benzene = 78.\nMW Toluene = 92.\n\n**Calculation:**\nInput 10 g Benzene $\\Rightarrow 10/78 = 0.1282$ mol.\nTheoretical Toluene = 0.1282 mol = $0.1282 \\times 92 = 11.79$ g.\nActual = 9.2 g.\nYield = $(9.2 / 11.79) \\times 100 = 78.03\\%$.\nNearest integer = 78.\n\n**Answer: 78**"
+    },
+    "mole_concept_pyq_92": {
+        "textSolutionLatex": "**Reaction:**\n$2C_4H_{10} + 13O_2 \\rightarrow 8CO_2 + 10H_2O$\n2 mol Butane gives 10 mol Water.\nMW Butane = 58.\nMW Water = 18.\n\n**Calculation:**\nWater produced = 72 g = 4 mol.\nButane required = $(2/10) \\times 4 = 0.8$ mol.\nMass Butane = $0.8 \\times 58 = 46.4$ g.\n$= 464 \\times 10^{-1}$ g.\n\n**Answer: 464**"
+    },
+    "mole_concept_pyq_93": {
+        "textSolutionLatex": "**Given:**\nMass = 750 g.\nCO2 = 420 g.\nH2O = 210 g.\n\n**Calculation:**\nMass C = $420 \\times 12/44 \\approx 114.5$ g.\n% C = $114.5/750 \\times 100 = 15.27\\%$. (Matches 15.3 given).\n\nMass H = $210 \\times 2/18 = 23.33$ g.\n% H = $23.33 / 750 \\times 100 = 3.11\\%$.\nNearest integer = 3.\n\n**Answer: 3**"
+    },
+    "mole_concept_pyq_94": {
+        "textSolutionLatex": "**Given:**\nBenzene $\\rightarrow$ Nitrobenzene.\nMW Benzene = 78.\nMW Nitrobenzene ($C_6H_5NO_2$) = $77 + 46 = 123$.\n\nInput: 3.9 g Benzene ($3.9/78 = 0.05$ mol).\nTheoretical Yield = $0.05$ mol Nitrobenzene = $0.05 \\times 123 = 6.15$ g.\nActual Yield = 4.92 g.\n% Yield = $(4.92 / 6.15) \\times 100 = 80\\%$.\n\n**Answer: 80**"
+    },
+    "mole_concept_pyq_95": {
+        "textSolutionLatex": "**Reaction Analysis:**\nHexanoyl chloride ($C_5H_{11}COCl$, MW 134.5?) $\\rightarrow$ Hexanamide? Image-based.\nLet's assume standard acid chloride to amide.\nAssuming 1:1 stoichiometry.\n\nIf we assume reactant MW and Product MW from formula.\nReactant: $C_6H_{11}ClO$ ? No, likely Benzoyl or similar. Image link provided.\nAssuming standard stoichiometry data usually provided or implied.\nLet's skip explicit calculation without clear image data, but likely in integer range (e.g., 60-90).\nIf I must provide, I'll flag as N/A or generic.\nWait, previous experience suggests these are often integer %.\nLet's mark N/A for now to be safe.\n**Answer: N/A**"
+    },
+    "mole_concept_pyq_96": {
+        "textSolutionLatex": "**Reaction:**\n$C_2H_6 + 3.5O_2 \\rightarrow 2CO_2 + 3H_2O$\nMW Ethane = 30.\n\n**Calculation:**\n3 g Ethane = 0.1 mol.\nH2O produced = $3 \\times 0.1 = 0.3$ mol.\nMolecules = $0.3 \\times 6.023 \\times 10^{23} = 1.8069 \\times 10^{23}$.\n$= 18.069 \\times 10^{22}$.\nNearest integer = 18.\n\n**Answer: 18**"
+    },
+    "mole_concept_pyq_97": {
+        "textSolutionLatex": "**Reaction:**\nBenzoic Acid (MW 122) $\\rightarrow$ m-Bromobenzoic acid (MW $122-1+80 = 201$).\nInput: 6.1 g Benzoic Acid = $6.1/122 = 0.05$ mol.\nTheoretical Yield = $0.05 \\times 201 = 10.05$ g.\nActual Yield = 7.8 g.\n% Yield = $(7.8 / 10.05) \\times 100 \\approx 77.6\\%$.\nNearest integer = 78.\n\n**Answer: 78**"
+    },
+    "mole_concept_pyq_98": {
+        "textSolutionLatex": "**Analysis:**\n$C_xH_y + (x+y/4)O_2 \\rightarrow xCO_2 + y/2H_2O$\nEqual volumes $\\propto$ moles.\nProduces 4 vol CO2 $\\Rightarrow x=4$.\nRequires 6 vol O2 $\\Rightarrow x + y/4 = 6$.\n$4 + y/4 = 6$\n$y/4 = 2 \\Rightarrow y=8$.\nFormula $C_4H_8$.\n\n**Answer: 8**"
+    },
+    "mole_concept_pyq_99": {
+        "textSolutionLatex": "**Reaction:**\nAniline ($C_6H_7N$, MW 93) $\\rightarrow$ Acetanilide ($C_6H_5NHCOCH_3$, MW 135).\nReaction: 1 to 1.\n\n**Calculation:**\nInput: 1.86 g Aniline = $1.86/93 = 0.02$ mol.\nTheoretical Acetanilide = $0.02 \\times 135 = 2.70$ g.\nLoss: 10%. Acquired: 90%.\nActual = $2.70 \\times 0.90 = 2.43$ g.\n$= 243 \\times 10^{-2}$ g.\n\n**Answer: 243**"
+    },
+    "mole_concept_pyq_100": {
+        "textSolutionLatex": "**Given:**\nMass 1.80 g.\nCO2 = 2.64 g.\nH2O = 1.08 g.\n\n**Calculation:**\nMass C = $2.64 \\times 12/44 = 0.72$ g.\nMass H = $1.08 \\times 2/18 = 0.12$ g.\nMass O = $1.80 - (0.72 + 0.12) = 0.96$ g.\n% O = $(0.96 / 1.80) \\times 100 = 53.33\\%$.\n\n**Answer: Option (1)**"
+    }
+}

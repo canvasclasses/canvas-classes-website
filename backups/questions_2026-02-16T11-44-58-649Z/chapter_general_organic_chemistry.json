@@ -1,0 +1,120 @@
+[
+  {
+    "id": "GOC-001",
+    "originalId": "GOC-001",
+    "textMarkdown": "In Carius method, 0.75 g of an organic compound gave 1.2 g of barium sulphate. Find the percentage of sulphur.\n\n[Molar mass: S = 32 g mol⁻¹, BaSO₄ = 233 g mol⁻¹]",
+    "options": [
+      {
+        "id": "1",
+        "text": "4.55%",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "10.30%",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "21.97%",
+        "isCorrect": true
+      },
+      {
+        "id": "4",
+        "text": "16.48%",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Carius Method Formula:**\n$$\\% S = \\frac{32 \\times \\text{Mass of BaSO}_4}{233 \\times \\text{Mass of compound}} \\times 100$$\n\n**Calculation:**\n$$\\% S = \\frac{32 \\times 1.2}{233 \\times 0.75} \\times 100$$\n\n$$\\% S = \\frac{38.4}{174.75} \\times 100 = 21.97\\%$$\n\n**Answer: 21.97%**\n\n![NCERT Example 12.24](/questions/jee_2026_jan21m_q58_solution.webp)"
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_general_organic_chemistry",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [],
+    "tagId": "TAG_MOLE_BASICS"
+  },
+  {
+    "id": "GOC-002",
+    "originalId": "GOC-002",
+    "textMarkdown": "From the following, the **least stable** structure is:\n",
+    "options": [
+      {
+        "id": "1",
+        "text": "![Option1](/questions/jee_2026_jan21m_q62_1.svg)",
+        "isCorrect": false,
+        "imageScale": 80
+      },
+      {
+        "id": "2",
+        "text": "![Option1](/questions/jee_2026_jan21m_q62_2.svg)",
+        "isCorrect": false,
+        "imageScale": 80
+      },
+      {
+        "id": "3",
+        "text": "![Option1](/questions/jee_2026_jan21m_q62_3.svg)",
+        "isCorrect": true,
+        "imageScale": 80
+      },
+      {
+        "id": "4",
+        "text": "![Option1](/questions/jee_2026_jan21m_q62_4.svg)",
+        "isCorrect": false,
+        "imageScale": 80
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Stability Analysis:**\n\n**(1) & (2):** These structures show resonance stabilization with the nitro group. The positive charge is stabilized by delocalization.\n\n**(3) $CH_2=CH-CH_2-\\overset{+}{C}H-NO_2$:**\n- This is a **carbocation** adjacent to a **strong electron-withdrawing group (NO₂)**\n- NO₂ is -I and -R group\n- It **destabilizes** the positive charge\n- **LEAST STABLE** ✓\n\n**(4):** This is a stable neutral molecule.\n\n**Reason:**\n$$\\text{Carbocation stability} \\downarrow \\text{ when adjacent to EWG}$$\n\nThe nitro group withdraws electron density from the carbocation, making it highly unstable."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_general_organic_chemistry",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [],
+    "tagId": "TAG_CH_GOC"
+  },
+  {
+    "id": "GOC-003",
+    "originalId": "GOC-003",
+    "textMarkdown": "Identify correct statements from the following:\n\nA. Propanal and propanone are functional isomers.\nB. Ethoxyethane and methoxypropane are metamers.\nC. But-2-ene shows optical isomerism.\nD. But-1-ene and but-2-ene are functional isomers.\nE. Pentane and 2,2-dimethylpropane are chain isomers.\n\nChoose the correct answer:",
+    "options": [
+      {
+        "id": "1",
+        "text": "B, C and D only",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "A, B and C only",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "A, B and E only",
+        "isCorrect": true
+      },
+      {
+        "id": "4",
+        "text": "C, D and E only",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Statement Analysis:**\n\n**A. Propanal and propanone are functional isomers** ✓\n- Propanal: $CH_3CH_2CHO$ (aldehyde)\n- Propanone: $CH_3COCH_3$ (ketone)\n- Same MF ($C_3H_6O$), different functional groups\n\n**B. Ethoxyethane and methoxypropane are metamers** ✓\n- Metamerism = same functional group, different alkyl groups\n- Both are ethers with same MF ($C_4H_{10}O$)\n\n**C. But-2-ene shows optical isomerism** ✗\n- But-2-ene has no chiral center\n- It shows geometrical isomerism (cis-trans)\n\n**D. But-1-ene and but-2-ene are functional isomers** ✗\n- Both are alkenes (same functional group)\n- They are **position isomers**\n\n**E. Pentane and 2,2-dimethylpropane are chain isomers** ✓\n- Same MF ($C_5H_{12}$)\n- Different carbon chain arrangements\n\n**Correct: A, B, E**"
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_general_organic_chemistry",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [],
+    "tagId": "TAG_CH_ISOMERISM"
+  }
+]

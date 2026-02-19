@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ELECTRO-001",
+    "originalId": "ELECTRO-001",
+    "textMarkdown": "The pH and conductance of a weak acid (HX) was found to be 5 and $4 \\times 10^{-5}$ S, respectively. The conductance was measured under standard condition using a cell where the electrode plates having a surface area of 1 cm² were at a distance of 15 cm apart.\n\nThe value of the limiting molar conductivity is ______ S m² mol⁻¹. (nearest integer)\n\n(Given: degree of dissociation of the weak acid (α) << 1)",
+    "options": [],
+    "integerAnswer": "6",
+    "solution": {
+      "textSolutionLatex": "**Given:**\n- pH = 5 → $[H^+] = 10^{-5}$ M\n- Conductance (G) = $4 \\times 10^{-5}$ S\n- Area (A) = 1 cm² = $10^{-4}$ m²\n- Length (l) = 15 cm = 0.15 m\n\n![Solution](/questions/jee_2026_jan21m_q72_solution.svg)"
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_electrochemistry",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [],
+    "tagId": "TAG_CH_ELECTROCHEMISTRY"
+  }
+]

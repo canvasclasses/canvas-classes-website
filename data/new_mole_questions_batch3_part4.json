@@ -1,0 +1,222 @@
+[
+  {
+    "display_id": "MOLE-243",
+    "question_text": {
+      "markdown": "Calculate the amount of oxygen required to produce enough $\\ce{CO}$ on reaction with $\\ce{C}$, which can reduce $1.6\\,\\text{kg}$ $\\ce{Fe2O3}$:",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$480\\,\\text{g}$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$240\\,\\text{g}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$120\\,\\text{g}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$960\\,\\text{g}$",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Mole Concept Method:**\n$$\\ce{Fe2O3 + 3CO -> 2Fe + 3CO2}$$\n$$\\ce{C + O2 -> CO}$$\n\n$\\ce{CO}$ required to reduce $1600\\,\\text{g}$ $\\ce{Fe2O3}$:\n$$= \\frac{3 \\times 28 \\times 10}{160} = 840\\,\\text{g}$$\n\n$$\\ce{C + \\frac{1}{2}O2 -> CO}$$\n\n$\\ce{O2}$ required to produce $840\\,\\text{g}$ $\\ce{CO}$:\n$$= \\frac{16}{28} \\times 840 = 480\\,\\text{g}$$\n\n**Equivalent Method:**\n$$\\ce{C + O2 -> CO}, \\quad \\ce{CO + Fe2O3 -> Fe + CO2}$$\n\nEq. of $\\ce{C}$ = Eq. of $\\ce{O2}$ = Eq. of $\\ce{CO}$ produced = Eq. of $\\ce{Fe2O3}$ reduced\n$$\\therefore \\text{Eq. of }\\ce{O2} = \\text{Eq. of }\\ce{Fe2O3}$$\n$$\\frac{\\text{wt of }\\ce{O2}}{8} = \\frac{1600}{160/6}$$\n$$\\text{wt} = 480\\,\\text{g}$$\n\n**Key Points:**\n- Two-step reaction: $\\ce{C + O2 -> CO}$, then $\\ce{CO}$ reduces $\\ce{Fe2O3}$\n- Can use mole concept or equivalent concept\n- n-factor of $\\ce{Fe2O3} = 6$, n-factor of $\\ce{O2} = 4$",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "ch11_mole",
+      "tags": [
+        {
+          "tag_id": "tag_mole_1",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "display_id": "MOLE-244",
+    "question_text": {
+      "markdown": "In order to oxidize a mixture of $1$ mole of each of $\\ce{FeC2O4}$, $\\ce{Fe2(C2O4)3}$, $\\ce{FeSO4}$ and $\\ce{Fe2(SO4)3}$ in acidic medium, the number of moles of $\\ce{KMnO4}$ required is:",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$1$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$3$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$1.5$",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Write oxidation reactions**\nThe oxidation of a mixture of one mole of each of $\\ce{FeC2O4}$, $\\ce{Fe2(C2O4)3}$, $\\ce{FeSO4}$ and $\\ce{Fe2(SO4)3}$ in acidic medium with $\\ce{KMnO4}$ is as follows:\n\n$$\\ce{FeC2O4 + KMnO4 -> Fe^{3+} + CO2 + Mn^{2+}}$$\n$$\\ce{Fe2(C2O4)3 + KMnO4 -> Fe^{3+} + CO2 + Mn^{2+}}$$\n$$\\ce{FeSO4 + KMnO4 -> Fe^{3+} + SO4^{2-} + Mn^{2+}}$$\n\n**Step 2: Calculate oxidation number changes**\nChange in oxidation number of Mn is 5. Change in oxidation number of Fe in (i), (ii) and (iii) are $+3$, $+6$, $+1$, respectively.\n\n$$n_{\\text{eq}}\\ce{KMnO4} = n_{\\text{eq}}[\\ce{FeC2O4} + \\ce{Fe2(C2O4)3} + \\ce{FeSO4}]$$\n$$n \\times 5 = 1 \\times 3 + 1 \\times 6 + 1 \\times 1 \\Rightarrow n = 2$$\n\n**Key Points:**\n- Use equivalent concept for redox reactions\n- $\\ce{Fe^{2+} -> Fe^{3+}}$ (n-factor = 1)\n- $\\ce{C2O4^{2-} -> 2CO2}$ (n-factor = 2 per oxalate)\n- $\\ce{MnO4^- -> Mn^{2+}}$ (n-factor = 5)",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "ch11_mole",
+      "tags": [
+        {
+          "tag_id": "tag_mole_1",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "display_id": "MOLE-245",
+    "question_text": {
+      "markdown": "How much quantity of $\\ce{Zn}$ will have to be reacted with excess of dil. $\\ce{HCl}$ solution to produce sufficient $\\ce{H2(g)}$ for completely reacting with the $\\ce{O2(g)}$ obtained by decomposing $5.104\\,\\text{g}$ of $\\ce{KClO3}$?",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$6.5\\,\\text{g}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$8.124\\,\\text{g}$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$4.062\\,\\text{g}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$3.25\\,\\text{g}$",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Write reactions**\n$$\\ce{Zn + HCl -> ZnCl2 + H2}$$\n$$\\ce{KClO3 -> KCl + O2}$$\n$$\\ce{H2 + O2 -> H2O}$$\n\n**Step 2: Calculate moles**\nn-factor of $\\ce{Zn} = 2$\n\nn-factor of $\\ce{KClO3} = 6$\n\nEq. of $\\ce{Zn}$ = Eq. of $\\ce{H2}$ = Eq. of $\\ce{O2}$ = Eq. of $\\ce{KClO3}$\n\n$$\\therefore \\frac{\\text{wt of }\\ce{Zn}}{65} \\times 2 = \\frac{5.104}{122.5} \\times 6$$\n\n$$\\text{wt of }\\ce{Zn} = 8.124\\,\\text{g}$$\n\n**Key Points:**\n- Three-step process linked by equivalents\n- n-factor of $\\ce{Zn}$ (oxidation) = 2\n- n-factor of $\\ce{KClO3}$ (reduction) = 6\n- Use equivalent concept to connect all reactions",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "ch11_mole",
+      "tags": [
+        {
+          "tag_id": "tag_mole_1",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "display_id": "MOLE-246",
+    "question_text": {
+      "markdown": "$34\\,\\text{g}$ of $\\ce{H2O2}$ is present in $1120\\,\\text{mL}$ solution. This solution is ________ volume $\\ce{H2O2}$:",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$5.6$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$11.2$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$22.4$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$10$",
+        "is_correct": true
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Calculate amount of H₂O₂ in 1 mL**\n$$\\text{Amt. of }\\ce{H2O2}\\text{ in }1\\,\\text{mL} = \\frac{34}{1120}\\,\\text{g}$$\n\n**Step 2: Calculate O₂ produced**\n$$\\ce{H2O2 -> H2O + O2}$$\n\nIf $68\\,\\text{g}$ $\\ce{H2O2}$ gives $22.4\\,\\text{L}$ (or $22400\\,\\text{mL}$) $\\ce{O2}$ (at STP)\n\n$$\\frac{34}{1120}\\,\\text{g }\\ce{H2O2}\\text{ gives} = \\frac{22400}{68} \\times \\frac{34}{1120} = 10\\,\\text{mL }\\ce{O2}$$\n\n$$\\therefore 1\\,\\text{mL }\\ce{H2O2}\\text{ soln. gives }10\\,\\text{mL }\\ce{O2}\\text{ on decomposition}$$\n\n**Key Points:**\n- Volume strength = volume of $\\ce{O2}$ at STP from 1 mL solution\n- $\\ce{2H2O2 -> 2H2O + O2}$\n- 68 g $\\ce{H2O2}$ produces 22.4 L $\\ce{O2}$ at STP",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "ch11_mole",
+      "tags": [
+        {
+          "tag_id": "tag_mole_3",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "display_id": "MOLE-247",
+    "question_text": {
+      "markdown": "$20\\,\\text{mL}$ of $\\ce{H2O2}$ solution is reacted with $80\\,\\text{mL}$ of $0.05\\,\\text{M}$ $\\ce{KMnO4}$ in acidic medium then what is the volume strength of $\\ce{H2O2}$?",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2.8$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$5.6$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$11.2$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "None of these",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Write balanced equation**\n$$\\ce{KMnO4}\\text{ oxidizes }\\ce{H2O2}\\text{ to }\\ce{O2(g)}$$\n$$2\\ce{KMnO4 + 5H2O2 + 6H^+ -> 2Mn^{2+} + 8H2O + 5O2}$$\n\nor we can use equivalent concept:\n$$\\text{meq of }\\ce{H2O2} = \\text{meq of }\\ce{KMnO4}$$\n$$20 \\times N = 0.05 \\times 5 \\times 80$$\n$$N = 1$$\n\n**Step 2: Calculate volume strength**\nN × 5.6 = vol. strength of $\\ce{H2O2}$\n$$\\therefore \\text{Vol. strength} = 5.6$$\n\n**Key Points:**\n- $\\ce{KMnO4}$ oxidizes $\\ce{H2O2}$ to $\\ce{O2}$\n- Use equivalent concept: n-factor of $\\ce{H2O2} = 2$, n-factor of $\\ce{KMnO4} = 5$\n- Volume strength = Normality × 5.6",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "ch11_mole",
+      "tags": [
+        {
+          "tag_id": "tag_mole_3",
+          "weight": 1
+        }
+      ]
+    }
+  }
+]

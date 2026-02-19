@@ -1,0 +1,25 @@
+[
+  {
+    "id": "AROMATIC-001",
+    "originalId": "AROMATIC-001",
+    "textMarkdown": "Consider the following reaction sequence:\n\n![Reaction Sequence](/questions/jee_2026_jan21m_q74. svg)\n\nThe percentage of nitrogen in product 'T' formed is ______ %. (Nearest integer)\n\n(Given molar mass in g mol⁻¹: H:1, C:12, N:14, O:16)",
+    "options": [],
+    "integerAnswer": "20",
+    "solution": {
+      "textSolutionLatex": "![Solution](/questions/jee_2026_jan21m_q74_solution. svg)"
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_aromatic_compounds",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "TAG_GENERAL",
+        "weight": 1
+      }
+    ],
+    "tagId": "TAG_MOLE_COMPOSITION"
+  }
+]

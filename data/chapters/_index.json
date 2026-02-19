@@ -1,0 +1,200 @@
+{
+  "chapters": [
+    {
+      "id": "ch11_mole",
+      "name": "Some Basic Concepts of Chemistry (Mole Concept)",
+      "sequence_order": 1,
+      "class_level": 11,
+      "chapter_type": "physical"
+    },
+    {
+      "id": "ch11_atom",
+      "name": "Structure of Atom",
+      "sequence_order": 2,
+      "class_level": 11,
+      "chapter_type": "physical"
+    },
+    {
+      "id": "ch11_periodic",
+      "name": "Classification of Elements and Periodicity",
+      "sequence_order": 3,
+      "class_level": 11,
+      "chapter_type": "physical"
+    },
+    {
+      "id": "ch11_bonding",
+      "name": "Chemical Bonding",
+      "sequence_order": 4,
+      "class_level": 11,
+      "chapter_type": "physical"
+    },
+    {
+      "id": "ch11_thermo",
+      "name": "Thermodynamics",
+      "sequence_order": 5,
+      "class_level": 11,
+      "chapter_type": "physical"
+    },
+    {
+      "id": "ch11_chem_eq",
+      "name": "Chemical Equilibrium",
+      "sequence_order": 6,
+      "class_level": 11,
+      "chapter_type": "physical"
+    },
+    {
+      "id": "ch11_ionic_eq",
+      "name": "Ionic Equilibrium",
+      "sequence_order": 7,
+      "class_level": 11,
+      "chapter_type": "physical"
+    },
+    {
+      "id": "ch11_redox",
+      "name": "Redox Reactions",
+      "sequence_order": 8,
+      "class_level": 11,
+      "chapter_type": "inorganic"
+    },
+    {
+      "id": "ch11_pblock",
+      "name": "P Block (Class 11)",
+      "sequence_order": 9,
+      "class_level": 11,
+      "chapter_type": "inorganic"
+    },
+    {
+      "id": "ch11_goc",
+      "name": "GOC",
+      "sequence_order": 10,
+      "class_level": 11,
+      "chapter_type": "organic"
+    },
+    {
+      "id": "ch11_stereo",
+      "name": "Stereochemistry",
+      "sequence_order": 11,
+      "class_level": 11,
+      "chapter_type": "organic"
+    },
+    {
+      "id": "ch11_hydrocarbon",
+      "name": "Hydrocarbons",
+      "sequence_order": 12,
+      "class_level": 11,
+      "chapter_type": "organic"
+    },
+    {
+      "id": "ch11_prac_org",
+      "name": "Practical Organic Chemistry",
+      "sequence_order": 13,
+      "class_level": 11,
+      "chapter_type": "practical"
+    },
+    {
+      "id": "ch12_aromatic",
+      "name": "Aromatic Compounds",
+      "sequence_order": 14,
+      "class_level": 12,
+      "chapter_type": "organic"
+    },
+    {
+      "id": "ch12_solutions",
+      "name": "Solutions",
+      "sequence_order": 15,
+      "class_level": 12,
+      "chapter_type": "physical"
+    },
+    {
+      "id": "ch12_electrochem",
+      "name": "Electrochemistry",
+      "sequence_order": 16,
+      "class_level": 12,
+      "chapter_type": "physical"
+    },
+    {
+      "id": "ch12_kinetics",
+      "name": "Chemical Kinetics",
+      "sequence_order": 17,
+      "class_level": 12,
+      "chapter_type": "physical"
+    },
+    {
+      "id": "ch12_pblock",
+      "name": "P Block (12th)",
+      "sequence_order": 18,
+      "class_level": 12,
+      "chapter_type": "inorganic"
+    },
+    {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "sequence_order": 19,
+      "class_level": 12,
+      "chapter_type": "inorganic"
+    },
+    {
+      "id": "ch12_coord",
+      "name": "Coordination Compounds",
+      "sequence_order": 20,
+      "class_level": 12,
+      "chapter_type": "inorganic"
+    },
+    {
+      "id": "ch12_haloalkanes",
+      "name": "Haloalkanes & Haloarenes",
+      "sequence_order": 21,
+      "class_level": 12,
+      "chapter_type": "organic"
+    },
+    {
+      "id": "ch12_alcohols",
+      "name": "Alcohols, Phenols & Ethers",
+      "sequence_order": 22,
+      "class_level": 12,
+      "chapter_type": "organic"
+    },
+    {
+      "id": "ch12_aldehydes",
+      "name": "Aldehydes & Ketones",
+      "sequence_order": 23,
+      "class_level": 12,
+      "chapter_type": "organic"
+    },
+    {
+      "id": "ch12_amines",
+      "name": "Amines",
+      "sequence_order": 24,
+      "class_level": 12,
+      "chapter_type": "organic"
+    },
+    {
+      "id": "ch12_carboxylic",
+      "name": "Carboxylic Acids & Derivatives",
+      "sequence_order": 25,
+      "class_level": 12,
+      "chapter_type": "organic"
+    },
+    {
+      "id": "ch12_biomolecules",
+      "name": "Biomolecules",
+      "sequence_order": 26,
+      "class_level": 12,
+      "chapter_type": "organic"
+    },
+    {
+      "id": "ch12_salt",
+      "name": "Salt Analysis",
+      "sequence_order": 27,
+      "class_level": 12,
+      "chapter_type": "practical"
+    },
+    {
+      "id": "ch12_prac_phys",
+      "name": "Practical Physical Chemistry",
+      "sequence_order": 28,
+      "class_level": 12,
+      "chapter_type": "practical"
+    }
+  ]
+}

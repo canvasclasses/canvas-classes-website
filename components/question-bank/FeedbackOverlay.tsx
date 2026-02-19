@@ -2,7 +2,13 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, BookOpen, XCircle, ArrowRight } from 'lucide-react';
-import { TrapInfo } from '@/app/the-crucible/types';
+
+// Define TrapInfo inline for compatibility
+interface TrapInfo {
+    optionId: string;
+    explanation: string;
+    [key: string]: any;
+}
 
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';

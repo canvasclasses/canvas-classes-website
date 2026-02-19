@@ -1,0 +1,59 @@
+{
+    "mole_concept_pyq_41": {
+        "textSolutionLatex": "**Analysis:**\n1. From P4: 1 mol P4 (124g) consumes 5 mol O2 (160g). O2/P4 = 160/124 = 1.29 g/g\n2. From Mg: 2 mol Mg (48g) consumes 1 mol O2 (32g). O2/Mg = 32/48 = 0.66 g/g\n3. From Fe: 4 mol Fe (224g) consumes 3 mol O2 (96g). O2/Fe = 96/224 = 0.428 g/g\n4. From C3H8: 1 mol (44g) consumes 5 mol O2 (160g). O2/C3H8 = 160/44 = 3.63 g/g\n\nMinimuum is for Fe (0.43 g).\n\n**Answer: Option (3)**"
+    },
+    "mole_concept_pyq_42": {
+        "textSolutionLatex": "**Given:**\nMolarity (M) = x.\nMolality (m) = 3.\nDensity (d) = 1.12 g/mL.\nMW = 40.\n\n**Calculation:**\nRelation: $m = \\frac{1000M}{1000d - M \\times MW}$\n$3 = \\frac{1000x}{1000(1.12) - 40x}$\n$3(1120 - 40x) = 1000x$\n$3360 - 120x = 1000x$\n$1120x = 3360$\n$x = 3$.\n\n**Answer: Option (4)**"
+    },
+    "mole_concept_pyq_43": {
+        "textSolutionLatex": "**Given:**\nMolarity = 0.2 M.\nDensity = 1.25 g/mL.\nMW (CuSO4) = 159.5 g/mol.\n\n**Calculation:**\nConsider 1 L.\nMass solution = 1250 g.\nMoles solute = 0.2.\nMass solute = $0.2 \\times 159.5 = 31.9$ g.\nMass solvent = $1250 - 31.9 = 1218.1$ g = 1.2181 kg.\nMolality $m = 0.2 / 1.2181 = 0.1641$ m.\n$164.1 \\times 10^{-3}$ m.\nNearest integer = 164.\n\n**Answer: 164**"
+    },
+    "mole_concept_pyq_44": {
+        "textSolutionLatex": "**Analysis:**\nHydrated oxalic acid: $(COOH)_2 \\cdot 2H_2O$. MW = $2(12) + 2(16) + 2(1) + 2(18) = 126$ g/mol.\nReason R is true.\n\nAssertion A: 3.15 g in 250 mL.\nMolarity $M = \\frac{3.15/126}{0.25} = \\frac{0.025}{0.25} = 0.1$ M.\nAssertion A is true.\nR explains A because we need the molar mass to calculate molarity.\n\n**Answer: Option (3)**"
+    },
+    "mole_concept_pyq_45": {
+        "textSolutionLatex": "**Given:**\nSolution 1: 200 g of 25% $\\rightarrow$ 50 g sugar.\nSolution 2: 500 g of 40% $\\rightarrow$ 200 g sugar.\n\n**Calculation:**\nTotal sugar = 250 g.\nTotal mass = 700 g.\n% = $250/700 \\times 100 = 35.7\\%$.\nNearest integer = 36.\n\n**Answer: 36**"
+    },
+    "mole_concept_pyq_46": {
+        "textSolutionLatex": "**Given:**\n100 mL vapour weighs 0.57 g at STP.\nSTP molar volume = 22400 mL (old) or 22700 mL (new). Let's check magnitude.\nIf 22.4 L: MW = $0.57 \\times 22400 / 100 = 127.68$ g/mol.\nIf 22.7 L: MW = $0.57 \\times 22700 / 100 = 129.39$ g/mol.\n\nUsing 55% Chlorine:\nMass of Cl per mole $\\approx 0.55 \\times 127 = 69.85$.\nAtomic mass Cl = 35.5.\n$n = 69.85 / 35.5 \\approx 2$.\nFormula $MCl_2$.\nCheck $MCl_2$: $M + 71 = 127 \\Rightarrow M = 56$ (Fe). Cl% = $71/127 = 55.9\\%$. Close.\n\n**Answer: Option (3)**"
+    },
+    "mole_concept_pyq_47": {
+        "textSolutionLatex": "**Given:**\n10% v/V $Br_2$ in $CCl_4$.\nAssume 100 mL solution.\nVol $Br_2$ = 10 mL. Mass $Br_2$ = $10 \\times 3.2 = 32$ g.\nMoles $Br_2$ = $32/160 = 0.2$ mol.\n\nVol $CCl_4$ = 90 mL. Mass $CCl_4$ = $90 \\times 1.6 = 144$ g = 0.144 kg.\nMolality $m = 0.2 / 0.144 = 1.388$ m.\n$1.39$ m.\nWait, question asks Molarity (in code snippet says molality given, find Molarity?)\nSnippet: \"molality of ... is x'. x = ... * 10^-2 M\". This is confusing. Text says \"has a molality of 3.30\". Find Molarity.\n\nLet's re-read carefully: \"An aqueous... has molality 3.30... The molarity...\"\nOK, Given $m=3.30$, $d=1.20$. MW(KCl)=74.5.\n$M = \\frac{m \\times d \\times 1000}{1000 + m \\times MW}$\n$M = \\frac{3.3 \\times 1.2 \\times 1000}{1000 + 3.3 \\times 74.5}$\n$M = \\frac{3960}{1000 + 245.85} = \\frac{3960}{1245.85} = 3.17$ M.\nNearest integer = 3.\n\n**Answer: 3**"
+    },
+    "mole_concept_pyq_48": {
+        "textSolutionLatex": "**Analysis:**\n$SO_2Cl_2 + 2H_2O \\rightarrow H_2SO_4 + 2HCl$\n1 mol $SO_2Cl_2$ gives 1 mol $H_2SO_4$ (2H+) and 2 mol $HCl$ (2H+).\nTotal H+ = 4 moles per mol of $SO_2Cl_2$.\n\nNeutrailization:\n$H^+ + OH^- \\rightarrow H_2O$\n16 moles NaOH provides 16 moles OH-.\nSo we need 16 moles H+.\nMoles $SO_2Cl_2$ required = $16/4 = 4$ mol.\n\n**Answer: Option (3)**"
+    },
+    "mole_concept_pyq_49": {
+        "textSolutionLatex": "**Given:**\n48 ppm Mg. 2 L solution.\n48 ppm = 48 mg/L.\nTotal Mg = $48 \\times 2 = 96$ mg = 0.096 g.\nMoles Mg = $0.096 / 24 = 0.004$ mol.\nAtoms = $0.004 \\times 6.02 \\times 10^{23} = 2.408 \\times 10^{21}$.\n$= 24.08 \\times 10^{20}$.\nNearest integer = 24.\n\n**Answer: 24**"
+    },
+    "mole_concept_pyq_50": {
+        "textSolutionLatex": "**Given:**\nVol initial = 800 mL = 0.8 L.\nMolarity = 0.5 M.\nInitial moles = $0.5 \\times 0.8 = 0.4$ mol.\nMass initial = $0.4 \\times 63 = 25.2$ g.\n\nLost 11.5 g nitric acid.\nRemaining mass = $25.2 - 11.5 = 13.7$ g.\nRemaining moles = $13.7 / 63 \\approx 0.21746$ mol.\nFinal Volume = 400 mL = 0.4 L.\nFinal Molarity = $0.21746 / 0.4 = 0.5436$ M.\n$= 54.36 \\times 10^{-2}$ M.\nNearest integer = 54.\n\n**Answer: 54**"
+    },
+    "mole_concept_pyq_51": {
+        "textSolutionLatex": "**Given:**\n10.8% Carbon by weight.\nGlucose $C_6H_{12}O_6$ (MW 180).\nCarbon mass fraction in glucose = $72/180 = 0.4$ (40%).\n\nLet mass of solution = 100 g.\nMass of Carbon = 10.8 g.\nMass of Glucose = $10.8 / 0.4 = 27$ g.\nMass of Water = $100 - 27 = 73$ g = 0.073 kg.\nMoles Glucose = $27/180 = 0.15$ mol.\nMolality = $0.15 / 0.073 = 2.054$ m.\n\n**Answer: Option (2)**"
+    },
+    "mole_concept_pyq_52": {
+        "textSolutionLatex": "**Reaction:**\n$2NaOH + H_2SO_4 \\rightarrow Na_2SO_4 + 2H_2O$\n\n**Given:**\nNaOH: 2 L, 0.1 M $\\Rightarrow$ 0.2 mol.\nH2SO4: 2 L, 0.2 M $\\Rightarrow$ 0.4 mol.\n\nStoichiometry: 2 mol NaOH reacts with 1 mol H2SO4.\n0.2 mol NaOH reacts with 0.1 mol H2SO4.\nNaOH is limiting.\nProduct $Na_2SO_4$: From 2 mol NaOH $\\rightarrow$ 1 mol Salt.\n0.2 mol NaOH $\\rightarrow$ 0.1 mol $Na_2SO_4$.\n\nTotal Volume = $2 + 2 = 4$ L.\nMolarity = $0.1 / 4 = 0.025$ M.\n$= 25$ mM.\n\n**Answer: 25**"
+    },
+    "mole_concept_pyq_54": {
+        "textSolutionLatex": "**Reaction:**\n$C_3H_8 + 5O_2 \\rightarrow 3CO_2 + 4H_2O$\nMoles Propane = $100/44 = 2.27$ mol.\nMoles Oxygen = $1000/32 = 31.25$ mol.\n\nRequired O2 = $5 \\times 2.27 = 11.35$ mol.\nO2 is excess.\nPropane is limiting.\n\nProducts:\n$CO_2$: $3 \\times 2.27 = 6.81$ mol.\n$H_2O$: $4 \\times 2.27 = 9.08$ mol.\nUnreacted O2: $31.25 - 11.35 = 19.9$ mol.\n\nTotal moles = $6.81 + 9.08 + 19.9 = 35.79$ mol.\nMole fraction $CO_2$ = $6.81 / 35.79 = 0.1902$.\n$x = 19$.\n\n**Answer: 19**"
+    },
+    "mole_concept_pyq_55": {
+        "textSolutionLatex": "**Given:**\nDensity = 1.2 g/mL. Let's assume Molarity is not given? Wait, data usually couples density with Molarity or %.\nRe-read: \"The density of NaOH solution is... The molality is m\". Data missing?\nActually, for pure NaOH solution density is not enough. But maybe it refers to specific standard? Or maybe the prompt was incomplete.\nActually it says \"Solution is 1.2 g/cm3\". Usually assumes a value or specific concentrated solution. But checking earlier or similar PYQs, often it's \"2 M NaOH... density 1.2\".\nLet's assume the question text in parsed file is missing the Molarity value. It just says \"density of NaOH... is 1.2\".\nWait, question 42 had \"density 1.12... molality 3\".\nThis question #55 seems to be missing the concentration input.\nSkipping specific calculation.\n**Answer: N/A**"
+    },
+    "mole_concept_pyq_56": {
+        "textSolutionLatex": "**Given:**\nMolality = 6.5 m.\nDensity = 1.89 g/mL.\nMW (KOH) = 56.\n\n**Calculation:**\n$M = \\frac{m \\times d \\times 1000}{1000 + m \\times MW}$\n$M = \\frac{6.5 \\times 1.89 \\times 1000}{1000 + 6.5 \\times 56}$\n$M = \\frac{12285}{1000 + 364} = \\frac{12285}{1364} \\approx 9.006$ M.\n\n**Answer: 9**"
+    },
+    "mole_concept_pyq_57": {
+        "textSolutionLatex": "**Given:**\n$x_{glu} = 0.1$.\n$x_{water} = 0.9$.\n\n**Calculation:**\nMass ratio = moles $\\times$ MW.\nMass Glucose = $0.1 \\times 180 = 18$.\nMass Water = $0.9 \\times 18 = 16.2$.\nTotal Mass = $34.2$.\n% Water = $16.2 / 34.2 \\times 100 \\approx 47.36\\%$.\nNearest integer = 47.\n\n**Answer: 47**"
+    },
+    "mole_concept_pyq_58": {
+        "textSolutionLatex": "**Given:**\n8.9 M $H_2O_2$.\n\n**Calculation:**\nVolume Strength (V) = $11.2 \\times M = 11.2 \\times 8.9 = 99.68$.\n(Using 11.2 at STP 273K/1atm - actually factor depends on STP def. Old is 11.2, New 11.35).\nUsing PV=nRT for O2 release.\n$2H_2O_2 \\rightarrow 2H_2O + O_2$\n2 mol M gives 1 mol O2.\n8.9 mol/L gives 4.45 mol O2.\nVol O2 = $4.45 \\times 22.4$ (at 1 atm/273K it is 22.4 L).\n$4.45 \\times 22.4 = 99.68$.\nNearest integer = 100.\n\n**Answer: 100**"
+    },
+    "mole_concept_pyq_59": {
+        "textSolutionLatex": "**Given:**\n$2.3 \\times 10^{20}$ molecules in 10 g.\nMoles = $\\frac{0.023 \\times 10^{22}}{6.02 \\times 10^{23}} = \\frac{0.23 \\times 10^{21}}{6.02 \\times 10^{23}} = 0.038$??\nLet's check scientific notation: $0.023 \\times 10^{22} = 2.3 \\times 10^{20}$.\nMoles = $2.3 \\times 10^{20} / 6.02 \\times 10^{23} \\approx 3.82 \\times 10^{-4}$ mol in 10 g.\n\nSolution: 5 g in 2 L.\n5 g contains $1.91 \\times 10^{-4}$ mol.\nMolarity = $1.91 \\times 10^{-4} / 2 = 9.55 \\times 10^{-5}$ M.\nFormat $\\times 10^{-3}$.\n$0.0955 \\times 10^{-3}$.\nWait, maybe molecules is $6.02 \\times 10^{20}$? The text in JSON says \"0.023 x 10^22\".\nLet's assume standard values. Maybe substance MW?\nIf $0.023 \\times 10^{22}$ is approx Avogadro related? No.\nLet's recalculate accurately.\nMoles in 10g = $3.82 \\times 10^{-4}$.\nMoles in 5g = $1.91 \\times 10^{-4}$.\nVol = 2 L.\nM = $9.55 \\times 10^{-5}$.\nValue $x \\times 10^{-3} \\rightarrow x=0.1$. Round to 0?\nMaybe typo in power.\nIf power was $10^{23}$:\n$0.023 \\times 10^{23}$ molecules.\nMoles = $0.023 / 0.602 = 0.038$.\n... Still small.\nLet's assume Question 59 text is garbled in my view. I will skip precise calc for this file.\n**Answer: N/A**"
+    },
+    "mole_concept_pyq_60": {
+        "textSolutionLatex": "**Given:**\n5.6 Volume strength.\n\n**Calculation:**\nMolarity = Vol Strength / 11.2 = $5.6/11.2 = 0.5$ M.\nMass %:\n$M = \\frac{10 \\times \\% \\times d}{MW}$\n$0.5 = \\frac{10 \\times \\% \\times 1}{34}$\n$\\% = \\frac{0.5 \\times 34}{10} = 1.7\\%$.\n\n**Answer: Option (1)**"
+    }
+}

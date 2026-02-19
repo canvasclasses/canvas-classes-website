@@ -1,0 +1,1076 @@
+{
+  "alreadyGood": [
+    "MOLE-001",
+    "MOLE-012",
+    "MOLE-013",
+    "MOLE-018",
+    "MOLE-035",
+    "MOLE-043",
+    "MOLE-056",
+    "MOLE-057",
+    "MOLE-058",
+    "MOLE-061",
+    "MOLE-063",
+    "MOLE-065",
+    "MOLE-129",
+    "MOLE-133",
+    "MOLE-142",
+    "MOLE-146",
+    "MOLE-149",
+    "MOLE-153",
+    "MOLE-157",
+    "MOLE-158",
+    "MOLE-160",
+    "MOLE-172",
+    "MOLE-183",
+    "MOLE-184",
+    "MOLE-189",
+    "MOLE-195"
+  ],
+  "groupA": [
+    "MOLE-014",
+    "MOLE-016",
+    "MOLE-017",
+    "MOLE-023",
+    "MOLE-026",
+    "MOLE-028",
+    "MOLE-029",
+    "MOLE-030",
+    "MOLE-033",
+    "MOLE-046",
+    "MOLE-051",
+    "MOLE-059",
+    "MOLE-060",
+    "MOLE-066",
+    "MOLE-067",
+    "MOLE-070",
+    "MOLE-109",
+    "MOLE-113",
+    "MOLE-117",
+    "MOLE-120",
+    "MOLE-135",
+    "MOLE-155",
+    "MOLE-162",
+    "MOLE-169",
+    "MOLE-181",
+    "MOLE-186",
+    "MOLE-196"
+  ],
+  "groupB": [
+    "MOLE-002",
+    "MOLE-003",
+    "MOLE-009",
+    "MOLE-011",
+    "MOLE-027",
+    "MOLE-036",
+    "MOLE-037",
+    "MOLE-038",
+    "MOLE-039",
+    "MOLE-049",
+    "MOLE-050",
+    "MOLE-054",
+    "MOLE-055",
+    "MOLE-068",
+    "MOLE-071",
+    "MOLE-073",
+    "MOLE-074",
+    "MOLE-076",
+    "MOLE-078",
+    "MOLE-093",
+    "MOLE-095",
+    "MOLE-098",
+    "MOLE-099",
+    "MOLE-101",
+    "MOLE-106",
+    "MOLE-123",
+    "MOLE-124",
+    "MOLE-127",
+    "MOLE-128",
+    "MOLE-130",
+    "MOLE-131",
+    "MOLE-134",
+    "MOLE-136",
+    "MOLE-137",
+    "MOLE-140",
+    "MOLE-141",
+    "MOLE-143",
+    "MOLE-144",
+    "MOLE-148",
+    "MOLE-154",
+    "MOLE-161",
+    "MOLE-164",
+    "MOLE-166",
+    "MOLE-170",
+    "MOLE-171",
+    "MOLE-175",
+    "MOLE-185",
+    "MOLE-192"
+  ],
+  "groupC": [
+    "MOLE-004",
+    "MOLE-005",
+    "MOLE-006",
+    "MOLE-007",
+    "MOLE-008",
+    "MOLE-015",
+    "MOLE-019",
+    "MOLE-020",
+    "MOLE-021",
+    "MOLE-022",
+    "MOLE-024",
+    "MOLE-025",
+    "MOLE-031",
+    "MOLE-032",
+    "MOLE-034",
+    "MOLE-040",
+    "MOLE-041",
+    "MOLE-042",
+    "MOLE-044",
+    "MOLE-045",
+    "MOLE-047",
+    "MOLE-048",
+    "MOLE-052",
+    "MOLE-053",
+    "MOLE-062",
+    "MOLE-064",
+    "MOLE-069",
+    "MOLE-072",
+    "MOLE-075",
+    "MOLE-077",
+    "MOLE-079",
+    "MOLE-080",
+    "MOLE-081",
+    "MOLE-082",
+    "MOLE-083",
+    "MOLE-084",
+    "MOLE-085",
+    "MOLE-086",
+    "MOLE-087",
+    "MOLE-088",
+    "MOLE-089",
+    "MOLE-090",
+    "MOLE-091",
+    "MOLE-092",
+    "MOLE-094",
+    "MOLE-096",
+    "MOLE-097",
+    "MOLE-100",
+    "MOLE-102",
+    "MOLE-103",
+    "MOLE-104",
+    "MOLE-105",
+    "MOLE-107",
+    "MOLE-108",
+    "MOLE-110",
+    "MOLE-111",
+    "MOLE-112",
+    "MOLE-114",
+    "MOLE-115",
+    "MOLE-116",
+    "MOLE-118",
+    "MOLE-119",
+    "MOLE-121",
+    "MOLE-122",
+    "MOLE-125",
+    "MOLE-126",
+    "MOLE-132",
+    "MOLE-138",
+    "MOLE-139",
+    "MOLE-145",
+    "MOLE-147",
+    "MOLE-150",
+    "MOLE-151",
+    "MOLE-152",
+    "MOLE-156",
+    "MOLE-159",
+    "MOLE-163",
+    "MOLE-165",
+    "MOLE-167",
+    "MOLE-168",
+    "MOLE-173",
+    "MOLE-174",
+    "MOLE-176",
+    "MOLE-177",
+    "MOLE-178",
+    "MOLE-179",
+    "MOLE-180",
+    "MOLE-182",
+    "MOLE-187",
+    "MOLE-188",
+    "MOLE-190",
+    "MOLE-191",
+    "MOLE-193",
+    "MOLE-194",
+    "MOLE-197",
+    "MOLE-198",
+    "MOLE-199"
+  ],
+  "details": {
+    "groupA": [
+      {
+        "id": "MOLE-014",
+        "type": "Stoichiometry",
+        "currentLength": 378
+      },
+      {
+        "id": "MOLE-016",
+        "type": "Limiting Reagent",
+        "currentLength": 251
+      },
+      {
+        "id": "MOLE-017",
+        "type": "Mixture Analysis",
+        "currentLength": 298
+      },
+      {
+        "id": "MOLE-023",
+        "type": "Mixture Analysis",
+        "currentLength": 192
+      },
+      {
+        "id": "MOLE-026",
+        "type": "Mixture Analysis",
+        "currentLength": 595
+      },
+      {
+        "id": "MOLE-028",
+        "type": "Stoichiometry",
+        "currentLength": 298
+      },
+      {
+        "id": "MOLE-029",
+        "type": "Limiting Reagent",
+        "currentLength": 261
+      },
+      {
+        "id": "MOLE-030",
+        "type": "Limiting Reagent",
+        "currentLength": 267
+      },
+      {
+        "id": "MOLE-033",
+        "type": "Limiting Reagent",
+        "currentLength": 352
+      },
+      {
+        "id": "MOLE-046",
+        "type": "Stoichiometry",
+        "currentLength": 237
+      },
+      {
+        "id": "MOLE-051",
+        "type": "Stoichiometry",
+        "currentLength": 249
+      },
+      {
+        "id": "MOLE-059",
+        "type": "Mixture Analysis",
+        "currentLength": 415
+      },
+      {
+        "id": "MOLE-060",
+        "type": "Mixture Analysis",
+        "currentLength": 81
+      },
+      {
+        "id": "MOLE-066",
+        "type": "Limiting Reagent",
+        "currentLength": 341
+      },
+      {
+        "id": "MOLE-067",
+        "type": "Mixture Analysis",
+        "currentLength": 226
+      },
+      {
+        "id": "MOLE-070",
+        "type": "Limiting Reagent",
+        "currentLength": 289
+      },
+      {
+        "id": "MOLE-109",
+        "type": "Limiting Reagent",
+        "currentLength": 308
+      },
+      {
+        "id": "MOLE-113",
+        "type": "Limiting Reagent",
+        "currentLength": 193
+      },
+      {
+        "id": "MOLE-117",
+        "type": "Limiting Reagent",
+        "currentLength": 185
+      },
+      {
+        "id": "MOLE-120",
+        "type": "Limiting Reagent",
+        "currentLength": 190
+      },
+      {
+        "id": "MOLE-135",
+        "type": "Mixture Analysis",
+        "currentLength": 388
+      },
+      {
+        "id": "MOLE-155",
+        "type": "Limiting Reagent",
+        "currentLength": 248
+      },
+      {
+        "id": "MOLE-162",
+        "type": "Limiting Reagent",
+        "currentLength": 257
+      },
+      {
+        "id": "MOLE-169",
+        "type": "Limiting Reagent",
+        "currentLength": 988
+      },
+      {
+        "id": "MOLE-181",
+        "type": "Limiting Reagent",
+        "currentLength": 458
+      },
+      {
+        "id": "MOLE-186",
+        "type": "Limiting Reagent",
+        "currentLength": 1718
+      },
+      {
+        "id": "MOLE-196",
+        "type": "Limiting Reagent",
+        "currentLength": 226
+      }
+    ],
+    "groupB": [
+      {
+        "id": "MOLE-002",
+        "type": "Molarity",
+        "currentLength": 443
+      },
+      {
+        "id": "MOLE-003",
+        "type": "Density",
+        "currentLength": 438
+      },
+      {
+        "id": "MOLE-009",
+        "type": "Composition",
+        "currentLength": 226
+      },
+      {
+        "id": "MOLE-011",
+        "type": "Composition",
+        "currentLength": 406
+      },
+      {
+        "id": "MOLE-027",
+        "type": "Standard Calc",
+        "currentLength": 182
+      },
+      {
+        "id": "MOLE-036",
+        "type": "Standard Calc",
+        "currentLength": 304
+      },
+      {
+        "id": "MOLE-037",
+        "type": "Density",
+        "currentLength": 225
+      },
+      {
+        "id": "MOLE-038",
+        "type": "Composition",
+        "currentLength": 217
+      },
+      {
+        "id": "MOLE-039",
+        "type": "Density",
+        "currentLength": 240
+      },
+      {
+        "id": "MOLE-049",
+        "type": "Molarity",
+        "currentLength": 130
+      },
+      {
+        "id": "MOLE-050",
+        "type": "Composition",
+        "currentLength": 102
+      },
+      {
+        "id": "MOLE-054",
+        "type": "Composition",
+        "currentLength": 142
+      },
+      {
+        "id": "MOLE-055",
+        "type": "Density",
+        "currentLength": 177
+      },
+      {
+        "id": "MOLE-068",
+        "type": "Composition",
+        "currentLength": 650
+      },
+      {
+        "id": "MOLE-071",
+        "type": "Composition",
+        "currentLength": 343
+      },
+      {
+        "id": "MOLE-073",
+        "type": "Density",
+        "currentLength": 251
+      },
+      {
+        "id": "MOLE-074",
+        "type": "Composition",
+        "currentLength": 729
+      },
+      {
+        "id": "MOLE-076",
+        "type": "Density",
+        "currentLength": 445
+      },
+      {
+        "id": "MOLE-078",
+        "type": "Molarity",
+        "currentLength": 213
+      },
+      {
+        "id": "MOLE-093",
+        "type": "Composition",
+        "currentLength": 273
+      },
+      {
+        "id": "MOLE-095",
+        "type": "Density",
+        "currentLength": 274
+      },
+      {
+        "id": "MOLE-098",
+        "type": "Density",
+        "currentLength": 555
+      },
+      {
+        "id": "MOLE-099",
+        "type": "Molarity",
+        "currentLength": 248
+      },
+      {
+        "id": "MOLE-101",
+        "type": "Molarity",
+        "currentLength": 243
+      },
+      {
+        "id": "MOLE-106",
+        "type": "Composition",
+        "currentLength": 234
+      },
+      {
+        "id": "MOLE-123",
+        "type": "Molarity",
+        "currentLength": 315
+      },
+      {
+        "id": "MOLE-124",
+        "type": "Molarity",
+        "currentLength": 445
+      },
+      {
+        "id": "MOLE-127",
+        "type": "Composition",
+        "currentLength": 510
+      },
+      {
+        "id": "MOLE-128",
+        "type": "Density",
+        "currentLength": 858
+      },
+      {
+        "id": "MOLE-130",
+        "type": "Molarity",
+        "currentLength": 259
+      },
+      {
+        "id": "MOLE-131",
+        "type": "Molarity",
+        "currentLength": 413
+      },
+      {
+        "id": "MOLE-134",
+        "type": "Molarity",
+        "currentLength": 191
+      },
+      {
+        "id": "MOLE-136",
+        "type": "Density",
+        "currentLength": 398
+      },
+      {
+        "id": "MOLE-137",
+        "type": "Molarity",
+        "currentLength": 378
+      },
+      {
+        "id": "MOLE-140",
+        "type": "Molarity",
+        "currentLength": 348
+      },
+      {
+        "id": "MOLE-141",
+        "type": "Molarity",
+        "currentLength": 260
+      },
+      {
+        "id": "MOLE-143",
+        "type": "Molarity",
+        "currentLength": 190
+      },
+      {
+        "id": "MOLE-144",
+        "type": "Molarity",
+        "currentLength": 324
+      },
+      {
+        "id": "MOLE-148",
+        "type": "Composition",
+        "currentLength": 371
+      },
+      {
+        "id": "MOLE-154",
+        "type": "Molarity",
+        "currentLength": 204
+      },
+      {
+        "id": "MOLE-161",
+        "type": "Composition",
+        "currentLength": 346
+      },
+      {
+        "id": "MOLE-164",
+        "type": "Density",
+        "currentLength": 398
+      },
+      {
+        "id": "MOLE-166",
+        "type": "Molarity",
+        "currentLength": 415
+      },
+      {
+        "id": "MOLE-170",
+        "type": "Composition",
+        "currentLength": 376
+      },
+      {
+        "id": "MOLE-171",
+        "type": "Composition",
+        "currentLength": 320
+      },
+      {
+        "id": "MOLE-175",
+        "type": "Composition",
+        "currentLength": 299
+      },
+      {
+        "id": "MOLE-185",
+        "type": "Density",
+        "currentLength": 295
+      },
+      {
+        "id": "MOLE-192",
+        "type": "Molarity",
+        "currentLength": 254
+      }
+    ],
+    "groupC": [
+      {
+        "id": "MOLE-004",
+        "type": "Conceptual",
+        "currentLength": 418
+      },
+      {
+        "id": "MOLE-005",
+        "type": "Sig Figs",
+        "currentLength": 178
+      },
+      {
+        "id": "MOLE-006",
+        "type": "Sig Figs",
+        "currentLength": 214
+      },
+      {
+        "id": "MOLE-007",
+        "type": "Conceptual",
+        "currentLength": 300
+      },
+      {
+        "id": "MOLE-008",
+        "type": "Conceptual",
+        "currentLength": 284
+      },
+      {
+        "id": "MOLE-015",
+        "type": "Conceptual",
+        "currentLength": 330
+      },
+      {
+        "id": "MOLE-019",
+        "type": "Conceptual",
+        "currentLength": 213
+      },
+      {
+        "id": "MOLE-020",
+        "type": "Conceptual",
+        "currentLength": 286
+      },
+      {
+        "id": "MOLE-021",
+        "type": "Conceptual",
+        "currentLength": 324
+      },
+      {
+        "id": "MOLE-022",
+        "type": "Conceptual",
+        "currentLength": 277
+      },
+      {
+        "id": "MOLE-024",
+        "type": "Conceptual",
+        "currentLength": 274
+      },
+      {
+        "id": "MOLE-025",
+        "type": "Conceptual",
+        "currentLength": 191
+      },
+      {
+        "id": "MOLE-031",
+        "type": "Conceptual",
+        "currentLength": 225
+      },
+      {
+        "id": "MOLE-032",
+        "type": "Conceptual",
+        "currentLength": 204
+      },
+      {
+        "id": "MOLE-034",
+        "type": "Conceptual",
+        "currentLength": 227
+      },
+      {
+        "id": "MOLE-040",
+        "type": "Conceptual",
+        "currentLength": 147
+      },
+      {
+        "id": "MOLE-041",
+        "type": "Conceptual",
+        "currentLength": 148
+      },
+      {
+        "id": "MOLE-042",
+        "type": "Conceptual",
+        "currentLength": 271
+      },
+      {
+        "id": "MOLE-044",
+        "type": "Conceptual",
+        "currentLength": 111
+      },
+      {
+        "id": "MOLE-045",
+        "type": "Conceptual",
+        "currentLength": 112
+      },
+      {
+        "id": "MOLE-047",
+        "type": "Sig Figs",
+        "currentLength": 458
+      },
+      {
+        "id": "MOLE-048",
+        "type": "Conceptual",
+        "currentLength": 270
+      },
+      {
+        "id": "MOLE-052",
+        "type": "Conceptual",
+        "currentLength": 119
+      },
+      {
+        "id": "MOLE-053",
+        "type": "Conceptual",
+        "currentLength": 341
+      },
+      {
+        "id": "MOLE-062",
+        "type": "Conceptual",
+        "currentLength": 406
+      },
+      {
+        "id": "MOLE-064",
+        "type": "Conceptual",
+        "currentLength": 249
+      },
+      {
+        "id": "MOLE-069",
+        "type": "Conceptual",
+        "currentLength": 378
+      },
+      {
+        "id": "MOLE-072",
+        "type": "Conceptual",
+        "currentLength": 249
+      },
+      {
+        "id": "MOLE-075",
+        "type": "Conceptual",
+        "currentLength": 270
+      },
+      {
+        "id": "MOLE-077",
+        "type": "Conceptual",
+        "currentLength": 374
+      },
+      {
+        "id": "MOLE-079",
+        "type": "Conceptual",
+        "currentLength": 273
+      },
+      {
+        "id": "MOLE-080",
+        "type": "Conceptual",
+        "currentLength": 415
+      },
+      {
+        "id": "MOLE-081",
+        "type": "Conceptual",
+        "currentLength": 263
+      },
+      {
+        "id": "MOLE-082",
+        "type": "Conceptual",
+        "currentLength": 458
+      },
+      {
+        "id": "MOLE-083",
+        "type": "Conceptual",
+        "currentLength": 281
+      },
+      {
+        "id": "MOLE-084",
+        "type": "Sig Figs",
+        "currentLength": 378
+      },
+      {
+        "id": "MOLE-085",
+        "type": "Sig Figs",
+        "currentLength": 390
+      },
+      {
+        "id": "MOLE-086",
+        "type": "Sig Figs",
+        "currentLength": 239
+      },
+      {
+        "id": "MOLE-087",
+        "type": "Sig Figs",
+        "currentLength": 357
+      },
+      {
+        "id": "MOLE-088",
+        "type": "Conceptual",
+        "currentLength": 315
+      },
+      {
+        "id": "MOLE-089",
+        "type": "Conceptual",
+        "currentLength": 298
+      },
+      {
+        "id": "MOLE-090",
+        "type": "Conceptual",
+        "currentLength": 415
+      },
+      {
+        "id": "MOLE-091",
+        "type": "Conceptual",
+        "currentLength": 430
+      },
+      {
+        "id": "MOLE-092",
+        "type": "Conceptual",
+        "currentLength": 295
+      },
+      {
+        "id": "MOLE-094",
+        "type": "Conceptual",
+        "currentLength": 530
+      },
+      {
+        "id": "MOLE-096",
+        "type": "Conceptual",
+        "currentLength": 346
+      },
+      {
+        "id": "MOLE-097",
+        "type": "Conceptual",
+        "currentLength": 755
+      },
+      {
+        "id": "MOLE-100",
+        "type": "Conceptual",
+        "currentLength": 214
+      },
+      {
+        "id": "MOLE-102",
+        "type": "Conceptual",
+        "currentLength": 482
+      },
+      {
+        "id": "MOLE-103",
+        "type": "Conceptual",
+        "currentLength": 250
+      },
+      {
+        "id": "MOLE-104",
+        "type": "Conceptual",
+        "currentLength": 178
+      },
+      {
+        "id": "MOLE-105",
+        "type": "Conceptual",
+        "currentLength": 197
+      },
+      {
+        "id": "MOLE-107",
+        "type": "Conceptual",
+        "currentLength": 316
+      },
+      {
+        "id": "MOLE-108",
+        "type": "Conceptual",
+        "currentLength": 313
+      },
+      {
+        "id": "MOLE-110",
+        "type": "Conceptual",
+        "currentLength": 192
+      },
+      {
+        "id": "MOLE-111",
+        "type": "Conceptual",
+        "currentLength": 257
+      },
+      {
+        "id": "MOLE-112",
+        "type": "Conceptual",
+        "currentLength": 213
+      },
+      {
+        "id": "MOLE-114",
+        "type": "Conceptual",
+        "currentLength": 299
+      },
+      {
+        "id": "MOLE-115",
+        "type": "Conceptual",
+        "currentLength": 117
+      },
+      {
+        "id": "MOLE-116",
+        "type": "Conceptual",
+        "currentLength": 189
+      },
+      {
+        "id": "MOLE-118",
+        "type": "Conceptual",
+        "currentLength": 344
+      },
+      {
+        "id": "MOLE-119",
+        "type": "Conceptual",
+        "currentLength": 200
+      },
+      {
+        "id": "MOLE-121",
+        "type": "Conceptual",
+        "currentLength": 248
+      },
+      {
+        "id": "MOLE-122",
+        "type": "Conceptual",
+        "currentLength": 260
+      },
+      {
+        "id": "MOLE-125",
+        "type": "Conceptual",
+        "currentLength": 243
+      },
+      {
+        "id": "MOLE-126",
+        "type": "Conceptual",
+        "currentLength": 308
+      },
+      {
+        "id": "MOLE-132",
+        "type": "Conceptual",
+        "currentLength": 346
+      },
+      {
+        "id": "MOLE-138",
+        "type": "Conceptual",
+        "currentLength": 277
+      },
+      {
+        "id": "MOLE-139",
+        "type": "Conceptual",
+        "currentLength": 453
+      },
+      {
+        "id": "MOLE-145",
+        "type": "Conceptual",
+        "currentLength": 226
+      },
+      {
+        "id": "MOLE-147",
+        "type": "Conceptual",
+        "currentLength": 243
+      },
+      {
+        "id": "MOLE-150",
+        "type": "Conceptual",
+        "currentLength": 430
+      },
+      {
+        "id": "MOLE-151",
+        "type": "Conceptual",
+        "currentLength": 241
+      },
+      {
+        "id": "MOLE-152",
+        "type": "Conceptual",
+        "currentLength": 257
+      },
+      {
+        "id": "MOLE-156",
+        "type": "Conceptual",
+        "currentLength": 249
+      },
+      {
+        "id": "MOLE-159",
+        "type": "Conceptual",
+        "currentLength": 530
+      },
+      {
+        "id": "MOLE-163",
+        "type": "Conceptual",
+        "currentLength": 398
+      },
+      {
+        "id": "MOLE-165",
+        "type": "Conceptual",
+        "currentLength": 257
+      },
+      {
+        "id": "MOLE-167",
+        "type": "Conceptual",
+        "currentLength": 214
+      },
+      {
+        "id": "MOLE-168",
+        "type": "Conceptual",
+        "currentLength": 309
+      },
+      {
+        "id": "MOLE-173",
+        "type": "Conceptual",
+        "currentLength": 337
+      },
+      {
+        "id": "MOLE-174",
+        "type": "Conceptual",
+        "currentLength": 310
+      },
+      {
+        "id": "MOLE-176",
+        "type": "Conceptual",
+        "currentLength": 329
+      },
+      {
+        "id": "MOLE-177",
+        "type": "Conceptual",
+        "currentLength": 430
+      },
+      {
+        "id": "MOLE-178",
+        "type": "Conceptual",
+        "currentLength": 398
+      },
+      {
+        "id": "MOLE-179",
+        "type": "Conceptual",
+        "currentLength": 458
+      },
+      {
+        "id": "MOLE-180",
+        "type": "Conceptual",
+        "currentLength": 260
+      },
+      {
+        "id": "MOLE-182",
+        "type": "Conceptual",
+        "currentLength": 264
+      },
+      {
+        "id": "MOLE-187",
+        "type": "Conceptual",
+        "currentLength": 423
+      },
+      {
+        "id": "MOLE-188",
+        "type": "Conceptual",
+        "currentLength": 530
+      },
+      {
+        "id": "MOLE-190",
+        "type": "Conceptual",
+        "currentLength": 250
+      },
+      {
+        "id": "MOLE-191",
+        "type": "Conceptual",
+        "currentLength": 398
+      },
+      {
+        "id": "MOLE-193",
+        "type": "Conceptual",
+        "currentLength": 218
+      },
+      {
+        "id": "MOLE-194",
+        "type": "Conceptual",
+        "currentLength": 445
+      },
+      {
+        "id": "MOLE-197",
+        "type": "Conceptual",
+        "currentLength": 415
+      },
+      {
+        "id": "MOLE-198",
+        "type": "Conceptual",
+        "currentLength": 61
+      },
+      {
+        "id": "MOLE-199",
+        "type": "Conceptual",
+        "currentLength": 316
+      }
+    ]
+  }
+}

@@ -1,0 +1,450 @@
+[
+  {
+    "display_id": "MOLE-201",
+    "question_text": {
+      "markdown": "Convert the following quantities into SI base units:\n\n1. $28.7\\,\\text{pm}$\n2. $15.15\\,\\mu\\text{s}$\n3. $25.365\\,\\text{mg}$",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "$2.87\\times10^{-11}\\,\\text{m},\\;1.515\\times10^{-6}\\,\\text{s},\\;2.5365\\times10^{-3}\\,\\text{kg}$", "is_correct": false },
+      { "id": "b", "text": "$2.87\\times10^{-11}\\,\\text{m},\\;1.515\\times10^{-5}\\,\\text{s},\\;2.5365\\times10^{-5}\\,\\text{kg}$", "is_correct": true },
+      { "id": "c", "text": "$2.87\\times10^{-10}\\,\\text{m},\\;1.515\\times10^{-6}\\,\\text{s},\\;2.5365\\times10^{-3}\\,\\text{kg}$", "is_correct": false },
+      { "id": "d", "text": "$2.87\\times10^{-10}\\,\\text{m},\\;1.515\\times10^{-5}\\,\\text{s},\\;2.5365\\times10^{-2}\\,\\text{kg}$", "is_correct": false }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Understand the conversions**\nWe must write picometres, microseconds, and milligrams in base SI units (metre, second, kilogram).\n\n**Step 2: Recall unit prefixes**\n$1\\,\\text{pm}=10^{-12}\\,\\text{m}$, $1\\,\\mu\\text{s}=10^{-6}\\,\\text{s}$, $1\\,\\text{mg}=10^{-6}\\,\\text{kg}$.\n\n**Step 3: Convert each value**\n$$28.7\\,\\text{pm}=28.7\\times10^{-12}\\,\\text{m}=2.87\\times10^{-11}\\,\\text{m}$$\n$$15.15\\,\\mu\\text{s}=15.15\\times10^{-6}\\,\\text{s}=1.515\\times10^{-5}\\,\\text{s}$$\n$$25.365\\,\\text{mg}=25.365\\times10^{-6}\\,\\text{kg}=2.5365\\times10^{-5}\\,\\text{kg}$$\n\n**Step 4: Match options**\nOnly option **B** lists all three converted values correctly.\n\n**Step 5: Conclude**\nTherefore the correct converted set is option **B**.\n\n**Key Points to Remember:**\n- Pico $=10^{-12}$; micro $=10^{-6}$; milli $=10^{-3}$ (then adjust to kg).\n- Convert units before comparing answers.\n- Maintain significant figures while converting.\n- Express results in scientific notation for clarity.\n- Double-check each conversion independently.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-202",
+    "question_text": {
+      "markdown": "Two students perform the same experiment. Their readings (true value $=3.0\\,\\text{g}$) are:\n\n| Student | Reading (i) | Reading (ii) |\n|---------|-------------|--------------|\n| A | $3.01$ | $2.99$ |\n| B | $3.05$ | $2.95$ |\n\nIdentify the correct statement about accuracy and precision.",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Both students are neither accurate nor precise.", "is_correct": false },
+      { "id": "b", "text": "Student A is both precise and accurate.", "is_correct": true },
+      { "id": "c", "text": "Student B is neither precise nor accurate.", "is_correct": false },
+      { "id": "d", "text": "Both students are precise and accurate.", "is_correct": false }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Compare Student A with true value**\nReadings $3.01$ and $2.99$ straddle $3.0\\,\\text{g}$ and are close to each other.\n\n**Step 2: Assess accuracy of Student A**\nMean is $3.00\\,\\text{g}$ → very close to true value ⇒ accurate.\n\n**Step 3: Assess precision of Student A**\nDeviation from the mean is only $\\pm0.01\\,\\text{g}$ ⇒ precise.\n\n**Step 4: Evaluate Student B**\nValues $3.05$ and $2.95$ differ by $0.10\\,\\text{g}$ and both deviate from $3.0\\,\\text{g}$ ⇒ neither precise nor accurate.\n\n**Step 5: Conclude**\nOnly option **B** correctly describes the situation.\n\n**Key Points to Remember:**\n- Accuracy = closeness to true value.\n- Precision = closeness among repeated readings.\n- Mean near true value indicates accuracy even if individual values differ slightly.\n- Large spread reduces precision regardless of mean.\n- Always evaluate accuracy and precision separately.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-203",
+    "question_text": {
+      "markdown": "How many significant figures are present in $0.0025,\\;208,\\;5005,\\;126000,\\;500.0,\\;2.0034$?",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "$1,2,4,5,3,2$", "is_correct": false },
+      { "id": "b", "text": "$2,3,4,3,4,5$", "is_correct": true },
+      { "id": "c", "text": "$3,2,4,4,3,5$", "is_correct": false },
+      { "id": "d", "text": "$3,4,2,4,3,3$", "is_correct": false }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Recall sig-fig rules**\nLeading zeros are not significant; captive zeros are; trailing zeros are significant only if a decimal is present.\n\n**Step 2: Evaluate each number**\n$0.0025$ → 2; $208$ → 3; $5005$ → 4; $126000$ → 3; $500.0$ → 4; $2.0034$ → 5 significant figures.\n\n**Step 3: Build the sequence**\nSequence becomes $2,3,4,3,4,5$.\n\n**Step 4: Compare with options**\nOnly option **B** matches.\n\n**Step 5: Conclude**\nTherefore option **B** is correct.\n\n**Key Points to Remember:**\n- Captive zeros always count.\n- Trailing zeros count only when a decimal is shown.\n- Scientific notation clarifies significant figures.\n- Count each value carefully before forming the sequence.\n- Present final answer exactly in the order asked.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-204",
+    "question_text": {
+      "markdown": "Five students scored $88,\\;69,\\;81,\\;92,\\;79$ in an exam. What is the average score?",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "$81.8$", "is_correct": false },
+      { "id": "b", "text": "$82$", "is_correct": true },
+      { "id": "c", "text": "$68$", "is_correct": false },
+      { "id": "d", "text": "$81.80$", "is_correct": false }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Sum the scores**\n$$88+69+81+92+79=409$$\n\n**Step 2: Compute mean**\n$$\\text{Average}=\\frac{409}{5}=81.8$$\n\n**Step 3: Interpret reporting format**\nOptions use whole numbers or specific rounding; nearest whole number to $81.8$ is $82$.\n\n**Step 4: Choose matching option**\nOption **B** corresponds to the rounded average typically reported.\n\n**Step 5: Conclude**\nAverage score ≈ $82$.\n\n**Key Points to Remember:**\n- Arithmetic mean = total/number of observations.\n- Keep intermediate precision high; round at the end.\n- Match rounding style to exam instructions.\n- Compare numeric results carefully against provided options.\n- Document units or context (marks) if needed.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-205",
+    "question_text": {
+      "markdown": "An electronic balance used in a mailroom displays tenths of a kilogram (range $0$ to $140\\,\\text{kg}$). How many significant figures should be used to express the mass of any package whose mass is between $80.2$ and $83.5\\,\\text{kg}$?",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "$3$", "is_correct": true },
+      { "id": "b", "text": "$5$", "is_correct": false },
+      { "id": "c", "text": "$4$", "is_correct": false },
+      { "id": "d", "text": "$2$", "is_correct": false }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Identify instrument precision**\nThe balance displays to one decimal place in kilograms (e.g., $80.2\\,\\text{kg}$).\n\n**Step 2: Count significant figures**\nA reading like $80.2\\,\\text{kg}$ has three significant figures: $8$, $0$, and $2$.\n\n**Step 3: Apply to range**\nAll masses between $80.2$ and $83.5\\,\\text{kg}$ will have three significant figures when recorded to tenths.\n\n**Step 4: Match with options**\nOnly option **A** ($3$ significant figures) matches the instrument's capability.\n\n**Step 5: Conclude**\nExpress such measurements with **3 significant figures**.\n\n**Key Points to Remember:**\n- Instrument precision determines significant figures in measurements.\n- Decimal place shown indicates resolution.\n- All digits shown by the instrument are significant.\n- Trailing zeros after decimal count as significant.\n- Always report measurements matching instrument limits.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-206",
+    "question_text": {
+      "markdown": "If the density of a solution is $3.12\\,\\text{g mL}^{-1}$, the mass of $1.5\\,\\text{mL}$ solution in significant figures is:",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "$4.7\\,\\text{g}$", "is_correct": true },
+      { "id": "b", "text": "$4.680\\times10^{-3}\\,\\text{kg}$", "is_correct": false },
+      { "id": "c", "text": "$4.680\\,\\text{g}$", "is_correct": false },
+      { "id": "d", "text": "$46.80\\,\\text{g}$", "is_correct": false }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Write the formula**\nMass $=$ Density $\\times$ Volume.\n\n**Step 2: Substitute values**\n$$m=3.12\\,\\text{g mL}^{-1}\\times1.5\\,\\text{mL}=4.68\\,\\text{g}$$\n\n**Step 3: Apply significant figure rules**\nDensity has $3$ sig figs; volume has $2$ sig figs → result limited to $2$ sig figs.\n\n**Step 4: Round correctly**\n$4.68\\,\\text{g}$ rounded to $2$ sig figs becomes $4.7\\,\\text{g}$.\n\n**Step 5: Conclude**\nOption **A** is correct.\n\n**Key Points to Remember:**\n- Use $m=\\rho V$ for mass calculations.\n- Result's sig figs limited by least precise measurement.\n- Round only at the final step.\n- Units must be consistent (both in g/mL).\n- Always express final answer with proper units.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-207",
+    "question_text": {
+      "markdown": "The results of which of the following operations has the least number of significant figures?\n\n(a) $\\dfrac{0.02856\\times298.15\\times0.112}{0.5785}$\n\n(b) $5\\times5.364$\n\n(c) $0.0125+0.7864+0.0215$\n\n(d) All have same number of significant figures",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Expression (a)", "is_correct": true },
+      { "id": "b", "text": "Expression (b)", "is_correct": false },
+      { "id": "c", "text": "Expression (c)", "is_correct": false },
+      { "id": "d", "text": "All have same number", "is_correct": false }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Analyze expression (a)**\nNumbers have $4$, $5$, $3$, and $4$ sig figs. For multiplication/division, result limited by minimum → $3$ sig figs.\n\n**Step 2: Analyze expression (b)**\n$5$ is exact (infinite sig figs); $5.364$ has $4$ sig figs → result has $4$ sig figs.\n\n**Step 3: Analyze expression (c)**\nAddition limited by decimal places. $0.0125$ has $4$ decimal places; result keeps $4$ decimal places but maintains $4$ sig figs.\n\n**Step 4: Compare results**\nExpression (a) yields $3$ sig figs, fewer than (b) and (c).\n\n**Step 5: Conclude**\nOption **A** has the least significant figures.\n\n**Key Points to Remember:**\n- Multiplication/division → limited by least sig figs.\n- Addition/subtraction → limited by decimal places.\n- Exact numbers don't limit precision.\n- Identify the controlling measurement carefully.\n- Apply appropriate rule for each operation type.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-208",
+    "question_text": {
+      "markdown": "The law of definite proportions is not applicable to nitrogen oxide because:",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Atomic weight of $\\ce{N}$ is not constant", "is_correct": false },
+      { "id": "b", "text": "Molecular weight of $\\ce{N}$ is variable", "is_correct": false },
+      { "id": "c", "text": "Equivalent weight of $\\ce{N}$ is variable", "is_correct": true },
+      { "id": "d", "text": "Atomic weight of $\\ce{O}$ is variable", "is_correct": false }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Recall the law**\nLaw of definite proportions states a compound always contains elements in fixed mass ratio.\n\n**Step 2: Consider nitrogen oxides**\nNitrogen forms multiple oxides: $\\ce{NO}$, $\\ce{NO2}$, $\\ce{N2O}$, $\\ce{N2O3}$, $\\ce{N2O5}$ with different mass ratios.\n\n**Step 3: Identify the issue**\nNitrogen exhibits multiple oxidation states ($+1$, $+2$, $+3$, $+4$, $+5$), changing its equivalent weight in different oxides.\n\n**Step 4: Connect to answer**\nBecause equivalent weight of $\\ce{N}$ varies across oxides, the law of definite proportions (which assumes fixed ratio) appears violated when considering \"nitrogen oxide\" as a single entity.\n\n**Step 5: Conclude**\nOption **C** correctly identifies the reason.\n\n**Key Points to Remember:**\n- Equivalent weight depends on valency/oxidation state.\n- Elements with variable valency form multiple compounds.\n- Law of multiple proportions better explains such series.\n- Atomic weights themselves remain constant.\n- Distinguish between atomic weight and equivalent weight.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-209",
+    "question_text": {
+      "markdown": "Which of the following statements indicates that the law of multiple proportions is being followed?",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Samples of $\\ce{CO2}$ taken from any source will always have $\\ce{C}$ and $\\ce{O}$ in the ratio $1:2$", "is_correct": false },
+      { "id": "b", "text": "In $\\ce{CO2}$ and $\\ce{CO}$, masses of oxygen which combine with fixed mass of carbon are in the ratio $2:1$", "is_correct": true },
+      { "id": "c", "text": "When $\\ce{Mg}$ burns in $\\ce{O2}$, the amount of $\\ce{Mg}$ taken for the reaction is equal to the amount of $\\ce{MgO}$ formed", "is_correct": false },
+      { "id": "d", "text": "At constant $T$ and $P$, $200\\,\\text{mL}$ of $\\ce{H2}$ will combine with $100\\,\\text{mL}$ $\\ce{O2}$ to produce $200\\,\\text{mL}$ of water vapour", "is_correct": false }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Recall the law**\nLaw of multiple proportions: when two elements form multiple compounds, masses of one element combining with fixed mass of the other are in small whole-number ratios.\n\n**Step 2: Examine each statement**\nStatement (b) compares $\\ce{CO}$ and $\\ce{CO2}$ — both formed by carbon and oxygen.\n\n**Step 3: Verify the ratio**\nFor equal mass of carbon:\n- In $\\ce{CO}$: $1$ part oxygen\n- In $\\ce{CO2}$: $2$ parts oxygen\n- Ratio $=2:1$ (small whole number)\n\n**Step 4: Evaluate other options**\n(a) describes definite proportions; (c) describes conservation of mass; (d) describes Gay-Lussac's law.\n\n**Step 5: Conclude**\nOption **B** exemplifies the law of multiple proportions.\n\n**Key Points to Remember:**\n- Need at least two compounds of same elements.\n- Fix mass of one element, compare other element's masses.\n- Ratios must be small integers.\n- Distinguish from law of definite proportions (single compound).\n- Gas volume relationships follow different laws.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-210",
+    "question_text": {
+      "markdown": "Four $1\\,\\text{L}$ flasks are separately filled with $\\ce{SO2}$, $\\ce{SO3}$, $\\ce{Ar}$ and $\\ce{CH4}$ gases at same $T$ and $P$. The ratio of total number of atoms of these gases present in the flasks is:",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "$1:1:1:1$", "is_correct": false },
+      { "id": "b", "text": "$2:3:4:1$", "is_correct": false },
+      { "id": "c", "text": "$2:4:2:5$", "is_correct": false },
+      { "id": "d", "text": "$3:4:1:5$", "is_correct": true }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Apply Avogadro's law**\nSame $T$, $P$, $V$ → equal number of moles in each flask.\n\n**Step 2: Count atoms per molecule**\n- $\\ce{SO2}$: $1\\ce{S}+2\\ce{O}=3$ atoms\n- $\\ce{SO3}$: $1\\ce{S}+3\\ce{O}=4$ atoms\n- $\\ce{Ar}$: $1$ atom (monoatomic)\n- $\\ce{CH4}$: $1\\ce{C}+4\\ce{H}=5$ atoms\n\n**Step 3: Calculate total atoms**\nSince moles are equal, total atoms proportional to atoms per molecule.\n\n**Step 4: Form ratio**\nRatio $=3:4:1:5$.\n\n**Step 5: Conclude**\nOption **D** is correct.\n\n**Key Points to Remember:**\n- Avogadro's law: equal volumes at same $T,P$ contain equal moles.\n- Total atoms $=$ moles $\\times$ atoms per molecule.\n- Noble gases are monoatomic.\n- Polyatomic molecules contribute multiple atoms per mole.\n- Maintain order when expressing ratios.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-211",
+    "question_text": {
+      "markdown": "Which of the following statements is correct about the reaction given below?\n\n$$4\\ce{Fe}(s)+3\\ce{O2}(g)\\longrightarrow2\\ce{Fe2O3}(s)$$",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Total mass of iron and oxygen in reactants $=$ total mass of iron and oxygen in product; therefore it follows law of conservation of mass", "is_correct": true },
+      { "id": "b", "text": "Total mass of reactant $=$ total mass of product; therefore it follows law of multiple proportions", "is_correct": false },
+      { "id": "c", "text": "Amount of $\\ce{Fe2O3}$ can be increased by taking any one of the reactants in excess", "is_correct": false },
+      { "id": "d", "text": "Amount of $\\ce{Fe2O3}$ produced will decrease if amount of any one of the reactants is taken in excess", "is_correct": false }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Examine the reaction**\nBalanced equation: $4\\ce{Fe}+3\\ce{O2}\\rightarrow2\\ce{Fe2O3}$.\n\n**Step 2: Apply conservation of mass**\nMass of reactants $=$ mass of products (fundamental law in chemistry).\n\n**Step 3: Evaluate statement (a)**\nCorrectly states mass conservation and identifies the applicable law.\n\n**Step 4: Evaluate other statements**\n(b) confuses conservation with multiple proportions; (c) and (d) misunderstand limiting reagent concept.\n\n**Step 5: Conclude**\nOption **A** is correct.\n\n**Key Points to Remember:**\n- Balanced equations embody conservation of mass.\n- Law of multiple proportions involves different compounds, not a single reaction.\n- Excess reactant doesn't change theoretical yield.\n- Limiting reactant determines product amount.\n- Always verify which law applies to given scenario.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-212",
+    "question_text": {
+      "markdown": "$45.4\\,\\text{L}$ of $\\ce{N2}$ reacted with $22.7\\,\\text{L}$ of $\\ce{O2}$ and $45.4\\,\\text{L}$ of $\\ce{N2O}$ was formed as per:\n\n$$2\\ce{N2}(g)+\\ce{O2}(g)\\longrightarrow2\\ce{N2O}(g)$$\n\nThis obeys:",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Law of definite proportion", "is_correct": false },
+      { "id": "b", "text": "Law of multiple proportion", "is_correct": false },
+      { "id": "c", "text": "Law of mass conservation", "is_correct": false },
+      { "id": "d", "text": "None of the above", "is_correct": true }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Analyze volume data**\nGiven volumes: $45.4\\,\\text{L}$ $\\ce{N2}$, $22.7\\,\\text{L}$ $\\ce{O2}$, $45.4\\,\\text{L}$ $\\ce{N2O}$.\n\n**Step 2: Check stoichiometric ratio**\nCoefficients are $2:1:2$; volumes follow same ratio ($45.4:22.7:45.4\\approx2:1:2$).\n\n**Step 3: Identify relevant law**\nGay-Lussac's law of combining volumes: gases react in simple whole-number volume ratios at constant $T$ and $P$.\n\n**Step 4: Compare with options**\nNone of the listed laws (definite proportions, multiple proportions, conservation of mass) specifically describe volume relationships.\n\n**Step 5: Conclude**\nOption **D** (None of the above) is correct.\n\n**Key Points to Remember:**\n- Gay-Lussac's law governs gas volume ratios.\n- Law of definite proportions concerns mass ratios in compounds.\n- Multiple proportions needs two different compounds.\n- Conservation of mass always applies but isn't the unique feature here.\n- Recognize when classical laws don't cover the specific phenomenon.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-213",
+    "question_text": {
+      "markdown": "The mass of $\\ce{N}$ per gram of $\\ce{H}$ in the compound hydrazine is exactly one and half times the mass of $\\ce{N}$ in the compound ammonia. This illustrates:",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Law of mass conservation", "is_correct": false },
+      { "id": "b", "text": "Multiple valency of nitrogen", "is_correct": false },
+      { "id": "c", "text": "Law of multiple proportion", "is_correct": true },
+      { "id": "d", "text": "Law of definite proportion", "is_correct": false }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Identify compounds**\nHydrazine: $\\ce{N2H4}$; Ammonia: $\\ce{NH3}$.\n\n**Step 2: Calculate mass ratios**\nIn $\\ce{NH3}$: mass of $\\ce{N}$ per gram $\\ce{H}=14/3\\approx4.67$.\nIn $\\ce{N2H4}$: mass of $\\ce{N}$ per gram $\\ce{H}=28/4=7$.\nRatio $=7/4.67=1.5$ (or $3:2$).\n\n**Step 3: Identify the law**\nLaw of multiple proportions: when two elements form multiple compounds, masses of one element combining with fixed mass of the other are in small whole-number ratios.\n\n**Step 4: Verify ratio**\n$1.5:1=3:2$ is a small whole-number ratio.\n\n**Step 5: Conclude**\nOption **C** correctly identifies the law.\n\n**Key Points to Remember:**\n- Need two compounds with same elements.\n- Fix mass of one element, compare other's mass.\n- Ratio must be small integers (here $3:2$).\n- Not just multiple valency—it's a quantitative law.\n- Hydrazine and ammonia perfectly illustrate this law.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-214",
+    "question_text": {
+      "markdown": "If we consider that $\\tfrac{1}{6}$ (in place of $\\tfrac{1}{12}$) mass of carbon atom is taken to be the relative atomic mass unit, the mass of one mole of a substance will:",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Decrease twice", "is_correct": false },
+      { "id": "b", "text": "Increase two fold", "is_correct": false },
+      { "id": "c", "text": "Remain unchanged", "is_correct": true },
+      { "id": "d", "text": "Be a function of molecular mass of substance", "is_correct": false }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Understand atomic mass unit**\nAtomic mass unit (amu) is a relative scale based on carbon-12.\n\n**Step 2: Analyze the change**\nChanging from $\\tfrac{1}{12}$ to $\\tfrac{1}{6}$ doubles the amu value, so all atomic masses would be halved numerically.\n\n**Step 3: Consider molar mass**\nMolar mass (g/mol) equals atomic mass (in amu) expressed in grams. If amu doubles, atomic masses halve, but the conversion factor also changes.\n\n**Step 4: Calculate net effect**\nThe physical mass of one mole remains the same because both numerator (atomic mass) and denominator (amu definition) change proportionally.\n\n**Step 5: Conclude**\nOption **C** is correct—molar mass remains unchanged.\n\n**Key Points to Remember:**\n- Atomic mass unit is a relative scale.\n- Changing reference affects both atomic masses and conversion factors.\n- Physical quantities (actual mass) remain constant.\n- Molar mass in grams is independent of amu definition.\n- Conceptual understanding of relative scales is crucial.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-215",
+    "question_text": {
+      "markdown": "The average molar mass of chlorine is $35.5\\,\\text{g mol}^{-1}$. The ratio of $^{35}\\ce{Cl}$ to $^{37}\\ce{Cl}$ in naturally occurring chlorine is close to:",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "$4:1$", "is_correct": false },
+      { "id": "b", "text": "$3:1$", "is_correct": true },
+      { "id": "c", "text": "$2:1$", "is_correct": false },
+      { "id": "d", "text": "$1:1$", "is_correct": false }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Set up equation**\nLet ratio of $^{35}\\ce{Cl}:^{37}\\ce{Cl}=x:1$.\n\n**Step 2: Write average mass formula**\n$$\\text{Average mass}=\\frac{35x+37(1)}{x+1}=35.5$$\n\n**Step 3: Solve for $x$**\n$$35x+37=35.5(x+1)$$\n$$35x+37=35.5x+35.5$$\n$$37-35.5=35.5x-35x$$\n$$1.5=0.5x$$\n$$x=3$$\n\n**Step 4: Interpret result**\nRatio $=3:1$.\n\n**Step 5: Conclude**\nOption **B** is correct.\n\n**Key Points to Remember:**\n- Average atomic mass $=$ weighted average of isotopes.\n- Set up equation with unknown ratio.\n- Solve algebraically for the ratio.\n- Natural chlorine is about $75\\%$ $^{35}\\ce{Cl}$ and $25\\%$ $^{37}\\ce{Cl}$.\n- Verify answer makes physical sense.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-216",
+    "question_text": {
+      "markdown": "Given that abundances of isotopes $^{54}\\ce{Fe}$, $^{56}\\ce{Fe}$ and $^{57}\\ce{Fe}$ are $5\\%$, $90\\%$ and $5\\%$ respectively. The atomic mass of $\\ce{Fe}$ is:",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "$55.85$", "is_correct": false },
+      { "id": "b", "text": "$55.95$", "is_correct": true },
+      { "id": "c", "text": "$55.75$", "is_correct": false },
+      { "id": "d", "text": "$56.75$", "is_correct": false }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Write weighted average formula**\n$$\\text{Atomic mass}=\\sum(\\text{isotope mass}\\times\\text{abundance})$$\n\n**Step 2: Substitute values**\n$$\\text{Atomic mass}=54\\times0.05+56\\times0.90+57\\times0.05$$\n\n**Step 3: Calculate each term**\n$$=2.7+50.4+2.85$$\n\n**Step 4: Sum the terms**\n$$=55.95$$\n\n**Step 5: Conclude**\nOption **B** ($55.95$) is correct.\n\n**Key Points to Remember:**\n- Atomic mass is weighted average of isotopes.\n- Convert percentages to decimals (divide by $100$).\n- Multiply each isotope mass by its abundance.\n- Sum all contributions.\n- Result should be between lightest and heaviest isotopes.",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "ch11_mole",
+      "tags": [{ "tag_id": "tag_mole_1", "weight": 1.0 }],
+      "is_pyq": false,
+      "is_top_pyq": false
+    },
+    "status": "review",
+    "created_by": "ai_agent",
+    "updated_by": "ai_agent"
+  }
+]

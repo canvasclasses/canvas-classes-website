@@ -1,0 +1,122 @@
+[
+  {
+    "display_id": "MOLE-250",
+    "question_text": { "markdown": "At $300\\,\\text{K}$ and $1\\,\\text{atm}$ pressure, $10\\,\\text{mL}$ of a hydrocarbon required $55\\,\\text{mL}$ of $\\ce{O2}$ for complete combustion and $40\\,\\text{mL}$ of $\\ce{CO2}$ is formed. The formula of the hydrocarbon is", "latex_validated": true },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "$\\ce{C4H7Cl}$", "is_correct": false },
+      { "id": "b", "text": "$\\ce{C4H6}$", "is_correct": true },
+      { "id": "c", "text": "$\\ce{C4H10}$", "is_correct": false },
+      { "id": "d", "text": "$\\ce{C4H8}$", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Step 1: Write General Combustion Equation**\n\nFor hydrocarbon $\\ce{C_xH_y}$:\n$$\\ce{C_xH_y + \\left(x + \\frac{y}{4}\\right) O2 -> x CO2 + \\frac{y}{2} H2O}$$\n\n**Step 2: Find x from CO₂ volume**\n\n$10\\,\\text{mL}$ of hydrocarbon gives $40\\,\\text{mL}$ of $\\ce{CO2}$:\n$$10x = 40 \\Rightarrow x = 4$$\n\n**Step 3: Find y from O₂ volume**\n\n$10\\,\\text{mL}$ of hydrocarbon requires $55\\,\\text{mL}$ of $\\ce{O2}$:\n$$10\\left(4 + \\frac{y}{4}\\right) = 55 \\Rightarrow 40 + \\frac{10y}{4} = 55 \\Rightarrow y = 6$$\n\n**Step 4: Identify the Hydrocarbon**\n\nThe hydrocarbon is $\\ce{C4H6}$.\n\n**Key Points:**\n- At constant T and P, volumes are proportional to moles (Gay-Lussac's law)\n- $\\ce{CO2}$ volume directly gives the carbon count: $V_{\\ce{CO2}} = x \\times V_{\\text{hydrocarbon}}$\n- $\\ce{O2}$ consumed gives hydrogen count via $x + y/4$", "latex_validated": true },
+    "metadata": { "difficulty": "Medium", "chapter_id": "ch11_mole", "tags": [{ "tag_id": "tag_mole_5", "weight": 1.0 }], "is_pyq": false, "is_top_pyq": false },
+    "status": "review", "created_by": "ai_agent", "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-251",
+    "question_text": { "markdown": "A mixture of methane and ethylene in the ratio of $a:b$ by volume occupies $30\\,\\text{mL}$. On complete combustion, the mixture yields $40\\,\\text{mL}$ of $\\ce{CO2}$. What volume of $\\ce{CO2}$ would have been obtained if the ratio would have been $b:a$?", "latex_validated": true },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "$50\\,\\text{mL}$", "is_correct": true },
+      { "id": "b", "text": "$30\\,\\text{mL}$", "is_correct": false },
+      { "id": "c", "text": "$40\\,\\text{mL}$", "is_correct": false },
+      { "id": "d", "text": "$60\\,\\text{mL}$", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Step 1: Write Combustion Equations**\n\n$$\\ce{CH4 + 2O2 -> CO2 + 2H2O}$$\n$$\\ce{C2H4 + 3O2 -> 2CO2 + 2H2O}$$\n\n$a\\,\\text{mL}$ of $\\ce{CH4}$ gives $a\\,\\text{mL}$ $\\ce{CO2}$; $b\\,\\text{mL}$ of $\\ce{C2H4}$ gives $2b\\,\\text{mL}$ $\\ce{CO2}$.\n\n**Step 2: Set Up Equations for ratio a:b**\n\n$$a + b = 30 \\quad \\cdots(1)$$\n$$a + 2b = 40 \\quad \\cdots(2)$$\n\nSubtracting: $b = 10$, so $a = 20$.\n\n**Step 3: CO₂ for reversed ratio b:a**\n\nNow $\\ce{CH4} = b = 10\\,\\text{mL}$, $\\ce{C2H4} = a = 20\\,\\text{mL}$:\n$$V_{\\ce{CO2}} = 10 + 2(20) = 50\\,\\text{mL}$$\n\n**Key Points:**\n- $\\ce{CH4}$ gives 1 vol $\\ce{CO2}$ per vol burned\n- $\\ce{C2H4}$ gives 2 vol $\\ce{CO2}$ per vol burned\n- Reversing the ratio changes the $\\ce{CO2}$ yield from 40 to 50 mL", "latex_validated": true },
+    "metadata": { "difficulty": "Medium", "chapter_id": "ch11_mole", "tags": [{ "tag_id": "tag_mole_5", "weight": 1.0 }], "is_pyq": false, "is_top_pyq": false },
+    "status": "review", "created_by": "ai_agent", "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-252",
+    "question_text": { "markdown": "When $0.01$ mole of an organic compound containing $60\\%$ carbon was burnt completely, $4.4\\,\\text{g}$ of $\\ce{CO2}$ was produced. The molar mass of the compound is ______ $\\text{g/mol}$.", "latex_validated": true },
+    "type": "NVT",
+    "options": [],
+    "answer": { "integer_value": 200 },
+    "solution": { "text_markdown": "**Step 1: Moles of CO₂ Produced**\n\n$$n_{\\ce{CO2}} = \\frac{4.4}{44} = 0.1\\,\\text{mol}$$\n\n**Step 2: Mass of Carbon in 0.01 mol of Compound**\n\nMoles of C = moles of $\\ce{CO2}$ = $0.1\\,\\text{mol}$\n$$m_C = 0.1 \\times 12 = 1.2\\,\\text{g}$$\n\n**Step 3: Calculate Molar Mass**\n\nCarbon is $60\\%$ of the compound, and $0.01\\,\\text{mol}$ contains $1.2\\,\\text{g}$ of C:\n$$\\frac{1.2}{0.01 \\times M} \\times 100 = 60 \\Rightarrow M = \\frac{1.2 \\times 100}{0.01 \\times 60} = 200\\,\\text{g/mol}$$\n\n**Key Points:**\n- Moles of C = moles of $\\ce{CO2}$ (1:1 ratio in combustion)\n- Use $\\% = \\frac{\\text{mass of element in 1 mol}}{M} \\times 100$ to find M", "latex_validated": true },
+    "metadata": { "difficulty": "Medium", "chapter_id": "ch11_mole", "tags": [{ "tag_id": "tag_mole_3", "weight": 1.0 }], "is_pyq": false, "is_top_pyq": false },
+    "status": "review", "created_by": "ai_agent", "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-253",
+    "question_text": { "markdown": "The mass of $\\ce{CO2}$ that must be mixed with $20\\,\\text{g}$ of oxygen such that $27\\,\\text{mL}$ of a sample of the resulting mixture would contain equal number of molecules of each gas is", "latex_validated": true },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "$13.75\\,\\text{g}$", "is_correct": false },
+      { "id": "b", "text": "$27.50\\,\\text{g}$", "is_correct": true },
+      { "id": "c", "text": "$41.25\\,\\text{g}$", "is_correct": false },
+      { "id": "d", "text": "$55\\,\\text{g}$", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Step 1: Condition for Equal Molecules**\n\nEqual number of molecules means equal moles: $n_{\\ce{CO2}} = n_{\\ce{O2}}$\n\n**Step 2: Moles of O₂**\n\n$$n_{\\ce{O2}} = \\frac{20}{32} = 0.625\\,\\text{mol}$$\n\n**Step 3: Mass of CO₂**\n\n$$w_{\\ce{CO2}} = 0.625 \\times 44 = 27.50\\,\\text{g}$$\n\nVerification: $\\frac{w}{44} = \\frac{20}{32} \\Rightarrow w = 27.50\\,\\text{g}$ ✓\n\n**Key Points:**\n- Equal molecules ↔ equal moles (Avogadro's principle)\n- The $27\\,\\text{mL}$ sample volume is a distractor — it does not affect the calculation\n- Mole ratio determines molecular ratio at any given conditions", "latex_validated": true },
+    "metadata": { "difficulty": "Easy", "chapter_id": "ch11_mole", "tags": [{ "tag_id": "tag_mole_7", "weight": 1.0 }], "is_pyq": false, "is_top_pyq": false },
+    "status": "review", "created_by": "ai_agent", "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-254",
+    "question_text": { "markdown": "A $0.05\\,\\text{cm}$ thick coating of silver is deposited on a plate of $0.05\\,\\text{m}^2$ area. The number of silver atoms deposited on the plate is ______ $\\times 10^{23}$. (Atomic mass of $\\ce{Ag} = 108$, $d = 7.9\\,\\text{g/cm}^3$)", "latex_validated": true },
+    "type": "NVT",
+    "options": [],
+    "answer": { "decimal_value": 11.0 },
+    "solution": { "text_markdown": "**Step 1: Volume of Silver Coating**\n\nArea $= 0.05\\,\\text{m}^2 = 0.05 \\times 10^4\\,\\text{cm}^2 = 500\\,\\text{cm}^2$\n$$V = \\text{area} \\times \\text{thickness} = 500 \\times 0.05 = 25\\,\\text{cm}^3$$\n\n**Step 2: Mass of Silver**\n\n$$m = d \\times V = 7.9 \\times 25 = 197.5\\,\\text{g}$$\n\n**Step 3: Number of Atoms**\n\n$$N = \\frac{m}{M} \\times N_A = \\frac{197.5}{108} \\times 6.022 \\times 10^{23} = 11.01 \\times 10^{23}$$\n\n**Key Points:**\n- Convert $\\text{m}^2$ to $\\text{cm}^2$: multiply by $10^4$\n- $N = \\frac{m}{M} \\times N_A$\n- Answer: $\\approx 11 \\times 10^{23}$", "latex_validated": true },
+    "metadata": { "difficulty": "Hard", "chapter_id": "ch11_mole", "tags": [{ "tag_id": "tag_mole_7", "weight": 1.0 }], "is_pyq": false, "is_top_pyq": false },
+    "status": "review", "created_by": "ai_agent", "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-255",
+    "question_text": { "markdown": "Haemoglobin contains $0.34\\%$ Fe by mass. The number of Fe atoms in $3.3\\,\\text{g}$ of haemoglobin is ______.", "latex_validated": true },
+    "type": "NVT",
+    "options": [],
+    "answer": { "decimal_value": 1.21e20 },
+    "solution": { "text_markdown": "**Step 1: Mass of Fe in 3.3 g of Haemoglobin**\n\n$$m_{\\ce{Fe}} = \\frac{0.34}{100} \\times 3.3 = 0.01122\\,\\text{g}$$\n\n**Step 2: Moles of Fe**\n\n$$n_{\\ce{Fe}} = \\frac{0.01122}{56} = 2.004 \\times 10^{-4}\\,\\text{mol}$$\n\n**Step 3: Number of Fe Atoms**\n\n$$N = n \\times N_A = \\frac{0.34 \\times 3.3}{100 \\times 56} \\times 6.022 \\times 10^{23} = 1.21 \\times 10^{20}$$\n\n**Key Points:**\n- $\\% = \\frac{m_{\\text{element}}}{m_{\\text{total}}} \\times 100$\n- $N = \\frac{m}{M} \\times N_A$\n- Atomic mass of $\\ce{Fe} = 56\\,\\text{g/mol}$", "latex_validated": true },
+    "metadata": { "difficulty": "Medium", "chapter_id": "ch11_mole", "tags": [{ "tag_id": "tag_mole_7", "weight": 1.0 }], "is_pyq": false, "is_top_pyq": false },
+    "status": "review", "created_by": "ai_agent", "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-256",
+    "question_text": { "markdown": "A $1.84\\,\\text{mg}$ sample of a polyhydric alcoholic compound $X$ of molar mass $92\\,\\text{g/mol}$ gave $1.344\\,\\text{mL}$ of $\\ce{H2}$ gas at STP. The number of alcoholic hydrogen present in compound $X$ is", "latex_validated": true },
+    "type": "NVT",
+    "options": [],
+    "answer": { "integer_value": 6 },
+    "solution": { "text_markdown": "**Step 1: Reaction with Sodium**\n\n$$\\ce{R(OH)_x + x Na -> R(ONa)_x + \\frac{x}{2} H2}$$\n\n1 mole of alcohol gives $x/2$ moles of $\\ce{H2}$.\n\n**Step 2: Moles of H₂ Produced**\n\n$$n_{\\ce{H2}} = \\frac{1.344\\,\\text{mL}}{22400\\,\\text{mL/mol}} = 6 \\times 10^{-5}\\,\\text{mol}$$\n\n**Step 3: Moles of Compound X**\n\n$$n_X = \\frac{1.84 \\times 10^{-3}\\,\\text{g}}{92\\,\\text{g/mol}} = 2 \\times 10^{-5}\\,\\text{mol}$$\n\n**Step 4: Find x**\n\n$$n_X \\times \\frac{x}{2} = n_{\\ce{H2}} \\Rightarrow 2 \\times 10^{-5} \\times \\frac{x}{2} = 6 \\times 10^{-5} \\Rightarrow x = 6$$\n\n**Key Points:**\n- Each $\\ce{-OH}$ group reacts with Na to give $\\frac{1}{2}$ mol $\\ce{H2}$\n- Convert mg to g before calculating moles\n- STP molar volume = $22400\\,\\text{mL/mol}$", "latex_validated": true },
+    "metadata": { "difficulty": "Hard", "chapter_id": "ch11_mole", "tags": [{ "tag_id": "tag_mole_7", "weight": 1.0 }], "is_pyq": false, "is_top_pyq": false },
+    "status": "review", "created_by": "ai_agent", "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-257",
+    "question_text": { "markdown": "A $10\\,\\text{mg}$ effervescent tablet containing $\\ce{NaHCO3}$ and oxalic acid releases $0.25\\,\\text{mL}$ of $\\ce{CO2}$ at $298.15\\,\\text{K}$ and $1\\,\\text{bar}$. If molar volume of $\\ce{CO2}$ is $25\\,\\text{L}$ under such conditions, what is the $\\%$ of $\\ce{NaHCO3}$ in each tablet? (Molar mass of $\\ce{NaHCO3} = 84\\,\\text{g/mol}$)", "latex_validated": true },
+    "type": "NVT",
+    "options": [],
+    "answer": { "decimal_value": 8.4 },
+    "solution": { "text_markdown": "**Step 1: Reaction**\n\n$$\\ce{2NaHCO3 + H2C2O4 -> Na2C2O4 + 2CO2 + 2H2O}$$\n\nStoichiometry: $n_{\\ce{NaHCO3}} = n_{\\ce{CO2}}$ (1:1 ratio)\n\n**Step 2: Moles of CO₂**\n\n$$n_{\\ce{CO2}} = \\frac{V}{V_m} = \\frac{0.25 \\times 10^{-3}\\,\\text{L}}{25\\,\\text{L/mol}} = 1 \\times 10^{-5}\\,\\text{mol}$$\n\n**Step 3: Mass and % of NaHCO₃**\n\n$$m_{\\ce{NaHCO3}} = 1 \\times 10^{-5} \\times 84 = 8.4 \\times 10^{-4}\\,\\text{g} = 0.84\\,\\text{mg}$$\n$$\\% = \\frac{0.84\\,\\text{mg}}{10\\,\\text{mg}} \\times 100 = 8.4\\%$$\n\n**Key Points:**\n- $n = V / V_m$ (use given molar volume, not STP value)\n- Convert mL to L before dividing by molar volume\n- $n_{\\ce{NaHCO3}} = n_{\\ce{CO2}}$ from the balanced equation", "latex_validated": true },
+    "metadata": { "difficulty": "Hard", "chapter_id": "ch11_mole", "tags": [{ "tag_id": "tag_mole_8", "weight": 1.0 }], "is_pyq": false, "is_top_pyq": false },
+    "status": "review", "created_by": "ai_agent", "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-258",
+    "question_text": { "markdown": "$\\ce{S}$ combines with $\\ce{O2}$ to form $\\ce{SO2}$ and $\\ce{SO3}$. If $10\\,\\text{g}$ of $\\ce{S}$ is mixed with $12\\,\\text{g}$ of $\\ce{O2}$, what mass of $\\ce{SO2}$ and $\\ce{SO3}$ will be formed so that neither $\\ce{S}$ nor $\\ce{O}$ will be left at the end of reaction?", "latex_validated": true },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "$12\\,\\text{g}\\,\\ce{SO2} + 10\\,\\text{g}\\,\\ce{SO3}$", "is_correct": true },
+      { "id": "b", "text": "$10\\,\\text{g}\\,\\ce{SO2} + 12\\,\\text{g}\\,\\ce{SO3}$", "is_correct": false },
+      { "id": "c", "text": "$14\\,\\text{g}\\,\\ce{SO2} + 8\\,\\text{g}\\,\\ce{SO3}$", "is_correct": false },
+      { "id": "d", "text": "$8\\,\\text{g}\\,\\ce{SO2} + 14\\,\\text{g}\\,\\ce{SO3}$", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Step 1: Reactions**\n\n$$\\ce{S + O2 -> SO2} \\quad \\text{and} \\quad \\ce{2S + 3O2 -> 2SO3}$$\n\nLet $x\\,\\text{g}$ of $\\ce{O2}$ go to form $\\ce{SO2}$, and $(12-x)\\,\\text{g}$ go to form $\\ce{SO3}$.\n\n**Step 2: Conserve Moles of S**\n\nMoles of S for $\\ce{SO2}$: $\\frac{x}{32}$; moles of S for $\\ce{SO3}$: $\\frac{2(12-x)}{3 \\times 32}$\n\nTotal S = $\\frac{10}{32}$:\n$$\\frac{x}{32} + \\frac{2(12-x)}{96} = \\frac{10}{32}$$\n$$3x + 2(12-x) = 30 \\Rightarrow x + 24 = 30 \\Rightarrow x = 6\\,\\text{g (O2 for SO2)}$$\n\n**Step 3: Masses of Products**\n\nMoles of $\\ce{SO2} = \\frac{6}{32} = 0.1875$; mass $= 0.1875 \\times 64 = 12\\,\\text{g}$\n\nMass of $\\ce{SO3} = (10 + 12) - 12 = 10\\,\\text{g}$ (by mass conservation)\n\n**Key Points:**\n- Total mass conserved: $10 + 12 = 22\\,\\text{g}$ products\n- Set up S-balance to find split of $\\ce{O2}$ between the two reactions\n- Neither S nor O remains — all is consumed", "latex_validated": true },
+    "metadata": { "difficulty": "Medium", "chapter_id": "ch11_mole", "tags": [{ "tag_id": "tag_mole_8", "weight": 1.0 }], "is_pyq": false, "is_top_pyq": false },
+    "status": "review", "created_by": "ai_agent", "updated_by": "ai_agent"
+  },
+  {
+    "display_id": "MOLE-259",
+    "question_text": { "markdown": "A sample of hydrogen gas is collected and it is observed that it contains only H and D atoms in the atomic ratio $6000:1$. The number of neutrons in $3\\,\\text{g}$ of such a sample should be nearly", "latex_validated": true },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "$0.0005$", "is_correct": false },
+      { "id": "b", "text": "$3.01 \\times 10^{20}$", "is_correct": true },
+      { "id": "c", "text": "$1.80 \\times 10^{24}$", "is_correct": false },
+      { "id": "d", "text": "$1.0$", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Step 1: Key Facts**\n\n- H atom (protium) has 0 neutrons\n- D atom (deuterium) has 1 neutron\n- So: number of neutrons = number of D atoms\n- Average atomic mass $\\approx 1\\,\\text{g/mol}$ (H dominates at 6000:1 ratio)\n\n**Step 2: Total Atoms in 3 g**\n\n$$N_{\\text{total}} = \\frac{3}{1} \\times 6.022 \\times 10^{23} = 3 \\times 6.022 \\times 10^{23}$$\n\n**Step 3: Number of D Atoms (= neutrons)**\n\nFraction of D atoms $= \\frac{1}{6001} \\approx \\frac{1}{6001}$:\n$$N_D = \\frac{3 \\times 6.022 \\times 10^{23}}{6001} = 3.01 \\times 10^{20}$$\n\n**Key Points:**\n- Only D atoms contribute neutrons (H has none)\n- Average atomic mass $\\approx 1$ since H overwhelmingly dominates\n- Number of neutrons = number of D atoms", "latex_validated": true },
+    "metadata": { "difficulty": "Medium", "chapter_id": "ch11_mole", "tags": [{ "tag_id": "tag_mole_7", "weight": 1.0 }], "is_pyq": false, "is_top_pyq": false },
+    "status": "review", "created_by": "ai_agent", "updated_by": "ai_agent"
+  }
+]

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "DNF-001",
+    "originalId": "DNF-001",
+    "textMarkdown": "$MnO_4^{2-}$, in acidic medium, disproportionates to:",
+    "options": [
+      {
+        "id": "1",
+        "text": "$Mn_2O_7$ and $MnO_2$",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "$MnO_4^-$ and MnO",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "$MnO_4^-$ and $MnO_2$",
+        "isCorrect": true
+      },
+      {
+        "id": "4",
+        "text": "$Mn_2O_7$ and MnO",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Disproportionation of Manganate Ion:**\n\nIn acidic medium, $MnO_4^{2-}$ (manganate, Mn in +6) disproportionates:\n\n$$3MnO_4^{2-} + 4H^+ \\rightarrow 2MnO_4^- + MnO_2 + 2H_2O$$\n\n**Oxidation States:**\n- $MnO_4^{2-}$: Mn = **+6** (reactant)\n- $MnO_4^-$: Mn = **+7** (oxidation)\n- $MnO_2$: Mn = **+4** (reduction)\n\n**This is classic disproportionation:**\n- Same species both oxidizes and reduces\n- +6 → +7 (loses electron, oxidation)\n- +6 → +4 (gains electrons, reduction)\n\n**Answer: $MnO_4^-$ and $MnO_2$**"
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_d_and_f_block",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [],
+    "tagId": "TAG_CH_D_BLOCK"
+  }
+]

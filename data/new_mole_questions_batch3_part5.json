@@ -1,0 +1,90 @@
+[
+  {
+    "display_id": "MOLE-248",
+    "question_text": {
+      "markdown": "$15\\,\\text{g}$ $\\ce{Ba(MnO4)2}$ sample containing impurity is completely reacting with $100\\,\\text{mL}$ of $11.2\\,\\text{V}$ $\\ce{H2O2}$, then what will be the % purity of $\\ce{Ba(MnO4)2}$ in the sample?",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$5\\%$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$10\\%$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$50\\%$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$28\\%$",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Calculate equivalents**\n$$N = \\frac{11.2}{5.6} = 2$$\n$$\\text{meq of }\\ce{Ba(MnO4)2} = \\text{meq of }\\ce{H2O2}$$\n$$\\frac{\\text{wt}}{\\text{E}} \\times 1000 = 2 \\times 100$$\n\n**Step 2: Calculate n-factor**\nn-factor per $\\ce{MnO4^-}$ is 5\n$$\\therefore \\text{n-factor of }\\ce{Ba(MnO4)2} = 2 \\times 5 = 10$$\n\n**Step 3: Calculate weight**\n$$\\text{wt of }\\ce{Ba(MnO4)2} = 0.02 \\times \\frac{375}{10} = 0.75\\,\\text{g}$$\n\n**Step 4: Calculate purity**\n$$\\% \\text{ Purity} = \\frac{0.75 \\times 100}{15} = 5\\%$$\n\nWait, let me recalculate based on the handwritten solution:\n\n$$N = \\frac{11.2}{5.6} = 2$$\n$$\\text{meq of }\\ce{Ba(MnO4)2} = \\text{meq of }\\ce{H2O2}$$\n$$\\frac{\\text{wt} \\times 10}{375} \\times 1000 = 2 \\times 100$$\n$$\\text{wt of }\\ce{Ba(MnO4)2} = 0.02 \\times 37.5 = 0.75\\,\\text{g}$$\n\nActually, checking the solution more carefully:\n$$\\text{wt} = \\frac{375 \\times 2 \\times 100}{10 \\times 1000} = 7.5\\,\\text{g}$$\n$$\\% \\text{ Purity} = \\frac{7.5}{15} \\times 100 = 50\\%$$\n\n**Key Points:**\n- Volume strength to normality: $N = \\frac{\\text{Vol. strength}}{5.6}$\n- n-factor of $\\ce{Ba(MnO4)2} = 10$ (2 × 5)\n- Use equivalent concept",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "ch11_mole",
+      "tags": [
+        {
+          "tag_id": "tag_mole_3",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "display_id": "MOLE-249",
+    "question_text": {
+      "markdown": "What volume of air having $21\\%$ oxygen by volume is required to completely burn $1\\,\\text{kg}$ of carbon containing $10\\%$ combustible substances?",
+      "latex_validated": true
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$8.988\\,\\text{L}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$8.888\\,\\text{L}$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$8.778\\,\\text{L}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$8.983\\,\\text{L}$",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Step 1: Calculate pure carbon**\nCombustion of carbon may be given as:\n$$\\ce{C(s) + O2(g) -> CO2(g)}$$\n\n$12\\,\\text{g}$ carbon requires $1$ mole of $\\ce{O2}$ for complete combustion.\n\n$$\\therefore 1000\\,\\text{g}\\text{ carbon will require }\\frac{1}{12} \\times 1000\\,\\text{mol }\\ce{O2}\\text{ for combustion, i.e. }83.33\\,\\text{mol }\\ce{O2}$$\n\nVolume of $\\ce{O2}$ at NTP $= 83.33 \\times 22.4\\,\\text{L} = 1866.592\\,\\text{L}$\n\n**Step 2: Account for purity**\n$21\\,\\text{L}$ $\\ce{O2}$ is present in $100\\,\\text{L}$ air\n\n$$\\therefore 1866.592\\,\\text{L }\\ce{O2}\\text{ will be present in }\\frac{100}{21} \\times 1866.592\\,\\text{L air} = 8888.5\\,\\text{L} \\approx 8.888 \\times 10^3\\,\\text{L}$$\n\n**Key Points:**\n- $\\ce{C + O2 -> CO2}$ (1:1 mole ratio)\n- 12 g carbon requires 1 mole $\\ce{O2}$\n- Air contains 21% $\\ce{O2}$ by volume\n- Volume at NTP: 22.4 L/mol",
+      "latex_validated": true
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "ch11_mole",
+      "tags": [
+        {
+          "tag_id": "tag_mole_2",
+          "weight": 1
+        }
+      ]
+    }
+  }
+]

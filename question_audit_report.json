@@ -1,0 +1,2955 @@
+{
+  "summary": {
+    "totalFiles": 21,
+    "totalQuestions": 788,
+    "questionsWithIssues": 244,
+    "questionsWithoutSolutions": 0,
+    "questionsWithoutAnswers": 440,
+    "latexIssues": 174
+  },
+  "byChapter": {
+    "chapter_aldehydes_ketones_and_carboxylic_acids": {
+      "total": 1,
+      "withIssues": 0,
+      "withoutSolutions": 0
+    },
+    "chapter_amines": {
+      "total": 1,
+      "withIssues": 0,
+      "withoutSolutions": 0
+    },
+    "chapter_aromatic_compounds": {
+      "total": 1,
+      "withIssues": 1,
+      "withoutSolutions": 0
+    },
+    "chapter_atomic_structure": {
+      "total": 146,
+      "withIssues": 42,
+      "withoutSolutions": 0
+    },
+    "chapter_basic_concepts_mole_concept": {
+      "total": 199,
+      "withIssues": 68,
+      "withoutSolutions": 0
+    },
+    "chapter_biomolecules": {
+      "total": 1,
+      "withIssues": 0,
+      "withoutSolutions": 0
+    },
+    "chapter_chemical_bonding": {
+      "total": 1,
+      "withIssues": 0,
+      "withoutSolutions": 0
+    },
+    "chapter_chemical_equilibrium": {
+      "total": 60,
+      "withIssues": 20,
+      "withoutSolutions": 0
+    },
+    "chapter_chemical_kinetics": {
+      "total": 1,
+      "withIssues": 1,
+      "withoutSolutions": 0
+    },
+    "chapter_coordination_compounds": {
+      "total": 1,
+      "withIssues": 0,
+      "withoutSolutions": 0
+    },
+    "chapter_d_and_f_block": {
+      "total": 1,
+      "withIssues": 0,
+      "withoutSolutions": 0
+    },
+    "chapter_electrochemistry": {
+      "total": 1,
+      "withIssues": 1,
+      "withoutSolutions": 0
+    },
+    "chapter_general_organic_chemistry": {
+      "total": 3,
+      "withIssues": 2,
+      "withoutSolutions": 0
+    },
+    "chapter_hydrocarbons": {
+      "total": 2,
+      "withIssues": 1,
+      "withoutSolutions": 0
+    },
+    "chapter_periodic_properties": {
+      "total": 1,
+      "withIssues": 0,
+      "withoutSolutions": 0
+    },
+    "chapter_salt_analysis": {
+      "total": 2,
+      "withIssues": 1,
+      "withoutSolutions": 0
+    },
+    "chapter_solutions": {
+      "total": 1,
+      "withIssues": 1,
+      "withoutSolutions": 0
+    },
+    "chapter_stereochemistry": {
+      "total": 1,
+      "withIssues": 0,
+      "withoutSolutions": 0
+    },
+    "chapter_structure_of_atom": {
+      "total": 139,
+      "withIssues": 65,
+      "withoutSolutions": 0
+    },
+    "chapter_thermodynamics": {
+      "total": 129,
+      "withIssues": 12,
+      "withoutSolutions": 0
+    },
+    "chapter_uncategorized": {
+      "total": 96,
+      "withIssues": 29,
+      "withoutSolutions": 0
+    }
+  },
+  "issues": [
+    {
+      "id": "AROMATIC-001",
+      "file": "chapter_aromatic_compounds.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-005",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-009",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-011",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-016",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-017",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-018",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-019",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-021",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-022",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-034",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "ATOM-045",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-050",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-052",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-055",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-058",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "ATOM-060",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-063",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "ATOM-066",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "ATOM-069",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "ATOM-070",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "ATOM-074",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-075",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-076",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-077",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "ATOM-078",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "ATOM-079",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-080",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-082",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-083",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-084",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-085",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-086",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-087",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-089",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-090",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-095",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "ATOM-097",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-130",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-133",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ATOM-140",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "ATOM-141",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "ATOM-142",
+      "file": "chapter_atomic_structure.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "MOLE-002",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-003",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-004",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-005",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-008",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-009",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-011",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-012",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-013",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-014",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-016",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-020",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-022",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-024",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-039",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-047",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-064",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-065",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-066",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-067",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-069",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-070",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-072",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-075",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-076",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-077",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-078",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-082",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-087",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-088",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-090",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-096",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-098",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-100",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-101",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-108",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-113",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-114",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-115",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-118",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "MOLE-123",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Solution is placeholder",
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-124",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Missing options for non-integer question",
+        "Solution is placeholder"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-125",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Solution is placeholder",
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-128",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-131",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-132",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Solution is placeholder",
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-135",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-137",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Missing options for non-integer question",
+        "Solution is placeholder"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-141",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Solution is placeholder",
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-145",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Solution is placeholder",
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-155",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Missing options for non-integer question",
+        "Solution is placeholder"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-159",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Solution is placeholder",
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-160",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-162",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Missing options for non-integer question",
+        "Solution is placeholder"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-164",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Solution is placeholder",
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-166",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-174",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-177",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Missing options for non-integer question",
+        "Solution is placeholder"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-179",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Missing options for non-integer question",
+        "Solution is placeholder"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-181",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-190",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Missing options for non-integer question",
+        "Solution is placeholder"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-191",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Missing options for non-integer question",
+        "Solution is placeholder"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-192",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-194",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-195",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-197",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Missing options for non-integer question",
+        "Solution is placeholder"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-198",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Missing options for non-integer question",
+        "Solution is placeholder"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "MOLE-199",
+      "file": "chapter_basic_concepts_mole_concept.json",
+      "issues": [
+        "Solution is placeholder",
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-002",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [
+        "Missing options for non-integer question",
+        "Solution is placeholder"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-014",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "EQUIL-015",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "EQUIL-017",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-018",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-023",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-025",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-030",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-032",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-034",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-036",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-038",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-039",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-040",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-041",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-045",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-046",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-052",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "EQUIL-057",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "EQUIL-059",
+      "file": "chapter_chemical_equilibrium.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "KINETICS-001",
+      "file": "chapter_chemical_kinetics.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "ELECTRO-001",
+      "file": "chapter_electrochemistry.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "GOC-001",
+      "file": "chapter_general_organic_chemistry.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "GOC-002",
+      "file": "chapter_general_organic_chemistry.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "HYDRO-001",
+      "file": "chapter_hydrocarbons.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "SALT-002",
+      "file": "chapter_salt_analysis.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "SOLN-001",
+      "file": "chapter_solutions.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "atom_003",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_005",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_009",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_011",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_013",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_014",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_015",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_016",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_017",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_018",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_019",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_021",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_022",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_023",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_024",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_026",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_027",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_029",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_030",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_031",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_032",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_034",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "atom_042",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_045",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_050",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_052",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_055",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_058",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "atom_060",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_062",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_063",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "atom_065",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_066",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "atom_069",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "atom_070",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "atom_074",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_075",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_076",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_077",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "atom_078",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "atom_079",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_080",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_081",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_082",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_083",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_084",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_085",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_086",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_087",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_088",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_089",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_090",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_095",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "atom_097",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_099",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_103",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_104",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_105",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_112",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_119",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_123",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_129",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_130",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_132",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "atom_133",
+      "file": "chapter_structure_of_atom.json",
+      "issues": [
+        "No correct answer marked"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "THERMO-022",
+      "file": "chapter_thermodynamics.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "THERMO-062",
+      "file": "chapter_thermodynamics.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "THERMO-063",
+      "file": "chapter_thermodynamics.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "THERMO-064",
+      "file": "chapter_thermodynamics.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "THERMO-072",
+      "file": "chapter_thermodynamics.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "THERMO-074",
+      "file": "chapter_thermodynamics.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "THERMO-088",
+      "file": "chapter_thermodynamics.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "THERMO-095",
+      "file": "chapter_thermodynamics.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "THERMO-102",
+      "file": "chapter_thermodynamics.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "THERMO-105",
+      "file": "chapter_thermodynamics.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "THERMO-106",
+      "file": "chapter_thermodynamics.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "THERMO-110",
+      "file": "chapter_thermodynamics.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-003",
+      "file": "chapter_uncategorized.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "UNCAT-006",
+      "file": "chapter_uncategorized.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "UNCAT-016",
+      "file": "chapter_uncategorized.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "UNCAT-019",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-020",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-021",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-022",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-023",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-025",
+      "file": "chapter_uncategorized.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "UNCAT-031",
+      "file": "chapter_uncategorized.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "UNCAT-032",
+      "file": "chapter_uncategorized.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "UNCAT-056",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-057",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-058",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-059",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-060",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-070",
+      "file": "chapter_uncategorized.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "UNCAT-071",
+      "file": "chapter_uncategorized.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "UNCAT-074",
+      "file": "chapter_uncategorized.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "UNCAT-075",
+      "file": "chapter_uncategorized.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "UNCAT-079",
+      "file": "chapter_uncategorized.json",
+      "issues": [],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "UNCAT-082",
+      "file": "chapter_uncategorized.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "UNCAT-085",
+      "file": "chapter_uncategorized.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "UNCAT-090",
+      "file": "chapter_uncategorized.json",
+      "issues": [],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 4,
+      "hasCorrectAnswer": true
+    },
+    {
+      "id": "UNCAT-092",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-093",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-094",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [
+        "Unclosed $ (odd number of $ signs)",
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-095",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    },
+    {
+      "id": "UNCAT-096",
+      "file": "chapter_uncategorized.json",
+      "issues": [
+        "Missing options for non-integer question"
+      ],
+      "latexIssues": [
+        "Spacing issues with \\text{}"
+      ],
+      "hasSolution": true,
+      "optionCount": 0,
+      "hasCorrectAnswer": false
+    }
+  ],
+  "fixed": []
+}

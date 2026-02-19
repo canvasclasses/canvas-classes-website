@@ -7,10 +7,10 @@ import { usePathname } from 'next/navigation';
 
 export default function Footer() {
     const pathname = usePathname();
-    const isCrucibleAdmin = pathname?.startsWith('/the-crucible/admin');
+    const isCrucibleRoute = pathname?.startsWith('/the-crucible');
     const currentYear = new Date().getFullYear();
 
-    if (isCrucibleAdmin) return null;
+    if (isCrucibleRoute) return null;
 
     return (
         <footer className="bg-gray-900 border-t border-gray-800">

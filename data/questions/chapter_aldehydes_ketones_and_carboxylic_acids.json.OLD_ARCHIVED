@@ -1,0 +1,45 @@
+[
+  {
+    "id": "CARBOXYLIC-001",
+    "originalId": "CARBOXYLIC-001",
+    "textMarkdown": "An organic compound \"P\" of molecular formula $ C_6H_{12}O_3 $ gives positive Iodoform test but negative Tollen's test.\n\nWhen \"P\" is treated with dilute acid, it produces \"Q\". \"Q\" gives positive Tollen's test and also iodoform test.\n\nThe structure of \"P\" is:",
+    "options": [
+      {
+        "id": "1",
+        "text": "![Option1](/questions/jee_2026_jan21m_q61_1.svg)",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "![Option1](/questions/jee_2026_jan21m_q61_2.svg)",
+        "isCorrect": true
+      },
+      {
+        "id": "3",
+        "text": "![Option1](/questions/jee_2026_jan21m_q61_3.svg)",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "![Option1](/questions/jee_2026_jan21m_q61_4.svg)",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Analysis of \"P\" ($ C_6H_{12}O_3 $):**\n(+ve) Iodoform test means → either $ CH_3CO-$ or $ CH_3CH(OH)-$ group\n\n(-ve) Tollen's test means → No free aldehyde group\n\n**Analysis of \"Q\" (after acid hydrolysis):**\n\n(+ve) Tollen's test → Has aldehyde group (formed from acetal)\n\n(+ve) Iodoform test → Still has $ CH_3CO-$ group\n\n**Conclusion:**\n\"P\" is a **ketal/acetal** that hides an aldehyde\nUpon hydrolysis, the acetal opens up to reveal aldehyde\nThe methyl ketone remains intact\n\n**Structure of P:**$$ CH_3-O-CH(OCH_3)-CH_2-CO-CH_3 $$ (Dimethyl acetal of 4-oxopentanal)\n\n**Hydrolysis:**$$ P \\xrightarrow{H_3O^+} OHC-CH_2-CO-CH_3 + 2CH_3OH $$"
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_aldehydes_ketones_and_carboxylic_acids",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "TAG_GENERAL",
+        "weight": 1
+      }
+    ],
+    "tagId": "TAG_CH_ALDEHYDES_KETONES"
+  }
+]

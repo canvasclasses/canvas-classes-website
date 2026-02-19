@@ -1,0 +1,650 @@
+[
+  {
+    "_id": "chapter_some_basic_concepts_of_chemistry",
+    "name": "Some Basic Concepts of Chemistry",
+    "display_order": 1,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_structure_of_atom",
+    "name": "Structure of Atom",
+    "display_order": 2,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_classification_of_elements_and_periodicity",
+    "name": "Classification of Elements and Periodicity",
+    "display_order": 3,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_chemical_bonding_and_molecular_structure",
+    "name": "Chemical Bonding and Molecular Structure",
+    "display_order": 4,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_states_of_matter",
+    "name": "States of Matter",
+    "display_order": 5,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_thermodynamics",
+    "name": "Thermodynamics",
+    "display_order": 6,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_equilibrium",
+    "name": "Equilibrium",
+    "display_order": 7,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_redox_reactions",
+    "name": "Redox Reactions",
+    "display_order": 8,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_hydrogen",
+    "name": "Hydrogen",
+    "display_order": 9,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Inorganic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_sblock_elements",
+    "name": "s-Block Elements",
+    "display_order": 10,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Inorganic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_pblock_elements",
+    "name": "p-Block Elements",
+    "display_order": 11,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Inorganic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_organic_chemistry_basic_principles",
+    "name": "Organic Chemistry - Basic Principles",
+    "display_order": 12,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Organic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_hydrocarbons",
+    "name": "Hydrocarbons",
+    "display_order": 13,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Organic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_environmental_chemistry",
+    "name": "Environmental Chemistry",
+    "display_order": 14,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Organic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_solid_state",
+    "name": "Solid State",
+    "display_order": 15,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_solutions",
+    "name": "Solutions",
+    "display_order": 16,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_electrochemistry",
+    "name": "Electrochemistry",
+    "display_order": 17,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_chemical_kinetics",
+    "name": "Chemical Kinetics",
+    "display_order": 18,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_surface_chemistry",
+    "name": "Surface Chemistry",
+    "display_order": 19,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_general_principles_and_processes_of_isolation_of_elements",
+    "name": "General Principles and Processes of Isolation of Elements",
+    "display_order": 20,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Inorganic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_pblock_elements_group",
+    "name": "p-Block Elements (Group 15-18)",
+    "display_order": 21,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Inorganic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_d_and_f_block_elements",
+    "name": "d and f Block Elements",
+    "display_order": 22,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Inorganic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_coordination_compounds",
+    "name": "Coordination Compounds",
+    "display_order": 23,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Inorganic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_haloalkanes_and_haloarenes",
+    "name": "Haloalkanes and Haloarenes",
+    "display_order": 24,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Organic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_alcohols_phenols_and_ethers",
+    "name": "Alcohols, Phenols and Ethers",
+    "display_order": 25,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Organic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_aldehydes_ketones_and_carboxylic_acids",
+    "name": "Aldehydes, Ketones and Carboxylic Acids",
+    "display_order": 26,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Organic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_amines",
+    "name": "Amines",
+    "display_order": 27,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Organic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_biomolecules",
+    "name": "Biomolecules",
+    "display_order": 28,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Organic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_polymers",
+    "name": "Polymers",
+    "display_order": 29,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Organic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_chemistry_in_everyday_life",
+    "name": "Chemistry in Everyday Life",
+    "display_order": 30,
+    "question_sequence": 0,
+    "class_level": "12",
+    "subject": "Organic Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_atomic_structure",
+    "name": "Atomic Structure",
+    "display_order": 31,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_mole_concept",
+    "name": "Mole Concept",
+    "display_order": 32,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_stoichiometry",
+    "name": "Stoichiometry",
+    "display_order": 33,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_gaseous_state",
+    "name": "Gaseous State",
+    "display_order": 34,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_ionic_equilibrium",
+    "name": "Ionic Equilibrium",
+    "display_order": 35,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  },
+  {
+    "_id": "chapter_chemical_equilibrium",
+    "name": "Chemical Equilibrium",
+    "display_order": 36,
+    "question_sequence": 0,
+    "class_level": "11",
+    "subject": "Physical Chemistry",
+    "stats": {
+      "total_questions": 0,
+      "published_questions": 0,
+      "draft_questions": 0,
+      "avg_difficulty": "Medium",
+      "pyq_count": 0
+    },
+    "is_active": true,
+    "created_at": "2026-02-17T06:29:37.237Z",
+    "updated_at": "2026-02-17T06:29:37.237Z"
+  }
+]

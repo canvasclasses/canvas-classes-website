@@ -1,0 +1,56 @@
+{
+    "mole_concept_pyq_21": {
+        "textSolutionLatex": "**Given:**\nMass of solute = 1.43 g.\nVolume = 100 mL.\nNormality = 0.1 N.\n\n**Calculation:**\nFor \\(Na_2CO_3\\), valence factor n = 2.\nMolarity \\(M = 0.1/2 = 0.05\\) M.\nMoles = \\(0.05 \\times 0.1 = 0.005\\).\nMolar Mass = \\(1.43/0.005 = 286\\) g/mol.\n\n\\(106 (Na_2CO_3) + 18x = 286\\)\n\\(18x = 180 \\Rightarrow x=10\\).\n\n**Answer: 10**"
+    },
+    "mole_concept_pyq_23": {
+        "textSolutionLatex": "**Given:**\n1 g Carbonate gives 0.01 mol \\(CO_2\\).\n\n**Calculation:**\nStoichiometry: 1 mol \\(M_2CO_3 \\rightarrow 1\\) mol \\(CO_2\\).\nMoles of \\(M_2CO_3\\) = 0.01 mol.\nMass = 1 g.\nMolar Mass = \\(1/0.01 = 100\\) g/mol.\n\n**Answer: 100**"
+    },
+    "mole_concept_pyq_24": {
+        "textSolutionLatex": "**Given:**\n85.8% C, Molar mass 84.\n\n**Calculation:**\nMass C = \\(0.858 \\times 84 = 72\\) g.\nMoles C = 6.\nMass H = \\(84 - 72 = 12\\) g.\nMoles H = 12.\nFormula \\(C_6H_{12}\\).\nH atoms = 12.\n\n**Answer: 12**"
+    },
+    "mole_concept_pyq_25": {
+        "textSolutionLatex": "**Analysis:**\nCombustion: \\(C_xH_y + (x + y/4)O_2 \\rightarrow xCO_2 + y/2H_2O\\).\nGiven: \\(x + y/4 = 9.5\\) and \\(y/2 = 3 \\Rightarrow y=6\\).\nSubstitute y=6: \\(x + 1.5 = 9.5 \\Rightarrow x=8\\).\nFormula: \\(C_8H_6\\).\n\n**Answer: Option (1)**"
+    },
+    "mole_concept_pyq_26": {
+        "textSolutionLatex": "**Given:**\n0.01 mol compound \\(\\rightarrow\\) 4.4 g \\(CO_2\\).\n\n**Calculation:**\nMoles \\(CO_2 = 4.4/44 = 0.1\\) mol.\n1 mol compound produces \\(0.1/0.01 = 10\\) mol \\(CO_2\\).\nSo 10 C atoms per molecule.\nMass of C = \\(10 \\times 12 = 120\\) g.\nThis is 60% of total mass.\nTotal Mass = \\(120/0.6 = 200\\) g/mol.\n\n**Answer: 200**"
+    },
+    "mole_concept_pyq_27": {
+        "textSolutionLatex": "**Given:**\n35 mL 0.15 M \\(Pb(NO_3)_2\\) + 20 mL 0.12 M \\(Cr_2(SO_4)_3\\).\n\n**Calculation:**\nMoles \\(Pb^{2+} = 35 \\times 0.15 = 5.25\\) mmol.\nMoles \\(SO_4^{2-} = 3 \\times (20 \\times 0.12) = 7.2\\) mmol.\nPb is limiting.\nPbSO4 formed = 5.25 mmol = \\(5.25 \\times 10^{-3}\\) mol = \\(525 \\times 10^{-5}\\) mol.\n\n**Answer: 525**"
+    },
+    "mole_concept_pyq_28": {
+        "textSolutionLatex": "**Given:**\n2.8 kg \\(N_2\\) + 1 kg \\(H_2\\).\n\n**Calculation:**\nMoles \\(N_2\\) = 100 mol.\nMoles \\(H_2\\) = 500 mol.\nStoichiometry 1:3.\n100 mol \\(N_2\\) needs 300 mol \\(H_2\\).\n\\(H_2\\) is excess. \\(N_2\\) is limiting.\n\\(NH_3\\) produced = \\(2 \\times 100 = 200\\) mol.\nMass = \\(200 \\times 17 = 3400\\) g.\n\n**Answer: 3400**"
+    },
+    "mole_concept_pyq_30": {
+        "textSolutionLatex": "**Given:**\n0.3 g complex (MW 267.46).\n\n**Calculation:**\nMoles complex = \\(0.3 / 267.46 \\approx 1.12\\) mmol.\nChloride ions = \\(3 \\times 1.12 = 3.36\\) mmol.\nAgNO3 required = 3.36 mmol.\nVolume = \\(3.36 / 0.125 = 26.9\\) mL.\nNearest integer = 27.\n\n**Answer: 27**"
+    },
+    "mole_concept_pyq_31": {
+        "textSolutionLatex": "**Analysis:**\nAssuming complete combustion produces \\(CO_2\\) (typo in question saying CO).\nMass \\(CO_2\\) = 22 g = 0.5 mol.\nMoles \\(CH_4\\) required = 0.5 mol.\nMass \\(CH_4\\) = \\(0.5 \\times 16 = 8\\) g.\n\n**Answer: 8**"
+    },
+    "mole_concept_pyq_32": {
+        "textSolutionLatex": "**Given:**\n9.3 g Aniline.\n\n**Calculation:**\nMoles Aniline = \\(9.3/93 = 0.1\\) mol.\nMoles Acetanilide = 0.1 mol.\nMass = \\(0.1 \\times 135 = 13.5\\) g.\n\\(13.5 = 135 \\times 10^{-1}\\).\n\n**Answer: 135**"
+    },
+    "mole_concept_pyq_33": {
+        "textSolutionLatex": "**Given:**\nArea = 0.05 m² = 500 cm².\nThickness = 0.05 cm.\nDensity = 7.9 g/cm³.\n\n**Calculation:**\nVolume = \\(500 \\times 0.05 = 25\\) cm³.\nMass = \\(25 \\times 7.9 = 197.5\\) g.\nMoles = \\(197.5/108 \\approx 1.829\\) mol.\nAtoms = \\(1.829 \\times 6.02 \\times 10^{23} \\approx 11 \\times 10^{23}\\).\n\n**Answer: 11**"
+    },
+    "mole_concept_pyq_34": {
+        "textSolutionLatex": "**Analysis:**\n22 g \\(CO_2\\) = 0.5 mol.\nMoles \\(CH_4\\) required = 0.5 mol.\n\\(0.5 = 50 \\times 10^{-2}\\).\n\n**Answer: 50**"
+    },
+    "mole_concept_pyq_35": {
+        "textSolutionLatex": "**Given:**\n0.492 g compound $\\to$ 0.792 g CO2.\n\n**Calculation:**\nMass C = \\(12/44 \\times 0.792 = 0.216\\) g.\n% C = \\(0.216/0.492 \\times 100 = 43.9\\%\\).\nNearest integer = 44.\n\n**Answer: 44**"
+    },
+    "mole_concept_pyq_36": {
+        "textSolutionLatex": "**Given:**\n11.5 g Zn.\n\n**Calculation:**\nMoles Zn = \\(11.5/65.4 \\approx 0.176\\).\n1 mol Zn gives 1 mol H2.\nMoles H2 = 0.176.\nVolume at STP = \\(0.176 \\times 22.7 = 3.99\\) L.\n\n**Answer: 4**"
+    },
+    "mole_concept_pyq_37": {
+        "textSolutionLatex": "**Given:**\n0.34% Fe in Hemoglobin. 3.3 g Hb.\n\n**Calculation:**\nMass Fe = \\(0.0034 \\times 3.3 = 0.01122\\) g.\nMoles Fe = \\(0.01122/56 \\approx 2 \\times 10^{-4}\\).\nAtoms = \\(2 \\times 10^{-4} \\times 6.02 \\times 10^{23} = 1.2 \\times 10^{20}\\).\n\n**Answer: Option (3)**"
+    },
+    "mole_concept_pyq_38": {
+        "textSolutionLatex": "**Analysis:**\nMass C = 0.216 g (from 0.7938 g CO2).\nMass H = 0.0492 g (from 0.4428 g H2O).\nMass O = \\(0.492 - (0.216 + 0.0492) = 0.2268\\) g.\n% O = \\(0.2268/0.492 \\times 100 = 46.1\\%\\).\n\n**Answer: 46**"
+    },
+    "mole_concept_pyq_39": {
+        "textSolutionLatex": "**Analysis:**\nStoichiometry: 4 HNO3 gives 3 KNO3.\nMoles KNO3 (110 g) = 1.09 mol.\nMoles HNO3 = \\(4/3 \\times 1.09 = 1.45\\) mol.\nMass HNO3 = \\(1.45 \\times 63 = 91.5\\) g.\n\n**Answer: Option (3)**"
+    },
+    "mole_concept_pyq_40": {
+        "textSolutionLatex": "**Given:**\n70 mg Na+ per mL. 50 mL solution.\n\n**Calculation:**\nTotal Na+ = \\(50 \\times 70 = 3500\\) mg = 3.5 g.\nMoles Na+ = \\(3.5/23 = 0.152\\) mol.\nMoles NaNO3 = 0.152.\nMass NaNO3 = \\(0.152 \\times 85 = 12.9\\) g.\nNearest integer = 13.\n\n**Answer: 13**"
+    }
+}

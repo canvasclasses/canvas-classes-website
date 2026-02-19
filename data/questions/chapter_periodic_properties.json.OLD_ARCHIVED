@@ -1,0 +1,45 @@
+[
+  {
+    "id": "PERIODIC-001",
+    "originalId": "PERIODIC-001",
+    "textMarkdown": "Which of the following represents the correct trend for the mentioned property?\n\nA. $ F > P > S > B $– First Ionization Energy\nB. $ Cl > F > S > P $– Electron Affinity\nC. $ K > Al > Mg > B $– Metallic character\nD. $ K_2O > Na_2O > MgO > Al_2O_3 $– Basic character\n\nChoose the correct answer from the option given below.",
+    "options": [
+      {
+        "id": "1",
+        "text": "A, B and D only",
+        "isCorrect": true
+      },
+      {
+        "id": "2",
+        "text": "A, B, C and D",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "A and B only",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "B and C only",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**A. IE:**$ F > P > S > B $. (P > S due to half-filled). **Correct.**\n**B. EA:**$ Cl > F > S > P $. (Cl > F due to size). **Correct.**\n**C. Metallic:** Increases down group, decreases across. $ K > Mg > Al > B $. Given order incorrect.\n**D. Basic Oxide:** Matches metallic. $ K_2O > Na_2O > MgO > Al_2O_3 $ (Amphoteric). **Correct.**\n\n**Answer:** A, B, D."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_periodic_properties",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "TAG_PERIODIC_TRENDS",
+        "weight": 1
+      }
+    ],
+    "tagId": "TAG_PERIODIC_IONIZATION"
+  }
+]
