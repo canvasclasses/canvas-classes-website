@@ -67,52 +67,83 @@ function ProgressCard({ isLoggedIn }: { isLoggedIn: boolean }) {
   const p = PLACEHOLDER;
   const pct = Math.round((p.attempted / p.totalQ) * 100);
   const R = 36; const C = 2 * Math.PI * R;
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const ring = (
+    <svg width="88" height="88" viewBox="0 0 88 88" style={{ flexShrink: 0 }}>
+      <circle cx="44" cy="44" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="6"/>
+      <circle cx="44" cy="44" r={R} fill="none" stroke="url(#ring-grad)" strokeWidth="6" strokeLinecap="round"
+        strokeDasharray={C} strokeDashoffset={C * (1 - pct / 100)}
+        transform="rotate(-90 44 44)" style={{ transition: 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)' }}
+      />
+      <defs><linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#38bdf8"/><stop offset="100%" stopColor="#818cf8"/></linearGradient></defs>
+      <text x="44" y="40" textAnchor="middle" fill="#fff" fontSize="15" fontWeight="800" fontFamily="monospace">{pct}%</text>
+      <text x="44" y="54" textAnchor="middle" fill="rgba(255,255,255,0.35)" fontSize="8" fontFamily="sans-serif">done</text>
+    </svg>
+  );
+
+  const stats = [
+    { val: p.attempted.toLocaleString(), label: 'solved', color: '#a78bfa' },
+    { val: `${p.totalQ.toLocaleString()}`, label: 'total Qs', color: '#38bdf8' },
+    { val: `${p.mastered}/${p.masteredOf}`, label: 'ch mastered', color: '#34d399' },
+    { val: `${p.accuracy}%`, label: 'accuracy', color: '#fbbf24' },
+  ];
+
+  const streakBlock = (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: isMobile ? 'flex-start' : 'center', gap: 4 }}>
+      <span style={{ fontSize: 11, fontWeight: 700, color: '#f97316', whiteSpace: 'nowrap' }}>{String.fromCodePoint(0x1F525)} {p.streak} day streak</span>
+      <div style={{ display: 'flex', gap: 3 }}>
+        {DAYS.map((d, i) => (
+          <div key={i} style={{ width: 22, height: 22, borderRadius: 5, background: p.activeDays.includes(i) ? '#b45309' : 'rgba(255,255,255,0.07)', border: `1px solid ${p.activeDays.includes(i) ? '#d97706' : 'rgba(255,255,255,0.09)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, fontWeight: 700, color: p.activeDays.includes(i) ? '#fde68a' : 'rgba(255,255,255,0.25)' }}>{d}</div>
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <div style={{ background: 'linear-gradient(145deg,rgba(30,20,60,0.9),rgba(15,12,30,0.95))', border: '1px solid rgba(124,58,237,0.25)', borderRadius: 16, padding: '12px 16px', position: 'relative', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle,rgba(124,58,237,0.12) 0%,transparent 70%)', pointerEvents: 'none' }} />
 
-      {/* Single compact row: ring + 4 stats + streak */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        {/* Ring — 88px */}
-        <svg width="88" height="88" viewBox="0 0 88 88" style={{ flexShrink: 0 }}>
-          <circle cx="44" cy="44" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="6"/>
-          <circle cx="44" cy="44" r={R} fill="none" stroke="url(#ring-grad)" strokeWidth="6" strokeLinecap="round"
-            strokeDasharray={C} strokeDashoffset={C * (1 - pct / 100)}
-            transform="rotate(-90 44 44)" style={{ transition: 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)' }}
-          />
-          <defs><linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#38bdf8"/><stop offset="100%" stopColor="#818cf8"/></linearGradient></defs>
-          <text x="44" y="40" textAnchor="middle" fill="#fff" fontSize="15" fontWeight="800" fontFamily="monospace">{pct}%</text>
-          <text x="44" y="54" textAnchor="middle" fill="rgba(255,255,255,0.35)" fontSize="8" fontFamily="sans-serif">done</text>
-        </svg>
-
-        {/* Stats — 4 pills, content-width, no stretching */}
-        <div style={{ display: 'flex', gap: 6 }}>
-          {[
-            { val: p.attempted.toLocaleString(), label: 'solved', color: '#a78bfa' },
-            { val: `${p.totalQ.toLocaleString()}`, label: 'total Qs', color: '#38bdf8' },
-            { val: `${p.mastered}/${p.masteredOf}`, label: 'chapters mastered', color: '#34d399' },
-            { val: `${p.accuracy}%`, label: 'accuracy', color: '#fbbf24' },
-          ].map(({ val, label, color }) => (
-            <div key={label} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '8px 10px' }}>
-              <div style={{ fontSize: 19, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
-              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 3, whiteSpace: 'nowrap' }}>{label}</div>
+      {isMobile ? (
+        /* ── Mobile layout: ring left + 2×2 stat grid right, streak below ── */
+        <>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+            {ring}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, flex: 1 }}>
+              {stats.map(({ val, label, color }) => (
+                <div key={label} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '7px 10px' }}>
+                  <div style={{ fontSize: 17, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
+                  <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', marginTop: 3, whiteSpace: 'nowrap' }}>{label}</div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-
-        {/* Streak + day dots — right side */}
-        <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-          <span style={{ fontSize: 11, fontWeight: 700, color: '#f97316', whiteSpace: 'nowrap' }}>{String.fromCodePoint(0x1F525)} {p.streak}d</span>
-          <div style={{ display: 'flex', gap: 3 }}>
-            {DAYS.map((d, i) => (
-              <div key={i} style={{ width: 20, height: 20, borderRadius: 5, background: p.activeDays.includes(i) ? '#b45309' : 'rgba(255,255,255,0.07)', border: `1px solid ${p.activeDays.includes(i) ? '#d97706' : 'rgba(255,255,255,0.09)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, fontWeight: 700, color: p.activeDays.includes(i) ? '#fde68a' : 'rgba(255,255,255,0.25)' }}>{d}</div>
+          </div>
+          {streakBlock}
+        </>
+      ) : (
+        /* ── Desktop layout: single row ring + 4 pills + streak ── */
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          {ring}
+          <div style={{ display: 'flex', gap: 6 }}>
+            {stats.map(({ val, label, color }) => (
+              <div key={label} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '8px 10px' }}>
+                <div style={{ fontSize: 19, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
+                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 3, whiteSpace: 'nowrap' }}>{label}</div>
+              </div>
             ))}
           </div>
+          <div style={{ flexShrink: 0, marginLeft: 'auto' }}>{streakBlock}</div>
         </div>
-      </div>
+      )}
 
       {!isLoggedIn && (
-        <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 6 }}>
           <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontStyle: 'italic' }}>Showing sample data</span>
           <button style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: 'rgba(124,58,237,0.18)', border: '1px solid rgba(124,58,237,0.35)', borderRadius: 8, color: '#a78bfa', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
             <LogIn style={{ width: 12, height: 12 }} /> Log in to track real progress
@@ -533,9 +564,11 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
           {/* TOP PYQ FILTER — compact toggle pill */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, padding: '8px 12px', borderRadius: 12, background: topPYQFilter ? 'rgba(251,191,36,0.12)' : 'rgba(255,255,255,0.04)', border: `1.5px solid ${topPYQFilter ? 'rgba(251,191,36,0.45)' : 'rgba(255,255,255,0.08)'}`, cursor: 'pointer', transition: 'all 0.15s', userSelect: 'none' as const }} onClick={() => setTopPYQFilter(f => !f)}>
             <span style={{ fontSize: 13 }}>⭐</span>
-            <div style={{ flex: 1 }}>
-              <span style={{ fontSize: 12, fontWeight: 800, color: topPYQFilter ? '#fbbf24' : 'rgba(255,255,255,0.7)', letterSpacing: '0.04em' }}>Top PYQs only</span>
-              <span style={{ fontSize: 11, color: topPYQFilter ? 'rgba(251,191,36,0.6)' : 'rgba(255,255,255,0.35)', marginLeft: 8 }}>{topPYQFilter ? 'Active — showing only must-do questions' : 'Final revision filter · hand-picked per chapter'}</span>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'nowrap' }}>
+                <span style={{ fontSize: 12, fontWeight: 800, color: topPYQFilter ? '#fbbf24' : 'rgba(255,255,255,0.7)', letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>Top PYQs only</span>
+                <span style={{ fontSize: 11, color: topPYQFilter ? 'rgba(251,191,36,0.6)' : 'rgba(255,255,255,0.35)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{topPYQFilter ? 'Active — must-do questions only' : 'Final revision · hand-picked'}</span>
+              </div>
             </div>
             <div style={{ width: 36, height: 20, borderRadius: 99, background: topPYQFilter ? '#d97706' : 'rgba(255,255,255,0.12)', position: 'relative', transition: 'background 0.2s', flexShrink: 0 }}>
               <div style={{ position: 'absolute', top: 2, left: topPYQFilter ? 18 : 2, width: 16, height: 16, borderRadius: '50%', background: '#fff', transition: 'left 0.2s', boxShadow: '0 1px 4px rgba(0,0,0,0.4)' }} />
