@@ -1,332 +1,118 @@
 'use server';
 
-import { Question as QuestionPageType, TaxonomyNode } from './types';
+import { Question as QuestionPageType, TaxonomyNode, Chapter } from './components/types';
 import connectToDatabase from '@/lib/mongodb';
-import { Question as QuestionModel, Taxonomy as TaxonomyModel } from '@/lib/models';
-import { supabase } from '../../lib/supabase';
+import { Chapter as ChapterModel } from '@/lib/models/Chapter';
 
-// Helper to map DB Documents -> Question (camelCase)
 // Helper to safely convert ObjectId to string
 const toString = (val: any) => (val && val.toString ? val.toString() : val);
 
-// Helper to map DB Documents -> Question (camelCase)
-const mapDocToQuestion = (doc: any): QuestionPageType => ({
-    id: toString(doc._id || doc.id),
-    questionCode: doc.question_code,
-    textMarkdown: doc.text_markdown || doc.textMarkdown,
-    options: (doc.options || []).map((opt: any) => ({
-        id: toString(opt.id || opt._id),
-        text: opt.text,
-        imageScale: opt.imageScale || opt.image_scale,
-        isCorrect: opt.isCorrect ?? opt.is_correct
-    })),
-    integerAnswer: doc.integer_answer || doc.integerAnswer || "",
-    solution: {
-        textSolutionLatex: doc.solution?.text_latex || doc.solution?.textSolutionLatex || "",
-        videoUrl: doc.solution?.video_url || doc.solution?.videoUrl,
-        videoTimestampStart: doc.solution?.video_timestamp_start || doc.solution?.videoTimestampStart,
-        audioExplanationUrl: doc.solution?.audio_url || doc.solution?.audioExplanationUrl,
-        handwrittenSolutionImageUrl: doc.solution?.image_url || doc.solution?.handwrittenSolutionImageUrl
-    },
-    difficulty: doc.meta?.difficulty || doc.difficulty,
-    chapterId: toString(doc.chapter_id || doc.chapterId),
-    examSource: doc.exam_source || (() => {
-        const pyqRef = doc.source_references?.find((r: any) => r.type === 'PYQ');
-        if (pyqRef && pyqRef.pyqShift) {
-            return `${pyqRef.pyqExam || (doc.meta?.exam || 'JEE Main')} ${pyqRef.pyqYear || doc.meta?.year || ''} - ${pyqRef.pyqShift}`;
+// Category mapping by chapter name keywords (derived from taxonomyData_from_csv.ts)
+// Maps lowercase name fragments → category
+const CATEGORY_MAP: Array<{ keywords: string[]; category: Chapter['category'] }> = [
+    { keywords: ['mole', 'basic concept', 'structure of atom', 'classification', 'periodicity', 'chemical bonding', 'thermodynamic', 'equilibrium', 'ionic equilibrium', 'electrochemistry', 'kinetics', 'solutions', 'solid state', 'surface chemistry', 'states of matter', 'hydrogen', 's-block', 'gaseous'], category: 'Physical' },
+    { keywords: ['redox', 'p-block', 'p block', 'd-block', 'd block', 'f-block', 'f block', 'coordination', 'metallurgy', 'isolation', 'qualitative analysis', 'salt analysis', 'inorganic'], category: 'Inorganic' },
+    { keywords: ['organic chemistry', 'goc', 'hydrocarbons', 'haloalkane', 'haloarene', 'alcohol', 'phenol', 'ether', 'aldehyde', 'ketone', 'carboxylic', 'amine', 'biomolecule', 'polymer', 'everyday life', 'aromatic', 'stereochem', 'environmental'], category: 'Organic' },
+    { keywords: ['practical', 'qualitative', 'salt analysis'], category: 'Practical' },
+];
+
+function deriveCategory(name: string): Chapter['category'] {
+    const lower = name.toLowerCase();
+    for (const entry of CATEGORY_MAP) {
+        if (entry.keywords.some(kw => lower.includes(kw))) {
+            return entry.category;
         }
-        return (doc.meta?.exam ? `${doc.meta.exam} ${doc.meta.year || ''}` : doc.examSource);
-    })(),
-    isPYQ: doc.is_pyq || doc.isPYQ,
-    isTopPYQ: doc.is_top_pyq || doc.isTopPYQ,
-    questionType: doc.type || doc.questionType || 'SCQ',
-    conceptTags: (doc.tags || doc.conceptTags || []).map((t: any) => ({
-        tagId: toString(t.tag_id || t.tagId),
-        weight: t.weight
-    })),
-    tagId: toString(doc.tag_id || doc.tagId),
-    imageScale: doc.image_scale || doc.imageScale,
-    solutionImageScale: doc.solution_image_scale || doc.solutionImageScale,
-    sourceReferences: (doc.source_references || []).map((ref: any) => {
-        const { _id, ...rest } = ref;
-        return rest;
-    })
-});
-
-// Helper to map Question (camelCase) -> DB Document (snake_case)
-const mapQuestionToDoc = (q: QuestionPageType) => {
-    // Priority: conceptTags (Rich) > tagId (Legacy/Simple)
-    let tags: { tag_id: string; weight: number }[] = [];
-    if (q.conceptTags && q.conceptTags.length > 0) {
-        tags = q.conceptTags.map(t => ({ tag_id: t.tagId, weight: t.weight }));
-    } else if (q.tagId) {
-        tags = [{ tag_id: q.tagId, weight: 1.0 }];
     }
+    return 'Physical';
+}
 
-    return {
-        _id: q.id,
-        question_code: q.questionCode,
-        text_markdown: q.textMarkdown,
-        type: q.questionType,
-        options: q.options,
-        integer_answer: q.integerAnswer,
-        tags,
-        meta: {
-            difficulty: q.difficulty,
-            // Extract exam name (e.g., "JEE Main" from "JEE Main 2026 - Jan 21 Morning Shift")
-            exam: q.examSource?.match(/^([A-Za-z\s]+)\d/)?.[1]?.trim() || 'Other',
-            // Extract year (e.g., 2026 from "JEE Main 2026 - Jan 21 Morning Shift")
-            year: parseInt(q.examSource?.match(/(\d{4})/)?.[1] || '0') || undefined,
-            avg_time_sec: 120
-        },
-        chapter_id: q.chapterId,
-        is_pyq: q.isPYQ,
-        is_top_pyq: q.isTopPYQ,
-        exam_source: q.examSource,
-        solution: {
-            text_latex: q.solution.textSolutionLatex,
-            video_url: q.solution.videoUrl,
-            video_timestamp_start: q.solution.videoTimestampStart,
-            audio_url: q.solution.audioExplanationUrl,
-            image_url: q.solution.handwrittenSolutionImageUrl
-        },
-        tag_id: q.tagId,
-        image_scale: q.imageScale,
-        solution_image_scale: q.solutionImageScale,
-        source_references: q.sourceReferences
-    };
-};
-
+// V2 System: Return empty questions array since we're starting fresh
 export async function getQuestions(): Promise<QuestionPageType[]> {
-    try {
-        await connectToDatabase();
-        let docs = await QuestionModel.find({}).lean();
-
-        // REMOVED: Auto-recovery on read is dangerous and can cause usage spikes.
-        // if (!docs || docs.length === 0) {
-        //    await syncSupabaseToMongo(); ...
-        // }
-
-        return (docs || []).map(mapDocToQuestion);
-    } catch (error) {
-        console.error("Failed to load questions from MongoDB:", error);
-        return [];
-    }
+    // questions_v2 collection is empty - fresh start, no old data migrated
+    return [];
 }
 
 export async function saveQuestion(updatedQuestion: QuestionPageType): Promise<{ success: boolean; message: string }> {
-    try {
-        await connectToDatabase();
-        const doc = mapQuestionToDoc(updatedQuestion);
-
-        await QuestionModel.findOneAndUpdate(
-            { _id: updatedQuestion.id },
-            { $set: doc },
-            { upsert: true, new: true }
-        );
-
-        return { success: true, message: 'Saved successfully to MongoDB Atlas' };
-    } catch (error) {
-        console.error("Failed to save question to MongoDB:", error);
-        return { success: false, message: 'Failed to save to MongoDB' };
-    }
+    // V2 System: Use /crucible/admin with V2 API
+    return { success: false, message: 'Please use the new admin panel at /crucible/admin' };
 }
 
 export async function deleteQuestion(questionId: string): Promise<{ success: boolean; message: string }> {
-    try {
-        await connectToDatabase();
-
-        // 1. Delete from MongoDB (Primary)
-        const result = await QuestionModel.deleteOne({ _id: questionId });
-
-        if (result.deletedCount === 0) {
-            return { success: false, message: 'Question not found in MongoDB' };
-        }
-
-        // 2. Delete from Supabase (Secondary/Legacy) to prevent sync resurrection
-        // We do this best-effort
-        const { error: sbError } = await supabase
-            .from('questions')
-            .delete()
-            .eq('id', questionId);
-
-        if (sbError) {
-            console.warn("Deleted from Mongo but failed to delete from Supabase:", sbError);
-        }
-
-        return { success: true, message: 'Question deleted successfully' };
-    } catch (error) {
-        console.error("Failed to delete question:", error);
-        return { success: false, message: 'Failed to delete question' };
-    }
+    // V2 System: Use /crucible/admin
+    return { success: false, message: 'Please use the new admin panel at /crucible/admin' };
 }
 
-// --- Taxonomy Actions ---
+// --- Taxonomy Actions (V2) ---
 
-export async function getTaxonomy(): Promise<TaxonomyNode[]> {
-    try {
-        await connectToDatabase();
-        const docs = await TaxonomyModel.find({}).sort({ sequence_order: 1, name: 1 }).lean();
-
-        const safeDocs = (docs || []).map((doc: any) => ({
-            id: toString(doc._id || doc.id),
-            name: doc.name,
-            parent_id: toString(doc.parent_id),
-            type: doc.type || (doc.parent_id ? 'topic' : 'chapter'),
-            sequence_order: doc.sequence_order,
-            class_level: doc.class_level,
-            remedial_video_url: doc.remedial_video_url,
-            remedial_notes_url: doc.remedial_notes_url,
-        }));
-        return safeDocs;
-    } catch (error) {
-        console.error("Failed to load taxonomy from MongoDB:", error);
-        return [];
-    }
+export async function getTaxonomy(): Promise<Chapter[]> {
+    // Always use MOCK_CHAPTERS as the canonical chapter list.
+    // These IDs (ch11_atom, ch11_mole, etc.) match the metadata.chapter_id
+    // values stored in every QuestionV2 document, so question counts work correctly.
+    return MOCK_CHAPTERS;
 }
+
+// Mock chapters for fallback when MongoDB is not connected
+// Following the real taxonomy from taxonomyData_from_csv.ts
+const MOCK_CHAPTERS: Chapter[] = [
+    // Class 11 Chapters
+    { id: 'ch11_mole',      name: 'Some Basic Concepts of Chemistry',                    class_level: 11, display_order: 1,  category: 'Physical'  },
+    { id: 'ch11_atom',      name: 'Structure of Atom',                                   class_level: 11, display_order: 2,  category: 'Physical'  },
+    { id: 'ch11_periodic',  name: 'Classification of Elements and Periodicity',          class_level: 11, display_order: 3,  category: 'Physical'  },
+    { id: 'ch11_bonding',   name: 'Chemical Bonding',                                    class_level: 11, display_order: 4,  category: 'Physical'  },
+    { id: 'ch11_thermo',    name: 'Thermodynamics',                                      class_level: 11, display_order: 5,  category: 'Physical'  },
+    { id: 'ch11_chem_eq',   name: 'Chemical Equilibrium',                                class_level: 11, display_order: 6,  category: 'Physical'  },
+    { id: 'ch11_ionic_eq',  name: 'Ionic Equilibrium',                                   class_level: 11, display_order: 7,  category: 'Physical'  },
+    { id: 'ch11_redox',     name: 'Redox Reactions',                                     class_level: 11, display_order: 8,  category: 'Inorganic' },
+    { id: 'ch11_pblock',    name: 'P Block (Class 11)',                                  class_level: 11, display_order: 9,  category: 'Inorganic' },
+    { id: 'ch11_goc',       name: 'Organic Chemistry: Basic Principles (GOC)',           class_level: 11, display_order: 10, category: 'Organic'   },
+    { id: 'ch11_stereo',    name: 'Stereochemistry',                                     class_level: 11, display_order: 11, category: 'Organic'   },
+    { id: 'ch11_hc',        name: 'Hydrocarbons',                                        class_level: 11, display_order: 12, category: 'Organic'   },
+    { id: 'ch11_practical', name: 'Practical Organic Chemistry',                         class_level: 11, display_order: 13, category: 'Practical' },
+    // Class 12 Chapters
+    { id: 'ch12_solid',     name: 'Solid State',                                         class_level: 12, display_order: 14, category: 'Physical'  },
+    { id: 'ch12_sol',       name: 'Solutions',                                           class_level: 12, display_order: 15, category: 'Physical'  },
+    { id: 'ch12_elec',      name: 'Electrochemistry',                                    class_level: 12, display_order: 16, category: 'Physical'  },
+    { id: 'ch12_kin',       name: 'Chemical Kinetics',                                   class_level: 12, display_order: 17, category: 'Physical'  },
+    { id: 'ch12_surface',   name: 'Surface Chemistry',                                   class_level: 12, display_order: 18, category: 'Physical'  },
+    { id: 'ch12_pblock',    name: 'P Block (Class 12)',                                  class_level: 12, display_order: 19, category: 'Inorganic' },
+    { id: 'ch12_dblock',    name: 'D & F Block',                                         class_level: 12, display_order: 20, category: 'Inorganic' },
+    { id: 'ch12_coord',     name: 'Coordination Compounds',                              class_level: 12, display_order: 21, category: 'Inorganic' },
+    { id: 'ch12_halo',      name: 'Haloalkanes and Haloarenes',                          class_level: 12, display_order: 22, category: 'Organic'   },
+    { id: 'ch12_alc',       name: 'Alcohols, Phenols and Ethers',                        class_level: 12, display_order: 23, category: 'Organic'   },
+    { id: 'ch12_ald',       name: 'Aldehydes, Ketones and Carboxylic Acids',             class_level: 12, display_order: 24, category: 'Organic'   },
+    { id: 'ch12_amine',     name: 'Amines',                                              class_level: 12, display_order: 25, category: 'Organic'   },
+    { id: 'ch12_bio',       name: 'Biomolecules',                                        class_level: 12, display_order: 26, category: 'Organic'   },
+    { id: 'ch12_salt',      name: 'Salt Analysis',                                       class_level: 12, display_order: 27, category: 'Practical' },
+    { id: 'ch12_ppc',       name: 'Practical Physical Chemistry',                        class_level: 12, display_order: 28, category: 'Practical' },
+];
 
 export async function saveTaxonomyNode(node: TaxonomyNode): Promise<{ success: boolean; message: string }> {
-    try {
-        await connectToDatabase();
-
-        // Auto-detect type: nodes with parent_id are topics, nodes without are chapters
-        const nodeType = node.type || (node.parent_id ? 'topic' : 'chapter');
-
-        const doc: any = {
-            _id: node.id,
-            name: node.name,
-            parent_id: node.parent_id,
-            type: nodeType,
-            sequence_order: node.sequence_order,
-            class_level: node.class_level
-        };
-
-        // Include remedial fields if provided
-        if (node.remedial_video_url !== undefined) {
-            doc.remedial_video_url = node.remedial_video_url || null;
-        }
-        if (node.remedial_notes_url !== undefined) {
-            doc.remedial_notes_url = node.remedial_notes_url || null;
-        }
-
-        await TaxonomyModel.findOneAndUpdate(
-            { _id: node.id },
-            { $set: doc },
-            { upsert: true, new: true }
-        );
-
-        return { success: true, message: 'Taxonomy saved to MongoDB' };
-    } catch (error) {
-        console.error("Failed to save taxonomy node to MongoDB:", error);
-        return { success: false, message: 'Failed to save taxonomy' };
-    }
+    return { success: false, message: 'Use admin panel for chapter management' };
 }
 
-export async function deleteTaxonomyNode(id: string): Promise<{ success: boolean; message: string }> {
+export async function deleteTaxonomyNode(nodeId: string): Promise<{ success: boolean; message: string }> {
+    return { success: false, message: 'Use admin panel for chapter management' };
+}
+
+export async function getChapterQuestionCounts(): Promise<Record<string, number>> {
     try {
         await connectToDatabase();
-        await TaxonomyModel.deleteOne({ _id: id });
-        return { success: true, message: 'Deleted from MongoDB' };
+        const { QuestionV2 } = await import('@/lib/models/Question.v2');
+        const agg = await QuestionV2.aggregate([
+            { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
+        ]);
+        const result: Record<string, number> = {};
+        for (const row of agg) {
+            if (row._id) result[row._id] = row.count;
+        }
+        return result;
     } catch (error) {
-        console.error("Failed to delete taxonomy node from MongoDB:", error);
-        return { success: false, message: 'Failed to delete' };
+        console.error('Failed to get chapter question counts:', error);
+        return {};
     }
 }
-// --- Migration Utility ---
 
 export async function syncSupabaseToMongo(): Promise<{ success: boolean; message: string; count?: number }> {
-    try {
-        await connectToDatabase();
-
-        // 1. Sync Questions
-        const { data: sbQuestions, error: qError } = await supabase
-            .from('questions')
-            .select('*');
-
-        if (qError) throw qError;
-
-        if (sbQuestions && sbQuestions.length > 0) {
-
-            const docs = sbQuestions.map(row => {
-                // Use a modified version of mapQuestionToDoc logic since row is snake_case
-                return {
-                    _id: row.id,
-                    text_markdown: row.text_markdown,
-                    type: row.question_type || 'SCQ',
-                    options: row.options,
-                    integer_answer: row.integer_answer,
-                    tags: (row.concept_tags || []).map((t: any) => ({
-                        tag_id: t.tagId || t.tag_id,
-                        weight: t.weight
-                    })),
-                    meta: {
-                        difficulty: row.difficulty || 'Medium',
-                        // Extract exam name (e.g., "JEE Main" from "JEE Main 2026 - Jan 21 Morning Shift")
-                        exam: row.exam_source?.match(/^([A-Za-z\s]+)\d/)?.[1]?.trim() || 'Other',
-                        year: parseInt(row.exam_source?.match(/(\d{4})/)?.[1] || '0') || undefined,
-                        avg_time_sec: 120
-                    },
-                    chapter_id: row.chapter_id,
-                    is_pyq: row.is_pyq,
-                    is_top_pyq: row.is_top_pyq,
-                    exam_source: row.exam_source, // Copy directly from Supabase - no transformation
-                    solution: {
-                        text_latex: row.solution?.textSolutionLatex || row.solution?.text_latex || "",
-                        video_url: row.solution?.videoUrl || row.solution?.video_url,
-                        video_timestamp_start: row.solution?.videoTimestampStart || row.solution?.video_timestamp_start,
-                        audio_url: row.solution?.audioExplanationUrl || row.solution?.audio_url,
-                        image_url: row.solution?.handwrittenSolutionImageUrl || row.solution?.image_url
-                    },
-                    tag_id: row.tag_id
-                };
-            });
-
-            // Bulk upsert
-            for (const doc of docs) {
-                await QuestionModel.findOneAndUpdate(
-                    { _id: doc._id },
-                    { $set: doc },
-                    { upsert: true }
-                );
-            }
-        }
-
-        // 2. Sync ALL Taxonomy nodes (chapters AND topics/tags)
-        // First, delete all existing taxonomy to clean up any stale nodes
-        await TaxonomyModel.deleteMany({});
-
-        const { data: sbTaxonomy, error: tError } = await supabase
-            .from('taxonomy')
-            .select('*'); // Sync ALL nodes (chapters + topics/tags)
-
-        if (tError) throw tError;
-
-        if (sbTaxonomy && sbTaxonomy.length > 0) {
-            for (const node of sbTaxonomy) {
-                await TaxonomyModel.findOneAndUpdate(
-                    { _id: node.id },
-                    {
-                        $set: {
-                            _id: node.id,
-                            name: node.name,
-                            parent_id: node.parent_id,
-                            type: node.type || 'chapter',
-                            sequence_order: node.sequence_order,
-                            class_level: node.class_level
-                        }
-                    },
-                    { upsert: true }
-                );
-            }
-        }
-
-        return {
-            success: true,
-            message: `Successfully migrated ${sbQuestions?.length || 0} questions and ${sbTaxonomy?.length || 0} nodes.`,
-            count: sbQuestions?.length
-        };
-    } catch (error) {
-        console.error("Migration failed:", error);
-        return { success: false, message: String(error) };
-    }
+    // V2: No sync needed - fresh database
+    return { success: true, message: 'V2 System: No sync required', count: 0 };
 }

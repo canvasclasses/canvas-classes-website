@@ -8,7 +8,16 @@ import remarkGfm from 'remark-gfm';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import { Check, X, AlertCircle } from 'lucide-react';
-import { Question } from '@/app/the-crucible/types';
+// Define Question type inline for compatibility
+interface Question {
+    id: string;
+    textMarkdown: string;
+    chapterId?: string;
+    difficulty?: string;
+    examSource?: string;
+    isTopPYQ?: boolean;
+    [key: string]: any;
+}
 import ChemicalStructure from '../ChemicalStructure';
 import 'katex/dist/katex.min.css';
 

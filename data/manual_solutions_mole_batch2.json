@@ -1,0 +1,68 @@
+{
+    "MOLE-004": {
+        "textSolutionLatex": "**Analysis:**\nTrue value = 3.0 g.\n*   Student A: Readings 3.01, 2.99. Average = 3.00. Range = 0.02. \n    Result is close to true value (**Accurate**) and values are close to each other (**Precise**).\n*   Student B: Readings 3.05, 2.95. Average = 3.00. Range = 0.10. \n    Result is accurate but deviation is higher (Less Precise).\n\n**Conclusion:** Student A is both precise and accurate.\n\n**Correct Answer:** Option (b)"
+    },
+    "MOLE-005": {
+        "textSolutionLatex": "**Analysis of Significant Figures:**\n1.  4 sig figs: 0.0025 (2), 208 (3), 5005 (4), 126000 (3), 500.0 (4), 2.0034 (5).\nSequence: 2, 3, 4, 3, 4, 5.\n\n**Correct Answer:** Option (b)"
+    },
+    "MOLE-006": {
+        "textSolutionLatex": "**Analysis:**\nThe balance displays tenths of a kg (0.1 kg). Precision is 1 decimal place.\nMasses in range 80.2 to 83.5 kg are written as $XX.X$.\nTotal digits = 3.\nTherefore, 3 significant figures.\n\n**Answer:** 3"
+    },
+    "MOLE-007": {
+        "textSolutionLatex": "**Concept:**\nLaw of Multiple Proportions states that when two elements form more than one compound, the masses of one element that combine with a fixed mass of the other are in a ratio of small whole numbers.\n(Check options for pairs like $CO, CO_2$ or $H_2O, H_2O_2$).\n\n**Answer:** Check Options"
+    },
+    "MOLE-008": {
+        "textSolutionLatex": "**Concept:** Avogadro's Law states equal volumes contain equal moles.\nFour 1 Litre flasks $\\Rightarrow$ Equal moles ($n$).\n\n**Atom Ratio:**\n*   $SO_2$: 3 atoms.\n*   $SO_3$: 4 atoms.\n*   $Ar$: 1 atom.\n*   $CH_4$: 5 atoms.\n\nRatio: $3:4:1:5$.\n\n**Correct Answer:** Option (d)"
+    },
+    "MOLE-009": {
+        "textSolutionLatex": "**Formula:** Histamine $C_5H_9N_3$.\n**Molar Mass:**\n$5(12) + 9(1) + 3(14) = 60 + 9 + 42 = 111$ g/mol.\n\n**Calculation:**\nMass of Nitrogen = 42 g.\n$\\%N = \\frac{42}{111} \\times 100 = 37.84\\%$.\n\n**Correct Answer:** Option (a)"
+    },
+    "MOLE-010": {
+        "textSolutionLatex": "**Step 1:** Let sample = 100g.\n$MnO_2$ = 75g. Impurities = 20g. Water = 5g.\n\n**Step 2:** Moles $MnO_2 = 75/87 = 0.862$. Mass Mn = 47.4g.\n\n**Step 3:** Reaction $3MnO_2 \\to Mn_3O_4 + O_2$.\nMoles $Mn_3O_4 = 0.862/3 = 0.287$.\nMass $Mn_3O_4 = 0.287 \\times 229 = 65.8$g.\n\n**Step 4:** Residue = $Mn_3O_4 + Impurities = 65.8 + 20 = 85.8$g.\n\n**Step 5:** % Mn = $(47.4 / 85.8) \\times 100 = 55.2\\%$.\n\n**Answer:** 55.2"
+    },
+    "MOLE-011": {
+        "textSolutionLatex": "**Step 1: Empirical Formula**\ncombustion gives $3.38g CO_2$ and $0.69g H_2O$.\nMoles C = $3.38/44 = 0.077$.\nMoles H = $2 \\times (0.69/18) = 0.077$.\nRatio C:H = 1:1. Empirical = CH.\n\n**Step 2: Molecular Formula**\n10 L at STP weighs 11.6 g.\n$n = 10/22.4 = 0.446$ mol.\n$MW = 11.6/0.446 = 26$ g/mol.\n\nFormula mass of CH = 13.\nFactor = 26/13 = 2.\nFormula = $C_2H_2$.\n\n**Correct Answer:** Option (c)"
+    },
+    "MOLE-012": {
+        "textSolutionLatex": "**Step 1: Formula Determination**\nMass % Ratio C:H = 4:1 $\\to$ 12:3.\nMass % Ratio C:O = 3:4 $\\to$ 12:16.\nCombine: C:H:O Mass = 12:3:16.\nMoles: C=1, H=3, O=1.\nEmpirical $CH_3O$.\nSince saturated acyclic (Alcohol/Ether), Formula is $C_2H_6O_2$ (Ethylene Glycol).\n\n**Step 2: Combustion**\n$C_2H_6O_2 + \\frac{5}{2} O_2 \\to 2CO_2 + 3H_2O$.\n1 mol requires 2.5 mol $O_2$.\n2 mols require 5 mol $O_2$.\n\n**Final Answer:** 5"
+    },
+    "MOLE-013": {
+        "textSolutionLatex": "**Reaction:** $3AgNO_3 + FeCl_3 \\to 3AgCl + Fe(NO_3)_3$\n**Moles:**\n$AgNO_3 = 18/170 = 0.106$ mol.\n$FeCl_3 = 32.4/162.5 = 0.20$ mol.\n\n**Limiting:**\nReq ratio 3:1.\nActual $0.106/0.2 = 0.53$ (< 3). $AgNO_3$ is limiting.\n\n**Leftover:**\n$FeCl_3$ used = $0.106/3 = 0.035$ mol.\n$FeCl_3$ left = $0.20 - 0.035 = 0.165$ mol.\nMass = $0.165 \\times 162.5 = 26.8$ g.\n\n**Correct Answer:** Option (d)"
+    },
+    "MOLE-014": {
+        "textSolutionLatex": "**Reaction:** $2MnI_2 + 13F_2 \\to 2MnF_3 + 4IF_5$\n**Moles:**\n$MnI_2 = 10/309 = 0.032$.\n$F_2 = 10/38 = 0.263$.\nRatio F2/MnI2 = 8.1 (> 6.5). $MnI_2$ Limiting.\n\n**Product IF5:**\nStoich: 2 mol $MnI_2 \\to 4$ mol $IF_5$.\n$0.032 \\to 0.064$ mol.\nMass = $0.064 \\times 222 = 14.2$ g.\n\n**Yield:**\nAt 56\\% yield: $14.2 \\times 0.56 = 8.0$ g.\n\n**Correct Answer:** Option (a)"
+    },
+    "MOLE-015": {
+        "textSolutionLatex": "**Equivalence:**\nEq $H_2O_2$ = Eq $KMnO_4$.\nEq $KMnO_4$ = Moles $\\times$ n = $(0.316/158) \\times 5 = 0.002 \\times 5 = 0.01$.\nEq $H_2O_2$ = 0.01.\nMoles $H_2O_2$ = $0.01/2 = 0.005$.\nMass Pure $H_2O_2$ = $0.005 \\times 34 = 0.17$ g.\n\n**Purity:**\nSample = 0.2 g.\n$\\% = (0.17/0.2) \\times 100 = 85\\%$.\n\n**Answer:** 85"
+    },
+    "MOLE-016": {
+        "textSolutionLatex": "**Reactions:**\n(1) $Fe_2O_3 + 3CO \\to 2Fe + 3CO_2$\n(2) $2C + O_2 \\to 2CO$\n\n**Moles:**\n$Fe_2O_3 = 1600g / 160 = 10$ mol.\nReq $CO = 30$ mol.\nReq $O_2$ (from 2) = $30/2 = 15$ mol.\n\n**Mass O2:**\n$15 \\times 32 = 480$ g.\n\n**Final Answer:** 480"
+    },
+    "MOLE-017": {
+        "textSolutionLatex": "**n-factors:**\n$FeC_2O_4 \\to Fe^{3+} + 2CO_2$: n = 1 + 2 = 3.\n$Fe_2(C_2O_4)_3 \\to 2Fe^{3+} + 6CO_2$: n = 6.\n$FeSO_4 \\to Fe^{3+}$: n = 1.\\n$Fe_2(SO_4)_3$: n = 0.\nTotal Eq = $1(3) + 1(6) + 1(1) + 0 = 10$.\n\n**KMnO4:**\nn = 5.\nMoles $\\times 5 = 10 \\Rightarrow$ Moles = 2.\n\n**Final Answer:** 2"
+    },
+    "MOLE-018": {
+        "textSolutionLatex": "**Step 1: Oxygen from KClO3**\n$2KClO_3 \\to 3O_2$.\nMoles $KClO_3 = 5.104/122.5 = 0.0416$.\nMoles $O_2 = 1.5 \\times 0.0416 = 0.0625$.\n\n**Step 2: Hydrogen Reaction**\n$2H_2 + O_2 \\to 2H_2O$.\nMoles $H_2$ req = $2 \\times 0.0625 = 0.125$.\n\n**Step 3: Zinc Reaction**\n$Zn + 2HCl \\to H_2$.\nMoles Zn = Moles $H_2$ = 0.125.\nMass Zn = $0.125 \\times 65.4 = 8.17$ g (approx 8.12g).\n\n**Final Answer:** 8.12"
+    },
+    "MOLE-019": {
+        "textSolutionLatex": "**Calculation:**\nMolarity = $\\frac{Mass/MW}{Vol(L)}$.\n$34g H_2O_2$. Moles = $34/34 = 1$.\n$1120 ml$. $M = 1 / 1.12 = 0.893$ M.\nVolume Strength = $11.2 \\times M = 11.2 \\times 0.893 = 10$ V.\n\n**Answer:** 10"
+    },
+    "MOLE-020": {
+        "textSolutionLatex": "**Equivalence:**\n$N_1V_1 = N_2V_2$ (or Eq = Eq).\nEq $KMnO_4$ = $0.05(M) \\times 5(n) \\times 0.08(L) = 0.02$.\nEq $H_2O_2$ = 0.02.\n$N_{H2O2} \\times 0.02(L) = 0.02 \\Rightarrow N = 1$.\n\n**Volume Strength:**\n$V = 5.6 \\times N = 5.6 \\times 1 = 5.6$.\n\n**Correct Answer:** Option (b)"
+    },
+    "MOLE-021": {
+        "textSolutionLatex": "**Equivalence:**\n$H_2O_2$: 11.2V $\\Rightarrow$ N = 11.2/5.6 = 2 N.\nEq $H_2O_2$ = $2 \\times 0.1L = 0.2$.\n\n$Ba(MnO_4)_2$: n-factor = 10 ($2 \\times Mn^{+7} \\to Mn^{+2}$).\nMoles = Eq/n = $0.2/10 = 0.02$.\nMass = $0.02 \\times 375 = 7.5$ g.\n\n**Purity:**\nSample $15g$. $(7.5/15) \\times 100 = 50\\%$.\n\n**Answer:** 50"
+    },
+    "MOLE-022": {
+        "textSolutionLatex": "**Step 1: Oxygen Req**\n$C + O_2 \\to CO_2$.\n1 kg C = 1000/12 = 83.33 mol.\nReq $O_2$ = 83.33 mol.\nVol $O_2$ (STP, old def) = $83.33 \\times 22.4 = 1866.6$ L.\n\n**Step 2: Air Volume**\nAir is 21% Oxygen.\nVol Air = $1866.6 / 0.21 = 8888.5$ L.\n\n**Correct Answer:** Option (b)"
+    },
+    "MOLE-023": {
+        "textSolutionLatex": "**Note:** The question mentions \"mixed with 20g of oxygen\", suggesting mixing Oxygen with Oxygen, or a missing gas name. Assuming typo, data is insufficient to solve.\n\n**Answer:** Data Missing"
+    },
+    "MOLE-024": {
+        "textSolutionLatex": "**Calculation:**\nVol Ag = Area $\\times$ Thickness = $500 cm^2 \\times 0.05 cm = 25 cm^3$.\nMass Ag = $25 \\times 7.9 = 197.5$ g.\nMoles = $197.5 / 108 = 1.83$.\nAtoms = $1.83 \\times 6.022 \\times 10^{23} = 11.0 \\times 10^{23}$.\nFormat $11 \\times 10^{23}$.\n\n**Answer:** 11"
+    },
+    "MOLE-025": {
+        "textSolutionLatex": "**Calculation:**\nMass Fe = $3.3g \\times 0.0034 = 0.0112$ g.\nMoles Fe = $0.0112 / 56 = 0.0002$ mol.\nAtoms = $0.0002 \\times 6.022 \\times 10^{23} = 1.2044 \\times 10^{20}$.\n\n**Answer:** 1.21"
+    }
+}

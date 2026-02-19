@@ -1,0 +1,40 @@
+[
+  {
+    "id": "BONDING-001",
+    "originalId": "BONDING-001",
+    "textMarkdown": "Given below are two statements:\n\n**Statement I:** The number of species among $SF_4$, $NH_4^+$, $[NiCl_4]^{2-}$, $XeF_4$, $[PtCl_4]^{2-}$, $SeF_4$ and $[Ni(CN)_4]^{2-}$, that have tetrahedral geometry is 3.\n\n**Statement II:** In the set $[NO_2, BeH_2, BF_3, AlCl_3]$, all the molecules have incomplete octet around central atom.\n\nChoose the correct answer:",
+    "options": [
+      {
+        "id": "1",
+        "text": "Statement I is true but Statement II is false",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "Both Statement I and Statement II are false",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "Statement I is false but Statement II is true",
+        "isCorrect": true
+      },
+      {
+        "id": "4",
+        "text": "Both Statement I and Statement II are true",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Statement I Analysis:**\n\n| Species | Geometry |\n|---------|----------|\n| $SF_4$ | See-saw |\n| $NH_4^+$ | **Tetrahedral** ✓ |\n| $[NiCl_4]^{2-}$ | **Tetrahedral** ✓ (weak field) |\n| $XeF_4$ | Square planar |\n| $[PtCl_4]^{2-}$ | Square planar |\n| $SeF_4$ | See-saw |\n| $[Ni(CN)_4]^{2-}$ | Square planar (strong field) |\n\n**Tetrahedral species = 2** (not 3)\n**Statement I is FALSE** ✗\n\n**Statement II Analysis:**\n\n| Molecule | Central Atom Electrons |\n|----------|----------------------|\n| $NO_2$ | 7 e⁻ (incomplete) ✓ |\n| $BeH_2$ | 4 e⁻ (incomplete) ✓ |\n| $BF_3$ | 6 e⁻ (incomplete) ✓ |\n| $AlCl_3$ | 6 e⁻ (incomplete) ✓ |\n\n**All have incomplete octet**\n**Statement II is TRUE** ✓"
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_bonding",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [],
+    "tagId": "TAG_CH_CHEMICAL_BONDING"
+  }
+]

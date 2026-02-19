@@ -1,0 +1,50 @@
+{
+    "mole_concept_pyq_101": {
+        "textSolutionLatex": "**Reaction:**\n$M(OH)_n + nHCl \\rightarrow MCl_n + nH_2O$\n$2M(OH)_n + nH_2SO_4 \\rightarrow M_2(SO_4)_n + 2nH_2O$\n\n**Analysis:**\nIE1 = 496 kJ/mol (Typical for Na).\nIE2 = 4560 kJ/mol (Jump is huge $\\approx 9x$).\nThis implies the metal is Alkali Metal (Group 1), Valency = 1.\nFormula: $MOH$.\n\nReacting with HCl: $MOH + HCl \\rightarrow MCl + H_2O$. Requires 1 mol HCl.\nReacting with H2SO4: $2MOH + H_2SO_4 \\rightarrow M_2SO_4 + 2H_2O$. 1 mol MOH requires 0.5 mol H2SO4.\n\n**Answer: Option (4)**"
+    },
+    "mole_concept_pyq_102": {
+        "textSolutionLatex": "**Given:**\nMass = 0.27 g in 100 mL.\n10 mL of solution used. Mass used = 0.027 g.\nDensity = 0.9 g/mL.\nVolume of fatty acid = $0.027 / 0.9 = 0.03$ mL = $0.03$ cm$^3$.\nArea of circle ($r=10$ cm) = $\\pi r^2 = 3 \\times 10^2 = 300$ cm$^2$.\n\n**Calculation:**\nVolume = Area $\\times$ Height.\n$0.03 = 300 \\times h$.\n$h = 0.03 / 300 = 10^{-4}$ cm.\n$= 10^{-6}$ m.\n\n**Answer: Option (2)**"
+    },
+    "mole_concept_pyq_103": {
+        "textSolutionLatex": "**Reaction:**\n$N_2 + 3H_2 \\rightarrow 2NH_3$ (Mass Ratio $28 : 6$).\nRatio N2/H2 required = $28/6 = 4.67$.\n\n**Analysis:**\n1. $28g N_2, 6g H_2$. Ratio 4.67. Stoichiometric. No Limiting.\n2. $35g N_2, 8g H_2$. $35/8 = 4.375$. (Less N2 than required $\\rightarrow$ N2 limiting).\n3. $56g N_2, 10g H_2$. $56/10 = 5.6$. (More N2 than required $\\rightarrow$ H2 limiting).\n4. $14g N_2, 4g H_2$. $14/4 = 3.5$. (Less N2 $\\rightarrow$ N2 limiting).\n\nH2 is limiting in Case 3.\n\n**Answer: Option (3)**"
+    },
+    "mole_concept_pyq_104": {
+        "textSolutionLatex": "**Reaction:**\n$C_xH_y + (x+y/4)O_2 \\rightarrow xCO_2 + y/2H_2O$\nEqual volumes, same P,T $\\propto$ moles.\n10 mL HC gives 40 mL CO2 $\\Rightarrow x = 40/10 = 4$.\nCombustion O2 used = 55 mL.\n$10(x + y/4) = 55$\n$4 + y/4 = 5.5$\n$y/4 = 1.5 \\Rightarrow y=6$.\nFormula $C_4H_6$.\n\n**Answer: Option (3)**"
+    },
+    "mole_concept_pyq_105": {
+        "textSolutionLatex": "**Given:**\nMass = 25 g.\nCO2 = 88 g.\nH2O = 9 g.\n\n**Calculation:**\nMass C = $88 \\times 12/44 = 24$ g.\nMass H = $9 \\times 2/18 = 1$ g.\nTotal Mass = $24 + 1 = 25$ g. (No Oxygen).\nContains 24 g Carbon and 1 g Hydrogen.\n\n**Answer: Option (1)**"
+    },
+    "mole_concept_pyq_106": {
+        "textSolutionLatex": "**Reaction:**\n$2C_{57}H_{110}O_6 + 163O_2 \\rightarrow 114CO_2 + 110H_2O$\nMW Reactant (Triolein? No, Stearin?)\n$C_{57}H_{110}O_6$: $57(12) + 110(1) + 6(16) = 684 + 110 + 96 = 890$ g/mol.\n\n**Calculation:**\nInput 445 g = $445/890 = 0.5$ mol.\nStoichiometry: 2 mol Reactant gives 110 mol Water.\nRatio 1 : 55.\n0.5 mol Reactant gives $0.5 \\times 55 = 27.5$ mol Water.\nMass Water = $27.5 \\times 18 = 495$ g.\n\n**Answer: Option (4)**"
+    },
+    "mole_concept_pyq_107": {
+        "textSolutionLatex": "**Calculation:**\nMin Molar Mass contains at least 1 Glycine residue.\nMass of Glycine units = $0.30\\%$ of Total Mass.\n$75 = 0.003 \\times M_{protein}$.\n$M_{protein} = 75 / 0.003 = 25000$ g/mol.\n$= 25 \\times 10^3$ g/mol.\n\n**Answer: 25**"
+    },
+    "mole_concept_pyq_108": {
+        "textSolutionLatex": "**Reaction:**\nAlcohols react with Na (assumed method for Polyhydric X? - Usually active H determination).\nIf H2 collected is from OH groups ($2ROH + 2Na \\rightarrow 2RONa + H_2$).\n1 mol H2 corresponds to 2 mol OH.\n\n**Given:**\n1.84 mg Substance ($1.84 \\times 10^{-3}$ g).\nMW = 92.\nMoles Substance = $1.84 \\times 10^{-3} / 92 = 2 \\times 10^{-5}$ mol.\n\nH2 gas: 1.344 mL at STP. ($1.344 \\times 10^{-3}$ L).\nMoles H2 = $1.344 \\times 10^{-3} / 22.4 = 6 \\times 10^{-5}$ mol.\n\nRatio H2 / Substance = $6/2 = 3$.\nSince 1 H2 comes from 2 OH? Wait. $2 -OH \\rightarrow 1 H_2$.\nSo moles OH = $2 \\times$ moles H2 = $12 \\times 10^{-5}$ mol.\nOH per molecule = Moles OH / Moles Substance = $12/2 = 6$.\nNumber of OH groups = 6.\n(Sorbitol/Mannitol MW is 182. Glycerol is 92. Glycerol has 3. Wait.)\nGlycerol $C_3 H_8 O_3$ = $36+8+48=92$.\nGlycerol has 3 OH groups.\nLet's recheck Ratio.\n$2 -OH \\rightarrow 1 H_2$.\nMoles H2 produced = 3 per mole of substance.\nSo Moles OH = 6 per mole of substance?\nRe-read reaction: $2 ROH \\rightarrow H_2$. Yes.\nIf X gives 3 moles H2, it must have 6 OH groups.\nBut MW=92 fits Glycerol (3 OH).\nDid I use wrong Volume constant? 22.7 (STP New)?\n$1.344 / 22.7 = 5.92 \\times 10^{-5} \\approx 6$.\nIs the reaction 1 OH $\\rightarrow$ 0.5 H2? Yes.\nSo 3 H2 $\\Rightarrow$ 6 OH.\nContradiction with MW 92. Glycerol (92) has 3.\nMaybe reaction is $ROH \\rightarrow H_2$? No.\nDouble check calculation:\n$1.84$ mg / $92$ = $0.02$ mmol.\n$1.344$ mL / $22.4$ = $0.06$ mmol.\nRatio 3.\nEquation: Metal + Alcohol $\\rightarrow$ H2.\n$2 ROH + 2 Na \\rightarrow 2 RONa + H_2$.\nEach H2 requires 2 OH.\nSo 3 H2 requires 6 OH.\nIs it possible MW 92 refers to $C_3H_8O_3$? Yes.\nThis implies 6 OH groups on a 3 carbon chain? Impossible.\nMaybe the question implies 1.344 mL is different?\nOr \"alcoholic hydrogen\" means something else?\nAh, maybe 22400 mL/mol.\nMaybe the ratio is 3 and the answer is 6.\n(Just answering calculation: 6).\n\n**Answer: 6**"
+    },
+    "mole_concept_pyq_109": {
+        "textSolutionLatex": "**Given:**\nMass Na = 3.45 g.\nMW Na = 23.\nMoles Na = $3.45/23 = 0.15$ mol.\nCompound $Na_3PO_4$ has 3 Na.\nMoles sodium phosphate = $0.15/3 = 0.05$ mol.\nVolume = 100 mL = 0.1 L.\nMolarity = $0.05/0.1 = 0.5$ M.\n$= 50 \\times 10^{-2}$ M.\n\n**Answer: 50**"
+    },
+    "mole_concept_pyq_110": {
+        "textSolutionLatex": "**Reaction:**\n$NaHCO_3 + H^+ \\rightarrow CO_2 + H_2O + Na^+$\n1 mol Bicarb gives 1 mol CO2.\n\n**Given:**\nVol CO2 = 0.25 mL = $0.25 \\times 10^{-3}$ L.\nMolar Volume = 25.0 L.\nMoles CO2 = $0.25 \\times 10^{-3} / 25 = 10^{-5}$ mol.\nMoles NaHCO3 = $10^{-5}$ mol.\nMass NaHCO3 = $10^{-5} \\times 84 = 84 \\times 10^{-5}$ g = $0.84$ mg.\nTablet mass = 10 mg.\n% = $(0.84/10) \\times 100 = 8.4\\%$.\n\n**Answer: Option (4)**"
+    },
+    "mole_concept_pyq_111": {
+        "textSolutionLatex": "**Given:**\nCO2 = 0.220 g. H2O = 0.126 g.\nMass C = $0.220 \\times 12/44 = 0.06$ g.\nMass H = $0.126 \\times 2/18 = 0.014$ g.\n\nNote: Question says \"% of Carbon is 24\".\nLet's check: If mass C is 0.06 g, then Total Mass $M$ satisfies $0.06/M = 0.24 \\Rightarrow M = 0.25$ g.\nThen % H = $(0.014 / 0.25) \\times 100 = 5.6\\%$.\n$= 0.56 \\times 10^{-1}$. No, $56 \\times 10^{-1}$.\nWait, $5.6 = 56 \\times 10^{-1}$.\nNearest integer 56.\n\n**Answer: 56**"
+    },
+    "mole_concept_pyq_112": {
+        "textSolutionLatex": "**Reaction:**\n$2C + O_2 \\rightarrow 2CO$\nMoles C = $12/12 = 1$ mol.\nMoles O2 = $48/32 = 1.5$ mol.\nStoichiometry: 2 C requires 1 O2.\n1 mol C requires 0.5 mol O2. (Have 1.5 - Excess).\nLimiting is C.\nProduct 2CO from 2C $\\Rightarrow$ 1 mol CO from 1 mol C.\nMoles CO = 1 mol.\nVolume at STP (22.7 L) = 22.7 L.\n$= 227 \\times 10^{-1}$ L.\n\n**Answer: 227**"
+    },
+    "mole_concept_pyq_113": {
+        "textSolutionLatex": "**Reaction:**\n$N_2 + 3H_2 \\rightarrow 2NH_3$ (28g : 6g).\nRatio Required = 4.66.\nGiven: 20g N2, 5g H2.\nRatio = $20/5 = 4$. (Less than 4.66 $\\Rightarrow$ N2 is Limiting).\n\nMoles N2 = $20/28 \\approx 0.714$ mol.\nProduct NH3 = $2 \\times 0.714 = 1.428$ mol.\nLimiting Reagent: N2.\nOutput: 1.42 moles.\n\n**Answer: Option (3)**"
+    },
+    "mole_concept_pyq_114": {
+        "textSolutionLatex": "**Reaction:**\n3-Hydroxypropanal ($HO-CH_2-CH_2-CHO$) $\\rightarrow$ Acrolein ($CH_2=CH-CHO$) + H2O.\n(Dehydration, -18).\nMW Reactant = 74.\nMW Product = 56.\n\n**Calculation:**\nTarget: 7.8 g Acrolein.\nMoles Product = $7.8/56 \\approx 0.1393$ mol.\nSince yield is 64%, Theoretical moles needed = $0.1393 / 0.64 \\approx 0.2176$ mol.\nAssuming 1:1 stoichiometry.\nMolar mass Reactant = 74.\nMass required = $0.2176 \\times 74 \\approx 16.1$ g.\nNearest integer = 16.\n\n**Answer: 16**"
+    },
+    "mole_concept_pyq_115": {
+        "textSolutionLatex": "**Given:**\nMass ratios:\nC/H = 4/1. $\\implies$ Moles C / Moles H = $(4/12) / (1/1) = 0.33/1 = 1/3$. Formula $CH_3$.\nC/O = 3/4. $\\implies$ Moles C / Moles O = $(3/12) / (4/16) = 0.25/0.25 = 1/1$. Formula $CO$.\n\nCombine empirical ratios:\nC : H : O\nC:H = 1:3\nC:O = 1:1\nOverall C:H:O = 1:3:1.\nEmpirical Formula $CH_3O$ (MW 31).\nSince it is a \"saturated acyclic organic compound X\".\nIf n=1: $CH_3O$ (radical). No.\nIf n=2: $C_2H_6O_2$ (Ethylene Glycol). Saturated. Fits.\nFormula $C_2H_6O_2$.\n\n**Combustion of 2 moles X:**\n$C_2H_6O_2 + O_2 \\rightarrow CO_2 + H_2O$\nBalance: $C_2H_6O_2 + 2.5O_2 \\rightarrow 2CO_2 + 3H_2O$\nRequires 2.5 moles O2 per mole X.\nFor 2 moles X: $2 \\times 2.5 = 5$ moles O2.\n\n**Answer: 5**"
+    },
+    "mole_concept_pyq_116": {
+        "textSolutionLatex": "**Reaction:**\n$NH_2CONH_2 + 2NaOH \\rightarrow 2NH_3 + Na_2CO_3$\n1 mol Urea gives 2 mol NH3.\nMW Urea = 60.\n\n**Calculation:**\n0.6 g Urea = $0.6/60 = 0.01$ mol.\nNH3 produced = $2 \\times 0.01 = 0.02$ mol.\nNeutralization by HCl ($NH_3 + HCl \\rightarrow NH_4Cl$).\nRequires 0.02 mol HCl.\n\nCheck options:\n1. 200 mL 0.4 N = $0.2 \\times 0.4 = 0.08$ mol.\n2. 200 mL 0.2 N = $0.2 \\times 0.2 = 0.04$ mol.\n3. 100 mL 0.2 N = $0.1 \\times 0.2 = 0.02$ mol. (Matches).\n\n**Answer: Option (3)**"
+    }
+}

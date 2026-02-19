@@ -1,0 +1,86 @@
+[
+  {
+    "id": "HYDRO-001",
+    "originalId": "HYDRO-001",
+    "textMarkdown": "Identify A in the following reaction.\n\n![Reaction Scheme](/questions/jan21m_q53_reaction.svg)\n(Note: Reaction involves Hydrogenation and Oxidative Cleavage)",
+    "options": [
+      {
+        "id": "1",
+        "text": "![Option1](/questions/jee_2026_jan21m_q53_1.svg)",
+        "isCorrect": false,
+        "imageScale": 50
+      },
+      {
+        "id": "2",
+        "text": "![Option1](/questions/jee_2026_jan21m_q53_2.svg)",
+        "isCorrect": false,
+        "imageScale": 50
+      },
+      {
+        "id": "3",
+        "text": "![Option1](/questions/jee_2026_jan21m_q53_3.svg)",
+        "isCorrect": true,
+        "imageScale": 50
+      },
+      {
+        "id": "4",
+        "text": "![Option1](/questions/jee_2026_jan21m_q53_4.svg)",
+        "isCorrect": false,
+        "imageScale": 50
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**1. Analysis of Hydrogenation:**\nThe first reaction shows $A + 2H_2 \\xrightarrow{Pt} \\text{Decalin}$ (decahydronaphthalene).\n\n**Insight:** Since 2 moles of $H_2$ are consumed to reach the fully saturated bicyclic system, the starting material A must contain exactly two double bonds.All four options meet this criteria, so we must look at the oxidative cleavage for the final distinction.\n\n**2. Analysis of Oxidative Cleavage ($KMnO_4$):** The second reaction shows A reacting with $KMnO_4$ (likely hot/alkaline) to produce:Cyclohexane-1,2-dicarboxylic acid, Oxalic acid ($HOOC-COOH$). \n\nHere are some examples for you to revise and practice.\n.\n.\n.\n\n![some examples of Oxidative cleavage](/questions/jee_2026_jan21m_q53_solution.webp)\n"
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_hydrocarbons",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [],
+    "tagId": "TAG_CH_HYDROCARBONS"
+  },
+  {
+    "id": "HYDRO-002",
+    "originalId": "HYDRO-002",
+    "textMarkdown": "A hydrocarbon 'P' ($C_4H_8$) on reaction with HCl gives an optically active compound 'Q' ($C_4H_9Cl$) which on reaction with one mole of ammonia gives compound 'R' ($C_4H_{11}N$). 'R' on diazotization followed by hydrolysis gives 'S'. Identify P, Q, R and S.",
+    "options": [
+      {
+        "id": "1",
+        "text": "![Option1](/questions/jee_2026_jan21m_q54_1.svg)",
+        "isCorrect": false,
+        "imageScale": 75
+      },
+      {
+        "id": "2",
+        "text": "![Option1](/questions/jee_2026_jan21m_q54_2.svg)",
+        "isCorrect": false,
+        "imageScale": 79
+      },
+      {
+        "id": "3",
+        "text": "![Option1](/questions/jee_2026_jan21m_q54_3.svg)",
+        "isCorrect": true,
+        "imageScale": 67
+      },
+      {
+        "id": "4",
+        "text": "![Option1](/questions/jee_2026_jan21m_q54_4.svg)",
+        "isCorrect": false,
+        "imageScale": 86
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "![Solution](/questions/jee_2026_jan21m_q54_solution.svg)"
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_hydrocarbons",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [],
+    "tagId": "TAG_CH_GOC"
+  }
+]

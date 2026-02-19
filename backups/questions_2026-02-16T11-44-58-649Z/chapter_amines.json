@@ -1,0 +1,40 @@
+[
+  {
+    "id": "AMINES-001",
+    "originalId": "AMINES-001",
+    "textMarkdown": "An organic compound (P) on treatment with aqueous ammonia under hot condition forms compound (Q) which on heating with $Br_2$ and KOH forms compound (R) having molecular formula $C_6H_7N$.\n\nNames of P, Q and R respectively are:",
+    "options": [
+      {
+        "id": "1",
+        "text": "Benzoic acid, benzamide, aniline",
+        "isCorrect": true
+      },
+      {
+        "id": "2",
+        "text": "Toluic acid, methylbenzamide, 2-methylaniline",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "Benzoic acid, 4-methylbenzamide, 4-methylaniline",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "Phenylethanoic acid, phenylethanamide, benzamine",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Reaction Sequence:**\n\n1. **P + NH₃ (aq, hot) → Q**\n   - This is ammonolysis of carboxylic acid → amide\n\n2. **Q + Br₂/KOH → R ($C_6H_7N$)**\n   - This is **Hofmann Bromamide Degradation**\n   - Amide loses one carbon to form amine\n- Aniline = $C_6H_7N$)\n\n**Based on the answer:**\n- P = Benzoic acid ($C_7H_6O_2$)\n- Q = Benzamide ($C_7H_7NO$)\n- R = Aniline ($C_6H_7N$)\n\n**Hofmann Degradation:**\n$$C_6H_5CONH_2 + Br_2 + 4KOH \\rightarrow C_6H_5NH_2 + 2KBr + K_2CO_3 + 2H_2O$$"
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_amines",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [],
+    "tagId": "TAG_CH_AMINES"
+  }
+]

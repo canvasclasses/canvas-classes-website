@@ -1,0 +1,40 @@
+[
+  {
+    "id": "COORD-001",
+    "originalId": "COORD-001",
+    "textMarkdown": "Given below are two statements:\n\n**Statement I:** Among $[Cu(NH_3)_4]^{2+}$, $[Ni(en)_3]^{2+}$, $[Ni(NH_3)_6]^{2+}$ and $[Mn(H_2O)_6]^{2+}$, $[Mn(H_2O)_6]^{2+}$ has the maximum number of unpaired electrons.\n\n**Statement II:** The number of pairs among {$[NiCl_4]^{2-}$, $[Ni(CO)_4]$}, {$[NiCl_4]^{2-}$, $[Ni(CN)_4]^{2-}$} and {$[Ni(CO)_4]$, $[Ni(CN)_4]^{2-}$} that contain only diamagnetic species is two.\n\nChoose the correct answer:",
+    "options": [
+      {
+        "id": "1",
+        "text": "Statement I is false but Statement II is true",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "Both Statement I and Statement II are true",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "Both Statement I and Statement II are false",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "Statement I is true but Statement II is false",
+        "isCorrect": true
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Statement I Analysis:**\n\n| Complex | Metal Config | Unpaired e⁻ |\n|---------|-------------|-------------|\n| $[Cu(NH_3)_4]^{2+}$ | Cu²⁺: d⁹ | 1 |\n| $[Ni(en)_3]^{2+}$ | Ni²⁺: d⁸ | 2 |\n| $[Ni(NH_3)_6]^{2+}$ | Ni²⁺: d⁸ | 2 |\n| $[Mn(H_2O)_6]^{2+}$ | Mn²⁺: d⁵ | **5** ✓ |\n\n**Statement I is TRUE** ✓\n\n**Statement II Analysis:**\n\n| Complex | Nature |\n|---------|--------|\n| $[NiCl_4]^{2-}$ | Paramagnetic (2 unpaired) |\n| $[Ni(CO)_4]$ | Diamagnetic (Ni⁰, d¹⁰) |\n| $[Ni(CN)_4]^{2-}$ | Diamagnetic (strong field, d⁸ paired) |\n\n**Pairs with both diamagnetic:**\n- {$[NiCl_4]^{2-}$, $[Ni(CO)_4]$}: NO (NiCl₄²⁻ is paramagnetic)\n- {$[NiCl_4]^{2-}$, $[Ni(CN)_4]^{2-}$}: NO\n- {$[Ni(CO)_4]$, $[Ni(CN)_4]^{2-}$}: YES\n\n**Only 1 pair is both diamagnetic** (not 2)\n**Statement II is FALSE** ✗"
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_coordination_compounds",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [],
+    "tagId": "TAG_CH_COORDINATION"
+  }
+]

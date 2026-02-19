@@ -1,0 +1,45 @@
+[
+  {
+    "id": "SOLN-001",
+    "originalId": "SOLN-001",
+    "textMarkdown": "Elements P and Q form two types of non-volatile, non-ionizable compounds PQ and $ PQ_2 $. \n\nWhen 1 g of PQ is dissolved in 50 g of solvent 'A', $\\Delta T_b $ was 1.176 K.\nWhen 1 g of $ PQ_2 $ is dissolved in 50 g of solvent 'A', $\\Delta T_b $ was 0.689 K.\n\n($ K_b $ of 'A' = 5 K kg mol⁻¹)\n\nThe molar masses of elements P and Q (in g mol⁻¹) respectively, are:",
+    "options": [
+      {
+        "id": "1",
+        "text": "70, 110",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "65, 145",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "60, 25",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "25, 60",
+        "isCorrect": true
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Formula:**$\\Delta T_b = K_b \\times m = K_b \\times \\frac{w \\times 1000}{M \\times W}$**For PQ:**$$ 1.176 = 5 \\times \\frac{1 \\times 1000}{M_{PQ} \\times 50}$$$$ M_{PQ} = \\frac{5000}{1.176 \\times 50} = 85 \\text{ g/mol}$$**For PQ₂:**$$ 0.689 = 5 \\times \\frac{1 \\times 1000}{M_{PQ_2} \\times 50}$$$$ M_{PQ_2} = \\frac{5000}{0.689 \\times 50} = 145 \\text{ g/mol}$$**Solving:**\n- Let molar mass of P = p, Q = q\n-$ p + q = 85 $... (1)\n-$ p + 2q = 145 $... (2)\n\nSubtracting (1) from (2):\n-$ q = 60 $ g/mol\n-$ p = 85 - 60 = 25 $ g/mol\n\n**Answer: P = 25, Q = 60 g/mol**"
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_solutions",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "TAG_SOLUTIONS_COLLIGATIVE",
+        "weight": 1
+      }
+    ],
+    "tagId": "TAG_MOLE_CONCENTRATIONS"
+  }
+]

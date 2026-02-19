@@ -1,0 +1,25 @@
+[
+  {
+    "id": "KINETICS-001",
+    "originalId": "KINETICS-001",
+    "textMarkdown": "Pre-exponential factors of two different reactions of same order are identical. Let activation energy of first reaction exceeds the activation energy of second reaction by 20 kJ mol⁻¹.\n\nIf $ k_1 $ and $ k_2 $ are the rate constants of first and second reaction respectively at 300 K, then $\\ln\\frac{k_2}{k_1}$ will be ______ (nearest integer)\n\n[R = 8.3 J K⁻¹ mol⁻¹]",
+    "options": [],
+    "integerAnswer": "8",
+    "solution": {
+      "textSolutionLatex": "**Arrhenius Equation:**$$ k = Ae^{-E_a/RT}$$**Given:**\n-$ A_1 = A_2 = A $ (same pre-exponential factor)\n-$ E_{a1} - E_{a2} = 20 $ kJ/mol = 20000 J/mol\n- T = 300 K\n\n**Solution:**$$\\ln k_1 = \\ln A - \\frac{E_{a1}}{RT}$$$$\\ln k_2 = \\ln A - \\frac{E_{a2}}{RT}$$$$\\ln\\frac{k_2}{k_1} = \\ln k_2 - \\ln k_1 = \\frac{E_{a1} - E_{a2}}{RT}$$$$\\ln\\frac{k_2}{k_1} = \\frac{20000}{8.3 \\times 300} = \\frac{20000}{2490} = 8.03 $$**Answer: 8**"
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_kinetics",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "TAG_KINETICS_ORDER",
+        "weight": 1
+      }
+    ],
+    "tagId": "TAG_CH_KINETICS"
+  }
+]

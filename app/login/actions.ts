@@ -14,6 +14,7 @@ export async function login(formData: FormData) {
 
     const email = formData.get('email') as string
     const password = formData.get('password') as string
+    const next = (formData.get('next') as string) || '/'
 
     const { error } = await supabase.auth.signInWithPassword({
         email,
@@ -25,7 +26,7 @@ export async function login(formData: FormData) {
     }
 
     revalidatePath('/', 'layout')
-    redirect('/')
+    redirect(next)
 }
 
 export async function signup(formData: FormData) {
@@ -52,17 +53,20 @@ export async function signup(formData: FormData) {
     redirect('/')
 }
 
-export async function signInWithGoogle() {
+export async function signInWithGoogle(next: string = '/') {
     const supabase = await createClient()
 
     if (!supabase) {
         redirect('/login?error=Authentication service not configured')
     }
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+    const callbackUrl = `${baseUrl}/auth/callback?next=${encodeURIComponent(next)}`
+
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-            redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/auth/callback`,
+            redirectTo: callbackUrl,
         },
     })
 

@@ -9,6 +9,168 @@
   font-family: var(--font-outfit), 'Outfit', sans-serif;
 }
 
+/* Question Text Styling - Professional & Clean */
+.question-text {
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.75;
+  font-weight: 400;
+  color: #E5E7EB;
+}
+
+/* Solution Text Styling */
+.solution-text {
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #D1D5DB;
+}
+
+/* Control paragraph spacing in solution text */
+.solution-text p {
+  margin: 0.25em 0;
+}
+
+/* Control list spacing — must beat .latex-preview ul/li rules */
+.solution-text ul,
+.solution-text.latex-preview ul,
+.latex-preview.solution-text ul {
+  margin: 0.2em 0 !important;
+  padding-left: 1.2em !important;
+}
+
+.solution-text li,
+.solution-text.latex-preview li,
+.latex-preview.solution-text li {
+  margin: 0.05em 0 !important;
+  line-height: 1.4 !important;
+}
+
+/* Control other elements */
+.solution-text strong {
+  display: inline;
+}
+
+/* Override KaTeX's own margin:1em 0 on .katex-display — applies everywhere */
+.katex-display {
+  margin: 0.2em 0 !important;
+}
+
+/* Tighter inside solution preview */
+.solution-text .katex-display,
+.solution-text .latex-math-display .katex-display {
+  margin: 0.3em 0 !important;
+}
+
+/* The wrapper div we inject around display math */
+.solution-text .latex-math-display {
+  margin: 0.3em 0 !important;
+  display: block;
+}
+
+/* Global KaTeX display override */
+.latex-preview .katex-display {
+  margin: 0.2em 0 !important;
+}
+
+/* LaTeX Preview Container */
+.latex-preview {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* When solution-text and latex-preview are both applied, solution-text wins */
+.solution-text.latex-preview,
+.latex-preview.solution-text {
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+/* Force Inter font on all LaTeX math elements */
+.latex-math-inline,
+.latex-math-inline *,
+.latex-math-display,
+.latex-math-display * {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+}
+
+/*
+ * KaTeX size tuning per context.
+ * KaTeX's own default is font-size:1.21em on .katex.
+ * We override globally at the bottom of this file.
+ * These rules fine-tune per section so math matches surrounding text.
+ *
+ * TO ADJUST: change the font-size value below for the section you need.
+ */
+
+/* Solution section — inline math same size as text */
+.solution-text .latex-math-inline .katex {
+  font-size: 1em !important;
+}
+
+/* Solution section — display math same size as text */
+.solution-text .latex-math-display .katex {
+  font-size: 1em !important;
+}
+
+/* Match all select dropdowns to have consistent styling */
+select {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+  font-size: 0.875rem !important;
+  letter-spacing: -0.01em;
+}
+
+/* Markdown table styling */
+.markdown-table {
+  border-collapse: collapse;
+  margin: 1em 0;
+  width: auto;
+  max-width: 100%;
+}
+
+.markdown-table th,
+.markdown-table td {
+  border: 1px solid #4B5563;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.markdown-table th {
+  background-color: #374151;
+  font-weight: 600;
+  color: #E5E7EB;
+}
+
+.markdown-table td {
+  background-color: #1F2937;
+  color: #D1D5DB;
+}
+
+.markdown-table tr:hover td {
+  background-color: #2D3748;
+}
+
+/* Markdown lists styling */
+.latex-preview ul {
+  list-style-type: disc;
+  margin-left: 1.5em;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+.latex-preview li {
+  margin-bottom: 0.1em;
+  line-height: 1.4;
+}
+
+/* Markdown bold text */
+.latex-preview strong {
+  font-weight: 600;
+  color: #F3F4F6;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -215,9 +377,9 @@ body {
 /* KaTeX Global Overrides                   */
 /* ======================================== */
 
-/* Base KaTeX size bump — ensures inline math is readable */
+/* Base KaTeX size — match surrounding text */
 .katex {
-  font-size: 1.15em !important;
+  font-size: 1em !important;
 }
 
 /* Force fractions to render in displaystyle (larger numerator/denominator) */
@@ -258,14 +420,9 @@ button .katex,
   padding: 0.1em 0;
 }
 
-/* Inside solution/prose sections: ensure math is large and readable */
-.prose .katex {
-  font-size: 1.3em !important;
-}
-
-/* Display-mode math blocks ($$...$$) should be even larger */
+/* Display-mode math blocks — same size as inline for consistency */
 .katex-display .katex {
-  font-size: 1.4em !important;
+  font-size: 1em !important;
 }
 
 /* Ensure fraction lines are visible at all sizes */

@@ -217,14 +217,14 @@ const OrganicWizardGame = () => {
                         )}
                     </AnimatePresence>
 
-                    {/* Reaction Path Visualization - Horizontal Scroll on Small Screens */}
-                    <div className="flex items-center justify-start gap-8 md:gap-12 overflow-x-auto pb-8 w-full px-8 custom-scrollbar flex-nowrap min-h-[280px]">
+                    {/* Reaction Path Visualization - Wrapped on Small Screens */}
+                    <div className="flex flex-wrap items-center justify-center gap-4 w-full px-4 pt-12 pb-8 min-h-[150px]">
 
                         {/* Start Molecule Card */}
-                        <div className="flex-shrink-0 flex flex-col items-center gap-3 group">
+                        <div className="flex-shrink-0 flex flex-col items-center gap-2 group">
                             <div className="flex items-center justify-center relative overflow-hidden transition-colors">
-                                {/* Increased scale by 50% from original 200 */}
-                                <MoleculeViewer smiles={currentLevel.start_smiles} svg={currentLevel.start_svg} width={300} height={240} />
+                                {/* Reduced scale */}
+                                <MoleculeViewer smiles={currentLevel.start_smiles} svg={currentLevel.start_svg} width={150} height={120} />
                             </div>
                         </div>
 
@@ -232,9 +232,9 @@ const OrganicWizardGame = () => {
                         {Array.from({ length: totalSteps }).map((_, idx) => (
                             <React.Fragment key={idx}>
                                 {/* Long Arrow */}
-                                <div className="flex-shrink-0 text-white/40 relative flex items-center px-2">
+                                <div className="flex-shrink-0 text-white/40 relative flex items-center px-1">
                                     <div className="absolute inset-0 blur-sm bg-white/5 rounded-full" />
-                                    <svg width="80" height="32" viewBox="0 0 60 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 w-20 md:w-24">
+                                    <svg width="40" height="24" viewBox="0 0 60 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 w-10 md:w-12">
                                         <path d="M4 12H56" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                                         <path d="M48 4L56 12L48 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
@@ -243,7 +243,7 @@ const OrganicWizardGame = () => {
                                 {/* Drop Zone */}
                                 <div
                                     className={`
-                                        flex-shrink-0 w-36 h-28 rounded-xl border-2 transition-all duration-300 relative
+                                        flex-shrink-0 w-24 h-20 rounded-lg border-2 transition-all duration-300 relative
                                         flex flex-col items-center justify-center
                                         ${placedReagents[idx]
                                             ? isCorrect === true ? 'border-emerald-400/60 bg-emerald-500/10'
@@ -256,12 +256,12 @@ const OrganicWizardGame = () => {
                                     onDrop={(e) => draggedReagent && handleDrop(idx, draggedReagent)}
                                 >
                                     {placedReagents[idx] ? (
-                                        <div className="w-full h-full p-2 flex items-center justify-center text-center relative group/slot">
+                                        <div className="w-full h-full p-1 flex items-center justify-center text-center relative group/slot">
                                             {/* Tape effect */}
-                                            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-10 h-4 bg-white/20 rotate-1 backdrop-blur-sm shadow-sm" />
+                                            <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-8 h-3 bg-white/20 rotate-1 backdrop-blur-sm shadow-sm" />
 
                                             <div
-                                                className="font-handwriting text-[#e0e0e0] text-lg font-bold leading-tight"
+                                                className="font-handwriting text-[#e0e0e0] text-sm font-bold leading-tight"
                                                 dangerouslySetInnerHTML={{
                                                     __html: availableReagents.find(r => r.id === placedReagents[idx])?.display || '?'
                                                 }}
@@ -278,13 +278,13 @@ const OrganicWizardGame = () => {
                                                     }}
                                                     className="absolute -top-2 -right-2 bg-[#2a2a2a] text-slate-400 hover:text-red-400 rounded-full p-1 opacity-0 group-hover/slot:opacity-100 transition-opacity shadow-lg border border-white/10"
                                                 >
-                                                    <X size={16} />
+                                                    <X size={12} />
                                                 </button>
                                             )}
                                         </div>
                                     ) : (
                                         <div className="text-center opacity-40 group-hover:opacity-60 transition-opacity">
-                                            <span className="font-handwriting text-2xl block mb-1">Step {idx + 1}</span>
+                                            <span className="font-handwriting text-lg block mb-0.5">Step {idx + 1}</span>
                                         </div>
                                     )}
                                 </div>
@@ -294,16 +294,16 @@ const OrganicWizardGame = () => {
                         {/* Long Arrow */}
                         <div className="flex-shrink-0 text-white/40 relative flex items-center px-1">
                             <div className="absolute inset-0 blur-sm bg-white/5 rounded-full" />
-                            <svg width="80" height="32" viewBox="0 0 60 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 w-20 md:w-24">
+                            <svg width="40" height="24" viewBox="0 0 60 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 w-10 md:w-12">
                                 <path d="M4 12H56" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                                 <path d="M48 4L56 12L48 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </div>
 
                         {/* Target Molecule Card */}
-                        <div className="flex-shrink-0 flex flex-col items-center gap-3">
+                        <div className="flex-shrink-0 flex flex-col items-center gap-2">
                             <div className="flex items-center justify-center relative overflow-hidden">
-                                <MoleculeViewer smiles={currentLevel.target_smiles} svg={currentLevel.target_svg} width={300} height={240} />
+                                <MoleculeViewer smiles={currentLevel.target_smiles} svg={currentLevel.target_svg} width={150} height={120} />
                             </div>
                         </div>
                     </div>

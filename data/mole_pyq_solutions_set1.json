@@ -1,0 +1,71 @@
+{
+    "mole_concept_pyq_1": {
+        "textSolutionLatex": "**Analysis:**\nCombustion reaction of methane:\n\\[CH_4 + 2O_2 \\rightarrow CO_2 + 2H_2O\\]\n\n**Given:**\nMass of water produced = 81 g.\nMolar mass of water \\((H_2O)\\) = 18 g/mol.\n\n**Calculation:**\nMoles of water = \\(\\frac{81}{18} = 4.5\\) mol.\nFrom stoichiometry, 1 mole of \\(CH_4\\) produces 2 moles of \\(H_2O\\).\nTherefore, moles of \\(CH_4\\) required = \\(\\frac{4.5}{2} = 2.25\\) mol.\n\nTo express as \\(x \\times 10^{-2}\\):\n\\(2.25 = 225 \\times 10^{-2}\\).\n\n**Answer:** 225"
+    },
+    "mole_concept_pyq_2": {
+        "textSolutionLatex": "**Analysis:**\n(1) Dalton proposed that chemical reactions involve reorganization of atoms (atoms are neither created nor destroyed). **True**.\n(2) Dalton proposed that atoms of a given element are identical in mass and properties. **True**.\n(3) The law of combining volumes (gases combine in simple ratio by volume) was proposed by **Gay Lussac**, not Dalton. **False**.\n(4) Dalton proposed that matter consists of indivisible atoms. **True**.\n\n**Answer: Option (3)**"
+    },
+    "mole_concept_pyq_3": {
+        "textSolutionLatex": "**Analysis:**\n(A) 0.00253: Leading zeros are insignificant. Significant figures: 2, 5, 3 (Total **3**).\n(B) 1.0003: Zeros between non-zero digits are significant. Total **5**.\n(C) 15.0: Trailing zero after decimal is significant. Total **3**.\n(D) 163: All non-zero digits are significant. Total **3**.\n\nSpecies with same significant figures: A, C, and D.\n\n**Answer: Option (4)**"
+    },
+    "mole_concept_pyq_4": {
+        "textSolutionLatex": "**Analysis:**\nExpression: \\(\\frac{0.02858 \\times 0.112}{0.5702}\\)\n\n**Significant Figures in inputs:**\n- 0.02858: 4 sig figs\n- 0.112: 3 sig figs (Least precision)\n- 0.5702: 4 sig figs\n\nThe result should be rounded to **3 significant figures**.\n\n**Calculation:**\n\\(\\frac{0.02858 \\times 0.112}{0.5702} \\approx \\frac{0.00320096}{0.5702} \\approx 0.00561375...\\)\n\nRounding to 3 sig figs: **0.00561**.\n\n**Answer: Option (2)**"
+    },
+    "mole_concept_pyq_5": {
+        "textSolutionLatex": "**Analysis:**\nNumber: 0.00340\nLeading zeros (0.00...) are placeholders and not significant.\nThe digits 3, 4, and the trailing 0 (after decimal) are significant.\nTotal significant figures = 3.\n\n**Answer: 3**"
+    },
+    "mole_concept_pyq_6": {
+        "textSolutionLatex": "**Analysis:**\nNumber: \\(50000.020 \\times 10^{-3}\\)\nThe power of 10 does not affect significant figures.\nConsider the mantissa: 50000.020\n- All non-zero digits are significant.\n- Zeros between non-zero digits are significant.\n- Trailing zeros after the decimal point are significant.\n\nTotal digits: 5, 0, 0, 0, 0, 0, 2, 0 -> Total **8** digits.\n\n**Answer: 8**"
+    },
+    "mole_concept_pyq_7": {
+        "textSolutionLatex": "**Given:**\nMass of NaOH = 84 g.\nMolar mass of NaOH = 40 g/mol.\nMolarity (M) = 3 M.\n\n**Calculation:**\nMoles of NaOH = \\(\\frac{84}{40} = 2.1\\) mol.\n\nUsing \\(M = \\frac{n}{V}\\):\n\\(3 = \\frac{2.1}{V}\\)\n\\(V = \\frac{2.1}{3} = 0.7\\) L (or \\(dm^3\\)).\n\nExpressing as \\(x \\times 10^{-1}\\):\n\\(0.7 = 7 \\times 10^{-1}\\).\n\n**Answer: 7**"
+    },
+    "mole_concept_pyq_8": {
+        "textSolutionLatex": "**Given:**\nVolume of \\(O_2\\) = 2.8375 L at STP.\nSTP defined as 1 bar, 273.15 K -> Molar Volume = 22.7 L.\n\n**Calculation:**\nMoles = \\(\\frac{2.8375}{22.7} = 0.125\\) mol.\n\nNumber of molecules:\n\\(N = n \\times N_A = 0.125 \\times 6.022 \\times 10^{23}\\)\n\\(N \\approx 0.75275 \\times 10^{23} = 7.527 \\times 10^{22}\\).\n\nOption (4) matches: \\(7.527 \\times 10^{22}\\) molecules and 0.125 mol.\n\n**Answer: Option (4)**"
+    },
+    "mole_concept_pyq_9": {
+        "textSolutionLatex": "**Analysis:**\nA. 16 g \\(CH_4\\) = 1 mol. Contains \\(10 \\times N_A\\) electrons = \\(60.2 \\times 10^{23}\\) electrons. Matches **II**.\nB. 1 g \\(H_2\\) = 0.5 mol. Volume at STP = \\(0.5 \\times 22.7 \\approx 11.4\\) L. Matches **IV**.\nC. 1 mol \\(N_2\\) = 28 g. Matches **I**.\nD. 0.5 mol \\(SO_2\\) = \\(0.5 \\times 64 = 32\\) g. Matches **III**.\n\nOrder: A-II, B-IV, C-I, D-III.\nMeasurement matches Option (2).\n\n**Answer: Option (2)**"
+    },
+    "mole_concept_pyq_10": {
+        "textSolutionLatex": "**Given:**\nMass of compound \\(C_7H_5N_3O_6\\) = 681 g.\nMolar mass calculation:\n\\(7(12) + 5(1) + 3(14) + 6(16) = 84 + 5 + 42 + 96 = 227\\) g/mol.\n\n**Calculation:**\nMoles of compound = \\(\\frac{681}{227} = 3\\) mol.\nFormula contains 3 N atoms per molecule.\nMoles of N atoms = \\(3 \\times 3 = 9\\) mol.\n\nNumber of N atoms:\n\\(9 \\times 6.02 \\times 10^{23} = 54.18 \\times 10^{23}\\)\n\\(= 5418 \\times 10^{21}\\).\n\nValue of x = 5418.\n\n**Answer: 5418**"
+    },
+    "mole_concept_pyq_11": {
+        "textSolutionLatex": "**Given:**\nMass of Na = 8 g.\nAtomic mass = 23 u.\n\n**Calculation:**\nMoles of Na = \\(\\frac{8}{23}\\) mol.\nNumber of atoms = \\(\\frac{8}{23} \\times 6.02 \\times 10^{23}\\)\n\\(\\approx 0.3478 \\times 6.02 \\times 10^{23} \\approx 2.094 \\times 10^{23}\\).\n\nThe question asks for \\(x\\) in \\(x \\times 10^{23}\\).\n\\(x \\approx 2.09\\).\nNearest integer is 2.\n\n**Answer: 2**"
+    },
+    "mole_concept_pyq_12": {
+        "textSolutionLatex": "**Analysis:**\nMethane \\((CH_4)\\) has 1 Carbon atom and 4 Hydrogen atoms.\nTotal moles of atoms in 1 mole of methane = 1 + 4 = 5 mol.\n\nPercentage of Carbon by mole:\n\\(\\%C = \\frac{1}{5} \\times 100 = 20\\%\\).\n\n**Answer: Option (2)**"
+    },
+    "mole_concept_pyq_13": {
+        "textSolutionLatex": "**Given:**\n1. 5 mol \\(AB_2\\) = 125 g \\(\\Rightarrow\\) Molar mass \\(AB_2 = 25\\) g/mol.\n2. 10 mol \\(A_2B_2\\) = 300 g \\(\\Rightarrow\\) Molar mass \\(A_2B_2 = 30\\) g/mol.\n\n**Equations:**\n(1) \\(M_A + 2M_B = 25\\)\n(2) \\(2M_A + 2M_B = 30 \\Rightarrow M_A + M_B = 15\\)\n\n**Solving:**\nSubtract (2) from (1):\n\\((M_A + 2M_B) - (M_A + M_B) = 25 - 15\\)\n\\(M_B = 10\\) g/mol.\nSubstitute into (2):\n\\(M_A + 10 = 15 \\Rightarrow M_A = 5\\) g/mol.\n\nConvert to kg/mol:\n\\(M_A = 5 \\times 10^{-3}\\) kg/mol.\n\\(M_B = 10 \\times 10^{-3}\\) kg/mol.\n\n**Answer: Option (1)**"
+    },
+    "mole_concept_pyq_14": {
+        "textSolutionLatex": "**Given:**\nMolarity (M) = 3 M.\nDensity (d) = 1.25 g/mL.\nMolar mass of NaCl = 58.5 g/mol.\n\n**Calculation:**\nConsider 1 L of solution.\nMass of solution = \\(1000 \\times 1.25 = 1250\\) g.\nMoles of solute = 3.\nMass of solute = \\(3 \\times 58.5 = 175.5\\) g.\nMass of solvent = \\(1250 - 175.5 = 1074.5\\) g = 1.0745 kg.\n\nMolality (m) = \\(\\frac{\\text{Moles of solute}}{\\text{Mass of solvent (kg)}} = \\frac{3}{1.0745} \\approx 2.79\\) m.\n\n**Answer: Option (3)**"
+    },
+    "mole_concept_pyq_15": {
+        "textSolutionLatex": "**Given:**\nMass of compound = 0.5 g.\nCarbon % = 60%.\n\n**Calculation:**\nMass of Carbon = \\(0.60 \\times 0.5 = 0.30\\) g.\nReaction: \\(C + O_2 \\rightarrow CO_2\\).\n12 g of C produces 44 g of \\(CO_2\\).\n0.3 g of C produces \\(\\frac{44}{12} \\times 0.3 = 1.1\\) g of \\(CO_2\\).\n\nFormat \\(x \\times 10^{-1}\\) g:\n\\(1.1 = 11 \\times 10^{-1}\\).\nX = 11.\n\n**Answer: 11**"
+    },
+    "mole_concept_pyq_16": {
+        "textSolutionLatex": "**Given:**\nMass of solute (X) = 2 g.\nMass of solvent (Water) = 1 mole = 18 g.\n\n**Calculation:**\nTotal mass of solution = 2 + 18 = 20 g.\nMass percent of X = \\(\\frac{2}{20} \\times 100 = 10\\%\\).\n\n**Answer: Option (4)**"
+    },
+    "mole_concept_pyq_17": {
+        "textSolutionLatex": "**Given:**\n3 M NaCl solution.\nDensity = 1.0 g/mL (Note: This is unusually low for 3M NaCl, likely a typo in question but using given data).\n\n**Calculation:**\nBasis: 1 L solution.\nMass of solution = 1000 g.\nMass of solute (NaCl) = \\(3 \\times 58.5 = 175.5\\) g.\nMass of solvent = \\(1000 - 175.5 = 824.5\\) g = 0.8245 kg.\n\nMolality \\(m = \\frac{3}{0.8245} \\approx 3.6386\\) m.\n\nFormat \\(x \\times 10^{-2}\\) m:\n\\(3.6386 = 363.86 \\times 10^{-2}\\).\nNearest integer = 364.\n(If density was ~1.12 standard, answer would differ, but following given data).\n\n**Answer: 364**"
+    },
+    "mole_concept_pyq_18": {
+        "textSolutionLatex": "**Given:**\n35% HCl by mass.\nDensity = 1.46 g/mL.\nMolar mass (HCl) = 36.5 g/mol.\n\n**Calculation:**\nMolarity \\(M = \\frac{\\% \\times d \\times 10}{MW}\\)\n\\(M = \\frac{35 \\times 1.46 \\times 10}{36.5}\\)\n\\(M = \\frac{511}{36.5} = 14\\) M.\n\n**Answer: Option (2)**"
+    },
+    "mole_concept_pyq_19": {
+        "textSolutionLatex": "**Given:**\nMolality = 100 m.\nSolvent is water.\n\n**Calculation:**\n100 moles of solute in 1 kg (1000 g) of water.\nMoles of water = \\(\\frac{1000}{18} \\approx 55.55\\) mol.\nTotal moles = \\(100 + 55.55 = 155.55\\) mol.\n\nMole fraction of solute \\(x_{solute} = \\frac{100}{155.55} \\approx 0.6428\\).\n\nFormat \\(x \\times 10^{-2}\\):\n\\(0.6428 = 64.28 \\times 10^{-2}\\).\nNearest integer = 64.\n\n**Answer: 64**"
+    },
+    "mole_concept_pyq_20": {
+        "textSolutionLatex": "**Given:**\nMass = 4.5 g.\nMW = 90 g/mol.\nVolume = 250 mL = 0.25 L.\n\n**Calculation:**\nMoles = \\(\\frac{4.5}{90} = 0.05\\) mol.\nMolarity \\(M = \\frac{0.05}{0.25} = 0.2\\) M.\n\nFormat \\(x \\times 10^{-1}\\):\n\\(0.2 = 2 \\times 10^{-1}\\).\nx = 2.\n\n**Answer: 2**"
+    },
+    "mole_concept_pyq_21": {
+        "textSolutionLatex": "**Given:**\nMass of \\(Na_2CO_3 \\cdot xH_2O\\) = 1.43 g.\nVolume = 100 mL = 0.1 L.\nNormality = 0.1 N.\n\n**Calculation:**\nFor \\(Na_2CO_3\\), n-factor = 2 (total cationic charge).\nMolarity \\(M = \\frac{N}{n} = \\frac{0.1}{2} = 0.05\\) M.\n\nMoles of solute = \\(M \\times V = 0.05 \\times 0.1 = 0.005\\) mol.\n\nMolar Mass = \\(\\frac{\\text{Mass}}{\\text{Moles}} = \\frac{1.43}{0.005} = 286\\) g/mol.\n\nFormula weight:\n\\(Na_2CO_3\\) = 106.\n\\(106 + 18x = 286\\)\n\\(18x = 180 \\Rightarrow x = 10\\).\n\n**Answer: 10**"
+    },
+    "mole_concept_pyq_22": {
+        "textSolutionLatex": "**Given:**\nAvg molar mass = 35.5.\nIsotopes 35 and 37.\n\n**Calculation:**\nLet fractional abundance of 35 be \\(f\\).\n\\(35f + 37(1-f) = 35.5\\)\n\\(35f + 37 - 37f = 35.5\\)\n\\(-2f = -1.5 \\Rightarrow f = 0.75\\).\nratio 35:37 = 75:25 = 3:1.\n\n**Answer: Option (2)**"
+    },
+    "mole_concept_pyq_29": {
+        "textSolutionLatex": "**Reaction:**\n\\(N_2 + 3H_2 \\rightarrow 2NH_3\\)\nFrom Gay Lussac's law, 1 volume of \\(N_2\\) gives 2 volumes of \\(NH_3\\).\n\n**Calculation:**\nVolume of \\(NH_3\\) produced = 20 L.\nVolume of \\(N_2\\) required = \\(\\frac{20}{2} = 10\\) L.\n\nInitial \\(N_2\\) = 56 L.\nUnused \\(N_2 = 56 - 10 = 46\\) L.\n\n**Answer: 46**"
+    }
+}

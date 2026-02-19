@@ -4,7 +4,24 @@ import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Play, Filter, BookOpen, CheckCircle2, X, Sparkles, Target, Zap, Atom, Brain, HelpCircle, Calculator, List, Info, Clock, Bookmark, FileText, LayoutGrid, Sun, Quote, Lightbulb, ChevronDown, Diamond, Layers, Rocket, Settings, Orbit, Crosshair, Hexagon, ShieldAlert, Cpu, Home, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { Question, TaxonomyNode } from '@/app/the-crucible/types';
+
+// Define types inline for compatibility
+interface Question {
+    id: string;
+    textMarkdown: string;
+    chapterId?: string;
+    difficulty?: string;
+    examSource?: string;
+    isTopPYQ?: boolean;
+    [key: string]: any;
+}
+
+interface TaxonomyNode {
+    id: string;
+    name: string;
+    type: string;
+    [key: string]: any;
+}
 import { DAILY_QUOTES } from './quotes';
 
 // STRICT USER-DEFINED LISTS (Display Names)

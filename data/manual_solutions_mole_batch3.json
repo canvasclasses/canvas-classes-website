@@ -1,0 +1,98 @@
+{
+    "MOLE-026": {
+        "textSolutionLatex": "**Observation:**\nQuestion mentions mixing 1.85g of CuCl2/CuBr2 with 1.8g of AgCl (solid?). Usually such reactions use AgNO3. However, based on \"displacement\" logic ($CuBr_2 + 2AgCl \\to CuCl_2 + 2AgBr$ if feasible) or typo assumption ($AgNO_3$).\n\n**Assuming AgCl -> AgBr Conversion:**\nMass increase = 2.052 - 1.8 = 0.252 g.\nDiff per mole (AgBr - AgCl) = 187.8 - 143.3 = 44.5 g.\nMoles reacted = $0.252 / 44.5 = 0.00566$ mol.\nMoles $CuBr_2$ = $0.00566 / 2 = 0.00283$ mol.\nMass $CuBr_2$ = $0.00283 \\times 223.4 = 0.632$ g.\n\\%\u0020= $(0.632 / 1.85) \\times 100 = 34.1\\%$.\n\n**Answer:** 34.1"
+    },
+    "MOLE-027": {
+        "textSolutionLatex": "**Calculation:**\nMass of Carbon per mol = $2 \\times 12 = 24$ g.\nMass\\% = 36\\%.\nMolar Mass = $24 / 0.36 = 66.67$ g/mol.\nMoles in 10g = $10 / 66.67 = 0.15$ mol.\n\n**Answer:** 0.15"
+    },
+    "MOLE-028": {
+        "textSolutionLatex": "**Reaction:**\nAlcohol (MW 74) $\\to$ Acrolein ($C_3H_4O$, MW 56) + $H_2O$.\nYield = 64\\%.\n\n**Calculation:**\nMass Acrolein = 7.8 g.\nMoles Acrolein = $7.8 / 56 = 0.139$ mol.\nTheoretical Moles needed = $0.139 / 0.64 = 0.218$ mol.\nMass Reactant = $0.218 \\times 74 = 16.1$ g.\n\n**Answer:** 16.10"
+    },
+    "MOLE-029": {
+        "textSolutionLatex": "**Reaction:** $N_2 + 3H_2 \\to 2NH_3$\n**Given:**\n$N_2$: 20g (0.714 mol).\n$H_2$: 5g (2.5 mol).\n\n**Limiting:**\nReq $H_2/N_2 = 3$. Actual $2.5/0.714 = 3.5$. $N_2$ is Limiting.\n\n**Product:**\n$NH_3 = 2 \\times 0.714 = 1.43$ mol.\n\n**Answer:** N2, 1.43 mol"
+    },
+    "MOLE-030": {
+        "textSolutionLatex": "**Analysis:**\n$Fe + S \\to FeS$ (56g : 32g).\nEqual Mass $m$.\nMoles $Fe = m/56$. S = m/32.\nS is Excess.\nReacted S = m/56.\nRemaining S = $m/32 - m/56 = 3m/224$.\nFraction of Original S ($m/32$) = $(3m/224) / (m/32) = 32 \\times 3 / 224 = 3/7$.\n\n**Answer:** 3/7"
+    },
+    "MOLE-031": {
+        "textSolutionLatex": "**Analysis:**\n$X$ ($R(OH)_n$) + $Na$ (or similar) $\\to$ $H_2$.\nRatio $n H_2 / n X = 6 \\times 10^{-5} / 2 \\times 10^{-5} = 3$.\nSo 3 moles $H_2$ per mole X.\nImplies 6 $OH$ groups ($6H \\to 3H_2$).\n\n**Answer:** 6"
+    },
+    "MOLE-032": {
+        "textSolutionLatex": "**Calculation:**\nMoles $CO_2 = 0.25 mL / 25 L = 10^{-5}$ mol.\nMoles $NaHCO_3 = 10^{-5}$ mol.\nMass $NaHCO_3 = 84 \\times 10^{-5}$ g = 0.84 mg.\n\\%\u0020= ($0.84 / 10$) $\\times$ 100 = 8.4\\%.\n\n**Answer:** 8.4"
+    },
+    "MOLE-033": {
+        "textSolutionLatex": "**Analysis:**\n$S + O_2 \\to SO_2$ / $SO_3$.\nLet $x$ mol $SO_2$, $y$ mol $SO_3$.\nS Conservation: $x + y = 10/32 = 0.3125$.\nO Conservation: $2x + 3y = (12/32) \\times 2 = 0.75$.\nSolving:\n$y = 0.125$ mol ($SO_3$). Mass = $0.125 \\times 80 = 10$ g.\n$x = 0.1875$ mol ($SO_2$). Mass = $0.1875 \\times 64 = 12$ g.\n\n**Answer:** 12g, 10g"
+    },
+    "MOLE-034": {
+        "textSolutionLatex": "**Calculation:**\nTotal Moles (approx H) = $3g / 1 = 3$ mol.\nTotal atoms = $3 N_A$.\nRatio H:D = 6000:1.\nD atoms = $3 N_A / 6000 = 3 \\times 10^{20}$.\nNeutrons = D atoms = $3 \\times 10^{20}$.\n\n**Answer:** $3 \\times 10^{20}$"
+    },
+    "MOLE-036": {
+        "textSolutionLatex": "**Calculation:**\nMolarity = 0.2 M. Vol = 0.5 L.\nMoles Solute = 0.1 mol.\nMass Solute ($CuSO_4$) = $0.1 \\times 159.5 = 15.95$ g.\nMass Solution = $500 \\times 1.25 = 625$ g.\nMass Solvent = $625 - 15.95 = 609$ g = 0.609 kg.\nMolality = $0.1 / 0.609 = 0.164$ m.\nIn $10^{-3}$ m = 164.\n\n**Answer:** 164"
+    },
+    "MOLE-037": {
+        "textSolutionLatex": "**Calculation:**\nMolarity = 3.2 M.\nAssuming 1 L solution = 1 L Solvent (from \"no volume change\").\nMass Solvent = $1000 mL \\times 0.4 g/mL = 400$ g = 0.4 kg.\nMoles Solute = 3.2.\nMolality = $3.2 / 0.4 = 8$ m.\n\n**Answer:** 8"
+    },
+    "MOLE-038": {
+        "textSolutionLatex": "**Calculation:**\nMoles Vapour = $0.1 / 22.4 = 0.00446$.\nMW = $0.57 / 0.00446 = 127.8$.\nCl Mass = $55\\%$ of $127.8 = 70.3$.\nAtoms Cl = $70.3 / 35.5 = 1.98 \\approx 2$.\nFormula $MCl_2$.\n\n**Answer:** $MCl_2$"
+    },
+    "MOLE-039": {
+        "textSolutionLatex": "**Calculation:**\n10 mL $Br_2$ + 90 mL $CCl_4$.\nMass $Br_2$ = $10 \\times 3.2 = 32$ g. Moles = $32/160 = 0.2$.\nMass $CCl_4$ = $90 \\times 1.6 = 144$ g = 0.144 kg.\nMolality = $0.2 / 0.144 = 1.39$ m.\nValue = 139.\n\n**Answer:** 139"
+    },
+    "MOLE-040": {
+        "textSolutionLatex": "**Calculation:**\n\\% C = $(12/44) \\times (420/750) \\times 100 = 15.27\\%$.\n\\% H = $(2/18) \\times (210/750) \\times 100 = 3.11\\%$.\n\n**Answer:** 3.1"
+    },
+    "MOLE-041": {
+        "textSolutionLatex": "**Calculation:**\n$C_xH_y + (x+y/4)O_2 \\to xCO_2$.\nGiven $x = 4$.\nGiven $x + y/4 = 6 \\Rightarrow 4 + y/4 = 6 \\Rightarrow y = 8$.\n\n**Answer:** 8"
+    },
+    "MOLE-044": {
+        "textSolutionLatex": "**Calculation:**\nMass = 196.\nMW = 98.\nMoles = 2.\nn-factor = 3.\nEquivalents = $2 \\times 3 = 6$.\n\n**Answer:** 6"
+    },
+    "MOLE-045": {
+        "textSolutionLatex": "**Calculation:**\nReaction $CO + 2H_2 \\to CH_3OH$.\n1 mol CO req 2 mol H2.\n2 mol CO req 4 mol H2.\n\n**Answer:** 4"
+    },
+    "MOLE-046": {
+        "textSolutionLatex": "**Calculation:**\n$Ca(HCO_3)_2 \\to CaCO_3 + CO_2 + H_2O$\n1 mol Pure $\\to$ 1 mol $CO_2$.\nGiven 2 moles of 50\\% pure sample $\\Rightarrow$ 1 mole pure Reactant.\nTheoretical Yield = 1 mol.\nActual = 1 mol.\nYield = 100\\%.\n\n**Answer:** 100"
+    },
+    "MOLE-047": {
+        "textSolutionLatex": "**Answer:** 4 sig figs (6,0,2,3)."
+    },
+    "MOLE-048": {
+        "textSolutionLatex": "**Answer:** 1 gram-atom = 1 mole."
+    },
+    "MOLE-049": {
+        "textSolutionLatex": "**Calculation:**\nMoles $NH_3$ = $4.48/22.4 = 0.2$.\nMoles Acid = $0.2/2 = 0.1$.\nMolarity = $0.1/0.1L = 1$ M.\n\n**Answer:** 1"
+    },
+    "MOLE-050": {
+        "textSolutionLatex": "**Calculation:**\nAcetic Acid $C_2H_4O_2$.\nEmpirical $CH_2O$.\nAtoms = $1+2+1 = 4$.\n\n**Answer:** 4"
+    },
+    "MOLE-051": {
+        "textSolutionLatex": "**Calculation:**\nDried: 50\\% Silica, 7\\% H2O, 43\\% Other.\nAssume 100g Dried. 50g Silica. Total Solid = 93g.\nSilica Fraction in Solid = 50/93.\nOriginal: 12\\% H2O, 88\\% Solid.\nSilica in Original = $88 \\times (50/93) = 47.3\\%$.\n\n**Answer:** 47.3"
+    },
+    "MOLE-052": {
+        "textSolutionLatex": "**Calculation:**\nEq Ca = Eq Zn.\n$1.6 / E_{Ca} = 2.6 / 32.6$.\n$E_{Ca} = 1.6 \\times (32.6/2.6) = 20$.\n\n**Answer:** 20"
+    },
+    "MOLE-053": {
+        "textSolutionLatex": "**Calculation:**\nConservation of Carbon.\n$12 \\times C$ in $K_2CO_3$ $\\to$ $12 \\times C$ in Product ($K_2Zn_3[Fe(CN)_6]_2$).\nStoich: 12 mol $K_2CO_3 \\to 1$ mol Product.\nMoles $K_2CO_3$: $27.6 / 138 = 0.2$.\nMoles Product: $0.2 / 12 = 0.0167$.\nMW Product (approx) = 698.\nMass = $0.0167 \\times 698 = 11.6$ g.\n\n**Answer:** 11.6"
+    },
+    "MOLE-054": {
+        "textSolutionLatex": "**Calculation:**\n93 atoms H, 7 atoms He.\nMass = $93(1) + 7(4) = 93 + 28 = 121$.\n\\% H = $(93/121) \\times 100 = 76.86\\%$.\n\n**Answer:** 76.86"
+    },
+    "MOLE-055": {
+        "textSolutionLatex": "**Calculation:**\nMoles water = 175g / 18 = 9.72 mol.\nMoles Ethanol = 9.72 mol.\nMass Ethanol = $9.72 \\times 46 = 447$ g.\nVolume = $447 / 0.789 = 566.8$ mL.\n\n**Answer:** 566.8"
+    },
+    "MOLE-056": {
+        "textSolutionLatex": "**Calculation:**\n$2H_2O$ is limiting (Req 6, Have 2).\nProd $Fe(OH)_3$ = $(4/6) \\times 2 = 1.33$ mol.\n\n**Answer:** 1.34"
+    },
+    "MOLE-057": {
+        "textSolutionLatex": "**Calculation:**\n$200kg \\times 0.95 = 190kg$ pure $CaCO_3$.\n$190/100 = 1.9$ kmol.\nProd CaO = 1.9 kmol.\nMass = $1.9 \\times 56 = 106.4$ kg.\n\n**Answer:** 106.4"
+    },
+    "MOLE-058": {
+        "textSolutionLatex": "**Calculation:**\n$I_2$ is limiting ($M = 254$).\nZn Left = $m/65 - m/254$.\nFraction of Zn = $(1/65 - 1/254) / (1/65) = 1 - 65/254 = 0.74$.\n\n**Answer:** 0.74"
+    },
+    "MOLE-059": {
+        "textSolutionLatex": "**Answer:** 0.55 g"
+    },
+    "MOLE-060": {
+        "textSolutionLatex": "**Calculation:**\n20 CO consumes 10 O2.\nLeft O2 = 50 - 10 = 40 mL.\n\n**Answer:** 40"
+    }
+}

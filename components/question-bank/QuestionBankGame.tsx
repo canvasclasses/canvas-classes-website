@@ -3,7 +3,16 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ArrowLeft, Trophy, Flame, Target, Play, Pause, ArrowRight, Menu, X, CheckCircle2, TrendingUp, Zap, BookOpen, Star, CheckCircle, Pencil, Trash2, HelpCircle, AlertTriangle, Rocket, ChevronDown, Code } from 'lucide-react';
 import Link from 'next/link';
-import { Question, TaxonomyNode } from '@/app/the-crucible/types';
+// Define Question type inline for compatibility
+interface Question {
+    id: string;
+    textMarkdown: string;
+    chapterId?: string;
+    difficulty?: string;
+    examSource?: string;
+    isTopPYQ?: boolean;
+    [key: string]: any;
+}
 import QuestionCard from '@/components/question-bank/QuestionCard';
 import FeedbackOverlay from '@/components/question-bank/FeedbackOverlay';
 import SolutionViewer from '@/components/question-bank/SolutionViewer';

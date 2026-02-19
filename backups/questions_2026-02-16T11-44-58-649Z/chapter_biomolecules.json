@@ -1,0 +1,40 @@
+[
+  {
+    "id": "BIO-001",
+    "originalId": "BIO-001",
+    "textMarkdown": "Identify the correct statements:\n\nA. Arginine and Tryptophan are essential amino acids.\nB. Histidine does not contain heterocyclic ring in its structure.\nC. Proline is a six membered cyclic ring amino acid.\nD. Glycine does not have chiral centre.\nE. Cysteine has characteristic feature of side chain as $CH_3S-CH_2-CH_2-$.\n\nChoose the correct answer:",
+    "options": [
+      {
+        "id": "1",
+        "text": "C and E only",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "B and E only",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "C and D only",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "A and D only",
+        "isCorrect": true
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Statement Analysis:**\n\n**A. Arginine and Tryptophan are essential amino acids** ✓\n- Both cannot be synthesized by the body\n- Must be obtained from diet\n\n**B. Histidine does not contain heterocyclic ring** ✗\n- Histidine contains an **imidazole ring** (5-membered, N-containing)\n\n**C. Proline is a six membered cyclic ring amino acid** ✗\n- Proline has a **5-membered** pyrrolidine ring\n\n**D. Glycine does not have chiral centre** ✓\n- Glycine: $H_2N-CH_2-COOH$\n- The α-carbon has 2 H atoms (not chiral)\n\n**E. Cysteine side chain is $CH_3S-CH_2-CH_2-$** ✗\n- Cysteine: $HS-CH_2-$ (thiol, not thioether)\n- The given structure is for **Methionine**\n\n**Correct: A and D**\n\n![Option1](/questions/jee_2026_jan21m_q67_solution.webp)"
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_biomolecules",
+    "examSource": "JEE Main 2026 - Jan 21 Morning Shift",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [],
+    "tagId": "TAG_CH_BIOMOLECULES"
+  }
+]

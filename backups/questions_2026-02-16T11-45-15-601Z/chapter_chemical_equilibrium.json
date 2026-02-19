@@ -1,0 +1,1766 @@
+[
+  {
+    "id": "EQUIL-001",
+    "originalId": "EQUIL-PYQ-001",
+    "textMarkdown": "The effect of addition of helium gas to the following reaction in equilibrium state at constant volume，is:\n\\(\\mathrm{PCI}_{5}(\\mathrm{~g}) \\rightleftharpoons \\mathrm{PCl}_{3}(\\mathrm{~g})+\\mathrm{Cl}_{2}(\\mathrm{~g})\\)\n01 Feb 2023 (E)",
+    "options": [
+      {
+        "id": "1",
+        "text": "the equilibrium will shift in the forward direction and more of \\(\\mathrm{Cl}_{2}\\) and \\(\\mathrm{PCl}_{3}\\) gases will be produced.",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "the equilibrium will go backward due to suppression of dissociation of \\(\\mathrm{PCl}_{5}\\) .",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "helium will deactivate \\(\\mathrm{PCl}_{5}\\) and reaction will stop.",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "addition of helium will not affect the equilibrium.",
+        "isCorrect": true
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 4\n\n**Solution:**\n\nThe correct option is (4).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Le chatelier's principle').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (4).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Le chatelier's principle",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-002",
+    "originalId": "EQUIL-PYQ-002",
+    "textMarkdown": "Consider the following equation: \\(2 \\mathrm{SO}_{2}(\\mathrm{~g})+\\mathrm{O}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{SO}_{3}(\\mathrm{~g}), \\Delta \\mathrm{H}=-190 \\mathrm{~kJ}\\) .\nThe number of factors which will increase the yield of \\(\\mathrm{SO}_{3}\\) at equilibrium from the following is\nA.Increasing temperature\nB.Increasing pressure\nC.Adding more \\(\\mathrm{SO}_{2}\\)\nD.Adding more \\(\\mathrm{O}_{2}\\)\nE.Addition of catalyst\n30 Jan 2023 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "Detailed step-by-step solution to be added by subject expert."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Le chatelier's principle",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-003",
+    "originalId": "EQUIL-PYQ-003",
+    "textMarkdown": "The ratio \\(\\frac{K_{P}}{K_{C}}\\) for the reaction : \\(\\mathrm{CO}_{(\\mathrm{g})}+\\frac{1}{2} \\mathrm{O}_{2(\\mathrm{~g})} \\rightleftharpoons \\mathrm{CO}_{2(\\mathrm{~g})}\\) is :\n06 Apr 2024 (E)",
+    "options": [
+      {
+        "id": "1",
+        "text": "\\(\\frac{1}{\\sqrt{\\mathrm{RT}}}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "\\((\\mathrm{RT})^{1 / 2}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "RT",
+        "isCorrect": true
+      },
+      {
+        "id": "4",
+        "text": "1",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 3\n\n**Solution:**\n\nThe correct option is (3).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (3).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-004",
+    "originalId": "EQUIL-PYQ-004",
+    "textMarkdown": "For reaction: \\(\\mathrm{SO}_{2}(\\mathrm{~g})+\\frac{1}{2} \\mathrm{O}_{2}(\\mathrm{~g}) \\rightleftharpoons \\mathrm{SO}_{3}(\\mathrm{~g}) \\mathrm{K}_{\\mathrm{P}}=2 \\times 10^{12}\\) at \\(27^{\\circ} \\mathrm{C}\\) and 1 atm pressure.The \\(\\mathrm{K}_{\\mathrm{c}}\\) for the same reaction is \\(\\times 10^{13}\\) .(Nearest integer)(Given \\(\\mathrm{R}=0.082 \\mathrm{~L} \\mathrm{~atm} \\mathrm{~K}^{-1} \\mathrm{~mol}^{-1}\\) )\n31 Jan 2023 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 1\n\n**Solution:**\n\nThe correct option is (1).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (1).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "1"
+  },
+  {
+    "id": "EQUIL-005",
+    "originalId": "EQUIL-PYQ-005",
+    "textMarkdown": "(i) \\(\\mathrm{X}(\\mathrm{g}) \\rightleftharpoons \\mathrm{Y}(\\mathrm{g})+\\mathrm{Z}(\\mathrm{g}) \\mathrm{K}_{\\mathrm{p} 1}=3\\)(ii) \\(\\mathrm{A}(\\mathrm{g}) \\rightleftharpoons 2 \\mathrm{~B}(\\mathrm{~g}) \\mathrm{K}_{\\mathrm{p} 2}=1\\)\nIf the degree of dissociation and initial concentration of both the reactants \\(\\mathrm{X}(\\mathrm{g})\\) and \\(\\mathrm{A}(\\mathrm{g})\\) are equal，then the ratio of the total pressure at equilibrium \\(\\left(\\frac{p_{1}}{p_{2}}\\right)\\) is equal to \\(\\mathrm{x}: 1\\) .The value of x is(Nearest integer)\n01 Feb 2023 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 1\n\n**Solution:**\n\nThe correct option is (1).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (1).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "1"
+  },
+  {
+    "id": "EQUIL-006",
+    "originalId": "EQUIL-PYQ-006",
+    "textMarkdown": "Value of \\(\\mathrm{K}_{\\mathrm{P}}\\) for the equilibrium reaction \\(\\mathrm{N}_{2} \\mathrm{O}_{4}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{NO}_{2(\\mathrm{~g})}\\) at 288 K is 47.9 .The \\(\\mathrm{K}_{\\mathrm{C}}\\) for this reaction at same temperature is(Nearest integer)\\(\\left(\\mathrm{R}=0.083 \\mathrm{~L}\\right.\\) bar \\(\\left.\\mathrm{K}^{-1} \\mathrm{~mol}^{-1}\\right)\\)\n22 Jul 2021 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 12\n\n**Solution:**\n\nThe numerical answer is 12.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 12.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "12"
+  },
+  {
+    "id": "EQUIL-007",
+    "originalId": "EQUIL-PYQ-007",
+    "textMarkdown": "If the equilibrium constant for \\(\\mathrm{A} \\rightleftharpoons \\mathrm{B}+\\mathrm{C}\\) is \\(\\mathrm{K}_{\\mathrm{eq}}^{(1)}\\) and that of \\(\\mathrm{B}+\\mathrm{C} \\rightleftharpoons \\mathrm{P}\\) is \\(\\mathrm{K}_{\\mathrm{eq}}^{(2)}\\) ，the equilibrium constant for \\(\\mathrm{A} \\rightleftharpoons \\mathrm{P}\\) is :\n04 Sep 2020 (E)",
+    "options": [
+      {
+        "id": "1",
+        "text": "\\(\\mathrm{K}_{\\mathrm{eq}}^{(1)} / \\mathrm{K}_{\\mathrm{eq}}^{(2)}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "\\(\\mathrm{K}_{\\mathrm{eq}}^{(2)}-\\mathrm{K}_{\\mathrm{eq}}^{(1)}\\)",
+        "isCorrect": true
+      },
+      {
+        "id": "3",
+        "text": "\\(\\mathrm{K}_{\\mathrm{eq}}^{(1)}+\\mathrm{K}_{\\mathrm{eq}}^{(2)}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "\\(\\mathrm{K}_{\\mathrm{eq}}^{(1)} \\mathrm{K}_{\\mathrm{eq}}^{(2)}\\)",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 2\n\n**Solution:**\n\nThe correct option is (2).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (2).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-008",
+    "originalId": "EQUIL-PYQ-008",
+    "textMarkdown": "For the reaction \\(\\mathrm{Fe}_{2} \\mathrm{~N}(\\mathrm{~s})+\\frac{3}{2} \\mathrm{H}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{Fe}(\\mathrm{s})+\\mathrm{NH}_{3}(\\mathrm{~g})\\)\n06 Sep 2020 (M)",
+    "options": [
+      {
+        "id": "1",
+        "text": "\\(\\mathrm{K}_{\\mathrm{c}}=\\mathrm{K}_{\\mathrm{p}}(\\mathrm{RT})\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "\\(\\mathrm{K}_{\\mathrm{c}}=\\mathrm{K}_{\\mathrm{p}}(\\mathrm{RT})^{-1 / 2}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "\\(\\mathrm{K}_{\\mathrm{c}}=\\mathrm{K}_{\\mathrm{p}}(\\mathrm{RT})^{1 / 2}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "\\(\\mathrm{K}_{\\mathrm{c}}=\\mathrm{K}_{\\mathrm{p}}(\\mathrm{RT})^{3 / 2}\\)",
+        "isCorrect": true
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 4\n\n**Solution:**\n\nThe correct option is (4).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (4).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-009",
+    "originalId": "EQUIL-PYQ-009",
+    "textMarkdown": "In the figure shown below reactant A (represented by square)is in equilibrium with product B (represented by circle).The equilibrium constant is(approx):\n09 Jan 2020 (E)",
+    "options": [
+      {
+        "id": "1",
+        "text": "4",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "8",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "1",
+        "isCorrect": true
+      },
+      {
+        "id": "4",
+        "text": "2",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 3\n\n**Solution:**\n\nThe correct option is (3).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (3).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-010",
+    "originalId": "EQUIL-PYQ-010",
+    "textMarkdown": "In which one of the following equilibria， \\(\\mathrm{K}_{\\mathrm{p}} \\neq \\mathrm{K}_{\\mathrm{c}}\\) ？\n12 Apr 2019 (E)",
+    "options": [
+      {
+        "id": "1",
+        "text": "\\(2 \\mathrm{HI}(\\mathrm{g}) \\rightleftharpoons \\mathrm{H}_{2}(\\mathrm{~g})+\\mathrm{I}_{2}(\\mathrm{~g})\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "\\(2 \\mathrm{C}(\\mathrm{s})+\\mathrm{O}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{CO}(\\mathrm{g})\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "\\(2 \\mathrm{NO}(\\mathrm{g}) \\rightleftharpoons \\mathrm{N}_{2}(\\mathrm{~g})+\\mathrm{O}_{2}(\\mathrm{~g})\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "\\(\\mathrm{NO}_{2}(\\mathrm{~g})+\\mathrm{SO}_{2}(\\mathrm{~g}) \\rightleftharpoons \\mathrm{NO}(\\mathrm{g})+\\mathrm{SO}_{3}(\\mathrm{~g})\\)",
+        "isCorrect": true
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 4\n\n**Solution:**\n\nThe correct option is (4).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (4).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-011",
+    "originalId": "EQUIL-PYQ-011",
+    "textMarkdown": "The following reaction occurs in the Blast furnance where iron ore is reduced to iron metal\n\\[\n\\mathrm{Fe}_{2} \\mathrm{O}_{3(\\mathrm{~s})}+3 \\mathrm{CO}_{(\\mathrm{g})} \\rightleftharpoons \\mathrm{Fe}_{(\\mathrm{l})}+3 \\mathrm{CO}_{2(\\mathrm{~g})}\n\\]\nUsing the Le-chatelier's principle，predict which one of the following will not disturb the equilibrium.\n05 Apr 2024 (M)",
+    "options": [
+      {
+        "id": "1",
+        "text": "Addition of \\(\\mathrm{CO}_{2}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "Removal of \\(\\mathrm{CO}_{2}\\)",
+        "isCorrect": true
+      },
+      {
+        "id": "3",
+        "text": "Addition of \\(\\mathrm{Fe}_{2} \\mathrm{O}_{3}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "Removal of CO",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 2\n\n**Solution:**\n\nThe correct option is (2).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Le chatelier's principle').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (2).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Le chatelier's principle",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-012",
+    "originalId": "EQUIL-PYQ-012",
+    "textMarkdown": "The equilibrium \\(\\mathrm{Cr}_{2} \\mathrm{O}_{7}^{2-} \\rightleftharpoons 2 \\mathrm{CrO}_{4}^{2-}\\) is shifted to the right in :",
+    "options": [
+      {
+        "id": "1",
+        "text": "an acidic medium",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "a basic medium",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "a neutral medium",
+        "isCorrect": true
+      },
+      {
+        "id": "4",
+        "text": "a weakly acidic medium",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 3\n\n**Solution:**\n\nThe correct option is (3).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Le chatelier's principle').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (3).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Le chatelier's principle",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-013",
+    "originalId": "EQUIL-PYQ-013",
+    "textMarkdown": "Consider the following reaction: \\(\\mathrm{N}_{2} \\mathrm{O}_{4}(g)=2 \\mathrm{NO}_{2}(\\mathrm{~g}): \\Delta \\mathrm{H}^{0}=+58 \\mathrm{k}\\)\nFor each of the following cases \\((\\mathrm{a}, \\mathrm{b})\\) ，the direction in which the equilibrium shifts is:\n(a)Temperature is decreased.(b)Pressure is increased by adding \\(\\mathrm{N}_{2}\\) at constant T .\n05 Sep 2020 (M)\n08 Apr 2024 (E)",
+    "options": [
+      {
+        "id": "1",
+        "text": "(a)towards product，(b)towards reactant",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "(a)towards reactant，(b)towards product",
+        "isCorrect": true
+      },
+      {
+        "id": "3",
+        "text": "(a)towards reactant，(b)no change",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "(a)towards product，(b)no change",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 2\n\n**Solution:**\n\nThe correct option is (2).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Le chatelier's principle').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (2).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Le chatelier's principle",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-014",
+    "originalId": "EQUIL-PYQ-014",
+    "textMarkdown": "The equilibrium constant for the reaction \\(\\mathrm{SO}_{3}(\\mathrm{~g}) \\rightleftharpoons \\mathrm{SO}_{2}(\\mathrm{~g})+\\frac{1}{2} \\mathrm{O}_{2}(\\mathrm{~g})\\) is \\(\\mathrm{K}_{\\mathrm{c}}=4.9 \\times 10^{-2}\\) .The value of \\(\\mathrm{K}_{\\mathrm{c}}\\) for the reaction given below is \\(2 \\mathrm{SO}_{2}(\\mathrm{~g})+\\mathrm{O}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{SO}_{3}(\\mathrm{~g})\\) is :\n04 Apr 2024 (E)",
+    "options": [
+      {
+        "id": "1",
+        "text": "4.9",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "49",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "41.6",
+        "isCorrect": true
+      },
+      {
+        "id": "4",
+        "text": "416",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 3\n\n**Solution:**\n\nThe correct option is (3).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (3).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-015",
+    "originalId": "EQUIL-PYQ-015",
+    "textMarkdown": "At \\(-20^{\\circ} \\mathrm{C}\\) and 1 atm pressure，a cylinder is filled with equal number of \\(\\mathrm{H}_{2}, \\mathrm{I}_{2}\\) and HI molecules for the reaction \\(\\mathrm{H}_{2}(\\mathrm{~g})+\\mathrm{I}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{HI}(\\mathrm{g})\\) ，the \\(\\mathrm{K}_{\\mathrm{p}}\\) for the process is \\(x \\times 10^{-1}\\) . \\(\\mathrm{x}=\\) \\(\\_\\_\\_\\_\\) ［Given : \\(\\mathrm{R}=0.082 \\mathrm{~L}^{2} \\mathrm{~atm} \\mathrm{~K}^{-1} \\mathrm{~mol}^{-1}\\) ］\n06 Apr 2024 (M)",
+    "options": [
+      {
+        "id": "1",
+        "text": "0.01",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "10",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "2",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "1",
+        "isCorrect": true
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 4\n\n**Solution:**\n\nThe correct option is (4).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (4).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-016",
+    "originalId": "EQUIL-PYQ-016",
+    "textMarkdown": "For the given hypothetical reactions，the equilibrium constants are as follows :\n\\(\\mathrm{X} \\rightleftharpoons \\mathrm{Y} ; \\mathrm{K}_{1}=1.0 \\quad \\mathrm{Y} \\rightleftharpoons \\mathrm{Z} ; \\mathrm{K}_{2}=2.0 \\quad \\mathrm{Z} \\rightleftharpoons \\mathrm{W} ; \\mathrm{K}_{3}=4.0\\)\nThe equilibrium constant for the reaction \\(\\mathrm{X} \\rightleftharpoons \\mathrm{W}\\) is\n08 Apr 2024 (M)",
+    "options": [
+      {
+        "id": "1",
+        "text": "6.0",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "12.0",
+        "isCorrect": true
+      },
+      {
+        "id": "3",
+        "text": "7.0",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "8.0",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 2\n\n**Solution:**\n\nThe correct option is (2).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (2).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-017",
+    "originalId": "EQUIL-PYQ-017",
+    "textMarkdown": "For the reaction \\(\\mathrm{N}_{2} \\mathrm{O}_{4}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{NO}_{2}(\\mathrm{~g}), \\mathrm{K}_{\\mathrm{p}}=0.492 \\mathrm{~atm}\\) at \\(300 \\mathrm{~K} . \\mathrm{K}_{\\mathrm{c}}\\) for the reaction at same temperature is \\(\\_\\_\\_\\_\\) \\(\\times 10^{-2}\\) .(Given : \\(\\mathrm{R}=0.082 \\mathrm{~L} \\mathrm{~atm} \\mathrm{~mol}^{-1} \\mathrm{~K}^{-1}\\) )\n29 Jan 2024 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 4\n\n**Solution:**\n\nThe correct option is (4).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (4).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "4"
+  },
+  {
+    "id": "EQUIL-018",
+    "originalId": "EQUIL-PYQ-018",
+    "textMarkdown": "The following concentrations were observed at 500 K for the formation of \\(\\mathrm{NH}_{3}\\) from \\(\\mathrm{N}_{2}\\) and \\(\\mathrm{H}_{2}\\) .At equilibrium :\\(\\left[\\mathrm{N}_{2}\\right]=2 \\times 10^{-2} \\mathrm{M},\\left[\\mathrm{H}_{2}\\right]=3 \\times 10^{-2} \\mathrm{M}\\) and \\(\\left[\\mathrm{NH}_{3}\\right]=1.5 \\times 10^{-2} \\mathrm{M}\\) .Equilibrium constant for the reaction is \\(\\_\\_\\_\\_\\) .\n29 Jan 2024 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 2\n\n**Solution:**\n\nThe correct option is (2).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (2).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "2"
+  },
+  {
+    "id": "EQUIL-019",
+    "originalId": "EQUIL-PYQ-019",
+    "textMarkdown": "For the given reaction，choose the correct expression of \\(\\mathrm{K}_{\\mathrm{C}}\\) from the following:\n\\(\\mathrm{Fe}^{3+}{ }_{(\\mathrm{aq})}+\\mathrm{SCN}^{-}{ }_{(\\mathrm{aq})} \\rightleftharpoons(\\mathrm{FeSCN})^{2+}{ }_{(\\mathrm{aq})}\\)\n31 Jan 2024 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 417\n\n**Solution:**\n\nThe numerical answer is 417.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 417.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "417"
+  },
+  {
+    "id": "EQUIL-020",
+    "originalId": "EQUIL-PYQ-020",
+    "textMarkdown": "\\(A_{(g)} \\rightleftharpoons B_{(g)}+\\frac{C}{2^{(g)}}\\) .The correct relationship between \\(K_{P}, \\alpha\\) and equilibrium pressure \\(P\\) is 31 Jan 2024 (E)\n\\({ }^{(2)} \\mathrm{K}_{\\mathrm{P}}=\\frac{\\alpha^{\\frac{3}{2}} \\mathrm{P}^{\\frac{1}{2}}}{(2+\\alpha)^{\\frac{1}{2}}(1-\\alpha)}\\)",
+    "options": [
+      {
+        "id": "1",
+        "text": "\\(\\mathrm{K}_{\\mathrm{P}}=\\frac{\\alpha^{\\frac{1}{2}} \\mathrm{P}^{\\frac{1}{2}}}{(2+\\alpha)^{\\frac{1}{2}}}\\)",
+        "isCorrect": true
+      },
+      {
+        "id": "2",
+        "text": "\\(\\mathrm{K}_{\\mathrm{P}}=\\frac{\\alpha^{\\frac{1}{2}} \\mathrm{P}^{\\frac{3}{2}}}{(2+\\alpha)^{\\frac{3}{2}}}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "\\(\\mathrm{K}_{\\mathrm{P}}=\\frac{\\alpha^{\\frac{1}{2}} \\mathrm{P}^{\\frac{1}{2}}}{(2+\\alpha)^{\\frac{3}{2}}}\\)",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 1\n\n**Solution:**\n\nThe correct option is (1).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (1).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-021",
+    "originalId": "EQUIL-PYQ-021",
+    "textMarkdown": "For a concentrated solution of a weak electrolyte( \\(\\mathrm{K}_{\\mathrm{eq}}=\\) equilibrium constant) \\(\\mathrm{A}_{2} \\mathrm{~B}_{3}\\) of concentration \\(\\backslash \\mathrm{C}\\) ， the degree of dissociation \\(\\backslash \\alpha /\\) is\n06 Apr 2023 (M)",
+    "options": [
+      {
+        "id": "1",
+        "text": "\\(\\left(\\frac{\\mathrm{K}_{\\mathrm{eq}}}{5 \\mathrm{c}^{4}}\\right)^{\\frac{1}{5}}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "\\(\\left(\\frac{\\mathrm{K}_{\\mathrm{eq}}}{108 \\mathrm{c}^{4}}\\right)^{\\frac{1}{5}}\\)",
+        "isCorrect": true
+      },
+      {
+        "id": "3",
+        "text": "\\(\\left(\\frac{\\mathrm{K}_{\\mathrm{eq}}}{25 \\mathrm{c}^{2}}\\right)^{\\frac{1}{5}}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "\\(\\left(\\frac{\\mathrm{K}_{\\mathrm{eq}}}{6 \\mathrm{c}^{5}}\\right)^{\\frac{1}{5}}\\)",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 2\n\n**Solution:**\n\nThe correct option is (2).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (2).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-022",
+    "originalId": "EQUIL-PYQ-022",
+    "textMarkdown": "The number of correct statement／s involving equilibria in physical processes from the following is \\(\\_\\_\\_\\_\\)\n(A)Equilibrium is possible only in a closed system at a given temperature.\n(B)Both the opposing processes occur at the same rate.\n(C)When equilibrium is attained at a given temperature，the value of all its parameters became equal\n(D)For dissolution of solids in liquids，the solubility is constant at a given temperature.\n10 Apr 2023 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 2\n\n**Solution:**\n\nThe correct option is (2).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (2).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "2"
+  },
+  {
+    "id": "EQUIL-023",
+    "originalId": "EQUIL-PYQ-023",
+    "textMarkdown": "A mixture of one mole of \\(\\mathrm{H}_{2} \\mathrm{O}\\) and 1 mole of CO is taken in a 10 litre container and heated to 725 K .At equilibrium \\(40 \\%\\) of water by mass reacts with carbon monoxide according to the equation:\n\\(\\mathrm{CO}(\\mathrm{g})+\\mathrm{H}_{2} \\mathrm{O}(\\mathrm{g}) \\rightleftharpoons \\mathrm{CO}_{2}(\\mathrm{~g})+\\mathrm{H}_{2}(\\mathrm{~g})\\) .The equilibrium constant \\(\\mathrm{K}_{\\mathrm{C}} \\times 10^{2}\\) for the reaction is\n\\(\\_\\_\\_\\_\\)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 3\n\n**Solution:**\n\nThe correct option is (3).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (3).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "3"
+  },
+  {
+    "id": "EQUIL-024",
+    "originalId": "EQUIL-PYQ-024",
+    "textMarkdown": "4.5 moles each of hydrogen and iodine is heated in a sealed ten litre vessel.At equilibrium， 3 moles of HI were found.The equilibrium constant for \\(\\mathrm{H}_{2}(\\mathrm{~g})+\\mathrm{I}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{HI}_{(\\mathrm{g})}\\) is ........ 11 Apr 2023 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 44\n\n**Solution:**\n\nThe numerical answer is 44.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 44.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "44"
+  },
+  {
+    "id": "EQUIL-025",
+    "originalId": "EQUIL-PYQ-025",
+    "textMarkdown": "Water decomposes at \\(2300 \\mathrm{~K} \\quad \\mathrm{H}_{2} \\mathrm{O}(\\mathrm{g}) \\rightarrow \\mathrm{H}_{2}(\\mathrm{~g})+\\frac{1}{2} \\mathrm{O}_{2}(\\mathrm{~g})\\)\nThe percent of water decomposing at 2300 K and 1 bar is \\(\\_\\_\\_\\_\\) (Nearest integer).Equilibrium constant for the reaction is \\(2 \\times 10^{-3}\\) at 2300 K\n29 Jan 2023 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 1\n\n**Solution:**\n\nThe correct option is (1).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (1).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "1"
+  },
+  {
+    "id": "EQUIL-026",
+    "originalId": "EQUIL-PYQ-026",
+    "textMarkdown": "At \\(298 \\mathrm{~K} \\quad \\mathrm{~N}_{2}(\\mathrm{~g})+3 \\mathrm{H}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{NH}_{3}(\\mathrm{~g}), \\mathrm{K}_{1}=4 \\times 10^{5} \\quad \\mathrm{~N}_{2}(\\mathrm{~g})+\\mathrm{O}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{NO}(\\mathrm{g}), \\mathrm{K}_{2}=1.6 \\times 10^{12} \\mathrm{H}_{2}(\\mathrm{~g})+\\frac{1}{2} \\mathrm{O}_{2}(\\mathrm{~g}) \\rightleftharpoons \\mathrm{H}_{2} \\mathrm{O}(\\mathrm{g}), \\mathrm{K}_{3}=1.0 \\times 10^{-13}\\)\nBased on above equilibria，the equilibrium constant of the reaction， \\(2 \\mathrm{NH}_{3}(\\mathrm{~g})+\\frac{5}{2} \\mathrm{O}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{NO}(\\mathrm{g})+3 \\mathrm{H}_{2} \\mathrm{O}(\\mathrm{g})\\) is \\(\\_\\_\\_\\_\\) \\(\\times 10^{-33}\\)(Nearest integer)\n29 Jan 2023 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 2\n\n**Solution:**\n\nThe correct option is (2).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (2).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "2"
+  },
+  {
+    "id": "EQUIL-027",
+    "originalId": "EQUIL-PYQ-027",
+    "textMarkdown": "At 298 K ，the equilibrium constant is \\(2 \\times 10^{15}\\) for the reaction: \\(\\mathrm{Cu}(\\mathrm{s})+2 \\mathrm{Ag}^{+}(\\mathrm{aq}) \\rightleftharpoons \\mathrm{Cu}^{2+}(\\mathrm{aq})+2 \\mathrm{Ag}(\\mathrm{s})\\) The equilibrium constant for the reaction \\(\\frac{1}{2} \\mathrm{Cu}^{2+}(\\mathrm{aq})+\\mathrm{Ag}(\\mathrm{s}) \\rightleftharpoons \\frac{1}{2} \\mathrm{Cu}(\\mathrm{s})+\\mathrm{Ag}^{+}(\\mathrm{aq})\\) is \\(\\mathrm{x} \\times 10^{-8}\\) .The value of \\(x\\) is \\(\\_\\_\\_\\_\\) .(Round off the answer to the nearest integer)\n26 Jul 2022 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 4\n\n**Solution:**\n\nThe correct option is (4).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (4).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "4"
+  },
+  {
+    "id": "EQUIL-028",
+    "originalId": "EQUIL-PYQ-028",
+    "textMarkdown": "At \\(600 \\mathrm{~K}, 2 \\mathrm{~mol}\\) of NO are mixed with 1 mol of \\(\\mathrm{O}_{2}\\) .\n\\(2 \\mathrm{NO}_{(\\mathrm{g})}+\\mathrm{O}_{2}(\\mathrm{~g}) \\rightleftarrows 2 \\mathrm{NO}_{2}(\\mathrm{~g})\\)\nThe reaction occurring as above comes to equilibrium under a total pressure of 1 atm .Analysis of the system shows that 0.6 mol of oxygen are present at equilibrium.The equilibrium constant for the reaction is \\(\\_\\_\\_\\_\\) .\n28 Jul 2022 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 2\n\n**Solution:**\n\nThe correct option is (2).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (2).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "2"
+  },
+  {
+    "id": "EQUIL-029",
+    "originalId": "EQUIL-PYQ-029",
+    "textMarkdown": "For a reaction at equilibrium \\(\\mathrm{A}(\\mathrm{g}) \\rightleftharpoons \\mathrm{B}(\\mathrm{g})+\\frac{1}{2} \\mathrm{C}(\\mathrm{g})\\) the relation between dissociation constant \\((\\mathrm{K})\\) ，degree of dissociation( \\(\\alpha\\) )and equilibrium pressure(p)is given by :\n\\({ }^{(2)} \\mathrm{K}=\\frac{\\alpha^{\\frac{1}{2}} \\mathrm{p}^{\\frac{3}{2}}}{\\left(1+\\frac{3}{2} \\alpha\\right)^{\\frac{1}{2}}(1-\\alpha)}\\)\n\\({ }^{(4)} \\mathrm{K}=\\frac{(\\alpha \\mathrm{p})^{\\frac{3}{2}}}{(1+\\alpha)(1-\\alpha)^{\\frac{1}{2}}}\\)\n\\({ }^{(1)} \\mathrm{K}=\\frac{\\alpha^{\\frac{3}{2}} \\mathrm{p}^{\\frac{1}{2}}}{(2+\\alpha)^{\\frac{1}{2}}(1-\\alpha)}\\)\n\\({ }^{(1)} \\mathrm{K}=\\frac{\\alpha^{\\frac{3}{2}} \\mathrm{p}^{\\frac{1}{2}}}{(2+\\alpha)^{\\frac{1}{2}}(1-\\alpha)}\\)\n\\({ }^{(2)} \\mathrm{K}=\\frac{\\alpha^{\\frac{1}{2}} \\mathrm{p}^{\\frac{3}{2}}}{\\left(1+\\frac{3}{2} \\alpha\\right)^{\\frac{1}{2}}(1-\\alpha)}\\)\n\\({ }^{(4)} \\mathrm{K}=\\frac{(\\alpha \\mathrm{p})^{\\frac{3}{2}}}{(1+\\alpha)(1-\\alpha)^{\\frac{1}{2}}}\\)",
+    "options": [
+      {
+        "id": "1",
+        "text": "\\(\\mathrm{K}=\\frac{(\\alpha \\mathrm{p})^{\\frac{3}{2}}}{\\left(1+\\frac{3}{2} \\alpha\\right)^{\\frac{1}{2}}(1-\\alpha)}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "\\(\\mathrm{K}=\\frac{(\\alpha \\mathrm{p})^{\\frac{3}{2}}}{\\left(1+\\frac{3}{2} \\alpha\\right)^{\\frac{1}{2}}(1-\\alpha)}\\)",
+        "isCorrect": true
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 2\n\n**Solution:**\n\nThe correct option is (2).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (2).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-030",
+    "originalId": "EQUIL-PYQ-030",
+    "textMarkdown": "\\(\\mathrm{PCl}_{5}\\) dissociates as \\(\\mathrm{PCl}_{5}(\\mathrm{~g}) \\rightleftharpoons \\mathrm{PCl}_{3}(\\mathrm{~g})+\\mathrm{Cl}_{2}(\\mathrm{~g}) 5\\) moles of \\(\\mathrm{PCl}_{5}\\) are placed in a 200 litre vessel which contains 2 moles of \\(\\mathrm{N}_{2}\\) and is maintained at 600 K .The equilibrium pressure is 2.46 atm .The equilibrium constant \\(\\mathrm{K}_{\\mathrm{p}}\\) for the dissociation of \\(\\mathrm{PCl}_{5}\\) is \\(\\_\\_\\_\\_\\) \\(\\times 10^{-3}\\) .(nearest integer)(Given: \\(\\mathrm{R}=0.082 \\mathrm{~L} \\mathrm{~atm}\\)\n\\(\\mathrm{K}^{-1} \\mathrm{~mol}^{-1}\\) ；Assume ideal gas behaviour)\n24 Jun 2022 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 1\n\n**Solution:**\n\nThe correct option is (1).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (1).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "1"
+  },
+  {
+    "id": "EQUIL-031",
+    "originalId": "EQUIL-PYQ-031",
+    "textMarkdown": "The standard free energy change( \\(\\Delta \\mathrm{G}^{\\circ}\\) )for \\(50 \\%\\) dissociation of \\(\\mathrm{N}_{2} \\mathrm{O}_{4}\\) into \\(\\mathrm{NO}_{2}\\) at \\(27^{\\circ} \\mathrm{C}\\) and 1 atm pressure is \\(-\\mathrm{x} \\mathrm{J} \\mathrm{mol}^{-1}\\) .The value of x is \\(-\\ldots . \\mathrm{J}\\) .(Nearest Integer)\n［Given : \\(\\mathrm{R}=8.31 \\mathrm{~J} \\mathrm{~K}^{-1} \\mathrm{~mol}^{-1}, \\log 1.33=0.1239 \\ln 10=2.3\\) ］\n25 Jun 2022 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 1107\n\n**Solution:**\n\nThe numerical answer is 1107.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 1107.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "1107"
+  },
+  {
+    "id": "EQUIL-032",
+    "originalId": "EQUIL-PYQ-032",
+    "textMarkdown": "At 298 K ，the equilibrium constant is \\(2 \\times 10^{15}\\) for the reaction: \\(\\mathrm{Cu}(\\mathrm{s})+2 \\mathrm{Ag}^{+}(\\mathrm{aq}) \\rightleftharpoons \\mathrm{Cu}^{2+}(\\mathrm{aq})+2 \\mathrm{Ag}(\\mathrm{s})\\)\nThe equilibr\nvalue of x is \\(\\_\\_\\_\\_\\) .(Round off the answer to the nearest integer) \\(\\_\\_\\_\\_\\) (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 4\n\n**Solution:**\n\nThe correct option is (4).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (4).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "4"
+  },
+  {
+    "id": "EQUIL-033",
+    "originalId": "EQUIL-PYQ-033",
+    "textMarkdown": "For a reaction at equilibrium \\(\\mathrm{A}(\\mathrm{g}) \\rightleftharpoons \\mathrm{B}(\\mathrm{g})+\\frac{1}{2} \\mathrm{C}(\\mathrm{g})\\) the relation between dissociation constant( K )，degree",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 2\n\n**Solution:**\n\nThe correct option is (2).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (2).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "2"
+  },
+  {
+    "id": "EQUIL-034",
+    "originalId": "EQUIL-PYQ-034",
+    "textMarkdown": "\\(2 \\mathrm{NOCl}(\\mathrm{g}) \\rightleftharpoons 2 \\mathrm{NO}(\\mathrm{g})+\\mathrm{Cl}_{2}(\\mathrm{~g})\\)\nIn an experiment， 2.0 moles of NOCl was placed in a one-litre flask and the concentration of NO after equilibrium established，was found to be \\(0.4 \\mathrm{~mol} / \\mathrm{L}\\) .The equilibrium constant at \\(30^{\\circ} \\mathrm{C}\\) is \\(\\_\\_\\_\\_\\) \\(\\times 10^{-4}\\) .\n27 Jun 2022 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 710\n\n**Solution:**\n\nThe numerical answer is 710.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 710.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "710"
+  },
+  {
+    "id": "EQUIL-035",
+    "originalId": "EQUIL-PYQ-035",
+    "textMarkdown": "The reaction rate for the reaction \\(\\left[\\mathrm{PtCl}_{4}\\right]^{2-}+\\mathrm{H}_{2} \\mathrm{O} \\rightleftharpoons\\left[\\mathrm{Pt}\\left(\\mathrm{H}_{2} \\mathrm{O}\\right) \\mathrm{Cl}_{3}\\right]^{-}+\\mathrm{Cl}^{-}\\) was measured as a function of concentrations of different species.It was observed that\n\\(\\frac{\\left.{ }^{-\\mathrm{d}[ }\\left[\\mathrm{PtCl}_{4}\\right]^{2-}\\right]}{\\mathrm{dt}}=4.8 \\times 10^{-5}\\left[\\left[\\mathrm{PtCl}_{4}\\right]^{2-}\\right]-2.4 \\times 10^{-3}\\left[\\left[\\mathrm{Pt}\\left(\\mathrm{H}_{2} \\mathrm{O}\\right) \\mathrm{Cl}_{3}\\right]^{-}\\right]\\left[\\mathrm{Cl}^{-}\\right]\\)\nwhere square brackets are used to denote molar concentrations.The equilibrium constant\n\\(\\mathrm{K}_{\\mathrm{c}}=X\\)(Nearest integer)Value of \\(\\frac{1}{X}\\) is(question is modified.)\n26 Aug 2021 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 125\n\n**Solution:**\n\nThe numerical answer is 125.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 125.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "125"
+  },
+  {
+    "id": "EQUIL-036",
+    "originalId": "EQUIL-PYQ-036",
+    "textMarkdown": "The equilibrium constant \\(K_{c}\\) at 298 K for the reaction \\(\\mathrm{A}+\\mathrm{B} \\rightleftharpoons \\mathrm{C}+\\mathrm{D}\\) is 100 .Starting with an equimolar solution with concentrations of \\(A, B, C\\) and \\(D\\) all equal to 1 M ，the equilibrium concentration of D is \\(\\_\\_\\_\\_\\) \\(\\times 10^{-2} \\mathrm{M}\\) .(Nearest integer)\n26 Aug 2021 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 50\n\n**Solution:**\n\nThe numerical answer is 50.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 50.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "50"
+  },
+  {
+    "id": "EQUIL-037",
+    "originalId": "EQUIL-PYQ-037",
+    "textMarkdown": "The number of moles of \\(\\mathrm{NH}_{3}\\) ，that must be added to 2 L of \\(0.80 \\mathrm{MAgNO}_{3}\\) in order to reduce the concentration of \\(\\mathrm{Ag}^{+}\\)ions to \\(5.0 \\times 10^{-8} \\mathrm{M}\\left(\\mathrm{K}_{\\text {formation }}\\right.\\) for \\(\\left.\\left[\\mathrm{Ag}\\left(\\mathrm{NH}_{3}\\right)_{2}\\right]^{+}=1.0 \\times 10^{8}\\right)\\) is \\(\\_\\_\\_\\_\\) .(Nearest integer)［Assume no volume change on adding \\(\\mathrm{NH}_{3}\\) ］\n27 Aug 2021 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 182\n\n**Solution:**\n\nThe numerical answer is 182.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 182.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "182"
+  },
+  {
+    "id": "EQUIL-038",
+    "originalId": "EQUIL-PYQ-038",
+    "textMarkdown": "When 5.1 g of solid \\(\\mathrm{NH}_{4} \\mathrm{HS}\\) is introduced into a two litre evacuated flask at \\(27^{\\circ} \\mathrm{C}, 20 \\%\\) of the solid decomposes into gaseous ammonia and hydrogen sulphide.The \\(\\mathrm{K}_{\\mathrm{p}}\\) for the reaction at \\(27^{\\circ} \\mathrm{C}\\) is \\(\\mathrm{x} \\times 10^{-2}\\) .The value of \\(x\\) is(Integer answer)［Given \\(1 \\mathrm{R}=0.082 \\mathrm{~L}\\) atm K-1 mol-1］\n27 Aug 2021 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 4\n\n**Solution:**\n\nThe correct option is (4).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (4).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "4"
+  },
+  {
+    "id": "EQUIL-039",
+    "originalId": "EQUIL-PYQ-039",
+    "textMarkdown": "\\(2 \\mathrm{SO}_{2}(\\mathrm{~g})+\\mathrm{O}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{SO}_{3}(\\mathrm{~g})\\)\nIn an equilibrium mixture，the partial pressures are \\(\\mathrm{P}_{\\mathrm{SO}_{3}}=43 \\mathrm{kPa} ; \\mathrm{P}_{\\mathrm{O}_{2}}=530 \\mathrm{~Pa}\\) and \\(\\mathrm{P}_{\\mathrm{SO}_{2}}=45 \\mathrm{kPa}\\) .The equilibrium constant \\(\\mathrm{K}_{\\mathrm{P}}=\\) \\(\\_\\_\\_\\_\\) \\(\\times 10^{-2}\\) .(Nearest integer)\n20 Jul 2021 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 6\n\n**Solution:**\n\nThe numerical answer is 6.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 6.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "6"
+  },
+  {
+    "id": "EQUIL-040",
+    "originalId": "EQUIL-PYQ-040",
+    "textMarkdown": "For the reaction \\(\\mathrm{A}+\\mathrm{B} \\rightleftharpoons 2 \\mathrm{C}\\) the value of equilibrium constant is 100 at 298 K .If the initial concentration of all the three species is 1 M each，then the equilibrium concentration of C is \\(\\mathrm{x} \\times 10^{-1} \\mathrm{M}\\) .The value of x is\n\\(\\_\\_\\_\\_\\) .(Nearest integer)\n25 Jul 2021 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 172\n\n**Solution:**\n\nThe numerical answer is 172.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 172.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "172"
+  },
+  {
+    "id": "EQUIL-041",
+    "originalId": "EQUIL-PYQ-041",
+    "textMarkdown": "\\(\\mathrm{PCl}_{5} \\rightleftharpoons \\mathrm{PCl}_{3}+\\mathrm{Cl}_{2} \\quad \\mathrm{~K}_{\\mathrm{c}}=1.844\\)\n3.0 moles of \\(\\mathrm{PCl}_{5}\\) is introduced in a 1 L closed reaction vessel at 380 K .The number of moles of \\(\\mathrm{PCl}_{5}\\) at equilibrium is \\(-\\times 10^{-3}\\)(Round off to the Nearest Integer)\n27 Jul 2021 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 25\n\n**Solution:**\n\nThe numerical answer is 25.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 25.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "25"
+  },
+  {
+    "id": "EQUIL-042",
+    "originalId": "EQUIL-PYQ-042",
+    "textMarkdown": "The equilibrium constant for the reaction \\(\\mathrm{A}(\\mathrm{s}) \\rightleftharpoons \\mathrm{M}(\\mathrm{s})+\\frac{1}{2} \\mathrm{O}_{2}(\\mathrm{~g})\\) is \\(\\mathrm{K}_{\\mathrm{p}}=4\\) .At equilibrium，the partial pressure of \\(\\mathrm{O}_{2}\\) is \\(\\_\\_\\_\\_\\) atm .(Round off to the nearest integer)\n27 Jul 2021 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 1400\n\n**Solution:**\n\nThe numerical answer is 1400.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 1400.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "1400"
+  },
+  {
+    "id": "EQUIL-043",
+    "originalId": "EQUIL-PYQ-043",
+    "textMarkdown": "For the reaction \\(\\mathrm{A}(\\mathrm{g}) \\rightleftharpoons \\mathrm{B}(\\mathrm{g})\\) at \\(495 \\mathrm{~K}, \\Delta_{\\mathrm{r}} \\mathrm{G}^{\\circ}=-9.478 \\mathrm{~kJ} \\mathrm{~mol}^{-1}\\) If we start the reaction in a closed container at 495 K with 22 millimoles of A ，the amount of B is the equilibrium mixture is \\(\\_\\_\\_\\_\\) millimoles.(Round off to the Nearest Integer).\\(\\left[\\mathrm{R}=8.314 \\mathrm{~J} \\mathrm{~mol}^{-1} \\mathrm{~K}^{-1} ;\\right.\\) nn \\(\\left.10=2.303\\right] 16\\) Mar 2021 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 16\n\n**Solution:**\n\nThe numerical answer is 16.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 16.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "16"
+  },
+  {
+    "id": "EQUIL-044",
+    "originalId": "EQUIL-PYQ-044",
+    "textMarkdown": "Consider the reaction \\(\\mathrm{N}_{2} \\mathrm{O}_{4}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{NO}_{2}(\\mathrm{~g})\\) The temperature at which \\(\\mathrm{K}_{\\mathrm{C}}=20.4\\) and \\(\\mathrm{K}_{\\mathrm{P}}=600.1\\) ，is\n\\(\\_\\_\\_\\_\\) K.(Round off to the Nearest Integer).［Assume all gases are ideal and \\(\\mathrm{R}=0.0831 \\mathrm{~L}\\) bar \\(\\mathrm{K}^{-1} \\mathrm{~mol}^{-1}\\) ］\n17 Mar 2021 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 20\n\n**Solution:**\n\nThe numerical answer is 20.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 20.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "20"
+  },
+  {
+    "id": "EQUIL-045",
+    "originalId": "EQUIL-PYQ-045",
+    "textMarkdown": "At 1990 K and 1 atm pressure，there are equal number of \\(\\mathrm{Cl}_{2}\\) molecules and Cl atoms in the reaction mixture.The value of \\(\\mathrm{K}_{\\mathrm{p}}\\) for the reaction \\(\\mathrm{Cl}_{2(\\mathrm{~g})}=2 \\mathrm{Cl}_{(\\mathrm{g})}\\) under the above conditions is \\(x \\times 10^{-1}\\) .The value of x is \\(\\_\\_\\_\\_\\) (Rounded off to the nearest integer)\n24 Feb 2021 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 354\n\n**Solution:**\n\nThe numerical answer is 354.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 354.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "354"
+  },
+  {
+    "id": "EQUIL-046",
+    "originalId": "EQUIL-PYQ-046",
+    "textMarkdown": "A homogeneous ideal gaseous reaction \\(\\mathrm{AB}_{2(\\mathrm{~g})} \\rightleftharpoons \\mathrm{A}_{(\\mathrm{g})}+2 \\mathrm{~B}_{(\\mathrm{g})}\\) is carried out in a 25 litre flask at \\(27^{\\circ} \\mathrm{C}\\) .The initial amount of \\(\\mathrm{AB}_{2}\\) was 1 mole and the equilibrium pressure was 1.9 atm .The value of \\(\\mathrm{K}_{\\mathrm{p}}\\) is \\(\\mathrm{x} \\times 10^{-2}\\) . The value of x is \\(\\_\\_\\_\\_\\) (Integer answer)\\(\\left[\\mathrm{R}=0.08206 \\mathrm{dm}^{3} \\mathrm{~atm} \\mathrm{~K}^{-1} \\mathrm{~mol}^{-1}\\right]\\)\n26 Feb 2021 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 5\n\n**Solution:**\n\nThe numerical answer is 5.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 5.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "5"
+  },
+  {
+    "id": "EQUIL-047",
+    "originalId": "EQUIL-PYQ-047",
+    "textMarkdown": "For the following Assertion and Reason，the correct option is\nAssertion(A):When Cu(II)and sulphide ions are mixed，they react together extremely quickly to give a solid.\nReason(R):The equilibrium constant of \\(\\mathrm{Cu}^{2+}(\\mathrm{aq})+\\mathrm{S}^{2-}(\\mathrm{aq}) \\rightleftharpoons \\mathrm{Cus}(\\mathrm{s})\\) is high because the solubility product is low.\n02 Sep 2020 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 73\n\n**Solution:**\n\nThe numerical answer is 73.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 73.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "73"
+  },
+  {
+    "id": "EQUIL-048",
+    "originalId": "EQUIL-PYQ-048",
+    "textMarkdown": "An open beaker of water in equilibrium with water vapour is in a sealed container.When a few grams of glucose are added to the beaker of water，the rate at which water molecules :\n02 Sep 2020 (M)",
+    "options": [
+      {
+        "id": "1",
+        "text": "leaves the vapour increases",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "leaves the solution increases",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "leaves the solution decreases",
+        "isCorrect": true
+      },
+      {
+        "id": "4",
+        "text": "leaves the vapour decreases",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 3\n\n**Solution:**\n\nThe correct option is (3).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (3).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-049",
+    "originalId": "EQUIL-PYQ-049",
+    "textMarkdown": "For a reaction \\(X+Y=2 Z, 1.0 \\mathrm{~mol}\\) of \\(\\mathrm{X}, 1.5 \\mathrm{~mol}\\) of Y and 0.5 mol of Z were taken in a \\(\\mathrm{1L}\\) vessel and allowed to react.At equilibrium，the concentration of \\(Z\\) was \\(1.0 \\mathrm{molL}^{-1}\\) .the equilibrium constant of the reaction is \\(\\_\\_\\_\\_\\) \\(\\frac{x}{15}\\) .The value of x is \\(\\_\\_\\_\\_\\) 05 Sep 2020 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 1\n\n**Solution:**\n\nThe correct option is (1).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (1).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "1"
+  },
+  {
+    "id": "EQUIL-050",
+    "originalId": "EQUIL-PYQ-050",
+    "textMarkdown": "The value of \\(\\mathrm{K}_{\\mathrm{c}}\\) us 64 at 800 K for the reaction \\(\\mathrm{N}_{2}(\\mathrm{~g})+3 \\mathrm{H}_{2}(\\mathrm{~g}) \\rightarrow 2 \\mathrm{NH}_{3}(\\mathrm{~g})\\) The value of \\(\\mathrm{K}_{\\mathrm{c}}\\) for the following reaction is: \\(\\mathrm{NH}_{3}(\\mathrm{~g}) \\rightarrow \\frac{1}{2} \\mathrm{~N}_{2}(\\mathrm{~g})+\\frac{3}{2} \\mathrm{H}_{2}(\\mathrm{~g})\\)\n06 Sep 2020 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 16\n\n**Solution:**\n\nThe numerical answer is 16.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 16.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "16"
+  },
+  {
+    "id": "EQUIL-051",
+    "originalId": "EQUIL-PYQ-051",
+    "textMarkdown": "For the following reaction，equilibrium constant are given:\n\\(\\mathrm{S}(\\mathrm{s})+\\mathrm{O}_{2}(\\mathrm{~g}) \\rightleftharpoons \\mathrm{SO}_{2}(\\mathrm{~g}) ; \\mathrm{K}_{1}=10^{52}, 2 \\mathrm{~S}(\\mathrm{~s})+3 \\mathrm{O}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{SO}_{3}(\\mathrm{~g}) ; \\mathrm{K}_{2}=10^{129}\\)\nThe equilibrium constant for the reaction， \\(2 \\mathrm{SO}_{2}(\\mathrm{~g})+\\mathrm{O}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{SO}_{3}(\\mathrm{~g})\\) is:\n08 Apr 2019 (E)",
+    "options": [
+      {
+        "id": "1",
+        "text": "\\(10^{154}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "\\(10^{25}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "\\(10^{181}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "\\(10^{77}\\)",
+        "isCorrect": true
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 4\n\n**Solution:**\n\nThe correct option is (4).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (4).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-052",
+    "originalId": "EQUIL-PYQ-052",
+    "textMarkdown": "For the reaction， \\(2 \\mathrm{SO}_{2}(\\mathrm{~g})+\\mathrm{O}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{SO}_{3}(\\mathrm{~g}), \\Delta \\mathrm{H}=-57.2 \\mathrm{~kJ} \\mathrm{~mol}^{-1}\\) and \\(\\mathrm{K}_{\\mathrm{c}}=1.7 \\times 10^{16}\\) . Which of the following statements is incorrect？\n10 Apr 2019 (E)",
+    "options": [
+      {
+        "id": "1",
+        "text": "The equilibrium constant is large suggestive of reaction going to completion and so，no catalyst is required.",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "The equilibrium will shift in forward direction as the pressure increases.",
+        "isCorrect": true
+      },
+      {
+        "id": "3",
+        "text": "The equilibrium constant decreases as the temperature increases.",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "The addition of inert gas at constant volume will not affect the equilibrium constant.",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 2\n\n**Solution:**\n\nThe correct option is (2).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (2).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-053",
+    "originalId": "EQUIL-PYQ-053",
+    "textMarkdown": "What are the values of \\(\\frac{\\mathrm{K}_{\\mathrm{p}}}{\\mathrm{K}_{\\mathrm{c}}}\\) for the following reactions at 300 K respectively？\n(At \\(300 \\mathrm{~K}, \\mathrm{RT}=24.62 \\mathrm{dm}^{2} \\mathrm{~atm} \\mathrm{~mol}^{-1}\\) )， \\(\\mathrm{N}_{2}(\\mathrm{~g})+\\mathrm{O}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{NO}(\\mathrm{g})\\)\n\\(\\mathrm{N}_{2} \\mathrm{O}_{4}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{NO}(\\mathrm{g}), \\mathrm{N}_{2}(\\mathrm{~g})+3 \\mathrm{H}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{NH}_{3}(\\mathrm{~g})\\)\n10 Jan 2019 (M)\n\\(606.0 \\mathrm{dm}^{6} \\mathrm{~atm}^{2} \\mathrm{~mol}^{-2}\\) ，\n\\(606.0 \\mathrm{dm}^{6} \\mathrm{~atm}^{2} \\mathrm{~mol}^{-2}\\)\n\\(1.65 \\times 10^{-3} \\mathrm{dm}^{-6} \\mathrm{~atm}^{-2} \\mathrm{~mol}^{2}\\)\n\\(1.65 \\times 10^{-3} \\mathrm{dm}^{-6} \\mathrm{~atm}^{-2} \\mathrm{~mol}^{2}\\)\n\\(606 \\mathrm{dm}^{6} \\mathrm{~atm}^{2} \\mathrm{~mol}^{-2}\\)",
+    "options": [
+      {
+        "id": "1",
+        "text": "\\(24.63 \\mathrm{dm}^{3} \\mathrm{~atm} \\mathrm{~mol}^{-1}\\) ，",
+        "isCorrect": true
+      },
+      {
+        "id": "2",
+        "text": "\\(1,24.62 \\mathrm{dm}^{6} \\mathrm{~atm}^{3} \\mathrm{~mol}^{-1}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "\\(1,24.62 \\mathrm{dm}^{3} \\mathrm{~atm} \\mathrm{~mol}^{-1}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "\\(1,4.1 \\times 10^{-2} \\mathrm{dm}^{-3} \\mathrm{~atm}^{-1} \\mathrm{~mol}\\) ，",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 1\n\n**Solution:**\n\nThe correct option is (1).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (1).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-054",
+    "originalId": "EQUIL-PYQ-054",
+    "textMarkdown": "5.1 \\(\\mathrm{g} \\mathrm{NH}_{4} \\mathrm{SH}\\) is introduced in 3.0 L evacuated flask at \\(327^{\\circ} \\mathrm{C} .30 \\%\\) of the solid \\(\\mathrm{NH}_{4} \\mathrm{SH}\\) is decomposed to \\(\\mathrm{NH}_{3}\\) and \\(\\mathrm{H}_{2} \\mathrm{~S}\\) as gases.The \\(\\mathrm{K}_{\\mathrm{P}}\\) of the reaction at \\(327^{\\circ} \\mathrm{C}\\) is ( \\(\\mathrm{R}=0.082 \\mathrm{~L} \\mathrm{~atm} \\mathrm{~mol}^{-1} \\mathrm{~K}^{-1}\\) ，Molar mass of \\(\\mathrm{S}=32 \\mathrm{~g} \\mathrm{~mol}^{-1}\\) ，Molar mass of \\(\\mathrm{N}=14 \\mathrm{~g} \\mathrm{~mol}^{-1}\\) )\n10 Jan 2019 (E)",
+    "options": [
+      {
+        "id": "1",
+        "text": "\\(0.242 \\quad \\mathrm{~atm}^{2}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "2",
+        "text": "\\(0.242 \\times 10^{-4} \\mathrm{~atm}^{2}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "\\(1 \\times 10^{-4} \\mathrm{~atm}^{2}\\)",
+        "isCorrect": true
+      },
+      {
+        "id": "4",
+        "text": "\\(4.9 \\times 10^{-3} \\mathrm{~atm}^{2}\\)",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 3\n\n**Solution:**\n\nThe correct option is (3).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (3).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-055",
+    "originalId": "EQUIL-PYQ-055",
+    "textMarkdown": "Consider the reaction \\(\\mathrm{N}_{2}(\\mathrm{~g})+3 \\mathrm{H}_{2}(\\mathrm{~g}) \\rightleftharpoons 2 \\mathrm{NH}_{3}(\\mathrm{~g})\\) .The equilibrium constant of the above reaction is \\(\\mathrm{K}_{\\mathrm{P}}\\) .If pure ammonia is left to dissociate，the partial pressure of ammonia at equilibrium is given by(Assume that \\(\\mathrm{P}_{\\mathrm{NH}_{3}} \\ll \\mathrm{P}_{\\text {total }}\\) at equilibrium)\n11 Jan 2019 (M)",
+    "options": [
+      {
+        "id": "1",
+        "text": "\\(\\frac{3^{3 / 2} \\mathrm{~K}_{\\mathrm{P}}^{1 / 2} \\mathrm{P}^{2}}{16}\\)",
+        "isCorrect": true
+      },
+      {
+        "id": "2",
+        "text": "\\(\\frac{\\mathrm{K}_{\\mathrm{P}}^{1 / 2 \\mathrm{P}^{2}}}{16}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "\\(\\frac{\\mathrm{K}_{\\mathrm{P}}^{1 / 2 \\mathrm{P}^{2}}}{4}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "\\(\\frac{3^{3 / 2} \\mathrm{~K}_{\\mathrm{P}}^{1 / 2} \\mathrm{P}^{2}}{4}\\)",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 1\n\n**Solution:**\n\nThe correct option is (1).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (1).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-056",
+    "originalId": "EQUIL-PYQ-056",
+    "textMarkdown": "In a chemical reaction， \\(\\mathrm{A}+2 \\mathrm{~B} \\stackrel{\\mathrm{~K}}{\\rightleftharpoons} 2 \\mathrm{C}+\\mathrm{D}\\) ，the initial concentration of B was 1.5 times of the concentration of A ，but the equilibrium concentrations of A and B were found to be equal.The equilibrium constant(K) for the chemical reaction is:\n12 Jan 2019 (M)\nLaw of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+    "options": [
+      {
+        "id": "1",
+        "text": "1",
+        "isCorrect": true
+      },
+      {
+        "id": "2",
+        "text": "4",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "\\(\\frac{1}{4}\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "16",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 1\n\n**Solution:**\n\nThe correct option is (1).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (1).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "Law of Mass Action，Equilibrium Constant(Kc and Kp)and its Application",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "EQUIL-057",
+    "originalId": "EQUIL-PYQ-057",
+    "textMarkdown": "The equilibrium composition for the reaction \\(\\mathrm{PCl}_{3}+\\mathrm{Cl}_{2} \\rightleftharpoons \\mathrm{PCl}_{5}\\) at 298 K is given below:\n\\(\\left[\\mathrm{PCl}_{3}\\right]_{\\mathrm{eq}}=0.2 \\mathrm{~mol} \\mathrm{~L} \\mathrm{~L}^{-1},\\left[\\mathrm{Cl}_{2}\\right]_{\\mathrm{eq}}=0.1 \\mathrm{~mol} \\mathrm{~L}{ }^{-1},\\left[\\mathrm{PCl}_{5}\\right]_{\\mathrm{eq}}=0.40 \\mathrm{~mol} \\mathrm{~L}{ }^{-1}\\)\nIf 0.2 mol of \\(\\mathrm{Cl}_{2}\\) is added at the same temperature，the equilibrium concentrations of \\(\\mathrm{PCl}_{5}\\) is \\(\\_\\_\\_\\_\\) \\(\\times 10^{-2} \\mathrm{~mol} \\mathrm{~L}^{-1}\\) .Given: \\(\\mathrm{K}_{\\mathrm{c}}\\) for the reaction at 298 K is 20\n06 Apr 2023 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 2\n\n**Solution:**\n\nThe correct option is (2).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'ADVANCED STYLE PROBLEMS').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (2).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "ADVANCED STYLE PROBLEMS",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "2"
+  },
+  {
+    "id": "EQUIL-058",
+    "originalId": "EQUIL-PYQ-058",
+    "textMarkdown": "4. 0 moles of argon and 5.0 moles of \\(\\mathrm{PCl}_{5}\\) are introduced into an evacuated flask of 100 litre capacity at 610 K .The system is allowed to equilibrate.At equilibrium，the total pressure of mixture was found to be\n6.0 atm .The \\(\\mathrm{K}_{\\mathrm{p}}\\) for the reaction is［Given : \\(\\mathrm{R}=0.082 \\mathrm{~L} \\mathrm{~atm} \\mathrm{~K}^{-1} \\mathrm{~mol}^{-1}\\) ］\n29 Jun 2022 (E)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 49\n\n**Solution:**\n\nThe numerical answer is 49.\n\nDetailed stepwise solution:\n\n1. Given data analysis.\n2. Formula application.\n3. Calculation steps leading to the value 49.\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "ADVANCED STYLE PROBLEMS",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "49"
+  },
+  {
+    "id": "EQUIL-059",
+    "originalId": "EQUIL-PYQ-059",
+    "textMarkdown": "The stepwise formation of \\(\\left[\\mathrm{Cu}\\left(\\mathrm{NH}_{3}\\right)_{4}\\right]^{2+}\\) is given below:\n\\(\\mathrm{Cu}^{2+}+\\mathrm{NH}_{3} \\stackrel{\\mathrm{~K}_{1}}{\\rightleftharpoons}\\left[\\mathrm{Cu}\\left(\\mathrm{NH}_{3}\\right)\\right]^{2+} ; \\quad\\left[\\mathrm{Cu}\\left(\\mathrm{NH}_{3}\\right)\\right]^{2+}+\\mathrm{NH}_{3} \\stackrel{\\mathrm{~K}_{2}}{\\rightleftharpoons}\\left[\\mathrm{Cu}\\left(\\mathrm{NH}_{3}\\right)_{2}\\right]^{2+}\\)\n\\(\\left[\\mathrm{Cu}\\left(\\mathrm{NH}_{3}\\right)_{2}\\right]^{2+}+\\mathrm{NH}_{3} \\stackrel{\\mathrm{~K}_{3}}{\\rightleftharpoons}\\left[\\mathrm{Cu}\\left(\\mathrm{NH}_{3}\\right)_{3}\\right]^{2+} ; \\quad\\left[\\mathrm{Cu}\\left(\\mathrm{NH}_{3}\\right)_{3}\\right]^{2+}+\\mathrm{NH}_{3} \\stackrel{\\mathrm{~K}_{4}}{\\rightleftharpoons}\\left[\\mathrm{Cu}\\left(\\mathrm{NH}_{3}\\right)_{4}\\right]^{2+}\\)\nThe value of stability constants \\(\\mathrm{K}_{1}, \\mathrm{~K}_{2}, \\mathrm{~K}_{3}\\) and \\(\\mathrm{K}_{4}\\) are \\(10^{4}, 1.58 \\times 10^{3}, 5 \\times 10^{2}\\) and \\(10^{2}\\) respectively.The overall equilibrium constants for dissociation of \\(\\left[\\mathrm{Cu}\\left(\\mathrm{NH}_{3}\\right)_{4}\\right]^{2+}\\) is \\(x \\times 10^{-12}\\) .The value of x is \\(\\_\\_\\_\\_\\) (Rounded off to the nearest integer)\n24 Feb 2021 (M)",
+    "options": [],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 1\n\n**Solution:**\n\nThe correct option is (1).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'ADVANCED STYLE PROBLEMS').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (1).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "NVT",
+    "conceptTags": [
+      {
+        "tagId": "ADVANCED STYLE PROBLEMS",
+        "weight": 1
+      }
+    ],
+    "numericalAnswer": "1"
+  },
+  {
+    "id": "EQUIL-060",
+    "originalId": "EQUIL-PYQ-060",
+    "textMarkdown": "Two solids dissociate as follows:\n\\(\\mathrm{A}(\\mathrm{s}) \\rightleftharpoons \\mathrm{B}(\\mathrm{g})+\\mathrm{C}(\\mathrm{g}) ; \\mathrm{K}_{\\mathrm{P}_{1}}=\\mathrm{x} \\operatorname{atm}^{2} \\mathrm{D}(\\mathrm{s}) \\rightleftharpoons \\mathrm{C}(\\mathrm{g})+\\mathrm{E}(\\mathrm{g}) ; \\mathrm{K}_{\\mathrm{P}_{2}}=\\mathrm{y} \\mathrm{atm}^{2}\\)\nThe total pressure when both the solids dissociate simultaneously is:\n12 Jan 2019 (M)",
+    "options": [
+      {
+        "id": "1",
+        "text": "\\(\\sqrt{x+y} \\mathrm{~atm}\\)",
+        "isCorrect": true
+      },
+      {
+        "id": "2",
+        "text": "\\(x^{2}+y^{2} a t m\\)",
+        "isCorrect": false
+      },
+      {
+        "id": "3",
+        "text": "\\((x+y)\\) atm",
+        "isCorrect": false
+      },
+      {
+        "id": "4",
+        "text": "\\(2(\\sqrt{\\mathrm{x}+\\mathrm{y}}) \\mathrm{atm}\\)",
+        "isCorrect": false
+      }
+    ],
+    "solution": {
+      "textSolutionLatex": "**Correct Answer:** 1\n\n**Solution:**\n\nThe correct option is (1).\n\nDetailed stepwise solution:\n\n1. Analyze the given question carefully.\n2. Identify the key concepts involved (e.g., 'ADVANCED STYLE PROBLEMS').\n3. Apply relevant formulas or principles.\n4. Calculate/Derive the result.\n\nResult matches Option (1).\n\n(Detailed solution pending subject expert review)."
+    },
+    "difficulty": "Medium",
+    "chapterId": "chapter_chemical_equilibrium",
+    "examSource": "JEE Main PYQ",
+    "isPYQ": true,
+    "isTopPYQ": false,
+    "questionType": "SCQ",
+    "conceptTags": [
+      {
+        "tagId": "ADVANCED STYLE PROBLEMS",
+        "weight": 1
+      }
+    ]
+  }
+]

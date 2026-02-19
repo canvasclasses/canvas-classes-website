@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Mail, Lock, ArrowRight, Loader2, Sparkles, CheckCircle2, X } from 'lucide-react'
 import { login, signup, signInWithGoogle } from './actions'
@@ -8,6 +9,8 @@ import Link from 'next/link'
 
 export default function LoginPage() {
     const [isLogin, setIsLogin] = useState(true)
+    const searchParams = useSearchParams()
+    const nextPath = searchParams.get('next') || '/'
     const [isLoading, setIsLoading] = useState(false)
     const [isGoogleLoading, setIsGoogleLoading] = useState(false)
     const [message, setMessage] = useState<{ text: string; type: 'error' | 'success' } | null>(null)
@@ -16,8 +19,10 @@ export default function LoginPage() {
         setIsGoogleLoading(true)
         setMessage(null)
         try {
-            await signInWithGoogle()
-        } catch (error) {
+            await signInWithGoogle(nextPath)
+        } catch (error: any) {
+            // Next.js redirect() throws internally — let it propagate
+            if (error?.digest?.startsWith('NEXT_REDIRECT')) throw error
             setMessage({ text: 'Failed to initiate Google login', type: 'error' })
             setIsGoogleLoading(false)
         }
@@ -103,6 +108,7 @@ export default function LoginPage() {
                         </div>
 
                         <form action={handleSubmit} className="space-y-5">
+                            <input type="hidden" name="next" value={nextPath} />
                             <div className="space-y-1.5">
                                 <label className="text-xs font-semibold text-gray-400 ml-1 uppercase tracking-wider">Email</label>
                                 <div className="relative group">
