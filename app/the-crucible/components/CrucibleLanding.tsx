@@ -5,7 +5,7 @@ import { Flame, ChevronLeft, ChevronRight, LogIn, LayoutGrid, Clock } from 'luci
 import { Chapter, Question } from './types';
 import BrowseView from './BrowseView';
 import TestView from './TestView';
-import TestConfigModal from './TestConfigModal';
+import TestConfigModal, { DifficultyMix } from './TestConfigModal';
 
 interface CrucibleLandingProps { chapters: Chapter[]; }
 type View = 'landing' | 'shloka' | 'browse' | 'test' | 'test-config';
@@ -62,44 +62,48 @@ function ShlokaScreen({ onDone }: { onDone: () => void }) {
   );
 }
 
-// ── Progress card (matches screenshot 1) ────────────────────────────────────
+// ── Progress card — compact mobile-first ────────────────────────────────────
 function ProgressCard({ isLoggedIn }: { isLoggedIn: boolean }) {
   const p = PLACEHOLDER;
   const pct = Math.round((p.attempted / p.totalQ) * 100);
-  const C = 2 * Math.PI * 30;
+  const C = 2 * Math.PI * 24;
   return (
-    <div style={{ background: 'linear-gradient(145deg,rgba(30,20,60,0.9),rgba(15,12,30,0.95))', border: '1px solid rgba(124,58,237,0.25)', borderRadius: 18, padding: '18px 20px 14px', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle,rgba(124,58,237,0.18) 0%,transparent 70%)', pointerEvents: 'none' }} />
-      <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', marginBottom: 14 }}>Your Progress</p>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-        <svg width="72" height="72" viewBox="0 0 72 72" style={{ flexShrink: 0 }}>
-          <circle cx="36" cy="36" r="30" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="6"/>
-          <circle cx="36" cy="36" r="30" fill="none" stroke="url(#ring-grad)" strokeWidth="6" strokeLinecap="round"
+    <div style={{ background: 'linear-gradient(145deg,rgba(30,20,60,0.9),rgba(15,12,30,0.95))', border: '1px solid rgba(124,58,237,0.25)', borderRadius: 16, padding: '14px 16px 12px', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', top: -30, right: -30, width: 120, height: 120, borderRadius: '50%', background: 'radial-gradient(circle,rgba(124,58,237,0.15) 0%,transparent 70%)', pointerEvents: 'none' }} />
+      {/* Top row: label + streak */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+        <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', margin: 0 }}>Your Progress</p>
+        <span style={{ fontSize: 12, fontWeight: 700, color: '#f97316' }}>{String.fromCodePoint(0x1F525)} {p.streak}-day streak</span>
+      </div>
+      {/* Stats row */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+        {/* Ring */}
+        <svg width="56" height="56" viewBox="0 0 56 56" style={{ flexShrink: 0 }}>
+          <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="5"/>
+          <circle cx="28" cy="28" r="24" fill="none" stroke="url(#ring-grad2)" strokeWidth="5" strokeLinecap="round"
             strokeDasharray={C} strokeDashoffset={C * (1 - pct / 100)}
-            transform="rotate(-90 36 36)" style={{ transition: 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)' }}
+            transform="rotate(-90 28 28)" style={{ transition: 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)' }}
           />
-          <defs><linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#38bdf8"/><stop offset="100%" stopColor="#818cf8"/></linearGradient></defs>
-          <text x="36" y="33" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="800" fontFamily="monospace">{pct}%</text>
-          <text x="36" y="46" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="8" fontFamily="sans-serif">complete</text>
+          <defs><linearGradient id="ring-grad2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#38bdf8"/><stop offset="100%" stopColor="#818cf8"/></linearGradient></defs>
+          <text x="28" y="25" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="800" fontFamily="monospace">{pct}%</text>
+          <text x="28" y="36" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="7" fontFamily="sans-serif">done</text>
         </svg>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 28px', flex: 1 }}>
-          <div><div style={{ fontSize: 22, fontWeight: 800, color: '#a78bfa', fontFamily: 'monospace', lineHeight: 1 }}>{p.attempted.toLocaleString()}</div><div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Attempted</div></div>
-          <div><div style={{ fontSize: 22, fontWeight: 800, color: '#38bdf8', fontFamily: 'monospace', lineHeight: 1 }}>{p.totalQ.toLocaleString()}</div><div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Total Qs</div></div>
-          <div><div style={{ fontSize: 22, fontWeight: 800, color: '#34d399', fontFamily: 'monospace', lineHeight: 1 }}>{p.mastered}/{p.masteredOf}</div><div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Mastered</div></div>
-          <div><div style={{ fontSize: 22, fontWeight: 800, color: '#fbbf24', fontFamily: 'monospace', lineHeight: 1 }}>{p.accuracy}%</div><div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Accuracy</div></div>
+        {/* 4 stats in 2×2 grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px 20px', flex: 1 }}>
+          <div><div style={{ fontSize: 18, fontWeight: 800, color: '#a78bfa', fontFamily: 'monospace', lineHeight: 1 }}>{p.attempted.toLocaleString()}</div><div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 1 }}>Attempted</div></div>
+          <div><div style={{ fontSize: 18, fontWeight: 800, color: '#38bdf8', fontFamily: 'monospace', lineHeight: 1 }}>{p.totalQ.toLocaleString()}</div><div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 1 }}>Total Qs</div></div>
+          <div><div style={{ fontSize: 18, fontWeight: 800, color: '#34d399', fontFamily: 'monospace', lineHeight: 1 }}>{p.mastered}/{p.masteredOf}</div><div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 1 }}>Mastered</div></div>
+          <div><div style={{ fontSize: 18, fontWeight: 800, color: '#fbbf24', fontFamily: 'monospace', lineHeight: 1 }}>{p.accuracy}%</div><div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 1 }}>Accuracy</div></div>
         </div>
       </div>
-      <div style={{ height: 1, background: 'rgba(255,255,255,0.07)', margin: '14px 0 12px' }} />
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <span style={{ fontSize: 13, fontWeight: 700, color: '#f97316' }}>{String.fromCodePoint(0x1F525)} {p.streak}-day streak</span>
-        <div style={{ display: 'flex', gap: 5 }}>
-          {DAYS.map((d, i) => (
-            <div key={i} style={{ width: 26, height: 26, borderRadius: 7, background: p.activeDays.includes(i) ? '#b45309' : 'rgba(255,255,255,0.07)', border: `1px solid ${p.activeDays.includes(i) ? '#d97706' : 'rgba(255,255,255,0.1)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: p.activeDays.includes(i) ? '#fde68a' : 'rgba(255,255,255,0.3)' }}>{d}</div>
-          ))}
-        </div>
+      {/* Day dots */}
+      <div style={{ display: 'flex', gap: 4, marginTop: 10 }}>
+        {DAYS.map((d, i) => (
+          <div key={i} style={{ flex: 1, height: 22, borderRadius: 6, background: p.activeDays.includes(i) ? '#b45309' : 'rgba(255,255,255,0.06)', border: `1px solid ${p.activeDays.includes(i) ? '#d97706' : 'rgba(255,255,255,0.08)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 700, color: p.activeDays.includes(i) ? '#fde68a' : 'rgba(255,255,255,0.25)' }}>{d}</div>
+        ))}
       </div>
       {!isLoggedIn && (
-        <button style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 7, padding: '7px 16px', background: 'rgba(124,58,237,0.18)', border: '1px solid rgba(124,58,237,0.35)', borderRadius: 10, color: '#a78bfa', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
+        <button style={{ marginTop: 10, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, padding: '8px 16px', background: 'rgba(124,58,237,0.15)', border: '1px solid rgba(124,58,237,0.3)', borderRadius: 10, color: '#a78bfa', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
           <LogIn style={{ width: 13, height: 13 }} /> Log in to track real progress
         </button>
       )}
@@ -190,7 +194,7 @@ function ChapterSheet({ classLevel, chapters, selected, onToggle, onClose, onSel
   );
 }
 
-// ── Class card ───────────────────────────────────────────────────────────────
+// ── Class card — clean compact mobile layout ─────────────────────────────────
 function ClassCard({ classLevel, chapters, selected, onOpen }: {
   classLevel: number; chapters: Chapter[]; selected: Set<string>; onOpen: () => void;
 }) {
@@ -199,50 +203,78 @@ function ClassCard({ classLevel, chapters, selected, onOpen }: {
   const totalQ   = chapters.reduce((s, c) => s + (c.question_count ?? 0), 0);
   const selQ     = chapters.filter(c => selected.has(c.id)).reduce((s, c) => s + (c.question_count ?? 0), 0);
   const p        = selCount > 0 ? Math.round((selCount / chapters.length) * 100) : 0;
-  const C        = 2 * Math.PI * 18;
+  const active   = selCount > 0;
   return (
-    <div onClick={onOpen} style={{ flex: 1, padding: '16px', borderRadius: 18, cursor: 'pointer', background: selCount > 0 ? `${color}12` : 'rgba(255,255,255,0.04)', border: `1.5px solid ${selCount > 0 ? color + '55' : 'rgba(255,255,255,0.1)'}`, transition: 'all 0.2s', userSelect: 'none', position: 'relative', overflow: 'hidden', boxShadow: selCount > 0 ? `0 0 24px ${color}20` : 'none' }}>
-      {selCount > 0 && <div style={{ position: 'absolute', top: -30, right: -30, width: 110, height: 110, borderRadius: '50%', background: `radial-gradient(circle, ${color}25 0%, transparent 70%)`, pointerEvents: 'none' }} />}
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 14 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 32, height: 32, borderRadius: 10, background: color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 800, color: '#000', flexShrink: 0 }}>{classLevel}</div>
-          <div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>Class {classLevel}</div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)' }}>{chapters.length} chapters</div>
-          </div>
+    <div onClick={onOpen} style={{ flex: 1, padding: '14px 12px', borderRadius: 16, cursor: 'pointer', background: active ? `${color}10` : 'rgba(255,255,255,0.04)', border: `1.5px solid ${active ? color + '50' : 'rgba(255,255,255,0.09)'}`, transition: 'all 0.2s', userSelect: 'none', position: 'relative', overflow: 'hidden' }}>
+      {/* Header row */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+        <div style={{ width: 28, height: 28, borderRadius: 8, background: color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 900, color: '#000', flexShrink: 0 }}>{classLevel}</div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', lineHeight: 1.2 }}>Class {classLevel}</div>
+          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', marginTop: 1 }}>{chapters.length} chapters</div>
         </div>
-        <svg width="44" height="44" viewBox="0 0 44 44">
-          <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="4"/>
-          <circle cx="22" cy="22" r="18" fill="none" stroke={color} strokeWidth="4" strokeLinecap="round"
-            strokeDasharray={C} strokeDashoffset={C * (1 - p / 100)}
-            transform="rotate(-90 22 22)" style={{ transition: 'stroke-dashoffset 0.7s cubic-bezier(.4,0,.2,1)' }}
-          />
-          <text x="22" y="22" textAnchor="middle" dominantBaseline="central" fill="#fff" fontSize="9" fontWeight="800" fontFamily="monospace">{p}%</text>
-        </svg>
+        <ChevronRight style={{ width: 13, height: 13, color: active ? color : 'rgba(255,255,255,0.3)', flexShrink: 0 }} />
       </div>
-      <div style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
-        <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 18, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{totalQ > 0 ? totalQ.toLocaleString() : '—'}</div>
-          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Total Qs</div>
+      {/* Progress bar */}
+      <Bar value={p} color={color} h={2} />
+      {/* Bottom stats */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 8 }}>
+        <div>
+          <div style={{ fontSize: 16, fontWeight: 800, color: active ? color : 'rgba(255,255,255,0.6)', fontFamily: 'monospace', lineHeight: 1 }}>{totalQ > 0 ? totalQ.toLocaleString() : '—'}</div>
+          <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Total Qs</div>
         </div>
-        {selCount > 0 && (
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 18, fontWeight: 800, color: '#fff', fontFamily: 'monospace', lineHeight: 1 }}>{selQ > 0 ? selQ.toLocaleString() : selCount}</div>
-            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>{selQ > 0 ? 'Selected Qs' : 'chapters sel.'}</div>
+        {active ? (
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontSize: 16, fontWeight: 800, color: '#fff', fontFamily: 'monospace', lineHeight: 1 }}>{selCount}</div>
+            <div style={{ fontSize: 9, color: color, marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 700 }}>ch selected</div>
           </div>
-        )}
-      </div>
-      <Bar value={p} color={color} h={3} />
-      <div style={{ marginTop: 12, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        {selCount > 0 ? (
-          <span style={{ fontSize: 11, fontWeight: 700, color, background: `${color}18`, padding: '3px 10px', borderRadius: 99, border: `1px solid ${color}33` }}>{selCount} selected</span>
         ) : (
-          <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Tap to select chapters</span>
+          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)' }}>Tap to select</span>
         )}
-        <ChevronRight style={{ width: 14, height: 14, color: 'rgba(255,255,255,0.4)' }} />
       </div>
     </div>
   );
+}
+
+// ── Smart question selector ──────────────────────────────────────────────────
+// Strategy: filter by difficulty mix → shuffle within each bucket → interleave
+// This guarantees variety across sessions while respecting the chosen difficulty.
+function selectTestQuestions(all: Question[], count: number, mix: DifficultyMix): Question[] {
+  const shuffle = <T,>(arr: T[]): T[] => [...arr].sort(() => Math.random() - 0.5);
+
+  let pool: Question[];
+  if (mix === 'pyq') {
+    pool = all.filter(q => q.metadata.is_pyq);
+    if (pool.length === 0) pool = all; // fallback if no PYQs tagged yet
+  } else if (mix === 'easy') {
+    const easy   = shuffle(all.filter(q => q.metadata.difficulty === 'Easy'));
+    const medium = shuffle(all.filter(q => q.metadata.difficulty === 'Medium'));
+    pool = [...easy, ...medium];
+  } else if (mix === 'hard') {
+    const medium = shuffle(all.filter(q => q.metadata.difficulty === 'Medium'));
+    const hard   = shuffle(all.filter(q => q.metadata.difficulty === 'Hard'));
+    pool = [...medium, ...hard];
+  } else {
+    // balanced: ~30% easy, ~40% medium, ~30% hard — interleaved
+    const easy   = shuffle(all.filter(q => q.metadata.difficulty === 'Easy'));
+    const medium = shuffle(all.filter(q => q.metadata.difficulty === 'Medium'));
+    const hard   = shuffle(all.filter(q => q.metadata.difficulty === 'Hard'));
+    const eN = Math.round(count * 0.3), hN = Math.round(count * 0.3), mN = count - eN - hN;
+    pool = [
+      ...easy.slice(0, eN),
+      ...medium.slice(0, mN),
+      ...hard.slice(0, hN),
+    ];
+    // if any bucket was short, fill from the rest
+    if (pool.length < count) {
+      const used = new Set(pool.map(q => q.id));
+      const rest = shuffle(all.filter(q => !used.has(q.id)));
+      pool = [...pool, ...rest];
+    }
+    pool = shuffle(pool); // final shuffle so difficulties are interleaved
+  }
+
+  return pool.slice(0, count);
 }
 
 // ── Shared question fetcher ──────────────────────────────────────────────────
@@ -330,23 +362,24 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
     setShowTestConfig(true);
   };
 
-  const startTest = (count: number) => {
+  const startTest = (count: number, mix: DifficultyMix) => {
     setShowTestConfig(false);
     if (loading) return;
     setLoading(true);
     setPendingMode('test');
-    setView('shloka'); // show shloka right away
-    fetchQuestions(Array.from(selectedChapters), count)
+    setView('shloka');
+    fetchQuestions(Array.from(selectedChapters))
       .then(qs => {
         if (qs.length === 0) { notify('No questions found.'); setView('landing'); return; }
-        const shuffled = qs.sort(() => Math.random() - 0.5).slice(0, count);
-        setQuestions(shuffled);
+        const selected = selectTestQuestions(qs, count, mix);
+        setQuestions(selected);
       })
       .catch(() => { notify('Failed to load questions.'); setView('landing'); })
       .finally(() => setLoading(false));
   };
 
   // View routing
+
   if (view === 'shloka') return <ShlokaScreen onDone={onShlokaDone} />;
   if (view === 'browse') return <BrowseView questions={questions} chapters={chapters} onBack={() => setView('landing')} />;
   if (view === 'test')   return <TestView   questions={questions} onBack={() => setView('landing')} />;
@@ -409,16 +442,19 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
         <div style={{ maxWidth: 900, margin: '0 auto', padding: '20px 14px' }}>
 
           {/* GREETING */}
-          <div style={{ marginBottom: 22, animation: 'fadeUp 0.3s ease' }}>
-            <p style={{ fontSize: 11, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: 4 }}>Chemistry PYQ Bank</p>
-            <h1 style={{ fontSize: 'clamp(24px,6vw,34px)', fontWeight: 800, lineHeight: 1.2, margin: 0 }}>
-              What will you<br />
-              <em style={{ color: '#a78bfa', fontStyle: 'italic' }}>conquer today?</em>
+          <div style={{ marginBottom: 18, animation: 'fadeUp 0.3s ease' }}>
+            <p style={{ fontSize: 10, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ display: 'inline-block', width: 16, height: 1, background: 'rgba(255,255,255,0.2)' }} />
+              Practice · Test · Improve
+              <span style={{ display: 'inline-block', width: 16, height: 1, background: 'rgba(255,255,255,0.2)' }} />
+            </p>
+            <h1 style={{ fontSize: 'clamp(22px,5.5vw,32px)', fontWeight: 900, lineHeight: 1.15, margin: 0 }}>
+              Master Chemistry,{' '}<em style={{ color: '#a78bfa', fontStyle: 'italic' }}>one question at a time.</em>
             </h1>
           </div>
 
           {/* PROGRESS CARD */}
-          <div style={{ marginBottom: 22 }}><ProgressCard isLoggedIn={isLoggedIn} /></div>
+          <div style={{ marginBottom: 18 }}><ProgressCard isLoggedIn={isLoggedIn} /></div>
 
           {/* SELECT CHAPTERS LABEL */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
@@ -430,7 +466,7 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
           </div>
 
           {/* CLASS CARDS */}
-          <div style={{ display: 'flex', gap: 12, marginBottom: 14 }}>
+          <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
             <ClassCard classLevel={11} chapters={class11} selected={selectedChapters} onOpen={() => setOpenSheet(11)} />
             <ClassCard classLevel={12} chapters={class12} selected={selectedChapters} onOpen={() => setOpenSheet(12)} />
           </div>
