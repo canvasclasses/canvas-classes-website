@@ -1,6 +1,8 @@
 const { MongoClient } = require('mongodb');
+require('dotenv').config({ path: '../.env.local' });
 
-const uri = 'mongodb+srv://REDACTED_USER:REDACTED_PASSWORD@crucible-cluster.x9hcudc.mongodb.net/crucible?retryWrites=true&w=majority&appName=Crucible-Cluster';
+const uri = process.env.MONGODB_URI;
+if (!uri) throw new Error('MONGODB_URI not set in .env.local');
 const client = new MongoClient(uri);
 
 async function checkAllCollections() {
