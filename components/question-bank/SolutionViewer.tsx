@@ -35,11 +35,20 @@ interface Question {
 }
 
 interface SolutionAsset {
-    // Add properties for SolutionAsset
+    videoUrl?: string;
+    handwrittenSolutionImageUrl?: string;
+    textSolutionLatex?: string;
+    [key: string]: any;
 }
 
 interface SourceReference {
-    // Add properties for SourceReference
+    type?: string;
+    pyqExam?: string;
+    pyqShift?: string;
+    ncertBook?: string;
+    ncertChapter?: string;
+    sourceName?: string;
+    [key: string]: any;
 }
 
 interface SolutionViewerProps {

@@ -27,6 +27,13 @@ import 'katex/dist/katex.min.css';
 import FocusDashboard from './FocusDashboard';
 
 
+interface TaxonomyNode {
+    id: string;
+    name: string;
+    parent_id: string | null;
+    type: string;
+}
+
 interface QuestionBankGameProps {
     initialQuestions: Question[];
     taxonomy?: TaxonomyNode[];
@@ -268,7 +275,7 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
         if (!chapterId) return '';
 
         // 1. Try to find in taxonomy
-        const node = taxonomy?.find(t => t.id === chapterId || t._id === chapterId);
+        const node = taxonomy?.find(t => t.id === chapterId);
         if (node?.name) return node.name;
 
         // 2. Fallback to slug-to-name conversion
@@ -328,7 +335,7 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
         recordAttemptWithSR(
             activeQuestion.id,
             activeQuestion.chapterId || 'Unknown',
-            activeQuestion.difficulty,
+            activeQuestion.difficulty || 'Medium',
             correct,
             quality
         );
@@ -387,8 +394,8 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
             filteredQuestions.forEach((q, idx) => {
                 const answer = examAnswers[idx];
                 if (answer) {
-                    const isCorrect = q.options.find(o => o.id === answer)?.isCorrect;
-                    recordAttempt(q.id, q.chapterId || 'Unknown', q.difficulty, !!isCorrect);
+                    const isCorrect = q.options.find((o: any) => o.id === answer)?.isCorrect;
+                    recordAttempt(q.id, q.chapterId || 'Unknown', q.difficulty || 'Medium', !!isCorrect);
 
                     // Log to backend API for 4-Bucket Architecture (exam mode)
                     logQuestionAttempt(q.id, !!isCorrect, answer, 'exam');
@@ -528,7 +535,7 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
             const answer = examAnswers[idx];
             if (!answer) skippedCount++;
             else {
-                const correct = q.options.find(o => o.id === answer)?.isCorrect;
+                const correct = q.options.find((o: any) => o.id === answer)?.isCorrect;
                 if (correct) solvedCount++;
                 else incorrectCount++;
             }
@@ -811,7 +818,7 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
                                         <span className="text-sm font-bold text-slate-300">Question {currentIndex + 1}</span>
                                         {/* Source/Year Tags */}
                                         <div className="flex flex-wrap gap-1.5">
-                                            {filteredQuestions[currentIndex].sourceReferences?.map((ref, i) => (
+                                            {filteredQuestions[currentIndex].sourceReferences?.map((ref: any, i: number) => (
                                                 <span key={i} className="text-[9px] font-bold uppercase tracking-wider text-slate-500 bg-white/5 px-1.5 py-0.5 rounded border border-white/5 whitespace-nowrap">
                                                     {ref.type === 'PYQ' ? `${ref.pyqExam || ''} ${ref.pyqShift || ''}`.trim() || 'PYQ' :
                                                         ref.type === 'NCERT' ? `${ref.ncertBook || ''} ${ref.ncertChapter || ''}`.trim() || 'NCERT' :
