@@ -24,7 +24,7 @@ function Bar({ value, color, h = 3 }: { value: number; color: string; h?: number
 
 // ── Shloka loading screen (2 seconds) ────────────────────────────────────────
 function ShlokaScreen({ onDone }: { onDone: () => void }) {
-  useEffect(() => { const t = setTimeout(onDone, 2200); return () => clearTimeout(t); }, [onDone]);
+  useEffect(() => { const t = setTimeout(onDone, 1600); return () => clearTimeout(t); }, [onDone]);
   return (
     <div style={{ minHeight: '100vh', background: 'radial-gradient(ellipse at center,#1a0e00 0%,#0a0700 45%,#050507 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-60%)', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle,rgba(180,100,0,0.18) 0%,transparent 65%)', pointerEvents: 'none' }} />
@@ -273,50 +273,154 @@ const DIFF_COLOR = (d: string) => d === 'Easy' ? '#34d399' : d === 'Medium' ? '#
 
 // ── Browse / Practice mode ───────────────────────────────────────────────────
 function BrowseView({ questions, chapters, onBack }: { questions: Question[]; chapters: Chapter[]; onBack: () => void }) {
-  const [selIdx, setSelIdx] = useState(0);
+  const [selIdx, setSelIdx] = useState<number | null>(null);
   const [showSol, setShowSol] = useState(false);
   const [starred, setStarred] = useState<Set<string>>(new Set());
   const [selectedOpt, setSelectedOpt] = useState<string | null>(null);
-  const q = questions[selIdx];
+  const [isMobile, setIsMobile] = useState(false);
+  // Per-card state for mobile accordion
+  const [cardSol, setCardSol] = useState<Record<number, boolean>>({});
+  const [cardOpt, setCardOpt] = useState<Record<number, string | null>>({});
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const q = selIdx !== null ? questions[selIdx] : questions[0];
+  const desktopIdx = selIdx ?? 0;
   const chName = (id: string) => chapters.find(c => c.id === id)?.name || id;
   const toggleStar = (id: string) => setStarred(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
-
   const goTo = (i: number) => { setSelIdx(i); setShowSol(false); setSelectedOpt(null); };
 
+  // Shared question detail renderer
+  const renderDetail = (qq: Question, solShown: boolean, setSolShown: (v: boolean) => void, optChosen: string | null, setOptChosen: (v: string | null) => void) => (
+    <div>
+      <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 16px', marginBottom: 12 }}>
+        <MathRenderer markdown={qq.question_text.markdown} className="text-sm leading-relaxed" imageScale={qq.svg_scales?.question ?? 100} />
+      </div>
+      {qq.options && qq.options.length > 0 && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 7, marginBottom: 12 }}>
+          {qq.options.map((opt: any) => {
+            const sel = optChosen === opt.id; const correct = opt.is_correct; const rev = solShown;
+            let bc = sel ? '#3b82f6' : 'rgba(255,255,255,0.1)', bg = sel ? 'rgba(59,130,246,0.1)' : 'rgba(255,255,255,0.03)';
+            if (rev && correct) { bc = '#34d399'; bg = 'rgba(52,211,153,0.1)'; } else if (rev && sel && !correct) { bc = '#f87171'; bg = 'rgba(248,113,113,0.08)'; }
+            return (
+              <button key={opt.id} onClick={() => { if (!solShown) { setOptChosen(opt.id); setSolShown(true); } }}
+                style={{ padding: '11px 13px', borderRadius: 10, border: `1.5px solid ${bc}`, background: bg, display: 'flex', alignItems: 'center', gap: 10, cursor: solShown ? 'default' : 'pointer', textAlign: 'left', color: '#fff', fontSize: 13, width: '100%' }}>
+                <span style={{ width: 24, height: 24, borderRadius: 6, border: `1.5px solid ${bc}`, background: sel ? (rev ? (correct ? '#34d399' : '#f87171') : '#3b82f6') : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: sel ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
+                  {rev && correct ? <Check style={{ width: 12, height: 12 }} /> : opt.id.toUpperCase()}
+                </span>
+                <span style={{ flex: 1 }}><MathRenderer markdown={opt.text || ''} className="text-sm" imageScale={qq.svg_scales?.[`option_${opt.id}`] ?? 100} /></span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+      {qq.type === 'NVT' && !solShown && (
+        <div style={{ marginBottom: 12 }}>
+          <input type="text" placeholder="Enter integer answer" onKeyDown={e => { if (e.key === 'Enter') setSolShown(true); }} onChange={e => setOptChosen(e.target.value)}
+            style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '1.5px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.05)', color: '#fff', fontSize: 15, outline: 'none', boxSizing: 'border-box' }} />
+          <button onClick={() => setSolShown(true)} style={{ marginTop: 8, padding: '10px 20px', borderRadius: 10, border: 'none', background: '#7c3aed', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>Submit</button>
+        </div>
+      )}
+      <button onClick={() => setSolShown(!solShown)}
+        style={{ padding: '9px 16px', borderRadius: 9, border: '1px solid rgba(124,58,237,0.4)', background: solShown ? 'rgba(124,58,237,0.15)' : 'transparent', color: '#a78bfa', fontSize: 12, fontWeight: 700, cursor: 'pointer', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
+        <ChevronRight style={{ width: 13, height: 13, transform: solShown ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
+        {solShown ? 'Hide Solution' : 'View Solution'}
+      </button>
+      {solShown && qq.solution.text_markdown && (
+        <div style={{ padding: '14px 16px', borderRadius: 12, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)' }}>
+          <div style={{ fontSize: 10, fontWeight: 700, color: '#a78bfa', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
+          <MathRenderer markdown={qq.solution.text_markdown} className="text-sm leading-relaxed" imageScale={qq.svg_scales?.solution ?? 100} />
+        </div>
+      )}
+    </div>
+  );
+
+  const sharedHeader = (
+    <header style={{ background: 'rgba(8,10,15,0.97)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.07)', flexShrink: 0 }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 12 }}>
+        <button onClick={onBack} style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.07)', border: 'none', color: '#fff', cursor: 'pointer', fontSize: 12, flexShrink: 0 }}>
+          <ChevronLeft style={{ width: 14, height: 14 }} /> EXIT
+        </button>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 14, fontWeight: 700 }}>Practice Session</div>
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)' }}>{questions.length} Questions{isMobile ? ' · tap to expand' : ' · Any Difficulty'}</div>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 12px', background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.3)', borderRadius: 99, fontSize: 12, color: '#34d399', fontWeight: 700, flexShrink: 0 }}>
+          {String.fromCodePoint(0x1F525)} 0 STREAK
+        </div>
+      </div>
+    </header>
+  );
+
+  // ── MOBILE: full-screen accordion ───────────────────────────────────────────
+  if (isMobile) {
+    return (
+      <div style={{ height: '100vh', overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
+        {sharedHeader}
+        <div style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch' } as any}>
+          {questions.map((qq, i) => {
+            const expanded = selIdx === i;
+            const solShown = cardSol[i] ?? false;
+            const optChosen = cardOpt[i] ?? null;
+            return (
+              <div key={qq.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', background: expanded ? 'rgba(124,58,237,0.05)' : 'transparent', borderLeft: `3px solid ${expanded ? '#7c3aed' : 'transparent'}` }}>
+                {/* Collapsed row */}
+                <div onClick={() => expanded ? setSelIdx(null) : goTo(i)}
+                  style={{ padding: '13px 14px', cursor: 'pointer', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                  <span style={{ width: 28, height: 28, borderRadius: 8, background: expanded ? '#7c3aed' : 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: expanded ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>Q{i + 1}</span>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', gap: 5, marginBottom: 5 }}>
+                      <span style={{ fontSize: 10, fontWeight: 700, color: DIFF_COLOR(qq.metadata.difficulty), background: DIFF_COLOR(qq.metadata.difficulty) + '18', padding: '1px 7px', borderRadius: 99 }}>{qq.metadata.difficulty}</span>
+                      <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.06)', padding: '1px 7px', borderRadius: 99 }}>{qq.type}</span>
+                    </div>
+                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' } as any}>
+                      <MathRenderer markdown={qq.question_text.markdown.slice(0, 100)} className="text-sm" />
+                    </div>
+                  </div>
+                  <ChevronRight style={{ width: 14, height: 14, color: 'rgba(255,255,255,0.3)', flexShrink: 0, transform: expanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s', marginTop: 6 }} />
+                </div>
+                {/* Expanded content */}
+                {expanded && (
+                  <div style={{ padding: '0 14px 4px' }}>
+                    {renderDetail(qq, solShown, (v) => setCardSol(s => ({ ...s, [i]: v })), optChosen, (v) => setCardOpt(s => ({ ...s, [i]: v })))}
+                    <button onClick={() => setSelIdx(null)}
+                      style={{ width: '100%', marginTop: 8, marginBottom: 12, padding: '10px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, color: 'rgba(255,255,255,0.4)', fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                      <ChevronRight style={{ width: 13, height: 13, transform: 'rotate(-90deg)' }} /> Collapse
+                    </button>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+          <div style={{ height: 40 }} />
+        </div>
+      </div>
+    );
+  }
+
+  // ── DESKTOP: split panel ─────────────────────────────────────────────────────
+  const dq = questions[desktopIdx];
   return (
     <div style={{ height: '100vh', overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
-      {/* Header */}
-      <header style={{ background: 'rgba(8,10,15,0.96)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.07)', flexShrink: 0 }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 12 }}>
-          <button onClick={onBack} style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.07)', border: 'none', color: '#fff', cursor: 'pointer', fontSize: 12 }}>
-            <ChevronLeft style={{ width: 15, height: 15 }} /> EXIT
-          </button>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 14, fontWeight: 700 }}>Practice Session</div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)' }}>{questions.length} Questions · Any Difficulty</div>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 14px', background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.3)', borderRadius: 99, fontSize: 12, color: '#34d399', fontWeight: 700 }}>
-            {String.fromCodePoint(0x1F525)} 0 STREAK
-          </div>
-        </div>
-      </header>
-
-      {/* Split layout — left scrolls independently, right stays put */}
-      <div style={{ flex: 1, display: 'flex', width: '100%', overflow: 'hidden', height: 'calc(100vh - 53px)' }}>
-        {/* Left: question list — scrollable, 40% width */}
-        <div style={{ width: '40%', minWidth: 360, maxWidth: 560, flexShrink: 0, borderRight: '1px solid rgba(255,255,255,0.07)', overflowY: 'auto', background: 'rgba(255,255,255,0.01)' }}>
+      {sharedHeader}
+      <div style={{ flex: 1, display: 'flex', width: '100%', overflow: 'hidden' }}>
+        {/* Left list */}
+        <div style={{ width: '38%', minWidth: 300, maxWidth: 480, flexShrink: 0, borderRight: '1px solid rgba(255,255,255,0.07)', overflowY: 'auto' }}>
           {questions.map((qq, i) => (
-            <div key={qq.id} onClick={() => goTo(i)} style={{ padding: '14px 16px', borderBottom: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer', background: i === selIdx ? 'rgba(124,58,237,0.1)' : 'transparent', borderLeft: i === selIdx ? '3px solid #7c3aed' : '3px solid transparent', transition: 'background 0.1s' }}>
+            <div key={qq.id} onClick={() => goTo(i)} style={{ padding: '13px 16px', borderBottom: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer', background: i === desktopIdx ? 'rgba(124,58,237,0.1)' : 'transparent', borderLeft: i === desktopIdx ? '3px solid #7c3aed' : '3px solid transparent', transition: 'background 0.1s' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                <span style={{ width: 26, height: 26, borderRadius: 7, background: i === selIdx ? '#7c3aed' : 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: i === selIdx ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
-                  Q{i + 1}
-                </span>
+                <span style={{ width: 26, height: 26, borderRadius: 7, background: i === desktopIdx ? '#7c3aed' : 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: i === desktopIdx ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>Q{i + 1}</span>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ display: 'flex', gap: 5, marginBottom: 6, flexWrap: 'wrap' }}>
+                  <div style={{ display: 'flex', gap: 5, marginBottom: 5 }}>
                     <span style={{ fontSize: 10, fontWeight: 700, color: DIFF_COLOR(qq.metadata.difficulty), background: DIFF_COLOR(qq.metadata.difficulty) + '18', padding: '1px 7px', borderRadius: 99 }}>{qq.metadata.difficulty}</span>
                     <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.06)', padding: '1px 7px', borderRadius: 99 }}>{qq.type}</span>
                   </div>
-                  <div style={{ fontSize: 12, color: i === selIdx ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.6)', lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                  <div style={{ fontSize: 12, color: i === desktopIdx ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.6)', lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' } as any}>
                     <MathRenderer markdown={qq.question_text.markdown.slice(0, 120)} className="text-sm" />
                   </div>
                 </div>
@@ -324,104 +428,23 @@ function BrowseView({ questions, chapters, onBack }: { questions: Question[]; ch
             </div>
           ))}
         </div>
-
-        {/* Right: question detail — independent scroll, constrained width */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '24px 32px 60px', height: '100%' }}>
-          {q && (
+        {/* Right detail */}
+        <div style={{ flex: 1, overflowY: 'auto', padding: '24px 32px 60px' }}>
+          {dq && (
             <div style={{ maxWidth: 680, margin: '0 auto' }}>
-              {/* Question header */}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
-                <span style={{ fontSize: 16, fontWeight: 800 }}>Question {selIdx + 1}</span>
-                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                  <div style={{ position: 'relative' }} className="star-btn-wrap">
-                    <button onClick={() => toggleStar(q.id)} title="Save question for later review" style={{ width: 34, height: 34, borderRadius: 8, background: starred.has(q.id) ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.06)', border: `1px solid ${starred.has(q.id) ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.1)'}`, color: starred.has(q.id) ? '#fbbf24' : 'rgba(255,255,255,0.4)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s' }}>
-                      <Star style={{ width: 15, height: 15, fill: starred.has(q.id) ? '#fbbf24' : 'none' }} />
-                    </button>
-                  </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+                <div>
+                  <span style={{ fontSize: 16, fontWeight: 800 }}>Question {desktopIdx + 1}</span>
+                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginLeft: 10 }}>{chName(dq.metadata.chapter_id)}</span>
                 </div>
+                <button onClick={() => toggleStar(dq.id)} style={{ width: 34, height: 34, borderRadius: 8, background: starred.has(dq.id) ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.06)', border: `1px solid ${starred.has(dq.id) ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.1)'}`, color: starred.has(dq.id) ? '#fbbf24' : 'rgba(255,255,255,0.4)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Star style={{ width: 15, height: 15, fill: starred.has(dq.id) ? '#fbbf24' : 'none' }} />
+                </button>
               </div>
-              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 16 }}>Practice Question</div>
-
-              {/* Difficulty + Chapter */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 18 }}>
-                <span style={{ fontSize: 11, fontWeight: 700, color: DIFF_COLOR(q.metadata.difficulty), background: DIFF_COLOR(q.metadata.difficulty) + '18', padding: '3px 10px', borderRadius: 99, border: `1px solid ${DIFF_COLOR(q.metadata.difficulty)}33` }}>{q.metadata.difficulty}</span>
-                <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>{chName(q.metadata.chapter_id)}</span>
-              </div>
-
-              {/* Question text with LaTeX */}
-              <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '20px 22px', marginBottom: 24 }}>
-                <MathRenderer markdown={q.question_text.markdown} className="text-base leading-relaxed" imageScale={q.svg_scales?.question ?? 100} />
-              </div>
-
-              {/* Options (SCQ) */}
-              {q.options && q.options.length > 0 && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
-                  {q.options.map((opt: any) => {
-                    const sel = selectedOpt === opt.id;
-                    const correct = opt.is_correct;
-                    const revealed = showSol;
-                    let borderC = sel ? '#3b82f6' : 'rgba(255,255,255,0.1)';
-                    let bgC = sel ? 'rgba(59,130,246,0.1)' : 'rgba(255,255,255,0.03)';
-                    if (revealed && correct) { borderC = '#34d399'; bgC = 'rgba(52,211,153,0.1)'; }
-                    else if (revealed && sel && !correct) { borderC = '#f87171'; bgC = 'rgba(248,113,113,0.08)'; }
-                    return (
-                      <button key={opt.id} onClick={() => { if (!showSol) { setSelectedOpt(opt.id); setShowSol(true); } }}
-                        style={{ padding: '14px 16px', borderRadius: 12, border: `1.5px solid ${borderC}`, background: bgC, display: 'flex', alignItems: 'center', gap: 12, cursor: showSol ? 'default' : 'pointer', textAlign: 'left', color: '#fff', fontSize: 14, transition: 'all 0.12s' }}>
-                        <span style={{ width: 26, height: 26, borderRadius: 7, border: `1.5px solid ${borderC}`, background: sel ? (revealed ? (correct ? '#34d399' : '#f87171') : '#3b82f6') : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, color: sel ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
-                          {revealed && correct ? <Check style={{ width: 13, height: 13 }} /> : opt.id.toUpperCase()}
-                        </span>
-                        <span style={{ flex: 1 }}><MathRenderer markdown={opt.text || ''} className="text-sm" imageScale={q.svg_scales?.[`option_${opt.id}`] ?? 100} /></span>
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-
-              {/* NVT input */}
-              {q.type === 'NVT' && !showSol && (
-                <div style={{ marginBottom: 24 }}>
-                  <input type="text" placeholder="Enter integer answer"
-                    onKeyDown={e => { if (e.key === 'Enter') setShowSol(true); }}
-                    onChange={e => setSelectedOpt(e.target.value)}
-                    style={{ width: '100%', padding: '14px 16px', borderRadius: 12, border: '1.5px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.05)', color: '#fff', fontSize: 16, outline: 'none' }}
-                  />
-                  <button onClick={() => setShowSol(true)} style={{ marginTop: 10, padding: '12px 24px', borderRadius: 12, border: 'none', background: '#7c3aed', color: '#fff', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>Submit Answer</button>
-                </div>
-              )}
-
-              {/* Solution toggle */}
-              <button onClick={() => setShowSol(v => !v)} style={{ padding: '10px 22px', borderRadius: 10, border: '1px solid rgba(124,58,237,0.4)', background: showSol ? 'rgba(124,58,237,0.15)' : 'transparent', color: '#a78bfa', fontSize: 13, fontWeight: 700, cursor: 'pointer', marginBottom: 16, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                {showSol ? 'Hide Solution' : 'View Full Solution'}
-              </button>
-
-              {/* Audio waveform placeholder — shown above solution */}
-              {showSol && (
-                <div style={{ marginBottom: 14, padding: '12px 16px', borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <button style={{ width: 32, height: 32, borderRadius: '50%', background: '#7c3aed', border: 'none', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor"><path d="M0 0l10 6-10 6z"/></svg>
-                  </button>
-                  <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 2, height: 28 }}>
-                    {Array.from({ length: 40 }, (_, i) => {
-                      const h = 4 + Math.abs(Math.sin(i * 0.7 + 1.2) * 18 + Math.sin(i * 1.3) * 6);
-                      return <div key={i} style={{ width: 3, height: h, borderRadius: 2, background: i < 14 ? '#7c3aed' : 'rgba(255,255,255,0.18)', flexShrink: 0 }} />;
-                    })}
-                  </div>
-                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', fontFamily: 'monospace', flexShrink: 0 }}>0:42</span>
-                </div>
-              )}
-
-              {/* Solution content */}
-              {showSol && q.solution.text_markdown && (
-                <div style={{ padding: '18px 20px', borderRadius: 14, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)', marginBottom: 24 }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: '#a78bfa', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
-                  <MathRenderer markdown={q.solution.text_markdown} className="text-sm leading-relaxed" imageScale={q.svg_scales?.solution ?? 100} />
-                </div>
-              )}
-
-              {/* Navigation */}
+              {renderDetail(dq, showSol, setShowSol, selectedOpt, setSelectedOpt)}
               <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
-                {selIdx > 0 && <button onClick={() => goTo(selIdx - 1)} style={{ padding: '10px 18px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.6)', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}><ChevronLeft style={{ width: 14, height: 14 }} /> Prev</button>}
-                {selIdx < questions.length - 1 && <button onClick={() => goTo(selIdx + 1)} style={{ flex: 1, padding: '10px 18px', borderRadius: 10, border: 'none', background: '#3b82f6', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>Next <ChevronRight style={{ width: 14, height: 14 }} /></button>}
+                {desktopIdx > 0 && <button onClick={() => goTo(desktopIdx - 1)} style={{ padding: '10px 18px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.6)', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}><ChevronLeft style={{ width: 14, height: 14 }} /> Prev</button>}
+                {desktopIdx < questions.length - 1 && <button onClick={() => goTo(desktopIdx + 1)} style={{ flex: 1, padding: '10px 18px', borderRadius: 10, border: 'none', background: '#3b82f6', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>Next <ChevronRight style={{ width: 14, height: 14 }} /></button>}
               </div>
             </div>
           )}
@@ -463,16 +486,25 @@ function TestConfigModal({ maxQ, onStart, onClose }: { maxQ: number; onStart: (c
 
 // ── Test mode (timed exam with palette) ─────────────────────────────────────
 function TestView({ questions, onBack }: { questions: Question[]; onBack: () => void }) {
-  const [idx,       setIdx]       = useState(0);
-  const [answers,   setAnswers]   = useState<Record<string, string>>({});
-  const [marked,    setMarked]    = useState<Record<string, boolean>>({});
-  const [nvtInputs, setNvtInputs] = useState<Record<string, string>>({});
-  const [submitted, setSubmitted] = useState(false);
-  const [seconds,   setSeconds]   = useState(Math.ceil(questions.length * 90));
-  const [starred,   setStarred]   = useState<Set<string>>(new Set());
-  const [reviewing, setReviewing] = useState(false);
-  const [revIdx,    setRevIdx]    = useState(0);
+  const [idx,        setIdx]        = useState(0);
+  const [answers,    setAnswers]    = useState<Record<string, string>>({});
+  const [marked,     setMarked]     = useState<Record<string, boolean>>({});
+  const [nvtInputs,  setNvtInputs]  = useState<Record<string, string>>({});
+  const [submitted,  setSubmitted]  = useState(false);
+  const [seconds,    setSeconds]    = useState(Math.ceil(questions.length * 90));
+  const [starred,    setStarred]    = useState<Set<string>>(new Set());
+  const [reviewing,  setReviewing]  = useState(false);
+  const [revIdx,     setRevIdx]     = useState(0);
+  const [isMobile,   setIsMobile]   = useState(false);
+  const [showPalette, setShowPalette] = useState(false);
   const toggleStar = (id: string) => setStarred(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   useEffect(() => {
     if (submitted) return;
@@ -600,114 +632,141 @@ function TestView({ questions, onBack }: { questions: Question[]; onBack: () => 
     );
   }
 
+  // Shared overview + palette panel content
+  const palettePanel = (
+    <div style={{ padding: '16px 14px' }}>
+      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: 10 }}>Overview</div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
+        {([
+          [String(answeredCount), 'Answered', '#34d399'],
+          [String(notVisitedCount), 'Not Visited', 'rgba(255,255,255,0.5)'],
+          [String(markedCount), 'Marked', '#7c3aed'],
+          ['0', 'Skipped', '#fbbf24'],
+        ] as [string,string,string][]).map(([v,l,c]) => (
+          <div key={l} style={{ textAlign: 'center', padding: '10px 6px', background: 'rgba(255,255,255,0.04)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.07)' }}>
+            <div style={{ fontSize: 22, fontWeight: 800, color: c, fontFamily: 'monospace' }}>{v}</div>
+            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', marginTop: 2, textTransform: 'uppercase' }}>{l}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: 8 }}>Question Palette</div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 5 }}>
+        {questions.map((_, i) => {
+          const s = palStatus(i);
+          return <button key={i} onClick={() => { setIdx(i); setShowPalette(false); }} style={{ width: '100%', aspectRatio: '1', borderRadius: 7, border: `1.5px solid ${s.border}`, background: s.bg, color: s.color, fontSize: 11, fontWeight: 700, cursor: 'pointer', transition: 'all 0.1s' }}>{i+1}</button>;
+        })}
+      </div>
+      <button onClick={() => { if (confirm('Submit test? You cannot change answers after submission.')) setSubmitted(true); }}
+        style={{ width: '100%', marginTop: 18, padding: '13px', borderRadius: 12, border: 'none', background: '#dc2626', color: '#fff', fontSize: 13, fontWeight: 800, cursor: 'pointer' }}>
+        SUBMIT TEST
+      </button>
+      <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', textAlign: 'center', marginTop: 6 }}>Once submitted, you cannot edit responses.</div>
+    </div>
+  );
+
+  // Shared question body
+  const questionBody = (
+    <div style={{ maxWidth: 700, margin: '0 auto', padding: isMobile ? '16px 14px 120px' : '24px 28px 100px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
+        <span style={{ fontSize: isMobile ? 17 : 20, fontWeight: 800 }}>Q{idx + 1}</span>
+        <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>/{questions.length}</span>
+        <span style={{ fontSize: 11, color: DIFF_COLOR(q.metadata.difficulty), background: DIFF_COLOR(q.metadata.difficulty) + '18', padding: '2px 8px', borderRadius: 99, fontWeight: 700 }}>{q.metadata.difficulty}</span>
+        <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 99, background: 'rgba(52,211,153,0.12)', color: '#34d399' }}>+4</span>
+        <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 99, background: 'rgba(248,113,113,0.12)', color: '#f87171' }}>-1</span>
+        <button onClick={() => toggleStar(q.id)} style={{ marginLeft: 'auto', width: 30, height: 30, borderRadius: 8, background: starred.has(q.id) ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.06)', border: `1px solid ${starred.has(q.id) ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.1)'}`, color: starred.has(q.id) ? '#fbbf24' : 'rgba(255,255,255,0.4)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Star style={{ width: 13, height: 13, fill: starred.has(q.id) ? '#fbbf24' : 'none' }} />
+        </button>
+      </div>
+      <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '16px 18px', marginBottom: 16 }}>
+        <MathRenderer markdown={q.question_text.markdown} className="text-base leading-relaxed" />
+      </div>
+      {q.options && q.options.length > 0 && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
+          {q.options.map((opt: any) => {
+            const sel = answers[q.id] === opt.id;
+            return (
+              <button key={opt.id} onClick={() => setAnswers(a => ({ ...a, [q.id]: opt.id }))}
+                style={{ padding: '12px 14px', borderRadius: 12, border: `1.5px solid ${sel ? '#3b82f6' : 'rgba(255,255,255,0.1)'}`, background: sel ? 'rgba(59,130,246,0.1)' : 'rgba(255,255,255,0.03)', color: '#fff', fontSize: 13, textAlign: 'left', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10, width: '100%' }}>
+                <span style={{ width: 26, height: 26, borderRadius: 7, border: `1.5px solid ${sel ? '#3b82f6' : 'rgba(255,255,255,0.2)'}`, background: sel ? '#3b82f6' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, flexShrink: 0 }}>{opt.id.toUpperCase()}</span>
+                <span style={{ flex: 1 }}><MathRenderer markdown={opt.text || ''} className="text-sm" /></span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+      {q.type === 'NVT' && (
+        <input type="text" value={nvtInputs[q.id] || ''} onChange={e => setNvtInputs(n => ({ ...n, [q.id]: e.target.value }))}
+          placeholder="Enter integer answer"
+          style={{ width: '100%', padding: '13px 16px', borderRadius: 12, border: '1.5px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.05)', color: '#fff', fontSize: 15, outline: 'none', marginBottom: 16, boxSizing: 'border-box' }}
+        />
+      )}
+      <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+        <button onClick={() => { const n = {...answers}; delete n[q.id]; setAnswers(n); const m = {...nvtInputs}; delete m[q.id]; setNvtInputs(m); }}
+          style={{ padding: '10px 14px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.5)', fontSize: 12, cursor: 'pointer' }}>Clear</button>
+        <button onClick={() => { setMarked(m => ({ ...m, [q.id]: true })); if (idx < questions.length - 1) setIdx(i => i + 1); }}
+          style={{ padding: '10px 14px', borderRadius: 10, border: '1px solid rgba(124,58,237,0.4)', background: 'rgba(124,58,237,0.1)', color: '#a78bfa', fontSize: 12, cursor: 'pointer', fontWeight: 600, whiteSpace: 'nowrap' }}>Mark & Next</button>
+        <button onClick={() => { if (idx < questions.length - 1) setIdx(i => i + 1); }}
+          style={{ flex: 1, padding: '10px 14px', borderRadius: 10, border: 'none', background: '#3b82f6', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>Save & Next <ChevronRight style={{ width: 13, height: 13 }} /></button>
+      </div>
+    </div>
+  );
+
   return (
     <div style={{ height: '100vh', overflow: 'hidden', background: '#0a0c14', color: '#fff', display: 'flex', flexDirection: 'column' }}>
       {/* Header */}
-      <header style={{ height: 48, borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(10,12,20,0.98)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <button onClick={onBack} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}>
-            <X style={{ width: 14, height: 14 }} />
+      <header style={{ height: 48, borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(10,12,20,0.98)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', flexShrink: 0, gap: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
+          <button onClick={onBack} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+            <X style={{ width: 16, height: 16 }} />
           </button>
-          <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>Section 1: Chemistry</span>
-          <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 99, background: 'rgba(52,211,153,0.15)', color: '#34d399', border: '1px solid rgba(52,211,153,0.3)', fontWeight: 700 }}>SINGLE CORRECT</span>
+          {!isMobile && <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.7)', whiteSpace: 'nowrap' }}>Section 1: Chemistry</span>}
+          {!isMobile && <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 99, background: 'rgba(52,211,153,0.15)', color: '#34d399', border: '1px solid rgba(52,211,153,0.3)', fontWeight: 700, whiteSpace: 'nowrap' }}>SINGLE CORRECT</span>}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: seconds < 300 ? '#f87171' : 'rgba(255,255,255,0.8)', fontSize: 14, fontWeight: 700, fontFamily: 'monospace' }}>
-          <Timer style={{ width: 14, height: 14 }} /> {fmt(seconds)}
+        {/* Timer — always visible */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: seconds < 300 ? '#f87171' : 'rgba(255,255,255,0.85)', fontSize: 15, fontWeight: 700, fontFamily: 'monospace', flexShrink: 0 }}>
+          <Timer style={{ width: 13, height: 13 }} /> {fmt(seconds)}
         </div>
-        <button onClick={() => { if (confirm('Submit test? You cannot change answers after submission.')) setSubmitted(true); }} style={{ padding: '6px 18px', borderRadius: 8, border: 'none', background: '#dc2626', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
-          SUBMIT TEST
-        </button>
+        <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
+          {/* Mobile: palette toggle button */}
+          {isMobile && (
+            <button onClick={() => setShowPalette(v => !v)}
+              style={{ padding: '6px 12px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.15)', background: showPalette ? 'rgba(255,255,255,0.1)' : 'transparent', color: '#fff', fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+              {answeredCount}/{questions.length}
+            </button>
+          )}
+          <button onClick={() => { if (confirm('Submit test? You cannot change answers after submission.')) setSubmitted(true); }}
+            style={{ padding: '6px 14px', borderRadius: 8, border: 'none', background: '#dc2626', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            {isMobile ? 'Submit' : 'SUBMIT TEST'}
+          </button>
+        </div>
       </header>
 
-      <div style={{ flex: 1, display: 'flex', overflow: 'hidden', height: 'calc(100vh - 48px)' }}>
-        {/* Question area — constrained width, centered */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '24px 28px 100px' }}>
-         <div style={{ maxWidth: 700, margin: '0 auto' }}>
-          {/* Q header */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-            <span style={{ fontSize: 20, fontWeight: 800 }}>Q{idx + 1}</span>
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>/{questions.length}</span>
-            <span style={{ fontSize: 11, color: DIFF_COLOR(q.metadata.difficulty), background: DIFF_COLOR(q.metadata.difficulty) + '18', padding: '2px 8px', borderRadius: 99, fontWeight: 700 }}>{q.metadata.difficulty}</span>
-            <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 99, background: 'rgba(52,211,153,0.12)', color: '#34d399' }}>+4</span>
-            <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 99, background: 'rgba(248,113,113,0.12)', color: '#f87171' }}>-1</span>
-            <div style={{ marginLeft: 'auto', display: 'flex', gap: 6 }}>
-              <button onClick={() => toggleStar(q.id)} title="Bookmark this question for later" style={{ width: 32, height: 32, borderRadius: 8, background: starred.has(q.id) ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.06)', border: `1px solid ${starred.has(q.id) ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.1)'}`, color: starred.has(q.id) ? '#fbbf24' : 'rgba(255,255,255,0.4)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s' }}>
-                <Star style={{ width: 14, height: 14, fill: starred.has(q.id) ? '#fbbf24' : 'none' }} />
-              </button>
-            </div>
-          </div>
-
-          {/* Question body */}
-          <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '20px 22px', marginBottom: 24 }}>
-            <MathRenderer markdown={q.question_text.markdown} className="text-base leading-relaxed" />
-          </div>
-
-          {/* Options */}
-          {q.options && q.options.length > 0 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
-              {q.options.map((opt: any) => {
-                const sel = answers[q.id] === opt.id;
-                return (
-                  <button key={opt.id} onClick={() => setAnswers(a => ({ ...a, [q.id]: opt.id }))}
-                    style={{ padding: '14px 16px', borderRadius: 12, border: `1.5px solid ${sel ? '#3b82f6' : 'rgba(255,255,255,0.1)'}`, background: sel ? 'rgba(59,130,246,0.1)' : 'rgba(255,255,255,0.03)', color: '#fff', fontSize: 14, textAlign: 'left', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 12, transition: 'all 0.12s' }}>
-                    <span style={{ width: 28, height: 28, borderRadius: 8, border: `1.5px solid ${sel ? '#3b82f6' : 'rgba(255,255,255,0.2)'}`, background: sel ? '#3b82f6' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, flexShrink: 0 }}>{opt.id.toUpperCase()}</span>
-                    <span style={{ flex: 1 }}><MathRenderer markdown={opt.text || ''} className="text-sm" /></span>
-                  </button>
-                );
-              })}
-            </div>
-          )}
-
-          {/* NVT input */}
-          {q.type === 'NVT' && (
-            <input type="text" value={nvtInputs[q.id] || ''} onChange={e => setNvtInputs(n => ({ ...n, [q.id]: e.target.value }))}
-              placeholder="Enter integer answer"
-              style={{ width: '100%', padding: '14px 16px', borderRadius: 12, border: '1.5px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.05)', color: '#fff', fontSize: 16, outline: 'none', marginBottom: 24 }}
-            />
-          )}
-
-          {/* Nav buttons */}
-          <div style={{ display: 'flex', gap: 10, marginTop: 8 }}>
-            <button onClick={() => { const n = {...answers}; delete n[q.id]; setAnswers(n); const m = {...nvtInputs}; delete m[q.id]; setNvtInputs(m); }}
-              style={{ padding: '10px 18px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.5)', fontSize: 13, cursor: 'pointer' }}>Clear</button>
-            <button onClick={() => { setMarked(m => ({ ...m, [q.id]: true })); if (idx < questions.length - 1) setIdx(i => i + 1); }}
-              style={{ padding: '10px 18px', borderRadius: 10, border: '1px solid rgba(124,58,237,0.4)', background: 'rgba(124,58,237,0.1)', color: '#a78bfa', fontSize: 13, cursor: 'pointer', fontWeight: 600 }}>Mark & Next</button>
-            <button onClick={() => { if (idx < questions.length - 1) setIdx(i => i + 1); }}
-              style={{ flex: 1, padding: '10px 18px', borderRadius: 10, border: 'none', background: '#3b82f6', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>Save & Next <ChevronRight style={{ width: 14, height: 14 }} /></button>
-          </div>
-         </div>{/* end maxWidth wrapper */}
+      <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative' }}>
+        {/* Question scroll area */}
+        <div style={{ flex: 1, overflowY: 'auto' }}>
+          {questionBody}
         </div>
 
-        {/* Right: Overview panel */}
-        <div style={{ width: 240, borderLeft: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)', overflowY: 'auto', padding: '16px 14px', flexShrink: 0 }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: 12 }}>Overview</div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 18 }}>
-            {([
-              [String(answeredCount), 'Answered', '#34d399'],
-              [String(notVisitedCount), 'Not Visited', 'rgba(255,255,255,0.5)'],
-              [String(markedCount), 'Marked', '#7c3aed'],
-              ['0', 'Skipped', '#fbbf24'],
-            ] as [string,string,string][]).map(([v,l,c]) => (
-              <div key={l} style={{ textAlign: 'center', padding: '10px 6px', background: 'rgba(255,255,255,0.04)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.07)' }}>
-                <div style={{ fontSize: 22, fontWeight: 800, color: c, fontFamily: 'monospace' }}>{v}</div>
-                <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', marginTop: 2, textTransform: 'uppercase' }}>{l}</div>
+        {/* Desktop: right sidebar */}
+        {!isMobile && (
+          <div style={{ width: 240, borderLeft: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)', overflowY: 'auto', flexShrink: 0 }}>
+            {palettePanel}
+          </div>
+        )}
+
+        {/* Mobile: palette bottom sheet */}
+        {isMobile && showPalette && (
+          <>
+            <div onClick={() => setShowPalette(false)} style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 40 }} />
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 50, background: '#12141f', borderTop: '1px solid rgba(255,255,255,0.12)', borderRadius: '16px 16px 0 0', maxHeight: '75vh', overflowY: 'auto', animation: 'sheetUp 0.22s ease' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px 0' }}>
+                <span style={{ fontSize: 13, fontWeight: 700 }}>Overview & Palette</span>
+                <button onClick={() => setShowPalette(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', padding: 4 }}><X style={{ width: 16, height: 16 }} /></button>
               </div>
-            ))}
-          </div>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: 8 }}>Question Palette</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 5 }}>
-            {questions.map((_, i) => {
-              const s = palStatus(i);
-              return <button key={i} onClick={() => setIdx(i)} style={{ width: '100%', aspectRatio: '1', borderRadius: 7, border: `1.5px solid ${s.border}`, background: s.bg, color: s.color, fontSize: 11, fontWeight: 700, cursor: 'pointer', transition: 'all 0.1s' }}>{i+1}</button>;
-            })}
-          </div>
-          {/* Submit button in sidebar */}
-          <button onClick={() => { if (confirm('Submit test?')) setSubmitted(true); }}
-            style={{ width: '100%', marginTop: 20, padding: '13px', borderRadius: 12, border: 'none', background: '#dc2626', color: '#fff', fontSize: 13, fontWeight: 800, cursor: 'pointer' }}>
-            SUBMIT TEST
-          </button>
-          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', textAlign: 'center', marginTop: 6 }}>Once submitted, you cannot edit responses.</div>
-        </div>
+              {palettePanel}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
@@ -752,17 +811,19 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
   const clearAll     = () => setSelectedChapters(new Set());
   const notify       = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
 
-  // Launch flow: click Browse/Test -> fetch questions -> show shloka -> enter mode
-  const launchBrowse = async () => {
+  // Launch flow: show shloka IMMEDIATELY, fetch in background so there's zero perceived delay
+  const launchBrowse = () => {
+    if (loading) return;
     setLoading(true);
-    try {
-      const qs = await fetchQuestions(Array.from(selectedChapters));
-      if (qs.length === 0) { notify('No questions found for selected chapters yet.'); setLoading(false); return; }
-      setQuestions(qs);
-      setPendingMode('browse');
-      setView('shloka');
-    } catch { notify('Failed to load questions.'); }
-    finally { setLoading(false); }
+    setPendingMode('browse');
+    setView('shloka'); // show shloka right away
+    fetchQuestions(Array.from(selectedChapters))
+      .then(qs => {
+        if (qs.length === 0) { notify('No questions found for selected chapters yet.'); setView('landing'); }
+        else setQuestions(qs);
+      })
+      .catch(() => { notify('Failed to load questions.'); setView('landing'); })
+      .finally(() => setLoading(false));
   };
 
   const launchTestConfig = () => {
@@ -770,19 +831,20 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
     setShowTestConfig(true);
   };
 
-  const startTest = async (count: number) => {
+  const startTest = (count: number) => {
     setShowTestConfig(false);
+    if (loading) return;
     setLoading(true);
-    try {
-      const qs = await fetchQuestions(Array.from(selectedChapters), count);
-      if (qs.length === 0) { notify('No questions found.'); setLoading(false); return; }
-      // Shuffle and limit
-      const shuffled = qs.sort(() => Math.random() - 0.5).slice(0, count);
-      setQuestions(shuffled);
-      setPendingMode('test');
-      setView('shloka');
-    } catch { notify('Failed to load questions.'); }
-    finally { setLoading(false); }
+    setPendingMode('test');
+    setView('shloka'); // show shloka right away
+    fetchQuestions(Array.from(selectedChapters), count)
+      .then(qs => {
+        if (qs.length === 0) { notify('No questions found.'); setView('landing'); return; }
+        const shuffled = qs.sort(() => Math.random() - 0.5).slice(0, count);
+        setQuestions(shuffled);
+      })
+      .catch(() => { notify('Failed to load questions.'); setView('landing'); })
+      .finally(() => setLoading(false));
   };
 
   // View routing
