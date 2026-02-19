@@ -35,6 +35,7 @@ export interface Question {
     is_pyq: boolean;
     is_top_pyq: boolean;
   };
+  svg_scales?: Record<string, number>;
 }
 
 export interface PracticeFilters {

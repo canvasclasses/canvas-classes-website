@@ -265,6 +265,7 @@ async function fetchQuestions(chapterIds: string[], limit?: number): Promise<Que
       is_pyq: q.metadata?.is_pyq || false,
       is_top_pyq: q.metadata?.is_top_pyq || false,
     },
+    svg_scales: q.svg_scales || {},
   }));
 }
 
@@ -349,7 +350,7 @@ function BrowseView({ questions, chapters, onBack }: { questions: Question[]; ch
 
               {/* Question text with LaTeX */}
               <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '20px 22px', marginBottom: 24 }}>
-                <MathRenderer markdown={q.question_text.markdown} className="text-base leading-relaxed" />
+                <MathRenderer markdown={q.question_text.markdown} className="text-base leading-relaxed" imageScale={q.svg_scales?.question ?? 100} />
               </div>
 
               {/* Options (SCQ) */}
@@ -369,7 +370,7 @@ function BrowseView({ questions, chapters, onBack }: { questions: Question[]; ch
                         <span style={{ width: 26, height: 26, borderRadius: 7, border: `1.5px solid ${borderC}`, background: sel ? (revealed ? (correct ? '#34d399' : '#f87171') : '#3b82f6') : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, color: sel ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
                           {revealed && correct ? <Check style={{ width: 13, height: 13 }} /> : opt.id.toUpperCase()}
                         </span>
-                        <span style={{ flex: 1 }}><MathRenderer markdown={opt.text || ''} className="text-sm" /></span>
+                        <span style={{ flex: 1 }}><MathRenderer markdown={opt.text || ''} className="text-sm" imageScale={q.svg_scales?.[`option_${opt.id}`] ?? 100} /></span>
                       </button>
                     );
                   })}
@@ -413,7 +414,7 @@ function BrowseView({ questions, chapters, onBack }: { questions: Question[]; ch
               {showSol && q.solution.text_markdown && (
                 <div style={{ padding: '18px 20px', borderRadius: 14, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)', marginBottom: 24 }}>
                   <div style={{ fontSize: 11, fontWeight: 700, color: '#a78bfa', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
-                  <MathRenderer markdown={q.solution.text_markdown} className="text-sm leading-relaxed" />
+                  <MathRenderer markdown={q.solution.text_markdown} className="text-sm leading-relaxed" imageScale={q.svg_scales?.solution ?? 100} />
                 </div>
               )}
 
