@@ -91,7 +91,10 @@ export async function GET(request: NextRequest) {
   try {
     // Check if request is from an authenticated admin (internal dashboard)
     const user = await getAuthenticatedUser(request);
-    const isAuthenticated = !!user;
+    // Also treat localhost as authenticated (dev bypass — Supabase may be configured but no session cookie)
+    const host = request.headers.get('host') || '';
+    const isLocalDev = host.startsWith('localhost') || host.startsWith('127.0.0.1');
+    const isAuthenticated = !!user || isLocalDev;
 
     // Rate limit unauthenticated requests
     if (!isAuthenticated) {
@@ -117,7 +120,7 @@ export async function GET(request: NextRequest) {
     const is_top_pyq = searchParams.get('is_top_pyq');
     // Authenticated users (admin dashboard) get full list; public gets max 50
     const requestedLimit = parseInt(searchParams.get('limit') || (isAuthenticated ? '5000' : '50'));
-    const limit = isAuthenticated ? requestedLimit : Math.min(requestedLimit, 50);
+    const limit = isAuthenticated ? requestedLimit : Math.min(requestedLimit, 50); // cap public at 50
     const skip = parseInt(searchParams.get('skip') || '0');
     
     // Build query
