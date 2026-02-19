@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Chapter, Question } from '../components/types';
 import BrowseView from '../components/BrowseView';
-import TestConfigModal from '../components/TestConfigModal';
+import TestConfigModal, { DifficultyMix } from '../components/TestConfigModal';
 import TestView from '../components/TestView';
 
 interface Props {
@@ -31,10 +31,29 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
     const color = CAT_COLOR[chapter.category ?? 'Physical'] ?? '#a78bfa';
     const qCount = questions.length;
 
-    const startTest = (count: number) => {
+    const startTest = (count: number, mix: DifficultyMix) => {
         setShowTestConfig(false);
-        const shuffled = [...questions].sort(() => Math.random() - 0.5).slice(0, count);
-        setTestQuestions(shuffled);
+        const shuffle = <T,>(arr: T[]): T[] => [...arr].sort(() => Math.random() - 0.5);
+        let pool: Question[];
+        if (mix === 'pyq') {
+            pool = questions.filter(q => q.metadata.is_pyq);
+            if (pool.length === 0) pool = questions;
+        } else if (mix === 'easy') {
+            pool = [...shuffle(questions.filter(q => q.metadata.difficulty === 'Easy')), ...shuffle(questions.filter(q => q.metadata.difficulty === 'Medium'))];
+        } else if (mix === 'hard') {
+            pool = [...shuffle(questions.filter(q => q.metadata.difficulty === 'Medium')), ...shuffle(questions.filter(q => q.metadata.difficulty === 'Hard'))];
+        } else {
+            const easy = shuffle(questions.filter(q => q.metadata.difficulty === 'Easy'));
+            const medium = shuffle(questions.filter(q => q.metadata.difficulty === 'Medium'));
+            const hard = shuffle(questions.filter(q => q.metadata.difficulty === 'Hard'));
+            const eN = Math.round(count * 0.3), hN = Math.round(count * 0.3), mN = count - eN - hN;
+            pool = shuffle([...easy.slice(0, eN), ...medium.slice(0, mN), ...hard.slice(0, hN)]);
+            if (pool.length < count) {
+                const used = new Set(pool.map(q => q.id));
+                pool = [...pool, ...shuffle(questions.filter(q => !used.has(q.id)))];
+            }
+        }
+        setTestQuestions(pool.slice(0, count));
         setMode('test');
     };
 

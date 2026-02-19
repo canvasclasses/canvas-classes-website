@@ -6,6 +6,7 @@ import { Chapter, Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
 
 const DIFF_COLOR = (d: string) => d === 'Easy' ? '#34d399' : d === 'Medium' ? '#fbbf24' : '#f87171';
+const PAGE_SIZE = 20;
 
 export default function BrowseView({ questions, chapters, onBack }: { questions: Question[]; chapters: Chapter[]; onBack: () => void }) {
   const [selIdx, setSelIdx] = useState<number | null>(null);
@@ -15,6 +16,10 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
   const [isMobile, setIsMobile] = useState(false);
   const [cardSol, setCardSol] = useState<Record<number, boolean>>({});
   const [cardOpt, setCardOpt] = useState<Record<number, string | null>>({});
+  const [page, setPage] = useState(0);
+
+  const totalPages = Math.ceil(questions.length / PAGE_SIZE);
+  const pageQuestions = questions.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -27,6 +32,15 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
   const chName = (id: string) => chapters.find(c => c.id === id)?.name || id;
   const toggleStar = (id: string) => setStarred(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
   const goTo = (i: number) => { setSelIdx(i); setShowSol(false); setSelectedOpt(null); };
+
+  const changePage = (newPage: number) => {
+    setPage(newPage);
+    setSelIdx(null);
+    setShowSol(false);
+    setSelectedOpt(null);
+    setCardSol({});
+    setCardOpt({});
+  };
 
   const renderDetail = (qq: Question, solShown: boolean, setSolShown: (v: boolean) => void, optChosen: string | null, setOptChosen: (v: string | null) => void) => (
     <div>
@@ -89,20 +103,43 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
     </header>
   );
 
+  // Shared pagination bar
+  const paginationBar = totalPages > 1 && (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.07)', flexShrink: 0, background: 'rgba(8,10,15,0.97)' }}>
+      <button onClick={() => changePage(page - 1)} disabled={page === 0}
+        style={{ padding: '7px 14px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: page === 0 ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.7)', fontSize: 12, cursor: page === 0 ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+        <ChevronLeft style={{ width: 13, height: 13 }} /> Prev
+      </button>
+      <div style={{ display: 'flex', gap: 4 }}>
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button key={i} onClick={() => changePage(i)}
+            style={{ width: 28, height: 28, borderRadius: 7, border: `1.5px solid ${i === page ? '#7c3aed' : 'rgba(255,255,255,0.1)'}`, background: i === page ? '#7c3aed' : 'transparent', color: i === page ? '#fff' : 'rgba(255,255,255,0.5)', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
+            {i + 1}
+          </button>
+        ))}
+      </div>
+      <button onClick={() => changePage(page + 1)} disabled={page === totalPages - 1}
+        style={{ padding: '7px 14px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: page === totalPages - 1 ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.7)', fontSize: 12, cursor: page === totalPages - 1 ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+        Next <ChevronRight style={{ width: 13, height: 13 }} />
+      </button>
+    </div>
+  );
+
   if (isMobile) {
     return (
       <div style={{ height: '100vh', overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
         {sharedHeader}
         <div style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch' } as any}>
-          {questions.map((qq, i) => {
-            const expanded = selIdx === i;
-            const solShown = cardSol[i] ?? false;
-            const optChosen = cardOpt[i] ?? null;
+          {pageQuestions.map((qq, i) => {
+            const globalIdx = page * PAGE_SIZE + i;
+            const expanded = selIdx === globalIdx;
+            const solShown = cardSol[globalIdx] ?? false;
+            const optChosen = cardOpt[globalIdx] ?? null;
             return (
               <div key={qq.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', background: expanded ? 'rgba(124,58,237,0.05)' : 'transparent', borderLeft: `3px solid ${expanded ? '#7c3aed' : 'transparent'}` }}>
-                <div onClick={() => expanded ? setSelIdx(null) : goTo(i)}
+                <div onClick={() => expanded ? setSelIdx(null) : goTo(globalIdx)}
                   style={{ padding: '13px 14px', cursor: 'pointer', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                  <span style={{ width: 28, height: 28, borderRadius: 8, background: expanded ? '#7c3aed' : 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: expanded ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>Q{i + 1}</span>
+                  <span style={{ width: 28, height: 28, borderRadius: 8, background: expanded ? '#7c3aed' : 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: expanded ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>Q{globalIdx + 1}</span>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', gap: 5, marginBottom: 5 }}>
                       <span style={{ fontSize: 10, fontWeight: 700, color: DIFF_COLOR(qq.metadata.difficulty), background: DIFF_COLOR(qq.metadata.difficulty) + '18', padding: '1px 7px', borderRadius: 99 }}>{qq.metadata.difficulty}</span>
@@ -116,7 +153,7 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
                 </div>
                 {expanded && (
                   <div style={{ padding: '0 14px 4px' }}>
-                    {renderDetail(qq, solShown, (v) => setCardSol(s => ({ ...s, [i]: v })), optChosen, (v) => setCardOpt(s => ({ ...s, [i]: v })))}
+                    {renderDetail(qq, solShown, (v) => setCardSol(s => ({ ...s, [globalIdx]: v })), optChosen, (v) => setCardOpt(s => ({ ...s, [globalIdx]: v })))}
                     <button onClick={() => setSelIdx(null)}
                       style={{ width: '100%', marginTop: 8, marginBottom: 12, padding: '10px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, color: 'rgba(255,255,255,0.4)', fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                       <ChevronRight style={{ width: 13, height: 13, transform: 'rotate(-90deg)' }} /> Collapse
@@ -126,41 +163,49 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
               </div>
             );
           })}
-          <div style={{ height: 40 }} />
+          <div style={{ height: 8 }} />
         </div>
+        {paginationBar}
       </div>
     );
   }
 
-  const dq = questions[desktopIdx];
+  const dq = pageQuestions[desktopIdx - page * PAGE_SIZE] ?? pageQuestions[0];
+  const dqGlobalIdx = desktopIdx;
   return (
     <div style={{ height: '100vh', overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
       {sharedHeader}
       <div style={{ flex: 1, display: 'flex', width: '100%', overflow: 'hidden' }}>
-        <div style={{ width: '38%', minWidth: 300, maxWidth: 480, flexShrink: 0, borderRight: '1px solid rgba(255,255,255,0.07)', overflowY: 'auto' }}>
-          {questions.map((qq, i) => (
-            <div key={qq.id} onClick={() => goTo(i)} style={{ padding: '13px 16px', borderBottom: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer', background: i === desktopIdx ? 'rgba(124,58,237,0.1)' : 'transparent', borderLeft: i === desktopIdx ? '3px solid #7c3aed' : '3px solid transparent', transition: 'background 0.1s' }}>
+        <div style={{ width: '38%', minWidth: 300, maxWidth: 480, flexShrink: 0, borderRight: '1px solid rgba(255,255,255,0.07)', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ flex: 1, overflowY: 'auto' }}>
+          {pageQuestions.map((qq, i) => {
+            const globalIdx = page * PAGE_SIZE + i;
+            return (
+            <div key={qq.id} onClick={() => goTo(globalIdx)} style={{ padding: '13px 16px', borderBottom: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer', background: globalIdx === dqGlobalIdx ? 'rgba(124,58,237,0.1)' : 'transparent', borderLeft: globalIdx === dqGlobalIdx ? '3px solid #7c3aed' : '3px solid transparent', transition: 'background 0.1s' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                <span style={{ width: 26, height: 26, borderRadius: 7, background: i === desktopIdx ? '#7c3aed' : 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: i === desktopIdx ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>Q{i + 1}</span>
+                <span style={{ width: 26, height: 26, borderRadius: 7, background: globalIdx === dqGlobalIdx ? '#7c3aed' : 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: globalIdx === dqGlobalIdx ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>Q{globalIdx + 1}</span>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', gap: 5, marginBottom: 5 }}>
                     <span style={{ fontSize: 10, fontWeight: 700, color: DIFF_COLOR(qq.metadata.difficulty), background: DIFF_COLOR(qq.metadata.difficulty) + '18', padding: '1px 7px', borderRadius: 99 }}>{qq.metadata.difficulty}</span>
                     <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.06)', padding: '1px 7px', borderRadius: 99 }}>{qq.type}</span>
                   </div>
-                  <div style={{ fontSize: 12, color: i === desktopIdx ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.6)', lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' } as any}>
+                  <div style={{ fontSize: 12, color: globalIdx === dqGlobalIdx ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.6)', lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' } as any}>
                     <MathRenderer markdown={qq.question_text.markdown.slice(0, 120)} className="text-sm" />
                   </div>
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
+          </div>
+          {paginationBar}
         </div>
         <div style={{ flex: 1, overflowY: 'auto', padding: '24px 32px 60px' }}>
           {dq && (
             <div style={{ maxWidth: 680, margin: '0 auto' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
                 <div>
-                  <span style={{ fontSize: 16, fontWeight: 800 }}>Question {desktopIdx + 1}</span>
+                  <span style={{ fontSize: 16, fontWeight: 800 }}>Question {dqGlobalIdx + 1}</span>
                   <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginLeft: 10 }}>{chName(dq.metadata.chapter_id)}</span>
                 </div>
                 <button onClick={() => toggleStar(dq.id)} style={{ width: 34, height: 34, borderRadius: 8, background: starred.has(dq.id) ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.06)', border: `1px solid ${starred.has(dq.id) ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.1)'}`, color: starred.has(dq.id) ? '#fbbf24' : 'rgba(255,255,255,0.4)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -169,8 +214,26 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
               </div>
               {renderDetail(dq, showSol, setShowSol, selectedOpt, setSelectedOpt)}
               <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
-                {desktopIdx > 0 && <button onClick={() => goTo(desktopIdx - 1)} style={{ padding: '10px 18px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.6)', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}><ChevronLeft style={{ width: 14, height: 14 }} /> Prev</button>}
-                {desktopIdx < questions.length - 1 && <button onClick={() => goTo(desktopIdx + 1)} style={{ flex: 1, padding: '10px 18px', borderRadius: 10, border: 'none', background: '#3b82f6', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>Next <ChevronRight style={{ width: 14, height: 14 }} /></button>}
+                {dqGlobalIdx > 0 && (
+                  <button onClick={() => {
+                    const prev = dqGlobalIdx - 1;
+                    const prevPage = Math.floor(prev / PAGE_SIZE);
+                    if (prevPage !== page) changePage(prevPage);
+                    goTo(prev);
+                  }} style={{ padding: '10px 18px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.6)', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <ChevronLeft style={{ width: 14, height: 14 }} /> Prev
+                  </button>
+                )}
+                {dqGlobalIdx < questions.length - 1 && (
+                  <button onClick={() => {
+                    const next = dqGlobalIdx + 1;
+                    const nextPage = Math.floor(next / PAGE_SIZE);
+                    if (nextPage !== page) changePage(nextPage);
+                    goTo(next);
+                  }} style={{ flex: 1, padding: '10px 18px', borderRadius: 10, border: 'none', background: '#3b82f6', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                    Next <ChevronRight style={{ width: 14, height: 14 }} />
+                  </button>
+                )}
               </div>
             </div>
           )}
