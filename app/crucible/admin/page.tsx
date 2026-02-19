@@ -157,6 +157,13 @@ export default function AdminPage() {
                 fetch('/api/v2/questions?limit=1000', { cache: 'no-store' }),
                 fetch('/api/v2/chapters', { cache: 'no-store' })
             ]);
+
+            // If redirected to login (unauthenticated), send user there
+            if (qRes.redirected || qRes.url.includes('/login') || qRes.status === 401) {
+                window.location.href = '/login?next=/crucible/admin';
+                return;
+            }
+
             const qData = await qRes.json();
             const cData = await cRes.json();
             
