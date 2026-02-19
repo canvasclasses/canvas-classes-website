@@ -163,8 +163,13 @@ export default function AdminPage() {
     }, [selectedQuestionId]);
 
     useEffect(() => {
-        loadData();
+        loadData(0);
     }, []);
+
+    // Reload from server when server-side filters change
+    useEffect(() => {
+        loadData(0);
+    }, [selectedChapterFilter, selectedTypeFilter, selectedDifficultyFilter, selectedSourceFilter]);
     
     // Update available tags when selected question changes
     useEffect(() => {
@@ -179,10 +184,26 @@ export default function AdminPage() {
         }
     }, [selectedQuestionId, questions]);
 
-    const loadData = async () => {
+    const PAGE_SIZE = 100;
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalCount, setTotalCount] = useState(0);
+
+    const buildQueryParams = (page: number) => {
+        const params = new URLSearchParams();
+        params.set('limit', String(PAGE_SIZE));
+        params.set('skip', String(page * PAGE_SIZE));
+        if (selectedChapterFilter !== 'all') params.set('chapter_id', selectedChapterFilter);
+        if (selectedTypeFilter !== 'all') params.set('type', selectedTypeFilter);
+        if (selectedDifficultyFilter !== 'all') params.set('difficulty', selectedDifficultyFilter);
+        if (selectedSourceFilter === 'mains_pyq' || selectedSourceFilter === 'adv_pyq') params.set('is_pyq', 'true');
+        return params.toString();
+    };
+
+    const loadData = async (page = 0) => {
+        setLoading(true);
         try {
             const [qRes, cRes] = await Promise.all([
-                fetch('/api/v2/questions?limit=1000', { cache: 'no-store' }),
+                fetch(`/api/v2/questions?${buildQueryParams(page)}`, { cache: 'no-store' }),
                 fetch('/api/v2/chapters', { cache: 'no-store' })
             ]);
 
@@ -195,7 +216,11 @@ export default function AdminPage() {
             const qData = await qRes.json();
             const cData = await cRes.json();
             
-            if (qData.success) setQuestions(qData.data.sort((a: Question, b: Question) => a.display_id.localeCompare(b.display_id)));
+            if (qData.success) {
+                setQuestions(qData.data.sort((a: Question, b: Question) => a.display_id.localeCompare(b.display_id)));
+                setTotalCount(qData.pagination?.total ?? qData.data.length);
+                setCurrentPage(page);
+            }
             if (cData.success) setChapters(cData.data);
         } catch (error) {
             console.error('Error loading data:', error);
@@ -470,7 +495,10 @@ export default function AdminPage() {
                     <h1 className="text-xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 bg-clip-text text-transparent shrink-0">
                         The Crucible Admin
                     </h1>
-                    <span className="text-gray-500 text-xs font-mono shrink-0">({questions.length})</span>
+                    <span className="text-gray-500 text-xs font-mono shrink-0">
+                        ({questions.length} shown / {totalCount} total
+                        {totalCount > PAGE_SIZE && ` · page ${currentPage + 1}/${Math.ceil(totalCount / PAGE_SIZE)}`})
+                    </span>
 
                     {/* Actions */}
                     <div className="flex items-center gap-2 shrink-0">
@@ -573,7 +601,7 @@ export default function AdminPage() {
                         </select>
                     )}
 
-                    {/* Navigation */}
+                    {/* Question navigation */}
                     {selectedQuestion && (
                         <div className="flex items-center gap-2 shrink-0">
                             <button
@@ -593,6 +621,29 @@ export default function AdminPage() {
                                 className="px-3 py-1.5 bg-indigo-600/80 hover:bg-indigo-600 text-white rounded-lg text-xs font-medium transition"
                             >
                                 Next →
+                            </button>
+                        </div>
+                    )}
+
+                    {/* Page navigation — only shown when there are multiple pages */}
+                    {totalCount > PAGE_SIZE && (
+                        <div className="flex items-center gap-1.5 shrink-0 ml-auto">
+                            <button
+                                disabled={currentPage === 0}
+                                onClick={() => loadData(currentPage - 1)}
+                                className="px-2 py-1 bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded text-xs font-medium transition"
+                            >
+                                ‹ Prev page
+                            </button>
+                            <span className="text-xs text-gray-500 font-mono px-1">
+                                {currentPage + 1} / {Math.ceil(totalCount / PAGE_SIZE)}
+                            </span>
+                            <button
+                                disabled={(currentPage + 1) * PAGE_SIZE >= totalCount}
+                                onClick={() => loadData(currentPage + 1)}
+                                className="px-2 py-1 bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded text-xs font-medium transition"
+                            >
+                                Next page ›
                             </button>
                         </div>
                     )}
