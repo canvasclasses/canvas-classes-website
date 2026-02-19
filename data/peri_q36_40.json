@@ -1,0 +1,67 @@
+[
+  {
+    "display_id": "PERI-036",
+    "question_text": { "markdown": "The correct order of the ionic radii of O$^{2-}$, N$^{3-}$, F$^-$, Mg$^{2+}$, Na$^+$ and Al$^{3+}$ is:\n\n(JEE Main, 05 Sep 2020)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "N3- < O2- < F- < Na+ < Mg2+ < Al3+", "is_correct": false },
+      { "id": "b", "text": "Al3+ < Na+ < Mg2+ < O2- < F- < N3-", "is_correct": false },
+      { "id": "c", "text": "Al3+ < Mg2+ < Na+ < F- < O2- < N3-", "is_correct": true },
+      { "id": "d", "text": "N3- < F- < O2- < Mg2+ < Na+ < Al3+", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (3) Al3+ < Mg2+ < Na+ < F- < O2- < N3-**\n\nAll isoelectronic (10 electrons). Size increases as Z decreases: Al3+(Z=13) < Mg2+(Z=12) < Na+(Z=11) < F-(Z=9) < O2-(Z=8) < N3-(Z=7)." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_2", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": true, "exam_source": { "exam": "JEE Main", "year": 2020, "month": "September", "day": 5, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-037",
+    "question_text": { "markdown": "The acidic, basic and amphoteric oxides, respectively, are:\n\n(JEE Main, 09 Jan 2020)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Na2O, SO3, Al2O3", "is_correct": false },
+      { "id": "b", "text": "Cl2O, CaO, P4O10", "is_correct": false },
+      { "id": "c", "text": "N2O3, Li2O, Al2O3", "is_correct": true },
+      { "id": "d", "text": "MgO, Cl2O, Al2O3", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (3) N2O3 (acidic), Li2O (basic), Al2O3 (amphoteric)**\n\nN2O3: non-metal oxide = acidic. Li2O: alkali metal oxide = basic. Al2O3: reacts with both acids and bases = amphoteric." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_5", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2020, "month": "January", "day": 9, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-038",
+    "question_text": { "markdown": "The IUPAC nomenclature of an element with electronic configuration [Rn] 5f$^{14}$ 6d$^1$ 7s$^2$ is:\n\n(JEE Main, 25 Jul 2022)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Unnilunium", "is_correct": false },
+      { "id": "b", "text": "Unnilbium", "is_correct": false },
+      { "id": "c", "text": "Unniltrium", "is_correct": true },
+      { "id": "d", "text": "Unnilquadium", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (3) Unniltrium**\n\n[Rn] 5f14 6d1 7s2: after Rn (Z=86), add 14 f-electrons (Z=100) + 1 d-electron = Z=103 (Lawrencium). IUPAC: un=1, nil=0, tri=3 -> Unniltrium (Unt). Z=103." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_1", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2022, "month": "July", "day": 25, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-039",
+    "question_text": { "markdown": "The metal that has very low melting point and its periodic position is closer to a metalloid is:\n\n(JEE Main, 26 Jul 2022)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Al", "is_correct": false },
+      { "id": "b", "text": "Ga", "is_correct": true },
+      { "id": "c", "text": "Se", "is_correct": false },
+      { "id": "d", "text": "In", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (2) Ga (Gallium)**\n\nGallium has an anomalously low melting point (~29.76 C, just above room temperature). It is in Period 4, Group 13, adjacent to Ge (a metalloid) in the periodic table. Se is a non-metal, not a metal." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_4", "weight": 0.5 }, { "tag_id": "tag_periodic_3", "weight": 0.5 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2022, "month": "July", "day": 26, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-040",
+    "question_text": { "markdown": "Which of the following is a metalloid?\n\n(JEE Main, 26 Jun 2022)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Sc", "is_correct": false },
+      { "id": "b", "text": "Pb", "is_correct": false },
+      { "id": "c", "text": "Bi", "is_correct": false },
+      { "id": "d", "text": "Te", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) Te (Tellurium)**\n\nMetalloids: B, Si, Ge, As, Sb, Te, Po. Te (Z=52) is a recognized metalloid. Sc is a transition metal, Pb and Bi are post-transition metals." },
+    "metadata": { "difficulty": "Easy", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_4", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2022, "month": "June", "day": 26, "shift": "Evening" } }
+  }
+]

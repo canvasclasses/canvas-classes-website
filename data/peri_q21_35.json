@@ -1,0 +1,192 @@
+[
+  {
+    "display_id": "PERI-021",
+    "question_text": { "markdown": "Given below are two statements:\n\n**Statement I:** Along the period, the chemical reactivity of the element gradually increases from group 1 to group 18.\n\n**Statement II:** The nature of oxides formed by group 1 element is basic while that of group 17 elements is acidic.\n\n(JEE Main, 30 Jan 2024)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Both Statement I and Statement II are true.", "is_correct": false },
+      { "id": "b", "text": "Statement I is true but Statement II is False.", "is_correct": false },
+      { "id": "c", "text": "Statement I is false but Statement II is true.", "is_correct": true },
+      { "id": "d", "text": "Both Statement I and Statement II are false.", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (3)**\n\nSt. I is FALSE: Reactivity does NOT gradually increase from Group 1 to 18. Noble gases (Group 18) are least reactive.\n\nSt. II is TRUE: Group 1 oxides (Na2O, K2O) are basic. Group 17 oxides (Cl2O7) are acidic." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_5", "weight": 0.5 }, { "tag_id": "tag_periodic_4", "weight": 0.5 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2024, "month": "January", "day": 30, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-022",
+    "question_text": { "markdown": "In case of isoelectronic species the size of F$^-$, Ne and Na$^+$ is affected by:\n\n(JEE Main, 01 Feb 2024)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Principal quantum number (n)", "is_correct": false },
+      { "id": "b", "text": "None of the factors because their size is the same", "is_correct": false },
+      { "id": "c", "text": "Electron-electron interaction in the outer orbitals", "is_correct": false },
+      { "id": "d", "text": "Nuclear charge (Z)", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) Nuclear charge (Z)**\n\nF-, Ne, Na+ all have 10 electrons. Same n, same electron count. Only Z differs: F-(Z=9) > Ne(Z=10) > Na+(Z=11) in size. Higher Z = stronger pull = smaller size." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_2", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": true, "exam_source": { "exam": "JEE Main", "year": 2024, "month": "February", "day": 1, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-023",
+    "question_text": { "markdown": "Lowest oxidation number of an atom in a compound A$_2$B is $-2$. The number of electrons in its valence shell is ____.\n\n(JEE Main, 01 Feb 2024)" },
+    "type": "NVT",
+    "answer": { "integer_value": 6 },
+    "solution": { "text_markdown": "**Answer: 6**\n\nIn A2B, B has OS = -2. Minimum OS = -2 means Group 16 element (O, S, Se, Te). Group 16 valence shell = ns2 np4 = 6 valence electrons." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_6", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2024, "month": "February", "day": 1, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-024",
+    "question_text": { "markdown": "Given below are two statements:\n\n**Assertion A:** The energy required to form Mg$^{2+}$ from Mg is much higher than that required to produce Mg$^+$.\n\n**Reason R:** Mg$^{2+}$ is small ion and carries more charge than Mg$^+$.\n\n(JEE Main, 10 Apr 2023)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Both A and R are true but R is NOT the correct explanation of A", "is_correct": false },
+      { "id": "b", "text": "A is true but R is false", "is_correct": false },
+      { "id": "c", "text": "A is false but R is true", "is_correct": false },
+      { "id": "d", "text": "Both A and R are true and R is the correct explanation of A", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4)**\n\nIE1(Mg)=738, IE2(Mg)=1451 kJ/mol. Total for Mg2+ >> Mg+. Mg2+ is smaller and more charged, so second electron is removed from a +1 cation with smaller radius, requiring much more energy. R correctly explains A." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_3", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2023, "month": "April", "day": 10, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-025",
+    "question_text": { "markdown": "For elements B, C, N, Li, Be, O and F, the correct order of first ionisation enthalpy is:\n\n(JEE Main, 11 Apr 2023)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Li < Be < B < C < O < N < F", "is_correct": false },
+      { "id": "b", "text": "B < Li < Be < C < N < O < F", "is_correct": false },
+      { "id": "c", "text": "Li < Be < B < C < N < O < F", "is_correct": false },
+      { "id": "d", "text": "Li < B < Be < C < O < N < F", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) Li < B < Be < C < O < N < F**\n\nIE1 (kJ/mol): Li(520) < B(800) < Be(899) < C(1086) < O(1314) < N(1402) < F(1681). Two anomalies: Be > B (Be has stable filled 2s2); N > O (N has half-filled 2p3, O has paired 2p4 causing repulsion)." },
+    "metadata": { "difficulty": "Hard", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_3", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": true, "exam_source": { "exam": "JEE Main", "year": 2023, "month": "April", "day": 11, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-026",
+    "question_text": { "markdown": "Which of the following statements are **not** correct?\n\nA. The electron gain enthalpy of F is more negative than that of Cl.\nB. Ionization enthalpy decreases in a group of periodic table.\nC. The electronegativity of an atom depends upon the atoms bonded to it.\nD. Al$_2$O$_3$ and NO are examples of amphoteric oxides.\n\n(JEE Main, 13 Apr 2023)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "A, B, C and D", "is_correct": false },
+      { "id": "b", "text": "A, B and D only", "is_correct": false },
+      { "id": "c", "text": "B and D only", "is_correct": false },
+      { "id": "d", "text": "A, C and D only", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) A, C and D are NOT correct**\n\nA wrong: Cl(-349) has more negative EGE than F(-328 kJ/mol). B correct: IE decreases down a group. C wrong: Electronegativity is an intrinsic property, not dependent on bonded atoms. D wrong: NO is a neutral oxide, not amphoteric." },
+    "metadata": { "difficulty": "Hard", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_3", "weight": 0.5 }, { "tag_id": "tag_periodic_5", "weight": 0.5 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2023, "month": "April", "day": 13, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-027",
+    "question_text": { "markdown": "The correct increasing order of the ionic radii is:\n\n(JEE Main, 31 Jan 2023)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Cl- < Ca2+ < K+ < S2-", "is_correct": false },
+      { "id": "b", "text": "K+ < S2- < Ca2+ < Cl-", "is_correct": false },
+      { "id": "c", "text": "S2- < Cl- < Ca2+ < K+", "is_correct": false },
+      { "id": "d", "text": "Ca2+ < K+ < Cl- < S2-", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) Ca2+ < K+ < Cl- < S2-**\n\nAll isoelectronic (18 electrons). Size increases as Z decreases: Ca2+(Z=20) < K+(Z=19) < Cl-(Z=17) < S2-(Z=16). S2- has lowest Z so it is largest." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_2", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": true, "exam_source": { "exam": "JEE Main", "year": 2023, "month": "January", "day": 31, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-028",
+    "question_text": { "markdown": "The correct order of ionic size of N$^{3-}$, Na$^+$, F$^-$, Mg$^{2+}$ and O$^{2-}$ is:\n\n(JEE Main, 27 Jun 2022)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Mg2+ < Na+ < F- < O2- < N3-", "is_correct": true },
+      { "id": "b", "text": "N3- < O2- < F- < Na+ < Mg2+", "is_correct": false },
+      { "id": "c", "text": "F- < Na+ < O2- < Mg2+ < N3-", "is_correct": false },
+      { "id": "d", "text": "Na+ < F- < Mg2+ < O2- < N3-", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (1) Mg2+ < Na+ < F- < O2- < N3-**\n\nAll isoelectronic with 10 electrons. Size increases as Z decreases: Mg2+(Z=12) < Na+(Z=11) < F-(Z=9) < O2-(Z=8) < N3-(Z=7)." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_2", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": true, "exam_source": { "exam": "JEE Main", "year": 2022, "month": "June", "day": 27, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-029",
+    "question_text": { "markdown": "The correct order of ionic radii for the ions P$^{3-}$, S$^{2-}$, Ca$^{2+}$, K$^+$, Cl$^-$ is:\n\n(JEE Main, 27 Aug 2021)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "P3- > S2- > Cl- > K+ > Ca2+", "is_correct": true },
+      { "id": "b", "text": "P3- > S2- > Cl- > Ca2+ > K+", "is_correct": false },
+      { "id": "c", "text": "Cl- > S2- > P3- > Ca2+ > K+", "is_correct": false },
+      { "id": "d", "text": "K+ > Ca2+ > P3- > S2- > Cl-", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (1) P3- > S2- > Cl- > K+ > Ca2+**\n\nP3-, S2-, Cl- are isoelectronic (18e): P3-(Z=15) > S2-(Z=16) > Cl-(Z=17). K+, Ca2+ are also isoelectronic (18e): K+(Z=19) > Ca2+(Z=20). Anions are larger than cations for same electron count. So: P3- > S2- > Cl- > K+ > Ca2+." },
+    "metadata": { "difficulty": "Hard", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_2", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2021, "month": "August", "day": 27, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-030",
+    "question_text": { "markdown": "The ionic radii of K$^+$, Na$^+$, Al$^{3+}$ and Mg$^{2+}$ are in the order:\n\n(JEE Main, 25 Jul 2021)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Na+ < K+ < Mg2+ < Al3+", "is_correct": false },
+      { "id": "b", "text": "Al3+ < Mg2+ < K+ < Na+", "is_correct": false },
+      { "id": "c", "text": "Al3+ < Mg2+ < Na+ < K+", "is_correct": true },
+      { "id": "d", "text": "K+ < Al3+ < Mg2+ < Na+", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (3) Al3+ < Mg2+ < Na+ < K+**\n\nIonic radii (pm): Al3+(53) < Mg2+(72) < Na+(102) < K+(138). Down the group size increases (Na+ < K+). Higher charge on same period = smaller size (Al3+ < Mg2+ < Na+)." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_2", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2021, "month": "July", "day": 25, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-031",
+    "question_text": { "markdown": "The ionic radii of F$^-$ and O$^{2-}$ respectively are 1.33 A and 1.4 A, while the covalent radius of N is 0.74 A. The correct statement for the ionic radius of N$^{3-}$ is:\n\n(JEE Main, 25 Jul 2021)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "It is smaller than F- and N", "is_correct": false },
+      { "id": "b", "text": "It is bigger than O2- and F-", "is_correct": true },
+      { "id": "c", "text": "It is bigger than F- and N, but smaller than O2-", "is_correct": false },
+      { "id": "d", "text": "It is smaller than O2- and F-, but bigger than N", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (2) N3- is bigger than O2- and F-**\n\nN3-, O2-, F- are isoelectronic (10 electrons). Size increases as Z decreases: F-(Z=9) < O2-(Z=8) < N3-(Z=7). So N3- is the largest. N3- > O2-(1.4 A) > F-(1.33 A)." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_2", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2021, "month": "July", "day": 25, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-032",
+    "question_text": { "markdown": "Match List-I with List-II:\n\n(a) NaOH, (b) Be(OH)2, (c) Ca(OH)2, (d) B(OH)3, (e) Al(OH)3\n\n(i) Acidic, (ii) Basic, (iii) Amphoteric\n\n(JEE Main, 27 Jul 2021)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "(a)-(ii), (b)-(ii), (c)-(iii), (d)-(ii), (e)-(iii)", "is_correct": false },
+      { "id": "b", "text": "(a)-(ii), (b)-(iii), (c)-(ii), (d)-(i), (e)-(iii)", "is_correct": true },
+      { "id": "c", "text": "(a)-(ii), (b)-(ii), (c)-(iii), (d)-(i), (e)-(iii)", "is_correct": false },
+      { "id": "d", "text": "(a)-(ii), (b)-(i), (c)-(ii), (d)-(iii), (e)-(iii)", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (2)**\n\nNaOH: strong base (ii). Be(OH)2: amphoteric (iii). Ca(OH)2: basic (ii). B(OH)3 = boric acid: acidic (i). Al(OH)3: amphoteric (iii)." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_5", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2021, "month": "July", "day": 27, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-033",
+    "question_text": { "markdown": "The characteristics of elements X, Y and Z with atomic numbers, respectively, 33, 53 and 83 are:\n\n(JEE Main, 16 Mar 2021)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "X and Y are metalloids and Z is a metal", "is_correct": false },
+      { "id": "b", "text": "X is a metalloid, Y is a non-metal and Z is a metal.", "is_correct": true },
+      { "id": "c", "text": "X, Y and Z are metals.", "is_correct": false },
+      { "id": "d", "text": "X and Z are non-metals and Y is a metalloid", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (2)**\n\nZ=33: As (Arsenic) - metalloid. Z=53: I (Iodine) - non-metal (halogen). Z=83: Bi (Bismuth) - metal (post-transition metal, Group 15)." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_4", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2021, "month": "March", "day": 16, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-034",
+    "question_text": { "markdown": "Which pair of oxides is acidic in nature?\n\n(JEE Main, 26 Feb 2021)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "B2O3, CaO", "is_correct": false },
+      { "id": "b", "text": "N2O, BaO", "is_correct": false },
+      { "id": "c", "text": "CaO, SiO2", "is_correct": false },
+      { "id": "d", "text": "B2O3, SiO2", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) B2O3 and SiO2**\n\nB2O3: acidic oxide (reacts with NaOH to form borax). SiO2: acidic oxide (reacts with NaOH to form Na2SiO3). CaO and BaO are basic oxides. N2O is a neutral oxide." },
+    "metadata": { "difficulty": "Easy", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_5", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2021, "month": "February", "day": 26, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-035",
+    "question_text": { "markdown": "The ionic radii of O$^{2-}$, F$^-$, Na$^+$ and Mg$^{2+}$ are in the order:\n\n(JEE Main, 04 Sep 2020)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "F- > O2- > Na+ > Mg2+", "is_correct": false },
+      { "id": "b", "text": "O2- > F- > Na+ > Mg2+", "is_correct": true },
+      { "id": "c", "text": "Mg2+ > Na+ > F- > O2-", "is_correct": false },
+      { "id": "d", "text": "O2- > F- > Mg2+ > Na+", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (2) O2- > F- > Na+ > Mg2+**\n\nAll isoelectronic (10 electrons). Size decreases as Z increases: O2-(Z=8) > F-(Z=9) > Na+(Z=11) > Mg2+(Z=12)." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_2", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2020, "month": "September", "day": 4, "shift": "Morning" } }
+  }
+]
