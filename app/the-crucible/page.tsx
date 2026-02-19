@@ -2,7 +2,7 @@ import { getTaxonomy, getChapterQuestionCounts } from './actions';
 import CrucibleLanding from './components/CrucibleLanding';
 import { Metadata } from 'next';
 
-export const revalidate = 300; // Revalidate every 5 minutes — chapter counts don't change per-request
+export const revalidate = 0; // Always fetch fresh — question counts change frequently during ingestion
 
 export const metadata: Metadata = {
     title: 'The Crucible | Forge Your Rank - Master Chemistry',
