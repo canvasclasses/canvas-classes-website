@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/app/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import UserDashboard from '../components/UserDashboard';
 
@@ -13,10 +13,19 @@ export const metadata = {
 };
 
 export default async function DashboardPage() {
-  // Get user session from Supabase
-  const { data: { user }, error } = await supabase.auth.getUser();
-  
-  if (!user || error) {
+  // Get user session from Supabase server client
+  let user = null;
+  try {
+    const supabase = await createClient();
+    if (supabase) {
+      const { data, error } = await supabase.auth.getUser();
+      if (!error) user = data.user;
+    }
+  } catch {
+    // Supabase not configured — redirect to login
+  }
+
+  if (!user) {
     redirect('/login?redirect=/crucible/dashboard');
   }
 

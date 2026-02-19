@@ -1,13 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Mail, Lock, ArrowRight, Loader2, Sparkles, CheckCircle2, X } from 'lucide-react'
 import { login, signup, signInWithGoogle } from './actions'
 import Link from 'next/link'
 
-export default function LoginPage() {
+function LoginContent() {
     const [isLogin, setIsLogin] = useState(true)
     const searchParams = useSearchParams()
     const nextPath = searchParams.get('next') || '/'
@@ -215,5 +215,13 @@ export default function LoginPage() {
                 </motion.div>
             </div>
         </div>
+    )
+}
+
+export default function LoginPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-[#0A0A0B]" />}>
+            <LoginContent />
+        </Suspense>
     )
 }

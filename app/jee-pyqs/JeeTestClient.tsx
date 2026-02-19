@@ -56,6 +56,17 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
 
     const currentQ = questions[currentQIndex];
 
+    if (!currentQ) {
+        return (
+            <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+                <div className="text-center">
+                    <p className="text-slate-400 text-lg mb-4">No questions available for this chapter yet.</p>
+                    <a href="/jee-pyqs" className="text-blue-400 hover:text-blue-300 transition-colors">← Back to chapters</a>
+                </div>
+            </div>
+        );
+    }
+
     const getStatusParams = (qId: string, idx: number): string => {
         if (currentQIndex === idx) return 'ring-2 ring-white ring-offset-2 ring-offset-slate-900 border-blue-500 bg-blue-500 text-white';
         if (marked[qId]) return 'bg-purple-600 border-purple-600 text-white';
