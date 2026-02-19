@@ -40,7 +40,13 @@ export async function middleware(request: NextRequest) {
         },
     });
 
-    const { data: { user } } = await supabase.auth.getUser();
+    let user = null;
+    try {
+        const { data } = await supabase.auth.getUser();
+        user = data.user;
+    } catch {
+        // Supabase network error — treat as unauthenticated
+    }
 
     // Not logged in → redirect to /login (skip on local dev)
     const isLocalDev = request.nextUrl.hostname === 'localhost' || request.nextUrl.hostname === '127.0.0.1';

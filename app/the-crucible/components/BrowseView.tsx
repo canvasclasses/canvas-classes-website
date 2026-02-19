@@ -92,17 +92,8 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
             style={{ marginTop: 8, padding: '10px 20px', borderRadius: 10, border: 'none', background: '#7c3aed', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>Submit</button>
         </div>
       )}
-      {/* View Solution — pointerUp fires reliably on iOS/Android Safari even inside
-          scrollable containers. We call preventDefault() to suppress the subsequent
-          synthetic onClick so the toggle doesn't flip twice. */}
       <button
-        onPointerUp={e => {
-          e.preventDefault();
-          e.stopPropagation();
-          e.currentTarget.releasePointerCapture(e.pointerId);
-          setSolShown(!solShown);
-        }}
-        onClick={e => { e.preventDefault(); e.stopPropagation(); }}
+        onClick={e => { e.stopPropagation(); setSolShown(!solShown); }}
         style={{ padding: '9px 16px', borderRadius: 9, border: '1px solid rgba(124,58,237,0.4)', background: solShown ? 'rgba(124,58,237,0.15)' : 'transparent', color: '#a78bfa', fontSize: 12, fontWeight: 700, cursor: 'pointer', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6, touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent', userSelect: 'none' } as any}>
         <ChevronRight style={{ width: 13, height: 13, transform: solShown ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
         {solShown ? 'Hide Solution' : 'View Solution'}
@@ -153,7 +144,7 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
 
   if (isMobile) {
     return (
-      <div style={{ height: '100vh', overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ height: '100dvh', minHeight: '-webkit-fill-available', overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
         {sharedHeader}
         <div style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch' } as any}>
           {pageQuestions.map((qq, i) => {
@@ -178,9 +169,9 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
                   <ChevronRight style={{ width: 14, height: 14, color: 'rgba(255,255,255,0.3)', flexShrink: 0, transform: expanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s', marginTop: 6 }} />
                 </div>
                 {expanded && (
-                  <div style={{ padding: '0 14px 4px' }}>
+                  <div style={{ padding: '0 14px 4px' }} onClick={e => e.stopPropagation()}>
                     {renderDetail(qq, solShown, (v) => setCardSol(s => ({ ...s, [globalIdx]: v })), optChosen, (v) => setCardOpt(s => ({ ...s, [globalIdx]: v })))}
-                    <button onClick={() => setSelIdx(null)}
+                    <button onClick={(e) => { e.stopPropagation(); setSelIdx(null); }}
                       style={{ width: '100%', marginTop: 8, marginBottom: 12, padding: '10px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, color: 'rgba(255,255,255,0.4)', fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                       <ChevronRight style={{ width: 13, height: 13, transform: 'rotate(-90deg)' }} /> Collapse
                     </button>
@@ -199,7 +190,7 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
   const dq = pageQuestions[desktopIdx - page * PAGE_SIZE] ?? pageQuestions[0];
   const dqGlobalIdx = desktopIdx;
   return (
-    <div style={{ height: '100vh', overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ height: '100dvh', minHeight: '-webkit-fill-available', overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
       {sharedHeader}
       <div style={{ flex: 1, display: 'flex', width: '100%', overflow: 'hidden' }}>
         <div style={{ width: '38%', minWidth: 300, maxWidth: 480, flexShrink: 0, borderRight: '1px solid rgba(255,255,255,0.07)', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
