@@ -1,0 +1,148 @@
+[
+  {
+    "display_id": "PERI-001",
+    "question_text": { "markdown": "Which one of the following statements for D.I. Mendeleeff, is incorrect?\n\n(JEE Main, 22 Jul 2021)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "He authored the textbook - Principles of Chemistry.", "is_correct": false },
+      { "id": "b", "text": "At the time he proposed Periodic Table of elements, structure of atom was known.", "is_correct": true },
+      { "id": "c", "text": "Element with atomic number 101 is named after him.", "is_correct": false },
+      { "id": "d", "text": "He invented accurate barometer.", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (2)**\n\nMendeleev proposed his periodic table in 1869. The structure of the atom was NOT known at that time — Thomson's model came in 1897. So statement (2) is **incorrect** (which is what the question asks for).\n\n- (1) ✓ Mendeleev authored 'Principles of Chemistry'.\n- (3) ✓ Element 101 is Mendelevium (Md).\n- (4) ✓ Mendeleev invented an accurate barometer.\n\n**Trap:** Don't confuse 'incorrect statement' with 'correct statement'." },
+    "metadata": { "difficulty": "Easy", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_1", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2021, "month": "July", "day": 22, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-002",
+    "question_text": { "markdown": "Which of the following material is **not** a semiconductor?\n\n(JEE Main, 06 Apr 2024)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Silicon", "is_correct": false },
+      { "id": "b", "text": "Copper oxide", "is_correct": false },
+      { "id": "c", "text": "Germanium", "is_correct": false },
+      { "id": "d", "text": "Graphite", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) Graphite**\n\nGraphite is a **conductor** due to delocalized π electrons in its layered structure.\n\n- Si: semiconductor (band gap ~1.1 eV)\n- Ge: semiconductor (band gap ~0.67 eV)\n- CuO: p-type semiconductor\n- Graphite: conductor — free electrons in delocalized π system" },
+    "metadata": { "difficulty": "Easy", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_4", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2024, "month": "April", "day": 6, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-003",
+    "question_text": { "markdown": "Identify the correct statements about p-block elements and their compounds.\n\n(A) Non-metals have higher electronegativity than metals.\n(B) Non-metals have lower ionisation enthalpy than metals.\n(C) Compounds formed between highly reactive nonmetals and highly reactive metals are generally ionic.\n(D) The non-metal oxides are generally basic in nature.\n(E) The metal oxides are generally acidic or neutral in nature.\n\nChoose the correct answer: (JEE Main, 08 Apr 2024)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "(B) and (D) only", "is_correct": false },
+      { "id": "b", "text": "(A) and (C) only", "is_correct": true },
+      { "id": "c", "text": "(D) and (E) only", "is_correct": false },
+      { "id": "d", "text": "(B) and (E) only", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (2) (A) and (C) only**\n\n- (A) ✓ Non-metals have higher electronegativity than metals.\n- (B) ✗ Non-metals have **higher** IE than metals, not lower.\n- (C) ✓ Reactive metal + reactive non-metal → ionic compound (e.g., NaCl).\n- (D) ✗ Non-metal oxides are **acidic** (SO₃, CO₂), not basic.\n- (E) ✗ Metal oxides are **basic** (Na₂O, CaO), not acidic." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_5", "weight": 0.5 }, { "tag_id": "tag_periodic_3", "weight": 0.5 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2024, "month": "April", "day": 8, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-004",
+    "question_text": { "markdown": "If IUPAC name of an element is \"Unununnium\" then the element belongs to $n$th group of periodic table. The value of $n$ is ____.\n\n(JEE Main, 30 Jan 2024)" },
+    "type": "NVT",
+    "answer": { "integer_value": 11 },
+    "solution": { "text_markdown": "**Answer: 11**\n\nDecoding 'Unununnium': Un=1, Un=1, Un=1 → Z = **111** (Roentgenium, Rg)\n\nConfig: [Rn] 5f¹⁴ 6d⁹ 7s² → d-block, 9 d-electrons + 2 s-electrons = 11 valence electrons → **Group 11** (like Cu, Ag, Au)\n\n$n = \\boxed{11}$" },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_1", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": true, "exam_source": { "exam": "JEE Main", "year": 2024, "month": "January", "day": 30, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-005",
+    "question_text": { "markdown": "Match List-I (Atomic number) with List-II (Block of periodic table):\n\n**List-I:** (A) 37, (B) 78, (C) 52, (D) 65\n\n**List-II:** I. p-block, II. d-block, III. f-block, IV. s-block\n\n(JEE Main, 30 Jan 2023)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "A-II, B-IV, C-I, D-III", "is_correct": false },
+      { "id": "b", "text": "A-I, B-III, C-IV, D-II", "is_correct": false },
+      { "id": "c", "text": "A-IV, B-III, C-II, D-I", "is_correct": false },
+      { "id": "d", "text": "A-IV, B-II, C-I, D-III", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) A-IV, B-II, C-I, D-III**\n\n- Z=37 (Rb): [Kr] 5s¹ → **s-block** (IV)\n- Z=78 (Pt): [Xe] 4f¹⁴ 5d⁹ 6s¹ → **d-block** (II)\n- Z=52 (Te): [Kr] 4d¹⁰ 5s² 5p⁴ → **p-block** (I)\n- Z=65 (Tb): [Xe] 4f⁹ 6s² → **f-block** (III)" },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_1", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": true, "exam_source": { "exam": "JEE Main", "year": 2023, "month": "January", "day": 30, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-006",
+    "question_text": { "markdown": "Element 'E' belongs to period 4 and group 16 of the periodic table. The valence shell electron configuration of the element which is just above 'E' in the group is:\n\n(JEE Main, 28 Jun 2022)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "$2s^2 2p^4$", "is_correct": false },
+      { "id": "b", "text": "$3d^{10}, 4s^2, 4p^4$", "is_correct": false },
+      { "id": "c", "text": "$3s^2 3p^4$", "is_correct": true },
+      { "id": "d", "text": "$4d^{10}, 5s^2, 5p^4$", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (3) $3s^2 3p^4$**\n\nGroup 16, Period 4 → E = **Se (Z=34)**. Element just above Se in Group 16 = **S (Z=16)**, Period 3.\n\nValence config of S: $3s^2 3p^4$" },
+    "metadata": { "difficulty": "Easy", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_1", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2022, "month": "June", "day": 28, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-007",
+    "question_text": { "markdown": "The atomic number of the element unnilennium is:\n\n(JEE Main, 03 Sep 2020)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "109", "is_correct": true },
+      { "id": "b", "text": "102", "is_correct": false },
+      { "id": "c", "text": "108", "is_correct": false },
+      { "id": "d", "text": "119", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (1) 109**\n\nun=1, nil=0, enn=9 → Z = **109** (Meitnerium, Mt)\n\nIUPAC roots: nil=0, un=1, bi=2, tri=3, quad=4, pent=5, hex=6, sept=7, oct=8, enn=9" },
+    "metadata": { "difficulty": "Easy", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_1", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2020, "month": "September", "day": 3, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-008",
+    "question_text": { "markdown": "The elements with atomic numbers 101 and 104 belong to, respectively:\n\n(JEE Main, 04 Sep 2020)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Group 11 and Group 4", "is_correct": false },
+      { "id": "b", "text": "Actinoids and Group 6", "is_correct": false },
+      { "id": "c", "text": "Actinoids and Group 4", "is_correct": true },
+      { "id": "d", "text": "Group 6 and Actinoids", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (3) Actinoids and Group 4**\n\n- Z=101 (Md): [Rn] 5f¹³ 7s² → 5f → **Actinoid**\n- Z=104 (Rf): [Rn] 5f¹⁴ 6d² 7s² → 6d → **d-block, Group 4** (like Ti, Zr, Hf)" },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_1", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2020, "month": "September", "day": 4, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-009",
+    "question_text": { "markdown": "The atomic number of Unnilunium is ____.\n\n(JEE Main, 06 Sep 2020)" },
+    "type": "NVT",
+    "answer": { "integer_value": 101 },
+    "solution": { "text_markdown": "**Answer: 101**\n\nUn=1, nil=0, un=1 → Z = **101** (Mendelevium, Md)\n\nConfig: [Rn] 5f¹³ 7s² → Actinoid series, named after Mendeleev." },
+    "metadata": { "difficulty": "Easy", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_1", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2020, "month": "September", "day": 6, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-010",
+    "question_text": { "markdown": "The IUPAC symbol for the element with atomic number 119 would be:\n\n(JEE Main, 08 Apr 2019)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Unh", "is_correct": false },
+      { "id": "b", "text": "Uun", "is_correct": false },
+      { "id": "c", "text": "Une", "is_correct": false },
+      { "id": "d", "text": "Uue", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) Uue**\n\nZ=119: 1→Un, 1→Un, 9→enn → Symbol = **Uue** (Ununennium)\n\nZ=119 would be Period 8, Group 1 (s-block, alkali metal)." },
+    "metadata": { "difficulty": "Easy", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_1", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2019, "month": "April", "day": 8, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-011",
+    "question_text": { "markdown": "The group number, number of valence electrons, and valency of an element with atomic number 15, respectively, are:\n\n(JEE Main, 12 Apr 2019)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "15, 6 and 2", "is_correct": false },
+      { "id": "b", "text": "16, 6 and 3", "is_correct": false },
+      { "id": "c", "text": "16, 5 and 2", "is_correct": false },
+      { "id": "d", "text": "15, 5 and 3", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) 15, 5 and 3**\n\nZ=15 = **Phosphorus (P)**: [Ne] 3s² 3p³\n\n- Group: **15** (p-block)\n- Valence electrons: **5** (3s² + 3p³)\n- Valency: **3** (needs 3 electrons to complete octet; forms PCl₃)" },
+    "metadata": { "difficulty": "Easy", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_6", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2019, "month": "April", "day": 12, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-012",
+    "question_text": { "markdown": "The element with $Z = 120$ (not yet discovered) will be a/an:\n\n(JEE Main, 12 Jan 2019)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "transition metal.", "is_correct": false },
+      { "id": "b", "text": "alkaline earth metal.", "is_correct": true },
+      { "id": "c", "text": "alkali metal.", "is_correct": false },
+      { "id": "d", "text": "inner-transition metal.", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (2) alkaline earth metal**\n\nZ=120: [Og] 8s² → last electron in 8s → **s-block, Group 2** → alkaline earth metal.\n\nZ=119 → Group 1 (alkali), Z=120 → Group 2 (alkaline earth)." },
+    "metadata": { "difficulty": "Easy", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_1", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2019, "month": "January", "day": 12, "shift": "Morning" } }
+  }
+]

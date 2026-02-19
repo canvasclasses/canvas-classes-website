@@ -1,0 +1,132 @@
+[
+  {
+    "display_id": "PERI-011",
+    "question_text": { "markdown": "The group number, number of valence electrons, and valency of an element with atomic number 15, respectively, are:\n\n(JEE Main, 12 Apr 2019)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "15, 6 and 2", "is_correct": false },
+      { "id": "b", "text": "16, 6 and 3", "is_correct": false },
+      { "id": "c", "text": "16, 5 and 2", "is_correct": false },
+      { "id": "d", "text": "15, 5 and 3", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) 15, 5 and 3**\n\nZ=15 = Phosphorus: [Ne] 3s2 3p3. Group 15, valence electrons = 5 (3s2+3p3), valency = 3 (forms PCl3, needs 3 more electrons)." },
+    "metadata": { "difficulty": "Easy", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_6", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2019, "month": "April", "day": 12, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-012",
+    "question_text": { "markdown": "The element with $Z = 120$ (not yet discovered) will be a/an:\n\n(JEE Main, 12 Jan 2019)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "transition metal.", "is_correct": false },
+      { "id": "b", "text": "alkaline earth metal.", "is_correct": true },
+      { "id": "c", "text": "alkali metal.", "is_correct": false },
+      { "id": "d", "text": "inner-transition metal.", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (2) alkaline earth metal**\n\nZ=120: [Og] 8s2 -> last electron in 8s -> s-block, Group 2 -> alkaline earth metal. (Z=119 would be Group 1 alkali metal.)" },
+    "metadata": { "difficulty": "Easy", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_1", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2019, "month": "January", "day": 12, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-013",
+    "question_text": { "markdown": "The correct order of the first ionization enthalpy is:\n\n(JEE Main, 04 Apr 2024)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Al > Ga > Tl", "is_correct": false },
+      { "id": "b", "text": "Ga > Al > B", "is_correct": false },
+      { "id": "c", "text": "Tl > Ga > Al", "is_correct": false },
+      { "id": "d", "text": "B > Al > Ga", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) B > Al > Ga**\n\nGroup 13 IE1 (kJ/mol): B=800, Al=577, Ga=579. Ga is slightly higher than Al due to poor shielding by 3d electrons (anomaly), but B is always highest. Among the options, B > Al > Ga is the correct partial ordering." },
+    "metadata": { "difficulty": "Hard", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_3", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": true, "exam_source": { "exam": "JEE Main", "year": 2024, "month": "April", "day": 4, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-014",
+    "question_text": { "markdown": "Given below are two statements:\n\n**Statement I:** The correct order of first ionization enthalpy of Li, Na, F and Cl is Na < Li < Cl < F.\n\n**Statement II:** The correct order of negative electron gain enthalpy of Li, Na, F and Cl is Na < Li < F < Cl.\n\n(JEE Main, 04 Apr 2024)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Statement I is true but Statement II is false", "is_correct": false },
+      { "id": "b", "text": "Statement I is false but Statement II is true", "is_correct": false },
+      { "id": "c", "text": "Both Statement I and Statement II are false", "is_correct": false },
+      { "id": "d", "text": "Both Statement I and Statement II are true", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) Both true**\n\nIE1: Na(496) < Li(520) < Cl(1251) < F(1681) kJ/mol. Correct.\n\nEGE magnitude: Na(53) < Li(60) < F(328) < Cl(349) kJ/mol. Correct. Cl has more negative EGE than F because F's compact 2p orbitals cause electron repulsion when extra electron is added." },
+    "metadata": { "difficulty": "Hard", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_3", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": true, "exam_source": { "exam": "JEE Main", "year": 2024, "month": "April", "day": 4, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-015",
+    "question_text": { "markdown": "Given below are two statements:\n\n**Statement I:** The metallic radius of Na is 1.86 A and the ionic radius of Na+ is lesser than 1.86 A.\n\n**Statement II:** Ions are always smaller in size than the corresponding elements.\n\n(JEE Main, 05 Apr 2024)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Both Statement I and Statement II are false", "is_correct": false },
+      { "id": "b", "text": "Statement I is incorrect but Statement II is true", "is_correct": false },
+      { "id": "c", "text": "Both Statement I and Statement II are true", "is_correct": false },
+      { "id": "d", "text": "Statement I is correct but Statement II is false", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4)**\n\nSt. I: Na+ (1.02 A) < Na (1.86 A). Cations are smaller than parent atom. Correct.\n\nSt. II: Anions are LARGER than parent atoms (e.g., Cl- = 1.81 A > Cl = 0.99 A). So 'ions are always smaller' is false. Only cations are smaller; anions are larger." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_2", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2024, "month": "April", "day": 5, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-016",
+    "question_text": { "markdown": "Match List I with List II:\n\n| List-I (Elements) | List-II (Properties in their groups) |\n|---|---|\n| A. Cl, S | I. Highest electronegativity |\n| B. Ge, As | II. Largest atomic size |\n| C. Fr, Ra | III. Properties of both metals and non-metals |\n| D. F, O | IV. Highest negative electron gain enthalpy |\n\n(JEE Main, 08 Apr 2024)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "A-II, B-I, C-IV, D-III", "is_correct": false },
+      { "id": "b", "text": "A-III, B-II, C-I, D-IV", "is_correct": false },
+      { "id": "c", "text": "A-IV, B-III, C-II, D-I", "is_correct": true },
+      { "id": "d", "text": "A-II, B-III, C-IV, D-I", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (3) A-IV, B-III, C-II, D-I**\n\nA (Cl, S): Highest negative EGE in their groups (IV). Anomaly: Cl > F and S > O in EGE.\nB (Ge, As): Metalloids - show properties of both metals and non-metals (III).\nC (Fr, Ra): Heaviest in their groups -> largest atomic size (II).\nD (F, O): Most electronegative in their groups (I)." },
+    "metadata": { "difficulty": "Hard", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_3", "weight": 0.5 }, { "tag_id": "tag_periodic_2", "weight": 0.5 }], "is_pyq": true, "is_top_pyq": true, "exam_source": { "exam": "JEE Main", "year": 2024, "month": "April", "day": 8, "shift": "Morning" } }
+  },
+  {
+    "display_id": "PERI-017",
+    "question_text": { "markdown": "The element having the highest first ionization enthalpy among Si, Al, N and C is:\n\n(JEE Main, 29 Jan 2024)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Si", "is_correct": false },
+      { "id": "b", "text": "Al", "is_correct": false },
+      { "id": "c", "text": "N", "is_correct": true },
+      { "id": "d", "text": "C", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (3) N**\n\nIE1 (kJ/mol): Al(577) < Si(786) < C(1086) < N(1402). N has half-filled 2p3 configuration which has extra stability due to exchange energy. Hence N has the highest IE1 among these four elements." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_3", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2024, "month": "January", "day": 29, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-018",
+    "question_text": { "markdown": "Given below are two statements:\n\n**Statement I:** Fluorine has most negative electron gain enthalpy in its group.\n\n**Statement II:** Oxygen has least negative electron gain enthalpy in its group.\n\n(JEE Main, 29 Jan 2024)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Both Statement I and Statement II are true", "is_correct": false },
+      { "id": "b", "text": "Statement I is true but Statement II is false", "is_correct": false },
+      { "id": "c", "text": "Both Statement I and Statement II are false", "is_correct": false },
+      { "id": "d", "text": "Statement I is false but Statement II is true", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) St. I false, St. II true**\n\nSt. I is FALSE: In Group 17, Cl (-349 kJ/mol) has more negative EGE than F (-328 kJ/mol). F's compact 2p orbitals cause electron-electron repulsion when extra electron is added.\n\nSt. II is TRUE: In Group 16, O (-141 kJ/mol) has the least negative EGE. Order: S(-200) > Se(-195) > Te(-190) > O(-141). Same reason - O's small size causes repulsion." },
+    "metadata": { "difficulty": "Hard", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_3", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": true, "exam_source": { "exam": "JEE Main", "year": 2024, "month": "January", "day": 29, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-019",
+    "question_text": { "markdown": "Given below are two statements:\n\n**Statement I:** Along the period, the chemical reactivity of the element gradually increases from group 1 to group 18.\n\n**Statement II:** The nature of oxides formed by group 1 element is basic while that of group 17 elements is acidic.\n\n(JEE Main, 30 Jan 2024)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Both Statement I and Statement II are true.", "is_correct": false },
+      { "id": "b", "text": "Statement I is true but Statement II is False.", "is_correct": false },
+      { "id": "c", "text": "Statement I is false but Statement II is true.", "is_correct": true },
+      { "id": "d", "text": "Both Statement I and Statement II are false.", "is_correct": false }
+    ],
+    "solution": { "text_markdown": "**Answer: (3) St. I false, St. II true**\n\nSt. I is FALSE: Reactivity does NOT gradually increase from Group 1 to 18. Noble gases (Group 18) are least reactive. Reactivity is highest at extremes (Groups 1 and 17) and lowest at Group 18.\n\nSt. II is TRUE: Group 1 oxides (Na2O, K2O) are basic. Group 17 oxides (Cl2O7, Cl2O) are acidic." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_5", "weight": 0.5 }, { "tag_id": "tag_periodic_4", "weight": 0.5 }], "is_pyq": true, "is_top_pyq": false, "exam_source": { "exam": "JEE Main", "year": 2024, "month": "January", "day": 30, "shift": "Evening" } }
+  },
+  {
+    "display_id": "PERI-020",
+    "question_text": { "markdown": "In case of isoelectronic species the size of F-, Ne and Na+ is affected by:\n\n(JEE Main, 01 Feb 2024)" },
+    "type": "SCQ",
+    "options": [
+      { "id": "a", "text": "Principal quantum number (n)", "is_correct": false },
+      { "id": "b", "text": "None of the factors because their size is the same", "is_correct": false },
+      { "id": "c", "text": "Electron-electron interaction in the outer orbitals", "is_correct": false },
+      { "id": "d", "text": "Nuclear charge (Z)", "is_correct": true }
+    ],
+    "solution": { "text_markdown": "**Answer: (4) Nuclear charge (Z)**\n\nF-, Ne, Na+ are isoelectronic - all have 10 electrons (1s2 2s2 2p6). Same n, same electron count. The only variable is nuclear charge Z: F-(Z=9) > Ne(Z=10) > Na+(Z=11) in size. Higher Z means stronger pull on the same electrons, giving smaller size." },
+    "metadata": { "difficulty": "Medium", "chapter_id": "chapter_classification_of_elements", "tags": [{ "tag_id": "tag_periodic_2", "weight": 1.0 }], "is_pyq": true, "is_top_pyq": true, "exam_source": { "exam": "JEE Main", "year": 2024, "month": "February", "day": 1, "shift": "Morning" } }
+  }
+]

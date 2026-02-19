@@ -1,0 +1,1136 @@
+[
+  {
+    "display_id": "PERI-081",
+    "question_text": {
+      "markdown": "In general, the property (magnitudes only) that shows an opposite trend in comparison to other properties across a period is:\n\n(JEE Main, 02 Sep 2020)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Ionization enthalpy",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "Electronegativity",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "Electron gain enthalpy",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "Atomic radius",
+        "is_correct": true
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (4) Atomic radius**\n\nAcross a period: IE increases, EN increases, EGE magnitude increases. But atomic radius DECREASES across a period - opposite trend."
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_2",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2020,
+        "month": "September",
+        "day": 2,
+        "shift": "Morning"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-082",
+    "question_text": {
+      "markdown": "Three elements X, Y and Z are in the 3rd period. The oxides of X, Y and Z, respectively, are basic, amphoteric and acidic. The correct order of the atomic numbers of X, Y and Z is:\n\n(JEE Main, 02 Sep 2020)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Z < Y < X",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "X < Y < Z",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "X < Z < Y",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "Y < X < Z",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (2) X < Y < Z**\n\nIn Period 3, basic oxides (metals, low Z) < amphoteric (metalloids, mid Z) < acidic (non-metals, high Z). e.g. Na(11) < Al(13) < S(16)."
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_5",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2020,
+        "month": "September",
+        "day": 2,
+        "shift": "Evening"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-083",
+    "question_text": {
+      "markdown": "The five successive ionization enthalpies of an element are 800, 2427, 3658, 25024 and 32824 kJ mol$^{-1}$. The number of valence electrons in the element is:\n\n(JEE Main, 03 Sep 2020)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "5",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "4",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "3",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "2",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (3) 3 valence electrons**\n\nHuge jump between IE3(3658) and IE4(25024 kJ/mol). The 4th electron is from noble gas core. So element has 3 valence electrons -> Group 13 (e.g. Al)."
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_3",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": true,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2020,
+        "month": "September",
+        "day": 3,
+        "shift": "Evening"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-084",
+    "question_text": {
+      "markdown": "The process that is NOT endothermic in nature is:\n\n(JEE Main, 04 Sep 2020)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Ar(g) + e- -> Ar-(g)",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "H(g) + e- -> H-(g)",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "O-(g) + e- -> O2-(g)",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "Na(g) -> Na+(g) + e-",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (2) H(g) + e- -> H-(g)**\n\nThis is exothermic: H has EGE = -73 kJ/mol (energy released). Ar + e- (noble gas, endothermic); O- + e- -> O2- (second electron, always endothermic); Na -> Na+ + e- (ionization, always endothermic)."
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_3",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2020,
+        "month": "September",
+        "day": 4,
+        "shift": "Evening"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-085",
+    "question_text": {
+      "markdown": "The electron gain enthalpy (in kJ/mol) of fluorine, chlorine, bromine and iodine, respectively, are:\n\n(JEE Main, 07 Jan 2020)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "-296, -325, -333 and -349",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "-349, -333, -325 and -296",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "-333, -349, -325 and -296",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "-333, -325, -349 and -296",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (3) F=-333, Cl=-349, Br=-325, I=-296 kJ/mol**\n\nCl has the most negative EGE. F is anomalously less negative than Cl due to compact 2p orbitals. EGE decreases in magnitude: Cl > F > Br > I."
+    },
+    "metadata": {
+      "difficulty": "Hard",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_3",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2020,
+        "month": "January",
+        "day": 7,
+        "shift": "Morning"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-086",
+    "question_text": {
+      "markdown": "Within each pair of elements F and Cl, S and Se, and Li and Na, respectively, the elements that release more energy upon an electron gain are:\n\n(JEE Main, 07 Jan 2020)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Cl, Se and Na",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "Cl, S and Li",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "F, S and Li",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "F, Se and Na",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (2) Cl, S and Li**\n\nMore energy released = more negative EGE: Cl(-349) > F(-328); S(-200) > Se(-195); Li(-60) > Na(-53). So Cl, S, Li release more energy."
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_3",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": true,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2020,
+        "month": "January",
+        "day": 7,
+        "shift": "Evening"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-087",
+    "question_text": {
+      "markdown": "The third ionization enthalpy is minimum for:\n\n(JEE Main, 08 Jan 2020)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Co",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "Fe",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "Ni",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "Mn",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (2) Fe**\n\nFe: [Ar]3d6 4s2. Fe2+ = [Ar]3d6. Removing 3rd electron from 3d6 (one paired electron in half-filled shell) is relatively easy. IE3(Fe) is minimum among these transition metals."
+    },
+    "metadata": {
+      "difficulty": "Hard",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_3",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2020,
+        "month": "January",
+        "day": 8,
+        "shift": "Morning"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-088",
+    "question_text": {
+      "markdown": "The first ionization energy (in kJ/mol) of Na, Mg, Al and Si respectively are:\n\n(JEE Main, 08 Jan 2020)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "496, 737, 577, 786",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "496, 577, 737, 786",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "786, 737, 577, 496",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "496, 577, 786, 737",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (1) Na=496, Mg=737, Al=577, Si=786 kJ/mol**\n\nAnomaly: Al(577) < Mg(737) because Al's 3p1 electron is easier to remove than Mg's 3s2. Order: Na < Al < Mg < Si."
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_3",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": true,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2020,
+        "month": "January",
+        "day": 8,
+        "shift": "Morning"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-089",
+    "question_text": {
+      "markdown": "The increasing order of the atomic radii of the following elements is:\n\n(a) C, (b) O, (c) F, (d) Cl, (e) Br\n\n(JEE Main, 08 Jan 2020)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "(b) < (c) < (d) < (a) < (e)",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "(d) < (c) < (b) < (a) < (e)",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "(c) < (b) < (a) < (d) < (e)",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "(a) < (b) < (c) < (d) < (e)",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (3) F < O < C < Cl < Br**\n\nAtomic radii (pm): F(64) < O(66) < C(77) < Cl(99) < Br(114). Across Period 2: F < O < C. Down Group 17: Cl > F, Br > Cl."
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_2",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2020,
+        "month": "January",
+        "day": 8,
+        "shift": "Evening"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-090",
+    "question_text": {
+      "markdown": "B has a smaller first ionization enthalpy than Be. The correct statements are:\n\n(I) It is easier to remove 2p electron than 2s electron.\n(II) 2p electron of B is more shielded from the nucleus by the inner core of electrons than the 2s electrons of Be.\n(III) 2s electron has more penetration power than 2p electron.\n(IV) Atomic radius of B is more than Be.\n\n(JEE Main, 09 Jan 2020)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "(I), (II) and (IV)",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "(II), (III) and (IV)",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "(I), (II) and (III)",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "(I), (III) and (IV)",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (3) I, II and III**\n\nI: 2p electron is higher energy, easier to remove. Correct. II: B's 2p is shielded by 1s2 2s2 inner electrons. Correct. III: 2s has greater penetration than 2p. Correct. IV: B(87 pm) < Be(112 pm). B is SMALLER. Incorrect."
+    },
+    "metadata": {
+      "difficulty": "Hard",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_3",
+          "weight": 0.5
+        },
+        {
+          "tag_id": "tag_periodic_2",
+          "weight": 0.5
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2020,
+        "month": "January",
+        "day": 9,
+        "shift": "Morning"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-091",
+    "question_text": {
+      "markdown": "The size of the isoelectronic species Cl$^-$, Ar and Ca$^{2+}$ is affected by:\n\n(JEE Main, 08 Apr 2019)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "nuclear charge",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "azimuthal quantum number of valence shell",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "electron-electron interaction in the outer orbitals",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "Principal quantum number of valence shell",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (1) Nuclear charge**\n\nCl-(Z=17), Ar(Z=18), Ca2+(Z=20) are isoelectronic (18 electrons). Only Z differs. Higher Z = smaller size: Cl- > Ar > Ca2+."
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_2",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2019,
+        "month": "April",
+        "day": 8,
+        "shift": "Morning"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-092",
+    "question_text": {
+      "markdown": "The element having the greatest difference between its first and second ionization energies, is:\n\n(JEE Main, 09 Apr 2019)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Ba",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "K",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "Ca",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "Sc",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (2) K**\n\nK is Group 1. IE1(K)=419 kJ/mol (removes 4s1 easily). IE2(K)=3051 kJ/mol (removes from noble gas core [Ar]). The IE2-IE1 difference is enormous for K compared to Ca (Group 2) where both IE1 and IE2 are moderate."
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_3",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": true,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2019,
+        "month": "April",
+        "day": 9,
+        "shift": "Morning"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-093",
+    "question_text": {
+      "markdown": "In comparison to boron, beryllium has:\n\n(JEE Main, 12 Apr 2019)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "greater nuclear charge and lesser first ionisation enthalpy",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "lesser nuclear charge and greater first ionisation enthalpy",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "lesser nuclear charge and lesser first ionisation enthalpy.",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "greater nuclear charge and greater first ionisation enthalpy.",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (2) lesser nuclear charge and greater first ionisation enthalpy**\n\nBe(Z=4) < B(Z=5) in nuclear charge. IE1: Be(899) > B(800) kJ/mol. Be has stable filled 2s2, harder to remove than B's single 2p1 electron."
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_3",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2019,
+        "month": "April",
+        "day": 12,
+        "shift": "Evening"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-094",
+    "question_text": {
+      "markdown": "In general, the properties that decrease and increase down a group in the periodic table, respectively, are:\n\n(JEE Main, 09 Jan 2019)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Atomic radius and electronegativity",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "Electronegativity and atomic radius",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "Electronegativity and electron gain enthalpy",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "Electron gain enthalpy and electronegativity",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (2) Electronegativity decreases, Atomic radius increases**\n\nDown a group: Electronegativity DECREASES (larger atoms, electrons farther from nucleus). Atomic radius INCREASES (more electron shells). This is the correct pair."
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_2",
+          "weight": 0.5
+        },
+        {
+          "tag_id": "tag_periodic_3",
+          "weight": 0.5
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2019,
+        "month": "January",
+        "day": 9,
+        "shift": "Morning"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-095",
+    "question_text": {
+      "markdown": "Aluminium is usually found in +3 oxidation state. In contrast, thallium exists in +1 and +3 oxidation states. This is due to:\n\n(JEE Main, 09 Jan 2019)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Diagonal relationship",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "Lattice effect",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "Lanthanoid contraction",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "Inert pair effect",
+        "is_correct": true
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (4) Inert pair effect**\n\nDown Group 13, the 6s2 electrons in Tl become reluctant to participate in bonding due to relativistic effects (inert pair effect). The 6s2 pair behaves as inert, making +1 OS stable for Tl (losing only 6p1), while Al always shows +3."
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_6",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2019,
+        "month": "January",
+        "day": 9,
+        "shift": "Morning"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-096",
+    "question_text": {
+      "markdown": "When the first electron gain enthalpy ($\\Delta H_{eg}$) of oxygen is $-141$ kJ/mol, its second electron gain enthalpy is:\n\n(JEE Main, 09 Jan 2019)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "A positive value",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "Almost the same as that of the first",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "Negative, but less negative than the first",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "A more negative value than the first",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (1) A positive value**\n\nThe second EGE of O (O- + e- -> O2-) is always positive (endothermic, ~+780 kJ/mol). Adding a second electron to an already negatively charged O- ion requires energy to overcome strong electron-electron repulsion."
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_3",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": true,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2019,
+        "month": "January",
+        "day": 9,
+        "shift": "Evening"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-097",
+    "question_text": {
+      "markdown": "The correct order of the atomic radii of C, Cs, Al, and S is:\n\n(JEE Main, 11 Jan 2019)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "C < S < Al < Cs",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "S < C < Cs < Al",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "S < C < Al < Cs",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "C < S < Cs < Al",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (1) C < S < Al < Cs**\n\nAtomic radii (pm): C(77) < S(104) < Al(143) < Cs(265). C is Period 2, S is Period 3, Al is Period 3 Group 13 (larger than S), Cs is Period 6 Group 1 (largest alkali metal)."
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_2",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2019,
+        "month": "January",
+        "day": 11,
+        "shift": "Morning"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-098",
+    "question_text": {
+      "markdown": "The correct option with respect to the Pauling electronegativity values of the elements is:\n\n(JEE Main, 11 Jan 2019)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Te > Se",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "Ga < Ge",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "Si < Al",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "P > S",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (2) Ga < Ge**\n\nElectronegativity (Pauling): Ga(1.81) < Ge(2.01). Correct - EN increases across a period. Others: Te(2.1) < Se(2.55) so Te > Se is wrong. Si(1.90) > Al(1.61) so Si < Al is wrong. P(2.19) < S(2.58) so P > S is wrong."
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_3",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2019,
+        "month": "January",
+        "day": 11,
+        "shift": "Evening"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-099",
+    "question_text": {
+      "markdown": "The element that does not show catenation is:\n\n(JEE Main, 12 Jan 2019)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Sn",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "Si",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "Ge",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "Pb",
+        "is_correct": true
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (4) Pb (Lead)**\n\nCatenation ability: C >> Si > Ge > Sn >> Pb. Pb does NOT show catenation because Pb-Pb bonds are very weak (large atomic size, poor orbital overlap). Sn shows limited catenation but Pb essentially does not."
+    },
+    "metadata": {
+      "difficulty": "Easy",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_4",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2019,
+        "month": "January",
+        "day": 12,
+        "shift": "Evening"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-100",
+    "question_text": {
+      "markdown": "For compound having the formula GaAlCl$_4$, the correct option from the following is:\n\n(JEE Main, 11 Apr 2023)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Ga is coordinated with Cl in GaAlCl4",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "Ga is more electronegative than Al and is present as a cationic part of the salt GaAlCl4",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "Cl forms bond with both Al and Ga in GaAlCl4",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "Oxidation state of Ga in the salt GaAlCl4 is +3",
+        "is_correct": true
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (4) Oxidation state of Ga is +3**\n\nGaAlCl4 is ionic: [Ga]3+[AlCl4]-. Ga acts as cation with OS = +3. Al is coordinated with 4 Cl atoms forming tetrahedral [AlCl4]- anion. Ga(1.81 EN) > Al(1.61 EN), so Ga is more electronegative and acts as cation here."
+    },
+    "metadata": {
+      "difficulty": "Hard",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_6",
+          "weight": 0.5
+        },
+        {
+          "tag_id": "tag_periodic_3",
+          "weight": 0.5
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2023,
+        "month": "April",
+        "day": 11,
+        "shift": "Morning"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-101",
+    "question_text": {
+      "markdown": "In which of the following pairs, electron gain enthalpies of constituent elements are nearly the same or identical?\n\n(A) Rb and Cs\n(B) Na and K\n(C) Ar and Kr\n(D) I and At\n\n(JEE Main, 28 Jul 2022)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "A & B only",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "B & C only",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "A & C only",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "C & D only",
+        "is_correct": true
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (4) C & D only**\n\nC (Ar and Kr): Both noble gases have nearly zero/positive EGE (~+35 to +40 kJ/mol). Very similar values.\n\nD (I and At): I(-295) and At(-270) kJ/mol are close in value.\n\nA (Rb and Cs) and B (Na and K) have more differing EGE values compared to C and D."
+    },
+    "metadata": {
+      "difficulty": "Hard",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_3",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2022,
+        "month": "July",
+        "day": 28,
+        "shift": "Morning"
+      }
+    }
+  },
+  {
+    "display_id": "PERI-102",
+    "question_text": {
+      "markdown": "The correct order of atomic radii is:\n\n(JEE Main, 12 Jan 2019)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Ce > Eu > Ho > N",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "N > Ce > Eu > Ho",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "Ho > N > Eu > Ce",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "Ce > Eu > Ho > N",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "**Answer: (1) Ce > Eu > Ho > N**\n\nLanthanoid contraction: atomic radii decrease across the lanthanide series due to poor 4f shielding. Ce(Z=58) > Eu(Z=63) > Ho(Z=67) in atomic radius. N (Period 2 non-metal, ~75 pm) is much smaller than any lanthanide. So Ce > Eu > Ho > N."
+    },
+    "metadata": {
+      "difficulty": "Medium",
+      "chapter_id": "chapter_classification_of_elements",
+      "tags": [
+        {
+          "tag_id": "tag_periodic_2",
+          "weight": 1
+        }
+      ],
+      "is_pyq": true,
+      "is_top_pyq": false,
+      "exam_source": {
+        "exam": "JEE Main",
+        "year": 2019,
+        "month": "January",
+        "day": 12,
+        "shift": "Evening"
+      }
+    }
+  }
+]
