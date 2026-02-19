@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../.env.local') });
 
-const MONGODB_URI = "mongodb+srv://REDACTED_USER:REDACTED_PASSWORD@crucible-cluster.x9hcudc.mongodb.net/crucible?retryWrites=true&w=majority&appName=Crucible-Cluster";
+const MONGODB_URI = process.env.MONGODB_URI;
 const QUESTIONS_DIR = path.join(__dirname, '../data/questions');
 
 async function sync() {
