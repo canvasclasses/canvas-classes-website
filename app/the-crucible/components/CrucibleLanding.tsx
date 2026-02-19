@@ -66,42 +66,45 @@ function ShlokaScreen({ onDone }: { onDone: () => void }) {
 function ProgressCard({ isLoggedIn }: { isLoggedIn: boolean }) {
   const p = PLACEHOLDER;
   const pct = Math.round((p.attempted / p.totalQ) * 100);
-  const C = 2 * Math.PI * 30;
+  const R = 40; const C = 2 * Math.PI * R;
   return (
-    <div style={{ background: 'linear-gradient(145deg,rgba(30,20,60,0.9),rgba(15,12,30,0.95))', border: '1px solid rgba(124,58,237,0.25)', borderRadius: 18, padding: '16px 18px 14px', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle,rgba(124,58,237,0.18) 0%,transparent 70%)', pointerEvents: 'none' }} />
+    <div style={{ background: 'linear-gradient(145deg,rgba(30,20,60,0.9),rgba(15,12,30,0.95))', border: '1px solid rgba(124,58,237,0.25)', borderRadius: 18, padding: '16px 20px 16px', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', top: -50, right: -50, width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle,rgba(124,58,237,0.15) 0%,transparent 70%)', pointerEvents: 'none' }} />
       {/* Top row: label + streak */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
         <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', margin: 0 }}>Your Progress</p>
         <span style={{ fontSize: 12, fontWeight: 700, color: '#f97316' }}>{String.fromCodePoint(0x1F525)} {p.streak}-day streak</span>
       </div>
-      {/* Stats row: ring + 2×2 grid */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
-        <svg width="72" height="72" viewBox="0 0 72 72" style={{ flexShrink: 0 }}>
-          <circle cx="36" cy="36" r="30" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="6"/>
-          <circle cx="36" cy="36" r="30" fill="none" stroke="url(#ring-grad)" strokeWidth="6" strokeLinecap="round"
+      {/* Main row: big ring | stats | day dots */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+        {/* Ring — bigger on desktop */}
+        <svg width="96" height="96" viewBox="0 0 96 96" style={{ flexShrink: 0 }}>
+          <circle cx="48" cy="48" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="7"/>
+          <circle cx="48" cy="48" r={R} fill="none" stroke="url(#ring-grad)" strokeWidth="7" strokeLinecap="round"
             strokeDasharray={C} strokeDashoffset={C * (1 - pct / 100)}
-            transform="rotate(-90 36 36)" style={{ transition: 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)' }}
+            transform="rotate(-90 48 48)" style={{ transition: 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)' }}
           />
           <defs><linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#38bdf8"/><stop offset="100%" stopColor="#818cf8"/></linearGradient></defs>
-          <text x="36" y="33" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="800" fontFamily="monospace">{pct}%</text>
-          <text x="36" y="46" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="8" fontFamily="sans-serif">complete</text>
+          <text x="48" y="44" textAnchor="middle" fill="#fff" fontSize="16" fontWeight="800" fontFamily="monospace">{pct}%</text>
+          <text x="48" y="60" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9" fontFamily="sans-serif">complete</text>
         </svg>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 24px', flex: 1 }}>
+        {/* 2×2 stats */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 28px', flex: 1 }}>
           <div><div style={{ fontSize: 20, fontWeight: 800, color: '#a78bfa', fontFamily: 'monospace', lineHeight: 1 }}>{p.attempted.toLocaleString()}</div><div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Attempted</div></div>
           <div><div style={{ fontSize: 20, fontWeight: 800, color: '#38bdf8', fontFamily: 'monospace', lineHeight: 1 }}>{p.totalQ.toLocaleString()}</div><div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Total Qs</div></div>
           <div><div style={{ fontSize: 20, fontWeight: 800, color: '#34d399', fontFamily: 'monospace', lineHeight: 1 }}>{p.mastered}/{p.masteredOf}</div><div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Mastered</div></div>
           <div><div style={{ fontSize: 20, fontWeight: 800, color: '#fbbf24', fontFamily: 'monospace', lineHeight: 1 }}>{p.accuracy}%</div><div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Accuracy</div></div>
         </div>
-      </div>
-      {/* Day dots — fixed size, left-aligned, not stretched */}
-      <div style={{ display: 'flex', gap: 5, marginTop: 14 }}>
-        {DAYS.map((d, i) => (
-          <div key={i} style={{ width: 28, height: 28, borderRadius: 7, flexShrink: 0, background: p.activeDays.includes(i) ? '#b45309' : 'rgba(255,255,255,0.07)', border: `1px solid ${p.activeDays.includes(i) ? '#d97706' : 'rgba(255,255,255,0.1)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: p.activeDays.includes(i) ? '#fde68a' : 'rgba(255,255,255,0.3)' }}>{d}</div>
-        ))}
+        {/* Day dots — vertical column on the right, fills the empty space */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flexShrink: 0, alignItems: 'center' }}>
+          <div style={{ fontSize: 9, fontWeight: 700, color: 'rgba(255,255,255,0.25)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 2 }}>Week</div>
+          {DAYS.map((d, i) => (
+            <div key={i} style={{ width: 30, height: 22, borderRadius: 6, background: p.activeDays.includes(i) ? '#b45309' : 'rgba(255,255,255,0.07)', border: `1px solid ${p.activeDays.includes(i) ? '#d97706' : 'rgba(255,255,255,0.1)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 700, color: p.activeDays.includes(i) ? '#fde68a' : 'rgba(255,255,255,0.3)' }}>{d}</div>
+          ))}
+        </div>
       </div>
       {!isLoggedIn && (
-        <button style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 7, padding: '7px 16px', background: 'rgba(124,58,237,0.18)', border: '1px solid rgba(124,58,237,0.35)', borderRadius: 10, color: '#a78bfa', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
+        <button style={{ marginTop: 14, display: 'flex', alignItems: 'center', gap: 7, padding: '7px 16px', background: 'rgba(124,58,237,0.18)', border: '1px solid rgba(124,58,237,0.35)', borderRadius: 10, color: '#a78bfa', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
           <LogIn style={{ width: 13, height: 13 }} /> Log in to track real progress
         </button>
       )}
@@ -302,10 +305,11 @@ async function fetchTopPYQs(): Promise<Question[]> {
 }
 
 // ── Shared question fetcher ──────────────────────────────────────────────────
-async function fetchQuestions(chapterIds: string[], limit?: number): Promise<Question[]> {
+async function fetchQuestions(chapterIds: string[], limit?: number, topPYQOnly?: boolean): Promise<Question[]> {
   const params = new URLSearchParams();
   chapterIds.forEach(id => params.append('chapter_id', id));
-  params.set('limit', String(limit || 200));
+  params.set('limit', String(limit || 500));
+  if (topPYQOnly) params.set('is_top_pyq', 'true');
   const res  = await fetch(`/api/v2/questions?${params.toString()}`);
   const json = await res.json();
   return (json.data || []).map((q: any) => ({
@@ -340,6 +344,7 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
   const [pendingMode,      setPendingMode]      = useState<'browse' | 'test' | null>(null);
   const [showTestConfig,   setShowTestConfig]   = useState(false);
   const [topPYQLoading,    setTopPYQLoading]    = useState(false);
+  const [topPYQFilter,     setTopPYQFilter]     = useState(false);
 
   const isLoggedIn = false;
 
@@ -391,10 +396,13 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
     if (loading) return;
     setLoading(true);
     setPendingMode('browse');
-    setView('shloka'); // show shloka right away
-    fetchQuestions(Array.from(selectedChapters))
+    setView('shloka');
+    const fetcher = topPYQFilter
+      ? fetchQuestions(Array.from(selectedChapters), undefined, true)
+      : fetchQuestions(Array.from(selectedChapters));
+    fetcher
       .then(qs => {
-        if (qs.length === 0) { notify('No questions found for selected chapters yet.'); setView('landing'); }
+        if (qs.length === 0) { notify(topPYQFilter ? 'No Top PYQs found for selected chapters yet.' : 'No questions found for selected chapters yet.'); setView('landing'); }
         else setQuestions(qs);
       })
       .catch(() => { notify('Failed to load questions.'); setView('landing'); })
@@ -412,10 +420,14 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
     setLoading(true);
     setPendingMode('test');
     setView('shloka');
-    fetchQuestions(Array.from(selectedChapters))
+    const fetcher = topPYQFilter
+      ? fetchQuestions(Array.from(selectedChapters), undefined, true)
+      : fetchQuestions(Array.from(selectedChapters));
+    fetcher
       .then(qs => {
         if (qs.length === 0) { notify('No questions found.'); setView('landing'); return; }
-        const selected = selectTestQuestions(qs, count, mix);
+        const effectiveMix = topPYQFilter ? 'pyq' : mix;
+        const selected = selectTestQuestions(qs, count, effectiveMix as DifficultyMix);
         setQuestions(selected);
       })
       .catch(() => { notify('Failed to load questions.'); setView('landing'); })
@@ -492,54 +504,32 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
               Practice · Test · Improve
               <span style={{ display: 'inline-block', width: 16, height: 1, background: 'rgba(255,255,255,0.2)' }} />
             </p>
-            <h1 style={{ fontSize: 'clamp(22px,5.5vw,32px)', fontWeight: 900, lineHeight: 1.15, margin: 0 }}>
-              Master Chemistry,{' '}<em style={{ color: '#a78bfa', fontStyle: 'italic' }}>one question at a time.</em>
+            <h1 style={{ fontSize: 'clamp(22px,5.5vw,32px)', fontWeight: 900, lineHeight: 1.2, margin: 0 }}>
+              Master Chemistry,<br /><em style={{ color: '#a78bfa', fontStyle: 'italic' }}>one question at a time.</em>
             </h1>
           </div>
 
           {/* PROGRESS CARD */}
           <div style={{ marginBottom: 18 }}><ProgressCard isLoggedIn={isLoggedIn} /></div>
 
-          {/* TOP PYQs HERO CARD */}
-          <div style={{ marginBottom: 20, borderRadius: 18, background: 'linear-gradient(135deg,rgba(251,191,36,0.12) 0%,rgba(234,88,12,0.1) 50%,rgba(124,58,237,0.1) 100%)', border: '1.5px solid rgba(251,191,36,0.3)', padding: '16px 18px', position: 'relative', overflow: 'hidden' }}>
-            {/* Glow */}
-            <div style={{ position: 'absolute', top: -30, right: -20, width: 140, height: 140, borderRadius: '50%', background: 'radial-gradient(circle,rgba(251,191,36,0.15) 0%,transparent 70%)', pointerEvents: 'none' }} />
-            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 10 }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 4 }}>
-                  <span style={{ fontSize: 16 }}>⭐</span>
-                  <span style={{ fontSize: 13, fontWeight: 900, color: '#fbbf24', letterSpacing: '0.04em' }}>TOP PYQs</span>
-                  <span style={{ fontSize: 10, fontWeight: 700, color: '#f97316', background: 'rgba(249,115,22,0.15)', border: '1px solid rgba(249,115,22,0.3)', padding: '1px 7px', borderRadius: 99, letterSpacing: '0.06em' }}>MUST DO</span>
-                </div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: '#fff', lineHeight: 1.3 }}>
-                  The most important questions,<br />
-                  <span style={{ color: 'rgba(255,255,255,0.6)', fontWeight: 400, fontSize: 12 }}>hand-picked across all 28 chapters</span>
-                </div>
-              </div>
-            </div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginBottom: 14, lineHeight: 1.5 }}>
-              Final revision mode — go through only the highest-yield questions before your exam.
-            </div>
-            <div style={{ display: 'flex', gap: 8 }}>
-              <button onClick={() => launchTopPYQs('browse')} disabled={topPYQLoading}
-                style={{ flex: 1, padding: '11px 10px', borderRadius: 12, border: '1px solid rgba(251,191,36,0.3)', background: 'rgba(251,191,36,0.08)', color: topPYQLoading ? 'rgba(255,255,255,0.3)' : '#fbbf24', fontSize: 13, fontWeight: 700, cursor: topPYQLoading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                <LayoutGrid style={{ width: 14, height: 14 }} /> Browse All
-              </button>
-              <button onClick={() => launchTopPYQs('test')} disabled={topPYQLoading}
-                style={{ flex: 2, padding: '11px 10px', borderRadius: 12, border: 'none', background: topPYQLoading ? 'rgba(251,191,36,0.2)' : 'linear-gradient(135deg,#d97706,#b45309)', color: '#fff', fontSize: 13, fontWeight: 800, cursor: topPYQLoading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, boxShadow: topPYQLoading ? 'none' : '0 4px 16px rgba(217,119,6,0.35)' }}>
-                <Clock style={{ width: 14, height: 14 }} />
-                {topPYQLoading ? 'Loading...' : 'Quick Test (20 Qs) →'}
-              </button>
-            </div>
-          </div>
-
-          {/* SELECT CHAPTERS LABEL */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+          {/* SELECT CHAPTERS LABEL + TOP PYQ FILTER TOGGLE */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
             <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>
               {String.fromCodePoint(0x1F4DA)} Select Chapters
             </span>
             <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.07)' }} />
             {hasSel && <span style={{ fontSize: 11, color: '#a78bfa', fontWeight: 600 }}>{selCount} ch · {selQ > 0 ? selQ.toLocaleString() + ' Qs' : ''}</span>}
+          </div>
+          {/* TOP PYQ FILTER — compact toggle pill */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, padding: '8px 12px', borderRadius: 12, background: topPYQFilter ? 'rgba(251,191,36,0.12)' : 'rgba(255,255,255,0.04)', border: `1.5px solid ${topPYQFilter ? 'rgba(251,191,36,0.45)' : 'rgba(255,255,255,0.08)'}`, cursor: 'pointer', transition: 'all 0.15s', userSelect: 'none' as const }} onClick={() => setTopPYQFilter(f => !f)}>
+            <span style={{ fontSize: 13 }}>⭐</span>
+            <div style={{ flex: 1 }}>
+              <span style={{ fontSize: 12, fontWeight: 800, color: topPYQFilter ? '#fbbf24' : 'rgba(255,255,255,0.7)', letterSpacing: '0.04em' }}>Top PYQs only</span>
+              <span style={{ fontSize: 11, color: topPYQFilter ? 'rgba(251,191,36,0.6)' : 'rgba(255,255,255,0.35)', marginLeft: 8 }}>{topPYQFilter ? 'Active — showing only must-do questions' : 'Final revision filter · hand-picked per chapter'}</span>
+            </div>
+            <div style={{ width: 36, height: 20, borderRadius: 99, background: topPYQFilter ? '#d97706' : 'rgba(255,255,255,0.12)', position: 'relative', transition: 'background 0.2s', flexShrink: 0 }}>
+              <div style={{ position: 'absolute', top: 2, left: topPYQFilter ? 18 : 2, width: 16, height: 16, borderRadius: '50%', background: '#fff', transition: 'left 0.2s', boxShadow: '0 1px 4px rgba(0,0,0,0.4)' }} />
+            </div>
           </div>
 
           {/* CLASS CARDS */}

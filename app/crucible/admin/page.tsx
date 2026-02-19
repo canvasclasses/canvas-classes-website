@@ -184,7 +184,7 @@ export default function AdminPage() {
         }
     }, [selectedQuestionId, questions]);
 
-    const PAGE_SIZE = 100;
+    const PAGE_SIZE = 5000;
     const [currentPage, setCurrentPage] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
 
