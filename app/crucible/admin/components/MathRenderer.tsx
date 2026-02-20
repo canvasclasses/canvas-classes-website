@@ -6,10 +6,11 @@ import 'katex/dist/katex.min.css';
 interface MathRendererProps {
   markdown: string;
   className?: string;
+  fontSize?: number; // px — sets font-size directly on container so innerHTML text inherits it
   imageScale?: number; // Fixed pixel width for images: scale * 2px (so 100 = 200px, 150 = 300px)
 }
 
-export default function MathRenderer({ markdown, className = '', imageScale = 100 }: MathRendererProps) {
+export default function MathRenderer({ markdown, className = '', fontSize, imageScale = 100 }: MathRendererProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -35,99 +36,158 @@ export default function MathRenderer({ markdown, className = '', imageScale = 10
         return `\\mathrm{${p}}`;
       });
 
-      // Split text into segments: plain text vs math
-      // Use character-by-character scan to find $...$ and $$...$$
-      const segments: Array<{ type: 'text' | 'inline' | 'display'; content: string }> = [];
-      let i = 0;
-      let buf = '';
-      const len = text.length;
+      // ── PHASE 1: Extract math into placeholders ──────────────────────────────
+      // This lets block-level markdown (tables, lists) see complete lines
+      // without math delimiters breaking the structure.
+      const mathStore: Array<{ display: boolean; content: string }> = [];
+      const PLACEHOLDER = '\x00MATH';
 
-      while (i < len) {
-        // Display math $$...$$
-        if (text[i] === '$' && i + 1 < len && text[i + 1] === '$') {
-          if (buf) { segments.push({ type: 'text', content: buf }); buf = ''; }
-          const start = i + 2;
-          const end = text.indexOf('$$', start);
-          if (end !== -1) {
-            segments.push({ type: 'display', content: text.slice(start, end) });
-            i = end + 2;
-          } else {
-            buf += text[i]; i++;
-          }
-          continue;
+      // Replace $$...$$ first (display math)
+      text = text.replace(/\$\$([\s\S]+?)\$\$/g, (_m, inner) => {
+        // Normalise ^* → ^{*} so KaTeX renders MO configs (σ*, π*) correctly
+        const fixed = inner.replace(/\^\*/g, '^{*}');
+        mathStore.push({ display: true, content: fixed });
+        return `${PLACEHOLDER}${mathStore.length - 1}\x00`;
+      });
+
+      // Replace $...$ (inline math, must not span newlines)
+      text = text.replace(/\$([^\$\n]+?)\$/g, (_m, inner) => {
+        // Normalise ^* → ^{*} so KaTeX renders MO configs (σ*, π*) correctly
+        const fixed = inner.replace(/\^\*/g, '^{*}');
+        mathStore.push({ display: false, content: fixed });
+        return `${PLACEHOLDER}${mathStore.length - 1}\x00`;
+      });
+
+      // ── PHASE 2: Process block-level markdown on the placeholder text ────────
+      let html = processMarkdown(text, imageScale);
+
+      // ── PHASE 3: Restore math placeholders with rendered KaTeX HTML ──────────
+      html = html.replace(/\x00MATH(\d+)\x00/g, (_m, idxStr) => {
+        const idx = Number(idxStr);
+        const entry = mathStore[idx];
+        if (!entry) return '';
+        try {
+          return katex.renderToString(entry.content, {
+            ...katexOpts,
+            displayMode: entry.display,
+          });
+        } catch {
+          return `<span class="katex-error">${entry.content}</span>`;
         }
-        // Inline math $...$
-        if (text[i] === '$') {
-          const start = i + 1;
-          let j = start;
-          while (j < len && text[j] !== '$' && text[j] !== '\n') j++;
-          if (j < len && text[j] === '$' && j > start) {
-            if (buf) { segments.push({ type: 'text', content: buf }); buf = ''; }
-            segments.push({ type: 'inline', content: text.slice(start, j) });
-            i = j + 1;
-            continue;
-          }
-        }
-        buf += text[i];
-        i++;
-      }
-      if (buf) segments.push({ type: 'text', content: buf });
+      });
 
-      // Build DOM directly (no innerHTML for math — use KaTeX's DOM output)
-      const frag = document.createDocumentFragment();
-
-      for (const seg of segments) {
-        if (seg.type === 'display') {
-          const div = document.createElement('div');
-          div.className = 'latex-math-display';
-          katex.render(seg.content, div, { ...katexOpts, displayMode: true });
-          frag.appendChild(div);
-        } else if (seg.type === 'inline') {
-          const span = document.createElement('span');
-          span.className = 'latex-math-inline';
-          katex.render(seg.content, span, { ...katexOpts, displayMode: false });
-          frag.appendChild(span);
-        } else {
-          // Process markdown in text segments
-          const html = processMarkdown(seg.content, imageScale);
-          const wrapper = document.createElement('span');
-          wrapper.innerHTML = html;
-          frag.appendChild(wrapper);
-        }
-      }
-
+      // ── PHASE 4: Set innerHTML ───────────────────────────────────────────────
       if (!cancelled && containerRef.current) {
-        containerRef.current.innerHTML = '';
-        containerRef.current.appendChild(frag);
+        containerRef.current.innerHTML = html;
       }
     })();
 
     return () => { cancelled = true; };
   }, [markdown, imageScale]);
 
-  return <div ref={containerRef} className={`latex-preview ${className}`} />;
+  return <div ref={containerRef} className={`latex-preview ${className}`} style={fontSize ? { fontSize } : undefined} />;
+}
+
+// Convert non-pipe-table MTC markdown into a 4-column HTML table.
+// Handles two formats found in the DB:
+//   Multiline:  **List I:**\nA. item\nB. item\n\n**List II:**\nI. item\n...
+//   Inline:     **List I (label):** A. item B. item ... **List II (label):** I. item ...
+function processNonTableMTC(text: string): string {
+  // ── Multiline format ────────────────────────────────────────────────────────
+  // **List I[...]:**\n(A|a). item\n... \n\n**List II[...]:**\n(I|i). item\n...
+  text = text.replace(
+    /(\*\*List I([^*]*)\*\*:?)[\s\n]+((?:[A-Da-d][.)][^\n]+\n?)+)[\s\n]*(\*\*List II([^*]*)\*\*:?)[\s\n]+((?:[IVXivx]+[.)][^\n]+\n?)+)/g,
+    (_m: string, h1raw: string, h1label: string, listI: string, h2raw: string, h2label: string, listII: string) => {
+      const h1 = `List I${h1label.trim() ? ' ' + h1label.trim() : ''}`;
+      const h2 = `List II${h2label.trim() ? ' ' + h2label.trim() : ''}`;
+      const rowsI = listI.trim().split('\n').map((l: string) => l.replace(/^[A-Da-d][.)\s]+/, '').trim()).filter(Boolean);
+      const rowsII = listII.trim().split('\n').map((l: string) => l.replace(/^[IVXivx]+[.)\s]+/, '').trim()).filter(Boolean);
+      const letters = ['A', 'B', 'C', 'D', 'E'];
+      const numerals = ['I', 'II', 'III', 'IV', 'V'];
+      const count = Math.max(rowsI.length, rowsII.length);
+      let t = `<table class="markdown-table"><thead><tr><th colspan="2" style="text-align:left">${h1}</th><th colspan="2" style="text-align:left">${h2}</th></tr></thead><tbody>`;
+      for (let i = 0; i < count; i++) {
+        t += `<tr><td>${letters[i] ?? ''}</td><td>${rowsI[i] ?? ''}</td><td>${numerals[i] ?? ''}</td><td>${rowsII[i] ?? ''}</td></tr>`;
+      }
+      t += '</tbody></table>';
+      return t;
+    }
+  );
+
+  // ── Inline format ───────────────────────────────────────────────────────────
+  // **List I (label):** A. item B. item ... **List II (label):** I. item II. item ...
+  text = text.replace(
+    /(\*\*List I([^*]*)\*\*:?)\s+((?:[A-Da-d][.)][^*]+?)+)(\*\*List II([^*]*)\*\*:?)\s+((?:[IVXivx]+[.)]\s*[^\n*]+)+)/g,
+    (_m: string, _h1: string, h1label: string, listI: string, _h2: string, h2label: string, listII: string) => {
+      const h1 = `List I${h1label.trim() ? ' ' + h1label.trim() : ''}`;
+      const h2 = `List II${h2label.trim() ? ' ' + h2label.trim() : ''}`;
+      const rowsI = listI.trim().split(/(?=[A-Da-d][.)])/).map((l: string) => l.replace(/^[A-Da-d][.)\s]+/, '').trim()).filter(Boolean);
+      const rowsII = listII.trim().split(/(?=[IVXivx]+[.)])/).map((l: string) => l.replace(/^[IVXivx]+[.)\s]+/, '').trim()).filter(Boolean);
+      const letters = ['A', 'B', 'C', 'D', 'E'];
+      const numerals = ['I', 'II', 'III', 'IV', 'V'];
+      const count = Math.max(rowsI.length, rowsII.length);
+      let t = `<table class="markdown-table"><thead><tr><th colspan="2" style="text-align:left">${h1}</th><th colspan="2" style="text-align:left">${h2}</th></tr></thead><tbody>`;
+      for (let i = 0; i < count; i++) {
+        t += `<tr><td>${letters[i] ?? ''}</td><td>${rowsI[i] ?? ''}</td><td>${numerals[i] ?? ''}</td><td>${rowsII[i] ?? ''}</td></tr>`;
+      }
+      t += '</tbody></table>';
+      return t;
+    }
+  );
+
+  return text;
 }
 
 function processMarkdown(text: string, imageScale: number): string {
   let html = text;
 
-  // Tables
-  html = html.replace(/\|(.+)\|[\r\n]+\|[-:\s|]+\|[\r\n]+((?:\|.+\|[\r\n]*)+)/g,
+  // Convert non-pipe-table MTC formats to HTML tables before other markdown processing
+  html = processNonTableMTC(html);
+
+  // Tables — now sees complete rows because math is replaced with placeholders
+  html = html.replace(/\|(.+)\|[ \t]*[\r\n]+\|[-:\s|]+\|[ \t]*[\r\n]+((?:\|.+\|[ \t]*[\r\n]*)+)/g,
     (_m: string, header: string, body: string) => {
-      const hs = header.split('|').map((h: string) => h.trim()).filter(Boolean);
+      // Split header preserving empty cells (don't filter yet)
+      // The regex captures content BETWEEN the outer | delimiters, e.g.:
+      //   "| | List I | | List II |"  → header = " | List I | | List II "
+      // so split gives: ['', 'List I', '', 'List II'] after trim
+      const rawHs = header.split('|').map((h: string) => h.trim());
+      // Strip leading empty string (artifact of leading space before first inner |)
+      const trimmedHs = rawHs[0] === '' ? rawHs.slice(1) : rawHs;
+      // Strip trailing empty string if present
+      const finalHs = trimmedHs[trimmedHs.length - 1] === '' ? trimmedHs.slice(0, -1) : trimmedHs;
+
       const rows = body.trim().split('\n').map((r: string) =>
         r.split('|').map((c: string) => c.trim()).filter(Boolean)
       );
+
+      // Detect MTC pattern: header " | List I | | List II " → finalHs = ['List I', '', 'List II'] (len 3, middle empty)
+      // OR header " | | List I | | List II " → finalHs = ['', 'List I', '', 'List II'] (len 4, positions 0 and 2 empty)
+      const isMTCHeader3 = finalHs.length === 3 && finalHs[1] === '' && finalHs[0] !== '' && finalHs[2] !== '';
+      const isMTCHeader4 = finalHs.length === 4 && finalHs[0] === '' && finalHs[2] === '' && finalHs[1] !== '' && finalHs[3] !== '';
+      const isMTCHeader = isMTCHeader3 || isMTCHeader4;
+      const mtcH1 = isMTCHeader3 ? finalHs[0] : finalHs[1];
+      const mtcH2 = isMTCHeader3 ? finalHs[2] : finalHs[3];
+
       let t = '<table class="markdown-table"><thead><tr>';
-      hs.forEach((h: string) => { t += `<th>${h}</th>`; });
+      if (isMTCHeader) {
+        t += `<th colspan="2" style="text-align:left">${mtcH1}</th>`;
+        t += `<th colspan="2" style="text-align:left">${mtcH2}</th>`;
+      } else {
+        finalHs.filter(Boolean).forEach((h: string) => { t += `<th>${h}</th>`; });
+      }
       t += '</tr></thead><tbody>';
-      rows.forEach((r: string[]) => { t += '<tr>'; r.forEach((c: string) => { t += `<td>${c}</td>`; }); t += '</tr>'; });
+      rows.forEach((r: string[]) => {
+        if (r.length === 0) return;
+        t += '<tr>';
+        r.forEach((c: string) => { t += `<td>${c}</td>`; });
+        t += '</tr>';
+      });
       t += '</tbody></table>';
       return t;
     });
 
   // Images — fixed pixel width so size is screen-independent
-  // imageScale 100 = 200px, 150 = 300px, 50 = 100px
   const pxWidth = Math.round(imageScale * 2);
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_m: string, alt: string, url: string) => {
     const clean = url.replace(/\s+/g, '');
@@ -144,10 +204,6 @@ function processMarkdown(text: string, imageScale: number): string {
   // Line breaks
   html = html.replace(/\n\n/g, '<br /><br />');
   html = html.replace(/\n/g, '<br />');
-
-  // Clean up br around display math
-  html = html.replace(/(<br \/>)+(<div class="latex-math-display)/g, '$2');
-  html = html.replace(/(<\/div>)(<br \/>)+/g, '$1');
 
   // Clean up br inside ul
   html = html.replace(/<ul>[\s\S]*?<\/ul>/g, (m) => m.replace(/<br \/>/g, ''));

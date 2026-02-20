@@ -78,7 +78,7 @@
 .latex-preview {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 1rem;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* When solution-text and latex-preview are both applied, solution-text wins */
@@ -88,11 +88,14 @@
   line-height: 1.5;
 }
 
-/* Force Inter font on all LaTeX math elements */
-.latex-math-inline,
-.latex-math-inline *,
-.latex-math-display,
-.latex-math-display * {
+/* KaTeX text-mode elements: use Inter to match surrounding text */
+.katex .mord.text,
+.katex .mtext,
+.katex .mord.textrm,
+.katex .textrm,
+.katex .mathrm,
+.katex .mop,
+.katex .mord:not(.mathnormal):not(.mathit):not(.mathbf) .katex-html > .base > .mord {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
 }
 

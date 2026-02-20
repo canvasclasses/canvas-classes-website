@@ -8,13 +8,15 @@ import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
 const DIFF_COLOR = (d: string) => d === 'Easy' ? '#34d399' : d === 'Medium' ? '#fbbf24' : '#f87171';
 const PAGE_SIZE = 20;
 
-// Returns true when all options are short enough to display in a 2×2 grid
+// Returns true when all options are short enough to display in a 2×2 grid.
+// Threshold is 28 chars (accounts for 20px font in half-width column ~220px).
 const isShortOptions = (opts: any[]): boolean => {
   if (!opts || opts.length !== 4) return false;
   return opts.every(o => {
     const t = (o.text || '');
     if (t.includes('$') || t.includes('![')) return false; // has LaTeX or image
-    return t.replace(/\*\*/g, '').trim().length <= 40;
+    const plain = t.replace(/\*\*/g, '').replace(/\*/g, '').trim();
+    return plain.length <= 28;
   });
 };
 
@@ -62,8 +64,8 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
 
   const renderDetail = (qq: Question, solShown: boolean, setSolShown: (v: boolean) => void, optChosen: string | null, setOptChosen: (v: string | null) => void, solDivId: string) => (
     <div>
-      <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '10px 12px', marginBottom: 10 }}>
-        <MathRenderer markdown={qq.question_text.markdown} className="text-sm leading-relaxed" imageScale={qq.svg_scales?.question ?? 100} />
+      <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 18px', marginBottom: 12 }}>
+        <MathRenderer markdown={qq.question_text.markdown} className="text-sm leading-relaxed" fontSize={isMobile ? undefined : 20} imageScale={qq.svg_scales?.question ?? 100} />
       </div>
       {qq.options && qq.options.length > 0 && (() => {
         const useGrid = isShortOptions(qq.options);
@@ -76,12 +78,12 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
               return (
                 <button key={opt.id}
                   onClick={e => { e.stopPropagation(); if (!solShown) { setOptChosen(opt.id); setSolShown(true); scrollSolutionIntoView(solDivId); } }}
-                  style={{ padding: useGrid ? '10px 10px' : '11px 13px', borderRadius: 10, border: `1.5px solid ${bc}`, background: bg, display: 'flex', alignItems: 'center', gap: 8, cursor: solShown ? 'default' : 'pointer', textAlign: 'left', color: '#fff', fontSize: 13, width: '100%', minWidth: 0 }}>
+                  style={{ padding: useGrid ? '12px 12px' : '13px 16px', borderRadius: 10, border: `1.5px solid ${bc}`, background: bg, display: 'flex', alignItems: 'center', gap: 8, cursor: solShown ? 'default' : 'pointer', textAlign: 'left', color: '#fff', fontSize: 17, width: '100%', minWidth: 0 }}>
                   <span style={{ width: 22, height: 22, borderRadius: 6, border: `1.5px solid ${bc}`, background: sel ? (rev ? (correct ? '#34d399' : '#f87171') : '#3b82f6') : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: sel ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
                     {rev && correct ? <Check style={{ width: 11, height: 11 }} /> : opt.id.toUpperCase()}
                   </span>
                   <span style={{ flex: 1, minWidth: 0, overflowX: 'auto', WebkitOverflowScrolling: 'touch' } as any}>
-                    <MathRenderer markdown={opt.text || ''} className="text-sm" imageScale={qq.svg_scales?.[`option_${opt.id}`] ?? 100} />
+                    <MathRenderer markdown={opt.text || ''} className="text-sm" fontSize={isMobile ? undefined : 20} imageScale={qq.svg_scales?.[`option_${opt.id}`] ?? 100} />
                   </span>
                 </button>
               );
@@ -105,10 +107,10 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
         {solShown ? 'Hide Solution' : 'View Solution'}
       </button>
       {solShown && (
-        <div id={solDivId} style={{ padding: '10px 12px', borderRadius: 12, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)' }}>
+        <div id={solDivId} style={{ padding: '14px 18px', borderRadius: 12, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)' }}>
           <div style={{ fontSize: 10, fontWeight: 700, color: '#a78bfa', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
           {qq.solution?.text_markdown ? (
-            <MathRenderer markdown={qq.solution.text_markdown} className="text-sm leading-relaxed" imageScale={qq.svg_scales?.solution ?? 100} />
+            <MathRenderer markdown={qq.solution.text_markdown} className="text-sm leading-relaxed" fontSize={isMobile ? undefined : 20} imageScale={qq.svg_scales?.solution ?? 100} />
           ) : (
             <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>Solution not available for this question.</div>
           )}
@@ -203,7 +205,7 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
     <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column', zIndex: 50 }}>
       {sharedHeader}
       <div style={{ flex: 1, display: 'flex', width: '100%', overflow: 'hidden' }}>
-        <div style={{ width: '38%', minWidth: 300, maxWidth: 480, flexShrink: 0, borderRight: '1px solid rgba(255,255,255,0.07)', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ width: '42%', minWidth: 340, maxWidth: 560, flexShrink: 0, borderRight: '1px solid rgba(255,255,255,0.07)', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
           <div style={{ flex: 1, overflowY: 'auto' }}>
           {pageQuestions.map((qq, i) => {
             const globalIdx = page * PAGE_SIZE + i;
@@ -216,8 +218,8 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
                     <span style={{ fontSize: 10, fontWeight: 700, color: DIFF_COLOR(qq.metadata.difficulty), background: DIFF_COLOR(qq.metadata.difficulty) + '18', padding: '1px 7px', borderRadius: 99 }}>{qq.metadata.difficulty}</span>
                     <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.06)', padding: '1px 7px', borderRadius: 99 }}>{qq.type}</span>
                   </div>
-                  <div style={{ fontSize: 12, color: globalIdx === dqGlobalIdx ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.6)', lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' } as any}>
-                    <MathRenderer markdown={qq.question_text.markdown.slice(0, 120)} className="text-sm" />
+                  <div style={{ fontSize: 13, color: globalIdx === dqGlobalIdx ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.6)', lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' } as any}>
+                    <MathRenderer markdown={qq.question_text.markdown.slice(0, 140)} className="text-sm" />
                   </div>
                 </div>
               </div>
@@ -227,9 +229,9 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
           </div>
           {paginationBar}
         </div>
-        <div style={{ flex: 1, overflowY: 'auto', padding: '24px 32px 60px' }}>
+        <div style={{ flex: 1, overflowY: 'auto', padding: '28px 48px 60px' }}>
           {dq && (
-            <div style={{ maxWidth: 680, margin: '0 auto' }}>
+            <div style={{ maxWidth: 860, margin: '0 auto' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
                 <div>
                   <span style={{ fontSize: 16, fontWeight: 800 }}>Question {dqGlobalIdx + 1}</span>
