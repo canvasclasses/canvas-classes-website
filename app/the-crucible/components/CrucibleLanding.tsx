@@ -67,6 +67,7 @@ function ProgressCard({ isLoggedIn }: { isLoggedIn: boolean }) {
   const p = PLACEHOLDER;
   const pct = Math.round((p.attempted / p.totalQ) * 100);
   const R = 36; const C = 2 * Math.PI * R;
+  const Rd = 44; const Cd = 2 * Math.PI * Rd;
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 640);
@@ -75,7 +76,7 @@ function ProgressCard({ isLoggedIn }: { isLoggedIn: boolean }) {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  const ring = (
+  const ring = isMobile ? (
     <svg width="88" height="88" viewBox="0 0 88 88" style={{ flexShrink: 0 }}>
       <circle cx="44" cy="44" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="6"/>
       <circle cx="44" cy="44" r={R} fill="none" stroke="url(#ring-grad)" strokeWidth="6" strokeLinecap="round"
@@ -85,6 +86,17 @@ function ProgressCard({ isLoggedIn }: { isLoggedIn: boolean }) {
       <defs><linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#38bdf8"/><stop offset="100%" stopColor="#818cf8"/></linearGradient></defs>
       <text x="44" y="40" textAnchor="middle" fill="#fff" fontSize="15" fontWeight="800" fontFamily="monospace">{pct}%</text>
       <text x="44" y="54" textAnchor="middle" fill="rgba(255,255,255,0.35)" fontSize="8" fontFamily="sans-serif">done</text>
+    </svg>
+  ) : (
+    <svg width="108" height="108" viewBox="0 0 108 108" style={{ flexShrink: 0 }}>
+      <circle cx="54" cy="54" r={Rd} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="7"/>
+      <circle cx="54" cy="54" r={Rd} fill="none" stroke="url(#ring-grad-d)" strokeWidth="7" strokeLinecap="round"
+        strokeDasharray={Cd} strokeDashoffset={Cd * (1 - pct / 100)}
+        transform="rotate(-90 54 54)" style={{ transition: 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)' }}
+      />
+      <defs><linearGradient id="ring-grad-d" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#38bdf8"/><stop offset="100%" stopColor="#818cf8"/></linearGradient></defs>
+      <text x="54" y="49" textAnchor="middle" fill="#fff" fontSize="19" fontWeight="800" fontFamily="monospace">{pct}%</text>
+      <text x="54" y="65" textAnchor="middle" fill="rgba(255,255,255,0.35)" fontSize="10" fontFamily="sans-serif">done</text>
     </svg>
   );
 
@@ -97,10 +109,10 @@ function ProgressCard({ isLoggedIn }: { isLoggedIn: boolean }) {
 
   const streakBlock = (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: isMobile ? 'flex-start' : 'center', gap: 4 }}>
-      <span style={{ fontSize: 11, fontWeight: 700, color: '#f97316', whiteSpace: 'nowrap' }}>{String.fromCodePoint(0x1F525)} {p.streak} day streak</span>
-      <div style={{ display: 'flex', gap: 3 }}>
+      <span style={{ fontSize: isMobile ? 11 : 13, fontWeight: 700, color: '#f97316', whiteSpace: 'nowrap' }}>{String.fromCodePoint(0x1F525)} {p.streak} day streak</span>
+      <div style={{ display: 'flex', gap: isMobile ? 3 : 5 }}>
         {DAYS.map((d, i) => (
-          <div key={i} style={{ width: 22, height: 22, borderRadius: 5, background: p.activeDays.includes(i) ? '#b45309' : 'rgba(255,255,255,0.07)', border: `1px solid ${p.activeDays.includes(i) ? '#d97706' : 'rgba(255,255,255,0.09)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, fontWeight: 700, color: p.activeDays.includes(i) ? '#fde68a' : 'rgba(255,255,255,0.25)' }}>{d}</div>
+          <div key={i} style={{ width: isMobile ? 22 : 28, height: isMobile ? 22 : 28, borderRadius: isMobile ? 5 : 7, background: p.activeDays.includes(i) ? '#b45309' : 'rgba(255,255,255,0.07)', border: `1px solid ${p.activeDays.includes(i) ? '#d97706' : 'rgba(255,255,255,0.09)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: isMobile ? 8 : 10, fontWeight: 700, color: p.activeDays.includes(i) ? '#fde68a' : 'rgba(255,255,255,0.25)' }}>{d}</div>
         ))}
       </div>
     </div>
@@ -132,9 +144,9 @@ function ProgressCard({ isLoggedIn }: { isLoggedIn: boolean }) {
           {ring}
           <div style={{ display: 'flex', gap: 6 }}>
             {stats.map(({ val, label, color }) => (
-              <div key={label} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '8px 10px' }}>
-                <div style={{ fontSize: 19, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
-                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 3, whiteSpace: 'nowrap' }}>{label}</div>
+              <div key={label} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '12px 16px' }}>
+                <div style={{ fontSize: 24, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
+                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 4, whiteSpace: 'nowrap' }}>{label}</div>
               </div>
             ))}
           </div>
@@ -252,8 +264,8 @@ function ClassCard({ classLevel, chapters, selected, onOpen }: {
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
         <div>
-          <div style={{ fontSize: 14, fontWeight: 800, color: active ? color : '#fff', lineHeight: 1.1 }}>Class {classLevel}</div>
-          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{chapters.length} chapters</div>
+          <div style={{ fontSize: 20, fontWeight: 800, color: active ? color : '#fff', lineHeight: 1.1 }}>Class {classLevel}</div>
+          <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', marginTop: 3 }}>{chapters.length} chapters</div>
         </div>
         <ChevronRight style={{ width: 14, height: 14, color: active ? color : 'rgba(255,255,255,0.25)', flexShrink: 0 }} />
       </div>
@@ -262,16 +274,16 @@ function ClassCard({ classLevel, chapters, selected, onOpen }: {
       {/* Bottom: question count left, selection state right */}
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginTop: 8 }}>
         <div>
-          <div style={{ fontSize: 18, fontWeight: 800, color: active ? color : 'rgba(255,255,255,0.7)', fontFamily: 'monospace', lineHeight: 1 }}>{totalQ > 0 ? totalQ.toLocaleString() : '—'}</div>
-          <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.07em' }}>questions</div>
+          <div style={{ fontSize: 28, fontWeight: 800, color: active ? color : 'rgba(255,255,255,0.7)', fontFamily: 'monospace', lineHeight: 1 }}>{totalQ > 0 ? totalQ.toLocaleString() : '—'}</div>
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginTop: 3, textTransform: 'uppercase', letterSpacing: '0.07em' }}>questions</div>
         </div>
         {active ? (
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 13, fontWeight: 800, color: '#fff', fontFamily: 'monospace', lineHeight: 1 }}>{selCount}/{chapters.length} ch</div>
-            <div style={{ fontSize: 9, color, marginTop: 2, fontWeight: 700 }}>{selQ.toLocaleString()} Qs selected</div>
+            <div style={{ fontSize: 15, fontWeight: 800, color: '#fff', fontFamily: 'monospace', lineHeight: 1 }}>{selCount}/{chapters.length} ch</div>
+            <div style={{ fontSize: 11, color, marginTop: 3, fontWeight: 700 }}>{selQ.toLocaleString()} Qs selected</div>
           </div>
         ) : (
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontStyle: 'italic' }}>tap to select</span>
+          <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', fontStyle: 'italic' }}>tap to select</span>
         )}
       </div>
     </div>
@@ -372,6 +384,119 @@ async function fetchQuestions(chapterIds: string[], limit?: number, topPYQOnly?:
   }));
 }
 
+// ── Bhagavad Gita shlokas (30 entries, rotated daily) ────────────────────────
+const GITA_SHLOKAS = [
+  { sanskrit: 'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।\nमा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥', message: 'You have the right to perform your duty, but not to the fruits of your actions. Focus on the effort — results will follow.' },
+  { sanskrit: 'योगस्थः कुरु कर्माणि सङ्गं त्यक्त्वा धनञ्जय।\nसिद्ध्यसिद्ध्योः समो भूत्वा समत्वं योग उच्यते॥', message: 'Perform your duties with equanimity. Whether you succeed or fail in an exam, maintain your balance — that steadiness is true yoga.' },
+  { sanskrit: 'उद्धरेदात्मनात्मानं नात्मानमवसादयेत्।\nआत्मैव ह्यात्मनो बन्धुरात्मैव रिपुरात्मनः॥', message: 'Elevate yourself through your own effort. You are your own best friend — and your own worst enemy. Choose discipline.' },
+  { sanskrit: 'श्रेयान्स्वधर्मो विगुणः परधर्मात्स्वनुष्ठितात्।\nस्वधर्मे निधनं श्रेयः परधर्मो भयावहः॥', message: 'Your own path, even if imperfect, is better than another\'s path perfectly followed. Study in your own way — don\'t just copy others.' },
+  { sanskrit: 'नायमात्मा बलहीनेन लभ्यः।', message: 'The highest goals cannot be achieved by the weak-willed. Build mental strength every single day — one problem at a time.' },
+  { sanskrit: 'व्यवसायात्मिका बुद्धिरेकेह कुरुनन्दन।\nबहुशाखा ह्यनन्ताश्च बुद्धयोऽव्यवसायिनाम्॥', message: 'The resolute mind is focused and single-pointed. The undecided mind scatters in endless directions. Commit to your preparation fully.' },
+  { sanskrit: 'यदा यदा हि धर्मस्य ग्लानिर्भवति भारत।\nअभ्युत्थानमधर्मस्य तदात्मानं सृजाम्यहम्॥', message: 'Whenever there is a decline in effort and a rise in distraction, rise up again. Every new day is a chance to restart.' },
+  { sanskrit: 'नहि कश्चित्क्षणमपि जातु तिष्ठत्यकर्मकृत्।', message: 'Not even for a moment can anyone remain without action. Use every moment of your day purposefully.' },
+  { sanskrit: 'तस्माद्युध्यस्व भारत।', message: 'Therefore, fight. Face your syllabus, your doubts, your fears — and fight through them.' },
+  { sanskrit: 'क्लैब्यं मा स्म गमः पार्थ नैतत्त्वय्युपपद्यते।\nक्षुद्रं हृदयदौर्बल्यं त्यक्त्वोत्तिष्ठ परन्तप॥', message: 'Do not yield to weakness. It does not become you. Cast off faint-heartedness and rise up, O conqueror of challenges.' },
+  { sanskrit: 'अभ्यासेन तु कौन्तेय वैराग्येण च गृह्यते।', message: 'The restless mind is controlled by practice and detachment. Regular study and freedom from distraction — that is the formula.' },
+  { sanskrit: 'असंशयं महाबाहो मनो दुर्निग्रहं चलम्।\nअभ्यासेन तु कौन्तेय वैराग्येण च गृह्यते॥', message: 'The mind is indeed restless and hard to control. But through consistent practice and letting go of distractions, it can be mastered.' },
+  { sanskrit: 'ज्ञानं लब्ध्वा परां शान्तिमचिरेणाधिगच्छति।', message: 'Having gained knowledge, one quickly attains supreme peace. Every concept you master brings you closer to clarity and confidence.' },
+  { sanskrit: 'श्रद्धावान्ल्लभते ज्ञानं तत्परः संयतेन्द्रियः।', message: 'One who has faith, is devoted, and has controlled the senses — that person attains knowledge. Believe in your preparation.' },
+  { sanskrit: 'योगः कर्मसु कौशलम्।', message: 'Yoga is excellence in action. Whatever you do — practice, revision, tests — do it with full skill and attention.' },
+  { sanskrit: 'सुखदुःखे समे कृत्वा लाभालाभौ जयाजयौ।\nततो युद्धाय युज्यस्व नैवं पापमवाप्स्यसि॥', message: 'Treat success and failure, gain and loss equally. Then engage in your work — this evenness of mind is the highest preparation.' },
+  { sanskrit: 'धूमेनाव्रियते वह्निर्यथादर्शो मलेन च।\nयथोल्बेनावृतो गर्भस्तथा तेनेदमावृतम्॥', message: 'As fire is covered by smoke, a mirror by dust — so knowledge is covered by desire and distraction. Clear your mind to learn clearly.' },
+  { sanskrit: 'इन्द्रियाणि पराण्याहुरिन्द्रियेभ्यः परं मनः।\nमनसस्तु परा बुद्धिर्यो बुद्धेः परतस्तु सः॥', message: 'The senses are higher than the body; the mind is higher than the senses; the intellect is higher than the mind. Train your intellect.' },
+  { sanskrit: 'ध्यायतो विषयान्पुंसः सङ्गस्तेषूपजायते।\nसङ्गात्सञ्जायते कामः कामात्क्रोधोऽभिजायते॥', message: 'Dwelling on distractions leads to attachment, then craving, then frustration. Guard what you give your attention to.' },
+  { sanskrit: 'रसवर्जं रसोऽप्यस्य परं दृष्ट्वा निवर्तते।', message: 'When you experience the deeper joy of understanding, lesser distractions lose their pull. Fall in love with learning itself.' },
+  { sanskrit: 'यत्र योगेश्वरः कृष्णो यत्र पार्थो धनुर्धरः।\nतत्र श्रीर्विजयो भूतिर्ध्रुवा नीतिर्मतिर्मम॥', message: 'Where there is focused effort and disciplined action, there is prosperity, victory, and success. That is certain.' },
+  { sanskrit: 'न बुद्धिभेदं जनयेद्अज्ञानां कर्मसङ्गिनाम्।', message: 'Do not let the doubts of others disturb your focus. Stay on your path — your consistency will speak for itself.' },
+  { sanskrit: 'सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज।\nअहं त्वां सर्वपापेभ्यो मोक्षयिष्यामि मा शुचः॥', message: 'Let go of all confusion and surrender to the process. Trust your preparation completely — release the anxiety.' },
+  { sanskrit: 'अनित्यमसुखं लोकमिमं प्राप्य भजस्व माम्।', message: 'This world of results is temporary and uncertain. Focus on the eternal — the knowledge you build within yourself.' },
+  { sanskrit: 'पत्रं पुष्पं फलं तोयं यो मे भक्त्या प्रयच्छति।\nतदहं भक्त्युपहृतमश्नामि प्रयतात्मनः॥', message: 'Even a small offering made with sincerity is accepted. Every small study session done with genuine effort counts.' },
+  { sanskrit: 'दैवी ह्येषा गुणमयी मम माया दुरत्यया।\nमामेव ये प्रपद्यन्ते मायामेतां तरन्ति ते॥', message: 'The illusion of shortcuts and easy success is hard to cross. Only those who commit fully to the process transcend it.' },
+  { sanskrit: 'ज्ञानविज्ञानतृप्तात्मा कूटस्थो विजितेन्द्रियः।\nयुक्त इत्युच्यते योगी समलोष्टाश्मकाञ्चनः॥', message: 'One who is satisfied with knowledge and wisdom, who has conquered the senses — that person is truly prepared for any challenge.' },
+  { sanskrit: 'सततं कीर्तयन्तो मां यतन्तश्च दृढव्रताः।\nनमस्यन्तश्च मां भक्त्या नित्ययुक्ता उपासते॥', message: 'Those who strive with firm resolve, with daily dedication — they are always on the path to excellence.' },
+  { sanskrit: 'अपि चेदसि पापेभ्यः सर्वेभ्यः पापकृत्तमः।\nसर्वं ज्ञानप्लवेनैव वृजिनं सन्तरिष्यसि॥', message: 'Even if you have wasted time or made mistakes, the raft of knowledge will carry you across all difficulties. It is never too late.' },
+  { sanskrit: 'उत्तिष्ठत जाग्रत प्राप्य वरान्निबोधत।', message: 'Arise, awake, and stop not till the goal is reached. Get up, stay alert, and keep moving forward — every single day.' },
+];
+
+// Returns today\'s shloka index (0-29) based on day of year
+function getTodayShlokaIndex(): number {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const diff = now.getTime() - start.getTime();
+  const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+  return dayOfYear % GITA_SHLOKAS.length;
+}
+
+// ── Daily Gita Shloka section (desktop only) ─────────────────────────────────
+function DailyGitaShloka() {
+  const idx = getTodayShlokaIndex();
+  const shloka = GITA_SHLOKAS[idx];
+  const lines = shloka.sanskrit.split('\n');
+  return (
+    <div style={{
+      margin: '20px 0 0',
+      padding: '12px 32px 14px',
+      borderRadius: 16,
+      background: 'linear-gradient(145deg, rgba(20,12,4,0.95) 0%, rgba(10,8,20,0.98) 100%)',
+      border: '1px solid rgba(180,130,40,0.2)',
+      position: 'relative',
+      overflow: 'hidden',
+    }}>
+      {/* Om symbol + day indicator */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <span style={{ fontSize: 28, color: 'rgba(180,130,40,0.7)', fontFamily: 'serif', lineHeight: 1 }}>{String.fromCodePoint(0x0950)}</span>
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.18em', color: 'rgba(180,130,40,0.6)', textTransform: 'uppercase' }}>Bhagavad Gita</div>
+            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', marginTop: 2 }}>Daily Shloka · {idx + 1} of {GITA_SHLOKAS.length}</div>
+          </div>
+        </div>
+        {/* Decorative divider dots */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          {[0,1,2].map(i => (
+            <div key={i} style={{ width: i === 1 ? 6 : 4, height: i === 1 ? 6 : 4, borderRadius: '50%', background: `rgba(180,130,40,${i === 1 ? 0.5 : 0.25})` }} />
+          ))}
+        </div>
+      </div>
+
+      {/* Sanskrit lines */}
+      <div style={{ marginBottom: 8 }}>
+        {lines.map((line, i) => (
+          <p key={i} style={{
+            fontSize: 'clamp(17px, 1.6vw, 21px)',
+            fontFamily: 'serif',
+            lineHeight: 1.55,
+            margin: '0 0 1px',
+            color: 'rgba(253,230,138,0.95)',
+            letterSpacing: '0.02em',
+            textAlign: 'center',
+          }}>{line}</p>
+        ))}
+      </div>
+
+      {/* Divider */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 7 }}>
+        <div style={{ flex: 1, height: 1, background: 'linear-gradient(to right, transparent, rgba(180,130,40,0.3))' }} />
+        <div style={{ width: 4, height: 4, borderRadius: '50%', background: 'rgba(180,130,40,0.4)' }} />
+        <div style={{ flex: 1, height: 1, background: 'linear-gradient(to left, transparent, rgba(180,130,40,0.3))' }} />
+      </div>
+
+      {/* Student message */}
+      <p style={{
+        fontSize: 'clamp(13px, 1.2vw, 15px)',
+        color: 'rgba(255,255,255,0.72)',
+        lineHeight: 1.55,
+        textAlign: 'center',
+        margin: 0,
+        fontStyle: 'italic',
+        maxWidth: 600,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      }}>{shloka.message}</p>
+    </div>
+  );
+}
+
 // ── Main component ── (BrowseView/TestView/TestConfigModal imported above) ───
 // ── Main component ───────────────────────────────────────────────────────────
 export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
@@ -386,10 +511,18 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
   const [showTestConfig,   setShowTestConfig]   = useState(false);
   const [topPYQLoading,    setTopPYQLoading]    = useState(false);
   const [topPYQFilter,     setTopPYQFilter]     = useState(false);
+  const [jeeMode,          setJeeMode]          = useState<'mains' | 'advanced'>('mains');
 
   const isLoggedIn = false;
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const onShlokaDone = useCallback(() => {
     if (pendingMode) { setView(pendingMode); setPendingMode(null); }
@@ -488,12 +621,27 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
         @keyframes fadeUp  { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes pulse   { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
       `}</style>
+      <style>{`
+        @keyframes floatOrb1 { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(40px,-30px) scale(1.12); } 66% { transform: translate(-20px,35px) scale(0.92); } }
+        @keyframes floatOrb2 { 0%,100% { transform: translate(0,0) scale(1); } 40% { transform: translate(-35px,20px) scale(1.08); } 75% { transform: translate(28px,-40px) scale(0.88); } }
+        @keyframes floatOrb3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,30px) scale(1.15); } }
+        @keyframes shimmerText { 0%,100% { opacity:1; } 50% { opacity:0.75; } }
+      `}</style>
 
-      <div style={{ minHeight: '100vh', background: '#080a0f', color: '#fff', paddingBottom: hasSel ? 140 : 40 }}>
+      <div style={{ minHeight: '100vh', background: '#080a0f', color: '#fff', paddingBottom: hasSel ? 140 : 40, position: 'relative', overflow: 'hidden' }}>
+        {/* Animated background orbs */}
+        {!isMobile && (
+          <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', top: '-5%', left: '-8%', width: 700, height: 700, borderRadius: '50%', background: 'radial-gradient(circle, rgba(124,58,237,0.18) 0%, rgba(124,58,237,0.06) 40%, transparent 70%)', animation: 'floatOrb1 16s ease-in-out infinite' }} />
+            <div style={{ position: 'absolute', top: '30%', right: '-10%', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0.05) 40%, transparent 70%)', animation: 'floatOrb2 20s ease-in-out infinite' }} />
+            <div style={{ position: 'absolute', bottom: '-5%', left: '25%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(167,139,250,0.14) 0%, rgba(167,139,250,0.04) 40%, transparent 70%)', animation: 'floatOrb3 24s ease-in-out infinite' }} />
+            <div style={{ position: 'absolute', top: '60%', left: '10%', width: 350, height: 350, borderRadius: '50%', background: 'radial-gradient(circle, rgba(251,191,36,0.08) 0%, transparent 65%)', animation: 'floatOrb2 28s ease-in-out infinite reverse' }} />
+          </div>
+        )}
 
         {/* NAV */}
         <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(8,10,15,0.94)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', maxWidth: 900, margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 28px', maxWidth: 1100, margin: '0 auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
               {/* Custom crucible icon */}
               <div style={{ width: 38, height: 38, borderRadius: 11, background: 'linear-gradient(160deg,#1a0a00 0%,#2d1200 100%)', border: '1px solid rgba(234,88,12,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 14px rgba(234,88,12,0.2), inset 0 1px 0 rgba(255,160,60,0.1)' }}>
@@ -520,8 +668,8 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
                 </svg>
               </div>
               <div>
-                <div style={{ fontSize: 14, fontWeight: 900, letterSpacing: '0.08em', background: 'linear-gradient(90deg,#fff 0%,rgba(255,255,255,0.85) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', lineHeight: 1.1 }}>THE CRUCIBLE</div>
-                <div style={{ fontSize: 8.5, letterSpacing: '0.18em', background: 'linear-gradient(90deg,#f97316,#fb923c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', textTransform: 'uppercase', fontWeight: 700, marginTop: 1 }}>Forge Your Rank</div>
+                <div style={{ fontSize: 20, fontWeight: 900, letterSpacing: '0.08em', background: 'linear-gradient(90deg,#fff 0%,rgba(255,255,255,0.85) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', lineHeight: 1.1 }}>THE CRUCIBLE</div>
+                <div style={{ fontSize: 10, letterSpacing: '0.18em', background: 'linear-gradient(90deg,#f97316,#fb923c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', textTransform: 'uppercase', fontWeight: 700, marginTop: 2 }}>Forge Your Rank</div>
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -536,93 +684,127 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
           </div>
         </nav>
 
-        <div style={{ maxWidth: 900, margin: '0 auto', padding: '20px 14px' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: isMobile ? '12px 14px' : '20px 28px' }}>
 
-          {/* GREETING */}
-          <div style={{ marginBottom: 18, animation: 'fadeUp 0.3s ease' }}>
-            <p style={{ fontSize: 10, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          {/* GREETING + animated orbs */}
+          <div style={{ marginBottom: 12, animation: 'fadeUp 0.3s ease', position: 'relative' }}>
+            {!isMobile && (
+              <>
+                <div style={{ position: 'absolute', top: -20, right: 60, width: 220, height: 220, borderRadius: '50%', background: 'radial-gradient(circle, rgba(124,58,237,0.22) 0%, transparent 70%)', pointerEvents: 'none', animation: 'floatOrb1 9s ease-in-out infinite' }} />
+                <div style={{ position: 'absolute', top: 10, right: 200, width: 140, height: 140, borderRadius: '50%', background: 'radial-gradient(circle, rgba(56,189,248,0.15) 0%, transparent 70%)', pointerEvents: 'none', animation: 'floatOrb2 12s ease-in-out infinite' }} />
+              </>
+            )}
+            <p style={{ fontSize: 10, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ display: 'inline-block', width: 16, height: 1, background: 'rgba(255,255,255,0.2)' }} />
               Practice · Test · Improve
               <span style={{ display: 'inline-block', width: 16, height: 1, background: 'rgba(255,255,255,0.2)' }} />
             </p>
-            <h1 style={{ fontSize: 'clamp(22px,5.5vw,32px)', fontWeight: 900, lineHeight: 1.2, margin: 0 }}>
-              Master Chemistry,<br /><em style={{ color: '#a78bfa', fontStyle: 'italic' }}>one question at a time.</em>
+            <h1 style={{ fontSize: isMobile ? 'clamp(22px,5.5vw,28px)' : 'clamp(26px,3vw,40px)', fontWeight: 900, lineHeight: 1.15, margin: 0 }}>
+              Master Chemistry,<br /><em style={{ color: '#a78bfa', fontStyle: 'italic', animation: 'shimmerText 4s ease-in-out infinite' }}>one question at a time.</em>
             </h1>
           </div>
 
           {/* PROGRESS CARD */}
-          <div style={{ marginBottom: 18 }}><ProgressCard isLoggedIn={isLoggedIn} /></div>
+          <div style={{ marginBottom: 12 }}><ProgressCard isLoggedIn={isLoggedIn} /></div>
 
-          {/* SELECT CHAPTERS LABEL + TOP PYQ FILTER TOGGLE */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-            <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>
+          {/* SELECT CHAPTERS LABEL + LEGEND inline */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+            <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
               {String.fromCodePoint(0x1F4DA)} Select Chapters
             </span>
+            <div style={{ width: 1, height: 12, background: 'rgba(255,255,255,0.12)', flexShrink: 0 }} />
+            {Object.entries(CAT_COLOR).map(([cat, color]) => (
+              <div key={cat} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                <div style={{ width: 6, height: 6, borderRadius: '50%', background: color, flexShrink: 0 }} />
+                <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', whiteSpace: 'nowrap' }}>{cat}</span>
+              </div>
+            ))}
             <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.07)' }} />
-            {hasSel && <span style={{ fontSize: 11, color: '#a78bfa', fontWeight: 600 }}>{selCount} ch · {selQ > 0 ? selQ.toLocaleString() + ' Qs' : ''}</span>}
+            {hasSel && <span style={{ fontSize: 11, color: '#a78bfa', fontWeight: 600, whiteSpace: 'nowrap' }}>{selCount} ch · {selQ > 0 ? selQ.toLocaleString() + ' Qs' : ''}</span>}
           </div>
-          {/* TOP PYQ FILTER — compact toggle pill */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, padding: '8px 12px', borderRadius: 12, background: topPYQFilter ? 'rgba(251,191,36,0.12)' : 'rgba(255,255,255,0.04)', border: `1.5px solid ${topPYQFilter ? 'rgba(251,191,36,0.45)' : 'rgba(255,255,255,0.08)'}`, cursor: 'pointer', transition: 'all 0.15s', userSelect: 'none' as const }} onClick={() => setTopPYQFilter(f => !f)}>
-            <span style={{ fontSize: 13 }}>⭐</span>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'nowrap' }}>
-                <span style={{ fontSize: 12, fontWeight: 800, color: topPYQFilter ? '#fbbf24' : 'rgba(255,255,255,0.7)', letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>Top PYQs only</span>
-                <span style={{ fontSize: 11, color: topPYQFilter ? 'rgba(251,191,36,0.6)' : 'rgba(255,255,255,0.35)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{topPYQFilter ? 'Active — must-do questions only' : 'Final revision · hand-picked'}</span>
+          {/* FILTER ROW: Top PYQs (left) + JEE Mains/Advanced segmented (right) */}
+          <div style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
+            {/* Top PYQs toggle */}
+            <div onClick={() => setTopPYQFilter(f => !f)} style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 12, padding: '11px 16px', borderRadius: 12, background: topPYQFilter ? 'rgba(251,191,36,0.1)' : 'rgba(255,255,255,0.04)', border: `1.5px solid ${topPYQFilter ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.08)'}`, cursor: 'pointer', transition: 'all 0.15s', userSelect: 'none' as const }}>
+              <span style={{ fontSize: 18 }}>⭐</span>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 15, fontWeight: 800, color: topPYQFilter ? '#fbbf24' : 'rgba(255,255,255,0.85)', lineHeight: 1.2 }}>Top PYQs only</div>
+                <div style={{ fontSize: 11, color: topPYQFilter ? 'rgba(251,191,36,0.65)' : 'rgba(255,255,255,0.4)', marginTop: 2 }}>{topPYQFilter ? 'Must-do questions active' : 'Final revision · hand-picked'}</div>
+              </div>
+              <div style={{ width: 38, height: 22, borderRadius: 99, background: topPYQFilter ? '#d97706' : 'rgba(255,255,255,0.12)', position: 'relative', transition: 'background 0.2s', flexShrink: 0 }}>
+                <div style={{ position: 'absolute', top: 3, left: topPYQFilter ? 19 : 3, width: 16, height: 16, borderRadius: '50%', background: '#fff', transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.4)' }} />
               </div>
             </div>
-            <div style={{ width: 36, height: 20, borderRadius: 99, background: topPYQFilter ? '#d97706' : 'rgba(255,255,255,0.12)', position: 'relative', transition: 'background 0.2s', flexShrink: 0 }}>
-              <div style={{ position: 'absolute', top: 2, left: topPYQFilter ? 18 : 2, width: 16, height: 16, borderRadius: '50%', background: '#fff', transition: 'left 0.2s', boxShadow: '0 1px 4px rgba(0,0,0,0.4)' }} />
+            {/* JEE Mains / Advanced segmented control */}
+            <div style={{ flex: 1, padding: '11px 16px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: '1.5px solid rgba(255,255,255,0.08)' }}>
+              <div style={{ fontSize: 13, fontWeight: 800, color: 'rgba(255,255,255,0.7)', marginBottom: 8, letterSpacing: '0.01em' }}>Exam</div>
+              <div style={{ display: 'flex', background: 'rgba(255,255,255,0.07)', borderRadius: 8, padding: 2, gap: 2 }}>
+                <button onClick={() => setJeeMode('mains')} style={{ flex: 1, padding: '6px 0', borderRadius: 6, border: 'none', background: jeeMode === 'mains' ? '#3b82f6' : 'transparent', color: jeeMode === 'mains' ? '#fff' : 'rgba(255,255,255,0.45)', fontSize: 12, fontWeight: 700, cursor: 'pointer', transition: 'all 0.15s' }}>JEE Mains</button>
+                <button onClick={() => setJeeMode('advanced')} style={{ flex: 1, padding: '6px 0', borderRadius: 6, border: 'none', background: jeeMode === 'advanced' ? '#7c3aed' : 'transparent', color: jeeMode === 'advanced' ? '#fff' : 'rgba(255,255,255,0.45)', fontSize: 12, fontWeight: 700, cursor: 'pointer', transition: 'all 0.15s' }}>JEE Advanced</button>
+              </div>
             </div>
           </div>
 
-          {/* CLASS CARDS */}
-          <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
+          {/* CLASS CARDS + MOCK TESTS */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 10 }}>
             <ClassCard classLevel={11} chapters={class11} selected={selectedChapters} onOpen={() => setOpenSheet(11)} />
             <ClassCard classLevel={12} chapters={class12} selected={selectedChapters} onOpen={() => setOpenSheet(12)} />
+            {/* Mock Tests — Coming Soon */}
+            <div style={{ padding: '14px 14px 12px', borderRadius: 16, background: 'rgba(255,255,255,0.02)', border: '1.5px dashed rgba(255,255,255,0.1)', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                <div>
+                  <div style={{ fontSize: 20, fontWeight: 800, color: 'rgba(255,255,255,0.3)', lineHeight: 1.1 }}>Mock Tests</div>
+                  <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.2)', marginTop: 3 }}>Full syllabus</div>
+                </div>
+                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: '#f97316', background: 'rgba(249,115,22,0.12)', border: '1px solid rgba(249,115,22,0.25)', borderRadius: 6, padding: '3px 7px', textTransform: 'uppercase' }}>Soon</div>
+              </div>
+              <div style={{ height: 2, background: 'rgba(255,255,255,0.05)', borderRadius: 99, marginBottom: 8 }} />
+              <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+                <div>
+                  <div style={{ fontSize: 28, fontWeight: 800, color: 'rgba(255,255,255,0.15)', fontFamily: 'monospace', lineHeight: 1 }}>—</div>
+                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.2)', marginTop: 3, textTransform: 'uppercase', letterSpacing: '0.07em' }}>questions</div>
+                </div>
+                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.15)', fontStyle: 'italic' }}>coming soon</span>
+              </div>
+            </div>
           </div>
 
           {/* CLEAR ALL */}
           {hasSel && (
-            <div style={{ textAlign: 'center', marginBottom: 18 }}>
-              <button onClick={clearAll} style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Clear all selections</button>
+            <div style={{ textAlign: 'center', marginBottom: 6 }}>
+              <button onClick={clearAll} style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Clear all selections</button>
             </div>
           )}
 
-          {/* CATEGORY LEGEND */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px', marginBottom: 28 }}>
-            {Object.entries(CAT_COLOR).map(([cat, color]) => (
-              <div key={cat} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-                <div style={{ width: 7, height: 7, borderRadius: '50%', background: color }} />
-                <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)' }}>{cat}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* QUICK STATS */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 28 }}>
+          {/* QUICK STATS — full-width 3-col grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: isMobile ? 8 : 10, marginBottom: 12 }}>
             {([
               [String(chapters.length), 'Chapters', '#a78bfa'],
               [chapters.reduce((s,c) => s + (c.question_count ?? 0), 0).toLocaleString(), 'Total Qs', '#38bdf8'],
               [String(chapters.filter(c => (c.question_count ?? 0) > 0).length), 'Active', '#34d399'],
             ] as [string,string,string][]).map(([val, label, color]) => (
-              <div key={label} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.09)', borderRadius: 12, padding: '12px 14px' }}>
-                <div style={{ fontSize: 20, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
-                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginTop: 3 }}>{label}</div>
+              <div key={label} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.09)', borderRadius: 12, padding: isMobile ? '10px 14px' : '12px 18px' }}>
+                <div style={{ fontSize: isMobile ? 18 : 24, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
+                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 3 }}>{label}</div>
               </div>
             ))}
           </div>
 
-          {/* QUOTE */}
-          <div style={{ textAlign: 'center', padding: '0 16px' }}>
-            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.22)', fontStyle: 'italic' }}>&ldquo;Sleep 7 hours. Eat healthy. Burnout is not a strategy.&rdquo;</p>
-            <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.14)', marginTop: 4 }}>&mdash; Paaras Sir</p>
-          </div>
+          {/* QUOTE (mobile) / GITA SHLOKA (desktop) */}
+          {isMobile ? (
+            <div style={{ textAlign: 'center', padding: '0 16px' }}>
+              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.22)', fontStyle: 'italic' }}>&ldquo;Sleep 7 hours. Eat healthy. Burnout is not a strategy.&rdquo;</p>
+              <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.14)', marginTop: 4 }}>&mdash; Paaras Sir</p>
+            </div>
+          ) : (
+            <DailyGitaShloka />
+          )}
         </div>
 
         {/* BOTTOM CTA BAR */}
         {hasSel && (
           <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 60, background: 'rgba(8,10,15,0.98)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.09)', padding: '10px 16px 28px' }}>
-            <div style={{ maxWidth: 900, margin: '0 auto' }}>
+            <div style={{ maxWidth: 1100, margin: '0 auto' }}>
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 0, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 99, overflow: 'hidden', fontSize: 12 }}>
                   <span style={{ padding: '5px 14px', background: '#38bdf8', color: '#000', fontWeight: 800, fontSize: 11, letterSpacing: '0.06em' }}>JEE MAINS</span>

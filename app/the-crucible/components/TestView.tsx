@@ -7,13 +7,15 @@ import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
 
 const DIFF_COLOR = (d: string) => d === 'Easy' ? '#34d399' : d === 'Medium' ? '#fbbf24' : '#f87171';
 
-// Returns true when all 4 options are short enough for a 2×2 grid
+// Returns true when all 4 options are short enough for a 2×2 grid.
+// Threshold is 28 chars (accounts for 20px font in half-width column ~220px).
 const isShortOptions = (opts: any[]): boolean => {
   if (!opts || opts.length !== 4) return false;
   return opts.every(o => {
     const t = (o.text || '');
     if (t.includes('$') || t.includes('![')) return false;
-    return t.replace(/\*\*/g, '').trim().length <= 40;
+    const plain = t.replace(/\*\*/g, '').replace(/\*/g, '').trim();
+    return plain.length <= 28;
   });
 };
 
@@ -170,24 +172,24 @@ export default function TestView({ questions, onBack }: { questions: Question[];
   const palettePanel = (
     <div style={{ padding: '16px 14px' }}>
       <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: 10 }}>Overview</div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 16 }}>
         {([
           [String(answeredCount), 'Answered', '#34d399'],
           [String(notVisitedCount), 'Not Visited', 'rgba(255,255,255,0.5)'],
           [String(markedCount), 'Marked', '#7c3aed'],
           ['0', 'Skipped', '#fbbf24'],
         ] as [string, string, string][]).map(([v, l, c]) => (
-          <div key={l} style={{ textAlign: 'center', padding: '10px 6px', background: 'rgba(255,255,255,0.04)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.07)' }}>
-            <div style={{ fontSize: 22, fontWeight: 800, color: c, fontFamily: 'monospace' }}>{v}</div>
-            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', marginTop: 2, textTransform: 'uppercase' }}>{l}</div>
+          <div key={l} style={{ textAlign: 'center', padding: '12px 6px', background: 'rgba(255,255,255,0.04)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.07)' }}>
+            <div style={{ fontSize: 24, fontWeight: 800, color: c, fontFamily: 'monospace' }}>{v}</div>
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 3, textTransform: 'uppercase' }}>{l}</div>
           </div>
         ))}
       </div>
       <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: 8 }}>Question Palette</div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 5 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 6 }}>
         {questions.map((_, i) => {
           const s = palStatus(i);
-          return <button key={i} onClick={() => { setIdx(i); setShowPalette(false); }} style={{ width: '100%', aspectRatio: '1', borderRadius: 7, border: `1.5px solid ${s.border}`, background: s.bg, color: s.color, fontSize: 11, fontWeight: 700, cursor: 'pointer', transition: 'all 0.1s' }}>{i + 1}</button>;
+          return <button key={i} onClick={() => { setIdx(i); setShowPalette(false); }} style={{ width: '100%', aspectRatio: '1', borderRadius: 8, border: `1.5px solid ${s.border}`, background: s.bg, color: s.color, fontSize: 12, fontWeight: 700, cursor: 'pointer', transition: 'all 0.1s' }}>{i + 1}</button>;
         })}
       </div>
       <button onClick={() => { if (confirm('Submit test? You cannot change answers after submission.')) setSubmitted(true); }}
@@ -199,7 +201,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
   );
 
   const questionBody = (
-    <div style={{ maxWidth: 700, margin: '0 auto', padding: isMobile ? '12px 10px 120px' : '20px 20px 100px' }}>
+    <div style={{ maxWidth: isMobile ? 700 : 860, margin: '0 auto', padding: isMobile ? '12px 10px 120px' : '28px 32px 100px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
         <span style={{ fontSize: isMobile ? 17 : 20, fontWeight: 800 }}>Q{idx + 1}</span>
         <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>/{questions.length}</span>
@@ -210,8 +212,8 @@ export default function TestView({ questions, onBack }: { questions: Question[];
           <Star style={{ width: 13, height: 13, fill: starred.has(q.id) ? '#fbbf24' : 'none' }} />
         </button>
       </div>
-      <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: isMobile ? '12px 12px' : '14px 16px', marginBottom: 16 }}>
-        <MathRenderer markdown={q.question_text.markdown} className="text-base leading-relaxed" />
+      <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: isMobile ? '12px 12px' : '18px 22px', marginBottom: 16 }}>
+        <MathRenderer markdown={q.question_text.markdown} className="leading-relaxed" fontSize={isMobile ? undefined : 20} />
       </div>
       {q.options && q.options.length > 0 && (() => {
         const useGrid = isShortOptions(q.options);
@@ -221,9 +223,9 @@ export default function TestView({ questions, onBack }: { questions: Question[];
               const sel = answers[q.id] === opt.id;
               return (
                 <button key={opt.id} onClick={() => setAnswers(a => ({ ...a, [q.id]: opt.id }))}
-                  style={{ padding: useGrid ? '10px 10px' : (isMobile ? '10px 11px' : '11px 13px'), borderRadius: 12, border: `1.5px solid ${sel ? '#3b82f6' : 'rgba(255,255,255,0.1)'}`, background: sel ? 'rgba(59,130,246,0.1)' : 'rgba(255,255,255,0.03)', color: '#fff', fontSize: 13, textAlign: 'left', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, width: '100%' }}>
+                  style={{ padding: useGrid ? '12px 12px' : (isMobile ? '10px 11px' : '13px 16px'), borderRadius: 12, border: `1.5px solid ${sel ? '#3b82f6' : 'rgba(255,255,255,0.1)'}`, background: sel ? 'rgba(59,130,246,0.1)' : 'rgba(255,255,255,0.03)', color: '#fff', fontSize: isMobile ? 13 : 17, textAlign: 'left', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, width: '100%' }}>
                   <span style={{ width: 24, height: 24, borderRadius: 7, border: `1.5px solid ${sel ? '#3b82f6' : 'rgba(255,255,255,0.2)'}`, background: sel ? '#3b82f6' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, flexShrink: 0 }}>{opt.id.toUpperCase()}</span>
-                  <span style={{ flex: 1 }}><MathRenderer markdown={opt.text || ''} className="text-sm" /></span>
+                  <span style={{ flex: 1 }}><MathRenderer markdown={opt.text || ''} fontSize={isMobile ? undefined : 20} /></span>
                 </button>
               );
             })}
@@ -279,7 +281,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
           {questionBody}
         </div>
         {!isMobile && (
-          <div style={{ width: 240, borderLeft: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)', overflowY: 'auto', flexShrink: 0 }}>
+          <div style={{ width: 390, borderLeft: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)', overflowY: 'auto', flexShrink: 0 }}>
             {palettePanel}
           </div>
         )}

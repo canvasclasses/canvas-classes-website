@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import AnalyticsDashboard from './AnalyticsDashboard';
@@ -161,6 +161,37 @@ export default function AdminPage() {
     useEffect(() => {
         setSvgScaleOverrides({});
     }, [selectedQuestionId]);
+
+    // Ref to always hold the latest filteredQuestions without causing hook ordering issues
+    const filteredQuestionsRef = useRef<Question[]>([]);
+
+    // Keyboard navigation: ArrowLeft/Up = Prev, ArrowRight/Down = Next
+    const handleKeyNav = useCallback((e: KeyboardEvent) => {
+        const tag = (e.target as HTMLElement)?.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            setSelectedQuestionId(prev => {
+                const fq = filteredQuestionsRef.current;
+                const idx = fq.findIndex(q => q._id === prev);
+                if (idx > 0) return fq[idx - 1]._id;
+                return prev;
+            });
+        } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            setSelectedQuestionId(prev => {
+                const fq = filteredQuestionsRef.current;
+                const idx = fq.findIndex(q => q._id === prev);
+                if (idx < fq.length - 1) return fq[idx + 1]._id;
+                return prev;
+            });
+        }
+    }, []);
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyNav);
+        return () => window.removeEventListener('keydown', handleKeyNav);
+    }, [handleKeyNav]);
 
     useEffect(() => {
         loadData(0);
@@ -481,6 +512,7 @@ export default function AdminPage() {
         }
         return true;
     });
+    filteredQuestionsRef.current = filteredQuestions;
 
     // Calculate tag status counts for filter display
     const untaggedCount = questions.filter(q => !q.metadata.chapter_id || !(q.metadata.tags && q.metadata.tags.length > 0)).length;
@@ -491,7 +523,7 @@ export default function AdminPage() {
         <div className="fixed inset-0 z-50 flex flex-col h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden">
             {/* TOP BAR — two rows */}
             <header className="shrink-0 bg-gray-950/95 backdrop-blur-sm border-b border-gray-800/50 shadow-xl">
-                {/* Row 1: title + actions + search + selector + nav */}
+                {/* Row 1: title + actions + search + Prev/Next + selector + chapter/type filters */}
                 <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-800/40">
                     <h1 className="text-sm font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 bg-clip-text text-transparent shrink-0">
                         Crucible Admin
@@ -500,7 +532,7 @@ export default function AdminPage() {
 
                     <div className="w-px h-4 bg-gray-700/50 shrink-0" />
 
-                    {/* Icon-only action buttons with tooltips */}
+                    {/* Icon-only action buttons */}
                     <button onClick={handleAddQuestion} title="Add Question"
                         className="flex items-center justify-center w-7 h-7 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-500 hover:to-purple-500 transition shrink-0">
                         <Plus size={13} />
@@ -526,6 +558,39 @@ export default function AdminPage() {
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-32 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none shrink-0 placeholder-gray-500"
                     />
+
+                    {/* ── Prev / Next — centred in the bar ── */}
+                    <div className="flex items-center gap-1 shrink-0">
+                        <button
+                            title="Previous question (← or ↑)"
+                            onClick={() => {
+                                const idx = filteredQuestions.findIndex(q => q._id === selectedQuestionId);
+                                if (idx > 0) setSelectedQuestionId(filteredQuestions[idx - 1]._id);
+                            }}
+                            disabled={!selectedQuestionId || filteredQuestions.findIndex(q => q._id === selectedQuestionId) <= 0}
+                            className="px-2.5 py-1 bg-indigo-600/80 hover:bg-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded-lg text-xs font-medium transition shrink-0"
+                        >
+                            ← Prev
+                        </button>
+                        {selectedQuestionId && (
+                            <span className="text-xs text-gray-500 font-mono shrink-0">
+                                {filteredQuestions.findIndex(q => q._id === selectedQuestionId) + 1}/{filteredQuestions.length}
+                            </span>
+                        )}
+                        <button
+                            title="Next question (→ or ↓)"
+                            onClick={() => {
+                                const idx = filteredQuestions.findIndex(q => q._id === selectedQuestionId);
+                                if (idx < filteredQuestions.length - 1) setSelectedQuestionId(filteredQuestions[idx + 1]._id);
+                            }}
+                            disabled={!selectedQuestionId || filteredQuestions.findIndex(q => q._id === selectedQuestionId) >= filteredQuestions.length - 1}
+                            className="px-2.5 py-1 bg-indigo-600/80 hover:bg-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded-lg text-xs font-medium transition shrink-0"
+                        >
+                            Next →
+                        </button>
+                    </div>
+
+                    <div className="w-px h-4 bg-gray-700/50 shrink-0" />
 
                     {/* Question Selector or Bulk Selection Info */}
                     {bulkMode ? (
@@ -561,9 +626,9 @@ export default function AdminPage() {
                         <select
                             value={selectedQuestionId || ''}
                             onChange={(e) => setSelectedQuestionId(e.target.value || null)}
-                            className="flex-1 min-w-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
+                            className="w-56 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none shrink-0"
                         >
-                            <option value="">Select Question ({filteredQuestions.length})</option>
+                            <option value="">Select ({filteredQuestions.length})</option>
                             {filteredQuestions.map(q => {
                                 const hasChapter = !!q.metadata.chapter_id;
                                 const hasPrimaryTag = q.metadata.tags && q.metadata.tags.length > 0;
@@ -579,29 +644,27 @@ export default function AdminPage() {
                         </select>
                     )}
 
-                    {/* Question navigation */}
-                    {selectedQuestion && (
-                        <div className="flex items-center gap-1 shrink-0">
-                            <button
-                                onClick={() => {
-                                    const idx = filteredQuestions.findIndex(q => q._id === selectedQuestionId);
-                                    if (idx > 0) setSelectedQuestionId(filteredQuestions[idx - 1]._id);
-                                }}
-                                className="px-2 py-1 bg-indigo-600/80 hover:bg-indigo-600 text-white rounded-lg text-xs font-medium transition"
-                            >
-                                ← Prev
-                            </button>
-                            <button
-                                onClick={() => {
-                                    const idx = filteredQuestions.findIndex(q => q._id === selectedQuestionId);
-                                    if (idx < filteredQuestions.length - 1) setSelectedQuestionId(filteredQuestions[idx + 1]._id);
-                                }}
-                                className="px-2 py-1 bg-indigo-600/80 hover:bg-indigo-600 text-white rounded-lg text-xs font-medium transition"
-                            >
-                                Next →
-                            </button>
-                        </div>
-                    )}
+                    {/* Chapter + Type filters moved to row 1 */}
+                    <select
+                        value={selectedChapterFilter}
+                        onChange={(e) => setSelectedChapterFilter(e.target.value)}
+                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
+                    >
+                        <option value="all">All Chapters</option>
+                        {chapters.map(ch => (
+                            <option key={ch._id} value={ch._id}>{ch.name}</option>
+                        ))}
+                    </select>
+                    <select
+                        value={selectedTypeFilter}
+                        onChange={(e) => setSelectedTypeFilter(e.target.value)}
+                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
+                    >
+                        <option value="all">All Types</option>
+                        {QUESTION_TYPES.map(qt => (
+                            <option key={qt.id} value={qt.id}>{qt.id}</option>
+                        ))}
+                    </select>
 
                     {/* Page navigation */}
                     {totalCount > PAGE_SIZE && (
@@ -628,29 +691,9 @@ export default function AdminPage() {
                     )}
                 </div>
 
-                {/* Row 2: horizontally scrollable filter bar */}
+                {/* Row 2: secondary filters — Difficulty, Source, Year, Shift, PYQ, Tags */}
                 <div className="flex items-center gap-2 px-3 py-1.5 overflow-x-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as any}>
                     <Filter size={11} className="text-purple-400 shrink-0" />
-                    <select
-                        value={selectedChapterFilter}
-                        onChange={(e) => setSelectedChapterFilter(e.target.value)}
-                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                    >
-                        <option value="all">All Chapters</option>
-                        {chapters.map(ch => (
-                            <option key={ch._id} value={ch._id}>{ch.name}</option>
-                        ))}
-                    </select>
-                    <select
-                        value={selectedTypeFilter}
-                        onChange={(e) => setSelectedTypeFilter(e.target.value)}
-                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                    >
-                        <option value="all">All Types</option>
-                        {QUESTION_TYPES.map(qt => (
-                            <option key={qt.id} value={qt.id}>{qt.id}</option>
-                        ))}
-                    </select>
                     <select
                         value={selectedDifficultyFilter}
                         onChange={(e) => setSelectedDifficultyFilter(e.target.value)}
@@ -1026,7 +1069,7 @@ export default function AdminPage() {
                                                 question_text: { markdown: e.target.value, latex_validated: false }
                                             });
                                         }}
-                                        className="flex-1 bg-gray-800/70 border-2 border-gray-600/70 rounded-lg px-4 py-3 text-sm leading-relaxed focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 hover:border-gray-500 outline-none resize-y font-mono min-h-[16rem] text-gray-100"
+                                        className="flex-1 bg-gray-800/70 border-2 border-gray-600/70 rounded-lg px-4 py-3 text-base leading-relaxed focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 hover:border-gray-500 outline-none resize-y font-mono min-h-[16rem] text-gray-100"
                                         placeholder="✏️ Click here to edit question text... (LaTeX supported: use $...$ for inline, $$...$$ for display)"
                                     />
                                     <div className="w-32 shrink-0 flex flex-col gap-2">
@@ -1119,7 +1162,7 @@ export default function AdminPage() {
                                                         );
                                                         handleUpdate(selectedQuestion._id, { options: newOptions });
                                                     }}
-                                                    className="w-full bg-gray-900/50 border border-gray-700/50 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 hover:border-gray-600 font-mono mb-2 text-gray-100"
+                                                    className="w-full bg-gray-900/50 border border-gray-700/50 rounded px-2 py-1.5 text-base focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 hover:border-gray-600 font-mono mb-2 text-gray-100"
                                                     placeholder="✏️ Click to edit option text..."
                                                 />
                                                 <SVGScaleControls 
@@ -1198,7 +1241,7 @@ export default function AdminPage() {
                                                 solution: { text_markdown: e.target.value, latex_validated: false }
                                             });
                                         }}
-                                        className="flex-1 bg-gray-800/70 border-2 border-gray-600/70 rounded-lg px-4 py-3 text-sm leading-relaxed focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 hover:border-gray-500 outline-none resize-y font-mono min-h-[20rem] text-gray-100"
+                                        className="flex-1 bg-gray-800/70 border-2 border-gray-600/70 rounded-lg px-4 py-3 text-base leading-relaxed focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 hover:border-gray-500 outline-none resize-y font-mono min-h-[20rem] text-gray-100"
                                         placeholder="✏️ Click here to edit solution... (Use **Step 1:** for bold, $$...$$ for equations)"
                                     />
                                     <div className="w-32 shrink-0 flex flex-col gap-2">
@@ -1273,6 +1316,7 @@ export default function AdminPage() {
                                     <MathRenderer 
                                         markdown={selectedQuestion.question_text.markdown}
                                         className="text-gray-300"
+                                        fontSize={20}
                                         imageScale={getSvgScale('question')}
                                     />
                                     {selectedQuestion.type !== 'NVT' && (() => {
@@ -1309,6 +1353,7 @@ export default function AdminPage() {
                                                             <MathRenderer 
                                                                 markdown={opt.text}
                                                                 className="text-gray-300 option-text"
+                                                                fontSize={20}
                                                                 imageScale={getSvgScale(`option_${opt.id}`)}
                                                             />
                                                         </div>
@@ -1333,6 +1378,7 @@ export default function AdminPage() {
                                     <MathRenderer 
                                         markdown={selectedQuestion.solution.text_markdown}
                                         className="text-gray-300 solution-text"
+                                        fontSize={20}
                                         imageScale={getSvgScale('solution')}
                                     />
                                 </div>

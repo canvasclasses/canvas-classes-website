@@ -41,6 +41,45 @@ Questions written only to the `questions` collection via `sync_json_to_mongo.js`
     - Use Markdown for structured text.
     - Generate a unique ID following the pattern: `jee_[year]_[shift_code]_[chapter_short]_[index]`.
 
+    ### ⚠️ MANDATORY LaTeX Rules (violations cause broken rendering in admin + student views):
+
+    **Electronic configurations** — ALWAYS wrap in `$...$`:
+    - ✅ `$[\mathrm{Ar}]\,3d^{10}\,4s^{2}$`
+    - ❌ `[Ar] 3d10 4s2` (bare text — will NOT render)
+
+    **Ion notation** — ALWAYS wrap in `$...$`:
+    - ✅ `$\mathrm{Ca^{2+}}$`, `$\mathrm{O^{2-}}$`, `$\mathrm{Fe^{3+}}$`
+    - ❌ `Ca2+`, `O2-`, `Fe3+` (bare text)
+
+    **Chemical formulas with subscripts** — ALWAYS wrap in `$\mathrm{...}$`:
+    - ✅ `$\mathrm{Na_2O}$`, `$\mathrm{Al_2O_3}$`, `$\mathrm{Fe_4[Fe(CN)_6]_3}$`
+    - ❌ `Na2O`, `Al2O3` (bare text)
+
+    **Ionic radii / Angstrom values** — use `$x.xx\,\text{Å}$`:
+    - ✅ `$1.02\,\text{Å}$`
+    - ❌ `1.02 A` (bare text)
+
+    **Orbital notation standalone** — wrap in `$...$`:
+    - ✅ `$3d^{10}$`, `$2p^{3}$`, `$ns^{2}\,np^{4}$`
+    - ❌ `3d10`, `2p3`
+
+    ### ⚠️ MANDATORY Table Rules for Match-List Questions:
+
+    Any question containing "Match List-I with List-II" (or similar) **MUST** include a markdown table in the `question_text.markdown` field. Format:
+
+    ```
+    | List-I (label) | List-II (label) |
+    |----------------|-----------------|
+    | (A) item text  | (I) item text   |
+    | (B) item text  | (II) item text  |
+    | (C) item text  | (III) item text |
+    | (D) item text  | (IV) item text  |
+    ```
+
+    - Keep the original List-I / List-II text above the table for context.
+    - If List-I or List-II items contain LaTeX, wrap them properly inside the table cells.
+    - The table rows show the items side-by-side — do NOT put the correct answer mapping in the question table (that goes in the solution).
+
 3. **Update Local Question Bank**:
     - Add the question to the local JSON file: `data/questions/chapter_[name].json`.
     - Fields must be camelCase: `chapterId`, `textMarkdown`, `isPYQ`, `isTopPYQ`, `questionType`, `conceptTags`, `solution.textSolutionLatex`.

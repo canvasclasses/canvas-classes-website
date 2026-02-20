@@ -44,6 +44,14 @@ Solution: [If provided, use it. If not, generate high-quality solution]
    - Arrows: `\rightarrow`, `\leftarrow`, `\leftrightarrow`
    - Equilibrium: `\rightleftharpoons`
 
+   **MO Configuration Notation (CRITICAL):**
+   - Antibonding orbitals use `^*` superscript: `\sigma^*`, `\pi^*`
+   - The renderer auto-converts `^*` → `^{*}` for KaTeX compatibility
+   - ✅ Write: `$\sigma_{1s}^2\sigma^*_{1s}^2\sigma_{2s}^2\sigma^*_{2s}^2\pi_{2p}^4\sigma_{2p}^2$`
+   - ✅ Also valid: `$\sigma_{1s}^2\sigma^{*}_{1s}^2...$` (braced form, slightly safer)
+   - ❌ Never write MO configs as plain text — always inside `$...$`
+   - Example full MO config for CO/NO⁺ (10e⁻): `$\sigma_{1s}^2\sigma^*_{1s}^2\sigma_{2s}^2\sigma^*_{2s}^2\pi_{2p}^4\sigma_{2p}^2$`
+
 2. **Chemical Equation Examples:**
    ```latex
    \ce{2H2 + O2 -> 2H2O}
@@ -68,6 +76,44 @@ Solution: [If provided, use it. If not, generate high-quality solution]
      | Cell B1  | Cell B2  | Cell B3  |
      ```
    - **NEVER** use plain text for tables - always use proper markdown table format
+
+5. **MTC (Match The Column) Question Formatting — CRITICAL:**
+
+   The renderer supports **three** MTC markdown formats. Always use **Format A** (pipe table) for new questions:
+
+   **Format A — Pipe table (PREFERRED for new questions):**
+   ```markdown
+   | | List I (Molecule/Species) | | List II (Property/Shape) |
+   |---|---|---|---|
+   | A | $\mathrm{SO_2Cl_2}$ | I | Paramagnetic |
+   | B | NO | II | Diamagnetic |
+   | C | $\mathrm{NO_2^-}$ | III | Tetrahedral |
+   | D | $\mathrm{I_3^-}$ | IV | Linear |
+   ```
+   - Header row: `| | List I (label) | | List II (label) |` — empty cells at positions 0 and 2 trigger colspan=2 rendering
+   - Renders as a proper 4-column table with List I spanning cols 1-2 and List II spanning cols 3-4
+
+   **Format B — Multiline text (also supported, legacy):**
+   ```markdown
+   **List I:**
+   A. $\mathrm{XeF_4}$
+   B. $\mathrm{SF_4}$
+   C. $\mathrm{NH_4^+}$
+   D. $\mathrm{BrF_3}$
+
+   **List II:**
+   I. See-saw
+   II. Square planar
+   III. Bent T-shaped
+   IV. Tetrahedral
+   ```
+
+   **Format C — Inline text (also supported, legacy):**
+   ```markdown
+   **List I (Molecule):** A. $\mathrm{BrF_5}$ B. $\mathrm{H_2O}$ C. $\mathrm{ClF_3}$ D. $\mathrm{SF_4}$ **List II (Shape):** i. T-shape ii. See-saw iii. Bent iv. Square pyramidal
+   ```
+
+   All three formats render as a proper 4-column HTML table. Format A is most reliable.
 
 5. **LaTeX Sizing & Font Standards (CRITICAL - Auto-Applied):**
    
@@ -306,6 +352,9 @@ Before submitting, verify:
 - [ ] Subscripts/superscripts use braces for multi-char
 - [ ] No spaces inside `$...$` at boundaries
 - [ ] Display math `$$...$$` on separate lines
+- [ ] MO configs: `\sigma^*`, `\pi^*` written inside `$...$` (renderer handles `^*` → `^{*}` automatically)
+- [ ] MTC questions: use pipe-table Format A (see Rule 1.5)
+- [ ] Option plain-text length ≤ 28 chars if grid layout is desired; otherwise vertical stack is used automatically
 
 ### **RULE 9: Quality Assurance**
 
@@ -596,11 +645,11 @@ All rendering is handled automatically by the LaTeXPreview component. AI agents 
 - Works immediately without manual intervention
 
 **4. Option Layout (Auto-Applied):**
-- Short text (< 50 chars avg): 2×2 grid
-- Images in options: 2×2 grid
-- Long text (≥ 50 chars avg): Vertical stack
-- A/B/C/D labels: Rounded squares outside boxes, center-aligned
-- **System automatically chooses layout**
+- Short text (≤ 28 plain chars per option): 2×2 grid
+- Any option with LaTeX (`$...$`) or images: vertical stack
+- Any option with bold markdown stripped length > 28 chars: vertical stack
+- **System automatically chooses layout — keep options concise for grid view**
+- ⚠️ At 20px font size, the half-width grid column fits ~28 chars. Options like "The C–C bond in ethyne is shorter than that in ethene" (51 chars) will wrap — use list view by keeping options ≤ 28 chars plain text, or accept vertical stack.
 
 ### **Quality Checklist for AI Agents**
 
@@ -747,6 +796,31 @@ For taxonomy questions:
 
 ---
 
-**Document Version:** 1.0  
-**Last Updated:** 2026-02-17  
+---
+
+## 🔧 RENDERER CAPABILITIES & KNOWN FIXES (Updated 2026-02-20)
+
+### MathRenderer.tsx — What It Handles Automatically
+
+| Input | Renderer Action |
+|---|---|
+| `^*` in math (e.g. `\sigma^*`) | Auto-converts to `^{*}` for KaTeX |
+| `\ce{H2O}` | Converts to `\mathrm{H_{2}O}` |
+| Pipe-table MTC with `\| \| List I \| \| List II \|` header | Renders with colspan=2 on both headers |
+| Multiline `**List I:**\nA. ...\n**List II:**\nI. ...` | Converts to 4-column table |
+| Inline `**List I:** A. ... **List II:** I. ...` | Converts to 4-column table |
+| `![alt](url)` | Renders as fixed-width image (scale × 2px) |
+| `**bold**` | Renders as `<strong>` |
+| `- item` | Renders as `<ul><li>` |
+
+### Option Grid vs List Layout
+
+`isShortOptions()` in `BrowseView.tsx` and `TestView.tsx` decides layout:
+- **Grid (2×2):** All 4 options have plain-text length ≤ 28 chars AND no LaTeX/images
+- **List (vertical):** Any option exceeds 28 chars, or contains `$` or `![`
+- Threshold set for 20px font size in ~220px half-width column
+- Strip `**` bold markers before measuring length
+
+**Document Version:** 1.2  
+**Last Updated:** 2026-02-20  
 **Maintained By:** The Crucible Admin Team
