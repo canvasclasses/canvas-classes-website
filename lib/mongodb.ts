@@ -54,6 +54,7 @@ async function connectToDatabase(): Promise<Mongoose | null> {
             maxPoolSize: 10,
         };
 
+        mongoose.set('strictQuery', false);
         cached!.promise = mongoose.connect(MONGODB_URI, opts).then((mongooseInstance) => {
             console.log('✅ MongoDB connected successfully');
             return mongooseInstance;

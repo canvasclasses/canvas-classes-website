@@ -144,17 +144,54 @@ const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
   is_top_pyq: { type: Boolean, default: false }
 }, { _id: false });
 
+// ─────────────────────────────────────────────────────────────────────────────
+// DISPLAY_ID FORMAT — CANONICAL REFERENCE
+// Format: {PREFIX}-{NNN}  where PREFIX is 2–10 uppercase alphanumeric chars
+// and NNN is 3+ digits (zero-padded).
+//
+// ALL known prefixes in production (questions_v2 collection):
+//   MOLE   → ch11_mole          (Some Basic Concepts)
+//   ATOM   → ch11_atom          (Structure of Atom)
+//   PERI   → ch11_periodic      (Periodicity)
+//   BOND   → ch11_bonding       (Chemical Bonding)
+//   THERMO → ch11_thermo        (Thermodynamics)      ← 6 chars
+//   CEQ    → ch11_chem_eq       (Chemical Equilibrium) ← 3 chars
+//   IEQ    → ch11_ionic_eq      (Ionic Equilibrium)   ← 3 chars
+//   RDX    → ch11_redox         (Redox)               ← 3 chars
+//   GOC    → ch11_goc           (GOC)
+//   HC     → ch11_hydrocarbon   (Hydrocarbons)        ← 2 chars
+//   SOL    → ch12_solutions     (Solutions)
+//   EC     → ch12_electrochem   (Electrochemistry)    ← 2 chars
+//   CK     → ch12_kinetics      (Chemical Kinetics)   ← 2 chars
+//   PB11   → ch11_pblock        (P-Block 11)          ← 4 chars with digit
+//   PB12   → ch12_pblock        (P-Block 12)          ← 4 chars with digit
+//   DNF    → ch12_dblock        (D & F Block)         ← 3 chars
+//   CORD   → ch12_coord         (Coordination Compounds)
+//   BIO    → ch12_biomolecules  (Biomolecules)
+//   POC    → ch11_prac_org      (Practical Organic)
+//
+// RULE: When adding a new chapter, add its prefix here BEFORE writing any
+// insertion scripts, and verify the regex below still matches it.
+// REGEX: ^[A-Z0-9]{2,10}-\d{3,}$
+// ─────────────────────────────────────────────────────────────────────────────
+
 const QuestionSchema = new Schema<IQuestion>({
   _id: { 
     type: String, 
-    required: true,
-    match: /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+    required: true
+    // UUID v4 format — all AI-agent batch scripts must use uuidv4() for _id.
+    // Regex validation intentionally removed: Mongoose validates on write only,
+    // and a strict regex here causes .find()/.lean() to silently drop documents
+    // whose _id was inserted by an older script. Validation is enforced at the
+    // insertion script level instead (see QUESTION_INGESTION_WORKFLOW.md Rule 15).
   },
   display_id: { 
     type: String, 
     required: true,
     unique: true,
-    match: /^[A-Z]{4}-\d{3}$/
+    // Matches all known prefixes: 2–10 uppercase alphanumeric chars, dash, 3+ digits.
+    // See canonical prefix table above. Update the table when adding new chapters.
+    match: /^[A-Z0-9]{2,10}-\d{3,}$/
   },
   
   question_text: { type: QuestionTextSchema, required: true },

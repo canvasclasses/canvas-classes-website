@@ -19,7 +19,7 @@ interface Question {
 }
 import { useCrucibleProgress } from '@/hooks/useCrucibleProgress';
 import StudentProgressDashboard from './StudentProgressDashboard';
-import { CHAPTERS } from '@/lib/chaptersConfig';
+import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 
 interface NewCrucibleHomeProps {
     initialQuestions: Question[];
@@ -115,16 +115,19 @@ export default function NewCrucibleHome({ initialQuestions, onStart }: NewCrucib
     const [mode, setMode] = useState<'practice' | 'exam'>('practice');
     const [questionType, setQuestionType] = useState<'Mix' | 'SCQ' | 'MCQ' | 'NVT'>('Mix');
     
-    // Get available chapters from all chapters config
+    // Get available chapters from TAXONOMY_FROM_CSV — single source of truth
     const allChapters = useMemo(() => {
-        return CHAPTERS.map(ch => ({
-            id: ch.id,
-            name: ch.name,
-            class: ch.class,
-            color: CHAPTER_COLORS[ch.id] || 'bg-gray-500',
-            icon: CHAPTER_ICONS[ch.id] || '📚',
-            questionCount: initialQuestions.filter(q => q.chapterId === ch.id).length
-        }));
+        return TAXONOMY_FROM_CSV
+            .filter(node => node.type === 'chapter')
+            .sort((a, b) => (a.sequence_order ?? 99) - (b.sequence_order ?? 99))
+            .map(ch => ({
+                id: ch.id,
+                name: ch.name,
+                class: ch.class_level ?? 11,
+                color: CHAPTER_COLORS[ch.id] || 'bg-gray-500',
+                icon: CHAPTER_ICONS[ch.id] || '📚',
+                questionCount: initialQuestions.filter(q => q.chapterId === ch.id).length
+            }));
     }, [initialQuestions]);
     
     const class11Chapters = allChapters.filter(ch => ch.class === 11);

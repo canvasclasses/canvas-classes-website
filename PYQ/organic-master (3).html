@@ -1,0 +1,2383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Organic Chemistry — Master Reference | The Crucible</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ── RESET & BASE ─────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#0c0e13;color:#d4d6e0;font-family:'DM Sans',sans-serif;height:100%;font-size:16px}
+button,input{font-family:inherit}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:4px}
+
+/* ── LAYOUT ───────────────────────────────────────────────── */
+#app{display:flex;flex-direction:column;height:100vh}
+#topbar{position:sticky;top:0;z-index:100;background:rgba(12,14,19,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);padding:10px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0}
+#body{flex:1;display:flex;overflow:hidden}
+#sidebar{width:220px;flex-shrink:0;background:rgba(255,255,255,0.015);border-right:1px solid rgba(255,255,255,0.06);padding:14px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
+#main{flex:1;overflow-y:auto;padding:24px 22px 80px}
+#content{max-width:860px;margin:0 auto}
+
+/* ── BRAND ────────────────────────────────────────────────── */
+#brand{display:flex;align-items:center;gap:9px;flex-shrink:0;text-decoration:none}
+#brand-icon{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#7b6fa0,#4f4680);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#brand-name{font-size:14px;font-weight:700;letter-spacing:0.05em;color:#c8c4dc;line-height:1.1}
+#brand-sub{font-size:11px;letter-spacing:0.12em;color:rgba(255,255,255,0.22);text-transform:uppercase}
+
+/* ── SEARCH ───────────────────────────────────────────────── */
+#search-wrap{flex:1;position:relative;max-width:520px}
+#search{width:100%;padding:8px 32px 8px 32px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#d4d6e0;font-size:15px;outline:none;transition:border-color 0.2s}
+#search:focus{border-color:rgba(120,100,170,0.45);background:rgba(255,255,255,0.05)}
+#search::placeholder{color:rgba(255,255,255,0.22)}
+#clear-btn{position:absolute;right:9px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:16px;line-height:1;display:none;padding:2px}
+
+/* ── SIDEBAR NAV ──────────────────────────────────────────── */
+.sidebar-label{font-size:11px;font-weight:700;color:rgba(255,255,255,0.2);letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px 8px}
+.nav-btn{
+  display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;
+  border-radius:6px;border:none;background:transparent;
+  color:rgba(255,255,255,0.36);font-size:13.5px;font-weight:450;
+  cursor:pointer;transition:color .18s, background .18s;text-align:left;
+  letter-spacing:.01em;
+}
+.nav-btn:hover{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.72)}
+.nav-btn.active{
+  background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.92);font-weight:600;
+  box-shadow:inset 2px 0 0 rgba(200,185,245,0.55);
+}
+.nav-count{
+  margin-left:auto;font-size:11px;background:rgba(255,255,255,0.06);
+  padding:2px 7px;border-radius:4px;color:rgba(255,255,255,0.28);
+  font-family:'DM Mono',monospace;letter-spacing:.03em;
+}
+.nav-btn.active .nav-count{background:rgba(200,185,245,0.12);color:rgba(200,185,245,0.7)}
+
+/* ── FILTER AREA ──────────────────────────────────────────── */
+#filter-box{margin-bottom:18px;display:flex;flex-direction:column;gap:9px;padding:13px 14px;background:rgba(255,255,255,0.018);border-radius:10px;border:1px solid rgba(255,255,255,0.06)}
+.filter-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.filter-label{font-size:11px;font-weight:700;color:rgba(255,255,255,0.22);text-transform:uppercase;letter-spacing:0.1em;min-width:52px;flex-shrink:0}
+.chip{
+  padding:3px 11px;border-radius:4px;
+  border:1px solid rgba(255,255,255,0.08);background:transparent;
+  color:rgba(255,255,255,0.3);font-size:12.5px;font-weight:500;
+  cursor:pointer;transition:color .15s,border-color .15s,background .15s;
+  font-family:inherit;white-space:nowrap;letter-spacing:.02em;
+}
+.chip:hover{border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.62)}
+.chip.active{
+  background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.22);
+  color:rgba(255,255,255,0.88);font-weight:600;
+}
+
+/* custom chip colours when active */
+.chip[data-col="blue"].active{background:rgba(80,140,190,0.12);border-color:rgba(80,140,190,0.35);color:#8bbfd8}
+.chip[data-col="red"].active{background:rgba(180,90,90,0.12);border-color:rgba(180,90,90,0.35);color:#d8908a}
+.chip[data-col="green"].active{background:rgba(80,160,110,0.14);border-color:rgba(80,160,110,0.3);color:#86c9a0}
+.chip[data-col="amber"].active{background:rgba(180,150,70,0.14);border-color:rgba(180,150,70,0.3);color:#d4bd7a}
+
+/* ── COUNT BAR ────────────────────────────────────────────── */
+#count-bar{font-size:13px;color:rgba(255,255,255,0.22);margin-bottom:12px;padding-left:1px}
+#count-bar strong{color:rgba(255,255,255,0.5);font-weight:600}
+
+/* ── CARD ─────────────────────────────────────────────────── */
+.card{border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.065);margin-bottom:6px;overflow:hidden;transition:border-color 0.2s,background 0.2s}
+.card.open{border-color:rgba(255,255,255,0.14);background:rgba(255,255,255,0.025)}
+.card-header{padding:13px 15px;cursor:pointer;user-select:none}
+.card-header:hover{background:rgba(255,255,255,0.018)}
+.card-name{font-size:16px;font-weight:600;color:#dddae8;letter-spacing:0.01em}
+
+/* ── INLINE BADGES (subdued) ──────────────────────────────── */
+.badge{display:inline-flex;align-items:center;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:500;letter-spacing:0.02em;white-space:nowrap}
+/* priority */
+.badge-high{background:rgba(180,80,80,0.12);color:#c4867e;border:1px solid rgba(180,80,80,0.2)}
+.badge-medium{background:rgba(170,140,60,0.12);color:#c4ae72;border:1px solid rgba(170,140,60,0.2)}
+.badge-low{background:rgba(70,150,100,0.12);color:#7dba99;border:1px solid rgba(70,150,100,0.2)}
+/* exam */
+.badge-both{background:rgba(255,255,255,0.07);color:rgba(200,190,225,0.8);border:1px solid rgba(255,255,255,0.12)}
+.badge-mains{background:rgba(70,120,170,0.12);color:#82aed4;border:1px solid rgba(70,120,170,0.2)}
+.badge-advanced{background:rgba(160,90,70,0.12);color:#c49a82;border:1px solid rgba(160,90,70,0.2)}
+/* difficulty */
+.badge-easy{background:rgba(70,150,100,0.1);color:#78b592;border:1px solid rgba(70,150,100,0.18)}
+.badge-medium-d{background:rgba(170,140,60,0.1);color:#bfab6a;border:1px solid rgba(170,140,60,0.18)}
+.badge-hard{background:rgba(160,80,80,0.1);color:#c08080;border:1px solid rgba(160,80,80,0.18)}
+
+/* ── TYPE TAG ─────────────────────────────────────────────── */
+.type-tag{display:inline-flex;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:500;border:1px solid;white-space:nowrap}
+
+/* ── CHAPTER TAG ──────────────────────────────────────────── */
+.ch-tag{display:inline-flex;padding:1px 7px;border-radius:5px;font-size:12px;color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);white-space:nowrap}
+
+/* ── KW TAGS ──────────────────────────────────────────────── */
+.kw-tag{display:inline-flex;padding:1px 7px;border-radius:5px;font-size:12px;color:rgba(255,255,255,0.28);border:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02);white-space:nowrap}
+
+/* ── CARD BODY ────────────────────────────────────────────── */
+.card-body{border-top:1px solid rgba(255,255,255,0.055);padding:16px 15px}
+
+/* SVG slot */
+.svg-slot{background:rgba(255,255,255,0.018);border:1px dashed rgba(255,255,255,0.09);border-radius:8px;padding:24px 16px;text-align:center;margin-bottom:14px}
+.svg-slot p{font-size:13px;color:rgba(255,255,255,0.22);font-style:italic;margin-top:5px}
+
+/* Info table */
+.info-table{border-radius:8px;border:1px solid rgba(255,255,255,0.055);overflow:hidden;margin-bottom:12px}
+.info-row{display:flex;gap:12px;padding:7px 12px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.info-row:last-child{border-bottom:none}
+.info-label{font-size:12px;font-weight:600;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:0.07em;min-width:88px;flex-shrink:0;padding-top:1px}
+.info-val{font-size:14.5px;color:rgba(255,255,255,0.65);line-height:1.55;flex:1}
+
+/* Panels */
+.panel{border-radius:8px;padding:10px 13px;margin-bottom:8px}
+.panel-label{font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:5px}
+.panel-body{font-size:14.5px;line-height:1.65;color:rgba(255,255,255,0.6)}
+.panel-stereo{background:rgba(70,120,170,0.07);border:1px solid rgba(70,120,170,0.18)}
+.panel-stereo .panel-label{color:#7aa8cc}
+.panel-mistake{background:rgba(160,70,70,0.07);border:1px solid rgba(160,70,70,0.18)}
+.panel-mistake .panel-label{color:#c08282}
+.panel-hook{background:rgba(160,140,60,0.07);border:1px solid rgba(160,140,60,0.18)}
+.panel-hook .panel-label{color:#c4b070}
+.panel-jee{background:rgba(100,85,145,0.07);border:1px solid rgba(100,85,145,0.18)}
+.panel-jee .panel-label{color:#9e90c2}
+
+/* Chevron */
+.chevron{flex-shrink:0;opacity:0.3;transition:transform 0.2s;margin-top:2px}
+.card.open .chevron{transform:rotate(90deg);opacity:0.5}
+
+/* ── SECTION HEADER ───────────────────────────────────────── */
+.sec-head{margin-bottom:18px}
+.sec-head h2{font-size:22px;font-weight:700;color:#dddae8;margin-bottom:3px;letter-spacing:-0.01em}
+.sec-head p{font-size:13px;color:rgba(255,255,255,0.28)}
+
+/* ── QUICK REF ────────────────────────────────────────────── */
+.ref-table{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.065);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.ref-head{padding:11px 15px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:15px;font-weight:600;color:#dddae8}
+.ref-row{display:flex;gap:10px;padding:8px 15px;border-bottom:1px solid rgba(255,255,255,0.03);align-items:baseline}
+.ref-row:last-child{border-bottom:none}
+
+/* ── MOBILE BOTTOM BAR ────────────────────────────────────── */
+#bottom-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(12,14,19,0.97);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.07);padding:6px 0 14px;z-index:100}
+.tab-btn{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;padding:7px 4px;border:none;background:transparent;color:rgba(255,255,255,0.3);font-size:11px;font-weight:600;letter-spacing:0.04em;cursor:pointer;transition:color 0.15s}
+.tab-btn.active{color:#b8aad8}
+
+/* ── KEYBOARD HINT ────────────────────────────────────────── */
+#kb-hint{margin-top:auto;padding:13px 10px 0;border-top:1px solid rgba(255,255,255,0.06);font-size:12px;color:rgba(255,255,255,0.18);line-height:2}
+#kb-hint b{color:rgba(255,255,255,0.28);display:block;margin-bottom:1px}
+
+/* ── EMPTY ────────────────────────────────────────────────── */
+.empty{text-align:center;padding:52px 20px;color:rgba(255,255,255,0.18);font-size:15px}
+
+/* ── ANIMATIONS ───────────────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp 0.2s ease}
+
+@media(max-width:768px){
+  #sidebar{display:none}
+  #bottom-bar{display:flex}
+  #main{padding-bottom:100px}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <a id="brand" href="#">
+    <div id="brand-icon">
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+        <path d="M7 2v4l-3 8a2 2 0 001.86 2.75h8.28A2 2 0 0016 14L13 6V2" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M7 2h6M5.5 12h9" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div>
+      <div id="brand-name">The Crucible</div>
+      <div id="brand-sub">Organic Chemistry</div>
+    </div>
+  </a>
+  <div id="search-wrap">
+    <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:0.25;pointer-events:none" width="13" height="13" viewBox="0 0 16 16" fill="none">
+      <circle cx="7" cy="7" r="5.5" stroke="white" stroke-width="1.5"/>
+      <path d="M11 11L14 14" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <input id="search" type="text" placeholder="Search reactions, reagents, keywords…  / to focus"/>
+    <button id="clear-btn" onclick="clearSearch()">×</button>
+  </div>
+</div>
+
+<!-- BODY -->
+<div id="body">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div class="sidebar-label">Reference</div>
+    <button class="nav-btn active" id="nav-named" onclick="switchSection('named')">
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M10 2L12.09 7.26L17.51 7.63L13.5 11.14L14.82 16.49L10 13.77L5.18 16.49L6.5 11.14L2.49 7.63L7.91 7.26L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      Named Reactions
+      <span class="nav-count" id="nc-named">–</span>
+    </button>
+    <button class="nav-btn" id="nav-sim" onclick="switchSection('sim')">
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M7 7h6M7 10h6M7 13h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity=".6"/><circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.3"/></svg>
+      Acidity Lab
+      <span class="nav-count">∿</span>
+    </button>
+    <button class="nav-btn" id="nav-ref" onclick="switchSection('ref')">
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><rect x="3" y="5" width="14" height="12" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M7 5V3M13 5V3M3 9h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Quick Reference
+      <span class="nav-count">3</span>
+    </button>
+    <div id="kb-hint">
+      <b>Keyboard shortcuts</b>
+      <span>/ &nbsp;— focus search</span><br>
+      <span>Esc — clear</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main id="main">
+    <div id="content">
+
+      <!-- NAMED REACTIONS SECTION -->
+      <div id="sec-named">
+        <div class="sec-head">
+          <h2>Named Reactions</h2>
+          <p id="sec-sub">reactions · click any card to expand full detail</p>
+        </div>
+        <div id="filter-box">
+          <div class="filter-row">
+            <span class="filter-label">Exam</span>
+            <button class="chip active" data-g="exam" data-v="all" onclick="setFilter('exam','all',this)">All</button>
+            <button class="chip" data-g="exam" data-v="mains" data-col="blue" onclick="setFilter('exam','mains',this)">JEE Mains</button>
+            <button class="chip" data-g="exam" data-v="advanced" data-col="red" onclick="setFilter('exam','advanced',this)">JEE Advanced</button>
+          </div>
+          <div class="filter-row">
+            <span class="filter-label">Priority</span>
+            <button class="chip active" data-g="prio" data-v="all" onclick="setFilter('prio','all',this)">All</button>
+            <button class="chip" data-g="prio" data-v="high" data-col="red" onclick="setFilter('prio','high',this)">High</button>
+            <button class="chip" data-g="prio" data-v="medium" data-col="amber" onclick="setFilter('prio','medium',this)">Medium</button>
+            <button class="chip" data-g="prio" data-v="low" data-col="green" onclick="setFilter('prio','low',this)">Low</button>
+          </div>
+          <div class="filter-row" id="type-filter-row">
+            <span class="filter-label">Type</span>
+          </div>
+        </div>
+        <div id="count-bar"><strong id="vc">–</strong> of <span id="tc">–</span> reactions</div>
+        <div id="cards"></div>
+      </div>
+
+      <!-- ACIDITY LAB SECTION -->
+      <div id="sec-sim" style="display:none">
+        <div class="sec-head">
+          <h2>Acidity &amp; Basicity Lab</h2>
+          <p>Build substituted benzene derivatives and compare their pKₐ values side by side</p>
+        </div>
+        <div id="sim-root"></div>
+      </div>
+
+      <!-- QUICK REF SECTION -->
+      <div id="sec-ref" style="display:none">
+        <div class="sec-head">
+          <h2>Quick Reference</h2>
+          <p>Essential tables for JEE revision</p>
+        </div>
+        <div id="ref-content"></div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- MOBILE BOTTOM BAR -->
+<div id="bottom-bar">
+  <button class="tab-btn active" id="tab-named" onclick="switchSection('named')">
+    <svg width="17" height="17" viewBox="0 0 20 20" fill="none"><path d="M10 2L12.09 7.26L17.51 7.63L13.5 11.14L14.82 16.49L10 13.77L5.18 16.49L6.5 11.14L2.49 7.63L7.91 7.26L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    Reactions
+  </button>
+  <button class="tab-btn" id="tab-sim" onclick="switchSection('sim')">
+    <svg width="17" height="17" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.3"/></svg>
+    Lab
+  </button>
+  <button class="tab-btn" id="tab-ref" onclick="switchSection('ref')">
+    <svg width="17" height="17" viewBox="0 0 20 20" fill="none"><rect x="3" y="5" width="14" height="12" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M7 5V3M13 5V3M3 9h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Reference
+  </button>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DATA — 38 reactions, sorted by JEE exam priority then A-Z
+// ═══════════════════════════════════════════════════════════
+const REACTIONS = [
+
+// ── HIGH PRIORITY (asked almost every year) ──────────────
+
+{id:"aldol",name:"Aldol Condensation",type:"Condensation",chapter:"Aldehydes & Ketones",
+ priority:"high",exam:"both",difficulty:"medium",
+ tags:["enolate","alpha-H","NaOH","beta-hydroxy carbonyl","crotonaldehyde"],
+ summary:"Aldehyde or ketone with alpha-H undergoes base/acid condensation → beta-hydroxy carbonyl (aldol); heating dehydrates to alpha,beta-unsaturated carbonyl.",
+ reactants:"Aldehyde or ketone with at least one alpha-H",
+ reagents:"Dil. NaOH (base) or dil. HCl (acid)",
+ conditions:"Cold dil. NaOH = aldol product. Heat = dehydration = condensation product.",
+ product:"Cold: beta-hydroxy carbonyl. Heat: alpha,beta-unsaturated carbonyl. Classic: CH3CHO → crotonaldehyde (CH3CH=CHCHO).",
+ mechanism:"Enolate attacks carbonyl C of second molecule → aldol. Heating → E1cb dehydration → alpha,beta-unsaturated product.",
+ stereo:"New stereocentre at beta-C in aldol product → racemic mixture without chiral catalyst.",
+ mistake:"Applying to HCHO or PhCHO — no alpha-H → they do Cannizzaro, NOT aldol. Also confusing the cold (aldol) and hot (condensation) products — they are different.",
+ hook:"No alpha-H = no aldol = Cannizzaro instead. Cold = aldol. Heat = condensation. Acetaldehyde → crotonaldehyde is the go-to JEE example.",
+ jee:"Very high frequency. Cross-aldol with two different carbonyls gives a mixture — JEE Advanced tests which product predominates."},
+
+{id:"cannizzaro",name:"Cannizzaro Reaction",type:"Disproportionation",chapter:"Aldehydes & Ketones",
+ priority:"high",exam:"both",difficulty:"easy",
+ tags:["no alpha-H","HCHO","PhCHO","conc NaOH","hydride transfer"],
+ summary:"Aldehydes WITHOUT alpha-H simultaneously oxidise and reduce in conc. alkali: one → carboxylate salt, other → primary alcohol.",
+ reactants:"Aldehydes with NO alpha-H: HCHO, PhCHO, CCl3CHO",
+ reagents:"Conc. NaOH (concentrated — dilute gives aldol if alpha-H present)",
+ conditions:"Concentrated aqueous NaOH, mild heat",
+ product:"Carboxylate salt + primary alcohol. HCHO + NaOH → HCOONa + CH3OH",
+ mechanism:"OH⁻ attacks C=O → tetrahedral alkoxide → H⁻ transfer (rate-determining) to second aldehyde → two products.",
+ stereo:null,
+ mistake:"Using dilute NaOH — need CONC. In crossed Cannizzaro (HCHO + PhCHO), HCHO is ALWAYS oxidised (gives HCOO⁻), PhCHO is ALWAYS reduced (gives PhCH2OH). Students reverse these roles.",
+ hook:"Cannizzaro = CAN'T do aldol (no alpha-H). CONC NaOH. One up (acid salt), one down (alcohol). HCHO always sacrifices itself in crossed Cannizzaro.",
+ jee:"Crossed Cannizzaro popular in JEE Advanced — given products, identify reaction and roles of each aldehyde."},
+
+{id:"carbylamine",name:"Carbylamine Reaction",type:"Amine Test",chapter:"Amines",
+ priority:"high",exam:"both",difficulty:"easy",
+ tags:["isocyanide","1° amine only","CHCl3","KOH","foul smell"],
+ summary:"Primary amines + CHCl3 + alc. KOH → isocyanide (R-N≡C) with putrid smell. Qualitative test for primary amines; negative for secondary and tertiary.",
+ reactants:"Primary amine ONLY (RNH2) — aliphatic or aromatic",
+ reagents:"CHCl3 + alcoholic KOH, heat",
+ conditions:"Alcoholic KOH, heat. Smell is the indicator.",
+ product:"Isocyanide (R-N≡C). Extremely foul odour = positive test.",
+ mechanism:"CHCl3 + KOH → :CCl2 (dichlorocarbene) → reacts with -NH2 → R-N=CCl2 → double HCl elimination → R-N≡C",
+ stereo:null,
+ mistake:"Applying to 2° or 3° amines — NEGATIVE. Only 1° amines react. Also: isocyanide is R-N≡C (N bonded to R), NOT R-C≡N (nitrile). Structure is inverted — students draw it backwards.",
+ hook:"Carbylamine = Foul = 1° amine ONLY. CHCl3 + alc. KOH. 2° and 3° = negative. If it stinks = positive.",
+ jee:"'Distinguish 1° from 2°/3° amine?' → Carbylamine test. Works for both aliphatic and aromatic 1° amines."},
+
+{id:"clemmensen",name:"Clemmensen Reduction",type:"Reduction",chapter:"Aldehydes & Ketones",
+ priority:"high",exam:"both",difficulty:"easy",
+ tags:["Zn amalgam","HCl","C=O → CH2","acid conditions"],
+ summary:"Reduces aldehyde/ketone C=O directly to CH2 using Zn(Hg) + conc. HCl. Requires acid-stable substrate.",
+ reactants:"Aldehyde or ketone (not carboxylic acids)",
+ reagents:"Zn(Hg) amalgam + conc. HCl",
+ conditions:"Strongly acidic (conc. HCl), heat. Substrate must be acid-stable.",
+ product:"Alkane: R-CO-R' → R-CH2-R'. C=O becomes CH2.",
+ mechanism:"Heterogeneous surface mechanism on Zn. Not a simple ionic pathway.",
+ stereo:null,
+ mistake:"Using for acid-sensitive substrates — they are destroyed. Use Wolff-Kishner (basic) instead. Also: does NOT reduce COOH or esters — only aldehyde/ketone C=O.",
+ hook:"Clemmensen = Zn(Hg) + HCl = ACID. Use when substrate is BASE-sensitive. Wolff-Kishner = KOH = BASE. Use when ACID-sensitive. Same product, opposite conditions.",
+ jee:"Always paired with Wolff-Kishner in JEE. 'Which to use if substrate has acid-sensitive group?' → Wolff-Kishner."},
+
+{id:"diazotisation",name:"Diazotisation",type:"Diazonium Chemistry",chapter:"Amines",
+ priority:"high",exam:"both",difficulty:"easy",
+ tags:["ArN2+","NaNO2","HCl","0–5°C","ice bath","gateway reaction"],
+ summary:"Primary AROMATIC amines + NaNO2 + HCl at 0–5°C → diazonium salt. Gateway to Sandmeyer, Balz-Schiemann, azo coupling.",
+ reactants:"Primary aromatic amine (ArNH2): aniline, substituted anilines",
+ reagents:"NaNO2 + HCl (generates HNO2 in situ)",
+ conditions:"ICE COLD: 0–5°C. Above 5°C → diazonium decomposes to phenol + N2.",
+ product:"Diazonium salt (ArN2⁺Cl⁻): C6H5NH2 → C6H5N2⁺Cl⁻",
+ mechanism:"HNO2 + ArNH2 → N-nitrosoamine → tautomerism → ArN2⁺",
+ stereo:null,
+ mistake:"Using aliphatic amines — alkyl diazonium instantly decomposes to alcohol + N2. Only AROMATIC amines form stable diazonium. Also: above 5°C → decomposition to phenol.",
+ hook:"Diazotisation = ICE COLD always. ArNH2 + NaNO2 + HCl at 0–5°C = ArN2⁺. Gateway to all diazonium reactions.",
+ jee:"Master this first — Sandmeyer, Balz-Schiemann and azo coupling all start here."},
+
+{id:"fc-acylation",name:"Friedel-Crafts Acylation",type:"Electrophilic Aromatic Substitution",chapter:"Aromatic Compounds",
+ priority:"high",exam:"both",difficulty:"medium",
+ tags:["AlCl3","RCOCl","acylium ion","aryl ketone","no rearrangement"],
+ summary:"Benzene + RCOCl + AlCl3 → aryl ketone. Unlike alkylation: no carbocation rearrangement, no polyacylation. Still fails on deactivated rings.",
+ reactants:"Benzene + acyl chloride (RCOCl) or acid anhydride",
+ reagents:"Anhydrous AlCl3 (>1 equiv — one equiv complexes with product C=O)",
+ conditions:"Anhydrous. Excess AlCl3 needed because product ketone complexes with AlCl3.",
+ product:"Aryl ketone: PhH + CH3COCl + AlCl3 → PhCOCH3 (acetophenone) + HCl",
+ mechanism:"RCOCl + AlCl3 → RCO⁺ (acylium — resonance-stabilised → no rearrangement). EAS. Product C=O complexes AlCl3 → ring deactivated → no polyacylation.",
+ stereo:null,
+ mistake:"Forgetting that >1 equiv AlCl3 is needed. Acylation also FAILS on deactivated rings — same as alkylation. Best way to put a long-chain alkyl on a ring without rearrangement: FC acylation → Clemmensen/WK.",
+ hook:"FC Acylation = no rearrangement, no polyacylation. Same limitation as alkylation: fails on deactivated rings. Acylation + Clemmensen = rearrangement-free alkylation.",
+ jee:"JEE contrasts acylation vs alkylation limitations. Two-step (acylation + Clemmensen) = classic synthesis question."},
+
+{id:"fc-alkylation",name:"Friedel-Crafts Alkylation",type:"Electrophilic Aromatic Substitution",chapter:"Aromatic Compounds",
+ priority:"high",exam:"both",difficulty:"medium",
+ tags:["AlCl3","RX","carbocation","EAS","rearrangement","polyalkylation"],
+ summary:"Benzene + RX + AlCl3 → alkylbenzene. Three major limitations: carbocation rearrangement, polyalkylation, fails on deactivated rings.",
+ reactants:"Benzene + alkyl halide (RX)",
+ reagents:"Anhydrous AlCl3 (Lewis acid)",
+ conditions:"Anhydrous AlCl3, anhydrous conditions. H2O destroys catalyst.",
+ product:"Alkylbenzene: PhH + CH3Cl + AlCl3 → PhCH3 + HCl",
+ mechanism:"RX + AlCl3 → R⁺ + AlCl4⁻. R⁺ attacks benzene (EAS) → sigma complex → H⁺ loss → product.",
+ stereo:null,
+ mistake:"Three JEE limitations: (1) REARRANGEMENT — 1° carbocations rearrange (n-PrCl + Ph + AlCl3 → isopropylbenzene, NOT n-propylbenzene). (2) POLYALKYLATION — product is more reactive than benzene. (3) FAILS on deactivated rings (nitrobenzene, etc.).",
+ hook:"FC Alkylation Three Enemies: Rearrangement. Polyalkylation. Deactivated rings fail. n-Pr → isopropyl (rearranges!). Use Acylation + Clemmensen to avoid rearrangement.",
+ jee:"All three limitations are exam staples. n-propyl chloride → cumene (isopropylbenzene) via rearrangement is a classic trap."},
+
+{id:"fischer",name:"Fischer Esterification",type:"Acyl Substitution",chapter:"Carboxylic Acids",
+ priority:"high",exam:"both",difficulty:"easy",
+ tags:["RCOOH","alcohol","H+","reversible","¹⁸O labelling","ester"],
+ summary:"Carboxylic acid + alcohol + H⁺ catalyst ⇌ ester + water. Reversible equilibrium reaction — must be driven forward.",
+ reactants:"Carboxylic acid (RCOOH) + alcohol (R'OH)",
+ reagents:"H⁺ catalyst (conc. H2SO4 or dry HCl), heat",
+ conditions:"Reversible. Drive forward: excess alcohol, remove water (distillation/molecular sieves), or conc. H2SO4.",
+ product:"Ester (RCOOR') + H2O: CH3COOH + C2H5OH ⇌ CH3COOC2H5 + H2O",
+ mechanism:"H⁺ protonates C=O → R'OH attacks → tetrahedral intermediate → H2O loss → ester. Acyl-oxygen cleavage (confirmed by ¹⁸O labelling).",
+ stereo:null,
+ mistake:"Forgetting it is REVERSIBLE. Also: ¹⁸O labelling shows the O in ester comes from the ALCOHOL (not the acid). The acid loses its -OH as water. Students draw the wrong bond breaking. Tertiary alcohols react poorly (elimination competes).",
+ hook:"Reversible! ¹⁸O from ALCOHOL ends up in ester. Acid donates -OH as water. Drive equilibrium right: excess alcohol or remove water.",
+ jee:"JEE tests ¹⁸O isotope labelling to confirm acyl-oxygen cleavage. RCOOH + ROH (reversible, H⁺) vs RCOCl + ROH (irreversible, fast, no catalyst) distinction."},
+
+{id:"gabriel",name:"Gabriel Phthalimide Synthesis",type:"Amine Synthesis",chapter:"Amines",
+ priority:"high",exam:"both",difficulty:"medium",
+ tags:["phthalimide","KOH","RX","SN2","1° amine only","hydrazinolysis"],
+ summary:"Phthalimide + KOH → K-phthalimide + RX (SN2) → N-alkyl phthalimide + hydrolysis → PRIMARY AMINE ONLY. Cannot make 2° or 3° amines.",
+ reactants:"Phthalimide + primary alkyl halide (RX)",
+ reagents:"Step 1: KOH. Step 2: RX. Step 3: acid hydrolysis (H3O⁺) or hydrazinolysis (N2H4).",
+ conditions:"Anhydrous for SN2 step; then acidic hydrolysis or hydrazinolysis.",
+ product:"Primary amine (RNH2) only. Phthalate byproduct.",
+ mechanism:"Phthalimide N-H (pKa ~8.3) deprotonated by KOH → N-nucleophile → SN2 on RX → N-alkyl phthalimide → hydrolysis → RNH2.",
+ stereo:"SN2 step: inversion of configuration at RX carbon if chiral.",
+ mistake:"Gabriel cannot make secondary or tertiary amines — phthalimide has ONE N-H so only one alkyl group attaches. Also: primary aryl amines cannot be made (ArX doesn't undergo SN2 easily).",
+ hook:"Gabriel = phthalimide + KOH + RX + hydrolysis = 1° AMINE ONLY. One N-H = one alkyl group. Never secondary, never tertiary.",
+ jee:"'Which method gives only primary amine?' → Gabriel. 'Can Gabriel make 2° amine?' → No."},
+
+{id:"grignard",name:"Grignard Reaction",type:"Nucleophilic Addition",chapter:"Multiple Chapters",
+ priority:"high",exam:"both",difficulty:"easy",
+ tags:["RMgX","organometallic","C-C bond","anhydrous","dry ether","carbanion"],
+ summary:"R-MgX acts as a carbanion — adds to C=O to give alcohol after hydrolysis. Most versatile C-C bond forming reaction in JEE.",
+ reactants:"RMgX + HCHO → 1° OH  |  RCHO → 2° OH  |  R2CO → 3° OH  |  CO2 → RCOOH  |  Ester → 3° OH (2 moles RMgX)",
+ reagents:"Mg in dry ether for prep. Then carbonyl. Then H3O⁺ workup.",
+ conditions:"Strictly anhydrous and aprotic. Dry ether or THF. One drop of water destroys Grignard: RMgX + H2O → RH.",
+ product:"1° OH (HCHO), 2° OH (RCHO), 3° OH (R2CO), RCOOH (CO2), 3° OH same R (ester)",
+ mechanism:"C(δ−)-Mg(δ+): C is nucleophile. Attacks electrophilic carbonyl C → Mg-alkoxide → H3O⁺ → alcohol.",
+ stereo:"New stereocentre at former carbonyl C → RACEMIC mixture (attack from both faces).",
+ mistake:"Using with ANY protic compound (H2O, ROH, NH3, RCOOH, RNH2) — IMMEDIATELY DESTROYED → gives only RH. Also with esters: 2 moles of RMgX react (first → ketone intermediate, second → 3° alcohol with R added twice).",
+ hook:"Grignard = R⁻ in disguise. Kills with moisture. HCHO=1°, RCHO=2°, R2CO=3°, CO2=RCOOH, ester=3° (2 moles). DRY EVERYTHING.",
+ jee:"Most important reaction in JEE organics. Which product from which carbonyl? How many moles? Every paper has a Grignard question."},
+
+{id:"hofmann-bromamide",name:"Hofmann Bromamide Reaction",type:"Rearrangement",chapter:"Amines",
+ priority:"high",exam:"both",difficulty:"medium",
+ tags:["RCONH2","Br2","NaOH","1° amine","n-1 carbons","isocyanate"],
+ summary:"Primary amide + Br2/NaOH → primary amine with ONE FEWER carbon. The carbonyl is lost as CO2. Amide → amine with carbon loss.",
+ reactants:"Primary amide (RCONH2) ONLY. Does not work for 2° or 3° amides.",
+ reagents:"Br2 + NaOH (NaOBr is the active species)",
+ conditions:"Aqueous NaOH + Br2, 0°C then warm",
+ product:"RNH2 (n-1 carbons): CH3CONH2 → CH3NH2. CO2 is lost.",
+ mechanism:"NaOBr → N-bromoamide → base removes N-H → Br⁻ leaves → isocyanate (R-N=C=O) → H2O → carbamic acid → CO2 + RNH2",
+ stereo:"Configuration at R is RETAINED (rearrangement at carbonyl, not at R).",
+ mistake:"Writing the same number of carbons in product as in starting amide — WRONG. Amide has n C, amine has n-1 C. CO2 escapes! Also: confusing with Hofmann ELIMINATION (quaternary salt → least substituted alkene) — completely different reaction.",
+ hook:"Hofmann Bromamide: RCONH2 → RNH2. ONE carbon LESS. Carbonyl runs away as CO2. Br2 + NaOH. Primary amide only. CH3CONH2 → CH3NH2 (not C2H5NH2).",
+ jee:"Very high frequency. 'CH3CONH2 + Br2/NaOH → ?' → CH3NH2. Propanamide → ethylamine (C3 → C2). Tests carbon counting."},
+
+{id:"haloform",name:"Haloform / Iodoform Reaction",type:"Halogenation",chapter:"Aldehydes & Ketones",
+ priority:"high",exam:"both",difficulty:"medium",
+ tags:["CHI3","iodoform","yellow precipitate","methyl ketone","NaOI","qualitative test"],
+ summary:"Methyl ketones (CH3COR) and CH3CHO react with I2/NaOH → yellow CHI3 (iodoform). Qualitative test for methyl ketone group.",
+ reactants:"CH3COR (methyl ketone), CH3CHO, ethanol, isopropanol (all oxidised to methyl carbonyl in situ)",
+ reagents:"I2 + NaOH (NaOI formed in situ)",
+ conditions:"Alkaline medium (NaOH), room temperature. Yellow ppt = positive.",
+ product:"CHI3 (yellow iodoform ppt) + RCOONa (one fewer carbon than starting material)",
+ mechanism:"Step 1: all 3 alpha-H on methyl replaced by I (trihalogenation). Step 2: OH⁻ cleaves C-C → CHI3 + RCOO⁻",
+ stereo:null,
+ mistake:"ALL ketones give iodoform — FALSE. Only METHYL ketones (CH3CO-). Ethanol → YES, Isopropanol → YES (oxidised to acetone), n-Propanol → NO (gives propanal, no CH3CO-), Diethyl ketone → NO. Students constantly mix up isopropanol (YES) and n-propanol (NO).",
+ hook:"Iodoform test: look for CH3CO- group. Ethanol ✓  Isopropanol ✓  n-Propanol ✗  Acetone ✓  Diethyl ketone ✗. Yellow CHI3 = positive.",
+ jee:"Positive/negative iodoform test lists are extremely common. JEE gives a set of compounds and asks which give CHI3."},
+
+{id:"kolbe",name:"Kolbe's Reaction (Kolbe-Schmitt)",type:"Carboxylation",chapter:"Phenols",
+ priority:"high",exam:"both",difficulty:"easy",
+ tags:["phenol","CO2","salicylic acid","Na phenoxide","pressure","aspirin"],
+ summary:"Sodium phenoxide + CO2 under pressure at 125°C → salicylic acid (2-hydroxybenzoic acid) after acidification. Precursor of aspirin.",
+ reactants:"Sodium phenoxide (C6H5ONa) — phenol + NaOH first",
+ reagents:"CO2 gas at 4–5 atm, then H⁺ workup",
+ conditions:"125°C, 4–5 atm CO2. Na-phenoxide → ortho. K-phenoxide at 250°C → para (p-hydroxybenzoic acid).",
+ product:"Salicylic acid (2-hydroxybenzoic acid). Aspirin = salicylic acid + acetic anhydride.",
+ mechanism:"CO2 (weak electrophile) attacks ortho of electron-rich phenoxide ring → H⁺ workup → salicylic acid.",
+ stereo:null,
+ mistake:"Temperature and cation matter: Na + 125°C = ORTHO. K + 250°C = PARA. Using free phenol (need the Na-salt). Students mix up temperature and product.",
+ hook:"Kolbe = CO2 + Na-phenoxide + pressure = SALICYLIC ACID. Low T = ortho. High T = para. Na≠K. Kolbe made aspirin's parent!",
+ jee:"'Phenol + CO2 under pressure → ?' → salicylic acid. Direct factual question every alternate year."},
+
+{id:"reimer-tiemann",name:"Reimer-Tiemann Reaction",type:"Electrophilic Aromatic Substitution",chapter:"Phenols",
+ priority:"high",exam:"both",difficulty:"medium",
+ tags:["phenol","CHCl3","NaOH","salicylaldehyde","dichlorocarbene"],
+ summary:"Phenol + CHCl3 + NaOH → dichlorocarbene electrophile attacks phenoxide ortho → hydrolysis → salicylaldehyde (2-hydroxybenzaldehyde).",
+ reactants:"Phenol (C6H5OH)",
+ reagents:"CHCl3 + conc. NaOH (aqueous)",
+ conditions:"NaOH/H2O, ~60–70°C",
+ product:"Salicylaldehyde (2-hydroxybenzaldehyde) — major; para-hydroxybenzaldehyde — minor.",
+ mechanism:"CHCl3 + NaOH → :CCl2 (dichlorocarbene) → attacks ortho of phenoxide → gem-dichloride intermediate + 2NaOH → CHO + 2NaCl (hydrolysis).",
+ stereo:null,
+ mistake:"Writing CHO⁺ as the electrophile — WRONG. The electrophile is :CCl2 (dichlorocarbene). Also: works ONLY for phenols — not plain benzene (use Gattermann-Koch for benzene).",
+ hook:"RT = CHCl3 + NaOH on PHENOL = carbene = salicylaldehyde. G-K = CO + HCl + AlCl3 on BENZENE. Carbene is the electrophile, not CHO⁺.",
+ jee:"'Phenol + CHCl3 + NaOH → ?' → salicylaldehyde. Asked almost every year."},
+
+{id:"rosenmund",name:"Rosenmund Reduction",type:"Reduction",chapter:"Aldehydes & Ketones",
+ priority:"high",exam:"both",difficulty:"easy",
+ tags:["RCOCl","H2","Pd/BaSO4","poisoned catalyst","RCHO"],
+ summary:"Acid chloride (RCOCl) reduced selectively to aldehyde (RCHO) by H2 over POISONED Pd/BaSO4. Poison prevents over-reduction to alcohol.",
+ reactants:"Acid chloride (RCOCl)",
+ reagents:"H2 + Pd/BaSO4 (catalyst poisoned with quinoline-S)",
+ conditions:"H2 atmosphere, Pd/BaSO4, gentle",
+ product:"Aldehyde: RCOCl + H2 → RCHO + HCl",
+ mechanism:"Surface hydrogenation on poisoned Pd. Stops at aldehyde — un-poisoned Pd would reduce to alcohol.",
+ stereo:null,
+ mistake:"Using normal Pd/C — over-reduces to primary alcohol. Pd/BaSO4 (POISONED) is essential. Also: LiAlH4 or NaBH4 cannot stop at aldehyde.",
+ hook:"Rosenmund = Pd/BaSO4 = POISONED Pd = STOPS at ALDEHYDE. Unpoisoned Pd → alcohol. Poison = halfway stop.",
+ jee:"'RCOCl → RCHO, which reagent?' → H2/Pd-BaSO4. Distinguish from Stephen (SnCl2/HCl on RCN)."},
+
+{id:"sandmeyer",name:"Sandmeyer Reaction",type:"Diazonium Chemistry",chapter:"Amines",
+ priority:"high",exam:"both",difficulty:"medium",
+ tags:["ArN2+","CuCl","CuBr","CuCN","aryl halide","radical"],
+ summary:"Diazonium salt + CuCl/CuBr/CuCN → ArCl/ArBr/ArCN. Makes aryl halides not accessible by direct substitution.",
+ reactants:"Benzenediazonium salt (ArN2⁺Cl⁻)",
+ reagents:"CuCl → ArCl; CuBr → ArBr; CuCN → ArCN. For ArF: Balz-Schiemann. For ArI: KI directly.",
+ conditions:"Freshly prepared cold diazonium, then warm with cuprous salt",
+ product:"ArCl, ArBr, or ArCN. ArCN can be hydrolysed to ArCOOH.",
+ mechanism:"Radical mechanism via Cu⁺/Cu²⁺ redox cycle — NOT SN2.",
+ stereo:"Not applicable — aromatic product",
+ mistake:"Using Sandmeyer for ArF — does NOT work. For ArF: Balz-Schiemann (NaBF4 + pyrolysis). For ArI: just KI, no Cu needed. Different halogen = different route.",
+ hook:"Sandmeyer: CuCl/CuBr/CuCN for Cl/Br/CN. Fluoride = Balz-Schiemann. Iodide = KI directly. Three different routes for three different halogens.",
+ jee:"'Which CANNOT be made by Sandmeyer?' → ArF. Also: ArN2⁺ + KI → ArI without Cu."},
+
+{id:"williamson",name:"Williamson Ether Synthesis",type:"SN2 Substitution",chapter:"Alcohols & Ethers",
+ priority:"high",exam:"both",difficulty:"medium",
+ tags:["alkoxide","SN2","mixed ether","primary halide","RONa + RX"],
+ summary:"Alkoxide (RONa) + primary alkyl halide → ether by SN2. Best route to mixed ethers. Tertiary alkyl halides fail (elimination dominates).",
+ reactants:"Sodium alkoxide (RONa) + primary (ideally) alkyl halide",
+ reagents:"Na metal + alcohol → alkoxide, then RX. Or NaOH + phenol → phenoxide + RX.",
+ conditions:"Anhydrous. SN2 requires primary RX.",
+ product:"Ether (R-O-R'): CH3ONa + C2H5Br → CH3OC2H5 + NaBr",
+ mechanism:"SN2: alkoxide O⁻ attacks back of C-X → concerted → ether + X⁻",
+ stereo:"Inversion of configuration at RX carbon (SN2).",
+ mistake:"Using tertiary RX — SN2 fails, elimination dominates. SWAP ROLES: tertiary group on the ALKOXIDE side. e.g. for (CH3)3C-O-CH3: use (CH3)3CONa + CH3I, NOT (CH3)3CI + CH3ONa.",
+ hook:"Williamson = alkoxide + PRIMARY halide → ether. Tertiary halide = elimination. Tertiary group goes on ALKOXIDE side.",
+ jee:"'Which combination gives ether without elimination?' Tests SN2 vs E2. Anisole via PhONa + CH3I is classic."},
+
+{id:"wolff-kishner",name:"Wolff-Kishner Reduction",type:"Reduction",chapter:"Aldehydes & Ketones",
+ priority:"high",exam:"both",difficulty:"easy",
+ tags:["NH2NH2","KOH","C=O → CH2","base conditions","N2 escapes"],
+ summary:"Reduces C=O to CH2 via hydrazone under basic conditions. Complement to Clemmensen — same product, basic rather than acidic.",
+ reactants:"Aldehyde or ketone",
+ reagents:"NH2-NH2 (hydrazine), KOH, high-boiling solvent (ethylene glycol, ~200°C)",
+ conditions:"Step 1: C=O + NH2NH2 → hydrazone (C=NNH2). Step 2: KOH, heat (~200°C) → CH2 + N2↑",
+ product:"Alkane: C=O → CH2. Same as Clemmensen.",
+ mechanism:"Hydrazone → KOH removes N-H → carbanion → protonation → N2 escapes → CH2.",
+ stereo:null,
+ mistake:"Forgetting it is TWO steps — hydrazone first, THEN KOH + heat. 'KOH alone reduces carbonyl' = WRONG. Fails for base-sensitive substrates.",
+ hook:"WK = NH2NH2 + KOH = BASE. Hydrazone → N2 escapes → CH2. Use when ACID-sensitive. Clemmensen when BASE-sensitive.",
+ jee:"Standard comparison with Clemmensen. Same product, opposite conditions."},
+
+// ── MEDIUM PRIORITY ──────────────────────────────────────
+
+{id:"azo-coupling",name:"Azo Coupling Reaction",type:"Diazonium Chemistry",chapter:"Amines",
+ priority:"medium",exam:"both",difficulty:"medium",
+ tags:["ArN2+","phenol","aniline","azo dye","N=N bond","para coupling"],
+ summary:"Diazonium salt (ArN2⁺) + phenol or aryl amine → azo compound (Ar-N=N-Ar'). Coloured azo dyes. Para coupling preferred.",
+ reactants:"Diazonium salt (electrophile) + phenol or aromatic amine (activated ring)",
+ reagents:"Freshly prepared cold diazonium salt (ArN2⁺Cl⁻)",
+ conditions:"Phenol: mildly alkaline (pH 8–10, forms PhO⁻). Amine: weakly acidic/neutral. Temperature: 0–5°C always.",
+ product:"Azo compound (Ar-N=N-Ar') — coloured dye. Para coupling major product.",
+ mechanism:"ArN2⁺ (weak electrophile) attacks para of activated ring (EAS) → sigma complex → H⁺ loss → azo dye.",
+ stereo:"E/Z isomerism about N=N bond. E (trans) = thermodynamically more stable.",
+ mistake:"Phenol coupling needs MILD BASE (PhO⁻ = more activated). Amine coupling needs WEAK ACID (strong acid protonates -NH2 → -NH3⁺ = deactivated ring). Students swap the pH conditions.",
+ hook:"Coupling = ArN2⁺ + activated ring = AZO DYE. Phenol: mild base. Amine: weak acid. Para preferred. Cold always.",
+ jee:"diazonium + phenol → p-hydroxyazobenzene (orange/red). E/Z isomerism tested. Methyl orange, Orange II are azo dyes."},
+
+{id:"arndt-eistert",name:"Arndt-Eistert Reaction",type:"Chain Homologation",chapter:"Carboxylic Acids",
+ priority:"medium",exam:"advanced",difficulty:"hard",
+ tags:["diazomethane","carbene","ketene","homologation","Wolff rearrangement","CH2N2"],
+ summary:"Converts RCOOH to RCH2COOH (one-carbon homologation) via acid chloride + diazomethane + Wolff rearrangement + water.",
+ reactants:"Carboxylic acid (RCOOH)",
+ reagents:"Step 1: SOCl2 → RCOCl. Step 2: CH2N2 (diazomethane) → alpha-diazoketone. Step 3: hv or Ag2O/H2O (Wolff rearrangement).",
+ conditions:"Anhydrous for diazomethane step. Ag2O in aqueous dioxane for Wolff rearrangement.",
+ product:"RCH2COOH (one carbon more than starting acid): RCOOH → RCH2COOH",
+ mechanism:"RCOCl + CH2N2 → RCOC(=N2)H (alpha-diazoketone) → hv/Ag → RCH=C=O (ketene, Wolff rearrangement) → H2O → RCH2COOH",
+ stereo:null,
+ mistake:"Mixing up the order of steps. Diazomethane (explosive!) must be handled carefully. Also: the ketene intermediate (RCH=C=O) is highly reactive and reacts instantly with nucleophiles.",
+ hook:"Arndt-Eistert = RCOOH + one C (via CH2N2) = RCH2COOH. Three steps: acid chloride → diazomethane → Wolff rearrangement → acid. Homologation by exactly one carbon.",
+ jee:"JEE Advanced synthesis questions. 'Homologation of carboxylic acid' → Arndt-Eistert."},
+
+{id:"balz-schiemann",name:"Balz-Schiemann Reaction",type:"Diazonium Chemistry",chapter:"Amines",
+ priority:"medium",exam:"both",difficulty:"easy",
+ tags:["ArF","NaBF4","diazonium tetrafluoroborate","pyrolysis","fluorobenzene"],
+ summary:"Only reliable route to aryl fluorides. ArN2⁺ + HBF4 → ArN2⁺BF4⁻ salt → dry pyrolysis → ArF + N2 + BF3.",
+ reactants:"Benzenediazonium chloride (ArN2⁺Cl⁻)",
+ reagents:"HBF4 or NaBF4, then dry heat",
+ conditions:"Step 1: form ArN2⁺BF4⁻ (precipitates). Step 2: dry pyrolysis of dry salt → ArF.",
+ product:"Aryl fluoride (ArF) e.g. fluorobenzene from aniline.",
+ mechanism:"Thermal decomposition of diazonium fluoroborate → aryl cation + N2 + BF4⁻ → ArF + BF3",
+ stereo:null,
+ mistake:"Trying Sandmeyer for ArF — poor results. Must use Balz-Schiemann. It is a TWO-step process: form BF4⁻ salt FIRST (precipitates out), THEN dry pyrolysis.",
+ hook:"Balz-Schiemann = Fluorine's special reaction. BF4 salt → dry heat → ArF. Sandmeyer cannot make ArF.",
+ jee:"'How is fluorobenzene prepared from aniline?' → Diazotisation → Balz-Schiemann. Standard 2-mark question."},
+
+{id:"beckmann",name:"Beckmann Rearrangement",type:"Rearrangement",chapter:"Aldehydes & Ketones",
+ priority:"medium",exam:"advanced",difficulty:"hard",
+ tags:["oxime","H2SO4","lactam","amide","ring expansion","anti migration"],
+ summary:"Ketone oxime + H2SO4 (or PCl5) → amide (or lactam for cyclic ketones) via 1,2-migration of the anti group. Ring expansion for cyclic ketones.",
+ reactants:"Ketone oxime (R-C(=NOH)-R')",
+ reagents:"Conc. H2SO4 or PCl5",
+ conditions:"Strong acid conditions. For cyclic ketones: ring expansion (cyclohexanone oxime → caprolactam, the nylon-6 precursor).",
+ product:"Amide (R-CO-NHR') or lactam. The group ANTI to -OH migrates.",
+ mechanism:"H⁺ protonates oxime -OH → H2O leaves → nitrilium ion → anti-group migrates to N (1,2-shift) → H2O attacks → amide.",
+ stereo:"The group ANTI (trans) to -OH in the oxime migrates. Stereospecific: different oxime isomers give different amide products.",
+ mistake:"Thinking either group can migrate — ONLY the anti group (trans to OH) migrates. Also: cyclic ketone → ring EXPANSION (cyclohexanone → 7-membered lactam, caprolactam). Students expect ring contraction.",
+ hook:"Beckmann: anti-group migrates to N. Cyclic ketones → ring EXPANSION. Cyclohexanone oxime → caprolactam (nylon-6 monomer). Anti = moves.",
+ jee:"JEE Advanced. 'Cyclohexanone oxime + H2SO4 → ?' → caprolactam (ring expansion). Anti-migration rule tested."},
+
+{id:"benzoin",name:"Benzoin Condensation",type:"Condensation",chapter:"Aldehydes & Ketones",
+ priority:"medium",exam:"advanced",difficulty:"hard",
+ tags:["PhCHO","KCN","benzoin","acyloin","C-C bond","umpolung"],
+ summary:"Two molecules of benzaldehyde condense with KCN (cyanide catalyst) to give benzoin (PhCH(OH)COPh). Cyanide acts as umpolung catalyst — reverses carbonyl reactivity.",
+ reactants:"Benzaldehyde (PhCHO) — aromatic aldehydes only (not aliphatic)",
+ reagents:"KCN (potassium cyanide) or NaCN; aqueous ethanol; heat",
+ conditions:"KCN catalyst in aqueous ethanol, ~60°C. Thiamine (vitamin B1) can catalyse biochemically.",
+ product:"Benzoin (PhCH(OH)COPh) — an alpha-hydroxy ketone",
+ mechanism:"CN⁻ adds to PhCHO → cyanohydrin → anion (umpolung) → attacks second PhCHO → rearrangement → CN⁻ expelled → benzoin",
+ stereo:"Racemic benzoin formed (no stereocontrol with simple KCN; chiral NHC catalysts can give enantioselective version).",
+ mistake:"Confusing with aldol — benzaldehyde has NO alpha-H so it cannot do aldol. Benzoin uses CN⁻ catalyst. Aliphatic aldehydes do NOT give benzoin condensation with KCN.",
+ hook:"Benzoin condensation = PhCHO + PhCHO + KCN → benzoin. CN⁻ flips carbonyl reactivity (umpolung). Only aromatic aldehydes. No alpha-H needed.",
+ jee:"JEE Advanced synthesis. 'Benzaldehyde + KCN → ?' → benzoin. Umpolung concept."},
+
+{id:"birch",name:"Birch Reduction",type:"Reduction",chapter:"Aromatic Compounds",
+ priority:"medium",exam:"advanced",difficulty:"hard",
+ tags:["Na/NH3","liquid ammonia","1,4-diene","EDG","EWG","regioselectivity"],
+ summary:"Partial reduction of aromatic ring to 1,4-cyclohexadiene using Na or Li in liquid NH3 with alcohol proton source. Not full reduction.",
+ reactants:"Benzene or substituted benzene",
+ reagents:"Na or Li metal + liquid NH3 (−33°C) + ROH (proton source)",
+ conditions:"Liquid ammonia (−33°C), Na metal, alcohol as proton source essential.",
+ product:"1,4-cyclohexadiene. Position of double bonds depends on substituents.",
+ mechanism:"Na → solvated e⁻ in NH3 → radical anion → protonation → second e⁻ → anion → protonation → 1,4-diene.",
+ stereo:"EDG: double bonds ON substituted carbons (EDG stays on C=C). EWG: double bonds AWAY from EWG (EWG on sp3 carbon).",
+ mistake:"Getting regioselectivity wrong: EDG → double bond ON those carbons. EWG → double bond AWAY. Also: result is 1,4-DIENE, not cyclohexane. Alcohol as proton source is essential.",
+ hook:"Birch = Na/NH3/alcohol = partial ring reduction = 1,4-diene. EDG stays on C=C. EWG ends up on sp3 C. Anisole (EDG) → double bonds on OCH3-bearing carbons.",
+ jee:"JEE Advanced only. 'Birch reduction of anisole → which diene?' Tests regioselectivity rule."},
+
+{id:"claisen",name:"Claisen Condensation",type:"Condensation",chapter:"Carbonyl Compounds",
+ priority:"medium",exam:"advanced",difficulty:"hard",
+ tags:["ester","NaOEt","beta-ketoester","Claisen","ethyl acetoacetate","C-C bond"],
+ summary:"Two ester molecules condense under base (NaOEt) to give a beta-ketoester. Classic: 2 ethyl acetate → ethyl acetoacetate (EtOCOCH2COCH3).",
+ reactants:"Ester (requires alpha-H for the donor). Two molecules of same ester (Claisen) or different esters (crossed Claisen).",
+ reagents:"NaOEt (sodium ethoxide, strong base) in dry ethanol",
+ conditions:"Anhydrous ethanol, NaOEt, reflux. Base must match the ester's alkoxy group.",
+ product:"Beta-ketoester: 2 CH3COOEt + NaOEt → CH3COCH2COOEt (ethyl acetoacetate) + EtOH",
+ mechanism:"NaOEt deprotonates alpha-C of ester → enolate → attacks carbonyl C of second ester → tetrahedral intermediate → EtO⁻ expelled → beta-ketoester",
+ stereo:null,
+ mistake:"Confusing with aldol (which involves aldehyde/ketone + NaOH). Claisen = ESTER + NaOEt. Also: one ester must have no alpha-H to act as acceptor in crossed Claisen (e.g. PhCOOEt, HCOOEt), otherwise mixture results.",
+ hook:"Claisen = ester + NaOEt = beta-ketoester. Two esters → one loses EtO⁻. Aldol uses NaOH, Claisen uses NaOEt. Ethyl acetate → ethyl acetoacetate = classic example.",
+ jee:"JEE Advanced synthesis. Ethyl acetoacetate synthesis route, active methylene compounds, acetoacetic ester synthesis."},
+
+{id:"decarboxylation",name:"Decarboxylation (Soda Lime)",type:"Decarboxylation",chapter:"Carboxylic Acids",
+ priority:"medium",exam:"both",difficulty:"easy",
+ tags:["RCOONa","soda lime","NaOH+CaO","n-1 carbons","alkane"],
+ summary:"Sodium salt of carboxylic acid + soda lime (NaOH+CaO) + strong heat → alkane with one fewer carbon + CO2.",
+ reactants:"Sodium carboxylate (RCOONa)",
+ reagents:"Soda lime = NaOH + CaO (1:3 ratio), strong heat (300°C+)",
+ conditions:"Strong heat. CaO prevents NaOH melting and activates it.",
+ product:"Alkane (n-1 C): CH3COONa + soda lime → CH4 + Na2CO3",
+ mechanism:"CaO activates carboxylate → decarboxylation → carbanion → protonation → alkane",
+ stereo:null,
+ mistake:"NaOH alone is insufficient — need soda lime (NaOH + CaO). Confusing with Kolbe electrolysis: Kolbe = 2RCOO⁻ → R-R (coupling, gains C). Soda lime = RCOOH → RH (loses 1 C). Completely opposite.",
+ hook:"Soda lime = lose 1 carbon (RH). Kolbe electrolysis = couple carbons (R-R). Thermal = lose. Kolbe = couple.",
+ jee:"'Convert RCOONa to RH?' → Soda lime + heat. Common in multistep synthesis."},
+
+{id:"etard",name:"Etard Reaction",type:"Oxidation",chapter:"Aldehydes & Ketones",
+ priority:"medium",exam:"both",difficulty:"easy",
+ tags:["toluene","CrO2Cl2","chromyl chloride","benzaldehyde","CCl4","selective"],
+ summary:"Toluene + CrO2Cl2 in CCl4 → benzaldehyde. Chromyl chloride oxidises side-chain methyl selectively to CHO (not COOH).",
+ reactants:"Toluene (PhCH3) or alkylbenzene with methyl group",
+ reagents:"CrO2Cl2 (chromyl chloride) in CCl4",
+ conditions:"CCl4 solvent, room temperature. Then H2O workup.",
+ product:"Benzaldehyde (PhCHO): PhCH3 + CrO2Cl2 → [complex] → H2O → PhCHO",
+ mechanism:"CrO2Cl2 forms chromate ester with methyl → hydrolysis gives aldehyde selectively.",
+ stereo:null,
+ mistake:"Confusing with KMnO4 which burns toluene methyl all the way to COOH. CrO2Cl2 in CCl4 = selective STOP at CHO. KMnO4 = COOH.",
+ hook:"Etard = CrO2Cl2 in CCl4 = STOPS at ALDEHYDE. KMnO4 = burns to COOH. E for Early stop.",
+ jee:"'Toluene → benzaldehyde: which reagent?' → Etard. 'Toluene → benzoic acid?' → KMnO4."},
+
+{id:"finkelstein",name:"Finkelstein Reaction",type:"Halogen Exchange",chapter:"Haloalkanes",
+ priority:"medium",exam:"mains",difficulty:"easy",
+ tags:["NaI","acetone","SN2","RI","Le Chatelier","precipitation"],
+ summary:"Alkyl Cl or Br + NaI in dry acetone → alkyl iodide. Driven by insolubility of NaCl/NaBr in acetone (Le Chatelier).",
+ reactants:"Alkyl chloride (RCl) or alkyl bromide (RBr)",
+ reagents:"NaI, dry acetone",
+ conditions:"Dry acetone. NaCl/NaBr precipitate out → equilibrium shifts forward.",
+ product:"Alkyl iodide (RI): RCl + NaI → RI + NaCl↓",
+ mechanism:"SN2: I⁻ attacks C-Cl (backside). NaCl insoluble in acetone → precipitates → drives equilibrium.",
+ stereo:"Inversion of configuration (SN2). (R) → (S).",
+ mistake:"Reaction done in water — NaCl soluble in water → equilibrium doesn't shift → doesn't work. Dry acetone is essential. Also fails for 3° RX (SN2 impossible).",
+ hook:"Finkelstein = NaI + dry ACETONE. NaCl precipitates → Le Chatelier pulls forward. Water kills it.",
+ jee:"Paired with Swartz reaction. Le Chatelier's principle drive = classic JEE concept."},
+
+{id:"fries",name:"Fries Rearrangement",type:"Rearrangement",chapter:"Phenols",
+ priority:"medium",exam:"advanced",difficulty:"medium",
+ tags:["phenyl ester","AlCl3","phenol ketone","ortho/para","photo-Fries"],
+ summary:"Phenyl ester + AlCl3 (Lewis acid) → hydroxy aryl ketone. Ester rearranges to ortho or para hydroxyphenyl ketone depending on temperature.",
+ reactants:"Phenyl ester (ArOCOR)",
+ reagents:"AlCl3 (Lewis acid), solvent or neat",
+ conditions:"Low temp → para product. High temp → ortho product. Photo-Fries (hv): possible without Lewis acid.",
+ product:"Hydroxy aryl ketone: PhOCOR + AlCl3 → o-HOC6H4COR (major at high T) + p-HOC6H4COR (major at low T)",
+ mechanism:"AlCl3 complexes with ester C=O → acylium migrates onto phenol ring (EAS) → ortho or para ketone",
+ stereo:null,
+ mistake:"Temperature selectivity is inverted vs intuition: HIGH temperature = ORTHO (thermodynamic control). LOW temperature = PARA (kinetic control). Students mix these up.",
+ hook:"Fries = phenyl ester + AlCl3 = hydroxyphenyl ketone. Low T = para (kinetic). High T = ortho (thermodynamic). Photo-Fries also possible.",
+ jee:"JEE Advanced. Temperature-controlled ortho/para selectivity questions."},
+
+{id:"gattermann-koch",name:"Gattermann-Koch Reaction",type:"Electrophilic Aromatic Substitution",chapter:"Aldehydes & Ketones",
+ priority:"medium",exam:"both",difficulty:"medium",
+ tags:["benzaldehyde","CO","HCl","AlCl3","CuCl","formylation","benzene"],
+ summary:"Benzene + CO + HCl + AlCl3/CuCl → benzaldehyde. Formylation of activated benzene rings.",
+ reactants:"Benzene or activated substituted benzene",
+ reagents:"CO + HCl gas, anhydrous AlCl3, CuCl catalyst, high pressure",
+ conditions:"Anhydrous AlCl3, CuCl, CO + HCl, high pressure. Fails on deactivated rings.",
+ product:"Benzaldehyde (PhCHO) from benzene.",
+ mechanism:"CO + HCl + AlCl3/CuCl → formyl cation (HCO⁺) → EAS on benzene → benzaldehyde.",
+ stereo:null,
+ mistake:"Thinking it works on phenol (use Reimer-Tiemann for phenol). G-K is for BENZENE rings. Also fails on deactivated rings.",
+ hook:"G-K = CO + HCl + AlCl3 on BENZENE = benzaldehyde. Reimer-Tiemann = CHCl3 + NaOH on PHENOL. Never swap.",
+ jee:"'Benzene → benzaldehyde directly: which reaction?' → Gattermann-Koch."},
+
+{id:"hvz",name:"Hell-Volhard-Zelinsky (HVZ)",type:"Halogenation",chapter:"Carboxylic Acids",
+ priority:"medium",exam:"both",difficulty:"medium",
+ tags:["alpha halogenation","Br2","phosphorus","RCOOH","alpha-bromo acid","acyl bromide"],
+ summary:"Alpha-halogenation of carboxylic acids using Br2 + red phosphorus. Phosphorus converts acid to acyl bromide first, which enolises far more easily.",
+ reactants:"Carboxylic acid with alpha-H (RCH2COOH)",
+ reagents:"Br2 + red phosphorus (or PBr3)",
+ conditions:"P + Br2 → PBr3 in situ → RCOOH → RCOBr → enolisation → Br2 at alpha-C → H2O workup.",
+ product:"Alpha-bromo carboxylic acid: CH3COOH → BrCH2COOH (bromoacetic acid)",
+ mechanism:"P + Br2 → PBr3 → RCOOH → RCOBr → enol → Br2 at alpha → alpha-bromo acyl bromide → H2O → alpha-bromo acid.",
+ stereo:"New stereocentre at alpha-C → racemic mixture (enol face attack from both sides).",
+ mistake:"Applying to ketones or aldehydes — HVZ is SPECIFICALLY for carboxylic acids. Without phosphorus, RCOOH barely reacts with Br2. Phosphorus is essential.",
+ hook:"HVZ = alpha-Bromo CARBOXYLIC ACID. P + Br2 = PBr3 activates acid → acyl bromide enolises → Br2 attacks alpha. No P = no reaction.",
+ jee:"Alpha-bromo acid + NH3 (SN2) → alpha-amino acid. Links HVZ to amino acid synthesis."},
+
+{id:"perkin",name:"Perkin Reaction",type:"Condensation",chapter:"Carboxylic Acids",
+ priority:"medium",exam:"advanced",difficulty:"medium",
+ tags:["ArCHO","acetic anhydride","NaOAc","cinnamic acid","E-alkene","alpha,beta-unsaturated acid"],
+ summary:"Aromatic aldehyde + acetic anhydride + NaOAc → alpha,beta-unsaturated carboxylic acid (trans). Classic: PhCHO → trans-cinnamic acid.",
+ reactants:"Aromatic aldehyde (ArCHO) — benzaldehyde is textbook",
+ reagents:"Acetic anhydride (Ac2O), sodium acetate (NaOAc, mild base)",
+ conditions:"Heat 150–200°C. NaOAc acts as mild base.",
+ product:"Trans-cinnamic acid: PhCHO + Ac2O → Ph-CH=CH-COOH + CH3COOH",
+ mechanism:"NaOAc deprotonates Ac2O at alpha → enolate attacks ArCHO → beta-hydroxy → dehydration → alpha,beta-unsaturated acid.",
+ stereo:"Trans (E) isomer is major product (thermodynamic control).",
+ mistake:"Confusing with aldol — aldol uses NaOH, Perkin uses NaOAc + ACID ANHYDRIDE as carbon source. Aliphatic aldehydes work poorly.",
+ hook:"Perkin = PhCHO + Ac2O + NaOAc = TRANS-CINNAMIC ACID. Perkin = cinnamic acid (always). JEE Advanced synthesis final step.",
+ jee:"'Which reaction gives trans-cinnamic acid from benzaldehyde?' → Perkin. Often the last step in multistep synthesis."},
+
+{id:"pinacol",name:"Pinacol-Pinacolone Rearrangement",type:"Rearrangement",chapter:"Alcohols",
+ priority:"medium",exam:"advanced",difficulty:"hard",
+ tags:["1,2-diol","vicinal diol","H+","1,2-shift","carbocation","pinacolone"],
+ summary:"Vicinal diol (1,2-diol) treated with H⁺ → 1,2-migration of alkyl/aryl group to adjacent carbocation → ketone (pinacolone). Classic: pinacol → pinacolone.",
+ reactants:"Vicinal diol (1,2-diol): pinacol = (CH3)2C(OH)-C(OH)(CH3)2",
+ reagents:"H⁺ (dil. H2SO4 or HCl)",
+ conditions:"Aqueous acid, heat",
+ product:"Ketone: pinacol + H⁺ → pinacolone ((CH3)3C-CO-CH3, 3,3-dimethylbutan-2-one)",
+ mechanism:"H⁺ protonates one OH → H2O leaves → tertiary carbocation → 1,2-methyl shift → oxocarbenium ion stabilised by O lone pair → deprotonation → ketone.",
+ stereo:"If the two OH groups are on different carbons bearing different groups, the migrating group is the one anti-periplanar to leaving group (in concerted version).",
+ mistake:"Thinking the less stable carbocation forms first — no, one OH is protonated and leaves to give the MORE stable initial carbocation. Then migration gives an even more stable oxocarbenium. Students mix up which carbon loses OH first.",
+ hook:"Pinacol → Pinacolone: 1,2-diol + H⁺ → 1,2-shift → ketone. More stable intermediate drives migration. Diol → ketone (not alcohol).",
+ jee:"JEE Advanced. 'Pinacol + H⁺ → ?' → pinacolone. 1,2-shift mechanism with driving force from oxocarbenium stabilisation."},
+
+{id:"stephen",name:"Stephen Reduction",type:"Reduction",chapter:"Aldehydes & Ketones",
+ priority:"medium",exam:"both",difficulty:"medium",
+ tags:["RCN","SnCl2","HCl","aldimine","RCHO","nitrile to aldehyde"],
+ summary:"Nitrile (RCN) reduced with SnCl2/HCl to aldimine; hydrolysis gives aldehyde. Nitrile → aldehyde (not amine).",
+ reactants:"Nitrile (RCN)",
+ reagents:"SnCl2 + HCl (in ether), then H2O hydrolysis",
+ conditions:"SnCl2/HCl in dry ether; then aqueous workup",
+ product:"Aldehyde (RCHO): RCN → [RCH=NH·SnCl2] → H2O → RCHO + NH3",
+ mechanism:"SnCl2 reduces C≡N to C=N-SnCl2 (aldimine/tin complex) → hydrolysis → CHO + NH3.",
+ stereo:null,
+ mistake:"Confusing with LiAlH4 on nitrile — LAH gives PRIMARY AMINE (RCH2NH2), NOT aldehyde. Stephen = SnCl2 = STOPS at aldimine. LAH = goes to amine.",
+ hook:"Stephen = Sn STOPS at aldehyde. SnCl2 on RCN → aldimine → H2O → RCHO. LAH on RCN = amine (too far). StePhen StoPs.",
+ jee:"'RCN → RCHO how?' → SnCl2/HCl then H2O. Rosenmund uses RCOCl. Stephen uses RCN. Both give RCHO."},
+
+{id:"wurtz",name:"Wurtz Reaction",type:"C-C Coupling",chapter:"Haloalkanes",
+ priority:"medium",exam:"both",difficulty:"easy",
+ tags:["2RX + 2Na","dry ether","alkane","C-C bond","sodium"],
+ summary:"Two alkyl halides + Na in dry ether → higher alkane via C-C coupling. Always doubles (or crosses) the carbon count.",
+ reactants:"Alkyl halide (RX) — primary best. Tertiary fails (elimination).",
+ reagents:"Na metal (2 eq), dry ether",
+ conditions:"Dry ether, strictly anhydrous, reflux",
+ product:"Alkane: 2RX + 2Na → R-R + 2NaX",
+ mechanism:"RX + 2Na → RNa (organosodium) + NaX; RNa + RX → R-R + NaX",
+ stereo:null,
+ mistake:"Using a single RX to make an odd-carbon alkane — impossible. Single halide always gives even-carbon product. Mixed Wurtz (two different RX) gives three products (symmetrical + unsymmetrical alkane mixture).",
+ hook:"Wurtz = two RX + Na = doubled alkane. One RX = even-carbon product. Mixed Wurtz = messy mixture.",
+ jee:"'Which alkane CANNOT be made by Wurtz from one halide?' → any odd-carbon alkane."},
+
+{id:"wurtz-fittig",name:"Wurtz-Fittig Reaction",type:"C-C Coupling",chapter:"Haloalkanes & Haloarenes",
+ priority:"medium",exam:"mains",difficulty:"easy",
+ tags:["ArX","RX","Na","alkylarene","toluene from PhBr+CH3Br"],
+ summary:"Aryl halide + alkyl halide + Na → alkylarene. Distinct from Fittig (ArX+ArX+Na → biaryl) and Wurtz (RX+RX+Na → alkane).",
+ reactants:"Aryl halide (ArX) + Alkyl halide (RX)",
+ reagents:"Na metal, dry ether",
+ conditions:"Dry ether, anhydrous",
+ product:"Alkylarene: PhBr + CH3Br + 2Na → PhCH3 + 2NaBr",
+ mechanism:"Organosodium intermediate; aryl and alkyl groups couple",
+ stereo:null,
+ mistake:"Three-way confusion: Wurtz = alkyl+alkyl → alkane. Fittig = aryl+aryl → biaryl. Wurtz-Fittig = aryl+alkyl → alkylarene.",
+ hook:"Fittig = two aryls = biaryl. Wurtz-Fittig = aryl + alkyl = alkylarene. Wurtz joins Fittig = mixed coupling.",
+ jee:"Standard 3-way distinction question."},
+
+// ── LOW / ADVANCED-ONLY ──────────────────────────────────
+
+{id:"dow",name:"Dow Process (Chlorobenzene Hydrolysis)",type:"Nucleophilic Aromatic Substitution",chapter:"Haloarenes",
+ priority:"low",exam:"advanced",difficulty:"medium",
+ tags:["chlorobenzene","NaOH","350°C","300 atm","sodium phenoxide","phenol","benzyne"],
+ summary:"Chlorobenzene + NaOH (350°C, 300 atm, Cu catalyst) → sodium phenoxide → H⁺ → phenol. Industrial route to phenol. Proceeds via benzyne (elimination-addition).",
+ reactants:"Chlorobenzene (C6H5Cl)",
+ reagents:"NaOH (aq, very conc.), Cu catalyst",
+ conditions:"350°C, 300 atm — extremely harsh. These conditions distinguish SNAr from ordinary substitution.",
+ product:"Phenol (C6H5OH) via sodium phenoxide intermediate",
+ mechanism:"Benzyne (aryne) mechanism: E2-like elimination of HCl → benzyne (3-membered pi system) → OH⁻ addition → sodium phenoxide → H⁺ → phenol.",
+ stereo:null,
+ mistake:"Treating it as simple SN2 on benzene — benzene rings do NOT do SN2. The mechanism goes through benzyne (aryne). Harsh conditions (350°C, 300 atm) are essential — ArCl is far less reactive than RCl toward nucleophiles.",
+ hook:"Dow Process = chlorobenzene + NaOH at extreme T & P → phenol via benzyne. Not SN2 — benzyne mechanism. Industrial phenol production.",
+ jee:"JEE Advanced. Benzyne mechanism. 'Why harsh conditions for ArCl vs RCl?' — resonance stabilisation makes ArCl less reactive."},
+
+{id:"pinacol-kolbe",name:"Kolbe Electrolysis",type:"C-C Coupling",chapter:"Carboxylic Acids",
+ priority:"low",exam:"advanced",difficulty:"medium",
+ tags:["electrolysis","RCOO−","anode","R-R","decarboxylation","coupling"],
+ summary:"Electrolysis of carboxylate salt solution: 2RCOO⁻ → R-R + 2CO2 at anode. Electrochemical C-C coupling via radical mechanism.",
+ reactants:"Carboxylate salt (RCOONa) in aqueous solution",
+ reagents:"Electrolysis — platinum anode, DC current",
+ conditions:"Aqueous RCOONa solution, electrolysis, Pt anode",
+ product:"Symmetrical alkane: 2RCOO⁻ → R-R + 2CO2 + 2e⁻ (at anode). e.g. 2CH3COO⁻ → C2H6",
+ mechanism:"RCOO⁻ oxidised at anode → RCOO• → loses CO2 → R• → R• + R• → R-R (radical coupling)",
+ stereo:null,
+ mistake:"Confusing with soda lime decarboxylation: soda lime gives RH (lose 1C). Kolbe electrolysis gives R-R (doubled carbons). Thermal = lose. Kolbe = couple.",
+ hook:"Kolbe electrolysis = 2RCOO⁻ at anode → R-R + 2CO2. Soda lime = RH (n-1 C). Opposite outcomes!",
+ jee:"JEE: contrast with soda lime decarboxylation. Same starting material → opposite products depending on method."},
+
+];
+
+// Sort by priority (high first) then alphabetically by name
+const PRIORITY_ORDER = {high:0, medium:1, low:2};
+REACTIONS.sort((a,b) => {
+  const pd = PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority];
+  return pd !== 0 ? pd : a.name.localeCompare(b.name);
+});
+
+// Quick Reference tables
+const QUICK_REF = [
+  {title:"Acidity Order of Organic Compounds",rows:[
+    ["Carboxylic acids (RCOOH)","pKa ~4–5","Most acidic organic"],
+    ["Phenol (ArOH)","pKa ~10","More acidic than alcohols"],
+    ["Water (H2O)","pKa ~15.7","Reference"],
+    ["Alcohol (ROH)","pKa ~16–18","Slightly less acidic than water"],
+    ["Terminal alkyne (RC≡CH)","pKa ~25","sp C-H"],
+    ["Alkene (sp2 C-H)","pKa ~44","Very weakly acidic"],
+    ["Alkane (sp3 C-H)","pKa ~50","Essentially non-acidic"],
+  ]},
+  {title:"Leaving Group Ability",rows:[
+    ["I⁻ (iodide)","Best LG","Weakest conjugate base"],
+    ["Br⁻","Good LG",""],
+    ["Cl⁻","Moderate LG",""],
+    ["TsO⁻ (tosylate)","Excellent LG","Common in synthesis"],
+    ["H2O (after protonation)","Good LG","Why ROH needs acid"],
+    ["OH⁻ (hydroxide)","Very poor","Must protonate first"],
+    ["F⁻","Worst halide LG","Strong base = poor LG"],
+  ]},
+  {title:"Carbon Oxidation States",rows:[
+    ["CH4 (methane)","−4","Most reduced"],
+    ["CH3OH (methanol)","−2",""],
+    ["HCHO (formaldehyde)","0",""],
+    ["HCOOH (formic acid)","+2",""],
+    ["CO2","+4","Most oxidised"],
+  ]},
+];
+
+// ═══════════════════════════════════════════════════════════
+// TYPE → colour mapping (all muted)
+// ═══════════════════════════════════════════════════════════
+const TYPE_COLOR = {
+  "C-C Coupling":              ["rgba(60,110,160,0.1)","rgba(60,110,160,0.3)","#80acd0"],
+  "Condensation":              ["rgba(100,80,150,0.1)","rgba(100,80,150,0.3)","#a890cc"],
+  "Diazonium Chemistry":       ["rgba(150,130,60,0.1)","rgba(150,130,60,0.3)","#c8b870"],
+  "Disproportionation":        ["rgba(60,110,160,0.1)","rgba(60,110,160,0.3)","#80acd0"],
+  "Electrophilic Aromatic Substitution":["rgba(150,100,50,0.1)","rgba(150,100,50,0.3)","#c8a870"],
+  "Reduction":                 ["rgba(140,70,70,0.1)","rgba(140,70,70,0.3)","#c09090"],
+  "Oxidation":                 ["rgba(140,70,70,0.1)","rgba(140,70,70,0.3)","#c09090"],
+  "Halogenation":              ["rgba(150,130,60,0.1)","rgba(150,130,60,0.3)","#c8b870"],
+  "Nucleophilic Addition":     ["rgba(60,140,100,0.1)","rgba(60,140,100,0.3)","#78bfa0"],
+  "SN2 Substitution":          ["rgba(60,110,160,0.1)","rgba(60,110,160,0.3)","#80acd0"],
+  "Rearrangement":             ["rgba(150,100,50,0.1)","rgba(150,100,50,0.3)","#c8a870"],
+  "Amine Synthesis":           ["rgba(100,80,150,0.1)","rgba(100,80,150,0.3)","#a890cc"],
+  "Amine Test":                ["rgba(60,140,100,0.1)","rgba(60,140,100,0.3)","#78bfa0"],
+  "Decarboxylation":           ["rgba(60,110,160,0.1)","rgba(60,110,160,0.3)","#80acd0"],
+  "Acyl Substitution":         ["rgba(60,140,100,0.1)","rgba(60,140,100,0.3)","#78bfa0"],
+  "Carboxylation":             ["rgba(60,140,100,0.1)","rgba(60,140,100,0.3)","#78bfa0"],
+  "Halogen Exchange":          ["rgba(60,140,100,0.1)","rgba(60,140,100,0.3)","#78bfa0"],
+  "Chain Homologation":        ["rgba(100,80,150,0.1)","rgba(100,80,150,0.3)","#a890cc"],
+  "Nucleophilic Aromatic Substitution":["rgba(140,70,70,0.1)","rgba(140,70,70,0.3)","#c09090"],
+};
+function typeStyle(type) {
+  const c = TYPE_COLOR[type] || ["rgba(90,80,110,0.1)","rgba(90,80,110,0.3)","#9890b0"];
+  return `background:${c[0]};border-color:${c[1]};color:${c[2]}`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+const S = { section:'named', query:'', exam:'all', prio:'all', type:'all', open:null };
+
+// ═══════════════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════════════
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+function getVisible(){
+  const q = S.query.toLowerCase();
+  return REACTIONS.filter(r=>{
+    if(S.exam!=='all' && r.exam!=='both' && r.exam!==S.exam) return false;
+    if(S.prio!=='all' && r.priority!==S.prio) return false;
+    if(S.type!=='all' && r.type!==S.type) return false;
+    if(!q) return true;
+    return r.name.toLowerCase().includes(q)
+      || r.summary.toLowerCase().includes(q)
+      || r.chapter.toLowerCase().includes(q)
+      || r.tags.some(t=>t.toLowerCase().includes(q))
+      || (r.reactants||'').toLowerCase().includes(q)
+      || (r.reagents||'').toLowerCase().includes(q);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER CARDS
+// ═══════════════════════════════════════════════════════════
+function renderCards(){
+  const vis = getVisible();
+  document.getElementById('vc').textContent = vis.length;
+  document.getElementById('tc').textContent = REACTIONS.length;
+
+  const el = document.getElementById('cards');
+  if(!vis.length){
+    el.innerHTML = '<div class="empty">No reactions match these filters.<br><small style="color:rgba(255,255,255,.12)">Try clearing a filter or adjusting your search.</small></div>';
+    return;
+  }
+
+  el.innerHTML = vis.map(r=>{
+    const isOpen = S.open===r.id;
+
+    // Priority badge
+    const pb = r.priority==='high'
+      ? `<span class="badge badge-high">High Priority</span>`
+      : r.priority==='medium'
+      ? `<span class="badge badge-medium">Medium</span>`
+      : `<span class="badge badge-low">Low</span>`;
+
+    // Exam badge
+    const eb = r.exam==='both'
+      ? `<span class="badge badge-both">Mains + Adv</span>`
+      : r.exam==='advanced'
+      ? `<span class="badge badge-advanced">Adv only</span>`
+      : `<span class="badge badge-mains">Mains</span>`;
+
+    // Difficulty badge (only shown in expanded view for cleanliness)
+    // Type tag
+    const tt = `<span class="type-tag" style="${typeStyle(r.type)}">${esc(r.type)}</span>`;
+
+    // Chemistry icon per reaction type
+    const TYPE_ICON = {
+      "Rearrangement": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Rearrangement"><path d="M4 12h16M4 12l4-4M4 12l4 4M20 12l-4-4M20 12l-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="2" fill="currentColor" opacity=".5"/></svg>`,
+      "Electrophilic Aromatic Substitution": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="EAS"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1" opacity=".35"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M7 7l2.5 2.5M17 7l-2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity=".6"/></svg>`,
+      "Nucleophilic Addition": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Nucleophilic Addition"><path d="M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M15 8l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="12" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M7 9v-2M7 17v-2M4.5 10.5l-1.5-1.5M11 10.5l1.5-1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".5"/></svg>`,
+      "SN2 Substitution": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="SN2"><circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="1.4"/><circle cx="18" cy="12" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M9 12h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 2"/><path d="M3 9l2 3-2 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/></svg>`,
+      "Nucleophilic Aromatic Substitution": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="SNAr"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M3 12h4M17 12h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M2 12l2.5-2M2 12l2.5 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/></svg>`,
+      "Reduction": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Reduction"><path d="M12 5v14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M7 14l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 8h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M8 5h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".45"/></svg>`,
+      "Oxidation": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Oxidation"><path d="M12 19V5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M7 10l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 16h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M8 19h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".45"/></svg>`,
+      "C-C Coupling": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="C-C Coupling"><circle cx="7" cy="12" r="3.5" stroke="currentColor" stroke-width="1.4"/><circle cx="17" cy="12" r="3.5" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+      "Condensation": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Condensation"><path d="M5 8h4l2 4 2-8 2 8 2-4h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 17h14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".4"/><circle cx="12" cy="20" r="1.2" fill="currentColor" opacity=".4"/></svg>`,
+      "Diazonium Chemistry": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Diazonium"><circle cx="12" cy="14" r="5" stroke="currentColor" stroke-width="1.4"/><path d="M12 9V4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 4l-2 2.5M12 4l2 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/><text x="9" y="16" font-size="5" fill="currentColor" opacity=".8" font-family="monospace">N₂</text></svg>`,
+      "Halogenation": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Halogenation"><path d="M9 4h6l2 4H7L9 4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><rect x="7" y="8" width="10" height="9" rx="1" stroke="currentColor" stroke-width="1.4"/><path d="M10 12h4M12 10v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+      "Halogen Exchange": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Halogen Exchange"><path d="M4 8l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 8l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 2"/></svg>`,
+      "Acyl Substitution": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Acyl Substitution"><path d="M5 15l4-8 3 5 2-3 3 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 8v-3M17 5l-2 1.5M17 5l2 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/></svg>`,
+      "Carboxylation": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Carboxylation"><path d="M6 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M14 7l4 5-4 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="12" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 10.5l3 3M9.5 10.5l-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".5"/></svg>`,
+      "Decarboxylation": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Decarboxylation"><circle cx="8" cy="12" r="3.5" stroke="currentColor" stroke-width="1.4"/><path d="M11.5 12h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M17 9l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 5l1 3.5M8 5l-1 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity=".5"/></svg>`,
+      "Amine Synthesis": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Amine Synthesis"><circle cx="12" cy="13" r="5" stroke="currentColor" stroke-width="1.4"/><path d="M12 8V5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9 5h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.5 13h3M12 11.5v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>`,
+      "Amine Test": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Amine Test"><path d="M9 4l-4 12a2 2 0 001.86 2.75h10.28A2 2 0 0019 16L15 4H9z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9 4h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M7.5 14h9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity=".5"/><path d="M12 9v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".7"/></svg>`,
+      "Disproportionation": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Disproportionation"><path d="M12 5v14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="2 3"/><path d="M5 9l6 3-6 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 9l-6 3 6 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+      "Chain Homologation": `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" title="Chain Homologation"><circle cx="5" cy="12" r="2" stroke="currentColor" stroke-width="1.3"/><circle cx="12" cy="12" r="2" stroke="currentColor" stroke-width="1.3"/><circle cx="19" cy="12" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M7 12h3M14 12h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 5v4M12 15v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity=".4"/></svg>`,
+    };
+    const typeIcon = TYPE_ICON[r.type] || `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    // Icon colour tied to type colour
+    const iconCol = (TYPE_COLOR[r.type]||["","","#9890b0"])[2];
+
+    let body = '';
+    if(isOpen){
+      // SVG slot
+      const svgSlot = `<div class="svg-slot">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="opacity:.2"><rect x="3" y="3" width="18" height="18" rx="2" stroke="white" stroke-width="1.5"/><path d="M3 9h18M9 21V9" stroke="white" stroke-width="1.5"/></svg>
+        <p>Mechanism diagram — replace with <code style="font-size:12px;color:rgba(255,255,255,.3)">${esc(r.id)}.svg</code></p>
+      </div>`;
+
+      // Info rows
+      const infoRows = [
+        ['Reactants', r.reactants],
+        ['Reagents',  r.reagents],
+        ['Conditions',r.conditions],
+        ['Product',   r.product],
+        ['Mechanism', r.mechanism],
+        ['Named after',r.named],
+      ].filter(([,v])=>v).map(([l,v])=>
+        `<div class="info-row"><span class="info-label">${esc(l)}</span><span class="info-val">${esc(v)}</span></div>`
+      ).join('');
+
+      // Panels
+      const stereoPanel = r.stereo
+        ? `<div class="panel panel-stereo"><div class="panel-label">Stereochemistry</div><div class="panel-body">${esc(r.stereo)}</div></div>`
+        : '';
+      const mistakePanel = r.mistake
+        ? `<div class="panel panel-mistake"><div class="panel-label">Common Mistake</div><div class="panel-body">${esc(r.mistake)}</div></div>`
+        : '';
+      const hookPanel = r.hook
+        ? `<div class="panel panel-hook"><div class="panel-label">Memory Hook</div><div class="panel-body">${esc(r.hook)}</div></div>`
+        : '';
+      const jeePanel = r.jee
+        ? `<div class="panel panel-jee"><div class="panel-label">JEE Exam Notes</div><div class="panel-body">${esc(r.jee)}</div></div>`
+        : '';
+
+      body = `<div class="card-body">
+        ${svgSlot}
+        <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(r.name+' reaction JEE chemistry')}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;padding:8px 16px;border-radius:8px;background:rgba(180,50,50,0.12);border:1px solid rgba(180,50,50,0.25);color:#c98080;font-size:13px;font-weight:600;text-decoration:none;transition:background 0.15s" onmouseover="this.style.background='rgba(180,50,50,0.2)'" onmouseout="this.style.background='rgba(180,50,50,0.12)'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" fill="rgba(200,80,80,0.6)"/><path d="M10 9l6 3-6 3V9z" fill="white"/></svg>
+          Watch Video Explanation
+        </a>
+        <div class="info-table">${infoRows}</div>
+        ${stereoPanel}${mistakePanel}${hookPanel}${jeePanel}
+      </div>`;
+    }
+
+    return `<div class="card ${isOpen?'open':''}" id="card-${r.id}">
+      <div class="card-header" onclick="toggleCard('${r.id}')">
+        <div style="display:flex;align-items:flex-start;gap:12px">
+          <div style="flex-shrink:0;width:38px;height:38px;border-radius:9px;background:${iconCol}14;border:1px solid ${iconCol}28;display:flex;align-items:center;justify-content:center;color:${iconCol};margin-top:1px">
+            ${typeIcon}
+          </div>
+          <div style="flex:1;min-width:0">
+            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-bottom:6px">
+              <span class="card-name">${esc(r.name)}</span>
+              ${pb} ${eb}
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px">
+              ${tt}
+            </div>
+            <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.5;margin:0">${esc(r.summary)}</p>
+          </div>
+          <svg class="chevron" width="12" height="12" viewBox="0 0 14 14" fill="none" style="${isOpen?'transform:rotate(90deg);opacity:.45':''}">
+            <path d="M4 2L10 7L4 12" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      ${body}
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER TYPE CHIPS
+// ═══════════════════════════════════════════════════════════
+function renderTypeChips(){
+  const types = ['all', ...new Set(REACTIONS.map(r=>r.type))].sort((a,b)=>a==='all'?-1:a.localeCompare(b));
+  const row = document.getElementById('type-filter-row');
+  const label = row.querySelector('.filter-label');
+  row.innerHTML = '';
+  row.appendChild(label);
+  types.forEach(t=>{
+    const b = document.createElement('button');
+    b.className = 'chip' + (S.type===t?' active':'');
+    b.textContent = t==='all'?'All':t;
+    b.dataset.g = 'type';
+    b.dataset.v = t;
+    b.onclick = ()=>setFilter('type',t,b);
+    row.appendChild(b);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER QUICK REF
+// ═══════════════════════════════════════════════════════════
+function renderRef(){
+  document.getElementById('ref-content').innerHTML = QUICK_REF.map(tbl=>
+    `<div class="ref-table">
+      <div class="ref-head">${esc(tbl.title)}</div>
+      ${tbl.rows.map((row,i)=>`
+        <div class="ref-row" style="${i===tbl.rows.length-1?'border-bottom:none':''}">
+          <span style="font-size:14.5px;color:rgba(255,255,255,.6);flex:2">${esc(row[0])}</span>
+          <span style="font-size:14.5px;font-weight:600;color:#a898cc;font-family:'DM Mono',monospace;flex:1;text-align:center">${esc(row[1])}</span>
+          <span style="font-size:13px;color:rgba(255,255,255,.5);flex:2;text-align:right;font-style:italic">${esc(row[2])}</span>
+        </div>`).join('')}
+    </div>`
+  ).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+// ACTIONS
+// ═══════════════════════════════════════════════════════════
+function toggleCard(id){
+  S.open = S.open===id ? null : id;
+  renderCards();
+  if(S.open){
+    setTimeout(()=>{
+      const el=document.getElementById('card-'+id);
+      if(el) el.scrollIntoView({behavior:'smooth',block:'nearest'});
+    },60);
+  }
+}
+
+function switchSection(sec){
+  S.section = sec;
+  S.open = null;
+  document.getElementById('sec-named').style.display = sec==='named'?'':'none';
+  document.getElementById('sec-sim').style.display   = sec==='sim'?'':'none';
+  document.getElementById('sec-ref').style.display   = sec==='ref'?'':'none';
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.id==='nav-'+sec));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.id==='tab-'+sec));
+  document.getElementById('main').scrollTop = 0;
+  if(sec==='sim') renderSim();
+}
+
+function setFilter(group, val, btn){
+  S[group] = val;
+  S.open = null;
+  // Reset all chips in this group
+  document.querySelectorAll(`.chip[data-g="${group}"]`).forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards();
+}
+
+function clearSearch(){
+  document.getElementById('search').value='';
+  S.query='';
+  S.open=null;
+  document.getElementById('clear-btn').style.display='none';
+  renderCards();
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+document.getElementById('nc-named').textContent = REACTIONS.length;
+document.getElementById('sec-sub').textContent =
+  REACTIONS.length + ' reactions · sorted by priority then A–Z · click any card to expand';
+document.getElementById('tc').textContent = REACTIONS.length;
+document.getElementById('vc').textContent = REACTIONS.length;
+
+document.getElementById('search').addEventListener('input',e=>{
+  S.query = e.target.value;
+  S.open = null;
+  document.getElementById('clear-btn').style.display = S.query?'block':'none';
+  renderCards();
+});
+
+document.addEventListener('keydown',e=>{
+  const s = document.getElementById('search');
+  if(e.key==='/'&&document.activeElement!==s){ e.preventDefault(); s.focus(); }
+  if(e.key==='Escape'){ s.blur(); clearSearch(); }
+});
+
+
+// ═══════════════════════════════════════════════════════════
+// ACIDITY & BASICITY LAB — SIMULATOR ENGINE
+// ═══════════════════════════════════════════════════════════
+
+// ── Functional group data ────────────────────────────────
+// Each group: label, symbol, effect {ortho,meta,para} on pKa of PhOH (base 10.0)
+// Positive delta = more acidic (lower pKa). EWG = more acidic. EDG = less acidic.
+// pKa values calibrated against published Hammett sigma data.
+const GROUPS = [
+  { id:'H',    sym:'H',     label:'H (none)',          color:'#7a7a8a', delta:{o:0,    m:0,    p:0   }, type:'neutral',
+    effect:'No substituent. Reference compound: phenol (pKₐ 10.0).', sigma:{o:0, m:0, p:0} },
+  { id:'OH',   sym:'OH',    label:'–OH (hydroxyl)',    color:'#6a9e7a', delta:{o:-0.5, m:-0.2, p:-0.7}, type:'edg',
+    effect:'Strong EDG via resonance (+M). Destabilises phenoxide anion → less acidic than phenol at para.', sigma:{o:-.13,m:0.12,p:-.37} },
+  { id:'OMe',  sym:'OCH₃',  label:'–OCH₃ (methoxy)',  color:'#6a9e7a', delta:{o:-0.4, m:-0.1, p:-0.6}, type:'edg',
+    effect:'EDG by resonance (+M). Para effect stronger than meta due to resonance delocalization.', sigma:{o:.12,m:.12,p:-.27} },
+  { id:'Me',   sym:'CH₃',   label:'–CH₃ (methyl)',    color:'#7a8e9a', delta:{o:-0.2, m:-0.1, p:-0.2}, type:'edg',
+    effect:'Weak EDG by hyperconjugation (+I). Slightly destabilises the phenoxide anion.', sigma:{o:-.13,m:-.07,p:-.17} },
+  { id:'F',    sym:'F',     label:'–F (fluoro)',       color:'#7aaa8a', delta:{o:0.5,  m:0.3,  p:0.4 }, type:'ewg',
+    effect:'−I (strong) and +M (moderate). Net EWG at ortho/meta; weaker at para due to +M competing.', sigma:{o:.18,m:.34,p:.06} },
+  { id:'Cl',   sym:'Cl',    label:'–Cl (chloro)',      color:'#8aaa7a', delta:{o:0.7,  m:0.4,  p:0.6 }, type:'ewg',
+    effect:'−I dominant over +M. EWG. Stabilises phenoxide via induction, especially ortho.', sigma:{o:.23,m:.37,p:.23} },
+  { id:'Br',   sym:'Br',    label:'–Br (bromo)',       color:'#9aaa6a', delta:{o:0.8,  m:0.5,  p:0.6 }, type:'ewg',
+    effect:'Similar to Cl. −I effect stabilises negative charge on phenoxide oxygen.', sigma:{o:.22,m:.39,p:.23} },
+  { id:'NO2',  sym:'NO₂',   label:'–NO₂ (nitro)',      color:'#c07870', delta:{o:2.8,  m:1.7,  p:2.5 }, type:'ewg',
+    effect:'Strongest common EWG. Massive stabilisation of phenoxide by resonance at ortho/para. JEE favourite.', sigma:{o:.92,m:.71,p:.78} },
+  { id:'CN',   sym:'CN',    label:'–CN (cyano)',       color:'#9080c0', delta:{o:2.2,  m:1.5,  p:2.0 }, type:'ewg',
+    effect:'Strong EWG by −I and −M. Second only to NO₂ in acidifying phenols.', sigma:{o:.56,m:.56,p:.66} },
+  { id:'COOH', sym:'COOH',  label:'–COOH (carboxyl)',  color:'#b08060', delta:{o:1.8,  m:1.0,  p:1.2 }, type:'ewg',
+    effect:'EWG by −I and −M. Stabilises phenoxide, increasing acidity significantly.', sigma:{o:.43,m:.37,p:.45} },
+  { id:'CHO',  sym:'CHO',   label:'–CHO (aldehyde)',   color:'#a08870', delta:{o:1.6,  m:1.0,  p:1.5 }, type:'ewg',
+    effect:'EWG by −M and −I. Strong stabilisation of anion by resonance at para.', sigma:{o:.56,m:.35,p:.42} },
+  { id:'NH2',  sym:'NH₂',   label:'–NH₂ (amino)',      color:'#6a88b0', delta:{o:-0.8, m:-0.3, p:-1.0}, type:'edg',
+    effect:'Strongest EDG by +M resonance. Greatly destabilises phenoxide → much less acidic. Para = maximum effect.', sigma:{o:-.16,m:-.16,p:-.66} },
+  { id:'NMe2', sym:'N(CH₃)₂',label:'–NMe₂ (dimethylamino)',color:'#5a78a0',delta:{o:-0.9,m:-0.3,p:-1.1},type:'edg',
+    effect:'Stronger +M donor than NH₂. Most powerful EDG. Para position nearly neutralises phenol acidity.', sigma:{o:.10,m:-.10,p:-.83} },
+  { id:'SO3H', sym:'SO₃H',  label:'–SO₃H (sulfo)',     color:'#b07850', delta:{o:1.5,  m:1.2,  p:1.3 }, type:'ewg',
+    effect:'Strong EWG by −I. Stabilises phenoxide anion through inductive withdrawal.', sigma:{o:.55,m:.52,p:.50} },
+  { id:'CF3',  sym:'CF₃',   label:'–CF₃ (trifluoromethyl)',color:'#a09080',delta:{o:1.4,m:1.2,p:1.5},type:'ewg',
+    effect:'Very strong −I EWG (three F atoms). No resonance component. Strong through-bond induction.', sigma:{o:.40,m:.43,p:.54} },
+  { id:'tBu',  sym:'C(CH₃)₃',label:'–tBu (tert-butyl)', color:'#7a8a7a', delta:{o:-0.2,m:-0.1,p:-0.2}, type:'edg',
+    effect:'Weak EDG by +I (hyperconjugation). Bulky — ortho effect includes steric component too.', sigma:{o:-.14,m:-.10,p:-.20} },
+];
+
+const BASE_PKA = 10.0; // phenol reference
+
+// Slot colours for 4 comparison compounds
+// Solid pastel slot colours — used for text/accents on light containers
+const SLOT_COLORS = ['#4a6fa5','#a0522d','#3a7d5a','#8b6914'];
+// Solid pastel backgrounds for each slot card
+const SLOT_BG     = ['#dde8f5','#f5e6d8','#d8f0e6','#f5f0d8'];
+const SLOT_BORDER = ['#b8cee8','#e0c4a8','#a8d8c0','#ddd4a0'];
+
+// Simulator state: 4 slots, each = {group, position}
+const SIM = [
+  { group:'NO2', pos:'para'  },
+  { group:'OH',  pos:'para'  },
+  { group:'NH2', pos:'para'  },
+  { group:'H',   pos:'para'  },
+];
+let SIM_ACTIVE_SLOT = 0; // which slot is being edited
+
+function simPka(slot){
+  const g = GROUPS.find(x=>x.id===slot.group);
+  if(!g) return BASE_PKA;
+  return +(BASE_PKA - g.delta[slot.pos[0]]).toFixed(2); // pos is 'ortho'/'meta'/'para', key is first char
+}
+
+function simLabel(slot){
+  const g = GROUPS.find(x=>x.id===slot.group);
+  if(!g || slot.group==='H') return 'Phenol';
+  return g.sym + '-(' + slot.pos + ')';
+}
+
+// ── Build benzene SVG with clickable positions ───────────
+function benzSVG(slot, slotIdx){
+  const g = GROUPS.find(x=>x.id===slot.group) || GROUPS[0];
+  const col = SLOT_COLORS[slotIdx];
+  const pos = slot.pos;
+
+  // Hexagon vertices centred at 80,80, radius 42
+  const cx=80, cy=80, r=42;
+  const hex = Array.from({length:6},(_,i)=>{
+    const a = Math.PI/180*(60*i - 90);
+    return [+(cx+r*Math.cos(a)).toFixed(1), +(cy+r*Math.sin(a)).toFixed(1)];
+  });
+  const pts = hex.map(p=>p.join(',')).join(' ');
+
+  // Alternating double-bond arcs inside
+  const innerR = 28;
+  function arcPath(from, to){
+    const a1=Math.PI/180*(60*from-90), a2=Math.PI/180*(60*to-90);
+    const x1=+(cx+innerR*Math.cos(a1)).toFixed(1), y1=+(cy+innerR*Math.sin(a1)).toFixed(1);
+    const x2=+(cx+innerR*Math.cos(a2)).toFixed(1), y2=+(cy+innerR*Math.sin(a2)).toFixed(1);
+    return `M${x1} ${y1} A${innerR} ${innerR} 0 0 1 ${x2} ${y2}`;
+  }
+
+  // Position labels: vertex 0=top, go clockwise: ipso(0), ortho(1,5), meta(2,4), para(3)
+  // Map position → vertices
+  const posMap = { ortho:[1,5], meta:[2,4], para:[3] };
+
+  // Substituent label positions (outside the ring)
+  function labelPos(vIdx, extra=18){
+    const a = Math.PI/180*(60*vIdx-90);
+    return [+(cx+(r+extra)*Math.cos(a)).toFixed(1), +(cy+(r+extra)*Math.sin(a)).toFixed(1)];
+  }
+
+  // Build position dots and labels
+  let dots='';
+  ['ortho','meta','para'].forEach(p=>{
+    const verts = posMap[p];
+    const isActive = pos===p;
+    verts.forEach(vi=>{
+      const [vx,vy] = hex[vi];
+      const dotCol = isActive ? col : 'rgba(0,0,0,0.18)';
+      const dotR = isActive ? 5 : 3.5;
+      dots += `<circle cx="${vx}" cy="${vy}" r="${dotR}" fill="${dotCol}" style="cursor:pointer;transition:all .2s" onclick="simSetPos(${slotIdx},'${p}')"/>`;
+    });
+  });
+
+  // Substituent display at para (vertex 3) or appropriate position
+  const activeVerts = posMap[pos];
+  const dispVert = activeVerts[0];
+  const [sx,sy] = labelPos(dispVert, 26);
+
+  return `<svg viewBox="0 0 160 160" width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+    <!-- Ring glow -->
+    <circle cx="${cx}" cy="${cy}" r="${r+8}" fill="${col}" opacity=".08"/>
+    <!-- Benzene ring -->
+    <polygon points="${pts}" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1.8"/>
+    <!-- Inner aromatic arcs -->
+    <path d="${arcPath(0,1)}" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="1.44"/>
+    <path d="${arcPath(2,3)}" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="1.44"/>
+    <path d="${arcPath(4,5)}" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="1.44"/>
+    <!-- C label at ipso -->
+    <text x="${hex[0][0]}" y="${+(hex[0][1]+4).toFixed(1)}" text-anchor="middle" font-size="11" fill="rgba(0,0,0,0.4)" font-family="DM Mono,monospace">C</text>
+    <!-- OH at ipso (top vertex, index 0) always -->
+    <line x1="${hex[0][0]}" y1="${+(hex[0][1]-2).toFixed(1)}" x2="${hex[0][0]}" y2="${+(hex[0][1]-14).toFixed(1)}" stroke="rgba(0,0,0,0.4)" stroke-width="1.56"/>
+    <text x="${hex[0][0]}" y="${+(hex[0][1]-17).toFixed(1)}" text-anchor="middle" font-size="13" fill="${col}" font-weight="700" font-family="DM Sans,sans-serif">OH</text>
+    <!-- Position dots -->
+    ${dots}
+    <!-- Active substituent -->
+    ${slot.group!=='H' ? `
+    <line x1="${hex[dispVert][0]}" y1="${hex[dispVert][1]}" x2="${+(hex[dispVert][0]+(sx-hex[dispVert][0])*0.55).toFixed(1)}" y2="${+(hex[dispVert][1]+(sy-hex[dispVert][1])*0.55).toFixed(1)}" stroke="${col}" stroke-width="1.68" opacity=".7"/>
+    <text x="${sx}" y="${+(sy+4).toFixed(1)}" text-anchor="middle" font-size="14" fill="${col}" font-weight="700" font-family="DM Sans,sans-serif">${g.sym}</text>
+    ` : ''}
+  </svg>`;
+}
+
+// ── Carboxylic acid pKa data ─────────────────────────────
+// Source: Hammett (1940) / standard physical organic chemistry tables
+// Y–CH₂COOH = substituted acetic acid; Y–C₆H₄COOH = substituted benzoic acid
+const CA_DATA = [
+  { y:'H',       acetic:4.74, ortho:4.20, meta:4.20, para:4.20, type:'neutral' },
+  { y:'CH₃',     acetic:4.87, ortho:3.91, meta:4.27, para:4.38, type:'edg' },
+  { y:'C₂H₅',   acetic:4.82, ortho:3.79, meta:4.27, para:4.35, type:'edg' },
+  { y:'F',        acetic:2.59, ortho:3.27, meta:3.86, para:4.14, type:'ewg' },
+  { y:'Cl',       acetic:2.85, ortho:2.92, meta:3.83, para:3.97, type:'ewg' },
+  { y:'Br',       acetic:2.90, ortho:2.85, meta:3.81, para:3.97, type:'ewg' },
+  { y:'I',        acetic:3.18, ortho:2.86, meta:3.85, para:4.02, type:'ewg' },
+  { y:'CN',       acetic:2.47, ortho:3.14, meta:3.64, para:3.55, type:'ewg' },
+  { y:'CF₃',      acetic:3.06, ortho:null, meta:3.77, para:3.66, type:'ewg' },
+  { y:'HO',       acetic:3.83, ortho:2.98, meta:4.08, para:4.57, type:'edg' },
+  { y:'CH₃O',     acetic:3.57, ortho:4.09, meta:4.09, para:4.47, type:'edg' },
+  { y:'C₆H₅',    acetic:4.31, ortho:3.46, meta:4.14, para:4.21, type:'neutral' },
+  { y:'NO₂',      acetic:null, ortho:2.21, meta:3.49, para:3.42, type:'ewg' },
+];
+let CA_HIGHLIGHTED = null;
+let CA_SORT = 'acetic';
+
+// Generates the <tr> rows for the CA table (no nested template literals)
+function caTableRows(){
+  const dotCol = {ewg:'#e08080',edg:'#60c080',neutral:'#a8a8cc'};
+  const sorted = [...CA_DATA].sort((a,b)=>{
+    if(CA_SORT==='y') return a.y.localeCompare(b.y);
+    const av=a[CA_SORT], bv=b[CA_SORT];
+    if(av===null&&bv===null) return 0;
+    if(av===null) return 1; if(bv===null) return -1;
+    return av-bv;
+  });
+  return sorted.map(row=>{
+    const isHL = CA_HIGHLIGHTED && CA_HIGHLIGHTED.y===row.y;
+    const cells = ['acetic','ortho','meta','para'].map((col,ci)=>{
+      const v = row[col];
+      const isSelCell = isHL && CA_HIGHLIGHTED.col===col;
+      let bg, tc;
+      if(v===null){
+        bg='rgba(255,255,255,0.02)'; tc='rgba(255,255,255,0.18)';
+      } else {
+        // Vivid heatmap: 2.0 = hot coral-red, 3.5 = warm amber, 5.0 = cool indigo-blue
+        // Three-stop ramp for richer colour
+        const t = Math.max(0,Math.min(1,(v-2.0)/3.0));
+        let r2,g2,b2;
+        if(t < 0.5){
+          // coral-red → amber
+          const s = t/0.5;
+          r2=Math.round(220-s*10); g2=Math.round(60+s*90); b2=Math.round(50-s*10);
+        } else {
+          // amber → indigo-blue
+          const s=(t-0.5)/0.5;
+          r2=Math.round(210-s*160); g2=Math.round(150-s*60); b2=Math.round(40+s*185);
+        }
+        const op = isSelCell ? 0.75 : 0.52;
+        bg = 'rgba('+r2+','+g2+','+b2+','+op+')';
+        // Text: bright white when selected, otherwise a lighter tint of the cell colour
+        tc = isSelCell ? '#fff' : 'rgb('+Math.min(255,Math.round(r2*1.15+30))+','+Math.min(255,Math.round(g2*1.15+35))+','+Math.min(255,Math.round(b2*1.1+60))+')';
+      }
+      const ring = isSelCell ? 'outline:2.5px solid rgba(255,255,255,0.7);outline-offset:-2px;border-radius:4px;' : '';
+      const sep  = ci===0 ? 'border-right:1px solid rgba(255,255,255,0.1);' : '';
+      return '<td style="background:'+bg+';color:'+tc+';'+sep+ring+'font-size:15px;padding:10px 14px;cursor:pointer" onclick="caSelect(event,\''+row.y+'\',\''+col+'\')">'+(v!==null?v.toFixed(2):'&mdash;')+'</td>';
+    }).join('');
+    const hlStyle = isHL ? 'background:rgba(255,255,255,0.045);' : '';
+    return '<tr style="cursor:pointer;'+hlStyle+'"><td style="font-size:15px;padding:10px 4px;"><span class="ca-type-dot" style="background:'+dotCol[row.type]+'"></span>'+row.y+'</td>'+cells+'</tr>';
+  }).join('');
+}
+
+// Generates structure viewer HTML (no nested template literals)
+function caStructHTML(){
+  if(!CA_HIGHLIGHTED){
+    return '<div style="text-align:center;color:rgba(255,255,255,0.22);font-size:15px;line-height:2">Click any cell in the<br>table to see the structure</div>';
+  }
+  const {y, col} = CA_HIGHLIGHTED;
+  const row = CA_DATA.find(r=>r.y===y);
+  const v = row ? row[col] : null;
+  const isAcetic = col==='acetic';
+  const posLabel = isAcetic ? 'Aliphatic' : col.charAt(0).toUpperCase()+col.slice(1);
+  const dotCol = {ewg:'#e08080',edg:'#60c080',neutral:'#a8a8cc'};
+  const typeCol = row ? dotCol[row.type] : '#aaa';
+
+  let svgInner = '';
+  let svgW = 260, svgH = 140;
+
+  if(isAcetic){
+    // ── Aliphatic: Y–CH₂–COOH drawn as a proper chain ──
+    // Layout: Y (left) — bond — CH₂ — bond — COOH (right), centred
+    svgH = 100;
+    svgInner =
+      // Y label
+      '<text x="20" y="52" font-size="18" font-weight="700" fill="'+typeCol+'" font-family="DM Mono,monospace" dominant-baseline="middle">'+y+'</text>'+
+      // bond line Y→CH₂  (crude but we measure Y text width as ~14px per char)
+      '<line x1="'+(20+y.length*11)+'" y1="52" x2="'+(20+y.length*11+20)+'" y2="52" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>'+
+      // CH₂
+      '<text x="'+(20+y.length*11+24)+'" y="52" font-size="17" fill="rgba(255,255,255,0.75)" font-family="DM Mono,monospace" dominant-baseline="middle">CH\u2082</text>'+
+      // bond CH₂→COOH
+      '<line x1="'+(20+y.length*11+62)+'" y1="52" x2="'+(20+y.length*11+82)+'" y2="52" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>'+
+      // COOH
+      '<text x="'+(20+y.length*11+86)+'" y="52" font-size="17" font-weight="600" fill="rgba(255,255,255,0.9)" font-family="DM Mono,monospace" dominant-baseline="middle">COOH</text>'+
+      // footnote
+      '<text x="130" y="85" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.28)" font-family="DM Sans,sans-serif">inductive only \u2014 no resonance</text>';
+
+  } else {
+    // Aromatic: Kekulé benzene ring, viewBox centred so ring is visually centred
+    // ViewBox 240x210: ring at cx=120, cy=118 — 68px above for COOH, 48px below for caption
+    svgW = 240; svgH = 195;
+    const cx=120, cy=118, r=44;
+    const pts = Array.from({length:6},(_,k)=>{
+      const a = -Math.PI/2 + k*Math.PI/3;
+      return [cx + r*Math.cos(a), cy + r*Math.sin(a)];
+    });
+    // Kekulé: edges 0,2,4 = double; 1,3,5 = single
+    const bondOff = 4;
+    let ringBonds = '';
+    for(let i=0;i<6;i++){
+      const a=pts[i], b=pts[(i+1)%6];
+      const dx=b[0]-a[0], dy=b[1]-a[1];
+      const mx=(a[0]+b[0])/2, my=(a[1]+b[1])/2;
+      const idist=Math.sqrt((cx-mx)*(cx-mx)+(cy-my)*(cy-my));
+      const inx=(cx-mx)/idist, iny=(cy-my)/idist;
+      const isDbl=(i%2===0);
+      const sh=0.09, sh2=0.18;
+      // outer bond (all edges)
+      ringBonds += '<line x1="'+(a[0]+dx*sh).toFixed(1)+'" y1="'+(a[1]+dy*sh).toFixed(1)+'" x2="'+(b[0]-dx*sh).toFixed(1)+'" y2="'+(b[1]-dy*sh).toFixed(1)+'" stroke="rgba(255,255,255,0.72)" stroke-width="2"/>';
+      if(isDbl){
+        // inner parallel line offset toward centre
+        ringBonds += '<line x1="'+(a[0]+dx*sh2+inx*bondOff).toFixed(1)+'" y1="'+(a[1]+dy*sh2+iny*bondOff).toFixed(1)+'" x2="'+(b[0]-dx*sh2+inx*bondOff).toFixed(1)+'" y2="'+(b[1]-dy*sh2+iny*bondOff).toFixed(1)+'" stroke="rgba(255,255,255,0.72)" stroke-width="2"/>';
+      }
+    }
+    // COOH at vertex 0 (top, 12 o'clock)
+    const [v0x,v0y] = pts[0];
+    const coohBond = '<line x1="'+v0x.toFixed(1)+'" y1="'+(v0y-2).toFixed(1)+'" x2="'+v0x.toFixed(1)+'" y2="'+(v0y-30).toFixed(1)+'" stroke="rgba(255,255,255,0.65)" stroke-width="2"/>';
+    const coohLabel = '<text x="'+v0x.toFixed(1)+'" y="'+(v0y-44).toFixed(1)+'" text-anchor="middle" font-size="18" font-weight="700" fill="rgba(255,255,255,0.92)" font-family="DM Mono,monospace">COOH</text>';
+    // Substituent at posIdx vertex
+    const posIdx = col==='ortho'?1 : col==='meta'?2 : 3;
+    const [vsx,vsy] = pts[posIdx];
+    const odx=vsx-cx, ody=vsy-cy;
+    const olen=Math.sqrt(odx*odx+ody*ody);
+    const ux=odx/olen, uy=ody/olen;
+    const bstart=4, blen=26, lgap=10;
+    const subBond = '<line x1="'+(vsx+ux*bstart).toFixed(1)+'" y1="'+(vsy+uy*bstart).toFixed(1)+'" x2="'+(vsx+ux*(bstart+blen)).toFixed(1)+'" y2="'+(vsy+uy*(bstart+blen)).toFixed(1)+'" stroke="'+typeCol+'" stroke-width="2.4"/>';
+    const lx=vsx+ux*(bstart+blen+lgap), ly=vsy+uy*(bstart+blen+lgap);
+    let ta='middle'; if(ux>0.35) ta='start'; else if(ux<-0.35) ta='end';
+    const subLabel = '<text x="'+lx.toFixed(1)+'" y="'+ly.toFixed(1)+'" text-anchor="'+ta+'" dominant-baseline="middle" font-size="17" font-weight="700" fill="'+typeCol+'" font-family="DM Mono,monospace">'+y+'</text>';
+    svgInner = ringBonds + coohBond + coohLabel + subBond + subLabel;
+  }
+
+  const pkaStr = v!==null ? v.toFixed(2) : '\u2014';
+  const mech = row ? (row.type==='ewg'
+    ? 'EWG \u2014 stabilises carboxylate anion, increases acidity'
+    : row.type==='edg'
+    ? 'EDG \u2014 destabilises carboxylate anion, decreases acidity'
+    : 'Neutral \u2014 no significant electronic effect') : '';
+
+  return '<svg width="'+svgW+'" height="'+svgH+'" viewBox="0 0 '+svgW+' '+svgH+'" style="overflow:visible;display:block;margin:0 auto 10px">'+svgInner+'</svg>'+
+    '<div style="text-align:center">'+
+    '<div style="font-size:14px;font-weight:700;color:'+typeCol+';margin-bottom:10px;letter-spacing:.04em">'+posLabel+' &nbsp;&middot;&nbsp; '+y+'</div>'+
+    '<div style="display:inline-flex;align-items:baseline;gap:8px;justify-content:center">'+
+      '<span style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.45);font-family:\'DM Mono\',monospace;letter-spacing:.04em">pK\u2090 =</span>'+
+      '<span style="font-size:28px;font-weight:800;font-family:\'DM Mono\',monospace;color:#fff;line-height:1">'+pkaStr+'</span>'+
+    '</div>'+
+    (mech?'<div style="font-size:13px;color:rgba(255,255,255,0.42);margin-top:12px;line-height:1.65;text-align:left">'+mech+'</div>':'')+
+    '</div>';
+}
+
+
+// ═══════════════════════════════════════════════════════════
+// ACIDITY TRENDS — four collapsible sections
+// ═══════════════════════════════════════════════════════════
+let TREND_OPEN = {ortho:true, cistrans:false, cyclic:false, axeq:false};
+function toggleTrend(id){ TREND_OPEN[id]=!TREND_OPEN[id]; renderSim(); }
+
+function trendSectionsHTML(){
+  return [
+    trendOrtho(),
+    trendCisTrans(),
+    trendCyclic(),
+    trendAxEq()
+  ].join('');
+}
+
+// ── helpers ────────────────────────────────────────────────
+function trendCard(id, title, badge, content){
+  const open = TREND_OPEN[id];
+  return '<div style="border:1px solid rgba(255,255,255,0.1);border-radius:14px;overflow:hidden;margin-bottom:14px">'+
+    '<button onclick="toggleTrend(\''+id+'\')" style="width:100%;display:flex;align-items:center;gap:12px;padding:16px 20px;background:rgba(255,255,255,0.04);border:none;cursor:pointer;text-align:left">'+
+      '<span style="font-size:16px;font-weight:700;color:rgba(255,255,255,0.88);flex:1">'+title+'</span>'+
+      '<span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.4);letter-spacing:.06em">'+badge+'</span>'+
+      '<span style="font-size:18px;color:rgba(255,255,255,0.3);transform:rotate('+(open?'90':'0')+'deg);transition:transform .2s;margin-left:4px">›</span>'+
+    '</button>'+
+    (open ? '<div style="padding:20px 22px 24px;border-top:1px solid rgba(255,255,255,0.06)">'+content+'</div>' : '')+
+  '</div>';
+}
+
+// mini benzene ring SVG for trend cards - accepts substituent label, position (ortho/meta/para/top), colour
+function miniRingSVG(sub, pos, col, pka, w, h){
+  w=w||160; h=h||185;
+  const cx=w/2, cy=h/2+8, r=36;
+  const pts = Array.from({length:6},(_,k)=>{
+    const a=-Math.PI/2+k*Math.PI/3;
+    return [cx+r*Math.cos(a), cy+r*Math.sin(a)];
+  });
+  const bondOff=3.8;
+  let bonds='';
+  for(let i=0;i<6;i++){
+    const a=pts[i],b=pts[(i+1)%6];
+    const dx=b[0]-a[0],dy=b[1]-a[1];
+    const mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2;
+    const id2=Math.sqrt((cx-mx)*(cx-mx)+(cy-my)*(cy-my));
+    const inx=(cx-mx)/id2,iny=(cy-my)/id2;
+    const sh=0.09,sh2=0.18;
+    bonds+='<line x1="'+(a[0]+dx*sh).toFixed(1)+'" y1="'+(a[1]+dy*sh).toFixed(1)+'" x2="'+(b[0]-dx*sh).toFixed(1)+'" y2="'+(b[1]-dy*sh).toFixed(1)+'" stroke="rgba(255,255,255,0.6)" stroke-width="1.7"/>';
+    if(i%2===0) bonds+='<line x1="'+(a[0]+dx*sh2+inx*bondOff).toFixed(1)+'" y1="'+(a[1]+dy*sh2+iny*bondOff).toFixed(1)+'" x2="'+(b[0]-dx*sh2+inx*bondOff).toFixed(1)+'" y2="'+(b[1]-dy*sh2+iny*bondOff).toFixed(1)+'" stroke="rgba(255,255,255,0.6)" stroke-width="1.7"/>';
+  }
+  // COOH at top (vertex 0)
+  const [v0x,v0y]=pts[0];
+  bonds+='<line x1="'+v0x.toFixed(1)+'" y1="'+(v0y-2).toFixed(1)+'" x2="'+v0x.toFixed(1)+'" y2="'+(v0y-22).toFixed(1)+'" stroke="rgba(255,255,255,0.55)" stroke-width="1.7"/>';
+  bonds+='<text x="'+v0x.toFixed(1)+'" y="'+(v0y-32).toFixed(1)+'" text-anchor="middle" font-size="14" font-weight="700" fill="rgba(255,255,255,0.88)" font-family="DM Mono,monospace">COOH</text>';
+  // substituent
+  const posIdx = pos==='ortho'?1:pos==='meta'?2:pos==='para'?3:0;
+  if(posIdx>0 && sub){
+    const [vsx,vsy]=pts[posIdx];
+    const odx=vsx-cx,ody=vsy-cy,olen=Math.sqrt(odx*odx+ody*ody);
+    const ux=odx/olen,uy=ody/olen;
+    const bl=24, bg=4;
+    bonds+='<line x1="'+(vsx+ux*bg).toFixed(1)+'" y1="'+(vsy+uy*bg).toFixed(1)+'" x2="'+(vsx+ux*(bg+bl)).toFixed(1)+'" y2="'+(vsy+uy*(bg+bl)).toFixed(1)+'" stroke="'+col+'" stroke-width="2.2"/>';
+    const lx=vsx+ux*(bg+bl+9), ly=vsy+uy*(bg+bl+9);
+    let ta='middle'; if(ux>0.35)ta='start'; else if(ux<-0.35)ta='end';
+    bonds+='<text x="'+lx.toFixed(1)+'" y="'+ly.toFixed(1)+'" text-anchor="'+ta+'" dominant-baseline="middle" font-size="15" font-weight="700" fill="'+col+'" font-family="DM Mono,monospace">'+sub+'</text>';
+  }
+  // pKa label: for para, shift left to avoid overlap with downward substituent
+  const isPara = (pos==='para');
+  const pkaX = isPara ? (cx-r-8) : cx;
+  const pkaAnchor = isPara ? 'end' : 'middle';
+  bonds+='<text x="'+pkaX.toFixed(1)+'" y="'+(cy+r+22).toFixed(1)+'" text-anchor="'+pkaAnchor+'" font-size="16" font-weight="800" fill="rgba(255,255,255,0.92)" font-family="DM Mono,monospace">'+pka+'</text>';
+  return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" style="overflow:visible">'+bonds+'</svg>';
+}
+
+// chain acid structure: Y-CH2-COOH or just COOH chain
+function miniChainSVG(sub, pka, col, w, h){
+  w=w||160; h=h||70;
+  const y0=h/2;
+  let s = '<text x="10" y="'+y0+'" font-size="13" font-weight="700" fill="'+(col||'rgba(255,255,255,0.7)')+'" font-family="DM Mono,monospace" dominant-baseline="middle">'+sub+'</text>';
+  const x1=10+sub.length*9;
+  s+='<line x1="'+x1+'" y1="'+y0+'" x2="'+(x1+16)+'" y2="'+y0+'" stroke="rgba(255,255,255,0.45)" stroke-width="1.6"/>';
+  s+='<text x="'+(x1+18)+'" y="'+y0+'" font-size="13" fill="rgba(255,255,255,0.65)" font-family="DM Mono,monospace" dominant-baseline="middle">CH₂</text>';
+  const x2=x1+18+33;
+  s+='<line x1="'+x2+'" y1="'+y0+'" x2="'+(x2+16)+'" y2="'+y0+'" stroke="rgba(255,255,255,0.45)" stroke-width="1.6"/>';
+  s+='<text x="'+(x2+18)+'" y="'+y0+'" font-size="13" fill="rgba(255,255,255,0.8)" font-family="DM Mono,monospace" dominant-baseline="middle">COOH</text>';
+  s+='<text x="'+(w/2)+'" y="'+(y0+24)+'" text-anchor="middle" font-size="14" font-weight="800" fill="rgba(255,255,255,0.9)" font-family="DM Mono,monospace">'+pka+'</text>';
+  return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'">'+s+'</svg>';
+}
+
+// ─── SECTION 1: Ortho Effect ───────────────────────────────
+function trendOrtho(){
+  const cases = [
+    {sub:'H',    pos:'ortho', col:'#a8a8cc', pka:'4.20', note:'Reference'},
+    {sub:'CH₃',  pos:'ortho', col:'#60c080', pka:'3.91', note:'Weak EDG, but ortho → slight acidity increase (steric inhibition of resonance)'},
+    {sub:'C₂H₅', pos:'ortho', col:'#60c080', pka:'3.79', note:'Bulkier than CH₃ → stronger steric effect → more acidic'},
+    {sub:'iPr',  pos:'ortho', col:'#60c080', pka:'3.46', note:'Even bulkier → very strong ortho effect'},
+    {sub:'tBu',  pos:'ortho', col:'#60c080', pka:'3.21', note:'Bulkiest alkyl → strongest steric inhibition of resonance → most acidic of the series'},
+    {sub:'CH₃',  pos:'para',  col:'#60c080', pka:'4.38', note:'Para-CH₃ is EDG via hyperconj. → raises pKa (less acidic)'},
+    {sub:'CH₃',  pos:'meta',  col:'#60c080', pka:'4.27', note:'Meta-CH₃: no resonance, weak +I → slightly less acidic than H'},
+  ];
+
+  const cards = cases.map(c=>{
+    return '<div style="display:flex;flex-direction:column;align-items:center;min-width:140px">'+
+      miniRingSVG(c.sub, c.pos, c.col, c.pka, 150, 190)+
+      '<div style="font-size:13px;color:rgba(200,200,210,0.55);text-align:center;max-width:130px;line-height:1.5;margin-top:6px">'+c.note+'</div>'+
+    '</div>';
+  }).join('');
+
+  const body =
+    '<div style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:20px">'+
+      'The <strong style="color:rgba(255,255,255,0.88)">ortho effect</strong> is an anomaly: ortho-alkyl benzoic acids are <em>more</em> acidic than the para isomers, even though alkyl groups are EDG. '+
+      'Two factors operate: <strong style="color:#e0c878">steric inhibition of resonance</strong> (the bulky group twists the COOH out of plane, preventing delocalisation that would stabilise the neutral acid) '+
+      'and a <strong style="color:#e0c878">field/inductive effect</strong> through space. Both stabilise the carboxylate anion relative to the acid.'+
+    '</div>'+
+    '<div style="overflow-x:auto;padding-bottom:8px"><div style="display:flex;gap:10px;min-width:max-content">'+cards+'</div></div>'+
+    '<div style="margin-top:18px;padding:14px 18px;border-radius:10px;background:rgba(200,180,50,0.08);border:1px solid rgba(200,180,50,0.2)">'+
+      '<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(200,180,50,0.7);margin-bottom:6px">JEE Key Point</div>'+
+      '<div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.65">'+
+        'For alkyl groups: <strong style="color:#fff">ortho &gt; meta ≈ para</strong> in acidity — the reverse of what induction alone would predict. '+
+        'For EWG (–NO₂, –CN): ortho is most acidic for a different reason — direct resonance stabilisation of the anion.'+
+      '</div>'+
+    '</div>';
+
+  return trendCard('ortho','Ortho Effect','Steric + Field',body);
+}
+
+// ─── SECTION 2: Cis vs Trans acids ────────────────────────
+function trendCisTrans(){
+  // Draw alkene acid SVG (wedge-style, simplified as text labels on a line)
+  function alkeneAcidSVG(left_top, left_bot, right_top, right_bot, pka, label){
+    // simplified structural notation as SVG text layout
+    const w=160, h=130;
+    // double bond at centre
+    let s = '';
+    // left carbon at (55,65), right carbon at (105,65)
+    // draw double bond
+    s += '<line x1="58" y1="62" x2="102" y2="62" stroke="rgba(255,255,255,0.65)" stroke-width="1.8"/>';
+    s += '<line x1="58" y1="70" x2="102" y2="70" stroke="rgba(255,255,255,0.65)" stroke-width="1.8"/>';
+    // left-top group
+    if(left_top) s += '<line x1="56" y1="62" x2="32" y2="38" stroke="rgba(255,255,255,0.5)" stroke-width="1.6"/>'+
+      '<text x="28" y="32" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="DM Mono,monospace">'+left_top+'</text>';
+    // left-bot group
+    if(left_bot) s += '<line x1="56" y1="70" x2="32" y2="94" stroke="rgba(255,255,255,0.5)" stroke-width="1.6"/>'+
+      '<text x="28" y="108" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="DM Mono,monospace">'+left_bot+'</text>';
+    // right-top group
+    if(right_top) s += '<line x1="104" y1="62" x2="128" y2="38" stroke="rgba(255,255,255,0.5)" stroke-width="1.6"/>'+
+      '<text x="132" y="32" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="DM Mono,monospace">'+right_top+'</text>';
+    // right-bot group
+    if(right_bot) s += '<line x1="104" y1="70" x2="128" y2="94" stroke="rgba(255,255,255,0.5)" stroke-width="1.6"/>'+
+      '<text x="132" y="108" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="DM Mono,monospace">'+right_bot+'</text>';
+    // label + pKa
+    s += '<text x="80" y="128" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.3)" font-family="DM Sans,sans-serif">'+label+'</text>';
+    s += '<text x="80" y="145" text-anchor="middle" font-size="14" font-weight="800" fill="rgba(255,255,255,0.9)" font-family="DM Mono,monospace">pKa '+pka+'</text>';
+    return '<svg width="'+w+'" height="155" viewBox="0 0 '+w+' 155" style="overflow:visible">'+s+'</svg>';
+  }
+
+  const body =
+    '<div style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:20px">'+
+      '<strong style="color:rgba(255,255,255,0.88)">cis-acids are generally more acidic than trans-acids</strong> when the groups are not too bulky. '+
+      'The cis geometry allows <strong style="color:#78d0c0">intramolecular hydrogen bonding</strong> in the product anion — or more precisely, '+
+      'the cis arrangement brings the second COOH close enough to stabilise the carboxylate via H-bonding, lowering pKa₁. '+
+      'Exception: if substituents are very bulky, the trans isomer can be more acidic (steric relief upon ionisation).'+
+    '</div>'+
+    '<div style="overflow-x:auto;padding-bottom:8px"><div style="display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap">'+
+      // Maleic vs Fumaric
+      '<div style="display:flex;flex-direction:column;align-items:center">'+
+        '<div style="font-size:12px;font-weight:700;color:rgba(180,150,220,0.7);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">cis</div>'+
+        alkeneAcidSVG('H','CH₃','COOH','','4.44','cis-crotonic')+
+      '</div>'+
+      '<div style="display:flex;flex-direction:column;align-items:center">'+
+        '<div style="font-size:12px;font-weight:700;color:rgba(180,150,220,0.7);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">trans</div>'+
+        alkeneAcidSVG('CH₃','H','COOH','','4.69','trans-crotonic')+
+      '</div>'+
+      '<div style="padding:0 12px;align-self:center;font-size:22px;color:rgba(255,255,255,0.2)">vs</div>'+
+      '<div style="display:flex;flex-direction:column;align-items:center">'+
+        '<div style="font-size:12px;font-weight:700;color:rgba(100,200,180,0.7);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">cis (maleic)</div>'+
+        alkeneAcidSVG('H','COOH','COOH','','1.92','pKa₁')+
+      '</div>'+
+      '<div style="display:flex;flex-direction:column;align-items:center">'+
+        '<div style="font-size:12px;font-weight:700;color:rgba(100,200,180,0.7);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">trans (fumaric)</div>'+
+        alkeneAcidSVG('H','COOH','','COOH','3.02','pKa₁')+
+      '</div>'+
+    '</div></div>'+
+    '<div style="margin-top:18px;padding:14px 18px;border-radius:10px;background:rgba(100,200,180,0.07);border:1px solid rgba(100,200,180,0.18)">'+
+      '<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(100,200,180,0.7);margin-bottom:6px">Why maleic pKa₁ = 1.92 (very strong)</div>'+
+      '<div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.65">'+
+        'After ionisation of one COOH, the resulting carboxylate (COO⁻) in maleic acid forms a strong <strong style="color:#fff">intramolecular H-bond</strong> with the adjacent COOH. '+
+        'This extra stabilisation dramatically lowers pKa₁. Fumaric acid cannot do this (groups are trans).'+
+      '</div>'+
+    '</div>';
+
+  return trendCard('cistrans','cis vs trans Acid Strength','Geometry',body);
+}
+
+// ─── SECTION 3: Cyclic Acids / s-character ─────────────────
+function trendCyclic(){
+  function cycleSVG(shape, pka, label, w){
+    w = w||140;
+    const h=155, cx=w/2, cy=68;
+    let ring='';
+    if(shape==='triangle'){
+      // Clean equilateral triangle — no CH₂ labels, just the ring bonds
+      const r=32;
+      const pts=[
+        [cx, cy-r],
+        [cx - r*Math.sqrt(3)/2, cy + r/2],
+        [cx + r*Math.sqrt(3)/2, cy + r/2]
+      ];
+      ring='<polygon points="'+pts.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ')+'" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="2.2"/>';
+    } else if(shape==='square'){
+      ring='<rect x="'+(cx-22)+'" y="'+(cy-22)+'" width="44" height="44" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="2.2"/>';
+    } else if(shape==='chain'){
+      // Proper propane zigzag: C1 bottom-left, C2 top-centre, C3 bottom-right
+      const c1=[cx-28, cy+14], c2=[cx, cy-14], c3=[cx+28, cy+14];
+      ring='<line x1="'+c1[0]+'" y1="'+c1[1]+'" x2="'+c2[0]+'" y2="'+c2[1]+'" stroke="rgba(255,255,255,0.65)" stroke-width="2.2"/>'+
+           '<line x1="'+c2[0]+'" y1="'+c2[1]+'" x2="'+c3[0]+'" y2="'+c3[1]+'" stroke="rgba(255,255,255,0.65)" stroke-width="2.2"/>'+
+           // tiny vertex dots to show carbons
+           '<circle cx="'+c1[0]+'" cy="'+c1[1]+'" r="2.5" fill="rgba(255,255,255,0.5)"/>'+
+           '<circle cx="'+c2[0]+'" cy="'+c2[1]+'" r="2.5" fill="rgba(255,255,255,0.5)"/>'+
+           '<circle cx="'+c3[0]+'" cy="'+c3[1]+'" r="2.5" fill="rgba(255,255,255,0.5)"/>';
+    }
+    return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" style="overflow:visible">'+
+      ring+
+      '<text x="'+cx+'" y="'+(cy+52)+'" text-anchor="middle" font-size="16" font-weight="800" fill="rgba(255,255,255,0.92)" font-family="DM Mono,monospace">pKa '+pka+'</text>'+
+      '<text x="'+cx+'" y="'+(cy+70)+'" text-anchor="middle" font-size="13" fill="rgba(200,200,210,0.5)" font-family="DM Sans,sans-serif">'+label+'</text>'+
+    '</svg>';
+  }
+
+  const body =
+    '<div style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:20px">'+
+      'C–H acidity increases with <strong style="color:rgba(255,255,255,0.88)">% s-character</strong> of the carbon orbital. '+
+      'Ring strain in small rings forces smaller C–C–C bond angles, which requires <strong style="color:#e0c878">more p-character in ring bonds</strong>, '+
+      'leaving more s-character in the C–H bonds. Higher s-character = electron density closer to nucleus = better anion stabilisation = lower pKa.'+
+    '</div>'+
+    '<div style="display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap;margin-bottom:20px">'+
+      '<div style="text-align:center">'+cycleSVG('triangle','39','cyclopropane\n(sp³ → more s)')+'</div>'+
+      '<div style="align-self:center;font-size:26px;color:rgba(255,255,255,0.2);padding:0 4px">&gt;</div>'+
+      '<div style="text-align:center">'+cycleSVG('square','43','cyclobutane')+'</div>'+
+      '<div style="align-self:center;font-size:26px;color:rgba(255,255,255,0.2);padding:0 4px">&gt;</div>'+
+      '<div style="text-align:center">'+cycleSVG('chain','50','propane\n(sp³, 25% s)')+'</div>'+
+    '</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">'+
+      '<div style="padding:14px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)">'+
+        '<div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.6);margin-bottom:6px">Bond Angles</div>'+
+        '<div style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7">'+
+          'Cyclopropane: 60° (forced)<br>Cyclobutane: ~90°<br>Propane: ~109.5°<br>'+
+          '<strong style="color:#e0c878">Smaller angle → more p in ring → more s in C–H</strong>'+
+        '</div>'+
+      '</div>'+
+      '<div style="padding:14px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)">'+
+        '<div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.6);margin-bottom:6px">Hybridisation Series</div>'+
+        '<div style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7">'+
+          'sp³ C–H: pKa ~50<br>sp² C–H: pKa ~44 (alkene)<br>sp C–H: pKa ~25 (alkyne)<br>'+
+          '<strong style="color:#78d0c0">More s-character → more acidic</strong>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+
+  return trendCard('cyclic','Cyclic Acids & s-Character','Ring Strain',body);
+}
+
+// ─── SECTION 4: Axial vs Equatorial COOH ──────────────────
+function trendAxEq(){
+  function cyclohexSVG(label, pka, note, accentCol){
+    accentCol = accentCol||'rgba(255,255,255,0.7)';
+    const w=150, h=155;
+    // Simplified cyclohexane chair-like representation as flattened hexagon
+    // Points arranged as a chair: top-left, top-right, right, bottom-right, bottom-left, left
+    const pts = [
+      [45,40],[105,40],[130,65],[105,90],[45,90],[20,65]
+    ];
+    const hexStr = pts.map(p=>p.join(',')).join(' ');
+    let s = '<polygon points="'+hexStr+'" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.8"/>';
+    // COOH group — axial goes up from top vertex, equatorial goes to the side
+    // Simplified: just show COOH label at appropriate position
+    s += '<text x="75" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="'+accentCol+'" font-family="DM Mono,monospace">COOH</text>';
+    s += '<line x1="75" y1="22" x2="75" y2="38" stroke="'+accentCol+'" stroke-width="1.8"/>';
+    s += '<text x="75" y="118" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.3)" font-family="DM Sans,sans-serif">'+note+'</text>';
+    s += '<text x="75" y="135" text-anchor="middle" font-size="14" font-weight="800" fill="rgba(255,255,255,0.9)" font-family="DM Mono,monospace">'+pka+'</text>';
+    s += '<text x="75" y="152" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.35)" font-family="DM Sans,sans-serif">'+label+'</text>';
+    return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'">'+s+'</svg>';
+  }
+
+  const body =
+    '<div style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:20px">'+
+      'For cyclohexane dicarboxylic acids, the <strong style="color:rgba(255,255,255,0.88)">spatial relationship between two COOH groups</strong> determines acidity. '+
+      'When both COOH groups are <strong style="color:#78d0c0">axial</strong> (cis-1,2), they are close in space and the anion formed after first ionisation can be stabilised by <strong style="color:#78d0c0">intramolecular H-bonding</strong>. '+
+      'When groups are <strong style="color:#e08080">equatorial</strong> (trans-1,2 or cis-1,4), they point away from each other and no such stabilisation is possible.'+
+    '</div>'+
+    '<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px">'+
+      '<div>'+
+        '<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(120,208,192,0.7);margin-bottom:8px">cis-1,2 (both axial)</div>'+
+        cyclohexSVG('more acidic','pKa₁ lower','H-bond stabilisation','#78d0c0')+
+      '</div>'+
+      '<div style="align-self:center;font-size:24px;color:rgba(255,255,255,0.15);padding:0 8px">&gt;</div>'+
+      '<div>'+
+        '<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(220,130,100,0.7);margin-bottom:8px">trans-1,2 (one ax, one eq)</div>'+
+        cyclohexSVG('less acidic','pKa₁ higher','no H-bonding','#e08080')+
+      '</div>'+
+    '</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">'+
+      '<div style="padding:14px;border-radius:10px;background:rgba(120,208,192,0.06);border:1px solid rgba(120,208,192,0.15)">'+
+        '<div style="font-size:13px;font-weight:700;color:rgba(120,208,192,0.8);margin-bottom:6px">cis-1,2: Both axial</div>'+
+        '<div style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.65">Both groups point up — close proximity enables intramolecular H-bond in carboxylate → <strong style="color:#fff">lower pKa₁</strong> (more acidic)</div>'+
+      '</div>'+
+      '<div style="padding:14px;border-radius:10px;background:rgba(220,130,100,0.06);border:1px solid rgba(220,130,100,0.15)">'+
+        '<div style="font-size:13px;font-weight:700;color:rgba(220,130,100,0.8);margin-bottom:6px">trans-1,2: Axial + Equatorial</div>'+
+        '<div style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.65">Groups on opposite faces — too far apart for H-bonding → <strong style="color:#fff">higher pKa₁</strong> (less acidic). More stable conformation too.</div>'+
+      '</div>'+
+    '</div>'+
+    '<div style="margin-top:14px;padding:12px 16px;border-radius:10px;background:rgba(200,180,50,0.07);border:1px solid rgba(200,180,50,0.18)">'+
+      '<div style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.65">'+
+        '<strong style="color:#e0c878">Note on pKa₂:</strong> The reverse often holds — trans-1,2 has a lower pKa₂ because after first ionisation, the carboxylate of the trans isomer is more accessible, '+
+        'and there is no intramolecular H-bonding competing with the second ionisation.'+
+      '</div>'+
+    '</div>';
+
+  return trendCard('axeq','Axial vs Equatorial COOH','Cyclohexane',body);
+}
+
+// ═══════════════════════════════════════════════════════════
+// QUIZ MODE
+// ═══════════════════════════════════════════════════════════
+const QUIZ_QUESTIONS = [
+  {
+    q:'Which is the most acidic?',
+    options:['ortho-NO₂ benzoic acid','meta-NO₂ benzoic acid','para-NO₂ benzoic acid','benzoic acid'],
+    answer:0,
+    explanation:'ortho-NO₂ (pKa 2.21) is most acidic. Both direct resonance withdrawal AND the ortho field effect operate simultaneously. meta (3.49) and para (3.42) are more acidic than unsubstituted benzoic acid (4.20) but less so than ortho.'
+  },
+  {
+    q:'Arrange in increasing order of acidity: (1) acetic acid (2) chloroacetic acid (3) dichloroacetic acid (4) trichloroacetic acid',
+    options:['1 < 2 < 3 < 4','4 < 3 < 2 < 1','1 < 3 < 2 < 4','2 < 1 < 4 < 3'],
+    answer:0,
+    explanation:'Each Cl replaces H and exerts a strong –I (inductive) effect, stabilising the carboxylate anion. More Cl atoms = stronger withdrawal = more acidic. pKa: CH₃COOH (4.74) > ClCH₂COOH (2.85) > Cl₂CHCOOH (1.48) > Cl₃CCOOH (0.66).'
+  },
+  {
+    q:'maleic acid (cis) vs fumaric acid (trans): which has the lower pKa₁ (more acidic)?',
+    options:['maleic acid (cis)','fumaric acid (trans)','They are identical','Depends on temperature'],
+    answer:0,
+    explanation:'Maleic acid pKa₁ = 1.92 vs fumaric acid pKa₁ = 3.02. After first ionisation of maleic acid, the carboxylate anion is stabilised by intramolecular H-bonding with the adjacent COOH group (possible only in the cis geometry). This dramatically lowers pKa₁.'
+  },
+  {
+    q:'Cyclopropane C–H bonds are more acidic than propane C–H bonds because:',
+    options:['Ring strain destabilises the C–H bond','Greater s-character in C–H bonds increases acidity','Cyclopropane has more hydrogen atoms','C–C bonds are weaker in cyclopropane'],
+    answer:1,
+    explanation:'The 60° bond angle in cyclopropane forces more p-character into the C–C ring bonds, leaving more s-character in the C–H bonds. Higher s-character means electron density is held closer to the carbon nucleus, better stabilising the carbanion formed after proton loss. pKa: cyclopropane (39) < cyclobutane (43) < propane (50).'
+  },
+  {
+    q:'ortho-tert-butyl benzoic acid is MORE acidic than para-tert-butyl benzoic acid. Why?',
+    options:['–tBu is EWG at ortho position','Steric inhibition of resonance + field effect at ortho','–tBu donates electrons at para only','Ortho position is always more acidic'],
+    answer:1,
+    explanation:'–tBu is an EDG by hyperconjugation, so it should make benzoic acid less acidic. But at ortho, the bulk of tBu physically twists the COOH group out of conjugation with the ring (steric inhibition of resonance), preventing the neutral acid from being stabilised by delocalisation. The field effect through space also stabilises the anion. Net result: ortho-tBu benzoic acid (pKa 3.21) is more acidic than para (pKa ~3.98).'
+  },
+  {
+    q:'Which of these aliphatic acids is the most acidic?',
+    options:['F–CH₂–COOH (pKa 2.59)','Cl–CH₂–COOH (pKa 2.85)','Br–CH₂–COOH (pKa 2.90)','I–CH₂–COOH (pKa 3.18)'],
+    answer:0,
+    explanation:'Fluoroacetic acid is most acidic (pKa 2.59). Fluorine has the highest electronegativity of the halogens, exerting the strongest inductive (–I) effect through the CH₂ group to stabilise the carboxylate anion. The –I effect order is F > Cl > Br > I, which mirrors the acidity order perfectly.'
+  },
+  {
+    q:'cis-1,2-cyclohexanedicarboxylic acid has a lower pKa₁ than its trans isomer because:',
+    options:['The cis isomer is more stable conformationally','Both axial COOH groups enable intramolecular H-bonding in the anion','The trans isomer is less polar','cis isomers are always more acidic'],
+    answer:1,
+    explanation:'In cis-1,2-cyclohexanedicarboxylic acid, both COOH groups can occupy axial positions simultaneously, bringing them close in space. After the first ionisation, the carboxylate (COO⁻) is stabilised by intramolecular H-bonding with the adjacent COOH. This extra stabilisation lowers pKa₁. In the trans isomer, one group is axial and one equatorial — they are too far apart for effective H-bonding.'
+  },
+  {
+    q:'For benzoic acid derivatives, which substituent gives the LARGEST increase in acidity at the para position?',
+    options:['–F (para)','–Cl (para)','–NO₂ (para)','–CF₃ (para)'],
+    answer:2,
+    explanation:'–NO₂ at para (pKa 3.42) gives the largest acidity increase. It acts by both –I (induction) and –M (resonance withdrawal), with full resonance conjugation at para. –F at para is surprisingly weak (4.14) because its +M resonance donation partly counteracts –I. –Cl and –CF₃ are intermediate. –NO₂ has the largest Hammett σ_para value (+0.78).'
+  },
+  {
+    q:'p-methoxybenzoic acid (anisic acid) has a higher pKa than benzoic acid because:',
+    options:['–OCH₃ is electron-withdrawing by induction','–OCH₃ donates electrons by resonance at para, destabilising carboxylate','–OCH₃ reduces ring aromaticity','The methoxy group is too large'],
+    answer:1,
+    explanation:'–OCH₃ is a powerful +M donor (EDG by resonance). At para, it pushes electron density into the ring and toward the COOH group via resonance, destabilising the carboxylate anion (which needs to withdraw electrons). This makes p-methoxybenzoic acid less acidic (pKa 4.47) than benzoic acid (pKa 4.20). Note: at ortho, steric and field effects complicate matters — ortho-OCH₃ actually has pKa 4.09 (slightly more acidic than benzoic).'
+  },
+  {
+    q:'Which acid is more acidic: phenylacetic acid (C₆H₅–CH₂–COOH) or benzoic acid (C₆H₅–COOH)?',
+    options:['Phenylacetic acid (pKa 4.31)','Benzoic acid (pKa 4.20)','They are identical','Depends on solvent'],
+    answer:1,
+    explanation:'Benzoic acid (pKa 4.20) is more acidic than phenylacetic acid (pKa 4.31). In benzoic acid, the COOH is directly conjugated with the ring, allowing resonance delocalisation of the negative charge into the aromatic ring after ionisation. In phenylacetic acid, the CH₂ insulator breaks this conjugation — the phenyl group can only exert a weak inductive effect through CH₂.'
+  }
+];
+
+let QUIZ_IDX = 0;
+let QUIZ_SCORE = 0;
+let QUIZ_ANSWERED = null; // null = not yet, index = chosen answer
+let QUIZ_DONE = false;
+
+function quizAnswer(idx){
+  if(QUIZ_ANSWERED !== null) return;
+  QUIZ_ANSWERED = idx;
+  if(idx === QUIZ_QUESTIONS[QUIZ_IDX].answer) QUIZ_SCORE++;
+  renderSim();
+}
+function quizNext(){
+  if(QUIZ_IDX < QUIZ_QUESTIONS.length-1){
+    QUIZ_IDX++;
+    QUIZ_ANSWERED = null;
+  } else {
+    QUIZ_DONE = true;
+  }
+  renderSim();
+}
+function quizRestart(){
+  QUIZ_IDX=0; QUIZ_SCORE=0; QUIZ_ANSWERED=null; QUIZ_DONE=false;
+  renderSim();
+}
+
+function quizHTML(){
+  if(QUIZ_DONE){
+    const pct = Math.round(QUIZ_SCORE/QUIZ_QUESTIONS.length*100);
+    const grade = pct>=80?['Excellent!','#78d0c0']:pct>=60?['Good effort','#e0c878']:['Keep revising','#e08080'];
+    return '<div style="max-width:560px;margin:0 auto;text-align:center;padding:32px 0">'+
+      '<div style="font-size:48px;margin-bottom:8px">'+(pct>=80?'🎯':pct>=60?'📚':'💪')+'</div>'+
+      '<div style="font-size:28px;font-weight:800;color:'+grade[1]+';margin-bottom:8px">'+grade[0]+'</div>'+
+      '<div style="font-size:18px;color:rgba(255,255,255,0.6);margin-bottom:4px">'+QUIZ_SCORE+' / '+QUIZ_QUESTIONS.length+' correct</div>'+
+      '<div style="font-size:40px;font-weight:800;color:#fff;margin:12px 0">'+pct+'%</div>'+
+      '<div style="margin-top:4px;height:8px;border-radius:4px;background:rgba(255,255,255,0.08);overflow:hidden;max-width:300px;margin:12px auto 28px">'+
+        '<div style="height:100%;width:'+pct+'%;background:'+grade[1]+';border-radius:4px;transition:width .6s"></div>'+
+      '</div>'+
+      '<button onclick="quizRestart()" style="padding:10px 32px;border-radius:5px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.88);font-size:14px;font-weight:600;cursor:pointer;letter-spacing:.02em">Try Again</button>'+
+    '</div>';
+  }
+
+  const q = QUIZ_QUESTIONS[QUIZ_IDX];
+  const answered = QUIZ_ANSWERED !== null;
+  const correct = q.answer;
+
+  const optionsHTML = q.options.map((opt,i)=>{
+    let bg='rgba(255,255,255,0.04)', border='rgba(255,255,255,0.1)', col='rgba(255,255,255,0.75)';
+    if(answered){
+      if(i===correct){ bg='rgba(100,200,120,0.15)'; border='rgba(100,200,120,0.5)'; col='#78d080'; }
+      else if(i===QUIZ_ANSWERED && i!==correct){ bg='rgba(220,80,60,0.15)'; border='rgba(220,80,60,0.5)'; col='#e07070'; }
+      else { col='rgba(255,255,255,0.3)'; }
+    }
+    const icon = answered ? (i===correct?'✓ ':i===QUIZ_ANSWERED&&i!==correct?'✗ ':'  ') : '';
+    return '<button onclick="quizAnswer('+i+')" style="width:100%;text-align:left;padding:14px 18px;border-radius:10px;background:'+bg+';border:1.5px solid '+border+';color:'+col+';font-size:14px;line-height:1.5;cursor:'+(answered?'default':'pointer')+';transition:all .15s;margin-bottom:8px;font-family:inherit">'+
+      (icon?'<strong>'+icon+'</strong>':'')+opt+
+    '</button>';
+  }).join('');
+
+  const progress = '<div style="display:flex;align-items:center;gap:10px;margin-bottom:24px">'+
+    '<div style="font-size:13px;color:rgba(255,255,255,0.35)">'+( QUIZ_IDX+1)+' / '+QUIZ_QUESTIONS.length+'</div>'+
+    '<div style="flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,0.08);overflow:hidden">'+
+      '<div style="height:100%;width:'+(Math.round((QUIZ_IDX/QUIZ_QUESTIONS.length)*100))+'%;background:rgba(255,255,255,0.35);border-radius:2px;transition:width .4s"></div>'+
+    '</div>'+
+    '<div style="font-size:13px;color:rgba(255,255,255,0.35)">Score: '+QUIZ_SCORE+'</div>'+
+  '</div>';
+
+  const explanation = answered ?
+    '<div style="margin-top:16px;padding:16px 18px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09)">'+
+      '<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.38);margin-bottom:8px">Explanation</div>'+
+      '<div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7">'+q.explanation+'</div>'+
+      '<button onclick="quizNext()" style="margin-top:16px;padding:9px 24px;border-radius:5px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.88);font-size:13.5px;font-weight:600;cursor:pointer;letter-spacing:.02em">'+
+        (QUIZ_IDX<QUIZ_QUESTIONS.length-1 ? 'Next Question →' : 'See Results')+
+      '</button>'+
+    '</div>' : '';
+
+  return '<div style="max-width:600px;margin:0 auto">'+
+    progress+
+    '<div style="font-size:18px;font-weight:700;color:rgba(255,255,255,0.9);line-height:1.55;margin-bottom:20px">'+q.q+'</div>'+
+    optionsHTML+
+    explanation+
+  '</div>';
+}
+
+// ── Render the full simulator ────────────────────────────
+function renderSim(){
+  const root = document.getElementById('sim-root');
+  if(!root) return;
+
+  const pkas = SIM.map((sl,i)=>({ val:simPka(sl), label:simLabel(sl), col:SLOT_COLORS[i] }));
+  const activeG = GROUPS.find(x=>x.id===SIM[SIM_ACTIVE_SLOT].group) || GROUPS[0];
+  const activePka = simPka(SIM[SIM_ACTIVE_SLOT]);
+
+  function acidLabel(pka){
+    if(pka<7)  return {txt:'Strong Acid',   col:'#c0392b'};
+    if(pka<9)  return {txt:'Moderate Acid', col:'#d35400'};
+    if(pka<11) return {txt:'Weak Acid',     col:'#27ae60'};
+    return             {txt:'Very Weak Acid',col:'#2980b9'};
+  }
+
+  // pKa → heatmap colour (low=red, high=blue) for table cells
+  function heatCol(v){
+    if(v===null) return 'transparent';
+    // range ~2.0 (strongest acid) to ~4.9 (weakest)
+    const t = Math.max(0, Math.min(1, (v - 2.0)/(5.0 - 2.0)));
+    const r = Math.round(220 - t*100);
+    const g = Math.round(80  + t*100);
+    const b = Math.round(80  + t*120);
+    return `rgba(${r},${g},${b},0.18)`;
+  }
+  function heatText(v){
+    if(v===null) return 'rgba(255,255,255,0.15)';
+    const t = Math.max(0, Math.min(1, (v - 2.0)/(5.0 - 2.0)));
+    const r = Math.round(200 - t*100);
+    const g = Math.round(60  + t*110);
+    const b = Math.round(60  + t*130);
+    return `rgb(${r},${g},${b})`;
+  }
+
+  root.innerHTML = `
+  <style>
+    #sim-root { font-family:'DM Sans',sans-serif; color:rgba(255,255,255,0.85); }
+
+    /* ── Sub-nav tabs ── */
+    .lab-tabs {
+      display:flex; gap:2px; margin-bottom:32px;
+      background:rgba(255,255,255,0.04); border-radius:8px;
+      padding:3px; width:fit-content;
+    }
+    .lab-tab {
+      padding:7px 18px; font-size:12.5px; font-weight:550; cursor:pointer;
+      color:rgba(255,255,255,0.38); background:transparent; border:none;
+      border-radius:6px; transition:color .18s, background .18s;
+      letter-spacing:.025em;
+    }
+    .lab-tab:hover { color:rgba(255,255,255,0.68); background:rgba(255,255,255,0.04); }
+    .lab-tab.active {
+      color:rgba(255,255,255,0.92); background:rgba(255,255,255,0.1);
+      font-weight:650;
+    }
+
+    /* ── Section panels ── */
+    .lab-panel { display:none; }
+    .lab-panel.active { display:block; }
+
+    /* ── Substituent chip tray ── */
+    .chip-tray { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+    .gchip {
+      padding:4px 12px; border-radius:5px;
+      font-size:11.5px; font-family:'DM Mono',monospace;
+      cursor:pointer; transition:color .15s, background .15s, border-color .15s;
+      border:1px solid transparent; font-weight:500; letter-spacing:.02em;
+    }
+    .gchip.ewg    { background:rgba(160,50,50,0.1); border-color:rgba(160,50,50,0.2); color:rgba(220,140,130,0.75); }
+    .gchip.edg    { background:rgba(40,120,75,0.1); border-color:rgba(40,120,75,0.2); color:rgba(100,190,140,0.75); }
+    .gchip.neutral{ background:rgba(100,100,140,0.1); border-color:rgba(100,100,140,0.2); color:rgba(160,160,195,0.75); }
+    .gchip.ewg.selected    { background:rgba(160,50,50,0.22); border-color:rgba(210,110,100,0.55); color:rgb(230,160,150); font-weight:650; }
+    .gchip.edg.selected    { background:rgba(40,120,75,0.22); border-color:rgba(80,180,120,0.55); color:rgb(120,200,155); font-weight:650; }
+    .gchip.neutral.selected{ background:rgba(100,100,140,0.22); border-color:rgba(150,150,195,0.55); color:rgb(175,175,215); font-weight:650; }
+
+    /* ── 4 compound slots ── */
+    .slots-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:28px; }
+    @media(max-width:700px){ .slots-row { grid-template-columns:1fr 1fr; } }
+
+    .slot-tile {
+      border-radius:14px; padding:14px 12px 12px;
+      cursor:pointer; transition:all .18s;
+      border:2px solid transparent; position:relative;
+    }
+    .slot-tile:hover { transform:translateY(-2px); }
+    .slot-tile.active { border-color:rgba(255,255,255,0.35); box-shadow:0 0 0 4px rgba(255,255,255,0.06); }
+
+    .slot-num { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; opacity:.55; margin-bottom:6px; }
+    .slot-formula { font-size:15px; font-weight:700; font-family:'DM Mono',monospace; margin-bottom:2px; }
+    .slot-pka-big { font-size:26px; font-weight:800; font-family:'DM Mono',monospace; line-height:1; margin-bottom:4px; }
+    .slot-acid-lbl { font-size:11px; font-weight:600; letter-spacing:.04em; }
+    .slot-pos-row { display:flex; gap:4px; margin-top:10px; }
+    .slot-pos-btn {
+      flex:1; padding:4px 0; border-radius:4px; font-size:10px; font-family:'DM Mono',monospace;
+      cursor:pointer; border:1px solid rgba(0,0,0,0.12); background:rgba(0,0,0,0.06);
+      color:rgba(0,0,0,0.38); transition:color .15s, background .15s; font-weight:500;
+      letter-spacing:.04em;
+    }
+    .slot-pos-btn:hover { background:rgba(0,0,0,0.1); color:rgba(0,0,0,0.62); }
+    .slot-pos-btn.on { border-color:rgba(0,0,0,0.08); color:rgba(255,255,255,0.95); font-weight:650; }
+
+    /* ── Comparison panel ── */
+    .compare-row { display:flex; align-items:center; gap:14px; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .compare-row:last-child { border-bottom:none; }
+    .compare-label { font-size:13px; font-family:'DM Mono',monospace; min-width:120px; flex-shrink:0; }
+    .compare-bar-wrap { flex:1; height:28px; background:rgba(255,255,255,0.04); border-radius:6px; overflow:hidden; position:relative; }
+    .compare-bar { height:100%; border-radius:6px; display:flex; align-items:center; padding:0 10px; transition:width .4s cubic-bezier(.4,0,.2,1); }
+    .compare-pka { font-size:14px; font-weight:700; font-family:'DM Mono',monospace; min-width:46px; text-align:right; flex-shrink:0; }
+    .compare-badge { font-size:11px; font-weight:600; padding:2px 10px; border-radius:12px; white-space:nowrap; flex-shrink:0; min-width:90px; text-align:center; }
+
+    /* ── Detail strip ── */
+    .detail-strip { padding:20px 0 8px; }
+    .detail-sym { font-size:32px; font-weight:800; font-family:'DM Mono',monospace; line-height:1; }
+    .sigma-trio { display:flex; gap:10px; margin:14px 0; }
+    .sigma-card { flex:1; padding:10px; border-radius:10px; background:rgba(255,255,255,0.05); text-align:center; }
+    .sigma-pos { font-size:11px; font-weight:600; letter-spacing:.06em; opacity:.5; margin-bottom:4px; }
+    .sigma-val { font-size:18px; font-weight:700; font-family:'DM Mono',monospace; }
+
+    /* ── Carboxylic acid table ── */
+    .ca-table-wrap { overflow-x:auto; }
+    .ca-table { width:100%; border-collapse:separate; border-spacing:0; font-size:13px; }
+    .ca-table th {
+      padding:8px 14px; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+      color:rgba(255,255,255,0.4); text-align:center; border-bottom:1px solid rgba(255,255,255,0.1);
+      cursor:pointer; user-select:none; white-space:nowrap;
+    }
+    .ca-table th:first-child { text-align:left; }
+    .ca-table th:hover { color:rgba(255,255,255,0.75); }
+    .ca-table th.sort-active { color:#c8b4e8; }
+    .ca-table td {
+      padding:9px 14px; text-align:center; font-family:'DM Mono',monospace;
+      font-size:13px; font-weight:600; transition:background .2s;
+      border-bottom:1px solid rgba(255,255,255,0.04);
+    }
+    .ca-table td:first-child { text-align:left; font-family:'DM Sans',sans-serif; font-weight:600; padding-left:4px; }
+    .ca-table tr { cursor:pointer; transition:background .15s; }
+    .ca-table tr:hover td { background:rgba(255,255,255,0.04) !important; }
+    .ca-table tr.hl td { background:rgba(255,255,255,0.04) !important; outline:1px solid rgba(255,255,255,0.1); }
+    .ca-type-dot { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:8px; vertical-align:middle; flex-shrink:0; }
+    .sort-arrow { font-size:10px; margin-left:4px; opacity:.5; }
+    .col-group-header { font-size:10px; color:rgba(255,255,255,0.3); padding:6px 14px 2px; text-align:center; letter-spacing:.08em; text-transform:uppercase; }
+    .pattern-box { margin-top:24px; padding:16px 20px; border-radius:12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); }
+    .pattern-title { font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:10px; }
+    .pattern-item { font-size:15px; line-height:1.7; color:rgba(255,255,255,0.65); padding-left:18px; position:relative; }
+    .pattern-item::before { content:'→'; position:absolute; left:0; color:rgba(180,150,220,0.7); font-weight:700; }
+  </style>
+
+  <!-- ── SUB-NAV ── -->
+  <div class="lab-tabs">
+    <button class="lab-tab ${SIM_TAB==='phenol'?'active':''}" onclick="simTab('phenol')">Phenol Acidity Lab</button>
+    <button class="lab-tab ${SIM_TAB==='carbox'?'active':''}" onclick="simTab('carbox')">Acid Patterns & Trends</button>
+    <button class="lab-tab ${SIM_TAB==='quiz'?'active':''}" onclick="simTab('quiz')">Quiz Mode</button>
+  </div>
+
+  <!-- ══════════════════════ TAB 1 — PHENOL LAB ══════════════════════ -->
+  <div class="lab-panel ${SIM_TAB==='phenol'?'active':''}">
+
+    <!-- Section label -->
+    <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px">
+      Editing Compound ${SIM_ACTIVE_SLOT+1} &nbsp;·&nbsp;
+      <span style="color:#e8a090">● EWG</span> &nbsp;
+      <span style="color:#78c898">● EDG</span> &nbsp;
+      <span style="color:#a8a8cc">● Neutral</span>
+    </div>
+
+    <!-- Substituent tray -->
+    <div class="chip-tray">
+      ${GROUPS.map(g=>`
+        <button class="gchip ${g.type} ${SIM[SIM_ACTIVE_SLOT].group===g.id?'selected':''}"
+          onclick="simSetGroup(${SIM_ACTIVE_SLOT},'${g.id}')">${g.sym}</button>`).join('')}
+    </div>
+
+    <div style="height:24px"></div>
+
+    <!-- 4 compound tiles -->
+    <div class="slots-row">
+      ${SIM.map((sl,i)=>{
+        const pka = simPka(sl);
+        const acL = acidLabel(pka);
+        const col = SLOT_COLORS[i];
+        const bg  = SLOT_BG[i];
+        const isActive = i===SIM_ACTIVE_SLOT;
+        // pastel text on light bg
+        return `<div class="slot-tile ${isActive?'active':''}"
+            style="background:${bg};border-color:${isActive?col:'transparent'}"
+            onclick="simActivateSlot(${i})">
+          <div class="slot-num" style="color:${col}">Compound ${i+1}</div>
+          <div style="display:flex;align-items:flex-start;gap:8px">
+            <div style="flex:1">
+              <div class="slot-formula" style="color:${col}">${simLabel(sl)}</div>
+              <div class="slot-acid-lbl" style="color:${acL.col}">${acL.txt}</div>
+            </div>
+            <div class="slot-pka-big" style="color:${col}">${pka.toFixed(2)}</div>
+          </div>
+          ${benzSVG(sl,i)}
+          <div class="slot-pos-row">
+            ${['ortho','meta','para'].map(p=>`
+              <button class="slot-pos-btn ${sl.pos===p?'on':''}"
+                onclick="event.stopPropagation();simSetPos(${i},'${p}')"
+                style="${sl.pos===p?'background:'+col+';border-color:'+col+';color:#fff;':''}"
+              >${p.slice(0,1).toUpperCase()+p.slice(1,4)}</button>`).join('')}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <!-- Comparison rows -->
+    <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px">pKₐ Comparison — most acidic first</div>
+    <div>
+      ${[...pkas.map((p,i)=>({...p,i}))].sort((a,b)=>a.val-b.val).map((p,rank)=>{
+        const acL = acidLabel(p.val);
+        const pMin = Math.min(...pkas.map(x=>x.val));
+        const pMax = Math.max(...pkas.map(x=>x.val));
+        const w = pMax===pMin ? 60 : Math.round(30 + 60*(pMax-p.val)/(pMax-pMin));
+        return `<div class="compare-row">
+          <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.22);min-width:24px;font-family:'DM Mono',monospace">#${rank+1}</span>
+          <div style="width:9px;height:9px;border-radius:50%;background:${p.col};flex-shrink:0"></div>
+          <span class="compare-label" style="color:${p.col}">${p.label}</span>
+          <div class="compare-bar-wrap">
+            <div class="compare-bar" style="width:${w}%;background:${p.col}30;">
+              <span style="font-size:12px;font-weight:700;color:${p.col};font-family:'DM Mono',monospace">${p.val.toFixed(2)}</span>
+            </div>
+          </div>
+          <span class="compare-badge" style="color:${acL.col};background:${acL.col}18;border:1px solid ${acL.col}30">${acL.txt}</span>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <!-- Horizontal number line -->
+    ${(()=>{
+      const allV = pkas.map(p=>p.val);
+      const lo = Math.min(...allV)-0.8, hi = Math.max(...allV)+0.8;
+      const W=520,H=48,padL=36,padR=36,ty=20,trackW=W-padL-padR;
+      const xOf = v => padL+trackW*(v-lo)/(hi-lo);
+      const ticks=[];
+      for(let v=Math.ceil(lo);v<=Math.floor(hi);v++){
+        const x=xOf(v).toFixed(1);
+        ticks.push(`<line x1="${x}" y1="${ty-4}" x2="${x}" y2="${ty+4}" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <text x="${x}" y="${ty+17}" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.3)" font-family="DM Mono,monospace">${v}</text>`);
+      }
+      const dots=pkas.map((p,i)=>{
+        const cx=xOf(p.val).toFixed(1);
+        const near=pkas.filter(q=>Math.abs(q.val-p.val)<0.35);
+        const mi=near.findIndex(q=>q===p);
+        const cy=mi%2===0?ty:ty-18;
+        return `<line x1="${cx}" y1="${ty}" x2="${cx}" y2="${cy}" stroke="${p.col}" stroke-width="1.5" opacity=".4"/>
+          <circle cx="${cx}" cy="${cy}" r="10" fill="${p.col}" opacity=".9"/>
+          <text x="${cx}" y="${+(cy+3.8).toFixed(1)}" text-anchor="middle" font-size="9" font-weight="700" fill="white" font-family="DM Mono,monospace">${i+1}</text>`;
+      }).join('');
+      return `<div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06)">
+        <div style="display:flex;justify-content:space-between;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:8px">
+          <span style="color:#e07070">← stronger acid</span><span>pKₐ number line</span><span style="color:#7090d0">weaker acid →</span>
+        </div>
+        <svg width="100%" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="overflow:visible">
+          <defs><linearGradient id="tg2" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#d06060" stop-opacity=".5"/>
+            <stop offset="100%" stop-color="#6080c0" stop-opacity=".35"/>
+          </linearGradient></defs>
+          <rect x="${padL}" y="${ty-2}" width="${trackW}" height="4" rx="2" fill="url(#tg2)"/>
+          ${ticks.join('')}${dots}
+        </svg>
+      </div>`;
+    })()}
+
+    <!-- Active compound detail strip -->
+    <div class="detail-strip" style="border-top:1px solid rgba(255,255,255,0.06);margin-top:24px;padding-top:24px">
+      <div style="display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap">
+        <div>
+          <div class="detail-sym" style="color:${SLOT_COLORS[SIM_ACTIVE_SLOT]}">${activeG.sym}</div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:4px;
+            color:${activeG.type==='ewg'?'#e08080':activeG.type==='edg'?'#60c080':'#a8a8cc'}">
+            ${activeG.type==='ewg'?'Electron-Withdrawing':activeG.type==='edg'?'Electron-Donating':'Neutral'}
+          </div>
+        </div>
+        <div style="flex:1;min-width:200px">
+          <div style="font-size:16px;font-weight:600;color:rgba(255,255,255,0.8);margin-bottom:2px">${activeG.label}</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:10px">
+            ${SIM[SIM_ACTIVE_SLOT].pos.charAt(0).toUpperCase()+SIM[SIM_ACTIVE_SLOT].pos.slice(1)} substitution on phenol
+          </div>
+          <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.65">${activeG.effect}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-size:40px;font-weight:800;font-family:'DM Mono',monospace;line-height:1;color:${SLOT_COLORS[SIM_ACTIVE_SLOT]}">${activePka.toFixed(2)}</div>
+          <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:2px">pKₐ</div>
+          <div style="font-size:12px;margin-top:6px;color:rgba(255,255,255,0.35)">
+            Δ ${(-(activeG.delta[SIM[SIM_ACTIVE_SLOT].pos[0]]))>=0?'+':''}${(-(activeG.delta[SIM[SIM_ACTIVE_SLOT].pos[0]])).toFixed(2)} from phenol
+          </div>
+        </div>
+      </div>
+      <div class="sigma-trio">
+        ${['ortho','meta','para'].map(p=>{
+          const sv=activeG.sigma[p[0]];
+          const sc=sv>0.1?'#e08080':sv<-0.1?'#60c080':'#a8a8cc';
+          return `<div class="sigma-card">
+            <div class="sigma-pos">Hammett σ ${p}</div>
+            <div class="sigma-val" style="color:${sc}">${sv>=0?'+':''}${sv.toFixed(2)}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2 — CARBOXYLIC ACID TABLE -->
+  <div class="lab-panel ${SIM_TAB==='carbox'?'active':''}">
+    <div style="display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap">
+      <!-- LEFT: table -->
+      <div style="flex:1;min-width:320px">
+        <div style="margin-bottom:18px">
+          <div style="font-size:22px;font-weight:700;color:rgba(255,255,255,0.92);margin-bottom:8px">Substituent Effects on Acid Strength</div>
+          <div style="font-size:15px;color:rgba(255,255,255,0.55);line-height:1.65">
+            Click any <strong style="color:rgba(255,255,255,0.8)">cell</strong> to see its structure.
+            Click a <strong style="color:rgba(255,255,255,0.8)">column header</strong> to sort by pKa.
+          </div>
+        </div>
+        <div class="ca-table-wrap">
+          <table class="ca-table">
+            <thead>
+              <tr>
+                <th rowspan="2" style="text-align:left;vertical-align:bottom;padding-bottom:12px;font-size:13px" onclick="caSort('y')">
+                  Substituent Y
+                </th>
+                <th rowspan="2" onclick="caSort('acetic')" style="vertical-align:bottom;padding-bottom:12px;border-right:1px solid rgba(255,255,255,0.1);font-size:13px;color:${CA_SORT==='acetic'?'#c8b4e8':'rgba(255,255,255,0.4)'}">
+                  Y&#8211;CH&#8322;COOH ${CA_SORT==='acetic'?'&#8593;':'<span style="opacity:.2">&#8597;</span>'}
+                </th>
+                <th colspan="3" style="font-size:12px;padding-bottom:4px;border-bottom:1px solid rgba(255,255,255,0.1)">Y&#8211;C&#8326;H&#8324;COOH</th>
+              </tr>
+              <tr>
+                <th onclick="caSort('ortho')" style="font-size:13px;color:${CA_SORT==='ortho'?'#c8b4e8':'rgba(255,255,255,0.4)'}">ortho ${CA_SORT==='ortho'?'&#8593;':'<span style="opacity:.2">&#8597;</span>'}</th>
+                <th onclick="caSort('meta')"  style="font-size:13px;color:${CA_SORT==='meta'?'#c8b4e8':'rgba(255,255,255,0.4)'}">meta ${CA_SORT==='meta'?'&#8593;':'<span style="opacity:.2">&#8597;</span>'}</th>
+                <th onclick="caSort('para')"  style="font-size:13px;color:${CA_SORT==='para'?'#c8b4e8':'rgba(255,255,255,0.4)'}">para ${CA_SORT==='para'?'&#8593;':'<span style="opacity:.2">&#8597;</span>'}</th>
+              </tr>
+            </thead>
+            <tbody>${caTableRows()}</tbody>
+          </table>
+        </div>
+        <!-- Legend -->
+        <div style="margin-top:18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+          <div style="font-size:13px;color:rgba(255,255,255,0.4)">pKa scale:</div>
+          <div style="flex:1;min-width:160px;max-width:240px">
+            <svg width="100%" height="18" viewBox="0 0 240 18" preserveAspectRatio="none">
+              <defs><linearGradient id="leg2" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%"   stop-color="rgba(220,60,50,0.85)"/>
+                <stop offset="50%"  stop-color="rgba(210,150,40,0.75)"/>
+                <stop offset="100%" stop-color="rgba(50,90,225,0.8)"/>
+              </linearGradient></defs>
+              <rect x="0" y="3" width="240" height="12" rx="6" fill="url(#leg2)"/>
+            </svg>
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.35);margin-top:3px">
+              <span>2.0 stronger acid</span><span>5.0 weaker acid</span>
+            </div>
+          </div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.35);margin-left:auto">
+            <span style="color:#e08080">&#9679; EWG</span> &nbsp;
+            <span style="color:#60c080">&#9679; EDG</span> &nbsp;
+            <span style="color:#a8a8cc">&#9679; Neutral</span>
+          </div>
+        </div>
+      </div>
+      <!-- RIGHT: structure viewer -->
+      <div style="width:260px;flex-shrink:0">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px">Structure Viewer</div>
+        <div style="border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:20px;min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          ${caStructHTML()}
+        </div>
+        <div class="pattern-box" style="margin-top:16px">
+          <div class="pattern-title">Key patterns</div>
+          <div class="pattern-item">Aliphatic: EWG acts by <strong>induction only</strong> through CH&#8322;</div>
+          <div class="pattern-item" style="margin-top:8px">Ortho anomaly: steric + field effects override Hammett</div>
+          <div class="pattern-item" style="margin-top:8px">Resonance EWGs: <strong>para &gt; meta</strong> acidity</div>
+          <div class="pattern-item" style="margin-top:8px">EDGs always raise pKa (weaker acid)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRENDS SECTIONS (below the table) -->
+    <div style="margin-top:40px">
+      ${trendSectionsHTML()}
+    </div>
+  </div>
+
+  <!-- TAB 3 — QUIZ MODE -->
+  <div class="lab-panel ${SIM_TAB==='quiz'?'active':''}">
+    ${quizHTML()}
+  </div>
+  `;
+}
+
+// ── Simulator actions ────────────────────────────────────
+let SIM_TAB = 'phenol';
+let QUIZ_STATE = null; // {questions, current, score, answered}
+function simTab(t){ SIM_TAB=t; renderSim(); }
+function caSort(col){ CA_SORT=col; renderSim(); }
+function caSelect(e, y, col){
+  e.stopPropagation();
+  if(CA_HIGHLIGHTED && CA_HIGHLIGHTED.y===y && CA_HIGHLIGHTED.col===col){
+    CA_HIGHLIGHTED=null;
+  } else {
+    CA_HIGHLIGHTED={y,col};
+  }
+  renderSim();
+}
+function caHighlight(y){ /* legacy, unused */ }
+function simActivateSlot(i){
+  SIM_ACTIVE_SLOT = i;
+  renderSim();
+}
+function simSetGroup(slotIdx, gid){
+  SIM[slotIdx].group = gid;
+  renderSim();
+}
+function simSetPos(slotIdx, pos){
+  SIM[slotIdx].pos = pos;
+  renderSim();
+}
+
+// Initial sim render (called after section switch)
+// We hook into switchSection to trigger renderSim on first visit
+renderTypeChips();
+renderCards();
+renderRef();
+renderSim();
+
+</script>
+</body>
+</html>

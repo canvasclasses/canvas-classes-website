@@ -29,7 +29,7 @@ interface TaxonomyNode {
     [key: string]: any;
 }
 import { useCrucibleProgress } from '@/hooks/useCrucibleProgress';
-import { CHAPTERS, CHAPTER_ID_MAPPINGS } from '@/lib/chaptersConfig';
+import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 import { useMagnetic } from '@/hooks/useMagnetic';
 import MolecularParticles from '@/components/effects/MolecularParticles';
 import AnimatedCounter from '@/components/effects/AnimatedCounter';
@@ -91,9 +91,9 @@ function shuffleArray<T>(array: T[]): T[] {
     return newArray;
 }
 
-// Helper function to get standard chapter ID
+// Helper function to get standard chapter ID — questions already use ch11_*/ch12_* IDs
 function getStandardChapterId(chapterId: string): string {
-    return CHAPTER_ID_MAPPINGS[chapterId] || chapterId;
+    return chapterId;
 }
 
 // 30 Bhagvadgita Shlokas for daily rotation
@@ -340,28 +340,28 @@ export default function CrucibleUnified({ initialQuestions, taxonomy = [] }: Cru
         return () => clearInterval(interval);
     }, [viewMode, timerActive, gameMode]);
     
-    // Get all chapters from CHAPTERS config with accurate question counts
+    // Get all chapters from TAXONOMY_FROM_CSV — the single source of truth
     const allChapters = useMemo(() => {
-        return CHAPTERS.map(ch => {
-            // Count questions for this chapter from initialQuestions (including legacy IDs)
-            const chapterQuestionCount = initialQuestions.filter(q => {
-                const standardChapterId = getStandardChapterId(q.chapterId || '');
-                return standardChapterId === ch.id;
-            }).length;
-            
-            return {
-                id: ch.id,
-                name: ch.name,
-                class: ch.class,
-                branch: ch.branch,
-                order: ch.order,
-                color: CHAPTER_CONFIG[ch.id]?.color || 'text-gray-400',
-                bg: CHAPTER_CONFIG[ch.id]?.bg || 'bg-gray-500/10',
-                gradient: CHAPTER_CONFIG[ch.id]?.gradient || 'from-gray-500/20 to-slate-500/20',
-                icon: CHAPTER_CONFIG[ch.id]?.icon || '📚',
-                questionCount: chapterQuestionCount
-            };
-        }).sort((a, b) => a.order - b.order); // Sort by NCERT order
+        return TAXONOMY_FROM_CSV
+            .filter(node => node.type === 'chapter')
+            .map(ch => {
+                const chapterQuestionCount = initialQuestions.filter(q =>
+                    (q.chapterId || '') === ch.id
+                ).length;
+                return {
+                    id: ch.id,
+                    name: ch.name,
+                    class: ch.class_level ?? 11,
+                    branch: ch.chapterType ?? 'physical',
+                    order: ch.sequence_order ?? 99,
+                    color: CHAPTER_CONFIG[ch.id]?.color || 'text-gray-400',
+                    bg: CHAPTER_CONFIG[ch.id]?.bg || 'bg-gray-500/10',
+                    gradient: CHAPTER_CONFIG[ch.id]?.gradient || 'from-gray-500/20 to-slate-500/20',
+                    icon: CHAPTER_CONFIG[ch.id]?.icon || '📚',
+                    questionCount: chapterQuestionCount
+                };
+            })
+            .sort((a, b) => a.order - b.order);
     }, [initialQuestions]);
     
     const class11Chapters = allChapters.filter(ch => ch.class === 11);
