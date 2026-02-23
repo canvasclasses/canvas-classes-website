@@ -34,6 +34,12 @@ export interface Question {
     tags: Array<{ tag_id: string; weight: number }>;
     is_pyq: boolean;
     is_top_pyq: boolean;
+    exam_source?: {
+      exam?: string;
+      year?: number;
+      month?: string;
+      shift?: string;
+    };
   };
   svg_scales?: Record<string, number>;
 }

@@ -34,12 +34,12 @@ Solution: [If provided, use it. If not, generate high-quality solution]
 ### **RULE 1: Question Text Processing**
 
 1. **LaTeX Formatting:**
-   - Use `$...$` for inline math: `$H_2O$`, `$\Delta H$`
-   - Use `$$...$$` for display equations (centered, large)
+   - Use `$...$` for ALL math — both inline and display (see Rule 12: `$$...$$` is BANNED)
+   - ❌ NEVER use `$$...$$` — it breaks the renderer
    - Chemical formulas: Use `\ce{}` command: `\ce{H2SO4}`, `\ce{CaCO3}`
    - Subscripts: `H_{2}O` or `H_2O` (single char doesn't need braces)
    - Superscripts: `x^{2}` or `x^2` (single char doesn't need braces)
-   - Fractions: `\frac{numerator}{denominator}`
+   - Fractions: `\frac{numerator}{denominator}` — ❌ NEVER use `\dfrac` (causes oversized rendering in inline math)
    - Greek letters: `\alpha`, `\beta`, `\Delta`, `\pi`
    - Arrows: `\rightarrow`, `\leftarrow`, `\leftrightarrow`
    - Equilibrium: `\rightleftharpoons`
@@ -258,14 +258,51 @@ Examples for "ch11_mole":
 }
 ```
 
-**Exam Source (if PYQ):**
+**Exam Source (if PYQ) — CRITICAL RULES:**
+
+**RULE: The `exam` field is MANDATORY for all PYQs. Never omit it.**
+
+All questions uploaded so far (and until further notice) are **JEE Main** PYQs:
 ```json
 {
   "exam": "JEE Main",
   "year": 2024,
-  "month": "January",
-  "shift": "Shift 1"
+  "month": "Apr",
+  "day": 10,
+  "shift": "Evening"
 }
+```
+
+When JEE Advanced PYQs are added (user will explicitly notify), use:
+```json
+{
+  "exam": "JEE Advanced",
+  "year": 2023,
+  "month": "Jun",
+  "day": 4,
+  "shift": "Paper 1"
+}
+```
+
+**Field standards:**
+- `exam`: `"JEE Main"` or `"JEE Advanced"` — always present, exact spelling
+- `year`: 4-digit integer e.g. `2024`
+- `month`: Short name e.g. `"Jan"`, `"Apr"`, `"Jun"`, `"Aug"`, `"Sep"`
+- `day`: Integer day of month e.g. `10`
+- `shift`: `"Morning"` or `"Evening"` for JEE Main; `"Paper 1"` or `"Paper 2"` for JEE Advanced
+
+**Non-PYQ questions must NOT have `exam_source` field at all.**
+
+**Admin dashboard filters:**
+- "Mains PYQ" filter → matches `exam_source.exam` containing `"Main"`
+- "Advanced PYQ" filter → matches `exam_source.exam` containing `"Adv"` or `"Advanced"`
+
+**Ingestion script helper:**
+```javascript
+function src(year, month, day, shift) {
+  return { exam: 'JEE Main', year, month, day, shift };
+}
+// Usage: src(2024, 'Apr', 10, 'Evening')
 ```
 
 ### **RULE 7: Display ID Generation**
@@ -353,6 +390,7 @@ Before submitting, verify:
 - [ ] No spaces inside `$...$` at boundaries
 - [ ] Display math `$$...$$` on separate lines
 - [ ] MO configs: `\sigma^*`, `\pi^*` written inside `$...$` (renderer handles `^*` → `^{*}` automatically)
+- [ ] No `\dfrac` anywhere — use `\frac` only (dfrac causes oversized fractions in inline math)
 - [ ] MTC questions: use pipe-table Format A (see Rule 1.5)
 - [ ] Option plain-text length ≤ 28 chars if grid layout is desired; otherwise vertical stack is used automatically
 
@@ -821,6 +859,431 @@ For taxonomy questions:
 - Threshold set for 20px font size in ~220px half-width column
 - Strip `**` bold markers before measuring length
 
-**Document Version:** 1.2  
-**Last Updated:** 2026-02-20  
+---
+
+## 🚨 CRITICAL RULES ADDED 2026-02-21 (Based on Audit Findings)
+
+### **RULE 12: LaTeX Delimiter Standards (ENFORCED)**
+
+The database audit of 273 questions (thermodynamics, chemical equilibrium, ionic equilibrium) found systematic LaTeX errors. These rules are now mandatory:
+
+**1. NEVER use `$$...$$` for display math in solutions.**
+- `$$...$$` is NOT reliably supported by the renderer.
+- ✅ Use `$...$` for ALL math — both inline and display.
+- ❌ WRONG: `$$\Delta G = \Delta H - T\Delta S$$`
+- ✅ CORRECT: `$\Delta G = \Delta H - T\Delta S$`
+
+**2. NEVER use raw Unicode arrows (`→`, `←`, `⇌`) outside math blocks.**
+- ❌ WRONG: `$\Delta G < 0$ → spontaneous`
+- ✅ CORRECT: `$\Delta G < 0$ $\Rightarrow$ spontaneous`
+- ✅ CORRECT: `$\Delta G < 0 \Rightarrow \text{spontaneous}$`
+
+**3. NEVER write LaTeX commands (`\rightarrow`, `\frac`, `\Delta`, etc.) outside `$...$` delimiters.**
+- ❌ WRONG: `$K_P = K_C$\rightarrow$K_C = K_P$` (bare `\rightarrow` between two math blocks)
+- ✅ CORRECT: `$K_P = K_C \Rightarrow K_C = K_P$` (all inside one math block)
+- When connecting two math expressions with an arrow, merge them into one block.
+
+**4. LaTeX validation checklist (run before every insertion):**
+- [ ] Count `$` signs per line — must be even
+- [ ] No `$$` anywhere in the document
+- [ ] No Unicode `→`, `←`, `⇌` outside `$...$`
+- [ ] No `\rightarrow`, `\frac`, `\Delta` etc. outside `$...$`
+- [ ] All `{` have matching `}`
+
+---
+
+### **RULE 13: Question Text Integrity (NEVER SHORTEN)**
+
+**The question text (`question_text.markdown`) must be reproduced EXACTLY as given — never shortened, paraphrased, or compressed.**
+
+- ❌ WRONG: Shortening "Calculate the standard enthalpy of formation of methane given the following data..." to "Find ΔH for methane."
+- ✅ CORRECT: Preserve every word, every given value, every condition from the original question.
+- ❌ WRONG: Removing given data (e.g., bond energies, constants, conditions) from the question text.
+- ✅ CORRECT: All given data must appear in the question text exactly as in the source.
+
+**This rule applies even when the question text seems long. JEE questions are precise — every word matters.**
+
+---
+
+### **RULE 14: Solution Quality Minimums (STRICTLY ENFORCED)**
+
+The audit found 90+ thermodynamics questions with solutions that were just the final answer (3–15 words). This is unacceptable.
+
+**Minimum solution requirements by question type:**
+
+| Type | Minimum words | Minimum steps | Step-by-step required? |
+|---|---|---|---|
+| SCQ (Single Correct) | 80 words | 3 | ✅ Yes |
+| MCQ (Multi Correct) | 100 words | 3 | ✅ Yes |
+| NVT (Numerical) | 60 words | 3 | ✅ Yes |
+| AR (Assertion-Reason) | 80 words | 2 | ✅ Yes |
+| MTC (Match Column) | 60 words | 1 per match | ✅ Yes |
+| MST (Multi-Statement) | 80 words | 1 per statement | ✅ Yes |
+
+**NVT solutions MUST show full working — not just the final number:**
+- ❌ WRONG: `$\Delta G = -747$ J mol⁻¹. **Answer: 747**`
+- ✅ CORRECT:
+  ```
+  **Step 1 — Set up ICE table:**
+  Let initial moles O₃ = 1. At 50% dissociation: O₃ = 0.5, O₂ = 0.75. Total = 1.25 mol.
+
+  **Step 2 — Calculate partial pressures:**
+  $P_{\text{O}_3} = 0.5/1.25 = 0.4\,\text{atm}$, $P_{\text{O}_2} = 0.75/1.25 = 0.6\,\text{atm}$
+
+  **Step 3 — Calculate $K_p$:**
+  $K_p = \frac{(0.6)^3}{(0.4)^2} = \frac{0.216}{0.16} = 1.35$
+
+  **Step 4 — Apply $\Delta G^\circ = -RT\ln K_p$:**
+  $\Delta G^\circ = -8.3 \times 300 \times \ln 1.35 = -2490 \times 0.3 = -747\,\text{J mol}^{-1}$
+
+  **Answer: 747**
+  ```
+
+**Solution structure template (mandatory for all types):**
+```markdown
+**Step 1 — [Describe what you're doing]:**
+[Explanation + calculation]
+
+**Step 2 — [Next logical step]:**
+[Explanation + calculation]
+
+**Step 3 — [Final calculation or conclusion]:**
+$[\text{final equation}]$
+
+**Answer: [value/option]**
+```
+
+---
+
+### **RULE 15: MTC (Match The Column) Question Formatting — Table Placement**
+
+**CRITICAL: The answer table must NEVER appear in the question text.**
+
+The question text must show ONLY the unmatched List-I and List-II items. The matching (A→II, B→III, etc.) belongs ONLY in the solution.
+
+**❌ WRONG question text (answer embedded):**
+```markdown
+Match List-I with List-II:
+
+| List-I | List-II |
+|--------|---------|
+| (A) Spontaneous process | (II) ΔG < 0 |   ← WRONG: answer shown
+| (B) Isothermal process  | (III) ΔT = 0 |  ← WRONG: answer shown
+```
+
+**✅ CORRECT question text (no answers):**
+```markdown
+Match List-I with List-II:
+
+| | List-I | | List-II |
+|---|---|---|---|
+| A | Spontaneous process | I | $\Delta H < 0$ |
+| B | Process with $\Delta P=0, \Delta T=0$ | II | $\Delta G_{T,P} < 0$ |
+| C | $\Delta H_{\text{reaction}}$ | III | Isothermal and isobaric process |
+| D | Exothermic process | IV | [Bond energies of reactants] $-$ [Bond energies of products] |
+```
+
+**✅ CORRECT solution (matching with reasoning):**
+```markdown
+**Step 1 — Match A (Spontaneous process):**
+Spontaneous process requires $\Delta G_{T,P} < 0$. → **A → II**
+
+**Step 2 — Match B:**
+$\Delta P = 0$ (isobaric) + $\Delta T = 0$ (isothermal) → **B → III**
+
+**Step 3 — Match C:**
+$\Delta H_{\text{rxn}} = \sum \text{BE(reactants)} - \sum \text{BE(products)}$ → **C → IV**
+
+**Step 4 — Match D:**
+Exothermic: $\Delta H < 0$ → **D → I**
+
+**Final: A-II, B-III, C-IV, D-I → Answer: Option (1)**
+```
+
+---
+
+### **RULE 16: Audit Findings Summary (2026-02-21)**
+
+The following systematic issues were found and fixed across 273 questions:
+
+| Chapter | Questions | Issues Fixed |
+|---|---|---|
+| ch11_thermo | 137 | 21 LaTeX fixes ($$, →) |
+| ch11_chem_eq | 58 | 58 LaTeX fixes (all had $$) |
+| ch11_ionic_eq | 78 | 77 LaTeX fixes (all had $$) |
+
+**Remaining known issues (require manual re-ingestion):**
+- ~90 thermodynamics NVT/SCQ questions have solutions that are too short (< 30 words, no steps).
+- THERMO-070: MTC answer table was in question text — **fixed 2026-02-21**.
+- THERMO-071, THERMO-132: Empty options — need re-ingestion with correct option text.
+- Multiple SCQ questions (THERMO-026, 028, 048, 062, etc.) have 4–9 word solutions — need expansion.
+
+**These questions need to be re-ingested or manually edited in the admin dashboard following RULE 14.**
+
+---
+
+### **RULE 17: Pre-Insertion Schema Compatibility Check (MANDATORY — NEVER SKIP)**
+
+> **Why this rule exists:** On 2026-02-21, the admin dashboard showed ZERO questions because the `display_id` regex in `lib/models/Question.v2.ts` was `^[A-Z]{4}-\d{3}$` (exactly 4 letters). Existing questions had prefixes like `THERMO` (6), `EC` (2), `PB11` (4+digit), `HC` (2). Mongoose validation rejected ALL reads, making the entire database invisible. This was a silent failure — no error was thrown, the API just returned empty arrays.
+
+**Before writing ANY batch insertion script, run this checklist:**
+
+#### ✅ Step 1 — Verify your `display_id` prefix matches the schema regex
+
+Open `lib/models/Question.v2.ts` and find the `display_id` field. The current regex is:
+```
+/^[A-Z0-9]{2,10}-\d{3,}$/
+```
+Test your prefix manually:
+```bash
+node -e "console.log(/^[A-Z0-9]{2,10}-\d{3,}$/.test('HC-001'))"   # must print: true
+node -e "console.log(/^[A-Z0-9]{2,10}-\d{3,}$/.test('THERMO-001'))" # must print: true
+```
+**If it prints `false` → update the regex in `Question.v2.ts` BEFORE writing any scripts.**
+Also add the new prefix to the canonical prefix table in `Question.v2.ts` (lines ~147–176).
+
+#### ✅ Step 2 — Verify `_id` uses `uuidv4()`, NOT `new ObjectId()`
+
+Every batch script MUST use:
+```javascript
+const { v4: uuidv4 } = require('uuid');
+// ...
+_id: uuidv4(),   // ✅ CORRECT — UUID v4 string
+// NOT: new ObjectId()  ← ❌ WRONG — ObjectId is not a string
+```
+The Mongoose model stores `_id` as `String`. Inserting an `ObjectId` creates a type mismatch that causes Mongoose `.find()` to silently skip those documents.
+
+#### ✅ Step 3 — Verify the collection name is `questions_v2`
+
+```javascript
+const col = mongoose.connection.db.collection('questions_v2');  // ✅
+// NOT: 'questions'  ← ❌ wrong collection, invisible in admin dashboard
+// NOT: 'questionv2s' ← ❌ wrong collection name
+```
+
+#### ✅ Step 4 — Verify `deleted_at: null` is set explicitly
+
+```javascript
+deleted_at: null,   // ✅ REQUIRED — the API query filters { deleted_at: null }
+```
+Without this, the question is invisible in the admin dashboard even though it exists in MongoDB.
+
+#### ✅ Step 5 — Verify `chapter_id` matches `taxonomyData_from_csv.ts` exactly
+
+```javascript
+// ✅ Correct examples:
+chapter_id: 'ch11_hydrocarbon'   // Hydrocarbons
+chapter_id: 'ch11_thermo'        // Thermodynamics
+chapter_id: 'ch12_coord'         // Coordination Compounds
+// ❌ Wrong:
+chapter_id: 'chapter_hydrocarbons'  // old format — NOT used in questions_v2
+chapter_id: 'ch11_hydrocarbon_'     // trailing underscore
+```
+
+#### ✅ Step 6 — Run a post-insertion count check
+
+After every batch script, immediately run:
+```bash
+node -e "
+const { MongoClient } = require('mongodb');
+const URI = process.env.MONGODB_URI || 'YOUR_URI_HERE';
+async function main() {
+  const client = new MongoClient(URI);
+  await client.connect();
+  const col = client.db('crucible').collection('questions_v2');
+  const count = await col.countDocuments({ 'metadata.chapter_id': 'CHAPTER_ID_HERE' });
+  console.log('Questions in chapter:', count);
+  await client.close();
+}
+main();
+"
+```
+Expected count must equal (previous count + questions inserted in this batch).
+
+#### ✅ Step 7 — Canonical batch script template (copy this exactly)
+
+```javascript
+// scripts/insert_{chapter}_b{N}.js
+const { MongoClient } = require('mongodb');
+const { v4: uuidv4 } = require('uuid');
+
+const URI = process.env.MONGODB_URI;
+const now = new Date();
+
+const questions = [
+  {
+    _id: uuidv4(),                    // ✅ UUID v4 string — NEVER ObjectId
+    metadata: {
+      chapter_id: 'ch11_hydrocarbon', // ✅ must match taxonomyData_from_csv.ts exactly
+      display_id: 'HC-001',           // ✅ stored here AND at top level
+      question_id: 'HC-001',
+      difficulty: 'Medium',
+      question_type: 'SCQ',
+      is_pyq: true,
+      exam_source: { exam: 'JEE Main', year: 2024, month: 'January', shift: 'Morning' },
+      tags: [{ tag_id: 'tag_hydrocarbon_2', weight: 1.0 }],
+    },
+    display_id: 'HC-001',             // ✅ top-level display_id (required by schema)
+    question_text: { markdown: '...', latex_validated: true },
+    type: 'SCQ',
+    options: [
+      { id: 'a', text: '...', is_correct: false },
+      { id: 'b', text: '...', is_correct: true },
+      { id: 'c', text: '...', is_correct: false },
+      { id: 'd', text: '...', is_correct: false },
+    ],
+    answer: { correct_option: 'b' },
+    solution: { text_markdown: '...', latex_validated: true },
+    status: 'review',
+    version: 1,
+    quality_score: 85,
+    needs_review: false,
+    created_by: 'ai_agent',
+    updated_by: 'ai_agent',
+    created_at: now,
+    updated_at: now,
+    deleted_at: null,                 // ✅ REQUIRED — must be null, not undefined
+    asset_ids: [],
+  },
+];
+
+async function main() {
+  const client = new MongoClient(URI);
+  await client.connect();
+  const col = client.db('crucible').collection('questions_v2'); // ✅ correct collection
+  let ok = 0, fail = 0;
+  for (const doc of questions) {
+    try {
+      await col.insertOne(doc);
+      console.log(`  ✅ ${doc.display_id}`);
+      ok++;
+    } catch (e) {
+      console.error(`  ❌ ${doc.display_id}: ${e.message}`);
+      fail++;
+    }
+  }
+  console.log(`\n📊 ${ok} inserted, ${fail} failed`);
+  await client.close();
+}
+main().catch(e => { console.error(e); process.exit(1); });
+```
+
+**Key differences from old template:**
+- Uses `MongoClient` directly (NOT `mongoose.connect`) — avoids Mongoose schema validation on insert, which is correct for bulk AI-agent ingestion
+- `_id` is `uuidv4()` string
+- `deleted_at: null` is explicit
+- `display_id` appears at BOTH top level AND inside `metadata`
+- Collection is `questions_v2`
+
+---
+
+### **RULE 18: KaTeX Fraction Rendering — How It Works (2026-02-21)**
+
+The renderer uses a custom CSS fix in `app/globals.css` to make inline fractions (`$\frac{...}{...}$`) legible. Understanding this prevents confusion during QA.
+
+#### What KaTeX does by default
+KaTeX renders inline fractions in **textstyle** mode, which shrinks the numerator and denominator to ~70% of the surrounding text size via internal `.sizing.reset-sizeN.sizeN` CSS classes. This makes fractions like $\frac{-\Delta_r G^\circ}{2.303RT}$ very small and hard to read.
+
+#### The fix applied (globals.css)
+```css
+/* zoom participates in layout flow — surrounding = signs reposition correctly */
+.katex .mfrac {
+  zoom: 1.35;
+  display: inline-block;
+}
+```
+
+**Why `zoom` and not `transform: scale` or `font-size` override:**
+
+| Approach | Problem |
+|---|---|
+| `font-size: 1em` on sizing spans | Enlarges glyphs but KaTeX's `vlist` `top` offsets stay at original small values → text clips into the fraction line |
+| `transform: scale(1.35)` | Doesn't participate in layout flow → surrounding `=` signs overlap the fraction |
+| `zoom: 1.35` ✅ | Scales the already-correctly-spaced fraction output; layout flow updates so surrounding operators reposition correctly |
+
+#### What AI agents must do
+- **Nothing.** The CSS fix is global and automatic.
+- Write fractions normally: `$\frac{numerator}{denominator}$`
+- Do NOT add manual spacing hacks, `\displaystyle`, or `\dfrac` to work around sizing — the CSS handles it.
+- `\dfrac` is acceptable if you want display-style fractions explicitly, but is not required.
+
+#### If fractions look wrong after a renderer change
+Check `app/globals.css` around the `.katex .mfrac` rule. The `zoom: 1.35` must be present. Do not remove it.
+
+---
+
+### **RULE 19: Question Text Must Be Verbatim — ABSOLUTE RULE**
+
+**The `question_text.markdown` field must reproduce the source question EXACTLY as written — word for word, value for value, condition for condition.**
+
+This is the single most important content rule. Violations corrupt the question bank and mislead students.
+
+#### What "verbatim" means
+
+| Source element | Required action |
+|---|---|
+| Full question stem | Copy exactly — no paraphrasing |
+| All given numerical values | Include every value (e.g., `R = 8.314 J K⁻¹ mol⁻¹`) |
+| All given conditions | Include (e.g., `at 298 K and 1 atm`) |
+| All options (A/B/C/D) | Include full option text, not abbreviated |
+| Units | Include exactly as given |
+| Parenthetical instructions | Include (e.g., `(Nearest integer)`, `(Round off to 2 decimal places)`) |
+| Hint/given data blocks | Include all `[Given: ...]` blocks verbatim |
+
+#### Forbidden actions
+
+- ❌ **Shortening:** "Find ΔH for methane" instead of the full question
+- ❌ **Paraphrasing:** Changing "The enthalpy of combustion of propane..." to "Combustion enthalpy of C₃H₈..."
+- ❌ **Dropping given data:** Removing `R = 8.314`, bond energies, or other constants from the question text
+- ❌ **Dropping conditions:** Removing "at 298 K", "at 1 bar", "assuming ideal gas"
+- ❌ **Dropping parenthetical instructions:** Removing "(Nearest integer)" or "(Round off to 2 decimal places)"
+- ❌ **Merging options into prose:** Rewriting option text into the question stem
+
+#### Correct approach
+
+When ingesting from a screenshot or markdown file:
+1. Transcribe the full question stem character by character.
+2. Include every `[Given: ...]` block exactly as shown.
+3. Include every option exactly as shown.
+4. Only convert plain-text math to LaTeX — do not change the mathematical content.
+5. If unsure whether to include something, **include it**.
+
+**This rule applies to ALL question types: SCQ, MCQ, NVT, AR, MST, MTC.**
+
+---
+
+### **RULE 20: Mandatory Pre-Write LaTeX Checklist — Run BEFORE Every DB Write**
+
+> **Why this rule exists:** On 2026-02-21, a corrected solution for THERMO-036 was written to the DB with LaTeX commands (`\rightarrow`, `\frac`, `\times`, `\ln`) outside `$...$` delimiters, and plain text leaking into math blocks. The rendered output was completely broken. This checklist prevents that class of error.
+
+**Before writing ANY question text or solution to the database, verify every line passes ALL of these:**
+
+- [ ] Every LaTeX command (`\rightarrow`, `\frac`, `\times`, `\ln`, `\Delta`, `\log`, `\cdot`, `\text`, etc.) is inside `$...$`
+- [ ] Count `$` signs per line — must be even (no unclosed delimiters)
+- [ ] NO `$$...$$` anywhere — use `$...$` only (see Rule 12)
+- [ ] NO raw Unicode arrows `→`, `←`, `⇌` outside `$...$` (see Rule 12)
+- [ ] NO LaTeX commands leaking as plain text (e.g. `\rightarrow` written outside math)
+- [ ] Plain text units like `bar·L`, `J`, `K` stay as plain text — do NOT put them inside `$...$` where they render as italic math variables
+- [ ] Step headers use `**Step N — description:**` format — plain markdown bold, no LaTeX inside the header
+- [ ] Bullet points use `- ` prefix — plain markdown, no LaTeX in the bullet marker itself
+
+**If ANY check fails — fix it before writing. Do not write broken LaTeX to the DB.**
+
+> ⚠️ **CRITICAL — Script execution method:** NEVER use `node -e "..."` inline shell strings to write LaTeX content to the DB. Shell escaping layers corrupt backslashes (`\\\\` → `\\` → `\` → lost). **ALWAYS write a `.js` script file** (e.g. `scripts/fix_chapter_NNN.js`) and run it with `node scripts/fix_chapter_NNN.js`. Print the solution string to console before the DB write to visually confirm single backslashes are present.
+
+#### Quick reference — correct vs wrong patterns
+
+| Wrong | Correct |
+|---|---|
+| `Total work: = W_{1\rightarrow2} + ...` | `Total work: $W = W_{1 \rightarrow 2} + ...$` |
+| `= -20 + 20\ln 2$` (odd `$`) | `$= -20 + 20\ln 2$` |
+| `$$\Delta G = \Delta H - T\Delta S$$` | `$\Delta G = \Delta H - T\Delta S$` |
+| `$\Delta G < 0$ → spontaneous` | `$\Delta G < 0 \Rightarrow \text{spontaneous}$` |
+| `**Isobaric ($1 \rightarrow 2$):** \*\* ...` | `**Isobaric** ($1 \rightarrow 2$): ...` |
+| `$6.2$ bar·L` (units in math) | `$6.2$ bar·L` ✅ (units outside math) |
+
+---
+
+**Document Version:** 1.6
+**Last Updated:** 2026-02-21
 **Maintained By:** The Crucible Admin Team

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RotateCcw } from 'lucide-react';
 
 interface SVGScaleControlsProps {
@@ -20,11 +20,10 @@ export default function SVGScaleControls({
 }: SVGScaleControlsProps) {
   const [scale, setScale] = useState(initialScale);
 
-  // Sync if parent changes initialScale (e.g. switching questions)
-  const prevInitial = useState(initialScale)[0];
-  if (scale === prevInitial && initialScale !== prevInitial) {
+  // Sync local scale whenever initialScale changes (question switch or DB value loaded)
+  useEffect(() => {
     setScale(initialScale);
-  }
+  }, [initialScale]);
 
   const handleScaleChange = (newScale: number) => {
     setScale(newScale);

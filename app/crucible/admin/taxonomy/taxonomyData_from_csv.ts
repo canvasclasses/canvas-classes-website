@@ -1,6 +1,6 @@
-// CRITICAL: This taxonomy data is sourced from the user's Google Sheet CSV
-// DO NOT MODIFY OR OVERWRITE WITHOUT EXPLICIT USER APPROVAL
-// Source: https://docs.google.com/spreadsheets/d/e/2PACX-1vRa14TLedcWxIDW2-IXC9HEJ2yGx5_WczuzIAh-5mOWgnqr6jsptH6ouLBO7JjFih2hlKzA5kAadYGD/pub?output=csv
+// CRITICAL: This taxonomy data is the single source of truth for the practice session.
+// DO NOT MODIFY DIRECTLY — use the Taxonomy Dashboard at /crucible/admin/taxonomy
+// Changes made in the dashboard are auto-saved here via POST /api/v2/taxonomy/save
 
 export interface TaxonomyNode {
     id: string;
@@ -13,7 +13,7 @@ export interface TaxonomyNode {
 }
 
 export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
-    // Class 11 - Physical Chemistry
+    // Class 11
     { id: 'ch11_mole', name: 'Some Basic Concepts of Chemistry (Mole Concept)', parent_id: null, type: 'chapter', sequence_order: 1, class_level: 11, chapterType: 'physical' },
     { id: 'tag_mole_1', name: 'Laws Of Chemical Combination, Sig. Fig, Accuracy', parent_id: 'ch11_mole', type: 'topic' },
     { id: 'tag_mole_2', name: 'Concentration Terms (M, m, X)', parent_id: 'ch11_mole', type: 'topic' },
@@ -101,7 +101,6 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_pblock11_5', name: 'Properties & Reactions of Carbon Family', parent_id: 'ch11_pblock', type: 'topic' },
     { id: 'tag_pblock11_6', name: 'Silicates, Silicones and Zeolites', parent_id: 'ch11_pblock', type: 'topic' },
 
-    // Class 11 - Organic Chemistry
     { id: 'ch11_goc', name: 'GOC', parent_id: null, type: 'chapter', sequence_order: 10, class_level: 11, chapterType: 'organic' },
     { id: 'tag_goc_1', name: 'Classification & IUPAC Naming', parent_id: 'ch11_goc', type: 'topic' },
     { id: 'tag_goc_2', name: 'Acidity & Basicity', parent_id: 'ch11_goc', type: 'topic' },
@@ -130,10 +129,10 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_hydrocarbon_6', name: 'Preparation Reactions of Alkanes', parent_id: 'ch11_hydrocarbon', type: 'topic' },
     { id: 'tag_hydrocarbon_7', name: 'Preparation and Properties of Alkenes', parent_id: 'ch11_hydrocarbon', type: 'topic' },
     { id: 'tag_hydrocarbon_8', name: 'Reactions of Alkanes', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'tag_hydrocarbon_9', name: 'Reactions of Benzene', parent_id: 'ch11_hydrocarbon', type: 'topic' },
+    { id: 'tag_hydrocarbon_9', name: 'Reactions of Benzene & Derivatives', parent_id: 'ch11_hydrocarbon', type: 'topic' },
     { id: 'tag_hydrocarbon_10', name: 'Multi-Concept', parent_id: 'ch11_hydrocarbon', type: 'topic' },
+    { id: 'tag_ch11_hydrocarbon_1771659235901', name: 'Electrophilic Aromatic Substitution (SEAr)', parent_id: 'ch11_hydrocarbon', type: 'topic' },
 
-    // Class 11 - Practical
     { id: 'ch11_prac_org', name: 'Practical Organic Chemistry', parent_id: null, type: 'chapter', sequence_order: 13, class_level: 11, chapterType: 'practical' },
     { id: 'tag_prac_org_1', name: 'Purification Methods (Distillation, Chromatography, Sublimation)', parent_id: 'ch11_prac_org', type: 'topic' },
     { id: 'tag_prac_org_2', name: 'Detection of Elements (Lassaigne\'s Test: N, S, Halogens)', parent_id: 'ch11_prac_org', type: 'topic' },
@@ -143,14 +142,7 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_prac_org_6', name: 'Tests for Carbonyls & Carboxyls (2, 4-DNP, Sodium Bicarbonate, Esterification)', parent_id: 'ch11_prac_org', type: 'topic' },
     { id: 'tag_prac_org_7', name: 'Tests for Amines (Hinsberg Test, Azo Dye Test, Carbylamine)', parent_id: 'ch11_prac_org', type: 'topic' },
 
-    // Class 12 - Physical Chemistry
-    { id: 'ch12_aromatic', name: 'Aromatic Compounds', parent_id: null, type: 'chapter', sequence_order: 14, class_level: 12, chapterType: 'organic' },
-    { id: 'tag_aromatic_1', name: 'Aromatic Nucleophilic Substitution', parent_id: 'ch12_aromatic', type: 'topic' },
-    { id: 'tag_aromatic_2', name: 'Electrophilic Aromatic Substitution', parent_id: 'ch12_aromatic', type: 'topic' },
-    { id: 'tag_aromatic_3', name: 'Misc. Reactions of Aromatic Compounds', parent_id: 'ch12_aromatic', type: 'topic' },
-    { id: 'tag_aromatic_4', name: 'SEAr Reactions of Aniline & Nitrobenzene', parent_id: 'ch12_aromatic', type: 'topic' },
-    { id: 'tag_aromatic_5', name: 'SEAr Reactions of Phenol, ethers', parent_id: 'ch12_aromatic', type: 'topic' },
-
+    // Class 12
     { id: 'ch12_solutions', name: 'Solutions', parent_id: null, type: 'chapter', sequence_order: 15, class_level: 12, chapterType: 'physical' },
     { id: 'tag_solutions_1', name: 'Vapour Pressure & RLVP', parent_id: 'ch12_solutions', type: 'topic' },
     { id: 'tag_solutions_2', name: 'Basics & Definitions', parent_id: 'ch12_solutions', type: 'topic' },
@@ -179,7 +171,6 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_kinetics_7', name: 'Zero Order Reactions', parent_id: 'ch12_kinetics', type: 'topic' },
     { id: 'tag_kinetics_8', name: 'First Order Reactions & Special cases', parent_id: 'ch12_kinetics', type: 'topic' },
 
-    // Class 12 - Inorganic Chemistry
     { id: 'ch12_pblock', name: 'P Block (12th)', parent_id: null, type: 'chapter', sequence_order: 18, class_level: 12, chapterType: 'inorganic' },
     { id: 'tag_pblock12_1', name: 'Properties of P-Block', parent_id: 'ch12_pblock', type: 'topic' },
     { id: 'tag_pblock12_2', name: 'Compounds of Halides', parent_id: 'ch12_pblock', type: 'topic' },
@@ -212,14 +203,12 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_coord_8', name: 'Valence Bond Theory (VBT)', parent_id: 'ch12_coord', type: 'topic' },
     { id: 'tag_coord_9', name: 'Werner\'s Theory', parent_id: 'ch12_coord', type: 'topic' },
 
-    // Class 12 - Organic Chemistry
     { id: 'ch12_haloalkanes', name: 'Haloalkanes & Haloarenes', parent_id: null, type: 'chapter', sequence_order: 21, class_level: 12, chapterType: 'organic' },
-    { id: 'tag_haloalkanes_1', name: 'Aryl Halides', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'tag_haloalkanes_1', name: 'Aryl Halides & Their Reactions', parent_id: 'ch12_haloalkanes', type: 'topic' },
     { id: 'tag_haloalkanes_2', name: 'Elimination Reactions', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'tag_haloalkanes_3', name: 'NGP', parent_id: 'ch12_haloalkanes', type: 'topic' },
     { id: 'tag_haloalkanes_4', name: 'Nucleophilicity, Basicity & Leaving Group', parent_id: 'ch12_haloalkanes', type: 'topic' },
     { id: 'tag_haloalkanes_5', name: 'Physical properties of Haloalkanes', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'tag_haloalkanes_6', name: 'SN Reactions (SN1, SN2, SNi)', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'tag_haloalkanes_6', name: 'SN Reactions (SN1, SN2, SNi) & NGP', parent_id: 'ch12_haloalkanes', type: 'topic' },
     { id: 'tag_haloalkanes_7', name: 'Preparation (From Alcohols, Hydrocarbons)', parent_id: 'ch12_haloalkanes', type: 'topic' },
     { id: 'tag_haloalkanes_8', name: 'Elimination Reactions vs Substitution', parent_id: 'ch12_haloalkanes', type: 'topic' },
     { id: 'tag_haloalkanes_9', name: 'Multi-Concept', parent_id: 'ch12_haloalkanes', type: 'topic' },
@@ -231,6 +220,7 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_alcohols_4', name: 'Phenol Reactions (Reimer-Tiemann, Kolbe etc)', parent_id: 'ch12_alcohols', type: 'topic' },
     { id: 'tag_alcohols_5', name: 'Reactions of ethers, epoxides', parent_id: 'ch12_alcohols', type: 'topic' },
     { id: 'tag_alcohols_6', name: 'Other Reactions of Alcohols', parent_id: 'ch12_alcohols', type: 'topic' },
+    { id: 'tag_ch12_alcohols_1771659358099', name: 'SEAr Reactions of Phenols & Ethers', parent_id: 'ch12_alcohols', type: 'topic' },
 
     { id: 'ch12_aldehydes', name: 'Aldehydes & Ketones', parent_id: null, type: 'chapter', sequence_order: 23, class_level: 12, chapterType: 'organic' },
     { id: 'tag_aldehydes_1', name: 'Grignard Reagent', parent_id: 'ch12_aldehydes', type: 'topic' },
@@ -240,6 +230,7 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_aldehydes_5', name: 'Tests for carbonyl compounds (Tollen\'s, Fehling, Benedict etc)', parent_id: 'ch12_aldehydes', type: 'topic' },
     { id: 'tag_aldehydes_6', name: 'Nucleophilic Addition Reactions', parent_id: 'ch12_aldehydes', type: 'topic' },
     { id: 'tag_aldehydes_7', name: 'Oxidation & Reduction Reactions of Carbony!', parent_id: 'ch12_aldehydes', type: 'topic' },
+    { id: 'tag_ch12_aldehydes_1771659373017', name: 'Reactions of Aromatic Aldehydes & Ketones', parent_id: 'ch12_aldehydes', type: 'topic' },
 
     { id: 'ch12_amines', name: 'Amines', parent_id: null, type: 'chapter', sequence_order: 24, class_level: 12, chapterType: 'organic' },
     { id: 'tag_amines_1', name: 'Reactions of Aliphatic Amines', parent_id: 'ch12_amines', type: 'topic' },
@@ -247,12 +238,14 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_amines_3', name: 'Basic Character (Gaseous vs Aqueous Phase)', parent_id: 'ch12_amines', type: 'topic' },
     { id: 'tag_amines_4', name: 'Diazonium Salts & Coupling Reactions', parent_id: 'ch12_amines', type: 'topic' },
     { id: 'tag_amines_5', name: 'Gabriel Phthalimide, Hofmann Bromamide & Carbylamine', parent_id: 'ch12_amines', type: 'topic' },
+    { id: 'tag_ch12_amines_1771659399884', name: 'Reactions of Nitrobenzene & Aniline', parent_id: 'ch12_amines', type: 'topic' },
 
     { id: 'ch12_carboxylic', name: 'Carboxylic Acids & Derivatives', parent_id: null, type: 'chapter', sequence_order: 25, class_level: 12, chapterType: 'organic' },
     { id: 'tag_carboxylic_1', name: 'Acid Derivatives (Esters, Anhydrides, Amides)', parent_id: 'ch12_carboxylic', type: 'topic' },
     { id: 'tag_carboxylic_2', name: 'Acidity Trends & Substituent Effects', parent_id: 'ch12_carboxylic', type: 'topic' },
     { id: 'tag_carboxylic_3', name: 'Name Reactions (Dearboxylation, HVZ, Arndt Eistert etc.)', parent_id: 'ch12_carboxylic', type: 'topic' },
     { id: 'tag_carboxylic_4', name: 'Preparation Methods', parent_id: 'ch12_carboxylic', type: 'topic' },
+    { id: 'tag_ch12_carboxylic_1771659384907', name: 'Reactions of Aromatic Acids & Derivatives', parent_id: 'ch12_carboxylic', type: 'topic' },
 
     { id: 'ch12_biomolecules', name: 'Biomolecules', parent_id: null, type: 'chapter', sequence_order: 26, class_level: 12, chapterType: 'organic' },
     { id: 'tag_biomolecules_1', name: 'Carbohydrates (Glucose Structure & Reactions)', parent_id: 'ch12_biomolecules', type: 'topic' },
@@ -262,7 +255,6 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_biomolecules_5', name: 'Proteins & Amino Acids', parent_id: 'ch12_biomolecules', type: 'topic' },
     { id: 'tag_biomolecules_6', name: 'Vitamins & Enzymes', parent_id: 'ch12_biomolecules', type: 'topic' },
 
-    // Class 12 - Practical
     { id: 'ch12_salt', name: 'Salt Analysis', parent_id: null, type: 'chapter', sequence_order: 27, class_level: 12, chapterType: 'practical' },
     { id: 'tag_salt_1', name: 'Anion Analysis', parent_id: 'ch12_salt', type: 'topic' },
     { id: 'tag_salt_2', name: 'Cation Analysis', parent_id: 'ch12_salt', type: 'topic' },
@@ -286,10 +278,10 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_prac_phys_4', name: 'lodometric vs lodimetric Titrations (Starch Indicator)', parent_id: 'ch12_prac_phys', type: 'topic' },
     { id: 'tag_prac_phys_5', name: 'Hardness of Water (EDTA Titration)', parent_id: 'ch12_prac_phys', type: 'topic' },
     { id: 'tag_prac_phys_6', name: 'Surface Chemistry Practicals (Lyophilic/Lyophobic Sols & Dialysis)', parent_id: 'ch12_prac_phys', type: 'topic' },
+
 ];
 
 // Summary Statistics
-// Total Chapters: 28
-// Class 11: 13 chapters (8 Physical, 2 Inorganic, 2 Organic, 1 Practical)
-// Class 12: 15 chapters (4 Physical, 3 Inorganic, 6 Organic, 2 Practical)
-// Total Tags: 224
+// Total Chapters: 27
+// Total Tags: 210
+// Last saved: 2026-02-21T07:36:39.932Z

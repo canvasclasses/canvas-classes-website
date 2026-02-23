@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut } from 'lucide-react';
+import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut, FileDown } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import AnalyticsDashboard from './AnalyticsDashboard';
+import ExportDashboard from './components/ExportDashboard';
 import { TAXONOMY_FROM_CSV, type TaxonomyNode } from './taxonomy/taxonomyData_from_csv';
 import { validateLaTeX, getLatexSuggestions, type LaTeXValidationResult } from '@/lib/latexValidator';
 import MathRenderer from './components/MathRenderer';
@@ -94,6 +95,7 @@ export default function AdminPage() {
     // svg_scales are loaded from the selected question's DB record
     // Keys: 'question', 'solution', 'option_a', 'option_b', 'option_c', 'option_d'
     const [svgScaleOverrides, setSvgScaleOverrides] = useState<Record<string, number>>({});
+    const scaleDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [reclassifying, setReclassifying] = useState(false);
     
     // Bulk selection
@@ -107,6 +109,7 @@ export default function AdminPage() {
     
     // Analytics
     const [showAnalytics, setShowAnalytics] = useState(false);
+    const [showExport, setShowExport] = useState(false);
     
     // LaTeX Validation
     const [questionLatexValidation, setQuestionLatexValidation] = useState<LaTeXValidationResult | null>(null);
@@ -124,6 +127,7 @@ export default function AdminPage() {
     const [selectedDifficultyFilter, setSelectedDifficultyFilter] = useState('all');
     const [selectedTagStatusFilter, setSelectedTagStatusFilter] = useState('all');
     const [selectedYearFilter, setSelectedYearFilter] = useState('all');
+    const [selectedPaperFilter, setSelectedPaperFilter] = useState('all');
 
     // Get chapter-specific tags from taxonomy
     const [availableTags, setAvailableTags] = useState<Array<{id: string, name: string}>>([]);
@@ -140,7 +144,7 @@ export default function AdminPage() {
         return q?.svg_scales?.[field] ?? 100;
     };
 
-    // Save scale to DB and local state
+    // Save scale to DB and local state (debounced — only PATCHes 600ms after user stops dragging)
     const handleScaleChange = (questionId: string, field: string, scale: number) => {
         setSvgScaleOverrides(prev => ({ ...prev, [field]: scale }));
         const q = questions.find(q => q._id === questionId);
@@ -149,12 +153,24 @@ export default function AdminPage() {
         setQuestions(prev => prev.map(qq =>
             qq._id === questionId ? { ...qq, svg_scales: newScales } : qq
         ));
-        // Persist to DB (debounced via the existing handleUpdate)
-        fetch(`/api/v2/questions/${questionId}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ svg_scales: newScales })
-        }).catch(e => console.error('Scale save error:', e));
+        // Debounce the PATCH — cancel any pending save and schedule a new one
+        if (scaleDebounceRef.current) clearTimeout(scaleDebounceRef.current);
+        scaleDebounceRef.current = setTimeout(async () => {
+            try {
+                const res = await fetch(`/api/v2/questions/${questionId}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ svg_scales: newScales })
+                });
+                const data = await res.json();
+                if (!data.success) {
+                    console.error('Scale save failed:', data.error);
+                    alert(`Scale save failed: ${data.error}`);
+                }
+            } catch (e) {
+                console.error('Scale save error:', e);
+            }
+        }, 600);
     };
 
     // Reset local scale overrides when switching questions
@@ -494,6 +510,11 @@ export default function AdminPage() {
             const qYear = q.metadata?.exam_source?.year;
             if (!qYear || String(qYear) !== selectedYearFilter) return false;
         }
+        if (selectedPaperFilter !== 'all') {
+            const es = q.metadata?.exam_source;
+            const key = es ? `${es.exam}|${es.year}|${es.month}|${es.day}|${es.shift}` : '';
+            if (key !== selectedPaperFilter) return false;
+        }
         if (selectedShiftFilter !== 'all') {
             const qShift = q.metadata?.exam_source?.shift ?? '';
             if (qShift.toLowerCase() !== selectedShiftFilter.toLowerCase()) return false;
@@ -513,6 +534,20 @@ export default function AdminPage() {
         return true;
     });
     filteredQuestionsRef.current = filteredQuestions;
+
+    // Compute distinct papers from loaded questions for Previous Papers dropdown
+    const distinctPapers = Array.from(
+        new Map(
+            questions
+                .filter(q => q.metadata?.exam_source?.year && q.metadata?.exam_source?.day)
+                .map(q => {
+                    const es = q.metadata.exam_source!;
+                    const key = `${es.exam}|${es.year}|${es.month}|${es.day}|${es.shift}`;
+                    const label = `${es.exam} ${es.year} ${es.month ?? ''} ${es.day ?? ''} ${es.shift ?? ''}`.trim();
+                    return [key, label] as [string, string];
+                })
+        ).entries()
+    ).sort((a, b) => b[0].localeCompare(a[0]));
 
     // Calculate tag status counts for filter display
     const untaggedCount = questions.filter(q => !q.metadata.chapter_id || !(q.metadata.tags && q.metadata.tags.length > 0)).length;
@@ -546,6 +581,10 @@ export default function AdminPage() {
                     <button onClick={() => setShowAnalytics(!showAnalytics)} title="Analytics"
                         className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 rounded-lg transition shrink-0">
                         <BarChart3 size={13} />
+                    </button>
+                    <button onClick={() => setShowExport(true)} title="Export Practice Sheet"
+                        className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-violet-700/60 rounded-lg transition shrink-0">
+                        <FileDown size={13} />
                     </button>
 
                     <div className="w-px h-4 bg-gray-700/50 shrink-0" />
@@ -734,6 +773,18 @@ export default function AdminPage() {
                         <option value="Evening">Evening</option>
                     </select>
                     <select
+                        value={selectedPaperFilter}
+                        onChange={(e) => setSelectedPaperFilter(e.target.value)}
+                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${
+                            selectedPaperFilter !== 'all' ? 'border-purple-500 text-purple-300' : 'border-gray-700/50'
+                        }`}
+                    >
+                        <option value="all">📄 All Papers</option>
+                        {distinctPapers.map(([key, label]) => (
+                            <option key={key} value={key}>{label}</option>
+                        ))}
+                    </select>
+                    <select
                         value={selectedTopPYQFilter}
                         onChange={(e) => setSelectedTopPYQFilter(e.target.value)}
                         className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
@@ -754,7 +805,7 @@ export default function AdminPage() {
                         <option value="no-chapter">🔴 No Chapter ({noChapterCount})</option>
                         <option value="no-tag">🟡 No Tag ({noTagCount})</option>
                     </select>
-                    {(selectedChapterFilter !== 'all' || selectedTypeFilter !== 'all' || selectedSourceFilter !== 'all' || selectedTopPYQFilter !== 'all' || selectedDifficultyFilter !== 'all' || selectedTagStatusFilter !== 'all' || selectedYearFilter !== 'all' || selectedShiftFilter !== 'all') && (
+                    {(selectedChapterFilter !== 'all' || selectedTypeFilter !== 'all' || selectedSourceFilter !== 'all' || selectedTopPYQFilter !== 'all' || selectedDifficultyFilter !== 'all' || selectedTagStatusFilter !== 'all' || selectedYearFilter !== 'all' || selectedShiftFilter !== 'all' || selectedPaperFilter !== 'all') && (
                         <button
                             onClick={() => {
                                 setSelectedChapterFilter('all');
@@ -765,6 +816,7 @@ export default function AdminPage() {
                                 setSelectedTagStatusFilter('all');
                                 setSelectedYearFilter('all');
                                 setSelectedShiftFilter('all');
+                                setSelectedPaperFilter('all');
                             }}
                             className="shrink-0 text-xs text-red-400 hover:text-red-300 px-2"
                         >
@@ -774,10 +826,10 @@ export default function AdminPage() {
                 </div>
             </header>
 
-            {/* MAIN AREA: 60/40 split */}
+            {/* MAIN AREA: 54/46 split */}
             <div className="flex-1 flex overflow-hidden">
-                {/* LEFT: Editor (60%) */}
-                <div className="w-[60%] flex flex-col overflow-hidden border-r border-gray-800/50">
+                {/* LEFT: Editor (54%) */}
+                <div className="w-[54%] flex flex-col overflow-hidden border-r border-gray-800/50">
                     {selectedQuestion ? (
                         <div className="flex-1 overflow-y-auto p-6 space-y-4">
                             {/* Header Row */}
@@ -1107,7 +1159,7 @@ export default function AdminPage() {
                                 <div>
                                     <label className="text-xs text-gray-500 mb-2 block font-medium">Options</label>
                                     <div className="grid grid-cols-2 gap-3">
-                                        {selectedQuestion.options.map((opt) => (
+                                        {selectedQuestion.options.filter(opt => opt && opt.id).map((opt) => (
                                             <div
                                                 key={opt.id}
                                                 className={`p-3 rounded-lg border-2 transition ${
@@ -1286,8 +1338,8 @@ export default function AdminPage() {
                     )}
                 </div>
 
-                {/* RIGHT: Live Preview (40%) */}
-                <div className="w-[40%] flex flex-col overflow-hidden bg-gray-950/50">
+                {/* RIGHT: Live Preview (46%) */}
+                <div className="w-[46%] flex flex-col overflow-hidden bg-gray-950/50">
                     <div className="p-4 border-b border-gray-800/50 bg-gray-900/50">
                         <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
                             <Eye size={14} /> Live Preview
@@ -1398,6 +1450,15 @@ export default function AdminPage() {
                     questions={questions}
                     chapters={chapters}
                     onClose={() => setShowAnalytics(false)}
+                />
+            )}
+
+            {/* Export Dashboard Modal */}
+            {showExport && (
+                <ExportDashboard
+                    questions={questions}
+                    initialSelected={bulkMode && selectedQuestions.size > 0 ? selectedQuestions : undefined}
+                    onClose={() => setShowExport(false)}
                 />
             )}
         </div>

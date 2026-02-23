@@ -39,6 +39,7 @@ export default function TaxonomyPage() {
     const [selectedChapterType, setSelectedChapterType] = useState<ChapterType>('physical');
     const [selectedClassLevel, setSelectedClassLevel] = useState<11 | 12>(11);
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+    const [saving, setSaving] = useState(false);
 
     useEffect(() => {
         loadData();
@@ -88,44 +89,42 @@ export default function TaxonomyPage() {
         });
     };
 
+    const saveTaxonomyToFile = async (nodes: TaxonomyNode[]) => {
+        setSaving(true);
+        try {
+            const res = await fetch('/api/v2/taxonomy/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nodes }),
+            });
+            const data = await res.json();
+            if (!data.success) throw new Error(data.error || 'Save failed');
+            setMessage({ type: 'success', text: `Saved to file — ${data.chapters} chapters, ${data.tags} tags` });
+        } catch (err: any) {
+            setMessage({ type: 'error', text: `File save failed: ${err.message}` });
+        } finally {
+            setSaving(false);
+            setTimeout(() => setMessage(null), 4000);
+        }
+    };
+
     const saveEdit = async () => {
         if (!editingNode) return;
 
-        try {
-            setTaxonomy(prev => 
-                prev.map(node => 
-                    node.id === editingNode.id 
-                        ? { ...node, ...editingNode }
-                        : node
-                )
-            );
-
-            setEditingNode(null);
-            setMessage({ type: 'success', text: 'Node updated successfully' });
-            setTimeout(() => setMessage(null), 3000);
-        } catch (error) {
-            setMessage({ type: 'error', text: 'Failed to update node' });
-        }
+        const updated = taxonomy.map(node =>
+            node.id === editingNode.id ? { ...node, ...editingNode } : node
+        );
+        setTaxonomy(updated);
+        setEditingNode(null);
+        await saveTaxonomyToFile(updated);
     };
 
     const deleteNode = async (nodeId: string) => {
         if (!confirm('Are you sure you want to delete this node and all its children?')) return;
 
-        try {
-            const removeNodeAndChildren = (id: string, nodes: TaxonomyNode[]): TaxonomyNode[] => {
-                return nodes.filter(node => {
-                    if (node.id === id) return false;
-                    if (node.parent_id === id) return false;
-                    return true;
-                });
-            };
-
-            setTaxonomy(prev => removeNodeAndChildren(nodeId, prev));
-            setMessage({ type: 'success', text: 'Node deleted successfully' });
-            setTimeout(() => setMessage(null), 3000);
-        } catch (error) {
-            setMessage({ type: 'error', text: 'Failed to delete node' });
-        }
+        const updated = taxonomy.filter(node => node.id !== nodeId && node.parent_id !== nodeId);
+        setTaxonomy(updated);
+        await saveTaxonomyToFile(updated);
     };
 
     const addChapter = async () => {
@@ -148,11 +147,11 @@ export default function TaxonomyPage() {
                 chapterType: selectedChapterType
             };
 
-            setTaxonomy(prev => [...prev, createdNode]);
+            const updated = [...taxonomy, createdNode];
+            setTaxonomy(updated);
             setNewNode({});
             setShowAddForm(false);
-            setMessage({ type: 'success', text: 'Chapter added successfully' });
-            setTimeout(() => setMessage(null), 3000);
+            await saveTaxonomyToFile(updated);
         } catch (error) {
             setMessage({ type: 'error', text: 'Failed to add chapter' });
         }
@@ -171,9 +170,9 @@ export default function TaxonomyPage() {
                 type: 'topic'
             };
 
-            setTaxonomy(prev => [...prev, createdNode]);
-            setMessage({ type: 'success', text: 'Tag added successfully' });
-            setTimeout(() => setMessage(null), 3000);
+            const updated = [...taxonomy, createdNode];
+            setTaxonomy(updated);
+            await saveTaxonomyToFile(updated);
         } catch (error) {
             setMessage({ type: 'error', text: 'Failed to add tag' });
         }
@@ -385,13 +384,20 @@ export default function TaxonomyPage() {
                             <h1 className="text-2xl font-bold text-white">Chemistry Taxonomy Manager</h1>
                             <p className="text-gray-400 mt-1">Manage chapters and concept tags for JEE Chemistry</p>
                         </div>
-                        <button
-                            onClick={() => setShowAddForm(!showAddForm)}
-                            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                        >
-                            <Plus className="w-4 h-4" />
-                            Add Chapter
-                        </button>
+                        <div className="flex items-center gap-3">
+                            {saving && (
+                                <span className="text-sm text-yellow-400 flex items-center gap-1">
+                                    <Loader className="w-3 h-3 animate-spin" /> Saving...
+                                </span>
+                            )}
+                            <button
+                                onClick={() => setShowAddForm(!showAddForm)}
+                                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                            >
+                                <Plus className="w-4 h-4" />
+                                Add Chapter
+                            </button>
+                        </div>
                     </div>
 
                     {/* Stats */}
