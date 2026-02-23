@@ -53,39 +53,39 @@ export async function getTaxonomy(): Promise<Chapter[]> {
 
 // Mock chapters for fallback when MongoDB is not connected
 // Following the real taxonomy from taxonomyData_from_csv.ts
+// SINGLE SOURCE OF TRUTH: IDs here MUST exactly match taxonomyData_from_csv.ts chapter IDs
+// and metadata.chapter_id values stored in MongoDB questions_v2 collection.
+// DO NOT add chapters here that are not in taxonomyData_from_csv.ts.
 const MOCK_CHAPTERS: Chapter[] = [
-    // Class 11 Chapters — IDs must exactly match metadata.chapter_id in questions_v2
-    { id: 'ch11_mole',        name: 'Some Basic Concepts of Chemistry',                  class_level: 11, display_order: 1,  category: 'Physical'  },
-    { id: 'ch11_atom',        name: 'Structure of Atom',                                 class_level: 11, display_order: 2,  category: 'Physical'  },
-    { id: 'ch11_periodic',    name: 'Classification of Elements and Periodicity',        class_level: 11, display_order: 3,  category: 'Physical'  },
-    { id: 'ch11_bonding',     name: 'Chemical Bonding',                                  class_level: 11, display_order: 4,  category: 'Physical'  },
-    { id: 'ch11_thermo',      name: 'Thermodynamics',                                    class_level: 11, display_order: 5,  category: 'Physical'  },
-    { id: 'ch11_chem_eq',     name: 'Chemical Equilibrium',                              class_level: 11, display_order: 6,  category: 'Physical'  },
-    { id: 'ch11_ionic_eq',    name: 'Ionic Equilibrium',                                 class_level: 11, display_order: 7,  category: 'Physical'  },
-    { id: 'ch11_redox',       name: 'Redox Reactions',                                   class_level: 11, display_order: 8,  category: 'Inorganic' },
-    { id: 'ch11_pblock',      name: 'P Block (Class 11)',                                class_level: 11, display_order: 9,  category: 'Inorganic' },
-    { id: 'ch11_goc',         name: 'Organic Chemistry: Basic Principles (GOC)',         class_level: 11, display_order: 10, category: 'Organic'   },
-    { id: 'ch11_stereo',      name: 'Stereochemistry',                                   class_level: 11, display_order: 11, category: 'Organic'   },
-    { id: 'ch11_hydrocarbon', name: 'Hydrocarbons',                                      class_level: 11, display_order: 12, category: 'Organic'   },
-    { id: 'ch11_prac_org',    name: 'Practical Organic Chemistry',                       class_level: 11, display_order: 13, category: 'Practical' },
-    // Class 12 Chapters — IDs must exactly match metadata.chapter_id in questions_v2
-    { id: 'ch12_aromatic',    name: 'Aromatic Compounds',                                class_level: 12, display_order: 14, category: 'Organic'   },
-    { id: 'ch12_solutions',   name: 'Solutions',                                         class_level: 12, display_order: 15, category: 'Physical'  },
-    { id: 'ch12_electrochem', name: 'Electrochemistry',                                  class_level: 12, display_order: 16, category: 'Physical'  },
-    { id: 'ch12_kinetics',    name: 'Chemical Kinetics',                                 class_level: 12, display_order: 17, category: 'Physical'  },
-    { id: 'ch12_surface',     name: 'Surface Chemistry',                                 class_level: 12, display_order: 18, category: 'Physical'  },
-    { id: 'ch12_solid',       name: 'Solid State',                                       class_level: 12, display_order: 19, category: 'Physical'  },
-    { id: 'ch12_pblock',      name: 'P Block (Class 12)',                                class_level: 12, display_order: 20, category: 'Inorganic' },
-    { id: 'ch12_dblock',      name: 'D & F Block',                                       class_level: 12, display_order: 21, category: 'Inorganic' },
-    { id: 'ch12_coord',       name: 'Coordination Compounds',                            class_level: 12, display_order: 22, category: 'Inorganic' },
-    { id: 'ch12_haloalkanes', name: 'Haloalkanes and Haloarenes',                        class_level: 12, display_order: 23, category: 'Organic'   },
-    { id: 'ch12_alcohols',    name: 'Alcohols, Phenols and Ethers',                      class_level: 12, display_order: 24, category: 'Organic'   },
-    { id: 'ch12_aldehydes',   name: 'Aldehydes, Ketones and Carboxylic Acids',           class_level: 12, display_order: 25, category: 'Organic'   },
-    { id: 'ch12_amines',      name: 'Amines',                                            class_level: 12, display_order: 26, category: 'Organic'   },
-    { id: 'ch12_biomolecules',name: 'Biomolecules',                                      class_level: 12, display_order: 27, category: 'Organic'   },
-    { id: 'ch12_carboxylic',  name: 'Carboxylic Acids & Derivatives',                    class_level: 12, display_order: 28, category: 'Organic'   },
-    { id: 'ch12_salt',        name: 'Salt Analysis',                                     class_level: 12, display_order: 29, category: 'Practical' },
-    { id: 'ch12_prac_phys',   name: 'Practical Physical Chemistry',                      class_level: 12, display_order: 30, category: 'Practical' },
+    // Class 11 — 13 chapters
+    { id: 'ch11_mole',        name: 'Some Basic Concepts of Chemistry (Mole Concept)', class_level: 11, display_order: 1,  category: 'Physical'  },
+    { id: 'ch11_atom',        name: 'Structure of Atom',                               class_level: 11, display_order: 2,  category: 'Physical'  },
+    { id: 'ch11_periodic',    name: 'Classification of Elements and Periodicity',      class_level: 11, display_order: 3,  category: 'Physical'  },
+    { id: 'ch11_bonding',     name: 'Chemical Bonding',                                class_level: 11, display_order: 4,  category: 'Physical'  },
+    { id: 'ch11_thermo',      name: 'Thermodynamics',                                  class_level: 11, display_order: 5,  category: 'Physical'  },
+    { id: 'ch11_chem_eq',     name: 'Chemical Equilibrium',                            class_level: 11, display_order: 6,  category: 'Physical'  },
+    { id: 'ch11_ionic_eq',    name: 'Ionic Equilibrium',                               class_level: 11, display_order: 7,  category: 'Physical'  },
+    { id: 'ch11_redox',       name: 'Redox Reactions',                                 class_level: 11, display_order: 8,  category: 'Inorganic' },
+    { id: 'ch11_pblock',      name: 'P Block (Class 11)',                              class_level: 11, display_order: 9,  category: 'Inorganic' },
+    { id: 'ch11_goc',         name: 'GOC',                                             class_level: 11, display_order: 10, category: 'Organic'   },
+    { id: 'ch11_stereo',      name: 'Stereochemistry',                                 class_level: 11, display_order: 11, category: 'Organic'   },
+    { id: 'ch11_hydrocarbon', name: 'Hydrocarbons',                                    class_level: 11, display_order: 12, category: 'Organic'   },
+    { id: 'ch11_prac_org',    name: 'Practical Organic Chemistry',                     class_level: 11, display_order: 13, category: 'Practical' },
+    // Class 12 — 14 chapters (ch12_aromatic removed per user decision)
+    { id: 'ch12_solutions',   name: 'Solutions',                                       class_level: 12, display_order: 14, category: 'Physical'  },
+    { id: 'ch12_electrochem', name: 'Electrochemistry',                                class_level: 12, display_order: 15, category: 'Physical'  },
+    { id: 'ch12_kinetics',    name: 'Chemical Kinetics',                               class_level: 12, display_order: 16, category: 'Physical'  },
+    { id: 'ch12_pblock',      name: 'P Block (12th)',                                  class_level: 12, display_order: 17, category: 'Inorganic' },
+    { id: 'ch12_dblock',      name: 'D & F Block',                                    class_level: 12, display_order: 18, category: 'Inorganic' },
+    { id: 'ch12_coord',       name: 'Coordination Compounds',                          class_level: 12, display_order: 19, category: 'Inorganic' },
+    { id: 'ch12_haloalkanes', name: 'Haloalkanes & Haloarenes',                        class_level: 12, display_order: 20, category: 'Organic'   },
+    { id: 'ch12_alcohols',    name: 'Alcohols, Phenols & Ethers',                      class_level: 12, display_order: 21, category: 'Organic'   },
+    { id: 'ch12_aldehydes',   name: 'Aldehydes & Ketones',                             class_level: 12, display_order: 22, category: 'Organic'   },
+    { id: 'ch12_amines',      name: 'Amines',                                          class_level: 12, display_order: 23, category: 'Organic'   },
+    { id: 'ch12_carboxylic',  name: 'Carboxylic Acids & Derivatives',                  class_level: 12, display_order: 24, category: 'Organic'   },
+    { id: 'ch12_biomolecules',name: 'Biomolecules',                                    class_level: 12, display_order: 25, category: 'Organic'   },
+    { id: 'ch12_salt',        name: 'Salt Analysis',                                   class_level: 12, display_order: 26, category: 'Practical' },
+    { id: 'ch12_prac_phys',   name: 'Practical Physical Chemistry',                    class_level: 12, display_order: 27, category: 'Practical' },
 ];
 
 export async function saveTaxonomyNode(node: TaxonomyNode): Promise<{ success: boolean; message: string }> {
@@ -138,13 +138,14 @@ export async function getChapterQuestions(chapterId: string): Promise<QuestionPa
             type: q.type,
             options: q.options || [],
             answer: q.answer || {},
-            solution: { text_markdown: q.solution?.text_markdown || '' },
+            solution: { text_markdown: q.solution?.markdown || q.solution?.text_markdown || '' },
             metadata: {
                 difficulty: q.metadata?.difficulty || 'Medium',
                 chapter_id: q.metadata?.chapter_id || '',
                 tags: q.metadata?.tags || [],
                 is_pyq: q.metadata?.is_pyq || false,
                 is_top_pyq: q.metadata?.is_top_pyq || false,
+                exam_source: q.metadata?.exam_source,
             },
             svg_scales: q.svg_scales || {},
         }));

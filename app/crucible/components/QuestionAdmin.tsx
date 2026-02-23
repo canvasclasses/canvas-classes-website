@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import type { TaxonomyNode } from '../admin/taxonomy/taxonomyData';
-import { HARDCODED_TAXONOMY } from '../admin/taxonomy/taxonomyData';
+import { TAXONOMY_FROM_CSV, type TaxonomyNode } from '../admin/taxonomy/taxonomyData_from_csv';
 import { uploadToR2, UploadResult } from '@/lib/r2Storage';
 import { 
   Plus, 
@@ -57,8 +56,8 @@ export default function QuestionAdmin() {
   const audioInputRef = useRef<HTMLInputElement>(null);
 
   // Get chapters and tags from taxonomy
-  const chapters = HARDCODED_TAXONOMY.filter((n: TaxonomyNode) => n.type === 'chapter');
-  const tags = HARDCODED_TAXONOMY.filter((n: TaxonomyNode) => n.type === 'topic');
+  const chapters = TAXONOMY_FROM_CSV.filter((n: TaxonomyNode) => n.type === 'chapter');
+  const tags = TAXONOMY_FROM_CSV.filter((n: TaxonomyNode) => n.type === 'topic');
   const selectedChapterTags = tags.filter((t: TaxonomyNode) => t.parent_id === chapterId);
 
   const handleAudioSelect = (e: React.ChangeEvent<HTMLInputElement>) => {

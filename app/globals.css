@@ -390,13 +390,12 @@ body {
   border-bottom-width: 0.06em !important;
 }
 
-.katex .mfrac .mfrac {
-  font-size: 85% !important;
-}
-
-/* Make fraction numerator and denominator text larger */
-.katex .mfrac>span>span {
-  font-size: 100% !important;
+/* Scale up inline fractions without disturbing KaTeX's internal vlist geometry.
+   zoom (unlike transform:scale) participates in layout flow, so surrounding operators
+   (= signs etc.) correctly reposition around the enlarged fraction. */
+.katex .mfrac {
+  zoom: 1.35;
+  display: inline-block;
 }
 
 /* Inside option buttons: extra size boost for legibility */
@@ -418,9 +417,9 @@ button .katex,
   word-wrap: break-word;
 }
 
-/* Spacing fix for inline fractions so they don't clip */
-.katex .mfrac {
-  padding: 0.1em 0;
+/* Vertical breathing room so scaled fractions don't overlap adjacent text lines */
+.katex .mfrac .vlist-r {
+  padding: 0.05em 0;
 }
 
 /* Display-mode math blocks — same size as inline for consistency */
