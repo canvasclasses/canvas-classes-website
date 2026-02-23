@@ -1379,8 +1379,9 @@ export default function AdminPage() {
                                         const maxTextLength = Math.max(...selectedQuestion.options.map(opt => opt.text.length));
                                         const avgTextLength = selectedQuestion.options.reduce((sum, opt) => sum + opt.text.length, 0) / selectedQuestion.options.length;
                                         
-                                        // Use grid if: has images, OR all options are short (avg < 50 chars), OR max length < 80 chars
-                                        const useGrid = hasImages || avgTextLength < 50 || maxTextLength < 80;
+                                        // Use grid only for image options or truly short labels (e.g. "A", "B", numbers)
+                                        // Statement I/II options (~45-52 chars) and chemistry equations must be list view
+                                        const useGrid = hasImages || (avgTextLength < 20 && maxTextLength < 25);
                                         
                                         return (
                                             <div className={`mt-4 ${
