@@ -10,7 +10,7 @@ export default function FinalCTASection() {
     const isInView = useInView(ref, { once: true, margin: '-80px' });
 
     return (
-        <section className="relative w-full py-28 px-6 newhero-bg overflow-hidden">
+        <section className="relative w-full py-24 md:py-28 px-6 newhero-bg overflow-hidden">
             {/* Multi-layered glow */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/10 rounded-full blur-[160px]" />
@@ -33,7 +33,7 @@ export default function FinalCTASection() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5, delay: 0.1 }}
-                    className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-5 leading-[1.15]"
+                    className="text-3xl md:text-4xl font-medium tracking-tight text-white mb-6 leading-[1.15]"
                 >
                     Every Day You Wait,{' '}
                     <br className="hidden md:block" />
@@ -44,7 +44,7 @@ export default function FinalCTASection() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="text-base md:text-lg text-slate-400 leading-relaxed mb-10 max-w-xl mx-auto"
+                    className="text-base md:text-lg text-slate-400 font-light leading-relaxed mb-10 max-w-xl mx-auto"
                 >
                     JEE and NEET don&apos;t wait. Your syllabus doesn&apos;t shrink. But with the right tools, you can cover more ground in less time — starting right now.
                 </motion.p>
@@ -71,14 +71,14 @@ export default function FinalCTASection() {
                 </motion.div>
 
                 {/* Trust line */}
-                <motion.p
+                {/* <motion.p
                     initial={{ opacity: 0 }}
                     animate={isInView ? { opacity: 1 } : {}}
                     transition={{ duration: 0.5, delay: 0.5 }}
                     className="mt-8 text-xs text-slate-600"
                 >
                     No sign-up required. No credit card. Just start learning.
-                </motion.p>
+                </motion.p> */}
             </div>
         </section>
     );

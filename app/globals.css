@@ -111,6 +111,30 @@
   background-clip: text;
 }
 
+/* Gradient text — white to red tint */
+.pain-gradient-text {
+  background: linear-gradient(180deg, #fff 0%, rgba(248, 113, 113, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient text — white to emerald tint */
+.emerald-gradient-text {
+  background: linear-gradient(180deg, #fff 0%, rgba(52, 211, 153, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient text — white to violet tint */
+.violet-gradient-text {
+  background: linear-gradient(180deg, #fff 0%, rgba(167, 139, 250, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* Fade-up animation */
 .newhero-fade-up {
   animation: newhero-fadeUp 0.6s ease-out forwards;
@@ -118,8 +142,15 @@
 }
 
 @keyframes newhero-fadeUp {
-  0% { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Subtle pulse */
@@ -128,8 +159,15 @@
 }
 
 @keyframes newhero-pulseSubtle {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* Cursor blink — royal blue */
@@ -144,8 +182,15 @@
 }
 
 @keyframes newhero-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 /* Search focus ring — royal blue glow */

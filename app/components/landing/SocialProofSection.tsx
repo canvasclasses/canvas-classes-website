@@ -21,10 +21,10 @@ function useAnimatedCounter(target: number, isInView: boolean, duration = 2) {
 }
 
 const STATS = [
-    { icon: Users, value: 50000, suffix: '+', label: 'Students Trusted Us', color: 'text-blue-400' },
-    { icon: BookOpen, value: 500, suffix: '+', label: 'Video Lectures', color: 'text-emerald-400' },
-    { icon: Trophy, value: 10000, suffix: '+', label: 'Practice Questions', color: 'text-amber-400' },
-    { icon: Star, value: 98, suffix: '%', label: 'Student Satisfaction', color: 'text-purple-400' },
+    { icon: Users, value: 300000, suffix: '+', label: 'Students Trusted Us', color: 'text-blue-400' },
+    { icon: BookOpen, value: 2000, suffix: '+', label: 'Video Lectures', color: 'text-emerald-400' },
+    { icon: Trophy, value: 4000, suffix: '+', label: 'Practice Questions', color: 'text-amber-400' },
+    // { icon: Star, value: 98, suffix: '%', label: 'Student Satisfaction', color: 'text-purple-400' },
 ];
 
 const TESTIMONIALS = [

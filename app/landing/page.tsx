@@ -4,7 +4,8 @@ import FeaturesBento from "../components/FeaturesBento";
 import PainSection from "../components/landing/PainSection";
 import MethodSection from "../components/landing/MethodSection";
 import ComparisonSection from "../components/landing/ComparisonSection";
-import SocialProofSection from "../components/landing/SocialProofSection";
+import StatsSection from "../components/landing/StatsSection";
+import TestimonialsSection from "../components/landing/TestimonialsSection";
 import PaarasSirSection from "../components/landing/PaarasSirSection";
 import FinalCTASection from "../components/landing/FinalCTASection";
 
@@ -23,7 +24,7 @@ export default function LandingPage() {
             <PainSection />
 
             {/* Method Section - How Canvas approach is different */}
-            <MethodSection />
+            {/* <MethodSection /> */}
 
             {/* Features Bento Grid - The arsenal */}
             <FeaturesBento />
@@ -31,8 +32,11 @@ export default function LandingPage() {
             {/* Comparison - Before vs After Canvas */}
             <ComparisonSection />
 
-            {/* Social Proof - Stats & testimonials */}
-            <SocialProofSection />
+            {/* Stats - Quantifiable social proof */}
+            <StatsSection />
+
+            {/* Testimonials - Qualitative social proof */}
+            {/* <TestimonialsSection /> */}
 
             {/* Paaras Sir - Mentor credibility */}
             <PaarasSirSection />

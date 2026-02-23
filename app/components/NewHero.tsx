@@ -195,7 +195,7 @@ export default function NewHero() {
         const handler = (e: KeyboardEvent) => {
             if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
                 e.preventDefault();
-                searchInputRef.current?.focus();
+                window.dispatchEvent(new Event('openCommandPalette'));
             }
         };
         document.addEventListener('keydown', handler);
@@ -203,8 +203,11 @@ export default function NewHero() {
     }, []);
 
     const handleTagClick = useCallback((tag: string) => {
-        setSearchValue(tag);
-        searchInputRef.current?.focus();
+        window.dispatchEvent(new Event('openCommandPalette'));
+    }, []);
+
+    const handleSearchClick = useCallback(() => {
+        window.dispatchEvent(new Event('openCommandPalette'));
     }, []);
 
     return (
@@ -245,7 +248,7 @@ export default function NewHero() {
 
                     {/* Subheadline */}
                     <p
-                        className="text-lg text-slate-400 max-w-lg leading-relaxed newhero-fade-up"
+                        className="text-base md:text-lg text-slate-400 font-light leading-relaxed max-w-2xl mx-auto newhero-fade-up"
                         style={{ animationDelay: '100ms' }}
                     >
                         Stop memorizing. Start understanding. Interactive tools, PYQ simulations, and visual concepts built for NEET &amp; JEE.
@@ -253,7 +256,10 @@ export default function NewHero() {
 
                     {/* Search */}
                     <div className="w-full max-w-xl newhero-fade-up" style={{ animationDelay: '150ms' }}>
-                        <div className="relative group newhero-search-ring rounded-xl bg-white/[0.04] border border-white/[0.08] backdrop-blur-sm">
+                        <div
+                            className="relative group newhero-search-ring rounded-xl bg-white/[0.04] border border-white/[0.08] backdrop-blur-sm cursor-pointer"
+                            onClick={handleSearchClick}
+                        >
                             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
                                 <Search size={18} />
                             </div>
@@ -261,14 +267,24 @@ export default function NewHero() {
                                 ref={searchInputRef}
                                 type="text"
                                 value={searchValue}
-                                onChange={(e) => setSearchValue(e.target.value)}
+                                onChange={(e) => {
+                                    setSearchValue(e.target.value);
+                                    if (e.target.value.trim().length > 0) {
+                                        window.dispatchEvent(new CustomEvent('openCommandPalette', { detail: { search: e.target.value } }));
+                                        e.target.blur(); // Let command palette take over
+                                    }
+                                }}
+                                onFocus={(e) => {
+                                    window.dispatchEvent(new CustomEvent('openCommandPalette', { detail: { search: e.target.value } }));
+                                    e.target.blur(); // Let command palette take over
+                                }}
                                 placeholder={placeholderText}
                                 autoComplete="off"
-                                className="w-full bg-transparent py-4 pl-12 pr-12 text-base text-white placeholder:text-slate-500 focus:outline-none"
+                                className="w-full bg-transparent py-4 pl-12 pr-12 text-base text-white placeholder:text-slate-500 focus:outline-none cursor-pointer"
                             />
-                            <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
                                 <kbd className="hidden sm:inline-block px-2 py-1 rounded text-xs font-mono text-slate-500 bg-white/[0.04] border border-white/[0.08]">
-                                    ⌘K
+                                    ⌘ K
                                 </kbd>
                             </div>
                         </div>

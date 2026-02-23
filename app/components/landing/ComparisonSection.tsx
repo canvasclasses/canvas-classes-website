@@ -15,72 +15,108 @@ const COMPARISONS = [
 
 export default function ComparisonSection() {
     const ref = useRef<HTMLDivElement>(null);
-    const isInView = useInView(ref, { once: true, margin: '-80px' });
+    const isInView = useInView(ref, { once: true, margin: '-10% 0px' });
 
     return (
-        <section className="relative w-full py-24 px-6 newhero-bg overflow-hidden">
+        <section className="relative w-full py-24 md:py-28 px-6 bg-[#050505] overflow-hidden">
+            {/* Background Orbs */}
             <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-emerald-900/6 rounded-full blur-[120px]" />
+                <div className="absolute top-1/2 -left-1/4 w-[600px] h-[600px] bg-red-900/10 rounded-full blur-[140px]" />
+                <div className="absolute top-1/2 -right-1/4 w-[600px] h-[600px] bg-emerald-900/10 rounded-full blur-[140px]" />
             </div>
 
-            <div ref={ref} className="relative z-10 max-w-4xl mx-auto">
-                <div className="text-center max-w-2xl mx-auto mb-14">
-                    <motion.span
+            <div ref={ref} className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
+                {/* Header */}
+                <div className="text-center max-w-3xl mb-20">
+                    <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.5 }}
-                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/20 bg-blue-950/40 text-xs text-blue-300/80 font-mono uppercase tracking-wider mb-5"
+                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-xs text-emerald-300 font-mono uppercase tracking-wider mb-6"
                     >
                         Before vs After
-                    </motion.span>
+                    </motion.div>
                     <motion.h2
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: 20 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.5, delay: 0.1 }}
-                        className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-4"
+                        transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                        className="text-3xl md:text-4xl font-medium tracking-tight text-white mb-6"
                     >
                         What Changes When You{' '}
-                        <span className="newhero-gradient-text">Switch to Canvas</span>
+                        <span className="emerald-gradient-text">
+                            Switch to Canvas.
+                        </span>
                     </motion.h2>
                 </div>
 
-                {/* Comparison table */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm overflow-hidden"
-                >
-                    {/* Header */}
-                    <div className="grid grid-cols-2 border-b border-white/[0.06]">
-                        <div className="p-4 md:p-5 text-center">
-                            <span className="text-xs font-mono uppercase tracking-wider text-red-400/70">Without Canvas</span>
-                        </div>
-                        <div className="p-4 md:p-5 text-center border-l border-white/[0.06]">
-                            <span className="text-xs font-mono uppercase tracking-wider text-emerald-400/70">With Canvas</span>
-                        </div>
-                    </div>
+                {/* Comparison Cards */}
+                <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mt-8">
 
-                    {/* Rows */}
-                    {COMPARISONS.map((row, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0 }}
-                            animate={isInView ? { opacity: 1 } : {}}
-                            transition={{ duration: 0.4, delay: 0.3 + i * 0.08 }}
-                            className={`grid grid-cols-2 ${i < COMPARISONS.length - 1 ? 'border-b border-white/[0.04]' : ''}`}
-                        >
-                            <div className="p-4 md:p-5 flex items-center gap-3">
-                                <X size={14} className="text-red-400/50 flex-shrink-0" />
-                                <span className="text-sm text-slate-500">{row.old}</span>
+                    {/* The Old Way Card */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={isInView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                        className="flex flex-col rounded-3xl border border-red-500/10 bg-red-950/10 p-8 md:p-10 relative overflow-hidden"
+                    >
+                        {/* Title */}
+                        <div className="flex items-center gap-4 mb-10 pb-6 border-b border-red-500/10">
+                            <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center shrink-0">
+                                <X size={24} className="text-red-400/80" />
                             </div>
-                            <div className="p-4 md:p-5 flex items-center gap-3 border-l border-white/[0.06]">
-                                <Check size={14} className="text-emerald-400 flex-shrink-0" />
-                                <span className="text-sm text-white/80">{row.new}</span>
+                            <h3 className="text-2xl font-medium text-slate-300 tracking-tight">
+                                The Old Way
+                            </h3>
+                        </div>
+
+                        {/* List */}
+                        <div className="flex flex-col gap-8">
+                            {COMPARISONS.map((row, i) => (
+                                <div key={i} className="flex items-start gap-5 group">
+                                    <div className="mt-1 flex-shrink-0 opacity-50 group-hover:opacity-100 transition-opacity duration-300">
+                                        <X size={18} className="text-red-400" />
+                                    </div>
+                                    <span className="text-lg text-slate-400 font-light group-hover:text-slate-300 transition-colors duration-300 leading-relaxed">
+                                        {row.old}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
+
+                    {/* The Canvas Way Card */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={isInView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        className="flex flex-col rounded-3xl border border-emerald-500/20 bg-emerald-950/20 p-8 md:p-10 relative overflow-hidden transform lg:scale-105 shadow-2xl shadow-emerald-900/10 z-10"
+                    >
+                        {/* Title */}
+                        <div className="flex items-center gap-4 mb-10 pb-6 border-b border-emerald-500/20">
+                            <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0 shadow-[0_0_30px_-5px_rgba(52,211,153,0.3)]">
+                                <Check size={24} className="text-emerald-400" />
                             </div>
-                        </motion.div>
-                    ))}
-                </motion.div>
+                            <h3 className="text-2xl font-medium text-white tracking-tight drop-shadow-sm">
+                                The Canvas Way
+                            </h3>
+                        </div>
+
+                        {/* List */}
+                        <div className="flex flex-col gap-8">
+                            {COMPARISONS.map((row, i) => (
+                                <div key={i} className="flex items-start gap-5 group">
+                                    <div className="mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                                        <Check size={18} className="text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
+                                    </div>
+                                    <span className="text-lg text-slate-200 font-medium group-hover:text-white transition-colors duration-300 leading-relaxed tracking-wide">
+                                        {row.new}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
+
+                </div>
             </div>
         </section>
     );
