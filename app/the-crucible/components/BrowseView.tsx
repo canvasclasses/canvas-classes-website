@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, Star, Check } from 'lucide-react';
 import { Chapter, Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
+import WatermarkOverlay from '@/components/WatermarkOverlay';
 
 async function fetchOptionStats(questionId: string): Promise<Record<string, number>> {
   try {
@@ -184,6 +185,7 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
   if (isMobile) {
     return (
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column', zIndex: 50 }}>
+        <WatermarkOverlay />
         {sharedHeader}
         <div style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch' } as any}>
           {pageQuestions.map((qq, i) => {
@@ -235,6 +237,7 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
   const dqGlobalIdx = desktopIdx;
   return (
     <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column', zIndex: 50 }}>
+      <WatermarkOverlay />
       {sharedHeader}
       <div style={{ flex: 1, display: 'flex', width: '100%', overflow: 'hidden' }}>
         <div style={{ width: '50%', minWidth: 400, maxWidth: 660, flexShrink: 0, borderRight: '1px solid rgba(255,255,255,0.07)', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>

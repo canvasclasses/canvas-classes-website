@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star, Check, Timer, X } from 'lucide-react';
 import { Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
+import WatermarkOverlay from '@/components/WatermarkOverlay';
 
 async function fetchOptionStats(questionId: string): Promise<Record<string, number>> {
   try {
@@ -101,6 +102,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
 
       return (
         <div style={{ minHeight: '100vh', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
+          <WatermarkOverlay />
           <header style={{ height: 48, borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(10,12,20,0.98)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px', flexShrink: 0 }}>
             <button onClick={() => setReviewing(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}>
               <ChevronLeft style={{ width: 14, height: 14 }} /> Back to Results
@@ -175,6 +177,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
 
     return (
       <div style={{ minHeight: '100vh', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+        <WatermarkOverlay />
         <div style={{ fontSize: 48, marginBottom: 16 }}>{String.fromCodePoint(0x1F3AF)}</div>
         <div style={{ fontSize: 28, fontWeight: 800, marginBottom: 8 }}>Test Complete!</div>
         <div style={{ fontSize: 16, color: 'rgba(255,255,255,0.6)', marginBottom: 32 }}>You scored <span style={{ color: '#34d399', fontWeight: 700 }}>{score}</span> out of <span style={{ fontWeight: 700 }}>{questions.length}</span></div>
@@ -276,6 +279,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
 
   return (
     <div style={{ height: '100vh', overflow: 'hidden', background: '#0a0c14', color: '#fff', display: 'flex', flexDirection: 'column' }}>
+      <WatermarkOverlay />
       <header style={{ height: 48, borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(10,12,20,0.98)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', flexShrink: 0, gap: 8 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
           <button onClick={onBack} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
