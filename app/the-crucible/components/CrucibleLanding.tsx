@@ -260,12 +260,12 @@ function ClassCard({ classLevel, chapters, selected, onOpen }: {
   const pct      = selCount > 0 ? Math.round((selCount / chapters.length) * 100) : 0;
   const active   = selCount > 0;
   return (
-    <div onClick={onOpen} style={{ flex: 1, padding: '14px 14px 12px', borderRadius: 16, cursor: 'pointer', background: active ? `${color}0d` : 'rgba(255,255,255,0.04)', border: `1.5px solid ${active ? color + '55' : 'rgba(255,255,255,0.09)'}`, transition: 'all 0.2s', userSelect: 'none', position: 'relative', overflow: 'hidden' }}>
+    <div onClick={onOpen} style={{ padding: '11px 11px 10px', borderRadius: 14, cursor: 'pointer', background: active ? `${color}0d` : 'rgba(255,255,255,0.04)', border: `1.5px solid ${active ? color + '55' : 'rgba(255,255,255,0.09)'}`, transition: 'all 0.2s', userSelect: 'none', position: 'relative', overflow: 'hidden' }}>
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
         <div>
-          <div style={{ fontSize: 20, fontWeight: 800, color: active ? color : '#fff', lineHeight: 1.1 }}>Class {classLevel}</div>
-          <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', marginTop: 3 }}>{chapters.length} chapters</div>
+          <div style={{ fontSize: 17, fontWeight: 800, color: active ? color : '#fff', lineHeight: 1.1 }}>Class {classLevel}</div>
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{chapters.length} chapters</div>
         </div>
         <ChevronRight style={{ width: 14, height: 14, color: active ? color : 'rgba(255,255,255,0.25)', flexShrink: 0 }} />
       </div>
@@ -274,13 +274,13 @@ function ClassCard({ classLevel, chapters, selected, onOpen }: {
       {/* Bottom: question count left, selection state right */}
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginTop: 8 }}>
         <div>
-          <div style={{ fontSize: 28, fontWeight: 800, color: active ? color : 'rgba(255,255,255,0.7)', fontFamily: 'monospace', lineHeight: 1 }}>{totalQ > 0 ? totalQ.toLocaleString() : '—'}</div>
-          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginTop: 3, textTransform: 'uppercase', letterSpacing: '0.07em' }}>questions</div>
+          <div style={{ fontSize: 22, fontWeight: 800, color: active ? color : 'rgba(255,255,255,0.7)', fontFamily: 'monospace', lineHeight: 1 }}>{totalQ > 0 ? totalQ.toLocaleString() : '—'}</div>
+          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.07em' }}>questions</div>
         </div>
         {active ? (
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 15, fontWeight: 800, color: '#fff', fontFamily: 'monospace', lineHeight: 1 }}>{selCount}/{chapters.length} ch</div>
-            <div style={{ fontSize: 11, color, marginTop: 3, fontWeight: 700 }}>{selQ.toLocaleString()} Qs selected</div>
+            <div style={{ fontSize: 12, fontWeight: 800, color: '#fff', fontFamily: 'monospace', lineHeight: 1 }}>{selCount}/{chapters.length} ch</div>
+            <div style={{ fontSize: 10, color, marginTop: 2, fontWeight: 700 }}>{selQ.toLocaleString()} Qs</div>
           </div>
         ) : (
           <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', fontStyle: 'italic' }}>tap to select</span>
@@ -641,10 +641,10 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
 
         {/* NAV */}
         <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(8,10,15,0.94)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 28px', maxWidth: 1100, margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: isMobile ? '8px 14px' : '12px 28px', maxWidth: 1100, margin: '0 auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
               {/* Custom crucible icon */}
-              <div style={{ width: 38, height: 38, borderRadius: 11, background: 'linear-gradient(160deg,#1a0a00 0%,#2d1200 100%)', border: '1px solid rgba(234,88,12,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 14px rgba(234,88,12,0.2), inset 0 1px 0 rgba(255,160,60,0.1)' }}>
+              <div style={{ width: isMobile ? 30 : 38, height: isMobile ? 30 : 38, borderRadius: isMobile ? 9 : 11, background: 'linear-gradient(160deg,#1a0a00 0%,#2d1200 100%)', border: '1px solid rgba(234,88,12,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 14px rgba(234,88,12,0.2), inset 0 1px 0 rgba(255,160,60,0.1)', flexShrink: 0 }}>
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <defs>
                     <linearGradient id="flame-grad" x1="11" y1="14" x2="11" y2="1" gradientUnits="userSpaceOnUse">
@@ -668,8 +668,8 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
                 </svg>
               </div>
               <div>
-                <div style={{ fontSize: 20, fontWeight: 900, letterSpacing: '0.08em', background: 'linear-gradient(90deg,#fff 0%,rgba(255,255,255,0.85) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', lineHeight: 1.1 }}>THE CRUCIBLE</div>
-                <div style={{ fontSize: 10, letterSpacing: '0.18em', background: 'linear-gradient(90deg,#f97316,#fb923c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', textTransform: 'uppercase', fontWeight: 700, marginTop: 2 }}>Forge Your Rank</div>
+                <div style={{ fontSize: isMobile ? 15 : 20, fontWeight: 900, letterSpacing: '0.08em', background: 'linear-gradient(90deg,#fff 0%,rgba(255,255,255,0.85) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', lineHeight: 1.1 }}>THE CRUCIBLE</div>
+                <div style={{ fontSize: isMobile ? 8 : 10, letterSpacing: '0.18em', background: 'linear-gradient(90deg,#f97316,#fb923c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', textTransform: 'uppercase', fontWeight: 700, marginTop: 2 }}>Forge Your Rank</div>
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -699,7 +699,7 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
               Practice · Test · Improve
               <span style={{ display: 'inline-block', width: 16, height: 1, background: 'rgba(255,255,255,0.2)' }} />
             </p>
-            <h1 style={{ fontSize: isMobile ? 'clamp(22px,5.5vw,28px)' : 'clamp(26px,3vw,40px)', fontWeight: 900, lineHeight: 1.15, margin: 0 }}>
+            <h1 style={{ fontSize: isMobile ? 'clamp(16px,4vw,20px)' : 'clamp(22px,2.5vw,34px)', fontWeight: 900, lineHeight: 1.15, margin: 0 }}>
               Master Chemistry,<br /><em style={{ color: '#a78bfa', fontStyle: 'italic', animation: 'shimmerText 4s ease-in-out infinite' }}>one question at a time.</em>
             </h1>
           </div>
@@ -723,48 +723,48 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
             {hasSel && <span style={{ fontSize: 11, color: '#a78bfa', fontWeight: 600, whiteSpace: 'nowrap' }}>{selCount} ch · {selQ > 0 ? selQ.toLocaleString() + ' Qs' : ''}</span>}
           </div>
           {/* FILTER ROW: Top PYQs (left) + JEE Mains/Advanced segmented (right) */}
-          <div style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
+          <div style={{ display: 'flex', gap: isMobile ? 8 : 10, marginBottom: 10, flexDirection: isMobile ? 'row' : 'row' }}>
             {/* Top PYQs toggle */}
-            <div onClick={() => setTopPYQFilter(f => !f)} style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 12, padding: '11px 16px', borderRadius: 12, background: topPYQFilter ? 'rgba(251,191,36,0.1)' : 'rgba(255,255,255,0.04)', border: `1.5px solid ${topPYQFilter ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.08)'}`, cursor: 'pointer', transition: 'all 0.15s', userSelect: 'none' as const }}>
-              <span style={{ fontSize: 18 }}>⭐</span>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 15, fontWeight: 800, color: topPYQFilter ? '#fbbf24' : 'rgba(255,255,255,0.85)', lineHeight: 1.2 }}>Top PYQs only</div>
-                <div style={{ fontSize: 11, color: topPYQFilter ? 'rgba(251,191,36,0.65)' : 'rgba(255,255,255,0.4)', marginTop: 2 }}>{topPYQFilter ? 'Must-do questions active' : 'Final revision · hand-picked'}</div>
+            <div onClick={() => setTopPYQFilter(f => !f)} style={{ flex: 1, display: 'flex', alignItems: 'center', gap: isMobile ? 8 : 12, padding: isMobile ? '8px 10px' : '11px 16px', borderRadius: 12, background: topPYQFilter ? 'rgba(251,191,36,0.1)' : 'rgba(255,255,255,0.04)', border: `1.5px solid ${topPYQFilter ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.08)'}`, cursor: 'pointer', transition: 'all 0.15s', userSelect: 'none' as const }}>
+              <span style={{ fontSize: isMobile ? 14 : 18 }}>⭐</span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: isMobile ? 12 : 15, fontWeight: 800, color: topPYQFilter ? '#fbbf24' : 'rgba(255,255,255,0.85)', lineHeight: 1.2 }}>Top PYQs only</div>
+                <div style={{ fontSize: isMobile ? 10 : 11, color: topPYQFilter ? 'rgba(251,191,36,0.65)' : 'rgba(255,255,255,0.4)', marginTop: 2, whiteSpace: isMobile ? 'nowrap' : 'normal', overflow: 'hidden', textOverflow: 'ellipsis' }}>{topPYQFilter ? 'Active' : isMobile ? 'Hand-picked' : 'Final revision · hand-picked'}</div>
               </div>
-              <div style={{ width: 38, height: 22, borderRadius: 99, background: topPYQFilter ? '#d97706' : 'rgba(255,255,255,0.12)', position: 'relative', transition: 'background 0.2s', flexShrink: 0 }}>
-                <div style={{ position: 'absolute', top: 3, left: topPYQFilter ? 19 : 3, width: 16, height: 16, borderRadius: '50%', background: '#fff', transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.4)' }} />
+              <div style={{ width: isMobile ? 32 : 38, height: isMobile ? 18 : 22, borderRadius: 99, background: topPYQFilter ? '#d97706' : 'rgba(255,255,255,0.12)', position: 'relative', transition: 'background 0.2s', flexShrink: 0 }}>
+                <div style={{ position: 'absolute', top: isMobile ? 2 : 3, left: topPYQFilter ? (isMobile ? 16 : 19) : 3, width: isMobile ? 14 : 16, height: isMobile ? 14 : 16, borderRadius: '50%', background: '#fff', transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.4)' }} />
               </div>
             </div>
             {/* JEE Mains / Advanced segmented control */}
-            <div style={{ flex: 1, padding: '11px 16px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: '1.5px solid rgba(255,255,255,0.08)' }}>
-              <div style={{ fontSize: 13, fontWeight: 800, color: 'rgba(255,255,255,0.7)', marginBottom: 8, letterSpacing: '0.01em' }}>Exam</div>
+            <div style={{ flex: 1, padding: isMobile ? '8px 10px' : '11px 16px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: '1.5px solid rgba(255,255,255,0.08)' }}>
+              <div style={{ fontSize: isMobile ? 11 : 13, fontWeight: 800, color: 'rgba(255,255,255,0.7)', marginBottom: isMobile ? 6 : 8, letterSpacing: '0.01em' }}>Exam</div>
               <div style={{ display: 'flex', background: 'rgba(255,255,255,0.07)', borderRadius: 8, padding: 2, gap: 2 }}>
-                <button onClick={() => setJeeMode('mains')} style={{ flex: 1, padding: '6px 0', borderRadius: 6, border: 'none', background: jeeMode === 'mains' ? '#3b82f6' : 'transparent', color: jeeMode === 'mains' ? '#fff' : 'rgba(255,255,255,0.45)', fontSize: 12, fontWeight: 700, cursor: 'pointer', transition: 'all 0.15s' }}>JEE Mains</button>
-                <button onClick={() => setJeeMode('advanced')} style={{ flex: 1, padding: '6px 0', borderRadius: 6, border: 'none', background: jeeMode === 'advanced' ? '#7c3aed' : 'transparent', color: jeeMode === 'advanced' ? '#fff' : 'rgba(255,255,255,0.45)', fontSize: 12, fontWeight: 700, cursor: 'pointer', transition: 'all 0.15s' }}>JEE Advanced</button>
+                <button onClick={() => setJeeMode('mains')} style={{ flex: 1, padding: isMobile ? '5px 0' : '6px 0', borderRadius: 6, border: 'none', background: jeeMode === 'mains' ? '#3b82f6' : 'transparent', color: jeeMode === 'mains' ? '#fff' : 'rgba(255,255,255,0.45)', fontSize: isMobile ? 11 : 12, fontWeight: 700, cursor: 'pointer', transition: 'all 0.15s' }}>JEE Mains</button>
+                <button onClick={() => setJeeMode('advanced')} style={{ flex: 1, padding: isMobile ? '5px 0' : '6px 0', borderRadius: 6, border: 'none', background: jeeMode === 'advanced' ? '#7c3aed' : 'transparent', color: jeeMode === 'advanced' ? '#fff' : 'rgba(255,255,255,0.45)', fontSize: isMobile ? 11 : 12, fontWeight: 700, cursor: 'pointer', transition: 'all 0.15s' }}>JEE Advanced</button>
               </div>
             </div>
           </div>
 
           {/* CLASS CARDS + MOCK TESTS */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 10 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : '1fr 1fr 1fr', gap: isMobile ? 8 : 10, marginBottom: 10 }}>
             <ClassCard classLevel={11} chapters={class11} selected={selectedChapters} onOpen={() => setOpenSheet(11)} />
             <ClassCard classLevel={12} chapters={class12} selected={selectedChapters} onOpen={() => setOpenSheet(12)} />
-            {/* Mock Tests — Coming Soon */}
-            <div style={{ padding: '14px 14px 12px', borderRadius: 16, background: 'rgba(255,255,255,0.02)', border: '1.5px dashed rgba(255,255,255,0.1)', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+            {/* Mock Tests — Coming Soon — spans both columns on mobile */}
+            <div style={{ padding: '11px 11px 10px', borderRadius: 14, background: 'rgba(255,255,255,0.02)', border: '1.5px dashed rgba(255,255,255,0.1)', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gridColumn: isMobile ? '1 / -1' : undefined }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
                 <div>
-                  <div style={{ fontSize: 20, fontWeight: 800, color: 'rgba(255,255,255,0.3)', lineHeight: 1.1 }}>Mock Tests</div>
-                  <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.2)', marginTop: 3 }}>Full syllabus</div>
+                  <div style={{ fontSize: 17, fontWeight: 800, color: 'rgba(255,255,255,0.3)', lineHeight: 1.1 }}>Mock Tests</div>
+                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.2)', marginTop: 2 }}>Full syllabus</div>
                 </div>
                 <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: '#f97316', background: 'rgba(249,115,22,0.12)', border: '1px solid rgba(249,115,22,0.25)', borderRadius: 6, padding: '3px 7px', textTransform: 'uppercase' }}>Soon</div>
               </div>
-              <div style={{ height: 2, background: 'rgba(255,255,255,0.05)', borderRadius: 99, marginBottom: 8 }} />
+              <div style={{ height: 2, background: 'rgba(255,255,255,0.05)', borderRadius: 99, marginBottom: 6 }} />
               <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
                 <div>
-                  <div style={{ fontSize: 28, fontWeight: 800, color: 'rgba(255,255,255,0.15)', fontFamily: 'monospace', lineHeight: 1 }}>—</div>
-                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.2)', marginTop: 3, textTransform: 'uppercase', letterSpacing: '0.07em' }}>questions</div>
+                  <div style={{ fontSize: 22, fontWeight: 800, color: 'rgba(255,255,255,0.15)', fontFamily: 'monospace', lineHeight: 1 }}>—</div>
+                  <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.2)', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.07em' }}>questions</div>
                 </div>
-                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.15)', fontStyle: 'italic' }}>coming soon</span>
+                <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.15)', fontStyle: 'italic' }}>coming soon</span>
               </div>
             </div>
           </div>

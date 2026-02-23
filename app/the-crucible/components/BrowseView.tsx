@@ -5,6 +5,15 @@ import { ChevronLeft, ChevronRight, Star, Check } from 'lucide-react';
 import { Chapter, Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
 
+async function fetchOptionStats(questionId: string): Promise<Record<string, number>> {
+  try {
+    const res = await fetch(`/api/v2/questions/${questionId}/stats`);
+    if (!res.ok) return {};
+    const data = await res.json();
+    return data.optionStats || {};
+  } catch { return {}; }
+}
+
 const DIFF_COLOR = (d: string) => d === 'Easy' ? '#34d399' : d === 'Medium' ? '#fbbf24' : '#f87171';
 const PAGE_SIZE = 20;
 
@@ -29,6 +38,7 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
   const [cardSol, setCardSol] = useState<Record<number, boolean>>({});
   const [cardOpt, setCardOpt] = useState<Record<number, string | null>>({});
   const [page, setPage] = useState(0);
+  const [optionStats, setOptionStats] = useState<Record<string, number>>({});
 
   const totalPages = Math.ceil(questions.length / PAGE_SIZE);
   const pageQuestions = questions.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
@@ -43,7 +53,14 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
   const desktopIdx = selIdx ?? 0;
   const chName = (id: string) => chapters.find(c => c.id === id)?.name || id;
   const toggleStar = (id: string) => setStarred(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
-  const goTo = (i: number) => { setSelIdx(i); setShowSol(false); setSelectedOpt(null); };
+  const goTo = (i: number) => {
+    setSelIdx(i);
+    setShowSol(false);
+    setSelectedOpt(null);
+    setOptionStats({});
+    const qq = questions[i];
+    if (qq) fetchOptionStats(qq.id).then(setOptionStats);
+  };
 
   const changePage = (newPage: number) => {
     setPage(newPage);
@@ -52,6 +69,7 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
     setSelectedOpt(null);
     setCardSol({});
     setCardOpt({});
+    setOptionStats({});
   };
 
   // Scroll the solution div into view after it renders
@@ -62,7 +80,7 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
     }, 80);
   }, []);
 
-  const renderDetail = (qq: Question, solShown: boolean, setSolShown: (v: boolean) => void, optChosen: string | null, setOptChosen: (v: string | null) => void, solDivId: string) => (
+  const renderDetail = (qq: Question, solShown: boolean, setSolShown: (v: boolean) => void, optChosen: string | null, setOptChosen: (v: string | null) => void, solDivId: string, stats: Record<string, number> = {}) => (
     <div>
       <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 18px', marginBottom: 12 }}>
         <MathRenderer markdown={qq.question_text.markdown} className="text-sm leading-relaxed" fontSize={isMobile ? undefined : 20} imageScale={qq.svg_scales?.question ?? 100} />
@@ -75,16 +93,25 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
               const sel = optChosen === opt.id; const correct = opt.is_correct; const rev = solShown;
               let bc = sel ? '#3b82f6' : 'rgba(255,255,255,0.1)', bg = sel ? 'rgba(59,130,246,0.1)' : 'rgba(255,255,255,0.03)';
               if (rev && correct) { bc = '#34d399'; bg = 'rgba(52,211,153,0.1)'; } else if (rev && sel && !correct) { bc = '#f87171'; bg = 'rgba(248,113,113,0.08)'; }
+              const pct = stats[opt.id] ?? 0;
               return (
                 <button key={opt.id}
                   onClick={e => { e.stopPropagation(); if (!solShown) { setOptChosen(opt.id); setSolShown(true); scrollSolutionIntoView(solDivId); } }}
-                  style={{ padding: useGrid ? '12px 12px' : '13px 16px', borderRadius: 10, border: `1.5px solid ${bc}`, background: bg, display: 'flex', alignItems: 'center', gap: 8, cursor: solShown ? 'default' : 'pointer', textAlign: 'left', color: '#fff', fontSize: 17, width: '100%', minWidth: 0 }}>
-                  <span style={{ width: 22, height: 22, borderRadius: 6, border: `1.5px solid ${bc}`, background: sel ? (rev ? (correct ? '#34d399' : '#f87171') : '#3b82f6') : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: sel ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
-                    {rev && correct ? <Check style={{ width: 11, height: 11 }} /> : opt.id.toUpperCase()}
-                  </span>
-                  <span style={{ flex: 1, minWidth: 0, overflowX: 'auto', WebkitOverflowScrolling: 'touch' } as any}>
-                    <MathRenderer markdown={opt.text || ''} className="text-sm" fontSize={isMobile ? undefined : 20} imageScale={qq.svg_scales?.[`option_${opt.id}`] ?? 100} />
-                  </span>
+                  style={{ padding: useGrid ? '12px 12px' : '13px 16px', borderRadius: 10, border: `1.5px solid ${bc}`, background: bg, display: 'flex', flexDirection: 'column', gap: 6, cursor: solShown ? 'default' : 'pointer', textAlign: 'left', color: '#fff', fontSize: 17, width: '100%', minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%' }}>
+                    <span style={{ width: 22, height: 22, borderRadius: 6, border: `1.5px solid ${bc}`, background: sel ? (rev ? (correct ? '#34d399' : '#f87171') : '#3b82f6') : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: sel ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
+                      {rev && correct ? <Check style={{ width: 11, height: 11 }} /> : opt.id.toUpperCase()}
+                    </span>
+                    <span style={{ flex: 1, minWidth: 0, overflowX: 'auto', WebkitOverflowScrolling: 'touch' } as any}>
+                      <MathRenderer markdown={opt.text || ''} className="text-sm" fontSize={isMobile ? undefined : 20} imageScale={qq.svg_scales?.[`option_${opt.id}`] ?? 100} />
+                    </span>
+                    {rev && <span style={{ fontSize: 12, fontWeight: 700, color: correct ? '#34d399' : '#f87171', flexShrink: 0, minWidth: 36, textAlign: 'right' }}>{pct}%</span>}
+                  </div>
+                  {rev && (
+                    <div style={{ width: '100%', height: 6, borderRadius: 3, background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${pct}%`, borderRadius: 3, background: correct ? '#34d399' : '#f87171', transition: 'width 0.5s ease' }} />
+                    </div>
+                  )}
                 </button>
               );
             })}
@@ -170,9 +197,14 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
                   style={{ padding: '13px 14px', cursor: 'pointer', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
                   <span style={{ width: 28, height: 28, borderRadius: 8, background: expanded ? '#7c3aed' : 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: expanded ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>Q{globalIdx + 1}</span>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: 'flex', gap: 5, marginBottom: 5 }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 5 }}>
                       <span style={{ fontSize: 10, fontWeight: 700, color: DIFF_COLOR(qq.metadata.difficulty), background: DIFF_COLOR(qq.metadata.difficulty) + '18', padding: '1px 7px', borderRadius: 99 }}>{qq.metadata.difficulty}</span>
                       <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.06)', padding: '1px 7px', borderRadius: 99 }}>{qq.type}</span>
+                      {qq.metadata.exam_source?.year && (
+                        <span style={{ fontSize: 10, color: '#60a5fa', background: 'rgba(96,165,250,0.1)', padding: '1px 7px', borderRadius: 99, border: '1px solid rgba(96,165,250,0.2)' }}>
+                          {qq.metadata.exam_source.exam ?? 'JEE Main'} {qq.metadata.exam_source.year}
+                        </span>
+                      )}
                     </div>
                     <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' } as any}>
                       <MathRenderer markdown={qq.question_text.markdown.slice(0, 100)} className="text-sm" />
@@ -205,21 +237,26 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
     <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column', zIndex: 50 }}>
       {sharedHeader}
       <div style={{ flex: 1, display: 'flex', width: '100%', overflow: 'hidden' }}>
-        <div style={{ width: '42%', minWidth: 340, maxWidth: 560, flexShrink: 0, borderRight: '1px solid rgba(255,255,255,0.07)', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ width: '50%', minWidth: 400, maxWidth: 660, flexShrink: 0, borderRight: '1px solid rgba(255,255,255,0.07)', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
           <div style={{ flex: 1, overflowY: 'auto' }}>
           {pageQuestions.map((qq, i) => {
             const globalIdx = page * PAGE_SIZE + i;
             return (
-            <div key={qq.id} onClick={() => goTo(globalIdx)} style={{ padding: '13px 16px', borderBottom: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer', background: globalIdx === dqGlobalIdx ? 'rgba(124,58,237,0.1)' : 'transparent', borderLeft: globalIdx === dqGlobalIdx ? '3px solid #7c3aed' : '3px solid transparent', transition: 'background 0.1s' }}>
+            <div key={qq.id} onClick={() => goTo(globalIdx)} style={{ padding: '17px 18px', borderBottom: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer', background: globalIdx === dqGlobalIdx ? 'rgba(124,58,237,0.1)' : 'transparent', borderLeft: globalIdx === dqGlobalIdx ? '3px solid #7c3aed' : '3px solid transparent', transition: 'background 0.1s' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
                 <span style={{ width: 26, height: 26, borderRadius: 7, background: globalIdx === dqGlobalIdx ? '#7c3aed' : 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: globalIdx === dqGlobalIdx ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>Q{globalIdx + 1}</span>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ display: 'flex', gap: 5, marginBottom: 5 }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 6 }}>
                     <span style={{ fontSize: 10, fontWeight: 700, color: DIFF_COLOR(qq.metadata.difficulty), background: DIFF_COLOR(qq.metadata.difficulty) + '18', padding: '1px 7px', borderRadius: 99 }}>{qq.metadata.difficulty}</span>
                     <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.06)', padding: '1px 7px', borderRadius: 99 }}>{qq.type}</span>
+                    {qq.metadata.exam_source?.year && (
+                      <span style={{ fontSize: 10, color: '#60a5fa', background: 'rgba(96,165,250,0.1)', padding: '1px 7px', borderRadius: 99, border: '1px solid rgba(96,165,250,0.2)' }}>
+                        {qq.metadata.exam_source.exam ?? 'JEE Main'} {qq.metadata.exam_source.year}
+                      </span>
+                    )}
                   </div>
-                  <div style={{ fontSize: 13, color: globalIdx === dqGlobalIdx ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.6)', lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' } as any}>
-                    <MathRenderer markdown={qq.question_text.markdown.slice(0, 140)} className="text-sm" />
+                  <div style={{ fontSize: 13, color: globalIdx === dqGlobalIdx ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.6)', lineHeight: 1.6, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' } as any}>
+                    <MathRenderer markdown={qq.question_text.markdown.slice(0, 180)} className="text-sm" />
                   </div>
                 </div>
               </div>
@@ -234,14 +271,21 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
             <div style={{ maxWidth: 860, margin: '0 auto' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
                 <div>
-                  <span style={{ fontSize: 16, fontWeight: 800 }}>Question {dqGlobalIdx + 1}</span>
-                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginLeft: 10 }}>{chName(dq.metadata.chapter_id)}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 4 }}>
+                    <span style={{ fontSize: 16, fontWeight: 800 }}>Question {dqGlobalIdx + 1}</span>
+                    <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)' }}>{chName(dq.metadata.chapter_id)}</span>
+                    {dq.metadata.exam_source?.year && (
+                      <span style={{ fontSize: 10, fontWeight: 700, color: '#60a5fa', background: 'rgba(96,165,250,0.12)', padding: '2px 8px', borderRadius: 99, border: '1px solid rgba(96,165,250,0.25)' }}>
+                        {dq.metadata.exam_source.exam ?? 'JEE Main'} {dq.metadata.exam_source.year}{dq.metadata.exam_source.month ? ` · ${dq.metadata.exam_source.month}` : ''}{dq.metadata.exam_source.shift ? ` (${dq.metadata.exam_source.shift[0]})` : ''}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <button onClick={() => toggleStar(dq.id)} style={{ width: 34, height: 34, borderRadius: 8, background: starred.has(dq.id) ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.06)', border: `1px solid ${starred.has(dq.id) ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.1)'}`, color: starred.has(dq.id) ? '#fbbf24' : 'rgba(255,255,255,0.4)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Star style={{ width: 15, height: 15, fill: starred.has(dq.id) ? '#fbbf24' : 'none' }} />
                 </button>
               </div>
-              {renderDetail(dq, showSol, setShowSol, selectedOpt, setSelectedOpt, 'sol-desktop')}
+              {renderDetail(dq, showSol, setShowSol, selectedOpt, setSelectedOpt, 'sol-desktop', optionStats)}
               <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
                 {dqGlobalIdx > 0 && (
                   <button onClick={() => {

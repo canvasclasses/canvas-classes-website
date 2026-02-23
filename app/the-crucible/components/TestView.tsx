@@ -5,6 +5,15 @@ import { ChevronLeft, ChevronRight, Star, Check, Timer, X } from 'lucide-react';
 import { Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
 
+async function fetchOptionStats(questionId: string): Promise<Record<string, number>> {
+  try {
+    const res = await fetch(`/api/v2/questions/${questionId}/stats`);
+    if (!res.ok) return {};
+    const data = await res.json();
+    return data.optionStats || {};
+  } catch { return {}; }
+}
+
 const DIFF_COLOR = (d: string) => d === 'Easy' ? '#34d399' : d === 'Medium' ? '#fbbf24' : '#f87171';
 
 // Returns true when all 4 options are short enough for a 2×2 grid.
@@ -31,6 +40,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
   const [revIdx,      setRevIdx]      = useState(0);
   const [isMobile,    setIsMobile]    = useState(false);
   const [showPalette, setShowPalette] = useState(false);
+  const [revStats,    setRevStats]    = useState<Record<string, number>>({});
 
   const toggleStar = (id: string) => setStarred(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
 
@@ -46,6 +56,14 @@ export default function TestView({ questions, onBack }: { questions: Question[];
     const t = setInterval(() => setSeconds(s => { if (s <= 1) { clearInterval(t); setSubmitted(true); return 0; } return s - 1; }), 1000);
     return () => clearInterval(t);
   }, [submitted, questions.length]);
+
+  useEffect(() => {
+    if (!reviewing) return;
+    const rq = questions[revIdx];
+    if (!rq) return;
+    setRevStats({});
+    fetchOptionStats(rq.id).then(setRevStats);
+  }, [reviewing, revIdx, questions]);
 
   const fmt = (s: number) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
   const q = questions[idx];
@@ -80,6 +98,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
       const isCorrect = rq.type === 'NVT'
         ? nvtInputs[rq.id]?.trim() === rq.answer?.integer_value?.toString()
         : rq.options?.find((o: any) => o.id === answers[rq.id])?.is_correct;
+
       return (
         <div style={{ minHeight: '100vh', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
           <header style={{ height: 48, borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(10,12,20,0.98)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px', flexShrink: 0 }}>
@@ -113,13 +132,19 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                       let borderC = 'rgba(255,255,255,0.1)', bgC = 'rgba(255,255,255,0.03)';
                       if (correct) { borderC = '#34d399'; bgC = 'rgba(52,211,153,0.1)'; }
                       else if (sel && !correct) { borderC = '#f87171'; bgC = 'rgba(248,113,113,0.08)'; }
+                      const pct = revStats[opt.id] ?? 0;
                       return (
-                        <div key={opt.id} style={{ padding: useGrid ? '10px 10px' : '12px 14px', borderRadius: 12, border: `1.5px solid ${borderC}`, background: bgC, display: 'flex', alignItems: 'center', gap: 8 }}>
-                          <span style={{ width: 24, height: 24, borderRadius: 7, border: `1.5px solid ${borderC}`, background: correct ? '#34d399' : (sel ? '#f87171' : 'transparent'), display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: (correct || sel) ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
-                            {correct ? <Check style={{ width: 12, height: 12 }} /> : opt.id.toUpperCase()}
-                          </span>
-                          <span style={{ flex: 1, color: '#fff', fontSize: 13 }}><MathRenderer markdown={opt.text || ''} className="text-sm" /></span>
-                          {sel && !correct && !useGrid && <span style={{ fontSize: 10, color: '#f87171', flexShrink: 0 }}>Your answer</span>}
+                        <div key={opt.id} style={{ padding: useGrid ? '10px 10px' : '12px 14px', borderRadius: 12, border: `1.5px solid ${borderC}`, background: bgC, display: 'flex', flexDirection: 'column', gap: 6 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <span style={{ width: 24, height: 24, borderRadius: 7, border: `1.5px solid ${borderC}`, background: correct ? '#34d399' : (sel ? '#f87171' : 'transparent'), display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: (correct || sel) ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
+                              {correct ? <Check style={{ width: 12, height: 12 }} /> : opt.id.toUpperCase()}
+                            </span>
+                            <span style={{ flex: 1, color: '#fff', fontSize: 13 }}><MathRenderer markdown={opt.text || ''} className="text-sm" /></span>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: correct ? '#34d399' : '#f87171', flexShrink: 0, minWidth: 36, textAlign: 'right' }}>{pct}%</span>
+                          </div>
+                          <div style={{ width: '100%', height: 6, borderRadius: 3, background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
+                            <div style={{ height: '100%', width: `${pct}%`, borderRadius: 3, background: correct ? '#34d399' : '#f87171', transition: 'width 0.5s ease' }} />
+                          </div>
                         </div>
                       );
                     })}
@@ -139,8 +164,8 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                 </div>
               )}
               <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
-                {revIdx > 0 && <button onClick={() => setRevIdx(i => i - 1)} style={{ padding: '10px 18px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.6)', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}><ChevronLeft style={{ width: 14, height: 14 }} /> Prev</button>}
-                {revIdx < questions.length - 1 && <button onClick={() => setRevIdx(i => i + 1)} style={{ flex: 1, padding: '10px 18px', borderRadius: 10, border: 'none', background: '#3b82f6', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>Next <ChevronRight style={{ width: 14, height: 14 }} /></button>}
+                {revIdx > 0 && <button onClick={() => { setRevIdx(i => i - 1); }} style={{ padding: '10px 18px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.6)', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}><ChevronLeft style={{ width: 14, height: 14 }} /> Prev</button>}
+                {revIdx < questions.length - 1 && <button onClick={() => { setRevIdx(i => i + 1); }} style={{ flex: 1, padding: '10px 18px', borderRadius: 10, border: 'none', background: '#3b82f6', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>Next <ChevronRight style={{ width: 14, height: 14 }} /></button>}
               </div>
             </div>
           </div>
