@@ -263,6 +263,143 @@ select {
   animation: float-fast 5s ease-in-out infinite;
 }
 
+/* ======================================== */
+/* NewHero Styles                           */
+/* ======================================== */
+
+/* Background */
+.newhero-bg {
+  background-color: #050505;
+}
+
+/* Gradient text — white to blue tint */
+.newhero-gradient-text {
+  background: linear-gradient(180deg, #fff 0%, rgba(147, 197, 253, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient text — white to red tint */
+.pain-gradient-text {
+  background: linear-gradient(180deg, #fff 0%, rgba(248, 113, 113, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient text — white to emerald tint */
+.emerald-gradient-text {
+  background: linear-gradient(180deg, #fff 0%, rgba(52, 211, 153, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient text — white to violet tint */
+.violet-gradient-text {
+  background: linear-gradient(180deg, #fff 0%, rgba(167, 139, 250, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Fade-up animation */
+.newhero-fade-up {
+  animation: newhero-fadeUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes newhero-fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Subtle pulse */
+.newhero-pulse-subtle {
+  animation: newhero-pulseSubtle 2s ease-in-out infinite;
+}
+
+@keyframes newhero-pulseSubtle {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Cursor blink — royal blue */
+.newhero-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: #3b82f6;
+  margin-left: 2px;
+  animation: newhero-blink 1s step-end infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes newhero-blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Search focus ring — royal blue glow */
+.newhero-search-ring:focus-within {
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3), 0 0 0 4px rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.4) !important;
+}
+
+/* Bento card */
+.newhero-bento-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.newhero-bento-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.25);
+  background-color: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 8px 32px rgba(37, 99, 235, 0.08), 0 0 0 1px rgba(59, 130, 246, 0.1);
+}
+
+/* Tag pill hover — blue tint */
+.newhero-tag-pill {
+  transition: all 0.15s ease;
+}
+
+.newhero-tag-pill:hover {
+  background-color: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.25);
+  color: #93c5fd;
+}
+
+/* Selection color — royal blue */
+.newhero-bg ::selection {
+  background: rgba(59, 130, 246, 0.35);
+  color: #fff;
+}
+
 /* Crucible Logo Animations */
 @keyframes crucibleGlow {
 
