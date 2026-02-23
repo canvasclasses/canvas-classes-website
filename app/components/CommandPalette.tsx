@@ -26,9 +26,9 @@ interface CommandPaletteProps {
 export function CommandPalette({ itemsPromise }: CommandPaletteProps) {
     const [open, setOpen] = useState(false)
     const [items, setItems] = useState<SearchItem[]>([]);
+    const [searchValue, setSearchValue] = useState("");
     const router = useRouter()
 
-    // Unwrap promise if provided
     // Unwrap promise if provided
     useEffect(() => {
         if (itemsPromise && typeof itemsPromise.then === 'function') {
@@ -54,8 +54,12 @@ export function CommandPalette({ itemsPromise }: CommandPaletteProps) {
         document.addEventListener('keydown', down)
 
         // Listen for custom event from Navbar (dispatched on window)
-        const openHandler = () => {
+        const openHandler = (e: Event) => {
             console.log("Command Palette opened via event");
+            const customEvent = e as CustomEvent;
+            if (customEvent.detail?.search) {
+                setSearchValue(customEvent.detail.search);
+            }
             setOpen(true);
         };
         window.addEventListener('openCommandPalette', openHandler);
@@ -110,6 +114,8 @@ export function CommandPalette({ itemsPromise }: CommandPaletteProps) {
                                     <Search className="mr-2 h-5 w-5 shrink-0 text-gray-500" />
                                     <Command.Input
                                         placeholder="Search for tools, elements, or pages..."
+                                        value={searchValue}
+                                        onValueChange={setSearchValue}
                                         className="flex h-14 w-full rounded-md bg-transparent py-3 text-lg outline-none placeholder:text-gray-500 text-white disabled:cursor-not-allowed disabled:opacity-50"
                                     />
                                 </div>
