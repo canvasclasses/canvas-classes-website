@@ -593,15 +593,63 @@ async function runPDFExport(
 }
 
 // ── PPT Export (image-based rendering for perfect math + SVG recoloring) ─────
+type PptShapeType = 'rect' | 'line' | 'roundRect';
+
+interface PptShapeOp {
+  shape: PptShapeType;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  fillColor?: string;
+  lineColor?: string;
+  lineWidth?: number;
+  rectRadius?: number;
+}
+
+interface PptTextRun {
+  text: string;
+  options?: { color?: string; fontSize?: number; bold?: boolean };
+}
+
+interface PptTextOp {
+  text: string | PptTextRun[];
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  fontSize?: number;
+  bold?: boolean;
+  color?: string;
+  fontFace?: string;
+  align?: 'left' | 'center' | 'right';
+  valign?: 'top' | 'mid' | 'bottom';
+  shape?: PptShapeType;
+  fillColor?: string;
+  rectRadius?: number;
+}
+
+interface PptImageOp {
+  data: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+interface PptSlidePayload {
+  backgroundColor: string;
+  shapes: PptShapeOp[];
+  texts: PptTextOp[];
+  images: PptImageOp[];
+}
+
 async function runPPTExport(
   questions: Question[],
   opts: { title: string; showAnswerKey: boolean; includeSolution: boolean; pptBg: 'white' | 'black' },
   onProgress: (pct: number, label: string) => void,
 ) {
-  const { default: PptxGenJS } = await import('pptxgenjs');
   const { title, showAnswerKey, includeSolution, pptBg } = opts;
-  const pptx = new PptxGenJS();
-  pptx.layout = 'LAYOUT_WIDE';
   const SW = 13.33, SH = 7.5, PAD = 0.5, CW = SW - PAD * 2;
   const dark = pptBg === 'black';
   const BG  = dark ? '0d0d0d' : 'ffffff';
@@ -612,17 +660,44 @@ async function runPPTExport(
   const GBG = dark ? '052e16' : 'dcfce7';
   const GBORDER = dark ? '166534' : '86efac';
   const bgMode: 'light' | 'dark' = dark ? 'dark' : 'light';
+  const slides: PptSlidePayload[] = [];
 
-  const addChrome = (slide: ReturnType<typeof pptx.addSlide>, sub?: string) => {
-    slide.addShape(pptx.ShapeType.rect, { x:0, y:0, w:SW, h:0.08, fill:{color:ACC}, line:{color:ACC,width:0} });
-    slide.addShape(pptx.ShapeType.rect, { x:0, y:SH-0.08, w:SW, h:0.08, fill:{color:ACC}, line:{color:ACC,width:0} });
-    slide.addText(sub ?? title, { x:PAD, y:SH-0.35, w:CW*0.6, h:0.25, fontSize:7, color:DIM, fontFace:'Helvetica' });
-    slide.addText('Canvas Classes', { x:SW-PAD-2.5, y:SH-0.35, w:2.5, h:0.25, fontSize:7, color:DIM, fontFace:'Helvetica', align:'right' });
+  const newSlide = (): PptSlidePayload => ({
+    backgroundColor: BG.replace('#', ''),
+    shapes: [],
+    texts: [],
+    images: [],
+  });
+
+  const addChrome = (slide: PptSlidePayload, sub?: string) => {
+    slide.shapes.push({ shape: 'rect', x: 0, y: 0, w: SW, h: 0.08, fillColor: ACC, lineColor: ACC, lineWidth: 0 });
+    slide.shapes.push({ shape: 'rect', x: 0, y: SH - 0.08, w: SW, h: 0.08, fillColor: ACC, lineColor: ACC, lineWidth: 0 });
+    slide.texts.push({
+      text: sub ?? title,
+      x: PAD,
+      y: SH - 0.35,
+      w: CW * 0.6,
+      h: 0.25,
+      fontSize: 7,
+      color: DIM,
+      fontFace: 'Helvetica',
+    });
+    slide.texts.push({
+      text: 'Canvas Classes',
+      x: SW - PAD - 2.5,
+      y: SH - 0.35,
+      w: 2.5,
+      h: 0.25,
+      fontSize: 7,
+      color: DIM,
+      fontFace: 'Helvetica',
+      align: 'right',
+    });
   };
 
   // Render HTML to image and add to slide
   const addRenderedText = async (
-    slide: ReturnType<typeof pptx.addSlide>,
+    slide: PptSlidePayload,
     html: string, x: number, yPos: number, widthIn: number, maxHeightIn: number,
     fontSize: number, color: string, bold?: boolean,
   ) => {
@@ -632,13 +707,13 @@ async function runPPTExport(
     // Convert mm to inches (1 inch = 25.4mm)
     const wIn = img.widthMm / 25.4;
     const hIn = Math.min(img.heightMm / 25.4, maxHeightIn);
-    slide.addImage({ data: img.dataUrl, x, y: yPos, w: wIn, h: hIn });
+    slide.images.push({ data: img.dataUrl, x, y: yPos, w: wIn, h: hIn });
   };
 
   // Add SVG diagrams to slide
   // scalePercent: from svg_scales (0-200). Clamped to 100. Default 45%.
   const addDiagrams = async (
-    slide: ReturnType<typeof pptx.addSlide>,
+    slide: PptSlidePayload,
     md: string, x: number, yPos: number, maxWidthIn: number, scalePercent = 45,
   ) => {
     const urls = extractImageUrls(md);
@@ -650,7 +725,7 @@ async function runPPTExport(
       if (diagram) {
         const wIn = diagram.widthMm / 25.4;
         const hIn = diagram.heightMm / 25.4;
-        slide.addImage({ data: diagram.dataUrl, x, y: curY, w: wIn, h: hIn });
+        slide.images.push({ data: diagram.dataUrl, x, y: curY, w: wIn, h: hIn });
         curY += hIn + 0.1;
       }
     }
@@ -661,12 +736,12 @@ async function runPPTExport(
     onProgress(Math.round((qi / questions.length) * 88), `Rendering slide ${qi + 1} / ${questions.length}`);
 
     // ── Question slide ──
-    const slide = pptx.addSlide();
-    slide.background = { color: BG.replace('#', '') };
+    const slide = newSlide();
     addChrome(slide);
 
     // Slide counter
-    slide.addText(`${qi + 1} / ${questions.length}`, {
+    slide.texts.push({
+      text: `${qi + 1} / ${questions.length}`,
       x: SW/2 - 0.6, y: SH-0.35, w: 1.2, h: 0.25,
       fontSize: 7, color: DIM, fontFace: 'Helvetica', align: 'center',
     });
@@ -679,22 +754,26 @@ async function runPPTExport(
         : (dark ? 'f87171' : 'dc2626');
 
     // Header row
-    slide.addText(`Q${qi + 1}.`, {
+    slide.texts.push({
+      text: `Q${qi + 1}.`,
       x: PAD, y: 0.12, w: 0.65, h: 0.4,
       fontSize: 16, bold: true, color: ACC, fontFace: 'Helvetica',
     });
-    slide.addText(q.type, {
+    slide.texts.push({
+      text: q.type,
       x: PAD + 0.65, y: 0.14, w: 0.7, h: 0.34,
       fontSize: 8.5, bold: true, color: ACC, fontFace: 'Helvetica',
-      fill: { color: dark ? '2d1b69' : 'ede9fe' },
-      shape: pptx.ShapeType.roundRect, rectRadius: 0.05,
-      align: 'center', valign: 'middle',
+      fillColor: dark ? '2d1b69' : 'ede9fe',
+      shape: 'roundRect', rectRadius: 0.05,
+      align: 'center', valign: 'mid',
     });
-    slide.addText(q.metadata.difficulty, {
+    slide.texts.push({
+      text: q.metadata.difficulty,
       x: PAD + 1.45, y: 0.14, w: 1.1, h: 0.34,
       fontSize: 9, bold: true, color: diffC, fontFace: 'Helvetica',
     });
-    slide.addText(q.display_id || q._id.substring(0, 8), {
+    slide.texts.push({
+      text: q.display_id || q._id.substring(0, 8),
       x: SW - PAD - 3, y: 0.18, w: 3, h: 0.22,
       fontSize: 6, color: DIM, fontFace: 'Helvetica', align: 'right',
     });
@@ -717,9 +796,15 @@ async function runPPTExport(
         const correct = opt.is_correct && showAnswerKey;
         const oy = optStartY + oi * optH;
         if (correct) {
-          slide.addShape(pptx.ShapeType.rect, {
-            x: PAD + 0.05, y: oy - 0.02, w: CW - 0.1, h: optH - 0.02,
-            fill: { color: GBG }, line: { color: GBORDER, width: 0.75 },
+          slide.shapes.push({
+            shape: 'rect',
+            x: PAD + 0.05,
+            y: oy - 0.02,
+            w: CW - 0.1,
+            h: optH - 0.02,
+            fillColor: GBG,
+            lineColor: GBORDER,
+            lineWidth: 0.75,
           });
         }
         const optHtml = `<b>(${label})</b>&ensp;${mdToHtml(opt.text)}`;
@@ -731,34 +816,57 @@ async function runPPTExport(
     // NVT answer
     if (q.type === 'NVT' && showAnswerKey) {
       const ans = String(q.answer?.integer_value ?? q.answer?.decimal_value ?? '-');
-      slide.addShape(pptx.ShapeType.rect, {
-        x: PAD, y: 3.4, w: 4, h: 0.55,
-        fill: { color: GBG }, line: { color: GBORDER, width: 0.75 },
+      slide.shapes.push({
+        shape: 'rect',
+        x: PAD,
+        y: 3.4,
+        w: 4,
+        h: 0.55,
+        fillColor: GBG,
+        lineColor: GBORDER,
+        lineWidth: 0.75,
       });
-      slide.addText([
+      slide.texts.push({
+        text: [
         { text: 'Answer:  ', options: { color: DIM, fontSize: 14 } },
         { text: ans, options: { bold: true, color: GRN, fontSize: 18 } },
-      ], { x: PAD + 0.15, y: 3.4, w: 3.7, h: 0.55, fontFace: 'Helvetica', valign: 'middle' });
+        ],
+        x: PAD + 0.15,
+        y: 3.4,
+        w: 3.7,
+        h: 0.55,
+        fontFace: 'Helvetica',
+        valign: 'mid',
+      });
     }
+
+    slides.push(slide);
 
     // ── Solution slide ──
     if (includeSolution && q.solution?.text_markdown) {
-      const ss = pptx.addSlide();
-      ss.background = { color: BG.replace('#', '') };
+      const ss = newSlide();
       addChrome(ss, `Q${qi + 1} - Solution`);
-      ss.addText(`${qi + 1} / ${questions.length}`, {
+      ss.texts.push({
+        text: `${qi + 1} / ${questions.length}`,
         x: SW/2-0.6, y: SH-0.35, w: 1.2, h: 0.25,
         fontSize: 7, color: DIM, fontFace: 'Helvetica', align: 'center',
       });
 
       // Solution header
-      ss.addShape(pptx.ShapeType.rect, {
-        x: 0, y: 0.08, w: SW, h: 0.52,
-        fill: { color: dark ? '2d1b69' : 'ede9fe' }, line: { color: dark ? '2d1b69' : 'ede9fe', width: 0 },
+      ss.shapes.push({
+        shape: 'rect',
+        x: 0,
+        y: 0.08,
+        w: SW,
+        h: 0.52,
+        fillColor: dark ? '2d1b69' : 'ede9fe',
+        lineColor: dark ? '2d1b69' : 'ede9fe',
+        lineWidth: 0,
       });
-      ss.addText(`Q${qi + 1} - Solution`, {
+      ss.texts.push({
+        text: `Q${qi + 1} - Solution`,
         x: PAD, y: 0.1, w: CW, h: 0.46,
-        fontSize: 14, bold: true, color: ACC, fontFace: 'Helvetica', valign: 'middle',
+        fontSize: 14, bold: true, color: ACC, fontFace: 'Helvetica', valign: 'mid',
       });
 
       // Stem (rendered as image)
@@ -766,9 +874,14 @@ async function runPPTExport(
       await addRenderedText(ss, stemHtml, PAD, 0.72, CW, 0.9, 13, dark ? '#888888' : '#666666');
 
       // Divider
-      ss.addShape(pptx.ShapeType.line, {
-        x: PAD, y: 1.72, w: CW, h: 0,
-        line: { color: dark ? '334155' : 'd1d5db', width: 0.75 },
+      ss.shapes.push({
+        shape: 'line',
+        x: PAD,
+        y: 1.72,
+        w: CW,
+        h: 0,
+        lineColor: dark ? '334155' : 'd1d5db',
+        lineWidth: 0.75,
       });
 
       // Solution body (rendered as image)
@@ -777,11 +890,32 @@ async function runPPTExport(
 
       // Diagrams in solution — use per-question svg_scales.solution (default 50%)
       await addDiagrams(ss, q.solution.text_markdown, PAD, SH - 2.0, CW, q.svg_scales?.solution ?? 50);
+      slides.push(ss);
     }
   }
 
-  onProgress(100, 'Saving...');
-  await pptx.writeFile({ fileName: `${title.replace(/\s+/g, '_')}.pptx` });
+  onProgress(94, 'Building PPT...');
+  const response = await fetch('/api/v2/export/ppt', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title, slides }),
+  });
+
+  if (!response.ok) {
+    const err = await response.text();
+    throw new Error(err || 'Failed to generate PPT');
+  }
+
+  const blob = await response.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${title.replace(/\s+/g, '_')}.pptx`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  onProgress(100, 'Saved');
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
