@@ -146,7 +146,7 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
             {/* Hero Header - Impactful Design */}
-            <section className="relative pt-20 md:pt-28 pb-12 overflow-hidden">
+            <section className="relative pt-20 pb-8 md:pt-24 md:pb-10 overflow-hidden">
                 {/* Animated Background elements */}
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-900/30 via-transparent to-transparent" />
                 <div className="absolute top-10 right-1/4 w-[500px] h-[500px] bg-violet-500/20 rounded-full blur-3xl animate-pulse" />
@@ -159,7 +159,7 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 rounded-full mb-8"
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/40 rounded-full mb-4 md:mb-6"
                         >
                             <span className="w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse" />
                             <span className="text-red-400 font-semibold text-sm tracking-wide">STOP WASTING 6-8 HOURS!</span>
@@ -170,7 +170,7 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
-                            className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight whitespace-nowrap"
+                            className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 leading-tight whitespace-nowrap"
                         >
                             <span className="text-white">One Shots</span>
                             <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 bg-clip-text text-transparent ml-3">
@@ -183,7 +183,7 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="text-base md:text-xl text-gray-300 mb-10 leading-relaxed max-w-3xl mx-auto"
+                            className="text-base md:text-lg text-gray-300 mb-6 md:mb-8 leading-relaxed max-w-3xl mx-auto"
                         >
                             Stop wasting hours on fluff. Master entire chapters with laser-focused content designed for <span className="text-violet-400 font-bold">maximum retention</span> in the <span className="text-violet-400 font-bold">shortest time possible.</span>
                         </motion.p>
@@ -193,7 +193,7 @@ export default function OneShotClient({ initialVideos }: OneShotClientProps) {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
-                            className="flex flex-wrap justify-center gap-4 mb-12"
+                            className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8 md:mb-10"
                         >
                             <button
                                 onClick={() => document.getElementById('video-grid')?.scrollIntoView({ behavior: 'smooth' })}

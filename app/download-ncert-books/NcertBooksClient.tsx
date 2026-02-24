@@ -94,16 +94,16 @@ export default function NcertBooksClient({ initialData }: NcertBooksClientProps)
             </AnimatePresence>
 
             {/* Main Content */}
-            <main className="pt-28 pb-20 px-4 md:px-6 max-w-5xl mx-auto">
+            <main className="pt-20 pb-12 md:pt-24 md:pb-16 px-4 md:px-6 max-w-5xl mx-auto">
                 {/* Header */}
-                <div className="text-center mb-12">
-                    <span className="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 font-semibold text-sm mb-6">
+                <div className="text-center mb-8 md:mb-10">
+                    <span className="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 font-semibold text-sm mb-4">
                         📚 Digital Library
                     </span>
-                    <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 tracking-tight">
                         NCERT <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-indigo-400">Bookshelf</span>
                     </h1>
-                    <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-10">
+                    <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mb-6 md:mb-8">
                         Access official NCERT Textbooks, Exemplars, and Lab Manuals instantly. Read distraction-free or download for offline use.
                     </p>
                 </div>
@@ -142,7 +142,7 @@ export default function NcertBooksClient({ initialData }: NcertBooksClientProps)
                         <section>
                             <div className="flex items-center gap-3 mb-6">
                                 <div className={`w-1.5 h-8 rounded-full bg-gradient-to-b ${getTabGradient()}`}></div>
-                                <h2 className="text-2xl md:text-3xl font-bold text-white">Class 11</h2>
+                                <h2 className="text-xl md:text-2xl font-bold text-white">Class 11</h2>
                                 <span className="ml-2 px-3 py-1 rounded-full bg-gray-800 text-gray-400 text-sm font-medium">
                                     {chapters11.length} {chapters11.length === 1 ? 'Chapter' : 'Chapters'}
                                 </span>
@@ -174,7 +174,7 @@ export default function NcertBooksClient({ initialData }: NcertBooksClientProps)
                         <section>
                             <div className="flex items-center gap-3 mb-6">
                                 <div className={`w-1.5 h-8 rounded-full bg-gradient-to-b ${getTabGradient()}`}></div>
-                                <h2 className="text-2xl md:text-3xl font-bold text-white">Class 12</h2>
+                                <h2 className="text-xl md:text-2xl font-bold text-white">Class 12</h2>
                                 <span className="ml-2 px-3 py-1 rounded-full bg-gray-800 text-gray-400 text-sm font-medium">
                                     {chapters12.length} {chapters12.length === 1 ? 'Chapter' : 'Chapters'}
                                 </span>
@@ -228,20 +228,20 @@ function ChapterRow({
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.03 }}
             onClick={onRead}
-            className="group flex items-center justify-between bg-gray-900/50 hover:bg-gray-800/80 border border-gray-800/60 hover:border-gray-700 rounded-xl px-5 py-4 cursor-pointer transition-all duration-200"
+            className="group flex items-center justify-between bg-gray-900/50 hover:bg-gray-800/80 border border-gray-800/60 hover:border-gray-700 rounded-xl px-4 py-3 cursor-pointer transition-all duration-200"
         >
             <div className="flex items-center gap-4 overflow-hidden">
                 {/* Icon */}
-                <div className={`shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${gradient} bg-opacity-10 flex items-center justify-center text-white/80 group-hover:scale-105 transition-transform`}>
-                    <Icon size={22} />
+                <div className={`shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br ${gradient} bg-opacity-10 flex items-center justify-center text-white/80 group-hover:scale-105 transition-transform`}>
+                    <Icon size={18} />
                 </div>
 
                 {/* Title */}
                 <div className="min-w-0">
-                    <h3 className="text-lg md:text-xl font-bold text-gray-100 group-hover:text-white truncate pr-4 transition-colors">
+                    <h3 className="text-sm md:text-base font-bold text-gray-100 group-hover:text-white truncate pr-4 transition-colors">
                         {chapter.title}
                     </h3>
-                    <p className="text-sm text-gray-500 mt-0.5">Click to read • PDF</p>
+                    <p className="text-xs text-gray-500 mt-0.5">Click to read • PDF</p>
                 </div>
             </div>
 
@@ -251,10 +251,10 @@ function ChapterRow({
                     e.stopPropagation();
                     window.open(chapter.pdfUrl, '_blank');
                 }}
-                className="shrink-0 flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white text-sm font-semibold transition-all"
+                className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white text-xs font-semibold transition-all"
             >
-                <ExternalLink size={16} />
-                <span className="hidden md:inline">Open</span>
+                <ExternalLink size={14} />
+                <span className="hidden md:inline text-xs">Open</span>
             </button>
         </motion.div>
     );

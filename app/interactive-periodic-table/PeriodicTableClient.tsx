@@ -328,7 +328,7 @@ export default function PeriodicTableClient() {
             </AnimatePresence>
 
             {/* Hero Header */}
-            <section className="relative pt-32 pb-6 md:pt-40 md:pb-8 overflow-hidden">
+            <section className="relative pt-20 pb-6 md:pt-24 md:pb-8 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-gray-900 to-gray-950" />
                 <div className="absolute top-20 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
                 <div className="absolute top-40 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
@@ -339,7 +339,7 @@ export default function PeriodicTableClient() {
                         <span className="text-xs font-medium text-blue-400">NCERT Data Visualizations</span>
                     </div>
 
-                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 tracking-tight">
                         <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                             Interactive Periodic Table
                         </span>

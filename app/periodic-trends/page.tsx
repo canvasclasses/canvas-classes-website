@@ -9,7 +9,7 @@ export default function PeriodicTrendsPage() {
     return (
         <main className="min-h-screen bg-[#0d1117] text-white">
             {/* Hero Header */}
-            <section className="relative pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden">
+            <section className="relative pt-20 pb-8 md:pt-24 md:pb-10 overflow-hidden">
                 {/* Background gradient */}
                 <div className="absolute inset-0 bg-gradient-to-b from-violet-900/20 via-transparent to-transparent" />
                 <div className="absolute top-20 left-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl" />
@@ -23,7 +23,7 @@ export default function PeriodicTrendsPage() {
                     </div>
 
                     {/* Main Title with Gradient */}
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
                         <span className="bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
                             Periodic Trends & Exceptions
                         </span>

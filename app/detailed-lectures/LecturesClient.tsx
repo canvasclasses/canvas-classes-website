@@ -215,7 +215,7 @@ export default function LecturesClient({ initialChapters, initialStats }: Lectur
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
             {/* Hero Header - Reduced padding on mobile */}
-            <section className="relative pt-24 pb-8 md:pt-32 md:pb-6 overflow-hidden">
+            <section className="relative pt-20 pb-6 md:pt-24 md:pb-8 overflow-hidden">
                 {/* Background elements */}
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-teal-900/20 via-transparent to-transparent" />
                 <div className="absolute top-20 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl hidden md:block" />
@@ -236,7 +236,7 @@ export default function LecturesClient({ initialChapters, initialStats }: Lectur
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 tracking-tight"
+                        className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 tracking-tight"
                     >
                         <span className="text-white block md:inline">Complete </span>
                         <span className="bg-gradient-to-r from-teal-200 via-cyan-400 to-teal-500 bg-clip-text text-transparent filter drop-shadow-[0_0_25px_rgba(45,212,191,0.2)]">

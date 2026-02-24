@@ -200,7 +200,7 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
         <main className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
 
             {/* Hero Section */}
-            <section className="relative pt-28 pb-8 md:pt-48 md:pb-12 overflow-hidden">
+            <section className="relative pt-20 pb-6 md:pt-24 md:pb-8 overflow-hidden">
                 <div className="absolute top-20 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl" />
                 <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl" />
 
@@ -215,7 +215,7 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                             <span className="text-purple-400 font-semibold text-xs md:text-sm">Active Recall & Spaced Repetition</span>
                         </div>
 
-                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
+                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
                             Chemistry{' '}
                             <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                                 Flashcards
