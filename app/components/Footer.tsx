@@ -8,9 +8,11 @@ import { usePathname } from 'next/navigation';
 export default function Footer() {
     const pathname = usePathname();
     const isCrucibleAdmin = pathname?.startsWith('/the-crucible/admin');
+    const isOrganicMaster = pathname === '/organic-master';
+    const isCrucibleLanding = pathname === '/the-crucible';
     const currentYear = new Date().getFullYear();
 
-    if (isCrucibleAdmin) return null;
+    if (isCrucibleAdmin || isOrganicMaster || isCrucibleLanding) return null;
 
     return (
         <footer className="bg-[#050505] border-t border-white/8 relative overflow-hidden">

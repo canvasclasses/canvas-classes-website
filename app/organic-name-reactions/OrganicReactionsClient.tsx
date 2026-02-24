@@ -64,7 +64,7 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
         <div className="min-h-screen bg-[#0d1117] text-white font-sans selection:bg-emerald-500/30">
 
             {/* Hero Section - Dark Emerald Theme */}
-            <section className="relative pt-32 pb-16 px-4 md:pt-40 md:pb-20 overflow-hidden">
+            <section className="relative pt-20 pb-8 px-4 md:pt-24 md:pb-10 overflow-hidden">
                 {/* Background gradient */}
                 <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/20 via-transparent to-transparent" />
                 <div className="absolute top-20 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
@@ -75,7 +75,7 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-sm font-medium mb-6"
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-sm font-medium mb-4"
                     >
                         <Sparkles size={16} />
                         NCERT Organic Chemistry
@@ -85,7 +85,7 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight"
+                        className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight"
                     >
                         Organic <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Name Reactions</span>
                     </motion.h1>
@@ -94,7 +94,7 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed"
+                        className="text-base md:text-lg text-gray-400 mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed"
                     >
                         Master every named reaction from Class 11 & 12 NCERT with handwritten reaction mechanisms and key-points that make your revision highly effective.
                     </motion.p>
@@ -194,23 +194,23 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                                     {/* Collapsed Header */}
                                     <button
                                         onClick={() => toggleExpand(reaction.id)}
-                                        className="cursor-pointer w-full p-4 md:p-6 flex items-center gap-4 text-left hover:bg-gray-800/30 transition-colors focus:outline-none focus:bg-gray-800/30"
+                                        className="cursor-pointer w-full p-3 md:p-4 flex items-center gap-3 text-left hover:bg-gray-800/30 transition-colors focus:outline-none focus:bg-gray-800/30"
                                     >
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-3 mb-1.5 md:mb-2">
-                                                <h3 className="font-bold text-white text-lg md:text-xl truncate group-hover:text-emerald-400 transition-colors">
+                                                <h3 className="font-bold text-white text-sm md:text-base truncate group-hover:text-emerald-400 transition-colors">
                                                     {reaction.reactionName}
                                                 </h3>
                                             </div>
 
-                                            <div className="flex flex-wrap items-center gap-1.5 md:gap-2">
-                                                <span className="px-2 py-0.5 rounded-md bg-gray-800 border border-gray-700 text-gray-400 text-[10px] md:text-xs font-medium">
+                                            <div className="flex flex-wrap items-center gap-1 md:gap-1.5">
+                                                <span className="px-1.5 py-0.5 rounded-md bg-gray-800 border border-gray-700 text-gray-400 text-[9px] md:text-[10px] font-medium">
                                                     {reaction.reactionType}
                                                 </span>
-                                                <span className={`px-2 py-0.5 rounded-md text-[10px] md:text-xs font-medium border ${getDifficultyColor(reaction.difficulty)}`}>
+                                                <span className={`px-1.5 py-0.5 rounded-md text-[9px] md:text-[10px] font-medium border ${getDifficultyColor(reaction.difficulty)}`}>
                                                     {reaction.difficulty}
                                                 </span>
-                                                <span className="px-2 py-0.5 rounded-md bg-gray-800 border border-gray-700 text-gray-400 text-[10px] md:text-xs font-medium">
+                                                <span className="px-1.5 py-0.5 rounded-md bg-gray-800 border border-gray-700 text-gray-400 text-[9px] md:text-[10px] font-medium">
                                                     Class {reaction.classNum}
                                                 </span>
                                             </div>
@@ -238,11 +238,11 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                                                     {/* Mechanism Details */}
                                                     {reaction.mechanismDetails && (
                                                         <div className="mb-6">
-                                                            <h4 className="font-semibold text-emerald-400 mb-3 flex items-center gap-2 text-sm uppercase tracking-wide">
+                                                            <h4 className="font-semibold text-emerald-400 mb-2 flex items-center gap-2 text-xs uppercase tracking-wide">
                                                                 <Zap size={16} />
                                                                 Mechanism & Key Points
                                                             </h4>
-                                                            <div className="text-gray-300 text-base leading-relaxed pl-6 border-l-2 border-emerald-500/20">
+                                                            <div className="text-gray-300 text-sm leading-relaxed pl-4 border-l-2 border-emerald-500/20">
                                                                 <div className="prose prose-invert max-w-none prose-p:text-gray-300 prose-headings:text-white prose-strong:text-white prose-em:text-gray-200">
                                                                     <ReactMarkdown
                                                                         remarkPlugins={[remarkMath]}
@@ -258,7 +258,7 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                                                     {/* Reaction Image */}
                                                     {reaction.imageUrl && (
                                                         <div className="mt-6">
-                                                            <div className="flex items-center gap-2 mb-3 text-sm font-medium text-gray-400">
+                                                            <div className="flex items-center gap-2 mb-2 text-xs font-medium text-gray-400">
                                                                 <FlaskConical size={16} className="text-cyan-400" />
                                                                 Reaction Scheme
                                                             </div>
@@ -272,7 +272,7 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                                                                     className="w-full h-auto opacity-90 group-hover/image:opacity-100 transition-opacity"
                                                                 />
                                                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity bg-black/40 backdrop-blur-[1px]">
-                                                                    <span className="bg-black/70 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 backdrop-blur-md border border-white/10">
+                                                                    <span className="bg-black/70 text-white px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-2 backdrop-blur-md border border-white/10">
                                                                         <Sparkles size={14} /> Click to Expand
                                                                     </span>
                                                                 </div>
@@ -289,8 +289,8 @@ export default function OrganicReactionsClient({ initialReactions }: OrganicReac
                     ) : (
                         <div className="text-center py-20 bg-gray-900/40 backdrop-blur-sm rounded-2xl border border-gray-800">
                             <FlaskConical size={64} className="mx-auto mb-6 text-gray-700" />
-                            <h3 className="text-xl font-bold text-white mb-2">No reactions found</h3>
-                            <p className="text-gray-500 mb-6">Try adjusting your filters or search query.</p>
+                            <h3 className="text-lg font-bold text-white mb-2">No reactions found</h3>
+                            <p className="text-gray-500 text-sm mb-6">Try adjusting your filters or search query.</p>
                             <button
                                 onClick={() => {
                                     setSearchQuery('');

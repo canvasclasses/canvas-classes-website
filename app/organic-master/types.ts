@@ -25,7 +25,17 @@ export interface Reaction {
   svgUrl?: string;
 }
 
+export interface QuickRefRow {
+  name: string;
+  value: string;
+  note: string;
+  svg?: string; // Using SVG string for portability
+}
+
 export interface QuickRefTable {
   title: string;
-  rows: [string, string, string][];
+  description?: string;
+  layout?: 'list' | 'grid';
+  headers?: [string, string, string];
+  rows: QuickRefRow[];
 }

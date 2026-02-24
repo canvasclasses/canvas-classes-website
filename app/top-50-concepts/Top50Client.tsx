@@ -152,7 +152,7 @@ export default function Top50Client({ initialConcepts }: Top50ClientProps) {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
             {/* Hero Header */}
-            <section className="relative pt-32 md:pt-40 pb-8 overflow-hidden">
+            <section className="relative pt-20 pb-6 md:pt-24 md:pb-8 overflow-hidden">
                 {/* Background elements */}
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-900/20 via-transparent to-transparent" />
                 <div className="absolute top-20 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
@@ -164,7 +164,7 @@ export default function Top50Client({ initialConcepts }: Top50ClientProps) {
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-4xl md:text-5xl font-bold mb-4"
+                        className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
                     >
                         <span className="text-white">Top 50 </span>
                         <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
@@ -176,7 +176,7 @@ export default function Top50Client({ initialConcepts }: Top50ClientProps) {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="hidden md:block text-gray-400 text-lg max-w-2xl mx-auto mb-10"
+                        className="hidden md:block text-base md:text-lg text-gray-400 max-w-2xl mx-auto mb-6 md:mb-8"
                     >
                         Master the most important chemistry concepts for JEE & NEET. These handpicked
                         topics are frequently asked in exams and essential for your preparation.

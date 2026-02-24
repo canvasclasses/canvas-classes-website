@@ -151,7 +151,7 @@ export default function TwoMinClient({ initialVideos }: TwoMinClientProps) {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
             {/* Hero Header */}
-            <section className="relative pt-32 pb-12 overflow-hidden">
+            <section className="relative pt-20 pb-6 md:pt-24 md:pb-8 overflow-hidden">
                 {/* Background elements */}
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-rose-900/20 via-transparent to-transparent" />
                 <div className="absolute top-20 right-1/4 w-96 h-96 bg-rose-500/10 rounded-full blur-3xl" />
@@ -174,7 +174,7 @@ export default function TwoMinClient({ initialVideos }: TwoMinClientProps) {
                         <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center shadow-lg shadow-rose-500/25">
                             <Zap className="w-5 h-5 md:w-7 md:h-7 text-white" />
                         </div>
-                        <h1 className="text-3xl md:text-5xl font-bold">
+                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">
                             <span className="text-white">2 Minute </span>
                             <span className="bg-gradient-to-r from-rose-400 to-pink-400 bg-clip-text text-transparent">
                                 Chemistry
@@ -186,7 +186,7 @@ export default function TwoMinClient({ initialVideos }: TwoMinClientProps) {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-gray-400 text-base md:text-lg max-w-2xl mb-6 md:mb-10"
+                        className="text-gray-400 text-base md:text-lg max-w-2xl mb-6 md:mb-8"
                     >
                         Bite-sized chemistry lessons for revision on the go.
                         Master concepts in under 5 minutes.

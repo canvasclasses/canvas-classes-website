@@ -8,19 +8,29 @@ type SortCol = 'y' | 'acetic' | 'ortho' | 'meta' | 'para';
 type HL = { y: string; col: SortCol } | null;
 
 function heatBg(v: number | null, sel: boolean): string {
-  if (v === null) return 'rgba(255,255,255,0.02)';
+  if (v === null) return 'rgba(255,255,255,0.03)';
   const t = Math.max(0, Math.min(1, (v - 2.0) / 3.0));
   let r: number, g: number, b: number;
-  if (t < 0.5) { const s = t / 0.5; r = Math.round(220 - s * 10); g = Math.round(60 + s * 90); b = Math.round(50 - s * 10); }
-  else { const s = (t - 0.5) / 0.5; r = Math.round(210 - s * 160); g = Math.round(150 - s * 60); b = Math.round(40 + s * 185); }
-  return `rgba(${r},${g},${b},${sel ? 0.75 : 0.45})`;
+
+  // Vibrant Diverging Palette (Strong Acid Red -> Neutral Orange -> Weak Acid Blue)
+  if (t < 0.5) {
+    const s = t / 0.5;
+    r = 255;
+    g = Math.round(45 + s * 145);    // 45 -> 190
+    b = Math.round(85 - s * 45);     // 85 -> 40
+  } else {
+    const s = (t - 0.5) / 0.5;
+    r = Math.round(255 - s * 230);   // 255 -> 25
+    g = Math.round(190 - s * 60);    // 190 -> 130
+    b = Math.round(40 + s * 215);    // 40 -> 255
+  }
+
+  return `rgba(${r},${g},${b},${sel ? 0.95 : 0.8})`;
 }
 
 function heatText(v: number | null, sel: boolean): string {
-  if (v === null) return 'rgba(255,255,255,0.18)';
-  if (sel) return '#fff';
-  const t = Math.max(0, Math.min(1, (v - 2.0) / 3.0));
-  return `rgb(${Math.min(255, Math.round((220 - t * 10) * 1.15 + 30))},${Math.min(255, Math.round((60 + t * 90) * 1.15 + 35))},${Math.min(255, Math.round((50 - t * 10) * 1.1 + 60))})`;
+  if (v === null) return 'rgba(255,255,255,0.2)';
+  return '#ffffff';
 }
 
 function MiniRingSVG({ sub, pos, col, pka }: { sub: string; pos: 'ortho' | 'meta' | 'para'; col: string; pka: string }) {
@@ -80,7 +90,7 @@ function StructureViewer({ hl }: { hl: HL }) {
     </div>
   );
   const row = CA_DATA.find(r => r.y === hl.y)!;
-  const typeCol = row.type === 'ewg' ? '#e08080' : row.type === 'edg' ? '#60c080' : '#a8a8cc';
+  const typeCol = row.type === 'ewg' ? '#ff3b30' : row.type === 'edg' ? '#34c759' : '#5856d6';
   const v = hl.col === 'y' ? null : row[hl.col as keyof CaRow] as number | null;
   const isAcetic = hl.col === 'acetic';
   const posLabel = isAcetic ? 'Aliphatic' : hl.col.charAt(0).toUpperCase() + hl.col.slice(1);
@@ -298,7 +308,7 @@ export default function AcidPatternsTab() {
     return av - bv;
   });
 
-  const dotCol: Record<string, string> = { ewg: '#e08080', edg: '#60c080', neutral: '#a8a8cc' };
+  const dotCol: Record<string, string> = { ewg: '#ff3b30', edg: '#34c759', neutral: '#5856d6' };
   const cols: { key: SortCol; label: string }[] = [
     { key: 'y', label: 'Substituent' },
     { key: 'acetic', label: 'Y–CH₂COOH' },
@@ -382,6 +392,204 @@ export default function AcidPatternsTab() {
       <CisTransTrend />
       <CyclicTrend />
       <AxEqTrend />
+      <ActiveMethylenePkaTable />
     </div>
+  );
+}
+
+function ActiveMethylenePkaTable() {
+  const red = "#ef4444";
+  const bond = "rgba(255,255,255,0.7)";
+  const textFill = "rgba(255,255,255,0.9)";
+
+  const PKA_DATA_LEFT = [
+    {
+      type: '[1] Amide', pka: '30', svg: (
+        <svg width="120" height="80" viewBox="0 0 120 80" style={{ overflow: 'visible' }}>
+          <text x="10" y="27" fill={red} fontSize="14" fontWeight="bold">H</text>
+          <line x1="23" y1="21" x2="35" y2="40" stroke={bond} strokeWidth="1.5" />
+          <line x1="35" y1="40" x2="55" y2="25" stroke={bond} strokeWidth="1.5" />
+          <line x1="53" y1="26" x2="53" y2="10" stroke={bond} strokeWidth="1.5" />
+          <line x1="58" y1="26" x2="58" y2="10" stroke={bond} strokeWidth="1.5" />
+          <text x="55" y="8" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">O</text>
+          <line x1="55" y1="25" x2="72" y2="40" stroke={bond} strokeWidth="1.5" />
+          <text x="76" y="47" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">N</text>
+          <line x1="76" y1="50" x2="76" y2="65" stroke={bond} strokeWidth="1.5" />
+          <line x1="84" y1="43" x2="100" y2="43" stroke={bond} strokeWidth="1.5" />
+        </svg>
+      )
+    },
+    {
+      type: '[2] Nitrile', pka: '25', svg: (
+        <svg width="120" height="80" viewBox="0 0 120 80" style={{ overflow: 'visible' }}>
+          <text x="20" y="40" fill={red} fontSize="14" fontWeight="bold">H</text>
+          <line x1="32" y1="36" x2="45" y2="45" stroke={bond} strokeWidth="1.5" />
+          <line x1="45" y1="45" x2="65" y2="25" stroke={bond} strokeWidth="1.5" />
+          <text x="68" y="27" fill={textFill} fontSize="14" fontFamily="DM Mono,monospace">CN</text>
+        </svg>
+      )
+    },
+    {
+      type: '[3] Ester', pka: '25', svg: (
+        <svg width="120" height="80" viewBox="0 0 120 80" style={{ overflow: 'visible' }}>
+          <text x="5" y="27" fill={red} fontSize="14" fontWeight="bold">H</text>
+          <line x1="18" y1="21" x2="30" y2="40" stroke={bond} strokeWidth="1.5" />
+          <line x1="30" y1="40" x2="45" y2="25" stroke={bond} strokeWidth="1.5" />
+          <line x1="43" y1="26" x2="43" y2="10" stroke={bond} strokeWidth="1.5" />
+          <line x1="48" y1="26" x2="48" y2="10" stroke={bond} strokeWidth="1.5" />
+          <text x="45" y="8" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">O</text>
+          <line x1="45" y1="25" x2="60" y2="40" stroke={bond} strokeWidth="1.5" />
+          <text x="65" y="48" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">O</text>
+          <line x1="72" y1="42" x2="85" y2="30" stroke={bond} strokeWidth="1.5" />
+          <line x1="85" y1="30" x2="105" y2="45" stroke={bond} strokeWidth="1.5" />
+        </svg>
+      )
+    },
+    {
+      type: '[4] Ketone', pka: '19.2', svg: (
+        <svg width="120" height="80" viewBox="0 0 120 80" style={{ overflow: 'visible' }}>
+          <text x="15" y="27" fill={red} fontSize="14" fontWeight="bold">H</text>
+          <line x1="28" y1="21" x2="40" y2="40" stroke={bond} strokeWidth="1.5" />
+          <line x1="40" y1="40" x2="55" y2="25" stroke={bond} strokeWidth="1.5" />
+          <line x1="53" y1="26" x2="53" y2="10" stroke={bond} strokeWidth="1.5" />
+          <line x1="58" y1="26" x2="58" y2="10" stroke={bond} strokeWidth="1.5" />
+          <text x="55" y="8" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">O</text>
+          <line x1="55" y1="25" x2="75" y2="45" stroke={bond} strokeWidth="1.5" />
+        </svg>
+      )
+    },
+    {
+      type: '[5] Aldehyde', pka: '17', svg: (
+        <svg width="120" height="80" viewBox="0 0 120 80" style={{ overflow: 'visible' }}>
+          <text x="15" y="27" fill={red} fontSize="14" fontWeight="bold">H</text>
+          <line x1="28" y1="21" x2="40" y2="40" stroke={bond} strokeWidth="1.5" />
+          <line x1="40" y1="40" x2="55" y2="25" stroke={bond} strokeWidth="1.5" />
+          <line x1="53" y1="26" x2="53" y2="10" stroke={bond} strokeWidth="1.5" />
+          <line x1="58" y1="26" x2="58" y2="10" stroke={bond} strokeWidth="1.5" />
+          <text x="55" y="8" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">O</text>
+          <line x1="55" y1="25" x2="70" y2="40" stroke={bond} strokeWidth="1.5" />
+          <text x="73" y="48" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">H</text>
+        </svg>
+      )
+    }
+  ];
+
+  const PKA_DATA_RIGHT = [
+    {
+      type: '[6] 1,3-Diester', pka: '13.3', svg: (
+        <svg width="180" height="80" viewBox="0 0 180 80" style={{ overflow: 'visible' }}>
+          <line x1="10" y1="45" x2="25" y2="35" stroke={bond} strokeWidth="1.5" />
+          <line x1="25" y1="35" x2="35" y2="45" stroke={bond} strokeWidth="1.5" />
+          <text x="42" y="52" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">O</text>
+          <line x1="49" y1="45" x2="60" y2="35" stroke={bond} strokeWidth="1.5" />
+          <line x1="58" y1="34" x2="58" y2="18" stroke={bond} strokeWidth="1.5" />
+          <line x1="63" y1="34" x2="63" y2="18" stroke={bond} strokeWidth="1.5" />
+          <text x="60" y="15" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">O</text>
+          <line x1="60" y1="35" x2="80" y2="48" stroke={bond} strokeWidth="1.5" />
+          <line x1="80" y1="48" x2="80" y2="60" stroke={bond} strokeWidth="1.5" />
+          <text x="80" y="75" fill={red} fontSize="14" fontWeight="bold" textAnchor="middle">H</text>
+          <line x1="80" y1="48" x2="100" y2="35" stroke={bond} strokeWidth="1.5" />
+          <line x1="97" y1="34" x2="97" y2="18" stroke={bond} strokeWidth="1.5" />
+          <line x1="102" y1="34" x2="102" y2="18" stroke={bond} strokeWidth="1.5" />
+          <text x="100" y="15" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">O</text>
+          <line x1="100" y1="35" x2="111" y2="45" stroke={bond} strokeWidth="1.5" />
+          <text x="118" y="52" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">O</text>
+          <line x1="125" y1="45" x2="135" y2="35" stroke={bond} strokeWidth="1.5" />
+          <line x1="135" y1="35" x2="150" y2="45" stroke={bond} strokeWidth="1.5" />
+        </svg>
+      )
+    },
+    {
+      type: '[7] 1,3-Dinitrile', pka: '11', svg: (
+        <svg width="180" height="80" viewBox="0 0 180 80" style={{ overflow: 'visible' }}>
+          <text x="40" y="45" fill={textFill} fontSize="14" textAnchor="end" fontFamily="DM Mono,monospace">NC</text>
+          <line x1="45" y1="40" x2="65" y2="50" stroke={bond} strokeWidth="1.5" />
+          <line x1="65" y1="50" x2="85" y2="40" stroke={bond} strokeWidth="1.5" />
+          <text x="90" y="45" fill={textFill} fontSize="14" textAnchor="start" fontFamily="DM Mono,monospace">CN</text>
+          <line x1="65" y1="50" x2="65" y2="35" stroke={bond} strokeWidth="1.5" />
+          <text x="65" y="30" fill={red} fontSize="14" fontWeight="bold" textAnchor="middle">H</text>
+        </svg>
+      )
+    },
+    {
+      type: '[8] β-Keto ester', pka: '10.7', svg: (
+        <svg width="180" height="80" viewBox="0 0 180 80" style={{ overflow: 'visible' }}>
+          <line x1="20" y1="48" x2="40" y2="35" stroke={bond} strokeWidth="1.5" />
+          <line x1="38" y1="34" x2="38" y2="18" stroke={bond} strokeWidth="1.5" />
+          <line x1="43" y1="34" x2="43" y2="18" stroke={bond} strokeWidth="1.5" />
+          <text x="40" y="15" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">O</text>
+          <line x1="40" y1="35" x2="60" y2="48" stroke={bond} strokeWidth="1.5" />
+          <line x1="60" y1="48" x2="60" y2="60" stroke={bond} strokeWidth="1.5" />
+          <text x="60" y="75" fill={red} fontSize="14" fontWeight="bold" textAnchor="middle">H</text>
+          <line x1="60" y1="48" x2="80" y2="35" stroke={bond} strokeWidth="1.5" />
+          <line x1="77" y1="34" x2="77" y2="18" stroke={bond} strokeWidth="1.5" />
+          <line x1="82" y1="34" x2="82" y2="18" stroke={bond} strokeWidth="1.5" />
+          <text x="80" y="15" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">O</text>
+          <line x1="80" y1="35" x2="91" y2="45" stroke={bond} strokeWidth="1.5" />
+          <text x="98" y="52" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">O</text>
+          <line x1="105" y1="45" x2="115" y2="35" stroke={bond} strokeWidth="1.5" />
+          <line x1="115" y1="35" x2="130" y2="45" stroke={bond} strokeWidth="1.5" />
+        </svg>
+      )
+    },
+    {
+      type: '[9] β-Diketone', pka: '9', svg: (
+        <svg width="180" height="80" viewBox="0 0 180 80" style={{ overflow: 'visible' }}>
+          <line x1="30" y1="48" x2="50" y2="35" stroke={bond} strokeWidth="1.5" />
+          <line x1="48" y1="34" x2="48" y2="18" stroke={bond} strokeWidth="1.5" />
+          <line x1="53" y1="34" x2="53" y2="18" stroke={bond} strokeWidth="1.5" />
+          <text x="50" y="15" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">O</text>
+          <line x1="50" y1="35" x2="70" y2="48" stroke={bond} strokeWidth="1.5" />
+          <line x1="70" y1="48" x2="70" y2="60" stroke={bond} strokeWidth="1.5" />
+          <text x="70" y="75" fill={red} fontSize="14" fontWeight="bold" textAnchor="middle">H</text>
+          <line x1="70" y1="48" x2="90" y2="35" stroke={bond} strokeWidth="1.5" />
+          <line x1="87" y1="34" x2="87" y2="18" stroke={bond} strokeWidth="1.5" />
+          <line x1="92" y1="34" x2="92" y2="18" stroke={bond} strokeWidth="1.5" />
+          <text x="90" y="15" fill={textFill} fontSize="14" textAnchor="middle" fontFamily="DM Mono,monospace">O</text>
+          <line x1="90" y1="35" x2="110" y2="48" stroke={bond} strokeWidth="1.5" />
+        </svg>
+      )
+    }
+  ];
+
+  const tableHeaderStyle = { display: 'flex', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' as const, letterSpacing: '.08em', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: 8, marginBottom: 8, padding: '0 8px 8px 8px' };
+  const th1Style = { width: '33%' };
+  const th2Style = { width: '40%', textAlign: 'center' as const };
+  const th3Style = { width: '27%', textAlign: 'right' as const };
+
+  const TableHeader = () => (
+    <div style={tableHeaderStyle}>
+      <div style={th1Style}>Compound type</div>
+      <div style={th2Style}>Example</div>
+      <div style={{ ...th3Style, paddingRight: 8 }}>pKₐ</div>
+    </div>
+  );
+
+  const TableRow = ({ item }: { item: any }) => (
+    <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.04)', padding: '8px', fontSize: 13 }}>
+      <div style={{ width: '33%', color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>{item.type}</div>
+      <div style={{ width: '40%', display: 'flex', justifyContent: 'center' }}>{item.svg}</div>
+      <div style={{ width: '27%', textAlign: 'right', fontFamily: 'DM Mono,monospace', fontWeight: 700, color: '#34d399', fontSize: 15, paddingRight: 8 }}>{item.pka}</div>
+    </div>
+  );
+
+  return (
+    <TrendCard title="Important pKa Values (α-Hydrogen Acidity)" badge="Active Methylene">
+      <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)', lineHeight: 1.75, marginBottom: 20 }}>
+        The acidity of <strong style={{ color: 'rgba(255,255,255,0.88)' }}>α-hydrogens</strong> next to carbonyls or electron-withdrawing groups is dramatically increased due to resonance stabilisation of the resulting carbanion (enolate).
+        Compounds with two EWGs (<strong style={{ color: '#78d0c0' }}>active methylene compounds</strong>) are particularly acidic.
+      </div>
+
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 32, marginTop: 16 }}>
+        <div style={{ flex: '1 1 300px', minWidth: 280 }}>
+          <TableHeader />
+          {PKA_DATA_LEFT.map(item => <TableRow key={item.type} item={item} />)}
+        </div>
+        <div style={{ flex: '1 1 300px', minWidth: 280 }}>
+          <TableHeader />
+          {PKA_DATA_RIGHT.map(item => <TableRow key={item.type} item={item} />)}
+        </div>
+      </div>
+    </TrendCard>
   );
 }

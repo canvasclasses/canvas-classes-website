@@ -292,7 +292,7 @@ export default function SaltAnalysisHero() {
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent" />
 
             {/* Content - Using relative to permit auto-growth with content */}
-            <div className="relative z-10 max-w-7xl mx-auto px-4 flex flex-col items-center justify-center pt-20 pb-16 md:pt-28 md:pb-24 h-full text-center">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 flex flex-col items-center justify-center pt-16 pb-12 md:pt-20 md:pb-16 h-full text-center">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -304,7 +304,7 @@ export default function SaltAnalysisHero() {
                         <span className="text-cyan-300 font-medium">Revise for CBSE/JEE/NEET</span>
                     </div>
 
-                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
                         Master <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Salt Analysis</span> Like a Pro
                     </h1>
 

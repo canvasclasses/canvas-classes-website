@@ -63,19 +63,15 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
       <div className="relative px-6 py-3 rounded-full bg-[#050505]/80 backdrop-blur-xl border border-white/[0.08] shadow-2xl shadow-black/50 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="relative h-8 w-auto aspect-[3.6]">
-            {/* Using brightness-0 invert to make the logo white if it's dark, or just keep it as is if it's already white. 
-                 Assuming needs filter for dark mode compatibility based on 'modern/sleek' request */}
-            <Image
-              src="/logo.webp"
-              alt="Canvas Classes"
-              width={140}
-              height={40}
-              className="object-contain filter brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity"
-              priority
-            />
-          </div>
+        <Link href="/" className="flex items-center justify-center group">
+          <Image
+            src="/canvas logo white.svg"
+            alt="Canvas Classes"
+            width={105}
+            height={30}
+            className="object-contain opacity-90 group-hover:opacity-100 transition-opacity h-[21px] md:h-6 w-auto"
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}
