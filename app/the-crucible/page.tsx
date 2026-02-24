@@ -1,6 +1,7 @@
 import { getTaxonomy, getChapterQuestionCounts } from './actions';
 import CrucibleLanding from './components/CrucibleLanding';
 import { Metadata } from 'next';
+import { createClient } from '../utils/supabase/server';
 
 export const revalidate = 0; // Always fetch fresh — question counts change frequently during ingestion
 
@@ -19,6 +20,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
+    const supabase = await createClient();
+    const { data: { user } } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
+
     const [chapters, questionCounts] = await Promise.all([
         getTaxonomy(),
         getChapterQuestionCounts(),
@@ -30,6 +34,6 @@ export default async function Page() {
     }));
 
     return (
-        <CrucibleLanding chapters={chaptersWithCounts} />
+        <CrucibleLanding chapters={chaptersWithCounts} isLoggedIn={!!user} />
     );
 }

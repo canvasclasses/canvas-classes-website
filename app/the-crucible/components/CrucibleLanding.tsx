@@ -2,18 +2,19 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Flame, ChevronLeft, ChevronRight, LogIn, LayoutGrid, Clock } from 'lucide-react';
+import Link from 'next/link';
 import { Chapter, Question } from './types';
 import BrowseView from './BrowseView';
 import TestView from './TestView';
 import TestConfigModal, { DifficultyMix } from './TestConfigModal';
 
-interface CrucibleLandingProps { chapters: Chapter[]; }
+interface CrucibleLandingProps { chapters: Chapter[]; isLoggedIn: boolean; }
 type View = 'landing' | 'shloka' | 'browse' | 'test' | 'test-config';
 
 const CAT_COLOR: Record<string, string> = { Physical: '#38bdf8', Organic: '#a78bfa', Inorganic: '#34d399', Practical: '#fbbf24' };
 const CLS_COLOR: Record<string, string> = { '11': '#38bdf8', '12': '#a78bfa' };
-const DAYS = ['M','T','W','T','F','S','S'];
-const PLACEHOLDER = { streak: 14, attempted: 1205, totalQ: 2530, mastered: 4, masteredOf: 28, accuracy: 72, activeDays: [0,1,2,3,4] };
+const DAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+const PLACEHOLDER = { streak: 14, attempted: 1205, totalQ: 2530, mastered: 4, masteredOf: 28, accuracy: 72, activeDays: [0, 1, 2, 3, 4] };
 
 // ── Tiny progress bar ────────────────────────────────────────────────────────
 function Bar({ value, color, h = 3 }: { value: number; color: string; h?: number }) {
@@ -38,10 +39,10 @@ function ShlokaScreen({ onDone }: { onDone: () => void }) {
       </div>
       <div style={{ textAlign: 'center', marginBottom: 28 }}>
         <p style={{ fontSize: 'clamp(32px,7vw,52px)', fontWeight: 900, fontFamily: 'serif', lineHeight: 1.35, margin: 0, background: 'linear-gradient(180deg,#fde68a 0%,#f59e0b 50%,#b45309 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-          {String.fromCodePoint(0x0909,0x0926,0x094D,0x092F,0x092E,0x0947,0x0928)} {String.fromCodePoint(0x0939,0x093F)} {String.fromCodePoint(0x0938,0x093F,0x0927,0x094D,0x092F,0x0928,0x094D,0x0924,0x093F)}
+          {String.fromCodePoint(0x0909, 0x0926, 0x094D, 0x092F, 0x092E, 0x0947, 0x0928)} {String.fromCodePoint(0x0939, 0x093F)} {String.fromCodePoint(0x0938, 0x093F, 0x0927, 0x094D, 0x092F, 0x0928, 0x094D, 0x0924, 0x093F)}
         </p>
         <p style={{ fontSize: 'clamp(32px,7vw,52px)', fontWeight: 900, fontFamily: 'serif', lineHeight: 1.35, margin: 0, background: 'linear-gradient(180deg,#fde68a 0%,#f59e0b 50%,#b45309 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-          {String.fromCodePoint(0x0915,0x093E,0x0930,0x094D,0x092F,0x093E,0x0923,0x093F)} {String.fromCodePoint(0x0928)} {String.fromCodePoint(0x092E,0x0928,0x094B,0x0930,0x0925,0x0948,0x0903)}
+          {String.fromCodePoint(0x0915, 0x093E, 0x0930, 0x094D, 0x092F, 0x093E, 0x0923, 0x093F)} {String.fromCodePoint(0x0928)} {String.fromCodePoint(0x092E, 0x0928, 0x094B, 0x0930, 0x0925, 0x0948, 0x0903)}
         </p>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 22 }}>
@@ -78,23 +79,23 @@ function ProgressCard({ isLoggedIn }: { isLoggedIn: boolean }) {
 
   const ring = isMobile ? (
     <svg width="88" height="88" viewBox="0 0 88 88" style={{ flexShrink: 0 }}>
-      <circle cx="44" cy="44" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="6"/>
+      <circle cx="44" cy="44" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="6" />
       <circle cx="44" cy="44" r={R} fill="none" stroke="url(#ring-grad)" strokeWidth="6" strokeLinecap="round"
         strokeDasharray={C} strokeDashoffset={C * (1 - pct / 100)}
         transform="rotate(-90 44 44)" style={{ transition: 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)' }}
       />
-      <defs><linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#38bdf8"/><stop offset="100%" stopColor="#818cf8"/></linearGradient></defs>
+      <defs><linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#38bdf8" /><stop offset="100%" stopColor="#818cf8" /></linearGradient></defs>
       <text x="44" y="40" textAnchor="middle" fill="#fff" fontSize="15" fontWeight="800" fontFamily="monospace">{pct}%</text>
       <text x="44" y="54" textAnchor="middle" fill="rgba(255,255,255,0.35)" fontSize="8" fontFamily="sans-serif">done</text>
     </svg>
   ) : (
     <svg width="108" height="108" viewBox="0 0 108 108" style={{ flexShrink: 0 }}>
-      <circle cx="54" cy="54" r={Rd} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="7"/>
+      <circle cx="54" cy="54" r={Rd} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="7" />
       <circle cx="54" cy="54" r={Rd} fill="none" stroke="url(#ring-grad-d)" strokeWidth="7" strokeLinecap="round"
         strokeDasharray={Cd} strokeDashoffset={Cd * (1 - pct / 100)}
         transform="rotate(-90 54 54)" style={{ transition: 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)' }}
       />
-      <defs><linearGradient id="ring-grad-d" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#38bdf8"/><stop offset="100%" stopColor="#818cf8"/></linearGradient></defs>
+      <defs><linearGradient id="ring-grad-d" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#38bdf8" /><stop offset="100%" stopColor="#818cf8" /></linearGradient></defs>
       <text x="54" y="49" textAnchor="middle" fill="#fff" fontSize="19" fontWeight="800" fontFamily="monospace">{pct}%</text>
       <text x="54" y="65" textAnchor="middle" fill="rgba(255,255,255,0.35)" fontSize="10" fontFamily="sans-serif">done</text>
     </svg>
@@ -122,44 +123,49 @@ function ProgressCard({ isLoggedIn }: { isLoggedIn: boolean }) {
     <div style={{ background: 'linear-gradient(145deg,rgba(30,20,60,0.9),rgba(15,12,30,0.95))', border: '1px solid rgba(124,58,237,0.25)', borderRadius: 16, padding: '12px 16px', position: 'relative', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle,rgba(124,58,237,0.12) 0%,transparent 70%)', pointerEvents: 'none' }} />
 
-      {isMobile ? (
-        /* ── Mobile layout: ring left + 2×2 stat grid right, streak below ── */
-        <>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+      <div style={{ filter: isLoggedIn ? 'none' : 'blur(6px)', opacity: isLoggedIn ? 1 : 0.4, transition: 'all 0.3s ease', pointerEvents: isLoggedIn ? 'auto' : 'none', userSelect: isLoggedIn ? 'auto' : 'none' }}>
+        {isMobile ? (
+          /* ── Mobile layout: ring left + 2×2 stat grid right, streak below ── */
+          <>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+              {ring}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, flex: 1 }}>
+                {stats.map(({ val, label, color }) => (
+                  <div key={label} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '7px 10px' }}>
+                    <div style={{ fontSize: 17, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
+                    <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', marginTop: 3, whiteSpace: 'nowrap' }}>{label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {streakBlock}
+          </>
+        ) : (
+          /* ── Desktop layout: single row ring + 4 pills + streak ── */
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             {ring}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, flex: 1 }}>
+            <div style={{ display: 'flex', gap: 6 }}>
               {stats.map(({ val, label, color }) => (
-                <div key={label} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '7px 10px' }}>
-                  <div style={{ fontSize: 17, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
-                  <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', marginTop: 3, whiteSpace: 'nowrap' }}>{label}</div>
+                <div key={label} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '12px 16px' }}>
+                  <div style={{ fontSize: 24, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
+                  <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 4, whiteSpace: 'nowrap' }}>{label}</div>
                 </div>
               ))}
             </div>
+            <div style={{ flexShrink: 0, marginLeft: 'auto' }}>{streakBlock}</div>
           </div>
-          {streakBlock}
-        </>
-      ) : (
-        /* ── Desktop layout: single row ring + 4 pills + streak ── */
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          {ring}
-          <div style={{ display: 'flex', gap: 6 }}>
-            {stats.map(({ val, label, color }) => (
-              <div key={label} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '12px 16px' }}>
-                <div style={{ fontSize: 24, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
-                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 4, whiteSpace: 'nowrap' }}>{label}</div>
-              </div>
-            ))}
-          </div>
-          <div style={{ flexShrink: 0, marginLeft: 'auto' }}>{streakBlock}</div>
-        </div>
-      )}
+        )}
+      </div>
 
       {!isLoggedIn && (
-        <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 6 }}>
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontStyle: 'italic' }}>Showing sample data</span>
-          <button style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: 'rgba(124,58,237,0.18)', border: '1px solid rgba(124,58,237,0.35)', borderRadius: 8, color: '#a78bfa', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
-            <LogIn style={{ width: 12, height: 12 }} /> Log in to track real progress
-          </button>
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 10, background: 'rgba(0,0,0,0.2)' }}>
+          <div style={{ textAlign: 'center', padding: '0 20px' }}>
+            <h3 style={{ fontSize: 18, fontWeight: 800, color: '#fff', marginBottom: 8, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>Login to save and view progress</h3>
+            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginBottom: 16 }}>Tracking your solved questions and streaks helps you stay consistent.</p>
+            <Link href="/login" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 24px', background: '#7c3aed', borderRadius: 12, color: '#fff', fontSize: 14, fontWeight: 700, border: 'none', cursor: 'pointer', boxShadow: '0 4px 15px rgba(124,58,237,0.4)', transition: 'transform 0.2s', textDecoration: 'none' }} onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}>
+              <LogIn style={{ width: 18, height: 18 }} /> Log in Now
+            </Link>
+          </div>
         </div>
       )}
     </div>
@@ -168,13 +174,13 @@ function ProgressCard({ isLoggedIn }: { isLoggedIn: boolean }) {
 
 // ── Chapter row inside bottom sheet ─────────────────────────────────────────
 function ChapterRow({ ch, selected, onToggle }: { ch: Chapter; selected: Set<string>; onToggle: (id: string) => void }) {
-  const isSel  = selected.has(ch.id);
+  const isSel = selected.has(ch.id);
   const accent = CAT_COLOR[ch.category ?? 'Physical'];
   const qCount = ch.question_count ?? 0;
   return (
     <div onClick={() => onToggle(ch.id)} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', background: isSel ? `${accent}12` : 'transparent', borderBottom: '1px solid rgba(255,255,255,0.06)', cursor: 'pointer', transition: 'background 0.12s', userSelect: 'none' }}>
       <div style={{ width: 20, height: 20, borderRadius: 6, flexShrink: 0, border: `1.5px solid ${isSel ? accent : 'rgba(255,255,255,0.25)'}`, background: isSel ? accent : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s' }}>
-        {isSel && <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="#000" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+        {isSel && <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L4 7L9 1" stroke="#000" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>}
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}>
@@ -194,10 +200,10 @@ function ChapterSheet({ classLevel, chapters, selected, onToggle, onClose, onSel
   classLevel: number; chapters: Chapter[]; selected: Set<string>;
   onToggle: (id: string) => void; onClose: () => void; onSelectAll: () => void; onClearClass: () => void;
 }) {
-  const color    = CLS_COLOR[String(classLevel)];
+  const color = CLS_COLOR[String(classLevel)];
   const selCount = chapters.filter(c => selected.has(c.id)).length;
-  const totalQ   = chapters.reduce((s, c) => s + (c.question_count ?? 0), 0);
-  const selQ     = chapters.filter(c => selected.has(c.id)).reduce((s, c) => s + (c.question_count ?? 0), 0);
+  const totalQ = chapters.reduce((s, c) => s + (c.question_count ?? 0), 0);
+  const selQ = chapters.filter(c => selected.has(c.id)).reduce((s, c) => s + (c.question_count ?? 0), 0);
   const grouped: Record<string, Chapter[]> = {};
   chapters.forEach(ch => { const cat = ch.category ?? 'Physical'; (grouped[cat] = grouped[cat] || []).push(ch); });
   const catOrder = ['Physical', 'Inorganic', 'Organic', 'Practical'];
@@ -253,12 +259,12 @@ function ChapterSheet({ classLevel, chapters, selected, onToggle, onClose, onSel
 function ClassCard({ classLevel, chapters, selected, onOpen }: {
   classLevel: number; chapters: Chapter[]; selected: Set<string>; onOpen: () => void;
 }) {
-  const color    = CLS_COLOR[String(classLevel)];
+  const color = CLS_COLOR[String(classLevel)];
   const selCount = chapters.filter(c => selected.has(c.id)).length;
-  const totalQ   = chapters.reduce((s, c) => s + (c.question_count ?? 0), 0);
-  const selQ     = chapters.filter(c => selected.has(c.id)).reduce((s, c) => s + (c.question_count ?? 0), 0);
-  const pct      = selCount > 0 ? Math.round((selCount / chapters.length) * 100) : 0;
-  const active   = selCount > 0;
+  const totalQ = chapters.reduce((s, c) => s + (c.question_count ?? 0), 0);
+  const selQ = chapters.filter(c => selected.has(c.id)).reduce((s, c) => s + (c.question_count ?? 0), 0);
+  const pct = selCount > 0 ? Math.round((selCount / chapters.length) * 100) : 0;
+  const active = selCount > 0;
   return (
     <div onClick={onOpen} style={{ padding: '11px 11px 10px', borderRadius: 14, cursor: 'pointer', background: active ? `${color}0d` : 'rgba(255,255,255,0.04)', border: `1.5px solid ${active ? color + '55' : 'rgba(255,255,255,0.09)'}`, transition: 'all 0.2s', userSelect: 'none', position: 'relative', overflow: 'hidden' }}>
       {/* Header */}
@@ -301,18 +307,18 @@ function selectTestQuestions(all: Question[], count: number, mix: DifficultyMix)
     pool = all.filter(q => q.metadata.is_pyq);
     if (pool.length === 0) pool = all; // fallback if no PYQs tagged yet
   } else if (mix === 'easy') {
-    const easy   = shuffle(all.filter(q => q.metadata.difficulty === 'Easy'));
+    const easy = shuffle(all.filter(q => q.metadata.difficulty === 'Easy'));
     const medium = shuffle(all.filter(q => q.metadata.difficulty === 'Medium'));
     pool = [...easy, ...medium];
   } else if (mix === 'hard') {
     const medium = shuffle(all.filter(q => q.metadata.difficulty === 'Medium'));
-    const hard   = shuffle(all.filter(q => q.metadata.difficulty === 'Hard'));
+    const hard = shuffle(all.filter(q => q.metadata.difficulty === 'Hard'));
     pool = [...medium, ...hard];
   } else {
     // balanced: ~30% easy, ~40% medium, ~30% hard — interleaved
-    const easy   = shuffle(all.filter(q => q.metadata.difficulty === 'Easy'));
+    const easy = shuffle(all.filter(q => q.metadata.difficulty === 'Easy'));
     const medium = shuffle(all.filter(q => q.metadata.difficulty === 'Medium'));
-    const hard   = shuffle(all.filter(q => q.metadata.difficulty === 'Hard'));
+    const hard = shuffle(all.filter(q => q.metadata.difficulty === 'Hard'));
     const eN = Math.round(count * 0.3), hN = Math.round(count * 0.3), mN = count - eN - hN;
     pool = [
       ...easy.slice(0, eN),
@@ -336,7 +342,7 @@ async function fetchTopPYQs(): Promise<Question[]> {
   const params = new URLSearchParams();
   params.set('is_top_pyq', 'true');
   params.set('limit', '500');
-  const res  = await fetch(`/api/v2/questions?${params.toString()}`);
+  const res = await fetch(`/api/v2/questions?${params.toString()}`);
   const json = await res.json();
   return (json.data || []).map((q: any) => ({
     id: q._id,
@@ -363,7 +369,7 @@ async function fetchQuestions(chapterIds: string[], limit?: number, topPYQOnly?:
   chapterIds.forEach(id => params.append('chapter_id', id));
   params.set('limit', String(limit || 500));
   if (topPYQOnly) params.set('is_top_pyq', 'true');
-  const res  = await fetch(`/api/v2/questions?${params.toString()}`);
+  const res = await fetch(`/api/v2/questions?${params.toString()}`);
   const json = await res.json();
   return (json.data || []).map((q: any) => ({
     id: q._id,
@@ -453,7 +459,7 @@ function DailyGitaShloka() {
         </div>
         {/* Decorative divider dots */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          {[0,1,2].map(i => (
+          {[0, 1, 2].map(i => (
             <div key={i} style={{ width: i === 1 ? 6 : 4, height: i === 1 ? 6 : 4, borderRadius: '50%', background: `rgba(180,130,40,${i === 1 ? 0.5 : 0.25})` }} />
           ))}
         </div>
@@ -499,21 +505,20 @@ function DailyGitaShloka() {
 
 // ── Main component ── (BrowseView/TestView/TestConfigModal imported above) ───
 // ── Main component ───────────────────────────────────────────────────────────
-export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
+export default function CrucibleLanding({ chapters, isLoggedIn }: CrucibleLandingProps) {
   const [selectedChapters, setSelectedChapters] = useState<Set<string>>(new Set());
-  const [view,             setView]             = useState<View>('landing');
-  const [openSheet,        setOpenSheet]        = useState<number | null>(null);
-  const [toast,            setToast]            = useState<string | null>(null);
-  const [mounted,          setMounted]          = useState(false);
-  const [questions,        setQuestions]        = useState<Question[]>([]);
-  const [loading,          setLoading]          = useState(false);
-  const [pendingMode,      setPendingMode]      = useState<'browse' | 'test' | null>(null);
-  const [showTestConfig,   setShowTestConfig]   = useState(false);
-  const [topPYQLoading,    setTopPYQLoading]    = useState(false);
-  const [topPYQFilter,     setTopPYQFilter]     = useState(false);
-  const [jeeMode,          setJeeMode]          = useState<'mains' | 'advanced'>('mains');
+  const [view, setView] = useState<View>('landing');
+  const [openSheet, setOpenSheet] = useState<number | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [pendingMode, setPendingMode] = useState<'browse' | 'test' | null>(null);
+  const [showTestConfig, setShowTestConfig] = useState(false);
+  const [topPYQLoading, setTopPYQLoading] = useState(false);
+  const [topPYQFilter, setTopPYQFilter] = useState(false);
+  const [jeeMode, setJeeMode] = useState<'mains' | 'advanced'>('mains');
 
-  const isLoggedIn = false;
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => { setMounted(true); }, []);
@@ -537,14 +542,14 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
   const class11 = chapters.filter(ch => ch.class_level === 11);
   const class12 = chapters.filter(ch => ch.class_level === 12);
   const selCount = selectedChapters.size;
-  const hasSel   = selCount > 0;
-  const selQ     = chapters.filter(c => selectedChapters.has(c.id)).reduce((s, c) => s + (c.question_count ?? 0), 0);
+  const hasSel = selCount > 0;
+  const selQ = chapters.filter(c => selectedChapters.has(c.id)).reduce((s, c) => s + (c.question_count ?? 0), 0);
 
-  const toggle       = (id: string) => setSelectedChapters(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
-  const selectAll    = (lvl: number) => { const chs = chapters.filter(ch => ch.class_level === lvl); setSelectedChapters(prev => { const n = new Set(prev); chs.forEach(c => n.add(c.id)); return n; }); };
-  const clearCls     = (lvl: number) => { const chs = chapters.filter(ch => ch.class_level === lvl); setSelectedChapters(prev => { const n = new Set(prev); chs.forEach(c => n.delete(c.id)); return n; }); };
-  const clearAll     = () => setSelectedChapters(new Set());
-  const notify       = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
+  const toggle = (id: string) => setSelectedChapters(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
+  const selectAll = (lvl: number) => { const chs = chapters.filter(ch => ch.class_level === lvl); setSelectedChapters(prev => { const n = new Set(prev); chs.forEach(c => n.add(c.id)); return n; }); };
+  const clearCls = (lvl: number) => { const chs = chapters.filter(ch => ch.class_level === lvl); setSelectedChapters(prev => { const n = new Set(prev); chs.forEach(c => n.delete(c.id)); return n; }); };
+  const clearAll = () => setSelectedChapters(new Set());
+  const notify = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
 
   // Top PYQs launch — fetches all is_top_pyq questions across all chapters
   const launchTopPYQs = (mode: 'browse' | 'test') => {
@@ -612,7 +617,7 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
 
   if (view === 'shloka') return <ShlokaScreen onDone={onShlokaDone} />;
   if (view === 'browse') return <BrowseView questions={questions} chapters={chapters} onBack={() => setView('landing')} />;
-  if (view === 'test')   return <TestView   questions={questions} onBack={() => setView('landing')} />;
+  if (view === 'test') return <TestView questions={questions} onBack={() => setView('landing')} />;
 
   return (
     <>
@@ -648,23 +653,23 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <defs>
                     <linearGradient id="flame-grad" x1="11" y1="14" x2="11" y2="1" gradientUnits="userSpaceOnUse">
-                      <stop offset="0%" stopColor="#ea580c"/>
-                      <stop offset="55%" stopColor="#f97316"/>
-                      <stop offset="100%" stopColor="#fde68a"/>
+                      <stop offset="0%" stopColor="#ea580c" />
+                      <stop offset="55%" stopColor="#f97316" />
+                      <stop offset="100%" stopColor="#fde68a" />
                     </linearGradient>
                     <linearGradient id="vessel-grad" x1="11" y1="12" x2="11" y2="21" gradientUnits="userSpaceOnUse">
-                      <stop offset="0%" stopColor="#78350f"/>
-                      <stop offset="100%" stopColor="#451a03"/>
+                      <stop offset="0%" stopColor="#78350f" />
+                      <stop offset="100%" stopColor="#451a03" />
                     </linearGradient>
                   </defs>
                   {/* Crucible vessel body */}
-                  <path d="M5 13 Q4.5 21 11 21 Q17.5 21 17 13 Z" fill="url(#vessel-grad)" stroke="rgba(234,88,12,0.5)" strokeWidth="0.5"/>
+                  <path d="M5 13 Q4.5 21 11 21 Q17.5 21 17 13 Z" fill="url(#vessel-grad)" stroke="rgba(234,88,12,0.5)" strokeWidth="0.5" />
                   {/* Vessel rim */}
-                  <rect x="4" y="12" width="14" height="2" rx="1" fill="#92400e"/>
+                  <rect x="4" y="12" width="14" height="2" rx="1" fill="#92400e" />
                   {/* Center flame */}
-                  <path d="M11 13 C11 13 8.5 10 9 7 C9.5 4 11 2 11 2 C11 2 10 5 11.5 6.5 C12 5 12.5 3.5 13.5 3 C13 5 14 7 13 9 C14.5 7.5 15 5 14.5 3.5 C16 5.5 15.5 9 13.5 11 C14 10 14 9 13.5 8.5 C13 10 12 12 11 13 Z" fill="url(#flame-grad)"/>
+                  <path d="M11 13 C11 13 8.5 10 9 7 C9.5 4 11 2 11 2 C11 2 10 5 11.5 6.5 C12 5 12.5 3.5 13.5 3 C13 5 14 7 13 9 C14.5 7.5 15 5 14.5 3.5 C16 5.5 15.5 9 13.5 11 C14 10 14 9 13.5 8.5 C13 10 12 12 11 13 Z" fill="url(#flame-grad)" />
                   {/* Left small flame */}
-                  <path d="M8 13 C8 13 6.5 11 7 9 C7.5 7.5 8.5 7 8.5 7 C8 8.5 8.5 10 9.5 10.5 C9 9 9.5 7.5 10 7 C9.5 8.5 10 10.5 9 12 C9.5 11 9.5 10 9 9.5 C8.5 11 8.5 12 8 13 Z" fill="#f97316" opacity="0.7"/>
+                  <path d="M8 13 C8 13 6.5 11 7 9 C7.5 7.5 8.5 7 8.5 7 C8 8.5 8.5 10 9.5 10.5 C9 9 9.5 7.5 10 7 C9.5 8.5 10 10.5 9 12 C9.5 11 9.5 10 9 9.5 C8.5 11 8.5 12 8 13 Z" fill="#f97316" opacity="0.7" />
                 </svg>
               </div>
               <div>
@@ -780,9 +785,9 @@ export default function CrucibleLanding({ chapters }: CrucibleLandingProps) {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: isMobile ? 8 : 10, marginBottom: 12 }}>
             {([
               [String(chapters.length), 'Chapters', '#a78bfa'],
-              [chapters.reduce((s,c) => s + (c.question_count ?? 0), 0).toLocaleString(), 'Total Qs', '#38bdf8'],
+              [chapters.reduce((s, c) => s + (c.question_count ?? 0), 0).toLocaleString(), 'Total Qs', '#38bdf8'],
               [String(chapters.filter(c => (c.question_count ?? 0) > 0).length), 'Active', '#34d399'],
-            ] as [string,string,string][]).map(([val, label, color]) => (
+            ] as [string, string, string][]).map(([val, label, color]) => (
               <div key={label} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.09)', borderRadius: 12, padding: isMobile ? '10px 14px' : '12px 18px' }}>
                 <div style={{ fontSize: isMobile ? 18 : 24, fontWeight: 800, color, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
                 <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 3 }}>{label}</div>
