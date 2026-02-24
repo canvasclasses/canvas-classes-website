@@ -5,7 +5,7 @@ import { QuestionV2 } from '@/lib/models/Question.v2';
 import { Chapter } from '@/lib/models/Chapter';
 import { AuditLog } from '@/lib/models/AuditLog';
 
-// Chapter prefix map — uppercase prefix for display_id generation
+// Chapter prefix map — CANONICAL prefixes matching actual display_id values in DB
 // IDs MUST match taxonomyData_from_csv.ts chapter IDs (ch11_* / ch12_* scheme)
 const CHAPTER_PREFIXES: Record<string, string> = {
   // Class 11
@@ -13,30 +13,31 @@ const CHAPTER_PREFIXES: Record<string, string> = {
   'ch11_atom':        'ATOM',
   'ch11_periodic':    'PERI',
   'ch11_bonding':     'BOND',
-  'ch11_thermo':      'THER',
-  'ch11_chem_eq':     'CHEQ',
-  'ch11_ionic_eq':    'ION',
-  'ch11_redox':       'REDX',
+  'ch11_thermo':      'THERMO',
+  'ch11_chem_eq':     'CEQ',
+  'ch11_ionic_eq':    'IEQ',
+  'ch11_redox':       'RDX',
   'ch11_pblock':      'PB11',
   'ch11_goc':         'GOC',
   'ch11_stereo':      'STER',
   'ch11_hydrocarbon': 'HC',
-  'ch11_prac_org':    'PORG',
+  'ch11_prac_org':    'POC',
   // Class 12
-  'ch12_solutions':   'SOLN',
-  'ch12_electrochem': 'ELEC',
-  'ch12_kinetics':    'KINE',
+  'ch12_solutions':   'SOL',
+  'ch12_electrochem': 'EC',
+  'ch12_kinetics':    'CK',
   'ch12_pblock':      'PB12',
-  'ch12_dblock':      'DFBL',
-  'ch12_coord':       'COOR',
+  'ch12_dblock':      'DNF',
+  'ch12_coord':       'CORD',
   'ch12_haloalkanes': 'HALO',
   'ch12_alcohols':    'ALCO',
-  'ch12_aldehydes':   'CARB',
+  'ch12_aldehydes':   'ALDO',
   'ch12_amines':      'AMIN',
-  'ch12_carboxylic':  'CARC',
+  'ch12_carboxylic':  'CARB',
   'ch12_biomolecules':'BIO',
   'ch12_salt':        'SALT',
   'ch12_prac_phys':   'PPHY',
+  'ch12_phenols':     'PHEN',
 };
 
 /**
@@ -90,26 +91,29 @@ export async function POST(
       );
     }
 
-    // 2. Load new chapter
-    const newChapter = await Chapter.findById(new_chapter_id);
-    if (!newChapter) {
-      return NextResponse.json(
-        { success: false, error: `Chapter "${new_chapter_id}" not found` },
-        { status: 404 }
-      );
-    }
-
-    // 3. Generate new display_id
+    // 2. Determine new prefix
     const prefix = CHAPTER_PREFIXES[new_chapter_id]
       || new_chapter_id.split('_').pop()!.toUpperCase().substring(0, 4);
-    const newSequence = (newChapter.question_sequence || 0) + 1;
+
+    // 3. Generate new display_id by querying actual max in DB (never trust question_sequence)
+    const prefixRegex = new RegExp(`^${prefix}-\\d+$`);
+    const lastInChapter = await QuestionV2.findOne(
+      { display_id: prefixRegex },
+      { display_id: 1 }
+    ).sort({ display_id: -1 }).lean() as any;
+
+    let newSequence = 1;
+    if (lastInChapter?.display_id) {
+      const parts = lastInChapter.display_id.split('-');
+      newSequence = parseInt(parts[parts.length - 1], 10) + 1;
+    }
     const newDisplayId = `${prefix}-${String(newSequence).padStart(3, '0')}`;
 
     // 4. Check for display_id collision (safety net)
     const conflict = await QuestionV2.findOne({ display_id: newDisplayId });
     if (conflict) {
       return NextResponse.json(
-        { success: false, error: `display_id "${newDisplayId}" already exists — chapter sequence out of sync` },
+        { success: false, error: `display_id "${newDisplayId}" already exists — please retry` },
         { status: 409 }
       );
     }
@@ -125,7 +129,7 @@ export async function POST(
       }
     });
 
-    // 6. Update old chapter stats (decrement)
+    // 6. Update old chapter stats (decrement) — best-effort, chapters collection may be stale
     await Chapter.findByIdAndUpdate(oldChapterId, {
       $inc: {
         'stats.total_questions': -1,
@@ -135,10 +139,9 @@ export async function POST(
       }
     });
 
-    // 7. Update new chapter stats + advance sequence
+    // 7. Update new chapter stats — best-effort
     await Chapter.findByIdAndUpdate(new_chapter_id, {
       $inc: {
-        question_sequence: 1,
         'stats.total_questions': 1,
         'stats.published_questions': question.status === 'published' ? 1 : 0,
         'stats.draft_questions': question.status === 'draft' ? 1 : 0,

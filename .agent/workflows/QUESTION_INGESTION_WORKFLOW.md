@@ -307,31 +307,59 @@ function src(year, month, day, shift) {
 
 ### **RULE 7: Display ID Generation**
 
-**Format:** `{CHAPTER_CODE}-{SEQUENCE}`
+**Format:** `{CHAPTER_PREFIX}-{ZERO_PADDED_3_DIGIT_SEQUENCE}`
 
-**Chapter Codes:**
-```
-Mole Concept        → MOLE-001, MOLE-002, ...
-Structure of Atom   → ATOM-001, ATOM-002, ...
-Periodic Table      → PERD-001, PERD-002, ...
-Chemical Bonding    → BOND-001, BOND-002, ...
-Thermodynamics      → THRM-001, THRM-002, ...
-Equilibrium         → EQUI-001, EQUI-002, ...
-Solutions           → SOLN-001, SOLN-002, ...
-Electrochemistry    → ELEC-001, ELEC-002, ...
-Kinetics            → KINE-001, KINE-002, ...
-D & F Block         → DNF-001, DNF-002, ...
-Redox Reactions     → REDX-001, REDX-002, ...
-Coordination Cmpds  → CORD-001, CORD-002, ...
-```
+**⚠️ CANONICAL PREFIX TABLE — ONE PREFIX PER CHAPTER, NO EXCEPTIONS:**
+
+| chapter_id | Canonical Prefix | Example |
+|---|---|---|
+| `ch11_atom` | `ATOM` | ATOM-414 |
+| `ch11_bonding` | `BOND` | BOND-177 |
+| `ch11_chem_eq` | `CEQ` | CEQ-063 |
+| `ch11_goc` | `GOC` | GOC-135 |
+| `ch11_hydrocarbon` | `HC` | HC-151 |
+| `ch11_ionic_eq` | `IEQ` | IEQ-078 |
+| `ch11_mole` | `MOLE` | MOLE-213 |
+| `ch11_pblock` | `PB11` | PB11-062 |
+| `ch11_periodic` | `PERI` | PERI-131 |
+| `ch11_prac_org` | `POC` | POC-085 |
+| `ch11_redox` | `RDX` | RDX-080 |
+| `ch11_thermo` | `THERMO` | THERMO-136 |
+| `ch12_alcohols` | `ALCO` | ALCO-001 |
+| `ch12_aldehydes` | `ALDO` | ALDO-007 |
+| `ch12_amines` | `AMIN` | AMIN-008 |
+| `ch12_biomolecules` | `BIO` | BIO-123 |
+| `ch12_carboxylic` | `CARB` | CARB-001 |
+| `ch12_coord` | `CORD` | CORD-236 |
+| `ch12_dblock` | `DNF` | DNF-158 |
+| `ch12_electrochem` | `EC` | EC-128 |
+| `ch12_haloalkanes` | `HALO` | HALO-005 |
+| `ch12_kinetics` | `CK` | CK-126 |
+| `ch12_pblock` | `PB12` | PB12-121 |
+| `ch12_phenols` | `PHEN` | PHEN-001 |
+| `ch12_solutions` | `SOL` | SOL-135 |
 
 **CRITICAL ID RULES:**
+- ❌ **NEVER** use exam-based prefixes like `JM25APR7M-51` — these were a historical mistake, now fully corrected
+- ❌ **NEVER** invent new prefixes (e.g., `PERD`, `BIOM`, `SOLN`, `THRM`, `ELEC`, `HYDR`, `KINE`) — all chapters already have a canonical prefix above
 - ❌ **NEVER** include `PYQ` in the display_id (e.g., `DNF-PYQ-001` is WRONG)
-- ✅ **CORRECT:** `DNF-001`, `MOLE-042`, `ATOM-015`
+- ✅ **ALWAYS** look up the canonical prefix from the table above before assigning any display_id
+- ✅ **ALWAYS** query `questions_v2` for the current maximum number in that prefix before assigning the next ID
+- ✅ **CORRECT:** `DNF-159`, `MOLE-414`, `ATOM-412`
 - The fact that a question is a PYQ is stored in `metadata.is_pyq: true` — NOT in the ID
-- Exam source/year is stored in `metadata.exam_source` — NOT in the question text
+- Exam source/year is stored in `metadata.exam_source` — NOT in the display_id or question text
 
-**Auto-increment:** Check existing questions in chapter and use next number.
+**chapter_id canonical values — ALWAYS use these exact strings:**
+- ❌ WRONG: `ch11_equilibrium`, `ch11_thermodynamics`, `ch11_hydrocarbons`, `ch12_coordination`, `ch12_electrochemistry`
+- ✅ CORRECT: `ch11_chem_eq`, `ch11_thermo`, `ch11_hydrocarbon`, `ch12_coord`, `ch12_electrochem`
+- **Single source of truth:** `app/crucible/admin/taxonomy/taxonomyData_from_csv.ts`
+
+**Auto-increment:** Before writing any insertion script, query the current max:
+```javascript
+const docs = await col.find({ display_id: /^CORD-/ }).toArray();
+const max = Math.max(...docs.map(d => parseInt(d.display_id.split('-')[1])));
+// next ID = CORD-(max+1) zero-padded to 3 digits
+```
 
 ### **RULE 10: Question Text Cleanliness**
 

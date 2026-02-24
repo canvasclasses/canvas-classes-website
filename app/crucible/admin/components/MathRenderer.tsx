@@ -152,10 +152,10 @@ function processMarkdown(text: string, imageScale: number): string {
       //   "| | List I | | List II |"  → header = " | List I | | List II "
       // so split gives: ['', 'List I', '', 'List II'] after trim
       const rawHs = header.split('|').map((h: string) => h.trim());
-      // Strip leading empty string (artifact of leading space before first inner |)
-      const trimmedHs = rawHs[0] === '' ? rawHs.slice(1) : rawHs;
-      // Strip trailing empty string if present
-      const finalHs = trimmedHs[trimmedHs.length - 1] === '' ? trimmedHs.slice(0, -1) : trimmedHs;
+      // Strip only the trailing empty string (artifact of trailing |)
+      // Do NOT strip the leading empty — it represents the intentional empty first cell
+      // e.g. '| | A | B |' → header=' | A | B ' → split=['', '', 'A', 'B', ''] → keep leading '' as empty <th>
+      const finalHs = rawHs[rawHs.length - 1] === '' ? rawHs.slice(0, -1) : rawHs;
 
       const rows = body.trim().split('\n').map((r: string) =>
         r.split('|').map((c: string) => c.trim()).filter(Boolean)
@@ -174,7 +174,7 @@ function processMarkdown(text: string, imageScale: number): string {
         t += `<th colspan="2" style="text-align:left">${mtcH1}</th>`;
         t += `<th colspan="2" style="text-align:left">${mtcH2}</th>`;
       } else {
-        finalHs.filter(Boolean).forEach((h: string) => { t += `<th>${h}</th>`; });
+        finalHs.forEach((h: string) => { t += `<th>${h}</th>`; });
       }
       t += '</tr></thead><tbody>';
       rows.forEach((r: string[]) => {
