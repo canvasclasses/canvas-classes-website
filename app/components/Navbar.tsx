@@ -65,7 +65,7 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center group">
           <Image
-            src="/canvas logo white.svg"
+            src="/Canvas Logo white.svg"
             alt="Canvas Classes"
             width={105}
             height={30}
