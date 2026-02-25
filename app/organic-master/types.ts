@@ -19,10 +19,9 @@ export interface Reaction {
   mechanism: string;
   stereo: string | null;
   mistake: string;
-  hook: string;
-  jee: string;
   videoUrl?: string;
-  svgUrl?: string;
+  images: string[];
+  audioUrl?: string;
 }
 
 export interface QuickRefRow {

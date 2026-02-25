@@ -99,7 +99,7 @@ function ReactionCard({ r, isOpen, onToggle }: { r: Reaction; isOpen: boolean; o
           </motion.div>
         </div>
 
-        <p className="text-[13.5px] text-gray-400/80 leading-relaxed mt-3 lining-nums">{r.summary}</p>
+        <p className="text-[13.5px] text-gray-300 leading-relaxed mt-3 lining-nums">{r.summary}</p>
 
         <AnimatePresence>
           {!isOpen && r.tags && r.tags.length > 0 && (
@@ -122,9 +122,13 @@ function ReactionCard({ r, isOpen, onToggle }: { r: Reaction; isOpen: boolean; o
             exit={{ height: 0, opacity: 0 }}
             className="border-t border-emerald-500/20 px-5 pb-6 pt-5 bg-black/20"
           >
-            {r.svgUrl ? (
-              <div className="mb-6 rounded-xl overflow-hidden border border-white/10 bg-white/[0.02] p-4 flex justify-center backdrop-blur-sm">
-                <img src={r.svgUrl} alt={`${r.name} mechanism`} className="max-w-full max-h-56 object-contain filter invert opacity-90 hover:opacity-100 transition-opacity" />
+            {r.images?.length > 0 ? (
+              <div className="flex flex-col gap-4 mb-6">
+                {r.images.map((img, idx) => (
+                  <div key={idx} className="rounded-xl overflow-hidden border border-white/10 bg-white/[0.02] p-4 flex justify-center backdrop-blur-sm">
+                    <img src={img} alt={`${r.name} mechanism ${idx + 1}`} className="max-w-full max-h-72 object-contain opacity-90 hover:opacity-100 transition-opacity" />
+                  </div>
+                ))}
               </div>
             ) : null}
 
@@ -139,8 +143,6 @@ function ReactionCard({ r, isOpen, onToggle }: { r: Reaction; isOpen: boolean; o
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
               {r.stereo && <Panel variant="stereo" label="Stereochemistry" body={r.stereo} icon={Compass} />}
               <Panel variant="mistake" label="Common Mistake" body={r.mistake} icon={ShieldAlert} />
-              <Panel variant="hook" label="Memory Hook" body={r.hook} icon={Lightbulb} />
-              <Panel variant="jee" label="JEE Relevance" body={r.jee} icon={Zap} />
             </div>
 
             <div className="flex items-center gap-3 flex-wrap">
@@ -151,9 +153,12 @@ function ReactionCard({ r, isOpen, onToggle }: { r: Reaction; isOpen: boolean; o
                   </span>
                 ))}
               </div>
+              {r.audioUrl && (
+                <audio src={r.audioUrl} controls className="h-9 max-w-[220px] outline-none" />
+              )}
               {r.videoUrl && (
                 <a href={r.videoUrl} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 transition-colors shrink-0">
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 transition-colors shrink-0 h-9">
                   <Play size={14} fill="currentColor" />
                   Watch Video Lesson
                 </a>
