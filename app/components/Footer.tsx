@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 
 export default function Footer() {
     const pathname = usePathname();
-    const isCrucibleAdmin = pathname?.startsWith('/the-crucible/admin');
+    const isCrucibleAdmin = pathname?.startsWith('/the-crucible/admin') || pathname?.startsWith('/crucible/admin');
     const isOrganicMaster = pathname === '/organic-master';
     const isCrucibleLanding = pathname === '/the-crucible';
     const currentYear = new Date().getFullYear();
