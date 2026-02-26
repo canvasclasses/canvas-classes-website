@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# one-time batch insertion scripts
+/scripts/insert_*_b*.js
+/scripts/audit_*_final.js
+/scripts/check_aldehyde_carboxylic_questions.js
+/scripts/update_carbonyl_chapter_ids.js
+/scripts/final_merge_verification.js
+
+# automation pipeline output
+/automation/output/
+/automation/logs/
+/automation/progress.db
+/automation/node_modules/

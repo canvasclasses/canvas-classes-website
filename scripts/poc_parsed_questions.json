@@ -1,0 +1,2916 @@
+[
+  {
+    "mdNumber": 108,
+    "displayId": "POC-NEW-001",
+    "questionLines": [
+      "Match List-I with List-II.",
+      "\\begin{tabular}{|l|l|l|l|}",
+      "\\hline \\multicolumn{2}{|c|}{\\begin{tabular}{c}",
+      "List-I \\\\",
+      "(Purification technique)",
+      "\\end{tabular}} & \\multicolumn{2}{c|}{\\begin{tabular}{c}",
+      "List-II \\\\",
+      "(Mixture of organic \\\\",
+      "compounds)",
+      "\\end{tabular}} \\\\",
+      "\\hline (A) & Distillation (simple) & (I) & Diesel + Petrol \\\\",
+      "\\hline (B) & Fractional distillation & (II) & Aniline + Water \\\\",
+      "\\hline (C) & \\begin{tabular}{l}",
+      "Distillation under \\\\",
+      "reduced pressure",
+      "\\end{tabular} & (III) & \\begin{tabular}{l}",
+      "Chloroform + \\\\",
+      "Aniline",
+      "\\end{tabular} \\\\",
+      "\\hline (D) & Steam distillation & (IV) & \\begin{tabular}{l}",
+      "Glycerol + \\\\",
+      "Spent-lye",
+      "\\end{tabular} \\\\",
+      "\\hline",
+      "\\end{tabular}",
+      "Choose the correct answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "(A)-(II), (B)-(III), (C)-(IV), (D)-(I)"
+      },
+      {
+        "id": "b",
+        "text": "(A)-(II), (B)-(IV), (C)-(I), (D)-(III)"
+      },
+      {
+        "id": "c",
+        "text": "(A)-(III), (B)-(IV), (C)-(II), (D)-(I)"
+      },
+      {
+        "id": "d",
+        "text": "(A)-(III), (B)-(I), (C)-(IV), (D)-(II)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 2,
+      "month": "April",
+      "year": 2025,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 109,
+    "displayId": "POC-NEW-002",
+    "questionLines": [
+      "Match List-I with List-II.",
+      "\\begin{tabular}{|l|l|l|l|}",
+      "\\hline \\multicolumn{2}{|c|}{List-I (Separation of)} & \\multicolumn{2}{|c|}{List-II (Separation Technique)} \\\\",
+      "\\hline (A) & Aniline from aniline-water mixture & (I) & Simple distillation \\\\",
+      "\\hline (B) & Glycerol from spent-lye in soap industry & (II) & Fractional distillation \\\\",
+      "\\hline (C) & Different fractions of crude oil in petroleum industry & (III) & Distillation at reduced pressure \\\\",
+      "\\hline (D) & ChloroformAniline mixture & (IV) & Steam distillation \\\\",
+      "\\hline",
+      "\\end{tabular}",
+      "Choose the correct answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "(A)-(IV), (B)-(III), (C)-(II), (D)-(I)"
+      },
+      {
+        "id": "b",
+        "text": "(A)-(I), (B)-(II), (C)-(III), (D)-(IV)"
+      },
+      {
+        "id": "c",
+        "text": "(A)-(III), (B)-(IV), (C)-(I), (D)-(II)"
+      },
+      {
+        "id": "d",
+        "text": "(A)-(II), (B)-(I), (C)-(IV), (D)-(III)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 4,
+      "month": "April",
+      "year": 2025,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 110,
+    "displayId": "POC-NEW-003",
+    "questionLines": [
+      "The purification method based on the following physical transformation is :",
+      "![](https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-01.jpg?height=112&width=662&top_left_y=2321&top_left_x=1280)"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Sublimation"
+      },
+      {
+        "id": "b",
+        "text": "Crystallization"
+      },
+      {
+        "id": "c",
+        "text": "Extraction"
+      },
+      {
+        "id": "d",
+        "text": "Distillation"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 28,
+      "month": "Jan",
+      "year": 2025,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 111,
+    "displayId": "POC-NEW-004",
+    "questionLines": [
+      "Given below are two statements:",
+      "Statement (I): In partition chromatography, stationary phase is thin film of liquid present in the inert support.",
+      "Statement (II): In paper chromatography, the material of paper acts as a stationary phase.",
+      "In the light of the above statements, choose the correct answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Statement I is true but Statement II is false"
+      },
+      {
+        "id": "b",
+        "text": "Statement I is false but Statement II is true"
+      },
+      {
+        "id": "c",
+        "text": "Both Statement I and Statement II are false"
+      },
+      {
+        "id": "d",
+        "text": "Both Statement I and Statement II are true"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 29,
+      "month": "Jan",
+      "year": 2025,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 112,
+    "displayId": "POC-NEW-005",
+    "questionLines": [
+      "The technique used for purification of steam volatile water immiscible substance is:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Fractional distillation"
+      },
+      {
+        "id": "b",
+        "text": "Fractional distillation under reduced pressure"
+      },
+      {
+        "id": "c",
+        "text": "Distillation"
+      },
+      {
+        "id": "d",
+        "text": "Steam distillation"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 27,
+      "month": "Jan",
+      "year": 2024,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 113,
+    "displayId": "POC-NEW-006",
+    "questionLines": [
+      "Chromatographic technique/s based on the principle of differential adsorption is/are",
+      "A. Column chromatography",
+      "B. Thin layer chromatography",
+      "C. Paper chromatography",
+      "Choose the most appropriate answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "B only"
+      },
+      {
+        "id": "b",
+        "text": "A only"
+      },
+      {
+        "id": "c",
+        "text": "A \\& B only"
+      },
+      {
+        "id": "d",
+        "text": "C only"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 29,
+      "month": "Jan",
+      "year": 2024,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 115,
+    "displayId": "POC-NEW-008",
+    "questionLines": [
+      "Which among the following purification methods is based on the principle of \"Solubility\" in two different solvents?"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Column Chromatography"
+      },
+      {
+        "id": "b",
+        "text": "Sublimation"
+      },
+      {
+        "id": "c",
+        "text": "Distillation"
+      },
+      {
+        "id": "d",
+        "text": "Differential Extraction"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 30,
+      "month": "Jan",
+      "year": 2024,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 116,
+    "displayId": "POC-NEW-009",
+    "questionLines": [
+      "'Adsorption' principle is used for which of the following purification method?"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Extraction"
+      },
+      {
+        "id": "b",
+        "text": "Chromatography"
+      },
+      {
+        "id": "c",
+        "text": "Distillation"
+      },
+      {
+        "id": "d",
+        "text": "Sublimation"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 31,
+      "month": "Jan",
+      "year": 2024,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 117,
+    "displayId": "POC-NEW-010",
+    "questionLines": [
+      "Match List-I with List-II.",
+      "\\begin{tabular}{|l|l|l|l|}",
+      "\\hline \\multicolumn{2}{|c|}{ List-I (Technique) } & \\multicolumn{2}{|c|}{ List-II (Application) } \\\\",
+      "\\hline A. & Distillation & I. & \\begin{tabular}{l}",
+      "Separation of glycerol from \\\\",
+      "spent-lye",
+      "\\end{tabular} \\\\",
+      "\\hline B. & Fractional distillation & II. & Aniline - Water mixture \\\\",
+      "\\hline C. & Steam distillation & III. & \\begin{tabular}{l}",
+      "Separation of crude oil \\\\",
+      "fractions",
+      "\\end{tabular} \\\\",
+      "\\hline D. & \\begin{tabular}{l}",
+      "Distillation under \\\\",
+      "reduced pressure",
+      "\\end{tabular} & IV. & Chloroform - Aniline \\\\",
+      "\\hline",
+      "\\end{tabular}",
+      "Choose the correct answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "A-IV, B-I, C-II, D-III"
+      },
+      {
+        "id": "b",
+        "text": "A-IV, B-III, C-II, D-I"
+      },
+      {
+        "id": "c",
+        "text": "A-I, B-II, C-IV, D-III"
+      },
+      {
+        "id": "d",
+        "text": "A-II, B-III, C-I, D-IV"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 31,
+      "month": "Jan",
+      "year": 2024,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 118,
+    "displayId": "POC-NEW-011",
+    "questionLines": [
+      "The fragrance of flowers is due to the presence of some steam volatile organic compounds called essential oils. These are generally insoluble in water at room temperature but are miscible with water vapour in vapour phase. A suitable method for the extraction of these oils from the flowers is -"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Crystallisation"
+      },
+      {
+        "id": "b",
+        "text": "Distillation under reduced pressure"
+      },
+      {
+        "id": "c",
+        "text": "Distillation"
+      },
+      {
+        "id": "d",
+        "text": "Steam distillation"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 31,
+      "month": "Jan",
+      "year": 2024,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 119,
+    "displayId": "POC-NEW-012",
+    "questionLines": [
+      "The adsorbent used in adsorption chromatography is/are",
+      "A. silica gel",
+      "B. alumina",
+      "C. quick lime",
+      "D. magnesia",
+      "Choose the most appropriate answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "B only"
+      },
+      {
+        "id": "b",
+        "text": "C and D only"
+      },
+      {
+        "id": "c",
+        "text": "A and B only"
+      },
+      {
+        "id": "d",
+        "text": "A only"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 4,
+      "month": "April",
+      "year": 2024,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 121,
+    "displayId": "POC-NEW-014",
+    "questionLines": [
+      "Which of the following statements are correct?",
+      "A. Glycerol is purified by vacuum distillation because it decomposes at its normal boiling point.",
+      "B. Aniline can be purified by steam distillation as aniline is miscible in water.",
+      "C. Ethanol can be separated from ethanol water mixture by azeotropic distillation because it forms azeotrope.",
+      "D. An organic compound is pure, if mixed M.P. is remained same.",
+      "Choose the most appropriate answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "A, B, C only"
+      },
+      {
+        "id": "b",
+        "text": "A, C, D only"
+      },
+      {
+        "id": "c",
+        "text": "B, C, D only"
+      },
+      {
+        "id": "d",
+        "text": "A, B, D only"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 6,
+      "month": "April",
+      "year": 2024,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 122,
+    "displayId": "POC-NEW-015",
+    "questionLines": [
+      "The correct statements among the following, for a \"chromatography\" purification method is:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Organic compounds run faster than solvent in the thin layer chromatographic plate."
+      },
+      {
+        "id": "b",
+        "text": "Non-polar compounds are retained at top and polar compounds come down in column chromatography."
+      },
+      {
+        "id": "c",
+        "text": "\\(R_{f}\\) of a polar compound is smaller than that of a non-polar compound."
+      },
+      {
+        "id": "d",
+        "text": "\\(\\mathrm{R}_{\\mathrm{f}}\\) is an integral value."
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 6,
+      "month": "April",
+      "year": 2024,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 123,
+    "displayId": "POC-NEW-016",
+    "questionLines": [
+      "Methods used for purification of organic compounds are based on:",
+      "124.",
+      "![](https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-02.jpg?height=320&width=358&top_left_y=2086&top_left_x=1251)",
+      "In the given TLC, the distance of spot \\(\\mathrm{A} \\& \\mathrm{~B}\\) are \\(5 \\mathrm{~cm} \\& 7 \\mathrm{~cm}\\), from the bottom of TLC plate, respectively.",
+      "\\(R_{f}\\) value of \\(B\\) is \\(x \\times 10^{-1}\\) times more than \\(A\\). The value of \\(x\\) is \\(\\_\\_\\_\\_\\) ."
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "neither on nature of compound nor on the impurity present."
+      },
+      {
+        "id": "b",
+        "text": "nature of compound only."
+      },
+      {
+        "id": "c",
+        "text": "nature of compound and presence of impurity."
+      },
+      {
+        "id": "d",
+        "text": "presence of impurity only."
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 9,
+      "month": "April",
+      "year": 2024,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 125,
+    "displayId": "POC-NEW-018",
+    "questionLines": [
+      "Using column chromatography, mixture of two compounds 'A' and 'B' was separated. 'A' eluted first, this indicates 'B' has"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Low \\(\\mathrm{R}_{\\mathrm{f}}\\), weaker adsorption"
+      },
+      {
+        "id": "b",
+        "text": "High \\(\\mathrm{R}_{\\mathrm{f}}\\), stronger adsorption"
+      },
+      {
+        "id": "c",
+        "text": "High \\(\\mathrm{R}_{\\mathrm{f}}\\), weaker adsorption"
+      },
+      {
+        "id": "d",
+        "text": "Low \\(\\mathrm{R}_{\\mathrm{f}}\\), stronger adsorption"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 10,
+      "month": "April",
+      "year": 2023,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 127,
+    "displayId": "POC-NEW-020",
+    "questionLines": [
+      "From the figure of column chromatography given below, identify incorrect statements.",
+      "![](https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-03.jpg?height=272&width=139&top_left_y=1251&top_left_x=579)",
+      "(A) Compound ' c ' is more polar than ' a ' and ' b '",
+      "(B) Compound ' \\(a\\) ' is least polar",
+      "(C) Compound ' \\(b\\) ' comes out of the column before ' \\(c\\) ' and after ' \\(a\\) '",
+      "(D) Compound ' \\(a\\) ' spends more time in the column",
+      "Choose the correct answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "(A), (B) and (C) only"
+      },
+      {
+        "id": "b",
+        "text": "(B), (C) and (D) only"
+      },
+      {
+        "id": "c",
+        "text": "(A), (B) and (D) only"
+      },
+      {
+        "id": "d",
+        "text": "(B) and (D) only"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 6,
+      "month": "April",
+      "year": 2023,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 128,
+    "displayId": "POC-NEW-021",
+    "questionLines": [
+      "Thin layer chromatography of a mixture shows the following observation:",
+      "![](https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-03.jpg?height=225&width=223&top_left_y=1900&top_left_x=585)",
+      "The correct order of elution in the silica gel column chromatography is"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(\\mathrm{A}, \\mathrm{C}, \\mathrm{B}\\)"
+      },
+      {
+        "id": "b",
+        "text": "B, C, A"
+      },
+      {
+        "id": "c",
+        "text": "\\(\\mathrm{C}, \\mathrm{A}, \\mathrm{B}\\)"
+      },
+      {
+        "id": "d",
+        "text": "B, A, C"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 11,
+      "month": "April",
+      "year": 2023,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 129,
+    "displayId": "POC-NEW-022",
+    "questionLines": [
+      "Match List-I with List-II:",
+      "\\begin{tabular}{|l|l|l|l|}",
+      "\\hline \\multicolumn{2}{|c|}{List-I (Mixture)} & \\multicolumn{2}{|r|}{List-II (Separation Technique)} \\\\",
+      "\\hline A. & \\(\\mathrm{CHCl}_{3}+\\mathrm{C}_{6} \\mathrm{H}_{5} \\mathrm{NH}_{2}\\) & I. & Steam distillation \\\\",
+      "\\hline B. & \\(\\mathrm{C}_{6} \\mathrm{H}_{14}+\\mathrm{C}_{5} \\mathrm{H}_{12}\\) & II. & Differential extraction \\\\",
+      "\\hline C. & \\(\\mathrm{C}_{6} \\mathrm{H}_{5} \\mathrm{NH}_{2}+\\mathrm{H}_{2} \\mathrm{O}\\) & III. & Distillation \\\\",
+      "\\hline D. & Organic compound in \\(\\mathrm{H}_{2} \\mathrm{O}\\) & IV. & Fractional distillation \\\\",
+      "\\hline",
+      "\\end{tabular}"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "(A)-(IV), (B)-(I), (C)-(III), (D)-(II)"
+      },
+      {
+        "id": "b",
+        "text": "(A)-(III), (B)-(IV), (C)-(I), (D)-(II)"
+      },
+      {
+        "id": "c",
+        "text": "(A)-(II), (B)-(I), (C)-(III), (D)-(IV)"
+      },
+      {
+        "id": "d",
+        "text": "(A)-(III), (B)-(I), (C)-(IV), (D)-(II)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 30,
+      "month": "Jan",
+      "year": 2023,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 130,
+    "displayId": "POC-NEW-023",
+    "questionLines": [
+      "Which of the following statement is correct for paper chromatography?"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Water present in the mobile phase gets absorbed by the paper which then forms the stationary phase."
+      },
+      {
+        "id": "b",
+        "text": "Water present in the pores of the paper forms the stationary phase."
+      },
+      {
+        "id": "c",
+        "text": "Paper sheet forms the stationary phase."
+      },
+      {
+        "id": "d",
+        "text": "Paper and water present in its pores together form the stationary phase."
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 15,
+      "month": "April",
+      "year": 2023,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 131,
+    "displayId": "POC-NEW-024",
+    "questionLines": [
+      "Three organic compounds \\(\\mathrm{A}, \\mathrm{B}\\) and C were allowed to run in thin layer chromatography using hexane and gave the following result (see figure). The \\(\\mathrm{R}_{\\mathrm{f}}\\) value of the most polar compound is \\(\\_\\_\\_\\_\\) \\(\\times 10^{-2}\\)",
+      "![](https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-03.jpg?height=320&width=365&top_left_y=936&top_left_x=1484)"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 12,
+      "month": "April",
+      "year": 2023,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 132,
+    "displayId": "POC-NEW-025",
+    "questionLines": [
+      "Following chromatogram was developed by adsorption of compound 'A' on a 6 cm TLC glass plate. Retardation factor of the compound ' A ' is \\(\\times 10^{-1}\\).",
+      "![](https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-03.jpg?height=311&width=691&top_left_y=1389&top_left_x=1276)"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 29,
+      "month": "Jan",
+      "year": 2023,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 133,
+    "displayId": "POC-NEW-026",
+    "questionLines": [
+      "Which technique among the following is most appropriate in separation of a mixture of 100 mg of p- nitrophenol and picric acid?"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Steam distillation"
+      },
+      {
+        "id": "b",
+        "text": "2-5 ft long column of silica gel"
+      },
+      {
+        "id": "c",
+        "text": "Sublimation"
+      },
+      {
+        "id": "d",
+        "text": "Preparative TLC (Thin layer Chromatography)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 26,
+      "month": "July",
+      "year": 2022,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 134,
+    "displayId": "POC-NEW-027",
+    "questionLines": [
+      "Given below are two statements: One is labelled as Assertion (A) and the other is labelled as Reason (R).",
+      "Assertion (A): Thin layer chromatography is an adsorption chromatography.",
+      "Reason (R): A thin layer of silica gel is spread over a glass plate of suitable size in thin layer chromatography which acts as an adsorbent.",
+      "In the light of the above statements, choose the correct answer from the options given below"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Both A and R are true and R is the correct explanation of A"
+      },
+      {
+        "id": "b",
+        "text": "Both A are R are true but R is NOT the correct explanation of A"
+      },
+      {
+        "id": "c",
+        "text": "A is true but R is false"
+      },
+      {
+        "id": "d",
+        "text": "A is false but R is true"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 28,
+      "month": "July",
+      "year": 2022,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 135,
+    "displayId": "POC-NEW-028",
+    "questionLines": [
+      "Match List-I with List-II.",
+      "\\begin{tabular}{|l|l|l|l|}",
+      "\\hline \\multicolumn{2}{|c|}{List-I (Mixture)} & \\multicolumn{2}{|c|}{List-II (Purificaiton Process)} \\\\",
+      "\\hline A. & Chloroform \\& Aniline & I. & Steam distillation \\\\",
+      "\\hline B. & Benzoic acid \\& Naphthalene & II. & Sublimation \\\\",
+      "\\hline C. & Water \\& Aniline & III. & Distillation \\\\",
+      "\\hline D. & Naphthalene \\& Sodium chloride & IV. & Crystallisation \\\\",
+      "\\hline",
+      "\\end{tabular}",
+      "Choose the correct answer from the options given below"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "(A)-(IV), (B)-(III), (C)-(I), (D)-(II)"
+      },
+      {
+        "id": "b",
+        "text": "(A)-(III), (B)-(I), (C)-(IV), (D)-(II)"
+      },
+      {
+        "id": "c",
+        "text": "(A)-(III), (B)-(IV), (C)-(II), (D)-(I)"
+      },
+      {
+        "id": "d",
+        "text": "(A)-(III), (B)-(IV), (C)-(I), (D)-(II)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 27,
+      "month": "July",
+      "year": 2022,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 136,
+    "displayId": "POC-NEW-029",
+    "questionLines": [
+      "The separation of two coloured substances was done by paper chromatography. The distance travelled by solvent front, substance A and substance B from the base line are \\(3.25 \\mathrm{~cm}, 2.08 \\mathrm{~cm}\\) and 1.05 cm , respectively. The ratio of \\(R_{f}\\) values of \\(A\\) to \\(B\\) is \\(\\_\\_\\_\\_\\) ."
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 25,
+      "month": "July",
+      "year": 2022,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 137,
+    "displayId": "POC-NEW-030",
+    "questionLines": [
+      "A flask contains a mixture of isohexane and 3-methylpentane. One of the liquids boils at \\(63^{\\circ} \\mathrm{C}\\) while the other boils at \\(60^{\\circ} \\mathrm{C}\\). What is the best way to separate the two liquids and which one will be distilled out first?"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Fractional distillation, 3-methylpentane"
+      },
+      {
+        "id": "b",
+        "text": "Simple distillation, isohexane"
+      },
+      {
+        "id": "c",
+        "text": "Simple distillation, 3-methylpentane"
+      },
+      {
+        "id": "d",
+        "text": "Fractional distillation, isohexane"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 8,
+      "month": "Jan",
+      "year": 2020,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 138,
+    "displayId": "POC-NEW-031",
+    "questionLines": [
+      "Glycerol is separated in soap industries by:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Differential extraction"
+      },
+      {
+        "id": "b",
+        "text": "Fractional distillation"
+      },
+      {
+        "id": "c",
+        "text": "Distillation under reduced pressure"
+      },
+      {
+        "id": "d",
+        "text": "Steam distillation"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 3,
+      "month": "Sept",
+      "year": 2020,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 139,
+    "displayId": "POC-NEW-032",
+    "questionLines": [
+      "A Chromatography column, packed with silica gel as stationary phase, was used to separate a mixture of compounds consisting of (A) benzanilide, (B) aniline and (C) acetophenone. When the column is eluted with a mixture of solvents, hexane; ethyl acetate(20:80), the sequence of obtained compounds is",
+      "\\section*{Qualitative and Quantitative}",
+      "\\section*{Analysis of Organic Compounds}"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "(B), (C) and (A)"
+      },
+      {
+        "id": "b",
+        "text": "(A), (B) and (C)"
+      },
+      {
+        "id": "c",
+        "text": "(C), (A) and (B)"
+      },
+      {
+        "id": "d",
+        "text": "(B), (A) and (C)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 7,
+      "month": "Jan",
+      "year": 2020,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 140,
+    "displayId": "POC-NEW-033",
+    "questionLines": [
+      "Formation of \\(\\mathrm{Na}_{4}\\left[\\mathrm{Fe}(\\mathrm{CN})_{5} \\mathrm{NOS}\\right]\\), a purple coloured complex formed by addition of sodium nitroprusside in sodium carbonate extract of salt indicates the presence of:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Sodium ion"
+      },
+      {
+        "id": "b",
+        "text": "Sulphate ion"
+      },
+      {
+        "id": "c",
+        "text": "Sulphide ion"
+      },
+      {
+        "id": "d",
+        "text": "Sulphite ion"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 2,
+      "month": "April",
+      "year": 2025,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 141,
+    "displayId": "POC-NEW-034",
+    "questionLines": [
+      "In Dumas' method for estimation of nitrogen, 0.5 gram of an organic compound gave 60 mL of nitrogen collected at 300 K temperature and 715 mm Hg pressure. The percentage composition of nitrogen in the compound (Aqueous tension at \\(300 \\mathrm{~K}=15 \\mathrm{~mm} \\mathrm{Hg}\\) ) is"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "1.257"
+      },
+      {
+        "id": "b",
+        "text": "20.87"
+      },
+      {
+        "id": "c",
+        "text": "18.67"
+      },
+      {
+        "id": "d",
+        "text": "12.57"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 2,
+      "month": "April",
+      "year": 2025,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 142,
+    "displayId": "POC-NEW-035",
+    "questionLines": [
+      "During estimation of nitrogen by Dumas' method of compound \\(\\mathrm{X}(0.42 \\mathrm{~g})\\) :",
+      "![](https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-04.jpg?height=193&width=94&top_left_y=294&top_left_x=1574)",
+      "\\(\\_\\_\\_\\_\\) mL of \\(\\mathrm{N}_{2}\\) gas will be liberated at STP. (nearest integer) (Given molar mass in \\(\\mathrm{g} \\mathrm{mol}^{-1}: \\mathrm{C}: 12, \\mathrm{H}: 1, \\mathrm{~N}: 14\\) )"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 3,
+      "month": "April",
+      "year": 2025,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 143,
+    "displayId": "POC-NEW-036",
+    "questionLines": [
+      "0.5 g of an organic compound on combustion gave 1.46 g of \\(\\mathrm{CO}_{2}\\) and 0.9 g of \\(\\mathrm{H}_{2} \\mathrm{O}\\). The percentage of carbon in the compound is",
+      "\\(\\_\\_\\_\\_\\) . (Nearest integer)",
+      "[Given : Molar mass (in \\(\\mathrm{gmol}^{-1} \\mathrm{C}: 12, \\mathrm{H}: 1, \\mathrm{O}: 16\\) ]"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 3,
+      "month": "April",
+      "year": 2025,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 144,
+    "displayId": "POC-NEW-037",
+    "questionLines": [
+      "In Dumas' method for estimation of nitrogen 0.4 g of an organic compound gave 60 mL of nitrogen collected at 300 K temperature and 715 mm Hg pressure. The percentage composition of nitrogen in the compound is (Given: Aqueous tension at \\(300 \\mathrm{~K}=15 \\mathrm{~mm} \\mathrm{Hg}\\) )"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(15.71 \\%\\)"
+      },
+      {
+        "id": "b",
+        "text": "\\(20.95 \\%\\)"
+      },
+      {
+        "id": "c",
+        "text": "\\(17.46 \\%\\)"
+      },
+      {
+        "id": "d",
+        "text": "\\(7.85 \\%\\)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 3,
+      "month": "April",
+      "year": 2025,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 145,
+    "displayId": "POC-NEW-038",
+    "questionLines": [
+      "In Dumas' method for estimation of nitrogen 1 g of an organic compound gave 150 mL of nitrogen collected at 300 K temperature and 900 mm Hg pressure. The percentage composition of nitrogen in the compound is \\(\\_\\_\\_\\_\\) \\% (nearest integer). (Aqueous tension at \\(300 \\mathrm{~K}=15 \\mathrm{mmHg}\\) )"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 4,
+      "month": "April",
+      "year": 2025,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 146,
+    "displayId": "POC-NEW-039",
+    "questionLines": [
+      "In Duma's method, 292 mg of an organic compound released 50 mL of nitrogen gas \\(\\left(\\mathrm{N}_{2}\\right)\\) at 300 K temperature and 715 mm Hg pressure. The percentage composition of ' N ' in the organic compound is",
+      "\\(\\_\\_\\_\\_\\) \\% (Nearest integer)",
+      "(Aqueous tension at \\(300 \\mathrm{~K}=15 \\mathrm{~mm} \\mathrm{Hg}\\) )"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 7,
+      "month": "April",
+      "year": 2025,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 148,
+    "displayId": "POC-NEW-041",
+    "questionLines": [
+      "Given below are two statements:",
+      "Statement (I): Nitrogen, sulphur, halogen and phosphorus present in an organic compound are detected by Lassaigne's Test.",
+      "Statement (II): The elements present in the compound are converted from covalent form into ionic form by fusing the compound with Magnesium in Lassaigne's test.",
+      "In the light of the above statements, choose the correct answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Statement I is false but statement II is true."
+      },
+      {
+        "id": "b",
+        "text": "Both statement I and statement II are false."
+      },
+      {
+        "id": "c",
+        "text": "Both statement I and statement II are true."
+      },
+      {
+        "id": "d",
+        "text": "Statement I is true but statement II is false."
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 22,
+      "month": "Jan",
+      "year": 2025,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 149,
+    "displayId": "POC-NEW-042",
+    "questionLines": [
+      "Given below are two statements:",
+      "Statement I: In Lassaigne's test, the covalent organic molecules are transformed into ionic compounds.",
+      "Statement II: The sodium fusion extract of an organic compound having N and S gives prussian blue colour with \\(\\mathrm{FeSO}_{4}\\) and \\(\\mathrm{Na}_{4}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]\\)",
+      "In the light of the above statements, choose the correct answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Statement I is false but Statement II is true"
+      },
+      {
+        "id": "b",
+        "text": "Both Statement I and Statement II are false"
+      },
+      {
+        "id": "c",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "id": "d",
+        "text": "Statement I is true but Statement II is false"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 23,
+      "month": "Jan",
+      "year": 2025,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 150,
+    "displayId": "POC-NEW-043",
+    "questionLines": [
+      "During \"S\" estimation, 160 mg of an organic compound gives 466 mg of barium sulphate. The percentage of Sulphur in the given compound is \\(\\_\\_\\_\\_\\) \\%.",
+      "(Given molar mass in \\(\\mathrm{g} \\mathrm{mol}^{-1}\\) of \\(\\mathrm{Ba}: 137, \\mathrm{~S}: 32, \\mathrm{O}: 16\\) )"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 23,
+      "month": "Jan",
+      "year": 2025,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 151,
+    "displayId": "POC-NEW-044",
+    "questionLines": [
+      "Given below are two statements I and II.",
+      "Statement-I: Dumas method is used for estimation of \"Nitrogen\" in an organic compound.",
+      "Statement-II: Dumas method involves the formation of ammonium sulphate by heating the organic compound with conc \\(\\mathrm{H}_{2} \\mathrm{SO}_{4}\\).",
+      "In the light of the above statements, choose the correct answer from the options given below"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Statement-I is true but Statement-II is false"
+      },
+      {
+        "id": "b",
+        "text": "Statement-I is false but Statement-II is true"
+      },
+      {
+        "id": "c",
+        "text": "Both Statement-I and Statement-II are false"
+      },
+      {
+        "id": "d",
+        "text": "Both Statement-I and Statement-II are true"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 24,
+      "month": "Jan",
+      "year": 2025,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 152,
+    "displayId": "POC-NEW-045",
+    "questionLines": [
+      "In Carius method of estimation of halogen, 0.25 g of an organic compound gave 0.15 g of silver bromide ( AgBr ). The percentage of Bromine in the organic compound is \\(\\_\\_\\_\\_\\) \\(\\times 10^{-1} \\%\\) (Nearest integer).",
+      "(Given : Molar mass of Ag is 108 and Br is \\(80 \\mathrm{~g} \\mathrm{~mol}^{-1}\\) )"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 24,
+      "month": "Jan",
+      "year": 2025,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 153,
+    "displayId": "POC-NEW-046",
+    "questionLines": [
+      "In the sulphur estimation, 0.20 g of a pure organic compound gave 0.40 g of barium sulphate. The percentage of sulphur in the compound is \\(\\_\\_\\_\\_\\) \\(\\times 10^{-1} \\%\\).",
+      "(Molar mass: \\(\\mathrm{O}=16, \\mathrm{~S}=32, \\mathrm{Ba}=137\\) in \\(\\mathrm{g} \\mathrm{mol}^{-1}\\) )"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 29,
+      "month": "Jan",
+      "year": 2025,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 154,
+    "displayId": "POC-NEW-047",
+    "questionLines": [
+      "Appearance of blood red colour, on treatment of the sodium fusion extract of an organic compound with \\(\\mathrm{FeSO}_{4}\\) in presence of concentrated \\(\\mathrm{H}_{2} \\mathrm{SO}_{4}\\) indicates the presence of element/s."
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Br"
+      },
+      {
+        "id": "b",
+        "text": "N"
+      },
+      {
+        "id": "c",
+        "text": "N and S"
+      },
+      {
+        "id": "d",
+        "text": "S"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 29,
+      "month": "Jan",
+      "year": 2024,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 155,
+    "displayId": "POC-NEW-048",
+    "questionLines": [
+      "The Lassiagne's extract is boiled with dil \\(\\mathrm{HNO}_{3}\\) before testing for halogens because,"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(\\quad \\mathrm{AgCN}\\) is soluble in \\(\\mathrm{HNO}_{3}\\)"
+      },
+      {
+        "id": "b",
+        "text": "Silver halides arc soluble in \\(\\mathrm{HNO}_{3}\\)"
+      },
+      {
+        "id": "c",
+        "text": "\\(\\quad \\mathrm{Ag}_{2} \\mathrm{~S}\\) is soluble in \\(\\mathrm{HNO}_{3}\\)"
+      },
+      {
+        "id": "d",
+        "text": "\\(\\mathrm{Na}_{2} \\mathrm{~S}\\) and NaCN are decomposed by \\(\\mathrm{HNO}_{3}\\)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 30,
+      "month": "Jan",
+      "year": 2024,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 156,
+    "displayId": "POC-NEW-049",
+    "questionLines": [
+      "In Kjeldahl's method for estimation of nitrogen, \\(\\mathrm{CuSO}_{4}\\) acts as:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Reducing agent"
+      },
+      {
+        "id": "b",
+        "text": "Catalytic agent"
+      },
+      {
+        "id": "c",
+        "text": "Hydrolysis agent"
+      },
+      {
+        "id": "d",
+        "text": "Oxidising agent"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 1,
+      "month": "Feb",
+      "year": 2024,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 157,
+    "displayId": "POC-NEW-050",
+    "questionLines": [
+      "Lassaigne's test is used for detection of:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Nitrogen and Sulphur only"
+      },
+      {
+        "id": "b",
+        "text": "Nitrogen, Sulphur and Phosphorous Only"
+      },
+      {
+        "id": "c",
+        "text": "Phosphorous and halogens only"
+      },
+      {
+        "id": "d",
+        "text": "Nitrogen, Sulphur, phosphorous and halogens"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 1,
+      "month": "Feb",
+      "year": 2024,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 158,
+    "displayId": "POC-NEW-051",
+    "questionLines": [
+      "Following Kjeldahl's method, 1 g of organic compound released ammonia, that neutralised 10 mL of \\(2 \\mathrm{M} \\mathrm{H}_{2} \\mathrm{SO}_{4}\\). The percentage of nitrogen in the compound is \\(\\_\\_\\_\\_\\) \\%."
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 1,
+      "month": "Feb",
+      "year": 2024,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 159,
+    "displayId": "POC-NEW-052",
+    "questionLines": [
+      "Which of the following nitrogen containing compound does not give Lassaigne's test?"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Phenyl hydrazine"
+      },
+      {
+        "id": "b",
+        "text": "Glycene"
+      },
+      {
+        "id": "c",
+        "text": "Urea"
+      },
+      {
+        "id": "d",
+        "text": "Hydrazine"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 4,
+      "month": "April",
+      "year": 2024,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 160,
+    "displayId": "POC-NEW-053",
+    "questionLines": [
+      "Match List-I with List-II",
+      "\\begin{tabular}{|l|l|l|l|}",
+      "\\hline \\multicolumn{2}{|r|}{List-I (Compound)} & \\multicolumn{2}{|r|}{List-II (Colour)} \\\\",
+      "\\hline A. & \\(\\mathrm{Fe}_{4}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]_{3} \\cdot \\mathrm{xH}_{2} \\mathrm{O}\\) & I. & Violet \\\\",
+      "\\hline B. & \\(\\left[\\mathrm{Fe}(\\mathrm{CN})_{5} \\mathrm{NOS}\\right]^{4-}\\) & II. & Blood Red \\\\",
+      "\\hline C. & \\([\\mathrm{Fe}(\\mathrm{SCN})]^{2+}\\) & III. & Prussian Blue \\\\",
+      "\\hline D. & \\(\\left(\\mathrm{NH}_{4}\\right)_{3} \\mathrm{PO}_{4} \\cdot 12 \\mathrm{MoO}_{3}\\) & IV. & Yellow \\\\",
+      "\\hline",
+      "\\end{tabular}",
+      "Choose the correct answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "A-III, B-I, C-II, D-IV"
+      },
+      {
+        "id": "b",
+        "text": "A-IV, B-I, C-II, D-III"
+      },
+      {
+        "id": "c",
+        "text": "A-II, B-III, C-IV, D-I"
+      },
+      {
+        "id": "d",
+        "text": "A-I, B-II, C-III, D-IV"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 8,
+      "month": "April",
+      "year": 2024,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 161,
+    "displayId": "POC-NEW-054",
+    "questionLines": [
+      "In qualitative test for identification of presence of phosphorous, the compound is heated with an oxidising agent. Which is further treated with nitric acid and ammonium molybdate respectively. The yellow coloured precipitate obtained is:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(\\mathrm{Na}_{3} \\mathrm{PO}_{4} \\cdot 12 \\mathrm{MoO}_{3}\\)"
+      },
+      {
+        "id": "b",
+        "text": "\\(\\left(\\mathrm{NH}_{4}\\right)_{3} \\mathrm{PO}_{4} \\cdot 12\\left(\\mathrm{NH}_{4}\\right)_{2} \\mathrm{MoO}_{4}\\)"
+      },
+      {
+        "id": "c",
+        "text": "\\(\\left(\\mathrm{NH}_{4}\\right)_{3} \\mathrm{PO}_{4} \\cdot 12 \\mathrm{MoO}_{3}\\)"
+      },
+      {
+        "id": "d",
+        "text": "\\(\\mathrm{MoPO}_{4} .21 \\mathrm{NH}_{4} \\mathrm{NO}_{3}\\)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 8,
+      "month": "April",
+      "year": 2024,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 162,
+    "displayId": "POC-NEW-055",
+    "questionLines": [
+      "Match List-I with List-II.",
+      "\\begin{tabular}{|l|l|r|l|}",
+      "\\hline \\multicolumn{2}{|c|}{ List-I (Test) } & \\multicolumn{2}{c|}{ List-II (Identification) } \\\\",
+      "\\hline A. & Bayer's test & I. & Phenol \\\\",
+      "\\hline B. & Ceric ammonium nitrate test & II. & Aldehyde \\\\",
+      "\\hline C. & Phthalein dye test & III. & Alcoholic-OH group \\\\",
+      "\\hline D. & Schiff's test & IV. & Unsaturation \\\\",
+      "\\hline",
+      "\\end{tabular}",
+      "Choose the correct answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "(A)-(III), (B)-(I), (C)-(IV), (D)-(II)"
+      },
+      {
+        "id": "b",
+        "text": "(A)-(II), (B)-(III), (C)-(IV), (D)-(I)"
+      },
+      {
+        "id": "c",
+        "text": "(A)-(IV), (B)-(I), (C)-(II), (D)-(III)"
+      },
+      {
+        "id": "d",
+        "text": "(A)-(IV), (B)-(III), (C)-(I), (D)-(II)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 8,
+      "month": "April",
+      "year": 2024,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 163,
+    "displayId": "POC-NEW-056",
+    "questionLines": [
+      "Given below are two statements:",
+      "Statement-I: Kjeldahl method is applicable to estimate nitrogen in pyridine.",
+      "Statement-II: The nitrogen present in pyridine can easily be converted into ammonium sulphate in Kjeldahl method.",
+      "In the light of the above statements, choose the correct answer from the options given below."
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Both Statement-I and Statement-II is false"
+      },
+      {
+        "id": "b",
+        "text": "Statement-I is false but Statement-II is true"
+      },
+      {
+        "id": "c",
+        "text": "Both Statement-I and Statement-II is true"
+      },
+      {
+        "id": "d",
+        "text": "Statement-I is true but Statement-II is false"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 8,
+      "month": "April",
+      "year": 2024,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 164,
+    "displayId": "POC-NEW-057",
+    "questionLines": [
+      "Match List-I with List-II",
+      "\\begin{tabular}{|l|l|l|l|}",
+      "\\hline \\multicolumn{2}{|c|}{List-I (Test)} & \\multicolumn{2}{|c|}{List-II (Observation)} \\\\",
+      "\\hline A. & \\(\\mathrm{Br}_{2}\\) water test & I. & Yellow orange or orange red precipitate formed \\\\",
+      "\\hline B. & Ceric ammonium nitrate test & II. & Reddish orange colour disappears \\\\",
+      "\\hline C. & Ferric chloride test & III. & Red colour appears \\\\",
+      "\\hline D. & 2, 4-DNP test & IV. & Blue, Green, Violet or Red colour appear \\\\",
+      "\\hline",
+      "\\end{tabular}",
+      "Choose the correct answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "A-I, B-II, C-III, D-IV"
+      },
+      {
+        "id": "b",
+        "text": "A-II, B-III, C-IV, D-I"
+      },
+      {
+        "id": "c",
+        "text": "A-III, B-IV, C-I, D-II"
+      },
+      {
+        "id": "d",
+        "text": "A-IV, B-I, C-II, D-III"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 9,
+      "month": "April",
+      "year": 2024,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 165,
+    "displayId": "POC-NEW-058",
+    "questionLines": [
+      "Match List-I with List-II.",
+      "\\begin{tabular}{|l|l|l|l|}",
+      "\\hline \\multicolumn{2}{|r|}{List-I (Element detected)} & \\multicolumn{2}{|l|}{List-II (Reagent used/ Product formed)} \\\\",
+      "\\hline A. & Nitrogen & I. & \\(\\mathrm{Na}_{2}\\left[\\mathrm{Fe}(\\mathrm{CN})_{5} \\mathrm{NO}\\right]\\) \\\\",
+      "\\hline B. & Sulphur & II. & \\(\\mathrm{AgNO}_{3}\\) \\\\",
+      "\\hline C. & Phosphorous & III. & \\(\\mathrm{Fe}_{4}\\left[\\mathrm{Fe}\\left(\\mathrm{CN}_{6}\\right)\\right]_{3}\\) \\\\",
+      "\\hline D. & Halogen & IV. & \\(\\left(\\mathrm{NH}_{4}\\right)_{2} \\mathrm{MoO}_{4}\\) \\\\",
+      "\\hline",
+      "\\end{tabular}",
+      "Choose the correct answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "(A)-(II), (B)-(IV), (C)-(I), (D)-(III)"
+      },
+      {
+        "id": "b",
+        "text": "(A)-(IV), (B)-(II), (C)-(I), (D)-(III)"
+      },
+      {
+        "id": "c",
+        "text": "(A)-(II), (B)-(I), (C)-(IV), (D)-(III)"
+      },
+      {
+        "id": "d",
+        "text": "(A)-(III), (B)-(I), (C)-(IV), (D)-(II)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 6,
+      "month": "April",
+      "year": 2023,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 166,
+    "displayId": "POC-NEW-059",
+    "questionLines": [
+      "In Carius tube, an organic compound ' X ' is treated with sodium peroxide to form a mineral acid ' Y '. The solution of \\(\\mathrm{BaCl}_{2}\\) is added to ' Y ' to form a precipitate ' Z '. ' Z ' is used for the quantitative estimation of an extra element. ' X ' could be:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Cytosine"
+      },
+      {
+        "id": "b",
+        "text": "Chloroxylenol"
+      },
+      {
+        "id": "c",
+        "text": "A nucleotide"
+      },
+      {
+        "id": "d",
+        "text": "Methionine"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 10,
+      "month": "April",
+      "year": 2023,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 167,
+    "displayId": "POC-NEW-060",
+    "questionLines": [
+      "A solution of \\(\\mathrm{FeCl}_{3}\\) when treated with \\(\\mathrm{K}_{4}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]\\) gives a prussiun blue precipitate due to the formation of"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(\\mathrm{K}\\left[\\mathrm{Fe}_{2}(\\mathrm{CN})_{6}\\right]\\)"
+      },
+      {
+        "id": "b",
+        "text": "\\(\\mathrm{Fe}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]\\)"
+      },
+      {
+        "id": "c",
+        "text": "\\(\\mathrm{Fe}_{3}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]_{2}\\)"
+      },
+      {
+        "id": "d",
+        "text": "\\(\\mathrm{Fe}_{4}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]_{3}\\)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 1,
+      "month": "Feb",
+      "year": 2023,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 168,
+    "displayId": "POC-NEW-061",
+    "questionLines": [
+      "Compound that will give positive Lassaigne's test for both nitrogen and halogen is"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(\\mathrm{N}_{2} \\mathrm{H}_{4} \\cdot \\mathrm{HCl}\\)"
+      },
+      {
+        "id": "b",
+        "text": "\\(\\mathrm{CH}_{3} \\mathrm{NH}_{2} \\cdot \\mathrm{HCl}\\)"
+      },
+      {
+        "id": "c",
+        "text": "\\(\\mathrm{NH}_{4} \\mathrm{Cl}\\)"
+      },
+      {
+        "id": "d",
+        "text": "\\(\\mathrm{NH}_{2} \\mathrm{OH} . \\mathrm{HCl}\\)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 29,
+      "month": "Jan",
+      "year": 2023,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 169,
+    "displayId": "POC-NEW-062",
+    "questionLines": [
+      "In Dumas method for the estimation of \\(\\mathrm{N}_{2}\\), the sample is heated with copper oxide and the gas evolved is passed over:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Ni"
+      },
+      {
+        "id": "b",
+        "text": "Copper gauze"
+      },
+      {
+        "id": "c",
+        "text": "Pd"
+      },
+      {
+        "id": "d",
+        "text": "Copper oxide"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 31,
+      "month": "Jan",
+      "year": 2023,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 170,
+    "displayId": "POC-NEW-063",
+    "questionLines": [
+      "0.400 g of an organic compound \\((\\mathrm{X})\\) gave 0.376 g of AgBr in Carius method for estimation of bromine. \\% of bromine in the compound (X) is \\(\\_\\_\\_\\_\\) .",
+      "(Given: Molar mass \\(\\mathrm{AgBr}=188 \\mathrm{~g} \\mathrm{~mol}^{-1} \\mathrm{Br}=80 \\mathrm{~g} \\mathrm{~mol}^{-1}\\) )"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 13,
+      "month": "April",
+      "year": 2023,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 171,
+    "displayId": "POC-NEW-064",
+    "questionLines": [
+      "In sulphur estimation. 0.471 of an organic compound gave 1.4439 g of barium sulphate.",
+      "The percentage of sulphur in the compound is (Nearest Integer)",
+      "(Given: Atomic mass Ba: \\(137 \\mathrm{u}, \\mathrm{S}: 32 \\mathrm{u}, \\mathrm{O}: 16 \\mathrm{u}\\) )"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 25,
+      "month": "Jan",
+      "year": 2023,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 172,
+    "displayId": "POC-NEW-065",
+    "questionLines": [
+      "Phenol on reaction with dilute nitric acid, gives two products. Which method will be most efficient for large scale separation?"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Chromatographic separation"
+      },
+      {
+        "id": "b",
+        "text": "Fractional Crystallisation"
+      },
+      {
+        "id": "c",
+        "text": "Steam distillation"
+      },
+      {
+        "id": "d",
+        "text": "Sublimation"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 25,
+      "month": "June",
+      "year": 2022,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 173,
+    "displayId": "POC-NEW-066",
+    "questionLines": [
+      "Which one of the following techniques is not used to spot components of a mixture separated on thin layer chromatographic plate?"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(\\mathrm{I}_{2}\\) (Solid)"
+      },
+      {
+        "id": "b",
+        "text": "U.V Light"
+      },
+      {
+        "id": "c",
+        "text": "Visualisation agent as a component of mobile phase"
+      },
+      {
+        "id": "d",
+        "text": "Spraying of an appropriate reagent"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 28,
+      "month": "June",
+      "year": 2022,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 174,
+    "displayId": "POC-NEW-067",
+    "questionLines": [
+      "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).",
+      "Assertion (A): A mixture contains benzoic acid and naphthalene. The pure benzoic acid can be separated out by the use of benzene.",
+      "Reason (R): Benzoic acid is soluble in hot water.",
+      "In the light of the above statements, choose the most appropriate answer from the options given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Both A and R are true and R is the correct explanation of A ."
+      },
+      {
+        "id": "b",
+        "text": "Both A and R are true but R is NOT the correct explanation of A."
+      },
+      {
+        "id": "c",
+        "text": "A is true but R is false."
+      },
+      {
+        "id": "d",
+        "text": "A is false but R is true"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 25,
+      "month": "June",
+      "year": 2022,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 175,
+    "displayId": "POC-NEW-068",
+    "questionLines": [
+      "Given below are two statements:",
+      "Statement-I: In 'Lassaigne's Test', when both nitrogen and sulphur are present in an organic compound, sodium thiocyanate is formed.",
+      "Statement-II: If both nitrogen and sulphur are present in an organic compound, then the excess of sodium used in sodium fusion will decompose the sodium thiocyanate formed to given NaCN and \\(\\mathrm{Na}_{2} \\mathrm{~S}\\).",
+      "In the light of the above statements, choose the most appropriate answer from the option given below:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Both Statement-I and Statement-II are correct."
+      },
+      {
+        "id": "b",
+        "text": "Both Statement-I and Statement-II are incorrect."
+      },
+      {
+        "id": "c",
+        "text": "Statement-I is correct but Statement-II is incorrect."
+      },
+      {
+        "id": "d",
+        "text": "Statement-I is incorrect but Statement-II is correct."
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 26,
+      "month": "June",
+      "year": 2022,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 176,
+    "displayId": "POC-NEW-069",
+    "questionLines": [
+      "Which of the following is structure of a separating funnel?",
+      "\\begin{figure}",
+      "\\captionsetup{labelformat=empty}",
+      "\\caption{(a)}",
+      "\\includegraphics[alt={},max width=\\textwidth]{https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-06.jpg?height=200&width=110&top_left_y=1348&top_left_x=1305}",
+      "\\end{figure}",
+      "\\begin{figure}",
+      "\\captionsetup{labelformat=empty}",
+      "\\caption{(b)}",
+      "\\includegraphics[alt={},max width=\\textwidth]{https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-06.jpg?height=207&width=114&top_left_y=1343&top_left_x=1701}",
+      "\\end{figure}",
+      "\\begin{figure}",
+      "\\captionsetup{labelformat=empty}",
+      "\\caption{(c)}",
+      "\\includegraphics[alt={},max width=\\textwidth]{https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-06.jpg?height=207&width=103&top_left_y=1547&top_left_x=1307}",
+      "\\end{figure}",
+      "\\begin{figure}",
+      "\\captionsetup{labelformat=empty}",
+      "\\caption{(d)}",
+      "\\includegraphics[alt={},max width=\\textwidth]{https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-06.jpg?height=166&width=232&top_left_y=1565&top_left_x=1703}",
+      "\\end{figure}"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 27,
+      "month": "June",
+      "year": 2022,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 177,
+    "displayId": "POC-NEW-070",
+    "questionLines": [
+      "During halogen test, sodium fusion extract is boiled with concentrated \\(\\mathrm{HNO}_{3}\\) to"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "remove unreacted sodium"
+      },
+      {
+        "id": "b",
+        "text": "decompose cyanide or sulphide of sodium"
+      },
+      {
+        "id": "c",
+        "text": "extract halogen from organic compound"
+      },
+      {
+        "id": "d",
+        "text": "maintain the pH of extract."
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 25,
+      "month": "June",
+      "year": 2022,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 178,
+    "displayId": "POC-NEW-071",
+    "questionLines": [
+      "In carius method of estimation of halogen, 0.45 g of an organic compound gave 0.36 g of AgBr . Find out the percentage of bromine in the compound.",
+      "(Molar masses: \\(\\mathrm{AgBr}=188 \\mathrm{~g} \\mathrm{~mol}^{-1}, \\mathrm{Br}=80 \\mathrm{~g} \\mathrm{~mol}^{-1}\\) )"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(34.04 \\%\\)"
+      },
+      {
+        "id": "b",
+        "text": "\\(40.04 \\%\\)"
+      },
+      {
+        "id": "c",
+        "text": "\\(36.03 \\%\\)"
+      },
+      {
+        "id": "d",
+        "text": "\\(38.04 \\%\\)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 27,
+      "month": "July",
+      "year": 2022,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 179,
+    "displayId": "POC-NEW-072",
+    "questionLines": [
+      "Which statement is not true with respect to nitrate ion test?"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "A dark brown ring is formed at the junction of two solutions"
+      },
+      {
+        "id": "b",
+        "text": "Ring is formed due to nitrosoferrous sulphate complex"
+      },
+      {
+        "id": "c",
+        "text": "The brown complex is \\(\\left[\\mathrm{Fe}\\left(\\mathrm{H}_{2} \\mathrm{O}\\right)_{5}(\\mathrm{NO})\\right] \\mathrm{SO}_{4}\\)."
+      },
+      {
+        "id": "d",
+        "text": "Heating the nitrate salt with conc. \\(\\mathrm{H}_{2} \\mathrm{SO}_{4}\\), light brown fumes are evolved."
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 26,
+      "month": "June",
+      "year": 2022,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 180,
+    "displayId": "POC-NEW-073",
+    "questionLines": [
+      "The formula of the purple colour formed in Lassaigne's test for sulphur using sodium nitroprusside is"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(\\mathrm{NaFe}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]\\)"
+      },
+      {
+        "id": "b",
+        "text": "\\(\\mathrm{Na}\\left[\\mathrm{Cr}\\left(\\mathrm{NH}_{3}\\right)_{2}(\\mathrm{NCS})_{4}\\right]\\)"
+      },
+      {
+        "id": "c",
+        "text": "\\(\\mathrm{Na}_{2}\\left[\\mathrm{Fe}(\\mathrm{CN})_{5}(\\mathrm{NO})\\right]\\)"
+      },
+      {
+        "id": "d",
+        "text": "\\(\\mathrm{Na}_{4}\\left[\\mathrm{Fe}(\\mathrm{CN})_{5}(\\mathrm{NOS})\\right]\\)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 28,
+      "month": "June",
+      "year": 2022,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 181,
+    "displayId": "POC-NEW-074",
+    "questionLines": [
+      "\\(\\mathrm{Fe}^{3+}\\) cation gives a Prussian blue precipitate on addition of potassium ferrocyanide solution due to the formation of:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(\\left[\\mathrm{Fe}\\left(\\mathrm{H}_{2} \\mathrm{O}\\right)_{6}\\right]_{2}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]\\)"
+      },
+      {
+        "id": "b",
+        "text": "\\(\\mathrm{Fe}_{2}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]_{2}\\)"
+      },
+      {
+        "id": "c",
+        "text": "\\(\\mathrm{Fe}_{3}\\left[\\mathrm{Fe}(\\mathrm{OH})_{2}(\\mathrm{CN})_{4}\\right]_{2}\\)"
+      },
+      {
+        "id": "d",
+        "text": "\\(\\mathrm{Fe}_{4}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]_{3}\\)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 27,
+      "month": "July",
+      "year": 2022,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 182,
+    "displayId": "POC-NEW-075",
+    "questionLines": [
+      "A sample of 0.125 g of an organic compound when analysed by Duma's method yields 22.78 mL of nitrogen gas collected over KOH solution at 280 K and 759 mm Hg . The percentage of nitrogen in the given organic compound is \\(\\_\\_\\_\\_\\) . (Nearest integer)",
+      "[Given: (a) The vapour pressure of water at 280 K is 14.2 mm Hg , (b) \\(\\mathrm{R}=0.082 \\mathrm{~L}^{2} \\mathrm{~atm} \\mathrm{~K}^{-1} \\mathrm{~mol}^{-1}\\) ]"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 28,
+      "month": "July",
+      "year": 2022,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 183,
+    "displayId": "POC-NEW-076",
+    "questionLines": [
+      "0.2 g of an organic compound was subjected to estimation of nitrogen by Dumas method in which volume of \\(\\mathrm{N}_{2}\\) evolved (at STP) was found to be 22.400 mL . The percentage of nitrogen in the compound is \\(\\_\\_\\_\\_\\) . [nearest integer]",
+      "(Given: Molar mass of \\(\\mathrm{N}_{2}\\) is \\(28 \\mathrm{~g} \\mathrm{~mol}^{-1}\\), Molar volume of \\(\\mathrm{N}_{2}\\) at STP: 22.4L)"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 24,
+      "month": "June",
+      "year": 2022,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 184,
+    "displayId": "POC-NEW-077",
+    "questionLines": [
+      "Kjeldahl's method was used for the estimation of nitrogen in an organic compound. The ammonia evolved from 0.55 g of the compound neutralised 12.5 mL of \\(1 \\mathrm{M} \\mathrm{H}_{2} \\mathrm{SO}_{4}\\) solution. The percentage of nitrogen in the compound is \\(\\_\\_\\_\\_\\) (Nearest",
+      "Integer)"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 29,
+      "month": "June",
+      "year": 2022,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 185,
+    "displayId": "POC-NEW-078",
+    "questionLines": [
+      "While estimating the nitrogen present in an organic compound by Kjeldahl's method, the ammonia evolved from 0.25 g of the compound neutralized 2.5 mL of \\(\\mathrm{M} \\mathrm{H}_{2} \\mathrm{SO}_{4}\\). The percentage of nitrogen present in organic compoundis \\(\\_\\_\\_\\_\\)。"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 25,
+      "month": "July",
+      "year": 2022,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 186,
+    "displayId": "POC-NEW-079",
+    "questionLines": [
+      "On complete combustion of 0.492 g of an organic compound containing C, H and O, 0.7938 g of \\(\\mathrm{CO}_{2}\\) and 0.4428 g of \\(\\mathrm{H}_{2} \\mathrm{O}\\) was produced. The \\% composition of oxygen in the compound is",
+      "\\(\\_\\_\\_\\_\\) ."
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 28,
+      "month": "July",
+      "year": 2022,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 187,
+    "displayId": "POC-NEW-080",
+    "questionLines": [
+      "0.25 g of an organic compound containing chlorine gave 0.40 g of silver chloride in Carius estimation. The percentage of chlorine present in the compound is \\(\\_\\_\\_\\_\\) . [in nearest integer]",
+      "(Given: Molar mass of Ag is \\(108 \\mathrm{~g} \\mathrm{~mol}^{-1}\\) and that of Cl is 35.5 g \\(\\mathrm{mol}^{-1}\\) )"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 28,
+      "month": "June",
+      "year": 2022,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 188,
+    "displayId": "POC-NEW-081",
+    "questionLines": [
+      "The potassium ferrocyanide solution gives a Prussian blue colour, when added to:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(\\mathrm{CoCl}_{3}\\)"
+      },
+      {
+        "id": "b",
+        "text": "\\(\\mathrm{FeCl}_{3}\\)"
+      },
+      {
+        "id": "c",
+        "text": "\\(\\mathrm{FeCl}_{2}\\)"
+      },
+      {
+        "id": "d",
+        "text": "\\(\\mathrm{CoCl}_{2}\\)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 1,
+      "month": "Sep",
+      "year": 2021,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 189,
+    "displayId": "POC-NEW-082",
+    "questionLines": [
+      "Nitrogen can be estimated by Kjeldahl's method for which of the following compound?",
+      "(a)",
+      "<smiles>O=[N+]([O-])c1ccccc1</smiles>",
+      "(b)",
+      "<smiles>NCc1ccccc1</smiles>",
+      "(c)",
+      "<smiles>c1ccncc1</smiles>",
+      "(d)",
+      "<smiles>[Al]=[N]c1ccccc1</smiles>"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 17,
+      "month": "March",
+      "year": 2021,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 190,
+    "displayId": "POC-NEW-083",
+    "questionLines": [
+      "Which one of the following set of elements can be detected using sodium fusion extract?"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Halogens, Nitrogen, Oxygen, Sulfur"
+      },
+      {
+        "id": "b",
+        "text": "Sulfur, Nitrogen, Phosphorous Halogens"
+      },
+      {
+        "id": "c",
+        "text": "Phosphorous, Oxygen, Nitrogen, Halogens"
+      },
+      {
+        "id": "d",
+        "text": "Nitrogen, Phosphorous, Carbon, Sulfur"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 27,
+      "month": "July",
+      "year": 2021,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 191,
+    "displayId": "POC-NEW-084",
+    "questionLines": [
+      "Which of the following compound is added to the sodium extract before addition of silver nitrate for testing of halogens?"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Sodium hydroxide"
+      },
+      {
+        "id": "b",
+        "text": "Hydrochloric acid"
+      },
+      {
+        "id": "c",
+        "text": "Nitric acid"
+      },
+      {
+        "id": "d",
+        "text": "Ammonia"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 25,
+      "month": "Feb",
+      "year": 2021,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 192,
+    "displayId": "POC-NEW-085",
+    "questionLines": [
+      "Which of the following is 'a' FALSE statement?"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Carius method is used for the estimation of nitrogen in an organic compound."
+      },
+      {
+        "id": "b",
+        "text": "Carius tube is used in the estimation of sulphur in an organic compound."
+      },
+      {
+        "id": "c",
+        "text": "Kjeldahl's method is used for the estimation of nitrogen in an organic compound."
+      },
+      {
+        "id": "d",
+        "text": "Phosphoric acid produced on oxidation of phosphorus present in an organic compound is precipitated as \\(\\mathrm{Mg}_{2} \\mathrm{P}_{2} \\mathrm{O}_{7}\\) by adding magnesia mixture."
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 26,
+      "month": "Feb",
+      "year": 2021,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 193,
+    "displayId": "POC-NEW-086",
+    "questionLines": [
+      "Which one of the following complexes is violet in colour?"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(\\left[\\mathrm{Fe}(\\mathrm{CN})_{5} \\mathrm{NOS}\\right]^{4-}\\)"
+      },
+      {
+        "id": "b",
+        "text": "\\(\\left[\\mathrm{Fe}(\\mathrm{SCN})_{6}\\right]^{4-}\\)"
+      },
+      {
+        "id": "c",
+        "text": "\\(\\mathrm{Fe}_{4}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]_{3} \\cdot \\mathrm{H}_{2} \\mathrm{O}\\)"
+      },
+      {
+        "id": "d",
+        "text": "\\(\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]^{4-}\\)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 26,
+      "month": "Aug",
+      "year": 2021,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 194,
+    "displayId": "POC-NEW-087",
+    "questionLines": [
+      "In Carius method, halogen containing organic compound is heated with fuming nitric acid in the presence of:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(\\mathrm{AgNO}_{3}\\)"
+      },
+      {
+        "id": "b",
+        "text": "\\(\\mathrm{HNO}_{3}\\)"
+      },
+      {
+        "id": "c",
+        "text": "\\(\\mathrm{BaSO}_{4}\\)"
+      },
+      {
+        "id": "d",
+        "text": "\\(\\mathrm{CuSO}_{4}\\)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 20,
+      "month": "July",
+      "year": 2021,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 195,
+    "displayId": "POC-NEW-088",
+    "questionLines": [
+      "Acidic ferric chloride solution on treatment with excess of potassium ferrocyanide gives a Prussian blue coloured colloidal species. It is:"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(\\mathrm{KFe}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]\\)"
+      },
+      {
+        "id": "b",
+        "text": "\\(\\mathrm{K}_{5} \\mathrm{Fe}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]_{2}\\)"
+      },
+      {
+        "id": "c",
+        "text": "\\(\\mathrm{Fe}_{4}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]_{3}\\)"
+      },
+      {
+        "id": "d",
+        "text": "\\(\\mathrm{HFe}\\left[\\mathrm{Fe}(\\mathrm{CN})_{6}\\right]\\)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 27,
+      "month": "Aug",
+      "year": 2021,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 196,
+    "displayId": "POC-NEW-089",
+    "questionLines": [
+      "The transformation occurring in Duma's method is given below:",
+      "\\[",
+      "\\begin{aligned}",
+      "& \\mathrm{C}_{2} \\mathrm{H}_{7} \\mathrm{~N}+\\left(2 \\mathrm{x}+\\frac{\\mathrm{y}}{2}\\right) \\mathrm{CuO} \\rightarrow \\mathrm{xCO}_{2}+\\frac{\\mathrm{y}}{2} \\mathrm{H}_{2} \\mathrm{O}+ \\\\",
+      "& \\frac{\\mathrm{z}}{2} \\mathrm{~N}_{2}+\\left(2 \\mathrm{x}+\\frac{\\mathrm{y}}{2}\\right) \\mathrm{Cu}",
+      "\\end{aligned}",
+      "\\]",
+      "The value of \\(y\\) is \\(\\_\\_\\_\\_\\) . (Integer answer)"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 31,
+      "month": "Aug",
+      "year": 2021,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 197,
+    "displayId": "POC-NEW-090",
+    "questionLines": [
+      "When 0.15 g of an organic compound was analyzed using carius method for estimation of bromine, 0.2397 g of AgBr was obtained. The percentage of bromine in the organic compound is \\(\\_\\_\\_\\_\\) .",
+      "(Nearest Integer) (Atomic mass: \\(\\mathrm{Ag}=108, \\mathrm{Br}=80\\) )"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 20,
+      "month": "July",
+      "year": 2021,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 198,
+    "displayId": "POC-NEW-091",
+    "questionLines": [
+      "In Carius method for estimation of halogens, 0.2 g of an organic compound gave 0.188 g of AgBr . The percentage of bromine in the compound is. (Nearest integer) [Atomic mass: \\(\\mathrm{Ag}=108, \\mathrm{Br}=80\\) ]"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 27,
+      "month": "Aug",
+      "year": 2021,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 199,
+    "displayId": "POC-NEW-092",
+    "questionLines": [
+      "In the sulphur estimation, 0.471 g of an organic compound gave 1.44 g of barium sulphate. The percentage of sulphur in the compound is \\(\\_\\_\\_\\_\\) \\%. (Nearest integer)",
+      "(Atomic mass of \\(\\mathrm{Ba}=137 \\mathrm{u}\\) )."
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 26,
+      "month": "Aug",
+      "year": 2021,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 200,
+    "displayId": "POC-NEW-093",
+    "questionLines": [
+      "An organic compound is subjected to chlorination to get compound A using 5.0 g of chlorine. When 0.5 g of compound A is reacted with \\(\\mathrm{AgNO}_{3}\\) [Carius Method], the percentage of chlorine in compound A is \\(\\_\\_\\_\\_\\) when it forms 0.3849 g of AgCl",
+      "(Round off to the Nearest integer)",
+      "(Atomic masses of Ag and Cl are 107.87 and 35.5 respectively)"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 27,
+      "month": "July",
+      "year": 2021,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 201,
+    "displayId": "POC-NEW-094",
+    "questionLines": [
+      "The number of moles of CuO , that will be utilized in Dumas method for estimating nitrogen in a sample of 57.5 g of N , N -dimethylaminopentane is \\(\\_\\_\\_\\_\\) \\(\\times 10^{-2}\\). (Nearest integer)."
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 27,
+      "month": "Aug",
+      "year": 2021,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 202,
+    "displayId": "POC-NEW-095",
+    "questionLines": [
+      "0.8 g of an organic compound was analysed by Kjeldahl's method for the estimation of nitrogen. If the percentage of nitrogen in the compound was found to be \\(42 \\%\\), then \\(\\_\\_\\_\\_\\) ml of \\(1 \\mathrm{M} \\mathrm{H}_{2} \\mathrm{SO}_{4}\\) would have been neutralized by the ammonia evolved during the analysis."
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 25,
+      "month": "July",
+      "year": 2021,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 204,
+    "displayId": "POC-NEW-097",
+    "questionLines": [
+      "Kjeldahl's method cannot be used to estimate nitrogen for which of the following compounds?",
+      "(a)",
+      "<smiles>NC(N)=O</smiles>"
+    ],
+    "options": [
+      {
+        "id": "b",
+        "text": "\\(\\mathrm{C}_{6} \\mathrm{H}_{5} \\mathrm{NH}_{2}\\)"
+      },
+      {
+        "id": "c",
+        "text": "\\(\\mathrm{C}_{6} \\mathrm{H}_{5} \\mathrm{NO}_{2}\\)"
+      },
+      {
+        "id": "d",
+        "text": "\\(\\mathrm{CH}_{3} \\mathrm{CH}_{2}-\\mathrm{C} \\equiv \\mathrm{N}\\)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 8,
+      "month": "Jan",
+      "year": 2020,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 205,
+    "displayId": "POC-NEW-098",
+    "questionLines": [
+      "In Carius method of estimation of halogen, 0.172 g of an organic compound showed presence of 0.08 g of bromine. Which of these is the correct structure of the compound?",
+      "(c)",
+      "<smiles>Nc1ccc(Br)cc1Br</smiles>",
+      "(d)",
+      "<smiles>Nc1ccc(Br)cc1</smiles>"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "\\(\\mathrm{H}_{3} \\mathrm{C}-\\mathrm{CH}_{2}-\\mathrm{Br}\\)"
+      },
+      {
+        "id": "b",
+        "text": "\\(\\mathrm{H}_{3} \\mathrm{C}-\\mathrm{Be}\\)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 2,
+      "month": "Sept",
+      "year": 2020,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 206,
+    "displayId": "POC-NEW-099",
+    "questionLines": [
+      "Match the following:",
+      "\\begin{tabular}{|l|l|l|l|}",
+      "\\hline \\multicolumn{2}{|c|}{Test/Method} & \\multicolumn{2}{|c|}{Reagent} \\\\",
+      "\\hline A. & Lucas Test & I. & \\(\\mathrm{C}_{6} \\mathrm{H}_{5} \\mathrm{SO}_{2} \\mathrm{Cl}\\) /aq.kOH \\\\",
+      "\\hline B. & Dumas method & II. & \\(\\mathrm{HNO}_{3} / \\mathrm{AgNO}_{3}\\) \\\\",
+      "\\hline C. & Kjeldahl's method & III. & \\(\\mathrm{CuO} / \\mathrm{CO}_{2}\\) \\\\",
+      "\\hline D. & Hinsberg Test & IV. & Conc. HCl and \\(\\mathrm{ZnCl}_{2}\\) \\\\",
+      "\\hline & & V. & \\(\\mathrm{H}_{2} \\mathrm{SO}_{4}\\) \\\\",
+      "\\hline",
+      "\\end{tabular}"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "(A)-(IV), (B)-(III), (C)-(II), (D)-(V)"
+      },
+      {
+        "id": "b",
+        "text": "(A)-(II), (B)-(IV), (C)-(V), (D)-(I)"
+      },
+      {
+        "id": "c",
+        "text": "(A)-(IV), (B)-(III), (C)-(V), (D)-(I)"
+      },
+      {
+        "id": "d",
+        "text": "(A)-(II), (B)-(I), (C)-(III), (D)-(IV)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 6,
+      "month": "Sept",
+      "year": 2020,
+      "shift": "Shift-II"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 207,
+    "displayId": "POC-NEW-100",
+    "questionLines": [
+      "The Kjeldahl's method of Nitrogen estimation fails for which of the following reaction products?",
+      "\\begin{figure}",
+      "\\captionsetup{labelformat=empty}",
+      "\\caption{(A)}",
+      "\\includegraphics[alt={},max width=\\textwidth]{https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-08.jpg?height=159&width=214&top_left_y=803&top_left_x=1305}",
+      "\\end{figure}",
+      "\\begin{figure}",
+      "\\captionsetup{labelformat=empty}",
+      "\\caption{(B)}",
+      "\\includegraphics[alt={},max width=\\textwidth]{https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-08.jpg?height=158&width=209&top_left_y=800&top_left_x=1701}",
+      "\\end{figure}",
+      "\\begin{figure}",
+      "\\captionsetup{labelformat=empty}",
+      "\\caption{(C)}",
+      "\\includegraphics[alt={},max width=\\textwidth]{https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-08.jpg?height=157&width=298&top_left_y=959&top_left_x=1307}",
+      "\\end{figure}",
+      "\\begin{figure}",
+      "\\captionsetup{labelformat=empty}",
+      "\\caption{(D)}",
+      "\\includegraphics[alt={},max width=\\textwidth]{https://cdn.mathpix.com/cropped/aca1ffda-6c50-41f5-a3e0-e61c67e516fb-08.jpg?height=117&width=288&top_left_y=990&top_left_x=1701}",
+      "\\end{figure}"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "(C) and (D)"
+      },
+      {
+        "id": "b",
+        "text": "(B) and (C)"
+      },
+      {
+        "id": "c",
+        "text": "(A) and (D)"
+      },
+      {
+        "id": "d",
+        "text": "(A), (C) and (D)"
+      }
+    ],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 3,
+      "month": "Sept",
+      "year": 2020,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 208,
+    "displayId": "POC-NEW-101",
+    "questionLines": [
+      "The volume (in mL ) of \\(0.125 \\mathrm{M} \\mathrm{AgNO}_{3}\\) required to quantitatively precipitate chloride ions in 0.3 g of \\(\\left[\\mathrm{Co}\\left(\\mathrm{NH}_{3}\\right)_{6}\\right] \\mathrm{Cl}_{3}\\) is \\(\\_\\_\\_\\_\\) \\({ }^{\\mathrm{M}}\\left[\\mathrm{Co}\\left(\\mathrm{NH}_{3}\\right)_{6} \\mathrm{Cl}_{3}\\right]=267.46 \\mathrm{~g} / \\mathrm{mol}\\)",
+      "\\({ }^{\\mathrm{M}} \\mathrm{AgNO}_{3}=169.87 \\mathrm{~g} / \\mathrm{mol}\\)"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 8,
+      "month": "Jan",
+      "year": 2020,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  },
+  {
+    "mdNumber": 209,
+    "displayId": "POC-NEW-102",
+    "questionLines": [
+      "In an estimation of bromine by Carius method, 1.6 g of an organic compound gave 1.88 g of AgBr . The mass percentage of bromine in the compound is \\(\\_\\_\\_\\_\\)",
+      "(Atomic mass, \\(\\mathrm{Ag}=108, \\mathrm{Br}=80 \\mathrm{~g} \\mathrm{~mol}^{-1}\\) )",
+      "\\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}",
+      "\\hline \\multicolumn{13}{|c|}{} & 108. (d) & & 109. & (a) & 110. (a) & \\\\",
+      "\\hline 111. & (a) & 112. & (d) & 113. & (c) & 114. & 115. & (d) & 116. & (b) & 117. & (b) & 118. & (d) & 119. & (c) & 120. & [50] \\\\",
+      "\\hline 121. & (b) & 122. & (c) & 123. & (c) & 124. & 125. & (d) & 126. & (c) & 127. & (a) & 128. & (a) & 129. & (b) & 130. & (b) \\\\",
+      "\\hline 131. & [25] & 132. & [6] & 133. & (d) & 134. & 135. & (d) & 136. & [2] & 137. & (d) & 138. & (c) & 139. & (c) & 140. & (c) \\\\",
+      "\\hline 141. & (d) & 142. & [109] & 143. & [80] & 144. & 145. & [20] & 146. & [18] & 147. & [20] & 148. & (d) & 149. & (d) & 150. & [40] \\\\",
+      "\\hline 151. & (a) & 152. & [255] & 153. & [275] & 154. & 155. & (d) & 156. & (b) & 157. & (d) & 158. & [56] & 159. & (d) & 160. & (a) \\\\",
+      "\\hline 161. & (c) & 162. & (d) & 163. & (a) & 164. & 165. & (d) & 166. & (d) & 167. & (d) & 168. & (b) & 169. & (b) & 170. & [40] \\\\",
+      "\\hline 171. & [42] & 172. & (c) & 173. & (c) & 174. & 175. & (a) & 176. & (a) & 177. & (b) & 178. & (a) & 179. & (b) & 180. & (d) \\\\",
+      "\\hline 181. & (d) & 182. & [22] & 183. & [14] & 184. & 185. & [56] & 186. & [46] & 187. & [40] & 188. & (b) & 189. & (b) & 190. & (b) \\\\",
+      "\\hline 191. & (c) & 192. & (a) & 193. & (a) & 194. & 195. & (a) & 196. & [7] & 197. & [68] & 198. & [40] & 199. & [42] & 200. & [19] \\\\",
+      "\\hline 201. & [1125] & 202. & [12] & 203. & [19] & 204. & 205. & (d) & 206. & (c) & 207. & (a) & 208. & [26.92] & 209. & [50] & & \\\\",
+      "\\hline",
+      "\\end{tabular}"
+    ],
+    "options": [],
+    "examSource": {
+      "exam": "JEE Main",
+      "day": 6,
+      "month": "Sept",
+      "year": 2020,
+      "shift": "Shift-I"
+    },
+    "type": "SCQ"
+  }
+]

@@ -57,7 +57,7 @@ export async function getTaxonomy(): Promise<Chapter[]> {
 // and metadata.chapter_id values stored in MongoDB questions_v2 collection.
 // DO NOT add chapters here that are not in taxonomyData_from_csv.ts.
 const MOCK_CHAPTERS: Chapter[] = [
-    // Class 11 — 13 chapters
+    // Class 11 — 12 chapters
     { id: 'ch11_mole',        name: 'Some Basic Concepts of Chemistry (Mole Concept)', class_level: 11, display_order: 1,  category: 'Physical'  },
     { id: 'ch11_atom',        name: 'Structure of Atom',                               class_level: 11, display_order: 2,  category: 'Physical'  },
     { id: 'ch11_periodic',    name: 'Classification of Elements and Periodicity',      class_level: 11, display_order: 3,  category: 'Physical'  },
@@ -68,10 +68,9 @@ const MOCK_CHAPTERS: Chapter[] = [
     { id: 'ch11_redox',       name: 'Redox Reactions',                                 class_level: 11, display_order: 8,  category: 'Inorganic' },
     { id: 'ch11_pblock',      name: 'P Block (Class 11)',                              class_level: 11, display_order: 9,  category: 'Inorganic' },
     { id: 'ch11_goc',         name: 'GOC',                                             class_level: 11, display_order: 10, category: 'Organic'   },
-    { id: 'ch11_stereo',      name: 'Stereochemistry',                                 class_level: 11, display_order: 11, category: 'Organic'   },
-    { id: 'ch11_hydrocarbon', name: 'Hydrocarbons',                                    class_level: 11, display_order: 12, category: 'Organic'   },
-    { id: 'ch11_prac_org',    name: 'Practical Organic Chemistry',                     class_level: 11, display_order: 13, category: 'Practical' },
-    // Class 12 — 14 chapters (ch12_aromatic removed per user decision)
+    { id: 'ch11_hydrocarbon', name: 'Hydrocarbons',                                    class_level: 11, display_order: 11, category: 'Organic'   },
+    { id: 'ch11_prac_org',    name: 'Practical Organic Chemistry',                     class_level: 11, display_order: 12, category: 'Practical' },
+    // Class 12 — 13 chapters (ch12_aromatic removed, ch12_aldehydes + ch12_carboxylic merged into ch12_carbonyl)
     { id: 'ch12_solutions',   name: 'Solutions',                                       class_level: 12, display_order: 14, category: 'Physical'  },
     { id: 'ch12_electrochem', name: 'Electrochemistry',                                class_level: 12, display_order: 15, category: 'Physical'  },
     { id: 'ch12_kinetics',    name: 'Chemical Kinetics',                               class_level: 12, display_order: 16, category: 'Physical'  },
@@ -80,12 +79,11 @@ const MOCK_CHAPTERS: Chapter[] = [
     { id: 'ch12_coord',       name: 'Coordination Compounds',                          class_level: 12, display_order: 19, category: 'Inorganic' },
     { id: 'ch12_haloalkanes', name: 'Haloalkanes & Haloarenes',                        class_level: 12, display_order: 20, category: 'Organic'   },
     { id: 'ch12_alcohols',    name: 'Alcohols, Phenols & Ethers',                      class_level: 12, display_order: 21, category: 'Organic'   },
-    { id: 'ch12_aldehydes',   name: 'Aldehydes & Ketones',                             class_level: 12, display_order: 22, category: 'Organic'   },
+    { id: 'ch12_carbonyl',    name: 'Aldehydes, Ketones and Carboxylic Acids',         class_level: 12, display_order: 22, category: 'Organic'   },
     { id: 'ch12_amines',      name: 'Amines',                                          class_level: 12, display_order: 23, category: 'Organic'   },
-    { id: 'ch12_carboxylic',  name: 'Carboxylic Acids & Derivatives',                  class_level: 12, display_order: 24, category: 'Organic'   },
-    { id: 'ch12_biomolecules',name: 'Biomolecules',                                    class_level: 12, display_order: 25, category: 'Organic'   },
-    { id: 'ch12_salt',        name: 'Salt Analysis',                                   class_level: 12, display_order: 26, category: 'Practical' },
-    { id: 'ch12_prac_phys',   name: 'Practical Physical Chemistry',                    class_level: 12, display_order: 27, category: 'Practical' },
+    { id: 'ch12_biomolecules',name: 'Biomolecules',                                    class_level: 12, display_order: 24, category: 'Organic'   },
+    { id: 'ch12_salt',        name: 'Salt Analysis',                                   class_level: 12, display_order: 25, category: 'Practical' },
+    { id: 'ch12_prac_phys',   name: 'Practical Physical Chemistry',                    class_level: 12, display_order: 26, category: 'Practical' },
 ];
 
 export async function saveTaxonomyNode(node: TaxonomyNode): Promise<{ success: boolean; message: string }> {

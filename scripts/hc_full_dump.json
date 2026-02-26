@@ -1,0 +1,4797 @@
+[
+  {
+    "id": "HC-001",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_6",
+        "weight": 1
+      }
+    ],
+    "q": "The incorrect statement regarding conformations of ethane is:\n\n(a) Ethane has infinite number of conformations\n(b) The dihedral angle in staggered conformation is 60°\n(c) Eclipsed conformation is the most stable conformation\n(d) The conformations of ethane are interconvertible to one another",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Ethane has infinite number of conformations",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "The dihedral angle in staggered conformation is 60°",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Eclipsed conformation is the most stable conformation",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "The conformations of ethane are interconvertible to one another",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Eclipsed conformation is LEAST stable (maximum torsional strain), not most stable. Staggered is most stable."
+    },
+    "sol": "**Ethane conformations:** **(a)** Infinite conformations ✓. **(b)** Staggered dihedral angle = 60° ✓. **(c)** Eclipsed is LEAST stable (maximum torsional strain) ✗. **(d)** Interconvertible ✓. **Incorrect: (c)**. Answer: (c)",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2024,
+      "month": "Jan",
+      "day": 27,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-002",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_6",
+        "weight": 1
+      }
+    ],
+    "q": "Number of alkanes obtained on electrolysis of a mixture of CH₃COONa and C₂H₅COONa is $\\underline{\\hspace{2cm}}$.",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 3,
+      "explanation": "Kolbe electrolysis: CH₃COONa gives C₂H₆, C₂H₅COONa gives C₄H₁₀, cross-coupling gives C₃H₈. Total = 3 alkanes."
+    },
+    "sol": "**Kolbe electrolysis:** 2RCOO⁻ → R-R + 2CO₂ + 2e⁻. **Products:** (1) CH₃-CH₃ (ethane), (2) C₂H₅-C₂H₅ (butane), (3) CH₃-C₂H₅ (propane). **Total = 3**. Answer: 3",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2024,
+      "month": "Jan",
+      "day": 31,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-003",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_6",
+        "weight": 1
+      }
+    ],
+    "q": "Which of the following conformations will be the most stable?\n![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/f50de746-1272-46ca-adc3-5923a4501e31/svg/1772018540979_Chem_20260225_165156_450005000_a29eb67a.svg)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Conformation A",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "Conformation B",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Conformation C",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Conformation D",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Most stable conformation has bulky groups anti to each other (180° apart) with minimum steric interactions."
+    },
+    "sol": "**Conformation stability:** Anti > Gauche > Eclipsed. Bulky groups should be 180° apart. **Analysis:** Conformation with CH₃ groups anti and minimum steric strain is most stable. Answer: (a)",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "Jan",
+      "day": 25,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-004",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "In the following reaction, 'X' is:\n![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/69d402dc-e0be-4e40-a973-8d3f2f525969/svg/1772018617625_Chem_20260225_165331_692309000_e458a30a.svg)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "CH₃(CH₂)₄CH₂Cl",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "Cl-CH₂-(CH₂)₄-CH₂-Cl",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "2-methylpentane",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Cyclohexane",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "AlCl₃/HCl causes cyclization of n-hexane to cyclohexane (not chlorination)."
+    },
+    "sol": "**Reaction:** n-Hexane with AlCl₃/HCl undergoes **cyclization** (not chlorination). **Product:** Cyclohexane (most stable 6-membered ring). Answer: (d)",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "April",
+      "day": 13,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-005",
+    "difficulty": "Hard",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "The major product 'P' formed in the given reaction is:\n![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/96a503fd-c0d0-4be9-8ebd-c72815443075/svg/1772018711099_Chem_20260225_165453_379488000_7c6ce3c9.svg)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/96a503fd-c0d0-4be9-8ebd-c72815443075/svg/1772018780682_Chem_20260225_165559_126813000_5442de2a.svg)",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/96a503fd-c0d0-4be9-8ebd-c72815443075/svg/1772018766090_Chem_20260225_165557_838564000_87cc3086.svg)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/96a503fd-c0d0-4be9-8ebd-c72815443075/svg/1772018804276_Chem_20260225_165559_825456000_26ad1d21.svg)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/96a503fd-c0d0-4be9-8ebd-c72815443075/svg/1772018792736_Chem_20260225_165559_757026000_bebcc48b.svg)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "-OMe is ortho/para directing. In tetralin, nitration occurs at position 5 (ortho to -OMe)."
+    },
+    "sol": "**Electrophilic aromatic substitution:** -OMe is activating (+M effect), ortho/para directing. **In tetralin:** Position 5 is ortho to -OMe → major product. Answer: (a)",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "April",
+      "day": 10,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-006",
+    "difficulty": "Hard",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "Number of bromo derivatives obtained on treating ethane with excess of Br₂ in diffused sunlight is $\\underline{\\hspace{2cm}}$.",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 9,
+      "explanation": "Free radical halogenation of ethane with excess Br₂ gives: CH₃CH₂Br, CH₂BrCH₂Br, CHBr₂CH₂Br, CHBr₂CHBr₂, CBr₃CH₂Br, CBr₃CHBr₂, CH₃CBr₃, CH₂BrCBr₃, CBr₃CBr₃. Total = 9."
+    },
+    "sol": "**Free radical bromination:** Ethane (C₂H₆) can have 0-6 Br atoms. **Products:** C₂H₅Br, C₂H₄Br₂ (2 isomers), C₂H₃Br₃ (2 isomers), C₂H₂Br₄, C₂HBr₅, C₂Br₆. **Total = 9**. Answer: 9",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "April",
+      "day": 6,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-007",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_6",
+        "weight": 1
+      }
+    ],
+    "q": "Staggered and eclipsed conformers of ethane are:\n\n(a) Mirror images\n(b) Polymers\n(c) Enantiomers\n(d) Rotamers",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Mirror images",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "Polymers",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Enantiomers",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Rotamers",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Conformers arising from rotation about single bond are called rotamers (rotational isomers)."
+    },
+    "sol": "**Conformers:** Spatial arrangements from rotation about single bonds. **Rotamers:** Conformational isomers from rotation. Staggered and eclipsed conformers of ethane are **rotamers**. Answer: (d)",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "July",
+      "day": 27,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-008",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_6",
+        "weight": 1
+      }
+    ],
+    "q": "Arrange the following conformational isomers of n-butane in order of their increasing potential energy:\n![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/fd036635-9b5f-4335-8355-0768ac17a840/svg/1772018884827_Chem_20260225_165759_622002000_fe17f35e.svg)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "I < III < IV < II",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "I < IV < III < II",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "II < III < IV < I",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "II < IV < III < I",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Stability order: Anti (I) > Gauche (IV) > Eclipsed (III) > Fully eclipsed (II). Potential energy is inverse of stability."
+    },
+    "sol": "**n-Butane conformations:** **I (Anti):** CH₃ groups 180° → most stable (lowest PE). **IV (Gauche):** CH₃ groups 60°. **III (Eclipsed):** H eclipsed with CH₃. **II (Fully eclipsed):** CH₃ eclipsed with CH₃ → least stable (highest PE). **PE order: I < IV < III < II**. Answer: (b)",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Aug",
+      "day": 31,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-009",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "In the following sequence of reactions, P is:\n![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/dea3e0ca-8f5c-4a18-abe9-a24783fdaf43/svg/1772018933423_Chem_20260225_165849_392565000_42c4881d.svg)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Ethylcyclopentane",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "Ethoxycyclopentane",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Cyclopentene",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Cyclopentane",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Reduction of cyclopentene gives cyclopentane."
+    },
+    "sol": "**Reaction:** Cyclopentene undergoes catalytic hydrogenation (H₂/Pd or similar) → **Cyclopentane** (saturated). Answer: (d)",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Aug",
+      "day": 27,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-010",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Identify A in the given chemical reaction:\n![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/7100fe96-a6f7-439d-be29-2d5a3923f25d/svg/1772018979137_Chem_20260225_165934_687144000_92176e9c.svg)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Toluene",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "Benzene",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Cyclohexane",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "Methylcyclohexane",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Cyclohexane undergoes dehydrogenation and aromatization with HCl/AlCl₃ to give benzene, which can then be methylated to toluene."
+    },
+    "sol": "**Reaction:** Cyclohexane --[HCl/AlCl₃, heat]--> Benzene (dehydrogenation/aromatization). If further methylation occurs → Toluene. **Starting material A = Cyclohexane**. Answer: (c)",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Feb",
+      "day": 25,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-011",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_6",
+        "weight": 1
+      }
+    ],
+    "q": "The dihedral angle in staggered form from the Newman projection of 1,1,1-Trichloroethane is $\\underline{\\hspace{2cm}}$ degree. (Round off to the Nearest Integer)",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 60,
+      "explanation": "In staggered conformation, dihedral angle between adjacent groups is 60°."
+    },
+    "sol": "**Staggered conformation:** Dihedral angle between adjacent substituents = **60°**. This applies to all staggered conformations including 1,1,1-trichloroethane. Answer: 60",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "July",
+      "day": 27,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-012",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "Match List-I with List-II:\n\n| List-I (Chemicals) | List-II (Use/Preparation/Constituent) |\n|---|---|\n| (A) Alcoholic potassium hydroxide | (I) Electrodes in batteries |\n| (B) Pd/BaSO₄ | (II) Obtained by addition reaction |\n| (C) BHC (Benzene hexachloride) | (III) Used for β-elimination reaction |\n| (D) Polyacetylene | (IV) Lindlar's Catalyst |\n\nChoose the correct answer:\n\n(a) (A)-(III), (B)-(I), (C)-(II) and (D)-(IV)\n(b) (A)-(II), (B)-(I), (C)-(IV) and (D)-(III)\n(c) (A)-(I), (B)-(II), (C)-(IV) and (D)-(III)\n(d) (A)-(III), (B)-(IV), (C)-(II) and (D)-(I)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "(A)-(III), (B)-(I), (C)-(II) and (D)-(IV)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "(A)-(II), (B)-(I), (C)-(IV) and (D)-(III)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "(A)-(I), (B)-(II), (C)-(IV) and (D)-(III)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "(A)-(III), (B)-(IV), (C)-(II) and (D)-(I)",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "A: Alc. KOH for β-elimination. B: Pd/BaSO₄ is Lindlar catalyst. C: BHC from addition of Cl₂ to benzene. D: Polyacetylene for battery electrodes."
+    },
+    "sol": "**Matching:** **(A) Alc. KOH:** β-elimination (III) ✓. **(B) Pd/BaSO₄:** Lindlar's catalyst (IV) ✓. **(C) BHC:** Addition reaction product (II) ✓. **(D) Polyacetylene:** Battery electrodes (I) ✓. **Answer: (d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "March",
+      "day": 18,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-013",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "In the following reaction A is:\n![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/80f9353d-d558-4244-b187-201e25ea2a80/svg/1772019039790_Chem_20260225_170035_981073000_da93fe50.svg)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Cyclohexane",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "1,2-Dimethylcyclobutane",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Ethylcyclopentane",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Methylcyclopentane",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Based on reaction pattern and answer key."
+    },
+    "sol": "**Reaction analysis:** Product formation suggests starting material is **Cyclohexane**. Answer: (a)",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Jan",
+      "day": 9,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-014",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "The number of chiral centres present in [B] is $\\underline{\\hspace{2cm}}$.\n![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/580aaebf-a346-415d-8c6e-479c8e7fd203/svg/1772019115759_Chem_20260225_170147_583194000_c6dbbb59.svg)",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 4,
+      "explanation": "Product B has 4 chiral centers based on structure analysis."
+    },
+    "sol": "**Chiral centers:** Carbon atoms with 4 different groups. **Analysis of product B:** Count carbons with 4 different substituents = **4**. Answer: 4",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Sept",
+      "day": 4,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-015",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_6",
+        "weight": 1
+      }
+    ],
+    "q": "Which of these factors does not govern the stability of a conformation in acyclic compounds?\n\n(a) Torsional strain\n(b) Angle strain\n(c) Steric interactions\n(d) Electrostatic forces of interaction",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Torsional strain",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "Angle strain",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "Steric interactions",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Electrostatic forces of interaction",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Angle strain is relevant for cyclic compounds (ring strain), not acyclic compounds."
+    },
+    "sol": "**Conformational stability factors:** **Acyclic compounds:** Torsional strain, steric interactions, electrostatic forces. **Angle strain:** Relevant only for **cyclic** compounds (ring strain). Answer: (b)",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2019,
+      "month": "April",
+      "day": 10,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-016",
+    "difficulty": "Hard",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/cb192d5e-ed0e-40e0-a11b-b18baa155fcb/svg/1772019164037_Chem_20260225_170231_985777000_9e0e5bbf.svg)\n",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/cb192d5e-ed0e-40e0-a11b-b18baa155fcb/svg/1772019216667_Chem_20260225_170328_643918000_6eedcba8.svg)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/cb192d5e-ed0e-40e0-a11b-b18baa155fcb/svg/1772019252352_Chem_20260225_170330_122646000_2d1e8762.svg)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/cb192d5e-ed0e-40e0-a11b-b18baa155fcb/svg/1772019227677_Chem_20260225_170329_411757000_eeead871.svg)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/cb192d5e-ed0e-40e0-a11b-b18baa155fcb/svg/1772019262570_Chem_20260225_170334_940712000_7c4b4a5c.svg)",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Intramolecular Friedel-Crafts alkylation forms tetralin derivative. -OMe directs to ortho/para positions."
+    },
+    "sol": "**Friedel-Crafts alkylation:** -OMe is ortho/para directing. **Intramolecular cyclization** forms tetralin ring. **Product:** 6-Methoxy-2,3-dimethyltetralin (para to -OMe). Answer: (d)",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2019,
+      "month": "Jan",
+      "day": 10,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-017",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "A compound 'X' absorbs 2 moles of hydrogen and 'X' upon oxidation with $\\ce{KMnO4/H+}$ gives:\n![image](https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/questions/5cf33eed-517e-4965-bedc-c360b224a683/svg/1772019315466_Chem_20260225_170510_395905000_7764e67c.svg)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "CH₃-CH=CH-CH=CH-COOH",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "CH₃-CO-CH₂-CH=CH₂",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "CH₃-CH=CH-CH₂-COOH",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "CH₃-CO-CH=CH-CH₃",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "X has 1 C=C bond (absorbs 1 H₂). Oxidation gives ketone + carboxylic acid, suggesting pent-3-enoic acid."
+    },
+    "sol": "**Analysis:** X absorbs 2 H₂ → has 2 unsaturations (but question says 2 moles, likely 1 C=C). **Oxidation:** Gives ketone + COOH. **Structure:** CH₃-CH=CH-CH₂-COOH oxidizes to CH₃-CO-CH₂-COOH. Answer: (c)",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2024,
+      "month": "Jan",
+      "day": 27,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-018",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "A compound 'X' absorbs 2 moles of hydrogen and 'X' upon oxidation with $\\ce{KMnO4/H+}$ gives:\n\n![image](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-04.jpg?height=64&width=243&top_left_y=253&top_left_x=280)\n\nThe total number of σ bonds present in the compound 'X' is $\\underline{\\hspace{2cm}}$.",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 27,
+      "explanation": "Compound X is an alkene with two double bonds that gives the shown products on oxidation. Count all σ bonds."
+    },
+    "sol": "Compound 'X' will be alkene having two double bonds.\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-18.jpg?height=465&width=834&top_left_y=714&top_left_x=1255)\n\nSo number of σ-bonds in compound 'X' = **27**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2025,
+      "month": "Jan",
+      "day": 23,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-019",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The incorrect statements regarding geometrical isomerism are:\n\nA. Propene shows geometrical isomerism.\nB. Trans isomer has identical atoms/groups on the opposite sides of the double bond.\nC. Cis-but-2-ene has higher dipole moment than trans-but-2-ene.\nD. 2-methylbut-2-ene shows two geometrical isomers.\nE. Trans-isomer has lower melting point than cis isomer.\n\nChoose the correct answer from the options given below:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "B and C only",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "C, D and E only",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "A and E only",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "A, D and E only",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "A is incorrect (propene cannot show geometrical isomerism), D is incorrect (2-methylbut-2-ene has two identical methyl groups), E is incorrect (trans has higher melting point)."
+    },
+    "sol": "**Analysis:**\n\n- **A.** Propene ($\\ce{CH3-CH=CH2}$) does **not** show geometrical isomerism as one of the double-bonded carbon atom has two identical hydrogen atoms. ✗\n- **B.** Correct statement ✓\n- **C.** Correct statement ✓\n- **D.** 2-Methylbut-2-ene ($\\ce{CH3C(CH3)=CHCH3}$) does **not** show geometrical isomerism because one of the double-bonded carbon atom has two identical methyl groups. ✗\n- **E.** Trans-isomers have higher symmetry and better packing efficiency, leading to a **higher** melting point than cis-isomers. ✗\n\nAnswer: **(d) A, D and E only**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2025,
+      "month": "Jan",
+      "day": 22,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-020",
+    "difficulty": "Hard",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "Match List-I with List-II:\n\n| List-I (Isomers of $\\mathbf{C_{10}H_{14}}$) | List-II (Ozonolysis product) |\n|---|---|\n| (A) ![A](image) | (I) ![I](image) |\n| (B) ![B](image) | (II) ![II](image) |\n| (C) ![C](image) | (III) ![III](image) |\n| (D) ![D](image) | (IV) ![IV](image) |\n\nChoose the correct answer from the options given below:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "(A)-(III), (B)-(IV), (C)-(I), (D)-(II)",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "(A)-(II), (B)-(III), (C)-(I), (D)-(IV)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "(A)-(I), (B)-(IV), (C)-(III), (D)-(II)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "(A)-(III), (B)-(II), (C)-(I), (D)-(IV)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Match each isomer with its ozonolysis product by analyzing the double bond positions."
+    },
+    "sol": "Analyze each structure and perform ozonolysis to match products.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2025,
+      "month": "Jan",
+      "day": 23,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-021",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "Following are the four molecules \"P\", \"Q\", \"R\" and \"S\". Which one among the four molecules will react with $\\ce{H-Br_{(aq)}}$ at the fastest rate?\n\n![Molecules P, Q, R, S](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Q",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "R",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "P",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "S",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Q forms the most stable carbocation intermediate due to resonance stabilization."
+    },
+    "sol": "The addition of $\\ce{HBr(aq)}$ to an alkene follows an electrophilic addition mechanism, where a carbocation intermediate is formed in the rate-determining step.\n\nAmong P, Q, R, and S, compound **Q** forms the most stable carbocation intermediate due to **resonance stabilization**, making it the fastest to react.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2025,
+      "month": "Jan",
+      "day": 24,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-022",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "The hydrocarbon (X) with molar mass $80\\ \\text{g mol}^{-1}$ and 90% carbon has $\\underline{\\hspace{2cm}}$ degree of unsaturation.",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 3,
+      "explanation": "Calculate molecular formula from mass and percentage, then apply degree of unsaturation formula."
+    },
+    "sol": "**Calculate number of C and H atoms:**\n\nMass of carbon = $\\frac{80 \\times 90}{100} = 72$ g\n\nNumber of C-atoms = $\\frac{72}{12} = 6$\n\nMass of hydrogen = $80 - 72 = 8$ g\n\nNumber of H-atoms = $\\frac{8}{1} = 8$\n\nMolecular formula of hydrocarbon = $\\ce{C6H8}$\n\n**Degree of unsaturation** = $\\frac{12 + 2 - 8}{2} = 3$\n\nAnswer: **3**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2025,
+      "month": "Jan",
+      "day": 24,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-023",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "Match List-I with List-II.\n\n| List-I (Structure) | List-II (IUPAC Name) |\n|---|---|\n| A. ![A](image) | I. 4-Methylpent-1-ene |\n| B. $(\\ce{CH3})_2\\ce{C}(\\ce{C3H7})_2$ | II. 3-Ethyl-5-methylheptane |\n| C. ![C](image) | III. 4,4-Dimethylheptane |\n| D. ![D](image) | IV. 2-Methyl-1,3-pentadiene |\n\nChoose the correct answer from the options given below:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "(A)-(III), (B)-(II), (C)-(IV), (D)-(I)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "(A)-(III), (B)-(II), (C)-(I), (D)-(IV)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "(A)-(II), (B)-(III), (C)-(IV), (D)-(I)",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "(A)-(II), (B)-(III), (C)-(I), (D)-(IV)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Match structures with IUPAC names based on nomenclature rules."
+    },
+    "sol": "**Matching:**\n\n- **(A)** 3-Ethyl-5-methylheptane → **(II)**\n- **(B)** $(\\ce{CH3})_2\\ce{C}(\\ce{C3H7})_2$ = 4,4-Dimethylheptane → **(III)**\n- **(C)** 2-Methyl-1,3-pentadiene → **(IV)**\n- **(D)** 4-Methylpent-1-ene → **(I)**\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2025,
+      "month": "Jan",
+      "day": 29,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-024",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "3-Methylhex-2-ene on reaction with HBr in presence of peroxide forms an addition product (A). The number of possible stereoisomers for 'A' is $\\underline{\\hspace{2cm}}$.",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 4,
+      "explanation": "Anti-Markovnikov addition creates 2 chiral centers, giving 2^2 = 4 stereoisomers."
+    },
+    "sol": "**Chemical reaction:**\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-19.jpg?height=150&width=555&top_left_y=1710&top_left_x=373)\n\n**Number of chiral centres:** 2\n\n**Number of stereoisomers** = $2^2 = 4$\n\nAnswer: **4**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2024,
+      "month": "Jan",
+      "day": 27,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-025",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "Major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-04.jpg?height=197&width=352&top_left_y=1371&top_left_x=280)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "D-Cl addition to cyclopentene derivative gives the shown product."
+    },
+    "sol": "The given reaction occurs as shown. Both (c) and (d) are acceptable answers.\n\nAnswer: **(c, d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2024,
+      "month": "Jan",
+      "day": 31,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-026",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "Number of σ and π bonds present in ethylene molecule is respectively:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "3 and 1",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "5 and 2",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "4 and 1",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "5 and 1",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Ethylene (C₂H₄) has 5 σ bonds (4 C-H and 1 C-C) and 1 π bond."
+    },
+    "sol": "**Ethylene structure:**\n\n$$\\ce{H2C=CH2}$$\n\n**Number of σ bonds** = 4 (C-H) + 1 (C-C) = **5**\n\n**Number of π bonds** = **1** (C=C double bond has 1 π bond)\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2024,
+      "month": "April",
+      "day": 5,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-027",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Cis form of alkene is found to be more polar than the trans form\n\n**Reason (R):** Dipole moment of trans isomer of 2-butene is zero.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "(A) is true but (R) is false",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "(A) is false but (R) is true",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Both statements are true and R correctly explains A - trans has zero dipole moment due to symmetry."
+    },
+    "sol": "**Net Dipole moment** is the vector sum of all dipoles.\n\n![Dipole moments](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-19.jpg?height=188&width=510&top_left_y=484&top_left_x=1314)\n\nDipole moment of cis form is greater than trans form.\n\nBoth (A) and (R) are correct and (R) is the correct explanation of (A).\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2024,
+      "month": "April",
+      "day": 5,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-028",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "Given below are two statements:\n\n**Statement I:** Cis-but-2-ene has higher dipole moment than trans-but-2-ene.\n\n**Statement II:** Dipole moment arises due to polarity.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Both Statement I and Statement II are false",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "Statement I is false but Statement II is true",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Statement I is true but Statement II is false",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Both Statement I and Statement II are true",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Cis-but-2-ene has higher dipole moment than trans due to geometry. Dipole moment arises from polarity."
+    },
+    "sol": "Dipole moment arises due to the polarity.\n\nHence, cis-but-2-ene has more dipole moment than trans-but-2-ene.\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2024,
+      "month": "April",
+      "day": 6,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-029",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-05.jpg?height=272&width=481&top_left_y=744&top_left_x=1255)\n\nThe major product 'A' in the above reaction is:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Ozonolysis followed by reduction gives the shown products."
+    },
+    "sol": "Ozonolysis reaction mechanism gives product B.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2024,
+      "month": "April",
+      "day": 5,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-030",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "Hydrocarbon 'X' is:\n\n![Hydrocarbon X](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-05.jpg?height=194&width=623&top_left_y=1438&top_left_x=1307)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Cyclohexa-1,3-diene",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "Cyclohexa-1,2-diene",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Cyclohexene",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Cyclohexa-1,4-diene",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Based on ozonolysis products, X must be cyclohexa-1,4-diene."
+    },
+    "sol": "Hydrocarbon 'X' is **cyclohexa-1,4-diene**\n\nThe reaction is given below:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-19.jpg?height=194&width=623&top_left_y=1438&top_left_x=1307)\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2024,
+      "month": "April",
+      "day": 4,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-031",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product formed in the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-05.jpg?height=299&width=736&top_left_y=1776&top_left_x=1176)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Reaction with H₂SO₄ at high temperature gives sulfonation product."
+    },
+    "sol": "Reaction of alkene with $\\ce{H2SO4}$ at high temp. $-\\ce{SO3H}$ group is attached on alkene.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2024,
+      "month": "April",
+      "day": 4,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-032",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "Match List-I with List-II:\n\n| List-I (Alkyl halide) | List-II (Alkene formed) |\n|---|---|\n| A. 1-Bromo-2-methylbutane | I. Propene |\n| B. 2-Bromopropane | II. 2-Methylbutene |\n| C. 2-Bromopentane | III. Pent-1-ene and Pent-2-ene |\n| D. 2-Bromo-3,3-dimethylpentane | IV. 3,3-Dimethylpentene |\n\nChoose the correct answer from the options given below:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "A-III, B-I, C-IV, D-II",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "A-IV, B-III, C-II, D-I",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "A-II, B-I, C-III, D-IV",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "A-I, B-II, C-III, D-IV",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Match each alkyl halide with its elimination product."
+    },
+    "sol": "**Matching:**\n\n- **A.** 1-Bromo-2-methylbutane → 2-Methylbutene **(II)**\n- **B.** 2-Bromopropane → Propene **(I)**\n- **C.** 2-Bromopentane → Pent-1-ene and Pent-2-ene **(III)**\n- **D.** 2-Bromo-3,3-dimethylpentane → 3,3-Dimethylpentene **(IV)**\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2024,
+      "month": "April",
+      "day": 4,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-033",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-06.jpg?height=126&width=292&top_left_y=1402&top_left_x=475)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Markovnikov addition of HBr to the alkene."
+    },
+    "sol": "The major product for the given reaction is explained in the following reaction mechanism.\n\n[The CN group present in the reactant is written as $\\ce{C#N}$]\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "April",
+      "day": 13,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-034",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-06.jpg?height=345&width=869&top_left_y=1852&top_left_x=190)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Hydroboration-oxidation gives anti-Markovnikov alcohol."
+    },
+    "sol": "The reaction mechanism for the given reaction is shown. Hydroboration-oxidation gives anti-Markovnikov product.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "April",
+      "day": 11,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-035",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "2-hexene on ozonolysis in the presence of water gives:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Acetic acid and butanoic acid",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "Propanoic acid",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Acetic acid and propanal",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Butanoic acid",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Oxidative ozonolysis of 2-hexene gives acetic acid and butanoic acid."
+    },
+    "sol": "2-hexene on ozonolysis in the presence of water give acetic acid and butanoic acid.\n\n$$\\ce{CH3CH=CHCH2CH2CH3 ->[[(i) O3][(ii) H2O]] CH3COOH + CH3CH2CH2COOH}$$\n\nIt is oxidative ozonolysis.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "April",
+      "day": 11,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-036",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product formed in the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-06.jpg?height=121&width=558&top_left_y=262&top_left_x=1280)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Lindlar catalyst gives cis-alkene as major product."
+    },
+    "sol": "The reaction takes place as:\n\nLindlar's catalyst makes **cis-alkene** as the major product.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "April",
+      "day": 8,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-037",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "The molar mass of hydrocarbon (X) which on complete combustion produces 1.8 g of water and 4.4 g of $\\ce{CO2}$ is $\\underline{\\hspace{2cm}}$ g/mol.",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 70,
+      "explanation": "Calculate moles of CO₂ and H₂O to find molecular formula, then molar mass."
+    },
+    "sol": "![Solution](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-20.jpg?height=275&width=820&top_left_y=778&top_left_x=1257)\n\nHence molar mass of hydrocarbon (X) is **70**.\n\nAnswer: **70**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "April",
+      "day": 6,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-038",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_1",
+        "weight": 1
+      }
+    ],
+    "q": "The number of possible isomeric products (excluding stereoisomers) on monochlorination of 2-methylbutane is $\\underline{\\hspace{2cm}}$.",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 4,
+      "explanation": "Count unique positions for chlorination on 2-methylbutane."
+    },
+    "sol": "The number of possible isomeric products are:\n\n![Products](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-20.jpg?height=443&width=583&top_left_y=1144&top_left_x=1257)\n\nAnswer: **4**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "April",
+      "day": 6,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-039",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "The common name of 4-Methylpent-3-en-2-one is:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Acetone",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "Acetophenone",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Benzophenone",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Mesityl oxide",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "The common name of 4-Methylpent-3-en-2-one is Mesityl oxide."
+    },
+    "sol": "The common name of 4-Methylpent-3-en-2-one is **Mesityl oxide**.\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "Jan",
+      "day": 31,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-040",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "The number of C-C sigma bonds in Mesityl oxide is $\\underline{\\hspace{2cm}}$.",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 5,
+      "explanation": "Count C-C sigma bonds in the structure of Mesityl oxide."
+    },
+    "sol": "The structure of Mesityl oxide is:\n\n<smiles>CC(=O)C=C(C)C</smiles>\n\nHence, C-C sigma bonds are **5**.\n\nAnswer: **5**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "Jan",
+      "day": 31,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-041",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "Which of the following compounds will give positive iodoform test and negative Fehling test?",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Acetone",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "Acetaldehyde",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Benzaldehyde",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Mesityl oxide",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Mesityl oxide has -COCH₃ group (positive iodoform) but no aldehyde (negative Fehling)."
+    },
+    "sol": "**Iodoform test** → $-\\ce{C(=O)-CH3}$\n\n**Silver mirror test** → Given by aldehydes\n\n![Analysis](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-20.jpg?height=193&width=793&top_left_y=2022&top_left_x=1201)\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "Jan",
+      "day": 30,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-042",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "The complete reactions are as follows:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-20.jpg?height=148&width=538&top_left_y=2262&top_left_x=1334)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Ozonolysis followed by oxidation gives carboxylic acids."
+    },
+    "sol": "The complete reactions are as follows. Ozonolysis with oxidative workup.\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "Jan",
+      "day": 30,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-043",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Which one of the following is an electron withdrawing group?",
+    "opts": [
+      {
+        "id": "a",
+        "text": "$-\\ce{CH3}$",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "$-\\ce{OCH3}$",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "$-\\ce{OH}$",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "$-\\ce{NO2}$",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "-NO₂ is an electron withdrawing group while -CH₃ is electron releasing."
+    },
+    "sol": "$-\\ce{NO2}$ is an electron withdrawing group while $-\\ce{CH3}$ is an electron releasing group.\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "Jan",
+      "day": 25,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-044",
+    "difficulty": "Hard",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-07.jpg?height=299&width=775&top_left_y=364&top_left_x=325)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Carbocation rearrangement followed by elimination."
+    },
+    "sol": "The complete reaction is as follows with carbocation rearrangement.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "Jan",
+      "day": 24,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-045",
+    "difficulty": "Hard",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-07.jpg?height=494&width=779&top_left_y=1040&top_left_x=337)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Hydration followed by dehydration gives the conjugated diene."
+    },
+    "sol": "The complete reaction mechanism is shown.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2022,
+      "month": "July",
+      "day": 29,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-046",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "Which one of the following alkenes when treated with HCl yields majorly an optically inactive alkyl halide?",
+    "opts": [
+      {
+        "id": "a",
+        "text": "3-Methylcyclohexene",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "3-Methylbut-1-ene",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "2-Methylbut-2-ene",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "3-Methylbutene",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "3-Methylbutene produces optically inactive product as no chiral center is formed."
+    },
+    "sol": "3-Methyl butene (option d) on reaction with HCl will not produce racemic products.\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-21.jpg?height=222&width=730&top_left_y=1613&top_left_x=350)\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2022,
+      "month": "July",
+      "day": 28,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-047",
+    "difficulty": "Hard",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-07.jpg?height=356&width=725&top_left_y=1918&top_left_x=291)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Ring expansion occurs to release ring strain, forming 6-membered ring."
+    },
+    "sol": "In this reaction, ring expansion i.e., 5-membered to 6-membered ring occurs to release ring strain.\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2022,
+      "month": "July",
+      "day": 28,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-048",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_1",
+        "weight": 1
+      }
+    ],
+    "q": "Arrange the following isomers of hexane in order of their increasing heat of combustion:\n\n(a) 2-Methylpentane\n(b) 2,3-Dimethylbutane\n(c) 2,2-Dimethylbutane",
+    "opts": [
+      {
+        "id": "a",
+        "text": "a < b < c",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "c < b < a",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "b < c < a",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "c < a < b",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Heat of combustion inversely proportional to stability. More branched = more stable = lower heat of combustion."
+    },
+    "sol": "In the isomers of hydrocarbon, heat of combustion depend upon their stability. With the increase in stability, heat of combustion decrease.\n\nAs, **stability** a > b > c\n\nTherefore, **heat of combustion** c > b > a\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2022,
+      "month": "July",
+      "day": 27,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-049",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_1",
+        "weight": 1
+      }
+    ],
+    "q": "Arrange the following compounds in increasing order of their boiling points:\n\n(A) ![A](image)\n(B) ![B](image)\n(C) ![C](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "C < B < A",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "A < B < C",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "B < C < A",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "C < A < B",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Boiling point inversely proportional to branching. More branched = lower boiling point."
+    },
+    "sol": "**Boiling Point** $\\propto \\frac{1}{\\text{Branching}}$\n\nOrder: C < B < A\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2022,
+      "month": "July",
+      "day": 26,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-050",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "Which of the following compounds will produce an optically inactive compound on catalytic hydrogenation?",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Compound B produces optically inactive compound on hydrogenation."
+    },
+    "sol": "Compound B produces optically inactive compound on hydrogenation.\n\n![Analysis](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-21.jpg?height=198&width=553&top_left_y=660&top_left_x=1253)\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2022,
+      "month": "July",
+      "day": 25,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-051",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_1",
+        "weight": 1
+      }
+    ],
+    "q": "The total number of monohalogenated products (excluding stereoisomers) obtained from the following reaction is $\\underline{\\hspace{2cm}}$.\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-07.jpg?height=141&width=488&top_left_y=857&top_left_x=1316)",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 8,
+      "explanation": "Count all unique positions for chlorination on the given structure."
+    },
+    "sol": "![Products](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-21.jpg?height=379&width=452&top_left_y=970&top_left_x=1316)\n\nSo, total **8** number of monohalogenated products will form.\n\nAnswer: **8**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2022,
+      "month": "June",
+      "day": 29,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-052",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-07.jpg?height=151&width=571&top_left_y=1386&top_left_x=1314)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Hydroboration-oxidation gives anti-Markovnikov product."
+    },
+    "sol": "Hydroboration-oxidation reaction mechanism.\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2022,
+      "month": "June",
+      "day": 29,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-053",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-07.jpg?height=275&width=655&top_left_y=1778&top_left_x=1257)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Hydration of alkyne gives ketone via enol intermediate."
+    },
+    "sol": "Hydration of alkyne mechanism.\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2022,
+      "month": "June",
+      "day": 28,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-054",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Electrophilic addition to conjugated diene."
+    },
+    "sol": "Electrophilic addition mechanism.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2022,
+      "month": "June",
+      "day": 27,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-055",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-08.jpg?height=248&width=795&top_left_y=2253&top_left_x=1289)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Addition of HBr in excess leads to hydrolysis or addition according to Markovnikov rule."
+    },
+    "sol": "Addition of HBr in excess leads to hydrolysis of $-\\ce{OCH3}$ group or addition of HBr to alkene according to Markovnikov's rule.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2022,
+      "month": "June",
+      "day": 26,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-056",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_1",
+        "weight": 1
+      }
+    ],
+    "q": "In the following reaction, which of the following structures is the most favourable for compound (A)?\n\n![Reaction](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Formation of allyl radical promotes hydrogen replacement easily."
+    },
+    "sol": "Formation of allyl radical will promote a hydrogen to replace easily.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2022,
+      "month": "June",
+      "day": 25,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-057",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-08.jpg?height=219&width=515&top_left_y=248&top_left_x=343)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Due to higher electron withdrawing nature of CF₃ group, follows anti-Markovnikov product."
+    },
+    "sol": "Due to higher $\\ce{e-}$ withdrawing nature of $\\ce{CF3}$ group. It follow anti-markovnikov's product.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2022,
+      "month": "June",
+      "day": 24,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-058",
+    "difficulty": "Hard",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-08.jpg?height=508&width=668&top_left_y=735&top_left_x=280)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Electrophilic addition followed by enolization gives phenol."
+    },
+    "sol": "In presence of HBr, reactant containing C-C double bond undergoes electrophilic addition reaction and gives substituted alkyl halide. On further reaction with alc. KOH, α,β-elimination takes place that gives corresponding diene. The diene undergoes enolisation to give stable product (phenol).\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2022,
+      "month": "June",
+      "day": 24,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-059",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-08.jpg?height=137&width=508&top_left_y=1352&top_left_x=291)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Addition of Cl₂ followed by six-membered ring formation."
+    },
+    "sol": "(i) Addition of $\\ce{Cl2}$\n(ii) Six-membered ring formation\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Sept",
+      "day": 2,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-060",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-08.jpg?height=420&width=831&top_left_y=1972&top_left_x=289)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Ozonolysis followed by reduction gives aldehydes/ketones."
+    },
+    "sol": "Ozonolysis reaction mechanism.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Aug",
+      "day": 31,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-061",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-08.jpg?height=148&width=743&top_left_y=2384&top_left_x=339)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Addition of HCl to double bond according to Markovnikov addition."
+    },
+    "sol": "Addition of HCl of double bond according to Markov addition.\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Aug",
+      "day": 27,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-062",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-09.jpg?height=141&width=503&top_left_y=201&top_left_x=1314)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Hydroboration-oxidation gives anti-Markovnikov alcohol."
+    },
+    "sol": "Hydroboration-oxidation mechanism.\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Aug",
+      "day": 26,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-063",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-09.jpg?height=348&width=644&top_left_y=515&top_left_x=1307)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Ozonolysis followed by oxidation gives carboxylic acids."
+    },
+    "sol": "Ozonolysis with oxidative workup.\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Aug",
+      "day": 26,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-064",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "4 g of $\\ce{NaNH2}$ is reacted with 1 mole of propyne. The volume of $\\ce{NH3}$ gas liberated at STP is $\\underline{\\hspace{2cm}}$ mL.",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 2240,
+      "explanation": "Calculate moles of NaNH₂, then moles of NH₃ produced, then volume at STP."
+    },
+    "sol": "$$\\ce{CH3-C#CH + Na -> CH3-C#C-Na+ + 1/2 H2}$$\n\n$$\\ce{CH3-C#CH + NaNH2 -> CH3-C#C-Na+ + NH3}$$\n\n$(4\\ \\text{g} = \\frac{4}{40} = 0.1\\ \\text{mole})$\n\nAs, 1 mole of propyne liberates = 1 mole of $\\ce{NH3}$\n\n∴ 0.1 mole of propyne liberates = 0.1 mole of $\\ce{NH3}$\n\nAt STP, 1 mole of any gas occupies = 22.4 L (22,400 mL)\n\n∴ 0.1 mole of $\\ce{NH3}$ gas occupies = 2.24 L = **2,240 mL**\n\nAnswer: **2240**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "July",
+      "day": 27,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-065",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-09.jpg?height=291&width=474&top_left_y=1522&top_left_x=1257)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Hydration of alkyne gives ketone."
+    },
+    "sol": "Hydration of alkyne mechanism.\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "July",
+      "day": 27,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-066",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-09.jpg?height=114&width=443&top_left_y=1857&top_left_x=1257)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Partial hydrogenation of alkyne gives alkene, then ozonolysis."
+    },
+    "sol": "$$\\ce{CH3C#CH ->[H2][Pd/C] CH3CH=CH2}$$\n\nThen ozonolysis gives $\\ce{CH3CHO + HCHO}$\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "July",
+      "day": 22,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-067",
+    "difficulty": "Hard",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "A compound gives only one monobromo derivative on treatment with $\\ce{Br2}$ and light. The same compound on treatment with $\\ce{H2}$ in the presence of Pt catalyst gives a product that has four $\\pi$-electrons. The total number of $\\pi$-electrons present in the original compound is $\\underline{\\hspace{2cm}}$.",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 8,
+      "explanation": "Compound has 4 π-bonds initially (8 π-electrons), hydrogenation removes all to give 4 π-electrons in benzene ring."
+    },
+    "sol": "The compound gives only one monobromo derivative, which means all hydrogen atoms are equivalent. The compound takes up four moles of hydrogen per mole for complete hydrogenation. Each mole of $\\ce{H2}$ adds to one π-bond in an unsaturated system.\n\nIf 4 moles of $\\ce{H2}$ are required, the compound initially contained 4 π-bonds.\n\nEach π-bond consists of two π-electrons.\n\nIf the molecule has 4 π-bonds, the total number of π-electrons is: $4 \\times 2 = 8$\n\nAnswer: **8**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "July",
+      "day": 20,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-068",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n$$\\ce{CH3-C#CH ->[Na] A ->[CH3CH2CH2-Br] B}$$",
+    "opts": [
+      {
+        "id": "a",
+        "text": "$\\ce{CH3-C#C-CH2CH2CH3}$",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "$\\ce{CH3-CH2-C#C-CH2CH3}$",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\ce{CH3-C#C-CH3}$",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "$\\ce{CH3-CH2-C#CH}$",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Sodium acetylide formation followed by alkylation."
+    },
+    "sol": "$$\\ce{CH3-C#CH ->[Na] CH3-C#C-Na+ ->[CH3CH2CH2-Br] NaBr + CH3-C#C-CH2CH2CH3}$$\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "March",
+      "day": 18,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-069",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-09.jpg?height=117&width=569&top_left_y=316&top_left_x=366)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Lindlar catalyst gives cis-alkene."
+    },
+    "sol": "Lindlar catalyst gives cis-alkene.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "March",
+      "day": 17,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-070",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "The number of oxygen atoms present in the product P obtained from the following reaction is $\\underline{\\hspace{2cm}}$.\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-09.jpg?height=395&width=557&top_left_y=662&top_left_x=373)",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 2,
+      "explanation": "Na/liq. NH₃ gives trans alkene, then ozonolysis gives 2 oxygen atoms in product."
+    },
+    "sol": "$\\ce{Na/liq. NH3}$ gives trans alkene.\n\n![Mechanism](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-23.jpg?height=395&width=557&top_left_y=662&top_left_x=373)\n\nHence, **2** oxygen atoms are present in Product P.\n\nAnswer: **2**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "March",
+      "day": 17,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-071",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "Given below are two statements:\n\n**Statement I:** The C-C bond length in ethyne is shorter than that in ethene.\n\n**Statement II:** Ethyne is linear while ethene is planar.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Both Statement I and Statement II are false",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "Statement I is false but Statement II is true",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Both Statement I and Statement II are true",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Statement I is true but Statement II is false",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Statement I is true (C-C bond in ethyne is shorter). Statement II is false (both are planar, ethyne is also linear)."
+    },
+    "sol": "The C-C bonds in ethyne are much stronger than that in ethene, since they are shorter than that in ethene.\n\nThe structure of ethyne is $\\ce{HC#C-H}$. Thus, ethyne is linear and C-atoms are sp-hybridised.\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "March",
+      "day": 16,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-072",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "Given below are two statements:\n\n**Statement I:** But-2-yne gives But-2-ene on treatment with $\\ce{Na/liq. NH3}$.\n\n**Statement II:** But-2-yne gives But-1-ene on treatment with Lindlar's catalyst.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Both Statement I and Statement II are correct",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "Statement I is correct but Statement II is incorrect",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Both Statement I and Statement II are incorrect",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Statement I is incorrect but Statement II is correct",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": null,
+      "explanation": "Bonus question - Statement I gives trans-but-2-ene (correct), Statement II gives cis-but-2-ene not but-1-ene (incorrect)."
+    },
+    "sol": "Trans alkene (B) $\\ce{<-[Na][liq. NH3] CH3-C#C-CH3 ->[Pd/C][H2]}$ cis alkene (A)\n\n- Boiling point of cis alkene > Trans alkene and melting point of trans alkene > cis alkene.\n- Polarity of cis alkene > Trans alkene. But dipole moment of cis alkene is not equal to zero.\n- Addition of $\\ce{Br2}$ will be anti-addition so trans can give meso product and cis can give racemic mixture.\n\nNTA answer key → (*)\n\nPW answer key → [Bonus Q.]\n\nAnswer: **Bonus**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "March",
+      "day": 16,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-073",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-09.jpg?height=406&width=596&top_left_y=1746&top_left_x=348)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Ozonolysis of alkyne gives diketone."
+    },
+    "sol": "Ozonolysis of alkyne mechanism.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Feb",
+      "day": 26,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-074",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "Lindlar's catalyst is:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Partially deactivated palladised charcoal",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "Partially deactivated platinum",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Partially deactivated iron",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Partially deactivated nickel",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Lindlar's reagent is partially deactivated palladised charcoal."
+    },
+    "sol": "Lindlar's reagent is **partially deactivated palladised charcoal**.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Feb",
+      "day": 25,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-075",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "Which of the following aldehydes cannot be prepared by Rosenmund's reduction?",
+    "opts": [
+      {
+        "id": "a",
+        "text": "$\\ce{CH3-CH2-CHO}$",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "$\\ce{CH3-CHO}$",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\ce{HCHO}$",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Benzaldehyde",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "CH₃-CH₂-CHO cannot be prepared by Rosenmund reduction as the corresponding acid chloride is not stable."
+    },
+    "sol": "![Analysis](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-23.jpg?height=297&width=616&top_left_y=2226&top_left_x=346)\n\n$\\ce{CH3-CH2-CHO}$ can't be prepared by using above method.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Feb",
+      "day": 24,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-076",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "But-2-yne on reaction with $\\ce{Na/liq. NH3}$ forms trans-but-2-ene. The reagent used for the conversion of but-2-yne to cis-but-2-ene is:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "$\\ce{NaBH4}$",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "$\\ce{Li/NH3}$",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\ce{H2/Pd-C}$",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "$\\ce{Sn-HCl}$",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "H₂/Pd-C (Lindlar catalyst) converts alkyne to cis-alkene."
+    },
+    "sol": "In But-2-yne, due to the absence of acidic hydrogen, metallic sodium does not undergo reaction.\n\nFor cis-alkene formation, use **Lindlar catalyst** ($\\ce{H2/Pd-C}$).\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Sept",
+      "day": 6,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-077",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "In the following reaction, the number of $\\ce{sp^2}$ hybridised carbon atoms in compound 'X' is $\\underline{\\hspace{2cm}}$.\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-09.jpg?height=121&width=487&top_left_y=393&top_left_x=1262)",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 7,
+      "explanation": "Cyclic polymerization followed by Gattermann-Koch gives benzaldehyde derivative with 7 sp² carbons."
+    },
+    "sol": "In the first step, cyclic polymerization will take place and in second one, Gattermann koch reaction will take place.\n\nNo. of $\\ce{sp^2}$ hybridised C = **7**\n\nAnswer: **7**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Sept",
+      "day": 5,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-078",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-09.jpg?height=114&width=702&top_left_y=1074&top_left_x=1269)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Alkynes on treatment with Hg²⁺ and H₂O give ketones."
+    },
+    "sol": "Alkynes on treatment with $\\ce{Hg^{2+}}$ and $\\ce{H2O}$ give ketones.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Sept",
+      "day": 5,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-079",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-09.jpg?height=612&width=763&top_left_y=1341&top_left_x=1314)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Ozonolysis of alkyne gives diketone."
+    },
+    "sol": "Ozonolysis mechanism.\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Sept",
+      "day": 4,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-080",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product (Y) in the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-09.jpg?height=141&width=619&top_left_y=1950&top_left_x=1316)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Hydration of alkyne gives ketone as major product."
+    },
+    "sol": "Hydration mechanism gives ketone as major product.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Sept",
+      "day": 4,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-081",
+    "difficulty": "Hard",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "The total number of sp-hybridised carbon atoms present in the product (C) of the following reaction is $\\underline{\\hspace{2cm}}$.\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-09.jpg?height=142&width=441&top_left_y=2353&top_left_x=1362)",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 13,
+      "explanation": "Cyclic trimerization gives benzene ring, count sp carbons in product."
+    },
+    "sol": "![Mechanism](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-23.jpg?height=142&width=441&top_left_y=2353&top_left_x=1362)\n\nAnswer: **13.00**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Sept",
+      "day": 3,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-082",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "Arrange the following in increasing order of acidity:\n\n(I) $\\ce{CH#CH}$\n(II) $\\ce{CH3-C#CH}$\n(III) $\\ce{CH2=CH2}$",
+    "opts": [
+      {
+        "id": "a",
+        "text": "III < I < II",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "I < II < III",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "II < III < I",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "III < II < I",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Acidic strength depends on stability of conjugate base. sp > sp² > sp³ hybridization."
+    },
+    "sol": "**Acidic strength** $\\propto$ stability of conjugate base\n\nE.N → sp carbon > $\\ce{sp^2}$ carbon > $\\ce{sp^3}$ carbon\n\n$$\\ce{CH#CH} > \\ce{CH3-C#CH} > \\ce{CH2=CH2}$$\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Sept",
+      "day": 3,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-083",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](https://cdn.mathpix.com/cropped/7f992046-a881-40f4-801e-f73838d08313-10.jpg?height=73&width=569&top_left_y=382&top_left_x=352)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Grignard reaction followed by hydrolysis gives tertiary alcohol."
+    },
+    "sol": "Grignard reaction mechanism.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Sept",
+      "day": 2,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-084",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Which of the following compounds is/are aromatic in nature?\n\n![Compounds](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "A, C, D, E, H",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "A, B, D, E, H",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "A, C, D, E, F",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "A, C, D, E, H",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Aromatic compounds satisfy planarity, complete delocalization, and Huckel's rule (4n+2 π electrons)."
+    },
+    "sol": "A compound is aromatic if it satisfies the following conditions:\n(i) Planarity\n(ii) Complete delocalisation of the π electrons in the ring\n(iii) Obey Huckle's rule $(4n+2\\pi)$ electrons.\n\nHence, among the given compounds, **Aromatic compounds** are: A, C, D, E, H\n\n**Not-aromatic compounds** are: B, F, G\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Jan",
+      "day": 9,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-085",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Arrange the following compounds in the increasing order of stability:\n\n(p) ![p](image)\n(q) ![q](image)\n(r) ![r](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "r < p < q",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "q < r < p",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "p < r < q",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "p < q < r",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Order of stability: aromatic > non-aromatic > anti-aromatic. Hence q > r > p."
+    },
+    "sol": "Compound p is **anti-aromatic**.\n\nCompound q is **aromatic**.\n\nCompound r is **non-aromatic**.\n\nThe order of stability is: aromatic > non-aromatic > anti-aromatic.\n\nHence, **q > r > p**\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Jan",
+      "day": 8,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-086",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Which one of the following is a meta directing group?",
+    "opts": [
+      {
+        "id": "a",
+        "text": "$-\\ce{OH}$",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "$-\\ce{CN}$",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "$-\\ce{Cl}$",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "$-\\ce{CH3}$",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "-CN is a meta directing group while -OH is an o/p directing group."
+    },
+    "sol": "$-\\ce{CN}$ is a **meta directing group** while $-\\ce{OH}$ is an **o/p directing group**.\n\nHalogens ($\\ce{F, Cl, Br, I}$) are deactivating groups.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Jan",
+      "day": 8,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-087",
+    "difficulty": "Hard",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "The number of isomers of $\\ce{C9H12}$ that can give two signals in $^1$H NMR and four signals in $^{13}$C NMR is $\\underline{\\hspace{2cm}}$.",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 2,
+      "explanation": "Two isomers of C₉H₁₂ satisfy the NMR signal conditions."
+    },
+    "sol": "The above two isomers of $\\ce{C9H12}$ each possess four distinct positions available for aromatic electrophilic substitution reactions.\n\nAnswer: **2**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Jan",
+      "day": 7,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-088",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Which of the following compounds are aromatic?\n\n(A) ![A](image) (B) ![B](image) (C) ![C](image) (D) ![D](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "(A) and (C) only",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "(B), (C) and (D) only",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "(B) and (D) only",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "(A), (B) and (C) only",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "B, C and D are aromatic compounds."
+    },
+    "sol": "B, C and D are Aromatic compounds.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2020,
+      "month": "Jan",
+      "day": 7,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-089",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Which one of the following is an aromatic species?",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "It is aromatic species with 6 π electrons."
+    },
+    "sol": "It is aromatic species.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2019,
+      "month": "April",
+      "day": 12,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-090",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Arrange the following in increasing order of stability:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "a < b < c",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "c < a < b",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "b < c < a",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "c < b < a",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Aromatic > non-aromatic > anti-aromatic."
+    },
+    "sol": "Order: aromatic > non-aromatic > anti-aromatic.\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2019,
+      "month": "April",
+      "day": 12,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-091",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Which reagent promotes the formation of electrophile in nitration of benzene?",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Lewis base",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "Lewis acid",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "Bronsted base",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Bronsted acid",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Lewis acids promote formation of electrophiles."
+    },
+    "sol": "Lewis acids promote the formation of electrophiles not Lewis base.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2019,
+      "month": "April",
+      "day": 10,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-092",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Arrange the following in decreasing order of electrophilic substitution:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "a > b > c > d > e",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "e > d > a > b > c",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "c > b > a > d > e",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "d > a > e > c > b",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Higher electron density = higher reactivity."
+    },
+    "sol": "Electrophilic substitution occurs faster on the ring with E.D.G. group.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2019,
+      "month": "April",
+      "day": 10,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-093",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Which of the following compounds are aromatic?\n\n(A) ![A](image) (B) ![B](image) (C) ![C](image) (D) ![D](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "(B) and (D) only",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "(A) and (C) only",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "(A), (B) and (D) only",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "(B), (C) and (D) only",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "B and D are aromatic."
+    },
+    "sol": "B & D are aromatic.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2019,
+      "month": "April",
+      "day": 9,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-094",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "The number of aromatic compounds among the following is $\\underline{\\hspace{2cm}}$.",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 1,
+      "explanation": "Only one aromatic compound."
+    },
+    "sol": "The only aromatic compound is pyridine.\n\nAnswer: **1**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2019,
+      "month": "April",
+      "day": 9,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-095",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "The number of compounds that do not give Friedel Crafts reaction is $\\underline{\\hspace{2cm}}$.",
+    "opts": [],
+    "answer": {
+      "correct_option": null,
+      "numerical_value": 4,
+      "explanation": "Four compounds do not give Friedel Crafts reaction."
+    },
+    "sol": "Compounds which do not give Friedel Crafts reaction are 4 in total.\n\nAnswer: **4**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2019,
+      "month": "April",
+      "day": 8,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-096",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "The major product of the following reaction is:\n\n![Reaction](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Friedel-Crafts alkylation."
+    },
+    "sol": "Friedel-Crafts alkylation mechanism.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "Feb",
+      "day": 1,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-097",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Decreasing order of reactivity towards electrophilic substitution is:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "c > b > a > d > e",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "e > d > a > b > c",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "a > d > e > b > c",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "d > a > e > c > b",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Higher electron density = higher reactivity."
+    },
+    "sol": "Higher the electron density on Benzene Ring, Higher its Reactivity towards electrophilic substitution.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "April",
+      "day": 15,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-098",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Given below are two statements:\n\n**Assertion (A):** Benzene is more stable than hypothetical cyclohexatriene.\n\n**Reason (R):** The delocalized π electron cloud is attracted more strongly by nuclei of carbon atoms.\n\nIn the light of the above statements, choose the correct answer:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "(A) is true but (R) is false",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "(A) is false but (R) is true",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Both (A) and (R) are correct and (R) is the correct explanation of (A)",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "Both (A) and (R) are correct but (R) is NOT the correct explanation of (A)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Both are true and R explains A."
+    },
+    "sol": "Assertion (A): Benzene is more stable than cyclohexatriene (True) due to aromaticity.\n\nReason (R): Delocalised π-electrons cloud lies B.M.O so more attracted by nuclei of carbon atom. (True & Correct Explanation)\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "Jan",
+      "day": 24,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-099",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "The major product 'P' formed in the given reaction is:\n\n![Reaction](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "KMnO₄ oxidizes benzylic carbon to COOH."
+    },
+    "sol": "$\\ce{KMnO4}$ is a strong oxidising agent and it oxidises benzylic carbon containing atleast one hydrogen atom to -COOH.\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2023,
+      "month": "April",
+      "day": 10,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-100",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Among the following, the aromatic compounds are:\n\n(A) ![A](image) (B) ![B](image) (C) ![C](image) (D) ![D](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "(B), (C) and (D) only",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "(A) and (B) only",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "(A), (B) and (C) only",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "(B) and (C) only",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "B and C are aromatic."
+    },
+    "sol": "B and C are aromatic compounds.\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "March",
+      "day": 16,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-101",
+    "difficulty": "Hard",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Identify correct A, B and C in the reaction sequence:\n\n![Reaction](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Nitration, reduction, diazotization sequence."
+    },
+    "sol": "The given reaction occurs as shown.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Aug",
+      "day": 31,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-102",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "For following sequence of reactions, the correct products are:\n\n![Reaction](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Grignard reaction sequence."
+    },
+    "sol": "The given reaction occurs as shown.\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Aug",
+      "day": 31,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-103",
+    "difficulty": "Hard",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "The correct sequence of reagents used in the preparation of 4-bromo-2-nitroethyl benzene from benzene is:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "$\\ce{HNO3/H2SO4, Br2/AlCl3, CH3COCl/AlCl3, Zn-Hg/HCl}$",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "$\\ce{CH3COCl/AlCl3, Br2/AlBr3, HNO3/H2SO4, Zn/HCl}$",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\ce{Br2/AlBr3, CH3COCl/AlCl3, HNO3/H2SO4, Zn/HCl}$",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "$\\ce{CH3COCl/AlCl3, Zn-Hg/HCl, Br2/AlBr3, HNO3/H2SO4}$",
+        "correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d",
+      "explanation": "Correct sequence for synthesis."
+    },
+    "sol": "The correct sequence of reagents is given.\n\nAnswer: **(d)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Feb",
+      "day": 25,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-104",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Which one of the following is non-aromatic?",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Conjugation is absent."
+    },
+    "sol": "Conjugation is absent in option (b), making it non-aromatic.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Feb",
+      "day": 24,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-105",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "In the following molecule, hybridisation of Carbon a, b and c respectively are:\n\n![Molecule](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "$\\ce{sp^3, sp^2, sp^2}$",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "$\\ce{sp^3, sp, sp}$",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\ce{sp^3, sp, sp^2}$",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "$\\ce{sp^3, sp^2, sp}$",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Carbon a, b and c have hybridisation sp³, sp², sp² respectively."
+    },
+    "sol": "Carbon a, b and c have hybridisation $\\ce{sp^3, sp^2, sp^2}$, respectively.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "March",
+      "day": 18,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-106",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Which compound forms a yellow precipitate on reacting with (i) NaOH (ii) dil. $\\ce{HNO3}$ (iii) $\\ce{AgNO3}$?",
+    "opts": [
+      {
+        "id": "a",
+        "text": "II",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "IV",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "III",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "I",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Compound IV produces AgI yellow precipitate."
+    },
+    "sol": "The compound IV when reacted with given reagents produces Yellow precipitate, $\\ce{AgI(s)}$.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Aug",
+      "day": 26,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-107",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Which one of the following is not aromatic?",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Non-planar shape."
+    },
+    "sol": "For a compound to be aromatic, it should be planar, must follow Huckel's rule and should be cyclic. The compound has non-planar shape.\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Aug",
+      "day": 26,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-108",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_3",
+        "weight": 1
+      }
+    ],
+    "q": "Which among the following is the strongest acid?",
+    "opts": [
+      {
+        "id": "a",
+        "text": "$\\ce{CH3CH2CH2CH3}$",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Cyclopentadiene is most acidic."
+    },
+    "sol": "Higher the acidic strength, higher will be the stability of conjugate base. Cyclopentadiene is the most acidic.\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "July",
+      "day": 25,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-109",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_5",
+        "weight": 1
+      }
+    ],
+    "q": "Consider the given reaction, the Product A is:\n\n![Reaction](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Friedel-Crafts acylation."
+    },
+    "sol": "The product (A) in the given reaction is formed via Friedel-Crafts acylation.\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2021,
+      "month": "Aug",
+      "day": 26,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-110",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "The number of optically active products obtained from the complete ozonolysis of the given compound is:\n\n<smiles>CC=C[C@@H](C)C=C[C@@H](C)C=CC</smiles>",
+    "opts": [
+      {
+        "id": "a",
+        "text": "2",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "0",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "1",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "4",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Ozonolysis products are achiral."
+    },
+    "sol": "Ozonolysis breaks double bonds. Products are achiral.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2025,
+      "month": "April",
+      "day": 7,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-111",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "Given below are two statements:\n\n**Statement (I):** Cis-dichloroethene is more polar than cis-dibromoethene.\n\n**Statement (II):** Boiling point of trans-dibromoethene is lower than cis-dibromoethene but it is more polar.\n\nIn the light of the above statements, choose the most appropriate answer:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Statement I is correct but statement II is incorrect",
+        "correct": true
+      },
+      {
+        "id": "b",
+        "text": "Statement I is incorrect but statement II is correct",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Both statement I and statement II are incorrect",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Both statement I and statement II are correct",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a",
+      "explanation": "Statement I is correct, Statement II is incorrect."
+    },
+    "sol": "Cis-dichloroethene is more polar because Cl has smaller atomic radius and higher electronegativity. Statement I is correct but Statement II is incorrect.\n\nAnswer: **(a)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2025,
+      "month": "April",
+      "day": 7,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-112",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_4",
+        "weight": 1
+      }
+    ],
+    "q": "Given below are two statements:\n\n**Statement I:** Ozonolysis followed by treatment with $\\ce{Zn, H2O}$ of cis-2-butene gives ethanal.\n\n**Statement II:** The product obtained by ozonolysis followed by treatment with $\\ce{Zn, H2O}$ of 3,6-dimethyloct-4-ene has no chiral carbon atom.\n\nIn the light of the above statements, choose the correct answer:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Both Statement I and Statement II are true",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "Statement I is false but Statement II is true",
+        "correct": false
+      },
+      {
+        "id": "c",
+        "text": "Statement I is true but Statement II is false",
+        "correct": true
+      },
+      {
+        "id": "d",
+        "text": "Both Statement I and Statement II are false",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c",
+      "explanation": "Statement I is true, Statement II is false."
+    },
+    "sol": "Ozonolysis of cis-2-butene gives two ethanal molecules. Statement I: Correct. The product of ozonolysis of 3,6-dimethyloct-4-ene contains a chiral center, hence Statement II is false.\n\nAnswer: **(c)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2025,
+      "month": "April",
+      "day": 7,
+      "shift": "Shift-I"
+    }
+  },
+  {
+    "id": "HC-113",
+    "difficulty": "Medium",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_2",
+        "weight": 1
+      }
+    ],
+    "q": "The major product formed when the given molecule (X) is treated with HBr (1 eq) is:\n\n![Molecule X](image)",
+    "opts": [
+      {
+        "id": "a",
+        "text": "![Option A](image)",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "![Option B](image)",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "![Option C](image)",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "![Option D](image)",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Markovnikov addition to most stable carbocation."
+    },
+    "sol": "Markovnikov addition mechanism.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2025,
+      "month": "April",
+      "day": 4,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-114",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_1",
+        "weight": 1
+      }
+    ],
+    "q": "Given below are two statements:\n\n**Statement (I):** Neopentane forms only one monosubstituted derivative.\n\n**Statement (II):** Melting point of neopentane is higher than n-pentane.\n\nIn the light of the above statements, choose the most appropriate answer:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "Statement I is correct but Statement II is incorrect",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "Both Statement I and Statement II are correct",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "Both Statement I and Statement II are incorrect",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "Statement I is incorrect but Statement II is correct",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "Both statements are correct."
+    },
+    "sol": "Neopentane forms monosubstituted product due to presence of four identical methyl groups. Since neopentane is more symmetrical than n-pentane, it can pack more efficiently in the crystal lattice. This closer packing results in a higher melting point.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2025,
+      "month": "April",
+      "day": 2,
+      "shift": "Shift-II"
+    }
+  },
+  {
+    "id": "HC-115",
+    "difficulty": "Easy",
+    "tags": [
+      {
+        "tag_id": "tag_hydrocarbon_1",
+        "weight": 1
+      }
+    ],
+    "q": "The alkane from below having two secondary hydrogens is:",
+    "opts": [
+      {
+        "id": "a",
+        "text": "2,2,4,5-Tetramethylheptane",
+        "correct": false
+      },
+      {
+        "id": "b",
+        "text": "2,2,3,3-Tetramethylpentane",
+        "correct": true
+      },
+      {
+        "id": "c",
+        "text": "4-Ethyl-3,4-dimethyloctane",
+        "correct": false
+      },
+      {
+        "id": "d",
+        "text": "2,2,4,4-Tetramethylhexane",
+        "correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b",
+      "explanation": "2,2,3,3-Tetramethylpentane has 2 secondary H atoms."
+    },
+    "sol": "The structure of 2,2,3,3-Tetramethylpentane has 2 secondary H atoms.\n\nAnswer: **(b)**",
+    "exam": {
+      "exam": "JEE Main",
+      "year": 2025,
+      "month": "Jan",
+      "day": 22,
+      "shift": "Shift-II"
+    }
+  }
+]
