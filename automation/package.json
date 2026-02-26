@@ -1,0 +1,37 @@
+{
+  "name": "canvas-question-ingestion-pipeline",
+  "version": "1.0.0",
+  "description": "Automated pipeline for extracting chemistry questions from PDF screenshots",
+  "main": "start_pipeline.js",
+  "scripts": {
+    "start": "node start_pipeline.js",
+    "stats": "node start_pipeline.js --stats",
+    "config": "node start_pipeline.js --config",
+    "dry-run": "node start_pipeline.js --dry-run",
+    "test": "node start_pipeline.js --dry-run --skip-solutions --no-diagrams"
+  },
+  "keywords": [
+    "automation",
+    "question-extraction",
+    "ai",
+    "chemistry",
+    "education"
+  ],
+  "author": "Canvas Classes",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "commander": "^12.0.0",
+    "dotenv": "^16.4.0",
+    "mongoose": "^8.0.0",
+    "sharp": "^0.33.0",
+    "sqlite3": "^5.1.7",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

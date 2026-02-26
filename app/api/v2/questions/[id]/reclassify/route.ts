@@ -19,7 +19,6 @@ const CHAPTER_PREFIXES: Record<string, string> = {
   'ch11_redox':       'RDX',
   'ch11_pblock':      'PB11',
   'ch11_goc':         'GOC',
-  'ch11_stereo':      'STER',
   'ch11_hydrocarbon': 'HC',
   'ch11_prac_org':    'POC',
   // Class 12
@@ -31,9 +30,8 @@ const CHAPTER_PREFIXES: Record<string, string> = {
   'ch12_coord':       'CORD',
   'ch12_haloalkanes': 'HALO',
   'ch12_alcohols':    'ALCO',
-  'ch12_aldehydes':   'ALDO',
+  'ch12_carbonyl':    'CARB',  // Unified: Aldehydes, Ketones and Carboxylic Acids (ALDO + CARB merged)
   'ch12_amines':      'AMIN',
-  'ch12_carboxylic':  'CARB',
   'ch12_biomolecules':'BIO',
   'ch12_salt':        'SALT',
   'ch12_prac_phys':   'PPHY',

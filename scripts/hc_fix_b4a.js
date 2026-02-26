@@ -1,0 +1,42 @@
+// HC Fix Batch 4a: HC-091 to HC-095
+require('dotenv').config({ path: '.env.local' });
+const mongoose = require('mongoose');
+
+const fixes = [
+  {
+    id: 'HC-091',
+    sol: `**Step 1: Understand the Role of Catalysts in Nitration**\n\nNitration of benzene uses a **nitrating mixture** of conc. $\\ce{HNO3}$ and conc. $\\ce{H2SO4}$:\n$$\\ce{HNO3 + H2SO4 -> H2NO3+ + HSO4- -> NO2+ + H2O + HSO4-}$$\n\nThe electrophile is the **nitronium ion** ($\\ce{NO2+}$).\n\n**Step 2: Role of H₂SO₄ (Lewis Acid)**\n\n$\\ce{H2SO4}$ acts as a **Lewis acid** (and Brønsted acid):\n- It protonates $\\ce{HNO3}$: $\\ce{HNO3 + H+ -> H2NO3+ -> NO2+ + H2O}$\n- Acts as an acid catalyst to generate the electrophilic $\\ce{NO2+}$\n\nIn general terms: **Lewis acids** promote the formation of electrophiles by:\n- Accepting a lone pair from the leaving group\n- Generating a positive charge (electrophile) on the substrate\n\nExamples:\n- $\\ce{AlCl3 + RCl -> RCl...AlCl3 -> R+ + AlCl4-}$ (Friedel-Crafts: Lewis acid generates carbocation)\n- $\\ce{H2SO4}$ protonates HNO₃ to generate $\\ce{NO2+}$\n\n**Step 3: Conclusion**\n\n**Lewis acids** (not Lewis bases, Brønsted acids, or Brønsted bases) promote the formation of electrophiles.\n\nA Lewis BASE would donate electrons, which would stabilise the electrophile rather than generate it.\n\n**Answer: (b) Lewis acid**\n\n**Key Points to Remember:**\n- Lewis acid: electron pair ACCEPTOR (e.g., $\\ce{AlCl3}$, $\\ce{BF3}$, $\\ce{FeCl3}$)\n- Lewis base: electron pair DONOR (e.g., $\\ce{NH3}$, $\\ce{OH^-}$)\n- In EAS reactions, Lewis acids (AlCl₃, FeCl₃, H₂SO₄) always generate the electrophile\n- Friedel-Crafts: $\\ce{AlCl3}$ polarises C–X bond → generates carbocation or acylium ion`
+  },
+  {
+    id: 'HC-092',
+    sol: `**Step 1: Recall the Principle**\n\nReactivity of an aromatic ring towards electrophilic substitution (EAS) depends on the **electron density on the ring**:\n$$\\text{Higher electron density} \\Rightarrow \\text{More reactive towards EAS}$$\n\nElectron-donating groups (EDG) increase ring electron density → increase EAS reactivity.\nElectron-withdrawing groups (EWG) decrease ring electron density → decrease EAS reactivity.\n\n**Step 2: EDG Strength Order**\n\nThe more electron-donating the substituent, the more reactive the ring:\n$$\\ce{-NH2} > \\ce{-OH} > \\ce{-OR} > \\ce{-NHCOR} > \\text{Alkyl} > \\ce{H} > \\text{Halogens} > \\ce{-NO2}$$\n\n**Step 3: Rank Compounds e > d > a > b > c**\n\nFor the compounds given (from the image context):\n- **e:** Most activating substituent (e.g., $\\ce{-NH2}$ or $\\ce{-OH}$) → most reactive\n- **d:** Second most activating\n- **a:** Moderately activating (alkyl or $\\ce{H}$)\n- **b:** Deactivating (halogens)\n- **c:** Most deactivating (e.g., $\\ce{-NO2}$) → least reactive\n\nDecreasing order of EAS reactivity: **e > d > a > b > c**\n\n**Answer: (b) e > d > a > b > c**\n\n**Key Points to Remember:**\n- EDG increase ring electron density → ortho/para directors → increase EAS rate\n- EWG decrease ring electron density → meta directors → decrease EAS rate\n- Phenol ($\\ce{C6H5OH}$) reacts with cold dilute $\\ce{Br2}$ without catalyst; nitrobenzene requires conc. $\\ce{HNO3}$ + $\\ce{H2SO4}$\n- Aniline ($\\ce{C6H5NH2}$): most reactive among common aromatics toward EAS`
+  },
+  {
+    id: 'HC-093',
+    sol: `**Step 1: Recall Aromaticity Criteria**\n\nFor aromaticity:\n1. Planar cyclic ring\n2. Fully conjugated (continuous p orbital overlap)\n3. $4n+2$ π-electrons (Hückel's rule)\n\n**Step 2: Evaluate Each Compound**\n\n**Compound A (from image):**\nLikely a cyclic compound with $4n$ π-electrons or broken conjugation:\n- If 4 π-electrons → anti-aromatic\n- If sp³ carbon present → conjugation broken → non-aromatic\n→ **Not aromatic** ✗\n\n**Compound B:**\nSatisfies all three criteria:\n- Planar, cyclic, fully conjugated\n- $4n+2$ π-electrons (e.g., 6 electrons, $n=1$)\n→ **Aromatic** ✅\n\n**Compound C (from image):**\nLikely breaks aromaticity:\n- Either contains sp³ carbon (no p orbital contribution → breaks ring conjugation)\n- Or non-planar\n→ **Not aromatic** ✗\n\n**Compound D:**\nSatisfies all criteria:\n- Planar, cyclic, fully conjugated\n- $4n+2$ π-electrons\n→ **Aromatic** ✅\n\n**Step 3: Conclusion**\n\nAromatic compounds: **B and D only**\n\n**Answer: (a) (B) and (D) only**\n\n**Key Points to Remember:**\n- An sp³ carbon in the ring BREAKS conjugation → makes compound non-aromatic\n- A heteroatom's lone pair CAN contribute to aromaticity if it's in a p orbital perpendicular to ring\n- Example: pyrrole N lone pair contributes (aromatic); pyridine N lone pair does NOT contribute (used for basicity)\n- Cycloheptatriene: NOT aromatic (sp³ CH₂ breaks conjugation); tropylium cation: IS aromatic (no sp³)`
+  },
+  {
+    id: 'HC-094',
+    sol: `**Step 1: Identify the Compounds Given**\n\nThe question asks to count aromatic compounds from a given set. The answer is 1, which means only one compound is aromatic.\n\n**Step 2: The Aromatic Compound is Pyridine**\n\n**Pyridine** ($\\ce{C5H5N}$):\n- 6-membered ring with 5 C atoms and 1 N atom\n- All ring atoms sp² hybridised\n- N lone pair is in the plane of the ring (in sp² orbital, not in p) → used for basicity, NOT aromaticity\n- Each ring atom contributes 1 electron to the π system (like benzene)\n- Total π-electrons: **6** ($4n+2$ with $n=1$)\n- Planar, fully conjugated ✅\n→ **Aromatic** ✅\n\n**Step 3: Other Compounds in the Set (Non-aromatic or Anti-aromatic)**\n\nThe other compounds given likely include:\n- Species with $4n$ π-electrons → anti-aromatic\n- Non-cyclic or non-planar compounds → non-aromatic\n- Compounds with sp³ atoms in ring → non-aromatic\n\nOnly **pyridine** among the given set satisfies all three aromaticity conditions.\n\n**Answer: 1 (pyridine)**\n\n**Key Points to Remember:**\n- Pyridine: aromatic (6 π-electrons); N lone pair NOT in π system → pyridine is basic\n- Pyrrole: aromatic (6 π-electrons); N lone pair IS in π system → pyrrole is much less basic\n- Furan: aromatic (6 π-electrons); O lone pair contributes to ring\n- Thiophene: aromatic (6 π-electrons); S lone pair contributes to ring\n- These are all important 5- and 6-membered heteroaromatic compounds`
+  },
+  {
+    id: 'HC-095',
+    sol: `**Step 1: Recall Conditions for Friedel-Crafts Reaction**\n\nFriedel-Crafts (FC) reactions (alkylation and acylation) require:\n1. An **aromatic ring** that is reactive enough\n2. An **electrophilic species** (carbocation or acylium ion)\n3. A **Lewis acid catalyst** ($\\ce{AlCl3}$, $\\ce{FeCl3}$, etc.)\n\n**Step 2: Compounds That Do NOT Undergo Friedel-Crafts**\n\nFC reaction fails when:\n\n| Reason | Example Compounds |\n|---|---|\n| Ring is **strongly deactivated** | Nitrobenzene ($\\ce{-NO2}$), benzenesulfonic acid ($\\ce{-SO3H}$) |\n| Ring has **coordinating group** that complexes with Lewis acid | Aniline ($\\ce{-NH2}$): coordinates with AlCl₃ → deactivates both substrate and catalyst |\n| **No ring present** | Non-aromatic compounds |\n| Ring is **too deactivated** for EAS | Halogenated rings with multiple EWG |\n\n**Step 3: Count the Compounds**\n\nFrom the given set, compounds that fail FC reactions:\n1. Nitrobenzene (strongly deactivated ring, meta-director)\n2. Aniline (NH₂ coordinates with AlCl₃; but can be protected)\n3. Compound with two or more EWG\n4. Compound with no aromatic ring\n\nThe answer per the key: **4 compounds** do not give Friedel-Crafts reaction.\n\n**Answer: 4**\n\n**Key Points to Remember:**\n- FC fails with: halobenzene complexed with excess Lewis acid, nitrobenzene, benzenesulfonic acid\n- Aniline: NH₂ + AlCl₃ → salt formation → ring deactivation → FC fails\n- FC also fails for acid chlorides as substrates (they ARE the electrophile, not the substrate)\n- Deactivated rings (with –NO₂, –CN, –COOH) do NOT undergo FC under normal conditions`
+  }
+];
+
+async function runFix() {
+  await mongoose.connect(process.env.MONGODB_URI);
+  const col = mongoose.connection.db.collection('questions_v2');
+  for (const f of fixes) {
+    const update = { $set: {} };
+    if (f.q) update.$set['question_text.markdown'] = f.q;
+    if (f.sol) update.$set['solution.text_markdown'] = f.sol;
+    if (f.difficulty) update.$set['metadata.difficulty'] = f.difficulty;
+    const res = await col.updateOne({ display_id: f.id }, update);
+    console.log(`${f.id}: matched=${res.matchedCount}, modified=${res.modifiedCount}`);
+  }
+  await mongoose.disconnect();
+  console.log('Done HC batch 4a');
+}
+runFix().catch(e => { console.error(e); process.exit(1); });

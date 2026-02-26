@@ -110,15 +110,13 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_goc_6', name: 'Reaction Intermediates', parent_id: 'ch11_goc', type: 'topic' },
     { id: 'tag_goc_7', name: 'Structural Isomerism & Tautomerism', parent_id: 'ch11_goc', type: 'topic' },
     { id: 'tag_goc_8', name: 'Electrophiles, Nucleophiles & Basic Terms', parent_id: 'ch11_goc', type: 'topic' },
-
-    { id: 'ch11_stereo', name: 'Stereochemistry', parent_id: null, type: 'chapter', sequence_order: 11, class_level: 11, chapterType: 'organic' },
-    { id: 'tag_stereo_1', name: 'Stereoisomerism (Geometrical & Optical)', parent_id: 'ch11_stereo', type: 'topic' },
-    { id: 'tag_stereo_2', name: 'Allenes, Atropisomers and Spiro Compounds', parent_id: 'ch11_stereo', type: 'topic' },
-    { id: 'tag_stereo_3', name: 'Chirality and Optical activity', parent_id: 'ch11_stereo', type: 'topic' },
-    { id: 'tag_stereo_4', name: 'Conformational Isomerism', parent_id: 'ch11_stereo', type: 'topic' },
-    { id: 'tag_stereo_5', name: 'Conformations of Cycloalkanes', parent_id: 'ch11_stereo', type: 'topic' },
-    { id: 'tag_stereo_6', name: 'Enantiomers, Diastereomers & Meso Compounds', parent_id: 'ch11_stereo', type: 'topic' },
-    { id: 'tag_stereo_7', name: 'Geometrical Isomerism', parent_id: 'ch11_stereo', type: 'topic' },
+    { id: 'tag_goc_9', name: 'Stereoisomerism (Geometrical & Optical)', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'tag_goc_10', name: 'Chirality and Optical Activity', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'tag_goc_11', name: 'Enantiomers, Diastereomers & Meso Compounds', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'tag_goc_12', name: 'Conformational Isomerism', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'tag_goc_13', name: 'Conformations of Cycloalkanes', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'tag_goc_14', name: 'Geometrical Isomerism (E/Z, Cis/Trans)', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'tag_goc_15', name: 'Allenes, Atropisomers and Spiro Compounds', parent_id: 'ch11_goc', type: 'topic' },
 
     { id: 'ch11_hydrocarbon', name: 'Hydrocarbons', parent_id: null, type: 'chapter', sequence_order: 12, class_level: 11, chapterType: 'organic' },
     { id: 'tag_hydrocarbon_1', name: 'Alkynes (Acidity & Rxns)', parent_id: 'ch11_hydrocarbon', type: 'topic' },
@@ -222,30 +220,28 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_alcohols_6', name: 'Other Reactions of Alcohols', parent_id: 'ch12_alcohols', type: 'topic' },
     { id: 'tag_ch12_alcohols_1771659358099', name: 'SEAr Reactions of Phenols & Ethers', parent_id: 'ch12_alcohols', type: 'topic' },
 
-    { id: 'ch12_aldehydes', name: 'Aldehydes & Ketones', parent_id: null, type: 'chapter', sequence_order: 23, class_level: 12, chapterType: 'organic' },
-    { id: 'tag_aldehydes_1', name: 'Grignard Reagent', parent_id: 'ch12_aldehydes', type: 'topic' },
-    { id: 'tag_aldehydes_2', name: 'Name Reactions (Aldol, Cannizzaro, Perkins, Haloform, Claisen etc)', parent_id: 'ch12_aldehydes', type: 'topic' },
-    { id: 'tag_aldehydes_3', name: 'Other name reactions of carbonyl', parent_id: 'ch12_aldehydes', type: 'topic' },
-    { id: 'tag_aldehydes_4', name: 'Preparation raections of carbonyl', parent_id: 'ch12_aldehydes', type: 'topic' },
-    { id: 'tag_aldehydes_5', name: 'Tests for carbonyl compounds (Tollen\'s, Fehling, Benedict etc)', parent_id: 'ch12_aldehydes', type: 'topic' },
-    { id: 'tag_aldehydes_6', name: 'Nucleophilic Addition Reactions', parent_id: 'ch12_aldehydes', type: 'topic' },
-    { id: 'tag_aldehydes_7', name: 'Oxidation & Reduction Reactions of Carbony!', parent_id: 'ch12_aldehydes', type: 'topic' },
-    { id: 'tag_ch12_aldehydes_1771659373017', name: 'Reactions of Aromatic Aldehydes & Ketones', parent_id: 'ch12_aldehydes', type: 'topic' },
+    { id: 'ch12_carbonyl', name: 'Aldehydes, Ketones and Carboxylic Acids', parent_id: null, type: 'chapter', sequence_order: 23, class_level: 12, chapterType: 'organic' },
+    { id: 'tag_aldehydes_1', name: 'Grignard Reagent', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_aldehydes_2', name: 'Name Reactions (Aldol, Cannizzaro, Perkins, Haloform, Claisen etc)', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_aldehydes_3', name: 'Other name reactions of carbonyl', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_aldehydes_4', name: 'Preparation raections of carbonyl', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_aldehydes_5', name: 'Tests for carbonyl compounds (Tollen\'s, Fehling, Benedict etc)', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_aldehydes_6', name: 'Nucleophilic Addition Reactions', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_aldehydes_7', name: 'Oxidation & Reduction Reactions of Carbony!', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_ch12_aldehydes_1771659373017', name: 'Reactions of Aromatic Aldehydes & Ketones', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_carboxylic_1', name: 'Acid Derivatives (Esters, Anhydrides, Amides)', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_carboxylic_2', name: 'Acidity Trends & Substituent Effects', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_carboxylic_3', name: 'Name Reactions (Dearboxylation, HVZ, Arndt Eistert etc.)', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_carboxylic_4', name: 'Preparation Methods', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_ch12_carboxylic_1771659384907', name: 'Reactions of Aromatic Acids & Derivatives', parent_id: 'ch12_carbonyl', type: 'topic' },
 
-    { id: 'ch12_amines', name: 'Amines', parent_id: null, type: 'chapter', sequence_order: 24, class_level: 12, chapterType: 'organic' },
+    { id: 'ch12_amines', name: 'Amines', parent_id: null, type: 'chapter', sequence_order: 25, class_level: 12, chapterType: 'organic' },
     { id: 'tag_amines_1', name: 'Reactions of Aliphatic Amines', parent_id: 'ch12_amines', type: 'topic' },
     { id: 'tag_amines_2', name: 'Tests for Amines (Hinsberg, Carbylamine, Hoffmann)', parent_id: 'ch12_amines', type: 'topic' },
     { id: 'tag_amines_3', name: 'Basic Character (Gaseous vs Aqueous Phase)', parent_id: 'ch12_amines', type: 'topic' },
     { id: 'tag_amines_4', name: 'Diazonium Salts & Coupling Reactions', parent_id: 'ch12_amines', type: 'topic' },
     { id: 'tag_amines_5', name: 'Gabriel Phthalimide, Hofmann Bromamide & Carbylamine', parent_id: 'ch12_amines', type: 'topic' },
     { id: 'tag_ch12_amines_1771659399884', name: 'Reactions of Nitrobenzene & Aniline', parent_id: 'ch12_amines', type: 'topic' },
-
-    { id: 'ch12_carboxylic', name: 'Carboxylic Acids & Derivatives', parent_id: null, type: 'chapter', sequence_order: 25, class_level: 12, chapterType: 'organic' },
-    { id: 'tag_carboxylic_1', name: 'Acid Derivatives (Esters, Anhydrides, Amides)', parent_id: 'ch12_carboxylic', type: 'topic' },
-    { id: 'tag_carboxylic_2', name: 'Acidity Trends & Substituent Effects', parent_id: 'ch12_carboxylic', type: 'topic' },
-    { id: 'tag_carboxylic_3', name: 'Name Reactions (Dearboxylation, HVZ, Arndt Eistert etc.)', parent_id: 'ch12_carboxylic', type: 'topic' },
-    { id: 'tag_carboxylic_4', name: 'Preparation Methods', parent_id: 'ch12_carboxylic', type: 'topic' },
-    { id: 'tag_ch12_carboxylic_1771659384907', name: 'Reactions of Aromatic Acids & Derivatives', parent_id: 'ch12_carboxylic', type: 'topic' },
 
     { id: 'ch12_biomolecules', name: 'Biomolecules', parent_id: null, type: 'chapter', sequence_order: 26, class_level: 12, chapterType: 'organic' },
     { id: 'tag_biomolecules_1', name: 'Carbohydrates (Glucose Structure & Reactions)', parent_id: 'ch12_biomolecules', type: 'topic' },
@@ -282,6 +278,6 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
 ];
 
 // Summary Statistics
-// Total Chapters: 27
+// Total Chapters: 26
 // Total Tags: 210
 // Last saved: 2026-02-21T07:36:39.932Z
