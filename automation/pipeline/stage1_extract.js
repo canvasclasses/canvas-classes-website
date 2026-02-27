@@ -40,18 +40,19 @@ class QuestionExtractor {
   }
 
   /**
-   * Extract question data from image using Claude Vision API
+   * Extract MULTIPLE questions from a single page image using Claude Vision API
+   * Each page may contain 5-10 questions
    */
   async extractFromImage(imagePath, metadata = {}) {
-    await this.logger.info(`Extracting question from: ${path.basename(imagePath)}`);
+    await this.logger.info(`Extracting questions from page: ${path.basename(imagePath)}`);
     
     // Read image and encode to base64
     const imageBuffer = await fs.readFile(imagePath);
     const base64Image = imageBuffer.toString('base64');
     const mimeType = this.getMimeType(imagePath);
 
-    // Build the extraction prompt
-    const prompt = this.buildExtractionPrompt(metadata);
+    // Build the extraction prompt for MULTIPLE questions
+    const prompt = this.buildMultiQuestionExtractionPrompt(metadata);
 
     // Call Claude API with retry logic
     const response = await retry(
@@ -90,32 +91,35 @@ class QuestionExtractor {
       }
     );
 
-    // Parse the response
+    // Parse the response - now returns ARRAY of questions
     const extractedText = response.content[0].text;
-    const questionData = this.parseExtractionResponse(extractedText);
+    const questionsArray = this.parseMultiQuestionResponse(extractedText);
 
-    // Add metadata
-    questionData.metadata = {
-      ...questionData.metadata,
-      ...metadata,
-      extraction_confidence: this.calculateConfidence(questionData),
-      api_model: this.config.ai.claude.model,
-      extracted_at: new Date().toISOString(),
-    };
-
-    await this.logger.info('Question extracted successfully', {
-      type: questionData.type,
-      hasOptions: questionData.options?.length > 0,
-      hasDiagrams: questionData.diagrams?.length > 0,
+    // Add metadata to each question
+    questionsArray.forEach((questionData, index) => {
+      questionData.metadata = {
+        ...questionData.metadata,
+        ...metadata,
+        page_source: path.basename(imagePath),
+        question_number_on_page: index + 1,
+        extraction_confidence: this.calculateConfidence(questionData),
+        api_model: this.config.ai.claude.model,
+        extracted_at: new Date().toISOString(),
+      };
     });
 
-    return questionData;
+    await this.logger.info(`Extracted ${questionsArray.length} questions from page`, {
+      page: path.basename(imagePath),
+      questionCount: questionsArray.length,
+    });
+
+    return questionsArray;
   }
 
   /**
-   * Build the extraction prompt for Claude
+   * Build the extraction prompt for MULTIPLE questions per page
    */
-  buildExtractionPrompt(metadata) {
+  buildMultiQuestionExtractionPrompt(metadata) {
     const chapterInfo = metadata.chapterName 
       ? `This question is from the chapter: "${metadata.chapterName}".`
       : 'Determine the chapter from the question content.';
@@ -124,14 +128,18 @@ class QuestionExtractor {
       ? `Exam: ${metadata.exam}${metadata.year ? ` (${metadata.year})` : ''}`
       : '';
 
-    return `You are an expert chemistry question extractor. Analyze this image of a chemistry question and extract ALL information in a structured JSON format.
+    return `You are an expert chemistry question extractor. This image shows a PDF page containing MULTIPLE chemistry questions (typically 5-10 questions per page).
+
+**YOUR TASK:** Extract ALL questions from this page in order, from top to bottom.
 
 ${examInfo}
 ${chapterInfo}
 
 **CRITICAL INSTRUCTIONS:**
 
-1. **Question Text**: Extract the complete question text with proper LaTeX formatting:
+1. **Multiple Questions**: This page contains MULTIPLE questions. Extract ALL of them in sequential order.
+
+2. **Question Text**: For each question, extract the complete question text with proper LaTeX formatting:
    - Use $...$ for inline math (e.g., $\\ce{H2O}$, $10^{-5}$)
    - Use $\\ce{...}$ for chemical formulas (e.g., $\\ce{NaOH}$, $\\ce{H2SO4}$)
    - Use $\\frac{numerator}{denominator}$ for fractions
@@ -182,48 +190,82 @@ ${chapterInfo}
    - Number of steps required
    - Level of application needed
 
-**OUTPUT FORMAT (strict JSON):**
+**OUTPUT FORMAT (strict JSON ARRAY):**
 
-\`\`\`json
-{
-  "question_text": "Complete question with proper LaTeX formatting",
-  "type": "SCQ|MCQ|NVT|MST|AR",
-  "options": [
-    { "id": "a", "text": "Option text with LaTeX", "is_correct": true/false },
-    { "id": "b", "text": "Option text with LaTeX", "is_correct": true/false },
-    { "id": "c", "text": "Option text with LaTeX", "is_correct": true/false },
-    { "id": "d", "text": "Option text with LaTeX", "is_correct": true/false }
-  ],
-  "answer": "c" or ["a", "c"] or 5 or {"p": "1", "q": "3", "r": "2", "s": "4"},
-  "diagrams": [
-    {
-      "location": "question|option_a|option_b|option_c|option_d",
-      "description": "What the diagram shows",
-      "bbox": { "x": 10, "y": 20, "width": 30, "height": 25 },
-      "essential": true/false
-    }
-  ],
-  "metadata": {
-    "chapter": "Chapter name from the list above",
-    "difficulty": "Easy|Medium|Hard",
-    "topics": ["Topic 1", "Topic 2"],
-    "requires_diagram": true/false
-  }
-}
-\`\`\`
+Return a JSON object with a "questions" array where each element is a question object.
 
-**IMPORTANT:**
+Example structure:
+- questions: array of question objects
+- Each question has: question_number, question_text, type, options (if applicable), diagrams (if any), metadata
+
+DO NOT include answers in the extraction - answers come from a separate answer key image.
+
+**CRITICAL RULES:**
+- Extract ALL questions on this page in sequential order (top to bottom)
+- Number questions sequentially starting from 1
+- DO NOT extract answers - answers will come from a separate answer key
 - Be extremely accurate with LaTeX formatting
 - Do NOT miss any diagrams or structures
 - Bounding boxes should be percentages (0-100) of image dimensions
+- If a question spans multiple lines or has parts, keep it as ONE question
 - If you're unsure about something, indicate it in a "notes" field
-- Extract EVERYTHING visible in the image
 
-Now analyze the image and provide the complete JSON output.`;
+**IMPORTANT:** Some questions may be split across pages. If you see a question that appears incomplete (e.g., "continued from previous page" or ends abruptly), extract what's visible and mark it with a note.
+
+Now analyze the image and provide the complete JSON array of ALL questions on this page.`;
   }
 
   /**
-   * Parse Claude's response and extract structured data
+   * Parse Claude's response for MULTIPLE questions
+   */
+  parseMultiQuestionResponse(responseText) {
+    // Extract JSON from response (Claude might wrap it in markdown)
+    let jsonText = responseText;
+    
+    // Remove markdown code blocks if present
+    const jsonMatch = responseText.match(/```(?:json)?\s*(\{[\s\S]*\})\s*```/);
+    if (jsonMatch) {
+      jsonText = jsonMatch[1];
+    }
+
+    try {
+      const parsed = JSON.parse(jsonText);
+      
+      // Validate structure
+      if (!parsed.questions || !Array.isArray(parsed.questions)) {
+        throw new Error('Response must contain a "questions" array');
+      }
+
+      // Validate and normalize each question
+      const questions = parsed.questions.map((q, index) => {
+        if (!q.question_text) {
+          throw new Error(`Question ${index + 1} missing question_text field`);
+        }
+        if (!q.type) {
+          throw new Error(`Question ${index + 1} missing type field`);
+        }
+
+        return {
+          question_text: q.question_text,
+          type: q.type,
+          options: q.options || [],
+          answer: null, // Will be filled from answer key
+          diagrams: q.diagrams || [],
+          metadata: q.metadata || {},
+          notes: q.notes || null,
+          question_number_on_page: q.question_number || (index + 1),
+        };
+      });
+
+      return questions;
+    } catch (error) {
+      this.logger.error('Failed to parse multi-question response', { error: error.message, responseText: responseText.substring(0, 500) });
+      throw new Error(`JSON parsing failed: ${error.message}`);
+    }
+  }
+
+  /**
+   * Parse Claude's response and extract structured data (legacy single question)
    */
   parseExtractionResponse(responseText) {
     // Extract JSON from response (Claude might wrap it in markdown)
@@ -278,9 +320,7 @@ Now analyze the image and provide the complete JSON output.`;
     if (['SCQ', 'MCQ'].includes(questionData.type) && (!questionData.options || questionData.options.length < 4)) {
       score -= 0.2;
     }
-    if (!questionData.answer) {
-      score -= 0.2;
-    }
+    // Don't penalize for missing answer - it comes from answer key
     if (!questionData.metadata?.chapter) {
       score -= 0.1;
     }

@@ -1279,12 +1279,12 @@ export default function AdminPage() {
                                 </label>
                                 <div className="flex gap-3 items-stretch">
                                     <textarea
-                                        value={selectedQuestion.solution.text_markdown}
+                                        value={selectedQuestion.solution?.text_markdown || ''}
                                         onChange={(e) => {
                                             const newValue = e.target.value;
                                             setQuestions(prev => prev.map(q =>
                                                 q._id === selectedQuestion._id
-                                                    ? { ...q, solution: { ...q.solution, text_markdown: newValue } }
+                                                    ? { ...q, solution: { ...(q.solution || { text_markdown: '', latex_validated: false }), text_markdown: newValue } }
                                                     : q
                                             ));
                                         }}
@@ -1317,15 +1317,15 @@ export default function AdminPage() {
                                 onAudioSaved={(url) => {
                                     handleUpdate(selectedQuestion._id, {
                                         solution: {
-                                            ...selectedQuestion.solution,
+                                            ...(selectedQuestion.solution || { text_markdown: '', latex_validated: false }),
                                             asset_ids: {
-                                                ...selectedQuestion.solution.asset_ids,
-                                                audio: [...(selectedQuestion.solution.asset_ids?.audio || []), url]
+                                                ...(selectedQuestion.solution?.asset_ids || {}),
+                                                audio: [...(selectedQuestion.solution?.asset_ids?.audio || []), url]
                                             }
                                         }
                                     });
                                 }}
-                                existingAudioUrl={selectedQuestion.solution.asset_ids?.audio?.[0]}
+                                existingAudioUrl={selectedQuestion.solution?.asset_ids?.audio?.[0]}
                             />
                         </div>
                     ) : (
@@ -1421,7 +1421,7 @@ export default function AdminPage() {
                                 <div className="bg-gray-900/50 rounded-xl border border-gray-800/50 p-6">
                                     <h4 className="text-xs font-bold text-gray-500 uppercase mb-3">Solution</h4>
                                     {/* Audio Player — shown when audio is attached */}
-                                    {selectedQuestion.solution.asset_ids?.audio && selectedQuestion.solution.asset_ids.audio.length > 0 && (
+                                    {selectedQuestion.solution?.asset_ids?.audio && selectedQuestion.solution.asset_ids.audio.length > 0 && (
                                         <div className="mb-4 space-y-2">
                                             {selectedQuestion.solution.asset_ids.audio.map((url, idx) => (
                                                 url ? <AudioPlayer key={idx} src={url} label={`Audio Note${selectedQuestion.solution.asset_ids!.audio!.length > 1 ? ` ${idx + 1}` : ''}`} /> : null
@@ -1429,7 +1429,7 @@ export default function AdminPage() {
                                         </div>
                                     )}
                                     <MathRenderer 
-                                        markdown={selectedQuestion.solution.text_markdown}
+                                        markdown={selectedQuestion.solution?.text_markdown || ''}
                                         className="text-gray-300 solution-text"
                                         fontSize={20}
                                         imageScale={getSvgScale('solution')}

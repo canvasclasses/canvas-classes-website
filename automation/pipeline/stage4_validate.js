@@ -1,5 +1,5 @@
 // Stage 4: Validation and quality checks
-const { TAXONOMY_FROM_CSV } = require('../../app/crucible/admin/taxonomy/taxonomyData_from_csv');
+const { TAXONOMY_FROM_CSV } = require('../lib/taxonomyData');
 
 class QuestionValidator {
   constructor(config, logger) {

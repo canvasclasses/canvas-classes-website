@@ -1,9 +1,13 @@
 #!/usr/bin/env node
 
 // CLI entry point for the automated question ingestion pipeline
-const PipelineOrchestrator = require('./pipeline/orchestrator');
-const { program } = require('commander');
 const path = require('path');
+const { program } = require('commander');
+
+// Load environment variables from .env.local
+require('dotenv').config({ path: path.join(__dirname, '..', '.env.local') });
+
+const PipelineOrchestrator = require('./pipeline/orchestrator');
 
 // ASCII art banner
 const banner = `

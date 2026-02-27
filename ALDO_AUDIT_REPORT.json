@@ -1,0 +1,168 @@
+{
+  "timestamp": "2026-02-26T16:00:31.271Z",
+  "chapter": "Aldehydes, Ketones and Carboxylic Acids (ALDO)",
+  "total_questions": 258,
+  "first_17": {
+    "range": "ALDO-001 to ALDO-017",
+    "count": 17,
+    "avg_solution_length": 1005,
+    "has_exam_source": 0,
+    "created_by": {
+      "ai_agent": 9,
+      "unknown": 6,
+      "admin": 2
+    },
+    "sample_questions": [
+      {
+        "display_id": "ALDO-001",
+        "type": "SCQ",
+        "question_preview": "The major product (P) in the following reaction is:\n![image](https://pub-2ff04ff",
+        "solution_length": 938,
+        "solution_preview": "**Step 1 — Identify the substrate**\n\nPhenylglyoxal ($\\ce{Ph-CO-CHO}$) — a 1,2-dicarbonyl compound with one ketone and one aldehyde group.\n\n**Step 2 — ",
+        "has_exam_source": false,
+        "created_by": "ai_agent"
+      },
+      {
+        "display_id": "ALDO-009",
+        "type": "SCQ",
+        "question_preview": "Which among the following compounds give yellow solid when reacted with $\\ce{NaO",
+        "solution_length": 1081,
+        "solution_preview": "**Answer: (b) (A) and (C) only**\n\n**Iodoform test conditions:** Compound must have $\\ce{CH3CO-}$ (methyl ketone) or $\\ce{CH3CH(OH)-}$ (secondary alcoh",
+        "has_exam_source": false,
+        "created_by": "unknown"
+      },
+      {
+        "display_id": "ALDO-017",
+        "type": "SCQ",
+        "question_preview": "Identify A and B:\n\nBenzene + CH₃Cl/AlCl₃ → A\nA + Cl₂/hν → B\nB + H₂O at 373K → ?\n",
+        "solution_length": 483,
+        "solution_preview": "**First Reaction**\n\nBenzene + CH₃Cl/AlCl₃ = Friedel-Crafts alkylation → Toluene (A).\n\n---\n\n**Second Reaction**\n\nToluene + Cl₂/hν with ring substitutio",
+        "has_exam_source": false,
+        "created_by": "admin"
+      }
+    ]
+  },
+  "remaining_241": {
+    "range": "ALDO-018 to ALDO-258",
+    "count": 241,
+    "avg_solution_length": 198,
+    "has_exam_source": 0,
+    "created_by": {
+      "admin": 241
+    },
+    "short_solutions_under_200": 107,
+    "generic_solutions": 228,
+    "sample_questions": [
+      {
+        "display_id": "ALDO-018",
+        "type": "SCQ",
+        "question_preview": "Identify major product X:\n\nBenzene + CO, HCl with Anhydrous AlCl₃/CuCl → X (Major Product)\n\n(a) Benz",
+        "solution_length": 326,
+        "solution_preview": "**Named Reaction**\n\nThis is Gattermann-Koch reaction: formylation of benzene ring gives benzaldehyde (C₆H₅CHO).\n\n---\n\n**Common Mistakes**\n\nBenzoic acid would need oxidation. Acetophenone would need RC",
+        "has_exam_source": false,
+        "exam_source": "none",
+        "created_by": "admin",
+        "difficulty": "unknown"
+      },
+      {
+        "display_id": "ALDO-050",
+        "type": "SCQ",
+        "question_preview": "Acetaldehyde + Grignard reagent gives:\n(a) Primary alcohol\n(b) Secondary alcohol\n(c) Tertiary alcoho",
+        "solution_length": 137,
+        "solution_preview": "**Analysis:**\n\nFor this question about aldehydes, ketones and carboxylic acids, apply the relevant concept systematically.\n\n**Answer: B**",
+        "has_exam_source": false,
+        "exam_source": "none",
+        "created_by": "admin",
+        "difficulty": "unknown"
+      },
+      {
+        "display_id": "ALDO-100",
+        "type": "NVT",
+        "question_preview": "Percentage of acetic acid in vinegar is approximately ___.",
+        "solution_length": 138,
+        "solution_preview": "**Analysis:**\n\nFor this question about aldehydes, ketones and carboxylic acids, apply the relevant concept systematically.\n\n**Answer: 60**",
+        "has_exam_source": false,
+        "exam_source": "none",
+        "created_by": "admin",
+        "difficulty": "unknown"
+      },
+      {
+        "display_id": "ALDO-150",
+        "type": "NVT",
+        "question_preview": "Number of α-hydrogen atoms in propionaldehyde is ___.",
+        "solution_length": 209,
+        "solution_preview": "**Analysis:**\n\nFor this question on aldehydes, ketones and carboxylic acids, apply the relevant concept systematically.\n\n**Key Concept:** Number of α-hydrogen atoms in propionaldehyde is ___....\n\n**An",
+        "has_exam_source": false,
+        "exam_source": "none",
+        "created_by": "admin",
+        "difficulty": "unknown"
+      },
+      {
+        "display_id": "ALDO-200",
+        "type": "SCQ",
+        "question_preview": "Citral is present in:\n(a) Cinnamon\n(b) Vanilla\n(c) Almond\n(d) Lemongrass",
+        "solution_length": 228,
+        "solution_preview": "**Analysis:**\n\nFor this question on aldehydes, ketones and carboxylic acids, apply the relevant concept systematically.\n\n**Key Concept:** Citral is present in: (a) Cinnamon (b) Vanilla (c) Almond (d) ",
+        "has_exam_source": false,
+        "exam_source": "none",
+        "created_by": "admin",
+        "difficulty": "unknown"
+      },
+      {
+        "display_id": "ALDO-250",
+        "type": "SCQ",
+        "question_preview": "Which of the following gives positive Fehling test?\n(a) Acetone\n(b) Glucose\n(c) Benzaldehyde\n(d) Ben",
+        "solution_length": 236,
+        "solution_preview": "**Analysis:**\n\nFor this question on aldehydes, ketones and carboxylic acids, apply the relevant concept systematically.\n\n**Key Concept:** Which of the following gives positive Fehling test? (a) Aceton",
+        "has_exam_source": false,
+        "exam_source": "none",
+        "created_by": "admin",
+        "difficulty": "unknown"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "issue": "Massive quality gap between first 17 and remaining 241 questions",
+      "details": "First 17: 1005 chars avg, Remaining 241: 198 chars avg",
+      "severity": "CRITICAL"
+    },
+    {
+      "issue": "Generic AI-generated solutions",
+      "details": "228 out of 241 questions have generic placeholder solutions",
+      "severity": "CRITICAL"
+    },
+    {
+      "issue": "Short solutions",
+      "details": "107 out of 241 questions have solutions under 200 characters",
+      "severity": "HIGH"
+    },
+    {
+      "issue": "All created by admin, not from image extraction",
+      "details": "All 241 questions show created_by: admin, suggesting bulk AI generation rather than image-based extraction",
+      "severity": "HIGH"
+    },
+    {
+      "issue": "No PYQ tags on any questions",
+      "details": "Despite having exam_source metadata, none have proper PYQ tagging",
+      "severity": "MEDIUM"
+    }
+  ],
+  "recommendations": [
+    {
+      "action": "DELETE all 241 AI-generated questions (ALDO-018 to ALDO-258)",
+      "reason": "These are low-quality AI-generated questions, not extracted from provided images",
+      "impact": "Chapter will have only 17 questions remaining"
+    },
+    {
+      "action": "LOCATE original source images for this chapter",
+      "reason": "User provided images that were never processed",
+      "impact": "Need to extract real PYQ questions from images"
+    },
+    {
+      "action": "RE-INGEST from images following QUESTION_INGESTION_WORKFLOW.md",
+      "reason": "Proper extraction with detailed solutions, correct LaTeX, proper validation",
+      "impact": "Will add high-quality questions with 800-1500 char solutions"
+    }
+  ]
+}

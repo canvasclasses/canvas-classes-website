@@ -200,10 +200,12 @@ const config = {
 function validateConfig() {
   const required = [
     'MONGODB_URI',
-    'R2_ACCOUNT_ID',
-    'R2_ACCESS_KEY_ID',
-    'R2_SECRET_ACCESS_KEY',
   ];
+  
+  // R2 credentials are optional if diagram extraction is disabled
+  if (config.features.enableDiagramExtraction) {
+    required.push('R2_ACCOUNT_ID', 'R2_ACCESS_KEY_ID', 'R2_SECRET_ACCESS_KEY');
+  }
   
   const aiProvider = config.ai.provider;
   if (aiProvider === 'claude') {

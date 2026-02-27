@@ -3,7 +3,7 @@ const sharp = require('sharp');
 const fs = require('fs').promises;
 const path = require('path');
 const { generateUniqueFilename, sleep, ensureDir } = require('./utils');
-const { uploadToR2 } = require('../../lib/r2Storage');
+const { uploadToR2 } = require('../lib/r2Storage');
 
 class DiagramProcessor {
   constructor(config, logger) {
