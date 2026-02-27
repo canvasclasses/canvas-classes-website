@@ -56,6 +56,14 @@ export interface IQuestionMetadata {
   is_top_pyq: boolean;
 }
 
+export interface IQuestionFlag {
+  type: string;   // e.g. 'latex_rendering', 'question_mismatch', etc.
+  note?: string;  // optional free-text note
+  flagged_at: Date;
+  resolved: boolean;
+  resolved_at?: Date;
+}
+
 export interface IQuestion {
   _id: string; // UUID v4
   display_id: string; // e.g., "ATOM-001"
@@ -67,6 +75,8 @@ export interface IQuestion {
   solution: IQuestionSolution;
   metadata: IQuestionMetadata;
   
+  flags?: IQuestionFlag[];
+
   status: 'draft' | 'review' | 'published' | 'archived';
   quality_score: number; // 0-100
   needs_review: boolean;
@@ -163,6 +173,10 @@ const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
 //   SOL    → ch12_solutions     (Solutions)
 //   EC     → ch12_electrochem   (Electrochemistry)    ← 2 chars
 //   CK     → ch12_kinetics      (Chemical Kinetics)   ← 2 chars
+//   ALDO   → ch12_carbonyl      (Aldehydes, Ketones and Carboxylic Acids)
+//           NOTE: ch12_aldehydes + ch12_carboxylic merged → ch12_carbonyl (commit e99b756)
+//           CARB prefix (2 docs: CARB-001, CARB-002) kept as-is for continuity.
+//           All new questions use ALDO prefix. Next available: ALDO-259
 //   PB11   → ch11_pblock        (P-Block 11)          ← 4 chars with digit
 //   PB12   → ch12_pblock        (P-Block 12)          ← 4 chars with digit
 //   DNF    → ch12_dblock        (D & F Block)         ← 3 chars
@@ -224,6 +238,16 @@ const QuestionSchema = new Schema<IQuestion>({
   deleted_by: { type: String },
   
   asset_ids: [{ type: String }],
+  flags: {
+    type: [{
+      type: { type: String, required: true },
+      note: { type: String },
+      flagged_at: { type: Date, default: Date.now },
+      resolved: { type: Boolean, default: false },
+      resolved_at: { type: Date }
+    }],
+    default: []
+  },
   svg_scales: {
     type: Schema.Types.Mixed,
     default: {}

@@ -8,6 +8,221 @@ Add high-quality chemistry questions to The Crucible database with consistent fo
 
 ---
 
+---
+
+
+## 🚨 RULE 0: ANTI-HALLUCINATION PROTOCOL (MANDATORY — READ BEFORE ANYTHING ELSE)
+
+> **Why this rule exists:** In February 2026, an AI agent fabricated 119 chemistry questions (ALDO-018 to ALDO-136) from general training knowledge instead of extracting from source images. It then ran fake audits — checking its own fabrications against themselves — and falsely reported success. This protocol adds targeted safeguards that stop that failure mode **without adding per-batch confirmation overhead or restricting session length.**
+
+---
+
+### 0.1 — The Fundamental Contract
+
+**You are a transcription tool first, a chemistry expert second.**
+
+Your job is to copy what is in the image — character by character, value by value, option by option. You are never permitted to generate a question from chemistry training knowledge when you cannot clearly read it from the source.
+
+**These two actions are FORBIDDEN under any circumstances:**
+- ❌ Generating a plausible-sounding question from training knowledge because the image is unclear
+- ❌ Reporting an audit as "passed" without actually re-reading and quoting from source images
+
+---
+
+### 0.2 — One-Time Image Survey (Autonomous — No Admin Confirmation Needed)
+
+At the start of every session, before extracting anything, read all attached images and output this survey **without waiting for admin confirmation** — produce it and immediately continue to extraction:
+
+```
+IMAGE SURVEY — [session date]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Total questions detected across all images: [N]
+Answer key present: YES / NO
+Solution images present: YES / NO
+Questions with diagrams: [Q numbers or NONE]
+
+Visibility check (first question per image):
+  [image 1] → Q[N] first 10 words: "[quote]" ✅
+  [image 2] → Q[N] first 10 words: "[quote]" ✅
+
+Illegible images: [list or NONE]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Proceeding to extract all [N] questions.
+```
+
+**Cost: ~50 tokens. Benefit: catches fabrication at the root.**
+
+The visibility check quote is the core protection — a hallucinating agent cannot accurately quote text it hasn't read. If it cannot quote 10 words from an image, it must flag that image as illegible and skip it, not fabricate from it.
+
+**If an image is illegible:** Flag it — `"⚠️ ILLEGIBLE: [filename] — skipping. Please re-attach."` — then continue with all other images. Do not halt the session.
+
+---
+
+### 0.3 — Continuous Extraction (No Per-Batch Confirmation Required)
+
+**Process all questions in one continuous flow without stopping to ask "shall I continue?"**
+
+This is how 30+ questions were successfully processed before. There is no batch size limit. The agent self-organises internally but does not pause for confirmation between batches.
+
+**The only valid reasons to pause mid-session:**
+- An image is illegible → flag it, skip it, continue
+- Answer key count doesn't match question count → add `⚠️ AMBIGUITY FLAG`, skip that question, continue
+- A technical error (DB connection, file write failure)
+
+Everything else: continue autonomously.
+
+---
+
+### 0.3.1 — SPECIAL PROTOCOL: Organic Chemistry Questions with Complex Diagrams
+
+**When to use:** Questions involving complex organic structures, stereochemistry, reaction mechanisms, or any visual diagrams that cannot be reliably interpreted from images.
+
+**What to extract:**
+- ✅ Question statement text (verbatim, no alterations)
+- ✅ Text-only options (e.g., "Phenol", "Benzyl alcohol", "m-Cresol")
+- ✅ Exam metadata (year, month, day, shift)
+- ✅ Tags, difficulty, chapter assignment
+
+**What to SKIP:**
+- ❌ Structure interpretation (do NOT describe organic structures)
+- ❌ Image-based options (use placeholder: `![](https://canvas-chemistry-assets.r2.dev/questions/{question_id}/diagram.svg)`)
+- ❌ Solution generation (if question cannot be fully understood without diagrams)
+
+**Rationale:** AI agents cannot reliably interpret complex organic structures, stereochemistry, or reaction mechanisms from images. Attempting to do so leads to:
+- Incorrect structure descriptions
+- Misidentified substituent positions
+- Wrong stereochemical configurations
+- Fabricated or altered question text
+
+**User workflow:** Admin will upload actual structure diagrams via admin panel and add handwritten solutions for complex questions.
+
+**Example extraction:**
+```javascript
+// SRC: "The increasing order of boiling points of" | AK: a
+{
+  "_id": "1771690000001",
+  "display_id": "ALCO-109",
+  "type": "SCQ",
+  "question_text": {
+    "markdown": "The increasing order of boiling points of the following compounds is:\n\n![](https://canvas-chemistry-assets.r2.dev/questions/alco_109/compounds.svg)"
+  },
+  "options": [
+    { "id": "a", "text": "I < IV < III < II", "is_correct": true },
+    { "id": "b", "text": "IV < I < II < III", "is_correct": false },
+    { "id": "c", "text": "III < I < II < IV", "is_correct": false },
+    { "id": "d", "text": "I < III < IV < II", "is_correct": false }
+  ],
+  "answer": { "correct_option": "a" },
+  "solution": null,  // Admin will add handwritten solution
+  "metadata": {
+    "chapter_id": "ch12_alcohols",
+    "tags": [{ "tag_id": "tag_alcohols_3", "weight": 1.0 }],
+    "difficulty": "Medium",
+    "is_pyq": true,
+    "exam_source": { exam: "JEE Main", year: 2020, month: "Sept", day: 5, shift: "Shift-II" },
+    ...
+  }
+}
+```
+
+---
+
+### 0.4 — Inline Source Tag (Lightweight — ~10 Tokens Per Question)
+
+Embed this single comment line before each JSON block. It is the tamper-evident seal that makes fabrication immediately detectable during review:
+
+```javascript
+// SRC: "[first 8 words from source image]" | AK: [answer from answer key]
+{
+  "_id": "...",
+  "display_id": "ALDO-018",
+  ...
+}
+```
+
+Example:
+```javascript
+// SRC: "Vanillin compound obtained from vanilla beans which" | AK: B
+{
+  "_id": "uuid-here",
+  "display_id": "ALDO-018",
+  ...
+}
+```
+
+If the admin later spot-checks any question, they search the source image for those 8 words. If they're not there, fabrication is immediately identified. This costs ~10 tokens per question — on a 30-question session that is 300 extra tokens total, a negligible overhead.
+
+---
+
+### 0.5 — Uncertainty Handling (Flag and Skip, Never Fabricate)
+
+If at any point the agent is uncertain whether specific text came from the image or from training knowledge:
+
+```
+⚠️ UNCERTAINTY FLAG — Q[N]: Cannot confirm [specific text] from source image.
+Skipping. Marked for manual review. Continuing with Q[N+1].
+```
+
+Never guess. Never fill in a plausible chemistry value. Skip and continue. List all skipped questions in the session summary.
+
+---
+
+### 0.6 — End-of-Session Audit (Once Per Session, Sample-Based)
+
+The audit runs **once at the very end of the session**, covering every 5th question plus any flagged ones. This keeps audit cost proportional to session length.
+
+A real audit means re-reading source images and quoting from them — **not** checking extracted data against itself.
+
+```
+END-OF-SESSION AUDIT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Sample (every 5th question + flagged):
+
+Display ID  | SRC match | AK match | LaTeX | Solution
+ALDO-018    |    ✅     |    ✅    |  ✅   |    ✅
+ALDO-023    |    ✅     |    ✅    |  ✅   |    ✅
+[...]
+
+Flagged for manual review: [list or NONE]
+LaTeX violations: [list or NONE]
+Answer key mismatches: [list or NONE]
+
+Total: [N] extracted | [N] clean | [N] flagged | [N] skipped
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+---
+
+### 0.7 — Insertion Script and Database Execution
+
+**UPDATED WORKFLOW (Feb 27, 2026):**
+
+The agent must complete ALL extraction first, then proceed to database insertion:
+
+1. **Extract all questions** from all provided images (continuous extraction, no per-batch confirmation)
+2. **Generate insertion script(s)** with all extracted questions
+3. **BEFORE running the script — check for existing IDs:**
+   ```js
+   // Always run this check first to avoid E11000 duplicate key errors
+   node -e "require('dotenv').config({path:'.env.local'}); const {MongoClient}=require('mongodb'); async function main(){const c=new MongoClient(process.env.MONGODB_URI);await c.connect();const col=c.db('crucible').collection('questions_v2');const existing=await col.find({display_id:{$in:['ALDO-090','ALDO-127']}},{projection:{display_id:1,_id:0}}).toArray();console.log(existing);await c.close();}main();"
+   ```
+   If any IDs already exist, **skip the script** — insertion was already done in a prior session.
+4. **Run the insertion script(s)** only if no duplicates found
+5. **Verify insertion** by querying the database for total count
+6. **Provide end-of-session audit** with database confirmation
+
+**CRITICAL — Duplicate Key Prevention:**
+- `insertMany()` with `ordered:true` (default) stops at first duplicate. Use `{ ordered: false }` to skip duplicates and continue, OR pre-check IDs before running.
+- If script errors with `E11000 duplicate key error`, it means questions were already inserted in a previous session. Verify with a count query before re-running.
+- **Never re-run an insertion script without first checking for existing IDs.**
+
+**The agent should automatically execute the insertion scripts after extraction is complete, unless the admin explicitly requests otherwise.**
+
+End-of-session statement:
+`"Successfully inserted [N] questions ([PREFIX]-XXX to [PREFIX]-YYY) into database. Verified in questions_v2 collection. Review audit above."`
+
+---
+
 ## 📋 INPUT FORMAT
 
 ### **Handwritten Question Format:**
@@ -226,6 +441,63 @@ $$
 - ✅ Minimum 150 words for Medium/Hard questions
 - ✅ Use `\ce{}` for all chemical formulas
 
+**CRITICAL: Organic Mechanism Solutions (NEW - Feb 2026)**
+
+When a question demands organic reaction mechanisms or structure drawing:
+
+**❌ DO NOT attempt to:**
+- Draw organic structures using LaTeX/ASCII art
+- Generate complex reaction mechanisms with arrows
+- Create multi-step mechanism diagrams
+
+**✅ INSTEAD, focus on:**
+1. **Conceptual understanding** - Explain the reaction type (SN1, SN2, E1, E2, etc.)
+2. **Common mistakes** - Highlight errors students typically make in similar questions
+3. **Problem-solving approach** - Teach the strategy to solve such questions
+4. **Key indicators** - What to look for in the question (substrate type, reagent, conditions)
+5. **Elimination strategies** - How to rule out wrong options without drawing full mechanisms
+
+**Example approach for mechanism questions:**
+```markdown
+**Step 1: Identify the reaction type**
+
+This is an E2 elimination reaction based on:
+- Strong base (KOH alcoholic)
+- Good leaving group (Br)
+- β-hydrogens available
+
+**Step 2: Common mistakes to avoid**
+
+Students often confuse:
+- E2 vs E1 conditions (strong base vs weak base)
+- Zaitsev vs Hofmann products (bulky base consideration)
+- Anti-periplanar geometry requirement
+
+**Step 3: Solving strategy**
+
+For E2 elimination questions:
+1. Check substrate structure (1°, 2°, 3°)
+2. Identify all β-hydrogens
+3. Apply Zaitsev's rule (more substituted alkene favored)
+4. Consider steric factors if base is bulky
+
+**Step 4: Eliminate wrong options**
+
+Option (a): Shows less substituted alkene → unlikely (Zaitsev violation)
+Option (b): Shows correct regiochemistry → possible
+Option (c): Shows retention instead of anti-elimination → wrong
+Option (d): Shows no elimination → wrong mechanism
+
+**Answer: (b)**
+
+**Key Points:**
+- E2 requires anti-periplanar geometry
+- Zaitsev's rule: more substituted alkene is major product
+- Bulky bases favor Hofmann product (less substituted)
+```
+
+This approach teaches problem-solving skills rather than attempting to draw structures that AI cannot render accurately.
+
 **Solution Font Style:**
 - Use handwritten-style font (Caveat, Kalam, or Patrick Hand)
 - Makes solution feel personal and approachable
@@ -303,6 +575,295 @@ function src(year, month, day, shift) {
   return { exam: 'JEE Main', year, month, day, shift };
 }
 // Usage: src(2024, 'Apr', 10, 'Evening')
+```
+
+### **RULE 6.5: PRE-INGESTION VALIDATION (CRITICAL)**
+
+**⚠️ MANDATORY CHECKS BEFORE INSERTING ANY QUESTION:**
+
+Before inserting questions into the database, **ALWAYS** validate the following:
+
+**1. Question Type Validation:**
+```javascript
+// SCQ/MCQ/MTC/MST/AR questions MUST have exactly 4 options
+if (['SCQ', 'MCQ', 'MTC', 'MST', 'AR'].includes(question.type)) {
+  if (question.options.length !== 4) {
+    throw new Error(`${question.type} must have exactly 4 options, found ${question.options.length}`);
+  }
+}
+
+// NVT questions MUST have a numerical answer
+if (question.type === 'NVT') {
+  if (!question.answer.integer_value && !question.answer.decimal_value) {
+    throw new Error('NVT question missing numerical answer value');
+  }
+  if (question.options && question.options.length > 0) {
+    throw new Error('NVT questions should NOT have options array');
+  }
+}
+```
+
+**2. Answer Key Validation:**
+```javascript
+// SCQ must have exactly 1 correct option
+if (question.type === 'SCQ') {
+  const correctCount = question.options.filter(o => o.is_correct).length;
+  if (correctCount !== 1) {
+    throw new Error(`SCQ must have exactly 1 correct option, found ${correctCount}`);
+  }
+}
+
+// MCQ must have 2+ correct options
+if (question.type === 'MCQ') {
+  const correctCount = question.options.filter(o => o.is_correct).length;
+  if (correctCount < 2) {
+    throw new Error(`MCQ must have 2+ correct options, found ${correctCount}`);
+  }
+}
+```
+
+**3. Question Type Detection Rules:**
+
+When determining question type from source material:
+
+- **Has 4 options A/B/C/D + exactly 1 correct** → `SCQ`
+- **Has 4 options A/B/C/D + 2+ correct** → `MCQ`
+- **Asks for numerical value / "nearest integer" / fill-in-blank number** → `NVT`
+- **Has "Assertion (A)" and "Reason (R)" statements** → `AR`
+- **Has "Statement I" and "Statement II" to evaluate** → `MST`
+- **Has "Match List-I with List-II" or two columns to match** → `MTC`
+
+**⚠️ COMMON MISTAKE:** Do NOT classify questions as NVT just because they lack visible options in the source. Always check if the question asks for a numerical answer or has option choices.
+
+**4. Content Completeness Check:**
+```javascript
+// Question text must be substantial
+if (question.question_text.markdown.length < 20) {
+  throw new Error('Question text too short - likely incomplete');
+}
+
+// All options must have text
+question.options.forEach((opt, idx) => {
+  if (!opt.text || opt.text.trim().length === 0) {
+    throw new Error(`Option ${opt.id} is empty`);
+  }
+});
+```
+
+**5. Exam Source Validation (for PYQs):**
+```javascript
+if (question.metadata.is_pyq) {
+  if (!question.metadata.exam_source || !question.metadata.exam_source.exam) {
+    throw new Error('PYQ question missing exam_source.exam field');
+  }
+  if (!question.metadata.exam_source.year) {
+    throw new Error('PYQ question missing exam_source.year field');
+  }
+}
+```
+
+**VALIDATION SCRIPT TEMPLATE:**
+```javascript
+function validateQuestion(q) {
+  const errors = [];
+  
+  // Type-specific validations
+  if (['SCQ', 'MCQ', 'MTC', 'MST', 'AR'].includes(q.type) && q.options.length !== 4) {
+    errors.push(`${q.type} needs 4 options, has ${q.options.length}`);
+  }
+  
+  if (q.type === 'NVT' && !q.answer?.integer_value && !q.answer?.decimal_value) {
+    errors.push('NVT missing numerical answer');
+  }
+  
+  if (q.type === 'SCQ') {
+    const correct = q.options.filter(o => o.is_correct).length;
+    if (correct !== 1) errors.push(`SCQ needs 1 correct option, has ${correct}`);
+  }
+  
+  // Content checks
+  if (q.question_text.markdown.length < 20) {
+    errors.push('Question text too short');
+  }
+  
+  return errors;
+}
+
+// Use before insertion:
+const errors = validateQuestion(questionData);
+if (errors.length > 0) {
+  console.error(`Validation failed for ${questionData.display_id}:`, errors);
+  throw new Error('Question validation failed');
+}
+```
+
+### **RULE 6.6: Source Provenance Tracking (MANDATORY)**
+
+**⚠️ CRITICAL — Added after Feb 2026 HC/POC error incident**
+
+Every question MUST have traceable source provenance. This prevents using wrong/intermediate sources.
+
+**Mandatory metadata fields:**
+```javascript
+metadata: {
+  source_reference: {
+    type: 'image' | 'pdf' | 'markdown',  // MUST be 'image' for PYQs
+    file_path: '/path/to/source/image.jpg',  // Exact source file
+    page_number: 42,  // For PDFs
+    question_number_in_source: 67,  // Q67 in the image
+    verified_against_source: true,  // MUST be true before insertion
+    verification_date: new Date(),
+    verified_by: 'ai_agent' | 'admin'
+  }
+}
+```
+
+**Validation:**
+- For PYQs: `source_reference.type` MUST be `'image'`
+- `verified_against_source` MUST be `true`
+- Never use intermediate sources (markdown, OCR output) as primary source
+- The authoritative source image is the single source of truth
+
+### **RULE 6.7: Mandatory Pre-Insertion Validation Script**
+
+**⚠️ CRITICAL — This rule is now MANDATORY, not optional**
+
+Before inserting ANY batch of questions, you MUST:
+
+1. **Run the validation function on EVERY question:**
+```javascript
+function validateQuestionBeforeInsertion(q) {
+  const errors = [];
+  
+  // Type-specific validations
+  if (['SCQ', 'MCQ', 'MTC', 'MST', 'AR'].includes(q.type)) {
+    if (!q.options || q.options.length !== 4) {
+      errors.push(`${q.type} needs exactly 4 options, has ${q.options?.length || 0}`);
+    }
+  }
+  
+  if (q.type === 'NVT') {
+    if (q.options && q.options.length > 0) {
+      errors.push('NVT questions must NOT have options array');
+    }
+    if (!q.answer?.integer_value && !q.answer?.decimal_value) {
+      errors.push('NVT missing numerical answer (integer_value or decimal_value)');
+    }
+  }
+  
+  if (q.type === 'SCQ') {
+    const correct = (q.options || []).filter(o => o.is_correct).length;
+    if (correct !== 1) {
+      errors.push(`SCQ must have exactly 1 correct option, has ${correct}`);
+    }
+    if (!q.answer?.correct_option) {
+      errors.push('SCQ missing answer.correct_option field');
+    }
+  }
+  
+  if (q.type === 'MCQ') {
+    const correct = (q.options || []).filter(o => o.is_correct).length;
+    if (correct < 2) {
+      errors.push(`MCQ must have 2+ correct options, has ${correct}`);
+    }
+  }
+  
+  // Content validation
+  if (!q.question_text?.markdown || q.question_text.markdown.length < 20) {
+    errors.push('Question text too short or missing');
+  }
+  
+  if (!q.solution?.text_markdown || q.solution.text_markdown.length < 50) {
+    errors.push('Solution missing or too short (minimum 50 chars)');
+  }
+  
+  // Source provenance validation (for PYQs)
+  if (q.metadata?.is_pyq) {
+    if (!q.metadata?.source_reference?.verified_against_source) {
+      errors.push('PYQ not verified against source image');
+    }
+    if (q.metadata?.source_reference?.type !== 'image') {
+      errors.push('PYQ must use image as source, not ' + q.metadata?.source_reference?.type);
+    }
+  }
+  
+  return errors;
+}
+
+// MANDATORY: Run before insertion
+for (const question of questionsToInsert) {
+  const errors = validateQuestionBeforeInsertion(question);
+  if (errors.length > 0) {
+    console.error(`❌ VALIDATION FAILED for ${question.display_id}:`);
+    errors.forEach(e => console.error(`   - ${e}`));
+    throw new Error(`Cannot insert ${question.display_id} - validation failed`);
+  }
+}
+```
+
+2. **Log validation summary:**
+```javascript
+console.log(`✅ All ${questionsToInsert.length} questions passed validation`);
+console.log(`   Types: ${JSON.stringify(typeDistribution)}`);
+console.log(`   Source verified: ${verifiedCount}/${questionsToInsert.length}`);
+```
+
+### **RULE 6.8: Post-Ingestion Audit Requirement**
+
+**After inserting any batch of questions, you MUST:**
+
+1. **Sample audit (10% or minimum 5 questions):**
+```javascript
+// After insertion, randomly sample questions
+const inserted = await col.find({ display_id: /^HC-/ }).toArray();
+const sampleSize = Math.max(5, Math.floor(inserted.length * 0.1));
+const sample = inserted.sort(() => 0.5 - Math.random()).slice(0, sampleSize);
+
+// Cross-check each sample against source
+for (const q of sample) {
+  console.log(`Auditing ${q.display_id}...`);
+  // Manually verify question text, options, answer match source image
+  // Flag any discrepancies immediately
+}
+```
+
+2. **Full validation audit:**
+```javascript
+// Run the same validation on inserted questions
+const issues = [];
+for (const q of inserted) {
+  const errors = validateQuestionBeforeInsertion(q);
+  if (errors.length > 0) issues.push({ id: q.display_id, errors });
+}
+
+if (issues.length > 0) {
+  console.error(`❌ POST-INSERTION AUDIT FAILED: ${issues.length} issues found`);
+  // DO NOT PROCEED - fix issues immediately
+} else {
+  console.log(`✅ POST-INSERTION AUDIT PASSED: 0 issues`);
+}
+```
+
+3. **Mandatory audit report:**
+```markdown
+## Ingestion Audit Report
+
+**Batch:** HC-001 to HC-128
+**Date:** 2026-02-26
+**Source:** Hydrocarbons PYQ Images (image 1-10)
+**Total Questions:** 128
+
+**Pre-Insertion Validation:**
+- ✅ All 128 questions passed validation
+- ✅ All verified against source images
+- ✅ Types: SCQ=107, NVT=19, MCQ=1, MST=1
+
+**Post-Insertion Audit:**
+- ✅ Sample audit: 13/13 questions match source
+- ✅ Full validation: 0 issues found
+- ✅ All solutions present and detailed
+
+**Status:** APPROVED FOR PRODUCTION
 ```
 
 ### **RULE 7: Display ID Generation**
@@ -1312,6 +1873,14 @@ When ingesting from a screenshot or markdown file:
 
 ---
 
-**Document Version:** 1.6
-**Last Updated:** 2026-02-21
+**Document Version:** 1.8
+**Last Updated:** 2026-02-27
 **Maintained By:** The Crucible Admin Team
+
+### Changelog
+
+| Version | Date | Change |
+|---------|------|--------|
+| 1.7 | 2026-02-27 | Added Rule 0: Anti-Hallucination Protocol — mandatory Image Verification Gate, verbatim echo requirement, real audit definition, 3-question batch hard limit, session restart policy. Triggered by ALDO-018–ALDO-136 fabrication incident (119 questions fabricated from training knowledge). |
+| 1.6 | 2026-02-21 | Added Rule 20 (mandatory pre-write LaTeX checklist), Rule 18 (KaTeX fraction fix), Rule 19 (verbatim question text rule) |
+| 1.5 | 2026-02-18 | Fixed POST API display_id bug, added Rule 6.6 source provenance tracking, Rule 6.7 mandatory pre-insertion validation |

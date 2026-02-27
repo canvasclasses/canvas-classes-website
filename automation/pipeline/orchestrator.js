@@ -5,10 +5,12 @@ const config = require('./config');
 const { Logger, parseFolderName, getImageFiles, calculateFileHash, ensureDir } = require('./utils');
 const ProgressTracker = require('./progress_tracker');
 const QuestionExtractor = require('./stage1_extract');
+const AnswerKeyExtractor = require('./stage1b_answer_key');
 const DiagramProcessor = require('./stage2_diagrams');
 const SolutionGenerator = require('./stage3_solutions');
 const QuestionValidator = require('./stage4_validate');
 const DatabaseInserter = require('./stage5_insert');
+const { categorizeImages } = require('./utils');
 
 class PipelineOrchestrator {
   constructor() {
@@ -16,6 +18,7 @@ class PipelineOrchestrator {
     this.logger = null;
     this.tracker = null;
     this.extractor = null;
+    this.answerKeyExtractor = null;
     this.diagramProcessor = null;
     this.solutionGenerator = null;
     this.validator = null;
@@ -23,11 +26,13 @@ class PipelineOrchestrator {
     
     this.stats = {
       foldersProcessed: 0,
+      pagesProcessed: 0,
       questionsExtracted: 0,
       questionsInserted: 0,
       questionsFailed: 0,
       questionsReview: 0,
       diagramsProcessed: 0,
+      solutionsGenerated: 0,
       startTime: null,
       endTime: null,
     };
@@ -61,6 +66,7 @@ class PipelineOrchestrator {
 
     // Initialize pipeline stages
     this.extractor = new QuestionExtractor(this.config, this.logger);
+    this.answerKeyExtractor = new AnswerKeyExtractor(this.config, this.logger);
     this.diagramProcessor = new DiagramProcessor(this.config, this.logger);
     this.solutionGenerator = new SolutionGenerator(this.config, this.logger);
     this.validator = new QuestionValidator(this.config, this.logger);
@@ -159,7 +165,8 @@ class PipelineOrchestrator {
   }
 
   /**
-   * Process a single folder
+   * Process a single folder - MULTI-QUESTION WORKFLOW
+   * Each page contains multiple questions, extracted sequentially
    */
   async processFolder(folder) {
     console.log(`\n${'='.repeat(60)}`);
@@ -170,89 +177,212 @@ class PipelineOrchestrator {
     const metadata = parseFolderName(folder.name, folder.parentName || '');
     await this.logger.info('Folder metadata parsed', { folder: folder.name, metadata });
 
-    // Get all images in folder
-    const images = await getImageFiles(folder.path);
-    
-    if (images.length === 0) {
-      console.log('⚠️  No images found in folder');
+    // Categorize images: page images vs answer key
+    const categorized = await categorizeImages(folder.path);
+    const pageImages = categorized.questions; // These are page images, not individual questions
+    const answerKeyImage = categorized.answerKey;
+
+    if (pageImages.length === 0) {
+      console.log('⚠️  No page images found in folder');
       return;
     }
 
-    console.log(`📸 Found ${images.length} image(s)\n`);
+    if (!answerKeyImage) {
+      console.log('❌ No answer key found - cannot proceed');
+      await this.logger.error('Answer key missing', { folder: folder.path });
+      return;
+    }
+
+    console.log(`� Found ${pageImages.length} page image(s)`);
+    console.log(`📋 Found answer key: ${path.basename(answerKeyImage)}\n`);
 
     // Register folder in progress tracker
     const folderId = await this.tracker.registerFolder(
       folder.path,
       folder.parentName,
-      images.length,
+      pageImages.length,
       metadata
     );
     await this.tracker.startFolder(folderId);
 
-    // Register all images
-    for (const imagePath of images) {
-      const fileHash = await calculateFileHash(imagePath);
-      await this.tracker.registerImage(folderId, imagePath, fileHash);
-    }
+    try {
+      // STEP 1: Extract ALL questions from ALL pages sequentially
+      console.log('\n📖 STEP 1: Extracting questions from all pages...\n');
+      const allQuestions = [];
+      let globalQuestionNumber = 1;
 
-    // Process each image
-    const pendingImages = await this.tracker.getPendingImages(folderId);
-    let successful = 0;
-    let failed = 0;
+      for (let i = 0; i < pageImages.length; i++) {
+        const pageImage = pageImages[i];
+        console.log(`[Page ${i + 1}/${pageImages.length}] Processing: ${path.basename(pageImage)}`);
 
-    for (let i = 0; i < pendingImages.length; i++) {
-      const imageRecord = pendingImages[i];
-      console.log(`\n[${i + 1}/${pendingImages.length}] Processing: ${path.basename(imageRecord.image_path)}`);
-
-      try {
-        await this.tracker.startImage(imageRecord.id);
+        const questionsOnPage = await this.extractor.extractFromImage(pageImage, metadata);
         
-        const result = await this.processImage(imageRecord.image_path, metadata);
-        
-        if (result.inserted) {
-          await this.tracker.completeImage(
-            imageRecord.id,
-            result.questionId,
-            result.displayId,
-            result.extractedData
-          );
-          successful++;
-          this.stats.questionsInserted++;
-          console.log(`✅ Inserted as ${result.displayId}`);
-        } else if (result.needsReview) {
-          await this.tracker.completeImage(
-            imageRecord.id,
-            null,
-            result.displayId || 'REVIEW',
-            result.extractedData
-          );
-          successful++;
-          this.stats.questionsReview++;
-          console.log(`⚠️  Flagged for review: ${result.reviewReason}`);
-        } else if (result.skipped) {
-          await this.tracker.skipImage(imageRecord.id, result.reason);
-          console.log(`⏭️  Skipped: ${result.reason}`);
-        }
-        
-      } catch (error) {
-        await this.tracker.failImage(imageRecord.id, error.message);
-        await this.logger.error('Image processing failed', {
-          image: imageRecord.image_path,
-          error: error.message,
+        // Assign global question numbers
+        questionsOnPage.forEach(q => {
+          q.global_question_number = globalQuestionNumber++;
         });
-        failed++;
-        this.stats.questionsFailed++;
-        console.log(`❌ Failed: ${error.message}`);
-      }
-    }
 
-    // Complete folder
-    await this.tracker.completeFolder(folderId, successful, failed);
-    console.log(`\n📊 Folder complete: ${successful} successful, ${failed} failed`);
+        allQuestions.push(...questionsOnPage);
+        this.stats.pagesProcessed++;
+        this.stats.questionsExtracted += questionsOnPage.length;
+        
+        console.log(`  ✅ Extracted ${questionsOnPage.length} questions (Total: ${allQuestions.length})`);
+      }
+
+      console.log(`\n✅ Total questions extracted: ${allQuestions.length}\n`);
+
+      // STEP 2: Extract ALL answers from answer key
+      console.log('📋 STEP 2: Extracting answers from answer key...\n');
+      const answers = await this.answerKeyExtractor.extractAnswers(
+        answerKeyImage,
+        allQuestions.length
+      );
+
+      if (answers.length !== allQuestions.length) {
+        console.log(`⚠️  WARNING: Answer count mismatch!`);
+        console.log(`   Questions: ${allQuestions.length}, Answers: ${answers.length}`);
+        await this.logger.warn('Answer count mismatch', {
+          questions: allQuestions.length,
+          answers: answers.length
+        });
+      }
+
+      console.log(`✅ Extracted ${answers.length} answers\n`);
+
+      // STEP 3: Match answers to questions sequentially
+      console.log('🔗 STEP 3: Matching answers to questions...\n');
+      const questionsWithAnswers = this.answerKeyExtractor.matchAnswersToQuestions(
+        allQuestions,
+        answers
+      );
+      console.log(`✅ Answers matched to ${questionsWithAnswers.length} questions\n`);
+
+      // STEP 4: Process each question individually
+      console.log('⚙️  STEP 4: Processing individual questions...\n');
+      let successful = 0;
+      let failed = 0;
+
+      for (let i = 0; i < questionsWithAnswers.length; i++) {
+        const question = questionsWithAnswers[i];
+        console.log(`\n[Q${question.global_question_number}/${questionsWithAnswers.length}] Processing...`);
+
+        try {
+          const result = await this.processSingleQuestion(question, metadata);
+          
+          if (result.inserted) {
+            successful++;
+            this.stats.questionsInserted++;
+            console.log(`  ✅ Inserted as ${result.displayId}`);
+          } else if (result.needsReview) {
+            successful++;
+            this.stats.questionsReview++;
+            console.log(`  ⚠️  Flagged for review`);
+          }
+        } catch (error) {
+          failed++;
+          this.stats.questionsFailed++;
+          await this.logger.error('Question processing failed', {
+            questionNumber: question.global_question_number,
+            error: error.message,
+          });
+          console.log(`  ❌ Failed: ${error.message}`);
+        }
+      }
+
+      // Complete folder
+      await this.tracker.completeFolder(folderId, successful, failed);
+      console.log(`\n${'='.repeat(60)}`);
+      console.log(`📊 Folder Complete`);
+      console.log(`   ✅ ${successful} questions inserted`);
+      console.log(`   ❌ ${failed} questions failed`);
+      console.log('='.repeat(60));
+
+    } catch (error) {
+      await this.logger.error('Folder processing failed', {
+        folder: folder.path,
+        error: error.message,
+        stack: error.stack
+      });
+      throw error;
+    }
   }
 
   /**
-   * Process a single image through all pipeline stages
+   * Process a single question through all pipeline stages
+   * Used in multi-question workflow
+   */
+  async processSingleQuestion(questionData, folderMetadata) {
+    const result = {
+      inserted: false,
+      needsReview: false,
+      extractedData: questionData,
+    };
+
+    // STAGE 2: Process diagrams (if any)
+    if (this.config.features.enableDiagramExtraction && questionData.diagrams?.length > 0) {
+      const questionId = `temp_${Date.now()}_${questionData.global_question_number}`;
+      const processedDiagrams = await this.diagramProcessor.processDiagrams(
+        questionData.metadata.page_source,
+        questionData.diagrams,
+        questionId
+      );
+      
+      // Insert diagram markdown links into question
+      this.diagramProcessor.insertDiagramLinks(questionData, processedDiagrams);
+      this.stats.diagramsProcessed += processedDiagrams.filter(d => d.status === 'success').length;
+    }
+
+    // STAGE 3: Generate solution (AI-powered, high quality)
+    const solutionData = await this.solutionGenerator.generateSolution(questionData);
+    this.stats.solutionsGenerated++;
+
+    // STAGE 4: Validate
+    const validationResult = await this.validator.validate(questionData, solutionData);
+    
+    // Suggest tags
+    validationResult.suggestedTags = this.validator.suggestTags(
+      validationResult.chapterId,
+      questionData.question_text
+    );
+
+    // Check if validation passed
+    if (!validationResult.isValid) {
+      await this.saveForReview(questionData, solutionData, validationResult);
+      result.needsReview = true;
+      result.reviewReason = validationResult.errors.join('; ');
+      return result;
+    }
+
+    // Check if needs manual review
+    if (validationResult.needsReview) {
+      await this.saveForReview(questionData, solutionData, validationResult);
+      result.needsReview = true;
+      result.reviewReason = 'Low confidence or warnings';
+      return result;
+    }
+
+    // STAGE 5: Insert into MongoDB
+    const insertResult = await this.inserter.insertQuestion(
+      questionData,
+      solutionData,
+      validationResult,
+      folderMetadata
+    );
+
+    if (insertResult.inserted) {
+      result.inserted = true;
+      result.questionId = insertResult.questionId;
+      result.displayId = insertResult.displayId;
+      
+      // Save extracted JSON for reference
+      await this.saveExtractedJson(insertResult.displayId, questionData, solutionData, validationResult);
+    }
+
+    return result;
+  }
+
+  /**
+   * Process a single image through all pipeline stages (LEGACY - for single question per image)
    */
   async processImage(imagePath, folderMetadata) {
     const result = {
@@ -337,20 +467,22 @@ class PipelineOrchestrator {
   /**
    * Save question data for manual review
    */
-  async saveForReview(imagePath, questionData, solutionData, validationResult) {
+  async saveForReview(questionData, solutionData, validationResult) {
     const reviewData = {
-      source_image: imagePath,
+      question_number: questionData.global_question_number || 'unknown',
+      page_source: questionData.metadata?.page_source || 'unknown',
       extracted_at: new Date().toISOString(),
       question_data: questionData,
       solution_data: solutionData,
       validation: validationResult,
     };
 
-    const filename = `review_${Date.now()}_${path.basename(imagePath, path.extname(imagePath))}.json`;
+    const qNum = questionData.global_question_number || Date.now();
+    const filename = `review_Q${qNum}_${Date.now()}.json`;
     const reviewPath = path.join(this.config.paths.reviewQueue, filename);
     
     await fs.writeFile(reviewPath, JSON.stringify(reviewData, null, 2));
-    await this.logger.info('Saved for manual review', { reviewPath });
+    await this.logger.info('Saved for manual review', { reviewPath, questionNumber: qNum });
   }
 
   /**
@@ -382,13 +514,21 @@ class PipelineOrchestrator {
     console.log('📊 PIPELINE EXECUTION SUMMARY');
     console.log('='.repeat(60));
     console.log(`⏱️  Duration: ${this.formatDuration(duration)}`);
+    console.log('\n📊 PIPELINE SUMMARY');
+    console.log('━'.repeat(60));
     console.log(`📁 Folders processed: ${this.stats.foldersProcessed}`);
-    console.log(`📸 Images processed: ${overallStats.completed_images + overallStats.failed_images}`);
-    console.log(`✅ Questions inserted: ${this.stats.questionsInserted}`);
-    console.log(`⚠️  Questions for review: ${this.stats.questionsReview}`);
-    console.log(`❌ Questions failed: ${this.stats.questionsFailed}`);
+    console.log(`� Pages processed: ${this.stats.pagesProcessed}`);
+    console.log(`📝 Questions extracted: ${this.stats.questionsExtracted}`);
+    console.log(`✅ Successfully inserted: ${this.stats.questionsInserted}`);
+    console.log(`⚠️  Flagged for review: ${this.stats.questionsReview}`);
+    console.log(`❌ Failed: ${this.stats.questionsFailed}`);
     console.log(`🖼️  Diagrams processed: ${this.stats.diagramsProcessed}`);
+    console.log(`🤖 Solutions generated: ${this.stats.solutionsGenerated}`);
     
+    const durationTime = Math.round((this.stats.endTime - this.stats.startTime) / 1000);
+    console.log(`⏱️  Time taken: ${Math.floor(durationTime / 60)}m ${durationTime % 60}s`);
+    console.log('━'.repeat(60));
+
     // API usage stats
     const extractorStats = this.extractor.getStats();
     const solutionStats = this.solutionGenerator.getStats();

@@ -171,6 +171,34 @@ export async function PATCH(
       updates.svg_scales = { ...(existing.svg_scales ?? {}), ...body.svg_scales };
     }
 
+    // Flag operations
+    if (body.add_flag) {
+      // Append a new flag
+      const newFlag = {
+        type: body.add_flag.type,
+        note: body.add_flag.note ?? '',
+        flagged_at: new Date(),
+        resolved: false,
+      };
+      updates.flags = [...(existing.flags ?? []), newFlag];
+      changes.push({ field: 'flags', old_value: 'none', new_value: newFlag.type });
+    }
+
+    if (body.resolve_flags !== undefined) {
+      // Mark all flags resolved
+      updates.flags = (existing.flags ?? []).map((f: any) => ({
+        ...f,
+        resolved: true,
+        resolved_at: new Date(),
+      }));
+      changes.push({ field: 'flags', old_value: 'flagged', new_value: 'resolved' });
+    }
+
+    if (body.clear_flags) {
+      updates.flags = [];
+      changes.push({ field: 'flags', old_value: JSON.stringify(existing.flags), new_value: '[]' });
+    }
+
     if (body.status && body.status !== existing.status) {
       changes.push({
         field: 'status',

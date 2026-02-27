@@ -2,46 +2,49 @@
 
 This folder demonstrates the correct structure for the automated question ingestion pipeline.
 
+## ✅ Simplified Workflow
+
+**Each page contains MULTIPLE questions** (5-10 questions per page)
+**AI generates ALL solutions** (no solution images needed)
+
 ## Folder Contents
 
 Place your files here following this naming convention:
 
 ```
 2024-Jan-24-Morning/
-├── q001.png              ← Question 1 screenshot
-├── q002.png              ← Question 2 screenshot
-├── q003.png              ← Question 3 screenshot
-├── q004.png              ← Question 4 screenshot
-├── q005.png              ← Question 5 screenshot
-├── answer-key.png        ← Answer key for ALL questions (REQUIRED)
-├── solutions-001.png     ← Solution for Q1 (optional)
-├── solutions-002.png     ← Solution for Q2 (optional)
-└── solutions-003.png     ← Solution for Q3 (optional)
+├── page-001.png          ← Page 1 (contains 7 questions)
+├── page-002.png          ← Page 2 (contains 8 questions)
+├── page-003.png          ← Page 3 (contains 7 questions)
+├── page-004.png          ← Page 4 (contains 8 questions)
+└── answer-key.png        ← Answers for ALL 30 questions (REQUIRED)
 ```
 
 ## File Naming Rules
 
-### Question Images
-- **Any name works**: `q001.png`, `page_001.png`, `screenshot_1.png`
+### Page Images
+- **Naming**: Use zero-padded numbers for correct alphabetical order
+  - ✅ CORRECT: `page-001.png`, `page-002.png`, `page-003.png`
+  - ✅ CORRECT: `p001.png`, `p002.png`, `p003.png`
+  - ✅ CORRECT: `001.png`, `002.png`, `003.png`
+  - ❌ WRONG: `page-1.png`, `page-2.png`, `page-10.png` (wrong sort order)
 - **Format**: PNG or JPG
-- **Order**: Alphabetically sorted by filename
-- **Content**: One question per image (can have multiple parts)
+- **Order**: Pages processed in alphabetical order
+- **Content**: Each page contains MULTIPLE questions (5-10 typically)
 
 ### Answer Key Image
 - **Name**: Exactly `answer-key.png` (case-insensitive)
 - **Format**: PNG or JPG
-- **Content**: All answers in order
-  - Example: "1. B  2. A  3. C  4. D  5. A"
+- **Content**: ALL answers for ALL questions across ALL pages
+  - Example: "1. B  2. A  3. C  4. D ... 30. C"
   - Can be horizontal list, vertical list, or table format
+  - Must have same number of answers as total questions
 - **REQUIRED**: Must be present for pipeline to work
 
-### Solution Images
-- **Name**: `solutions-001.png`, `solutions-002.png`, etc.
-- **Format**: PNG or JPG
-- **Number**: Must match question number
-  - `solutions-001.png` = solution for question 1
-  - `solutions-002.png` = solution for question 2
-- **Optional**: If missing, AI will generate solution automatically
+### ❌ No Solution Images Needed
+- AI generates all solutions automatically
+- High-quality, step-by-step explanations
+- Consistent formatting across all questions
 
 ## What Happens During Processing
 
