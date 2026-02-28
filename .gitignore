@@ -47,8 +47,23 @@ next-env.d.ts
 /scripts/update_carbonyl_chapter_ids.js
 /scripts/final_merge_verification.js
 
+
 # automation pipeline output
 /automation/output/
 /automation/logs/
 /automation/progress.db
 /automation/node_modules/
+
+# root-level one-time scripts and temp files
+query_db.js
+html_output.txt
+*.html
+
+# automation one-time scripts (insert/fix/check/audit)
+/automation/insert_*.js
+/automation/fix_*.js
+/automation/check_*.js
+/automation/audit_*.js
+/automation/bio_b*.js
+/automation/biomolecules_batch*.js
+/automation/amines_batch*.js
