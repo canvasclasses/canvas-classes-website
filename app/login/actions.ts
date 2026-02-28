@@ -16,17 +16,27 @@ export async function login(formData: FormData) {
     const password = formData.get('password') as string
     const next = (formData.get('next') as string) || '/'
 
-    const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-    })
+    try {
+        const { error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        })
 
-    if (error) {
-        return { error: error.message }
+        if (error) {
+            if (error.message.includes('Invalid login credentials')) {
+                return { error: 'Invalid email or password' }
+            }
+            return { error: error.message }
+        }
+
+        revalidatePath('/', 'layout')
+        redirect(next)
+    } catch (error: any) {
+        console.error('Login error:', error)
+        return { 
+            error: 'Connection failed. Please check your internet connection and try again.' 
+        }
     }
-
-    revalidatePath('/', 'layout')
-    redirect(next)
 }
 
 export async function signup(formData: FormData) {
@@ -39,18 +49,27 @@ export async function signup(formData: FormData) {
     const email = formData.get('email') as string
     const password = formData.get('password') as string
 
-    const { error } = await supabase.auth.signUp({
-        email,
-        password,
-    })
+    try {
+        const { error } = await supabase.auth.signUp({
+            email,
+            password,
+        })
 
-    if (error) {
-        return { error: error.message }
+        if (error) {
+            if (error.message.includes('already registered')) {
+                return { error: 'This email is already registered. Please sign in instead.' }
+            }
+            return { error: error.message }
+        }
+
+        revalidatePath('/', 'layout')
+        redirect('/')
+    } catch (error: any) {
+        console.error('Signup error:', error)
+        return { 
+            error: 'Connection failed. Please check your internet connection and try again.' 
+        }
     }
-
-    revalidatePath('/', 'layout')
-    revalidatePath('/', 'layout')
-    redirect('/')
 }
 
 export async function signInWithGoogle(next: string = '/') {
@@ -63,19 +82,24 @@ export async function signInWithGoogle(next: string = '/') {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
     const callbackUrl = `${baseUrl}/auth/callback?next=${encodeURIComponent(next)}`
 
-    const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-            redirectTo: callbackUrl,
-        },
-    })
+    try {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: callbackUrl,
+            },
+        })
 
-    if (error) {
-        console.error('Google Auth Error:', error)
-        redirect('/login?error=Google login failed')
-    }
+        if (error) {
+            console.error('Google Auth Error:', error)
+            redirect('/login?error=Google login failed. Please try again.')
+        }
 
-    if (data.url) {
-        redirect(data.url)
+        if (data.url) {
+            redirect(data.url)
+        }
+    } catch (error: any) {
+        console.error('Google OAuth error:', error)
+        redirect('/login?error=Connection failed. Please check your internet connection.')
     }
 }
