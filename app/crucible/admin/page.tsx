@@ -65,6 +65,12 @@ interface Question {
     created_at: string;
     updated_at: string;
     svg_scales?: Record<string, number>;
+    flags?: Array<{
+        type: 'latex_error' | 'table_error' | 'mismatch' | 'solution_incorrect' | 'other';
+        note: string;
+        flagged_at: string;
+        resolved: boolean;
+    }>;
 }
 
 interface Chapter {
@@ -97,31 +103,31 @@ export default function AdminPage() {
     const [svgScaleOverrides, setSvgScaleOverrides] = useState<Record<string, number>>({});
     const scaleDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [reclassifying, setReclassifying] = useState(false);
-    
+
     // Bulk selection
     const [bulkMode, setBulkMode] = useState(false);
     const [selectedQuestions, setSelectedQuestions] = useState<Set<string>>(new Set());
-    
+
     // Tag suggestions
     const [showTagSuggestions, setShowTagSuggestions] = useState(false);
     const [tagSuggestions, setTagSuggestions] = useState<string[]>([]);
     const [aiAnalyzing, setAiAnalyzing] = useState(false);
-    
+
     // Analytics
     const [showAnalytics, setShowAnalytics] = useState(false);
     const [showExport, setShowExport] = useState(false);
-    
+
     // LaTeX Validation
     const [questionLatexValidation, setQuestionLatexValidation] = useState<LaTeXValidationResult | null>(null);
     const [solutionLatexValidation, setSolutionLatexValidation] = useState<LaTeXValidationResult | null>(null);
-    
+
     // Filters
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedChapterFilter, setSelectedChapterFilter] = useState('all');
     const [selectedTypeFilter, setSelectedTypeFilter] = useState('all');
     const [selectedSourceFilter, setSelectedSourceFilter] = useState('all');
     const [selectedShiftFilter, setSelectedShiftFilter] = useState('all');
-    
+
     // Filter state (continued)
     const [selectedTopPYQFilter, setSelectedTopPYQFilter] = useState('all');
     const [selectedDifficultyFilter, setSelectedDifficultyFilter] = useState('all');
@@ -130,13 +136,18 @@ export default function AdminPage() {
     const [selectedPaperFilter, setSelectedPaperFilter] = useState('all');
 
     // Get chapter-specific tags from taxonomy
-    const [availableTags, setAvailableTags] = useState<Array<{id: string, name: string}>>([]);
-    
+    const [availableTags, setAvailableTags] = useState<Array<{ id: string, name: string }>>([]);
+
+    // Flag state
+    const [flagModalOpen, setFlagModalOpen] = useState(false);
+    const [flagReason, setFlagReason] = useState('latex_error');
+    const [flagNote, setFlagNote] = useState('');
+
     // Audio recording state
     const [isRecording, setIsRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-    
+
     // Helper: get scale for a field from the selected question or local override
     const getSvgScale = (field: string): number => {
         if (svgScaleOverrides[field] !== undefined) return svgScaleOverrides[field];
@@ -217,7 +228,7 @@ export default function AdminPage() {
     useEffect(() => {
         loadData(0);
     }, [selectedChapterFilter, selectedTypeFilter, selectedDifficultyFilter, selectedSourceFilter]);
-    
+
     // Update available tags when selected question changes
     useEffect(() => {
         const currentQuestion = questions.find(q => q._id === selectedQuestionId);
@@ -263,7 +274,7 @@ export default function AdminPage() {
 
             const qData = await qRes.json();
             const cData = await cRes.json();
-            
+
             if (qData.success) {
                 setQuestions(qData.data.sort((a: Question, b: Question) => a.display_id.localeCompare(b.display_id)));
                 setTotalCount(qData.pagination?.total ?? qData.data.length);
@@ -421,7 +432,7 @@ export default function AdminPage() {
         if (!tagId) return { valid: false, warning: 'Tag is required' };
         if (!tagId.startsWith('tag_')) return { valid: false, warning: 'Tag must start with tag_' };
         // Check if tag belongs to the selected chapter
-        const isValidTag = TAXONOMY_FROM_CSV.some(node => 
+        const isValidTag = TAXONOMY_FROM_CSV.some(node =>
             node.id === tagId && node.parent_id === chapterId && node.type === 'topic'
         );
         if (!isValidTag) return { valid: true, warning: 'Tag may not belong to this chapter' };
@@ -494,7 +505,7 @@ export default function AdminPage() {
     const filteredQuestions = questions.filter(q => {
         if (searchQuery) {
             const query = searchQuery.toLowerCase();
-            if (!q.display_id.toLowerCase().includes(query) && 
+            if (!q.display_id.toLowerCase().includes(query) &&
                 !q.question_text.markdown.toLowerCase().includes(query)) return false;
         }
         if (selectedChapterFilter !== 'all' && q.metadata.chapter_id !== selectedChapterFilter) return false;
@@ -527,9 +538,11 @@ export default function AdminPage() {
         if (selectedTagStatusFilter !== 'all') {
             const hasChapter = !!q.metadata.chapter_id;
             const hasPrimaryTag = q.metadata.tags && q.metadata.tags.length > 0;
+            const hasActiveFlags = q.flags?.some(f => !f.resolved);
             if (selectedTagStatusFilter === 'untagged' && hasChapter && hasPrimaryTag) return false;
             if (selectedTagStatusFilter === 'no-chapter' && hasChapter) return false;
             if (selectedTagStatusFilter === 'no-tag' && (!hasChapter || hasPrimaryTag)) return false;
+            if (selectedTagStatusFilter === 'flagged' && !hasActiveFlags) return false;
         }
         return true;
     });
@@ -554,6 +567,34 @@ export default function AdminPage() {
     const noChapterCount = questions.filter(q => !q.metadata.chapter_id).length;
     const noTagCount = questions.filter(q => q.metadata.chapter_id && !(q.metadata.tags && q.metadata.tags.length > 0)).length;
 
+    const submitFlag = async () => {
+        if (!selectedQuestion) return;
+        await handleUpdate(selectedQuestion._id, {
+            add_flag: { type: flagReason, note: flagNote }
+        } as any);
+        setFlagModalOpen(false);
+        setFlagReason('latex_error');
+        setFlagNote('');
+
+        const newFlag = { type: flagReason as any, note: flagNote, flagged_at: new Date().toISOString(), resolved: false };
+        setQuestions(prev => prev.map(q =>
+            q._id === selectedQuestion._id ? { ...q, flags: [...(q.flags || []), newFlag] } : q
+        ));
+    };
+
+    const resolveFlags = async () => {
+        if (!selectedQuestion) return;
+        await handleUpdate(selectedQuestion._id, {
+            resolve_flags: true
+        } as any);
+        setQuestions(prev => prev.map(q =>
+            q._id === selectedQuestion._id ? {
+                ...q,
+                flags: (q.flags || []).map(f => ({ ...f, resolved: true }))
+            } : q
+        ));
+    };
+
     return (
         <div className="fixed inset-0 z-50 flex flex-col h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden">
             {/* TOP BAR — two rows */}
@@ -573,9 +614,8 @@ export default function AdminPage() {
                         <Plus size={13} />
                     </button>
                     <button onClick={() => setBulkMode(!bulkMode)} title="Bulk Mode"
-                        className={`flex items-center justify-center w-7 h-7 rounded-lg transition shrink-0 ${
-                            bulkMode ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white' : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
-                        }`}>
+                        className={`flex items-center justify-center w-7 h-7 rounded-lg transition shrink-0 ${bulkMode ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white' : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
+                            }`}>
                         {bulkMode ? <CheckSquare size={13} /> : <Square size={13} />}
                     </button>
                     <button onClick={() => setShowAnalytics(!showAnalytics)} title="Analytics"
@@ -673,10 +713,10 @@ export default function AdminPage() {
                                 const hasPrimaryTag = q.metadata.tags && q.metadata.tags.length > 0;
                                 const statusDot = !hasChapter ? '🔴' : !hasPrimaryTag ? '🟡' : '🟢';
                                 const src = q.metadata?.exam_source;
-                                const srcLabel = src ? ` [${src.exam?.replace('JEE ','') ?? ''} ${src.year ?? ''} ${src.shift ? src.shift[0] : ''}]` : '';
+                                const srcLabel = src ? ` [${src.exam?.replace('JEE ', '') ?? ''} ${src.year ?? ''} ${src.shift ? src.shift[0] : ''}]` : '';
                                 return (
                                     <option key={q._id} value={q._id}>
-                                        {statusDot} {q.display_id}{srcLabel}: {q.question_text.markdown.substring(0, 40)}...
+                                        {statusDot} {q.display_id}{srcLabel}: {q.question_text?.markdown?.substring(0, 40) || "No text"}...
                                     </option>
                                 );
                             })}
@@ -759,7 +799,7 @@ export default function AdminPage() {
                         className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
                     >
                         <option value="all">All Years</option>
-                        {[2024,2023,2022,2021,2020,2019,2018,2017,2016,2015].map(y => (
+                        {[2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015].map(y => (
                             <option key={y} value={String(y)}>{y}</option>
                         ))}
                     </select>
@@ -775,9 +815,8 @@ export default function AdminPage() {
                     <select
                         value={selectedPaperFilter}
                         onChange={(e) => setSelectedPaperFilter(e.target.value)}
-                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${
-                            selectedPaperFilter !== 'all' ? 'border-purple-500 text-purple-300' : 'border-gray-700/50'
-                        }`}
+                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedPaperFilter !== 'all' ? 'border-purple-500 text-purple-300' : 'border-gray-700/50'
+                            }`}
                     >
                         <option value="all">📄 All Papers</option>
                         {distinctPapers.map(([key, label]) => (
@@ -796,14 +835,14 @@ export default function AdminPage() {
                     <select
                         value={selectedTagStatusFilter}
                         onChange={(e) => setSelectedTagStatusFilter(e.target.value)}
-                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs outline-none ${
-                            selectedTagStatusFilter !== 'all' ? 'border-red-500 text-red-300' : 'border-gray-700/50'
-                        }`}
+                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs outline-none ${selectedTagStatusFilter !== 'all' ? 'border-red-500 text-red-300' : 'border-gray-700/50'
+                            }`}
                     >
                         <option value="all">Tags ✓</option>
                         <option value="untagged">⚠ Untagged ({untaggedCount})</option>
                         <option value="no-chapter">🔴 No Chapter ({noChapterCount})</option>
                         <option value="no-tag">🟡 No Tag ({noTagCount})</option>
+                        <option value="flagged">🚨 Flagged ({questions.filter(q => q.flags?.some(f => !f.resolved)).length})</option>
                     </select>
                     {(selectedChapterFilter !== 'all' || selectedTypeFilter !== 'all' || selectedSourceFilter !== 'all' || selectedTopPYQFilter !== 'all' || selectedDifficultyFilter !== 'all' || selectedTagStatusFilter !== 'all' || selectedYearFilter !== 'all' || selectedShiftFilter !== 'all' || selectedPaperFilter !== 'all') && (
                         <button
@@ -856,14 +895,13 @@ export default function AdminPage() {
 
                                 <select
                                     value={selectedQuestion.metadata.difficulty}
-                                    onChange={(e) => handleUpdate(selectedQuestion._id, { 
+                                    onChange={(e) => handleUpdate(selectedQuestion._id, {
                                         metadata: { ...selectedQuestion.metadata, difficulty: e.target.value as any }
                                     })}
-                                    className={`bg-gray-800/50 border rounded-lg px-3 py-2 text-sm font-medium ${
-                                        selectedQuestion.metadata.difficulty === 'Hard' ? 'border-red-500/50 text-red-400' :
+                                    className={`bg-gray-800/50 border rounded-lg px-3 py-2 text-sm font-medium ${selectedQuestion.metadata.difficulty === 'Hard' ? 'border-red-500/50 text-red-400' :
                                         selectedQuestion.metadata.difficulty === 'Medium' ? 'border-orange-500/50 text-orange-400' :
-                                        'border-emerald-500/50 text-emerald-400'
-                                    }`}
+                                            'border-emerald-500/50 text-emerald-400'
+                                        }`}
                                 >
                                     <option value="Easy">Easy</option>
                                     <option value="Medium">Medium</option>
@@ -887,22 +925,31 @@ export default function AdminPage() {
                                         onClick={() => handleUpdate(selectedQuestion._id, {
                                             metadata: { ...selectedQuestion.metadata, is_top_pyq: !selectedQuestion.metadata.is_top_pyq }
                                         })}
-                                        className={`p-2 rounded-lg transition ${
-                                            selectedQuestion.metadata.is_top_pyq 
-                                                ? 'bg-amber-500/20 text-amber-400' 
-                                                : 'bg-gray-800/50 text-gray-500 hover:text-amber-400'
-                                        }`}
+                                        className={`p-2 rounded-lg transition ${selectedQuestion.metadata.is_top_pyq
+                                            ? 'bg-amber-500/20 text-amber-400'
+                                            : 'bg-gray-800/50 text-gray-500 hover:text-amber-400'
+                                            }`}
                                     >
                                         <Star size={18} fill={selectedQuestion.metadata.is_top_pyq ? "currentColor" : "none"} />
                                     </button>
 
                                     <button
+                                        onClick={() => setFlagModalOpen(true)}
+                                        className={`p-2 rounded-lg transition ${selectedQuestion.flags?.some(f => !f.resolved)
+                                            ? 'bg-red-500/20 text-red-500'
+                                            : 'bg-gray-800/50 text-gray-500 hover:text-red-400'
+                                            }`}
+                                        title="Flag Question"
+                                    >
+                                        <AlertTriangle size={18} />
+                                    </button>
+
+                                    <button
                                         onClick={() => handleDelete(selectedQuestion._id)}
-                                        className={`p-2 rounded-lg transition ${
-                                            deletingId === selectedQuestion._id 
-                                                ? 'bg-red-500 text-white' 
-                                                : 'bg-gray-800/50 text-gray-500 hover:text-red-400'
-                                        }`}
+                                        className={`p-2 rounded-lg transition ${deletingId === selectedQuestion._id
+                                            ? 'bg-red-500 text-white'
+                                            : 'bg-gray-800/50 text-gray-500 hover:text-red-400'
+                                            }`}
                                     >
                                         <Trash2 size={18} />
                                     </button>
@@ -928,7 +975,7 @@ export default function AdminPage() {
                                     <>
                                         {(() => {
                                             const es = selectedQuestion.metadata.exam_source;
-                                            const patchSrc = (patch: Partial<{exam:string;year:number;month:string;day:number;shift:string}>) => {
+                                            const patchSrc = (patch: Partial<{ exam: string; year: number; month: string; day: number; shift: string }>) => {
                                                 const merged = { exam: es?.exam ?? '', year: es?.year, month: es?.month, day: es?.day, shift: es?.shift, ...patch };
                                                 handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, exam_source: { ...merged, exam: merged.exam } } });
                                             };
@@ -946,7 +993,7 @@ export default function AdminPage() {
                                                         <label className="text-[10px] text-gray-500 block mb-1">Year</label>
                                                         <select value={es?.year ?? ''} onChange={(e) => patchSrc({ year: Number(e.target.value) })} className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none">
                                                             <option value="">Year</option>
-                                                            {[2025,2024,2023,2022,2021,2020,2019,2018,2017,2016,2015,2014,2013,2012,2011,2010].map(y => (
+                                                            {[2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010].map(y => (
                                                                 <option key={y} value={y}>{y}</option>
                                                             ))}
                                                         </select>
@@ -955,7 +1002,7 @@ export default function AdminPage() {
                                                         <label className="text-[10px] text-gray-500 block mb-1">Month</label>
                                                         <select value={es?.month ?? ''} onChange={(e) => patchSrc({ month: e.target.value })} className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none">
                                                             <option value="">Month</option>
-                                                            {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map(m => (
+                                                            {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(m => (
                                                                 <option key={m} value={m}>{m}</option>
                                                             ))}
                                                         </select>
@@ -1067,8 +1114,8 @@ export default function AdminPage() {
                                 <div>
                                     <label className="text-xs text-gray-500 mb-2 flex items-center justify-between">
                                         <span>Primary Concept Tag</span>
-                                        {selectedQuestion.metadata.tags[0]?.tag_id && (() => {
-                                            const validation = validateTag(selectedQuestion.metadata.tags[0].tag_id, selectedQuestion.metadata.chapter_id);
+                                        {selectedQuestion.metadata.tags?.[0]?.tag_id && (() => {
+                                            const validation = validateTag(selectedQuestion.metadata.tags![0].tag_id, selectedQuestion.metadata.chapter_id);
                                             return validation.warning ? (
                                                 <span className="text-xs text-yellow-400 flex items-center gap-1">
                                                     <AlertCircle size={10} /> {validation.warning}
@@ -1077,7 +1124,7 @@ export default function AdminPage() {
                                         })()}
                                     </label>
                                     <select
-                                        value={selectedQuestion.metadata.tags[0]?.tag_id || ''}
+                                        value={selectedQuestion.metadata.tags?.[0]?.tag_id || ''}
                                         onChange={(e) => handleUpdate(selectedQuestion._id, {
                                             metadata: {
                                                 ...selectedQuestion.metadata,
@@ -1099,6 +1146,24 @@ export default function AdminPage() {
                                     )}
                                 </div>
                             </div>
+
+                            {/* Active flags warning */}
+                            {selectedQuestion.flags?.some(f => !f.resolved) && (
+                                <div className="p-4 bg-red-900/20 border border-red-500/50 rounded-lg flex flex-col gap-2 relative">
+                                    <button onClick={resolveFlags} className="absolute top-2 right-2 px-3 py-1 bg-red-600/30 hover:bg-red-600/50 text-red-200 text-[10px] font-bold uppercase tracking-wider rounded transition">Resolve All</button>
+                                    <h4 className="text-xs font-bold text-red-400 uppercase tracking-wider flex items-center gap-2">
+                                        <AlertTriangle size={14} /> Active Flags
+                                    </h4>
+                                    <div className="space-y-2 mt-2">
+                                        {selectedQuestion.flags.filter(f => !f.resolved).map((f, i) => (
+                                            <div key={i} className="text-sm bg-red-950/40 p-2 rounded">
+                                                <div className="font-bold text-red-300 capitalize">{f.type.replace('_', ' ')}</div>
+                                                <div className="text-red-200">{f.note}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
 
                             {/* Question Text with SVG Upload */}
                             <div>
@@ -1162,11 +1227,10 @@ export default function AdminPage() {
                                         {selectedQuestion.options.filter(opt => opt && opt.id).map((opt) => (
                                             <div
                                                 key={opt.id}
-                                                className={`p-3 rounded-lg border-2 transition ${
-                                                    opt.is_correct
-                                                        ? 'bg-green-900/20 border-green-600/50'
-                                                        : 'bg-gray-800/30 border-gray-700/50 hover:border-gray-600/50'
-                                                }`}
+                                                className={`p-3 rounded-lg border-2 transition ${opt.is_correct
+                                                    ? 'bg-green-900/20 border-green-600/50'
+                                                    : 'bg-gray-800/30 border-gray-700/50 hover:border-gray-600/50'
+                                                    }`}
                                             >
                                                 <div className="flex items-center justify-between mb-2">
                                                     <button
@@ -1183,11 +1247,10 @@ export default function AdminPage() {
                                                             ));
                                                             handleUpdate(selectedQuestion._id, { options: newOptions });
                                                         }}
-                                                        className={`text-xs font-bold px-2 py-1 rounded-lg transition ${
-                                                            opt.is_correct
-                                                                ? 'bg-green-500 text-white'
-                                                                : 'bg-gray-700 text-gray-400 hover:bg-gray-600 hover:text-white'
-                                                        }`}
+                                                        className={`text-xs font-bold px-2 py-1 rounded-lg transition ${opt.is_correct
+                                                            ? 'bg-green-500 text-white'
+                                                            : 'bg-gray-700 text-gray-400 hover:bg-gray-600 hover:text-white'
+                                                            }`}
                                                     >
                                                         {opt.id.toUpperCase()} {opt.is_correct ? '✓' : '○'}
                                                     </button>
@@ -1217,7 +1280,7 @@ export default function AdminPage() {
                                                     className="w-full bg-gray-900/50 border border-gray-700/50 rounded px-2 py-1.5 text-base focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 hover:border-gray-600 font-mono mb-2 text-gray-100"
                                                     placeholder="✏️ Click to edit option text..."
                                                 />
-                                                <SVGScaleControls 
+                                                <SVGScaleControls
                                                     compact={true}
                                                     step={5}
                                                     initialScale={getSvgScale(`option_${opt.id}`)}
@@ -1352,20 +1415,18 @@ export default function AdminPage() {
                                 <div className="bg-gray-900/50 rounded-xl border border-gray-800/50 p-6">
                                     <div className="flex items-center gap-2 mb-4">
                                         <span className="text-xs font-mono text-purple-400">{selectedQuestion.display_id}</span>
-                                        <span className={`text-xs px-2 py-0.5 rounded ${
-                                            QUESTION_TYPES.find(t => t.id === selectedQuestion.type)?.color
-                                        }`}>
+                                        <span className={`text-xs px-2 py-0.5 rounded ${QUESTION_TYPES.find(t => t.id === selectedQuestion.type)?.color
+                                            }`}>
                                             {selectedQuestion.type}
                                         </span>
-                                        <span className={`text-xs px-2 py-0.5 rounded ${
-                                            selectedQuestion.metadata.difficulty === 'Hard' ? 'bg-red-500/20 text-red-400' :
+                                        <span className={`text-xs px-2 py-0.5 rounded ${selectedQuestion.metadata.difficulty === 'Hard' ? 'bg-red-500/20 text-red-400' :
                                             selectedQuestion.metadata.difficulty === 'Medium' ? 'bg-orange-500/20 text-orange-400' :
-                                            'bg-green-500/20 text-green-400'
-                                        }`}>
+                                                'bg-green-500/20 text-green-400'
+                                            }`}>
                                             {selectedQuestion.metadata.difficulty}
                                         </span>
                                     </div>
-                                    <MathRenderer 
+                                    <MathRenderer
                                         markdown={selectedQuestion.question_text.markdown}
                                         className="text-gray-300"
                                         fontSize={20}
@@ -1373,37 +1434,34 @@ export default function AdminPage() {
                                     />
                                     {selectedQuestion.type !== 'NVT' && (() => {
                                         // Intelligent layout: 2x2 grid for images/short text, vertical for long text
-                                        const hasImages = selectedQuestion.options.some(opt => 
+                                        const hasImages = selectedQuestion.options.some(opt =>
                                             opt.text.includes('![') || opt.text.includes('<img') || opt.text.includes('.svg') || opt.text.includes('.png')
                                         );
                                         const maxTextLength = Math.max(...selectedQuestion.options.map(opt => opt.text.length));
                                         const avgTextLength = selectedQuestion.options.reduce((sum, opt) => sum + opt.text.length, 0) / selectedQuestion.options.length;
-                                        
+
                                         // Use grid only for image options or truly short labels (e.g. "A", "B", numbers)
                                         // Statement I/II options (~45-52 chars) and chemistry equations must be list view
                                         const useGrid = hasImages || (avgTextLength < 20 && maxTextLength < 25);
-                                        
+
                                         return (
-                                            <div className={`mt-4 ${
-                                                useGrid 
-                                                    ? 'grid grid-cols-2 gap-3' 
-                                                    : 'space-y-2'
-                                            }`}>
+                                            <div className={`mt-4 ${useGrid
+                                                ? 'grid grid-cols-2 gap-3'
+                                                : 'space-y-2'
+                                                }`}>
                                                 {selectedQuestion.options.map(opt => (
                                                     <div key={opt.id} className="flex items-center gap-3">
-                                                        <div className={`flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center text-sm font-semibold ${
-                                                            opt.is_correct
-                                                                ? 'bg-green-600/30 text-green-300 border border-green-500/60'
-                                                                : 'bg-gray-700/40 text-gray-300 border border-gray-600/60'
-                                                        }`}>
+                                                        <div className={`flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center text-sm font-semibold ${opt.is_correct
+                                                            ? 'bg-green-600/30 text-green-300 border border-green-500/60'
+                                                            : 'bg-gray-700/40 text-gray-300 border border-gray-600/60'
+                                                            }`}>
                                                             {opt.id.toUpperCase()}
                                                         </div>
-                                                        <div className={`flex-1 p-3 rounded-lg border ${
-                                                            opt.is_correct
-                                                                ? 'bg-green-900/20 border-green-600/50'
-                                                                : 'bg-gray-800/30 border-gray-700/50'
-                                                        }`}>
-                                                            <MathRenderer 
+                                                        <div className={`flex-1 p-3 rounded-lg border ${opt.is_correct
+                                                            ? 'bg-green-900/20 border-green-600/50'
+                                                            : 'bg-gray-800/30 border-gray-700/50'
+                                                            }`}>
+                                                            <MathRenderer
                                                                 markdown={opt.text}
                                                                 className="text-gray-300 option-text"
                                                                 fontSize={20}
@@ -1428,7 +1486,7 @@ export default function AdminPage() {
                                             ))}
                                         </div>
                                     )}
-                                    <MathRenderer 
+                                    <MathRenderer
                                         markdown={selectedQuestion.solution?.text_markdown || ''}
                                         className="text-gray-300 solution-text"
                                         fontSize={20}
@@ -1462,6 +1520,50 @@ export default function AdminPage() {
                     onClose={() => setShowExport(false)}
                 />
             )}
+
+            {/* Flag Modal */}
+            {flagModalOpen && (
+                <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4">
+                    <div className="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl flex flex-col">
+                        <div className="p-4 border-b border-gray-800 flex items-center justify-between bg-gray-900/50">
+                            <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                                <AlertTriangle className="text-red-500" size={20} /> Flag Question
+                            </h2>
+                            <button onClick={() => setFlagModalOpen(false)} className="text-gray-500 hover:text-white transition">✕</button>
+                        </div>
+                        <div className="p-6 space-y-4">
+                            <div>
+                                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">Issue Type</label>
+                                <select
+                                    value={flagReason}
+                                    onChange={(e) => setFlagReason(e.target.value)}
+                                    className="w-full bg-gray-950 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none text-white"
+                                >
+                                    <option value="latex_error">LaTeX not rendering properly</option>
+                                    <option value="table_error">Table formatting issue</option>
+                                    <option value="mismatch">Question text/options mismatch</option>
+                                    <option value="solution_incorrect">Solution is incorrect</option>
+                                    <option value="other">Other issue</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">Remarks (Optional)</label>
+                                <textarea
+                                    value={flagNote}
+                                    onChange={(e) => setFlagNote(e.target.value)}
+                                    placeholder="Add specific details for the content team..."
+                                    className="w-full bg-gray-950 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:border-red-500 outline-none text-white resize-y min-h-[100px]"
+                                />
+                            </div>
+                        </div>
+                        <div className="p-4 border-t border-gray-800 bg-gray-900/50 flex justify-end gap-3">
+                            <button onClick={() => setFlagModalOpen(false)} className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition">Cancel</button>
+                            <button onClick={submitFlag} className="px-6 py-2 bg-red-600 hover:bg-red-500 text-white text-sm font-bold rounded-xl transition shadow-lg shadow-red-900/20">Submit Flag</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
+
