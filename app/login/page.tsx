@@ -22,8 +22,8 @@ function LoginContent() {
         setIsGoogleLoading(true)
         setMessage(null)
         
-        // Redirect to our OAuth proxy endpoint
-        window.location.href = `/api/auth/google?next=${encodeURIComponent(nextPath)}`
+        // Redirect to our Google OAuth flow (callback on our domain, not Supabase)
+        window.location.href = `/api/auth/google-direct/start?next=${encodeURIComponent(nextPath)}`
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
