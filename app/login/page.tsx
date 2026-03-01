@@ -4,8 +4,9 @@ import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Mail, Lock, ArrowRight, Loader2, Sparkles, CheckCircle2, X } from 'lucide-react'
-import { login, signup, signInWithGoogle } from './actions'
+import { createClient } from '../utils/supabase/client'
 import Link from 'next/link'
+import DnsBlockedBanner from '../components/DnsBlockedBanner'
 
 function LoginContent() {
     const [isLogin, setIsLogin] = useState(true)
@@ -14,32 +15,86 @@ function LoginContent() {
     const [isLoading, setIsLoading] = useState(false)
     const [isGoogleLoading, setIsGoogleLoading] = useState(false)
     const [message, setMessage] = useState<{ text: string; type: 'error' | 'success' } | null>(null)
+    const [showDnsBanner, setShowDnsBanner] = useState(false)
+    const [failureCount, setFailureCount] = useState(0)
 
     const handleGoogleLogin = async () => {
         setIsGoogleLoading(true)
         setMessage(null)
-        try {
-            await signInWithGoogle(nextPath)
-        } catch (error: any) {
-            // Next.js redirect() throws internally — let it propagate
-            if (error?.digest?.startsWith('NEXT_REDIRECT')) throw error
-            setMessage({ text: 'Failed to initiate Google login', type: 'error' })
-            setIsGoogleLoading(false)
-        }
+        
+        // Redirect to our Google OAuth flow (callback on our domain, not Supabase)
+        window.location.href = `/api/auth/google-direct/start?next=${encodeURIComponent(nextPath)}`
     }
 
-    const handleSubmit = async (formData: FormData) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
         setIsLoading(true)
         setMessage(null)
 
-        const action = isLogin ? login : signup
-        const result = await action(formData)
+        const formData = new FormData(e.currentTarget)
+        const email = formData.get('email') as string
+        const password = formData.get('password') as string
+        const next = formData.get('next') as string || '/'
+        
+        try {
+            const supabase = createClient()
+            
+            if (!supabase) {
+                setMessage({ text: 'Authentication service not configured', type: 'error' })
+                setIsLoading(false)
+                return
+            }
 
-        setIsLoading(false)
-        if (result?.error) {
-            setMessage({ text: result.error, type: 'error' })
-        } else if (!isLogin) {
-            setMessage({ text: 'Check your email to confirm your account!', type: 'success' })
+            if (isLogin) {
+                const { error } = await supabase.auth.signInWithPassword({
+                    email,
+                    password,
+                })
+
+                if (error) {
+                    const errorMsg = error.message.includes('Invalid login credentials') 
+                        ? 'Invalid email or password' 
+                        : error.message
+                    setMessage({ text: errorMsg, type: 'error' })
+                    setIsLoading(false)
+                    return
+                }
+
+                window.location.href = next
+            } else {
+                const { error } = await supabase.auth.signUp({
+                    email,
+                    password,
+                })
+
+                if (error) {
+                    const errorMsg = error.message.includes('already registered')
+                        ? 'This email is already registered. Please sign in instead.'
+                        : error.message
+                    setMessage({ text: errorMsg, type: 'error' })
+                    setIsLoading(false)
+                    return
+                }
+
+                setMessage({ text: 'Check your email to confirm your account!', type: 'success' })
+                setIsLoading(false)
+            }
+            
+            setFailureCount(0)
+        } catch (error: any) {
+            console.error('Auth error:', error)
+            setIsLoading(false)
+            const newCount = failureCount + 1
+            setFailureCount(newCount)
+            
+            if (newCount >= 2) {
+                setShowDnsBanner(true)
+            }
+            
+            setMessage({ 
+                text: 'Connection failed. Please check your internet connection.', 
+                type: 'error' 
+            })
         }
     }
 
@@ -86,6 +141,9 @@ function LoginContent() {
                             </p>
                         </div>
 
+                        {/* DNS Blocked Banner */}
+                        {showDnsBanner && <DnsBlockedBanner />}
+
                         {/* Toggle Switch */}
                         <div className="flex p-1 bg-black/40 rounded-xl mb-8 relative border border-white/5">
                             <motion.div
@@ -107,7 +165,7 @@ function LoginContent() {
                             </button>
                         </div>
 
-                        <form action={handleSubmit} className="space-y-5">
+                        <form onSubmit={handleSubmit} className="space-y-5">
                             <input type="hidden" name="next" value={nextPath} />
                             <div className="space-y-1.5">
                                 <label className="text-xs font-semibold text-gray-400 ml-1 uppercase tracking-wider">Email</label>

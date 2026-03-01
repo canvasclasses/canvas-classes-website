@@ -7,6 +7,7 @@ import { Chapter, Question } from './types';
 import BrowseView from './BrowseView';
 import TestView from './TestView';
 import TestConfigModal, { DifficultyMix } from './TestConfigModal';
+import AuthRequiredDialog from './AuthRequiredDialog';
 
 interface CrucibleLandingProps { chapters: Chapter[]; isLoggedIn: boolean; }
 type View = 'landing' | 'shloka' | 'browse' | 'test' | 'test-config';
@@ -515,6 +516,7 @@ export default function CrucibleLanding({ chapters, isLoggedIn }: CrucibleLandin
   const [loading, setLoading] = useState(false);
   const [pendingMode, setPendingMode] = useState<'browse' | 'test' | null>(null);
   const [showTestConfig, setShowTestConfig] = useState(false);
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [topPYQLoading, setTopPYQLoading] = useState(false);
   const [topPYQFilter, setTopPYQFilter] = useState(false);
   const [jeeMode, setJeeMode] = useState<'mains' | 'advanced'>('mains');
@@ -589,6 +591,10 @@ export default function CrucibleLanding({ chapters, isLoggedIn }: CrucibleLandin
   };
 
   const launchTestConfig = () => {
+    if (!isLoggedIn) {
+      setShowAuthDialog(true);
+      return;
+    }
     if (selQ === 0) { notify('Selected chapters have no questions yet.'); return; }
     setShowTestConfig(true);
   };
@@ -837,6 +843,9 @@ export default function CrucibleLanding({ chapters, isLoggedIn }: CrucibleLandin
 
         {/* TEST CONFIG MODAL */}
         {showTestConfig && <TestConfigModal maxQ={selQ} onStart={startTest} onClose={() => setShowTestConfig(false)} />}
+
+        {/* AUTH REQUIRED DIALOG */}
+        {showAuthDialog && <AuthRequiredDialog onClose={() => setShowAuthDialog(false)} />}
 
         {/* TOAST */}
         {toast && (
