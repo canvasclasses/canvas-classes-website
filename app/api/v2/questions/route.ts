@@ -2,10 +2,21 @@ import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
-import { Chapter } from '@/lib/models/Chapter';
 import { AuditLog } from '@/lib/models/AuditLog';
+import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 import { z } from 'zod';
 import { createServerClient } from '@supabase/ssr';
+
+// Canonical chapter_id → display_id prefix map (single source of truth: taxonomyData_from_csv.ts)
+const CHAPTER_PREFIX_MAP: Record<string, string> = {
+  ch11_atom: 'ATOM', ch11_bonding: 'BOND', ch11_chem_eq: 'CEQ', ch11_goc: 'GOC',
+  ch11_hydrocarbon: 'HC', ch11_ionic_eq: 'IEQ', ch11_mole: 'MOLE', ch11_pblock: 'PB11',
+  ch11_periodic: 'PERI', ch11_prac_org: 'POC', ch11_redox: 'RDX', ch11_thermo: 'THERMO',
+  ch12_alcohols: 'ALCO', ch12_amines: 'AMIN', ch12_biomolecules: 'BIO',
+  ch12_carbonyl: 'ALDO', ch12_coord: 'CORD', ch12_dblock: 'DNF', ch12_electrochem: 'EC',
+  ch12_haloalkanes: 'HALO', ch12_kinetics: 'CK', ch12_pblock: 'PB12', ch12_phenols: 'PHEN',
+  ch12_salt: 'SALT', ch12_solutions: 'SOL',
+};
 
 // Simple in-memory rate limiter (per IP, resets every minute)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
@@ -30,7 +41,7 @@ async function getAuthenticatedUser(request: NextRequest) {
   // If Supabase is not configured (local dev), treat as authenticated
   if (!supabaseUrl || !supabaseAnonKey) return { id: 'local', email: 'local' };
   const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
-    cookies: { getAll: () => request.cookies.getAll(), setAll: () => {} },
+    cookies: { getAll: () => request.cookies.getAll(), setAll: () => { } },
   });
   const { data: { user } } = await supabase.auth.getUser();
   return user;
@@ -110,7 +121,7 @@ export async function GET(request: NextRequest) {
     }
 
     await connectToDatabase();
-    
+
     const { searchParams } = new URL(request.url);
     const chapter_ids = searchParams.getAll('chapter_id');
     const status = searchParams.get('status');
@@ -122,7 +133,7 @@ export async function GET(request: NextRequest) {
     const requestedLimit = parseInt(searchParams.get('limit') || (isAuthenticated ? '5000' : '50'));
     const limit = isAuthenticated ? requestedLimit : Math.min(requestedLimit, 50); // cap public at 50
     const skip = parseInt(searchParams.get('skip') || '0');
-    
+
     // Build query
     const query: any = { deleted_at: null };
     if (chapter_ids.length === 1) query['metadata.chapter_id'] = chapter_ids[0];
@@ -132,13 +143,13 @@ export async function GET(request: NextRequest) {
     if (difficulty) query['metadata.difficulty'] = difficulty;
     if (is_pyq === 'true') query['metadata.is_pyq'] = true;
     if (is_top_pyq === 'true') query['metadata.is_top_pyq'] = true;
-    
+
     const questions = await QuestionV2.find(query)
       .sort({ created_at: -1 })
       .limit(limit)
       .skip(skip)
       .lean();
-    
+
     const total = await QuestionV2.countDocuments(query);
 
     return NextResponse.json({
@@ -151,7 +162,7 @@ export async function GET(request: NextRequest) {
         hasMore: skip + questions.length < total
       }
     });
-    
+
   } catch (error) {
     console.error('Error fetching questions:', error);
     return NextResponse.json(
@@ -164,16 +175,18 @@ export async function GET(request: NextRequest) {
 // POST - Create new question
 export async function POST(request: NextRequest) {
   try {
-    // Require authentication for question creation
+    // Require authentication (with localhost dev bypass)
     const user = await getAuthenticatedUser(request);
-    if (!user) {
+    const host = request.headers.get('host') || '';
+    const isLocalDev = host.startsWith('localhost') || host.startsWith('127.0.0.1');
+    if (!user && !isLocalDev) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
     await connectToDatabase();
-    
+
     const body = await request.json();
-    
+
     // Validate input
     const validation = QuestionSchema.safeParse(body);
     if (!validation.success) {
@@ -182,29 +195,48 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    
+
     const data = validation.data;
-    
+
     // Generate UUID
     const questionId = uuidv4();
-    
-    // Resolve display_id: use caller-supplied value, or auto-generate from chapter sequence
+
+    // Validate chapter_id against taxonomy (code is the single source of truth)
+    const chapterNode = TAXONOMY_FROM_CSV.find(
+      n => n.type === 'chapter' && n.id === data.metadata.chapter_id
+    );
+    if (!chapterNode) {
+      return NextResponse.json(
+        { success: false, error: `Invalid chapter_id: '${data.metadata.chapter_id}' does not exist in taxonomy` },
+        { status: 400 }
+      );
+    }
+
+    // Resolve display_id: use caller-supplied value, or auto-generate from max existing sequence
     let display_id = (data as any).display_id as string | undefined;
-    const chapter = await Chapter.findById(data.metadata.chapter_id);
 
     if (!display_id) {
-      if (!chapter) {
-        return NextResponse.json(
-          { success: false, error: 'Chapter not found and no display_id provided' },
-          { status: 404 }
-        );
-      }
-      // Derive a readable prefix from the chapter name (e.g. "Some Basic Concepts" → "MOLE" via chapter _id suffix)
-      const idSuffix = chapter._id.split('_').pop()?.toUpperCase().substring(0, 4) ?? 'QUES';
-      const sequence = chapter.question_sequence + 1;
-      display_id = `${idSuffix}-${String(sequence).padStart(3, '0')}`;
+      const prefix = CHAPTER_PREFIX_MAP[data.metadata.chapter_id]
+        ?? data.metadata.chapter_id.split('_').pop()!.toUpperCase().substring(0, 4);
+
+      // Find the highest existing sequence number for this prefix by querying questions_v2
+      const lastQ = await QuestionV2.findOne(
+        { display_id: { $regex: `^${prefix}-\\d+$` }, deleted_at: null },
+        { display_id: 1 }
+      ).sort({ display_id: -1 }).lean();
+
+      // Also check soft-deleted to avoid reusing a number
+      const lastQAny = await QuestionV2.findOne(
+        { display_id: { $regex: `^${prefix}-\\d+$` } },
+        { display_id: 1 }
+      ).sort({ display_id: -1 }).lean();
+
+      const maxActive  = lastQ    ? parseInt((lastQ    as any).display_id.split('-')[1], 10) : 0;
+      const maxAll     = lastQAny ? parseInt((lastQAny as any).display_id.split('-')[1], 10) : 0;
+      const nextSeq    = Math.max(maxActive, maxAll) + 1;
+      display_id = `${prefix}-${String(nextSeq).padStart(3, '0')}`;
     }
-    
+
     // Collect all asset IDs
     const asset_ids: string[] = [];
     if (data.solution.asset_ids) {
@@ -217,14 +249,14 @@ export async function POST(request: NextRequest) {
         if (opt.asset_ids) asset_ids.push(...opt.asset_ids);
       });
     }
-    
-    // Create question
-    const question = new QuestionV2({
+
+    // Create question document
+    const questionDoc = {
       _id: questionId,
       display_id,
       question_text: {
         markdown: data.question_text.markdown,
-        latex_validated: false // Will be validated separately
+        latex_validated: false
       },
       type: data.type,
       options: data.options || [],
@@ -241,67 +273,52 @@ export async function POST(request: NextRequest) {
       quality_score: 50,
       needs_review: false,
       version: 1,
-      created_by: 'admin', // TODO: Get from auth
+      created_by: 'admin',
       updated_by: 'admin',
+      created_at: new Date(),
+      updated_at: new Date(),
+      deleted_at: null,
       asset_ids
-    });
-    
-    await question.save();
-    
-    // Update chapter sequence and stats (only when chapter was found)
-    if (!chapter) {
-      const auditLog = new AuditLog({
-        _id: uuidv4(),
+    };
+
+    // Use insertOne on the raw collection to avoid Mongoose middleware issues
+    const col = QuestionV2.collection;
+    await col.insertOne(questionDoc as any);
+
+    // Chapter stats in MongoDB are no longer updated — taxonomy is code-based (taxonomyData_from_csv.ts).
+    // Stats are computed on-demand by querying questions_v2 directly.
+
+    // Create audit log (non-blocking)
+    try {
+      await AuditLog.collection.insertOne({
+        _id: uuidv4() as any,
         entity_type: 'question',
         entity_id: questionId,
         action: 'create',
-        changes: [{ field: 'question', old_value: null, new_value: 'Created new question' }],
+        changes: [{
+          field: 'question',
+          old_value: null,
+          new_value: 'Created new question'
+        }],
         user_id: 'admin',
         user_email: 'admin@canvasclasses.com',
         timestamp: new Date(),
         can_rollback: false
       });
-      await auditLog.save();
-      return NextResponse.json({ success: true, data: question, message: 'Question created successfully' }, { status: 201 });
+    } catch (auditErr) {
+      console.warn('Audit log creation failed (non-critical):', auditErr);
     }
-    await Chapter.findByIdAndUpdate(chapter._id, {
-      $inc: { 
-        question_sequence: 1,
-        'stats.total_questions': 1,
-        'stats.draft_questions': data.status === 'draft' ? 1 : 0,
-        'stats.published_questions': data.status === 'published' ? 1 : 0
-      }
-    });
-    
-    // Create audit log
-    const auditLog = new AuditLog({
-      _id: uuidv4(),
-      entity_type: 'question',
-      entity_id: questionId,
-      action: 'create',
-      changes: [{
-        field: 'question',
-        old_value: null,
-        new_value: 'Created new question'
-      }],
-      user_id: 'admin',
-      user_email: 'admin@canvasclasses.com',
-      timestamp: new Date(),
-      can_rollback: false
-    });
-    
-    await auditLog.save();
-    
+
     return NextResponse.json({
       success: true,
-      data: question,
+      data: questionDoc,
       message: 'Question created successfully'
     }, { status: 201 });
-    
-  } catch (error) {
+
+  } catch (error: any) {
     console.error('Error creating question:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to create question' },
+      { success: false, error: 'Failed to create question', detail: error?.message || String(error) },
       { status: 500 }
     );
   }

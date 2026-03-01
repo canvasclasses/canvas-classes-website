@@ -30,18 +30,18 @@ const isShortOptions = (opts: any[]): boolean => {
 };
 
 export default function TestView({ questions, onBack }: { questions: Question[]; onBack: () => void }) {
-  const [idx,         setIdx]         = useState(0);
-  const [answers,     setAnswers]     = useState<Record<string, string>>({});
-  const [marked,      setMarked]      = useState<Record<string, boolean>>({});
-  const [nvtInputs,   setNvtInputs]   = useState<Record<string, string>>({});
-  const [submitted,   setSubmitted]   = useState(false);
-  const [seconds,     setSeconds]     = useState(Math.ceil(questions.length * 90));
-  const [starred,     setStarred]     = useState<Set<string>>(new Set());
-  const [reviewing,   setReviewing]   = useState(false);
-  const [revIdx,      setRevIdx]      = useState(0);
-  const [isMobile,    setIsMobile]    = useState(false);
+  const [idx, setIdx] = useState(0);
+  const [answers, setAnswers] = useState<Record<string, string | string[]>>({});
+  const [marked, setMarked] = useState<Record<string, boolean>>({});
+  const [nvtInputs, setNvtInputs] = useState<Record<string, string>>({});
+  const [submitted, setSubmitted] = useState(false);
+  const [seconds, setSeconds] = useState(Math.ceil(questions.length * 90));
+  const [starred, setStarred] = useState<Set<string>>(new Set());
+  const [reviewing, setReviewing] = useState(false);
+  const [revIdx, setRevIdx] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const [showPalette, setShowPalette] = useState(false);
-  const [revStats,    setRevStats]    = useState<Record<string, number>>({});
+  const [revStats, setRevStats] = useState<Record<string, number>>({});
 
   const toggleStar = (id: string) => setStarred(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
 
@@ -80,25 +80,35 @@ export default function TestView({ questions, onBack }: { questions: Question[];
   const answeredCount = questions.filter(qq => answers[qq.id] || (nvtInputs[qq.id] && nvtInputs[qq.id].trim())).length;
   const markedCount = Object.values(marked).filter(Boolean).length;
   const notVisitedCount = questions.length - answeredCount;
-  const score = submitted ? questions.filter(qq => {
+
+  // Helper: check if a question is answered correctly
+  const isQuestionCorrect = (qq: Question): boolean => {
     if (qq.type === 'NVT') return nvtInputs[qq.id]?.trim() === qq.answer?.integer_value?.toString();
-    return qq.options?.find((o: any) => o.id === answers[qq.id])?.is_correct;
-  }).length : 0;
+    if (qq.type === 'MCQ') {
+      const userSel = Array.isArray(answers[qq.id]) ? (answers[qq.id] as string[]) : [];
+      const correctIds = (qq.options || []).filter((o: any) => o.is_correct).map((o: any) => o.id);
+      if (userSel.length !== correctIds.length) return false;
+      return correctIds.every((id: string) => userSel.includes(id));
+    }
+    // SCQ
+    return !!qq.options?.find((o: any) => o.id === answers[qq.id] && o.is_correct);
+  };
+
+  const score = submitted ? questions.filter(qq => isQuestionCorrect(qq)).length : 0;
 
   if (submitted) {
     const wrong = questions.filter(qq => {
       if (!answers[qq.id] && !nvtInputs[qq.id]) return false;
       if (qq.type === 'NVT') return nvtInputs[qq.id]?.trim() !== qq.answer?.integer_value?.toString();
-      return answers[qq.id] && !qq.options?.find((o: any) => o.id === answers[qq.id])?.is_correct;
+      return !isQuestionCorrect(qq);
     }).length;
     const skipped = questions.length - answeredCount;
 
     if (reviewing) {
       const rq = questions[revIdx];
       const userAns = answers[rq.id] || nvtInputs[rq.id];
-      const isCorrect = rq.type === 'NVT'
-        ? nvtInputs[rq.id]?.trim() === rq.answer?.integer_value?.toString()
-        : rq.options?.find((o: any) => o.id === answers[rq.id])?.is_correct;
+      const isCorrect = isQuestionCorrect(rq);
+      const userSelArr: string[] = rq.type === 'MCQ' ? (Array.isArray(answers[rq.id]) ? answers[rq.id] as string[] : []) : (typeof answers[rq.id] === 'string' ? [answers[rq.id] as string] : []);
 
       return (
         <div style={{ minHeight: '100vh', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
@@ -129,7 +139,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                 return (
                   <div style={{ display: useGrid ? 'grid' : 'flex', gridTemplateColumns: useGrid ? '1fr 1fr' : undefined, flexDirection: useGrid ? undefined : 'column', gap: 8, marginBottom: 24 }}>
                     {rq.options.map((opt: any) => {
-                      const sel = answers[rq.id] === opt.id;
+                      const sel = userSelArr.includes(opt.id);
                       const correct = opt.is_correct;
                       let borderC = 'rgba(255,255,255,0.1)', bgC = 'rgba(255,255,255,0.03)';
                       if (correct) { borderC = '#34d399'; bgC = 'rgba(52,211,153,0.1)'; }
@@ -248,9 +258,19 @@ export default function TestView({ questions, onBack }: { questions: Question[];
         return (
           <div style={{ display: useGrid ? 'grid' : 'flex', gridTemplateColumns: useGrid ? '1fr 1fr' : undefined, flexDirection: useGrid ? undefined : 'column', gap: 8, marginBottom: 16 }}>
             {q.options.map((opt: any) => {
-              const sel = answers[q.id] === opt.id;
+              const isMCQ = q.type === 'MCQ';
+              const userSelArr: string[] = isMCQ ? (Array.isArray(answers[q.id]) ? answers[q.id] as string[] : []) : (typeof answers[q.id] === 'string' ? [answers[q.id] as string] : []);
+              const sel = userSelArr.includes(opt.id);
               return (
-                <button key={opt.id} onClick={() => setAnswers(a => ({ ...a, [q.id]: opt.id }))}
+                <button key={opt.id} onClick={() => {
+                  if (isMCQ) {
+                    const curArr = Array.isArray(answers[q.id]) ? (answers[q.id] as string[]) : [];
+                    const newArr = sel ? curArr.filter(id => id !== opt.id) : [...curArr, opt.id];
+                    setAnswers(a => ({ ...a, [q.id]: newArr }));
+                  } else {
+                    setAnswers(a => ({ ...a, [q.id]: opt.id }));
+                  }
+                }}
                   style={{ padding: useGrid ? '12px 12px' : (isMobile ? '10px 11px' : '13px 16px'), borderRadius: 12, border: `1.5px solid ${sel ? '#3b82f6' : 'rgba(255,255,255,0.1)'}`, background: sel ? 'rgba(59,130,246,0.1)' : 'rgba(255,255,255,0.03)', color: '#fff', fontSize: isMobile ? 13 : 17, textAlign: 'left', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, width: '100%' }}>
                   <span style={{ width: 24, height: 24, borderRadius: 7, border: `1.5px solid ${sel ? '#3b82f6' : 'rgba(255,255,255,0.2)'}`, background: sel ? '#3b82f6' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, flexShrink: 0 }}>{opt.id.toUpperCase()}</span>
                   <span style={{ flex: 1 }}><MathRenderer markdown={opt.text || ''} fontSize={isMobile ? undefined : 20} /></span>

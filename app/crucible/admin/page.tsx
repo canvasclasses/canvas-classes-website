@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut, FileDown } from 'lucide-react';
-import { v4 as uuidv4 } from 'uuid';
+import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2 } from 'lucide-react';
+// uuid removed — display_id is now generated inline
 import AnalyticsDashboard from './AnalyticsDashboard';
 import ExportDashboard from './components/ExportDashboard';
 import { TAXONOMY_FROM_CSV, type TaxonomyNode } from './taxonomy/taxonomyData_from_csv';
-import { validateLaTeX, getLatexSuggestions, type LaTeXValidationResult } from '@/lib/latexValidator';
+import { validateLaTeX, autoFixLatex, getLatexSuggestions, type LaTeXValidationResult } from '@/lib/latexValidator';
+import BulkImportModal from './components/BulkImportModal';
 import MathRenderer from './components/MathRenderer';
 import AudioRecorder from './components/AudioRecorder';
 import AudioPlayer from './components/AudioPlayer';
@@ -116,6 +117,18 @@ export default function AdminPage() {
     // Analytics
     const [showAnalytics, setShowAnalytics] = useState(false);
     const [showExport, setShowExport] = useState(false);
+
+    // Bulk import
+    const [showBulkImport, setShowBulkImport] = useState(false);
+
+    // Preview mode: 'desktop' | 'mobile'
+    const [previewMode, setPreviewMode] = useState<'desktop' | 'mobile'>('desktop');
+
+    // Options layout override: 'auto' | 'grid' | 'list'
+    const [optionsLayout, setOptionsLayout] = useState<'auto' | 'grid' | 'list'>('auto');
+
+    // LaTeX auto-fix state
+    const [latexFixResult, setLatexFixResult] = useState<{ field: string; fixes: string[] } | null>(null);
 
     // LaTeX Validation
     const [questionLatexValidation, setQuestionLatexValidation] = useState<LaTeXValidationResult | null>(null);
@@ -289,10 +302,35 @@ export default function AdminPage() {
     };
 
     const handleAddQuestion = async () => {
-        const newId = uuidv4();
         const defaultChapter = selectedChapterFilter !== 'all' ? selectedChapterFilter : (chapters[0]?._id || '');
 
+        if (!defaultChapter) {
+            alert('Please select a chapter first before adding a question.');
+            return;
+        }
+
+        // Generate display_id client-side to avoid relying on MongoDB chapters collection
+        // Find current max sequence for this chapter prefix
+        const CHAPTER_PREFIX_MAP: Record<string, string> = {
+            ch11_atom: 'ATOM', ch11_bonding: 'BOND', ch11_chem_eq: 'CEQ', ch11_goc: 'GOC',
+            ch11_hydrocarbon: 'HC', ch11_ionic_eq: 'IEQ', ch11_mole: 'MOLE', ch11_pblock: 'PB11',
+            ch11_periodic: 'PERI', ch11_prac_org: 'POC', ch11_redox: 'RDX', ch11_thermo: 'THERMO',
+            ch12_alcohols: 'ALCO', ch12_amines: 'AMIN', ch12_biomolecules: 'BIO',
+            ch12_carbonyl: 'ALDO', ch12_coord: 'CORD', ch12_dblock: 'DNF', ch12_electrochem: 'EC',
+            ch12_haloalkanes: 'HALO', ch12_kinetics: 'CK', ch12_pblock: 'PB12', ch12_phenols: 'PHEN',
+            ch12_salt: 'SALT', ch12_solutions: 'SOL',
+        };
+        const prefix = CHAPTER_PREFIX_MAP[defaultChapter] || defaultChapter.split('_').pop()?.toUpperCase().substring(0, 4) || 'QUES';
+        // Find current max display_id with this prefix from loaded questions
+        const existingNums = questions
+            .filter(q => q.display_id?.startsWith(prefix + '-'))
+            .map(q => parseInt(q.display_id.split('-')[1], 10))
+            .filter(n => !isNaN(n));
+        const nextSeq = (existingNums.length > 0 ? Math.max(...existingNums) : 0) + 1;
+        const display_id = `${prefix}-${String(nextSeq).padStart(3, '0')}`;
+
         const newQuestion: Partial<Question> = {
+            display_id,
             question_text: { markdown: "New Question Text", latex_validated: false },
             type: 'SCQ',
             options: [
@@ -301,7 +339,7 @@ export default function AdminPage() {
                 { id: 'c', text: 'Option C', is_correct: false },
                 { id: 'd', text: 'Option D', is_correct: false }
             ],
-            solution: { text_markdown: "Wait for solution...", latex_validated: false },
+            solution: { text_markdown: "Solution placeholder - to be written.", latex_validated: false },
             metadata: {
                 difficulty: 'Medium',
                 chapter_id: defaultChapter,
@@ -322,9 +360,13 @@ export default function AdminPage() {
             if (data.success) {
                 await loadData();
                 setSelectedQuestionId(data.data._id);
+            } else {
+                console.error('Add question failed:', data);
+                alert(`Failed to add question: ${data.error || 'Unknown error'}${data.detail ? '\n' + data.detail : ''}${data.details ? '\n' + JSON.stringify(data.details) : ''}`);
             }
         } catch (error) {
             console.error('Error adding question:', error);
+            alert('Network error while adding question. Check console for details.');
         }
     };
 
@@ -626,6 +668,10 @@ export default function AdminPage() {
                         className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-violet-700/60 rounded-lg transition shrink-0">
                         <FileDown size={13} />
                     </button>
+                    <button onClick={() => setShowBulkImport(true)} title="Bulk JSON Import"
+                        className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-blue-600/60 rounded-lg transition shrink-0">
+                        <FileJson size={13} />
+                    </button>
 
                     <div className="w-px h-4 bg-gray-700/50 shrink-0" />
 
@@ -672,33 +718,64 @@ export default function AdminPage() {
                     <div className="w-px h-4 bg-gray-700/50 shrink-0" />
 
                     {/* Question Selector or Bulk Selection Info */}
-                    {bulkMode ? (
+                    {bulkMode && selectedQuestions.size > 0 ? (
                         <div className="flex items-center gap-2 px-2 py-1 bg-green-900/20 border border-green-600/50 rounded-lg shrink-0">
                             <CheckSquare size={12} className="text-green-400" />
                             <span className="text-xs font-bold text-green-400">{selectedQuestions.size} sel</span>
-                            {selectedQuestions.size > 0 && (
-                                <>
-                                    <select
-                                        onChange={(e) => {
-                                            const chapterId = e.target.value;
-                                            if (chapterId && confirm(`Assign ${selectedQuestions.size} questions to this chapter?`)) {
-                                                handleBulkTagAssignment(chapterId, '');
-                                            }
-                                        }}
-                                        className="bg-gray-800 border border-gray-700 rounded px-2 py-1 text-xs"
-                                    >
-                                        <option value="">Bulk Assign Chapter</option>
-                                        {chapters.map(ch => (
-                                            <option key={ch._id} value={ch._id}>{ch.name}</option>
-                                        ))}
-                                    </select>
-                                    <button
-                                        onClick={() => setSelectedQuestions(new Set())}
-                                        className="text-xs text-red-400 hover:text-red-300"
-                                    >
-                                        Clear
-                                    </button>
-                                </>
+                            <select
+                                onChange={(e) => {
+                                    const chapterId = e.target.value;
+                                    if (chapterId && confirm(`Assign ${selectedQuestions.size} questions to this chapter?`)) {
+                                        handleBulkTagAssignment(chapterId, '');
+                                    }
+                                }}
+                                className="bg-gray-800 border border-gray-700 rounded px-2 py-1 text-xs"
+                            >
+                                <option value="">Bulk Assign Chapter</option>
+                                {chapters.map(ch => (
+                                    <option key={ch._id} value={ch._id}>{ch.name}</option>
+                                ))}
+                            </select>
+                            <button
+                                onClick={() => setSelectedQuestions(new Set())}
+                                className="text-xs text-red-400 hover:text-red-300"
+                            >
+                                Clear
+                            </button>
+                        </div>
+                    ) : bulkMode ? (
+                        <div className="flex-1 max-h-32 overflow-y-auto bg-gray-800/30 border border-gray-700/50 rounded-lg p-2 space-y-1">
+                            {filteredQuestions.slice(0, 50).map(q => {
+                                const hasChapter = !!q.metadata.chapter_id;
+                                const hasPrimaryTag = q.metadata.tags && q.metadata.tags.length > 0;
+                                const statusDot = !hasChapter ? '🔴' : !hasPrimaryTag ? '🟡' : '🟢';
+                                const src = q.metadata?.exam_source;
+                                const srcLabel = src ? ` [${src.exam?.replace('JEE ', '') ?? ''} ${src.year ?? ''} ${src.shift ? src.shift[0] : ''}]` : '';
+                                const isSelected = selectedQuestions.has(q._id);
+                                return (
+                                    <label key={q._id} className={`flex items-center gap-2 px-2 py-1 rounded cursor-pointer hover:bg-gray-700/30 ${isSelected ? 'bg-green-900/20' : ''}`}>
+                                        <input
+                                            type="checkbox"
+                                            checked={isSelected}
+                                            onChange={(e) => {
+                                                const newSet = new Set(selectedQuestions);
+                                                if (e.target.checked) {
+                                                    newSet.add(q._id);
+                                                } else {
+                                                    newSet.delete(q._id);
+                                                }
+                                                setSelectedQuestions(newSet);
+                                            }}
+                                            className="h-3 w-3 accent-green-500"
+                                        />
+                                        <span className="text-xs text-gray-400 flex-1 truncate">
+                                            {statusDot} {q.display_id}{srcLabel}: {q.question_text?.markdown?.substring(0, 35) || "No text"}...
+                                        </span>
+                                    </label>
+                                );
+                            })}
+                            {filteredQuestions.length > 50 && (
+                                <div className="text-xs text-gray-500 text-center py-1">Showing first 50 of {filteredQuestions.length}</div>
                             )}
                         </div>
                     ) : (
@@ -885,7 +962,34 @@ export default function AdminPage() {
 
                                 <select
                                     value={selectedQuestion.type}
-                                    onChange={(e) => handleUpdate(selectedQuestion._id, { type: e.target.value as any })}
+                                    onChange={(e) => {
+                                        const newType = e.target.value as Question['type'];
+                                        const oldType = selectedQuestion.type;
+                                        if (newType === oldType) return;
+
+                                        // Build the update payload with appropriate options/answer based on new type
+                                        const update: Partial<Question> = { type: newType };
+
+                                        if (newType === 'NVT') {
+                                            // Switching TO NVT: clear options, set default numerical answer
+                                            update.options = [] as any;
+                                            update.answer = { integer_value: 0 } as any;
+                                        } else if (oldType === 'NVT' || !selectedQuestion.options || selectedQuestion.options.length === 0) {
+                                            // Switching FROM NVT or question has no options: provide 4 default options
+                                            update.options = [
+                                                { id: 'a', text: 'Option A', is_correct: newType === 'SCQ' },
+                                                { id: 'b', text: 'Option B', is_correct: false },
+                                                { id: 'c', text: 'Option C', is_correct: false },
+                                                { id: 'd', text: 'Option D', is_correct: false }
+                                            ] as any;
+                                            // Clear numerical answer when moving away from NVT
+                                            update.answer = {} as any;
+                                        }
+                                        // For MCQ, ensure we don't force single-correct constraints
+                                        // For types that already have options (e.g., SCQ→MCQ), keep existing options
+
+                                        handleUpdate(selectedQuestion._id, update);
+                                    }}
                                     className="bg-gray-800/50 border border-gray-700/50 rounded-lg px-3 py-2 text-sm font-medium"
                                 >
                                     {QUESTION_TYPES.map(qt => (
@@ -1167,9 +1271,34 @@ export default function AdminPage() {
 
                             {/* Question Text with SVG Upload */}
                             <div>
-                                <label className="text-xs text-gray-500 mb-2 block font-medium">
-                                    Question Text {savingId === selectedQuestion._id ? '• Saving…' : ''}
-                                </label>
+                                <div className="flex items-center justify-between mb-2">
+                                    <label className="text-xs text-gray-500 font-medium">
+                                        Question Text {savingId === selectedQuestion._id ? '• Saving…' : ''}
+                                    </label>
+                                    <button
+                                        onClick={() => {
+                                            const result = autoFixLatex(selectedQuestion.question_text.markdown);
+                                            if (result.fixesApplied.length === 0) { alert('No auto-fixable issues found.'); return; }
+                                            setQuestions(prev => prev.map(q =>
+                                                q._id === selectedQuestion._id
+                                                    ? { ...q, question_text: { ...q.question_text, markdown: result.text } }
+                                                    : q
+                                            ));
+                                            handleUpdate(selectedQuestion._id, { question_text: { markdown: result.text, latex_validated: false } });
+                                            setLatexFixResult({ field: 'question', fixes: result.fixesApplied });
+                                            setTimeout(() => setLatexFixResult(null), 5000);
+                                        }}
+                                        title="Auto-fix LaTeX issues"
+                                        className="flex items-center gap-1 text-[10px] px-2 py-1 rounded-lg bg-yellow-600/20 hover:bg-yellow-600/40 text-yellow-400 border border-yellow-600/30 transition"
+                                    >
+                                        <Wand2 size={10} /> Auto-fix LaTeX
+                                    </button>
+                                </div>
+                                {latexFixResult?.field === 'question' && (
+                                    <div className="mb-2 text-[11px] text-green-400 bg-green-900/20 border border-green-600/30 rounded-lg px-3 py-2 space-y-0.5">
+                                        {latexFixResult.fixes.map((f, i) => <div key={i}>✓ {f}</div>)}
+                                    </div>
+                                )}
                                 <div className="flex gap-3 items-stretch">
                                     <textarea
                                         value={selectedQuestion.question_text.markdown}
@@ -1187,7 +1316,7 @@ export default function AdminPage() {
                                             });
                                         }}
                                         className="flex-1 bg-gray-800/70 border-2 border-gray-600/70 rounded-lg px-4 py-3 text-base leading-relaxed focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 hover:border-gray-500 outline-none resize-y font-mono min-h-[16rem] text-gray-100"
-                                        placeholder="✏️ Click here to edit question text... (LaTeX supported: use $...$ for inline, $$...$$ for display)"
+                                        placeholder="✏️ Click here to edit question text... (LaTeX: use $...$ only, never $$...$$)"
                                     />
                                     <div className="w-32 shrink-0 flex flex-col gap-2">
                                         <SVGDropZone
@@ -1222,7 +1351,9 @@ export default function AdminPage() {
                             {/* Options or Numerical Answer */}
                             {selectedQuestion.type !== 'NVT' ? (
                                 <div>
-                                    <label className="text-xs text-gray-500 mb-2 block font-medium">Options</label>
+                                    <label className="text-xs text-gray-500 mb-2 block font-medium">
+                                        Options {selectedQuestion.type === 'MCQ' && <span className="text-yellow-400 ml-1">(multiple correct)</span>}
+                                    </label>
                                     <div className="grid grid-cols-2 gap-3">
                                         {selectedQuestion.options.filter(opt => opt && opt.id).map((opt) => (
                                             <div
@@ -1235,11 +1366,20 @@ export default function AdminPage() {
                                                 <div className="flex items-center justify-between mb-2">
                                                     <button
                                                         onClick={() => {
-                                                            const newOptions = selectedQuestion.options.map(o => ({
-                                                                ...o,
-                                                                is_correct: o.id === opt.id
-                                                            }));
-                                                            // Update local state immediately so UI reflects change
+                                                            let newOptions;
+                                                            if (selectedQuestion.type === 'MCQ') {
+                                                                // MCQ: toggle this option's is_correct (checkbox)
+                                                                newOptions = selectedQuestion.options.map(o => ({
+                                                                    ...o,
+                                                                    is_correct: o.id === opt.id ? !o.is_correct : o.is_correct
+                                                                }));
+                                                            } else {
+                                                                // SCQ/AR/MST/MTC: exclusive (radio) — only this one is correct
+                                                                newOptions = selectedQuestion.options.map(o => ({
+                                                                    ...o,
+                                                                    is_correct: o.id === opt.id
+                                                                }));
+                                                            }
                                                             setQuestions(prev => prev.map(q =>
                                                                 q._id === selectedQuestion._id
                                                                     ? { ...q, options: newOptions }
@@ -1255,7 +1395,9 @@ export default function AdminPage() {
                                                         {opt.id.toUpperCase()} {opt.is_correct ? '✓' : '○'}
                                                     </button>
                                                     {!opt.is_correct && (
-                                                        <span className="text-xs text-gray-500">click to mark correct</span>
+                                                        <span className="text-xs text-gray-500">
+                                                            {selectedQuestion.type === 'MCQ' ? 'click to toggle' : 'click to mark correct'}
+                                                        </span>
                                                     )}
                                                 </div>
                                                 <input
@@ -1337,9 +1479,35 @@ export default function AdminPage() {
 
                             {/* Solution with SVG Upload */}
                             <div>
-                                <label className="text-xs text-gray-500 mb-2 block font-medium">
-                                    Solution {savingId === selectedQuestion._id ? '• Saving…' : ''}
-                                </label>
+                                <div className="flex items-center justify-between mb-2">
+                                    <label className="text-xs text-gray-500 font-medium">
+                                        Solution {savingId === selectedQuestion._id ? '• Saving…' : ''}
+                                    </label>
+                                    <button
+                                        onClick={() => {
+                                            const sol = selectedQuestion.solution?.text_markdown || '';
+                                            const result = autoFixLatex(sol);
+                                            if (result.fixesApplied.length === 0) { alert('No auto-fixable issues found.'); return; }
+                                            setQuestions(prev => prev.map(q =>
+                                                q._id === selectedQuestion._id
+                                                    ? { ...q, solution: { ...(q.solution || { text_markdown: '', latex_validated: false }), text_markdown: result.text } }
+                                                    : q
+                                            ));
+                                            handleUpdate(selectedQuestion._id, { solution: { text_markdown: result.text, latex_validated: false } });
+                                            setLatexFixResult({ field: 'solution', fixes: result.fixesApplied });
+                                            setTimeout(() => setLatexFixResult(null), 5000);
+                                        }}
+                                        title="Auto-fix LaTeX issues in solution"
+                                        className="flex items-center gap-1 text-[10px] px-2 py-1 rounded-lg bg-yellow-600/20 hover:bg-yellow-600/40 text-yellow-400 border border-yellow-600/30 transition"
+                                    >
+                                        <Wand2 size={10} /> Auto-fix LaTeX
+                                    </button>
+                                </div>
+                                {latexFixResult?.field === 'solution' && (
+                                    <div className="mb-2 text-[11px] text-green-400 bg-green-900/20 border border-green-600/30 rounded-lg px-3 py-2 space-y-0.5">
+                                        {latexFixResult.fixes.map((f, i) => <div key={i}>✓ {f}</div>)}
+                                    </div>
+                                )}
                                 <div className="flex gap-3 items-stretch">
                                     <textarea
                                         value={selectedQuestion.solution?.text_markdown || ''}
@@ -1403,16 +1571,60 @@ export default function AdminPage() {
 
                 {/* RIGHT: Live Preview (46%) */}
                 <div className="w-[46%] flex flex-col overflow-hidden bg-gray-950/50">
-                    <div className="p-4 border-b border-gray-800/50 bg-gray-900/50">
+                    <div className="p-3 border-b border-gray-800/50 bg-gray-900/50 flex items-center justify-between gap-3">
                         <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
                             <Eye size={14} /> Live Preview
                         </h3>
+                        <div className="flex items-center gap-2">
+                            {/* Options layout toggle */}
+                            {selectedQuestion && selectedQuestion.type !== 'NVT' && (
+                                <div className="flex items-center gap-1 bg-gray-800/60 rounded-lg p-0.5">
+                                    <button
+                                        onClick={() => setOptionsLayout('list')}
+                                        title="List layout"
+                                        className={`p-1.5 rounded-md transition ${optionsLayout === 'list' ? 'bg-purple-600 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                    ><LayoutList size={13} /></button>
+                                    <button
+                                        onClick={() => setOptionsLayout('auto')}
+                                        title="Auto layout (smart)"
+                                        className={`px-2 py-1 rounded-md text-[10px] font-medium transition ${optionsLayout === 'auto' ? 'bg-purple-600 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                    >AUTO</button>
+                                    <button
+                                        onClick={() => setOptionsLayout('grid')}
+                                        title="2×2 grid layout"
+                                        className={`p-1.5 rounded-md transition ${optionsLayout === 'grid' ? 'bg-purple-600 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                    ><LayoutGrid size={13} /></button>
+                                </div>
+                            )}
+                            {/* Mobile / Desktop toggle */}
+                            <div className="flex items-center gap-1 bg-gray-800/60 rounded-lg p-0.5">
+                                <button
+                                    onClick={() => setPreviewMode('desktop')}
+                                    title="Desktop preview"
+                                    className={`p-1.5 rounded-md transition ${previewMode === 'desktop' ? 'bg-purple-600 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                ><Monitor size={13} /></button>
+                                <button
+                                    onClick={() => setPreviewMode('mobile')}
+                                    title="Mobile preview"
+                                    className={`p-1.5 rounded-md transition ${previewMode === 'mobile' ? 'bg-purple-600 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                ><Smartphone size={13} /></button>
+                            </div>
+                        </div>
                     </div>
-                    <div className="flex-1 overflow-y-auto p-6">
+                    <div className="flex-1 overflow-y-auto p-4 flex justify-center">
                         {selectedQuestion ? (
-                            <div className="space-y-6">
+                            <div className={`space-y-4 transition-all duration-300 ${
+                                previewMode === 'mobile'
+                                    ? 'w-[390px] border border-gray-700/60 rounded-2xl overflow-hidden shadow-2xl shadow-black/50 bg-gray-900'
+                                    : 'w-full'
+                            }`}>
+                                {previewMode === 'mobile' && (
+                                    <div className="flex items-center justify-center gap-1 py-2 bg-gray-950/80 border-b border-gray-800">
+                                        <div className="w-16 h-1 bg-gray-600 rounded-full" />
+                                    </div>
+                                )}
                                 {/* Question Preview */}
-                                <div className="bg-gray-900/50 rounded-xl border border-gray-800/50 p-6">
+                                <div className={`bg-gray-900/50 rounded-xl border border-gray-800/50 ${ previewMode === 'mobile' ? 'p-4 rounded-none border-x-0' : 'p-6'}`}>
                                     <div className="flex items-center gap-2 mb-4">
                                         <span className="text-xs font-mono text-purple-400">{selectedQuestion.display_id}</span>
                                         <span className={`text-xs px-2 py-0.5 rounded ${QUESTION_TYPES.find(t => t.id === selectedQuestion.type)?.color
@@ -1433,16 +1645,18 @@ export default function AdminPage() {
                                         imageScale={getSvgScale('question')}
                                     />
                                     {selectedQuestion.type !== 'NVT' && (() => {
-                                        // Intelligent layout: 2x2 grid for images/short text, vertical for long text
                                         const hasImages = selectedQuestion.options.some(opt =>
                                             opt.text.includes('![') || opt.text.includes('<img') || opt.text.includes('.svg') || opt.text.includes('.png')
                                         );
                                         const maxTextLength = Math.max(...selectedQuestion.options.map(opt => opt.text.length));
                                         const avgTextLength = selectedQuestion.options.reduce((sum, opt) => sum + opt.text.length, 0) / selectedQuestion.options.length;
-
-                                        // Use grid only for image options or truly short labels (e.g. "A", "B", numbers)
-                                        // Statement I/II options (~45-52 chars) and chemistry equations must be list view
-                                        const useGrid = hasImages || (avgTextLength < 20 && maxTextLength < 25);
+                                        const autoGrid = hasImages || (avgTextLength < 20 && maxTextLength < 25);
+                                        // On mobile preview, grid is only 2 cols for truly short/image options
+                                        const useGrid = optionsLayout === 'grid'
+                                            ? true
+                                            : optionsLayout === 'list'
+                                                ? false
+                                                : (previewMode === 'mobile' ? (hasImages || (avgTextLength < 15 && maxTextLength < 18)) : autoGrid);
 
                                         return (
                                             <div className={`mt-4 ${useGrid
@@ -1476,7 +1690,7 @@ export default function AdminPage() {
                                 </div>
 
                                 {/* Solution Preview */}
-                                <div className="bg-gray-900/50 rounded-xl border border-gray-800/50 p-6">
+                                <div className={`bg-gray-900/50 rounded-xl border border-gray-800/50 ${ previewMode === 'mobile' ? 'p-4 rounded-none border-x-0' : 'p-6'}`}>
                                     <h4 className="text-xs font-bold text-gray-500 uppercase mb-3">Solution</h4>
                                     {/* Audio Player — shown when audio is attached */}
                                     {selectedQuestion.solution?.asset_ids?.audio && selectedQuestion.solution.asset_ids.audio.length > 0 && (
@@ -1509,6 +1723,15 @@ export default function AdminPage() {
                     questions={questions}
                     chapters={chapters}
                     onClose={() => setShowAnalytics(false)}
+                />
+            )}
+
+            {/* Bulk Import Modal */}
+            {showBulkImport && (
+                <BulkImportModal
+                    onClose={() => setShowBulkImport(false)}
+                    onImported={(count) => { setShowBulkImport(false); loadData(0); }}
+                    defaultChapterId={selectedChapterFilter !== 'all' ? selectedChapterFilter : ''}
                 />
             )}
 
