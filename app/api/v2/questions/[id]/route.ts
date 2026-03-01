@@ -207,20 +207,19 @@ export async function PATCH(
       });
       updates.status = body.status;
       
-      // Update chapter stats
-      const oldStatus = existing.status;
-      const newStatus = body.status;
-      
-      const statsUpdate: any = {};
-      if (oldStatus === 'draft') statsUpdate['stats.draft_questions'] = -1;
-      if (oldStatus === 'published') statsUpdate['stats.published_questions'] = -1;
-      if (newStatus === 'draft') statsUpdate['stats.draft_questions'] = 1;
-      if (newStatus === 'published') statsUpdate['stats.published_questions'] = 1;
-      
-      await Chapter.findByIdAndUpdate(
-        existing.metadata.chapter_id,
-        { $inc: statsUpdate }
-      );
+      // Update chapter stats (optional — chapter may not exist in MongoDB; taxonomy is code-based)
+      try {
+        const oldStatus = existing.status;
+        const newStatus = body.status;
+        const statsUpdate: any = {};
+        if (oldStatus === 'draft') statsUpdate['stats.draft_questions'] = -1;
+        if (oldStatus === 'published') statsUpdate['stats.published_questions'] = -1;
+        if (newStatus === 'draft') statsUpdate['stats.draft_questions'] = 1;
+        if (newStatus === 'published') statsUpdate['stats.published_questions'] = 1;
+        await Chapter.findByIdAndUpdate(existing.metadata.chapter_id, { $inc: statsUpdate });
+      } catch (_chapterErr) {
+        // Chapter may not exist in MongoDB — safe to ignore
+      }
     }
     
     // Increment version
@@ -296,50 +295,52 @@ export async function DELETE(
       );
     }
     
-    // Soft delete
-    question.deleted_at = new Date();
-    question.deleted_by = 'admin'; // TODO: Get from auth
-    await question.save();
-    
-    // Update chapter stats
-    const statsUpdate: any = { 'stats.total_questions': -1 };
-    if (question.status === 'draft') statsUpdate['stats.draft_questions'] = -1;
-    if (question.status === 'published') statsUpdate['stats.published_questions'] = -1;
-    
-    await Chapter.findByIdAndUpdate(
-      question.metadata.chapter_id,
-      { $inc: statsUpdate }
+    // Soft delete — use updateOne to bypass pre-save middleware (avoids 'next is not a function' in Next.js App Router)
+    const deletedAt = new Date();
+    await QuestionV2.updateOne(
+      { _id: id },
+      { $set: { deleted_at: deletedAt, deleted_by: 'admin', updated_at: deletedAt } }
     );
+
+    // Update chapter stats (optional - don't fail delete if chapter doesn't exist in MongoDB)
+    try {
+      const statsUpdate: any = { 'stats.total_questions': -1 };
+      if (question.status === 'draft') statsUpdate['stats.draft_questions'] = -1;
+      if (question.status === 'published') statsUpdate['stats.published_questions'] = -1;
+      await Chapter.findByIdAndUpdate(question.metadata.chapter_id, { $inc: statsUpdate });
+    } catch (chapterError) {
+      // Chapter may not exist in MongoDB (taxonomy is code-based) — safe to ignore
+    }
     
-    // Create audit log
-    const auditLog = new AuditLog({
-      _id: uuidv4(),
-      entity_type: 'question',
-      entity_id: id,
-      action: 'delete',
-      changes: [{
-        field: 'deleted_at',
-        old_value: null,
-        new_value: new Date()
-      }],
-      user_id: 'admin',
-      user_email: 'admin@canvasclasses.com',
-      timestamp: new Date(),
-      can_rollback: true,
-      rollback_data: question.toObject()
-    });
-    
-    await auditLog.save();
+    // Create audit log (optional - don't fail delete if audit log fails)
+    try {
+      const auditLog = new AuditLog({
+        _id: uuidv4(),
+        entity_type: 'question',
+        entity_id: id,
+        action: 'delete',
+        changes: [{ field: 'deleted_at', old_value: null, new_value: deletedAt }],
+        user_id: 'admin',
+        user_email: 'admin@canvasclasses.com',
+        timestamp: deletedAt,
+        can_rollback: true,
+        rollback_data: question.toObject()
+      });
+      await auditLog.save();
+    } catch (auditError) {
+      console.warn('Audit log failed (non-fatal):', auditError);
+    }
     
     return NextResponse.json({
       success: true,
       message: 'Question deleted successfully'
     });
     
-  } catch (error) {
-    console.error('Error deleting question:', error);
+  } catch (error: any) {
+    console.error('Error deleting question:', error?.message ?? error);
+    console.error('Stack:', error?.stack);
     return NextResponse.json(
-      { success: false, error: 'Failed to delete question' },
+      { success: false, error: 'Failed to delete question', detail: error?.message ?? String(error) },
       { status: 500 }
     );
   }
