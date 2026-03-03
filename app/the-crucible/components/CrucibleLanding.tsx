@@ -339,10 +339,11 @@ function selectTestQuestions(all: Question[], count: number, mix: DifficultyMix)
 }
 
 // ── Top PYQ fetcher — all chapters, is_top_pyq=true ─────────────────────────
-async function fetchTopPYQs(): Promise<Question[]> {
+async function fetchTopPYQs(examLevel?: 'mains' | 'advanced'): Promise<Question[]> {
   const params = new URLSearchParams();
   params.set('is_top_pyq', 'true');
   params.set('limit', '500');
+  if (examLevel) params.set('exam_level', examLevel);
   const res = await fetch(`/api/v2/questions?${params.toString()}`);
   const json = await res.json();
   return (json.data || []).map((q: any) => ({
@@ -365,11 +366,12 @@ async function fetchTopPYQs(): Promise<Question[]> {
 }
 
 // ── Shared question fetcher ──────────────────────────────────────────────────
-async function fetchQuestions(chapterIds: string[], limit?: number, topPYQOnly?: boolean): Promise<Question[]> {
+async function fetchQuestions(chapterIds: string[], limit?: number, topPYQOnly?: boolean, examLevel?: 'mains' | 'advanced'): Promise<Question[]> {
   const params = new URLSearchParams();
   chapterIds.forEach(id => params.append('chapter_id', id));
   params.set('limit', String(limit || 500));
   if (topPYQOnly) params.set('is_top_pyq', 'true');
+  if (examLevel) params.set('exam_level', examLevel);
   const res = await fetch(`/api/v2/questions?${params.toString()}`);
   const json = await res.json();
   return (json.data || []).map((q: any) => ({
@@ -559,7 +561,7 @@ export default function CrucibleLanding({ chapters, isLoggedIn }: CrucibleLandin
     setTopPYQLoading(true);
     setPendingMode(mode);
     setView('shloka');
-    fetchTopPYQs()
+    fetchTopPYQs(jeeMode)
       .then(qs => {
         if (qs.length === 0) { notify('Top PYQs not tagged yet — check back soon!'); setView('landing'); return; }
         if (mode === 'test') {
@@ -579,8 +581,8 @@ export default function CrucibleLanding({ chapters, isLoggedIn }: CrucibleLandin
     setPendingMode('browse');
     setView('shloka');
     const fetcher = topPYQFilter
-      ? fetchQuestions(Array.from(selectedChapters), undefined, true)
-      : fetchQuestions(Array.from(selectedChapters));
+      ? fetchQuestions(Array.from(selectedChapters), undefined, true, jeeMode)
+      : fetchQuestions(Array.from(selectedChapters), undefined, false, jeeMode);
     fetcher
       .then(qs => {
         if (qs.length === 0) { notify(topPYQFilter ? 'No Top PYQs found for selected chapters yet.' : 'No questions found for selected chapters yet.'); setView('landing'); }
@@ -606,8 +608,8 @@ export default function CrucibleLanding({ chapters, isLoggedIn }: CrucibleLandin
     setPendingMode('test');
     setView('shloka');
     const fetcher = topPYQFilter
-      ? fetchQuestions(Array.from(selectedChapters), undefined, true)
-      : fetchQuestions(Array.from(selectedChapters));
+      ? fetchQuestions(Array.from(selectedChapters), undefined, true, jeeMode)
+      : fetchQuestions(Array.from(selectedChapters), undefined, false, jeeMode);
     fetcher
       .then(qs => {
         if (qs.length === 0) { notify('No questions found.'); setView('landing'); return; }

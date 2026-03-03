@@ -129,6 +129,7 @@ export async function GET(request: NextRequest) {
     const difficulty = searchParams.get('difficulty');
     const is_pyq = searchParams.get('is_pyq');
     const is_top_pyq = searchParams.get('is_top_pyq');
+    const exam_level = searchParams.get('exam_level');
     // Authenticated users (admin dashboard) get full list; public gets max 50
     const requestedLimit = parseInt(searchParams.get('limit') || (isAuthenticated ? '5000' : '50'));
     const limit = isAuthenticated ? requestedLimit : Math.min(requestedLimit, 50); // cap public at 50
@@ -143,6 +144,8 @@ export async function GET(request: NextRequest) {
     if (difficulty) query['metadata.difficulty'] = difficulty;
     if (is_pyq === 'true') query['metadata.is_pyq'] = true;
     if (is_top_pyq === 'true') query['metadata.is_top_pyq'] = true;
+    if (exam_level === 'mains') query['metadata.exam_source.exam'] = { $regex: /main/i };
+    if (exam_level === 'adv') query['metadata.exam_source.exam'] = { $regex: /adv/i };
 
     const questions = await QuestionV2.find(query)
       .sort({ created_at: -1 })
@@ -231,9 +234,9 @@ export async function POST(request: NextRequest) {
         { display_id: 1 }
       ).sort({ display_id: -1 }).lean();
 
-      const maxActive  = lastQ    ? parseInt((lastQ    as any).display_id.split('-')[1], 10) : 0;
-      const maxAll     = lastQAny ? parseInt((lastQAny as any).display_id.split('-')[1], 10) : 0;
-      const nextSeq    = Math.max(maxActive, maxAll) + 1;
+      const maxActive = lastQ ? parseInt((lastQ as any).display_id.split('-')[1], 10) : 0;
+      const maxAll = lastQAny ? parseInt((lastQAny as any).display_id.split('-')[1], 10) : 0;
+      const nextSeq = Math.max(maxActive, maxAll) + 1;
       display_id = `${prefix}-${String(nextSeq).padStart(3, '0')}`;
     }
 

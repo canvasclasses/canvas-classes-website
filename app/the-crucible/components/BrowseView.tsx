@@ -162,6 +162,38 @@ export default function BrowseView({ questions, chapters, onBack }: { questions:
         {solShown && (
           <div id={solDivId} style={{ padding: '14px 18px', borderRadius: 12, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)' }}>
             <div style={{ fontSize: 10, fontWeight: 700, color: '#a78bfa', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
+
+            {qq.solution?.video_url && (
+              <div style={{ marginBottom: 16 }}>
+                {qq.solution.video_url.includes('youtube.com') || qq.solution.video_url.includes('youtu.be') ? (
+                  <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 8 }}>
+                    <iframe
+                      src={qq.solution.video_url.replace('watch?v=', 'embed/').split('&')[0].replace('youtu.be/', 'youtube.com/embed/')}
+                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                ) : (
+                  <video controls style={{ width: '100%', borderRadius: 8, background: '#000' }}>
+                    <source src={qq.solution.video_url} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                )}
+              </div>
+            )}
+
+            {qq.solution?.asset_ids?.audio && qq.solution.asset_ids.audio.length > 0 && (
+              <div style={{ marginBottom: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {qq.solution.asset_ids.audio.map((url, idx) => (
+                  <audio key={idx} controls style={{ width: '100%', height: 40, borderRadius: 8 }}>
+                    <source src={url} type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                  </audio>
+                ))}
+              </div>
+            )}
+
             {qq.solution?.text_markdown ? (
               <MathRenderer markdown={qq.solution.text_markdown} className="text-sm leading-relaxed" fontSize={isMobile ? undefined : 20} imageScale={qq.svg_scales?.solution ?? 100} />
             ) : (

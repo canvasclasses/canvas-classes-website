@@ -13,6 +13,12 @@ import AudioRecorder from './components/AudioRecorder';
 import AudioPlayer from './components/AudioPlayer';
 import SVGScaleControls from './components/SVGScaleControls';
 import SVGDropZone from './components/SVGDropZone';
+import VideoDropZone from './components/VideoDropZone';
+
+const VALID_TOPIC_IDS = new Set(TAXONOMY_FROM_CSV.filter(t => t.type === 'topic').map(t => t.id));
+const isTagValid = (tags: any[] | undefined | null) => {
+    return !!(tags && tags.length > 0 && typeof tags[0] === 'object' && !!tags[0].tag_id && VALID_TOPIC_IDS.has(tags[0].tag_id));
+};
 
 // Types
 interface Question {
@@ -37,6 +43,7 @@ interface Question {
     solution: {
         text_markdown: string;
         latex_validated: boolean;
+        video_url?: string;
         asset_ids?: {
             images?: string[];
             svg?: string[];
@@ -255,6 +262,8 @@ export default function AdminPage() {
         }
     }, [selectedQuestionId, questions]);
 
+    // We already have these declared at top of file, only ExamLevel is new here
+    const [selectedExamLevelFilter, setSelectedExamLevelFilter] = useState<string>('all');
     const PAGE_SIZE = 5000;
     const [currentPage, setCurrentPage] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
@@ -267,6 +276,8 @@ export default function AdminPage() {
         if (selectedTypeFilter !== 'all') params.set('type', selectedTypeFilter);
         if (selectedDifficultyFilter !== 'all') params.set('difficulty', selectedDifficultyFilter);
         if (selectedSourceFilter === 'mains_pyq' || selectedSourceFilter === 'adv_pyq') params.set('is_pyq', 'true');
+        if (selectedExamLevelFilter !== 'all') params.set('exam_level', selectedExamLevelFilter);
+
         return params.toString();
     };
 
@@ -555,9 +566,14 @@ export default function AdminPage() {
         if (selectedDifficultyFilter !== 'all' && q.metadata.difficulty !== selectedDifficultyFilter) return false;
         if (selectedSourceFilter !== 'all') {
             const examName = q.metadata?.exam_source?.exam ?? '';
+            // By Source Dropdown
             if (selectedSourceFilter === 'mains_pyq' && !(q.metadata?.is_pyq && examName.toLowerCase().includes('main'))) return false;
             if (selectedSourceFilter === 'adv_pyq' && !(q.metadata?.is_pyq && (examName.toLowerCase().includes('adv') || examName.toLowerCase().includes('advanced')))) return false;
             if (selectedSourceFilter === 'non_pyq' && q.metadata?.is_pyq) return false;
+
+            // By Exam Level Dropdown
+            if (selectedExamLevelFilter === 'mains' && !examName.toLowerCase().includes('main')) return false;
+            if (selectedExamLevelFilter === 'adv' && !(examName.toLowerCase().includes('adv') || examName.toLowerCase().includes('advanced'))) return false;
         }
         if (selectedYearFilter !== 'all') {
             const qYear = q.metadata?.exam_source?.year;
@@ -579,7 +595,7 @@ export default function AdminPage() {
         // Tag Status Filter
         if (selectedTagStatusFilter !== 'all') {
             const hasChapter = !!q.metadata.chapter_id;
-            const hasPrimaryTag = q.metadata.tags && q.metadata.tags.length > 0;
+            const hasPrimaryTag = isTagValid(q.metadata.tags);
             const hasActiveFlags = q.flags?.some(f => !f.resolved);
             if (selectedTagStatusFilter === 'untagged' && hasChapter && hasPrimaryTag) return false;
             if (selectedTagStatusFilter === 'no-chapter' && hasChapter) return false;
@@ -605,9 +621,9 @@ export default function AdminPage() {
     ).sort((a, b) => b[0].localeCompare(a[0]));
 
     // Calculate tag status counts for filter display
-    const untaggedCount = questions.filter(q => !q.metadata.chapter_id || !(q.metadata.tags && q.metadata.tags.length > 0)).length;
+    const untaggedCount = questions.filter(q => !q.metadata.chapter_id || !isTagValid(q.metadata.tags)).length;
     const noChapterCount = questions.filter(q => !q.metadata.chapter_id).length;
-    const noTagCount = questions.filter(q => q.metadata.chapter_id && !(q.metadata.tags && q.metadata.tags.length > 0)).length;
+    const noTagCount = questions.filter(q => q.metadata.chapter_id && !isTagValid(q.metadata.tags)).length;
 
     const submitFlag = async () => {
         if (!selectedQuestion) return;
@@ -747,7 +763,7 @@ export default function AdminPage() {
                         <div className="flex-1 max-h-32 overflow-y-auto bg-gray-800/30 border border-gray-700/50 rounded-lg p-2 space-y-1">
                             {filteredQuestions.slice(0, 50).map(q => {
                                 const hasChapter = !!q.metadata.chapter_id;
-                                const hasPrimaryTag = q.metadata.tags && q.metadata.tags.length > 0;
+                                const hasPrimaryTag = isTagValid(q.metadata.tags);
                                 const statusDot = !hasChapter ? '🔴' : !hasPrimaryTag ? '🟡' : '🟢';
                                 const src = q.metadata?.exam_source;
                                 const srcLabel = src ? ` [${src.exam?.replace('JEE ', '') ?? ''} ${src.year ?? ''} ${src.shift ? src.shift[0] : ''}]` : '';
@@ -787,7 +803,7 @@ export default function AdminPage() {
                             <option value="">Select ({filteredQuestions.length})</option>
                             {filteredQuestions.map(q => {
                                 const hasChapter = !!q.metadata.chapter_id;
-                                const hasPrimaryTag = q.metadata.tags && q.metadata.tags.length > 0;
+                                const hasPrimaryTag = isTagValid(q.metadata.tags);
                                 const statusDot = !hasChapter ? '🔴' : !hasPrimaryTag ? '🟡' : '🟢';
                                 const src = q.metadata?.exam_source;
                                 const srcLabel = src ? ` [${src.exam?.replace('JEE ', '') ?? ''} ${src.year ?? ''} ${src.shift ? src.shift[0] : ''}]` : '';
@@ -820,6 +836,35 @@ export default function AdminPage() {
                         {QUESTION_TYPES.map(qt => (
                             <option key={qt.id} value={qt.id}>{qt.id}</option>
                         ))}
+                    </select>
+
+                    {/* Source Filter */}
+                    <select
+                        value={selectedSourceFilter}
+                        onChange={(e) => {
+                            setSelectedSourceFilter(e.target.value);
+                            setCurrentPage(0);
+                        }}
+                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
+                    >
+                        <option value="all">Any Source</option>
+                        <option value="mains_pyq">JEE Main PYQ</option>
+                        <option value="adv_pyq">JEE Adv PYQ</option>
+                        <option value="non_pyq">Non-PYQ</option>
+                    </select>
+
+                    {/* Exam Level Filter */}
+                    <select
+                        value={selectedExamLevelFilter}
+                        onChange={(e) => {
+                            setSelectedExamLevelFilter(e.target.value);
+                            setCurrentPage(0);
+                        }}
+                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
+                    >
+                        <option value="all">Any Level</option>
+                        <option value="mains">JEE Main Level</option>
+                        <option value="adv">JEE Adv Level</option>
                     </select>
 
                     {/* Page navigation */}
@@ -1062,37 +1107,39 @@ export default function AdminPage() {
 
                             {/* Exam Source Row */}
                             <div className="flex flex-wrap items-end gap-3 p-3 bg-gray-800/30 border border-gray-700/40 rounded-lg">
-                                <div className="flex items-center gap-2">
-                                    <label className="flex items-center gap-2 cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            checked={!!selectedQuestion.metadata.is_pyq}
-                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                                metadata: { ...selectedQuestion.metadata, is_pyq: e.target.checked }
-                                            })}
-                                            className="h-3.5 w-3.5 accent-blue-500"
-                                        />
-                                        <span className="text-xs text-gray-400 font-medium">PYQ</span>
-                                    </label>
-                                </div>
-                                {selectedQuestion.metadata.is_pyq && (
-                                    <>
-                                        {(() => {
-                                            const es = selectedQuestion.metadata.exam_source;
-                                            const patchSrc = (patch: Partial<{ exam: string; year: number; month: string; day: number; shift: string }>) => {
-                                                const merged = { exam: es?.exam ?? '', year: es?.year, month: es?.month, day: es?.day, shift: es?.shift, ...patch };
-                                                handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, exam_source: { ...merged, exam: merged.exam } } });
-                                            };
-                                            return (
+                                {(() => {
+                                    const es = selectedQuestion.metadata.exam_source;
+                                    const patchSrc = (patch: Partial<{ exam: string; year: number; month: string; day: number; shift: string }>) => {
+                                        const merged = { exam: es?.exam ?? '', year: es?.year, month: es?.month, day: es?.day, shift: es?.shift, ...patch };
+                                        handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, exam_source: { ...merged, exam: merged.exam } } });
+                                    };
+                                    return (
+                                        <>
+                                            <div>
+                                                <label className="text-[10px] text-gray-500 block mb-1">Target Exam</label>
+                                                <select value={es?.exam ?? ''} onChange={(e) => patchSrc({ exam: e.target.value })} className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none">
+                                                    <option value="">Select Level</option>
+                                                    <option value="JEE Main">JEE Main</option>
+                                                    <option value="JEE Advanced">JEE Advanced</option>
+                                                </select>
+                                            </div>
+
+                                            <div className="flex items-center gap-2 ml-2 mr-2">
+                                                <label className="flex items-center gap-2 cursor-pointer mt-5">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={!!selectedQuestion.metadata.is_pyq}
+                                                        onChange={(e) => handleUpdate(selectedQuestion._id, {
+                                                            metadata: { ...selectedQuestion.metadata, is_pyq: e.target.checked }
+                                                        })}
+                                                        className="h-3.5 w-3.5 accent-blue-500"
+                                                    />
+                                                    <span className="text-xs text-gray-400 font-medium">PYQ</span>
+                                                </label>
+                                            </div>
+
+                                            {selectedQuestion.metadata.is_pyq && (
                                                 <>
-                                                    <div>
-                                                        <label className="text-[10px] text-gray-500 block mb-1">Exam</label>
-                                                        <select value={es?.exam ?? ''} onChange={(e) => patchSrc({ exam: e.target.value })} className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none">
-                                                            <option value="">Select</option>
-                                                            <option value="JEE Main">JEE Main</option>
-                                                            <option value="JEE Advanced">JEE Advanced</option>
-                                                        </select>
-                                                    </div>
                                                     <div>
                                                         <label className="text-[10px] text-gray-500 block mb-1">Year</label>
                                                         <select value={es?.year ?? ''} onChange={(e) => patchSrc({ year: Number(e.target.value) })} className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none">
@@ -1124,10 +1171,10 @@ export default function AdminPage() {
                                                         </select>
                                                     </div>
                                                 </>
-                                            );
-                                        })()}
-                                    </>
-                                )}
+                                            )}
+                                        </>
+                                    );
+                                })()}
                                 {selectedQuestion.metadata.is_pyq && selectedQuestion.metadata.exam_source?.exam && (
                                     <span className="ml-auto text-[10px] font-mono text-blue-400 bg-blue-900/20 px-2 py-1 rounded">
                                         {selectedQuestion.metadata.exam_source.exam} {selectedQuestion.metadata.exam_source.year} {selectedQuestion.metadata.exam_source.month} {selectedQuestion.metadata.exam_source.day} · {selectedQuestion.metadata.exam_source.shift}
@@ -1139,14 +1186,14 @@ export default function AdminPage() {
                             <div className="flex items-center gap-3 p-3 rounded-lg border-2 ${
                                 !selectedQuestion.metadata.chapter_id 
                                     ? 'bg-red-900/20 border-red-600/50' 
-                                    : !(selectedQuestion.metadata.tags && selectedQuestion.metadata.tags.length > 0)
+                                    : !isTagValid(selectedQuestion.metadata.tags)
                                     ? 'bg-yellow-900/20 border-yellow-600/50'
                                     : 'bg-green-900/20 border-green-600/50'
                             }">
                                 <div className="flex items-center gap-2">
                                     {!selectedQuestion.metadata.chapter_id ? (
                                         <><AlertTriangle size={16} className="text-red-400" /><span className="text-xs font-bold text-red-400">Missing Chapter</span></>
-                                    ) : !(selectedQuestion.metadata.tags && selectedQuestion.metadata.tags.length > 0) ? (
+                                    ) : !isTagValid(selectedQuestion.metadata.tags) ? (
                                         <><AlertCircle size={16} className="text-yellow-400" /><span className="text-xs font-bold text-yellow-400">Missing Primary Tag</span></>
                                     ) : (
                                         <><Check size={16} className="text-green-400" /><span className="text-xs font-bold text-green-400">Fully Tagged</span></>
@@ -1542,6 +1589,41 @@ export default function AdminPage() {
                                 </div>
                             </div>
 
+                            {/* Video Solution */}
+                            <div className="flex flex-col gap-2 p-3 bg-gray-900/40 rounded-lg border border-gray-700/50">
+                                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+                                    <MonitorPlay size={14} /> Video Solution
+                                </h4>
+                                <input
+                                    type="text"
+                                    value={selectedQuestion.solution?.video_url || ''}
+                                    onChange={(e) => {
+                                        handleUpdate(selectedQuestion._id, {
+                                            solution: {
+                                                ...(selectedQuestion.solution || { text_markdown: '', latex_validated: false }),
+                                                video_url: e.target.value
+                                            }
+                                        });
+                                    }}
+                                    placeholder="Paste YouTube or Cloudflare Stream URL here..."
+                                    className="w-full bg-gray-800/70 border border-gray-600/70 rounded-lg px-3 py-2 text-xs focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 outline-none text-gray-200"
+                                />
+                                <div className="text-[10px] text-gray-500 mt-1 mb-2">
+                                    Directly paste a YouTube link, or drag & drop an MP4 below to automatically upload it to Cloudflare R2 and copy the link.
+                                </div>
+                                <VideoDropZone
+                                    questionId={selectedQuestion._id}
+                                    onUploaded={(videoUrl) => {
+                                        handleUpdate(selectedQuestion._id, {
+                                            solution: {
+                                                ...(selectedQuestion.solution || { text_markdown: '', latex_validated: false }),
+                                                video_url: videoUrl
+                                            }
+                                        });
+                                    }}
+                                />
+                            </div>
+
                             {/* Audio Recording */}
                             <AudioRecorder
                                 questionId={selectedQuestion._id}
@@ -1613,18 +1695,17 @@ export default function AdminPage() {
                     </div>
                     <div className="flex-1 overflow-y-auto p-4 flex justify-center">
                         {selectedQuestion ? (
-                            <div className={`space-y-4 transition-all duration-300 ${
-                                previewMode === 'mobile'
-                                    ? 'w-[390px] border border-gray-700/60 rounded-2xl overflow-hidden shadow-2xl shadow-black/50 bg-gray-900'
-                                    : 'w-full'
-                            }`}>
+                            <div className={`space-y-4 transition-all duration-300 ${previewMode === 'mobile'
+                                ? 'w-[390px] border border-gray-700/60 rounded-2xl overflow-hidden shadow-2xl shadow-black/50 bg-gray-900'
+                                : 'w-full'
+                                }`}>
                                 {previewMode === 'mobile' && (
                                     <div className="flex items-center justify-center gap-1 py-2 bg-gray-950/80 border-b border-gray-800">
                                         <div className="w-16 h-1 bg-gray-600 rounded-full" />
                                     </div>
                                 )}
                                 {/* Question Preview */}
-                                <div className={`bg-gray-900/50 rounded-xl border border-gray-800/50 ${ previewMode === 'mobile' ? 'p-4 rounded-none border-x-0' : 'p-6'}`}>
+                                <div className={`bg-gray-900/50 rounded-xl border border-gray-800/50 ${previewMode === 'mobile' ? 'p-4 rounded-none border-x-0' : 'p-6'}`}>
                                     <div className="flex items-center gap-2 mb-4">
                                         <span className="text-xs font-mono text-purple-400">{selectedQuestion.display_id}</span>
                                         <span className={`text-xs px-2 py-0.5 rounded ${QUESTION_TYPES.find(t => t.id === selectedQuestion.type)?.color
@@ -1690,7 +1771,7 @@ export default function AdminPage() {
                                 </div>
 
                                 {/* Solution Preview */}
-                                <div className={`bg-gray-900/50 rounded-xl border border-gray-800/50 ${ previewMode === 'mobile' ? 'p-4 rounded-none border-x-0' : 'p-6'}`}>
+                                <div className={`bg-gray-900/50 rounded-xl border border-gray-800/50 ${previewMode === 'mobile' ? 'p-4 rounded-none border-x-0' : 'p-6'}`}>
                                     <h4 className="text-xs font-bold text-gray-500 uppercase mb-3">Solution</h4>
                                     {/* Audio Player — shown when audio is attached */}
                                     {selectedQuestion.solution?.asset_ids?.audio && selectedQuestion.solution.asset_ids.audio.length > 0 && (
