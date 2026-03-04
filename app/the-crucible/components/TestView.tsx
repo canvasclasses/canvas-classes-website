@@ -69,6 +69,27 @@ export default function TestView({ questions, onBack }: { questions: Question[];
   const fmt = (s: number) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
   const q = questions[idx];
 
+  if (!questions || questions.length === 0 || !q) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
+        <WatermarkOverlay />
+        <header style={{ height: 48, borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(10,12,20,0.98)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', flexShrink: 0, gap: 8 }}>
+          <button onClick={onBack} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+            <X style={{ width: 16, height: 16 }} />
+          </button>
+          <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>Loading test…</span>
+          <span />
+        </header>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+            <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)' }}>Preparing your questions…</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const palStatus = (i: number) => {
     const qq = questions[i];
     if (i === idx) return { bg: '#3b82f6', color: '#fff', border: '#60a5fa' };

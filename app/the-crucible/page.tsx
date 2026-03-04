@@ -1,5 +1,5 @@
 import { getTaxonomy, getChapterQuestionCounts } from './actions';
-import CrucibleLanding from './components/CrucibleLanding';
+import CrucibleWizard from './components/CrucibleWizard';
 import { Metadata } from 'next';
 import { createClient } from '../utils/supabase/server';
 
@@ -34,6 +34,6 @@ export default async function Page() {
     }));
 
     return (
-        <CrucibleLanding chapters={chaptersWithCounts} isLoggedIn={!!user} />
+        <CrucibleWizard chapters={chaptersWithCounts} isLoggedIn={!!user} />
     );
 }
