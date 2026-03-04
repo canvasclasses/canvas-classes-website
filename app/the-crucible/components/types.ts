@@ -27,6 +27,10 @@ export interface Question {
   };
   solution: {
     text_markdown: string;
+    video_url?: string;
+    asset_ids?: {
+      audio?: string[];
+    };
   };
   metadata: {
     difficulty: 'Easy' | 'Medium' | 'Hard';
@@ -58,14 +62,14 @@ export interface ExamConfig {
 }
 
 export interface TaxonomyNode {
-    id: string;
-    name: string;
-    parent_id?: string | null;
-    type?: 'chapter' | 'topic';
-    sequence_order?: number;
-    class_level?: number;
-    remedial_video_url?: string;
-    remedial_notes_url?: string;
+  id: string;
+  name: string;
+  parent_id?: string | null;
+  type?: 'chapter' | 'topic';
+  sequence_order?: number;
+  class_level?: number;
+  remedial_video_url?: string;
+  remedial_notes_url?: string;
 }
 
 export type ViewMode = 'list' | 'split' | 'full';

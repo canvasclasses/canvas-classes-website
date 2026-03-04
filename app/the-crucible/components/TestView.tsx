@@ -190,10 +190,44 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                   <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>Correct answer: <strong style={{ color: '#34d399' }}>{rq.answer?.integer_value ?? '—'}</strong></div>
                 </div>
               )}
-              {rq.solution.text_markdown && (
+              {(rq.solution.text_markdown || rq.solution.video_url || (rq.solution.asset_ids?.audio && rq.solution.asset_ids.audio.length > 0)) && (
                 <div style={{ padding: '12px 14px', borderRadius: 14, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)', marginBottom: 24 }}>
                   <div style={{ fontSize: 11, fontWeight: 700, color: '#a78bfa', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
-                  <MathRenderer markdown={rq.solution.text_markdown} className="text-sm leading-relaxed" />
+
+                  {rq.solution?.video_url && (
+                    <div style={{ marginBottom: 16 }}>
+                      {rq.solution.video_url.includes('youtube.com') || rq.solution.video_url.includes('youtu.be') ? (
+                        <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 8 }}>
+                          <iframe
+                            src={rq.solution.video_url.replace('watch?v=', 'embed/').split('&')[0].replace('youtu.be/', 'youtube.com/embed/')}
+                            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                      ) : (
+                        <video controls style={{ width: '100%', borderRadius: 8, background: '#000' }}>
+                          <source src={rq.solution.video_url} type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+                      )}
+                    </div>
+                  )}
+
+                  {rq.solution?.asset_ids?.audio && rq.solution.asset_ids.audio.length > 0 && (
+                    <div style={{ marginBottom: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      {rq.solution.asset_ids.audio.map((url, idx) => (
+                        <audio key={idx} controls style={{ width: '100%', height: 40, borderRadius: 8 }}>
+                          <source src={url} type="audio/mpeg" />
+                          Your browser does not support the audio element.
+                        </audio>
+                      ))}
+                    </div>
+                  )}
+
+                  {rq.solution.text_markdown && (
+                    <MathRenderer markdown={rq.solution.text_markdown} className="text-sm leading-relaxed" />
+                  )}
                 </div>
               )}
               <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>

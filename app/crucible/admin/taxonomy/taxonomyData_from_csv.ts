@@ -13,6 +13,10 @@ export interface TaxonomyNode {
 }
 
 export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
+    // Unsorted - For bulk ingestion before categorization
+    { id: 'ch_unsorted', name: 'Unsorted Questions', parent_id: null, type: 'chapter', sequence_order: 0, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_unsorted', name: 'Needs Categorization', parent_id: 'ch_unsorted', type: 'topic' },
+
     // Class 11
     { id: 'ch11_mole', name: 'Some Basic Concepts of Chemistry (Mole Concept)', parent_id: null, type: 'chapter', sequence_order: 1, class_level: 11, chapterType: 'physical' },
     { id: 'tag_mole_1', name: 'Laws Of Chemical Combination, Sig. Fig, Accuracy', parent_id: 'ch11_mole', type: 'topic' },
