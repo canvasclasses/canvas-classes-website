@@ -11,12 +11,12 @@ interface SVGScaleControlsProps {
   compact?: boolean;
 }
 
-export default function SVGScaleControls({ 
-  imageUrl = '', 
+export default function SVGScaleControls({
+  imageUrl = '',
   initialScale = 100,
-  onScaleChange, 
+  onScaleChange,
   step = 5,
-  compact = false 
+  compact = false
 }: SVGScaleControlsProps) {
   const [scale, setScale] = useState(initialScale);
 
@@ -44,7 +44,7 @@ export default function SVGScaleControls({
         <input
           type="range"
           min="10"
-          max="300"
+          max="400"
           step={step}
           value={scale}
           onChange={(e) => handleScaleChange(parseInt(e.target.value))}
@@ -70,7 +70,7 @@ export default function SVGScaleControls({
       <input
         type="range"
         min="10"
-        max="300"
+        max="400"
         step={step}
         value={scale}
         onChange={(e) => handleScaleChange(parseInt(e.target.value))}
@@ -81,9 +81,9 @@ export default function SVGScaleControls({
       </span>
       {imageUrl && (
         <div className="mt-1 overflow-hidden">
-          <img 
-            src={imageUrl} 
-            alt="Preview" 
+          <img
+            src={imageUrl}
+            alt="Preview"
             style={{ width: `${scale}%`, height: 'auto', display: 'block', margin: '0 auto' }}
             className="transition-all"
           />
