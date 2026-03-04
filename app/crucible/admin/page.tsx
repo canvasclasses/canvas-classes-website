@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2 } from 'lucide-react';
+import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2, Library } from 'lucide-react';
 // uuid removed — display_id is now generated inline
 import AnalyticsDashboard from './AnalyticsDashboard';
 import ExportDashboard from './components/ExportDashboard';
@@ -154,6 +154,7 @@ export default function AdminPage() {
     const [selectedTagStatusFilter, setSelectedTagStatusFilter] = useState('all');
     const [selectedYearFilter, setSelectedYearFilter] = useState('all');
     const [selectedPaperFilter, setSelectedPaperFilter] = useState('all');
+    const [selectedExamLevelFilter, setSelectedExamLevelFilter] = useState<string>('all');
 
     // Get chapter-specific tags from taxonomy
     const [availableTags, setAvailableTags] = useState<Array<{ id: string, name: string }>>([]);
@@ -241,13 +242,13 @@ export default function AdminPage() {
     }, [handleKeyNav]);
 
     useEffect(() => {
-        loadData(0);
+        loadData();
     }, []);
 
-    // Reload from server when server-side filters change
+    // Load questions when filters or search change
     useEffect(() => {
-        loadData(0);
-    }, [selectedChapterFilter, selectedTypeFilter, selectedDifficultyFilter, selectedSourceFilter]);
+        loadQuestions(0);
+    }, [selectedChapterFilter, selectedTypeFilter, selectedDifficultyFilter, selectedSourceFilter, selectedExamLevelFilter, searchQuery]);
 
     // Update available tags when selected question changes
     useEffect(() => {
@@ -262,34 +263,38 @@ export default function AdminPage() {
         }
     }, [selectedQuestionId, questions]);
 
-    // We already have these declared at top of file, only ExamLevel is new here
-    const [selectedExamLevelFilter, setSelectedExamLevelFilter] = useState<string>('all');
     const PAGE_SIZE = 5000;
     const [currentPage, setCurrentPage] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
 
-    const buildQueryParams = (page: number) => {
+    const buildQueryParams = (page: number, countOnly: boolean = false) => {
         const params = new URLSearchParams();
-        params.set('limit', String(PAGE_SIZE));
-        params.set('skip', String(page * PAGE_SIZE));
+
+        if (countOnly) {
+            params.set('countOnly', 'true');
+        } else {
+            params.set('limit', String(PAGE_SIZE));
+            params.set('skip', String(page * PAGE_SIZE));
+        }
+
         if (selectedChapterFilter !== 'all') params.set('chapter_id', selectedChapterFilter);
         if (selectedTypeFilter !== 'all') params.set('type', selectedTypeFilter);
         if (selectedDifficultyFilter !== 'all') params.set('difficulty', selectedDifficultyFilter);
         if (selectedSourceFilter === 'mains_pyq' || selectedSourceFilter === 'adv_pyq') params.set('is_pyq', 'true');
         if (selectedExamLevelFilter !== 'all') params.set('exam_level', selectedExamLevelFilter);
+        if (searchQuery) params.set('search', searchQuery);
 
         return params.toString();
     };
 
-    const loadData = async (page = 0) => {
+    const loadData = async () => {
         setLoading(true);
         try {
             const [qRes, cRes] = await Promise.all([
-                fetch(`/api/v2/questions?${buildQueryParams(page)}`, { cache: 'no-store' }),
+                fetch(`/api/v2/questions?countOnly=true`, { cache: 'no-store' }),
                 fetch('/api/v2/chapters', { cache: 'no-store' })
             ]);
 
-            // If redirected to login (unauthenticated), send user there — but not on local dev
             const isDev = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
             if (!isDev && (qRes.redirected || qRes.url.includes('/login') || qRes.status === 401)) {
                 window.location.href = '/login?next=/crucible/admin';
@@ -300,13 +305,47 @@ export default function AdminPage() {
             const cData = await cRes.json();
 
             if (qData.success) {
-                setQuestions(qData.data.sort((a: Question, b: Question) => a.display_id.localeCompare(b.display_id)));
-                setTotalCount(qData.pagination?.total ?? qData.data.length);
-                setCurrentPage(page);
+                setTotalCount(qData.pagination?.total ?? 0);
             }
             if (cData.success) setChapters(cData.data);
+
+            // If there's an active filter or search, load questions immediately
+            if (selectedChapterFilter !== 'all' || searchQuery) {
+                await loadQuestions(0);
+            }
         } catch (error) {
-            console.error('Error loading data:', error);
+            console.error('Error loading initial data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const loadQuestions = async (page = 0) => {
+        // Only load questions if a chapter is selected or there's a search query
+        if (selectedChapterFilter === 'all' && !searchQuery) {
+            setQuestions([]);
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const res = await fetch(`/api/v2/questions?${buildQueryParams(page)}`, { cache: 'no-store' });
+
+            const isDev = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
+            if (!isDev && (res.redirected || res.url.includes('/login') || res.status === 401)) {
+                window.location.href = '/login?next=/crucible/admin';
+                return;
+            }
+
+            const data = await res.json();
+
+            if (data.success) {
+                setQuestions(data.data.sort((a: Question, b: Question) => a.display_id.localeCompare(b.display_id)));
+                setTotalCount(data.pagination?.total ?? data.data.length);
+                setCurrentPage(page);
+            }
+        } catch (error) {
+            console.error('Error loading questions:', error);
         } finally {
             setLoading(false);
         }
@@ -369,7 +408,7 @@ export default function AdminPage() {
             });
             const data = await res.json();
             if (data.success) {
-                await loadData();
+                await loadQuestions();
                 setSelectedQuestionId(data.data._id);
             } else {
                 console.error('Add question failed:', data);
@@ -387,7 +426,7 @@ export default function AdminPage() {
                 const res = await fetch(`/api/v2/questions/${id}`, { method: 'DELETE' });
                 const data = await res.json();
                 if (data.success) {
-                    await loadData();
+                    await loadQuestions();
                     if (selectedQuestionId === id) setSelectedQuestionId(null);
                 }
             } catch (error) {
@@ -398,6 +437,11 @@ export default function AdminPage() {
             setDeletingId(id);
             setTimeout(() => setDeletingId(null), 3000);
         }
+    };
+
+    // The API optimization replaces this client-side export load with an API fetch in a future step if needed.
+    const handleExport = async () => {
+        setShowExport(true);
     };
 
     const handleUpdate = async (id: string, updates: Partial<Question>) => {
@@ -452,7 +496,7 @@ export default function AdminPage() {
         }
         setSelectedQuestions(new Set());
         setBulkMode(false);
-        await loadData();
+        await loadQuestions();
     };
 
     const handleAITagSuggestion = async (questionId: string) => {
@@ -554,56 +598,7 @@ export default function AdminPage() {
 
     const selectedQuestion = questions.find(q => q._id === selectedQuestionId);
 
-    // Filter questions
-    const filteredQuestions = questions.filter(q => {
-        if (searchQuery) {
-            const query = searchQuery.toLowerCase();
-            if (!q.display_id.toLowerCase().includes(query) &&
-                !q.question_text.markdown.toLowerCase().includes(query)) return false;
-        }
-        if (selectedChapterFilter !== 'all' && q.metadata.chapter_id !== selectedChapterFilter) return false;
-        if (selectedTypeFilter !== 'all' && q.type !== selectedTypeFilter) return false;
-        if (selectedDifficultyFilter !== 'all' && q.metadata.difficulty !== selectedDifficultyFilter) return false;
-        if (selectedSourceFilter !== 'all') {
-            const examName = q.metadata?.exam_source?.exam ?? '';
-            // By Source Dropdown
-            if (selectedSourceFilter === 'mains_pyq' && !(q.metadata?.is_pyq && examName.toLowerCase().includes('main'))) return false;
-            if (selectedSourceFilter === 'adv_pyq' && !(q.metadata?.is_pyq && (examName.toLowerCase().includes('adv') || examName.toLowerCase().includes('advanced')))) return false;
-            if (selectedSourceFilter === 'non_pyq' && q.metadata?.is_pyq) return false;
-
-            // By Exam Level Dropdown
-            if (selectedExamLevelFilter === 'mains' && !examName.toLowerCase().includes('main')) return false;
-            if (selectedExamLevelFilter === 'adv' && !(examName.toLowerCase().includes('adv') || examName.toLowerCase().includes('advanced'))) return false;
-        }
-        if (selectedYearFilter !== 'all') {
-            const qYear = q.metadata?.exam_source?.year;
-            if (!qYear || String(qYear) !== selectedYearFilter) return false;
-        }
-        if (selectedPaperFilter !== 'all') {
-            const es = q.metadata?.exam_source;
-            const key = es ? `${es.exam}|${es.year}|${es.month}|${es.day}|${es.shift}` : '';
-            if (key !== selectedPaperFilter) return false;
-        }
-        if (selectedShiftFilter !== 'all') {
-            const qShift = q.metadata?.exam_source?.shift ?? '';
-            if (qShift.toLowerCase() !== selectedShiftFilter.toLowerCase()) return false;
-        }
-        if (selectedTopPYQFilter !== 'all') {
-            if (selectedTopPYQFilter === 'top' && !q.metadata.is_top_pyq) return false;
-            if (selectedTopPYQFilter === 'not-top' && q.metadata.is_top_pyq) return false;
-        }
-        // Tag Status Filter
-        if (selectedTagStatusFilter !== 'all') {
-            const hasChapter = !!q.metadata.chapter_id;
-            const hasPrimaryTag = isTagValid(q.metadata.tags);
-            const hasActiveFlags = q.flags?.some(f => !f.resolved);
-            if (selectedTagStatusFilter === 'untagged' && hasChapter && hasPrimaryTag) return false;
-            if (selectedTagStatusFilter === 'no-chapter' && hasChapter) return false;
-            if (selectedTagStatusFilter === 'no-tag' && (!hasChapter || hasPrimaryTag)) return false;
-            if (selectedTagStatusFilter === 'flagged' && !hasActiveFlags) return false;
-        }
-        return true;
-    });
+    const filteredQuestions = questions;
     filteredQuestionsRef.current = filteredQuestions;
 
     // Compute distinct papers from loaded questions for Previous Papers dropdown
@@ -705,26 +700,26 @@ export default function AdminPage() {
                         <button
                             title="Previous question (← or ↑)"
                             onClick={() => {
-                                const idx = filteredQuestions.findIndex(q => q._id === selectedQuestionId);
-                                if (idx > 0) setSelectedQuestionId(filteredQuestions[idx - 1]._id);
+                                const idx = questions.findIndex(q => q._id === selectedQuestionId);
+                                if (idx > 0) setSelectedQuestionId(questions[idx - 1]._id);
                             }}
-                            disabled={!selectedQuestionId || filteredQuestions.findIndex(q => q._id === selectedQuestionId) <= 0}
+                            disabled={!selectedQuestionId || questions.findIndex(q => q._id === selectedQuestionId) <= 0}
                             className="px-2.5 py-1 bg-indigo-600/80 hover:bg-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded-lg text-xs font-medium transition shrink-0"
                         >
                             ← Prev
                         </button>
                         {selectedQuestionId && (
                             <span className="text-xs text-gray-500 font-mono shrink-0">
-                                {filteredQuestions.findIndex(q => q._id === selectedQuestionId) + 1}/{filteredQuestions.length}
+                                {questions.findIndex(q => q._id === selectedQuestionId) + 1}/{questions.length}
                             </span>
                         )}
                         <button
                             title="Next question (→ or ↓)"
                             onClick={() => {
-                                const idx = filteredQuestions.findIndex(q => q._id === selectedQuestionId);
-                                if (idx < filteredQuestions.length - 1) setSelectedQuestionId(filteredQuestions[idx + 1]._id);
+                                const idx = questions.findIndex(q => q._id === selectedQuestionId);
+                                if (idx < questions.length - 1) setSelectedQuestionId(questions[idx + 1]._id);
                             }}
-                            disabled={!selectedQuestionId || filteredQuestions.findIndex(q => q._id === selectedQuestionId) >= filteredQuestions.length - 1}
+                            disabled={!selectedQuestionId || questions.findIndex(q => q._id === selectedQuestionId) >= questions.length - 1}
                             className="px-2.5 py-1 bg-indigo-600/80 hover:bg-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded-lg text-xs font-medium transition shrink-0"
                         >
                             Next →
@@ -761,7 +756,7 @@ export default function AdminPage() {
                         </div>
                     ) : bulkMode ? (
                         <div className="flex-1 max-h-32 overflow-y-auto bg-gray-800/30 border border-gray-700/50 rounded-lg p-2 space-y-1">
-                            {filteredQuestions.slice(0, 50).map(q => {
+                            {questions.slice(0, 50).map(q => {
                                 const hasChapter = !!q.metadata.chapter_id;
                                 const hasPrimaryTag = isTagValid(q.metadata.tags);
                                 const statusDot = !hasChapter ? '🔴' : !hasPrimaryTag ? '🟡' : '🟢';
@@ -790,8 +785,8 @@ export default function AdminPage() {
                                     </label>
                                 );
                             })}
-                            {filteredQuestions.length > 50 && (
-                                <div className="text-xs text-gray-500 text-center py-1">Showing first 50 of {filteredQuestions.length}</div>
+                            {questions.length > 50 && (
+                                <div className="text-xs text-gray-500 text-center py-1">Showing first 50 of {questions.length}</div>
                             )}
                         </div>
                     ) : (
@@ -800,8 +795,8 @@ export default function AdminPage() {
                             onChange={(e) => setSelectedQuestionId(e.target.value || null)}
                             className="w-56 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none shrink-0"
                         >
-                            <option value="">Select ({filteredQuestions.length})</option>
-                            {filteredQuestions.map(q => {
+                            <option value="">Select ({questions.length})</option>
+                            {questions.map(q => {
                                 const hasChapter = !!q.metadata.chapter_id;
                                 const hasPrimaryTag = isTagValid(q.metadata.tags);
                                 const statusDot = !hasChapter ? '🔴' : !hasPrimaryTag ? '🟡' : '🟢';
@@ -868,17 +863,17 @@ export default function AdminPage() {
                     </select>
 
                     {/* Page navigation */}
-                    {totalCount > PAGE_SIZE && (
+                    {totalCount > PAGE_SIZE && (!searchQuery && selectedChapterFilter !== 'all') && (
                         <div className="flex items-center gap-1 shrink-0 ml-auto">
                             <button
                                 disabled={currentPage === 0}
-                                onClick={() => loadData(currentPage - 1)}
+                                onClick={() => loadQuestions(currentPage - 1)}
                                 className="px-2 py-1 bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded text-xs transition"
                             >‹</button>
                             <span className="text-xs text-gray-500 font-mono">{currentPage + 1}/{Math.ceil(totalCount / PAGE_SIZE)}</span>
                             <button
                                 disabled={(currentPage + 1) * PAGE_SIZE >= totalCount}
-                                onClick={() => loadData(currentPage + 1)}
+                                onClick={() => loadQuestions(currentPage + 1)}
                                 className="px-2 py-1 bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded text-xs transition"
                             >›</button>
                         </div>
@@ -991,7 +986,16 @@ export default function AdminPage() {
             <div className="flex-1 flex overflow-hidden">
                 {/* LEFT: Editor (54%) */}
                 <div className="w-[54%] flex flex-col overflow-hidden border-r border-gray-800/50">
-                    {selectedQuestion ? (
+                    {selectedChapterFilter === 'all' && !searchQuery ? (
+                        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center text-gray-500">
+                            <Library size={48} className="mb-4 text-gray-600 opacity-50" />
+                            <h2 className="text-xl font-semibold text-gray-300 mb-2">Select a Chapter</h2>
+                            <p className="max-w-md text-sm">
+                                To optimize performance, the admin dashboard no longer loads all questions at once.
+                                Please select a chapter from the dropdown above or use the search bar to find specific questions.
+                            </p>
+                        </div>
+                    ) : selectedQuestion ? (
                         <div className="flex-1 overflow-y-auto p-6 space-y-4">
                             {/* Header Row */}
                             <div className="flex items-center gap-3 pb-4 border-b border-gray-800/50">
@@ -1811,7 +1815,7 @@ export default function AdminPage() {
             {showBulkImport && (
                 <BulkImportModal
                     onClose={() => setShowBulkImport(false)}
-                    onImported={(count) => { setShowBulkImport(false); loadData(0); }}
+                    onImported={(count) => { setShowBulkImport(false); loadData(); }}
                     defaultChapterId={selectedChapterFilter !== 'all' ? selectedChapterFilter : ''}
                 />
             )}

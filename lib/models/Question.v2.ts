@@ -67,30 +67,30 @@ export interface IQuestionFlag {
 export interface IQuestion {
   _id: string; // UUID v4
   display_id: string; // e.g., "ATOM-001"
-  
+
   question_text: IQuestionText;
   type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC';
   options: IQuestionOption[];
   answer?: IQuestionAnswer;
   solution: IQuestionSolution;
   metadata: IQuestionMetadata;
-  
+
   flags?: IQuestionFlag[];
 
   status: 'draft' | 'review' | 'published' | 'archived';
   quality_score: number; // 0-100
   needs_review: boolean;
   review_notes?: string;
-  
+
   version: number;
   created_at: Date;
   created_by: string;
   updated_at: Date;
   updated_by: string;
-  
+
   deleted_at?: Date;
   deleted_by?: string;
-  
+
   asset_ids: string[]; // All assets used in this question
   svg_scales?: {
     question?: number;
@@ -132,10 +132,10 @@ const QuestionSolutionSchema = new Schema<IQuestionSolution>({
 }, { _id: false });
 
 const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
-  difficulty: { 
-    type: String, 
-    enum: ['Easy', 'Medium', 'Hard'], 
-    required: true 
+  difficulty: {
+    type: String,
+    enum: ['Easy', 'Medium', 'Hard'],
+    required: true
   },
   chapter_id: { type: String, required: true },
   tags: [{
@@ -190,8 +190,8 @@ const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
 // ─────────────────────────────────────────────────────────────────────────────
 
 const QuestionSchema = new Schema<IQuestion>({
-  _id: { 
-    type: String, 
+  _id: {
+    type: String,
     required: true
     // UUID v4 format — all AI-agent batch scripts must use uuidv4() for _id.
     // Regex validation intentionally removed: Mongoose validates on write only,
@@ -199,44 +199,43 @@ const QuestionSchema = new Schema<IQuestion>({
     // whose _id was inserted by an older script. Validation is enforced at the
     // insertion script level instead (see QUESTION_INGESTION_WORKFLOW.md Rule 15).
   },
-  display_id: { 
-    type: String, 
+  display_id: {
+    type: String,
     required: true,
-    unique: true,
     // Matches all known prefixes: 2–10 uppercase alphanumeric chars, dash, 3+ digits.
     // See canonical prefix table above. Update the table when adding new chapters.
     match: /^[A-Z0-9]{2,10}-\d{3,}$/
   },
-  
+
   question_text: { type: QuestionTextSchema, required: true },
-  type: { 
-    type: String, 
-    enum: ['SCQ', 'MCQ', 'NVT', 'AR', 'MST', 'MTC'], 
-    required: true 
+  type: {
+    type: String,
+    enum: ['SCQ', 'MCQ', 'NVT', 'AR', 'MST', 'MTC'],
+    required: true
   },
   options: [QuestionOptionSchema],
   answer: QuestionAnswerSchema,
   solution: { type: QuestionSolutionSchema, required: true },
   metadata: { type: QuestionMetadataSchema, required: true },
-  
-  status: { 
-    type: String, 
-    enum: ['draft', 'review', 'published', 'archived'], 
-    default: 'draft' 
+
+  status: {
+    type: String,
+    enum: ['draft', 'review', 'published', 'archived'],
+    default: 'draft'
   },
   quality_score: { type: Number, default: 50, min: 0, max: 100 },
   needs_review: { type: Boolean, default: false },
   review_notes: { type: String },
-  
+
   version: { type: Number, default: 1 },
   created_at: { type: Date, default: Date.now },
   created_by: { type: String, required: true },
   updated_at: { type: Date, default: Date.now },
   updated_by: { type: String, required: true },
-  
+
   deleted_at: { type: Date },
   deleted_by: { type: String },
-  
+
   asset_ids: [{ type: String }],
   flags: {
     type: [{
@@ -266,7 +265,7 @@ QuestionSchema.index({ deleted_at: 1 }); // For soft deletes
 QuestionSchema.index({ 'metadata.exam_source.year': 1, 'metadata.exam_source.exam': 1 });
 
 // Pre-save middleware to update timestamps
-QuestionSchema.pre('save', function(this: any, next: any) {
+QuestionSchema.pre('save', function (this: any, next: any) {
   this.updated_at = new Date();
   next();
 });

@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, Star, Check, Timer, X } from 'lucide-react';
 import { Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
 import WatermarkOverlay from '@/components/WatermarkOverlay';
+import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 
 async function fetchOptionStats(questionId: string): Promise<Record<string, number>> {
   try {
@@ -65,6 +66,46 @@ export default function TestView({ questions, onBack }: { questions: Question[];
     setRevStats({});
     fetchOptionStats(rq.id).then(setRevStats);
   }, [reviewing, revIdx, questions]);
+
+  // Auto-save all test attempts when submitted
+  useEffect(() => {
+    if (!submitted) return;
+    (async () => {
+      try {
+        const supabase = createSupabaseClient();
+        if (!supabase) return;
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session?.access_token) return;
+        // Record every question — attempted or not
+        await Promise.allSettled(
+          questions.map(qq => {
+            const hasAnswer = !!(answers[qq.id] || (nvtInputs[qq.id] && nvtInputs[qq.id].trim()));
+            // Skipped questions: don't record (no attempt = no data)
+            if (!hasAnswer) return Promise.resolve();
+            const isCorrect = isQuestionCorrect(qq);
+            const selectedOption = qq.type === 'NVT'
+              ? nvtInputs[qq.id] ?? null
+              : (answers[qq.id] ?? null);
+            return fetch('/api/v2/user/progress', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+              body: JSON.stringify({
+                question_id: qq.id,
+                display_id: qq.display_id,
+                chapter_id: qq.metadata.chapter_id,
+                difficulty: qq.metadata.difficulty,
+                concept_tags: qq.metadata.tags?.map((t: any) => t.tag_id) ?? [],
+                is_correct: isCorrect,
+                selected_option: selectedOption,
+                source: 'test',
+              }),
+            });
+          })
+        );
+      } catch { /* non-critical */ }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submitted]);
 
   const fmt = (s: number) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
   const q = questions[idx];

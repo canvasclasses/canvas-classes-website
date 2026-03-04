@@ -130,9 +130,12 @@ export async function GET(request: NextRequest) {
     const is_pyq = searchParams.get('is_pyq');
     const is_top_pyq = searchParams.get('is_top_pyq');
     const exam_level = searchParams.get('exam_level');
-    // Authenticated users (admin dashboard) get full list; public gets max 50
+    const searchTerm = searchParams.get('search');
+    const isCountOnly = searchParams.get('countOnly') === 'true';
+
+    // Authenticated users (admin dashboard) get full list (unless counting); public gets max 50
     const requestedLimit = parseInt(searchParams.get('limit') || (isAuthenticated ? '5000' : '50'));
-    const limit = isAuthenticated ? requestedLimit : Math.min(requestedLimit, 50); // cap public at 50
+    const limit = isAuthenticated && !isCountOnly ? requestedLimit : Math.min(requestedLimit, 50); // cap public at 50
     const skip = parseInt(searchParams.get('skip') || '0');
 
     // Build query
@@ -147,13 +150,23 @@ export async function GET(request: NextRequest) {
     if (exam_level === 'mains') query['metadata.exam_source.exam'] = { $regex: /main/i };
     if (exam_level === 'adv') query['metadata.exam_source.exam'] = { $regex: /adv/i };
 
-    const questions = await QuestionV2.find(query)
-      .sort({ created_at: -1 })
-      .limit(limit)
-      .skip(skip)
-      .lean();
+    if (searchTerm) {
+      query.$or = [
+        { display_id: { $regex: searchTerm, $options: 'i' } },
+        { 'question_text.markdown': { $regex: searchTerm, $options: 'i' } }
+      ];
+    }
 
     const total = await QuestionV2.countDocuments(query);
+
+    let questions: any[] = [];
+    if (!isCountOnly) {
+      questions = await QuestionV2.find(query)
+        .sort({ created_at: -1 })
+        .limit(limit)
+        .skip(skip)
+        .lean();
+    }
 
     return NextResponse.json({
       success: true,

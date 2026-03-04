@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { Chapter, Question } from '../components/types';
 import BrowseView from '../components/BrowseView';
-import TestConfigModal, { DifficultyMix } from '../components/TestConfigModal';
+import TestConfigModal from '../components/TestConfigModal';
 import TestView from '../components/TestView';
+import { buildSmartTest, DifficultyMix, AttemptedEntry } from '../components/testGenerator';
 
 interface Props {
     chapter: Chapter;
@@ -22,43 +24,83 @@ const CAT_COLOR: Record<string, string> = {
     Practical: '#fbbf24',
 };
 
+async function fetchUserProgress(token: string, chapterId: string) {
+    try {
+        const res = await fetch(`/api/v2/user/progress?chapterId=${chapterId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) return null;
+        return await res.json();
+    } catch { return null; }
+}
+
+async function recordTestSession(token: string, chapterId: string, questionIds: string[], config: { count: number; mix: string }) {
+    try {
+        await fetch('/api/v2/user/test-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ chapter_id: chapterId, question_ids: questionIds, config }),
+        });
+    } catch { /* non-critical — test still starts */ }
+}
+
 export default function ChapterPracticePage({ chapter, questions, allChapters }: Props) {
     const router = useRouter();
     const [mode, setMode] = useState<Mode>('choose');
     const [testQuestions, setTestQuestions] = useState<Question[]>([]);
     const [showTestConfig, setShowTestConfig] = useState(false);
+    const [isBuilding, setIsBuilding] = useState(false);
 
     const color = CAT_COLOR[chapter.category ?? 'Physical'] ?? '#a78bfa';
     const qCount = questions.length;
 
-    const startTest = (count: number, mix: DifficultyMix) => {
+    const startTest = useCallback(async (count: number, mix: DifficultyMix) => {
         setShowTestConfig(false);
-        const shuffle = <T,>(arr: T[]): T[] => [...arr].sort(() => Math.random() - 0.5);
-        let pool: Question[];
-        if (mix === 'pyq') {
-            pool = questions.filter(q => q.metadata.is_pyq);
-            if (pool.length === 0) pool = questions;
-        } else if (mix === 'easy') {
-            pool = [...shuffle(questions.filter(q => q.metadata.difficulty === 'Easy')), ...shuffle(questions.filter(q => q.metadata.difficulty === 'Medium'))];
-        } else if (mix === 'hard') {
-            pool = [...shuffle(questions.filter(q => q.metadata.difficulty === 'Medium')), ...shuffle(questions.filter(q => q.metadata.difficulty === 'Hard'))];
-        } else {
-            const easy = shuffle(questions.filter(q => q.metadata.difficulty === 'Easy'));
-            const medium = shuffle(questions.filter(q => q.metadata.difficulty === 'Medium'));
-            const hard = shuffle(questions.filter(q => q.metadata.difficulty === 'Hard'));
-            const eN = Math.round(count * 0.3), hN = Math.round(count * 0.3), mN = count - eN - hN;
-            pool = shuffle([...easy.slice(0, eN), ...medium.slice(0, mN), ...hard.slice(0, hN)]);
-            if (pool.length < count) {
-                const used = new Set(pool.map(q => q.id));
-                pool = [...pool, ...shuffle(questions.filter(q => !used.has(q.id)))];
+        setIsBuilding(true);
+
+        try {
+            // Fetch user progress for smart scoring (best-effort — if not logged in, falls back to simple random)
+            let attempted: AttemptedEntry[] = [];
+            let starredIds = new Set<string>();
+            let last3Sessions: string[][] = [];
+
+            const { data: { session } } = await (createSupabaseClient()?.auth.getSession() ?? Promise.resolve({ data: { session: null } }));
+            const token = session?.access_token;
+
+            if (token) {
+                const progress = await fetchUserProgress(token, chapter.id);
+                if (progress) {
+                    attempted = progress.attempted_ids ?? [];
+                    starredIds = new Set<string>(progress.starred_ids ?? []);
+                    last3Sessions = progress.last_3_sessions ?? [];
+                }
             }
+
+            // Build the smart test
+            const picked = buildSmartTest({
+                questions,
+                count,
+                mix,
+                starredIds,
+                attempted,
+                last3Sessions,
+            });
+
+            setTestQuestions(picked);
+
+            // Record this session for future overlap detection (fire-and-forget)
+            if (token) {
+                recordTestSession(token, chapter.id, picked.map(q => q.id), { count, mix });
+            }
+
+            setMode('test');
+        } finally {
+            setIsBuilding(false);
         }
-        setTestQuestions(pool.slice(0, count));
-        setMode('test');
-    };
+    }, [questions, chapter.id]);
 
     if (mode === 'browse') {
-        return <BrowseView questions={questions} chapters={allChapters} onBack={() => setMode('choose')} />;
+        return <BrowseView questions={questions} chapters={allChapters} onBack={() => setMode('choose')} chapterId={chapter.id} />;
     }
 
     if (mode === 'test') {
@@ -122,10 +164,10 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
                                 📖 Browse All Questions
                                 <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 400 }}>Solutions visible</span>
                             </button>
-                            <button onClick={() => setShowTestConfig(true)}
-                                style={{ padding: '18px', borderRadius: 14, border: 'none', background: 'linear-gradient(135deg,#7c3aed,#5b21b6)', color: '#fff', fontSize: 15, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, boxShadow: '0 4px 20px rgba(124,58,237,0.4)' }}>
-                                ⏱ Take Timed Test
-                                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', fontWeight: 400 }}>Exam conditions</span>
+                            <button onClick={() => setShowTestConfig(true)} disabled={isBuilding}
+                                style={{ padding: '18px', borderRadius: 14, border: 'none', background: isBuilding ? 'rgba(124,58,237,0.4)' : 'linear-gradient(135deg,#7c3aed,#5b21b6)', color: '#fff', fontSize: 15, fontWeight: 800, cursor: isBuilding ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, boxShadow: '0 4px 20px rgba(124,58,237,0.4)' }}>
+                                {isBuilding ? '⏳ Building test…' : '⏱ Take Timed Test'}
+                                {!isBuilding && <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', fontWeight: 400 }}>Smart · topic-balanced</span>}
                             </button>
                         </div>
 
