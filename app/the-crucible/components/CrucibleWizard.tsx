@@ -221,10 +221,10 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
       setActiveView('shloka');
       fetchQuestions(chapterIds, undefined, topPYQFilter)
         .then(qs => {
-          if (qs.length === 0) { 
-            notify(topPYQFilter ? 'No Top PYQs found for selected chapters yet.' : 'No questions found for selected chapters yet.'); 
-            setActiveView('wizard'); 
-            return; 
+          if (qs.length === 0) {
+            notify(topPYQFilter ? 'No Top PYQs found for selected chapters yet.' : 'No questions found for selected chapters yet.');
+            setActiveView('wizard');
+            return;
           }
           setQuestions(qs);
         })
@@ -310,7 +310,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
               </div>
               <div>
                 <div style={{ fontSize: isMobile ? 16 : 20, fontWeight: 600, letterSpacing: '-0.01em', color: '#fafafa', lineHeight: 1 }}>The Crucible</div>
-                <div style={{ fontSize: isMobile ? 9 : 10, letterSpacing: '0.05em', color: 'rgba(251,146,60,0.7)', textTransform: 'uppercase', fontWeight: 500, marginTop: 3 }}>Practice Mode</div>
+                <div style={{ fontSize: isMobile ? 9 : 10, letterSpacing: '0.05em', color: 'rgba(251,146,60,0.7)', textTransform: 'uppercase', fontWeight: 500, marginTop: 3 }}>Forge Your Rank</div>
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -343,8 +343,8 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
                 <BarChart2 style={{ width: 14, height: 14 }} /> {isMobile ? '' : 'Progress'}
               </button>
               {/* Home link */}
-              <a 
-                href="/" 
+              <a
+                href="/"
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
                   e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
@@ -353,19 +353,19 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
                   e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
                   e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
                 }}
-                style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: 4, 
-                  padding: '6px 12px', 
-                  borderRadius: 8, 
-                  border: '1px solid rgba(255,255,255,0.08)', 
-                  background: 'rgba(255,255,255,0.03)', 
-                  color: 'rgba(203,213,225,0.8)', 
-                  fontSize: 12, 
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                  padding: '6px 12px',
+                  borderRadius: 8,
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  background: 'rgba(255,255,255,0.03)',
+                  color: 'rgba(203,213,225,0.8)',
+                  fontSize: 12,
                   fontWeight: 500,
-                  textDecoration: 'none', 
-                  transition: 'all 0.15s ease' 
+                  textDecoration: 'none',
+                  transition: 'all 0.15s ease'
                 }}>
                 <ChevronLeft style={{ width: 14, height: 14 }} /> Home
               </a>

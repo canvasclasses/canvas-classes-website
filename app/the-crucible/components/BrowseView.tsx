@@ -45,6 +45,18 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
   const [cardOpt, setCardOpt] = useState<Record<number, string | string[] | null>>({});
   const [cardStats, setCardStats] = useState<Record<number, Record<string, number>>>({});
   const [activeNavIdx, setActiveNavIdx] = useState(0);
+  // 'all' | 'mains' | 'advanced' | 'non-pyq'
+  const [examFilter, setExamFilter] = useState<'all' | 'mains' | 'advanced' | 'non-pyq'>('all');
+
+  // Filter questions client-side based on exam filter
+  const filteredQuestions = questions.filter(q => {
+    if (examFilter === 'all') return true;
+    if (examFilter === 'non-pyq') return !q.metadata.is_pyq;
+    const exam = (q.metadata.exam_source?.exam ?? '').toLowerCase();
+    if (examFilter === 'mains') return q.metadata.is_pyq && /main/i.test(exam);
+    if (examFilter === 'advanced') return q.metadata.is_pyq && /adv/i.test(exam);
+    return true;
+  });
 
   // Local browse-session attempt buffer — flushed to API only if user confirms on exit
   type BrowseAttempt = {
@@ -56,8 +68,8 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  const totalPages = Math.ceil(questions.length / PAGE_SIZE);
-  const pageQuestions = questions.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+  const totalPages = Math.ceil(filteredQuestions.length / PAGE_SIZE);
+  const pageQuestions = filteredQuestions.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -381,7 +393,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
       </button>
       <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', fontFamily: 'monospace' }}>
         {page + 1} / {totalPages}
-        <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', marginLeft: 6 }}>({questions.length} Qs)</span>
+        <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', marginLeft: 6 }}>({filteredQuestions.length} Qs)</span>
       </span>
       <button onClick={() => changePage(page + 1)} disabled={page === totalPages - 1}
         style={{ padding: '8px 16px', borderRadius: 9, border: '1px solid rgba(255,255,255,0.1)', background: page === totalPages - 1 ? 'rgba(255,255,255,0.03)' : 'rgba(124,58,237,0.15)', color: page === totalPages - 1 ? 'rgba(255,255,255,0.2)' : '#a78bfa', fontSize: 13, fontWeight: 600, cursor: page === totalPages - 1 ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -405,6 +417,40 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
         </div>
       </div>
     </header>
+  );
+
+  // ── Exam filter bar ─────────────────────────────────────────────────────────
+  const EXAM_FILTERS: { id: typeof examFilter; label: string }[] = [
+    { id: 'all', label: 'All' },
+    { id: 'mains', label: 'JEE Mains' },
+    { id: 'advanced', label: 'JEE Advanced' },
+    { id: 'non-pyq', label: 'Non-PYQ' },
+  ];
+
+  const filterBar = (
+    <div style={{ background: 'rgba(8,10,15,0.95)', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '6px 16px', display: 'flex', alignItems: 'center', gap: 6, overflowX: 'auto', flexShrink: 0 }}>
+      {EXAM_FILTERS.map(({ id, label }) => {
+        const active = examFilter === id;
+        const accentColor = id === 'mains' ? '#38bdf8' : id === 'advanced' ? '#a78bfa' : id === 'non-pyq' ? '#34d399' : 'rgba(255,255,255,0.6)';
+        return (
+          <button
+            key={id}
+            onClick={() => { setExamFilter(id); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
+            style={{
+              padding: '5px 12px', borderRadius: 99, border: `1px solid ${active ? accentColor + '66' : 'rgba(255,255,255,0.1)'}`,
+              background: active ? accentColor + '1a' : 'transparent',
+              color: active ? accentColor : 'rgba(255,255,255,0.4)', fontSize: 11, fontWeight: active ? 700 : 500,
+              cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.15s',
+            }}
+          >
+            {label}
+          </button>
+        );
+      })}
+      <span style={{ marginLeft: 'auto', fontSize: 10, color: 'rgba(255,255,255,0.25)', whiteSpace: 'nowrap' }}>
+        {filteredQuestions.length} questions
+      </span>
+    </div>
   );
 
   // ── Shared full question card ───────────────────────────────────────────────
@@ -506,6 +552,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column', zIndex: 50 }}>
         <WatermarkOverlay />
         {header}
+        {filterBar}
         <div ref={scrollAreaRef} style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: '16px 14px' } as any}>
           {pageQuestions.map((qq, i) => renderCard(qq, i))}
           <div style={{ height: 8 }} />
@@ -521,6 +568,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column', zIndex: 50 }}>
         <WatermarkOverlay />
         {header}
+        {filterBar}
         <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
 
           {/* Narrow nav rail */}

@@ -162,7 +162,7 @@ export async function GET(request: NextRequest) {
     let questions: any[] = [];
     if (!isCountOnly) {
       questions = await QuestionV2.find(query)
-        .sort({ created_at: -1 })
+        .sort({ created_at: 1 })
         .limit(limit)
         .skip(skip)
         .lean();
