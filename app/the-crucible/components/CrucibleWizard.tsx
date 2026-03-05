@@ -144,7 +144,34 @@ function selectTestQuestions(all: Question[], count: number, mix: DifficultyMix)
     }
     pool = shuffle(pool);
   }
-  return pool.slice(0, count);
+
+  let selected = pool.slice(0, count);
+
+  // ── NVT cap: at most 25% of the test should be Numerical Value type ──────────
+  // Rationale: NVT questions are cognitively very different from MCQ/SCQ and
+  // flooding a test with them (common in certain chapters like Solutions) makes
+  // the experience feel unbalanced. JEE Main itself caps NVT at 5 out of 20.
+  const maxNVT = Math.max(1, Math.floor(count * 0.25));
+  const nvtSelected = selected.filter(q => q.type === 'NVT');
+  if (nvtSelected.length > maxNVT) {
+    const excessNVT = nvtSelected.length - maxNVT;
+    const selectedIds = new Set(selected.map(q => q.id));
+    // Candidates to replace excess NVT: non-NVT questions not already selected
+    const nonNVTReplacements = shuffle(all.filter(q => q.type !== 'NVT' && !selectedIds.has(q.id)));
+    // Remove excess NVTs from selected (keep the first maxNVT ones)
+    let nvtKept = 0;
+    selected = selected.filter(q => {
+      if (q.type !== 'NVT') return true;
+      if (nvtKept < maxNVT) { nvtKept++; return true; }
+      return false; // drop excess NVT
+    });
+    // Fill back up with non-NVT replacements
+    const actuallyRemoved = excessNVT;
+    selected = [...selected, ...nonNVTReplacements.slice(0, actuallyRemoved)];
+    selected = shuffle(selected); // re-shuffle so NVTs don't cluster at end
+  }
+
+  return selected;
 }
 
 // ── Main Wizard Component ────────────────────────────────────────────────────

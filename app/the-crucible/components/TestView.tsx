@@ -43,6 +43,8 @@ export default function TestView({ questions, onBack }: { questions: Question[];
   const [isMobile, setIsMobile] = useState(false);
   const [showPalette, setShowPalette] = useState(false);
   const [revStats, setRevStats] = useState<Record<string, number>>({});
+  // Finish-test confirmation modal (shown when user hits 'Finish Test' on last question)
+  const [showFinishModal, setShowFinishModal] = useState(false);
 
   const toggleStar = (id: string) => setStarred(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
 
@@ -188,7 +190,10 @@ export default function TestView({ questions, onBack }: { questions: Question[];
               <ChevronLeft style={{ width: 14, height: 14 }} /> Back to Results
             </button>
             <span style={{ fontSize: 13, fontWeight: 600 }}>Review Solutions</span>
-            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>{revIdx + 1}/{questions.length}</span>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>{revIdx + 1}/{questions.length}</span>
+              <button onClick={onBack} style={{ padding: '4px 10px', borderRadius: 7, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: 'rgba(255,255,255,0.5)', fontSize: 11, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>🏠 Home</button>
+            </div>
           </header>
           <div style={{ flex: 1, overflowY: 'auto', padding: isMobile ? '12px 10px 60px' : '16px 20px 60px' }}>
             <div style={{ maxWidth: 680, margin: '0 auto' }}>
@@ -395,8 +400,18 @@ export default function TestView({ questions, onBack }: { questions: Question[];
           style={{ padding: '10px 14px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.5)', fontSize: 12, cursor: 'pointer' }}>Clear</button>
         <button onClick={() => { setMarked(m => ({ ...m, [q.id]: true })); if (idx < questions.length - 1) setIdx(i => i + 1); }}
           style={{ padding: '10px 14px', borderRadius: 10, border: '1px solid rgba(124,58,237,0.4)', background: 'rgba(124,58,237,0.1)', color: '#a78bfa', fontSize: 12, cursor: 'pointer', fontWeight: 600, whiteSpace: 'nowrap' }}>Mark & Next</button>
-        <button onClick={() => { if (idx < questions.length - 1) setIdx(i => i + 1); }}
-          style={{ flex: 1, padding: '10px 14px', borderRadius: 10, border: 'none', background: '#3b82f6', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>Save & Next <ChevronRight style={{ width: 13, height: 13 }} /></button>
+        {idx < questions.length - 1 ? (
+          <button onClick={() => setIdx(i => i + 1)}
+            style={{ flex: 1, padding: '10px 14px', borderRadius: 10, border: 'none', background: '#3b82f6', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
+            Save & Next <ChevronRight style={{ width: 13, height: 13 }} />
+          </button>
+        ) : (
+          // Last question — open summary modal instead of silently doing nothing
+          <button onClick={() => setShowFinishModal(true)}
+            style={{ flex: 1, padding: '10px 14px', borderRadius: 10, border: 'none', background: '#059669', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
+            Finish Test ✓
+          </button>
+        )}
       </div>
     </div>
   );
@@ -451,6 +466,44 @@ export default function TestView({ questions, onBack }: { questions: Question[];
           </>
         )}
       </div>
+      {/* Finish Test confirmation modal */}
+      {showFinishModal && (() => {
+        const skippedCount = questions.length - answeredCount;
+        return (
+          <>
+            <div onClick={() => setShowFinishModal(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 300, backdropFilter: 'blur(4px)' }} />
+            <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: '#12141f', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 18, padding: '28px 28px 22px', width: 'min(380px, 90vw)', boxShadow: '0 24px 64px rgba(0,0,0,0.6)' }}>
+              <div style={{ fontSize: 32, textAlign: 'center', marginBottom: 8 }}>{skippedCount === 0 ? '✅' : '⚠️'}</div>
+              <h3 style={{ color: '#fff', fontSize: 18, fontWeight: 800, textAlign: 'center', margin: '0 0 8px' }}>
+                {skippedCount === 0 ? 'All Questions Answered!' : `${skippedCount} Question${skippedCount > 1 ? 's' : ''} Skipped`}
+              </h3>
+              <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13, textAlign: 'center', margin: '0 0 20px', lineHeight: 1.6 }}>
+                {skippedCount === 0
+                  ? `You answered all ${questions.length} questions. Ready to submit?`
+                  : `You answered ${answeredCount} of ${questions.length} questions. ${skippedCount} ${skippedCount > 1 ? 'are' : 'is'} still unanswered.`}
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <button
+                  onClick={() => { setShowFinishModal(false); setSubmitted(true); }}
+                  style={{ width: '100%', padding: '12px', borderRadius: 12, border: 'none', background: '#dc2626', color: '#fff', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
+                  Submit Test Now
+                </button>
+                {skippedCount > 0 && (
+                  <button
+                    onClick={() => { setShowFinishModal(false); setShowPalette(true); }}
+                    style={{ width: '100%', padding: '12px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.15)', background: 'transparent', color: 'rgba(255,255,255,0.7)', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
+                    Review Unanswered ({skippedCount})
+                  </button>
+                )}
+                <button onClick={() => setShowFinishModal(false)}
+                  style={{ width: '100%', padding: '10px', borderRadius: 12, border: 'none', background: 'transparent', color: 'rgba(255,255,255,0.3)', fontSize: 13, cursor: 'pointer' }}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </>
+        );
+      })()}
     </div>
   );
 }
