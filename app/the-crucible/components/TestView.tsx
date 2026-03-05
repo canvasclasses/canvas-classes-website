@@ -57,7 +57,8 @@ export default function TestView({ questions, onBack }: { questions: Question[];
     if (submitted) return;
     const t = setInterval(() => setSeconds(s => { if (s <= 1) { clearInterval(t); setSubmitted(true); return 0; } return s - 1; }), 1000);
     return () => clearInterval(t);
-  }, [submitted, questions.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submitted]); // ← intentionally omit questions.length: it's captured once in useState init; adding it here would spawn multiple intervals on re-render
 
   useEffect(() => {
     if (!reviewing) return;
