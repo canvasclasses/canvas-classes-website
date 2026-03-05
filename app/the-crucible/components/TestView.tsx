@@ -54,11 +54,13 @@ export default function TestView({ questions, onBack }: { questions: Question[];
   }, []);
 
   useEffect(() => {
-    if (submitted) return;
+    // Never start the countdown if there are no questions yet (guard against
+    // the race condition where TestView mounts before fetch completes).
+    if (submitted || questions.length === 0) return;
     const t = setInterval(() => setSeconds(s => { if (s <= 1) { clearInterval(t); setSubmitted(true); return 0; } return s - 1; }), 1000);
     return () => clearInterval(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [submitted]); // ← intentionally omit questions.length: it's captured once in useState init; adding it here would spawn multiple intervals on re-render
+  }, [submitted]); // intentionally omit questions.length — initial seconds is set from useState
 
   useEffect(() => {
     if (!reviewing) return;
@@ -146,7 +148,12 @@ export default function TestView({ questions, onBack }: { questions: Question[];
 
   // Helper: check if a question is answered correctly
   const isQuestionCorrect = (qq: Question): boolean => {
-    if (qq.type === 'NVT') return nvtInputs[qq.id]?.trim() === qq.answer?.integer_value?.toString();
+    if (qq.type === 'NVT') {
+      const userInput = nvtInputs[qq.id]?.trim();
+      // Require a non-empty answer; undefined===undefined must NOT count as correct
+      if (!userInput) return false;
+      return userInput === qq.answer?.integer_value?.toString();
+    }
     if (qq.type === 'MCQ') {
       const userSel = Array.isArray(answers[qq.id]) ? (answers[qq.id] as string[]) : [];
       const correctIds = (qq.options || []).filter((o: any) => o.is_correct).map((o: any) => o.id);

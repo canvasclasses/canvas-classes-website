@@ -166,6 +166,11 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
   const [showProgress, setShowProgress] = useState(false);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [pendingView, setPendingView] = useState<'browse' | 'test' | null>(null);
+  // Two-flag handshake: only transition to browse/test when BOTH the shloka has
+  // exited AND the questions fetch has completed. Without this, TestView mounts
+  // with questions=[] → seconds=0 → instant auto-submission (race condition).
+  const [shlokaExited, setShlokaExited] = useState(false);
+  const [pendingQuestions, setPendingQuestions] = useState<Question[] | null>(null);
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -179,9 +184,24 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
 
   const notify = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
 
+  // Coordinate the two async "ready" signals:
+  // 1. Shloka has played (setShlokaExited)
+  // 2. Questions have been fetched (setPendingQuestions)
+  // Only when both are true do we switch to the final view.
+  useEffect(() => {
+    if (shlokaExited && pendingQuestions !== null && pendingView) {
+      setQuestions(pendingQuestions);
+      setActiveView(pendingView);
+      // Reset for next session
+      setPendingView(null);
+      setPendingQuestions(null);
+      setShlokaExited(false);
+    }
+  }, [shlokaExited, pendingQuestions, pendingView]);
+
   const onShlokaDone = useCallback(() => {
-    if (pendingView) { setActiveView(pendingView); setPendingView(null); }
-  }, [pendingView]);
+    setShlokaExited(true);
+  }, []);
 
   // Step 1: Mode selection
   const handleModeSelect = (m: 'browse' | 'test') => {
@@ -193,11 +213,13 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
   const handleTopPYQ = () => {
     setLoading(true);
     setPendingView('browse');
+    setShlokaExited(false);
+    setPendingQuestions(null);
     setActiveView('shloka');
     fetchTopPYQs()
       .then(qs => {
         if (qs.length === 0) { notify('Top PYQs not tagged yet — check back soon!'); setActiveView('wizard'); return; }
-        setQuestions(qs);
+        setPendingQuestions(qs); // signal questions ready; shloka flag will complete the handshake
       })
       .catch(() => { notify('Failed to load Top PYQs.'); setActiveView('wizard'); })
       .finally(() => setLoading(false));
@@ -213,6 +235,9 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
   const handleLaunch = (count?: number, mix?: DifficultyMix) => {
     if (loading) return;
     setLoading(true);
+    // Reset the two-flag handshake for this new session
+    setShlokaExited(false);
+    setPendingQuestions(null);
 
     const chapterIds = Array.from(selectedChapters);
 
@@ -226,7 +251,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
             setActiveView('wizard');
             return;
           }
-          setQuestions(qs);
+          setPendingQuestions(qs); // will activate view once shloka exits too
         })
         .catch(() => { notify('Failed to load questions.'); setActiveView('wizard'); })
         .finally(() => setLoading(false));
@@ -238,7 +263,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
           if (qs.length === 0) { notify('No questions found.'); setActiveView('wizard'); return; }
           const effectiveMix = topPYQFilter ? 'pyq' : mix;
           const selected = selectTestQuestions(qs, count || 20, (effectiveMix || 'balanced') as DifficultyMix);
-          setQuestions(selected);
+          setPendingQuestions(selected); // will activate view once shloka exits too
         })
         .catch(() => { notify('Failed to load questions.'); setActiveView('wizard'); })
         .finally(() => setLoading(false));
