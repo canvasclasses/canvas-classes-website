@@ -23,7 +23,7 @@ This document clarifies the correct data sources to prevent confusion from stale
   "chapter_info": { ... },
   "questions": [
     {
-      "display_id": "MOLE-201",
+      "display_id": "MOLE-001",
       "question_text": { "markdown": "...", "latex_validated": true },
       "options": [ { "id": "a", "text": "...", "is_correct": false } ],
       "solution": { "text_markdown": "...", "latex_validated": true },
@@ -99,7 +99,7 @@ This document clarifies the correct data sources to prevent confusion from stale
 - Synced from `/data/chapters/` files
 
 **Current Status:**
-- ch11_mole: 16 questions (MOLE-201 to MOLE-216)
+- ch11_mole: 16 questions (MOLE-001 to MOLE-016)
 
 ### **Deprecated Collection: `questions`**
 - Old collection (empty)
@@ -116,7 +116,7 @@ This document clarifies the correct data sources to prevent confusion from stale
 
 **Question Count:** 16 questions
 
-**ID Range:** MOLE-201 to MOLE-216
+**ID Range:** MOLE-001 to MOLE-016
 
 **Next Question ID:** MOLE-217
 
@@ -201,7 +201,7 @@ Before adding new questions, verify:
 ## 📞 SUMMARY
 
 **Current State:**
-- ✅ 16 active MOLE questions (MOLE-201 to MOLE-216)
+- ✅ 16 active MOLE questions (MOLE-001 to MOLE-016)
 - ✅ Stored in `/data/chapters/ch11_mole.json`
 - ✅ Synced to MongoDB `questions_v2` collection
 - ✅ Old 179-question file archived

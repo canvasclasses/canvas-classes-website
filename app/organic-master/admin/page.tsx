@@ -298,14 +298,9 @@ export default function OrganicAdminDashboard() {
                         {/* Large Text Areas */}
                         <div className="space-y-6">
                             {[
-                                { name: 'summary', label: 'Summary / Quick Overview', rows: 3 },
-                                { name: 'reactants', label: 'Reactants', rows: 2 },
-                                { name: 'reagents', label: 'Reagents', rows: 2 },
-                                { name: 'conditions', label: 'Conditions', rows: 2 },
-                                { name: 'product', label: 'Product', rows: 2 },
-                                { name: 'mechanism', label: 'Mechanism (Text)', rows: 3 },
-                                { name: 'stereo', label: 'Stereochemistry (optional)', rows: 2 },
-                                { name: 'mistake', label: 'Common Mistake', rows: 2 },
+                                { name: 'summary', label: 'Mechanism Explanation (Detailed)', rows: 6 },
+                                { name: 'stereo', label: 'Stereochemistry (optional)', rows: 3 },
+                                { name: 'mistake', label: 'Common Mistake', rows: 3 },
                                 { name: 'videoUrl', label: 'YouTube Video URL (optional)', rows: 1 },
                             ].map(field => (
                                 <div key={field.name} className="flex flex-col gap-1.5 focus-within:text-emerald-400 transition-colors">

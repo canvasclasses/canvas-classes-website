@@ -27,6 +27,9 @@ Before writing a solution, classify the question:
 Every solution MUST follow this template:
 
 ```markdown
+> **Strategy:**
+> [Conceptual overview and problem-solving methodology]
+
 **Step 1: [Short Title]**
 [Logic implementation using \ce{} for formulas]
 

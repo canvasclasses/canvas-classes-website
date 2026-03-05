@@ -9,13 +9,33 @@ import { createServerClient } from '@supabase/ssr';
 
 // Canonical chapter_id → display_id prefix map (single source of truth: taxonomyData_from_csv.ts)
 const CHAPTER_PREFIX_MAP: Record<string, string> = {
+  // ── Chemistry (Class 11) ──
   ch11_atom: 'ATOM', ch11_bonding: 'BOND', ch11_chem_eq: 'CEQ', ch11_goc: 'GOC',
   ch11_hydrocarbon: 'HC', ch11_ionic_eq: 'IEQ', ch11_mole: 'MOLE', ch11_pblock: 'PB11',
   ch11_periodic: 'PERI', ch11_prac_org: 'POC', ch11_redox: 'RDX', ch11_thermo: 'THERMO',
+  // ── Chemistry (Class 12) ──
   ch12_alcohols: 'ALCO', ch12_amines: 'AMIN', ch12_biomolecules: 'BIO',
   ch12_carbonyl: 'ALDO', ch12_coord: 'CORD', ch12_dblock: 'DNF', ch12_electrochem: 'EC',
   ch12_haloalkanes: 'HALO', ch12_kinetics: 'CK', ch12_pblock: 'PB12', ch12_phenols: 'PHEN',
   ch12_salt: 'SALT', ch12_solutions: 'SOL',
+  // ── Physics (Class 11) ──
+  ph11_units: 'UNIT', ph11_kinematics1d: 'K1D', ph11_kinematics2d: 'K2D',
+  ph11_nlm: 'NLM', ph11_wep: 'WEP', ph11_com_mom: 'COM', ph11_rotation: 'ROT',
+  ph11_gravitation: 'GRAV', ph11_matter: 'MATT', ph11_thermo_phy: 'PHTH',
+  ph11_shm: 'SHM', ph11_waves: 'WAVE',
+  // ── Physics (Class 12) ──
+  ph12_electrostatics: 'ELST', ph12_current: 'CURR', ph12_magnetism: 'MAG',
+  ph12_emi: 'EMI', ph12_ac: 'ACE', ph12_ray_optics: 'ROPY',
+  ph12_wave_optics: 'WVOP', ph12_modern: 'MOD', ph12_semiconductors: 'SEMI',
+  // ── Mathematics (Class 11) ──
+  ma11_sets: 'SETS', ma11_complex: 'CMPX', ma11_sequences: 'SEQ',
+  ma11_pnc: 'PNC', ma11_binomial: 'BINO', ma11_trigonometry: 'TRIG',
+  ma11_straight_lines: 'STLN', ma11_conics: 'CONI', ma11_limits: 'LIM',
+  ma11_math_induction: 'MI', ma11_stats: 'STAT',
+  // ── Mathematics (Class 12) ──
+  ma12_functions: 'FUNC', ma12_matrices: 'MATR', ma12_diff_calculus: 'DIFF',
+  ma12_aod: 'AOD', ma12_integrals: 'INTG', ma12_aoi: 'AOI',
+  ma12_vectors: 'VEC', ma12_3d: 'TDG', ma12_probability: 'PROB',
 };
 
 // Simple in-memory rate limiter (per IP, resets every minute)
@@ -79,6 +99,7 @@ const QuestionSchema = z.object({
   metadata: z.object({
     difficulty: z.enum(['Easy', 'Medium', 'Hard']),
     chapter_id: z.string(),
+    subject: z.enum(['chemistry', 'physics', 'maths', 'biology']).optional(),
     tags: z.array(z.object({
       tag_id: z.string(),
       weight: z.number().min(0).max(1)
@@ -124,6 +145,7 @@ export async function GET(request: NextRequest) {
 
     const { searchParams } = new URL(request.url);
     const chapter_ids = searchParams.getAll('chapter_id');
+    const subject = searchParams.get('subject');
     const status = searchParams.get('status');
     const type = searchParams.get('type');
     const difficulty = searchParams.get('difficulty');
@@ -142,6 +164,11 @@ export async function GET(request: NextRequest) {
     const query: any = { deleted_at: null };
     if (chapter_ids.length === 1) query['metadata.chapter_id'] = chapter_ids[0];
     else if (chapter_ids.length > 1) query['metadata.chapter_id'] = { $in: chapter_ids };
+    // subject filter — supports multi-subject future tests
+    if (subject) {
+      const subjects = subject.split(',').map(s => s.trim()).filter(Boolean);
+      query['metadata.subject'] = subjects.length === 1 ? subjects[0] : { $in: subjects };
+    }
     if (status) query.status = status;
     if (type) query.type = type;
     if (difficulty) query['metadata.difficulty'] = difficulty;

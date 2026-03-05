@@ -8,7 +8,7 @@
   },
   "questions": [
     {
-      "display_id": "MOLE-201",
+      "display_id": "MOLE-001",
       "question_text": {
         "markdown": "Convert the following quantities into SI base units:\n\n1. $28.7\\,\\text{pm}$\n2. $15.15\\,\\mu\\text{s}$\n3. $25.365\\,\\text{mg}$",
         "latex_validated": true
@@ -55,7 +55,7 @@
       "status": "review"
     },
     {
-      "display_id": "MOLE-202",
+      "display_id": "MOLE-002",
       "question_text": {
         "markdown": "Two students perform the same experiment. Their readings (true value $=3.0\\,\\text{g}$) are:\n\n| Student | Reading (i) | Reading (ii) |\n|---------|-------------|-------------|\n| A | $3.01$ | $2.99$ |\n| B | $3.05$ | $2.95$ |\n\nIdentify the correct statement about accuracy and precision.",
         "latex_validated": true
@@ -102,7 +102,7 @@
       "status": "review"
     },
     {
-      "display_id": "MOLE-203",
+      "display_id": "MOLE-003",
       "question_text": {
         "markdown": "How many significant figures are present in $0.0025,\\;208,\\;5005,\\;126000,\\;500.0,\\;2.0034$?",
         "latex_validated": true
@@ -151,7 +151,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-204",
+      "display_id": "MOLE-004",
       "question_text": {
         "markdown": "Five students scored $88,\\;69,\\;81,\\;92,\\;79$ in an exam. What is the average score?",
         "latex_validated": true
@@ -200,7 +200,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-205",
+      "display_id": "MOLE-005",
       "question_text": {
         "markdown": "An electronic balance used in a mailroom displays tenths of a kilogram (range $0$ to $140\\,\\text{kg}$). How many significant figures should be used to express the mass of any package whose mass is between $80.2$ and $83.5\\,\\text{kg}$?",
         "latex_validated": true
@@ -249,7 +249,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-206",
+      "display_id": "MOLE-006",
       "question_text": {
         "markdown": "If the density of a solution is $3.12\\,\\text{g mL}^{-1}$, the mass of $1.5\\,\\text{mL}$ solution in significant figures is:",
         "latex_validated": true
@@ -298,7 +298,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-207",
+      "display_id": "MOLE-007",
       "question_text": {
         "markdown": "The results of which of the following operations has the least number of significant figures?\n\n(a) $\\dfrac{0.02856\\times298.15\\times0.112}{0.5785}$\n\n(b) $5\\times5.364$\n\n(c) $0.0125+0.7864+0.0215$\n\n(d) All have same number of significant figures",
         "latex_validated": true
@@ -347,7 +347,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-208",
+      "display_id": "MOLE-008",
       "question_text": {
         "markdown": "The law of definite proportions is not applicable to nitrogen oxide because:",
         "latex_validated": true
@@ -396,7 +396,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-209",
+      "display_id": "MOLE-009",
       "question_text": {
         "markdown": "Which of the following statements indicates that the law of multiple proportions is being followed?",
         "latex_validated": true
@@ -445,7 +445,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-210",
+      "display_id": "MOLE-010",
       "question_text": {
         "markdown": "Four $1\\,\\text{L}$ flasks are separately filled with $\\ce{SO2}$, $\\ce{SO3}$, $\\ce{Ar}$ and $\\ce{CH4}$ gases at same $T$ and $P$. The ratio of total number of atoms of these gases present in the flasks is:",
         "latex_validated": true
@@ -494,7 +494,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-211",
+      "display_id": "MOLE-011",
       "question_text": {
         "markdown": "Which of the following statements is correct about the reaction given below?\n\n$$4\\ce{Fe}(s)+3\\ce{O2}(g)\\longrightarrow2\\ce{Fe2O3}(s)$$",
         "latex_validated": true
@@ -543,7 +543,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-212",
+      "display_id": "MOLE-012",
       "question_text": {
         "markdown": "$45.4\\,\\text{L}$ of $\\ce{N2}$ reacted with $22.7\\,\\text{L}$ of $\\ce{O2}$ and $45.4\\,\\text{L}$ of $\\ce{N2O}$ was formed as per:\n\n$$2\\ce{N2}(g)+\\ce{O2}(g)\\longrightarrow2\\ce{N2O}(g)$$\n\nThis obeys:",
         "latex_validated": true
@@ -592,7 +592,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-213",
+      "display_id": "MOLE-013",
       "question_text": {
         "markdown": "The mass of $\\ce{N}$ per gram of $\\ce{H}$ in the compound hydrazine is exactly one and half times the mass of $\\ce{N}$ in the compound ammonia. This illustrates:",
         "latex_validated": true
@@ -641,7 +641,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-214",
+      "display_id": "MOLE-014",
       "question_text": {
         "markdown": "If we consider that $\\tfrac{1}{6}$ (in place of $\\tfrac{1}{12}$) mass of carbon atom is taken to be the relative atomic mass unit, the mass of one mole of a substance will:",
         "latex_validated": true
@@ -690,7 +690,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-215",
+      "display_id": "MOLE-015",
       "question_text": {
         "markdown": "The average molar mass of chlorine is $35.5\\,\\text{g mol}^{-1}$. The ratio of $^{35}\\ce{Cl}$ to $^{37}\\ce{Cl}$ in naturally occurring chlorine is close to:",
         "latex_validated": true
@@ -739,7 +739,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-216",
+      "display_id": "MOLE-016",
       "question_text": {
         "markdown": "Given that abundances of isotopes $^{54}\\ce{Fe}$, $^{56}\\ce{Fe}$ and $^{57}\\ce{Fe}$ are $5\\%$, $90\\%$ and $5\\%$ respectively. The atomic mass of $\\ce{Fe}$ is:",
         "latex_validated": true
@@ -788,7 +788,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-217",
+      "display_id": "MOLE-017",
       "question_text": {
         "markdown": "The mass % of Nitrogen in Histamine is ______",
         "latex_validated": true
@@ -837,7 +837,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-218",
+      "display_id": "MOLE-018",
       "question_text": {
         "markdown": "Insulin contains $3.4\\%$ Sulphur. Calculate the minimum molar mass of insulin:",
         "latex_validated": true
@@ -886,7 +886,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-219",
+      "display_id": "MOLE-019",
       "question_text": {
         "markdown": "$\\ce{MnO2}$ on ignition converts into $\\ce{Mn3O4}$. A sample of pyrolusite having $75.7\\%$ $\\ce{MnO2}$, $8.07\\,\\text{g}$ inert impurities and the rest water is heated in air to constant weight. What is the % of Mn in ignited sample? (At. mass of Mn $= 55$)",
         "latex_validated": true
@@ -935,7 +935,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-220",
+      "display_id": "MOLE-020",
       "question_text": {
         "markdown": "The number of atoms present in one mole of an element is equal to Avogadro's number. Which of the following samples contains the greatest number of atoms?",
         "latex_validated": true
@@ -984,7 +984,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-221",
+      "display_id": "MOLE-021",
       "question_text": {
         "markdown": "In an experiment, it is found that $2.076\\,\\text{g}$ of pure X produces $2.68\\,\\text{g}$ of pure $\\ce{X2O5}$. The number of moles of X is:",
         "latex_validated": true
@@ -1033,7 +1033,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-222",
+      "display_id": "MOLE-022",
       "question_text": {
         "markdown": "A gaseous mixture contains $\\ce{CO2}(g)$ and $\\ce{N2O}(g)$ in a $2:5$ ratio by mass. The ratio of the number of molecules of $\\ce{CO2}(g)$ and $\\ce{N2O}(g)$ is:",
         "latex_validated": true
@@ -1082,7 +1082,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-223",
+      "display_id": "MOLE-023",
       "question_text": {
         "markdown": "X and Y are two elements which form $\\ce{X2Y3}$ and $\\ce{X3Y4}$. If $0.2$ mole of $\\ce{X2Y3}$ weighs $32\\,\\text{g}$ and $0.4$ mole of $\\ce{X3Y4}$ weighs $92.8\\,\\text{g}$, the atomic weights of X and Y are respectively:",
         "latex_validated": true
@@ -1131,7 +1131,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-224",
+      "display_id": "MOLE-024",
       "question_text": {
         "markdown": "When $1\\,\\text{L}$ of $\\ce{CO2}$ is heated with graphite, the volume of the gases collected is $1.5\\,\\text{L}$. Calculate the number of moles of CO produced at STP:",
         "latex_validated": true
@@ -1180,7 +1180,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-225",
+      "display_id": "MOLE-025",
       "question_text": {
         "markdown": "A mixture of $\\ce{C3H4}(g)$ and $\\ce{C2H6}(g)$ was kept in a $0.82\\,\\text{L}$ vessel at $1\\,\\text{atm}$ and $300\\,\\text{K}$. The weight of the gas mixture in the vessel is $0.613\\,\\text{g}$. Calculate the ratio of the number of moles of $\\ce{C2H6}(g)$ and $\\ce{C3H4}(g)$:",
         "latex_validated": true
@@ -1229,7 +1229,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-226",
+      "display_id": "MOLE-026",
       "question_text": {
         "markdown": "A welding fuel gas contains C and H only. Burning a small sample of it in oxygen gives $3.38\\,\\text{g}$ $\\ce{CO2}$, $0.69\\,\\text{g}$ of water and no other products. A volume of $10\\,\\text{L}$ (at STP) of this welding gas is found to weigh $11.6\\,\\text{g}$. The molecular formula of the compound is:",
         "latex_validated": true
@@ -1278,7 +1278,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-227",
+      "display_id": "MOLE-027",
       "question_text": {
         "markdown": "A compound having empirical formula $(\\ce{C3H4O})_n$ has vapour density $84$. The molecular formula of this compound is:",
         "latex_validated": true
@@ -1327,7 +1327,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-228",
+      "display_id": "MOLE-028",
       "question_text": {
         "markdown": "$20\\,\\text{mL}$ of a solution containing $0.2\\,\\text{g}$ of impure sample of $\\ce{H2O2}$ reacts with $0.316\\,\\text{g}$ of $\\ce{KMnO4}$ in presence of $\\ce{H2SO4}$ as per the reaction:\n\n$$\\ce{KMnO4 + H2O2 + H2SO4 -> MnSO4 + O2 + H2O}$$\n\nFind the purity of $\\ce{H2O2}$ solution:",
         "latex_validated": true
@@ -1376,7 +1376,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-229",
+      "display_id": "MOLE-029",
       "question_text": {
         "markdown": "The ratio of mass percentages of 'C' and 'H' and 'C' and 'O' of a saturated acyclic organic compound X are $4:1$ and $3:4$ respectively. Then the moles of $\\ce{O2}(g)$ required for complete combustion of $2$ moles of organic compound X is ______",
         "latex_validated": true
@@ -1425,7 +1425,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-230",
+      "display_id": "MOLE-030",
       "question_text": {
         "markdown": "Under the right conditions $\\ce{NH3}$ can be converted to $\\ce{NO}$ by the reaction:\n\n$$\\ce{NH3 + O2 -> NO + H2O}$$\n\nHow many grams of $\\ce{H2O}$ could be formed from a mixture of $51\\,\\text{g}$ of $\\ce{NH3}$ and $48\\,\\text{g}$ of $\\ce{O2}$?",
         "latex_validated": true
@@ -1472,7 +1472,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-231",
+      "display_id": "MOLE-031",
       "question_text": {
         "markdown": "$\\ce{AgNO3}$ reacts with $\\ce{FeCl3}$ to produce $\\ce{AgCl}$ and $\\ce{Fe(NO3)3}$. A solution containing $18\\,\\text{g}$ of $\\ce{AgNO3}$ was mixed with a solution containing $32.4\\,\\text{g}$ of $\\ce{FeCl3}$. How many grams of which reactant remain after the reaction is over?",
         "latex_validated": true
@@ -1519,7 +1519,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-232",
+      "display_id": "MOLE-032",
       "question_text": {
         "markdown": "If $20\\,\\text{g}$ $\\ce{CaCO3}$ is added to $20\\,\\text{g}$ $\\ce{HCl}$, select the true statement:",
         "latex_validated": true
@@ -1566,7 +1566,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-233",
+      "display_id": "MOLE-033",
       "question_text": {
         "markdown": "In the given reaction: $\\ce{MnI2(s) + F2(g) -> MnF3(s) + IF5(l)}$\n\nIf the % yield of $\\ce{MnF3}$ is always approx. $56\\%$, how many grams of $\\ce{IF5}$ can be expected if $10\\,\\text{g}$ of each reactant is used in an experiment?\n\n(At wt of $\\ce{I} = 127$, $\\ce{Mn} = 55$, $\\ce{F} = 19$)",
         "latex_validated": true
@@ -1613,7 +1613,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-234",
+      "display_id": "MOLE-034",
       "question_text": {
         "markdown": "Equal weights of $\\ce{P}$ and $\\ce{O}$ are heated in a closed vessel producing $\\ce{P4O6}$ and $\\ce{P4O10}$ in a $1:1$ mole ratio. If the limiting component is exhausted, find which component and what fraction of it is left over?",
         "latex_validated": true
@@ -1660,7 +1660,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-235",
+      "display_id": "MOLE-035",
       "question_text": {
         "markdown": "Calculate the molarity of a solution of ethanol in water in which the mole fraction of ethanol is $0.04$:",
         "latex_validated": true
@@ -1707,7 +1707,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-236",
+      "display_id": "MOLE-036",
       "question_text": {
         "markdown": "Mole fraction of $\\ce{I2}$ in benzene is $0.1$. The molality of $\\ce{I2}$ in benzene is:",
         "latex_validated": true
@@ -1754,7 +1754,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-237",
+      "display_id": "MOLE-037",
       "question_text": {
         "markdown": "In the following reaction: $\\ce{H2SO4 + 2NaOH -> Na2SO4 + 2H2O}$\n\nWhen $1\\,\\text{L}$ of $0.1\\,\\text{M}$ $\\ce{H2SO4}$ solution is allowed to react with $1\\,\\text{L}$ of $0.1\\,\\text{M}$ $\\ce{NaOH}$ solution, the amount of $\\ce{Na2SO4}$ formed and its molarity in the solution obtained are:",
         "latex_validated": true
@@ -1801,7 +1801,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-238",
+      "display_id": "MOLE-038",
       "question_text": {
         "markdown": "If $500\\,\\text{mL}$ of a $5\\,\\text{M}$ solution is diluted to $1500\\,\\text{mL}$, what will be the molarity of the solution obtained?",
         "latex_validated": true
@@ -1848,7 +1848,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-239",
+      "display_id": "MOLE-039",
       "question_text": {
         "markdown": "Density of a $2.05\\,\\text{M}$ solution of acetic acid in water is $1.02\\,\\text{g mL}^{-1}$. The molality of the solution is:",
         "latex_validated": true
@@ -1895,7 +1895,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-240",
+      "display_id": "MOLE-040",
       "question_text": {
         "markdown": "The density of a solution prepared by dissolving $120\\,\\text{g}$ of urea in $1000\\,\\text{g}$ of water is $1.15\\,\\text{g mL}^{-1}$. The molarity of the solution is:",
         "latex_validated": true
@@ -1942,7 +1942,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-241",
+      "display_id": "MOLE-041",
       "question_text": {
         "markdown": "How many moles of $\\ce{HCl}$ will be present in $100\\,\\text{mL}$ of a solution of specific gravity $1.08$, containing $20\\%$ $\\ce{HCl}$ by mass?",
         "latex_validated": true
@@ -1989,7 +1989,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-242",
+      "display_id": "MOLE-042",
       "question_text": {
         "markdown": "$29.2\\%$ (w/w) $\\ce{HCl}$ solution has density of $1.25\\,\\text{g mL}^{-1}$. The molecular weight of $\\ce{HCl}$ is $36.5\\,\\text{g mol}^{-1}$. The volume $(\\text{mL})$ of $\\ce{HCl}$ solution required to prepare a $200\\,\\text{mL}$ solution of $0.4\\,\\text{M}$ $\\ce{HCl}$ is ________",
         "latex_validated": true
@@ -2036,7 +2036,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-243",
+      "display_id": "MOLE-043",
       "question_text": {
         "markdown": "Calculate the amount of oxygen required to produce enough $\\ce{CO}$ on reaction with $\\ce{C}$, which can reduce $1.6\\,\\text{kg}$ $\\ce{Fe2O3}$:",
         "latex_validated": true
@@ -2083,7 +2083,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-244",
+      "display_id": "MOLE-044",
       "question_text": {
         "markdown": "In order to oxidize a mixture of $1$ mole of each of $\\ce{FeC2O4}$, $\\ce{Fe2(C2O4)3}$, $\\ce{FeSO4}$ and $\\ce{Fe2(SO4)3}$ in acidic medium, the number of moles of $\\ce{KMnO4}$ required is:",
         "latex_validated": true
@@ -2130,7 +2130,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-245",
+      "display_id": "MOLE-045",
       "question_text": {
         "markdown": "How much quantity of $\\ce{Zn}$ will have to be reacted with excess of dil. $\\ce{HCl}$ solution to produce sufficient $\\ce{H2(g)}$ for completely reacting with the $\\ce{O2(g)}$ obtained by decomposing $5.104\\,\\text{g}$ of $\\ce{KClO3}$?",
         "latex_validated": true
@@ -2177,7 +2177,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-246",
+      "display_id": "MOLE-046",
       "question_text": {
         "markdown": "$34\\,\\text{g}$ of $\\ce{H2O2}$ is present in $1120\\,\\text{mL}$ solution. This solution is ________ volume $\\ce{H2O2}$:",
         "latex_validated": true
@@ -2224,7 +2224,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-247",
+      "display_id": "MOLE-047",
       "question_text": {
         "markdown": "$20\\,\\text{mL}$ of $\\ce{H2O2}$ solution is reacted with $80\\,\\text{mL}$ of $0.05\\,\\text{M}$ $\\ce{KMnO4}$ in acidic medium then what is the volume strength of $\\ce{H2O2}$?",
         "latex_validated": true
@@ -2271,7 +2271,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-248",
+      "display_id": "MOLE-048",
       "question_text": {
         "markdown": "$15\\,\\text{g}$ $\\ce{Ba(MnO4)2}$ sample containing impurity is completely reacting with $100\\,\\text{mL}$ of $11.2\\,\\text{V}$ $\\ce{H2O2}$, then what will be the % purity of $\\ce{Ba(MnO4)2}$ in the sample?",
         "latex_validated": true
@@ -2318,7 +2318,7 @@
       "updated_by": "ai_agent"
     },
     {
-      "display_id": "MOLE-249",
+      "display_id": "MOLE-049",
       "question_text": {
         "markdown": "What volume of air having $21\\%$ oxygen by volume is required to completely burn $1\\,\\text{kg}$ of carbon containing $10\\%$ combustible substances?",
         "latex_validated": true

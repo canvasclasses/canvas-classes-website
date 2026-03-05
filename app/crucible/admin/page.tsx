@@ -143,6 +143,7 @@ export default function AdminPage() {
 
     // Filters
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedSubjectFilter, setSelectedSubjectFilter] = useState<'chemistry' | 'physics' | 'maths' | 'all'>('chemistry');
     const [selectedChapterFilter, setSelectedChapterFilter] = useState('all');
     const [selectedTypeFilter, setSelectedTypeFilter] = useState('all');
     const [selectedSourceFilter, setSelectedSourceFilter] = useState('all');
@@ -362,6 +363,7 @@ export default function AdminPage() {
         // Generate display_id client-side to avoid relying on MongoDB chapters collection
         // Find current max sequence for this chapter prefix
         const CHAPTER_PREFIX_MAP: Record<string, string> = {
+            // Chemistry
             ch11_atom: 'ATOM', ch11_bonding: 'BOND', ch11_chem_eq: 'CEQ', ch11_goc: 'GOC',
             ch11_hydrocarbon: 'HC', ch11_ionic_eq: 'IEQ', ch11_mole: 'MOLE', ch11_pblock: 'PB11',
             ch11_periodic: 'PERI', ch11_prac_org: 'POC', ch11_redox: 'RDX', ch11_thermo: 'THERMO',
@@ -369,6 +371,22 @@ export default function AdminPage() {
             ch12_carbonyl: 'ALDO', ch12_coord: 'CORD', ch12_dblock: 'DNF', ch12_electrochem: 'EC',
             ch12_haloalkanes: 'HALO', ch12_kinetics: 'CK', ch12_pblock: 'PB12', ch12_phenols: 'PHEN',
             ch12_salt: 'SALT', ch12_solutions: 'SOL',
+            // Physics
+            ph11_units: 'UNIT', ph11_kinematics1d: 'K1D', ph11_kinematics2d: 'K2D',
+            ph11_nlm: 'NLM', ph11_wep: 'WEP', ph11_com_mom: 'COM', ph11_rotation: 'ROT',
+            ph11_gravitation: 'GRAV', ph11_matter: 'MATT', ph11_thermo_phy: 'PHTH',
+            ph11_shm: 'SHM', ph11_waves: 'WAVE',
+            ph12_electrostatics: 'ELST', ph12_current: 'CURR', ph12_magnetism: 'MAG',
+            ph12_emi: 'EMI', ph12_ac: 'ACE', ph12_ray_optics: 'ROPY',
+            ph12_wave_optics: 'WVOP', ph12_modern: 'MOD', ph12_semiconductors: 'SEMI',
+            // Maths
+            ma11_sets: 'SETS', ma11_complex: 'CMPX', ma11_sequences: 'SEQ',
+            ma11_pnc: 'PNC', ma11_binomial: 'BINO', ma11_trigonometry: 'TRIG',
+            ma11_straight_lines: 'STLN', ma11_conics: 'CONI', ma11_limits: 'LIM',
+            ma11_math_induction: 'MI', ma11_stats: 'STAT',
+            ma12_functions: 'FUNC', ma12_matrices: 'MATR', ma12_diff_calculus: 'DIFF',
+            ma12_aod: 'AOD', ma12_integrals: 'INTG', ma12_aoi: 'AOI',
+            ma12_vectors: 'VEC', ma12_3d: 'TDG', ma12_probability: 'PROB',
         };
         const prefix = CHAPTER_PREFIX_MAP[defaultChapter] || defaultChapter.split('_').pop()?.toUpperCase().substring(0, 4) || 'QUES';
         // Find current max display_id with this prefix from loaded questions
@@ -811,16 +829,48 @@ export default function AdminPage() {
                         </select>
                     )}
 
-                    {/* Chapter + Type filters moved to row 1 */}
+                    {/* Subject Selector Pills */}
+                    <div className="flex items-center gap-1 shrink-0 bg-gray-800/40 rounded-lg p-0.5">
+                        {([
+                            { id: 'chemistry', label: '⚗️ Chem', color: 'from-amber-600 to-orange-600' },
+                            { id: 'physics', label: '⚡ Phys', color: 'from-blue-600 to-cyan-600' },
+                            { id: 'maths', label: '📐 Math', color: 'from-violet-600 to-purple-600' },
+                        ] as const).map(s => (
+                            <button
+                                key={s.id}
+                                onClick={() => {
+                                    setSelectedSubjectFilter(s.id);
+                                    setSelectedChapterFilter('all');
+                                }}
+                                className={`px-2 py-1 text-xs font-medium rounded-md transition shrink-0 ${selectedSubjectFilter === s.id
+                                        ? `bg-gradient-to-r ${s.color} text-white shadow`
+                                        : 'text-gray-400 hover:text-gray-200'
+                                    }`}
+                            >
+                                {s.label}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Chapter filter — scoped to selected subject */}
                     <select
                         value={selectedChapterFilter}
                         onChange={(e) => setSelectedChapterFilter(e.target.value)}
                         className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
                     >
                         <option value="all">All Chapters</option>
-                        {chapters.map(ch => (
-                            <option key={ch._id} value={ch._id}>{ch.name}</option>
-                        ))}
+                        {chapters
+                            .filter(ch => {
+                                const id = ch._id;
+                                if (selectedSubjectFilter === 'chemistry') return id.startsWith('ch11_') || id.startsWith('ch12_');
+                                if (selectedSubjectFilter === 'physics') return id.startsWith('ph11_') || id.startsWith('ph12_');
+                                if (selectedSubjectFilter === 'maths') return id.startsWith('ma11_') || id.startsWith('ma12_');
+                                return true;
+                            })
+                            .map(ch => (
+                                <option key={ch._id} value={ch._id}>{ch.name}</option>
+                            ))
+                        }
                     </select>
                     <select
                         value={selectedTypeFilter}
@@ -1700,7 +1750,7 @@ export default function AdminPage() {
                     <div className="flex-1 overflow-y-auto p-4 flex justify-center">
                         {selectedQuestion ? (
                             <div className={`space-y-4 transition-all duration-300 ${previewMode === 'mobile'
-                                ? 'w-[390px] border border-gray-700/60 rounded-2xl overflow-hidden shadow-2xl shadow-black/50 bg-gray-900'
+                                ? 'w-[390px] border border-gray-700/60 rounded-2xl overflow-y-auto shadow-2xl shadow-black/50 bg-gray-900 max-h-full'
                                 : 'w-full'
                                 }`}>
                                 {previewMode === 'mobile' && (

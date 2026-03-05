@@ -530,10 +530,10 @@ body {
 /* Scale up inline fractions without disturbing KaTeX's internal vlist geometry.
    zoom (unlike transform:scale) participates in layout flow, so surrounding operators
    (= signs etc.) correctly reposition around the enlarged fraction. */
-.katex .mfrac {
+/* .katex .mfrac {
   zoom: 1.35;
   display: inline-block;
-}
+} */
 
 /* Inside option buttons: extra size boost for legibility */
 button .katex,

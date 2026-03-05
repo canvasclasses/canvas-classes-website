@@ -279,9 +279,304 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_prac_phys_5', name: 'Hardness of Water (EDTA Titration)', parent_id: 'ch12_prac_phys', type: 'topic' },
     { id: 'tag_prac_phys_6', name: 'Surface Chemistry Practicals (Lyophilic/Lyophobic Sols & Dialysis)', parent_id: 'ch12_prac_phys', type: 'topic' },
 
+
+    // ─── PHYSICS (Class 11) ─────────────────────────────────────────────────
+
+    { id: 'ph11_units', name: 'Units, Dimensions & Errors', parent_id: null, type: 'chapter', sequence_order: 101, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_units_1', name: 'SI Units & Fundamental/Derived Quantities', parent_id: 'ph11_units', type: 'topic' },
+    { id: 'tag_units_2', name: 'Dimensional Analysis & Applications', parent_id: 'ph11_units', type: 'topic' },
+    { id: 'tag_units_3', name: 'Significant Figures & Rounding', parent_id: 'ph11_units', type: 'topic' },
+    { id: 'tag_units_4', name: 'Error Analysis (Absolute, Relative, % Error)', parent_id: 'ph11_units', type: 'topic' },
+    { id: 'tag_units_5', name: 'Vernier Callipers & Screw Gauge', parent_id: 'ph11_units', type: 'topic' },
+
+    { id: 'ph11_kinematics1d', name: 'Kinematics 1D', parent_id: null, type: 'chapter', sequence_order: 102, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_k1d_1', name: 'Distance, Displacement & Speed', parent_id: 'ph11_kinematics1d', type: 'topic' },
+    { id: 'tag_k1d_2', name: 'Velocity & Acceleration', parent_id: 'ph11_kinematics1d', type: 'topic' },
+    { id: 'tag_k1d_3', name: 'Equations of Motion (SUVAT)', parent_id: 'ph11_kinematics1d', type: 'topic' },
+    { id: 'tag_k1d_4', name: 'Motion Under Gravity (Free Fall)', parent_id: 'ph11_kinematics1d', type: 'topic' },
+    { id: 'tag_k1d_5', name: 'Graphs (x-t, v-t, a-t)', parent_id: 'ph11_kinematics1d', type: 'topic' },
+    { id: 'tag_k1d_6', name: 'Relative Motion in 1D', parent_id: 'ph11_kinematics1d', type: 'topic' },
+
+    { id: 'ph11_kinematics2d', name: 'Kinematics 2D', parent_id: null, type: 'chapter', sequence_order: 103, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_k2d_1', name: 'Vectors (Addition, Resolution, Dot & Cross Product)', parent_id: 'ph11_kinematics2d', type: 'topic' },
+    { id: 'tag_k2d_2', name: 'Projectile Motion', parent_id: 'ph11_kinematics2d', type: 'topic' },
+    { id: 'tag_k2d_3', name: 'Relative Motion in 2D', parent_id: 'ph11_kinematics2d', type: 'topic' },
+    { id: 'tag_k2d_4', name: 'Circular Motion (Uniform & Non-uniform)', parent_id: 'ph11_kinematics2d', type: 'topic' },
+    { id: 'tag_k2d_5', name: 'River-Boat & Rain Problems', parent_id: 'ph11_kinematics2d', type: 'topic' },
+
+    { id: 'ph11_nlm', name: 'Laws of Motion', parent_id: null, type: 'chapter', sequence_order: 104, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_nlm_1', name: "Newton's Laws (1st, 2nd, 3rd)", parent_id: 'ph11_nlm', type: 'topic' },
+    { id: 'tag_nlm_2', name: 'Free Body Diagrams & Constraint Motion', parent_id: 'ph11_nlm', type: 'topic' },
+    { id: 'tag_nlm_3', name: 'Friction (Static, Kinetic, Rolling)', parent_id: 'ph11_nlm', type: 'topic' },
+    { id: 'tag_nlm_4', name: 'Pulley Systems & Connected Bodies', parent_id: 'ph11_nlm', type: 'topic' },
+    { id: 'tag_nlm_5', name: 'Pseudo Force & Non-inertial Frames', parent_id: 'ph11_nlm', type: 'topic' },
+    { id: 'tag_nlm_6', name: 'Circular Dynamics (Banking, Conical Pendulum)', parent_id: 'ph11_nlm', type: 'topic' },
+
+    { id: 'ph11_wep', name: 'Work, Energy & Power', parent_id: null, type: 'chapter', sequence_order: 105, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_wep_1', name: 'Work Done by Constant & Variable Force', parent_id: 'ph11_wep', type: 'topic' },
+    { id: 'tag_wep_2', name: 'Kinetic & Potential Energy', parent_id: 'ph11_wep', type: 'topic' },
+    { id: 'tag_wep_3', name: 'Work-Energy Theorem', parent_id: 'ph11_wep', type: 'topic' },
+    { id: 'tag_wep_4', name: 'Conservation of Energy', parent_id: 'ph11_wep', type: 'topic' },
+    { id: 'tag_wep_5', name: 'Power & Efficiency', parent_id: 'ph11_wep', type: 'topic' },
+    { id: 'tag_wep_6', name: 'Conservative vs Non-conservative Forces', parent_id: 'ph11_wep', type: 'topic' },
+
+    { id: 'ph11_com_mom', name: 'Centre of Mass & Momentum', parent_id: null, type: 'chapter', sequence_order: 106, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_com_1', name: 'Centre of Mass (Discrete & Continuous)', parent_id: 'ph11_com_mom', type: 'topic' },
+    { id: 'tag_com_2', name: 'Linear Momentum & Impulse', parent_id: 'ph11_com_mom', type: 'topic' },
+    { id: 'tag_com_3', name: 'Conservation of Momentum', parent_id: 'ph11_com_mom', type: 'topic' },
+    { id: 'tag_com_4', name: 'Collisions (Elastic, Inelastic, Perfectly Inelastic)', parent_id: 'ph11_com_mom', type: 'topic' },
+    { id: 'tag_com_5', name: 'Coefficient of Restitution', parent_id: 'ph11_com_mom', type: 'topic' },
+
+    { id: 'ph11_rotation', name: 'Rotational Motion', parent_id: null, type: 'chapter', sequence_order: 107, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_rot_1', name: 'Moment of Inertia & Theorems (PA, PP)', parent_id: 'ph11_rotation', type: 'topic' },
+    { id: 'tag_rot_2', name: 'Torque & Angular Momentum', parent_id: 'ph11_rotation', type: 'topic' },
+    { id: 'tag_rot_3', name: 'Rolling Motion (Pure Rolling)', parent_id: 'ph11_rotation', type: 'topic' },
+    { id: 'tag_rot_4', name: 'Rotational Kinematics & Dynamics', parent_id: 'ph11_rotation', type: 'topic' },
+    { id: 'tag_rot_5', name: 'Conservation of Angular Momentum', parent_id: 'ph11_rotation', type: 'topic' },
+    { id: 'tag_rot_6', name: 'Equilibrium of Rigid Bodies', parent_id: 'ph11_rotation', type: 'topic' },
+
+    { id: 'ph11_gravitation', name: 'Gravitation', parent_id: null, type: 'chapter', sequence_order: 108, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_grav_1', name: "Newton's Law of Gravitation", parent_id: 'ph11_gravitation', type: 'topic' },
+    { id: 'tag_grav_2', name: 'Gravitational Field & Potential', parent_id: 'ph11_gravitation', type: 'topic' },
+    { id: 'tag_grav_3', name: "Kepler's Laws & Orbital Motion", parent_id: 'ph11_gravitation', type: 'topic' },
+    { id: 'tag_grav_4', name: 'Escape Velocity & Satellites', parent_id: 'ph11_gravitation', type: 'topic' },
+    { id: 'tag_grav_5', name: 'Variation of g (Depth, Height, Rotation)', parent_id: 'ph11_gravitation', type: 'topic' },
+
+    { id: 'ph11_matter', name: 'Properties of Matter', parent_id: null, type: 'chapter', sequence_order: 109, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_matter_1', name: 'Elasticity (Stress, Strain, Young\'s Modulus)', parent_id: 'ph11_matter', type: 'topic' },
+    { id: 'tag_matter_2', name: 'Fluid Statics (Pressure, Buoyancy, Archimedes)', parent_id: 'ph11_matter', type: 'topic' },
+    { id: 'tag_matter_3', name: 'Fluid Dynamics (Bernoulli, Continuity)', parent_id: 'ph11_matter', type: 'topic' },
+    { id: 'tag_matter_4', name: 'Viscosity & Stokes\' Law', parent_id: 'ph11_matter', type: 'topic' },
+    { id: 'tag_matter_5', name: 'Surface Tension & Capillarity', parent_id: 'ph11_matter', type: 'topic' },
+
+    { id: 'ph11_thermo_phy', name: 'Thermodynamics & Kinetic Theory', parent_id: null, type: 'chapter', sequence_order: 110, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_phth_1', name: 'Thermal Expansion & Calorimetry', parent_id: 'ph11_thermo_phy', type: 'topic' },
+    { id: 'tag_phth_2', name: 'Heat Transfer (Conduction, Convection, Radiation)', parent_id: 'ph11_thermo_phy', type: 'topic' },
+    { id: 'tag_phth_3', name: 'Laws of Thermodynamics & Processes', parent_id: 'ph11_thermo_phy', type: 'topic' },
+    { id: 'tag_phth_4', name: 'Carnot Engine & Efficiency', parent_id: 'ph11_thermo_phy', type: 'topic' },
+    { id: 'tag_phth_5', name: 'Kinetic Theory (KE, RMS speed, Degrees of Freedom)', parent_id: 'ph11_thermo_phy', type: 'topic' },
+    { id: 'tag_phth_6', name: 'Specific Heats (Cp, Cv) & Poisson\'s Ratio', parent_id: 'ph11_thermo_phy', type: 'topic' },
+
+    { id: 'ph11_shm', name: 'Simple Harmonic Motion', parent_id: null, type: 'chapter', sequence_order: 111, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_shm_1', name: 'SHM Equations & Characteristics', parent_id: 'ph11_shm', type: 'topic' },
+    { id: 'tag_shm_2', name: 'Energy in SHM', parent_id: 'ph11_shm', type: 'topic' },
+    { id: 'tag_shm_3', name: 'Spring-Mass Systems', parent_id: 'ph11_shm', type: 'topic' },
+    { id: 'tag_shm_4', name: 'Simple & Compound Pendulum', parent_id: 'ph11_shm', type: 'topic' },
+    { id: 'tag_shm_5', name: 'Forced Oscillations & Resonance', parent_id: 'ph11_shm', type: 'topic' },
+
+    { id: 'ph11_waves', name: 'Waves & Sound', parent_id: null, type: 'chapter', sequence_order: 112, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_waves_1', name: 'Wave Equation & Speed', parent_id: 'ph11_waves', type: 'topic' },
+    { id: 'tag_waves_2', name: 'Superposition, Interference & Beats', parent_id: 'ph11_waves', type: 'topic' },
+    { id: 'tag_waves_3', name: 'Standing Waves (Strings & Pipes)', parent_id: 'ph11_waves', type: 'topic' },
+    { id: 'tag_waves_4', name: 'Doppler Effect', parent_id: 'ph11_waves', type: 'topic' },
+    { id: 'tag_waves_5', name: 'Intensity & Loudness of Sound', parent_id: 'ph11_waves', type: 'topic' },
+
+    // ─── PHYSICS (Class 12) ─────────────────────────────────────────────────
+
+    { id: 'ph12_electrostatics', name: 'Electrostatics', parent_id: null, type: 'chapter', sequence_order: 113, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_elst_1', name: "Coulomb's Law & Electric Force", parent_id: 'ph12_electrostatics', type: 'topic' },
+    { id: 'tag_elst_2', name: 'Electric Field (Point Charges, Dipole, Continuous)', parent_id: 'ph12_electrostatics', type: 'topic' },
+    { id: 'tag_elst_3', name: "Gauss's Law & Applications", parent_id: 'ph12_electrostatics', type: 'topic' },
+    { id: 'tag_elst_4', name: 'Electric Potential & Potential Energy', parent_id: 'ph12_electrostatics', type: 'topic' },
+    { id: 'tag_elst_5', name: 'Conductors, Capacitors & Dielectrics', parent_id: 'ph12_electrostatics', type: 'topic' },
+    { id: 'tag_elst_6', name: 'Energy Stored in Capacitors & Circuits', parent_id: 'ph12_electrostatics', type: 'topic' },
+
+    { id: 'ph12_current', name: 'Current Electricity', parent_id: null, type: 'chapter', sequence_order: 114, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_curr_1', name: 'Ohm\'s Law, Resistance & Resistivity', parent_id: 'ph12_current', type: 'topic' },
+    { id: 'tag_curr_2', name: 'Kirchhoff\'s Laws (KVL, KCL)', parent_id: 'ph12_current', type: 'topic' },
+    { id: 'tag_curr_3', name: 'Wheatstone Bridge & Potentiometer', parent_id: 'ph12_current', type: 'topic' },
+    { id: 'tag_curr_4', name: 'Cell EMF, Internal Resistance & Combination', parent_id: 'ph12_current', type: 'topic' },
+    { id: 'tag_curr_5', name: 'Power Dissipation & Heating Effect', parent_id: 'ph12_current', type: 'topic' },
+
+    { id: 'ph12_magnetism', name: 'Magnetism & Moving Charges', parent_id: null, type: 'chapter', sequence_order: 115, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_mag_1', name: 'Magnetic Force on Charges & Wires (Lorentz)', parent_id: 'ph12_magnetism', type: 'topic' },
+    { id: 'tag_mag_2', name: 'Biot-Savart Law & Ampere\'s Law', parent_id: 'ph12_magnetism', type: 'topic' },
+    { id: 'tag_mag_3', name: 'Magnetic Field of Solenoid & Toroid', parent_id: 'ph12_magnetism', type: 'topic' },
+    { id: 'tag_mag_4', name: 'Motion of Charges in Magnetic Field', parent_id: 'ph12_magnetism', type: 'topic' },
+    { id: 'tag_mag_5', name: 'Torque on Current Loop & Moving Coil Galvanometer', parent_id: 'ph12_magnetism', type: 'topic' },
+    { id: 'tag_mag_6', name: 'Diamagnetism, Paramagnetism & Ferromagnetism', parent_id: 'ph12_magnetism', type: 'topic' },
+
+    { id: 'ph12_emi', name: 'Electromagnetic Induction', parent_id: null, type: 'chapter', sequence_order: 116, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_emi_1', name: 'Magnetic Flux & Faraday\'s Law', parent_id: 'ph12_emi', type: 'topic' },
+    { id: 'tag_emi_2', name: 'Lenz\'s Law & Motional EMF', parent_id: 'ph12_emi', type: 'topic' },
+    { id: 'tag_emi_3', name: 'Self Inductance & Mutual Inductance', parent_id: 'ph12_emi', type: 'topic' },
+    { id: 'tag_emi_4', name: 'Energy Stored in Inductors', parent_id: 'ph12_emi', type: 'topic' },
+    { id: 'tag_emi_5', name: 'Eddy Currents & Applications', parent_id: 'ph12_emi', type: 'topic' },
+
+    { id: 'ph12_ac', name: 'Alternating Current', parent_id: null, type: 'chapter', sequence_order: 117, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_ac_1', name: 'AC Fundamentals (RMS, Peak, Frequency)', parent_id: 'ph12_ac', type: 'topic' },
+    { id: 'tag_ac_2', name: 'R, L, C in AC Circuits', parent_id: 'ph12_ac', type: 'topic' },
+    { id: 'tag_ac_3', name: 'Series LCR & Resonance', parent_id: 'ph12_ac', type: 'topic' },
+    { id: 'tag_ac_4', name: 'Power in AC Circuits & Power Factor', parent_id: 'ph12_ac', type: 'topic' },
+    { id: 'tag_ac_5', name: 'Transformers', parent_id: 'ph12_ac', type: 'topic' },
+
+    { id: 'ph12_ray_optics', name: 'Ray Optics', parent_id: null, type: 'chapter', sequence_order: 118, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_rop_1', name: 'Reflection (Plane & Curved Mirrors)', parent_id: 'ph12_ray_optics', type: 'topic' },
+    { id: 'tag_rop_2', name: 'Refraction at Plane Surfaces & TIR', parent_id: 'ph12_ray_optics', type: 'topic' },
+    { id: 'tag_rop_3', name: 'Prism & Dispersion', parent_id: 'ph12_ray_optics', type: 'topic' },
+    { id: 'tag_rop_4', name: 'Refraction at Curved Surfaces & Lenses', parent_id: 'ph12_ray_optics', type: 'topic' },
+    { id: 'tag_rop_5', name: 'Optical Instruments (Microscope, Telescope)', parent_id: 'ph12_ray_optics', type: 'topic' },
+    { id: 'tag_rop_6', name: 'Power of Lens & Lens Maker\'s Equation', parent_id: 'ph12_ray_optics', type: 'topic' },
+
+    { id: 'ph12_wave_optics', name: 'Wave Optics', parent_id: null, type: 'chapter', sequence_order: 119, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_wvop_1', name: 'Huygens\' Principle & Wavefronts', parent_id: 'ph12_wave_optics', type: 'topic' },
+    { id: 'tag_wvop_2', name: 'Young\'s Double Slit Experiment (YDSE)', parent_id: 'ph12_wave_optics', type: 'topic' },
+    { id: 'tag_wvop_3', name: 'Interference Conditions & Fringe Width', parent_id: 'ph12_wave_optics', type: 'topic' },
+    { id: 'tag_wvop_4', name: 'Diffraction (Single Slit)', parent_id: 'ph12_wave_optics', type: 'topic' },
+    { id: 'tag_wvop_5', name: 'Polarisation', parent_id: 'ph12_wave_optics', type: 'topic' },
+
+    { id: 'ph12_modern', name: 'Modern Physics', parent_id: null, type: 'chapter', sequence_order: 120, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_mod_1', name: 'Photoelectric Effect & Einstein\'s Equation', parent_id: 'ph12_modern', type: 'topic' },
+    { id: 'tag_mod_2', name: 'de Broglie Waves & Davisson-Germer', parent_id: 'ph12_modern', type: 'topic' },
+    { id: 'tag_mod_3', name: 'Bohr\'s Model & Hydrogen Spectrum', parent_id: 'ph12_modern', type: 'topic' },
+    { id: 'tag_mod_4', name: 'Nuclear Structure, Binding Energy & Mass Defect', parent_id: 'ph12_modern', type: 'topic' },
+    { id: 'tag_mod_5', name: 'Radioactivity & Nuclear Reactions', parent_id: 'ph12_modern', type: 'topic' },
+    { id: 'tag_mod_6', name: 'X-Rays', parent_id: 'ph12_modern', type: 'topic' },
+
+    { id: 'ph12_semiconductors', name: 'Semiconductors & Communication', parent_id: null, type: 'chapter', sequence_order: 121, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_semi_1', name: 'Semiconductor Basics (n-type, p-type, Energy Bands)', parent_id: 'ph12_semiconductors', type: 'topic' },
+    { id: 'tag_semi_2', name: 'p-n Junction Diode & Characteristics', parent_id: 'ph12_semiconductors', type: 'topic' },
+    { id: 'tag_semi_3', name: 'Rectifiers (Half-wave, Full-wave)', parent_id: 'ph12_semiconductors', type: 'topic' },
+    { id: 'tag_semi_4', name: 'Zener Diode & Voltage Regulation', parent_id: 'ph12_semiconductors', type: 'topic' },
+    { id: 'tag_semi_5', name: 'Transistors (BJT, CE Config) & Logic Gates', parent_id: 'ph12_semiconductors', type: 'topic' },
+
+    // ─── MATHEMATICS (Class 11) ─────────────────────────────────────────────
+
+    { id: 'ma11_sets', name: 'Sets, Relations & Functions', parent_id: null, type: 'chapter', sequence_order: 201, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_sets_1', name: 'Sets & Set Operations (Union, Intersection, Complement)', parent_id: 'ma11_sets', type: 'topic' },
+    { id: 'tag_sets_2', name: 'Venn Diagrams & Applications', parent_id: 'ma11_sets', type: 'topic' },
+    { id: 'tag_sets_3', name: 'Relations (Types, Domain, Range)', parent_id: 'ma11_sets', type: 'topic' },
+    { id: 'tag_sets_4', name: 'Functions (Injective, Surjective, Bijective)', parent_id: 'ma11_sets', type: 'topic' },
+    { id: 'tag_sets_5', name: 'Composition of Functions & Inverse', parent_id: 'ma11_sets', type: 'topic' },
+
+    { id: 'ma11_complex', name: 'Complex Numbers & Quadratic Equations', parent_id: null, type: 'chapter', sequence_order: 202, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_cmpx_1', name: 'Algebra of Complex Numbers & Argand Plane', parent_id: 'ma11_complex', type: 'topic' },
+    { id: 'tag_cmpx_2', name: 'Modulus, Argument & Polar Form', parent_id: 'ma11_complex', type: 'topic' },
+    { id: 'tag_cmpx_3', name: 'De Moivre\'s Theorem & Roots of Unity', parent_id: 'ma11_complex', type: 'topic' },
+    { id: 'tag_cmpx_4', name: 'Quadratic Equations (Discriminant, Nature of Roots)', parent_id: 'ma11_complex', type: 'topic' },
+    { id: 'tag_cmpx_5', name: 'Equations Reducible to Quadratic', parent_id: 'ma11_complex', type: 'topic' },
+    { id: 'tag_cmpx_6', name: 'Locus Problems in Complex Plane', parent_id: 'ma11_complex', type: 'topic' },
+
+    { id: 'ma11_sequences', name: 'Sequences & Series', parent_id: null, type: 'chapter', sequence_order: 203, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_seq_1', name: 'Arithmetic Progression (AP)', parent_id: 'ma11_sequences', type: 'topic' },
+    { id: 'tag_seq_2', name: 'Geometric Progression (GP)', parent_id: 'ma11_sequences', type: 'topic' },
+    { id: 'tag_seq_3', name: 'Harmonic Progression & AM-GM-HM Inequality', parent_id: 'ma11_sequences', type: 'topic' },
+    { id: 'tag_seq_4', name: 'Sum of Special Series (n, n², n³)', parent_id: 'ma11_sequences', type: 'topic' },
+    { id: 'tag_seq_5', name: 'Arithmetico-Geometric Series', parent_id: 'ma11_sequences', type: 'topic' },
+
+    { id: 'ma11_pnc', name: 'Permutations & Combinations', parent_id: null, type: 'chapter', sequence_order: 204, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_pnc_1', name: 'Fundamental Counting Principle', parent_id: 'ma11_pnc', type: 'topic' },
+    { id: 'tag_pnc_2', name: 'Permutations (with & without Repetition)', parent_id: 'ma11_pnc', type: 'topic' },
+    { id: 'tag_pnc_3', name: 'Combinations & Selection', parent_id: 'ma11_pnc', type: 'topic' },
+    { id: 'tag_pnc_4', name: 'Circular Permutations', parent_id: 'ma11_pnc', type: 'topic' },
+    { id: 'tag_pnc_5', name: 'Distribution Problems', parent_id: 'ma11_pnc', type: 'topic' },
+
+    { id: 'ma11_binomial', name: 'Binomial Theorem', parent_id: null, type: 'chapter', sequence_order: 205, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_bino_1', name: 'Binomial Expansion & General Term', parent_id: 'ma11_binomial', type: 'topic' },
+    { id: 'tag_bino_2', name: 'Middle Term & Term Independent of x', parent_id: 'ma11_binomial', type: 'topic' },
+    { id: 'tag_bino_3', name: 'Binomial Coefficients & Properties', parent_id: 'ma11_binomial', type: 'topic' },
+    { id: 'tag_bino_4', name: 'Multinomial Theorem', parent_id: 'ma11_binomial', type: 'topic' },
+
+    { id: 'ma11_trigonometry', name: 'Trigonometric Functions & Equations', parent_id: null, type: 'chapter', sequence_order: 206, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_trig_1', name: 'Trigonometric Ratios & Identities', parent_id: 'ma11_trigonometry', type: 'topic' },
+    { id: 'tag_trig_2', name: 'Compound, Multiple & Sub-multiple Angle Formulas', parent_id: 'ma11_trigonometry', type: 'topic' },
+    { id: 'tag_trig_3', name: 'Product-to-Sum & Sum-to-Product', parent_id: 'ma11_trigonometry', type: 'topic' },
+    { id: 'tag_trig_4', name: 'Trigonometric Equations (General Solution)', parent_id: 'ma11_trigonometry', type: 'topic' },
+    { id: 'tag_trig_5', name: 'Properties of Triangles (Sine Rule, Cosine Rule)', parent_id: 'ma11_trigonometry', type: 'topic' },
+
+    { id: 'ma11_straight_lines', name: 'Straight Lines & Pair of Lines', parent_id: null, type: 'chapter', sequence_order: 207, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_stln_1', name: 'Equation of Line (Various Forms)', parent_id: 'ma11_straight_lines', type: 'topic' },
+    { id: 'tag_stln_2', name: 'Angle, Distance & Foot of Perpendicular', parent_id: 'ma11_straight_lines', type: 'topic' },
+    { id: 'tag_stln_3', name: 'Family of Lines & Concurrent Lines', parent_id: 'ma11_straight_lines', type: 'topic' },
+    { id: 'tag_stln_4', name: 'Pair of Straight Lines (Combined Equation)', parent_id: 'ma11_straight_lines', type: 'topic' },
+
+    { id: 'ma11_conics', name: 'Conic Sections', parent_id: null, type: 'chapter', sequence_order: 208, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_coni_1', name: 'Circle (Equation, Tangent, Normal)', parent_id: 'ma11_conics', type: 'topic' },
+    { id: 'tag_coni_2', name: 'Parabola (Standard & Shifted)', parent_id: 'ma11_conics', type: 'topic' },
+    { id: 'tag_coni_3', name: 'Ellipse (Standard Form, Foci, Eccentricity)', parent_id: 'ma11_conics', type: 'topic' },
+    { id: 'tag_coni_4', name: 'Hyperbola (Standard Form, Asymptotes)', parent_id: 'ma11_conics', type: 'topic' },
+    { id: 'tag_coni_5', name: 'Chord of Contact & Pair of Tangents', parent_id: 'ma11_conics', type: 'topic' },
+
+    { id: 'ma11_limits', name: 'Limits & Derivatives', parent_id: null, type: 'chapter', sequence_order: 209, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_lim_1', name: 'Limits (Algebraic, Trigonometric Forms)', parent_id: 'ma11_limits', type: 'topic' },
+    { id: 'tag_lim_2', name: 'L\'Hôpital\'s Rule & Standard Limits', parent_id: 'ma11_limits', type: 'topic' },
+    { id: 'tag_lim_3', name: 'Continuity & Types of Discontinuity', parent_id: 'ma11_limits', type: 'topic' },
+    { id: 'tag_lim_4', name: 'Derivatives from First Principles', parent_id: 'ma11_limits', type: 'topic' },
+
+    { id: 'ma11_math_induction', name: 'Mathematical Reasoning & Induction', parent_id: null, type: 'chapter', sequence_order: 210, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_mi_1', name: 'Mathematical Induction (Principle & Application)', parent_id: 'ma11_math_induction', type: 'topic' },
+    { id: 'tag_mi_2', name: 'Logical Connectives & Statements', parent_id: 'ma11_math_induction', type: 'topic' },
+
+    { id: 'ma11_stats', name: 'Statistics & Probability (Class 11)', parent_id: null, type: 'chapter', sequence_order: 211, class_level: 11, chapterType: 'physical' },
+    { id: 'tag_stat_1', name: 'Measures of Central Tendency (Mean, Median, Mode)', parent_id: 'ma11_stats', type: 'topic' },
+    { id: 'tag_stat_2', name: 'Measures of Dispersion (Variance, SD)', parent_id: 'ma11_stats', type: 'topic' },
+    { id: 'tag_stat_3', name: 'Classical Probability & Sample Space', parent_id: 'ma11_stats', type: 'topic' },
+    { id: 'tag_stat_4', name: 'Conditional Probability & Independent Events', parent_id: 'ma11_stats', type: 'topic' },
+
+    // ─── MATHEMATICS (Class 12) ─────────────────────────────────────────────
+
+    { id: 'ma12_functions', name: 'Relations, Functions & Inverse Trigonometry', parent_id: null, type: 'chapter', sequence_order: 212, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_func_1', name: 'Types of Functions & Graphs', parent_id: 'ma12_functions', type: 'topic' },
+    { id: 'tag_func_2', name: 'Composite & Inverse Functions', parent_id: 'ma12_functions', type: 'topic' },
+    { id: 'tag_func_3', name: 'Inverse Trigonometric Functions (Domain, Range)', parent_id: 'ma12_functions', type: 'topic' },
+    { id: 'tag_func_4', name: 'Properties & Identities of Inverse Trig', parent_id: 'ma12_functions', type: 'topic' },
+
+    { id: 'ma12_matrices', name: 'Matrices & Determinants', parent_id: null, type: 'chapter', sequence_order: 213, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_mat_1', name: 'Matrix Operations & Types', parent_id: 'ma12_matrices', type: 'topic' },
+    { id: 'tag_mat_2', name: 'Determinants & Properties', parent_id: 'ma12_matrices', type: 'topic' },
+    { id: 'tag_mat_3', name: 'Adjoint, Inverse & Rank of Matrix', parent_id: 'ma12_matrices', type: 'topic' },
+    { id: 'tag_mat_4', name: 'System of Linear Equations (Cramer\'s Rule)', parent_id: 'ma12_matrices', type: 'topic' },
+    { id: 'tag_mat_5', name: 'Cayley-Hamilton Theorem', parent_id: 'ma12_matrices', type: 'topic' },
+
+    { id: 'ma12_diff_calculus', name: 'Continuity, Differentiability & Methods of Differentiation', parent_id: null, type: 'chapter', sequence_order: 214, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_diff_1', name: 'Differentiability & Chain Rule', parent_id: 'ma12_diff_calculus', type: 'topic' },
+    { id: 'tag_diff_2', name: 'Parametric, Implicit & Logarithmic Differentiation', parent_id: 'ma12_diff_calculus', type: 'topic' },
+    { id: 'tag_diff_3', name: 'Higher Order Derivatives', parent_id: 'ma12_diff_calculus', type: 'topic' },
+    { id: 'tag_diff_4', name: 'Mean Value Theorems (Rolle\'s, LMVT)', parent_id: 'ma12_diff_calculus', type: 'topic' },
+
+    { id: 'ma12_aod', name: 'Application of Derivatives', parent_id: null, type: 'chapter', sequence_order: 215, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_aod_1', name: 'Tangents & Normals', parent_id: 'ma12_aod', type: 'topic' },
+    { id: 'tag_aod_2', name: 'Monotonicity & Maxima/Minima', parent_id: 'ma12_aod', type: 'topic' },
+    { id: 'tag_aod_3', name: 'Rate of Change & Approximation', parent_id: 'ma12_aod', type: 'topic' },
+    { id: 'tag_aod_4', name: 'Curve Sketching & Concavity', parent_id: 'ma12_aod', type: 'topic' },
+
+    { id: 'ma12_integrals', name: 'Integral Calculus', parent_id: null, type: 'chapter', sequence_order: 216, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_intg_1', name: 'Standard Integrals & Basic Rules', parent_id: 'ma12_integrals', type: 'topic' },
+    { id: 'tag_intg_2', name: 'Integration by Substitution & Parts', parent_id: 'ma12_integrals', type: 'topic' },
+    { id: 'tag_intg_3', name: 'Integration by Partial Fractions', parent_id: 'ma12_integrals', type: 'topic' },
+    { id: 'tag_intg_4', name: 'Definite Integrals & Properties', parent_id: 'ma12_integrals', type: 'topic' },
+    { id: 'tag_intg_5', name: 'Reduction Formulas & Special Integrals', parent_id: 'ma12_integrals', type: 'topic' },
+
+    { id: 'ma12_aoi', name: 'Application of Integrals & Differential Equations', parent_id: null, type: 'chapter', sequence_order: 217, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_aoi_1', name: 'Area under Curves & Between Curves', parent_id: 'ma12_aoi', type: 'topic' },
+    { id: 'tag_aoi_2', name: 'Differential Equations (Formation & Solutions)', parent_id: 'ma12_aoi', type: 'topic' },
+    { id: 'tag_aoi_3', name: 'Variable Separable Method', parent_id: 'ma12_aoi', type: 'topic' },
+    { id: 'tag_aoi_4', name: 'Linear Differential Equations (Integrating Factor)', parent_id: 'ma12_aoi', type: 'topic' },
+
+    { id: 'ma12_vectors', name: 'Vector Algebra', parent_id: null, type: 'chapter', sequence_order: 218, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_vec_1', name: 'Vector Basics (Magnitude, Direction, Unit Vectors)', parent_id: 'ma12_vectors', type: 'topic' },
+    { id: 'tag_vec_2', name: 'Dot Product & Scalar Projection', parent_id: 'ma12_vectors', type: 'topic' },
+    { id: 'tag_vec_3', name: 'Cross Product & Area Applications', parent_id: 'ma12_vectors', type: 'topic' },
+    { id: 'tag_vec_4', name: 'Scalar Triple Product & Volume', parent_id: 'ma12_vectors', type: 'topic' },
+
+    { id: 'ma12_3d', name: '3D Geometry', parent_id: null, type: 'chapter', sequence_order: 219, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_3dg_1', name: 'Direction Cosines & Direction Ratios', parent_id: 'ma12_3d', type: 'topic' },
+    { id: 'tag_3dg_2', name: 'Equation of Line in 3D (Cartesian & Vector)', parent_id: 'ma12_3d', type: 'topic' },
+    { id: 'tag_3dg_3', name: 'Equation of Plane (Various Forms)', parent_id: 'ma12_3d', type: 'topic' },
+    { id: 'tag_3dg_4', name: 'Angle & Distance (Line-Plane, Skew Lines)', parent_id: 'ma12_3d', type: 'topic' },
+    { id: 'tag_3dg_5', name: 'Family of Planes & Sphere', parent_id: 'ma12_3d', type: 'topic' },
+
+    { id: 'ma12_probability', name: 'Probability (Class 12)', parent_id: null, type: 'chapter', sequence_order: 220, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_prob2_1', name: 'Conditional Probability & Bayes\' Theorem', parent_id: 'ma12_probability', type: 'topic' },
+    { id: 'tag_prob2_2', name: 'Probability Distributions (Binomial, Poisson)', parent_id: 'ma12_probability', type: 'topic' },
+    { id: 'tag_prob2_3', name: 'Random Variables & Expected Value', parent_id: 'ma12_probability', type: 'topic' },
+    { id: 'tag_prob2_4', name: 'Total Probability Theorem', parent_id: 'ma12_probability', type: 'topic' },
 ];
 
 // Summary Statistics
-// Total Chapters: 26
-// Total Tags: 210
-// Last saved: 2026-02-21T07:36:39.932Z
+// Total Chapters: 65 (26 Chemistry + 19 Physics + 20 Maths)
+// Total Tags: ~430
+// Last saved: 2026-03-05T04:30:00.000Z
+// Chemistry chapters: ch11_*, ch12_*
+// Physics chapters:   ph11_*, ph12_*
+// Maths chapters:     ma11_*, ma12_*

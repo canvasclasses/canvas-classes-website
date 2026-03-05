@@ -40,6 +40,10 @@ export interface IQuestionSolution {
 export interface IQuestionMetadata {
   difficulty: 'Easy' | 'Medium' | 'Hard';
   chapter_id: string;
+  // subject is the top-level discipline the question belongs to.
+  // Always set at ingestion time. Existing Chemistry questions are
+  // backfilled via scripts/migrate-add-subject.ts.
+  subject: 'chemistry' | 'physics' | 'maths' | 'biology';
   tags: Array<{
     tag_id: string;
     weight: number;
@@ -138,6 +142,13 @@ const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
     required: true
   },
   chapter_id: { type: String, required: true },
+  // subject: always set going forward; defaults to 'chemistry' so existing
+  // documents remain valid until the migration script backfills them.
+  subject: {
+    type: String,
+    enum: ['chemistry', 'physics', 'maths', 'biology'],
+    default: 'chemistry',
+  },
   tags: [{
     tag_id: { type: String, required: true },
     weight: { type: Number, required: true, min: 0, max: 1 }

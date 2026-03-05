@@ -14,7 +14,7 @@
       "beta-hydroxy carbonyl",
       "crotonaldehyde"
     ],
-    "summary": "Aldehydes or ketones with at least one alpha-H undergo base-catalysed condensation: enolate attacks a second carbonyl to give a beta-hydroxy carbonyl compound (aldol product). On heating, water is eliminated to yield an alpha,beta-unsaturated carbonyl (condensation product). Cross-aldol between two different carbonyls gives a mixture — JEE Advanced tests which product predominates.",
+    "summary": "Aldol Condensation is a cornerstone C-C bond-forming reaction where a carbonyl compound possessing at least one alpha-hydrogen reacts to form a β-hydroxy carbonyl. The name 'Aldol' (Aldehyde + Alcohol) reflects the dual functionality. Classifications include Simple, Crossed, and Intramolecular (Cyclization). Mechanism: Base creates a nucleophilic enolate which attacks the second carbonyl. Dehydration: Heating triggers the E1cb mechanism to eliminate water and form an α,β-unsaturated carbonyl. If extended conjugation exists, this occurs spontaneously. JEE Note: Always identify the Enolate Donor vs. Carbonyl Acceptor in crossed reactions.",
     "reactants": "Aldehyde or ketone with at least one alpha-H",
     "reagents": "Dil. NaOH (base) or dil. HCl (acid)",
     "conditions": "Cold dil. NaOH = aldol product. Heat = dehydration = condensation product.",
@@ -39,7 +39,7 @@
       "conc NaOH",
       "hydride transfer"
     ],
-    "summary": "Aldehydes that lack alpha-H (HCHO, PhCHO, CCl₃CHO) undergo self-oxidation-reduction in concentrated NaOH: one molecule is oxidised to a carboxylate salt while the other is reduced to a primary alcohol via hydride transfer. In a crossed Cannizzaro (HCHO + PhCHO), HCHO is always oxidised and PhCHO is always reduced — a classic JEE trap.",
+    "summary": "Cannizzaro Reaction is a base-induced disproportionation reaction observed in aldehydes lacking alpha-hydrogens (e.g., HCHO, PhCHO). Unlike Aldol, these aldehydes cannot form enolates. Mechanism: A strong base (conc. NaOH) attacks the carbonyl carbon, eventually forcing a rate-determining Hydride Transfer (H⁻) to a second aldehyde molecule. Result: One molecule is oxidized to a carboxylate salt and the other is reduced to a primary alcohol. JEE Trap: In 'Crossed Cannizzaro' involving Formaldehyde, HCHO is ALWAYS oxidized because it is highly reactive to nucleophilic attack.",
     "reactants": "Aldehydes with NO alpha-H: HCHO, PhCHO, CCl₃CHO",
     "reagents": "Conc. NaOH (concentrated — dilute gives aldol if alpha-H present)",
     "conditions": "Concentrated aqueous NaOH, mild heat",
@@ -64,7 +64,7 @@
       "KOH",
       "foul smell"
     ],
-    "summary": "Primary amines (aliphatic or aromatic) react with CHCl₃ and alcoholic KOH to form isocyanides (R-N≡C) — compounds with an intensely foul, nauseating odour. The reaction proceeds via dichlorocarbene (:CCl₂) intermediate and is strictly a test for 1° amines only; secondary and tertiary amines give a negative result.",
+    "summary": "Carbylamine Reaction (Hofmann Isocyanide Test) is a sensitive detection method for primary (1°) amines, both aliphatic and aromatic. Reaction Requirement: Must have two N-H bonds. 2° and 3° amines show no reaction. Mechanism: Chloroform and KOH generate a highly reactive Dichlorocarbene (:CCl₂) intermediate, which performs a nucleophilic attack on the amine nitrogen. Subsequent double dehydrohalogenation leads to an Isocyanide (R-NC), known for its repulsive, foul odor. Safety Note: Known as the 'Stink Test'—phenyl isocyanide is extremely toxic.",
     "reactants": "Primary amine ONLY (RNH₂) — aliphatic or aromatic",
     "reagents": "CHCl₃ + alcoholic KOH, heat",
     "conditions": "Alcoholic KOH, heat. Smell is the indicator.",
@@ -88,7 +88,7 @@
       "C=O to CH₂",
       "acid conditions"
     ],
-    "summary": "Clemmensen reduction converts the carbonyl group (C=O) of aldehydes and ketones directly to a methylene group (CH₂) using zinc amalgam [Zn(Hg)] in concentrated HCl. The strongly acidic conditions mean the substrate must be acid-stable; for base-sensitive substrates use Wolff-Kishner instead. Both methods give the same alkane product from the same carbonyl starting material.",
+    "summary": "Clemmensen Reduction is a deoxygenation method that converts a carbonyl group (C=O) of aldehydes and ketones directly into a methylene group (CH₂) under acidic conditions. Reagent: Zinc Amalgam [Zn(Hg)] and concentrated HCl. Mechanism: Not a simple ionic path—it occurs as a heterogeneous process on the metal surface. Note: This reaction is ideal for acid-stable substrates. If your molecule contains groups sensitive to acid (e.g., esters or ethers), this method will cause degradation—switch to Wolff-Kishner instead.",
     "reactants": "Aldehyde or ketone (not carboxylic acids)",
     "reagents": "Zn(Hg) amalgam + conc. HCl",
     "conditions": "Strongly acidic (conc. HCl), heat. Substrate must be acid-stable.",
@@ -114,7 +114,7 @@
       "ice bath",
       "gateway reaction"
     ],
-    "summary": "Primary aromatic amines react with NaNO₂ and HCl at 0–5°C to form diazonium salts (ArN₂⁺Cl⁻) — the essential gateway to Sandmeyer, Balz-Schiemann, and azo-coupling reactions. Temperature control is critical: above 5°C the diazonium decomposes to phenol + N₂. Aliphatic diazonium salts are too unstable to isolate and immediately lose N₂.",
+    "summary": "Diazotisation is the preparation of aromatic diazonium salts (ArN₂⁺Cl⁻), which serve as essential intermediates for synthesizing phenols, halides, and azo dyes. Requirement: Primary aromatic amines reacting with NaNO₂ and HCl at 0-5°C. Mechanism: Generation of the Nitrosonium ion (NO⁺) followed by N-nitrosation and subsequent dehydration. Critical Constraint: The temperature must be strictly below 5°C. Above this range, the salt decomposes into phenol with the evolution of N₂ gas. Aliphatic amines give unstable diazoniums that instantly form carbocations.",
     "reactants": "Primary aromatic amine (ArNH₂): aniline, substituted anilines",
     "reagents": "NaNO₂ + HCl (generates HNO₂ in situ)",
     "conditions": "ICE COLD: 0–5°C. Above 5°C → diazonium decomposes to phenol + N₂.",
@@ -139,7 +139,7 @@
       "aryl ketone",
       "no rearrangement"
     ],
-    "summary": "Benzene reacts with an acyl chloride (RCOCl) in the presence of anhydrous AlCl₃ to give an aryl ketone via EAS. Because the electrophile is a resonance-stabilised acylium ion (RCO⁺), no carbocation rearrangement occurs and the product ketone deactivates the ring — preventing polyacylation. More than one equivalent of AlCl₃ is required since the product carbonyl complexes with it.",
+    "summary": "Friedel-Crafts Acylation is the introduction of an acyl group (R-CO-) into an aromatic ring to form an aryl ketone. Electrophile: The resonance-stabilized Acylium ion (R-C≡O⁺), generated from acyl chloride and AlCl₃. Advantages: Unlike alkylation, this reaction has no carbocation rearrangement and no polyacylation (the product deactivates the ring). Note: $>1$ equivalent of AlCl₃ is required because the product carbonyl complexes with the catalyst. Deactivated rings (like Nitrobenzene) do not react.",
     "reactants": "Benzene + acyl chloride (RCOCl) or acid anhydride",
     "reagents": "Anhydrous AlCl₃ (>1 equiv — one equiv complexes with product C=O)",
     "conditions": "Anhydrous. Excess AlCl₃ needed because product ketone complexes with AlCl₃.",
@@ -165,7 +165,7 @@
       "rearrangement",
       "polyalkylation"
     ],
-    "summary": "Benzene reacts with alkyl halides in the presence of anhydrous AlCl₃ to give alkylbenzenes via electrophilic aromatic substitution. Three critical limitations make this reaction unreliable: (1) carbocation rearrangement (n-PrCl gives isopropylbenzene, not n-propylbenzene), (2) polyalkylation since the product is more reactive than benzene, and (3) complete failure with deactivated rings such as nitrobenzene.",
+    "summary": "Friedel-Crafts Alkylation is an electrophilic aromatic substitution used to attach an alkyl group to a benzene ring. Mechanism: An alkyl halide and Lewis acid (AlCl₃) generate a carbocation electrophile. Limitations: (1) Carbocation rearrangement can lead to unexpected products (e.g., n-Propyl bromide yielding isopropylbenzene). (2) Polyalkylation occurs because the alkyl group activates the ring toward further attack. (3) Failing on deactivated rings. Standard strategy: Perform FC acylation first followed by reduction to avoid these issues.",
     "reactants": "Benzene + alkyl halide (RX)",
     "reagents": "Anhydrous AlCl₃ (Lewis acid)",
     "conditions": "Anhydrous AlCl₃, anhydrous conditions. H₂O destroys catalyst.",
@@ -191,7 +191,7 @@
       "dry ether",
       "carbanion"
     ],
-    "summary": "Grignard reagents (RMgX) behave as carbanions and add nucleophilically to carbonyl compounds: HCHO gives 1° alcohol, RCHO gives 2°, R₂CO gives 3°, CO₂ gives carboxylic acid, and esters consume 2 moles to give 3° alcohol. Strictly anhydrous conditions are essential — even a trace of water destroys the reagent by protonation (RMgX + H₂O → RH). This is the most versatile C–C bond-forming reaction tested in JEE.",
+    "summary": "Grignard Reaction involves the nucleophilic addition of an organomagnesium halide (RMgX) to a carbonyl compound to form a new C-C bond. Polarity: The C-Mg bond is highly polarized, making the carbon an extremely strong nucleophile/base. Outcomes: Formaldehyde gives 1° alcohols, higher aldehydes give 2° alcohols, and ketones give 3° alcohols. Golden Rule: Reaction must be strictly anhydrous. Protic sources (H₂O, alcohols, -NH₂, -COOH) 'kill' the Grignard reagent instantly, reducing it to a simple alkane (R-H).",
     "reactants": "RMgX + HCHO → 1° OH  |  RCHO → 2° OH  |  R₂CO → 3° OH  |  CO₂ → RCOOH  |  Ester → 3° OH (2 moles RMgX)",
     "reagents": "Mg in dry ether for prep. Then carbonyl. Then H₃O⁺ workup.",
     "conditions": "Strictly anhydrous and aprotic. Dry ether or THF. One drop of water destroys Grignard: RMgX + H₂O → RH.",
@@ -217,7 +217,7 @@
       "n-1 carbons",
       "isocyanate"
     ],
-    "summary": "Primary amide + Br₂/NaOH → primary amine with ONE FEWER carbon. The carbonyl is lost as CO₂. Amide → amine with carbon loss.",
+    "summary": "Hofmann Bromamide Degradation is a C-C bond-shortening rearrangement of a primary amide into a primary amine with one fewer carbon atom. Active Species: Sodium hypobromite (NaOBr), formed in situ from Br₂ and NaOH. Mechanism: Formation of an N-bromoamide followed by deprotonation to trigger a 1,2-rearrangement of the alkyl/aryl group from carbonyl carbon to nitrogen. The resulting Isocyanate (R-N=C=O) is hydrolyzed to release the amine and CO₂. Configuration: The migrating group (R) always retains its stereochemical configuration.",
     "reactants": "Primary amide (RCONH₂) ONLY. Does not work for 2° or 3° amides.",
     "reagents": "Br₂ + NaOH (NaOBr is the active species)",
     "conditions": "Aqueous NaOH + Br₂, 0°C then warm",
@@ -243,7 +243,7 @@
       "NaOI",
       "qualitative test"
     ],
-    "summary": "Methyl ketones (CH₃COR) and CH₃CHO react with I₂/NaOH → yellow CHI₃ (iodoform). Qualitative test for methyl ketone group.",
+    "summary": "Haloform (Iodoform) Reaction is a specific test for methyl ketones (CH₃-CO-) and alcohols oxidizable to them (e.g., ethanol). Condition: Iodine and NaOH generate sodium hypoiodite (NaOI). Mechanism: Base-induced trihalogenation of the methyl group followed by a nucleophilic attack on the carbonyl, which cleaves the molecule to form Iodoform (CHI₃) and a carboxylate salt. Diagnostic Result: Formation of a bright yellow crystalline precipitate of CHI₃ with a characteristic medicinal odor. Propan-1-ol and Methanol give negative results.",
     "reactants": "CH₃COR (methyl ketone), CH₃CHO, ethanol, isopropanol (all oxidised to methyl carbonyl in situ)",
     "reagents": "I₂ + NaOH (NaOI formed in situ)",
     "conditions": "Alkaline medium (NaOH), room temperature. Yellow ppt = positive.",
@@ -269,7 +269,7 @@
       "pressure",
       "aspirin"
     ],
-    "summary": "Sodium phenoxide + CO₂ under pressure at 125°C → salicylic acid (2-hydroxybenzoic acid) after acidification. Precursor of aspirin.",
+    "summary": "Kolbe-Schmitt Reaction is the carboxylation of a phenol to form an ortho-hydroxy aromatic acid (Salicylic acid). Requirement: Phenol must be converted to Sodium Phenoxide first to activate the ring. Mechanism: CO₂, a weak electrophile, performs an electrophilic substitution at the ortho position, stabilized by a chelate-like coordination with the sodium cation. Industrial Importance: This is the primary commercial route to Salicylic acid, the precursor to Aspirin. Note: Potassium Phenoxide at higher temperatures favors the para-product.",
     "reactants": "Sodium phenoxide (C₆H₅ONa) — phenol + NaOH first",
     "reagents": "CO₂ gas at 4–5 atm, then H⁺ workup",
     "conditions": "125°C, 4–5 atm CO₂. Na-phenoxide → ortho. K-phenoxide at 250°C → para (p-hydroxybenzoic acid).",
@@ -294,7 +294,7 @@
       "salicylaldehyde",
       "dichlorocarbene"
     ],
-    "summary": "Phenol + CHCl₃ + NaOH → dichlorocarbene electrophile attacks phenoxide ortho → hydrolysis → salicylaldehyde (2-hydroxybenzaldehyde).",
+    "summary": "Reimer-Tiemann Reaction is the formylation of phenols to yield Salicylaldehyde. Transition Species: Dichlorocarbene (:CCl₂), generated in situ from Chloroform and concentrated NaOH. Mechanism: The neutral but electron-deficient carbene attacks the nucleophilic phenoxide ring at the ortho position (major). Subsequent hydrolysis of the gem-dichloride intermediate yields the formyl (-CHO) group. Variation: Using Carbon Tetrachloride (CCl₄) instead of Chloroform yields Salicylic Acid instead of an aldehyde.",
     "reactants": "Phenol (C₆H₅OH)",
     "reagents": "CHCl₃ + conc. NaOH (aqueous)",
     "conditions": "NaOH/H₂O, ~60–70°C",
@@ -319,7 +319,7 @@
       "poisoned catalyst",
       "RCHO"
     ],
-    "summary": "Acid chloride (RCOCl) reduced selectively to aldehyde (RCHO) by H₂ over POISONED Pd/BaSO₄. Poison prevents over-reduction to alcohol.",
+    "summary": "Rosenmund Reduction is the selective catalytic hydrogenation of an acyl chloride to an aldehyde. Reagent: Palladium catalyst supported on Barium Sulphate (Pd/BaSO₄), poisoned with sulfur or quinoline. The Poison Logic: Un-poisoned Pd is too active and would reduce the resulting aldehyde all the way to an alcohol. The poison selectively deactivates the catalyst just enough to stop at the R-CHO stage. Constraint: It cannot be used to synthesize Formaldehyde (since Formyl Chloride is unstable).",
     "reactants": "Acid chloride (RCOCl)",
     "reagents": "H₂ + Pd/BaSO₄ (catalyst poisoned with quinoline-S)",
     "conditions": "H₂ atmosphere, Pd/BaSO₄, gentle",
@@ -345,7 +345,7 @@
       "aryl halide",
       "radical"
     ],
-    "summary": "Diazonium salt + CuCl/CuBr/CuCN → ArCl/ArBr/ArCN. Makes aryl halides not accessible by direct substitution.",
+    "summary": "Sandmeyer Reaction is a radical-nucleophilic substitution used to replace an aromatic diazonium group with Cl, Br, or CN. Reagent: Cuprous salts (CuCl, CuBr, CuCN). Mechanism: A Single Electron Transfer (SET) occurs between the Cu(I) salt and the diazonium cation, releasing N₂ gas and generating a reactive aryl radical. This radical then captures the halogen/nitrile from the copper complex. Importance: This reaction provides a versatile route to functionalize benzene rings in patterns not possible through standard EAS.",
     "reactants": "Benzenediazonium salt (ArN₂⁺Cl⁻)",
     "reagents": "CuCl → ArCl; CuBr → ArBr; CuCN → ArCN. For ArF: Balz-Schiemann (HBF₄). For ArI: KI directly (no Cu needed). For ArOH: H₂O/heat. For ArH: H₃PO₂.",
     "conditions": "Cu(I) salts, mild heat. Balz-Schiemann: HBF₄ then heat dry diazonium tetrafluoroborate.",
@@ -370,7 +370,7 @@
       "RCHO",
       "nitrile to aldehyde"
     ],
-    "summary": "Nitrile (RCN) + SnCl₂ + HCl → imine salt → hydrolysis → aldehyde (RCHO). Converts nitrile to aldehyde (same carbon count).",
+    "summary": "Stephen Reduction is the selective conversion of nitriles to aldehydes using Tin(II) chloride and HCl. Process Flow: (1) Nitrile is reduced to an iminium salt (imine hydrochloride) by SnCl₂/HCl. (2) Subsequent steam distillation or aqueous hydrolysis of the intermediate yields the final aldehyde. Distinction: Unlike strong hydrides (LiAlH₄) which reduce nitriles to primary amines, the Stephen reduction is 'mild' and stops specifically at the aldehyde stage. Typical Example: CH₃CN (Acetonitrile) $\\rightarrow$ CH₃CHO (Acetaldehyde).",
     "reactants": "Nitrile (RCN)",
     "reagents": "SnCl₂ + HCl (anhydrous), then H₂O workup",
     "conditions": "Anhydrous HCl + SnCl₂, then aqueous workup",
@@ -395,7 +395,7 @@
       "C=O to CH₂",
       "base conditions"
     ],
-    "summary": "Aldehyde/ketone + NH₂NH₂ + KOH/ethylene glycol → hydrazone → CH₂. Base conditions — use when substrate is acid-sensitive.",
+    "summary": "Wolff-Kishner Reduction is the complete deoxygenation of aldehydes and ketones to alkanes under strongly basic conditions. Reagent: Hydrazine (NH₂NH₂) and a strong base (KOH/NaOH) in a high-boiling solvent like ethylene glycol. Mechanism: Formation of a hydrazone intermediate followed by base-induced elimination of N₂ gas—the irreversible loss of nitrogen provides a massive thermodynamic driving force. Benefit: This is the ideal alternative to Clemmensen reduction when the molecule contains acid-sensitive functional groups.",
     "reactants": "Aldehyde or ketone",
     "reagents": "NH₂NH₂ (hydrazine) + KOH in ethylene glycol (high boiling point solvent)",
     "conditions": "High temperature (~200°C), strongly basic (KOH). Substrate must be base-stable.",
@@ -421,7 +421,7 @@
       "¹⁸O labelling",
       "ester"
     ],
-    "summary": "Carboxylic acid + alcohol + H⁺ catalyst ⇌ ester + water. Reversible equilibrium reaction — must be driven forward.",
+    "summary": "Fischer Esterification is an acid-catalyzed reversible condensation between a carboxylic acid and an alcohol. Mechanism: Protonation of the carbonyl oxygen makes the carbon more electrophilic, facilitating nucleophilic attack by the alcohol. Evidence: ¹⁸O isotope labeling proves that the 'O' in the resulting ester comes from the alcohol, while the 'O' in the water byproduct comes from the acid. Le Chatelier: Since the reaction is an equilibrium, it is driven forward by using excess alcohol or continuously removing water.",
     "reactants": "Carboxylic acid (RCOOH) + alcohol (R'OH)",
     "reagents": "H⁺ catalyst (conc. H₂SO₄ or dry HCl), heat",
     "conditions": "Reversible. Drive forward: excess alcohol, remove water (distillation/molecular sieves), or conc. H₂SO₄.",
@@ -447,7 +447,7 @@
       "1° amine only",
       "hydrazinolysis"
     ],
-    "summary": "Phthalimide + KOH → K-phthalimide + RX (SN2) → N-alkyl phthalimide + hydrolysis → PRIMARY AMINE ONLY. Cannot make 2° or 3° amines.",
+    "summary": "Gabriel Phthalimide Synthesis is a highly reliable method for preparing pure Primary (1°) Amines without risk of over-alkylation. Concept: It avoids the messy mixtures of ammonia alkylation by using Phthalimide as a 'masked' nitrogen source. Process: (1) Deprotonation of Phthalimide by KOH ($pK_a \\approx 8$). (2) SN2 attack on a primary alkyl halide. (3) Hydrazinolysis or hydrolysis to release the amine. Limitation: Aryl halides and 3° alkyl halides fail to react as they do not undergo SN2 substitution under these conditions.",
     "reactants": "Phthalimide + primary alkyl halide (RX)",
     "reagents": "Step 1: KOH. Step 2: RX. Step 3: acid hydrolysis (H₃O⁺) or hydrazinolysis (N₂H₄).",
     "conditions": "Anhydrous for SN2 step; then acidic hydrolysis or hydrazinolysis.",
@@ -472,7 +472,7 @@
       "primary halide",
       "RONa + RX"
     ],
-    "summary": "Alkoxide (RONa) + primary alkyl halide → ether by SN2. Best route to mixed ethers. Tertiary alkyl halides fail (elimination dominates).",
+    "summary": "Williamson Ether Synthesis is an SN2-based laboratory method for synthesizing both symmetrical and unsymmetrical ethers. Requirement: A nucleophilic alkoxide (RO⁻) reacting with an alkyl halide (R'X). Golden Rule: The alkyl halide MUST be primary (1°). If a 3° halide is used, the alkoxide acts as a strong base instead of a nucleophile, leading to E2 elimination (forming an alkene) rather than substitution. Strategic Tip: Always place the more sterically hindered (bulky) group on the alkoxide side, not the halide side.",
     "reactants": "Sodium alkoxide (RONa) + primary (ideally) alkyl halide",
     "reagents": "Na metal + alcohol → alkoxide, then RX. Or NaOH + phenol → phenoxide + RX.",
     "conditions": "Anhydrous. SN2 requires primary RX.",
@@ -498,7 +498,7 @@
       "N=N bond",
       "para coupling"
     ],
-    "summary": "Diazonium salt (ArN₂⁺) + phenol or aryl amine → azo compound (Ar-N=N-Ar'). Coloured azo dyes. Para coupling preferred.",
+    "summary": "Azo Coupling is an electrophilic aromatic substitution reaction between an aromatic diazonium cation and an activated aromatic ring (like phenol or aniline). Target: Formation of highly colored 'Azo Dyes' ($Ar-N=N-Ar'$). pH Sensitivity: Phenols react best in weakly basic medium ($pH \\, 9-10$), while anilines react best in weakly acidic medium ($pH \\, 4-5$). Logic: The diazonium ion is a weak electrophile and requires a high-electron-density ring to attack. Substitution occurs exclusively at the para-position (or ortho if para is blocked).",
     "reactants": "Diazonium salt (electrophile) + phenol or aromatic amine (activated ring)",
     "reagents": "Freshly prepared cold diazonium salt (ArN₂⁺Cl⁻)",
     "conditions": "Phenol: mildly alkaline (pH 8–10, forms PhO⁻). Amine: weakly acidic/neutral. Temperature: 0–5°C always.",
@@ -523,7 +523,7 @@
       "pyrolysis",
       "fluorobenzene"
     ],
-    "summary": "Only reliable route to aryl fluorides. ArN₂⁺ + HBF₄ → ArN₂⁺BF₄⁻ salt → dry pyrolysis → ArF + N₂ + BF₃.",
+    "summary": "Balz-Schiemann Reaction is the standard method for synthesizing aryl fluorides from diazonium salts. Process: (1) Treatment of an aryl diazonium salt with fluoroboric acid ($HBF_4$) to precipitate stable Aryl Diazonium Tetrafluoroborate ($ArN_2BF_4$). (2) Controlled thermal decomposition of the dry salt to yield $Ar-F$, $N_2$, and $BF_3$. Distinction: This is the only reliable way to introduce fluorine into a benzene ring, as direct fluorination is too violent and standard Sandmeyer ($CuF$) fails.",
     "reactants": "Benzenediazonium chloride (ArN₂⁺Cl⁻)",
     "reagents": "HBF₄ or NaBF₄, then dry heat",
     "conditions": "Step 1: form ArN₂⁺BF₄⁻ (precipitates). Step 2: dry pyrolysis of dry salt → ArF.",
@@ -549,7 +549,7 @@
       "ring expansion",
       "anti migration"
     ],
-    "summary": "Ketone oxime + H₂SO₄ (or PCl₅) → amide (or lactam for cyclic ketones) via 1,2-migration of the anti group. Ring expansion for cyclic ketones.",
+    "summary": "Beckmann Rearrangement is the acid-catalyzed conversion of an oxime into an amide. Driving Force: The migration of a group from carbon to nitrogen, simultaneous with the loss of a leaving group from nitrogen. Stereochemistry: The reaction is 'Stereospecific'—the group that is **anti** (trans) to the leaving group (-OH) is the one that migrates. Application: The rearrangement of cyclohexanone oxime yields $\\epsilon$-caprolactam, the essential monomer for synthesizing Nylon-6. Catalysts include $H_2SO_4$, $PCl_5$, or $SOCl_2$.",
     "reactants": "Ketone oxime (R-C(=NOH)-R')",
     "reagents": "Conc. H₂SO₄ or PCl₅",
     "conditions": "Strong acid conditions. For cyclic ketones: ring expansion (cyclohexanone oxime → caprolactam, the nylon-6 precursor).",
@@ -575,7 +575,7 @@
       "C-C bond",
       "umpolung"
     ],
-    "summary": "Two molecules of benzaldehyde condense with KCN (cyanide catalyst) to give benzoin (PhCH(OH)COPh). Cyanide acts as umpolung catalyst — reverses carbonyl reactivity.",
+    "summary": "Benzoin Condensation is the cyanide-catalyzed coupling of two aromatic aldehyde molecules (e.g., Benzaldehyde) to form an $\\alpha$-hydroxy ketone (Benzoin). Catalyst: Aqueous-alcoholic sodium or potassium cyanide ($NaCN/KCN$). Specificity: Only aromatic aldehydes (lacking alpha-H) typically undergo this condensation. Crucial Role of $CN^-$: It acts as both a nucleophile (to form a cyanohydrin intermediate) and an exceptionally good leaving group. Note: Unlike Aldol, this reaction creates a new C-C bond between two carbonyl carbons.",
     "reactants": "Benzaldehyde (PhCHO) — aromatic aldehydes only (not aliphatic)",
     "reagents": "KCN (potassium cyanide) or NaCN; aqueous ethanol; heat",
     "conditions": "KCN catalyst in aqueous ethanol, ~60°C.",
@@ -601,8 +601,8 @@
       "EWG",
       "regioselectivity"
     ],
-    "summary": "Partial reduction of aromatic ring to 1,4-cyclohexadiene using Na or Li in liquid NH₃ with alcohol proton source. Not full reduction.",
-    "reactants": "Benzene or substituted benzene",
+    "summary": "Birch Reduction is the selective partial reduction of aromatic rings to non-conjugated 1,4-cyclohexadienes. Reagent: Sodium or Lithium metal in liquid ammonia ($NH_3$) with a proton source (usually an alcohol like Ethanol). Mechanism: Single Electron Transfer (SET) to form radical anions. Substituent Effect: Electron-Withdrawing Groups (EWG) like $-COOH$ direct reduction to the 1,4-positions (ipso-para), while Electron-Donating Groups (EDG) like $-OCH_3$ direct it to the 2,5-positions (ortho-meta).",
+    "reactants": "Benzene or substituted benzene (EDG or EWG)",
     "reagents": "Na or Li metal + liquid NH₃ (−33°C) + ROH (proton source)",
     "conditions": "Liquid ammonia (−33°C), Na metal, alcohol as proton source essential.",
     "product": "1,4-cyclohexadiene. Position of double bonds depends on substituents.",
@@ -627,7 +627,7 @@
       "ethyl acetoacetate",
       "C-C bond"
     ],
-    "summary": "Two ester molecules condense under base (NaOEt) to give a beta-ketoester. Classic: 2 ethyl acetate → ethyl acetoacetate.",
+    "summary": "Claisen Condensation is a C-C bond-forming reaction between two esters (or one ester and one carbonyl) accompanied by the loss of an alcohol. Requirement: The starting ester must possess two alpha-hydrogens to drive the reaction to completion via a final deprotonation. Reagent: A strong base, typically the sodium alkoxide ($NaOR$) matching the ester's alcohol part. Result: A $\\beta$-keto ester. Thermodynamic Logic: The reaction is equilibrium-driven; the final irreversible deprotonation of the acidic alpha-proton between the two carbonyls is what forces the yield.",
     "reactants": "Ester (requires alpha-H for the donor). Two molecules of same ester (Claisen) or different esters (crossed Claisen).",
     "reagents": "NaOEt (sodium ethoxide, strong base) in dry ethanol",
     "conditions": "Anhydrous ethanol, NaOEt, reflux.",
@@ -652,7 +652,7 @@
       "n-1 carbons",
       "alkane"
     ],
-    "summary": "Sodium salt of carboxylic acid + soda lime (NaOH+CaO) + strong heat → alkane with one fewer carbon + CO₂.",
+    "summary": "Decarboxylation is the removal of the carboxyl group ($-COOH$) from a carboxylic acid as $CO_2$. Common Method: Heating the sodium salt of the acid with Soda Lime ($NaOH + CaO$ in 3:1 ratio). Mechanism: Formation of a carbanion intermediate. Stability Rule: The rate of decarboxylation depends on the stability of the resulting carbanion. $\\beta$-keto acids are exceptionally prone to decarboxylation—they lose $CO_2$ simply upon heating via a cyclic 6-membered transition state, bypassing the need for soda lime.",
     "reactants": "Sodium carboxylate (RCOONa)",
     "reagents": "Soda lime = NaOH + CaO (1:3 ratio), strong heat (300°C+)",
     "conditions": "Strong heat. CaO prevents NaOH melting and activates it.",
@@ -678,7 +678,7 @@
       "CCl₄",
       "selective"
     ],
-    "summary": "Toluene + CrO₂Cl₂ in CCl₄ → benzaldehyde. Chromyl chloride oxidises side-chain methyl selectively to CHO (not COOH).",
+    "summary": "Etard Reaction is the selective partial oxidation of a methyl group on an aromatic ring to an aldehyde group. Reagent: Chromyl chloride ($CrO_2Cl_2$) in a non-polar solvent like $CS_2$ or $CCl_4$. Process: (1) Formation of a brown-colored Etard complex (an adduct of chromyl chloride and the hydrocarbon). (2) Careful hydrolysis of this complex to release the aldehyde. Precision: This method is highly valued because it stops specifically at the aldehyde stage without over-oxidizing to the carboxylic acid (benzoic acid).",
     "reactants": "Toluene (PhCH₃) or alkylbenzene with methyl group",
     "reagents": "CrO₂Cl₂ (chromyl chloride) in CCl₄",
     "conditions": "CCl₄ solvent, room temperature. Then H₂O workup.",
@@ -704,7 +704,7 @@
       "Le Chatelier",
       "precipitation"
     ],
-    "summary": "Alkyl Cl or Br + NaI in dry acetone → alkyl iodide. Driven by insolubility of NaCl/NaBr in acetone (Le Chatelier).",
+    "summary": "Finkelstein Reaction is a halogen exchange method ($S_N2$) used to synthesize alkyl iodides. Reagent: Sodium Iodide ($NaI$) in dry acetone. Mechanism: An alkyl chloride or bromide is treated with $NaI$. Thermodynamic Driver: While the reaction is an equilibrium, it is driven to completion by the precipitation of the resulting $NaCl$ or $NaBr$, which are insoluble in dry acetone (consistent with Le Chatelier's principle). Note: This is an $S_N2$ reaction, so reactivity follows the order: $1^\\circ > 2^\\circ > 3^\\circ$ (3° halides typically fail).",
     "reactants": "Alkyl chloride (RCl) or alkyl bromide (RBr)",
     "reagents": "NaI, dry acetone",
     "conditions": "Dry acetone. NaCl/NaBr precipitate out → equilibrium shifts forward.",
@@ -729,7 +729,7 @@
       "ortho/para",
       "photo-Fries"
     ],
-    "summary": "Phenyl ester + AlCl₃ (Lewis acid) → hydroxy aryl ketone. Ester rearranges to ortho or para hydroxyphenyl ketone depending on temperature.",
+    "summary": "Fries Rearrangement is the phenolic ester rearrangement into ortho and para-hydroxy aryl ketones. Reagent: Anhydrous $AlCl_3$. Temperature Control: Law of the land—Low temperatures ($<60^\\circ C$) favor the **para** product, while high temperatures ($>160^\\circ C$) favor the **ortho** product due to intramolecular hydrogen bonding stability. Mechanism: It involves the formation of an acylium ion intermediate which then re-attacks the benzene ring at the available ortho/para sites.",
     "reactants": "Phenyl ester (ArOCOR)",
     "reagents": "AlCl₃ (Lewis acid), solvent or neat",
     "conditions": "Low temp → para product. High temp → ortho product.",
@@ -756,7 +756,7 @@
       "formylation",
       "benzene"
     ],
-    "summary": "Benzene + CO + HCl + AlCl₃/CuCl → benzaldehyde. Formylation of activated benzene rings.",
+    "summary": "Gattermann-Koch Reaction is a direct formylation method used to synthesize aromatic aldehydes from benzene or its derivatives. Reagents: Carbon Monoxide ($CO$) and Hydrogen Chloride ($HCl$) in the presence of anhydrous $AlCl_3$ and Cuprous Chloride ($CuCl$). Active Electrophile: The formyl cation ($[CHO]^+$), generated in situ. Note: This reaction is effectively an 'Acylation' with an unstable formyl chloride equivalent. It bypasses the need to handle unstable formaldehyde common in other formylation methods.",
     "reactants": "Benzene or activated substituted benzene",
     "reagents": "CO + HCl gas, anhydrous AlCl₃, CuCl catalyst, high pressure",
     "conditions": "Anhydrous AlCl₃, CuCl, CO + HCl, high pressure. Fails on deactivated rings.",
@@ -782,7 +782,7 @@
       "alpha-bromo acid",
       "acyl bromide"
     ],
-    "summary": "Alpha-halogenation of carboxylic acids using Br₂ + red phosphorus. Phosphorus converts acid to acyl bromide first, which enolises far more easily.",
+    "summary": "Hell-Volhard-Zelinsky (HVZ) Reaction is the specific $\\alpha$-halogenation of aliphatic carboxylic acids. Requirement: The acid must possess at least one $\\alpha$-hydrogen. Reagents: Chlorine or Bromine in the presence of a catalytic amount of Red Phosphorus ($P_{red}$). Mechanism: Phosphorus reacts with the halogen to form $PX_3$, which converts the acid to an acid halide. This acid halide undergoes enolization and halogenation at the alpha-carbon more readily than the parent acid. Result: $\\alpha$-halo carboxylic acids.",
     "reactants": "Carboxylic acid with alpha-H (RCH₂COOH)",
     "reagents": "Br₂ + red phosphorus (or PBr₃)",
     "conditions": "P + Br₂ → PBr₃ in situ → RCOOH → RCOBr → enolisation → Br₂ at alpha-C → H₂O workup.",
@@ -808,7 +808,7 @@
       "E-alkene",
       "alpha,beta-unsaturated acid"
     ],
-    "summary": "Aromatic aldehyde + acetic anhydride + NaOAc → alpha,beta-unsaturated carboxylic acid (trans). Classic: PhCHO → trans-cinnamic acid.",
+    "summary": "Perkin Reaction is an aldol-like condensation between an aromatic aldehyde (e.g., Benzaldehyde) and an acid anhydride. Reagent: The sodium salt of the carboxylic acid corresponding to the anhydride. Mechanism: The base deprotonates the anhydride to form an enolate, which performs a nucleophilic addition to the aromatic aldehyde. Subsequent dehydration and hydrolysis yield an $\\alpha,\\beta$-unsaturated aromatic acid. Benchmark Product: Cinnamic acid ($Ph-CH=CH-COOH$).",
     "reactants": "Aromatic aldehyde (ArCHO) — benzaldehyde is textbook",
     "reagents": "Acetic anhydride (Ac₂O), sodium acetate (NaOAc, mild base)",
     "conditions": "Heat 150–200°C. NaOAc acts as mild base.",
@@ -834,7 +834,7 @@
       "carbocation",
       "pinacolone"
     ],
-    "summary": "Vicinal diol (1,2-diol) treated with H⁺ → 1,2-migration of alkyl/aryl group to adjacent carbocation → ketone (pinacolone). Classic: pinacol → pinacolone.",
+    "summary": "Pinacol-Pinacolone Rearrangement is an acid-catalyzed rearrangement of a vicinal diol (1,2-diol) to a ketone or aldehyde. Key Steps: (1) Protonation of one hydroxyl group and its departure as water, forming a carbocation. (2) A 1,2-shift of an alkyl or aryl group from an adjacent carbon to the carbocation center, driven by the formation of a more stable oxocarbenium ion. (3) Deprotonation yields the final carbonyl product. Migration Aptitude: Aryl $>$ Alkyl (with $3^\\circ > 2^\\circ > 1^\\circ$ for alkyl groups).",
     "reactants": "Vicinal diol (1,2-diol): pinacol = (CH₃)₂C(OH)-C(OH)(CH₃)₂",
     "reagents": "H⁺ (dil. H₂SO₄ or HCl)",
     "conditions": "Aqueous acid, heat",
@@ -861,7 +861,7 @@
       "C-C bond",
       "sodium"
     ],
-    "summary": "Two alkyl halides + Na in dry ether → higher alkane via C-C coupling. Always doubles (or crosses) the carbon count.",
+    "summary": "Wurtz Reaction is a method for synthesizing symmetrical alkanes ($R-R$) by coupling two molecules of an alkyl halide ($RX$). Reagents: Sodium metal ($Na$) in dry ether. Mechanism: It proceeds via a free radical pathway or an organosodium intermediate ($R-Na$), which then reacts with another alkyl halide molecule in an $S_N2$-like fashion. Limitations: Poor yields for unsymmetrical alkanes (due to mixture of products), and it fails for $3^\\circ$ halides which undergo elimination.",
     "reactants": "Alkyl halide (RX) — primary best. Tertiary fails (elimination).",
     "reagents": "Na metal (2 eq), dry ether",
     "conditions": "Dry ether, strictly anhydrous, reflux",
@@ -886,7 +886,7 @@
       "alkylarene",
       "toluene from PhBr+CH₃Br"
     ],
-    "summary": "Aryl halide + alkyl halide + Na → alkylarene. Distinct from Fittig (ArX+ArX+Na → biaryl) and Wurtz (RX+RX+Na → alkane).",
+    "summary": "Wurtz-Fittig Reaction is a cross-coupling reaction between an aryl halide ($ArX$) and an alkyl halide ($RX$) to form an alkylarene ($Ar-R$). Reagents: Sodium metal ($Na$) in dry ether. Advantage: It combines the features of the Wurtz reaction (alkyl-alkyl coupling) and the Fittig reaction (aryl-aryl coupling) to specifically form an alkyl-aryl product. The different reactivities of aryl and alkyl halides allow for better control over the cross-coupling compared to a mixed Wurtz reaction.",
     "reactants": "Aryl halide (ArX) + Alkyl halide (RX)",
     "reagents": "Na metal, dry ether",
     "conditions": "Dry ether, anhydrous",
@@ -913,7 +913,7 @@
       "phenol",
       "benzyne"
     ],
-    "summary": "Chlorobenzene + NaOH (350°C, 300 atm, Cu catalyst) → sodium phenoxide → H⁺ → phenol. Industrial route to phenol. Proceeds via benzyne (elimination-addition).",
+    "summary": "Dow Process is an industrial nucleophilic aromatic substitution method for synthesizing phenol from chlorobenzene. Requirement: Extreme conditions ($350^\\circ C$ and $300$ atm pressure) are necessary because chlorobenzene is deactivated toward nucleophilic attack due to partial double bond character of the C-Cl bond. Intermediate: It proceeds via a Benzyne intermediate ($C_6H_4$) rather than a simple $S_N2$ or $S_NAr$ pathway. It remains a classic example of forcing a reaction on an unreactive substrate.",
     "reactants": "Chlorobenzene (C₆H₅Cl)",
     "reagents": "NaOH (aq, very conc.), Cu catalyst",
     "conditions": "350°C, 300 atm — extremely harsh.",
@@ -939,7 +939,7 @@
       "decarboxylation",
       "coupling"
     ],
-    "summary": "Electrolysis of carboxylate salt solution: 2RCOO⁻ → R-R + 2CO₂ at anode. Electrochemical C-C coupling via radical mechanism.",
+    "summary": "Kolbe Electrolysis is an electrochemical method for synthesizing higher symmetrical alkanes from the salts of carboxylic acids. Process: Electrolysis of an aqueous solution of sodium or potassium carboxylate ($R-COONa$). Mechanism: At the ANODE, the carboxylate ion is oxidized to a radical ($R-COO^\\bullet$), which loses $CO_2$ to form an alkyl radical ($R^\\bullet$). Two such radicals then couple. Observations: $CO_2$ and Alkane are evolved at the anode, while $H_2$ gas and $NaOH$ are formed at the cathode, making the solution basic over time.",
     "reactants": "Carboxylate salt (RCOONa) in aqueous solution",
     "reagents": "Electrolysis — platinum anode, DC current",
     "conditions": "Aqueous RCOONa solution, electrolysis, Pt anode",
@@ -963,7 +963,7 @@
       "HBr",
       "free radical"
     ],
-    "summary": "Anti-Markovnikov addition of HBr to alkenes only in the presence of peroxides. Proceeds via a free radical mechanism.",
+    "summary": "Kharasch Effect (Peroxide Effect) is the Anti-Markovnikov addition of Hydrogen Bromide ($HBr$) to unsymmetrical alkenes in the presence of organic peroxides. Mechanism: It follows a free-radical chain pathway rather than the usual carbocation path. Requirement: It is strictly observed only with $HBr$. Reactive intermediates: Peroxides generate $Br^\\bullet$ radicals which attack the less hindered terminal carbon to form the more stable $2^\\circ$ or $3^\\circ$ alkyl radical. Note: $HCl$ and $HI$ do not show this effect due to thermodynamic constraints (bond strengths).",
     "reactants": "Alkenes",
     "reagents": "HBr and peroxide (e.g. benzoyl peroxide)",
     "conditions": "Presence of peroxides",
@@ -987,7 +987,7 @@
       "Hg2F2",
       "halogen exchange"
     ],
-    "summary": "Best method to prepare alkyl fluorides by heating an alkyl chloride/bromide with a metallic fluoride.",
+    "summary": "Swarts Reaction is the standard laboratory method for synthesizing alkyl fluorides through halogen exchange. Reagent: Metallic fluorides such as $AgF$, $Hg_2F_2$, $CoF_2$, or $SbF_3$. Mechanism: An alkyl chloride or bromide is heated with the metallic fluoride to exchange the halogen. Drivers: The reaction is driven by the formation of insoluble metallic halides or the difference in bond enthalpies. Importance: Like Balz-Schiemann for aromatic rings, Swarts is the easiest way to prepare aliphatic fluorides safely.",
     "reactants": "Alkyl chloride or bromide",
     "reagents": "Heavy metal fluorides like AgF, Hg2F2, CoF2, SbF3",
     "conditions": "Heating",
@@ -1011,14 +1011,14 @@
       "HBr",
       "diazonium"
     ],
-    "summary": "Similar to Sandmeyer but uses finely divided Copper powder instead of Copper(I) salts to convert diazonium salts to aryl halides.",
+    "summary": "Gattermann Reaction is a method to convert arenediazonium salts into aryl halides (chlorides or bromides). Reagents: Copper powder ($Cu$) and the corresponding halogen acid ($HCl$ or $HBr$). Mechanism: Similar to the Sandmeyer reaction, it proceeds via a free-radical pathway where the diazonium group ($N_2^+$) is replaced by a halogen. Comparison: Gattermann is a simpler, 'budget' alternative to Sandmeyer, using copper powder instead of copper(I) salts, often resulting in lower yields but still effective for halogenation of aromatic rings.",
     "reactants": "Diazonium salt",
     "reagents": "Cu powder / HCl or Cu powder / HBr",
     "conditions": "Room temperature / mild heating",
     "product": "Aryl chloride or aryl bromide",
     "mechanism": "Free radical mechanism similar to Sandmeyer.",
     "stereo": null,
-    "mistake": "Confusing Sandmeyer (CuCl/CuBr) with Gattermann (Cu powder).",
+    "mistake": "Confusing Sandmeyer ($CuCl/CuBr$) with Gattermann ($Cu$ powder).",
     "images": []
   },
   {
@@ -1035,7 +1035,7 @@
       "biaryl",
       "dry ether"
     ],
-    "summary": "Coupling of two aryl halides using Sodium in dry ether to form a biaryl compound.",
+    "summary": "Fittig Reaction is a coupling reaction used to synthesize biaryl compounds ($Ar-Ar$) from two molecules of aryl halides ($ArX$). Reagents: Sodium metal ($Na$) in dry ether. Mechanism: It is analogous to the Wurtz reaction but involves aryl halides. It proceeds via a free radical or organosodium intermediate, leading to the formation of a new carbon-carbon bond between two aromatic rings. Distinction: Wurtz couples two alkyl halides, Wurtz-Fittig couples an alkyl and an aryl halide, and Fittig couples two aryl halides.",
     "reactants": "Two aryl halides (e.g., chlorobenzene)",
     "reagents": "Na metal",
     "conditions": "Dry ether",
@@ -1058,12 +1058,12 @@
       "ammoniacal silver nitrate",
       "aldehyde test"
     ],
-    "summary": "Chemical test to distinguish aldehydes from ketones. Aldehydes are oxidized to carboxylate salts, and silver ions are reduced to metallic silver.",
+    "summary": "Tollens' Test is a qualitative test for the presence of aldehydes, characterized by the formation of a 'silver mirror'. Reagent: Ammoniacal silver nitrate solution, $[Ag(NH_3)_2]^+OH^-$, a mild oxidizing agent. Mechanism: Aldehydes are oxidized to carboxylate ions, while $Ag^+$ ions are reduced to metallic silver ($Ag^0$), which deposits on the inner surface of the test tube. Scope: Both aliphatic and aromatic aldehydes give a positive test. Exceptions: Ketones generally do not react, but $\\alpha$-hydroxy ketones and formic acid ($HCOOH$) can give a positive result.",
     "reactants": "Aldehydes (aliphatic and aromatic)",
     "reagents": "Ammoniacal silver nitrate (Tollens' reagent)",
     "conditions": "Mild heating in alkaline medium",
     "product": "Carboxylate salt and Silver mirror",
-    "mechanism": "Oxidation of aldehyde by Ag(NH3)2+ complex.",
+    "mechanism": "Oxidation of aldehyde by $Ag(NH_3)_2^+$ complex.",
     "stereo": null,
     "mistake": "Thinking ketones give a positive test (only alpha-hydroxy ketones do).",
     "images": []
@@ -1081,12 +1081,12 @@
       "Cu2O",
       "aliphatic aldehyde test"
     ],
-    "summary": "Chemical test for aliphatic aldehydes. Aldehydes reduce Cu2+ to a red precipitate of Cu2O.",
+    "summary": "Fehling's Test is a qualitative test primarily used to detect aliphatic aldehydes. Reagents: Fehling's solution, prepared by mixing Fehling A ($CuSO_4$) and Fehling B (alkaline solution of sodium potassium tartrate, Rochelle salt). Mechanism: Aldehydes are oxidized to carboxylate ions, and the blue $Cu^{2+}$ ions are reduced to a brick-red precipitate of cuprous oxide ($Cu_2O$). Distinction: Aromatic aldehydes (e.g., benzaldehyde) typically give a negative test because they are less easily oxidized by this mild reagent, making it useful for distinguishing between aliphatic and aromatic aldehydes.",
     "reactants": "Aliphatic aldehydes (aromatic aldehydes give negative test)",
-    "reagents": "Fehling A (aq CuSO4) + Fehling B (Rochelle salt + NaOH)",
+    "reagents": "Fehling A (aq $CuSO_4$) + Fehling B (Rochelle salt + $NaOH$)",
     "conditions": "Heating",
-    "product": "Carboxylate salt and red Cu2O precipitate",
-    "mechanism": "Oxidation of aldehyde and reduction of Cu2+ to Cu+.",
+    "product": "Carboxylate salt and red $Cu_2O$ precipitate",
+    "mechanism": "Oxidation of aldehyde and reduction of $Cu^{2+}$ to $Cu^+$.",
     "stereo": null,
     "mistake": "Thinking benzaldehyde gives a positive test. Fehling's only works for ALIPHATIC aldehydes.",
     "images": []
@@ -1104,14 +1104,14 @@
       "1/2/3 degree amines",
       "solubility"
     ],
-    "summary": "Test to distinguish primary, secondary, and tertiary amines using benzenesulfonyl chloride (Hinsberg's reagent).",
+    "summary": "Hinsberg Test is a chemical test used to distinguish between primary ($1^\\circ$), secondary ($2^\\circ$), and tertiary ($3^\\circ$) amines based on their reactivity with benzenesulfonyl chloride ($C_6H_5SO_2Cl$) and subsequent solubility in alkali. Procedure: The amine reacts with benzenesulfonyl chloride in the presence of $NaOH$. $1^\\circ$ amines form an N-substituted sulfonamide which is soluble in $NaOH$ (due to an acidic N-H proton). $2^\\circ$ amines form an N,N-disubstituted sulfonamide which is insoluble in $NaOH$ (no acidic N-H proton). $3^\\circ$ amines do not react with benzenesulfonyl chloride under these conditions, remaining insoluble (or reacting slowly to form a salt that hydrolyzes).",
     "reactants": "Primary, secondary, or tertiary amines",
-    "reagents": "Benzenesulfonyl chloride and NaOH",
+    "reagents": "Benzenesulfonyl chloride and $NaOH$",
     "conditions": "Alkaline medium, then acidification",
-    "product": "1° gives soluble salt, 2° gives insoluble compound, 3° does not react.",
+    "product": "$1^\\circ$ gives soluble salt, $2^\\circ$ gives insoluble compound, $3^\\circ$ does not react.",
     "mechanism": "Formation of sulfonamides.",
     "stereo": null,
-    "mistake": "Forgetting the solubility: 1° sulfonamide has an acidic H, so it dissolves in NaOH. 2° does not.",
+    "mistake": "Forgetting the solubility: $1^\\circ$ sulfonamide has an acidic H, so it dissolves in $NaOH$. $2^\\circ$ does not.",
     "images": []
   },
   {
@@ -1128,12 +1128,11 @@
       "ring expansion",
       "ketone"
     ],
-    "summary": "Rearrangement of 1-aminomethylcycloalkanols using HNO2 to yield expanded cyclic ketones.",
+    "summary": "Tiffeneau-Demjanov Rearrangement is a ring-expansion method that converts a primary amine on a cyclic 1,2-amino alcohol into a cyclic ketone with one additional carbon. Reagent: Nitrous acid ($HNO_2$ or $NaNO_2/HCl$). Mechanism: Diazotisation of the primary amine group followed by spontaneous loss of $N_2$ gas to trigger a 1,2-migration of a ring carbon. Benefit: It is a more robust alternative to the Pinacol rearrangement for achieving structural expansions from 4 to 5 or 5 to 6 membered rings. Product: An expanded cyclic ketone.",
     "reactants": "1-aminomethylcycloalkanol (beta-amino alcohol)",
-    "reagents": "HNO2 (NaNO2 / HCl)",
+    "reagents": "$HNO_2$ ($NaNO_2 / HCl$)",
     "conditions": "Cold aqueous acid",
     "product": "Ring-expanded cyclic ketone",
-    "mechanism": "Diazotization of amine, loss of N2, and ring expansion via 1,2-alkyl shift.",
     "stereo": null,
     "mistake": "Similar to Pinacol rearrangement but uses amine and HNO2 instead of diol and H+.",
     "images": []
@@ -1152,7 +1151,7 @@
       "amine",
       "heat"
     ],
-    "summary": "Thermal decomposition of an acyl azide to an isocyanate, which optionally hydrolyzes to a primary amine.",
+    "summary": "Curtius Rearrangement is a thermal decomposition method that converts an acyl azide into a primary amine with one fewer carbon. Reagent: Acyl azide ($R-CON_3$), typically prepared from acyl chloride and $NaN_3$. Mechanism: (1) Thermal loss of $N_2$ gas to generate a highly reactive **Acyl Nitrene**. (2) Spontaneous 1,2-shift of the $R$ group to the nitrogen, forming an Isocyanate ($R-N=C=O$). (3) Hydrolysis of the isocyanate yields the amine and $CO_2$. Benefit: Similar to Hofmann Degradation but starts from azides instead of amides.",
     "reactants": "Acyl azide",
     "reagents": "Heat, then optionally H2O",
     "conditions": "Thermal decomposition",
@@ -1176,7 +1175,7 @@
       "wolf rearrangement",
       "ketene"
     ],
-    "summary": "Process to convert a carboxylic acid to its next higher homolog (adds one CH2).",
+    "summary": "Arndt-Eistert Synthesis is a homologation method used to convert a carboxylic acid into its next higher homologue ($R-COOH \\rightarrow R-CH_2-COOH$). Process: (1) Formation of an acyl chloride. (2) Treatment with Diazomethane ($CH_2N_2$) to form a diazoketone. (3) **Wolff Rearrangement** catalyzed by silver oxide ($Ag_2O$) in the presence of water/alcohol. Key Step: The migration of the R-group to form a Ketene ($R-CH=C=O$) intermediate, which then hydrates to the higher acid.",
     "reactants": "Acyl chloride from a carboxylic acid",
     "reagents": "CH2N2 (diazomethane), then Ag2O / H2O",
     "conditions": "Formation of diazoketone, then Wolff rearrangement",
@@ -1200,7 +1199,7 @@
       "aldehyde",
       "alcohol"
     ],
-    "summary": "Reduction of esters, aldehydes, or ketones to primary or secondary alcohols using metallic Sodium in Ethanol.",
+    "summary": "Bouveault-Blanc Reduction is the chemical reduction of esters to primary alcohols using sodium metal in absolute ethanol. Reagent: $Na$ / $C_2H_5OH$. Mechanism: It proceeds via a series of Single Electron Transfers (SET) from the sodium metal to the ester carbonyl, followed by protonation from the alcohol. Advantage: Historically important as a source of 1° alcohols before the discovery of $LiAlH_4$. Distinction: Unlike catalytic hydrogenation, it selectively reduces esters even in the presence of some other reducible groups.",
     "reactants": "Esters, aldehydes, or ketones",
     "reagents": "Na metal and Ethanol",
     "conditions": "Reflux",
@@ -1224,7 +1223,7 @@
       "para-diphenol",
       "quinol"
     ],
-    "summary": "Oxidation of phenols with alkaline potassium persulfate to form para-diphenols (hydroquinones).",
+    "summary": "Elbs Persulphate Oxidation is the chemical oxidation of phenols to form dihydric phenols (specifically para-diphenols) using alkaline potassium persulphate. Reagent: $K_2S_2O_8$ in aqueous $NaOH$. Mechanism: Nucleophilic attack of the phenoxide oxygen on the persulphate peroxide bond, followed by rearrangement to the para position. Product: Yields Quinol (hydroquinone) after hydrolysis of the intermediate sulphate. Note: If the para position is blocked, oxidation occurs at the ortho position.",
     "reactants": "Phenol",
     "reagents": "K2S2O8 (Potassium persulfate) and NaOH",
     "conditions": "Alkaline medium",
@@ -1247,7 +1246,7 @@
       "Br2/CCl4",
       "decarboxylation"
     ],
-    "summary": "Silver salt of carboxylic acid reacts with Br2 in CCl4 to form Alkyl Bromides, decreasing the carbon chain by one.",
+    "summary": "Hunsdiecker Reaction is the decarboxylative bromination of carboxylic acids to form alkyl bromides with one fewer carbon atom. Reagent: Silver salt of the carboxylic acid ($R-COOAg$) and Bromine ($Br_2$) in $CCl_4$. Mechanism: (1) Formation of an acyl hypobromite ($R-COOBr$). (2) Homolytic cleavage to generate an acyl radical ($R-COO^\\bullet$). (3) Decarboxylation to form an alkyl radical ($R^\\bullet$), which captures bromine. Reactivity: $1^\\circ > 2^\\circ > 3^\\circ$. Note: Using $I_2$ instead of $Br_2$ yields an ester (Simonini reaction).",
     "reactants": "Silver carboxylate (RCOOAg)",
     "reagents": "Br2 in CCl4",
     "conditions": "Reflux",
@@ -1270,7 +1269,7 @@
       "benzidine",
       "acid-catalyzed"
     ],
-    "summary": "Conversion of Hydrazobenzene (1,2-diphenylhydrazine) to Benzidine (4,4'-diaminobiphenyl) in an acidic medium.",
+    "summary": "Benzidine Rearrangement is the acid-catalyzed conversion of 1,2-diphenylhydrazine into 4,4'-diaminobiphenyl (benzidine). Process: Treatment with strong mineral acids like $HCl$. Mechanism: It is a concerted [5,5]-sigmatropic rearrangement. Logic: Protonation of the hydrazine nitrogens triggers a structural flip where the two para-positions of the aromatic rings couple together, followed by the re-aromatization of the rings. It is a fundamental example of an aromatic rearrangement where a N-N bond is exchanged for a C-C bond.",
     "reactants": "Hydrazobenzene",
     "reagents": "Strong acid (e.g., HCl)",
     "conditions": "Acidic medium",
@@ -1294,7 +1293,7 @@
       "alkene",
       "pyrolysis"
     ],
-    "summary": "Thermal decomposition of Tertiary Amine Oxides to give Alkenes and Hydroxylamine via a syn-elimination.",
+    "summary": "Cope Elimination is the 'mild' way to make alkenes without using a strong base. It starts with a Tertiary Amine Oxide, which is then heated. THE MECHANISM: It's a 'Syn-Elimination' that happens through a cyclic 5-membered transition state where the oxygen of the amine oxide reaches around and grabs a beta-hydrogen. Result: You get an alkene and a hydroxylamine. Because it's a 'front-side' attack, it's strictly SYN, unlike the E2 mechanism which is typically ANTI.",
     "reactants": "Tertiary amine oxide",
     "reagents": "Heat (150-200°C)",
     "conditions": "Pyrolysis",
@@ -1318,7 +1317,7 @@
       "weak base",
       "alpha-beta unsaturated"
     ],
-    "summary": "Condensation of an aldehyde/ketone with an active methylene compound using a weak base like an amine.",
+    "summary": "Knoevenagel Condensation is the base-catalyzed nucleophilic addition of an **active methylene compound** to an aldehyde or ketone. Requirement: The methylene compound ($Z-CH_2-Z'$) must be flanked by two electron-withdrawing groups (e.g., malonic ester, acetoacetic ester). Mechanism: Deprotonation forms a stable resonance-stabilized carbanion which attacks the carbonyl. Subsequent dehydration (condensation) yields an $\\alpha,\\beta$-unsaturated compound. Common Bases: Weak bases like Pyridine or Piperidine are usually sufficient due to the high acidity of the substrate.",
     "reactants": "Aldehyde/ketone and active methylene compound (e.g., malonic ester)",
     "reagents": "Weak base (e.g., piperidine, pyridine)",
     "conditions": "Mild heating",
@@ -1342,7 +1341,7 @@
       "lactone",
       "migratory aptitude"
     ],
-    "summary": "Oxidation of ketones to esters (or cyclic ketones to lactones) using peroxyacids (e.g. mCPBA).",
+    "summary": "Baeyer-Villiger Oxidation is the conversion of ketones into esters (or cyclic ketones into lactones) using peroxyacids. Reagent: $m-CPBA$, Peracetic acid, or Trifluoroperacetic acid. Mechanism: Nucleophilic attack of the peroxyacid on the ketone, followed by a C-to-O migration of an alkyl/aryl group. Migration Aptitude: $3^\\circ > 2^\\circ >$ Phenyl $> 1^\\circ >$ Methyl. Benefit: Highly regioselective; the more substituted group preferentially migrates to the oxygen. Cyclic products result in ring expansion (e.g., cyclohexanone $\\rightarrow \\epsilon$-caprolactone).",
     "reactants": "Ketone (or cyclic ketone)",
     "reagents": "Peroxyacid (e.g. mCPBA, CF3CO3H)",
     "conditions": "Room temperature",
@@ -1367,7 +1366,7 @@
       "blue-green",
       "indophenol"
     ],
-    "summary": "Chemical test for Phenols yielding a deep blue/green color (Indophenol), which turns red on dilution.",
+    "summary": "Libermann's Nitroso Test is a colorimetric qualitative test used to detect secondary ($2^\\circ$) amines and phenols. Process (for Phenol): Treatment with $NaNO_2$ and conc. $H_2SO_4$. (1) Phenol reacts with nitrous acid to form p-nitrosophenol. (2) This reacts with excess phenol to form **Indophenol**, which is red in acidic medium. (3) On adding $NaOH$, the color changes to blue/green due to the formation of the sodium salt. Sequence: Red (Acid) $\\rightarrow$ Blue (Base). Purpose: Distinguishes phenols and $2^\\circ$ amines from other functional groups.",
     "reactants": "Phenol",
     "reagents": "NaNO2 and conc. H2SO4",
     "conditions": "Warming, then dilution, then addition of NaOH",
@@ -1390,7 +1389,7 @@
       "Na/EtOH",
       "primary amine"
     ],
-    "summary": "Reduction of Alkyl Cyanides (Nitriles) to Primary Amines using Sodium and Ethanol.",
+    "summary": "Mendius Reaction is a selective reduction method used to convert nitriles into primary amines. Reagent: Sodium amalgam ($Na(Hg)$) in the presence of boiling ethanol ($C_2H_5OH$). Mechanism: It involves the transfer of four hydrogen atoms via a Single Electron Transfer (SET) process. Value: This reaction is a classic way to achieve 'Carbon Homologation' of an amine, increasing the chain length by one carbon (the cyanide carbon) relative to the starting alkyl group. It delivers pure primary amines without substituted byproducts.",
     "reactants": "Alkyl cyanide (nitrile)",
     "reagents": "Na and Ethanol",
     "conditions": "Reflux",
@@ -1414,7 +1413,7 @@
       "ester",
       "modified cannizzaro"
     ],
-    "summary": "Modified Cannizzaro reaction where all aldehydes (even with alpha-H) form esters using Aluminum Ethoxide.",
+    "summary": "Tischenko Reaction is an Al-alkoxide catalyzed disproportionation of aldehydes into esters. Reagent: Aluminum ethoxide ($Al(OC_2H_5)_3$). Distinction: Unlike the Cannizzaro reaction, which specifically requires aldehydes lacking $\\alpha$-hydrogens, the Tischenko reaction works on almost all aldehydes. Mechanism: Two molecules of aldehyde disproportionate, but the resulting alcohol and acid intermediate are immediately coupled by the catalyst to form an ester. It is effectively an anhydrous version of the Cannizzaro-Esterification sequence.",
     "reactants": "Aldehydes",
     "reagents": "Al(OEt)3 (Aluminum ethoxide)",
     "conditions": "Anhydrous",
@@ -1437,7 +1436,7 @@
       "Cu powder",
       "biaryl"
     ],
-    "summary": "Coupling of Aryl Halides (usually Iodides) using Copper powder at high temp to form Biaryls.",
+    "summary": "Ullmann Reaction is a coupling method for synthesizing symmetrical biaryls ($Ar-Ar$) from aryl halides. Reagent: Finely divided copper powder ($Cu$) at high temperatures. Requirement: Aryl iodides are the most reactive substrates. Aryl bromides and chlorides only react successfully if they are activated by strong electron-withdrawing groups in the ortho/para positions. Intermediate: It proceeds via an arylcopper(I) species. Importance: It is the aromatic sibling of the Wurtz reaction, specifically tuned for biaryl synthesis.",
     "reactants": "Aryl iodide",
     "reagents": "Copper powder",
     "conditions": "High temperature in sealed tube",
@@ -1462,7 +1461,7 @@
       "alkene",
       "carbonyl"
     ],
-    "summary": "Cleavage of alkenes/alkynes using Ozone. Reductive workup yields aldehydes/ketones. Oxidative workup yields carboxylic acids.",
+    "summary": "Ozonolysis is a powerful oxidative cleavage of C-C multiple bonds using ozone ($O_3$). Process: Formation of a cyclic molozonide which rearranges to a stable ozonide. The Workup Dictates the Product: (1) **Reductive Workup** ($Zn/H_2O$ or $Me_2S$) stops at aldehydes/ketones. (2) **Oxidative Workup** ($H_2O_2$) converts aldehydes into carboxylic acids. Purpose: This reaction is the primary diagnostic tool in organic chemistry for locating the exact position of double or triple bonds in an unknown hydrocarbon.",
     "reactants": "Alkenes or alkynes",
     "reagents": "O3, then Zn/H2O (reductive) or H2O2 (oxidative)",
     "conditions": "Low temperature for ozonide formation",
@@ -1486,7 +1485,7 @@
       "Markovnikov",
       "no rearrangement"
     ],
-    "summary": "Converts Alkenes to Alcohols following Markovnikov's rule WITHOUT carbocation rearrangement.",
+    "summary": "Oxymercuration-Demercuration is a two-step method for the Markovnikov hydration of alkenes without carbocation rearrangement. Process: (1) Reaction with mercuric acetate ($Hg(OAc)_2$) to form a cyclic mercurinium ion, followed by water attack at the more substituted carbon. (2) Reduction with $NaBH_4$ to remove the mercury. Advantage: Since a free carbocation is never formed, structural rearrangements are suppressed, making this superior to standard acid-catalyzed hydration for branched alkenes.",
     "reactants": "Alkene",
     "reagents": "1) Hg(OAc)2 / H2O, 2) NaBH4",
     "conditions": "Aqueous medium",
@@ -1510,7 +1509,7 @@
       "anti-Markovnikov",
       "syn addition"
     ],
-    "summary": "Converts alkenes to alcohols following Anti-Markovnikov's rule with Syn-addition.",
+    "summary": "Hydroboration-Oxidation is a regioselective method for the Anti-Markovnikov hydration of alkenes. Reagents: Borane ($BH_3$) or Diborane ($B_2H_6$) followed by oxidation with alkaline $H_2O_2$. Stereochemistry: It is a concerted **Syn-addition** of H and B across the double bond. Regiochemistry: The bulky boron group selectively attaches to the least hindered carbon. Result: A primary or secondary alcohol with configuration retention. Note: This reaction specifically yields the 'Anti-Markovnikov' product which is impossible via direct acid hydration.",
     "reactants": "Alkene",
     "reagents": "1) B2H6 / THF, 2) H2O2 / OH-",
     "conditions": "Alkaline peroxide workup",
@@ -1534,7 +1533,7 @@
       "E2",
       "heat"
     ],
-    "summary": "Thermal decomposition of Quaternary Ammonium Hydroxides to form the least substituted alkene (Hofmann product).",
+    "summary": "Hofmann Elimination is the base-promoted E2 elimination of quaternary ammonium salts that selectively yields the 'Least Substituted' alkene. Procedure: (1) Conversion of an amine to an iodide salt. (2) Treatment with moist silver oxide ($Ag_2O/H_2O$) to form a quaternary hydroxide. (3) Thermal elimination. Thermodynamic Driver: The reaction is controlled by steric effects; the bulky $-NR_3^+$ leaving group forces the base to extract a proton from the most accessible (least hindered) methyl group. Result: The Hofmann product (anti-Saytzeff).",
     "reactants": "Quaternary ammonium hydroxide",
     "reagents": "Heat",
     "conditions": "High temperature",
@@ -1558,7 +1557,7 @@
       "o-allyl phenol",
       "sigmatropic"
     ],
-    "summary": "Thermal conversion of Allyl Aryl Ethers to o-Allyl Phenols. Proceeds via a concerted [3,3]-Sigmatropic Shift.",
+    "summary": "Claisen Rearrangement is a purely thermal [3,3]-sigmatropic rearrangement that converts an allyl aryl ether into an ortho-allyl phenol. Process: Heating the substrate (typically $>200^\\circ C$) without a catalyst. Mechanism: A concerted pericyclic [3,3]-shift through a six-membered cyclic transition state. Inversion Effect: The allyl group 'inverts' during the migration—the terminal $\\gamma$-carbon of the allyl chain becomes attached to the ortho carbon of the ring. If both ortho positions are blocked, a second rearrangement to the para position may occur (Para-Claisen).",
     "reactants": "Allyl aryl ether",
     "reagents": "Heat (200°C)",
     "conditions": "Purely thermal, no catalyst needed",

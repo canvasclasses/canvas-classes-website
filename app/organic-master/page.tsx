@@ -24,36 +24,31 @@ const bgColors: Record<string, string> = {
   purple: 'bg-purple-500/15 border-purple-500/40 text-purple-300',
 };
 
-function InfoRow({ label, value }: { label: string; value: string }) {
-  if (!value) return null;
-  return (
-    <div className="flex gap-4 px-4 py-2.5 border-b border-white/5 last:border-none">
-      <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest min-w-[85px] shrink-0 pt-0.5">
-        {label}
-      </span>
-      <span className="text-[13.5px] text-white/70 leading-relaxed flex-1">
-        {value}
-      </span>
-    </div>
-  );
-}
+// Simplified Reaction View - Focused on pedagogical clarity and visual impact
 
 function Panel({ variant, label, body, icon: Icon }: { variant: 'stereo' | 'mistake' | 'hook' | 'jee'; label: string; body: string; icon: any }) {
   if (!body) return null;
   const s = {
-    stereo: 'bg-blue-500/5 border-blue-500/20 text-blue-200',
-    mistake: 'bg-orange-500/5 border-orange-500/15 text-rose-300/80',
-    hook: 'bg-amber-500/5 border-amber-500/20 text-amber-200',
-    jee: 'bg-indigo-500/5 border-indigo-500/20 text-indigo-200'
+    stereo: 'bg-blue-500/10 border-blue-500/20 text-blue-100 shadow-[0_0_20px_rgba(59,130,246,0.05)]',
+    mistake: 'bg-rose-500/10 border-rose-500/20 text-rose-100 shadow-[0_0_20px_rgba(244,63,94,0.05)]',
+    hook: 'bg-amber-500/10 border-amber-500/20 text-amber-100',
+    jee: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-100'
+  }[variant];
+
+  const iconColor = {
+    stereo: 'text-blue-400',
+    mistake: 'text-rose-400',
+    hook: 'text-amber-400',
+    jee: 'text-indigo-400'
   }[variant];
 
   return (
-    <div className={`rounded-lg p-3.5 mb-2.5 border ${s}`}>
-      <div className="flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase mb-1.5 opacity-80">
-        <Icon size={12} />
+    <div className={`rounded-xl p-4 border backdrop-blur-sm transition-all duration-300 hover:scale-[1.01] ${s}`}>
+      <div className={`flex items-center gap-2 text-[11px] font-extrabold tracking-widest uppercase mb-2 ${iconColor}`}>
+        <Icon size={14} strokeWidth={2.5} />
         {label}
       </div>
-      <div className="text-[13.5px] leading-relaxed opacity-75">{body}</div>
+      <div className="text-[13.5px] leading-relaxed opacity-90 font-medium">{body}</div>
     </div>
   );
 }
@@ -122,25 +117,29 @@ function ReactionCard({ r, isOpen, onToggle }: { r: Reaction; isOpen: boolean; o
             exit={{ height: 0, opacity: 0 }}
             className="border-t border-emerald-500/20 px-5 pb-6 pt-5 bg-black/20"
           >
+            {/* Main Visual: Mechanism SVG */}
             {r.images?.length > 0 ? (
-              <div className="flex flex-col gap-4 mb-6">
+              <div className="flex flex-col gap-4 mb-8">
+                <div className="flex items-center gap-2 text-[10px] font-bold text-white/20 uppercase tracking-widest mb-1 px-1">
+                  <Compass size={12} />
+                  Mechanism Pathway
+                </div>
                 {r.images.map((img, idx) => (
-                  <div key={idx} className="rounded-xl overflow-hidden border border-white/10 bg-white/[0.02] p-4 flex justify-center backdrop-blur-sm">
-                    <img src={img} alt={`${r.name} mechanism ${idx + 1}`} className="max-w-full max-h-72 object-contain opacity-90 hover:opacity-100 transition-opacity" />
+                  <div key={idx} className="rounded-2xl overflow-hidden border border-white/10 bg-[#050505] p-6 flex justify-center shadow-2xl relative group/img">
+                    <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity" />
+                    <img src={img} alt={`${r.name} mechanism ${idx + 1}`} className="max-w-full max-h-[400px] object-contain opacity-95 group-hover/img:opacity-100 transition-all duration-500 group-hover/img:scale-[1.02]" />
                   </div>
                 ))}
               </div>
-            ) : null}
+            ) : (
+              <div className="mb-6 py-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 opacity-30">
+                <FlaskConical size={32} className="mb-2" />
+                <span className="text-xs font-bold uppercase tracking-widest">Mechanism SVG Coming Soon</span>
+              </div>
+            )}
 
-            <div className="rounded-xl border border-white/10 bg-white/[0.01] overflow-hidden mb-5 backdrop-blur-md">
-              <InfoRow label="Reactants" value={r.reactants} />
-              <InfoRow label="Reagents" value={r.reagents} />
-              <InfoRow label="Conditions" value={r.conditions} />
-              <InfoRow label="Product" value={r.product} />
-              <InfoRow label="Mechanism" value={r.mechanism} />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+            {/* Insights Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 mb-6">
               {r.stereo && <Panel variant="stereo" label="Stereochemistry" body={r.stereo} icon={Compass} />}
               <Panel variant="mistake" label="Common Mistake" body={r.mistake} icon={ShieldAlert} />
             </div>
