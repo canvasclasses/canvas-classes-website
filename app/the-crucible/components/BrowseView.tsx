@@ -547,19 +547,74 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
     );
   };
 
+  const saveModalElement = showSaveModal && (() => {
+    const correctCount = browseAttempts.filter(a => a.is_correct).length;
+    const total = browseAttempts.length;
+    return (
+      <div style={{
+        position: 'fixed', inset: 0, zIndex: 9999,
+        background: 'rgba(0,0,0,0.72)', backdropFilter: 'blur(12px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: 24,
+      }}>
+        <div style={{
+          background: '#13151f',
+          border: '1px solid rgba(255,255,255,0.12)',
+          borderRadius: 20,
+          padding: '28px 28px 24px',
+          maxWidth: 380, width: '100%',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.7)',
+        }}>
+          <div style={{ fontSize: 36, textAlign: 'center', marginBottom: 12 }}>📊</div>
+          <div style={{ fontSize: 18, fontWeight: 800, textAlign: 'center', marginBottom: 6, color: '#fff' }}>
+            Save browse session progress?
+          </div>
+          <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textAlign: 'center', marginBottom: 24, lineHeight: 1.5 }}>
+            You attempted <strong style={{ color: '#fff' }}>{total} question{total !== 1 ? 's' : ''}</strong> in this session
+            {total > 0 && (
+              <> — <span style={{ color: '#34d399', fontWeight: 700 }}>{correctCount} correct</span>
+                {correctCount < total && <>, <span style={{ color: '#f87171', fontWeight: 700 }}>{total - correctCount} wrong</span></>}
+              </>
+            )}.<br />
+            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>
+              Saved browse progress counts toward your streak but won&apos;t affect test question selection.
+            </span>
+          </div>
+          <div style={{ display: 'flex', gap: 10 }}>
+            <button
+              onClick={() => { setShowSaveModal(false); onBack(); }}
+              disabled={isSaving}
+              style={{ flex: 1, padding: '12px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.6)', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
+              Discard &amp; Exit
+            </button>
+            <button
+              onClick={async () => { await saveBrowseProgress(); setShowSaveModal(false); onBack(); }}
+              disabled={isSaving}
+              style={{ flex: 1, padding: '12px', borderRadius: 12, border: 'none', background: isSaving ? 'rgba(124,58,237,0.4)' : 'linear-gradient(135deg,#7c3aed,#5b21b6)', color: '#fff', fontSize: 14, fontWeight: 800, cursor: isSaving ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+              {isSaving ? '⏳ Saving…' : '💾 Save & Exit'}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  })();
+
   // ── Mobile: single scroll column ───────────────────────────────────────────
   if (isMobile) {
     return (
-      <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column', zIndex: 50 }}>
-        <WatermarkOverlay />
-        {header}
-        {filterBar}
-        <div ref={scrollAreaRef} style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: '16px 14px' } as any}>
-          {pageQuestions.map((qq, i) => renderCard(qq, i))}
-          <div style={{ height: 8 }} />
+      <>
+        <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column', zIndex: 50 }}>
+          <WatermarkOverlay />
+          {header}
+          {filterBar}
+          <div ref={scrollAreaRef} style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: '16px 14px' } as any}>
+            {pageQuestions.map((qq, i) => renderCard(qq, i))}
+            <div style={{ height: 8 }} />
+          </div>
+          {paginationBar}
         </div>
-        {paginationBar}
-      </div>
+        {saveModalElement}
+      </>
     );
   }
 
@@ -629,58 +684,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
         </div>
       </div>
 
-      {/* ── Save Progress Modal ─────────────────────────────────────────────── */}
-      {showSaveModal && (() => {
-        const correctCount = browseAttempts.filter(a => a.is_correct).length;
-        const total = browseAttempts.length;
-        return (
-          <div style={{
-            position: 'fixed', inset: 0, zIndex: 9999,
-            background: 'rgba(0,0,0,0.72)', backdropFilter: 'blur(12px)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            padding: 24,
-          }}>
-            <div style={{
-              background: '#13151f',
-              border: '1px solid rgba(255,255,255,0.12)',
-              borderRadius: 20,
-              padding: '28px 28px 24px',
-              maxWidth: 380, width: '100%',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.7)',
-            }}>
-              <div style={{ fontSize: 36, textAlign: 'center', marginBottom: 12 }}>📊</div>
-              <div style={{ fontSize: 18, fontWeight: 800, textAlign: 'center', marginBottom: 6, color: '#fff' }}>
-                Save browse session progress?
-              </div>
-              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textAlign: 'center', marginBottom: 24, lineHeight: 1.5 }}>
-                You attempted <strong style={{ color: '#fff' }}>{total} question{total !== 1 ? 's' : ''}</strong> in this session
-                {total > 0 && (
-                  <> — <span style={{ color: '#34d399', fontWeight: 700 }}>{correctCount} correct</span>
-                    {correctCount < total && <>, <span style={{ color: '#f87171', fontWeight: 700 }}>{total - correctCount} wrong</span></>}
-                  </>
-                )}.<br />
-                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>
-                  Saved browse progress counts toward your streak but won&apos;t affect test question selection.
-                </span>
-              </div>
-              <div style={{ display: 'flex', gap: 10 }}>
-                <button
-                  onClick={() => { setShowSaveModal(false); onBack(); }}
-                  disabled={isSaving}
-                  style={{ flex: 1, padding: '12px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.6)', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
-                  Discard &amp; Exit
-                </button>
-                <button
-                  onClick={async () => { await saveBrowseProgress(); setShowSaveModal(false); onBack(); }}
-                  disabled={isSaving}
-                  style={{ flex: 1, padding: '12px', borderRadius: 12, border: 'none', background: isSaving ? 'rgba(124,58,237,0.4)' : 'linear-gradient(135deg,#7c3aed,#5b21b6)', color: '#fff', fontSize: 14, fontWeight: 800, cursor: isSaving ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                  {isSaving ? '⏳ Saving…' : '💾 Save & Exit'}
-                </button>
-              </div>
-            </div>
-          </div>
-        );
-      })()}
+      {saveModalElement}
     </>
   );
 }
