@@ -1,3 +1,4 @@
+'use client';
 import dynamic from 'next/dynamic';
 import { TrendingUp, Sparkles, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
