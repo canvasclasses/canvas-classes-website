@@ -301,21 +301,22 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
                         trackBrowseAttempt(qq, opt.is_correct, opt.id);
                       }
                     }}
-                    style={{ padding: useGrid ? '11px 12px' : '12px 16px', borderRadius: 10, border: `1.5px solid ${bc}`, background: bg, display: 'flex', flexDirection: 'column', gap: 5, cursor: solShown ? 'default' : 'pointer', textAlign: 'left', color: '#fff', fontSize: 15, width: '100%', minWidth: 0 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%' }}>
+                    style={{ position: 'relative', overflow: 'hidden', padding: useGrid ? '11px 12px' : '12px 16px', borderRadius: 10, border: `1.5px solid ${bc}`, background: bg, display: 'flex', flexDirection: 'column', gap: 5, cursor: solShown ? 'default' : 'pointer', textAlign: 'left', color: '#fff', fontSize: 15, width: '100%', minWidth: 0 }}>
+
+                    {/* Background Progress Fill (Poll Style) */}
+                    {rev && (
+                      <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${pct}%`, background: correct ? '#34d399' : '#f87171', opacity: 0.15, transition: 'width 0.5s ease', zIndex: 0 }} />
+                    )}
+
+                    {/* Content Wrapper */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%', position: 'relative', zIndex: 10 }}>
                       <span style={{ width: 22, height: 22, borderRadius: 6, border: `1.5px solid ${bc}`, background: sel ? (rev ? (correct ? '#34d399' : '#f87171') : '#3b82f6') : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: sel ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
                         {rev && correct ? <Check style={{ width: 11, height: 11 }} /> : opt.id.toUpperCase()}
                       </span>
                       <span style={{ flex: 1, minWidth: 0, overflowX: 'auto', WebkitOverflowScrolling: 'touch' } as any}>
                         <MathRenderer markdown={opt.text || ''} className="text-sm" fontSize={16} imageScale={qq.svg_scales?.[`option_${opt.id}`] ?? 100} />
                       </span>
-                      {rev && <span style={{ fontSize: 12, fontWeight: 700, color: correct ? '#34d399' : '#f87171', flexShrink: 0, minWidth: 36, textAlign: 'right' }}>{pct}%</span>}
                     </div>
-                    {rev && (
-                      <div style={{ width: '100%', height: 5, borderRadius: 3, background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
-                        <div style={{ height: '100%', width: `${pct}%`, borderRadius: 3, background: correct ? '#34d399' : '#f87171', transition: 'width 0.5s ease' }} />
-                      </div>
-                    )}
                   </button>
                 );
               })}

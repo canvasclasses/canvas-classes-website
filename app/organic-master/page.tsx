@@ -66,21 +66,13 @@ function ReactionCard({ r, isOpen, onToggle }: { r: Reaction; isOpen: boolean; o
   return (
     <motion.div
       layout
-      className={`rounded-2xl border mb-4 overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'bg-indigo-500/5 border-emerald-500/40 shadow-lg shadow-emerald-900/10' : 'bg-white/[0.02] border-white/10 hover:border-emerald-500/30 hover:bg-white/[0.04]'}`}
+      className={`rounded-2xl transition-all duration-300 ease-in-out ${isOpen ? 'bg-transparent border-transparent' : 'rounded-2xl border mb-4 bg-white/[0.02] border-white/10 hover:border-emerald-500/30 hover:bg-white/[0.04] shadow-sm'}`}
     >
       <div onClick={onToggle} className="p-5 cursor-pointer select-none">
         <div className="flex items-start gap-4">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-3 mb-2 flex-wrap">
-              <span className="text-[16.5px] font-bold text-white/90 tracking-tight group-hover:text-emerald-300 transition-colors">{r.name}</span>
-              {r.videoUrl && (
-                <a href={r.videoUrl} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
-                  title="Watch video explanation"
-                  className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-colors">
-                  <Play size={10} fill="currentColor" />
-                  Video
-                </a>
-              )}
+              <span className="text-[16.5px] font-bold text-white/90 tracking-tight group-hover:text-emerald-300 transition-colors uppercase">{r.name}</span>
             </div>
             <div className="flex flex-wrap gap-1.5 text-[9.5px] font-bold tracking-wider uppercase">
               <span className="inline-flex px-2 py-0.5 rounded-md border whitespace-nowrap opacity-80" style={typeStyle}>{r.type}</span>
@@ -89,12 +81,14 @@ function ReactionCard({ r, isOpen, onToggle }: { r: Reaction; isOpen: boolean; o
               <span className={`inline-flex px-2 py-0.5 rounded-md border whitespace-nowrap ${eb}`}>{eLabel}</span>
             </div>
           </div>
-          <motion.div animate={{ rotate: isOpen ? 180 : 0 }} className="shrink-0 text-gray-500 p-2 bg-gray-800/30 rounded-full">
-            <ChevronDown size={20} />
-          </motion.div>
+          {!isOpen && (
+            <motion.div className="shrink-0 text-gray-500 p-2 bg-gray-800/30 rounded-full">
+              <ChevronDown size={20} />
+            </motion.div>
+          )}
         </div>
 
-        <p className="text-[13.5px] text-gray-300 leading-relaxed mt-3 lining-nums">{r.summary}</p>
+        <p className="text-[14.5px] text-gray-300 leading-relaxed mt-4 lining-nums font-medium">{r.summary}</p>
 
         <AnimatePresence>
           {!isOpen && r.tags && r.tags.length > 0 && (
@@ -115,52 +109,63 @@ function ReactionCard({ r, isOpen, onToggle }: { r: Reaction; isOpen: boolean; o
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="border-t border-emerald-500/20 px-5 pb-6 pt-5 bg-black/20"
+            className="px-5 pb-10 pt-5"
           >
             {/* Main Visual: Mechanism SVG */}
-            {r.images?.length > 0 ? (
-              <div className="flex flex-col gap-4 mb-8">
-                <div className="flex items-center gap-2 text-[10px] font-bold text-white/20 uppercase tracking-widest mb-1 px-1">
-                  <Compass size={12} />
-                  Mechanism Pathway
-                </div>
-                {r.images.map((img, idx) => (
-                  <div key={idx} className="rounded-2xl overflow-hidden border border-white/10 bg-[#050505] p-6 flex justify-center shadow-2xl relative group/img">
-                    <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity" />
-                    <img src={img} alt={`${r.name} mechanism ${idx + 1}`} className="max-w-full max-h-[400px] object-contain opacity-95 group-hover/img:opacity-100 transition-all duration-500 group-hover/img:scale-[1.02]" />
-                  </div>
-                ))}
+            <div className="flex flex-col gap-4 mb-8">
+              <div className="flex items-center gap-2 text-[10px] font-bold text-white/20 uppercase tracking-widest mb-1 px-1">
+                <Compass size={12} />
+                Mechanism Pathway
               </div>
-            ) : (
-              <div className="mb-6 py-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 opacity-30">
-                <FlaskConical size={32} className="mb-2" />
-                <span className="text-xs font-bold uppercase tracking-widest">Mechanism SVG Coming Soon</span>
+              {r.images?.length > 0 ? (
+                <>
+                  {r.images.map((img, idx) => (
+                    <div key={idx} className="rounded-2xl overflow-hidden border border-white/10 bg-[#050505] p-8 flex justify-center shadow-2xl relative group/img">
+                      <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity" />
+                      <img src={img} alt={`${r.name} mechanism ${idx + 1}`} className="max-w-full max-h-[500px] object-contain opacity-95 group-hover/img:opacity-100 transition-all duration-500 group-hover/img:scale-[1.01]" />
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <div className="py-20 flex flex-col items-center justify-center rounded-3xl border border-dashed border-white/10 bg-white/[0.01]">
+                  <FlaskConical size={40} className="mb-3 text-white/10" />
+                  <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/20">Mechanism SVG Coming Soon</span>
+                </div>
+              )}
+            </div>
+
+            {/* Watch Video Button - Positioned exactly as requested (below SVG) */}
+            {r.videoUrl && (
+              <div className="mb-10 flex justify-center md:justify-start">
+                <a href={r.videoUrl} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-4 px-8 py-4 rounded-2xl text-[14px] font-black bg-red-500/10 border border-red-500/30 text-red-100 hover:bg-red-500/20 hover:scale-[1.02] active:scale-95 transition-all shadow-2xl shadow-red-500/10 group/vid tracking-wide">
+                  <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center text-white group-hover:scale-110 transition-transform shadow-lg shadow-red-600/40">
+                    <Play size={18} fill="currentColor" className="ml-0.5" />
+                  </div>
+                  WATCH VIDEO EXPLANATION
+                </a>
               </div>
             )}
 
             {/* Insights Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
               {r.stereo && <Panel variant="stereo" label="Stereochemistry" body={r.stereo} icon={Compass} />}
               <Panel variant="mistake" label="Common Mistake" body={r.mistake} icon={ShieldAlert} />
             </div>
 
-            <div className="flex items-center gap-3 flex-wrap">
-              <div className="flex flex-wrap gap-2 flex-1">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-t border-white/5 pt-8">
+              <div className="flex flex-wrap gap-2">
                 {r.tags.map(t => (
-                  <span key={t} className="inline-flex px-3 py-1.5 rounded-lg text-xs font-medium text-emerald-400/80 border border-emerald-500/20 bg-emerald-500/5">
+                  <span key={t} className="inline-flex px-3.5 py-1.5 rounded-xl text-xs font-bold text-emerald-400/60 border border-emerald-500/10 bg-emerald-500/[0.03]">
                     #{t}
                   </span>
                 ))}
               </div>
               {r.audioUrl && (
-                <audio src={r.audioUrl} controls className="h-9 max-w-[220px] outline-none" />
-              )}
-              {r.videoUrl && (
-                <a href={r.videoUrl} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 transition-colors shrink-0 h-9">
-                  <Play size={14} fill="currentColor" />
-                  Watch Video Lesson
-                </a>
+                <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-2xl border border-white/5">
+                  <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Audio Guide</span>
+                  <audio src={r.audioUrl} controls className="h-8 w-40 opacity-50 hover:opacity-100 transition-opacity" />
+                </div>
               )}
             </div>
           </motion.div>
@@ -179,11 +184,16 @@ function Chip({ active, onClick, color, children }: { active: boolean; onClick: 
   return <button onClick={onClick} className={base + colorStr + " shadow-[0_0_15px_rgba(var(--tw-colors-emerald-500),0.1)]"}>{children}</button>;
 }
 
-function NamedReactionsTab() {
+function NamedReactionsTab({ selectedId, onSelect }: { selectedId: string | null; onSelect: (id: string | null) => void }) {
   const [query, setQuery] = useState('');
   const [exam, setExam] = useState('all');
   const [prio, setPrio] = useState('all');
   const [openId, setOpenId] = useState<string | null>(null);
+
+  // Sync internal open state with sidebar selection
+  useEffect(() => {
+    if (selectedId) setOpenId(selectedId);
+  }, [selectedId]);
 
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -212,64 +222,99 @@ function NamedReactionsTab() {
         <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 blur-[80px] -z-10 rounded-full pointer-events-none" />
       </div>
 
-      <div className="relative mb-5 group">
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-2xl blur opacity-10 group-focus-within:opacity-25 transition duration-500"></div>
-        <div className="relative flex items-center">
-          <Search className="absolute left-4 text-emerald-500/60" size={20} />
-          <input
-            ref={searchRef}
-            value={query}
-            onChange={e => setQuery(e.target.value)}
-            placeholder="Search reactions, reagents, compounds… (Press '/' to focus)"
-            className="w-full py-4 pl-12 pr-12 bg-[#121820]/80 backdrop-blur-xl border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 shadow-inner font-medium text-[15px]"
-          />
-          {query && (
-            <button onClick={() => setQuery('')} className="absolute right-4 text-gray-500 hover:text-white transition-colors bg-white/5 p-1 rounded-md">
-              &times;
-            </button>
-          )}
-        </div>
-      </div>
+      {!selectedId && (
+        <>
+          <div className="relative mb-5 group">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-2xl blur opacity-10 group-focus-within:opacity-25 transition duration-500"></div>
+            <div className="relative flex items-center">
+              <Search className="absolute left-4 text-emerald-500/60" size={20} />
+              <input
+                ref={searchRef}
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                placeholder="Search reactions, reagents, compounds… (Press '/' to focus)"
+                className="w-full py-4 pl-12 pr-12 bg-[#121820]/80 backdrop-blur-xl border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 shadow-inner font-medium text-[15px]"
+              />
+              {query && (
+                <button onClick={() => setQuery('')} className="absolute right-4 text-gray-500 hover:text-white transition-colors bg-white/5 p-1 rounded-md">
+                  &times;
+                </button>
+              )}
+            </div>
+          </div>
 
-      <div className="mb-8 p-5 bg-[#121820]/60 backdrop-blur-md rounded-2xl border border-white/5 shadow-xl shadow-black/20 flex flex-col gap-4">
-        <div className="flex items-center gap-3 flex-wrap">
-          <div className="flex items-center gap-1.5 text-xs font-bold text-gray-500 uppercase tracking-widest min-w-[70px]">
-            <Droplet size={14} /> Exam
+          <div className="mb-8 p-5 bg-[#121820]/60 backdrop-blur-md rounded-2xl border border-white/5 shadow-xl shadow-black/20 flex flex-col gap-4">
+            <div className="flex items-center gap-3 flex-wrap">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-gray-500 uppercase tracking-widest min-w-[70px]">
+                <Droplet size={14} /> Exam
+              </div>
+              <div className="flex gap-2 flex-wrap">
+                <Chip active={exam === 'all'} onClick={() => setExam('all')}>All</Chip>
+                <Chip active={exam === 'mains'} onClick={() => setExam('mains')} color="blue">JEE Mains</Chip>
+                <Chip active={exam === 'advanced'} onClick={() => setExam('advanced')} color="red">JEE Advanced</Chip>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 flex-wrap">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-gray-500 uppercase tracking-widest min-w-[70px]">
+                <AlertTriangle size={14} /> Prio
+              </div>
+              <div className="flex gap-2 flex-wrap">
+                <Chip active={prio === 'all'} onClick={() => setPrio('all')}>All</Chip>
+                <Chip active={prio === 'high'} onClick={() => setPrio('high')} color="red">High</Chip>
+                <Chip active={prio === 'medium'} onClick={() => setPrio('medium')} color="amber">Medium</Chip>
+                <Chip active={prio === 'low'} onClick={() => setPrio('low')} color="green">Low</Chip>
+              </div>
+            </div>
           </div>
-          <div className="flex gap-2 flex-wrap">
-            <Chip active={exam === 'all'} onClick={() => setExam('all')}>All</Chip>
-            <Chip active={exam === 'mains'} onClick={() => setExam('mains')} color="blue">JEE Mains</Chip>
-            <Chip active={exam === 'advanced'} onClick={() => setExam('advanced')} color="red">JEE Advanced</Chip>
-          </div>
-        </div>
-        <div className="flex items-center gap-3 flex-wrap">
-          <div className="flex items-center gap-1.5 text-xs font-bold text-gray-500 uppercase tracking-widest min-w-[70px]">
-            <AlertTriangle size={14} /> Prio
-          </div>
-          <div className="flex gap-2 flex-wrap">
-            <Chip active={prio === 'all'} onClick={() => setPrio('all')}>All</Chip>
-            <Chip active={prio === 'high'} onClick={() => setPrio('high')} color="red">High</Chip>
-            <Chip active={prio === 'medium'} onClick={() => setPrio('medium')} color="amber">Medium</Chip>
-            <Chip active={prio === 'low'} onClick={() => setPrio('low')} color="green">Low</Chip>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
 
-      <div className="text-[13px] font-bold text-gray-500 tracking-widest uppercase mb-4 pl-1">
-        Showing {visible.length} Reactions
-      </div>
-
-      {visible.length === 0 ? (
-        <div className="text-center py-20 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
-          <FlaskConical size={48} className="mx-auto text-gray-600 mb-4" />
-          <h3 className="text-lg font-bold text-white mb-2">No reactions found</h3>
-          <p className="text-gray-400 text-sm">Adjust your filters or try a different search term.</p>
+      {selectedId ? (
+        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+          {REACTIONS.filter(r => r.id === selectedId).map(r => (
+            <ReactionCard key={r.id} r={r} isOpen={true} onToggle={() => { }} />
+          ))}
         </div>
       ) : (
-        <div className="space-y-4">
-          {visible.map(r => (
-            <ReactionCard key={r.id} r={r} isOpen={openId === r.id} onToggle={() => setOpenId(openId === r.id ? null : r.id)} />
-          ))}
+        <div className="flex-1 flex flex-col items-center justify-center py-20 bg-white/[0.01] border border-dashed border-white/10 rounded-3xl animate-in fade-in zoom-in-95 duration-700">
+          <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+            <FlaskConical size={40} className="text-emerald-400" />
+          </div>
+          <h2 className="text-2xl font-bold text-white mb-2 tracking-tight">Select a Named Reaction</h2>
+          <p className="text-gray-400 text-sm max-w-[280px] text-center leading-relaxed mb-10">
+            Browse the list on the left to explore detailed mechanisms, videos, and mastery tips.
+          </p>
+
+          <div className="w-full max-w-md px-6">
+            <div className="relative group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-500/60" size={18} />
+              <input
+                ref={searchRef}
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                placeholder="Search reactions, reagents..."
+                className="w-full py-3.5 pl-11 pr-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 transition-all"
+              />
+            </div>
+          </div>
+
+          {query && (
+            <div className="mt-8 w-full max-w-md grid grid-cols-1 gap-2 px-6">
+              {visible.slice(0, 5).map(r => (
+                <button
+                  key={r.id}
+                  onClick={() => onSelect(r.id)}
+                  className="flex items-center gap-3 p-3 bg-white/5 hover:bg-emerald-500/10 border border-white/5 rounded-xl transition-all text-left group"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                  <span className="text-sm font-semibold text-gray-300 group-hover:text-emerald-300 truncate">{r.name}</span>
+                </button>
+              ))}
+              {visible.length === 0 && (
+                <p className="text-center text-xs text-gray-500 py-4 italic">No matching reactions found.</p>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -432,6 +477,12 @@ function InorganicTrendsCTA() {
 
 export default function OrganicMasterPage() {
   const [section, setSection] = useState<'named' | 'lab' | 'phys' | 'ref'>('named');
+  const [selectedReactionId, setSelectedReactionId] = useState<string | null>(null);
+
+  const handleSelectReaction = (id: string) => {
+    setSelectedReactionId(id);
+    setSection('named');
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0d1117] text-[#d4d6e0] selection:bg-emerald-500/30 font-sans font-medium overflow-hidden">
@@ -452,18 +503,7 @@ export default function OrganicMasterPage() {
           </div>
 
           <button
-            onClick={() => setSection('named')}
-            className={`flex items-center justify-between w-full p-3 rounded-xl text-[14.5px] font-semibold transition-all duration-200 group ${section === 'named' ? 'bg-emerald-500/15 text-emerald-400 shadow-[inset_3px_0_0_rgba(var(--tw-colors-emerald-500))]' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
-          >
-            <div className="flex items-center gap-3">
-              <FlaskConical size={18} className={section === 'named' ? 'text-emerald-400' : 'text-gray-500 group-hover:text-emerald-400'} />
-              Name Reactions
-            </div>
-            <span className="text-[11px] font-mono bg-black/30 px-2 py-0.5 rounded text-white/50">{REACTIONS.length}</span>
-          </button>
-
-          <button
-            onClick={() => setSection('lab')}
+            onClick={() => { setSection('lab'); setSelectedReactionId(null); }}
             className={`flex items-center justify-between w-full p-3 rounded-xl text-[14.5px] font-semibold transition-all duration-200 group ${section === 'lab' ? 'bg-cyan-500/15 text-cyan-400 shadow-[inset_3px_0_0_rgba(var(--tw-colors-cyan-500))]' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
           >
             <div className="flex items-center gap-3">
@@ -474,8 +514,8 @@ export default function OrganicMasterPage() {
           </button>
 
           <button
-            onClick={() => setSection('phys')}
-            className={`flex items-center justify-between w-full p-3 rounded-xl text-[14.5px] font-semibold transition-all duration-200 group ${section === 'phys' ? 'bg-blue-500/15 text-blue-400 shadow-[inset_3_px_0_0_rgba(var(--tw-colors-blue-500))]' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+            onClick={() => { setSection('phys'); setSelectedReactionId(null); }}
+            className={`flex items-center justify-between w-full p-3 rounded-xl text-[14.5px] font-semibold transition-all duration-200 group ${section === 'phys' ? 'bg-blue-500/15 text-blue-400 shadow-[inset_3px_0_0_rgba(var(--tw-colors-blue-500))]' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
           >
             <div className="flex items-center gap-3">
               <BarChart3 size={18} className={section === 'phys' ? 'text-blue-400' : 'text-gray-500 group-hover:text-blue-400'} />
@@ -485,7 +525,7 @@ export default function OrganicMasterPage() {
           </button>
 
           <button
-            onClick={() => setSection('ref')}
+            onClick={() => { setSection('ref'); setSelectedReactionId(null); }}
             className={`flex items-center justify-between w-full p-3 rounded-xl text-[14.5px] font-semibold transition-all duration-200 group ${section === 'ref' ? 'bg-indigo-500/15 text-indigo-400 shadow-[inset_3px_0_0_rgba(var(--tw-colors-indigo-500))]' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
           >
             <div className="flex items-center gap-3">
@@ -494,6 +534,46 @@ export default function OrganicMasterPage() {
             </div>
             <span className="text-[11px] font-mono bg-black/30 px-2 py-0.5 rounded text-white/50">{QUICK_REF.length}</span>
           </button>
+
+          <button
+            onClick={() => { setSection('named'); setSelectedReactionId(null); }}
+            className={`flex items-center justify-between w-full p-3 rounded-xl text-[14.5px] font-semibold transition-all duration-200 group ${section === 'named' ? 'bg-emerald-500/15 text-emerald-400 shadow-[inset_3px_0_0_rgba(var(--tw-colors-emerald-500))]' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+          >
+            <div className="flex items-center gap-3">
+              <FlaskConical size={18} className={section === 'named' ? 'text-emerald-400' : 'text-gray-500 group-hover:text-emerald-400'} />
+              Name Reactions
+            </div>
+            <span className="text-[11px] font-mono bg-black/30 px-2 py-0.5 rounded text-white/50">{REACTIONS.length}</span>
+          </button>
+
+          {/* Conditional Sidebar Expansion for Name Reactions */}
+          {section === 'named' && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              className="mt-4 flex-1 flex flex-col min-h-0 border-t border-white/5 pt-4"
+            >
+              <div className="flex items-center justify-between px-3 mb-3 shrink-0">
+                <div className="text-[10px] font-bold text-white/30 tracking-[0.2em] uppercase">Existing Reactions</div>
+                <span className="text-[10px] font-mono bg-white/5 px-2 py-0.5 rounded-full text-white/40 border border-white/5">{REACTIONS.length}</span>
+              </div>
+              <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col gap-1 pr-1">
+                {REACTIONS.map((r) => (
+                  <button
+                    key={r.id}
+                    onClick={() => handleSelectReaction(r.id)}
+                    className={`text-left px-3 py-2 rounded-lg text-sm transition-all truncate flex items-center gap-2.5 group/item ${selectedReactionId === r.id ? 'bg-emerald-500/15 border-l-2 border-emerald-500 text-emerald-300 font-semibold' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+                  >
+                    <span
+                      className="w-1.5 h-1.5 rounded-full shrink-0 shadow-[0_0_8px_rgba(0,0,0,0.5)]"
+                      style={{ backgroundColor: TYPE_COLOR[r.type] ? TYPE_COLOR[r.type][2] : '#6ee7b7' }}
+                    />
+                    <span className="truncate group-hover/item:translate-x-0.5 transition-transform duration-200">{r.name}</span>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
           <div className="mt-auto pt-6 border-t border-white/5 px-2">
             <div className="text-[11px] font-bold text-white/30 tracking-wider mb-2 uppercase">Shortcuts</div>
@@ -508,7 +588,12 @@ export default function OrganicMasterPage() {
         <main className="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 pb-10 md:pb-40 scroll-smooth">
           <div className="max-w-6xl mx-auto min-h-full flex flex-col">
             <div className="flex-1">
-              {section === 'named' && <NamedReactionsTab />}
+              {section === 'named' && (
+                <NamedReactionsTab
+                  selectedId={selectedReactionId}
+                  onSelect={setSelectedReactionId}
+                />
+              )}
               {section === 'lab' && <div className="animate-in fade-in slide-in-from-bottom-4 duration-500"><AcidityLab /></div>}
               {section === 'phys' && <div className="animate-in fade-in slide-in-from-bottom-4 duration-500"><PhysicalPropertiesLab /></div>}
               {section === 'ref' && <QuickReferenceTab />}
@@ -522,32 +607,32 @@ export default function OrganicMasterPage() {
       {/* Mobile Bottom Navigation */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 h-[60px] bg-[#0d1117]/95 backdrop-blur-3xl border-t border-white/10 flex items-center justify-around px-2 z-50">
         <button
-          onClick={() => setSection('named')}
-          className={`flex flex-col items-center justify-center w-full h-full gap-1 ${section === 'named' ? 'text-emerald-400' : 'text-gray-500 hover:text-gray-300'}`}
-        >
-          <FlaskConical size={20} />
-          <span className="text-[10px] font-semibold">Reactions</span>
-        </button>
-        <button
-          onClick={() => setSection('lab')}
+          onClick={() => { setSection('lab'); setSelectedReactionId(null); }}
           className={`flex flex-col items-center justify-center w-full h-full gap-1 ${section === 'lab' ? 'text-cyan-400' : 'text-gray-500 hover:text-gray-300'}`}
         >
           <Droplet size={20} />
           <span className="text-[10px] font-semibold">Acidity</span>
         </button>
         <button
-          onClick={() => setSection('phys')}
+          onClick={() => { setSection('phys'); setSelectedReactionId(null); }}
           className={`flex flex-col items-center justify-center w-full h-full gap-1 ${section === 'phys' ? 'text-blue-400' : 'text-gray-500 hover:text-gray-300'}`}
         >
           <BarChart3 size={20} />
           <span className="text-[10px] font-semibold">Properties</span>
         </button>
         <button
-          onClick={() => setSection('ref')}
+          onClick={() => { setSection('ref'); setSelectedReactionId(null); }}
           className={`flex flex-col items-center justify-center w-full h-full gap-1 ${section === 'ref' ? 'text-indigo-400' : 'text-gray-500 hover:text-gray-300'}`}
         >
           <BookOpen size={20} />
           <span className="text-[10px] font-semibold">Reference</span>
+        </button>
+        <button
+          onClick={() => { setSection('named'); setSelectedReactionId(null); }}
+          className={`flex flex-col items-center justify-center w-full h-full gap-1 ${section === 'named' ? 'text-emerald-400' : 'text-gray-500 hover:text-gray-300'}`}
+        >
+          <FlaskConical size={20} />
+          <span className="text-[10px] font-semibold">Reactions</span>
         </button>
       </nav>
 
