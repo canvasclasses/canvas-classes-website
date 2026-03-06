@@ -15,7 +15,7 @@ export interface Question {
   question_text: {
     markdown: string;
   };
-  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC';
+  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ';
   options?: Array<{
     id: string;
     text: string;

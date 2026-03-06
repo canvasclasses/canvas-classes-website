@@ -9,6 +9,77 @@ import 'katex/dist/katex.min.css';
 import { inorganicTrendsData } from '@/app/lib/inorganicTrendsData';
 import { BookOpen, Trophy, Sparkles, Lightbulb } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+
+function LazyTrendBlock({ block, theme }: { block: any, theme: any }) {
+    const { ref, inView } = useInView({
+        triggerOnce: true,
+        rootMargin: '200px 0px',
+    });
+
+    return (
+        <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5 }}
+            className={`bg-[#161b22] rounded-xl border ${theme.border} ${theme.hoverBorder} transition-all duration-300 flex flex-col h-full group`}
+        >
+            <div className="p-5 flex-grow">
+                {/* Block Header (Always render title to avoid pop-in size changes if possible, or render skeleton) */}
+                <div className="flex justify-between items-start mb-4">
+                    <h4 className={`font-semibold text-gray-200 text-lg group-hover:${theme.text} transition-colors`}>
+                        {block.title}
+                    </h4>
+                    <span className={`text-xs font-mono ${theme.text} ${theme.badgeBg} px-2 py-1 rounded border ${theme.border}`}>
+                        #{block.id}
+                    </span>
+                </div>
+
+                {inView ? (
+                    <>
+                        {/* Trend Visual */}
+                        <div className={`mb-6 p-4 ${theme.bg} rounded-lg border ${theme.border}`}>
+                            <div className={`text-center font-mono text-base md:text-lg ${theme.trendText} overflow-x-auto whitespace-nowrap scrollbar-thin scrollbar-thumb-gray-700 pb-1`}>
+                                <ReactMarkdown
+                                    remarkPlugins={[remarkMath]}
+                                    rehypePlugins={[rehypeKatex]}
+                                    components={{
+                                        p: ({ node, ...props }) => <span {...props} />
+                                    }}
+                                >
+                                    {block.trend}
+                                </ReactMarkdown>
+                            </div>
+                        </div>
+
+                        {/* Logic/Explanation */}
+                        <div className="space-y-3">
+                            <div className="flex items-start gap-2">
+                                <BookOpen size={16} className="text-gray-500 mt-1 flex-shrink-0" />
+                                <div className="text-sm text-gray-400 leading-relaxed">
+                                    <span className="text-gray-300 font-semibold block mb-1">Examiner's Logic:</span>
+                                    <div className="prose prose-invert prose-sm max-w-none [&>p]:leading-relaxed">
+                                        <ReactMarkdown
+                                            remarkPlugins={[remarkMath]}
+                                            rehypePlugins={[rehypeKatex]}
+                                        >
+                                            {block.logic}
+                                        </ReactMarkdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    <div className="h-40 flex items-center justify-center">
+                        <div className="w-8 h-8 border-4 border-gray-600 border-t-amber-500 rounded-full animate-spin opacity-50"></div>
+                    </div>
+                )}
+            </div>
+        </motion.div>
+    );
+}
 
 // Section color themes for visual variety
 const SECTION_THEMES = [
@@ -92,59 +163,7 @@ export default function TopInorganicTrends() {
                                 {/* Cards Grid */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {section.blocks.map((block) => (
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 20 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true }}
-                                            transition={{ duration: 0.5 }}
-                                            key={block.id}
-                                            className={`bg-[#161b22] rounded-xl border ${theme.border} ${theme.hoverBorder} transition-all duration-300 flex flex-col h-full group`}
-                                        >
-                                            <div className="p-5 flex-grow">
-                                                {/* Block Header */}
-                                                <div className="flex justify-between items-start mb-4">
-                                                    <h4 className={`font-semibold text-gray-200 text-lg group-hover:${theme.text} transition-colors`}>
-                                                        {block.title}
-                                                    </h4>
-                                                    <span className={`text-xs font-mono ${theme.text} ${theme.badgeBg} px-2 py-1 rounded border ${theme.border}`}>
-                                                        #{block.id}
-                                                    </span>
-                                                </div>
-
-                                                {/* Trend Visual */}
-                                                <div className={`mb-6 p-4 ${theme.bg} rounded-lg border ${theme.border}`}>
-                                                    <div className={`text-center font-mono text-base md:text-lg ${theme.trendText} overflow-x-auto whitespace-nowrap scrollbar-thin scrollbar-thumb-gray-700 pb-1`}>
-                                                        <ReactMarkdown
-                                                            remarkPlugins={[remarkMath]}
-                                                            rehypePlugins={[rehypeKatex]}
-                                                            components={{
-                                                                p: ({ node, ...props }) => <span {...props} />
-                                                            }}
-                                                        >
-                                                            {block.trend}
-                                                        </ReactMarkdown>
-                                                    </div>
-                                                </div>
-
-                                                {/* Logic/Explanation */}
-                                                <div className="space-y-3">
-                                                    <div className="flex items-start gap-2">
-                                                        <BookOpen size={16} className="text-gray-500 mt-1 flex-shrink-0" />
-                                                        <div className="text-sm text-gray-400 leading-relaxed">
-                                                            <span className="text-gray-300 font-semibold block mb-1">Examiner's Logic:</span>
-                                                            <div className="prose prose-invert prose-sm max-w-none [&>p]:leading-relaxed">
-                                                                <ReactMarkdown
-                                                                    remarkPlugins={[remarkMath]}
-                                                                    rehypePlugins={[rehypeKatex]}
-                                                                >
-                                                                    {block.logic}
-                                                                </ReactMarkdown>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </motion.div>
+                                        <LazyTrendBlock key={block.id} block={block} theme={theme} />
                                     ))}
                                 </div>
                             </div>

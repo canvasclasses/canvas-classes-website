@@ -12,6 +12,10 @@ import {
   Lightbulb, ShieldAlert, Zap, Compass, Filter, Sparkles, BookOpen, Droplet, Hash,
   BarChart3
 } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css';
 
 // Tailwind color maps for chips
 const bgColors: Record<string, string> = {
@@ -29,26 +33,31 @@ const bgColors: Record<string, string> = {
 function Panel({ variant, label, body, icon: Icon }: { variant: 'stereo' | 'mistake' | 'hook' | 'jee'; label: string; body: string; icon: any }) {
   if (!body) return null;
   const s = {
-    stereo: 'bg-blue-500/10 border-blue-500/20 text-blue-100 shadow-[0_0_20px_rgba(59,130,246,0.05)]',
-    mistake: 'bg-rose-500/10 border-rose-500/20 text-rose-100 shadow-[0_0_20px_rgba(244,63,94,0.05)]',
-    hook: 'bg-amber-500/10 border-amber-500/20 text-amber-100',
-    jee: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-100'
+    stereo: 'bg-white/[0.03] border-blue-500/30 text-blue-50/90',
+    mistake: 'bg-white/[0.03] border-rose-500/30 text-rose-50/90',
+    hook: 'bg-white/[0.03] border-amber-500/30 text-amber-50/90',
+    jee: 'bg-white/[0.03] border-indigo-500/30 text-indigo-50/90'
   }[variant];
 
-  const iconColor = {
-    stereo: 'text-blue-400',
-    mistake: 'text-rose-400',
-    hook: 'text-amber-400',
-    jee: 'text-indigo-400'
+  const accent = {
+    stereo: 'bg-blue-500',
+    mistake: 'bg-rose-500',
+    hook: 'bg-amber-500',
+    jee: 'bg-indigo-500'
   }[variant];
 
   return (
-    <div className={`rounded-xl p-4 border backdrop-blur-sm transition-all duration-300 hover:scale-[1.01] ${s}`}>
-      <div className={`flex items-center gap-2 text-[11px] font-extrabold tracking-widest uppercase mb-2 ${iconColor}`}>
-        <Icon size={14} strokeWidth={2.5} />
+    <div className={`relative rounded-xl py-3.5 px-5 border-l-4 border-y border-r border-white/5 transition-all duration-300 hover:bg-white/[0.05] ${s}`}>
+      <div className={`absolute top-0 left-[-4px] bottom-0 w-1 ${accent} rounded-l-xl opacity-80`} />
+      <div className="flex items-center gap-2 text-[12.5px] font-bold tracking-wider uppercase mb-1.5 opacity-60">
+        <Icon size={15} strokeWidth={2.5} />
         {label}
       </div>
-      <div className="text-[13.5px] leading-relaxed opacity-90 font-medium">{body}</div>
+      <div className="text-[15px] leading-relaxed font-medium prose prose-invert prose-sm max-w-none">
+        <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+          {body}
+        </ReactMarkdown>
+      </div>
     </div>
   );
 }
@@ -72,9 +81,9 @@ function ReactionCard({ r, isOpen, onToggle }: { r: Reaction; isOpen: boolean; o
         <div className="flex items-start gap-4">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-3 mb-2 flex-wrap">
-              <span className="text-[16.5px] font-bold text-white/90 tracking-tight group-hover:text-emerald-300 transition-colors uppercase">{r.name}</span>
+              <span className="text-[18px] font-bold text-white/90 tracking-tight group-hover:text-emerald-300 transition-colors uppercase">{r.name}</span>
             </div>
-            <div className="flex flex-wrap gap-1.5 text-[9.5px] font-bold tracking-wider uppercase">
+            <div className="flex flex-wrap gap-1.5 text-[10.5px] font-bold tracking-wider uppercase">
               <span className="inline-flex px-2 py-0.5 rounded-md border whitespace-nowrap opacity-80" style={typeStyle}>{r.type}</span>
               <span className="inline-flex px-2 py-0.5 rounded-md border border-white/5 bg-white/5 text-white/30 whitespace-nowrap">{r.chapter}</span>
               <span className={`inline-flex px-2 py-0.5 rounded-md border whitespace-nowrap ${pb}`}>{pLabel} Priority</span>
@@ -88,7 +97,11 @@ function ReactionCard({ r, isOpen, onToggle }: { r: Reaction; isOpen: boolean; o
           )}
         </div>
 
-        <p className="text-[14.5px] text-gray-300 leading-relaxed mt-4 lining-nums font-medium">{r.summary}</p>
+        <div className="text-[16px] text-gray-300 leading-relaxed mt-4 lining-nums font-medium prose prose-invert max-w-none">
+          <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+            {r.summary}
+          </ReactMarkdown>
+        </div>
 
         <AnimatePresence>
           {!isOpen && r.tags && r.tags.length > 0 && (
@@ -129,7 +142,7 @@ function ReactionCard({ r, isOpen, onToggle }: { r: Reaction; isOpen: boolean; o
               ) : (
                 <div className="py-20 flex flex-col items-center justify-center rounded-3xl border border-dashed border-white/10 bg-white/[0.01]">
                   <FlaskConical size={40} className="mb-3 text-white/10" />
-                  <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/20">Mechanism SVG Coming Soon</span>
+                  <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/20">Mechanism and video explanation coming soon</span>
                 </div>
               )}
             </div>
@@ -270,11 +283,20 @@ function NamedReactionsTab({ selectedId, onSelect }: { selectedId: string | null
       )}
 
       {selectedId ? (
-        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
-          {REACTIONS.filter(r => r.id === selectedId).map(r => (
-            <ReactionCard key={r.id} r={r} isOpen={true} onToggle={() => { }} />
-          ))}
-        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selectedId}
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -5 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-6 min-h-[70vh]"
+          >
+            {REACTIONS.filter(r => r.id === selectedId).map(r => (
+              <ReactionCard key={r.id} r={r} isOpen={true} onToggle={() => { }} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
       ) : (
         <div className="flex-1 flex flex-col items-center justify-center py-20 bg-white/[0.01] border border-dashed border-white/10 rounded-3xl animate-in fade-in zoom-in-95 duration-700">
           <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
@@ -375,35 +397,52 @@ function QuickReferenceTab() {
             ) : (
               <div className="flex flex-col">
                 {table.headers && (
-                  <div className="hidden md:flex flex-row gap-4 px-5 py-3 border-b border-white/10 bg-white/5 text-[11px] font-bold text-gray-500 uppercase tracking-widest items-center pl-[20px]">
+                  <div className="hidden lg:grid grid-cols-2 gap-0 border-b border-white/10 bg-white/5 text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-[20px] pr-5 py-3">
+                    <div className="flex flex-row gap-4 items-center w-full pr-10 border-r border-white/5">
+                      <div className="flex-[2] truncate">{table.headers[0]}</div>
+                      <div className="flex-1 text-center truncate">{table.headers[1]}</div>
+                      <div className="flex-[2] text-left truncate">{table.headers[2]}</div>
+                    </div>
+                    <div className="flex flex-row gap-4 items-center w-full pl-6">
+                      <div className="flex-[2] truncate">{table.headers[0]}</div>
+                      <div className="flex-1 text-center truncate">{table.headers[1]}</div>
+                      <div className="flex-[2] text-left truncate">{table.headers[2]}</div>
+                    </div>
+                  </div>
+                )}
+                {/* Fallback headers for md screens only where it's 1 column but row layout */}
+                {table.headers && (
+                  <div className="hidden md:flex lg:hidden flex-row gap-4 px-5 py-3 border-b border-white/10 bg-white/5 text-[11px] font-bold text-gray-500 uppercase tracking-widest items-center pl-[20px]">
                     <div className="flex-[2] truncate">{table.headers[0]}</div>
                     <div className="flex-1 text-center truncate">{table.headers[1]}</div>
                     <div className="flex-[2] text-left truncate">{table.headers[2]}</div>
                   </div>
                 )}
-                {table.rows.map((row, i) => (
-                  <div key={i} className={`flex flex-col md:flex-row gap-y-1.5 md:gap-x-4 px-5 py-2.5 hover:bg-white/[0.03] transition-colors items-start md:items-center ${i < table.rows.length - 1 ? 'border-b border-white/[0.03]' : ''}`}>
-                    <div className="flex-[2] w-full md:w-auto flex items-center justify-between md:justify-start gap-4 min-w-0">
-                      <div className="flex items-center gap-4 min-w-0">
-                        {row.svg && (
-                          <div className="w-10 h-10 shrink-0 bg-white/5 rounded-lg flex items-center justify-center p-1 border border-white/10"
-                            dangerouslySetInnerHTML={{ __html: row.svg }} />
-                        )}
-                        <span className="text-[14.5px] font-semibold text-white/90 truncate">{row.name}</span>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-0">
+                  {table.rows.map((row, i) => (
+                    <div key={i} className={`flex flex-col md:flex-row gap-y-1.5 md:gap-x-4 px-5 lg:px-6 py-2.5 hover:bg-white/[0.03] transition-colors items-start md:items-center border-b border-white/[0.03] ${i % 2 === 0 ? 'lg:border-r lg:border-white/[0.03] lg:pr-10' : 'lg:pl-6'}`}>
+                      <div className="flex-[2] w-full md:w-auto flex items-center justify-between md:justify-start gap-4 min-w-0">
+                        <div className="flex items-center gap-4 min-w-0">
+                          {row.svg && (
+                            <div className="w-10 h-10 shrink-0 bg-white/5 rounded-lg flex items-center justify-center p-1 border border-white/10"
+                              dangerouslySetInnerHTML={{ __html: row.svg }} />
+                          )}
+                          <span className="text-[14.5px] font-semibold text-white/90 truncate">{row.name}</span>
+                        </div>
+
+                        {/* Mobile Value Badge */}
+                        <span className="md:hidden shrink-0 text-[13.5px] text-cyan-300 font-mono bg-cyan-500/10 px-2.5 py-1 rounded-md">{row.value}</span>
                       </div>
 
-                      {/* Mobile Value Badge */}
-                      <span className="md:hidden shrink-0 text-[13.5px] text-cyan-300 font-mono bg-cyan-500/10 px-2.5 py-1 rounded-md">{row.value}</span>
-                    </div>
+                      {/* Desktop Value Badge */}
+                      <div className="hidden md:flex flex-1 justify-center">
+                        <span className="text-[13.5px] text-cyan-300 font-mono bg-cyan-500/10 px-2.5 py-1 rounded-md truncate">{row.value}</span>
+                      </div>
 
-                    {/* Desktop Value Badge */}
-                    <div className="hidden md:flex flex-1 justify-center">
-                      <span className="text-[13.5px] text-cyan-300 font-mono bg-cyan-500/10 px-2.5 py-1 rounded-md truncate">{row.value}</span>
+                      <span className={`flex-[2] w-full text-left leading-snug truncate ${table.title.toLowerCase().includes('pka') ? 'text-[15px] font-bold text-gray-200 tracking-wide' : 'text-[13px] font-medium text-gray-400'}`}>{row.note}</span>
                     </div>
-
-                    <span className="text-[13px] font-medium text-gray-400 flex-[2] w-full text-left leading-snug">{row.note}</span>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -574,12 +613,17 @@ export default function OrganicMasterPage() {
               </div>
             </motion.div>
           )}
-
-          <div className="mt-auto pt-6 border-t border-white/5 px-2">
-            <div className="text-[11px] font-bold text-white/30 tracking-wider mb-2 uppercase">Shortcuts</div>
-            <div className="text-[12px] text-gray-500 flex flex-col gap-2 font-mono">
-              <div className="flex items-center justify-between"><span>Focus Search</span><kbd className="px-1.5 py-0.5 bg-black/40 rounded border border-white/10 text-[10px]">/</kbd></div>
-              <div className="flex items-center justify-between"><span>Clear Search</span><kbd className="px-1.5 py-0.5 bg-black/40 rounded border border-white/10 text-[10px]">Esc</kbd></div>
+          <div className="mt-auto pt-8 border-t border-white/5 px-3">
+            <div className="text-[12px] font-bold text-white/20 tracking-[0.15em] mb-4 uppercase">Keyboard Shortcuts</div>
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between text-[13.5px] text-gray-400 font-medium group/key">
+                <span className="group-hover/key:text-gray-300 transition-colors">Focus Search</span>
+                <kbd className="min-w-[24px] h-6 flex items-center justify-center px-1.5 bg-white/5 rounded border border-white/10 text-[11px] text-emerald-400 font-mono shadow-sm shadow-black/20" style={{ fontFamily: 'var(--font-geist-mono),monospace' }}>/</kbd>
+              </div>
+              <div className="flex items-center justify-between text-[13.5px] text-gray-400 font-medium group/key">
+                <span className="group-hover/key:text-gray-300 transition-colors">Clear Search</span>
+                <kbd className="px-2 h-6 flex items-center justify-center bg-white/5 rounded border border-white/10 text-[11px] text-emerald-400 font-mono shadow-sm shadow-black/20" style={{ fontFamily: 'var(--font-geist-mono),monospace' }}>Esc</kbd>
+              </div>
             </div>
           </div>
         </aside>
@@ -598,8 +642,10 @@ export default function OrganicMasterPage() {
               {section === 'phys' && <div className="animate-in fade-in slide-in-from-bottom-4 duration-500"><PhysicalPropertiesLab /></div>}
               {section === 'ref' && <QuickReferenceTab />}
             </div>
-            <TheCrucibleCTA />
-            <InorganicTrendsCTA />
+            <div className="mt-20">
+              <TheCrucibleCTA />
+              <InorganicTrendsCTA />
+            </div>
           </div>
         </main>
       </div>

@@ -7,7 +7,7 @@ interface Question {
   _id: string;
   display_id: string;
   question_text: { markdown: string };
-  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC';
+  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ';
   options: Array<{ id: string; text: string; is_correct: boolean }>;
   answer?: { integer_value?: number; decimal_value?: number };
   solution: { text_markdown: string };
@@ -340,11 +340,11 @@ function extractImageUrls(md: string): string[] {
 // For UI display (can use Unicode since browser handles it)
 function latexToUnicode(s: string): string {
   const sup = (c: string) => {
-    const m: Record<string,string> = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','+':'⁺','-':'⁻','n':'ⁿ','i':'ⁱ','a':'ᵃ','b':'ᵇ','x':'ˣ'};
+    const m: Record<string, string> = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '+': '⁺', '-': '⁻', 'n': 'ⁿ', 'i': 'ⁱ', 'a': 'ᵃ', 'b': 'ᵇ', 'x': 'ˣ' };
     return m[c] ?? c;
   };
   const sub = (c: string) => {
-    const m: Record<string,string> = {'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉','+':'₊','-':'₋','n':'ₙ','i':'ᵢ','a':'ₐ'};
+    const m: Record<string, string> = { '0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄', '5': '₅', '6': '₆', '7': '₇', '8': '₈', '9': '₉', '+': '₊', '-': '₋', 'n': 'ₙ', 'i': 'ᵢ', 'a': 'ₐ' };
     return m[c] ?? c;
   };
   return s
@@ -412,9 +412,9 @@ async function runPDFExport(
   const pdf = new jsPDF({ orientation, unit: 'mm', format: 'a4', compress: true });
 
   const setF = (style: 'normal' | 'bold' | 'italic', sz: number) => { pdf.setFont('helvetica', style); pdf.setFontSize(sz); };
-  const setC = (hex: string) => { const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16); pdf.setTextColor(r,g,b); };
+  const setC = (hex: string) => { const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16); pdf.setTextColor(r, g, b); };
   const setFill = (r: number, g: number, b: number) => pdf.setFillColor(r, g, b);
-  const setDraw = (hex: string) => { const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16); pdf.setDrawColor(r,g,b); };
+  const setDraw = (hex: string) => { const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16); pdf.setDrawColor(r, g, b); };
 
   let pageNum = 0;
   const newPage = (): number => {
@@ -652,7 +652,7 @@ async function runPPTExport(
   const { title, showAnswerKey, includeSolution, pptBg } = opts;
   const SW = 13.33, SH = 7.5, PAD = 0.5, CW = SW - PAD * 2;
   const dark = pptBg === 'black';
-  const BG  = dark ? '0d0d0d' : 'ffffff';
+  const BG = dark ? '0d0d0d' : 'ffffff';
   const TXT = dark ? '#f0f0f0' : '#111111';
   const DIM = dark ? '888888' : '666666';
   const ACC = dark ? 'a78bfa' : '4f46e5';
@@ -742,7 +742,7 @@ async function runPPTExport(
     // Slide counter
     slide.texts.push({
       text: `${qi + 1} / ${questions.length}`,
-      x: SW/2 - 0.6, y: SH-0.35, w: 1.2, h: 0.25,
+      x: SW / 2 - 0.6, y: SH - 0.35, w: 1.2, h: 0.25,
       fontSize: 7, color: DIM, fontFace: 'Helvetica', align: 'center',
     });
 
@@ -828,8 +828,8 @@ async function runPPTExport(
       });
       slide.texts.push({
         text: [
-        { text: 'Answer:  ', options: { color: DIM, fontSize: 14 } },
-        { text: ans, options: { bold: true, color: GRN, fontSize: 18 } },
+          { text: 'Answer:  ', options: { color: DIM, fontSize: 14 } },
+          { text: ans, options: { bold: true, color: GRN, fontSize: 18 } },
         ],
         x: PAD + 0.15,
         y: 3.4,
@@ -848,7 +848,7 @@ async function runPPTExport(
       addChrome(ss, `Q${qi + 1} - Solution`);
       ss.texts.push({
         text: `${qi + 1} / ${questions.length}`,
-        x: SW/2-0.6, y: SH-0.35, w: 1.2, h: 0.25,
+        x: SW / 2 - 0.6, y: SH - 0.35, w: 1.2, h: 0.25,
         fontSize: 7, color: DIM, fontFace: 'Helvetica', align: 'center',
       });
 
@@ -925,21 +925,21 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
   const [selectedIds, setSelectedIds] = useState<string[]>(
     initialSelected && initialSelected.size > 0 ? Array.from(initialSelected) : []
   );
-  const [format, setFormat]                     = useState<'pdf' | 'ppt'>('pdf');
-  const [sheetTitle, setSheetTitle]             = useState('Practice Sheet');
-  const [showAnswerKey, setShowAnswerKey]       = useState(true);
-  const [includeSolution, setIncludeSolution]   = useState(false);
-  const [pdfOrientation, setPdfOrientation]     = useState<'portrait' | 'landscape'>('portrait');
-  const [pptBg, setPptBg]                       = useState<'white' | 'black'>('white');
-  const [exporting, setExporting]               = useState(false);
-  const [progress, setProgress]                 = useState(0);
-  const [progressLabel, setProgressLabel]       = useState('');
-  const [searchFilter, setSearchFilter]         = useState('');
+  const [format, setFormat] = useState<'pdf' | 'ppt'>('pdf');
+  const [sheetTitle, setSheetTitle] = useState('Practice Sheet');
+  const [showAnswerKey, setShowAnswerKey] = useState(true);
+  const [includeSolution, setIncludeSolution] = useState(false);
+  const [pdfOrientation, setPdfOrientation] = useState<'portrait' | 'landscape'>('portrait');
+  const [pptBg, setPptBg] = useState<'white' | 'black'>('white');
+  const [exporting, setExporting] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [progressLabel, setProgressLabel] = useState('');
+  const [searchFilter, setSearchFilter] = useState('');
   const [filterDifficulty, setFilterDifficulty] = useState('');
-  const [filterType, setFilterType]             = useState('');
-  const [filterChapter, setFilterChapter]       = useState('');
-  const [showFilters, setShowFilters]           = useState(false);
-  const [page, setPage]                         = useState(0);
+  const [filterType, setFilterType] = useState('');
+  const [filterChapter, setFilterChapter] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
+  const [page, setPage] = useState(0);
 
   const allChapters = useMemo(
     () => Array.from(new Set(questions.map(q => q.metadata.chapter_id))).sort(),
@@ -1048,7 +1048,7 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
                 >
                   {allFilteredSelected && (
                     <svg width="8" height="7" viewBox="0 0 8 7" fill="none">
-                      <path d="M1 3.5L3 5.5L7 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M1 3.5L3 5.5L7 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   )}
                   {someFilteredSelected && !allFilteredSelected && (
@@ -1069,9 +1069,8 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
                 />
                 <button
                   onClick={() => setShowFilters(p => !p)}
-                  className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition ${
-                    showFilters ? 'bg-indigo-600 text-white' : 'bg-[#1e2a3a] text-gray-400 hover:text-gray-200'
-                  }`}
+                  className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition ${showFilters ? 'bg-indigo-600 text-white' : 'bg-[#1e2a3a] text-gray-400 hover:text-gray-200'
+                    }`}
                 >
                   <Filter size={11} />
                   Filters
@@ -1090,7 +1089,7 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
                   <select value={filterType} onChange={e => { setFilterType(e.target.value); setPage(0); }}
                     className="px-2 py-1 rounded-lg bg-[#1e2a3a] border border-[#2d3f55] text-xs text-gray-300 focus:outline-none focus:border-indigo-500">
                     <option value="">All Types</option>
-                    {['SCQ','MCQ','NVT','AR','MST','MTC'].map(t => <option key={t} value={t}>{t}</option>)}
+                    {['SCQ', 'MCQ', 'NVT', 'AR', 'MST', 'MTC'].map(t => <option key={t} value={t}>{t}</option>)}
                   </select>
                   <select value={filterChapter} onChange={e => { setFilterChapter(e.target.value); setPage(0); }}
                     className="px-2 py-1 rounded-lg bg-[#1e2a3a] border border-[#2d3f55] text-xs text-gray-300 focus:outline-none focus:border-indigo-500">
@@ -1109,101 +1108,99 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
 
             {/* Paginated question list — 2-column grid */}
             <div className="flex-1 overflow-y-auto px-4 py-3">
-            <div className="grid grid-cols-2 gap-2">
-              {filteredAll.length === 0 && (
-                <div className="flex flex-col items-center justify-center h-40 text-gray-600 text-sm">
-                  No questions match the current filters.
-                </div>
-              )}
-              {pageSlice.map((q, qi) => {
-                const isSelected = selectedSet.has(q._id);
-                const globalIdx = safePage * PAGE_SIZE + qi;
-                const qText = mdToDisplay(q.question_text.markdown);
-                return (
-                  <div
-                    key={q._id}
-                    className={`rounded-xl border transition-colors ${
-                      isSelected
-                        ? 'border-indigo-500/60 bg-[#161b27]'
-                        : 'border-[#1e2a3a] bg-[#0f1419] hover:border-[#2d3f55]'
-                    }`}
-                  >
-                    {/* Row */}
-                    <div className="flex items-start gap-2 px-3 py-2.5">
-                      {/* Left col: checkbox + number + badges */}
-                      <div className="shrink-0 flex flex-col items-center gap-1 pt-0.5" style={{width:'36px'}}>
-                        <button
-                          onClick={() => toggleSelect(q._id)}
-                          className="w-4 h-4 rounded border-2 flex items-center justify-center transition-colors"
-                          style={{
-                            background: isSelected ? '#4f46e5' : 'transparent',
-                            borderColor: isSelected ? '#4f46e5' : '#475569',
-                          }}
-                        >
-                          {isSelected && (
-                            <svg width="8" height="7" viewBox="0 0 8 7" fill="none">
-                              <path d="M1 3.5L3 5.5L7 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            </svg>
-                          )}
-                        </button>
-                        <span className="text-[11px] font-bold text-indigo-400 leading-none">{globalIdx + 1}.</span>
-                        <span className="px-1 py-0.5 rounded text-[8px] font-bold leading-none"
-                          style={{ background: `${TYPE_COLOR[q.type]}22`, color: TYPE_COLOR[q.type] }}>
-                          {q.type}
-                        </span>
-                        <span className="text-[8px] font-semibold leading-none"
-                          style={{ color: DIFF_COLOR[q.metadata.difficulty] }}>
-                          {q.metadata.difficulty[0]}
-                        </span>
-                      </div>
-
-                      {/* Question text — full width */}
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[15px] text-gray-200 leading-relaxed whitespace-pre-wrap break-words">
-                          {qText}
-                        </p>
-                        {/* SVG diagrams */}
-                        {extractImageUrls(q.question_text.markdown).map((url, ui) => (
-                          <img key={ui} src={`/api/proxy-svg?url=${encodeURIComponent(url)}`}
-                            alt="diagram" className="mt-2 rounded block"
+              <div className="grid grid-cols-2 gap-2">
+                {filteredAll.length === 0 && (
+                  <div className="flex flex-col items-center justify-center h-40 text-gray-600 text-sm">
+                    No questions match the current filters.
+                  </div>
+                )}
+                {pageSlice.map((q, qi) => {
+                  const isSelected = selectedSet.has(q._id);
+                  const globalIdx = safePage * PAGE_SIZE + qi;
+                  const qText = mdToDisplay(q.question_text.markdown);
+                  return (
+                    <div
+                      key={q._id}
+                      className={`rounded-xl border transition-colors ${isSelected
+                          ? 'border-indigo-500/60 bg-[#161b27]'
+                          : 'border-[#1e2a3a] bg-[#0f1419] hover:border-[#2d3f55]'
+                        }`}
+                    >
+                      {/* Row */}
+                      <div className="flex items-start gap-2 px-3 py-2.5">
+                        {/* Left col: checkbox + number + badges */}
+                        <div className="shrink-0 flex flex-col items-center gap-1 pt-0.5" style={{ width: '36px' }}>
+                          <button
+                            onClick={() => toggleSelect(q._id)}
+                            className="w-4 h-4 rounded border-2 flex items-center justify-center transition-colors"
                             style={{
-                              maxHeight: 160,
-                              background: '#0d1117',
-                              width: `${q.svg_scales?.question ?? 50}%`,
-                              maxWidth: '100%',
-                            }} />
-                        ))}
-                        {/* Options */}
-                        {q.type !== 'NVT' && q.options.length > 0 && (
-                          <div className="mt-2 space-y-1">
-                            {q.options.map((opt, oi) => (
-                              <div key={opt.id} className={`flex items-start gap-2 px-2.5 py-1 rounded-lg text-[13px] ${
-                                opt.is_correct ? 'bg-emerald-900/20 border border-emerald-700/30' : 'bg-[#1a2030]'
-                              }`}>
-                                <span className={`shrink-0 font-bold text-[12px] mt-0.5 ${opt.is_correct ? 'text-emerald-400' : 'text-indigo-400'}`}>
-                                  ({OPT_LABELS[oi] ?? String.fromCharCode(65 + oi)})
-                                </span>
-                                <span className={`flex-1 leading-snug ${opt.is_correct ? 'text-emerald-300' : 'text-gray-300'}`}>
-                                  {mdToDisplay(opt.text)}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                        {/* NVT answer */}
-                        {q.type === 'NVT' && (
-                          <p className="mt-1 text-[13px] text-emerald-400 font-medium">
-                            Answer: {q.answer?.integer_value ?? q.answer?.decimal_value ?? '—'}
+                              background: isSelected ? '#4f46e5' : 'transparent',
+                              borderColor: isSelected ? '#4f46e5' : '#475569',
+                            }}
+                          >
+                            {isSelected && (
+                              <svg width="8" height="7" viewBox="0 0 8 7" fill="none">
+                                <path d="M1 3.5L3 5.5L7 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            )}
+                          </button>
+                          <span className="text-[11px] font-bold text-indigo-400 leading-none">{globalIdx + 1}.</span>
+                          <span className="px-1 py-0.5 rounded text-[8px] font-bold leading-none"
+                            style={{ background: `${TYPE_COLOR[q.type]}22`, color: TYPE_COLOR[q.type] }}>
+                            {q.type}
+                          </span>
+                          <span className="text-[8px] font-semibold leading-none"
+                            style={{ color: DIFF_COLOR[q.metadata.difficulty] }}>
+                            {q.metadata.difficulty[0]}
+                          </span>
+                        </div>
+
+                        {/* Question text — full width */}
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[15px] text-gray-200 leading-relaxed whitespace-pre-wrap break-words">
+                            {qText}
                           </p>
-                        )}
-                        {/* display_id */}
-                        <p className="mt-1.5 text-[9px] text-indigo-500/60 font-mono font-semibold">{q.display_id}</p>
+                          {/* SVG diagrams */}
+                          {extractImageUrls(q.question_text.markdown).map((url, ui) => (
+                            <img key={ui} src={`/api/proxy-svg?url=${encodeURIComponent(url)}`}
+                              alt="diagram" className="mt-2 rounded block"
+                              style={{
+                                maxHeight: 160,
+                                background: '#0d1117',
+                                width: `${q.svg_scales?.question ?? 50}%`,
+                                maxWidth: '100%',
+                              }} />
+                          ))}
+                          {/* Options */}
+                          {q.type !== 'NVT' && q.options.length > 0 && (
+                            <div className="mt-2 space-y-1">
+                              {q.options.map((opt, oi) => (
+                                <div key={opt.id} className={`flex items-start gap-2 px-2.5 py-1 rounded-lg text-[13px] ${opt.is_correct ? 'bg-emerald-900/20 border border-emerald-700/30' : 'bg-[#1a2030]'
+                                  }`}>
+                                  <span className={`shrink-0 font-bold text-[12px] mt-0.5 ${opt.is_correct ? 'text-emerald-400' : 'text-indigo-400'}`}>
+                                    ({OPT_LABELS[oi] ?? String.fromCharCode(65 + oi)})
+                                  </span>
+                                  <span className={`flex-1 leading-snug ${opt.is_correct ? 'text-emerald-300' : 'text-gray-300'}`}>
+                                    {mdToDisplay(opt.text)}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                          {/* NVT answer */}
+                          {q.type === 'NVT' && (
+                            <p className="mt-1 text-[13px] text-emerald-400 font-medium">
+                              Answer: {q.answer?.integer_value ?? q.answer?.decimal_value ?? '—'}
+                            </p>
+                          )}
+                          {/* display_id */}
+                          <p className="mt-1.5 text-[9px] text-indigo-500/60 font-mono font-semibold">{q.display_id}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Pagination bar */}
@@ -1224,17 +1221,16 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
                   {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
                     const p = totalPages <= 7 ? i
                       : safePage < 4 ? i
-                      : safePage > totalPages - 5 ? totalPages - 7 + i
-                      : safePage - 3 + i;
+                        : safePage > totalPages - 5 ? totalPages - 7 + i
+                          : safePage - 3 + i;
                     return (
                       <button
                         key={p}
                         onClick={() => setPage(p)}
-                        className={`w-7 h-7 rounded-lg text-[11px] font-medium transition ${
-                          p === safePage
+                        className={`w-7 h-7 rounded-lg text-[11px] font-medium transition ${p === safePage
                             ? 'bg-indigo-600 text-white'
                             : 'bg-[#1e2a3a] text-gray-400 hover:text-white hover:bg-[#2d3f55]'
-                        }`}
+                          }`}
                       >
                         {p + 1}
                       </button>
@@ -1274,9 +1270,8 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
                 <div className="flex rounded-lg overflow-hidden border border-[#2d3f55]">
                   {(['pdf', 'ppt'] as const).map(f => (
                     <button key={f} onClick={() => setFormat(f)}
-                      className={`flex-1 py-2 text-xs font-semibold uppercase tracking-wide transition ${
-                        format === f ? 'bg-indigo-600 text-white' : 'bg-[#161b27] text-gray-500 hover:text-gray-300'
-                      }`}>
+                      className={`flex-1 py-2 text-xs font-semibold uppercase tracking-wide transition ${format === f ? 'bg-indigo-600 text-white' : 'bg-[#161b27] text-gray-500 hover:text-gray-300'
+                        }`}>
                       {f === 'pdf' ? '📄 PDF' : '📊 PPT'}
                     </button>
                   ))}
@@ -1290,9 +1285,8 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
                   <div className="flex rounded-lg overflow-hidden border border-[#2d3f55]">
                     {(['portrait', 'landscape'] as const).map(o => (
                       <button key={o} onClick={() => setPdfOrientation(o)}
-                        className={`flex-1 py-2 text-xs font-medium capitalize transition ${
-                          pdfOrientation === o ? 'bg-indigo-600 text-white' : 'bg-[#161b27] text-gray-500 hover:text-gray-300'
-                        }`}>
+                        className={`flex-1 py-2 text-xs font-medium capitalize transition ${pdfOrientation === o ? 'bg-indigo-600 text-white' : 'bg-[#161b27] text-gray-500 hover:text-gray-300'
+                          }`}>
                         {o === 'portrait' ? '↕ Portrait' : '↔ Landscape'}
                       </button>
                     ))}
@@ -1307,9 +1301,8 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
                   <div className="flex rounded-lg overflow-hidden border border-[#2d3f55]">
                     {(['white', 'black'] as const).map(bg => (
                       <button key={bg} onClick={() => setPptBg(bg)}
-                        className={`flex-1 py-2 text-xs font-medium capitalize transition ${
-                          pptBg === bg ? 'bg-indigo-600 text-white' : 'bg-[#161b27] text-gray-500 hover:text-gray-300'
-                        }`}>
+                        className={`flex-1 py-2 text-xs font-medium capitalize transition ${pptBg === bg ? 'bg-indigo-600 text-white' : 'bg-[#161b27] text-gray-500 hover:text-gray-300'
+                          }`}>
                         {bg === 'white' ? '☀ White' : '🌙 Black'}
                       </button>
                     ))}
@@ -1323,18 +1316,19 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
                 <div className="space-y-2">
                   {[
                     { label: 'Show Answer Key', value: showAnswerKey, set: setShowAnswerKey, desc: 'Highlight correct options in green' },
-                    { label: 'Include Solution', value: includeSolution, set: setIncludeSolution,
-                      desc: format === 'ppt' ? 'Solution on separate slide' : 'Solution below each question' },
+                    {
+                      label: 'Include Solution', value: includeSolution, set: setIncludeSolution,
+                      desc: format === 'ppt' ? 'Solution on separate slide' : 'Solution below each question'
+                    },
                   ].map(({ label, value, set, desc }) => (
                     <button key={label} onClick={() => set(!value)}
-                      className={`w-full flex items-start gap-3 px-3 py-2.5 rounded-lg border text-left transition ${
-                        value ? 'border-indigo-500/50 bg-indigo-900/20' : 'border-[#2d3f55] bg-[#161b27] hover:border-[#3d4f65]'
-                      }`}>
+                      className={`w-full flex items-start gap-3 px-3 py-2.5 rounded-lg border text-left transition ${value ? 'border-indigo-500/50 bg-indigo-900/20' : 'border-[#2d3f55] bg-[#161b27] hover:border-[#3d4f65]'
+                        }`}>
                       <div className="shrink-0 mt-0.5 w-4 h-4 rounded border-2 flex items-center justify-center"
                         style={{ background: value ? '#4f46e5' : 'transparent', borderColor: value ? '#4f46e5' : '#475569' }}>
                         {value && (
                           <svg width="8" height="7" viewBox="0 0 8 7" fill="none">
-                            <path d="M1 3.5L3 5.5L7 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M1 3.5L3 5.5L7 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                         )}
                       </div>
@@ -1382,17 +1376,16 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
               <button
                 onClick={handleExport}
                 disabled={exporting || selectedQuestions.length === 0}
-                className={`w-full py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
-                  exporting || selectedQuestions.length === 0
+                className={`w-full py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${exporting || selectedQuestions.length === 0
                     ? 'bg-[#1e2a3a] text-gray-600 cursor-not-allowed'
                     : 'bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-lg shadow-indigo-900/40'
-                }`}
+                  }`}
               >
                 {exporting ? (
                   <>
                     <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                     </svg>
                     Exporting...
                   </>

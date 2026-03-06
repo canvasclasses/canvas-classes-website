@@ -73,7 +73,7 @@ const QuestionSchema = z.object({
   question_text: z.object({
     markdown: z.string().min(10, 'Question text must be at least 10 characters'),
   }),
-  type: z.enum(['SCQ', 'MCQ', 'NVT', 'AR', 'MST', 'MTC']),
+  type: z.enum(['SCQ', 'MCQ', 'NVT', 'AR', 'MST', 'MTC', 'SUBJ']),
   options: z.array(z.object({
     id: z.string(),
     text: z.string(),

@@ -267,7 +267,16 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
             MCQ — Select one or more correct options
           </div>
         )}
-        {qq.type === 'NVT' ? (
+        {qq.type === 'SUBJ' ? (
+          <div style={{ marginBottom: 10, padding: '12px 16px', borderRadius: 10, background: 'rgba(255,255,255,0.03)', border: '1px dashed rgba(255,255,255,0.15)' }}>
+            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', marginBottom: 8 }}>
+              This is a subjective question or solved example. Solve it on paper, then check the solution.
+            </div>
+            <button
+              onClick={() => { setCardSol(s => ({ ...s, [i]: true })); scrollSolutionIntoView(solDivId); }}
+              style={{ padding: '9px 18px', borderRadius: 9, border: 'none', background: '#7c3aed', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>View Detailed Solution</button>
+          </div>
+        ) : qq.type === 'NVT' ? (
           <div style={{ marginBottom: 10 }}>
             <input type="text" placeholder="Enter integer answer"
               onKeyDown={e => { if (e.key === 'Enter') { setCardSol(s => ({ ...s, [i]: true })); scrollSolutionIntoView(solDivId); } }}

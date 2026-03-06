@@ -104,8 +104,10 @@ export function buildSmartTest({
     attempted = [],
     last3Sessions = [],
 }: TestGeneratorInput): Question[] {
-    if (questions.length === 0) return [];
-    const n = Math.min(count, questions.length);
+    // Subjective questions cannot be auto-graded in a timed test context
+    const validQuestions = questions.filter(q => q.type !== 'SUBJ');
+    if (validQuestions.length === 0) return [];
+    const n = Math.min(count, validQuestions.length);
 
     // ── Pre-build lookup structures ───────────────────────────────────────────
     const attemptedMap = new Map<string, AttemptedEntry>(
@@ -114,7 +116,7 @@ export function buildSmartTest({
     const recentSessionIds = new Set<string>(last3Sessions.flat());
 
     // ── Score every question ──────────────────────────────────────────────────
-    const scored = questions.map(q => ({
+    const scored = validQuestions.map(q => ({
         q,
         score: scoreQuestion(q, mix, attemptedMap, starredIds, recentSessionIds),
     }));
@@ -133,7 +135,7 @@ export function buildSmartTest({
 
     // ── Topic slot allocation (proportional) ─────────────────────────────────
     const topicIds = [...byTopic.keys()];
-    const totalQ = questions.length;
+    const totalQ = validQuestions.length;
     const slotMap = new Map<string, number>(); // topic → slot count
     let allocated = 0;
     for (const tid of topicIds) {

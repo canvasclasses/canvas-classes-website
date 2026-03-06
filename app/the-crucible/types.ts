@@ -36,7 +36,7 @@ export interface Question {
     id: string;
     questionCode?: string;
     textMarkdown: string;
-    questionType: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC';
+    questionType: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ';
     options: Option[];
     integerAnswer?: string;
     solution: Solution;
@@ -54,7 +54,7 @@ export interface Question {
     sourceReferences?: SourceReference[];
 }
 
-export type JEEQuestionType = 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC';
+export type JEEQuestionType = 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ';
 
 export interface TaxonomyNode {
     id: string;

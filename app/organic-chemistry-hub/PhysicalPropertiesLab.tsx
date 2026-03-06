@@ -52,8 +52,8 @@ function CompoundRow({
 
                 {/* Middle: Name and Info */}
                 <div className="w-28 md:w-36 shrink-0 overflow-hidden">
-                    <div className="text-[12px] font-bold text-white/90 truncate">{comp.name}</div>
-                    <div className="text-[9px] text-white/30 font-mono uppercase tracking-tighter">{comp.mw}u</div>
+                    <div className="text-[14px] font-bold text-white/80 truncate">{comp.name}</div>
+                    <div className="text-[10px] text-white/45 font-mono uppercase tracking-tighter">{comp.mw}u</div>
                 </div>
 
                 {/* Right: Dynamic Progress Bar */}
@@ -71,16 +71,16 @@ function CompoundRow({
                             }}
                         />
                     </div>
-                    <div className="w-12 text-right">
+                    <div className="w-14 text-right">
                         <motion.span
                             key={property}
                             initial={{ opacity: 0, y: 5 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="text-[12px] font-bold font-mono text-white/80"
+                            className="text-[14px] font-bold font-mono text-white/70"
                         >
                             {property === 'solubility' ? comp.solubility : value}
                         </motion.span>
-                        <span className="text-[9px] text-white/30 font-mono ml-0.5">{unit}</span>
+                        <span className="text-[10px] text-white/40 font-mono ml-0.5">{unit}</span>
                     </div>
                     <motion.div
                         animate={{ rotate: isExpanded ? 180 : 0 }}

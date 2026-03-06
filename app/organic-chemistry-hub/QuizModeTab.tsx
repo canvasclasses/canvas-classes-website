@@ -89,7 +89,7 @@ export default function QuizModeTab() {
     return (
       <div style={{ maxWidth: 560, margin: '0 auto', paddingTop: 24 }}>
         <div style={{ textAlign: 'center' as const, marginBottom: 32 }}>
-          <div style={{ fontSize: 52, fontWeight: 900, fontFamily: 'DM Mono,monospace', color: grade.col, lineHeight: 1 }}>{score}/{total}</div>
+          <div style={{ fontSize: 52, fontWeight: 900, fontFamily: 'var(--font-geist-mono),monospace', color: grade.col, lineHeight: 1 }}>{score}/{total}</div>
           <div style={{ fontSize: 16, fontWeight: 700, color: grade.col, marginTop: 6, marginBottom: 4 }}>{grade.label}</div>
           <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)' }}>{pct}% correct</div>
         </div>
@@ -138,12 +138,12 @@ export default function QuizModeTab() {
         <div style={{ flex: 1, height: 4, borderRadius: 2, background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
           <div style={{ height: '100%', width: `${((idx) / total) * 100}%`, background: 'rgba(180,150,220,0.6)', borderRadius: 2, transition: 'width .4s' }} />
         </div>
-        <span style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.35)', fontFamily: 'DM Mono,monospace', flexShrink: 0 }}>{idx + 1} / {total}</span>
+        <span style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-geist-mono),monospace', flexShrink: 0 }}>{idx + 1} / {total}</span>
       </div>
 
       {/* Score chip */}
       <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
-        <span style={{ fontSize: 12, fontWeight: 700, padding: '4px 12px', borderRadius: 20, background: 'rgba(120,208,192,0.1)', border: '1px solid rgba(120,208,192,0.2)', color: '#78d0c0', fontFamily: 'DM Mono,monospace' }}>
+        <span style={{ fontSize: 12, fontWeight: 700, padding: '4px 12px', borderRadius: 20, background: 'rgba(120,208,192,0.1)', border: '1px solid rgba(120,208,192,0.2)', color: '#78d0c0', fontFamily: 'var(--font-geist-mono),monospace' }}>
           Score: {score}/{idx}
         </span>
       </div>
@@ -173,7 +173,7 @@ export default function QuizModeTab() {
               style={{ padding: '14px 18px', borderRadius: 12, background: bg, border, color: col, fontSize: 14, fontWeight: 500, textAlign: 'left' as const, cursor: phase === 'answering' ? 'pointer' : 'default', transition: 'background .2s, border .2s', lineHeight: 1.5 }}
               onMouseEnter={e => { if (phase === 'answering') e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; }}
               onMouseLeave={e => { if (phase === 'answering') e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}>
-              <span style={{ fontFamily: 'DM Mono,monospace', fontWeight: 700, marginRight: 10, opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
+              <span style={{ fontFamily: 'var(--font-geist-mono),monospace', fontWeight: 700, marginRight: 10, opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
               {prefix}{opt}
             </button>
           );

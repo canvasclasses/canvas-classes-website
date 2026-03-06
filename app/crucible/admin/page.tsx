@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2, Library } from 'lucide-react';
+import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2, Library, Info } from 'lucide-react';
 // uuid removed — display_id is now generated inline
 import AnalyticsDashboard from './AnalyticsDashboard';
 import ExportDashboard from './components/ExportDashboard';
@@ -28,7 +28,7 @@ interface Question {
         markdown: string;
         latex_validated: boolean;
     };
-    type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC';
+    type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ';
     options: Array<{
         id: string;
         text: string;
@@ -66,6 +66,7 @@ interface Question {
         };
         is_pyq: boolean;
         is_top_pyq: boolean;
+        source_id?: string;
     };
     status: 'draft' | 'review' | 'published' | 'archived';
     quality_score: number;
@@ -97,6 +98,7 @@ const QUESTION_TYPES = [
     { id: 'AR', name: 'Assertion-Reason', color: 'bg-orange-500/20 text-orange-400 border-orange-500/30' },
     { id: 'MST', name: 'Multi-Statement', color: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30' },
     { id: 'MTC', name: 'Match Column', color: 'bg-pink-500/20 text-pink-400 border-pink-500/30' },
+    { id: 'SUBJ', name: 'Subjective / Example', color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' },
 ];
 
 export default function AdminPage() {
@@ -843,8 +845,8 @@ export default function AdminPage() {
                                     setSelectedChapterFilter('all');
                                 }}
                                 className={`px-2 py-1 text-xs font-medium rounded-md transition shrink-0 ${selectedSubjectFilter === s.id
-                                        ? `bg-gradient-to-r ${s.color} text-white shadow`
-                                        : 'text-gray-400 hover:text-gray-200'
+                                    ? `bg-gradient-to-r ${s.color} text-white shadow`
+                                    : 'text-gray-400 hover:text-gray-200'
                                     }`}
                             >
                                 {s.label}
@@ -1435,7 +1437,7 @@ export default function AdminPage() {
                             </div>
 
                             {/* Shared SVG drop zone for options — drag here, copy link, paste into option */}
-                            {selectedQuestion.type !== 'NVT' && (
+                            {selectedQuestion.type !== 'NVT' && selectedQuestion.type !== 'SUBJ' && (
                                 <div className="rounded-lg border border-dashed border-gray-700/40 bg-gray-800/20 px-3 py-2">
                                     <p className="text-[10px] text-gray-500 mb-2 font-medium uppercase tracking-wide">Option SVG — drop here → copy link → paste into option text</p>
                                     <SVGDropZone
@@ -1449,8 +1451,62 @@ export default function AdminPage() {
                                 </div>
                             )}
 
-                            {/* Options or Numerical Answer */}
-                            {selectedQuestion.type !== 'NVT' ? (
+                            {/* Options or Numerical Answer or Subjective */}
+                            {selectedQuestion.type === 'NVT' ? (
+                                <div>
+                                    <label className="text-xs text-gray-500 mb-2 block font-medium">Numerical Answer</label>
+                                    <input
+                                        type="text"
+                                        value={
+                                            selectedQuestion.answer?.integer_value !== undefined
+                                                ? selectedQuestion.answer.integer_value
+                                                : selectedQuestion.answer?.decimal_value !== undefined
+                                                    ? selectedQuestion.answer.decimal_value
+                                                    : ''
+                                        }
+                                        onChange={(e) => {
+                                            const raw = e.target.value;
+                                            const num = parseFloat(raw);
+                                            const isDecimal = raw.includes('.');
+                                            const answerUpdate = isNaN(num)
+                                                ? {}
+                                                : isDecimal
+                                                    ? { decimal_value: num }
+                                                    : { integer_value: num };
+                                            setQuestions(prev => prev.map(q =>
+                                                q._id === selectedQuestion._id
+                                                    ? { ...q, answer: { ...q.answer, ...answerUpdate } }
+                                                    : q
+                                            ));
+                                        }}
+                                        onBlur={(e) => {
+                                            const raw = e.target.value;
+                                            const num = parseFloat(raw);
+                                            if (isNaN(num) || raw.trim() === '') return;
+                                            const isDecimal = raw.includes('.');
+                                            const answerUpdate = isDecimal
+                                                ? { decimal_value: num }
+                                                : { integer_value: num };
+                                            handleUpdate(selectedQuestion._id, {
+                                                answer: { ...selectedQuestion.answer, ...answerUpdate }
+                                            });
+                                        }}
+                                        className="w-full bg-gray-800/50 border border-gray-700/50 rounded-lg px-4 py-3 text-2xl font-bold text-blue-400 focus:border-purple-500 outline-none"
+                                        placeholder="Enter numerical answer"
+                                    />
+                                </div>
+                            ) : selectedQuestion.type === 'SUBJ' ? (
+                                <div className="p-4 bg-yellow-900/10 border border-yellow-500/20 rounded-lg">
+                                    <p className="text-sm text-yellow-400/80 mb-1 font-medium flex items-center gap-2">
+                                        <Info size={16} />
+                                        Subjective / Solved Example Question
+                                    </p>
+                                    <p className="text-xs text-gray-500">
+                                        This question type does not have options or a numerical answer.
+                                        Provide the detailed answer directly in the Solution box below.
+                                    </p>
+                                </div>
+                            ) : (
                                 <div>
                                     <label className="text-xs text-gray-500 mb-2 block font-medium">
                                         Options {selectedQuestion.type === 'MCQ' && <span className="text-yellow-400 ml-1">(multiple correct)</span>}
@@ -1532,49 +1588,6 @@ export default function AdminPage() {
                                             </div>
                                         ))}
                                     </div>
-                                </div>
-                            ) : (
-                                <div>
-                                    <label className="text-xs text-gray-500 mb-2 block font-medium">Numerical Answer</label>
-                                    <input
-                                        type="text"
-                                        value={
-                                            selectedQuestion.answer?.integer_value !== undefined
-                                                ? selectedQuestion.answer.integer_value
-                                                : selectedQuestion.answer?.decimal_value !== undefined
-                                                    ? selectedQuestion.answer.decimal_value
-                                                    : ''
-                                        }
-                                        onChange={(e) => {
-                                            const raw = e.target.value;
-                                            const num = parseFloat(raw);
-                                            const isDecimal = raw.includes('.');
-                                            const answerUpdate = isNaN(num)
-                                                ? {}
-                                                : isDecimal
-                                                    ? { decimal_value: num }
-                                                    : { integer_value: num };
-                                            setQuestions(prev => prev.map(q =>
-                                                q._id === selectedQuestion._id
-                                                    ? { ...q, answer: { ...q.answer, ...answerUpdate } }
-                                                    : q
-                                            ));
-                                        }}
-                                        onBlur={(e) => {
-                                            const raw = e.target.value;
-                                            const num = parseFloat(raw);
-                                            if (isNaN(num) || raw.trim() === '') return;
-                                            const isDecimal = raw.includes('.');
-                                            const answerUpdate = isDecimal
-                                                ? { decimal_value: num }
-                                                : { integer_value: num };
-                                            handleUpdate(selectedQuestion._id, {
-                                                answer: { ...selectedQuestion.answer, ...answerUpdate }
-                                            });
-                                        }}
-                                        className="w-full bg-gray-800/50 border border-gray-700/50 rounded-lg px-4 py-3 text-2xl font-bold text-blue-400 focus:border-purple-500 outline-none"
-                                        placeholder="Enter numerical answer"
-                                    />
                                 </div>
                             )}
 

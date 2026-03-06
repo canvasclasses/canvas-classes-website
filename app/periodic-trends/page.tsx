@@ -1,9 +1,16 @@
-'use client';
-
-import TrendsComponent from '../interactive-periodic-table/TrendsComponent';
-import TopInorganicTrends from './TopInorganicTrends';
+import dynamic from 'next/dynamic';
 import { TrendingUp, Sparkles, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+
+const TrendsComponent = dynamic(() => import('../interactive-periodic-table/TrendsComponent'), {
+    ssr: false,
+    loading: () => <div className="h-[600px] flex items-center justify-center text-gray-400 bg-gray-900/20 rounded-2xl border border-gray-700/50 animate-pulse">Loading Trends Data...</div>
+});
+
+const TopInorganicTrends = dynamic(() => import('./TopInorganicTrends'), {
+    ssr: false,
+    loading: () => <div className="h-[400px] flex items-center justify-center text-gray-400 bg-gray-900/20 rounded-2xl border border-gray-700/50 animate-pulse mt-12">Loading Top Trends...</div>
+});
 
 export default function PeriodicTrendsPage() {
     return (

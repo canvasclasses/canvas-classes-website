@@ -28,7 +28,6 @@ const nextConfig: NextConfig = {
         destination: 'https://www.canvasclasses.in/:path*',
         permanent: true,
       },
-      // Permanent redirect for old flashcards URL to new SEO-friendly URL
       {
         source: '/flashcards',
         destination: '/chemistry-flashcards',
@@ -37,6 +36,48 @@ const nextConfig: NextConfig = {
       {
         source: '/flashcards/:slug*',
         destination: '/chemistry-flashcards/:slug*',
+        permanent: true,
+      },
+      // GSC SEO Fixes for Renamed/Deleted Chapters
+      {
+        source: '/chemistry-flashcards/aldehydes-ketones',
+        destination: '/chemistry-flashcards/aldehydes-ketones-acids',
+        permanent: true,
+      },
+      {
+        source: '/chemistry-flashcards/carboxylic-acids-derivatives',
+        destination: '/chemistry-flashcards/aldehydes-ketones-acids',
+        permanent: true,
+      },
+      {
+        source: '/chemistry-flashcards/p-block-12th',
+        destination: '/chemistry-flashcards/p-block-elements-g15-18',
+        permanent: true,
+      },
+      {
+        source: '/chemistry-flashcards/redox-reactions',
+        destination: '/chemistry-flashcards',
+        permanent: true,
+      },
+      {
+        source: '/chemistry-flashcards/thermodynamics',
+        destination: '/chemistry-flashcards',
+        permanent: true,
+      },
+      {
+        source: '/chemistry-flashcards/hydrogen',
+        destination: '/chemistry-flashcards',
+        permanent: true,
+      },
+      {
+        source: '/chemistry-flashcards/hydrocarbons',
+        destination: '/chemistry-flashcards',
+        permanent: true,
+      },
+      // Fix broken typo link
+      {
+        source: '/detailed-',
+        destination: '/detailed-lectures',
         permanent: true,
       },
     ];
