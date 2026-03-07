@@ -50,10 +50,16 @@ export default function VideoDropZone({ questionId, onUploaded }: VideoDropZoneP
                 body: formData,
             });
 
-            const data = await res.json();
+            let data;
+            try {
+                data = await res.json();
+            } catch (jsonError) {
+                console.error('Failed to parse JSON response:', jsonError);
+                throw new Error(`Server error: ${res.status} ${res.statusText}`);
+            }
 
             if (!res.ok || !data.success) {
-                throw new Error(data.error || 'Upload failed');
+                throw new Error(data.error || `Upload failed: ${res.status}`);
             }
 
             const cdnUrl: string = data.data.file.cdn_url;
@@ -65,6 +71,7 @@ export default function VideoDropZone({ questionId, onUploaded }: VideoDropZoneP
             // Reset to idle after 4s so zone is reusable
             setTimeout(() => setState('idle'), 4000);
         } catch (err: any) {
+            console.error('Video upload error:', err);
             setState('error');
             setErrorMsg(err.message || 'Upload failed');
             setTimeout(() => setState('idle'), 4000);

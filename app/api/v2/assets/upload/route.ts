@@ -7,6 +7,10 @@ import { Asset } from '@/lib/models/Asset';
 import { AuditLog } from '@/lib/models/AuditLog';
 import { uploadToR2, getExtensionFromMimeType, type AssetType } from '@/lib/r2Storage';
 
+// Configure route to handle large file uploads (videos up to 100MB)
+export const runtime = 'nodejs';
+export const maxDuration = 60; // 60 seconds for video uploads
+
 // Helper to calculate file checksum
 function calculateChecksum(buffer: Buffer): string {
   return crypto.createHash('sha256').update(buffer).digest('hex');
@@ -22,11 +26,14 @@ function getAssetType(mimeType: string): AssetType {
 }
 
 export async function POST(request: NextRequest) {
+  let formData: FormData | null = null;
+  let file: File | null = null;
+  
   try {
     await connectToDatabase();
     
-    const formData = await request.formData();
-    const file = formData.get('file') as File;
+    formData = await request.formData();
+    file = formData.get('file') as File;
     const questionId = formData.get('question_id') as string;
     const fieldType = formData.get('field_type') as string; // 'question', 'option', 'solution'
     const altText = formData.get('alt_text') as string;
@@ -104,13 +111,24 @@ export async function POST(request: NextRequest) {
       : `shared/${assetType}/${filename}`;
     
     // Upload to Cloudflare R2 using the organised storage path
+    console.log('Uploading to R2:', {
+      filename,
+      assetType,
+      contentType: file.type,
+      storagePath,
+      size: buffer.length
+    });
+    
     const r2Result = await uploadToR2(buffer, filename, assetType, file.type, storagePath);
     if (!r2Result.success) {
+      console.error('R2 upload failed:', r2Result.error);
       return NextResponse.json(
         { success: false, error: r2Result.error || 'R2 upload failed' },
         { status: 500 }
       );
     }
+    
+    console.log('R2 upload successful:', r2Result.url);
     
     const cdnUrl = r2Result.url!;
     
@@ -169,8 +187,16 @@ export async function POST(request: NextRequest) {
     
   } catch (error) {
     console.error('Error uploading asset:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to upload asset';
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    console.error('Asset upload error details:', {
+      message: errorMessage,
+      stack: errorStack,
+      fileName: file?.name || 'unknown',
+      fileType: file?.type || 'unknown',
+    });
     return NextResponse.json(
-      { success: false, error: 'Failed to upload asset' },
+      { success: false, error: errorMessage },
       { status: 500 }
     );
   }

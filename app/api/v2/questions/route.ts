@@ -16,7 +16,7 @@ const CHAPTER_PREFIX_MAP: Record<string, string> = {
   // ── Chemistry (Class 12) ──
   ch12_alcohols: 'ALCO', ch12_amines: 'AMIN', ch12_biomolecules: 'BIO',
   ch12_carbonyl: 'ALDO', ch12_coord: 'CORD', ch12_dblock: 'DNF', ch12_electrochem: 'EC',
-  ch12_haloalkanes: 'HALO', ch12_kinetics: 'CK', ch12_pblock: 'PB12', ch12_phenols: 'PHEN',
+  ch12_haloalkanes: 'HALO', ch12_kinetics: 'CK', ch12_pblock: 'PB12',
   ch12_salt: 'SALT', ch12_solutions: 'SOL',
   // ── Physics (Class 11) ──
   ph11_units: 'UNIT', ph11_kinematics1d: 'K1D', ph11_kinematics2d: 'K2D',

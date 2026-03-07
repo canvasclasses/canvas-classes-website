@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Star, Check, ChevronDown } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, Check, ChevronDown, MonitorPlay, Volume2, ChevronUp } from 'lucide-react';
 import { Chapter, Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
 import WatermarkOverlay from '@/components/WatermarkOverlay';
@@ -47,6 +47,9 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
   const [activeNavIdx, setActiveNavIdx] = useState(0);
   // 'all' | 'mains' | 'advanced' | 'non-pyq'
   const [examFilter, setExamFilter] = useState<'all' | 'mains' | 'advanced' | 'non-pyq'>('all');
+  // Video and audio expansion state
+  const [videoExpanded, setVideoExpanded] = useState<Record<number, boolean>>({});
+  const [audioExpanded, setAudioExpanded] = useState<Record<string, boolean>>({});
 
   // Helper for alphanumeric sorting (e.g., GOC-001 < GOC-002)
   const sortQuestions = (a: Question, b: Question) => {
@@ -380,10 +383,74 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
         {(cardSol[i] ?? false) && (
           <div id={solDivId} style={{ marginTop: 10, padding: '14px 18px', borderRadius: 12, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)' }}>
             <div style={{ fontSize: 10, fontWeight: 700, color: '#a78bfa', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
-            {qq.solution?.video_url && (
-              <div style={{ marginBottom: 14 }}>
+            
+            {/* Media Controls Row - Video & Audio buttons */}
+            {(qq.solution?.video_url || (qq.solution?.asset_ids?.audio && qq.solution.asset_ids.audio.length > 0)) && (
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 12 }}>
+                {/* Watch Video Solution Button */}
+                {qq.solution?.video_url && (
+                  <button
+                    onClick={() => setVideoExpanded(prev => ({ ...prev, [i]: !prev[i] }))}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      padding: '8px 14px',
+                      background: 'linear-gradient(135deg, #3b82f6 0%, #6366f1 100%)',
+                      border: 'none',
+                      borderRadius: 8,
+                      color: '#fff',
+                      fontSize: 12,
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      boxShadow: '0 4px 12px rgba(59,130,246,0.3)',
+                      transition: 'all 0.2s',
+                    }}
+                  >
+                    <MonitorPlay style={{ width: 14, height: 14 }} />
+                    <span>{videoExpanded[i] ? 'Hide' : 'Watch'} Video</span>
+                    {videoExpanded[i] ? <ChevronUp style={{ width: 12, height: 12 }} /> : <ChevronDown style={{ width: 12, height: 12 }} />}
+                  </button>
+                )}
+                
+                {/* Audio Note Button */}
+                {qq.solution?.asset_ids?.audio && qq.solution.asset_ids.audio.length > 0 && (
+                  qq.solution.asset_ids.audio.map((url, idx) => (
+                    url ? (
+                      <button
+                        key={idx}
+                        onClick={() => setAudioExpanded(prev => ({ ...prev, [`${i}-${idx}`]: !prev[`${i}-${idx}`] }))}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 6,
+                          padding: '8px 14px',
+                          background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                          border: 'none',
+                          borderRadius: 8,
+                          color: '#fff',
+                          fontSize: 12,
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                          boxShadow: '0 4px 12px rgba(168,85,247,0.3)',
+                          transition: 'all 0.2s',
+                        }}
+                      >
+                        <Volume2 style={{ width: 14, height: 14 }} />
+                        <span>{audioExpanded[`${i}-${idx}`] ? 'Hide' : 'Play'} Audio{qq.solution.asset_ids!.audio!.length > 1 ? ` ${idx + 1}` : ''}</span>
+                        {audioExpanded[`${i}-${idx}`] ? <ChevronUp style={{ width: 12, height: 12 }} /> : <ChevronDown style={{ width: 12, height: 12 }} />}
+                      </button>
+                    ) : null
+                  ))
+                )}
+              </div>
+            )}
+            
+            {/* Collapsible Video Player - Square Aspect Ratio */}
+            {qq.solution?.video_url && videoExpanded[i] && (
+              <div style={{ marginBottom: 14, transition: 'all 0.3s ease-in-out' }}>
                 {qq.solution.video_url.includes('youtube.com') || qq.solution.video_url.includes('youtu.be') ? (
-                  <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 8 }}>
+                  <div style={{ position: 'relative', paddingBottom: '100%', height: 0, overflow: 'hidden', borderRadius: 8, background: '#000' }}>
                     <iframe
                       src={qq.solution.video_url.replace('watch?v=', 'embed/').split('&')[0].replace('youtu.be/', 'youtube.com/embed/')}
                       style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
@@ -392,21 +459,45 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
                     />
                   </div>
                 ) : (
-                  <video controls style={{ width: '100%', borderRadius: 8, background: '#000' }}>
-                    <source src={qq.solution.video_url} type="video/mp4" />
-                  </video>
+                  <div style={{ aspectRatio: '1/1', borderRadius: 8, overflow: 'hidden', background: '#000' }}>
+                    <video 
+                      controls 
+                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                      onKeyDown={(e) => {
+                        if (e.key === ' ') {
+                          e.preventDefault();
+                          const video = e.currentTarget;
+                          video.paused ? video.play() : video.pause();
+                        } else if (e.key === 'ArrowRight') {
+                          e.preventDefault();
+                          e.currentTarget.currentTime += 5;
+                        } else if (e.key === 'ArrowLeft') {
+                          e.preventDefault();
+                          e.currentTarget.currentTime -= 5;
+                        }
+                      }}
+                    >
+                      <source src={qq.solution.video_url} type="video/mp4" />
+                    </video>
+                  </div>
                 )}
               </div>
             )}
+            
+            {/* Collapsible Audio Players */}
             {qq.solution?.asset_ids?.audio && qq.solution.asset_ids.audio.length > 0 && (
               <div style={{ marginBottom: 14, display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {qq.solution.asset_ids.audio.map((url, idx) => (
-                  <audio key={idx} controls style={{ width: '100%', height: 40, borderRadius: 8 }}>
-                    <source src={url} type="audio/mpeg" />
-                  </audio>
+                  url && audioExpanded[`${i}-${idx}`] ? (
+                    <audio key={idx} controls style={{ width: '100%', height: 40, borderRadius: 8, transition: 'all 0.3s ease-in-out' }}>
+                      <source src={url} type="audio/webm" />
+                      <source src={url} type="audio/mpeg" />
+                    </audio>
+                  ) : null
                 ))}
               </div>
             )}
+            
             {qq.solution?.text_markdown ? (
               <MathRenderer markdown={qq.solution.text_markdown} className="text-sm leading-relaxed" fontSize={16} imageScale={qq.svg_scales?.solution ?? 100} />
             ) : (

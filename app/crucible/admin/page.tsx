@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2, Library, Info } from 'lucide-react';
+import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2, Library, Info, Volume2, ChevronDown, ChevronUp } from 'lucide-react';
 // uuid removed — display_id is now generated inline
 import AnalyticsDashboard from './AnalyticsDashboard';
 import ExportDashboard from './components/ExportDashboard';
@@ -135,6 +135,10 @@ export default function AdminPage() {
 
     // Options layout override: 'auto' | 'grid' | 'list'
     const [optionsLayout, setOptionsLayout] = useState<'auto' | 'grid' | 'list'>('auto');
+
+    // Video and audio visibility
+    const [videoExpanded, setVideoExpanded] = useState<Record<string, boolean>>({});
+    const [audioExpanded, setAudioExpanded] = useState<Record<string, boolean>>({});
 
     // LaTeX auto-fix state
     const [latexFixResult, setLatexFixResult] = useState<{ field: string; fixes: string[] } | null>(null);
@@ -371,7 +375,7 @@ export default function AdminPage() {
             ch11_periodic: 'PERI', ch11_prac_org: 'POC', ch11_redox: 'RDX', ch11_thermo: 'THERMO',
             ch12_alcohols: 'ALCO', ch12_amines: 'AMIN', ch12_biomolecules: 'BIO',
             ch12_carbonyl: 'ALDO', ch12_coord: 'CORD', ch12_dblock: 'DNF', ch12_electrochem: 'EC',
-            ch12_haloalkanes: 'HALO', ch12_kinetics: 'CK', ch12_pblock: 'PB12', ch12_phenols: 'PHEN',
+            ch12_haloalkanes: 'HALO', ch12_kinetics: 'CK', ch12_pblock: 'PB12',
             ch12_salt: 'SALT', ch12_solutions: 'SOL',
             // Physics
             ph11_units: 'UNIT', ph11_kinematics1d: 'K1D', ph11_kinematics2d: 'K2D',
@@ -1661,6 +1665,56 @@ export default function AdminPage() {
                                 <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
                                     <MonitorPlay size={14} /> Video Solution
                                 </h4>
+                                
+                                {/* Current Video Display with Delete Option */}
+                                {selectedQuestion.solution?.video_url && (
+                                    <div className="bg-gray-800/50 rounded-lg p-3 border border-gray-700/50">
+                                        <div className="flex items-center justify-between mb-2">
+                                            <span className="text-xs text-green-400 font-medium">✓ Video Attached</span>
+                                            <button
+                                                onClick={async () => {
+                                                    if (!confirm('Delete this video? This will remove it from Cloudflare R2 storage.')) return;
+                                                    
+                                                    const videoUrl = selectedQuestion.solution?.video_url;
+                                                    if (!videoUrl) return;
+                                                    
+                                                    // Extract asset ID from URL if it's from R2
+                                                    const isR2Video = videoUrl.includes('canvas-chemistry-assets');
+                                                    if (isR2Video) {
+                                                        // Find asset by CDN URL
+                                                        try {
+                                                            const res = await fetch(`/api/v2/assets?question_id=${selectedQuestion._id}&type=video`);
+                                                            const data = await res.json();
+                                                            const asset = data.data?.find((a: any) => a.file.cdn_url === videoUrl);
+                                                            
+                                                            if (asset) {
+                                                                // Delete from R2 and DB
+                                                                await fetch(`/api/v2/assets/${asset._id}`, { method: 'DELETE' });
+                                                            }
+                                                        } catch (err) {
+                                                            console.error('Failed to delete video from R2:', err);
+                                                        }
+                                                    }
+                                                    
+                                                    // Clear video URL from question
+                                                    handleUpdate(selectedQuestion._id, {
+                                                        solution: {
+                                                            ...(selectedQuestion.solution || { text_markdown: '', latex_validated: false }),
+                                                            video_url: ''
+                                                        }
+                                                    });
+                                                }}
+                                                className="text-xs px-2 py-1 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded border border-red-500/50 transition"
+                                            >
+                                                Delete Video
+                                            </button>
+                                        </div>
+                                        <div className="text-xs text-gray-400 truncate font-mono bg-gray-900/50 px-2 py-1 rounded">
+                                            {selectedQuestion.solution.video_url}
+                                        </div>
+                                    </div>
+                                )}
+                                
                                 <input
                                     type="text"
                                     value={selectedQuestion.solution?.video_url || ''}
@@ -1701,6 +1755,17 @@ export default function AdminPage() {
                                             asset_ids: {
                                                 ...(selectedQuestion.solution?.asset_ids || {}),
                                                 audio: [...(selectedQuestion.solution?.asset_ids?.audio || []), url]
+                                            }
+                                        }
+                                    });
+                                }}
+                                onAudioDeleted={() => {
+                                    handleUpdate(selectedQuestion._id, {
+                                        solution: {
+                                            ...(selectedQuestion.solution || { text_markdown: '', latex_validated: false }),
+                                            asset_ids: {
+                                                ...(selectedQuestion.solution?.asset_ids || {}),
+                                                audio: []
                                             }
                                         }
                                     });
@@ -1840,14 +1905,120 @@ export default function AdminPage() {
                                 {/* Solution Preview */}
                                 <div className={`bg-gray-900/50 rounded-xl border border-gray-800/50 ${previewMode === 'mobile' ? 'p-4 rounded-none border-x-0' : 'p-6'}`}>
                                     <h4 className="text-xs font-bold text-gray-500 uppercase mb-3">Solution</h4>
-                                    {/* Audio Player — shown when audio is attached */}
-                                    {selectedQuestion.solution?.asset_ids?.audio && selectedQuestion.solution.asset_ids.audio.length > 0 && (
-                                        <div className="mb-4 space-y-2">
-                                            {selectedQuestion.solution.asset_ids.audio.map((url, idx) => (
-                                                url ? <AudioPlayer key={idx} src={url} label={`Audio Note${selectedQuestion.solution.asset_ids!.audio!.length > 1 ? ` ${idx + 1}` : ''}`} /> : null
-                                            ))}
+                                    
+                                    {/* Media Controls Row - Video & Audio buttons at top */}
+                                    {(selectedQuestion.solution?.video_url || (selectedQuestion.solution?.asset_ids?.audio && selectedQuestion.solution.asset_ids.audio.length > 0)) && (
+                                        <div className="flex flex-wrap gap-2 mb-4">
+                                            {/* Watch Video Solution Button with State Indicator */}
+                                            {selectedQuestion.solution?.video_url && (
+                                                <button
+                                                    onClick={() => {
+                                                        setVideoExpanded(prev => ({
+                                                            ...prev,
+                                                            [selectedQuestion._id]: !prev[selectedQuestion._id]
+                                                        }));
+                                                    }}
+                                                    className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-lg font-medium text-sm transition-all duration-200 shadow-lg shadow-blue-900/40 hover:shadow-blue-800/50 active:scale-95"
+                                                >
+                                                    <MonitorPlay size={16} />
+                                                    <span className="hidden sm:inline">
+                                                        {videoExpanded[selectedQuestion._id] ? 'Hide' : 'Watch'} Video Solution
+                                                    </span>
+                                                    <span className="sm:hidden">Video</span>
+                                                    {videoExpanded[selectedQuestion._id] 
+                                                        ? <ChevronUp size={14} className="transition-transform duration-200" />
+                                                        : <ChevronDown size={14} className="transition-transform duration-200" />
+                                                    }
+                                                </button>
+                                            )}
+                                            
+                                            {/* Audio Note Waveform Button with State Indicator */}
+                                            {selectedQuestion.solution?.asset_ids?.audio && selectedQuestion.solution.asset_ids.audio.length > 0 && (
+                                                selectedQuestion.solution.asset_ids.audio.map((url, idx) => {
+                                                    const audioKey = `${selectedQuestion._id}-${idx}`;
+                                                    return url ? (
+                                                        <button
+                                                            key={idx}
+                                                            onClick={() => {
+                                                                setAudioExpanded(prev => ({
+                                                                    ...prev,
+                                                                    [audioKey]: !prev[audioKey]
+                                                                }));
+                                                            }}
+                                                            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-lg font-medium text-sm transition-all duration-200 shadow-lg shadow-purple-900/40 hover:shadow-purple-800/50 active:scale-95"
+                                                        >
+                                                            <Volume2 size={16} />
+                                                            <span className="hidden sm:inline">
+                                                                {audioExpanded[audioKey] ? 'Hide' : 'Play'} Audio Note{selectedQuestion.solution.asset_ids!.audio!.length > 1 ? ` ${idx + 1}` : ''}
+                                                            </span>
+                                                            <span className="sm:hidden">Audio{selectedQuestion.solution.asset_ids!.audio!.length > 1 ? ` ${idx + 1}` : ''}</span>
+                                                            {audioExpanded[audioKey]
+                                                                ? <ChevronUp size={14} className="transition-transform duration-200" />
+                                                                : <ChevronDown size={14} className="transition-transform duration-200" />
+                                                            }
+                                                        </button>
+                                                    ) : null;
+                                                })
+                                            )}
                                         </div>
                                     )}
+                                    
+                                    {/* Collapsible Video Player - Square Aspect Ratio (1:1) with Smooth Animation */}
+                                    {selectedQuestion.solution?.video_url && (
+                                        <div 
+                                            className={`mb-4 transition-all duration-300 ease-in-out overflow-hidden ${
+                                                videoExpanded[selectedQuestion._id] 
+                                                    ? 'max-h-[600px] opacity-100' 
+                                                    : 'max-h-0 opacity-0'
+                                            }`}
+                                        >
+                                            <div className={`bg-black rounded-lg overflow-hidden ${previewMode === 'mobile' ? 'w-full' : 'max-w-md mx-auto'}`} style={{ aspectRatio: '1/1' }}>
+                                                <video
+                                                    controls
+                                                    className="w-full h-full object-contain"
+                                                    src={selectedQuestion.solution.video_url}
+                                                    onKeyDown={(e) => {
+                                                        // Keyboard shortcuts
+                                                        if (e.key === ' ') {
+                                                            e.preventDefault();
+                                                            const video = e.currentTarget;
+                                                            video.paused ? video.play() : video.pause();
+                                                        } else if (e.key === 'ArrowRight') {
+                                                            e.preventDefault();
+                                                            e.currentTarget.currentTime += 5;
+                                                        } else if (e.key === 'ArrowLeft') {
+                                                            e.preventDefault();
+                                                            e.currentTarget.currentTime -= 5;
+                                                        }
+                                                    }}
+                                                >
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </div>
+                                        </div>
+                                    )}
+                                    
+                                    {/* Collapsible Audio Players with Waveform and Smooth Animation */}
+                                    {selectedQuestion.solution?.asset_ids?.audio && selectedQuestion.solution.asset_ids.audio.length > 0 && (
+                                        <div className="space-y-2 mb-4">
+                                            {selectedQuestion.solution.asset_ids.audio.map((url, idx) => {
+                                                const audioKey = `${selectedQuestion._id}-${idx}`;
+                                                return url ? (
+                                                    <div 
+                                                        key={idx}
+                                                        className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                                                            audioExpanded[audioKey]
+                                                                ? 'max-h-40 opacity-100'
+                                                                : 'max-h-0 opacity-0'
+                                                        }`}
+                                                    >
+                                                        <AudioPlayer src={url} label={`Audio Note${selectedQuestion.solution.asset_ids!.audio!.length > 1 ? ` ${idx + 1}` : ''}`} />
+                                                    </div>
+                                                ) : null;
+                                            })}
+                                        </div>
+                                    )}
+                                    
                                     <MathRenderer
                                         markdown={selectedQuestion.solution?.text_markdown || ''}
                                         className="text-gray-300 solution-text"

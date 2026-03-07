@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Star, Check, Timer, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, Check, Timer, X, MonitorPlay, Volume2, ChevronUp, ChevronDown } from 'lucide-react';
 import { Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
 import WatermarkOverlay from '@/components/WatermarkOverlay';
@@ -45,6 +45,9 @@ export default function TestView({ questions, onBack }: { questions: Question[];
   const [revStats, setRevStats] = useState<Record<string, number>>({});
   // Finish-test confirmation modal (shown when user hits 'Finish Test' on last question)
   const [showFinishModal, setShowFinishModal] = useState(false);
+  // Video and audio expansion state for review section
+  const [videoExpanded, setVideoExpanded] = useState<Record<number, boolean>>({});
+  const [audioExpanded, setAudioExpanded] = useState<Record<string, boolean>>({});
 
   const toggleStar = (id: string) => setStarred(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
 
@@ -248,10 +251,73 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                 <div style={{ padding: '12px 14px', borderRadius: 14, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)', marginBottom: 24 }}>
                   <div style={{ fontSize: 11, fontWeight: 700, color: '#a78bfa', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
 
-                  {rq.solution?.video_url && (
-                    <div style={{ marginBottom: 16 }}>
+                  {/* Media Controls Row - Video & Audio buttons */}
+                  {(rq.solution?.video_url || (rq.solution?.asset_ids?.audio && rq.solution.asset_ids.audio.length > 0)) && (
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 12 }}>
+                      {/* Watch Video Solution Button */}
+                      {rq.solution?.video_url && (
+                        <button
+                          onClick={() => setVideoExpanded(prev => ({ ...prev, [revIdx]: !prev[revIdx] }))}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 6,
+                            padding: '8px 14px',
+                            background: 'linear-gradient(135deg, #3b82f6 0%, #6366f1 100%)',
+                            border: 'none',
+                            borderRadius: 8,
+                            color: '#fff',
+                            fontSize: 12,
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 12px rgba(59,130,246,0.3)',
+                            transition: 'all 0.2s',
+                          }}
+                        >
+                          <MonitorPlay style={{ width: 14, height: 14 }} />
+                          <span>{videoExpanded[revIdx] ? 'Hide' : 'Watch'} Video</span>
+                          {videoExpanded[revIdx] ? <ChevronUp style={{ width: 12, height: 12 }} /> : <ChevronDown style={{ width: 12, height: 12 }} />}
+                        </button>
+                      )}
+                      
+                      {/* Audio Note Button */}
+                      {rq.solution?.asset_ids?.audio && rq.solution.asset_ids.audio.length > 0 && (
+                        rq.solution.asset_ids.audio.map((url, idx) => (
+                          url ? (
+                            <button
+                              key={idx}
+                              onClick={() => setAudioExpanded(prev => ({ ...prev, [`${revIdx}-${idx}`]: !prev[`${revIdx}-${idx}`] }))}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 6,
+                                padding: '8px 14px',
+                                background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                                border: 'none',
+                                borderRadius: 8,
+                                color: '#fff',
+                                fontSize: 12,
+                                fontWeight: 600,
+                                cursor: 'pointer',
+                                boxShadow: '0 4px 12px rgba(168,85,247,0.3)',
+                                transition: 'all 0.2s',
+                              }}
+                            >
+                              <Volume2 style={{ width: 14, height: 14 }} />
+                              <span>{audioExpanded[`${revIdx}-${idx}`] ? 'Hide' : 'Play'} Audio{rq.solution.asset_ids!.audio!.length > 1 ? ` ${idx + 1}` : ''}</span>
+                              {audioExpanded[`${revIdx}-${idx}`] ? <ChevronUp style={{ width: 12, height: 12 }} /> : <ChevronDown style={{ width: 12, height: 12 }} />}
+                            </button>
+                          ) : null
+                        ))
+                      )}
+                    </div>
+                  )}
+
+                  {/* Collapsible Video Player - Square Aspect Ratio */}
+                  {rq.solution?.video_url && videoExpanded[revIdx] && (
+                    <div style={{ marginBottom: 16, transition: 'all 0.3s ease-in-out' }}>
                       {rq.solution.video_url.includes('youtube.com') || rq.solution.video_url.includes('youtu.be') ? (
-                        <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 8 }}>
+                        <div style={{ position: 'relative', paddingBottom: '100%', height: 0, overflow: 'hidden', borderRadius: 8, background: '#000' }}>
                           <iframe
                             src={rq.solution.video_url.replace('watch?v=', 'embed/').split('&')[0].replace('youtu.be/', 'youtube.com/embed/')}
                             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
@@ -260,21 +326,43 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                           />
                         </div>
                       ) : (
-                        <video controls style={{ width: '100%', borderRadius: 8, background: '#000' }}>
-                          <source src={rq.solution.video_url} type="video/mp4" />
-                          Your browser does not support the video tag.
-                        </video>
+                        <div style={{ aspectRatio: '1/1', borderRadius: 8, overflow: 'hidden', background: '#000' }}>
+                          <video 
+                            controls 
+                            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                            onKeyDown={(e) => {
+                              if (e.key === ' ') {
+                                e.preventDefault();
+                                const video = e.currentTarget;
+                                video.paused ? video.play() : video.pause();
+                              } else if (e.key === 'ArrowRight') {
+                                e.preventDefault();
+                                e.currentTarget.currentTime += 5;
+                              } else if (e.key === 'ArrowLeft') {
+                                e.preventDefault();
+                                e.currentTarget.currentTime -= 5;
+                              }
+                            }}
+                          >
+                            <source src={rq.solution.video_url} type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
+                        </div>
                       )}
                     </div>
                   )}
 
+                  {/* Collapsible Audio Players */}
                   {rq.solution?.asset_ids?.audio && rq.solution.asset_ids.audio.length > 0 && (
                     <div style={{ marginBottom: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
                       {rq.solution.asset_ids.audio.map((url, idx) => (
-                        <audio key={idx} controls style={{ width: '100%', height: 40, borderRadius: 8 }}>
-                          <source src={url} type="audio/mpeg" />
-                          Your browser does not support the audio element.
-                        </audio>
+                        url && audioExpanded[`${revIdx}-${idx}`] ? (
+                          <audio key={idx} controls style={{ width: '100%', height: 40, borderRadius: 8, transition: 'all 0.3s ease-in-out' }}>
+                            <source src={url} type="audio/webm" />
+                            <source src={url} type="audio/mpeg" />
+                            Your browser does not support the audio element.
+                          </audio>
+                        ) : null
                       ))}
                     </div>
                   )}

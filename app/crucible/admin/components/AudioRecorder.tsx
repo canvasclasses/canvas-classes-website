@@ -6,10 +6,11 @@ import { Mic, Square, Upload, Trash2, Play, Pause } from 'lucide-react';
 interface AudioRecorderProps {
   questionId: string;
   onAudioSaved: (audioUrl: string) => void;
+  onAudioDeleted?: () => void;
   existingAudioUrl?: string;
 }
 
-export default function AudioRecorder({ questionId, onAudioSaved, existingAudioUrl }: AudioRecorderProps) {
+export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted, existingAudioUrl }: AudioRecorderProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(existingAudioUrl || null);
@@ -102,12 +103,38 @@ export default function AudioRecorder({ questionId, onAudioSaved, existingAudioU
     }
   };
 
-  const deleteAudio = () => {
-    if (confirm('Delete this audio recording?')) {
+  const deleteAudio = async () => {
+    if (!confirm('Delete this audio recording? This will remove it from Cloudflare R2 storage.')) return;
+    
+    try {
+      // If it's an existing audio (uploaded to R2), delete from R2
+      if (existingAudioUrl) {
+        const isR2Audio = existingAudioUrl.includes('canvas-chemistry-assets');
+        if (isR2Audio) {
+          // Find and delete the asset from R2
+          const res = await fetch(`/api/v2/assets?question_id=${questionId}&type=audio`);
+          const data = await res.json();
+          const asset = data.data?.find((a: any) => a.file.cdn_url === existingAudioUrl);
+          
+          if (asset) {
+            await fetch(`/api/v2/assets/${asset._id}`, { method: 'DELETE' });
+          }
+        }
+        
+        // Call the callback to update the question
+        if (onAudioDeleted) {
+          onAudioDeleted();
+        }
+      }
+      
+      // Clear local state
       setAudioBlob(null);
       if (audioUrl && !existingAudioUrl) URL.revokeObjectURL(audioUrl);
       setAudioUrl(null);
       setRecordingTime(0);
+    } catch (error) {
+      console.error('Failed to delete audio:', error);
+      alert('Failed to delete audio from storage');
     }
   };
 

@@ -381,7 +381,12 @@ async function fetchQuestions(chapterIds: string[], limit?: number, topPYQOnly?:
     type: q.type,
     options: q.options,
     answer: q.answer,
-    solution: { text_markdown: q.solution?.text_markdown || '' },
+    solution: {
+      text_markdown: q.solution?.text_markdown || '',
+      video_url: q.solution?.video_url || undefined,
+      asset_ids: q.solution?.asset_ids || undefined,
+      latex_validated: q.solution?.latex_validated || false,
+    },
     metadata: {
       difficulty: q.metadata?.difficulty || 'Medium',
       chapter_id: q.metadata?.chapter_id || '',

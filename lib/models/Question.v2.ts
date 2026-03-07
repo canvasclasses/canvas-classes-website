@@ -73,7 +73,7 @@ export interface IQuestion {
   display_id: string; // e.g., "ATOM-001"
 
   question_text: IQuestionText;
-  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC';
+  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ';
   options: IQuestionOption[];
   answer?: IQuestionAnswer;
   solution: IQuestionSolution;
@@ -221,7 +221,7 @@ const QuestionSchema = new Schema<IQuestion>({
   question_text: { type: QuestionTextSchema, required: true },
   type: {
     type: String,
-    enum: ['SCQ', 'MCQ', 'NVT', 'AR', 'MST', 'MTC'],
+    enum: ['SCQ', 'MCQ', 'NVT', 'AR', 'MST', 'MTC', 'SUBJ'],
     required: true
   },
   options: [QuestionOptionSchema],

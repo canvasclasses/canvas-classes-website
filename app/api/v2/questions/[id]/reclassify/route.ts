@@ -35,7 +35,6 @@ const CHAPTER_PREFIXES: Record<string, string> = {
   'ch12_biomolecules':'BIO',
   'ch12_salt':        'SALT',
   'ch12_prac_phys':   'PPHY',
-  'ch12_phenols':     'PHEN',
 };
 
 /**
