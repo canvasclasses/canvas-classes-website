@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Flame, ChevronLeft, ChevronRight, LogIn, LayoutGrid, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { Chapter, Question } from './types';
@@ -514,8 +515,13 @@ function DailyGitaShloka() {
 // ── Main component ── (BrowseView/TestView/TestConfigModal imported above) ───
 // ── Main component ───────────────────────────────────────────────────────────
 export default function CrucibleLanding({ chapters, isLoggedIn }: CrucibleLandingProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  // Initialize view from URL query param (e.g., ?mode=browse)
+  const initialView = (searchParams.get('mode') as View) || 'landing';
   const [selectedChapters, setSelectedChapters] = useState<Set<string>>(new Set());
-  const [view, setView] = useState<View>('landing');
+  const [view, setView] = useState<View>(initialView);
   const [openSheet, setOpenSheet] = useState<number | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -537,6 +543,43 @@ export default function CrucibleLanding({ chapters, isLoggedIn }: CrucibleLandin
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
   }, []);
+
+  // On mount: restore chapter selection + re-fetch questions if mode=browse/test is in URL
+  useEffect(() => {
+    const urlMode = searchParams.get('mode') as View | null;
+    const urlChapters = searchParams.get('chapters');
+
+    if (urlChapters) {
+      const ids = urlChapters.split(',').filter(Boolean);
+      setSelectedChapters(new Set(ids));
+
+      if (urlMode === 'browse' || urlMode === 'test') {
+        setLoading(true);
+        fetchQuestions(ids, undefined, false, 'mains')
+          .then(qs => {
+            if (qs.length > 0) {
+              setQuestions(qs);
+              setView(urlMode);
+            }
+          })
+          .catch(() => {})
+          .finally(() => setLoading(false));
+      }
+    } else if (urlMode === 'browse' || urlMode === 'test') {
+      // No chapters in URL — just restore view if questions already loaded
+      setView(urlMode);
+    }
+  // Only run on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Helper to update view and URL together (only for landing/error states)
+  const updateView = useCallback((newView: View) => {
+    setView(newView);
+    if (newView === 'landing') {
+      router.push('/the-crucible', { scroll: false });
+    }
+  }, [router]);
 
   const onShlokaDone = useCallback(() => {
     if (pendingMode) { setView(pendingMode); setPendingMode(null); }
@@ -568,32 +611,44 @@ export default function CrucibleLanding({ chapters, isLoggedIn }: CrucibleLandin
     setView('shloka');
     fetchTopPYQs(jeeMode)
       .then(qs => {
-        if (qs.length === 0) { notify('Top PYQs not tagged yet — check back soon!'); setView('landing'); return; }
+        if (qs.length === 0) { notify('Top PYQs not tagged yet — check back soon!'); updateView('landing'); return; }
         if (mode === 'test') {
           setQuestions(selectTestQuestions(qs, Math.min(20, qs.length), 'pyq'));
         } else {
           setQuestions(qs);
         }
       })
-      .catch(() => { notify('Failed to load Top PYQs.'); setView('landing'); })
+      .catch(() => { notify('Failed to load Top PYQs.'); updateView('landing'); })
       .finally(() => setTopPYQLoading(false));
   };
 
-  // Launch flow: show shloka IMMEDIATELY, fetch in background so there's zero perceived delay
+  // Launch flow: single chapter → navigate to chapter-specific route (fully refresh-safe)
+  // Multiple chapters → show shloka, fetch, encode chapters in URL
   const launchBrowse = () => {
     if (loading) return;
+    const ids = Array.from(selectedChapters);
+    if (ids.length === 1) {
+      // Single chapter: direct navigation — ChapterPracticePage handles everything server-side
+      const suffix = topPYQFilter ? '?mode=browse&top=1' : '?mode=browse';
+      router.push(`/the-crucible/${ids[0]}${suffix}`);
+      return;
+    }
+    // Multiple chapters: fetch + encode in URL
     setLoading(true);
     setPendingMode('browse');
     setView('shloka');
     const fetcher = topPYQFilter
-      ? fetchQuestions(Array.from(selectedChapters), undefined, true, jeeMode)
-      : fetchQuestions(Array.from(selectedChapters), undefined, false, jeeMode);
+      ? fetchQuestions(ids, undefined, true, jeeMode)
+      : fetchQuestions(ids, undefined, false, jeeMode);
     fetcher
       .then(qs => {
-        if (qs.length === 0) { notify(topPYQFilter ? 'No Top PYQs found for selected chapters yet.' : 'No questions found for selected chapters yet.'); setView('landing'); }
-        else setQuestions(qs);
+        if (qs.length === 0) { notify(topPYQFilter ? 'No Top PYQs found for selected chapters yet.' : 'No questions found for selected chapters yet.'); updateView('landing'); }
+        else {
+          setQuestions(qs);
+          router.push(`/the-crucible?mode=browse&chapters=${ids.join(',')}`, { scroll: false });
+        }
       })
-      .catch(() => { notify('Failed to load questions.'); setView('landing'); })
+      .catch(() => { notify('Failed to load questions.'); updateView('landing'); })
       .finally(() => setLoading(false));
   };
 
@@ -609,28 +664,35 @@ export default function CrucibleLanding({ chapters, isLoggedIn }: CrucibleLandin
   const startTest = (count: number, mix: DifficultyMix) => {
     setShowTestConfig(false);
     if (loading) return;
+    const ids = Array.from(selectedChapters);
+    if (ids.length === 1) {
+      // Single chapter: navigate to chapter-specific route for full persistence
+      router.push(`/the-crucible/${ids[0]}?mode=test`);
+      return;
+    }
     setLoading(true);
     setPendingMode('test');
     setView('shloka');
     const fetcher = topPYQFilter
-      ? fetchQuestions(Array.from(selectedChapters), undefined, true, jeeMode)
-      : fetchQuestions(Array.from(selectedChapters), undefined, false, jeeMode);
+      ? fetchQuestions(ids, undefined, true, jeeMode)
+      : fetchQuestions(ids, undefined, false, jeeMode);
     fetcher
       .then(qs => {
-        if (qs.length === 0) { notify('No questions found.'); setView('landing'); return; }
+        if (qs.length === 0) { notify('No questions found.'); updateView('landing'); return; }
         const effectiveMix = topPYQFilter ? 'pyq' : mix;
         const selected = selectTestQuestions(qs, count, effectiveMix as DifficultyMix);
         setQuestions(selected);
+        router.push(`/the-crucible?mode=test&chapters=${ids.join(',')}`, { scroll: false });
       })
-      .catch(() => { notify('Failed to load questions.'); setView('landing'); })
+      .catch(() => { notify('Failed to load questions.'); updateView('landing'); })
       .finally(() => setLoading(false));
   };
 
   // View routing
 
   if (view === 'shloka') return <ShlokaScreen onDone={onShlokaDone} />;
-  if (view === 'browse') return <BrowseView questions={questions} chapters={chapters} onBack={() => setView('landing')} />;
-  if (view === 'test') return <TestView questions={questions} onBack={() => setView('landing')} />;
+  if (view === 'browse') return <BrowseView questions={questions} chapters={chapters} onBack={() => updateView('landing')} />;
+  if (view === 'test') return <TestView questions={questions} onBack={() => updateView('landing')} />;
 
   return (
     <>

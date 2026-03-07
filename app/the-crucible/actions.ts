@@ -4,6 +4,163 @@ import { Question as QuestionPageType, TaxonomyNode, Chapter } from './component
 import connectToDatabase from '@/lib/mongodb';
 import { Chapter as ChapterModel } from '@/lib/models/Chapter';
 
+// Full question shape returned by question detail page (superset of QuestionPageType)
+export interface QuestionDetail extends QuestionPageType {
+  updated_at: string;
+  created_at: string;
+  status: string;
+}
+
+// Lookup a question by either its UUID (_id) or display_id.
+// Returns { question, redirectTo } where redirectTo is set when slug is a display_id
+// so the caller can issue a permanent redirect to the canonical UUID URL.
+export async function getQuestionBySlug(
+  slug: string
+): Promise<{ question: QuestionDetail; redirectTo: string | null } | null> {
+  try {
+    await connectToDatabase();
+    const { QuestionV2 } = await import('@/lib/models/Question.v2');
+
+    // UUID pattern: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+    const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
+
+    let doc: any = null;
+    let redirectTo: string | null = null;
+
+    if (isUUID) {
+      doc = await QuestionV2.findOne({ _id: slug, deleted_at: null }).lean();
+    } else {
+      // Treat as display_id — find and redirect to canonical UUID URL
+      doc = await QuestionV2.findOne({
+        display_id: { $regex: new RegExp(`^${slug}$`, 'i') },
+        deleted_at: null,
+      }).lean();
+      if (doc) {
+        redirectTo = `/the-crucible/q/${toString(doc._id)}`;
+      }
+    }
+
+    if (!doc) return null;
+
+    const question: QuestionDetail = {
+      id: toString(doc._id),
+      display_id: doc.display_id || toString(doc._id)?.slice(0, 8)?.toUpperCase() || 'Q',
+      question_text: { markdown: doc.question_text?.markdown || '' },
+      type: doc.type,
+      options: doc.options || [],
+      answer: doc.answer || {},
+      solution: {
+        text_markdown: doc.solution?.text_markdown || '',
+        video_url: doc.solution?.video_url || undefined,
+        asset_ids: doc.solution?.asset_ids || undefined,
+        latex_validated: doc.solution?.latex_validated || false,
+      },
+      metadata: {
+        difficulty: doc.metadata?.difficulty || 'Medium',
+        chapter_id: doc.metadata?.chapter_id || '',
+        tags: doc.metadata?.tags || [],
+        is_pyq: doc.metadata?.is_pyq || false,
+        is_top_pyq: doc.metadata?.is_top_pyq || false,
+        exam_source: doc.metadata?.exam_source,
+      },
+      svg_scales: doc.svg_scales || {},
+      updated_at: doc.updated_at?.toISOString?.() || new Date().toISOString(),
+      created_at: doc.created_at?.toISOString?.() || new Date().toISOString(),
+      status: doc.status || 'published',
+    };
+
+    return { question, redirectTo };
+  } catch (error) {
+    console.error('getQuestionBySlug failed:', error);
+    return null;
+  }
+}
+
+// Fetch prev / next question within the same chapter (sorted by display_id).
+export async function getAdjacentQuestions(
+  chapterId: string,
+  currentDisplayId: string
+): Promise<{ prev: { id: string; display_id: string } | null; next: { id: string; display_id: string } | null }> {
+  try {
+    await connectToDatabase();
+    const { QuestionV2 } = await import('@/lib/models/Question.v2');
+
+    const allInChapter = await QuestionV2.find(
+      { 'metadata.chapter_id': chapterId, deleted_at: null, status: 'published' },
+      { _id: 1, display_id: 1 }
+    )
+      .sort({ display_id: 1 })
+      .lean();
+
+    const idx = allInChapter.findIndex((q: any) => q.display_id === currentDisplayId);
+    if (idx === -1) return { prev: null, next: null };
+
+    const prevDoc = allInChapter[idx - 1] as any;
+    const nextDoc = allInChapter[idx + 1] as any;
+
+    return {
+      prev: prevDoc ? { id: toString(prevDoc._id), display_id: prevDoc.display_id } : null,
+      next: nextDoc ? { id: toString(nextDoc._id), display_id: nextDoc.display_id } : null,
+    };
+  } catch {
+    return { prev: null, next: null };
+  }
+}
+
+// Fetch a small set of related questions (same chapter, excluding current).
+export async function getRelatedCrucibleQuestions(
+  chapterId: string,
+  excludeId: string,
+  limit = 5
+): Promise<Array<{ id: string; display_id: string; question_text: string; metadata: { difficulty: string; exam_source?: any } }>> {
+  try {
+    await connectToDatabase();
+    const { QuestionV2 } = await import('@/lib/models/Question.v2');
+
+    const docs = await QuestionV2.find(
+      { 'metadata.chapter_id': chapterId, deleted_at: null, status: 'published', _id: { $ne: excludeId } },
+      { _id: 1, display_id: 1, 'question_text.markdown': 1, 'metadata.difficulty': 1, 'metadata.exam_source': 1 }
+    )
+      .sort({ 'metadata.is_top_pyq': -1, display_id: 1 })
+      .limit(limit)
+      .lean();
+
+    return docs.map((d: any) => ({
+      id: toString(d._id),
+      display_id: d.display_id,
+      question_text: d.question_text?.markdown || '',
+      metadata: {
+        difficulty: d.metadata?.difficulty || 'Medium',
+        exam_source: d.metadata?.exam_source,
+      },
+    }));
+  } catch {
+    return [];
+  }
+}
+
+// Fetch all published PYQ IDs+display_ids for generateStaticParams (UUID only).
+export async function getAllPublishedPYQSlugs(): Promise<Array<{ id: string; display_id: string; updated_at: string }>> {
+  try {
+    await connectToDatabase();
+    const { QuestionV2 } = await import('@/lib/models/Question.v2');
+
+    const docs = await QuestionV2.find(
+      { deleted_at: null, status: 'published', 'metadata.is_pyq': true },
+      { _id: 1, display_id: 1, updated_at: 1 }
+    )
+      .lean();
+
+    return docs.map((d: any) => ({
+      id: toString(d._id),
+      display_id: d.display_id || '',
+      updated_at: d.updated_at?.toISOString?.() || new Date().toISOString(),
+    }));
+  } catch {
+    return [];
+  }
+}
+
 // Helper to safely convert ObjectId to string
 const toString = (val: any) => (val && val.toString ? val.toString() : val);
 

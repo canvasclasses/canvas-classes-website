@@ -31,6 +31,7 @@ export interface Question {
     asset_ids?: {
       audio?: string[];
     };
+    latex_validated?: boolean;
   };
   metadata: {
     difficulty: 'Easy' | 'Medium' | 'Hard';

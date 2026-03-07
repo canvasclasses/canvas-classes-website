@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft, BarChart2 } from 'lucide-react';
 import { Chapter, Question } from './types';
 import WizardStepIndicator from './WizardStepIndicator';
@@ -186,6 +187,7 @@ interface CrucibleWizardProps {
 }
 
 export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardProps) {
+  const router = useRouter();
   const [step, setStep] = useState<WizardStep>(1);
   const [mode, setMode] = useState<'browse' | 'test' | null>(null);
   const [selectedChapters, setSelectedChapters] = useState<Set<string>>(new Set());
@@ -266,12 +268,24 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
   // Step 3: Launch
   const handleLaunch = (count?: number, mix?: DifficultyMix) => {
     if (loading) return;
-    setLoading(true);
-    // Reset the two-flag handshake for this new session
-    setShlokaExited(false);
-    setPendingQuestions(null);
 
     const chapterIds = Array.from(selectedChapters);
+
+    // Single chapter: navigate to chapter-specific URL — fully refresh-safe
+    if (chapterIds.length === 1) {
+      const chId = chapterIds[0];
+      if (mode === 'browse') {
+        router.push(`/the-crucible/${chId}?mode=browse`);
+      } else {
+        router.push(`/the-crucible/${chId}?mode=test`);
+      }
+      return;
+    }
+
+    // Multiple chapters: use shloka + fetch flow, encode chapters in URL afterwards
+    setLoading(true);
+    setShlokaExited(false);
+    setPendingQuestions(null);
 
     if (mode === 'browse') {
       setPendingView('browse');
@@ -283,7 +297,8 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
             setActiveView('wizard');
             return;
           }
-          setPendingQuestions(qs); // will activate view once shloka exits too
+          setPendingQuestions(qs);
+          router.push(`/the-crucible?mode=browse&chapters=${chapterIds.join(',')}`, { scroll: false });
         })
         .catch(() => { notify('Failed to load questions.'); setActiveView('wizard'); })
         .finally(() => setLoading(false));
@@ -295,7 +310,8 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
           if (qs.length === 0) { notify('No questions found.'); setActiveView('wizard'); return; }
           const effectiveMix = topPYQFilter ? 'pyq' : mix;
           const selected = selectTestQuestions(qs, count || 20, (effectiveMix || 'balanced') as DifficultyMix);
-          setPendingQuestions(selected); // will activate view once shloka exits too
+          setPendingQuestions(selected);
+          router.push(`/the-crucible?mode=test&chapters=${chapterIds.join(',')}`, { scroll: false });
         })
         .catch(() => { notify('Failed to load questions.'); setActiveView('wizard'); })
         .finally(() => setLoading(false));

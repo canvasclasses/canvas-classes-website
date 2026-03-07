@@ -104,6 +104,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Error fetching crucible chapters for sitemap:', error);
     }
 
-    return [...staticEntries, ...flashcardChapterEntries, ...crucibleChapterEntries, ...questionEntries];
+    // Crucible individual question pages (UUID-based canonical URLs)
+    let crucibleQuestionEntries: MetadataRoute.Sitemap = [];
+    try {
+        const { getAllPublishedPYQSlugs } = await import('./the-crucible/actions');
+        const pyqSlugs = await getAllPublishedPYQSlugs();
+        crucibleQuestionEntries = pyqSlugs.map(q => ({
+            url: `${BASE_URL}/the-crucible/q/${q.id}`,
+            lastModified: new Date(q.updated_at),
+            changeFrequency: 'monthly' as const,
+            priority: 0.75,
+        }));
+    } catch (error) {
+        console.error('Error fetching crucible question slugs for sitemap:', error);
+    }
+
+    return [...staticEntries, ...flashcardChapterEntries, ...crucibleChapterEntries, ...questionEntries, ...crucibleQuestionEntries];
 }
 

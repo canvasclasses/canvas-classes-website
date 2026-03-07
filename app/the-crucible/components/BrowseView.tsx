@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Star, Check, ChevronDown, MonitorPlay, Volume2, ChevronUp } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, Check, ChevronDown, MonitorPlay, Volume2, ChevronUp, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
 import { Chapter, Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
 import WatermarkOverlay from '@/components/WatermarkOverlay';
@@ -381,8 +382,19 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
           {(cardSol[i] ?? false) ? 'Hide Solution' : 'View Solution'}
         </button>
         {(cardSol[i] ?? false) && (
-          <div id={solDivId} style={{ marginTop: 10, padding: '14px 18px', borderRadius: 12, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)' }}>
-            <div style={{ fontSize: 10, fontWeight: 700, color: '#a78bfa', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
+          <div id={solDivId} style={{ marginTop: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12, paddingBottom: 8, borderBottom: '1px solid rgba(124,58,237,0.2)' }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: '#a78bfa', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
+              <Link
+                href={`/the-crucible/q/${qq.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, color: 'rgba(167,139,250,0.6)', textDecoration: 'none' }}
+              >
+                <ExternalLink style={{ width: 10, height: 10 }} />
+                Share
+              </Link>
+            </div>
             
             {/* Media Controls Row - Video & Audio buttons */}
             {(qq.solution?.video_url || (qq.solution?.asset_ids?.audio && qq.solution.asset_ids.audio.length > 0)) && (

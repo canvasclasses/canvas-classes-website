@@ -22,6 +22,14 @@ export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Reset state when navigating to a different question
+  useEffect(() => {
+    setAudioBlob(null);
+    setAudioUrl(existingAudioUrl || null);
+    setIsPlaying(false);
+    setRecordingTime(0);
+  }, [questionId, existingAudioUrl]);
+
   useEffect(() => {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);

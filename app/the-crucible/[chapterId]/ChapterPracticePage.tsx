@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useCallback, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { Chapter, Question } from '../components/types';
 import BrowseView from '../components/BrowseView';
@@ -46,13 +46,34 @@ async function recordTestSession(token: string, chapterId: string, questionIds: 
 
 export default function ChapterPracticePage({ chapter, questions, allChapters }: Props) {
     const router = useRouter();
-    const [mode, setMode] = useState<Mode>('choose');
+    const searchParams = useSearchParams();
+    
+    // Initialize mode from URL query param (e.g., ?mode=browse)
+    const initialMode = (searchParams.get('mode') as Mode) || 'choose';
+    const [mode, setMode] = useState<Mode>(initialMode);
     const [testQuestions, setTestQuestions] = useState<Question[]>([]);
     const [showTestConfig, setShowTestConfig] = useState(false);
     const [isBuilding, setIsBuilding] = useState(false);
 
     const color = CAT_COLOR[chapter.category ?? 'Physical'] ?? '#a78bfa';
     const qCount = questions.length;
+
+    // Sync mode state with URL on mount and when searchParams change
+    useEffect(() => {
+        const urlMode = (searchParams.get('mode') as Mode) || 'choose';
+        if (urlMode !== mode) {
+            setMode(urlMode);
+        }
+    }, [searchParams]);
+
+    // Helper to update mode and URL together
+    const updateMode = useCallback((newMode: Mode) => {
+        setMode(newMode);
+        const url = newMode === 'choose' 
+            ? `/the-crucible/${chapter.id}`
+            : `/the-crucible/${chapter.id}?mode=${newMode}`;
+        router.push(url, { scroll: false });
+    }, [chapter.id, router]);
 
     const startTest = useCallback(async (count: number, mix: DifficultyMix) => {
         setShowTestConfig(false);
@@ -93,18 +114,18 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
                 recordTestSession(token, chapter.id, picked.map(q => q.id), { count, mix });
             }
 
-            setMode('test');
+            updateMode('test');
         } finally {
             setIsBuilding(false);
         }
-    }, [questions, chapter.id]);
+    }, [questions, chapter.id, updateMode]);
 
     if (mode === 'browse') {
-        return <BrowseView questions={questions} chapters={allChapters} onBack={() => setMode('choose')} chapterId={chapter.id} />;
+        return <BrowseView questions={questions} chapters={allChapters} onBack={() => updateMode('choose')} chapterId={chapter.id} />;
     }
 
     if (mode === 'test') {
-        return <TestView questions={testQuestions} onBack={() => setMode('choose')} />;
+        return <TestView questions={testQuestions} onBack={() => updateMode('choose')} />;
     }
 
     return (
@@ -159,7 +180,7 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
 
                         {/* Action buttons */}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                            <button onClick={() => setMode('browse')}
+                            <button onClick={() => updateMode('browse')}
                                 style={{ padding: '18px', borderRadius: 14, border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.06)', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
                                 📖 Browse All Questions
                                 <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 400 }}>Solutions visible</span>
