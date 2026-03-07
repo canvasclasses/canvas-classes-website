@@ -128,7 +128,7 @@ export async function getChapterQuestions(chapterId: string): Promise<QuestionPa
             'metadata.chapter_id': chapterId,
             deleted_at: null,
         })
-            .sort({ created_at: 1 })
+            .sort({ display_id: 1 })
             .lean();
 
         return docs.map((q: any) => ({

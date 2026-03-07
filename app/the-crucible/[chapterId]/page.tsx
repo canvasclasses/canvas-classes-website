@@ -9,7 +9,9 @@ export const revalidate = 600;
 // Generate all 28 chapter routes at build time
 export async function generateStaticParams() {
     const chapters = await getTaxonomy();
-    return chapters.map(ch => ({ chapterId: ch.id }));
+    return chapters.map(ch => ({
+        chapterId: ch.id.toString()
+    }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ chapterId: string }> }): Promise<Metadata> {

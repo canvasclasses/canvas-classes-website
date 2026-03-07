@@ -163,25 +163,27 @@ function CompareRows({ slots }: { slots: SimSlot[] }) {
   const pkas = slots.map((sl, i) => ({ val: simPka(sl), label: simLabel(sl), col: SLOT_COLORS[i], i }));
   const pMin = Math.min(...pkas.map(x => x.val)), pMax = Math.max(...pkas.map(x => x.val));
   return (
-    <div style={{ marginTop: 24 }}>
-      <div style={{ fontSize: 12.5, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase' as const, color: 'rgba(255,255,255,0.3)', marginBottom: 12 }}>pKₐ Comparison</div>
-      {pkas.map((p, idx) => {
-        const acL = acidLabel(p.val);
-        const w = pMax === pMin ? 60 : Math.round(30 + 60 * (pMax - p.val) / (pMax - pMin));
-        return (
-          <div key={p.i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 0', borderBottom: idx < pkas.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
-            <span style={{ fontSize: 12.5, fontWeight: 700, color: 'rgba(255,255,255,0.3)', minWidth: 24 }}>#{p.i + 1}</span>
-            <div style={{ width: 8, height: 8, borderRadius: '50%', background: p.col, flexShrink: 0 }} />
-            <span style={{ fontSize: 14.5, fontWeight: 600, color: 'rgba(255,255,255,0.9)', minWidth: 120, flexShrink: 0 }}>{p.label}</span>
-            <div style={{ flex: 1, height: 28, background: 'rgba(255,255,255,0.04)', borderRadius: 6, overflow: 'hidden', position: 'relative' as const }}>
-              <div style={{ height: '100%', width: `${w}%`, background: `linear-gradient(90deg, ${p.col}66, ${p.col}dd)`, borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 10px', transition: 'all .6s cubic-bezier(.34,1.56,.64,1)' }}>
-                <span className="font-mono" style={{ fontSize: 12.5, fontWeight: 700, color: '#fff', textShadow: '0 1px 2px rgba(0,0,0,0.4)' }}>{p.val.toFixed(2)}</span>
+    <div className="mt-6 overflow-x-auto pb-2 custom-scrollbar">
+      <div className="min-w-[500px]">
+        <div style={{ fontSize: 12.5, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase' as const, color: 'rgba(255,255,255,0.3)', marginBottom: 12 }}>pKₐ Comparison</div>
+        {pkas.map((p, idx) => {
+          const acL = acidLabel(p.val);
+          const w = pMax === pMin ? 60 : Math.round(30 + 60 * (pMax - p.val) / (pMax - pMin));
+          return (
+            <div key={p.i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 0', borderBottom: idx < pkas.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+              <span style={{ fontSize: 12.5, fontWeight: 700, color: 'rgba(255,255,255,0.3)', minWidth: 24 }}>#{p.i + 1}</span>
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: p.col, flexShrink: 0 }} />
+              <span style={{ fontSize: 14.5, fontWeight: 600, color: 'rgba(255,255,255,0.9)', minWidth: 120, flexShrink: 0 }}>{p.label}</span>
+              <div style={{ flex: 1, height: 28, background: 'rgba(255,255,255,0.04)', borderRadius: 6, overflow: 'hidden', position: 'relative' as const }}>
+                <div style={{ height: '100%', width: `${w}%`, background: `linear-gradient(90deg, ${p.col}66, ${p.col}dd)`, borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 10px', transition: 'all .6s cubic-bezier(.34,1.56,.64,1)' }}>
+                  <span className="font-mono" style={{ fontSize: 12.5, fontWeight: 700, color: '#fff', textShadow: '0 1px 2px rgba(0,0,0,0.4)' }}>{p.val.toFixed(2)}</span>
+                </div>
               </div>
+              <span style={{ fontSize: 12.5, fontWeight: 700, padding: '3px 10px', borderRadius: 20, whiteSpace: 'nowrap' as const, minWidth: 90, textAlign: 'center' as const, color: acL.col, background: `${acL.col}15`, border: `1px solid ${acL.col}25` }}>{acL.txt}</span>
             </div>
-            <span style={{ fontSize: 12.5, fontWeight: 700, padding: '3px 10px', borderRadius: 20, whiteSpace: 'nowrap' as const, minWidth: 90, textAlign: 'center' as const, color: acL.col, background: `${acL.col}15`, border: `1px solid ${acL.col}25` }}>{acL.txt}</span>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -273,7 +275,7 @@ function PhenolLab() {
   return (
     <div>
       <GroupChipTray activeGroup={slots[activeSlot].group} onSelect={g => setGroup(activeSlot, g)} />
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 28 }}>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
         {slots.map((slot, i) => <SlotTile key={i} slot={slot} slotIdx={i} isActive={activeSlot === i} onActivate={() => setActiveSlot(i)} onSetPos={p => setPos(i, p)} />)}
       </div>
       <CompareRows slots={slots} />

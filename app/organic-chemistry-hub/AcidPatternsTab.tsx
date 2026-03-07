@@ -326,8 +326,8 @@ export default function AcidPatternsTab() {
         <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.28)' }}>pKa data for substituted acetic and benzoic acids · click any cell to see the structure</p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 270px', gap: 16, marginBottom: 32 }}>
-        <div style={{ overflowX: 'auto' }}>
+      <div className="flex flex-col lg:flex-row gap-4 mb-8">
+        <div className="flex-1 overflow-x-auto w-full">
           <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: 0, fontSize: 13 }}>
             <thead>
               <tr>
@@ -366,7 +366,7 @@ export default function AcidPatternsTab() {
           </table>
         </div>
 
-        <div style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '16px 14px', minHeight: 260, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div className="w-full lg:w-[270px] shrink-0 bg-white/[0.025] border border-white/5 rounded-xl p-4 min-h-[260px] flex flex-col justify-center">
           <StructureViewer hl={hl} />
         </div>
       </div>
@@ -393,7 +393,7 @@ export default function AcidPatternsTab() {
       <CyclicTrend />
       <AxEqTrend />
       <ActiveMethylenePkaTable />
-    </div>
+    </div >
   );
 }
 

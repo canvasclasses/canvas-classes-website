@@ -15,6 +15,7 @@ import {
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import rehypeRaw from 'rehype-raw';
 import 'katex/dist/katex.min.css';
 
 // Tailwind color maps for chips
@@ -64,10 +65,15 @@ function Panel({ variant, label, body, icon: Icon }: { variant: 'stereo' | 'mist
 
 function ReactionCard({ r, isOpen, onToggle }: { r: Reaction; isOpen: boolean; onToggle: () => void }) {
   const c = TYPE_COLOR[r.type] ?? ['rgba(90,80,110,0.1)', 'rgba(90,80,110,0.3)', '#9890b0'];
-  const typeStyle = { backgroundColor: c[0], borderColor: c[1], color: c[2] };
+  const typeStyle = {
+    backgroundColor: '#1f2937',
+    borderColor: '#374151',
+    color: c[2]
+  };
 
-  const pb = r.priority === 'high' ? 'bg-rose-400/5 text-rose-300/70 border-rose-400/20' : r.priority === 'medium' ? 'bg-amber-400/5 text-amber-300/70 border-amber-400/20' : 'bg-emerald-400/5 text-emerald-300/70 border-emerald-400/20';
-  const eb = r.exam === 'both' ? 'bg-indigo-400/5 text-indigo-300/70 border-indigo-400/20' : r.exam === 'advanced' ? 'bg-orange-400/5 text-orange-300/70 border-orange-400/20' : 'bg-blue-400/5 text-blue-300/70 border-blue-400/20';
+  const pb = r.priority === 'high' ? 'bg-orange-500/20 text-orange-300 border-orange-500/30' : r.priority === 'medium' ? 'bg-amber-500/20 text-amber-300 border-amber-500/30' : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30';
+  const eb = r.exam === 'both' ? 'bg-blue-500/20 text-blue-300 border-blue-500/30' : r.exam === 'advanced' ? 'bg-lime-500/20 text-lime-300 border-lime-500/30' : 'bg-sky-500/20 text-sky-300 border-sky-500/30';
+  const cb = 'bg-gray-800 text-gray-400 border-gray-700';
 
   const pLabel = r.priority === 'high' ? 'High' : r.priority === 'medium' ? 'Medium' : 'Low';
   const eLabel = r.exam === 'both' ? 'Mains + Adv' : r.exam === 'advanced' ? 'Adv only' : 'Mains';
@@ -81,25 +87,30 @@ function ReactionCard({ r, isOpen, onToggle }: { r: Reaction; isOpen: boolean; o
         <div className="flex items-start gap-4">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-3 mb-2 flex-wrap">
-              <span className="text-[18px] font-bold text-white/90 tracking-tight group-hover:text-emerald-300 transition-colors uppercase">{r.name}</span>
+              <span className="text-[19px] font-bold text-gray-200 tracking-tight group-hover:text-emerald-400 transition-colors">{r.name}</span>
             </div>
-            <div className="flex flex-wrap gap-1.5 text-[10.5px] font-bold tracking-wider uppercase">
-              <span className="inline-flex px-2 py-0.5 rounded-md border whitespace-nowrap opacity-80" style={typeStyle}>{r.type}</span>
-              <span className="inline-flex px-2 py-0.5 rounded-md border border-white/5 bg-white/5 text-white/30 whitespace-nowrap">{r.chapter}</span>
+            <div className="flex flex-wrap gap-1.5 text-[10.5px] font-bold tracking-wider">
+              <span className="inline-flex px-2 py-0.5 rounded-md border whitespace-nowrap" style={typeStyle}>{r.type}</span>
+              <span className={`inline-flex px-2 py-0.5 rounded-md border whitespace-nowrap ${cb}`}>{r.chapter}</span>
               <span className={`inline-flex px-2 py-0.5 rounded-md border whitespace-nowrap ${pb}`}>{pLabel} Priority</span>
               <span className={`inline-flex px-2 py-0.5 rounded-md border whitespace-nowrap ${eb}`}>{eLabel}</span>
             </div>
           </div>
           {!isOpen && (
-            <motion.div className="shrink-0 text-gray-500 p-2 bg-gray-800/30 rounded-full">
-              <ChevronDown size={20} />
+            <motion.div className="shrink-0 text-gray-500 p-2 bg-gray-800/40 hover:bg-gray-700/50 rounded-md transition-all">
+              <ChevronDown size={18} />
             </motion.div>
           )}
         </div>
 
         <div className="text-[16px] text-gray-300 leading-relaxed mt-4 lining-nums font-medium prose prose-invert max-w-none">
-          <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
-            {r.summary}
+          <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex, rehypeRaw]}>
+            {r.summary
+              ? r.summary
+                .replace(/Reagent:/g, '<span class="text-emerald-400 font-bold">Reagent:</span>')
+                .replace(/Mechanism:/g, '<span class="text-cyan-400 font-bold">Mechanism:</span>')
+                .replace(/Benefit:/g, '<span class="text-purple-400 font-bold">Benefit:</span>')
+              : ''}
           </ReactMarkdown>
         </div>
 
@@ -230,8 +241,12 @@ function NamedReactionsTab({ selectedId, onSelect }: { selectedId: string | null
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 ease-out">
       <div className="mb-8 relative">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 mb-2 tracking-tight">Named Reactions</h2>
-        <p className="text-gray-400 text-[15px]">{REACTIONS.length} reactions · Master every important organic reaction for JEE & NEET.</p>
+        <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-2 tracking-tight">
+          Organic <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Name Reactions</span>
+        </h2>
+        <p className="text-gray-400 text-[15px] max-w-2xl leading-relaxed">
+          Master every name reaction for CBSE/JEE/NEET with handwritten reaction mechanisms and key-points that make your revision highly effective.
+        </p>
         <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 blur-[80px] -z-10 rounded-full pointer-events-none" />
       </div>
 
@@ -515,7 +530,7 @@ function InorganicTrendsCTA() {
 }
 
 export default function OrganicMasterPage() {
-  const [section, setSection] = useState<'named' | 'lab' | 'phys' | 'ref'>('named');
+  const [section, setSection] = useState<'named' | 'lab' | 'phys' | 'ref'>('lab');
   const [selectedReactionId, setSelectedReactionId] = useState<string | null>(null);
 
   const handleSelectReaction = (id: string) => {

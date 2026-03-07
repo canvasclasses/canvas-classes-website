@@ -75,29 +75,37 @@ const PeriodicTableSim = () => {
     const [hovered, setHovered] = useState<string | null>(null);
     return (
         <div
-            className="grid gap-[3px] h-full"
-            style={{ gridTemplateColumns: 'repeat(8, 1fr)', gridTemplateRows: 'repeat(3, 1fr)' }}
+            className="absolute right-0 top-0 bottom-0 w-2/3 max-w-[300px] overflow-hidden"
+            style={{
+                maskImage: 'linear-gradient(to right, transparent 0%, black 30%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 30%)'
+            }}
         >
-            {MINI_ELEMENTS.map((el, idx) => (
-                <motion.div
-                    key={el.s}
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3 + idx * 0.02 }}
-                    className="rounded-[3px] flex items-center justify-center text-[9px] font-bold cursor-pointer transition-all duration-200 hover:scale-110 hover:z-10"
-                    style={{
-                        gridColumn: el.col,
-                        gridRow: el.row,
-                        backgroundColor: hovered === el.s ? el.c : `${el.c}25`,
-                        color: hovered === el.s ? '#000' : '#fff',
-                        boxShadow: hovered === el.s ? `0 0 12px ${el.c}` : 'none',
-                    }}
-                    onMouseEnter={() => setHovered(el.s)}
-                    onMouseLeave={() => setHovered(null)}
-                >
-                    {el.s}
-                </motion.div>
-            ))}
+            <div
+                className="grid gap-[3px] h-full p-2"
+                style={{ gridTemplateColumns: 'repeat(8, 1fr)', gridTemplateRows: 'repeat(3, 1fr)' }}
+            >
+                {MINI_ELEMENTS.map((el, idx) => (
+                    <motion.div
+                        key={el.s}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.3 + idx * 0.02 }}
+                        className="rounded-[3px] flex items-center justify-center text-[9px] font-bold cursor-pointer transition-all duration-200 hover:scale-110 hover:z-10"
+                        style={{
+                            gridColumn: el.col,
+                            gridRow: el.row,
+                            backgroundColor: hovered === el.s ? el.c : `${el.c}25`,
+                            color: hovered === el.s ? '#000' : '#fff',
+                            boxShadow: hovered === el.s ? `0 0 12px ${el.c}` : 'none',
+                        }}
+                        onMouseEnter={() => setHovered(el.s)}
+                        onMouseLeave={() => setHovered(null)}
+                    >
+                        {el.s}
+                    </motion.div>
+                ))}
+            </div>
         </div>
     );
 };
@@ -205,25 +213,34 @@ const TwoMinSim = () => (
 );
 
 // --- Flashcards sim ---
+// --- Flashcards sim (3D Flip) ---
 const FlashcardSim = () => (
-    <div className="h-full flex items-center justify-center relative">
-        {[2, 1, 0].map((i) => (
-            <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1 - i * 0.3, y: i * -4, x: i * 3, rotate: i * 2 }}
-                transition={{ delay: 0.5 + i * 0.1 }}
-                className="absolute w-14 h-18 rounded-lg border border-white/10 bg-white/[0.03]"
-                style={{ zIndex: 3 - i }}
-            />
-        ))}
+    <div className="h-full flex items-center justify-center relative perspective-[1000px]">
+        {/* Underneath Card (The "Answer") */}
         <motion.div
-            initial={{ opacity: 0, rotateY: 90 }}
-            animate={{ opacity: 1, rotateY: 0 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
-            className="relative z-10 w-14 h-18 rounded-lg border border-emerald-500/20 bg-emerald-500/5 flex items-center justify-center"
+            className="absolute w-20 h-24 rounded-xl border-2 border-emerald-500/20 bg-emerald-950/40 flex items-center justify-center overflow-hidden"
+            initial={{ opacity: 0, rotateZ: -6, scale: 0.9, x: -10 }}
+            animate={{ opacity: 1, rotateZ: -6, scale: 0.9, x: -10 }}
+            transition={{ delay: 0.8 }}
+            style={{ zIndex: 1 }}
         >
-            <BookOpen size={14} className="text-emerald-400/60" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/10 to-transparent" />
+            <span className="text-4xl font-black text-emerald-500/30">A</span>
+        </motion.div>
+
+        {/* Top Card (The "Question") */}
+        <motion.div
+            className="absolute w-20 h-24 rounded-xl border border-white/20 bg-[#121822] shadow-xl flex flex-col items-center justify-center transform-style-[preserve-3d] transition-all duration-500 hover:-translate-y-4 hover:rotate-y-[15deg] hover:rotate-x-[5deg] hover:shadow-[0_20px_40px_-10px_rgba(16,185,129,0.3)] hover:border-emerald-500/50"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, type: 'spring', stiffness: 200, damping: 20 }}
+            style={{ zIndex: 2 }}
+        >
+            <div className="absolute top-2 left-2 text-[8px] font-bold text-slate-500 border border-white/10 px-1.5 py-0.5 rounded">Q</div>
+            <BookOpen size={20} className="text-emerald-400/80 mt-2 filter drop-shadow-[0_0_8px_rgba(52,211,153,0.5)] transition-transform group-hover:scale-110" />
+            <div className="mt-3 w-10 h-1 rounded-full bg-slate-700 overflow-hidden">
+                <div className="w-1/2 h-full bg-emerald-500 rounded-full" />
+            </div>
         </motion.div>
     </div>
 );
@@ -393,9 +410,9 @@ export default function FeaturesBento() {
                         </div>
                     </Link>
 
-                    {/* Name Reactions — small */}
+                    {/* Organic Hub — small */}
                     <Link
-                        href="/organic-name-reactions"
+                        href="/organic-chemistry-hub"
                         className="newhero-bento-card rounded-2xl relative overflow-hidden group cursor-pointer col-span-1 min-h-[160px]"
                     >
                         <CardSimLayer>
@@ -404,9 +421,9 @@ export default function FeaturesBento() {
                         <div className="relative z-10 p-4">
                             <div className="flex items-center gap-1.5 mb-1">
                                 <FlaskConical size={12} className="text-purple-400/70" />
-                                <h3 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">Reactions</h3>
+                                <h3 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors tracking-tight">Organic Hub</h3>
                             </div>
-                            <p className="text-[10px] text-slate-500 leading-relaxed">Name reactions</p>
+                            <p className="text-[10px] text-slate-500 leading-relaxed">Reactions, Mechanisms & Labs</p>
                         </div>
                         <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300">
                             <ArrowRight className="w-3.5 h-3.5 text-blue-400" />
@@ -440,9 +457,9 @@ export default function FeaturesBento() {
                         <CardSimLayer>
                             <PeriodicTableSim />
                         </CardSimLayer>
-                        <div className="relative z-10 p-5">
+                        <div className="relative z-10 p-5 w-full md:w-2/3 pointing-events-none">
                             <h3 className="text-base font-semibold text-white group-hover:text-blue-400 transition-colors mb-1">Periodic Table & Trends</h3>
-                            <p className="text-xs text-slate-500 leading-relaxed">Interactive element explorer with property heatmaps</p>
+                            <p className="text-xs text-slate-500 leading-relaxed max-w-[200px]">Interactive element explorer with property heatmaps</p>
                         </div>
                         <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300">
                             <ArrowRight className="w-4 h-4 text-blue-400" />
@@ -504,8 +521,8 @@ export default function FeaturesBento() {
                             <ArrowRight className="w-4 h-4 text-blue-400" />
                         </div>
                     </Link>
-                </motion.div>
-            </div>
-        </section>
+                </motion.div >
+            </div >
+        </section >
     );
 }
