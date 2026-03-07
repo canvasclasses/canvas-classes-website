@@ -48,15 +48,22 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
   // 'all' | 'mains' | 'advanced' | 'non-pyq'
   const [examFilter, setExamFilter] = useState<'all' | 'mains' | 'advanced' | 'non-pyq'>('all');
 
-  // Filter questions client-side based on exam filter
-  const filteredQuestions = questions.filter(q => {
-    if (examFilter === 'all') return true;
-    if (examFilter === 'non-pyq') return !q.metadata.is_pyq;
-    const exam = (q.metadata.exam_source?.exam ?? '').toLowerCase();
-    if (examFilter === 'mains') return q.metadata.is_pyq && /main/i.test(exam);
-    if (examFilter === 'advanced') return q.metadata.is_pyq && /adv/i.test(exam);
-    return true;
-  });
+  // Helper for alphanumeric sorting (e.g., GOC-001 < GOC-002)
+  const sortQuestions = (a: Question, b: Question) => {
+    return (a.display_id || '').localeCompare(b.display_id || '', undefined, { numeric: true, sensitivity: 'base' });
+  };
+
+  // Filter questions client-side based on exam filter + SORT BY display_id
+  const filteredQuestions = questions
+    .filter(q => {
+      if (examFilter === 'all') return true;
+      if (examFilter === 'non-pyq') return !q.metadata.is_pyq;
+      const exam = (q.metadata.exam_source?.exam ?? '').toLowerCase();
+      if (examFilter === 'mains') return q.metadata.is_pyq && /main/i.test(exam);
+      if (examFilter === 'advanced') return q.metadata.is_pyq && /adv/i.test(exam);
+      return true;
+    })
+    .sort(sortQuestions);
 
   // Local browse-session attempt buffer — flushed to API only if user confirms on exit
   type BrowseAttempt = {
@@ -135,18 +142,34 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
   }, []);
 
   // Track which card is in view for nav rail highlighting
+  // Refined: We track multiple intersecting cards and pick the top-most one (min index)
   useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    cardRefs.current.forEach((el, i) => {
-      if (!el) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActiveNavIdx(i); },
-        { root: scrollAreaRef.current, threshold: 0.3 }
-      );
-      obs.observe(el);
-      observers.push(obs);
+    const visibleIndices = new Set<number>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          const idx = Number(entry.target.getAttribute('data-index'));
+          if (entry.isIntersecting) {
+            visibleIndices.add(idx);
+          } else {
+            visibleIndices.delete(idx);
+          }
+        });
+
+        if (visibleIndices.size > 0) {
+          const sorted = Array.from(visibleIndices).sort((a, b) => a - b);
+          setActiveNavIdx(sorted[0]);
+        }
+      },
+      { root: scrollAreaRef.current, threshold: 0.15 }
+    );
+
+    cardRefs.current.forEach(el => {
+      if (el) observer.observe(el);
     });
-    return () => observers.forEach(o => o.disconnect());
+
+    return () => observer.disconnect();
   }, [pageQuestions.length]);
 
   const changePage = (newPage: number) => {
@@ -479,6 +502,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
         key={qq.id}
         ref={el => { cardRefs.current[localIdx] = el; }}
         id={`card-${page}-${localIdx}`}
+        data-index={localIdx}
         style={{
           background: 'rgba(255,255,255,0.025)',
           border: '1px solid rgba(255,255,255,0.07)',
