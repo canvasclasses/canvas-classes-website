@@ -569,3 +569,24 @@ button .katex,
   border-bottom-width: 0.06em !important;
   min-height: 1px;
 }
+
+/* ======================================== */
+/* Subscript & Superscript Styling         */
+/* ======================================== */
+
+/* Make subscripts and superscripts more readable (default is 75% which is too small) */
+sub,
+sup {
+  font-size: 0.85em !important;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.4em;
+}
+
+sub {
+  bottom: -0.25em;
+}

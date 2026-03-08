@@ -1130,17 +1130,30 @@ export default function AdminPage() {
                                         <span className="text-xs text-gray-300 font-medium">PYQ</span>
                                     </label>
 
-                                    <button
-                                        onClick={() => handleUpdate(selectedQuestion._id, {
-                                            metadata: { ...selectedQuestion.metadata, is_top_pyq: !selectedQuestion.metadata.is_top_pyq }
-                                        })}
-                                        className={`p-2 rounded-lg transition ${selectedQuestion.metadata.is_top_pyq
-                                            ? 'bg-amber-500/20 text-amber-400'
-                                            : 'bg-gray-800/50 text-gray-500 hover:text-amber-400'
-                                            }`}
-                                    >
-                                        <Star size={18} fill={selectedQuestion.metadata.is_top_pyq ? "currentColor" : "none"} />
-                                    </button>
+                                    <div className="flex flex-col items-center gap-1">
+                                        <button
+                                            onClick={() => handleUpdate(selectedQuestion._id, {
+                                                metadata: { ...selectedQuestion.metadata, is_top_pyq: !selectedQuestion.metadata.is_top_pyq }
+                                            })}
+                                            className={`p-2 rounded-lg transition ${selectedQuestion.metadata.is_top_pyq
+                                                ? 'bg-amber-500/20 text-amber-400'
+                                                : 'bg-gray-800/50 text-gray-500 hover:text-amber-400'
+                                                }`}
+                                            title="Mark as Top PYQ"
+                                        >
+                                            <Star size={18} fill={selectedQuestion.metadata.is_top_pyq ? "currentColor" : "none"} />
+                                        </button>
+                                        <span className="text-[10px] font-mono text-amber-400/70">
+                                            {(() => {
+                                                const currentChapterId = selectedQuestion.metadata.chapter_id;
+                                                const starredCount = questions.filter(q => 
+                                                    q.metadata.is_top_pyq && 
+                                                    q.metadata.chapter_id === currentChapterId
+                                                ).length;
+                                                return starredCount;
+                                            })()}
+                                        </span>
+                                    </div>
 
                                     <button
                                         onClick={() => setFlagModalOpen(true)}

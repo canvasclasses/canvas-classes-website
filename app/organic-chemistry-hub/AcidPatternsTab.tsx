@@ -7,6 +7,31 @@ import type { CaRow } from './acidity-lab-data2';
 type SortCol = 'y' | 'acetic' | 'ortho' | 'meta' | 'para';
 type HL = { y: string; col: SortCol } | null;
 
+// Convert Unicode subscripts/superscripts to HTML tags for proper styling
+function convertToHtml(text: string): string {
+  const subMap: Record<string, string> = {
+    '₀': '0', '₁': '1', '₂': '2', '₃': '3', '₄': '4', '₅': '5', '₆': '6', '₇': '7', '₈': '8', '₉': '9'
+  };
+  const supMap: Record<string, string> = {
+    '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9',
+    '⁺': '+', '⁻': '-', '⁼': '='
+  };
+  
+  let result = text;
+  
+  // Replace subscripts
+  Object.entries(subMap).forEach(([unicode, digit]) => {
+    result = result.replace(new RegExp(unicode, 'g'), `<sub>${digit}</sub>`);
+  });
+  
+  // Replace superscripts
+  Object.entries(supMap).forEach(([unicode, char]) => {
+    result = result.replace(new RegExp(unicode.replace(/[+\-=]/g, '\\$&'), 'g'), `<sup>${char}</sup>`);
+  });
+  
+  return result;
+}
+
 function heatBg(v: number | null, sel: boolean): string {
   if (v === null) return 'rgba(255,255,255,0.03)';
   const t = Math.max(0, Math.min(1, (v - 2.0) / 3.0));
@@ -309,15 +334,15 @@ export default function AcidPatternsTab() {
   });
 
   const dotCol: Record<string, string> = { ewg: '#e57373', edg: '#34c759', neutral: '#5856d6' };
-  const cols: { key: SortCol; label: string }[] = [
+  const cols: { key: SortCol; label: string; labelHtml?: string }[] = [
     { key: 'y', label: 'Substituent' },
-    { key: 'acetic', label: 'Y–CH₂COOH' },
+    { key: 'acetic', label: 'Y–CH₂COOH', labelHtml: 'Y–CH<sub>2</sub>COOH' },
     { key: 'ortho', label: 'ortho' },
     { key: 'meta', label: 'meta' },
     { key: 'para', label: 'para' },
   ];
 
-  const thBase: React.CSSProperties = { padding: '8px 14px', fontSize: 11, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', textAlign: 'center', borderBottom: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer', userSelect: 'none', whiteSpace: 'nowrap' };
+  const thBase: React.CSSProperties = { padding: '8px 14px', fontSize: 12.5, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', textAlign: 'center', borderBottom: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer', userSelect: 'none', whiteSpace: 'nowrap' };
 
   return (
     <div>
@@ -332,13 +357,15 @@ export default function AcidPatternsTab() {
             <thead>
               <tr>
                 <th colSpan={2} style={{ ...thBase, textAlign: 'left', borderRight: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.3)' }}>Aliphatic</th>
-                <th colSpan={3} style={{ ...thBase, color: 'rgba(255,255,255,0.3)' }}>Benzoic acid (Y–C₆H₄–COOH)</th>
+                <th colSpan={3} style={{ ...thBase, color: 'rgba(255,255,255,0.3)' }}>
+                  <span dangerouslySetInnerHTML={{ __html: 'Benzoic acid (Y–C<sub>6</sub>H<sub>4</sub>–COOH)' }} />
+                </th>
               </tr>
               <tr>
                 {cols.map(c => (
                   <th key={c.key} onClick={() => setSortCol(c.key)}
                     style={{ ...thBase, color: c.key === sortCol ? '#c8b4e8' : 'rgba(255,255,255,0.4)', borderRight: c.key === 'acetic' ? '1px solid rgba(255,255,255,0.08)' : 'none' }}>
-                    {c.label}{c.key === sortCol ? ' ↑' : ''}
+                    {c.labelHtml ? <span dangerouslySetInnerHTML={{ __html: c.labelHtml + (c.key === sortCol ? ' ↑' : '') }} /> : <>{c.label}{c.key === sortCol ? ' ↑' : ''}</>}
                   </th>
                 ))}
               </tr>
@@ -346,16 +373,16 @@ export default function AcidPatternsTab() {
             <tbody>
               {sorted.map(row => (
                 <tr key={row.y} style={{ background: hl?.y === row.y ? 'rgba(255,255,255,0.04)' : 'transparent', cursor: 'pointer' }}>
-                  <td style={{ padding: '9px 4px 9px 10px', borderBottom: '1px solid rgba(255,255,255,0.04)', fontSize: 14.5, fontWeight: 600, color: 'rgba(255,255,255,0.8)', whiteSpace: 'nowrap' }}>
+                  <td style={{ padding: '9px 4px 9px 10px', borderBottom: '1px solid rgba(255,255,255,0.04)', fontSize: 18, fontWeight: 600, color: 'rgba(255,255,255,0.8)', whiteSpace: 'nowrap', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif' }}>
                     <span style={{ display: 'inline-block', width: 9, height: 9, borderRadius: '50%', background: dotCol[row.type], marginRight: 8, verticalAlign: 'middle' }} />
-                    {row.y}
+                    <span dangerouslySetInnerHTML={{ __html: convertToHtml(row.y) }} />
                   </td>
                   {(['acetic', 'ortho', 'meta', 'para'] as const).map((col, ci) => {
                     const v = row[col];
                     const isSel = hl?.y === row.y && hl?.col === col;
                     return (
                       <td key={col} onClick={() => setHl({ y: row.y, col })}
-                        style={{ padding: '9px 14px', textAlign: 'center', fontFamily: 'var(--font-geist-mono),monospace', fontSize: 14, fontWeight: 600, borderBottom: '1px solid rgba(255,255,255,0.04)', borderRight: ci === 0 ? '1px solid rgba(255,255,255,0.06)' : 'none', background: heatBg(v, isSel), color: heatText(v, isSel), outline: isSel ? '2px solid rgba(255,255,255,0.45)' : 'none', outlineOffset: -2, cursor: 'pointer', transition: 'background .2s' }}>
+                        style={{ padding: '9px 14px', textAlign: 'center', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif', fontSize: 16.5, fontWeight: 600, borderBottom: '1px solid rgba(255,255,255,0.04)', borderRight: ci === 0 ? '1px solid rgba(255,255,255,0.06)' : 'none', background: heatBg(v, isSel), color: heatText(v, isSel), outline: isSel ? '2px solid rgba(255,255,255,0.45)' : 'none', outlineOffset: -2, cursor: 'pointer', transition: 'background .2s' }}>
                         {v !== null ? v.toFixed(2) : '—'}
                       </td>
                     );

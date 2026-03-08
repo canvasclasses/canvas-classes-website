@@ -18,6 +18,20 @@ import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import 'katex/dist/katex.min.css';
 
+// Convert Unicode subscripts/superscripts to HTML <sub>/<sup> tags
+function chem(text: string): string {
+  return text
+    .replace(/₀/g, '<sub>0</sub>').replace(/₁/g, '<sub>1</sub>').replace(/₂/g, '<sub>2</sub>')
+    .replace(/₃/g, '<sub>3</sub>').replace(/₄/g, '<sub>4</sub>').replace(/₅/g, '<sub>5</sub>')
+    .replace(/₆/g, '<sub>6</sub>').replace(/₇/g, '<sub>7</sub>').replace(/₈/g, '<sub>8</sub>')
+    .replace(/₉/g, '<sub>9</sub>')
+    .replace(/⁰/g, '<sup>0</sup>').replace(/¹/g, '<sup>1</sup>').replace(/²/g, '<sup>2</sup>')
+    .replace(/³/g, '<sup>3</sup>').replace(/⁴/g, '<sup>4</sup>').replace(/⁵/g, '<sup>5</sup>')
+    .replace(/⁶/g, '<sup>6</sup>').replace(/⁷/g, '<sup>7</sup>').replace(/⁸/g, '<sup>8</sup>')
+    .replace(/⁹/g, '<sup>9</sup>').replace(/⁺/g, '<sup>+</sup>').replace(/⁻/g, '<sup>−</sup>')
+    .replace(/⁼/g, '<sup>=</sup>');
+}
+
 // Tailwind color maps for chips
 const bgColors: Record<string, string> = {
   blue: 'bg-blue-500/15 border-blue-500/40 text-blue-300',
@@ -442,7 +456,7 @@ function QuickReferenceTab() {
                             <div className="w-10 h-10 shrink-0 bg-white/5 rounded-lg flex items-center justify-center p-1 border border-white/10"
                               dangerouslySetInnerHTML={{ __html: row.svg }} />
                           )}
-                          <span className="text-[14.5px] font-semibold text-white/90 truncate">{row.name}</span>
+                          <span className="text-[15.5px] font-semibold text-white/90 truncate" dangerouslySetInnerHTML={{ __html: chem(row.name) }} />
                         </div>
 
                         {/* Mobile Value Badge */}
@@ -454,7 +468,7 @@ function QuickReferenceTab() {
                         <span className="text-[13.5px] text-cyan-300 font-mono bg-cyan-500/10 px-2.5 py-1 rounded-md truncate">{row.value}</span>
                       </div>
 
-                      <span className={`flex-[2] w-full text-left leading-snug truncate ${table.title.toLowerCase().includes('pka') ? 'text-[15px] font-bold text-gray-200 tracking-wide' : 'text-[13px] font-medium text-gray-400'}`}>{row.note}</span>
+                      <span className={`flex-[2] w-full text-left leading-snug truncate ${table.title.toLowerCase().includes('pka') ? 'text-[16px] font-bold text-gray-200 tracking-wide' : 'text-[14px] font-medium text-gray-400'}`} dangerouslySetInnerHTML={{ __html: chem(row.note ?? '') }} />
                     </div>
                   ))}
                 </div>
@@ -707,6 +721,23 @@ export default function OrganicMasterPage() {
         @keyframes shimmer {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(100%); }
+        }
+        
+        /* Make subscripts and superscripts much more readable in chemical formulas */
+        sub, sup {
+          font-size: 0.85em !important;
+          line-height: 0;
+          position: relative;
+          vertical-align: baseline;
+          font-weight: 700;
+        }
+        
+        sup {
+          top: -0.5em;
+        }
+        
+        sub {
+          bottom: -0.25em;
         }
       `}} />
     </div>
