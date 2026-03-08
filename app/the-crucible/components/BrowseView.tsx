@@ -51,6 +51,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
   // Video and audio expansion state
   const [videoExpanded, setVideoExpanded] = useState<Record<number, boolean>>({});
   const [audioExpanded, setAudioExpanded] = useState<Record<string, boolean>>({});
+  const [copiedQuestionId, setCopiedQuestionId] = useState<string | null>(null);
 
   // Helper for alphanumeric sorting (e.g., GOC-001 < GOC-002)
   const sortQuestions = (a: Question, b: Question) => {
@@ -385,15 +386,59 @@ export default function BrowseView({ questions, chapters, onBack, chapterId }: {
           <div id={solDivId} style={{ marginTop: 16 }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12, paddingBottom: 8, borderBottom: '1px solid rgba(124,58,237,0.2)' }}>
               <div style={{ fontSize: 10, fontWeight: 700, color: '#a78bfa', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
-              <Link
-                href={`/the-crucible/q/${qq.id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10, color: 'rgba(167,139,250,0.6)', textDecoration: 'none' }}
+              <button
+                onClick={() => {
+                  const url = `${window.location.origin}/the-crucible/q/${qq.id}`;
+                  navigator.clipboard.writeText(url).then(() => {
+                    setCopiedQuestionId(qq.id);
+                    setTimeout(() => setCopiedQuestionId(null), 2000);
+                  });
+                }}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: 5, 
+                  fontSize: 11, 
+                  fontWeight: 700,
+                  color: '#fff', 
+                  background: copiedQuestionId === qq.id 
+                    ? 'linear-gradient(135deg, #34d399 0%, #10b981 100%)' 
+                    : 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '7px 12px',
+                  borderRadius: 8,
+                  transition: 'all 0.2s',
+                  boxShadow: copiedQuestionId === qq.id 
+                    ? '0 4px 12px rgba(52,211,153,0.4)' 
+                    : '0 4px 12px rgba(139,92,246,0.4)',
+                  transform: copiedQuestionId === qq.id ? 'scale(1.05)' : 'scale(1)',
+                }}
+                onMouseEnter={(e) => {
+                  if (copiedQuestionId !== qq.id) {
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(139,92,246,0.5)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (copiedQuestionId !== qq.id) {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(139,92,246,0.4)';
+                  }
+                }}
               >
-                <ExternalLink style={{ width: 10, height: 10 }} />
-                Share
-              </Link>
+                {copiedQuestionId === qq.id ? (
+                  <>
+                    <Check style={{ width: 12, height: 12 }} />
+                    Copied!
+                  </>
+                ) : (
+                  <>
+                    <ExternalLink style={{ width: 12, height: 12 }} />
+                    Share
+                  </>
+                )}
+              </button>
             </div>
             
             {/* Media Controls Row - Video & Audio buttons */}
