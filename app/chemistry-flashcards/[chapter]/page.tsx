@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { fetchFlashcards, getFlashcardChapters, getChapterFromSlug, generateChapterSlug } from '../../lib/revisionData';
+import { fetchFlashcards, getFlashcardChapters, getChapterFromSlug, generateChapterSlug } from '../../lib/flashcardsData';
 import FlashcardsChapterClient from './FlashcardsChapterClient';
 
 interface Props {

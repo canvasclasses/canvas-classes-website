@@ -57,8 +57,8 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(loginUrl);
     }
 
-    // /crucible/admin requires email to be in the ADMIN_EMAILS allowlist
-    if (pathname.startsWith('/crucible/admin') && user) {
+    // /crucible/admin requires email to be in the ADMIN_EMAILS allowlist (skip on local dev)
+    if (pathname.startsWith('/crucible/admin') && user && !isLocalDev) {
         const userEmail = user.email || '';
         if (ADMIN_EMAILS.length > 0 && !ADMIN_EMAILS.includes(userEmail)) {
             return NextResponse.json(

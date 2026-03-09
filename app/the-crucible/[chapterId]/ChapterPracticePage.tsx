@@ -58,14 +58,6 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
     const color = CAT_COLOR[chapter.category ?? 'Physical'] ?? '#a78bfa';
     const qCount = questions.length;
 
-    // Sync mode state with URL on mount and when searchParams change
-    useEffect(() => {
-        const urlMode = (searchParams.get('mode') as Mode) || 'choose';
-        if (urlMode !== mode) {
-            setMode(urlMode);
-        }
-    }, [searchParams]);
-
     // Helper to update mode and URL together
     const updateMode = useCallback((newMode: Mode) => {
         setMode(newMode);
@@ -119,6 +111,14 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
             setIsBuilding(false);
         }
     }, [questions, chapter.id, updateMode]);
+
+    // Auto-build test if mode=test in URL on mount
+    useEffect(() => {
+        if (mode === 'test' && testQuestions.length === 0 && !isBuilding && questions.length > 0) {
+            // Use default test config: 20 questions, balanced difficulty
+            startTest(20, 'balanced');
+        }
+    }, [mode, testQuestions.length, isBuilding, questions.length, startTest]);
 
     if (mode === 'browse') {
         return <BrowseView questions={questions} chapters={allChapters} onBack={() => updateMode('choose')} chapterId={chapter.id} />;

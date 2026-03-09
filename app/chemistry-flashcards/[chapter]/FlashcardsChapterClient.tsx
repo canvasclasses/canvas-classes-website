@@ -17,7 +17,7 @@ import {
     Trophy,
     RefreshCw
 } from 'lucide-react';
-import { FlashcardItem } from '../../lib/revisionData';
+import { FlashcardItem } from '../../lib/flashcardsData';
 import { useCardProgress } from '../../hooks/useCardProgress';
 import { QualityRating } from '../../lib/spacedRepetition';
 import ReactMarkdown from 'react-markdown';

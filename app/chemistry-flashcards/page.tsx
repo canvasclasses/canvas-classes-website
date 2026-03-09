@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import FlashcardsClient from './FlashcardsClient';
-import { fetchFlashcards } from '../lib/revisionData';
+import { fetchFlashcards } from '../lib/flashcardsData';
 
 export const revalidate = 86400;
 

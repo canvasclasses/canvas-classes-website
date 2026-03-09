@@ -24,7 +24,7 @@ import {
     FlaskConical,
     ChevronDown
 } from 'lucide-react';
-import { FlashcardItem } from '../lib/revisionData';
+import { FlashcardItem } from '../lib/flashcardsData';
 import { useCardProgress } from '../hooks/useCardProgress';
 import { getMasteryLevel, getMasteryColor, daysUntilReview, QualityRating } from '../lib/spacedRepetition';
 import ReactMarkdown from 'react-markdown';
