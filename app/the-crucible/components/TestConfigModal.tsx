@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 export type DifficultyMix = 'balanced' | 'easy' | 'hard' | 'pyq';
+export type QuestionSort = 'random' | 'difficulty' | 'topic';
 
 const MIX_OPTIONS: { id: DifficultyMix; label: string; desc: string; color: string }[] = [
   { id: 'balanced', label: 'Balanced', desc: 'Mix of Easy · Medium · Hard', color: '#a78bfa' },
@@ -11,9 +12,15 @@ const MIX_OPTIONS: { id: DifficultyMix; label: string; desc: string; color: stri
   { id: 'pyq',      label: 'PYQ Only', desc: 'Previous Year Questions',      color: '#fbbf24' },
 ];
 
+const SORT_OPTIONS: { id: QuestionSort; label: string; desc: string }[] = [
+  { id: 'random', label: 'Random', desc: 'Shuffled order' },
+  { id: 'difficulty', label: 'Easy → Hard', desc: 'Gradual progression' },
+  { id: 'topic', label: 'By Topic', desc: 'Grouped by concept' },
+];
+
 export default function TestConfigModal({ maxQ, onStart, onClose }: {
   maxQ: number;
-  onStart: (count: number, mix: DifficultyMix) => void;
+  onStart: (count: number, mix: DifficultyMix, sort: QuestionSort) => void;
   onClose: () => void;
 }) {
   const presets = [10, 20, 30].filter(n => n <= maxQ);
@@ -21,6 +28,7 @@ export default function TestConfigModal({ maxQ, onStart, onClose }: {
   if (maxQ > 40 && !presets.includes(maxQ)) presets.push(maxQ);
   const [count, setCount] = useState(Math.min(20, maxQ));
   const [mix, setMix] = useState<DifficultyMix>('balanced');
+  const [sort, setSort] = useState<QuestionSort>('random');
 
   return (
     <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 90, background: 'rgba(0,0,0,0.82)', backdropFilter: 'blur(14px)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
@@ -56,6 +64,18 @@ export default function TestConfigModal({ maxQ, onStart, onClose }: {
           ))}
         </div>
 
+        {/* Question order */}
+        <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.4)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Question order</div>
+        <div style={{ display: 'flex', gap: 8, marginBottom: 18 }}>
+          {SORT_OPTIONS.map(opt => (
+            <button key={opt.id} onClick={() => setSort(opt.id)}
+              style={{ flex: 1, padding: '10px 12px', borderRadius: 10, border: `1.5px solid ${sort === opt.id ? '#3b82f6' : 'rgba(255,255,255,0.09)'}`, background: sort === opt.id ? 'rgba(59,130,246,0.15)' : 'rgba(255,255,255,0.03)', cursor: 'pointer', textAlign: 'center', transition: 'all 0.15s' }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: sort === opt.id ? '#60a5fa' : '#fff', marginBottom: 2 }}>{opt.label}</div>
+              <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)' }}>{opt.desc}</div>
+            </button>
+          ))}
+        </div>
+
         {/* Time estimate */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', background: 'rgba(255,255,255,0.04)', borderRadius: 12, marginBottom: 18, border: '1px solid rgba(255,255,255,0.07)' }}>
           <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)' }}>Estimated time</span>
@@ -64,7 +84,7 @@ export default function TestConfigModal({ maxQ, onStart, onClose }: {
 
         <div style={{ display: 'flex', gap: 10 }}>
           <button onClick={onClose} style={{ flex: 1, padding: '14px', borderRadius: 14, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: 'rgba(255,255,255,0.45)', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>Cancel</button>
-          <button onClick={() => onStart(count, mix)} style={{ flex: 2, padding: '14px', borderRadius: 14, border: 'none', background: 'linear-gradient(135deg,#7c3aed,#5b21b6)', color: '#fff', fontSize: 14, fontWeight: 800, cursor: 'pointer', boxShadow: '0 4px 20px rgba(124,58,237,0.45)' }}>
+          <button onClick={() => onStart(count, mix, sort)} style={{ flex: 2, padding: '14px', borderRadius: 14, border: 'none', background: 'linear-gradient(135deg,#7c3aed,#5b21b6)', color: '#fff', fontSize: 14, fontWeight: 800, cursor: 'pointer', boxShadow: '0 4px 20px rgba(124,58,237,0.45)' }}>
             Start Test →
           </button>
         </div>

@@ -13,27 +13,132 @@ interface ProgressPanelProps {
   isLoggedIn: boolean;
 }
 
+// Placeholder data used only on localhost for UI preview
+const DEV_PLACEHOLDER_STATS = {
+  stats: {
+    total_questions_attempted: 247,
+    total_correct: 182,
+    overall_accuracy: 74,
+    streak_days: 5,
+  },
+  mastered_chapters: 3,
+  active_days: [0, 1, 2, 4, 5],
+};
+
+const DEV_PLACEHOLDER_TESTS = () => {
+  const now = new Date();
+  return [
+    {
+      _id: 'placeholder-1',
+      chapter_id: 'ch11_goc',
+      test_config: { count: 20, difficulty_mix: 'balanced', question_sort: 'random' },
+      score: { correct: 15, total: 20, percentage: 75 },
+      timing: { total_seconds: 1245 },
+      created_at: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(),
+      saved_to_progress: true,
+    },
+    {
+      _id: 'placeholder-2',
+      chapter_id: 'ch11_isomerism',
+      test_config: { count: 10, difficulty_mix: 'easy', question_sort: 'difficulty' },
+      score: { correct: 8, total: 10, percentage: 80 },
+      timing: { total_seconds: 654 },
+      created_at: new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString(),
+      saved_to_progress: true,
+    },
+    {
+      _id: 'placeholder-3',
+      chapter_id: 'ch12_carbonyl',
+      test_config: { count: 15, difficulty_mix: 'hard', question_sort: 'topic' },
+      score: { correct: 9, total: 15, percentage: 60 },
+      timing: { total_seconds: 1890 },
+      created_at: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+      saved_to_progress: false,
+    },
+  ];
+};
+
 export default function ProgressPanel({ isOpen, onClose, isLoggedIn }: ProgressPanelProps) {
-  const [loading, setLoading] = useState(true);
+  // Check if local dev (bypass login + show placeholder data)
+  // This variable is only ever true on localhost — safe for production deployment
+  const isLocalDev = typeof window !== 'undefined' && window.location.hostname === 'localhost';
+
+  // Initialise with placeholder immediately on localhost so UI never shows empty state during load
+  const [loading, setLoading] = useState(!isLocalDev);
   const [data, setData] = useState<{
     stats: { total_questions_attempted: number, total_correct: number, overall_accuracy: number, streak_days: number };
     mastered_chapters: number;
     active_days: number[];
-  } | null>(null);
+  } | null>(isLocalDev ? DEV_PLACEHOLDER_STATS : null);
+  const [testResults, setTestResults] = useState<any[]>(isLocalDev ? DEV_PLACEHOLDER_TESTS() : []);
+  const [showTests, setShowTests] = useState(isLocalDev);
 
-  // Fetch stats when panel opens if logged in
+  // Fetch stats and test results when panel opens
   useEffect(() => {
-    if (isOpen && isLoggedIn) {
+    if (isOpen && (isLoggedIn || isLocalDev)) {
       setLoading(true);
-      fetch('/api/v2/user/stats')
-        .then(res => res.json())
-        .then(json => {
-          if (json.stats) setData(json);
+      Promise.all([
+        fetch('/api/v2/user/stats').then(res => res.json()).catch(() => ({ stats: null })),
+        fetch('/api/v2/test-results?limit=5').then(res => res.json()).catch(() => ({ results: [] }))
+      ])
+        .then(([statsData, testsData]) => {
+          // Use real data if available
+          if (statsData.stats) {
+            setData(statsData);
+          } else if (isLocalDev) {
+            // Placeholder data for localhost preview only
+            setData({
+              stats: {
+                total_questions_attempted: 247,
+                total_correct: 182,
+                overall_accuracy: 74,
+                streak_days: 5
+              },
+              mastered_chapters: 3,
+              active_days: [0, 1, 2, 4, 5] // M, T, W, F, S
+            });
+          }
+          
+          if (testsData.results && testsData.results.length > 0) {
+            setTestResults(testsData.results);
+          } else if (isLocalDev) {
+            // Placeholder test results for localhost preview only
+            const now = new Date();
+            setTestResults([
+              {
+                _id: 'placeholder-1',
+                chapter_id: 'ch11_goc',
+                test_config: { count: 20, difficulty_mix: 'balanced', question_sort: 'random' },
+                score: { correct: 15, total: 20, percentage: 75 },
+                timing: { total_seconds: 1245 },
+                created_at: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
+                saved_to_progress: true
+              },
+              {
+                _id: 'placeholder-2',
+                chapter_id: 'ch11_isomerism',
+                test_config: { count: 10, difficulty_mix: 'easy', question_sort: 'difficulty' },
+                score: { correct: 8, total: 10, percentage: 80 },
+                timing: { total_seconds: 654 },
+                created_at: new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
+                saved_to_progress: true
+              },
+              {
+                _id: 'placeholder-3',
+                chapter_id: 'ch12_carbonyl',
+                test_config: { count: 15, difficulty_mix: 'hard', question_sort: 'topic' },
+                score: { correct: 9, total: 15, percentage: 60 },
+                timing: { total_seconds: 1890 },
+                created_at: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+                saved_to_progress: false
+              }
+            ]);
+          }
         })
         .catch(console.error)
         .finally(() => setLoading(false));
     }
-  }, [isOpen, isLoggedIn]);
+  }, [isOpen, isLoggedIn, isLocalDev]);
   // Lock body scroll when open
   useEffect(() => {
     if (isOpen) {
@@ -89,8 +194,8 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn }: ProgressP
 
         {/* Content */}
         <div className="p-6 px-5 relative">
-          {/* Blur overlay for logged-out users */}
-          {!isLoggedIn && (
+          {/* Blur overlay for logged-out users (skip on local dev) */}
+          {!isLoggedIn && !isLocalDev && (
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/30 backdrop-blur-[2px] p-6">
               <div className="text-center">
                 <h3 className="text-base font-semibold text-zinc-50 mb-2 tracking-tight">
@@ -109,7 +214,7 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn }: ProgressP
             </div>
           )}
 
-          <div className={`${isLoggedIn ? '' : 'blur-[6px] opacity-40 pointer-events-none'}`}>
+          <div className={`${isLoggedIn || isLocalDev ? '' : 'blur-[6px] opacity-40 pointer-events-none'}`}>
             {loading ? (
               <div className="flex items-center justify-center py-20">
                 <div className="w-8 h-8 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin" />
@@ -127,6 +232,22 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn }: ProgressP
                 <button onClick={onClose} className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-bold text-sm transition-colors">
                   Start Practice
                 </button>
+              </div>
+            ) : !isLoggedIn && !isLocalDev ? (
+              <div className="text-center py-12">
+                <div className="mx-auto w-16 h-16 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4">
+                  <LogIn className="w-8 h-8 text-blue-400" />
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">Login Required</h3>
+                <p className="text-sm text-slate-400 max-w-[240px] mx-auto mb-6">
+                  Sign in to track your progress, streaks, and test results.
+                </p>
+                <Link
+                  href="/login?next=/the-crucible"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold text-sm transition-colors no-underline"
+                >
+                  <LogIn className="w-4 h-8" /> Log in
+                </Link>
               </div>
             ) : (
               <>
@@ -169,7 +290,7 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn }: ProgressP
                 </div>
 
                 {/* Streak section */}
-                <div className="bg-orange-600/[0.06] border border-orange-600/15 rounded-xl p-4 px-[18px] backdrop-blur-xl">
+                <div className="bg-orange-600/[0.06] border border-orange-600/15 rounded-xl p-4 px-[18px] backdrop-blur-xl mb-5">
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-sm font-semibold text-orange-400 tracking-tight">
                       {String.fromCodePoint(0x1F525)} {d.stats.streak_days} day streak
@@ -192,6 +313,58 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn }: ProgressP
                     ))}
                   </div>
                 </div>
+
+                {/* Recent Tests Section */}
+                {testResults.length > 0 && (
+                  <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 backdrop-blur-xl">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-sm font-semibold text-zinc-50 tracking-tight">
+                        🕐 Recent Tests
+                      </h3>
+                      <button
+                        onClick={() => setShowTests(!showTests)}
+                        className="text-[10px] text-blue-400 font-medium uppercase tracking-wider hover:text-blue-300 transition-colors"
+                      >
+                        {showTests ? 'Hide' : 'Show'}
+                      </button>
+                    </div>
+                    {showTests && (
+                      <div className="space-y-2">
+                        {testResults.slice(0, 3).map((test: any) => {
+                          const percentage = test.score?.percentage || 0;
+                          const color = percentage >= 70 ? '#34d399' : percentage >= 50 ? '#fbbf24' : '#f87171';
+                          const date = new Date(test.created_at);
+                          const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                          
+                          return (
+                            <div key={test._id} className="bg-white/[0.02] border border-white/[0.04] rounded-lg p-3">
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="text-xs font-medium text-zinc-300">
+                                  {test.test_config?.count || 0}Q Test
+                                </span>
+                                <span className="text-[10px] text-slate-400">{dateStr}</span>
+                              </div>
+                              <div className="flex items-center gap-3">
+                                <div className="text-lg font-bold" style={{ color }}>
+                                  {test.score?.correct}/{test.score?.total}
+                                </div>
+                                <div className="flex-1 h-1.5 bg-white/[0.05] rounded-full overflow-hidden">
+                                  <div
+                                    className="h-full rounded-full transition-all duration-500"
+                                    style={{ width: `${percentage}%`, background: color }}
+                                  />
+                                </div>
+                                <div className="text-sm font-bold" style={{ color }}>
+                                  {percentage}%
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                )}
               </>
             )}
           </div>

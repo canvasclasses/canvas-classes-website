@@ -6,6 +6,7 @@ import { Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
 import WatermarkOverlay from '@/components/WatermarkOverlay';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
+import TestSaveModal from './TestSaveModal';
 
 async function fetchOptionStats(questionId: string): Promise<Record<string, number>> {
   try {
@@ -45,6 +46,12 @@ export default function TestView({ questions, onBack }: { questions: Question[];
   const [revStats, setRevStats] = useState<Record<string, number>>({});
   // Finish-test confirmation modal (shown when user hits 'Finish Test' on last question)
   const [showFinishModal, setShowFinishModal] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [testStartTime] = useState(Date.now());
+  const [questionStartTimes, setQuestionStartTimes] = useState<Record<string, number>>({});
+  const [questionTimings, setQuestionTimings] = useState<Record<string, number>>({});
+  const [isPaused, setIsPaused] = useState(false);
+  const [showWarning, setShowWarning] = useState<'5min' | '1min' | null>(null);
   // Video and audio expansion state for review section
   const [videoExpanded, setVideoExpanded] = useState<Record<number, boolean>>({});
   const [audioExpanded, setAudioExpanded] = useState<Record<string, boolean>>({});
@@ -58,14 +65,52 @@ export default function TestView({ questions, onBack }: { questions: Question[];
     return () => window.removeEventListener('resize', check);
   }, []);
 
+  // Timer with pause/resume and warnings
   useEffect(() => {
-    // Never start the countdown if there are no questions yet (guard against
-    // the race condition where TestView mounts before fetch completes).
-    if (submitted || questions.length === 0) return;
-    const t = setInterval(() => setSeconds(s => { if (s <= 1) { clearInterval(t); setSubmitted(true); return 0; } return s - 1; }), 1000);
+    if (submitted || questions.length === 0 || isPaused) return;
+    
+    const t = setInterval(() => {
+      setSeconds(s => {
+        // Show warnings
+        if (s === 300 && !showWarning) setShowWarning('5min');
+        if (s === 60 && showWarning !== '1min') setShowWarning('1min');
+        
+        // Auto-submit only when timer reaches 0
+        if (s <= 0) {
+          clearInterval(t);
+          setSubmitted(true);
+          setShowSaveModal(true);
+          return 0;
+        }
+        return s - 1;
+      });
+    }, 1000);
+    
     return () => clearInterval(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [submitted]); // intentionally omit questions.length — initial seconds is set from useState
+  }, [submitted, questions.length, isPaused, showWarning]);
+  
+  // Track time spent on current question
+  useEffect(() => {
+    if (submitted || reviewing) return;
+    const currentQ = questions[idx];
+    if (!currentQ) return;
+    
+    // Start timing for this question if not already started
+    if (!questionStartTimes[currentQ.id]) {
+      setQuestionStartTimes(prev => ({ ...prev, [currentQ.id]: Date.now() }));
+    }
+    
+    return () => {
+      // Save time spent when leaving question
+      if (questionStartTimes[currentQ.id]) {
+        const timeSpent = Math.floor((Date.now() - questionStartTimes[currentQ.id]) / 1000);
+        setQuestionTimings(prev => ({
+          ...prev,
+          [currentQ.id]: (prev[currentQ.id] || 0) + timeSpent
+        }));
+      }
+    };
+  }, [idx, submitted, reviewing, questions, questionStartTimes]);
 
   useEffect(() => {
     if (!reviewing) return;
@@ -75,45 +120,116 @@ export default function TestView({ questions, onBack }: { questions: Question[];
     fetchOptionStats(rq.id).then(setRevStats);
   }, [reviewing, revIdx, questions]);
 
-  // Auto-save all test attempts when submitted
-  useEffect(() => {
-    if (!submitted) return;
-    (async () => {
-      try {
-        const supabase = createSupabaseClient();
-        if (!supabase) return;
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session?.access_token) return;
-        // Record every question — attempted or not
-        await Promise.allSettled(
-          questions.map(qq => {
-            const hasAnswer = !!(answers[qq.id] || (nvtInputs[qq.id] && nvtInputs[qq.id].trim()));
-            // Skipped questions: don't record (no attempt = no data)
-            if (!hasAnswer) return Promise.resolve();
-            const isCorrect = isQuestionCorrect(qq);
-            const selectedOption = qq.type === 'NVT'
-              ? nvtInputs[qq.id] ?? null
-              : (answers[qq.id] ?? null);
-            return fetch('/api/v2/user/progress', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
-              body: JSON.stringify({
-                question_id: qq.id,
-                display_id: qq.display_id,
-                chapter_id: qq.metadata.chapter_id,
-                difficulty: qq.metadata.difficulty,
-                concept_tags: qq.metadata.tags?.map((t: any) => t.tag_id) ?? [],
-                is_correct: isCorrect,
-                selected_option: selectedOption,
-                source: 'test',
-              }),
-            });
-          })
-        );
-      } catch { /* non-critical */ }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [submitted]);
+  // Save progress to database (called when user clicks "Save Progress")
+  const saveProgressToDatabase = async () => {
+    try {
+      const supabase = createSupabaseClient();
+      if (!supabase) return;
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.access_token) return;
+      
+      const chapterId = questions[0]?.metadata?.chapter_id;
+      if (!chapterId) return;
+      
+      // Prepare batch attempts data
+      const attempts = questions
+        .filter(qq => !!(answers[qq.id] || (nvtInputs[qq.id] && nvtInputs[qq.id].trim())))
+        .map(qq => {
+          const isCorrect = isQuestionCorrect(qq);
+          const selectedOption = qq.type === 'NVT'
+            ? nvtInputs[qq.id] ?? null
+            : (answers[qq.id] ?? null);
+          
+          return {
+            question_id: qq.id,
+            display_id: qq.display_id,
+            chapter_id: qq.metadata.chapter_id,
+            difficulty: qq.metadata.difficulty,
+            concept_tags: qq.metadata.tags?.map((t: any) => t.tag_id) ?? [],
+            is_correct: isCorrect,
+            selected_option: selectedOption,
+            source: 'test',
+            time_spent_seconds: questionTimings[qq.id] || 0
+          };
+        });
+      
+      // Batch save all attempts (single API call)
+      if (attempts.length > 0) {
+        await fetch('/api/v2/user/progress/batch', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+          body: JSON.stringify({ attempts }),
+        });
+      }
+      
+      // Save complete test result for dashboard
+      const score = questions.filter(qq => isQuestionCorrect(qq)).length;
+      const timeSpentMs = Date.now() - testStartTime;
+      const totalSeconds = Math.floor(timeSpentMs / 1000);
+      
+      const testResultData = {
+        chapter_id: chapterId,
+        test_config: {
+          count: questions.length,
+          difficulty_mix: 'balanced', // TODO: Get from actual config
+          question_sort: 'random', // TODO: Get from actual config
+        },
+        questions: questions.map(qq => {
+          const hasAnswer = !!(answers[qq.id] || (nvtInputs[qq.id] && nvtInputs[qq.id].trim()));
+          return {
+            question_id: qq.id,
+            display_id: qq.display_id,
+            difficulty: qq.metadata.difficulty,
+            is_correct: hasAnswer ? isQuestionCorrect(qq) : false,
+            selected_option: qq.type === 'NVT' ? nvtInputs[qq.id] : answers[qq.id],
+            time_spent_seconds: questionTimings[qq.id] || 0,
+            marked_for_review: marked[qq.id] || false,
+          };
+        }),
+        score: {
+          correct: score,
+          total: questions.length,
+          percentage: Math.round((score / questions.length) * 100),
+        },
+        timing: {
+          started_at: new Date(testStartTime),
+          completed_at: new Date(),
+          total_seconds: totalSeconds,
+        },
+        saved_to_progress: true,
+      };
+      
+      await fetch('/api/v2/test-results', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+        body: JSON.stringify(testResultData),
+      });
+      
+      // Record test session completion
+      await fetch('/api/v2/user/test-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+        body: JSON.stringify({
+          chapter_id: chapterId,
+          question_ids: questions.map(q => q.id),
+          config: { count: questions.length, mix: 'balanced' },
+        }),
+      });
+    } catch (err) {
+      console.error('Failed to save progress:', err);
+    }
+  };
+  
+  const handleSaveProgress = async () => {
+    await saveProgressToDatabase();
+    setShowSaveModal(false);
+    setReviewing(true);
+  };
+  
+  const handleDiscardProgress = () => {
+    setShowSaveModal(false);
+    setReviewing(true);
+  };
 
   const fmt = (s: number) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
   const q = questions[idx];
@@ -198,19 +314,19 @@ export default function TestView({ questions, onBack }: { questions: Question[];
               <button onClick={onBack} style={{ padding: '4px 10px', borderRadius: 7, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: 'rgba(255,255,255,0.5)', fontSize: 11, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>🏠 Home</button>
             </div>
           </header>
-          <div style={{ flex: 1, overflowY: 'auto', padding: isMobile ? '12px 10px 60px' : '16px 20px 60px' }}>
-            <div style={{ maxWidth: 680, margin: '0 auto' }}>
+          <div style={{ flex: 1, overflowY: 'auto', padding: isMobile ? '12px 10px 60px' : '24px 32px 80px' }}>
+            <div style={{ maxWidth: isMobile ? 680 : 900, margin: '0 auto' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-                <span style={{ fontSize: 18, fontWeight: 800 }}>Q{revIdx + 1}</span>
-                <span style={{ fontSize: 11, color: DIFF_COLOR(rq.metadata.difficulty), background: DIFF_COLOR(rq.metadata.difficulty) + '18', padding: '2px 8px', borderRadius: 99, fontWeight: 700 }}>{rq.metadata.difficulty}</span>
+                <span style={{ fontSize: isMobile ? 18 : 24, fontWeight: 800 }}>Q{revIdx + 1}</span>
+                <span style={{ fontSize: isMobile ? 11 : 13, color: DIFF_COLOR(rq.metadata.difficulty), background: DIFF_COLOR(rq.metadata.difficulty) + '18', padding: '2px 8px', borderRadius: 99, fontWeight: 700 }}>{rq.metadata.difficulty}</span>
                 {userAns ? (
-                  <span style={{ fontSize: 11, padding: '2px 10px', borderRadius: 99, background: isCorrect ? 'rgba(52,211,153,0.15)' : 'rgba(248,113,113,0.15)', color: isCorrect ? '#34d399' : '#f87171', fontWeight: 700 }}>{isCorrect ? 'Correct' : 'Wrong'}</span>
+                  <span style={{ fontSize: isMobile ? 11 : 13, padding: '2px 10px', borderRadius: 99, background: isCorrect ? 'rgba(52,211,153,0.15)' : 'rgba(248,113,113,0.15)', color: isCorrect ? '#34d399' : '#f87171', fontWeight: 700 }}>{isCorrect ? 'Correct' : 'Wrong'}</span>
                 ) : (
-                  <span style={{ fontSize: 11, padding: '2px 10px', borderRadius: 99, background: 'rgba(251,191,36,0.15)', color: '#fbbf24', fontWeight: 700 }}>Skipped</span>
+                  <span style={{ fontSize: isMobile ? 11 : 13, padding: '2px 10px', borderRadius: 99, background: 'rgba(251,191,36,0.15)', color: '#fbbf24', fontWeight: 700 }}>Skipped</span>
                 )}
               </div>
-              <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '12px 14px', marginBottom: 24 }}>
-                <MathRenderer markdown={rq.question_text.markdown} className="text-base leading-relaxed" />
+              <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: isMobile ? '12px 14px' : '18px 22px', marginBottom: 24 }}>
+                <MathRenderer markdown={rq.question_text.markdown} className="text-base leading-relaxed" fontSize={isMobile ? undefined : 18} imageScale={rq.svg_scales?.question || 100} />
               </div>
               {rq.options && rq.options.length > 0 && (() => {
                 const useGrid = isShortOptions(rq.options);
@@ -224,13 +340,13 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                       else if (sel && !correct) { borderC = '#f87171'; bgC = 'rgba(248,113,113,0.08)'; }
                       const pct = revStats[opt.id] ?? 0;
                       return (
-                        <div key={opt.id} style={{ padding: useGrid ? '10px 10px' : '12px 14px', borderRadius: 12, border: `1.5px solid ${borderC}`, background: bgC, display: 'flex', flexDirection: 'column', gap: 6 }}>
+                        <div key={opt.id} style={{ padding: useGrid ? (isMobile ? '10px 10px' : '14px 14px') : (isMobile ? '12px 14px' : '16px 18px'), borderRadius: 12, border: `1.5px solid ${borderC}`, background: bgC, display: 'flex', flexDirection: 'column', gap: 6 }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                             <span style={{ width: 24, height: 24, borderRadius: 7, border: `1.5px solid ${borderC}`, background: correct ? '#34d399' : (sel ? '#f87171' : 'transparent'), display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: (correct || sel) ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
                               {correct ? <Check style={{ width: 12, height: 12 }} /> : opt.id.toUpperCase()}
                             </span>
-                            <span style={{ flex: 1, color: '#fff', fontSize: 13 }}><MathRenderer markdown={opt.text || ''} className="text-sm" /></span>
-                            <span style={{ fontSize: 12, fontWeight: 700, color: correct ? '#34d399' : '#f87171', flexShrink: 0, minWidth: 36, textAlign: 'right' }}>{pct}%</span>
+                            <span style={{ flex: 1, color: '#fff', fontSize: isMobile ? 13 : 16 }}><MathRenderer markdown={opt.text || ''} className="text-sm" fontSize={isMobile ? undefined : 16} imageScale={rq.svg_scales?.options || 100} /></span>
+                            <span style={{ fontSize: isMobile ? 12 : 14, fontWeight: 700, color: correct ? '#34d399' : '#f87171', flexShrink: 0, minWidth: 36, textAlign: 'right' }}>{pct}%</span>
                           </div>
                           <div style={{ width: '100%', height: 6, borderRadius: 3, background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
                             <div style={{ height: '100%', width: `${pct}%`, borderRadius: 3, background: correct ? '#34d399' : '#f87171', transition: 'width 0.5s ease' }} />
@@ -248,8 +364,8 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                 </div>
               )}
               {(rq.solution.text_markdown || rq.solution.video_url || (rq.solution.asset_ids?.audio && rq.solution.asset_ids.audio.length > 0)) && (
-                <div style={{ padding: '12px 14px', borderRadius: 14, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)', marginBottom: 24 }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: '#a78bfa', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
+                <div style={{ padding: isMobile ? '12px 14px' : '18px 22px', borderRadius: 14, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)', marginBottom: 24 }}>
+                  <div style={{ fontSize: isMobile ? 11 : 13, fontWeight: 700, color: '#a78bfa', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
 
                   {/* Media Controls Row - Video & Audio buttons */}
                   {(rq.solution?.video_url || (rq.solution?.asset_ids?.audio && rq.solution.asset_ids.audio.length > 0)) && (
@@ -368,7 +484,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                   )}
 
                   {rq.solution.text_markdown && (
-                    <MathRenderer markdown={rq.solution.text_markdown} className="text-sm leading-relaxed" />
+                    <MathRenderer markdown={rq.solution.text_markdown} className="text-sm leading-relaxed" fontSize={isMobile ? undefined : 16} imageScale={rq.svg_scales?.solution || 100} />
                   )}
                 </div>
               )}
@@ -427,7 +543,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
           return <button key={i} onClick={() => { setIdx(i); setShowPalette(false); }} style={{ width: '100%', aspectRatio: '1', borderRadius: 8, border: `1.5px solid ${s.border}`, background: s.bg, color: s.color, fontSize: 12, fontWeight: 700, cursor: 'pointer', transition: 'all 0.1s' }}>{i + 1}</button>;
         })}
       </div>
-      <button onClick={() => { if (confirm('Submit test? You cannot change answers after submission.')) setSubmitted(true); }}
+      <button onClick={() => { if (confirm('Submit test? You cannot change answers after submission.')) { setSubmitted(true); setShowSaveModal(true); } }}
         style={{ width: '100%', marginTop: 18, padding: '13px', borderRadius: 12, border: 'none', background: '#dc2626', color: '#fff', fontSize: 13, fontWeight: 800, cursor: 'pointer' }}>
         SUBMIT TEST
       </button>
@@ -448,7 +564,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
         </button>
       </div>
       <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: isMobile ? '12px 12px' : '18px 22px', marginBottom: 16 }}>
-        <MathRenderer markdown={q.question_text.markdown} className="leading-relaxed" fontSize={isMobile ? undefined : 20} />
+        <MathRenderer markdown={q.question_text.markdown} className="leading-relaxed" fontSize={isMobile ? undefined : 20} imageScale={q.svg_scales?.question || 100} />
       </div>
       {q.options && q.options.length > 0 && (() => {
         const useGrid = isShortOptions(q.options);
@@ -470,7 +586,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                 }}
                   style={{ padding: useGrid ? '12px 12px' : (isMobile ? '10px 11px' : '13px 16px'), borderRadius: 12, border: `1.5px solid ${sel ? '#3b82f6' : 'rgba(255,255,255,0.1)'}`, background: sel ? 'rgba(59,130,246,0.1)' : 'rgba(255,255,255,0.03)', color: '#fff', fontSize: isMobile ? 13 : 17, textAlign: 'left', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, width: '100%' }}>
                   <span style={{ width: 24, height: 24, borderRadius: 7, border: `1.5px solid ${sel ? '#3b82f6' : 'rgba(255,255,255,0.2)'}`, background: sel ? '#3b82f6' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, flexShrink: 0 }}>{opt.id.toUpperCase()}</span>
-                  <span style={{ flex: 1 }}><MathRenderer markdown={opt.text || ''} fontSize={isMobile ? undefined : 20} /></span>
+                  <span style={{ flex: 1 }}><MathRenderer markdown={opt.text || ''} fontSize={isMobile ? undefined : 20} imageScale={q.svg_scales?.options || 100} /></span>
                 </button>
               );
             })}
@@ -515,8 +631,15 @@ export default function TestView({ questions, onBack }: { questions: Question[];
           {!isMobile && <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.7)', whiteSpace: 'nowrap' }}>Section 1: Chemistry</span>}
           {!isMobile && <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 99, background: 'rgba(52,211,153,0.15)', color: '#34d399', border: '1px solid rgba(52,211,153,0.3)', fontWeight: 700, whiteSpace: 'nowrap' }}>SINGLE CORRECT</span>}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: seconds < 300 ? '#f87171' : 'rgba(255,255,255,0.85)', fontSize: 15, fontWeight: 700, fontFamily: 'monospace', flexShrink: 0 }}>
-          <Timer style={{ width: 13, height: 13 }} /> {fmt(seconds)}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+          <button
+            onClick={() => setIsPaused(p => !p)}
+            style={{ padding: '4px 8px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.15)', background: isPaused ? 'rgba(251,191,36,0.15)' : 'transparent', color: isPaused ? '#fbbf24' : 'rgba(255,255,255,0.6)', fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+            {isPaused ? '▶' : '⏸'}
+          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: seconds < 300 ? '#f87171' : 'rgba(255,255,255,0.85)', fontSize: 15, fontWeight: 700, fontFamily: 'monospace' }}>
+            <Timer style={{ width: 13, height: 13 }} /> {fmt(seconds)}
+          </div>
         </div>
         <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
           {isMobile && (
@@ -525,7 +648,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
               {answeredCount}/{questions.length}
             </button>
           )}
-          <button onClick={() => { if (confirm('Submit test? You cannot change answers after submission.')) setSubmitted(true); }}
+          <button onClick={() => { if (confirm('Submit test? You cannot change answers after submission.')) { setSubmitted(true); setShowSaveModal(true); } }}
             style={{ padding: '6px 14px', borderRadius: 8, border: 'none', background: '#dc2626', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
             {isMobile ? 'Submit' : 'SUBMIT TEST'}
           </button>
@@ -572,7 +695,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <button
-                  onClick={() => { setShowFinishModal(false); setSubmitted(true); }}
+                  onClick={() => { setShowFinishModal(false); setSubmitted(true); setShowSaveModal(true); }}
                   style={{ width: '100%', padding: '12px', borderRadius: 12, border: 'none', background: '#dc2626', color: '#fff', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
                   Submit Test Now
                 </button>
@@ -590,6 +713,47 @@ export default function TestView({ questions, onBack }: { questions: Question[];
               </div>
             </div>
           </>
+        );
+      })()}
+
+      {/* Timer Warning Notifications */}
+      {showWarning && (
+        <div style={{ position: 'fixed', top: 80, right: 20, zIndex: 200, background: showWarning === '1min' ? 'rgba(248,113,113,0.95)' : 'rgba(251,191,36,0.95)', border: `2px solid ${showWarning === '1min' ? '#f87171' : '#fbbf24'}`, borderRadius: 12, padding: '12px 16px', boxShadow: '0 8px 32px rgba(0,0,0,0.4)', animation: 'slideIn 0.3s ease-out' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ fontSize: 20 }}>{showWarning === '1min' ? '⚠️' : '⏰'}</div>
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: '#000', marginBottom: 2 }}>
+                {showWarning === '1min' ? '1 Minute Remaining!' : '5 Minutes Remaining'}
+              </div>
+              <div style={{ fontSize: 11, color: 'rgba(0,0,0,0.7)' }}>
+                {showWarning === '1min' ? 'Test will auto-submit soon' : 'Time is running out'}
+              </div>
+            </div>
+            <button
+              onClick={() => setShowWarning(null)}
+              style={{ background: 'rgba(0,0,0,0.2)', border: 'none', borderRadius: 6, padding: '4px 8px', color: '#000', fontSize: 12, fontWeight: 700, cursor: 'pointer', marginLeft: 8 }}>
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Save/Discard Progress Modal */}
+      {showSaveModal && (() => {
+        const score = questions.filter(qq => isQuestionCorrect(qq)).length;
+        const timeSpentMs = Date.now() - testStartTime;
+        const timeSpentMin = Math.floor(timeSpentMs / 60000);
+        const timeSpentSec = Math.floor((timeSpentMs % 60000) / 1000);
+        const timeSpent = `${timeSpentMin}:${String(timeSpentSec).padStart(2, '0')}`;
+        
+        return (
+          <TestSaveModal
+            score={score}
+            total={questions.length}
+            timeSpent={timeSpent}
+            onSave={handleSaveProgress}
+            onDiscard={handleDiscardProgress}
+          />
         );
       })()}
     </div>

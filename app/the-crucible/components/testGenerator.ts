@@ -11,6 +11,7 @@
 import { Question } from './types';
 
 export type DifficultyMix = 'balanced' | 'easy' | 'hard' | 'pyq';
+export type QuestionSort = 'random' | 'difficulty' | 'topic';
 
 /** Lightweight mirror of IAttemptedIdEntry (returned by the progress API) */
 export interface AttemptedEntry {
@@ -24,6 +25,7 @@ export interface TestGeneratorInput {
     questions: Question[];
     count: number;
     mix: DifficultyMix;
+    sort?: QuestionSort;
     starredIds?: Set<string>;
     attempted?: AttemptedEntry[];
     /** question_ids from the last 3 tests on this chapter */
@@ -100,6 +102,7 @@ export function buildSmartTest({
     questions,
     count,
     mix,
+    sort = 'random',
     starredIds = new Set(),
     attempted = [],
     last3Sessions = [],
@@ -226,6 +229,30 @@ export function buildSmartTest({
         }
     }
 
-    // ── Final shuffle ─────────────────────────────────────────────────────────
-    return shuffle(selected);
+    // ── Final sorting ─────────────────────────────────────────────────────────
+    if (sort === 'difficulty') {
+        // Sort by difficulty: Easy → Medium → Hard
+        const diffOrder = { 'Easy': 1, 'Medium': 2, 'Hard': 3 };
+        return selected.sort((a, b) => {
+            const aOrder = diffOrder[a.metadata.difficulty as keyof typeof diffOrder] || 2;
+            const bOrder = diffOrder[b.metadata.difficulty as keyof typeof diffOrder] || 2;
+            return aOrder - bOrder;
+        });
+    } else if (sort === 'topic') {
+        // Group by primary topic tag, shuffle within groups
+        const byTopic = new Map<string, Question[]>();
+        for (const q of selected) {
+            const topicId = q.metadata.tags?.[0]?.tag_id ?? '__untagged__';
+            if (!byTopic.has(topicId)) byTopic.set(topicId, []);
+            byTopic.get(topicId)!.push(q);
+        }
+        const result: Question[] = [];
+        for (const group of byTopic.values()) {
+            result.push(...shuffle(group));
+        }
+        return result;
+    } else {
+        // Random shuffle (default)
+        return shuffle(selected);
+    }
 }

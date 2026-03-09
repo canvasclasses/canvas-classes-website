@@ -23,6 +23,9 @@ export default async function Page() {
     const supabase = await createClient();
     const { data: { user } } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
 
+    // Always bypass auth in development mode (localhost)
+    const isLoggedIn = process.env.NODE_ENV === 'development' || !!user;
+
     const [chapters, questionCounts] = await Promise.all([
         getTaxonomy(),
         getChapterQuestionCounts(),
@@ -34,6 +37,6 @@ export default async function Page() {
     }));
 
     return (
-        <CrucibleWizard chapters={chaptersWithCounts} isLoggedIn={!!user} />
+        <CrucibleWizard chapters={chaptersWithCounts} isLoggedIn={isLoggedIn} />
     );
 }

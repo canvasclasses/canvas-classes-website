@@ -7,7 +7,7 @@ import { Chapter, Question } from '../components/types';
 import BrowseView from '../components/BrowseView';
 import TestConfigModal from '../components/TestConfigModal';
 import TestView from '../components/TestView';
-import { buildSmartTest, DifficultyMix, AttemptedEntry } from '../components/testGenerator';
+import { buildSmartTest, DifficultyMix, QuestionSort, AttemptedEntry } from '../components/testGenerator';
 
 interface Props {
     chapter: Chapter;
@@ -67,7 +67,7 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
         router.push(url, { scroll: false });
     }, [chapter.id, router]);
 
-    const startTest = useCallback(async (count: number, mix: DifficultyMix) => {
+    const startTest = useCallback(async (count: number, mix: DifficultyMix, sort: QuestionSort = 'random') => {
         setShowTestConfig(false);
         setIsBuilding(true);
 
@@ -94,6 +94,7 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
                 questions,
                 count,
                 mix,
+                sort,
                 starredIds,
                 attempted,
                 last3Sessions,
@@ -101,11 +102,8 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
 
             setTestQuestions(picked);
 
-            // Record this session for future overlap detection (fire-and-forget)
-            if (token) {
-                recordTestSession(token, chapter.id, picked.map(q => q.id), { count, mix });
-            }
-
+            // Note: Test session is now recorded only when user saves progress (not at start)
+            
             updateMode('test');
         } finally {
             setIsBuilding(false);
@@ -115,10 +113,18 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
     // Auto-build test if mode=test in URL on mount
     useEffect(() => {
         if (mode === 'test' && testQuestions.length === 0 && !isBuilding && questions.length > 0) {
-            // Use default test config: 20 questions, balanced difficulty
-            startTest(20, 'balanced');
+            // Read test config from URL params, or use defaults
+            const countParam = searchParams.get('count');
+            const mixParam = searchParams.get('mix') as DifficultyMix | null;
+            const sortParam = searchParams.get('sort') as QuestionSort | null;
+            
+            const count = countParam ? parseInt(countParam, 10) : 20;
+            const mix = mixParam && ['balanced', 'easy', 'hard', 'pyq'].includes(mixParam) ? mixParam : 'balanced';
+            const sort = sortParam && ['random', 'difficulty', 'topic'].includes(sortParam) ? sortParam : 'random';
+            
+            startTest(count, mix, sort);
         }
-    }, [mode, testQuestions.length, isBuilding, questions.length, startTest]);
+    }, [mode, testQuestions.length, isBuilding, questions.length, startTest, searchParams]);
 
     if (mode === 'browse') {
         return <BrowseView questions={questions} chapters={allChapters} onBack={() => updateMode('choose')} chapterId={chapter.id} />;
