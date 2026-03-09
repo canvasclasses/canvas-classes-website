@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { X, LogIn } from 'lucide-react';
 import Link from 'next/link';
+import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 
 const DAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 const PLACEHOLDER = { streak: 14, attempted: 1205, totalQ: 2530, mastered: 4, masteredOf: 28, accuracy: 72, activeDays: [0, 1, 2, 3, 4] };
@@ -75,69 +76,51 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn }: ProgressP
 
   // Fetch stats and test results when panel opens
   useEffect(() => {
-    if (isOpen && (isLoggedIn || isLocalDev)) {
-      setLoading(true);
-      Promise.all([
-        fetch('/api/v2/user/stats').then(res => res.json()).catch(() => ({ stats: null })),
-        fetch('/api/v2/test-results?limit=5').then(res => res.json()).catch(() => ({ results: [] }))
-      ])
-        .then(([statsData, testsData]) => {
-          // Use real data if available
-          if (statsData.stats) {
-            setData(statsData);
-          } else if (isLocalDev) {
-            // Placeholder data for localhost preview only
-            setData({
-              stats: {
-                total_questions_attempted: 247,
-                total_correct: 182,
-                overall_accuracy: 74,
-                streak_days: 5
-              },
-              mastered_chapters: 3,
-              active_days: [0, 1, 2, 4, 5] // M, T, W, F, S
-            });
+    if (!isOpen) return;
+    if (!isLoggedIn && !isLocalDev) return;
+
+    setLoading(true);
+
+    const doFetch = async () => {
+      // Get auth token from Supabase client session (required by both APIs on production)
+      let authHeader: Record<string, string> = {};
+      try {
+        const supabase = createSupabaseClient();
+        if (supabase) {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session?.access_token) {
+            authHeader = { Authorization: `Bearer ${session.access_token}` };
           }
-          
-          if (testsData.results && testsData.results.length > 0) {
-            setTestResults(testsData.results);
-          } else if (isLocalDev) {
-            // Placeholder test results for localhost preview only
-            const now = new Date();
-            setTestResults([
-              {
-                _id: 'placeholder-1',
-                chapter_id: 'ch11_goc',
-                test_config: { count: 20, difficulty_mix: 'balanced', question_sort: 'random' },
-                score: { correct: 15, total: 20, percentage: 75 },
-                timing: { total_seconds: 1245 },
-                created_at: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
-                saved_to_progress: true
-              },
-              {
-                _id: 'placeholder-2',
-                chapter_id: 'ch11_isomerism',
-                test_config: { count: 10, difficulty_mix: 'easy', question_sort: 'difficulty' },
-                score: { correct: 8, total: 10, percentage: 80 },
-                timing: { total_seconds: 654 },
-                created_at: new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
-                saved_to_progress: true
-              },
-              {
-                _id: 'placeholder-3',
-                chapter_id: 'ch12_carbonyl',
-                test_config: { count: 15, difficulty_mix: 'hard', question_sort: 'topic' },
-                score: { correct: 9, total: 15, percentage: 60 },
-                timing: { total_seconds: 1890 },
-                created_at: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
-                saved_to_progress: false
-              }
-            ]);
-          }
-        })
-        .catch(console.error)
-        .finally(() => setLoading(false));
-    }
+        }
+      } catch { /* non-critical — APIs will return 401 and we fall back to empty */ }
+
+      const [statsData, testsData] = await Promise.all([
+        fetch('/api/v2/user/stats', { headers: authHeader })
+          .then(res => res.ok ? res.json() : { stats: null })
+          .catch(() => ({ stats: null })),
+        fetch('/api/v2/test-results?limit=5', { headers: authHeader })
+          .then(res => res.ok ? res.json() : { results: [] })
+          .catch(() => ({ results: [] })),
+      ]);
+
+      if (statsData.stats) {
+        setData(statsData);
+      } else if (isLocalDev) {
+        setData(DEV_PLACEHOLDER_STATS);
+      }
+
+      if (testsData.results && testsData.results.length > 0) {
+        setTestResults(testsData.results);
+        setShowTests(true);
+      } else if (isLocalDev) {
+        setTestResults(DEV_PLACEHOLDER_TESTS());
+        setShowTests(true);
+      }
+
+      setLoading(false);
+    };
+
+    doFetch().catch(err => { console.error('[ProgressPanel]', err); setLoading(false); });
   }, [isOpen, isLoggedIn, isLocalDev]);
   // Lock body scroll when open
   useEffect(() => {
