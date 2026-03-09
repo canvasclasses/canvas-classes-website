@@ -326,15 +326,13 @@ export default function FlashcardAdminClient() {
                       <div className="text-white mb-2">
                         <strong>Q:</strong>{' '}
                         <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
-                          {flashcard.question.substring(0, 200)}
-                          {flashcard.question.length > 200 ? '...' : ''}
+                          {flashcard.question.substring(0, 200) + (flashcard.question.length > 200 ? '...' : '')}
                         </ReactMarkdown>
                       </div>
                       <div className="text-slate-400 text-sm">
                         <strong>A:</strong>{' '}
                         <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
-                          {flashcard.answer.substring(0, 200)}
-                          {flashcard.answer.length > 200 ? '...' : ''}
+                          {flashcard.answer.substring(0, 200) + (flashcard.answer.length > 200 ? '...' : '')}
                         </ReactMarkdown>
                       </div>
                     </div>

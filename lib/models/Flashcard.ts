@@ -114,9 +114,8 @@ FlashcardSchema.index({ 'topic.name': 1, deleted_at: 1 });
 FlashcardSchema.index({ flashcard_id: 1, deleted_at: 1 });
 
 // Pre-save hook to update metadata.updated_at
-FlashcardSchema.pre('save', function (next) {
+FlashcardSchema.pre('save', async function () {
   this.metadata.updated_at = new Date();
-  next();
 });
 
 // Static method to get active flashcards (not deleted)
