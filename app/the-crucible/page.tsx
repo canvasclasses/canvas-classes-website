@@ -3,7 +3,7 @@ import CrucibleWizard from './components/CrucibleWizard';
 import { Metadata } from 'next';
 import { createClient } from '../utils/supabase/server';
 
-export const revalidate = 0; // Always fetch fresh — question counts change frequently during ingestion
+export const revalidate = 3600; // Revalidate every hour — question counts don't change per-request
 
 export const metadata: Metadata = {
     title: 'The Crucible | Forge Your Rank - Master Chemistry',

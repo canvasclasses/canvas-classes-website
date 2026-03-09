@@ -277,7 +277,9 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
       if (mode === 'browse') {
         router.push(`/the-crucible/${chId}?mode=browse`);
       } else {
-        router.push(`/the-crucible/${chId}?mode=test`);
+        const testCount = count || 20;
+        const testMix = (mix || 'balanced') as DifficultyMix;
+        router.push(`/the-crucible/${chId}?mode=test&count=${testCount}&mix=${testMix}`);
       }
       return;
     }

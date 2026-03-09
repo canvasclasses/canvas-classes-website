@@ -23,12 +23,12 @@ export async function GET(req: NextRequest) {
         const userId = isLocalDev ? 'local-dev' : await getUserId(req);
         if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-        // For local dev, just return zero-state
+        // For local dev, return placeholder data so dashboard UI is previewable
         if (isLocalDev) {
             return NextResponse.json({
-                stats: { total_questions_attempted: 0, total_correct: 0, overall_accuracy: 0, streak_days: 0 },
-                mastered_chapters: 0,
-                active_days: [],
+                stats: { total_questions_attempted: 247, total_correct: 182, overall_accuracy: 74, streak_days: 5 },
+                mastered_chapters: 3,
+                active_days: [0, 1, 2, 4, 5],
             });
         }
         await connectToDatabase();

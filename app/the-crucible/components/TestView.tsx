@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Star, Check, Timer, X, MonitorPlay, Volume2, ChevronUp, ChevronDown } from 'lucide-react';
 import { Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
@@ -52,6 +52,10 @@ export default function TestView({ questions, onBack }: { questions: Question[];
   const [questionTimings, setQuestionTimings] = useState<Record<string, number>>({});
   const [isPaused, setIsPaused] = useState(false);
   const [showWarning, setShowWarning] = useState<'5min' | '1min' | null>(null);
+  // Refs to track values inside intervals without causing re-renders
+  const isPausedRef = useRef(false);
+  const submittedRef = useRef(false);
+  const questionStartTimesRef = useRef<Record<string, number>>({});
   // Video and audio expansion state for review section
   const [videoExpanded, setVideoExpanded] = useState<Record<number, boolean>>({});
   const [audioExpanded, setAudioExpanded] = useState<Record<string, boolean>>({});
@@ -65,52 +69,68 @@ export default function TestView({ questions, onBack }: { questions: Question[];
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Timer with pause/resume and warnings
+  // Sync refs so interval callbacks always see latest values without being in deps
+  useEffect(() => { isPausedRef.current = isPaused; }, [isPaused]);
+  useEffect(() => { submittedRef.current = submitted; }, [submitted]);
+
+  // Initialize timer when questions first arrive (handles async question loading)
   useEffect(() => {
-    if (submitted || questions.length === 0 || isPaused) return;
-    
+    if (questions.length > 0) {
+      setSeconds(prev => prev === 0 ? Math.ceil(questions.length * 90) : prev);
+    }
+  }, [questions.length]);
+
+  // Timer — runs once, reads latest state via refs, never restarts on tick
+  useEffect(() => {
+    if (questions.length === 0) return;
+
     const t = setInterval(() => {
+      if (submittedRef.current || isPausedRef.current) return;
       setSeconds(s => {
-        // Show warnings
-        if (s === 300 && !showWarning) setShowWarning('5min');
-        if (s === 60 && showWarning !== '1min') setShowWarning('1min');
-        
-        // Auto-submit only when timer reaches 0
-        if (s <= 0) {
+        if (s <= 1) {
           clearInterval(t);
           setSubmitted(true);
+          submittedRef.current = true;
           setShowSaveModal(true);
           return 0;
         }
+        // Trigger warnings at exact thresholds
+        if (s === 301) setShowWarning('5min');
+        if (s === 61) setShowWarning('1min');
         return s - 1;
       });
     }, 1000);
-    
+
     return () => clearInterval(t);
-  }, [submitted, questions.length, isPaused, showWarning]);
-  
-  // Track time spent on current question
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questions.length]); // Only restart if question set changes, never on tick
+
+  // Track time spent per question — uses ref to avoid re-running on every startTime update
   useEffect(() => {
     if (submitted || reviewing) return;
     const currentQ = questions[idx];
     if (!currentQ) return;
-    
-    // Start timing for this question if not already started
-    if (!questionStartTimes[currentQ.id]) {
+
+    // Record start time via ref (no state update = no re-render = no loop)
+    if (!questionStartTimesRef.current[currentQ.id]) {
+      questionStartTimesRef.current[currentQ.id] = Date.now();
       setQuestionStartTimes(prev => ({ ...prev, [currentQ.id]: Date.now() }));
     }
-    
+
     return () => {
-      // Save time spent when leaving question
-      if (questionStartTimes[currentQ.id]) {
-        const timeSpent = Math.floor((Date.now() - questionStartTimes[currentQ.id]) / 1000);
+      // On cleanup (question change), accumulate time spent
+      const startTime = questionStartTimesRef.current[currentQ.id];
+      if (startTime) {
+        const timeSpent = Math.floor((Date.now() - startTime) / 1000);
         setQuestionTimings(prev => ({
           ...prev,
-          [currentQ.id]: (prev[currentQ.id] || 0) + timeSpent
+          [currentQ.id]: (prev[currentQ.id] || 0) + timeSpent,
         }));
+        // Reset so next visit starts fresh tracking
+        delete questionStartTimesRef.current[currentQ.id];
       }
     };
-  }, [idx, submitted, reviewing, questions, questionStartTimes]);
+  }, [idx, submitted, reviewing, questions]); // questionStartTimes intentionally excluded
 
   useEffect(() => {
     if (!reviewing) return;
@@ -326,7 +346,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                 )}
               </div>
               <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: isMobile ? '12px 14px' : '18px 22px', marginBottom: 24 }}>
-                <MathRenderer markdown={rq.question_text.markdown} className="text-base leading-relaxed" fontSize={isMobile ? undefined : 18} imageScale={rq.svg_scales?.question || 100} />
+                <MathRenderer markdown={rq.question_text.markdown} className="text-base leading-relaxed" fontSize={isMobile ? 14 : 19} imageScale={rq.svg_scales?.question || 100} />
               </div>
               {rq.options && rq.options.length > 0 && (() => {
                 const useGrid = isShortOptions(rq.options);
@@ -345,7 +365,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                             <span style={{ width: 24, height: 24, borderRadius: 7, border: `1.5px solid ${borderC}`, background: correct ? '#34d399' : (sel ? '#f87171' : 'transparent'), display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: (correct || sel) ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
                               {correct ? <Check style={{ width: 12, height: 12 }} /> : opt.id.toUpperCase()}
                             </span>
-                            <span style={{ flex: 1, color: '#fff', fontSize: isMobile ? 13 : 16 }}><MathRenderer markdown={opt.text || ''} className="text-sm" fontSize={isMobile ? undefined : 16} imageScale={rq.svg_scales?.options || 100} /></span>
+                            <span style={{ flex: 1, color: '#fff', fontSize: isMobile ? 14 : 17 }}><MathRenderer markdown={opt.text || ''} className="text-sm" fontSize={isMobile ? 14 : 17} imageScale={rq.svg_scales?.options || 100} /></span>
                             <span style={{ fontSize: isMobile ? 12 : 14, fontWeight: 700, color: correct ? '#34d399' : '#f87171', flexShrink: 0, minWidth: 36, textAlign: 'right' }}>{pct}%</span>
                           </div>
                           <div style={{ width: '100%', height: 6, borderRadius: 3, background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
@@ -484,7 +504,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                   )}
 
                   {rq.solution.text_markdown && (
-                    <MathRenderer markdown={rq.solution.text_markdown} className="text-sm leading-relaxed" fontSize={isMobile ? undefined : 16} imageScale={rq.svg_scales?.solution || 100} />
+                    <MathRenderer markdown={rq.solution.text_markdown} className="text-sm leading-relaxed" fontSize={isMobile ? 14 : 17} imageScale={rq.svg_scales?.solution || 100} />
                   )}
                 </div>
               )}
