@@ -1056,136 +1056,60 @@ export default function AdminPage() {
                     </div>
                 ) : selectedQuestion ? (
                     <>
-                    {/* TOP: Full-width metadata & tagging */}
-                    <div className="shrink-0 border-b border-gray-800/50 overflow-y-auto" style={{maxHeight:'30vh'}}>
-                        <div className="p-3 space-y-2.5">
-                            {/* Header Row */}
-                            <div className="flex items-center gap-2 pb-2.5 border-b border-gray-800/50">
-                                <div className="flex flex-col">
-                                    <span className="text-xs text-gray-500 mb-1">Display ID</span>
-                                    <input
-                                        type="text"
-                                        value={selectedQuestion.display_id}
-                                        readOnly
-                                        className="bg-gray-800/50 border border-gray-700/50 rounded-lg px-3 py-1.5 text-sm font-mono focus:border-purple-500 outline-none w-32 text-purple-400"
-                                    />
-                                </div>
+                    {/* TOP: Full-width metadata & tagging — 2 compact rows */}
+                    <div className="shrink-0 border-b border-gray-800/50">
+                        <div className="p-3 space-y-2">
 
-                                <select
-                                    value={selectedQuestion.type}
-                                    onChange={(e) => {
-                                        const newType = e.target.value as Question['type'];
-                                        const oldType = selectedQuestion.type;
-                                        if (newType === oldType) return;
+                            {/* ── ROW 1: ID · Type · Difficulty │ Exam source │ Chapter · Tag │ Status + Actions ── */}
+                            <div className="flex items-end gap-0 flex-wrap">
 
-                                        // Build the update payload with appropriate options/answer based on new type
-                                        const update: Partial<Question> = { type: newType };
-
-                                        if (newType === 'NVT') {
-                                            // Switching TO NVT: clear options, set default numerical answer
-                                            update.options = [] as any;
-                                            update.answer = { integer_value: 0 } as any;
-                                        } else if (oldType === 'NVT' || !selectedQuestion.options || selectedQuestion.options.length === 0) {
-                                            // Switching FROM NVT or question has no options: provide 4 default options
-                                            update.options = [
-                                                { id: 'a', text: 'Option A', is_correct: newType === 'SCQ' },
-                                                { id: 'b', text: 'Option B', is_correct: false },
-                                                { id: 'c', text: 'Option C', is_correct: false },
-                                                { id: 'd', text: 'Option D', is_correct: false }
-                                            ] as any;
-                                            // Clear numerical answer when moving away from NVT
-                                            update.answer = {} as any;
-                                        }
-                                        // For MCQ, ensure we don't force single-correct constraints
-                                        // For types that already have options (e.g., SCQ→MCQ), keep existing options
-
-                                        handleUpdate(selectedQuestion._id, update);
-                                    }}
-                                    className="bg-gray-800/50 border border-gray-700/50 rounded-lg px-3 py-2 text-sm font-medium"
-                                >
-                                    {QUESTION_TYPES.map(qt => (
-                                        <option key={qt.id} value={qt.id}>{qt.name}</option>
-                                    ))}
-                                </select>
-
-                                <select
-                                    value={selectedQuestion.metadata.difficulty}
-                                    onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                        metadata: { ...selectedQuestion.metadata, difficulty: e.target.value as any }
-                                    })}
-                                    className={`bg-gray-800/50 border rounded-lg px-3 py-2 text-sm font-medium ${selectedQuestion.metadata.difficulty === 'Hard' ? 'border-red-500/50 text-red-400' :
-                                        selectedQuestion.metadata.difficulty === 'Medium' ? 'border-orange-500/50 text-orange-400' :
-                                            'border-emerald-500/50 text-emerald-400'
-                                        }`}
-                                >
-                                    <option value="Easy">Easy</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="Hard">Hard</option>
-                                </select>
-
-                                <div className="flex items-center gap-3 ml-auto">
-                                    <label className="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition">
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedQuestion.metadata.is_pyq}
-                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                                metadata: { ...selectedQuestion.metadata, is_pyq: e.target.checked }
-                                            })}
-                                            className="h-4 w-4 accent-blue-500"
-                                        />
-                                        <span className="text-xs text-gray-300 font-medium">PYQ</span>
-                                    </label>
-
-                                    <div className="flex flex-col items-center gap-1">
-                                        <button
-                                            onClick={() => handleUpdate(selectedQuestion._id, {
-                                                metadata: { ...selectedQuestion.metadata, is_top_pyq: !selectedQuestion.metadata.is_top_pyq }
-                                            })}
-                                            className={`p-2 rounded-lg transition ${selectedQuestion.metadata.is_top_pyq
-                                                ? 'bg-amber-500/20 text-amber-400'
-                                                : 'bg-gray-800/50 text-gray-500 hover:text-amber-400'
-                                                }`}
-                                            title="Mark as Top PYQ"
-                                        >
-                                            <Star size={18} fill={selectedQuestion.metadata.is_top_pyq ? "currentColor" : "none"} />
-                                        </button>
-                                        <span className="text-[10px] font-mono text-amber-400/70">
-                                            {(() => {
-                                                const currentChapterId = selectedQuestion.metadata.chapter_id;
-                                                const starredCount = questions.filter(q => 
-                                                    q.metadata.is_top_pyq && 
-                                                    q.metadata.chapter_id === currentChapterId
-                                                ).length;
-                                                return starredCount;
-                                            })()}
-                                        </span>
+                                {/* Group A: ID, Type, Difficulty */}
+                                <div className="flex items-end gap-1.5 pr-3 mr-2 border-r border-gray-700/60">
+                                    <div className="flex flex-col">
+                                        <span className="text-[10px] text-gray-500 mb-0.5">ID</span>
+                                        <input type="text" value={selectedQuestion.display_id} readOnly
+                                            className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs font-mono outline-none w-24 text-purple-400" />
                                     </div>
-
-                                    <button
-                                        onClick={() => setFlagModalOpen(true)}
-                                        className={`p-2 rounded-lg transition ${selectedQuestion.flags?.some(f => !f.resolved)
-                                            ? 'bg-red-500/20 text-red-500'
-                                            : 'bg-gray-800/50 text-gray-500 hover:text-red-400'
-                                            }`}
-                                        title="Flag Question"
+                                    <select
+                                        value={selectedQuestion.type}
+                                        onChange={(e) => {
+                                            const newType = e.target.value as Question['type'];
+                                            const oldType = selectedQuestion.type;
+                                            if (newType === oldType) return;
+                                            const update: Partial<Question> = { type: newType };
+                                            if (newType === 'NVT') {
+                                                update.options = [] as any;
+                                                update.answer = { integer_value: 0 } as any;
+                                            } else if (oldType === 'NVT' || !selectedQuestion.options || selectedQuestion.options.length === 0) {
+                                                update.options = [
+                                                    { id: 'a', text: 'Option A', is_correct: newType === 'SCQ' },
+                                                    { id: 'b', text: 'Option B', is_correct: false },
+                                                    { id: 'c', text: 'Option C', is_correct: false },
+                                                    { id: 'd', text: 'Option D', is_correct: false }
+                                                ] as any;
+                                                update.answer = {} as any;
+                                            }
+                                            handleUpdate(selectedQuestion._id, update);
+                                        }}
+                                        className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs font-medium"
                                     >
-                                        <AlertTriangle size={18} />
-                                    </button>
-
-                                    <button
-                                        onClick={() => handleDelete(selectedQuestion._id)}
-                                        className={`p-2 rounded-lg transition ${deletingId === selectedQuestion._id
-                                            ? 'bg-red-500 text-white'
-                                            : 'bg-gray-800/50 text-gray-500 hover:text-red-400'
-                                            }`}
+                                        {QUESTION_TYPES.map(qt => <option key={qt.id} value={qt.id}>{qt.name}</option>)}
+                                    </select>
+                                    <select
+                                        value={selectedQuestion.metadata.difficulty}
+                                        onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, difficulty: e.target.value as any } })}
+                                        className={`bg-gray-800/50 border rounded px-2 py-1 text-xs font-medium ${
+                                            selectedQuestion.metadata.difficulty === 'Hard' ? 'border-red-500/50 text-red-400' :
+                                            selectedQuestion.metadata.difficulty === 'Medium' ? 'border-orange-500/50 text-orange-400' :
+                                            'border-emerald-500/50 text-emerald-400'}`}
                                     >
-                                        <Trash2 size={18} />
-                                    </button>
+                                        <option value="Easy">Easy</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Hard">Hard</option>
+                                    </select>
                                 </div>
-                            </div>
 
-                            {/* Exam Source Row */}
-                            <div className="flex flex-wrap items-end gap-2 p-2 bg-gray-800/30 border border-gray-700/40 rounded">
+                                {/* Group B: Exam Source (always visible; year/month/day/shift appear when PYQ checked) */}
                                 {(() => {
                                     const es = selectedQuestion.metadata.exam_source;
                                     const patchSrc = (patch: Partial<{ exam: string; year: number; month: string; day: number; shift: string }>) => {
@@ -1193,191 +1117,161 @@ export default function AdminPage() {
                                         handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, exam_source: { ...merged, exam: merged.exam } } });
                                     };
                                     return (
-                                        <>
-                                            <div>
-                                                <label className="text-[10px] text-gray-500 block mb-1">Target Exam</label>
-                                                <select value={es?.exam ?? ''} onChange={(e) => patchSrc({ exam: e.target.value })} className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none">
-                                                    <option value="">Select Level</option>
+                                        <div className="flex items-end gap-1.5 pr-3 mr-2 border-r border-gray-700/60">
+                                            <div className="flex flex-col">
+                                                <span className="text-[10px] text-gray-500 mb-0.5">Exam</span>
+                                                <select value={es?.exam ?? ''} onChange={(e) => patchSrc({ exam: e.target.value })}
+                                                    className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none">
+                                                    <option value="">—</option>
                                                     <option value="JEE Main">JEE Main</option>
-                                                    <option value="JEE Advanced">JEE Advanced</option>
+                                                    <option value="JEE Advanced">JEE Adv</option>
                                                 </select>
                                             </div>
-
-                                            <div className="flex items-center gap-2 ml-2 mr-2">
-                                                <label className="flex items-center gap-2 cursor-pointer mt-5">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={!!selectedQuestion.metadata.is_pyq}
-                                                        onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                                            metadata: { ...selectedQuestion.metadata, is_pyq: e.target.checked }
-                                                        })}
-                                                        className="h-3.5 w-3.5 accent-blue-500"
-                                                    />
-                                                    <span className="text-xs text-gray-400 font-medium">PYQ</span>
-                                                </label>
-                                            </div>
-
-                                            {selectedQuestion.metadata.is_pyq && (
-                                                <>
-                                                    <div>
-                                                        <label className="text-[10px] text-gray-500 block mb-1">Year</label>
-                                                        <select value={es?.year ?? ''} onChange={(e) => patchSrc({ year: Number(e.target.value) })} className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none">
-                                                            <option value="">Year</option>
-                                                            {[2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010].map(y => (
-                                                                <option key={y} value={y}>{y}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
-                                                    <div>
-                                                        <label className="text-[10px] text-gray-500 block mb-1">Month</label>
-                                                        <select value={es?.month ?? ''} onChange={(e) => patchSrc({ month: e.target.value })} className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none">
-                                                            <option value="">Month</option>
-                                                            {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(m => (
-                                                                <option key={m} value={m}>{m}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
-                                                    <div>
-                                                        <label className="text-[10px] text-gray-500 block mb-1">Day</label>
-                                                        <input type="number" min={1} max={31} value={es?.day ?? ''} onChange={(e) => patchSrc({ day: Number(e.target.value) })} className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none w-14" placeholder="Day" />
-                                                    </div>
-                                                    <div>
-                                                        <label className="text-[10px] text-gray-500 block mb-1">Shift</label>
-                                                        <select value={es?.shift ?? ''} onChange={(e) => patchSrc({ shift: e.target.value })} className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none">
-                                                            <option value="">Shift</option>
-                                                            <option value="Morning">Morning</option>
-                                                            <option value="Evening">Evening</option>
-                                                        </select>
-                                                    </div>
-                                                </>
-                                            )}
-                                        </>
+                                            <label className="flex items-center gap-1 cursor-pointer mb-1">
+                                                <input type="checkbox" checked={!!selectedQuestion.metadata.is_pyq}
+                                                    onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, is_pyq: e.target.checked } })}
+                                                    className="h-3 w-3 accent-blue-500" />
+                                                <span className="text-[10px] text-gray-400 font-medium">PYQ</span>
+                                            </label>
+                                            {selectedQuestion.metadata.is_pyq && (<>
+                                                <div className="flex flex-col">
+                                                    <span className="text-[10px] text-gray-500 mb-0.5">Year</span>
+                                                    <select value={es?.year ?? ''} onChange={(e) => patchSrc({ year: Number(e.target.value) })}
+                                                        className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-16">
+                                                        <option value="">—</option>
+                                                        {[2026,2025,2024,2023,2022,2021,2020,2019,2018,2017,2016,2015].map(y => <option key={y} value={y}>{y}</option>)}
+                                                    </select>
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <span className="text-[10px] text-gray-500 mb-0.5">Mon</span>
+                                                    <select value={es?.month ?? ''} onChange={(e) => patchSrc({ month: e.target.value })}
+                                                        className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-14">
+                                                        <option value="">—</option>
+                                                        {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map(m => <option key={m} value={m}>{m}</option>)}
+                                                    </select>
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <span className="text-[10px] text-gray-500 mb-0.5">Day</span>
+                                                    <input type="number" min={1} max={31} value={es?.day ?? ''} onChange={(e) => patchSrc({ day: Number(e.target.value) })}
+                                                        className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-12" placeholder="—" />
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <span className="text-[10px] text-gray-500 mb-0.5">Shift</span>
+                                                    <select value={es?.shift ?? ''} onChange={(e) => patchSrc({ shift: e.target.value })}
+                                                        className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-16">
+                                                        <option value="">—</option>
+                                                        <option value="Morning">Morn</option>
+                                                        <option value="Evening">Eve</option>
+                                                    </select>
+                                                </div>
+                                            </>)}
+                                        </div>
                                     );
                                 })()}
-                                {selectedQuestion.metadata.is_pyq && selectedQuestion.metadata.exam_source?.exam && (
-                                    <span className="ml-auto text-[10px] font-mono text-blue-400 bg-blue-900/20 px-2 py-1 rounded">
-                                        {selectedQuestion.metadata.exam_source.exam} {selectedQuestion.metadata.exam_source.year} {selectedQuestion.metadata.exam_source.month} {selectedQuestion.metadata.exam_source.day} · {selectedQuestion.metadata.exam_source.shift}
-                                    </span>
-                                )}
-                            </div>
 
-                            {/* Tag Status Indicator */}
-                            <div className="flex items-center gap-2 p-2 rounded border-2 ${
-                                !selectedQuestion.metadata.chapter_id 
-                                    ? 'bg-red-900/20 border-red-600/50' 
-                                    : !isTagValid(selectedQuestion.metadata.tags)
-                                    ? 'bg-yellow-900/20 border-yellow-600/50'
-                                    : 'bg-green-900/20 border-green-600/50'
-                            }">
-                                <div className="flex items-center gap-2">
-                                    {!selectedQuestion.metadata.chapter_id ? (
-                                        <><AlertTriangle size={16} className="text-red-400" /><span className="text-xs font-bold text-red-400">Missing Chapter</span></>
-                                    ) : !isTagValid(selectedQuestion.metadata.tags) ? (
-                                        <><AlertCircle size={16} className="text-yellow-400" /><span className="text-xs font-bold text-yellow-400">Missing Primary Tag</span></>
-                                    ) : (
-                                        <><Check size={16} className="text-green-400" /><span className="text-xs font-bold text-green-400">Fully Tagged</span></>
-                                    )}
-                                </div>
-                                <button
-                                    onClick={() => handleAITagSuggestion(selectedQuestion._id)}
-                                    disabled={aiAnalyzing}
-                                    className="ml-auto flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-lg text-xs font-bold transition disabled:opacity-50"
-                                >
-                                    <Sparkles size={12} /> {aiAnalyzing ? 'Analyzing...' : 'AI Suggest Tags'}
-                                </button>
-                            </div>
-
-                            {/* AI Tag Suggestions */}
-                            {showTagSuggestions && tagSuggestions.length > 0 && (
-                                <div className="p-4 bg-purple-900/20 border border-purple-600/50 rounded-lg">
-                                    <div className="flex items-center justify-between mb-2">
-                                        <span className="text-xs font-bold text-purple-400">AI Suggested Tags:</span>
-                                        <button onClick={() => setShowTagSuggestions(false)} className="text-xs text-gray-500 hover:text-gray-300">✕</button>
+                                {/* Group C: Chapter + Primary Tag (take remaining space) */}
+                                <div className="flex items-end gap-1.5 flex-1 min-w-0 pr-3 mr-2 border-r border-gray-700/60">
+                                    <div className="flex flex-col flex-1 min-w-0">
+                                        <label className="text-[10px] text-gray-500 mb-0.5 flex items-center gap-1">
+                                            Chapter {reclassifying && <span className="text-purple-400 animate-pulse">● …</span>}
+                                        </label>
+                                        <select
+                                            value={selectedQuestion.metadata.chapter_id}
+                                            disabled={reclassifying}
+                                            onChange={(e) => {
+                                                const newChapterId = e.target.value;
+                                                if (!newChapterId || newChapterId === selectedQuestion.metadata.chapter_id) return;
+                                                handleReclassify(selectedQuestion._id, newChapterId, selectedQuestion.metadata.tags);
+                                            }}
+                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none disabled:opacity-50 disabled:cursor-wait"
+                                        >
+                                            <option value="">Select Chapter</option>
+                                            {chapters.map(ch => <option key={ch._id} value={ch._id}>{ch.name}</option>)}
+                                        </select>
                                     </div>
-                                    <div className="flex flex-wrap gap-2">
+                                    <div className="flex flex-col flex-1 min-w-0">
+                                        <label className="text-[10px] text-gray-500 mb-0.5 flex items-center justify-between">
+                                            <span>Primary Tag</span>
+                                            {selectedQuestion.metadata.tags?.[0]?.tag_id && (() => {
+                                                const validation = validateTag(selectedQuestion.metadata.tags![0].tag_id, selectedQuestion.metadata.chapter_id);
+                                                return validation.warning ? <span className="text-yellow-400 flex items-center gap-0.5"><AlertCircle size={8} />{validation.warning}</span> : null;
+                                            })()}
+                                        </label>
+                                        <select
+                                            value={selectedQuestion.metadata.tags?.[0]?.tag_id || ''}
+                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
+                                                metadata: { ...selectedQuestion.metadata, tags: e.target.value ? [{ tag_id: e.target.value, weight: 1.0 }] : [] }
+                                            })}
+                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs text-purple-300 focus:border-purple-500 outline-none font-mono"
+                                        >
+                                            <option value="">Select Tag</option>
+                                            {TAXONOMY_FROM_CSV
+                                                .filter(node => node.parent_id === selectedQuestion.metadata.chapter_id && node.type === 'topic')
+                                                .map(tag => <option key={tag.id} value={tag.id}>{tag.name}</option>)
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+
+                                {/* Group D: Tag status + AI Suggest + icon actions */}
+                                <div className="flex items-center gap-1.5">
+                                    {/* Tag status badge */}
+                                    <div className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-bold border ${
+                                        !selectedQuestion.metadata.chapter_id ? 'bg-red-900/20 border-red-600/40 text-red-400' :
+                                        !isTagValid(selectedQuestion.metadata.tags) ? 'bg-yellow-900/20 border-yellow-600/40 text-yellow-400' :
+                                        'bg-green-900/20 border-green-600/40 text-green-400'}`}>
+                                        {!selectedQuestion.metadata.chapter_id
+                                            ? <><AlertTriangle size={11} /> No Chapter</>
+                                            : !isTagValid(selectedQuestion.metadata.tags)
+                                            ? <><AlertCircle size={11} /> No Tag</>
+                                            : <><Check size={11} /> Tagged</>}
+                                    </div>
+                                    <button
+                                        onClick={() => handleAITagSuggestion(selectedQuestion._id)}
+                                        disabled={aiAnalyzing}
+                                        className="flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded text-[10px] font-bold transition disabled:opacity-50"
+                                    >
+                                        <Sparkles size={10} /> {aiAnalyzing ? '…' : 'AI Tags'}
+                                    </button>
+                                    {/* Star */}
+                                    <div className="flex flex-col items-center">
+                                        <button onClick={() => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, is_top_pyq: !selectedQuestion.metadata.is_top_pyq } })}
+                                            className={`p-1.5 rounded transition ${selectedQuestion.metadata.is_top_pyq ? 'bg-amber-500/20 text-amber-400' : 'bg-gray-800/50 text-gray-500 hover:text-amber-400'}`} title="Top PYQ">
+                                            <Star size={14} fill={selectedQuestion.metadata.is_top_pyq ? "currentColor" : "none"} />
+                                        </button>
+                                        <span className="text-[9px] font-mono text-amber-400/70 leading-none">
+                                            {questions.filter(q => q.metadata.is_top_pyq && q.metadata.chapter_id === selectedQuestion.metadata.chapter_id).length}
+                                        </span>
+                                    </div>
+                                    <button onClick={() => setFlagModalOpen(true)}
+                                        className={`p-1.5 rounded transition ${selectedQuestion.flags?.some(f => !f.resolved) ? 'bg-red-500/20 text-red-500' : 'bg-gray-800/50 text-gray-500 hover:text-red-400'}`} title="Flag">
+                                        <AlertTriangle size={14} />
+                                    </button>
+                                    <button onClick={() => handleDelete(selectedQuestion._id)}
+                                        className={`p-1.5 rounded transition ${deletingId === selectedQuestion._id ? 'bg-red-500 text-white' : 'bg-gray-800/50 text-gray-500 hover:text-red-400'}`}>
+                                        <Trash2 size={14} />
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* AI Tag Suggestions (shown inline when active) */}
+                            {showTagSuggestions && tagSuggestions.length > 0 && (
+                                <div className="flex items-center gap-2 p-2 bg-purple-900/20 border border-purple-600/50 rounded">
+                                    <span className="text-[10px] font-bold text-purple-400 shrink-0">AI Suggested:</span>
+                                    <div className="flex flex-wrap gap-1.5 flex-1">
                                         {tagSuggestions.map(tag => (
-                                            <button
-                                                key={tag}
-                                                onClick={() => {
-                                                    handleUpdate(selectedQuestion._id, {
-                                                        metadata: { ...selectedQuestion.metadata, tags: [{ tag_id: tag, weight: 1.0 }] }
-                                                    });
-                                                    setShowTagSuggestions(false);
-                                                }}
-                                                className="px-3 py-1.5 bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg text-xs font-mono text-purple-300 transition"
-                                            >
+                                            <button key={tag}
+                                                onClick={() => { handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, tags: [{ tag_id: tag, weight: 1.0 }] } }); setShowTagSuggestions(false); }}
+                                                className="px-2 py-0.5 bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded text-[10px] font-mono text-purple-300 transition">
                                                 {tag}
                                             </button>
                                         ))}
                                     </div>
+                                    <button onClick={() => setShowTagSuggestions(false)} className="text-xs text-gray-500 hover:text-gray-300 shrink-0">✕</button>
                                 </div>
                             )}
 
-                            {/* Chapter and Tag Selection */}
-                            <div className="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label className="text-xs text-gray-500 mb-2 flex items-center gap-2">
-                                        Chapter
-                                        {reclassifying && <span className="text-purple-400 text-[10px] animate-pulse">● Reclassifying…</span>}
-                                    </label>
-                                    <select
-                                        value={selectedQuestion.metadata.chapter_id}
-                                        disabled={reclassifying}
-                                        onChange={(e) => {
-                                            const newChapterId = e.target.value;
-                                            if (!newChapterId || newChapterId === selectedQuestion.metadata.chapter_id) return;
-                                            handleReclassify(selectedQuestion._id, newChapterId, selectedQuestion.metadata.tags);
-                                        }}
-                                        className="w-full bg-gray-800/50 border border-gray-700/50 rounded-lg px-3 py-2 text-sm focus:border-purple-500 outline-none disabled:opacity-50 disabled:cursor-wait"
-                                    >
-                                        <option value="">Select Chapter</option>
-                                        {chapters.map(ch => (
-                                            <option key={ch._id} value={ch._id}>{ch.name}</option>
-                                        ))}
-                                    </select>
-                                    {selectedQuestion.display_id && (
-                                        <p className="text-[10px] text-gray-600 mt-1 font-mono">
-                                            ID: <span className="text-purple-400">{selectedQuestion.display_id}</span> — changes on reclassify
-                                        </p>
-                                    )}
-                                </div>
-                                <div>
-                                    <label className="text-xs text-gray-500 mb-2 flex items-center justify-between">
-                                        <span>Primary Concept Tag</span>
-                                        {selectedQuestion.metadata.tags?.[0]?.tag_id && (() => {
-                                            const validation = validateTag(selectedQuestion.metadata.tags![0].tag_id, selectedQuestion.metadata.chapter_id);
-                                            return validation.warning ? (
-                                                <span className="text-xs text-yellow-400 flex items-center gap-1">
-                                                    <AlertCircle size={10} /> {validation.warning}
-                                                </span>
-                                            ) : null;
-                                        })()}
-                                    </label>
-                                    <select
-                                        value={selectedQuestion.metadata.tags?.[0]?.tag_id || ''}
-                                        onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                            metadata: {
-                                                ...selectedQuestion.metadata,
-                                                tags: e.target.value ? [{ tag_id: e.target.value, weight: 1.0 }] : []
-                                            }
-                                        })}
-                                        className="w-full bg-gray-800/50 border border-gray-700/50 rounded-lg px-3 py-2 text-sm text-purple-300 focus:border-purple-500 outline-none font-mono"
-                                    >
-                                        <option value="">Select Tag</option>
-                                        {TAXONOMY_FROM_CSV
-                                            .filter(node => node.parent_id === selectedQuestion.metadata.chapter_id && node.type === 'topic')
-                                            .map(tag => (
-                                                <option key={tag.id} value={tag.id}>{tag.name}</option>
-                                            ))
-                                        }
-                                    </select>
-                                    {availableTags.length === 0 && selectedQuestion.metadata.chapter_id && (
-                                        <p className="text-[10px] text-yellow-600 mt-1">No tags found for this chapter in taxonomy</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Adaptive Engine Tags */}
+                            {/* ── ROW 2: Adaptive Engine Tags ── */}
                             <div className="p-2 bg-teal-900/10 border border-teal-700/30 rounded space-y-2">
                                 <div className="flex items-center gap-2 mb-1">
                                     <Zap size={12} className="text-teal-400" />
