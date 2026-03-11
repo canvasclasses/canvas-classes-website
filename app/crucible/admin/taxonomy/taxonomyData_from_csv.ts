@@ -105,60 +105,45 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_pblock11_6', name: 'Silicates, Silicones and Zeolites', parent_id: 'ch11_pblock', type: 'topic' },
 
     { id: 'ch11_goc', name: 'GOC', parent_id: null, type: 'chapter', sequence_order: 10, class_level: 11, chapterType: 'organic' },
-    
-    // Primary Concept 1: Classification & IUPAC Naming
     { id: 'tag_goc_1', name: 'Classification & IUPAC Naming', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'micro_goc_1_1', name: 'Homologous series & functional group identification', parent_id: 'tag_goc_1', type: 'micro_topic' },
+    { id: 'micro_goc_1_1', name: 'Classification, Homologous series & functional group identification', parent_id: 'tag_goc_1', type: 'micro_topic' },
     { id: 'micro_goc_1_2', name: 'IUPAC naming of acyclic compounds', parent_id: 'tag_goc_1', type: 'micro_topic' },
     { id: 'micro_goc_1_3', name: 'IUPAC naming of cyclic & bicyclic compounds', parent_id: 'tag_goc_1', type: 'micro_topic' },
     { id: 'micro_goc_1_4', name: 'Common names & trivial nomenclature', parent_id: 'tag_goc_1', type: 'micro_topic' },
     { id: 'micro_goc_1_5', name: 'Degree of unsaturation (DBE calculation)', parent_id: 'tag_goc_1', type: 'micro_topic' },
-    
-    // Primary Concept 2: Electronic Effects
     { id: 'tag_goc_2', name: 'Electronic Effects', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'micro_goc_2_1', name: 'Inductive effect (±I)', parent_id: 'tag_goc_2', type: 'micro_topic' },
+    { id: 'micro_goc_2_1', name: 'Inductive effect (±I) & Electromeric effect', parent_id: 'tag_goc_2', type: 'micro_topic' },
     { id: 'micro_goc_2_2', name: 'Resonance / Mesomeric effect (±M)', parent_id: 'tag_goc_2', type: 'micro_topic' },
     { id: 'micro_goc_2_3', name: 'Hyperconjugation', parent_id: 'tag_goc_2', type: 'micro_topic' },
     { id: 'micro_goc_2_4', name: 'Combined effect reasoning (when two effects compete)', parent_id: 'tag_goc_2', type: 'micro_topic' },
-    
-    // Primary Concept 3: Acidity & Basicity
+    { id: 'micro_tag_goc_2_1773218015848', name: 'Stability of Resonating Structures', parent_id: 'tag_goc_2', type: 'micro_topic' },
     { id: 'tag_goc_3', name: 'Acidity & Basicity', parent_id: 'ch11_goc', type: 'topic' },
     { id: 'micro_goc_3_1', name: 'Acidity of C-H, O-H, N-H compounds', parent_id: 'tag_goc_3', type: 'micro_topic' },
-    { id: 'micro_goc_3_2', name: 'Effect of substituents on acidity', parent_id: 'tag_goc_3', type: 'micro_topic' },
-    { id: 'micro_goc_3_3', name: 'Basicity of amines & nitrogen compounds', parent_id: 'tag_goc_3', type: 'micro_topic' },
+    { id: 'micro_goc_3_2', name: 'Acidity of Phenols & carboxylic acids', parent_id: 'tag_goc_3', type: 'micro_topic' },
+    { id: 'micro_goc_3_3', name: 'Basicity of amines & other compounds', parent_id: 'tag_goc_3', type: 'micro_topic' },
     { id: 'micro_goc_3_4', name: 'Comparative acidity/basicity reasoning chains', parent_id: 'tag_goc_3', type: 'micro_topic' },
-    
-    // Primary Concept 4: Reaction Intermediates
     { id: 'tag_goc_4', name: 'Reaction Intermediates', parent_id: 'ch11_goc', type: 'topic' },
     { id: 'micro_goc_4_1', name: 'Carbocation — structure & stability', parent_id: 'tag_goc_4', type: 'micro_topic' },
     { id: 'micro_goc_4_2', name: 'Carbanion — structure & stability', parent_id: 'tag_goc_4', type: 'micro_topic' },
     { id: 'micro_goc_4_3', name: 'Free radical — structure & stability', parent_id: 'tag_goc_4', type: 'micro_topic' },
     { id: 'micro_goc_4_4', name: 'Carbene & nitrene', parent_id: 'tag_goc_4', type: 'micro_topic' },
     { id: 'micro_goc_4_5', name: 'Stability comparison across types', parent_id: 'tag_goc_4', type: 'micro_topic' },
-    
-    // Primary Concept 5: Electrophiles, Nucleophiles & Basic Terms
     { id: 'tag_goc_5', name: 'Electrophiles, Nucleophiles & Basic Terms', parent_id: 'ch11_goc', type: 'topic' },
     { id: 'micro_goc_5_1', name: 'Identifying electrophiles vs nucleophiles', parent_id: 'tag_goc_5', type: 'micro_topic' },
     { id: 'micro_goc_5_2', name: 'Hard/soft acid-base concept', parent_id: 'tag_goc_5', type: 'micro_topic' },
     { id: 'micro_goc_5_3', name: 'Leaving group ability', parent_id: 'tag_goc_5', type: 'micro_topic' },
     { id: 'micro_goc_5_4', name: 'Ambident nucleophiles', parent_id: 'tag_goc_5', type: 'micro_topic' },
-    
-    // Primary Concept 6: Structural Isomerism & Tautomerism
     { id: 'tag_goc_6', name: 'Structural Isomerism & Tautomerism', parent_id: 'ch11_goc', type: 'topic' },
     { id: 'micro_goc_6_1', name: 'Chain isomerism', parent_id: 'tag_goc_6', type: 'micro_topic' },
     { id: 'micro_goc_6_2', name: 'Position isomerism', parent_id: 'tag_goc_6', type: 'micro_topic' },
     { id: 'micro_goc_6_3', name: 'Functional group isomerism', parent_id: 'tag_goc_6', type: 'micro_topic' },
     { id: 'micro_goc_6_4', name: 'Metamerism', parent_id: 'tag_goc_6', type: 'micro_topic' },
     { id: 'micro_goc_6_5', name: 'Tautomerism (keto-enol, others)', parent_id: 'tag_goc_6', type: 'micro_topic' },
-    
-    // Primary Concept 7: Geometrical Isomerism
     { id: 'tag_goc_7', name: 'Geometrical Isomerism', parent_id: 'ch11_goc', type: 'topic' },
     { id: 'micro_goc_7_1', name: 'E/Z configuration assignment', parent_id: 'tag_goc_7', type: 'micro_topic' },
     { id: 'micro_goc_7_2', name: 'Cis/Trans in cyclic compounds', parent_id: 'tag_goc_7', type: 'micro_topic' },
     { id: 'micro_goc_7_3', name: 'Conditions for geometrical isomerism', parent_id: 'tag_goc_7', type: 'micro_topic' },
     { id: 'micro_goc_7_4', name: 'Geometrical isomerism in oximes & azo compounds', parent_id: 'tag_goc_7', type: 'micro_topic' },
-    
-    // Primary Concept 8: Optical Isomerism & Chirality
     { id: 'tag_goc_8', name: 'Optical Isomerism & Chirality', parent_id: 'ch11_goc', type: 'topic' },
     { id: 'micro_goc_8_1', name: 'Chiral centre identification', parent_id: 'tag_goc_8', type: 'micro_topic' },
     { id: 'micro_goc_8_2', name: 'R/S configuration (CIP rules)', parent_id: 'tag_goc_8', type: 'micro_topic' },
@@ -166,22 +151,16 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'micro_goc_8_4', name: 'Enantiomers vs diastereomers', parent_id: 'tag_goc_8', type: 'micro_topic' },
     { id: 'micro_goc_8_5', name: 'Meso compounds', parent_id: 'tag_goc_8', type: 'micro_topic' },
     { id: 'micro_goc_8_6', name: 'Fischer & Newman projections', parent_id: 'tag_goc_8', type: 'micro_topic' },
-    
-    // Primary Concept 9: Conformational Isomerism
     { id: 'tag_goc_9', name: 'Conformational Isomerism', parent_id: 'ch11_goc', type: 'topic' },
     { id: 'micro_goc_9_1', name: 'Newman projections of alkanes', parent_id: 'tag_goc_9', type: 'micro_topic' },
     { id: 'micro_goc_9_2', name: 'Conformations of cyclohexane (axial/equatorial)', parent_id: 'tag_goc_9', type: 'micro_topic' },
     { id: 'micro_goc_9_3', name: 'Conformations of cycloalkanes', parent_id: 'tag_goc_9', type: 'micro_topic' },
     { id: 'micro_goc_9_4', name: 'Energy diagrams of conformers', parent_id: 'tag_goc_9', type: 'micro_topic' },
-    
-    // Primary Concept 10: Huckel's Rule & Aromaticity
     { id: 'tag_goc_10', name: 'Huckel\'s Rule & Aromaticity', parent_id: 'ch11_goc', type: 'topic' },
     { id: 'micro_goc_10_1', name: 'Aromatic vs antiaromatic vs non-aromatic', parent_id: 'tag_goc_10', type: 'micro_topic' },
     { id: 'micro_goc_10_2', name: 'Huckel\'s rule application (4n+2 π electrons)', parent_id: 'tag_goc_10', type: 'micro_topic' },
     { id: 'micro_goc_10_3', name: 'Aromaticity in charged species & heterocycles', parent_id: 'tag_goc_10', type: 'micro_topic' },
     { id: 'micro_goc_10_4', name: 'Homoaromaticity (advanced)', parent_id: 'tag_goc_10', type: 'micro_topic' },
-    
-    // Primary Concept 11: Allenes, Atropisomers & Spiro Compounds
     { id: 'tag_goc_11', name: 'Allenes, Atropisomers & Spiro Compounds', parent_id: 'ch11_goc', type: 'topic' },
     { id: 'micro_goc_11_1', name: 'Axial chirality in allenes', parent_id: 'tag_goc_11', type: 'micro_topic' },
     { id: 'micro_goc_11_2', name: 'Atropisomerism (restricted rotation)', parent_id: 'tag_goc_11', type: 'micro_topic' },
@@ -629,4 +608,5 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
 // Summary Statistics
 // Total Chapters: 67
 // Total Tags: 405
-// Last saved: 2026-03-11T07:25:44.423Z
+// Total Micro Topics: 49
+// Last saved: 2026-03-11T08:35:01.338Z
