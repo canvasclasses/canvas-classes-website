@@ -32,11 +32,13 @@ const isShortOptions = (opts: { id: string; text: string; is_correct: boolean }[
 
 const hasImageMarkdown = (markdown: string): boolean => /!\[[^\]]*\]\([^)]+\)/.test(markdown);
 
-export default function BrowseView({ questions, chapters, onBack, chapterId }: {
+export default function BrowseView({ questions, chapters, onBack, chapterId, guidedMode, onQuestionAnswered }: {
   questions: Question[];
   chapters: Chapter[];
   onBack: () => void;
   chapterId?: string;
+  guidedMode?: boolean;
+  onQuestionAnswered?: (isCorrect: boolean) => void;
 }) {
   const [page, setPage] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
