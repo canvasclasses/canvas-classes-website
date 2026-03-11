@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
 
     const chapters = nodes.filter((n: any) => n.type === 'chapter');
     const tags = nodes.filter((n: any) => n.type === 'topic');
+    const microTopics = nodes.filter((n: any) => n.type === 'micro_topic');
 
     // Generate the TypeScript file content
     const lines: string[] = [
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
       "    id: string;",
       "    name: string;",
       "    parent_id: string | null;",
-      "    type: 'chapter' | 'topic';",
+      "    type: 'chapter' | 'topic' | 'micro_topic';",
       "    sequence_order?: number;",
       "    class_level?: 11 | 12;",
       "    chapterType?: 'physical' | 'inorganic' | 'organic' | 'practical';",
@@ -73,6 +74,11 @@ export async function POST(request: NextRequest) {
       const chTags = tags.filter((t: any) => t.parent_id === ch.id);
       for (const tag of chTags) {
         lines.push(nodeToLine(tag));
+        // Write micro_topics for this tag
+        const tagMicroTopics = microTopics.filter((mt: any) => mt.parent_id === tag.id);
+        for (const microTopic of tagMicroTopics) {
+          lines.push(nodeToLine(microTopic));
+        }
       }
       lines.push('');
     }
@@ -83,6 +89,11 @@ export async function POST(request: NextRequest) {
       const chTags = tags.filter((t: any) => t.parent_id === ch.id);
       for (const tag of chTags) {
         lines.push(nodeToLine(tag));
+        // Write micro_topics for this tag
+        const tagMicroTopics = microTopics.filter((mt: any) => mt.parent_id === tag.id);
+        for (const microTopic of tagMicroTopics) {
+          lines.push(nodeToLine(microTopic));
+        }
       }
       lines.push('');
     }
@@ -92,6 +103,7 @@ export async function POST(request: NextRequest) {
     lines.push(`// Summary Statistics`);
     lines.push(`// Total Chapters: ${chapters.length}`);
     lines.push(`// Total Tags: ${tags.length}`);
+    lines.push(`// Total Micro Topics: ${microTopics.length}`);
     lines.push(`// Last saved: ${new Date().toISOString()}`);
     lines.push('');
 
@@ -102,9 +114,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: `Saved ${chapters.length} chapters and ${tags.length} tags to taxonomyData_from_csv.ts`,
+      message: `Saved ${chapters.length} chapters, ${tags.length} tags, and ${microTopics.length} micro topics to taxonomyData_from_csv.ts`,
       chapters: chapters.length,
       tags: tags.length,
+      microTopics: microTopics.length,
     });
 
   } catch (error: any) {
