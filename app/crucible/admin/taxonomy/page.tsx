@@ -23,7 +23,7 @@ interface EditingNode {
     id: string;
     name: string;
     parent_id: string | null;
-    type: 'chapter' | 'topic';
+    type: 'chapter' | 'topic' | 'micro_topic';
     sequence_order?: number;
     class_level?: 11 | 12;
     chapterType?: ChapterType;
@@ -178,8 +178,33 @@ export default function TaxonomyPage() {
         }
     };
 
+    const addMicroTag = async (primaryTagId: string) => {
+        const microTagName = prompt('Enter micro concept tag name:');
+        if (!microTagName) return;
+
+        try {
+            const newId = `micro_${primaryTagId}_${Date.now()}`;
+            const createdNode: TaxonomyNode = {
+                id: newId,
+                name: microTagName,
+                parent_id: primaryTagId,
+                type: 'micro_topic'
+            };
+
+            const updated = [...taxonomy, createdNode];
+            setTaxonomy(updated);
+            await saveTaxonomyToFile(updated);
+        } catch (error) {
+            setMessage({ type: 'error', text: 'Failed to add micro tag' });
+        }
+    };
+
     const getChapterTags = (chapterId: string): TaxonomyNode[] => {
         return taxonomy.filter(node => node.type === 'topic' && node.parent_id === chapterId);
+    };
+
+    const getMicroTags = (primaryTagId: string): TaxonomyNode[] => {
+        return taxonomy.filter(node => node.type === 'micro_topic' && node.parent_id === primaryTagId);
     };
 
     const getBranchIcon = (branchId: ChapterType) => {
@@ -298,54 +323,121 @@ export default function TaxonomyPage() {
                             {tags.length === 0 ? (
                                 <p className="text-sm text-gray-500 py-4 text-center">No concept tags yet</p>
                             ) : (
-                                tags.map(tag => (
-                                    <div key={tag.id} className="flex items-center gap-2 px-3 py-2 bg-gray-700/50 rounded-lg group">
-                                        <Tag className="w-4 h-4 text-gray-500" />
-                                        {editingNode?.id === tag.id ? (
-                                            <input
-                                                type="text"
-                                                value={editingNode.name}
-                                                onChange={(e) => setEditingNode({ ...editingNode, name: e.target.value })}
-                                                className="flex-1 px-2 py-1 bg-gray-600 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
-                                                autoFocus
-                                            />
-                                        ) : (
-                                            <span className="flex-1 text-sm text-gray-300">{tag.name}</span>
-                                        )}
-                                        
-                                        {editingNode?.id === tag.id ? (
-                                            <>
-                                                <button
-                                                    onClick={() => saveEdit()}
-                                                    className="p-1 hover:bg-green-900/50 rounded"
-                                                >
-                                                    <Save className="w-3 h-3 text-green-500" />
-                                                </button>
-                                                <button
-                                                    onClick={() => setEditingNode(null)}
-                                                    className="p-1 hover:bg-red-900/50 rounded"
-                                                >
-                                                    <X className="w-3 h-3 text-red-500" />
-                                                </button>
-                                            </>
-                                        ) : (
-                                            <div className="opacity-0 group-hover:opacity-100 flex gap-1">
-                                                <button
-                                                    onClick={() => startEdit(tag)}
-                                                    className="p-1 hover:bg-blue-900/50 rounded"
-                                                >
-                                                    <Edit2 className="w-3 h-3 text-blue-500" />
-                                                </button>
-                                                <button
-                                                    onClick={() => deleteNode(tag.id)}
-                                                    className="p-1 hover:bg-red-900/50 rounded"
-                                                >
-                                                    <Trash2 className="w-3 h-3 text-red-500" />
-                                                </button>
+                                tags.map(tag => {
+                                    const microTags = getMicroTags(tag.id);
+                                    return (
+                                        <div key={tag.id} className="space-y-1">
+                                            <div className="flex items-center gap-2 px-3 py-2 bg-gray-700/50 rounded-lg group">
+                                                <Tag className="w-4 h-4 text-purple-400" />
+                                                {editingNode?.id === tag.id ? (
+                                                    <input
+                                                        type="text"
+                                                        value={editingNode.name}
+                                                        onChange={(e) => setEditingNode({ ...editingNode, name: e.target.value })}
+                                                        className="flex-1 px-2 py-1 bg-gray-600 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                                                        autoFocus
+                                                    />
+                                                ) : (
+                                                    <span className="flex-1 text-sm font-medium text-gray-200">{tag.name}</span>
+                                                )}
+                                                <span className="text-xs text-gray-500">{microTags.length} micro</span>
+                                                
+                                                {editingNode?.id === tag.id ? (
+                                                    <>
+                                                        <button
+                                                            onClick={() => saveEdit()}
+                                                            className="p-1 hover:bg-green-900/50 rounded"
+                                                        >
+                                                            <Save className="w-3 h-3 text-green-500" />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => setEditingNode(null)}
+                                                            className="p-1 hover:bg-red-900/50 rounded"
+                                                        >
+                                                            <X className="w-3 h-3 text-red-500" />
+                                                        </button>
+                                                    </>
+                                                ) : (
+                                                    <div className="opacity-0 group-hover:opacity-100 flex gap-1">
+                                                        <button
+                                                            onClick={() => addMicroTag(tag.id)}
+                                                            className="p-1 hover:bg-green-900/50 rounded"
+                                                            title="Add Micro Tag"
+                                                        >
+                                                            <Plus className="w-3 h-3 text-green-500" />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => startEdit(tag)}
+                                                            className="p-1 hover:bg-blue-900/50 rounded"
+                                                        >
+                                                            <Edit2 className="w-3 h-3 text-blue-500" />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => deleteNode(tag.id)}
+                                                            className="p-1 hover:bg-red-900/50 rounded"
+                                                        >
+                                                            <Trash2 className="w-3 h-3 text-red-500" />
+                                                        </button>
+                                                    </div>
+                                                )}
                                             </div>
-                                        )}
-                                    </div>
-                                ))
+                                            
+                                            {/* Micro Tags */}
+                                            {microTags.length > 0 && (
+                                                <div className="ml-6 space-y-1">
+                                                    {microTags.map(microTag => (
+                                                        <div key={microTag.id} className="flex items-center gap-2 px-3 py-1.5 bg-gray-700/30 rounded group">
+                                                            <div className="w-2 h-2 rounded-full bg-blue-400/50" />
+                                                            {editingNode?.id === microTag.id ? (
+                                                                <input
+                                                                    type="text"
+                                                                    value={editingNode.name}
+                                                                    onChange={(e) => setEditingNode({ ...editingNode, name: e.target.value })}
+                                                                    className="flex-1 px-2 py-1 bg-gray-600 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-xs"
+                                                                    autoFocus
+                                                                />
+                                                            ) : (
+                                                                <span className="flex-1 text-xs text-gray-400">{microTag.name}</span>
+                                                            )}
+                                                            
+                                                            {editingNode?.id === microTag.id ? (
+                                                                <>
+                                                                    <button
+                                                                        onClick={() => saveEdit()}
+                                                                        className="p-1 hover:bg-green-900/50 rounded"
+                                                                    >
+                                                                        <Save className="w-3 h-3 text-green-500" />
+                                                                    </button>
+                                                                    <button
+                                                                        onClick={() => setEditingNode(null)}
+                                                                        className="p-1 hover:bg-red-900/50 rounded"
+                                                                    >
+                                                                        <X className="w-3 h-3 text-red-500" />
+                                                                    </button>
+                                                                </>
+                                                            ) : (
+                                                                <div className="opacity-0 group-hover:opacity-100 flex gap-1">
+                                                                    <button
+                                                                        onClick={() => startEdit(microTag)}
+                                                                        className="p-1 hover:bg-blue-900/50 rounded"
+                                                                    >
+                                                                        <Edit2 className="w-2.5 h-2.5 text-blue-500" />
+                                                                    </button>
+                                                                    <button
+                                                                        onClick={() => deleteNode(microTag.id)}
+                                                                        className="p-1 hover:bg-red-900/50 rounded"
+                                                                    >
+                                                                        <Trash2 className="w-2.5 h-2.5 text-red-500" />
+                                                                    </button>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                                })
                             )}
                         </div>
                         

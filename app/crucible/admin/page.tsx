@@ -67,6 +67,11 @@ interface Question {
         is_pyq: boolean;
         is_top_pyq: boolean;
         source_id?: string;
+        microConcept?: string;
+        cognitiveType?: 'conceptual' | 'procedural' | 'application' | 'analytical' | 'recall' | 'multi-step' | '';
+        calcLoad?: 'calc-none' | 'calc-light' | 'calc-moderate' | 'calc-heavy' | 'calc-intense' | '';
+        entryPoint?: 'clear-entry' | 'strategy-first' | 'ambiguous-entry' | '';
+        isMultiConcept?: boolean;
     };
     status: 'draft' | 'review' | 'published' | 'archived';
     quality_score: number;
@@ -1038,21 +1043,22 @@ export default function AdminPage() {
                 </div>
             </header>
 
-            {/* MAIN AREA: 54/46 split */}
-            <div className="flex-1 flex overflow-hidden">
-                {/* LEFT: Editor (54%) */}
-                <div className="w-[54%] flex flex-col overflow-hidden border-r border-gray-800/50">
-                    {selectedChapterFilter === 'all' && !searchQuery ? (
-                        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center text-gray-500">
-                            <Library size={48} className="mb-4 text-gray-600 opacity-50" />
-                            <h2 className="text-xl font-semibold text-gray-300 mb-2">Select a Chapter</h2>
-                            <p className="max-w-md text-sm">
-                                To optimize performance, the admin dashboard no longer loads all questions at once.
-                                Please select a chapter from the dropdown above or use the search bar to find specific questions.
-                            </p>
-                        </div>
-                    ) : selectedQuestion ? (
-                        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            {/* MAIN AREA: full-width metadata top + split editor/preview bottom */}
+            <div className="flex-1 flex flex-col overflow-hidden">
+                {selectedChapterFilter === 'all' && !searchQuery ? (
+                    <div className="flex-1 flex flex-col items-center justify-center p-8 text-center text-gray-500">
+                        <Library size={48} className="mb-4 text-gray-600 opacity-50" />
+                        <h2 className="text-xl font-semibold text-gray-300 mb-2">Select a Chapter</h2>
+                        <p className="max-w-md text-sm">
+                            To optimize performance, the admin dashboard no longer loads all questions at once.
+                            Please select a chapter from the dropdown above or use the search bar to find specific questions.
+                        </p>
+                    </div>
+                ) : selectedQuestion ? (
+                    <>
+                    {/* TOP: Full-width metadata & tagging */}
+                    <div className="shrink-0 border-b border-gray-800/50 overflow-y-auto" style={{maxHeight:'38vh'}}>
+                        <div className="p-5 space-y-4">
                             {/* Header Row */}
                             <div className="flex items-center gap-3 pb-4 border-b border-gray-800/50">
                                 <div className="flex flex-col">
@@ -1371,6 +1377,108 @@ export default function AdminPage() {
                                 </div>
                             </div>
 
+                            {/* Adaptive Engine Tags */}
+                            <div className="p-3 bg-teal-900/10 border border-teal-700/30 rounded-lg space-y-3">
+                                <div className="flex items-center gap-2 mb-1">
+                                    <Zap size={12} className="text-teal-400" />
+                                    <span className="text-[10px] font-bold text-teal-400 uppercase tracking-widest">Adaptive Engine Tags</span>
+                                    <span className="text-[10px] text-gray-600 ml-1">— used by the V2 practice engine</span>
+                                </div>
+                                <div className="grid grid-cols-5 gap-3">
+                                    {/* Micro Concept */}
+                                    <div className="col-span-2">
+                                        <label className="text-[10px] text-gray-500 block mb-1">Micro Concept</label>
+                                        <input
+                                            type="text"
+                                            value={selectedQuestion.metadata.microConcept ?? ''}
+                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
+                                                metadata: { ...selectedQuestion.metadata, microConcept: e.target.value }
+                                            })}
+                                            placeholder="e.g. Nucleophilic addition"
+                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs text-teal-300 focus:border-teal-500 outline-none placeholder-gray-600"
+                                        />
+                                    </div>
+
+                                    {/* Cognitive Type */}
+                                    <div>
+                                        <label className="text-[10px] text-gray-500 block mb-1">Cognitive Type</label>
+                                        <select
+                                            value={selectedQuestion.metadata.cognitiveType ?? ''}
+                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
+                                                metadata: { ...selectedQuestion.metadata, cognitiveType: e.target.value as any }
+                                            })}
+                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs focus:border-teal-500 outline-none"
+                                        >
+                                            <option value="">— unset —</option>
+                                            <option value="conceptual">Conceptual</option>
+                                            <option value="procedural">Procedural</option>
+                                            <option value="application">Application</option>
+                                            <option value="analytical">Analytical</option>
+                                            <option value="recall">Recall</option>
+                                            <option value="multi-step">Multi-step</option>
+                                        </select>
+                                    </div>
+
+                                    {/* Calc Load */}
+                                    <div>
+                                        <label className="text-[10px] text-gray-500 block mb-1">Calc Load</label>
+                                        <select
+                                            value={selectedQuestion.metadata.calcLoad ?? ''}
+                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
+                                                metadata: { ...selectedQuestion.metadata, calcLoad: e.target.value as any }
+                                            })}
+                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs focus:border-teal-500 outline-none"
+                                        >
+                                            <option value="">— unset —</option>
+                                            <option value="calc-none">None</option>
+                                            <option value="calc-light">Light</option>
+                                            <option value="calc-moderate">Moderate</option>
+                                            <option value="calc-heavy">Heavy</option>
+                                            <option value="calc-intense">Intense</option>
+                                        </select>
+                                    </div>
+
+                                    {/* Entry Point */}
+                                    <div>
+                                        <label className="text-[10px] text-gray-500 block mb-1">Entry Point</label>
+                                        <select
+                                            value={selectedQuestion.metadata.entryPoint ?? ''}
+                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
+                                                metadata: { ...selectedQuestion.metadata, entryPoint: e.target.value as any }
+                                            })}
+                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs focus:border-teal-500 outline-none"
+                                        >
+                                            <option value="">— unset —</option>
+                                            <option value="clear-entry">Clear Entry</option>
+                                            <option value="strategy-first">Strategy First</option>
+                                            <option value="ambiguous-entry">Ambiguous</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                {/* Multi-Concept toggle on its own line */}
+                                <label className="flex items-center gap-2 cursor-pointer w-fit">
+                                    <input
+                                        type="checkbox"
+                                        checked={!!selectedQuestion.metadata.isMultiConcept}
+                                        onChange={(e) => handleUpdate(selectedQuestion._id, {
+                                            metadata: { ...selectedQuestion.metadata, isMultiConcept: e.target.checked }
+                                        })}
+                                        className="h-3.5 w-3.5 accent-teal-500"
+                                    />
+                                    <span className="text-xs text-gray-400">Multi-Concept question (spans &gt;1 micro concept)</span>
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {/* BOTTOM: Side-by-side editor and live preview */}
+                    <div className="flex-1 flex overflow-hidden">
+
+                        {/* LEFT: Question editor (50%) */}
+                        <div className="w-1/2 flex flex-col overflow-hidden border-r border-gray-800/50">
+                            <div className="flex-1 overflow-y-auto p-5 space-y-4">
                             {/* Active flags warning */}
                             {selectedQuestion.flags?.some(f => !f.resolved) && (
                                 <div className="p-4 bg-red-900/20 border border-red-500/50 rounded-lg flex flex-col gap-2 relative">
@@ -1786,18 +1894,10 @@ export default function AdminPage() {
                                 existingAudioUrl={selectedQuestion.solution?.asset_ids?.audio?.[0]}
                             />
                         </div>
-                    ) : (
-                        <div className="flex-1 flex items-center justify-center text-gray-600">
-                            <div className="text-center">
-                                <MonitorPlay size={48} className="mx-auto mb-4 opacity-30" />
-                                <p className="text-sm">Select a question to edit</p>
-                            </div>
                         </div>
-                    )}
-                </div>
 
-                {/* RIGHT: Live Preview (46%) */}
-                <div className="w-[46%] flex flex-col overflow-hidden bg-gray-950/50">
+                        {/* RIGHT: Live Preview (50%) */}
+                        <div className="w-1/2 flex flex-col overflow-hidden bg-gray-950/50">
                     <div className="p-3 border-b border-gray-800/50 bg-gray-900/50 flex items-center justify-between gap-3">
                         <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
                             <Eye size={14} /> Live Preview
@@ -2046,7 +2146,17 @@ export default function AdminPage() {
                             </div>
                         )}
                     </div>
-                </div>
+                        </div>
+                    </div>
+                    </>
+                ) : (
+                    <div className="flex-1 flex items-center justify-center text-gray-600">
+                        <div className="text-center">
+                            <MonitorPlay size={48} className="mx-auto mb-4 opacity-30" />
+                            <p className="text-sm">Select a question to edit</p>
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Analytics Dashboard Modal */}

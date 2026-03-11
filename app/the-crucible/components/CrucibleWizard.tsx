@@ -1,20 +1,25 @@
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, BarChart2 } from 'lucide-react';
+import { ChevronLeft, ChevronDown, ChevronRight, Check, BarChart2, UserCircle, BookOpen, LayoutGrid, Clock, Lock, Sparkles } from 'lucide-react';
+import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { Chapter, Question } from './types';
-import WizardStepIndicator from './WizardStepIndicator';
-import StepModeSelect from './StepModeSelect';
-import StepChapterSelect from './StepChapterSelect';
-import StepConfirmLaunch, { DifficultyMix } from './StepConfirmLaunch';
 import ProgressPanel from './ProgressPanel';
 import BrowseView from './BrowseView';
 import TestView from './TestView';
 import AuthRequiredDialog from './AuthRequiredDialog';
+import GuidedPracticeWizard from './GuidedPracticeWizard';
 
-type WizardStep = 1 | 2 | 3;
-type ActiveView = 'wizard' | 'shloka' | 'browse' | 'test';
+type ActiveView = 'wizard' | 'shloka' | 'browse' | 'guided' | 'test';
+type GuidedDifficulty = 'Easy' | 'Medium' | 'Hard' | 'Mixed';
+
+const CAT_COLOR: Record<string, string> = { Physical: '#3b82f6', Organic: '#8b5cf6', Inorganic: '#10b981', Practical: '#f59e0b' };
+const CAT_ORDER = ['Physical', 'Inorganic', 'Organic', 'Practical'];
+
+type DifficultyMix = 'balanced' | 'easy' | 'hard' | 'pyq';
+
+const COLLAPSE_TRANSITION = '0.38s cubic-bezier(0.16, 1, 0.3, 1)';
 
 // ── Shloka loading screen ────────────────────────────────────────────────────
 function ShlokaScreen({ onDone }: { onDone: () => void }) {
@@ -180,6 +185,106 @@ function selectTestQuestions(all: Question[], count: number, mix: DifficultyMix)
   return selected;
 }
 
+// ── Collapsible Step Card ─────────────────────────────────────────────────────
+function StepCard({
+  stepNum, label, value, isOpen, isConfirmed, onToggle, locked, children,
+}: {
+  stepNum: number; label: string; value: string; isOpen: boolean;
+  isConfirmed: boolean; onToggle: () => void; locked?: boolean;
+  children: React.ReactNode;
+}) {
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const [bodyHeight, setBodyHeight] = useState(0);
+
+  useEffect(() => {
+    if (bodyRef.current) setBodyHeight(bodyRef.current.scrollHeight);
+  });
+
+  const accent = '#818cf8';
+
+  return (
+    <div style={{
+      borderRadius: 14,
+      border: `1px solid ${isConfirmed ? 'rgba(129,140,248,0.3)' : isOpen ? 'rgba(129,140,248,0.15)' : '#222525'}`,
+      boxShadow: isConfirmed ? '0 0 0 1px rgba(129,140,248,0.1)' : isOpen ? '0 0 0 1px rgba(129,140,248,0.08)' : 'none',
+      background: '#0f1010',
+      overflow: 'hidden',
+      transition: `border-color ${COLLAPSE_TRANSITION}`,
+    }}>
+      {/* Header — always visible */}
+      <button
+        onClick={locked ? undefined : onToggle}
+        style={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+          padding: '16px 20px',
+          background: 'transparent',
+          border: 'none',
+          cursor: locked ? 'default' : 'pointer',
+          WebkitTapHighlightColor: 'transparent',
+          opacity: locked ? 0.45 : 1,
+          transition: `opacity ${COLLAPSE_TRANSITION}`,
+        }}
+      >
+        {/* Step badge */}
+        <div style={{
+          width: 28, height: 28, borderRadius: 8, flexShrink: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 13, fontWeight: 800,
+          background: (isOpen || isConfirmed) ? 'rgba(129,140,248,0.12)' : 'rgba(255,255,255,0.05)',
+          color: (isOpen || isConfirmed) ? accent : 'rgba(255,255,255,0.4)',
+          border: `1px solid ${(isOpen || isConfirmed) ? 'rgba(129,140,248,0.25)' : 'rgba(255,255,255,0.08)'}`,
+          transition: `all ${COLLAPSE_TRANSITION}`,
+        }}>
+          {stepNum}
+        </div>
+        <div style={{ flex: 1, textAlign: 'left' }}>
+          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: 2 }}>
+            STEP {stepNum}
+          </div>
+          <div style={{ fontSize: 14, fontWeight: 600, color: isConfirmed ? '#fafafa' : 'rgba(255,255,255,0.7)' }}>
+            {value}
+          </div>
+        </div>
+        {/* Right icon: checkmark or chevron */}
+        {isConfirmed ? (
+          <div style={{ width: 24, height: 24, borderRadius: 99, background: 'rgba(129,140,248,0.15)', border: '1px solid rgba(129,140,248,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <Check style={{ width: 14, height: 14, color: accent }} />
+          </div>
+        ) : (
+          <ChevronDown style={{
+            width: 18, height: 18, color: 'rgba(255,255,255,0.3)', flexShrink: 0,
+            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: `transform ${COLLAPSE_TRANSITION}`,
+          }} />
+        )}
+      </button>
+
+      {/* Collapsible body */}
+      <div style={{
+        maxHeight: isOpen ? bodyHeight + 40 : 0,
+        overflow: 'hidden',
+        transition: `max-height ${COLLAPSE_TRANSITION}`,
+      }}>
+        <div ref={bodyRef} style={{ padding: '0 20px 20px' }}>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Chapter list bar ─────────────────────────────────────────────────────────
+function ChapterBar({ value, color }: { value: number; color: string }) {
+  return (
+    <div style={{ height: 2, borderRadius: 99, background: 'rgba(255,255,255,0.08)', overflow: 'hidden', width: '100%' }}>
+      <div style={{ height: '100%', borderRadius: 99, background: color, width: `${Math.max(value > 0 ? 2 : 0, value)}%`, transition: 'width 0.4s ease' }} />
+    </div>
+  );
+}
+
 // ── Main Wizard Component ────────────────────────────────────────────────────
 interface CrucibleWizardProps {
   chapters: Chapter[];
@@ -188,11 +293,21 @@ interface CrucibleWizardProps {
 
 export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardProps) {
   const router = useRouter();
-  const [step, setStep] = useState<WizardStep>(1);
-  const [mode, setMode] = useState<'browse' | 'test' | null>(null);
-  const [selectedChapters, setSelectedChapters] = useState<Set<string>>(new Set());
-  const [jeeMode, setJeeMode] = useState<'mains' | 'advanced'>('mains');
-  const [topPYQFilter, setTopPYQFilter] = useState(false);
+  const step2Ref = useRef<HTMLDivElement>(null);
+
+  // Accordion state
+  const [step1Open, setStep1Open] = useState(true);
+  const [step2Open, setStep2Open] = useState(false);
+  const [selectedChapterId, setSelectedChapterId] = useState<string | null>(null);
+  const [classTab, setClassTab] = useState<11 | 12>(12);
+
+  // Guided practice config
+  const [guidedDifficulty, setGuidedDifficulty] = useState<GuidedDifficulty>('Mixed');
+  const [sessionLength, setSessionLength] = useState(20);
+  const [guidedExpanded, setGuidedExpanded] = useState(true);
+  const [howItWorksOpen, setHowItWorksOpen] = useState(false);
+
+  // View state
   const [activeView, setActiveView] = useState<ActiveView>('wizard');
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(false);
@@ -200,15 +315,22 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
   const [showProgress, setShowProgress] = useState(false);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [pendingView, setPendingView] = useState<'browse' | 'test' | null>(null);
-  // Two-flag handshake: only transition to browse/test when BOTH the shloka has
-  // exited AND the questions fetch has completed. Without this, TestView mounts
-  // with questions=[] → seconds=0 → instant auto-submission (race condition).
   const [shlokaExited, setShlokaExited] = useState(false);
   const [pendingQuestions, setPendingQuestions] = useState<Question[] | null>(null);
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
 
   useEffect(() => { setMounted(true); }, []);
+
+  useEffect(() => {
+    const supabase = createSupabaseClient();
+    if (!supabase) return;
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUserEmail(session?.user?.email ?? null);
+    });
+  }, []);
+
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
@@ -218,126 +340,105 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
 
   const notify = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
 
-  // Coordinate the two async "ready" signals:
-  // 1. Shloka has played (setShlokaExited)
-  // 2. Questions have been fetched (setPendingQuestions)
-  // Only when both are true do we switch to the final view.
   useEffect(() => {
     if (shlokaExited && pendingQuestions !== null && pendingView) {
       setQuestions(pendingQuestions);
       setActiveView(pendingView);
-      // Reset for next session
       setPendingView(null);
       setPendingQuestions(null);
       setShlokaExited(false);
     }
   }, [shlokaExited, pendingQuestions, pendingView]);
 
-  const onShlokaDone = useCallback(() => {
-    setShlokaExited(true);
-  }, []);
+  const onShlokaDone = useCallback(() => { setShlokaExited(true); }, []);
 
-  // Step 1: Mode selection
-  const handleModeSelect = (m: 'browse' | 'test') => {
-    setMode(m);
-    setStep(2);
+  // Derived values
+  const selectedChapter = selectedChapterId ? chapters.find(c => c.id === selectedChapterId) : null;
+  const chapterConfirmed = !!selectedChapterId;
+  const chapterQCount = selectedChapter?.question_count ?? 0;
+
+  // Chapter selection handler
+  const handleChapterTap = (id: string) => {
+    setSelectedChapterId(id);
+    setStep1Open(false);
+    // Scroll to step 2 after 280ms
+    setTimeout(() => {
+      setStep2Open(true);
+      setTimeout(() => {
+        step2Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }, 280);
   };
 
-  // Top PYQ shortcut — skip chapter selection
-  const handleTopPYQ = () => {
-    setLoading(true);
-    setPendingView('browse');
-    setShlokaExited(false);
-    setPendingQuestions(null);
-    setActiveView('shloka');
-    fetchTopPYQs()
-      .then(qs => {
-        if (qs.length === 0) { notify('Top PYQs not tagged yet — check back soon!'); setActiveView('wizard'); return; }
-        setPendingQuestions(qs); // signal questions ready; shloka flag will complete the handshake
-      })
-      .catch(() => { notify('Failed to load Top PYQs.'); setActiveView('wizard'); })
-      .finally(() => setLoading(false));
-  };
-
-  // Step 2: Chapter selection helpers
-  const toggle = (id: string) => setSelectedChapters(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
-  const selectAllClass = (lvl: number) => { setSelectedChapters(prev => { const n = new Set(prev); chapters.filter(ch => ch.class_level === lvl).forEach(c => n.add(c.id)); return n; }); };
-  const clearClass = (lvl: number) => { const ids = new Set(chapters.filter(ch => ch.class_level === lvl).map(c => c.id)); setSelectedChapters(prev => { const n = new Set(prev); ids.forEach(id => n.delete(id)); return n; }); };
-  const clearAll = () => setSelectedChapters(new Set());
-
-  // Step 3: Launch
-  const handleLaunch = (count?: number, mix?: DifficultyMix) => {
-    if (loading) return;
-
-    const chapterIds = Array.from(selectedChapters);
-
-    // Single chapter: navigate to chapter-specific URL — fully refresh-safe
-    if (chapterIds.length === 1) {
-      const chId = chapterIds[0];
-      if (mode === 'browse') {
-        router.push(`/the-crucible/${chId}?mode=browse`);
-      } else {
-        const testCount = count || 20;
-        const testMix = (mix || 'balanced') as DifficultyMix;
-        router.push(`/the-crucible/${chId}?mode=test&count=${testCount}&mix=${testMix}`);
-      }
-      return;
-    }
-
-    // Multiple chapters: use shloka + fetch flow, encode chapters in URL afterwards
-    setLoading(true);
-    setShlokaExited(false);
-    setPendingQuestions(null);
-
-    if (mode === 'browse') {
-      setPendingView('browse');
-      setActiveView('shloka');
-      fetchQuestions(chapterIds, undefined, topPYQFilter)
-        .then(qs => {
-          if (qs.length === 0) {
-            notify(topPYQFilter ? 'No Top PYQs found for selected chapters yet.' : 'No questions found for selected chapters yet.');
-            setActiveView('wizard');
-            return;
-          }
-          setPendingQuestions(qs);
-          router.push(`/the-crucible?mode=browse&chapters=${chapterIds.join(',')}`, { scroll: false });
-        })
-        .catch(() => { notify('Failed to load questions.'); setActiveView('wizard'); })
-        .finally(() => setLoading(false));
+  // Re-open step 1
+  const handleStep1Toggle = () => {
+    if (step1Open) {
+      setStep1Open(false);
     } else {
-      setPendingView('test');
-      setActiveView('shloka');
-      fetchQuestions(chapterIds, undefined, topPYQFilter)
-        .then(qs => {
-          if (qs.length === 0) { notify('No questions found.'); setActiveView('wizard'); return; }
-          const effectiveMix = topPYQFilter ? 'pyq' : mix;
-          const selected = selectTestQuestions(qs, count || 20, (effectiveMix || 'balanced') as DifficultyMix);
-          setPendingQuestions(selected);
-          router.push(`/the-crucible?mode=test&chapters=${chapterIds.join(',')}`, { scroll: false });
-        })
-        .catch(() => { notify('Failed to load questions.'); setActiveView('wizard'); })
-        .finally(() => setLoading(false));
+      setStep1Open(true);
+      setStep2Open(false);
     }
+  };
+
+  const handleStep2Toggle = () => {
+    if (!chapterConfirmed) return;
+    setStep2Open(!step2Open);
+  };
+
+  // Launch Guided Practice
+  const handleGuidedLaunch = () => {
+    if (!selectedChapterId) return;
+    setActiveView('guided');
+  };
+
+  // Launch Free Browse
+  const handleBrowseLaunch = () => {
+    if (!selectedChapterId || loading) return;
+    setLoading(true);
+    setShlokaExited(false);
+    setActiveView('shloka');
+    setTimeout(() => {
+      router.push(`/the-crucible/${selectedChapterId}?mode=browse`);
+    }, 1800);
+  };
+
+  // Launch Timed Test
+  const handleTestLaunch = () => {
+    if (!selectedChapterId) return;
+    if (!isLoggedIn) { setShowAuthDialog(true); return; }
+    setLoading(true);
+    setShlokaExited(false);
+    setActiveView('shloka');
+    setTimeout(() => {
+      router.push(`/the-crucible/${selectedChapterId}?mode=test`);
+    }, 1800);
   };
 
   const handleBackToWizard = () => {
     setActiveView('wizard');
-    // Don't reset wizard state so user can re-launch with different settings
+    setLoading(false);
   };
 
   if (!mounted) return (
-    <div style={{ minHeight: '100vh', background: '#080a0f', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ width: 32, height: 32, border: '2px solid #7c3aed', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+    <div style={{ minHeight: '100vh', background: '#07080f', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width: 32, height: 32, border: '2px solid #6366f1', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
 
-  // View routing
   if (activeView === 'shloka') return <ShlokaScreen onDone={onShlokaDone} />;
   if (activeView === 'browse') return <BrowseView questions={questions} chapters={chapters} onBack={handleBackToWizard} />;
   if (activeView === 'test') return <TestView questions={questions} onBack={handleBackToWizard} />;
+  if (activeView === 'guided') return <GuidedPracticeWizard chapters={chapters} onBack={handleBackToWizard} preSelectedChapterId={selectedChapterId ?? undefined} preSelectedDifficulty={guidedDifficulty} preSelectedSessionLength={sessionLength} />;
 
-  // Wizard UI
+  // Chapter list data
+  const classChapters = chapters.filter(ch => ch.class_level === classTab);
+  const grouped: Record<string, Chapter[]> = {};
+  classChapters.forEach(ch => { const cat = ch.category ?? 'Physical'; (grouped[cat] = grouped[cat] || []).push(ch); });
+
+  // Meta line for guided practice
+  const metaLine = `${chapterQCount} questions · ${selectedChapter?.name ?? '—'} · ${guidedDifficulty} · ${sessionLength}Q`;
+
   return (
     <>
       <style>{`
@@ -345,25 +446,23 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
         @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
       `}</style>
 
-      <div style={{ minHeight: '100vh', background: '#050505', color: '#fafafa', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ minHeight: '100vh', background: '#07080f', color: '#fafafa', position: 'relative', overflow: 'hidden' }}>
         {/* Background gradient glow */}
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
-          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '60%', background: 'linear-gradient(to top, rgba(59,130,246,0.06), transparent)' }} />
-          <div style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: 800, height: 400, background: 'rgba(59,130,246,0.08)', filter: 'blur(140px)', borderRadius: '50%' }} />
+          <div style={{ position: 'absolute', top: '-10%', left: '-5%', width: 700, height: 700, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, rgba(99,102,241,0.04) 45%, transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: '20%', right: '-8%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(139,92,246,0.1) 0%, rgba(139,92,246,0.03) 45%, transparent 70%)', filter: 'blur(60px)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', bottom: '-5%', left: '30%', width: 600, height: 300, borderRadius: '50%', background: 'radial-gradient(circle, rgba(56,189,248,0.07) 0%, transparent 70%)', filter: 'blur(80px)', pointerEvents: 'none' }} />
         </div>
 
-        {/* NAV */}
+        {/* NAV — kept exactly as is */}
         <nav style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 50,
-          background: 'rgba(5,5,5,0.8)',
+          position: 'sticky', top: 0, zIndex: 50,
+          background: 'rgba(7,8,15,0.85)',
           backdropFilter: 'blur(24px) saturate(180%)',
           borderBottom: '1px solid rgba(255,255,255,0.06)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: isMobile ? '12px 20px' : '16px 40px', maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
-              {/* Crucible icon */}
               <div style={{ width: isMobile ? 32 : 40, height: isMobile ? 32 : 40, borderRadius: 10, background: 'rgba(234,88,12,0.08)', border: '1px solid rgba(234,88,12,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <defs>
@@ -389,59 +488,19 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              {/* My Progress button */}
               <button
                 onClick={() => setShowProgress(true)}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(59,130,246,0.08)';
-                  e.currentTarget.style.borderColor = 'rgba(59,130,246,0.25)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
-                }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 6,
-                  padding: '6px 12px',
-                  borderRadius: 8,
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  background: 'rgba(255,255,255,0.03)',
-                  color: 'rgba(147,197,253,0.9)',
-                  fontSize: 12,
-                  fontWeight: 500,
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease',
-                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(99,102,241,0.1)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
+                style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)', color: 'rgba(165,180,252,0.9)', fontSize: 12, fontWeight: 500, cursor: 'pointer', transition: 'all 0.15s ease' }}
               >
                 <BarChart2 style={{ width: 14, height: 14 }} /> {isMobile ? '' : 'Progress'}
               </button>
-              {/* Home link */}
-              <a
-                href="/"
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
-                }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 4,
-                  padding: '6px 12px',
-                  borderRadius: 8,
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  background: 'rgba(255,255,255,0.03)',
-                  color: 'rgba(203,213,225,0.8)',
-                  fontSize: 12,
-                  fontWeight: 500,
-                  textDecoration: 'none',
-                  transition: 'all 0.15s ease'
-                }}>
+              <a href="/"
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
+                style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 12px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)', color: 'rgba(203,213,225,0.8)', fontSize: 12, fontWeight: 500, textDecoration: 'none', transition: 'all 0.15s ease' }}
+              >
                 <ChevronLeft style={{ width: 14, height: 14 }} /> Home
               </a>
               {!isMobile && (
@@ -450,96 +509,294 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
                   <span style={{ fontSize: 11, color: 'rgba(16,185,129,0.9)', fontWeight: 500 }}>Live</span>
                 </div>
               )}
+              {userEmail && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 10px', borderRadius: 8, background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)' }}>
+                  <UserCircle style={{ width: 13, height: 13, color: 'rgba(165,180,252,0.9)' }} />
+                  <span style={{ fontSize: isMobile ? 10 : 11, color: 'rgba(165,180,252,0.9)', fontWeight: 500, maxWidth: isMobile ? 80 : 140, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {userEmail}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </nav>
 
         {/* Main content area */}
-        <div style={{ maxWidth: 700, margin: '0 auto', padding: isMobile ? '20px 24px 48px' : '32px 40px 72px', position: 'relative', zIndex: 1 }}>
+        <div style={{ maxWidth: 700, margin: '0 auto', padding: isMobile ? '20px 20px 48px' : '32px 40px 72px', position: 'relative', zIndex: 1 }}>
           {/* Hero */}
-          <div style={{ textAlign: 'center', marginBottom: 24, animation: 'fadeUp 0.5s ease-out' }}>
-            <h1 style={{
-              margin: '0 0 10px',
-              lineHeight: 1.08,
-              letterSpacing: '-0.03em',
-              fontSize: isMobile ? 28 : 42,
-              fontWeight: 700,
-              color: '#fff',
-              textShadow: '0 6px 24px rgba(0,0,0,0.45)',
-            }}>
-              <span style={{
-                background: 'linear-gradient(180deg, #ffffff 0%, rgba(147,197,253,0.82) 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}>
+          <div style={{ textAlign: 'center', marginBottom: 28, animation: 'fadeUp 0.5s ease-out' }}>
+            <h1 style={{ margin: '0 0 10px', lineHeight: 1.08, letterSpacing: '-0.03em', fontSize: isMobile ? 28 : 44, fontWeight: 800, color: '#fff', textShadow: '0 6px 40px rgba(99,102,241,0.3)' }}>
+              <span style={{ background: 'linear-gradient(135deg, #e0e7ff 0%, #a5b4fc 40%, #818cf8 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
                 Master Chemistry,
               </span>
               <br />
-              <span style={{
-                fontSize: isMobile ? 18 : 26,
-                fontWeight: 600,
-                color: 'rgba(226,232,240,0.9)',
-                letterSpacing: '-0.02em',
-              }}>
+              <span style={{ fontSize: isMobile ? 18 : 26, fontWeight: 500, color: 'rgba(203,213,225,0.8)', letterSpacing: '-0.02em' }}>
                 one question at a time.
               </span>
             </h1>
-            <p style={{
-              fontSize: 14,
-              color: 'rgba(148,163,184,0.85)',
-              fontWeight: 400,
-              maxWidth: 520,
-              margin: '0 auto',
-              lineHeight: 1.65,
-            }}>
+            <p style={{ fontSize: 14, color: 'rgba(148,163,184,0.85)', fontWeight: 400, maxWidth: 520, margin: '0 auto', lineHeight: 1.65 }}>
               Practice chapter-wise questions, measure accuracy, and build confidence.
             </p>
           </div>
 
-          {/* Step indicator */}
-          <WizardStepIndicator currentStep={step} mode={mode} />
+          {/* Accordion Steps */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, animation: 'fadeUp 0.5s ease-out 0.1s backwards' }}>
 
-          {/* Step content */}
-          <div style={{ marginTop: 16 }}>
-            {step === 1 && (
-              <StepModeSelect
-                onSelectMode={handleModeSelect}
-                onTopPYQ={handleTopPYQ}
-                isLoggedIn={isLoggedIn}
-                onAuthRequired={() => setShowAuthDialog(true)}
-              />
-            )}
+            {/* ═══ STEP 1: Chapter Selector ═══ */}
+            <StepCard
+              stepNum={1}
+              label="STEP 1"
+              value={chapterConfirmed ? (selectedChapter?.name ?? 'Chapter') : 'Select a chapter'}
+              isOpen={step1Open}
+              isConfirmed={chapterConfirmed && !step1Open}
+              onToggle={handleStep1Toggle}
+            >
+              {/* Class tabs */}
+              <div style={{ display: 'flex', background: 'rgba(255,255,255,0.02)', borderRadius: 10, padding: 3, gap: 3, border: '1px solid rgba(255,255,255,0.06)', marginBottom: 12 }}>
+                {([11, 12] as const).map(level => {
+                  const isActive = classTab === level;
+                  const color = level === 11 ? '#38bdf8' : '#a78bfa';
+                  const count = chapters.filter(c => c.class_level === level).length;
+                  return (
+                    <button key={level} onClick={() => setClassTab(level)} style={{
+                      flex: 1, padding: '10px 8px', borderRadius: 8, border: 'none', cursor: 'pointer',
+                      background: isActive ? 'rgba(255,255,255,0.08)' : 'transparent',
+                      color: isActive ? '#fff' : 'rgba(255,255,255,0.4)',
+                      fontSize: 13, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
+                      transition: 'all 0.15s', WebkitTapHighlightColor: 'transparent',
+                    }}>
+                      Class {level}
+                      <span style={{ fontSize: 11, color: isActive ? color : 'rgba(255,255,255,0.3)' }}>{count} ch</span>
+                    </button>
+                  );
+                })}
+              </div>
 
-            {step === 2 && mode && (
-              <StepChapterSelect
-                chapters={chapters}
-                selectedChapters={selectedChapters}
-                onToggle={toggle}
-                onSelectAllClass={selectAllClass}
-                onClearClass={clearClass}
-                onClearAll={clearAll}
-                onContinue={() => setStep(3)}
-                mode={mode}
-                jeeMode={jeeMode}
-                onJeeModeChange={setJeeMode}
-                topPYQFilter={topPYQFilter}
-                onTopPYQFilterChange={setTopPYQFilter}
-                onBack={() => { setStep(1); setMode(null); }}
-              />
-            )}
+              {/* Chapter list */}
+              <div style={{ maxHeight: 340, overflowY: 'auto', margin: '0 -4px', padding: '0 4px' }}>
+                {CAT_ORDER.filter(cat => grouped[cat]?.length).map(cat => (
+                  <div key={cat}>
+                    <div style={{ padding: '6px 0 4px', display: 'flex', alignItems: 'center', gap: 8, position: 'sticky', top: 0, background: '#0f1010', zIndex: 2 }}>
+                      <div style={{ width: 8, height: 8, borderRadius: '50%', background: CAT_COLOR[cat] }} />
+                      <span style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', color: CAT_COLOR[cat] }}>{cat}</span>
+                      <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.28)', marginLeft: 'auto' }}>
+                        {grouped[cat].reduce((s, c) => s + (c.question_count ?? 0), 0)} Qs
+                      </span>
+                    </div>
+                    {grouped[cat].map(ch => {
+                      const isSelected = ch.id === selectedChapterId;
+                      const accent = CAT_COLOR[ch.category ?? 'Physical'];
+                      const qCount = ch.question_count ?? 0;
+                      return (
+                        <div
+                          key={ch.id}
+                          onClick={() => handleChapterTap(ch.id)}
+                          style={{
+                            display: 'flex', alignItems: 'center', gap: 12,
+                            padding: '11px 12px', borderRadius: 10, marginBottom: 2,
+                            cursor: 'pointer', transition: 'all 0.15s',
+                            background: isSelected ? 'rgba(99,102,241,0.09)' : 'transparent',
+                            borderLeft: isSelected ? '3px solid #818cf8' : '3px solid transparent',
+                            WebkitTapHighlightColor: 'transparent',
+                          }}
+                          onMouseEnter={e => { if (!isSelected) e.currentTarget.style.background = `${accent}09`; }}
+                          onMouseLeave={e => { if (!isSelected) e.currentTarget.style.background = 'transparent'; }}
+                        >
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+                              <span style={{ fontSize: 13, color: isSelected ? '#fafafa' : 'rgba(255,255,255,0.88)', fontWeight: isSelected ? 600 : 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', paddingRight: 8 }}>{ch.name}</span>
+                              <span style={{ fontSize: 11, fontWeight: 600, flexShrink: 0, color: qCount > 0 ? accent : 'rgba(148,163,184,0.4)', background: qCount > 0 ? `${accent}0d` : 'transparent', padding: '1px 6px', borderRadius: 4 }}>
+                                {qCount > 0 ? qCount : '—'}
+                              </span>
+                            </div>
+                            <ChapterBar value={qCount > 0 ? Math.min(100, Math.round((qCount / 300) * 100)) : 0} color={accent} />
+                          </div>
+                          <ChevronRight style={{ width: 14, height: 14, color: isSelected ? '#818cf8' : 'rgba(255,255,255,0.18)', flexShrink: 0 }} />
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+            </StepCard>
 
-            {step === 3 && mode && (
-              <StepConfirmLaunch
-                mode={mode}
-                chapters={chapters}
-                selectedChapters={selectedChapters}
-                jeeMode={jeeMode}
-                onLaunch={handleLaunch}
-                onBack={() => setStep(2)}
-                loading={loading}
-              />
-            )}
+            {/* ═══ STEP 2: Mode + Config ═══ */}
+            <div ref={step2Ref}>
+              <StepCard
+                stepNum={2}
+                label="STEP 2"
+                value="How do you want to practice?"
+                isOpen={step2Open}
+                isConfirmed={false}
+                onToggle={handleStep2Toggle}
+                locked={!chapterConfirmed}
+              >
+                {!chapterConfirmed ? (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '16px 0', opacity: 0.45 }}>
+                    <Lock style={{ width: 16, height: 16, color: 'rgba(255,255,255,0.4)' }} />
+                    <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>Pick a chapter first to unlock</span>
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+
+                    {/* A. Guided Practice card — expanded */}
+                    <div style={{ borderRadius: 12, border: '1px solid rgba(99,102,241,0.3)', background: 'rgba(99,102,241,0.04)', overflow: 'hidden', boxShadow: '0 0 0 1px rgba(99,102,241,0.08), 0 4px 20px rgba(99,102,241,0.08)' }}>
+                      <button
+                        onClick={() => setGuidedExpanded(!guidedExpanded)}
+                        style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '14px 16px', background: 'transparent', border: 'none', cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}
+                      >
+                        <BookOpen style={{ width: 18, height: 18, color: '#818cf8', flexShrink: 0 }} />
+                        <span style={{ flex: 1, fontSize: 14, fontWeight: 700, color: '#fafafa', textAlign: 'left' }}>Guided Practice</span>
+                        <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 6, background: 'rgba(99,102,241,0.15)', color: '#a5b4fc', fontWeight: 700, letterSpacing: '0.04em', border: '1px solid rgba(99,102,241,0.25)' }}>RECOMMENDED</span>
+                        <ChevronDown style={{ width: 16, height: 16, color: 'rgba(255,255,255,0.3)', transform: guidedExpanded ? 'rotate(180deg)' : 'rotate(0)', transition: `transform ${COLLAPSE_TRANSITION}` }} />
+                      </button>
+
+                      {guidedExpanded && (
+                        <div style={{ padding: '0 16px 16px' }}>
+                          {/* Difficulty */}
+                          <div style={{ marginBottom: 16 }}>
+                            <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 8 }}>Difficulty</div>
+                            <div style={{ display: 'flex', gap: 6 }}>
+                              {(['Easy', 'Medium', 'Hard', 'Mixed'] as GuidedDifficulty[]).map(d => {
+                                const sel = guidedDifficulty === d;
+                                const color = d === 'Easy' ? '#34d399' : d === 'Medium' ? '#fbbf24' : d === 'Hard' ? '#f87171' : '#a78bfa';
+                                return (
+                                  <button key={d} onClick={() => setGuidedDifficulty(d)} style={{
+                                    flex: 1, padding: '10px 0', borderRadius: 8, border: `1.5px solid ${sel ? color + '60' : 'rgba(255,255,255,0.08)'}`,
+                                    background: sel ? color + '15' : 'rgba(255,255,255,0.02)', color: sel ? color : 'rgba(255,255,255,0.5)',
+                                    fontSize: 12, fontWeight: sel ? 700 : 600, cursor: 'pointer', transition: 'all 0.15s', WebkitTapHighlightColor: 'transparent',
+                                  }}>
+                                    {d}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+
+                          {/* Session Length */}
+                          <div style={{ marginBottom: 16 }}>
+                            <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 8 }}>Session Length</div>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
+                              {[{ val: 10, label: 'Quick', time: '~12 min' }, { val: 20, label: 'Standard', time: '~25 min' }, { val: 30, label: 'Deep', time: '~40 min' }].map(opt => {
+                                const sel = sessionLength === opt.val;
+                                return (
+                                  <button key={opt.val} onClick={() => setSessionLength(opt.val)} style={{
+                                    padding: '14px 8px', borderRadius: 10, cursor: 'pointer', transition: 'all 0.15s',
+                                    border: `1.5px solid ${sel ? 'rgba(99,102,241,0.45)' : 'rgba(255,255,255,0.06)'}`,
+                                    background: sel ? 'rgba(99,102,241,0.1)' : 'rgba(255,255,255,0.02)', textAlign: 'center',
+                                    boxShadow: sel ? '0 0 0 1px rgba(99,102,241,0.15), 0 4px 16px rgba(99,102,241,0.12)' : 'none',
+                                    WebkitTapHighlightColor: 'transparent',
+                                  }}>
+                                    <div style={{ fontSize: 24, fontWeight: 800, color: sel ? '#a5b4fc' : 'rgba(255,255,255,0.5)', marginBottom: 2, letterSpacing: '-0.02em' }}>{opt.val}</div>
+                                    <div style={{ fontSize: 11, fontWeight: 700, color: sel ? '#a5b4fc' : 'rgba(255,255,255,0.4)', marginBottom: 1 }}>{opt.label}</div>
+                                    <div style={{ fontSize: 10, color: sel ? 'rgba(165,180,252,0.6)' : 'rgba(255,255,255,0.25)' }}>{opt.time}</div>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+
+                          {/* How this session works — toggle */}
+                          <div style={{ marginBottom: 16 }}>
+                            <button
+                              onClick={() => setHowItWorksOpen(!howItWorksOpen)}
+                              style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.4)', fontSize: 12, fontWeight: 600, padding: '4px 0', WebkitTapHighlightColor: 'transparent' }}
+                            >
+                              <Sparkles style={{ width: 13, height: 13 }} />
+                              How this session works
+                              <ChevronDown style={{ width: 13, height: 13, transform: howItWorksOpen ? 'rotate(180deg)' : 'rotate(0)', transition: `transform ${COLLAPSE_TRANSITION}` }} />
+                            </button>
+                            {howItWorksOpen && (
+                              <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 10, paddingLeft: 4 }}>
+                                {[
+                                  { num: 1, title: 'Warm-up (5 questions)', desc: 'One per major concept, easy difficulty. We silently map your baseline.' },
+                                  { num: 2, title: 'Adaptive practice', desc: 'One at a time. After each, tap how it felt. We adjust the next question instantly.' },
+                                  { num: 3, title: 'Session summary', desc: 'See exactly what moved, what needs work, and what to focus on next time.' },
+                                ].map(s => (
+                                  <div key={s.num} style={{ display: 'flex', gap: 10 }}>
+                                    <div style={{ width: 22, height: 22, borderRadius: 6, background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, color: '#a5b4fc', flexShrink: 0 }}>{s.num}</div>
+                                    <div>
+                                      <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.8)', marginBottom: 2 }}>{s.title}</div>
+                                      <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', lineHeight: 1.5 }}>{s.desc}</div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Meta line */}
+                          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginBottom: 12 }}>
+                            {metaLine}
+                          </div>
+
+                          {/* Begin Session button */}
+                          <button
+                            onClick={handleGuidedLaunch}
+                            onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg,#4f46e5 0%,#6366f1 50%,#818cf8 100%)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(99,102,241,0.45)'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg,#3730a3 0%,#4f46e5 50%,#6366f1 100%)'; e.currentTarget.style.boxShadow = '0 6px 24px rgba(99,102,241,0.35)'; }}
+                            style={{
+                              width: '100%', padding: '15px 0', borderRadius: 12, border: 'none',
+                              background: 'linear-gradient(135deg,#3730a3 0%,#4f46e5 50%,#6366f1 100%)',
+                              color: '#fff', fontSize: 15, fontWeight: 700,
+                              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                              boxShadow: '0 6px 24px rgba(99,102,241,0.35)',
+                              transition: 'all 0.2s ease',
+                              WebkitTapHighlightColor: 'transparent',
+                            }}
+                          >
+                            Begin Session <ChevronRight style={{ width: 18, height: 18 }} />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* B. Free Browse — row card */}
+                    <button
+                      onClick={handleBrowseLaunch}
+                      style={{
+                        width: '100%', display: 'flex', alignItems: 'center', gap: 12,
+                        padding: '16px', borderRadius: 12,
+                        border: '1px solid #222525', background: '#0f1010',
+                        cursor: 'pointer', transition: 'all 0.15s', textAlign: 'left',
+                        WebkitTapHighlightColor: 'transparent',
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(56,189,248,0.3)'; e.currentTarget.style.background = 'rgba(56,189,248,0.05)'; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = '#222525'; e.currentTarget.style.background = '#0f1010'; }}
+                    >
+                      <LayoutGrid style={{ width: 20, height: 20, color: '#3b82f6', flexShrink: 0 }} />
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: 14, fontWeight: 600, color: '#fafafa', marginBottom: 2 }}>Free Browse</div>
+                        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Explore questions at your own pace</div>
+                      </div>
+                      <ChevronRight style={{ width: 16, height: 16, color: 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
+                    </button>
+
+                    {/* C. Timed Test — row card */}
+                    <button
+                      onClick={handleTestLaunch}
+                      style={{
+                        width: '100%', display: 'flex', alignItems: 'center', gap: 12,
+                        padding: '16px', borderRadius: 12,
+                        border: '1px solid #222525', background: '#0f1010',
+                        cursor: 'pointer', transition: 'all 0.15s', textAlign: 'left',
+                        WebkitTapHighlightColor: 'transparent',
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(249,115,22,0.3)'; e.currentTarget.style.background = 'rgba(249,115,22,0.05)'; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = '#222525'; e.currentTarget.style.background = '#0f1010'; }}
+                    >
+                      <Clock style={{ width: 20, height: 20, color: '#f97316', flexShrink: 0 }} />
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: 14, fontWeight: 600, color: '#fafafa', marginBottom: 2 }}>Timed Test</div>
+                        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Simulate exam conditions with a timer</div>
+                      </div>
+                      <ChevronRight style={{ width: 16, height: 16, color: 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
+                    </button>
+
+                  </div>
+                )}
+              </StepCard>
+            </div>
           </div>
         </div>
 
@@ -556,20 +813,10 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
         {/* Toast */}
         {toast && (
           <div style={{
-            position: 'fixed',
-            bottom: 24,
-            left: '50%',
-            transform: 'translateX(-50%)',
-            zIndex: 200,
-            background: 'rgba(30,32,44,0.97)',
-            border: '1px solid rgba(255,255,255,0.12)',
-            borderRadius: 12,
-            padding: '10px 18px',
-            fontSize: 13,
-            color: '#fff',
-            fontWeight: 500,
-            whiteSpace: 'nowrap',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+            position: 'fixed', bottom: 24, left: '50%', transform: 'translateX(-50%)', zIndex: 200,
+            background: 'rgba(30,32,44,0.97)', border: '1px solid rgba(255,255,255,0.12)',
+            borderRadius: 12, padding: '10px 18px', fontSize: 13, color: '#fff', fontWeight: 500,
+            whiteSpace: 'nowrap', boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
           }}>
             {toast}
           </div>

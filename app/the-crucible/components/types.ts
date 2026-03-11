@@ -37,6 +37,12 @@ export interface Question {
     difficulty: 'Easy' | 'Medium' | 'Hard';
     chapter_id: string;
     tags: Array<{ tag_id: string; weight: number }>;
+    // Multi-dimensional tagging (Step 1 upgrade)
+    microConcept?: string;
+    cognitiveType?: 'recall' | 'conceptual' | 'application' | 'procedural' | 'multi-step' | 'analytical';
+    calcLoad?: 'calc-none' | 'calc-light' | 'calc-moderate' | 'calc-heavy' | 'calc-trap';
+    entryPoint?: 'clear-entry' | 'strategy-first' | 'novel-framing';
+    isMultiConcept?: boolean;
     is_pyq: boolean;
     is_top_pyq: boolean;
     exam_source?: {

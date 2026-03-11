@@ -37,6 +37,19 @@ export interface IQuestionSolution {
   video_timestamp_start?: number;
 }
 
+export type CognitiveType = 'recall' | 'conceptual' | 'application' | 'procedural' | 'multi-step' | 'analytical';
+export type CalcLoad = 'calc-none' | 'calc-light' | 'calc-moderate' | 'calc-heavy' | 'calc-trap';
+export type EntryPoint = 'clear-entry' | 'strategy-first' | 'novel-framing';
+
+export interface ICommunityDifficulty {
+  tooHardCount: number;
+  gotItCount: number;
+  tooEasyCount: number;
+  avgTimeSpentMs: number;
+  wrongAnswerRate: number;
+  studentScore: number; // computed 0.0–1.0
+}
+
 export interface IQuestionMetadata {
   difficulty: 'Easy' | 'Medium' | 'Hard';
   chapter_id: string;
@@ -48,6 +61,12 @@ export interface IQuestionMetadata {
     tag_id: string;
     weight: number;
   }>;
+  // ── Multi-dimensional tagging (Step 1 upgrade) ──
+  microConcept?: string;           // e.g. 'Hyperconjugation', 'Carbocation Stability'
+  cognitiveType?: CognitiveType;
+  calcLoad?: CalcLoad;
+  entryPoint?: EntryPoint;
+  isMultiConcept?: boolean;        // default false
   exam_source?: {
     exam: string;
     year?: number;
@@ -94,6 +113,9 @@ export interface IQuestion {
 
   deleted_at?: Date;
   deleted_by?: string;
+
+  // ── Community difficulty (auto-populated from student responses) ──
+  communityDifficulty?: ICommunityDifficulty;
 
   asset_ids: string[]; // All assets used in this question
   svg_scales?: {
@@ -161,6 +183,21 @@ const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
     shift: { type: String },
     question_number: { type: String }
   },
+  // Multi-dimensional tagging fields (all optional for backward compat)
+  microConcept: { type: String },
+  cognitiveType: {
+    type: String,
+    enum: ['recall', 'conceptual', 'application', 'procedural', 'multi-step', 'analytical'],
+  },
+  calcLoad: {
+    type: String,
+    enum: ['calc-none', 'calc-light', 'calc-moderate', 'calc-heavy', 'calc-trap'],
+  },
+  entryPoint: {
+    type: String,
+    enum: ['clear-entry', 'strategy-first', 'novel-framing'],
+  },
+  isMultiConcept: { type: Boolean, default: false },
   is_pyq: { type: Boolean, default: false },
   is_top_pyq: { type: Boolean, default: false }
 }, { _id: false });
@@ -257,6 +294,14 @@ const QuestionSchema = new Schema<IQuestion>({
       resolved_at: { type: Date }
     }],
     default: []
+  },
+  communityDifficulty: {
+    tooHardCount: { type: Number, default: 0 },
+    gotItCount: { type: Number, default: 0 },
+    tooEasyCount: { type: Number, default: 0 },
+    avgTimeSpentMs: { type: Number, default: 0 },
+    wrongAnswerRate: { type: Number, default: 0 },
+    studentScore: { type: Number, default: 0 },
   },
   svg_scales: {
     type: Schema.Types.Mixed,

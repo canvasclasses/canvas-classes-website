@@ -6,7 +6,7 @@ export interface TaxonomyNode {
     id: string;
     name: string;
     parent_id: string | null;
-    type: 'chapter' | 'topic';
+    type: 'chapter' | 'topic' | 'micro_topic';
     sequence_order?: number;
     class_level?: 11 | 12;
     chapterType?: 'physical' | 'inorganic' | 'organic' | 'practical';
@@ -106,43 +106,196 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_pblock11_6', name: 'Silicates, Silicones and Zeolites', parent_id: 'ch11_pblock', type: 'topic' },
 
     { id: 'ch11_goc', name: 'GOC', parent_id: null, type: 'chapter', sequence_order: 10, class_level: 11, chapterType: 'organic' },
+    
+    // Primary Concept 1: Classification & IUPAC Naming
     { id: 'tag_goc_1', name: 'Classification & IUPAC Naming', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'tag_goc_2', name: 'Acidity & Basicity', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'tag_goc_3', name: 'Electronic Effects (Inductive, Resonance, Hyperconjugation)', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'tag_goc_4', name: 'Huckel\'s Rule & Aromaticity', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'tag_goc_5', name: 'Misc. Concepts', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'tag_goc_6', name: 'Reaction Intermediates', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'tag_goc_7', name: 'Structural Isomerism & Tautomerism', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'tag_goc_8', name: 'Electrophiles, Nucleophiles & Basic Terms', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'tag_goc_9', name: 'Stereoisomerism (Geometrical & Optical)', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'tag_goc_10', name: 'Chirality and Optical Activity', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'tag_goc_11', name: 'Enantiomers, Diastereomers & Meso Compounds', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'tag_goc_12', name: 'Conformational Isomerism', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'tag_goc_13', name: 'Conformations of Cycloalkanes', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'tag_goc_14', name: 'Geometrical Isomerism (E/Z, Cis/Trans)', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'tag_goc_15', name: 'Allenes, Atropisomers and Spiro Compounds', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'micro_goc_1_1', name: 'Homologous series & functional group identification', parent_id: 'tag_goc_1', type: 'micro_topic' },
+    { id: 'micro_goc_1_2', name: 'IUPAC naming of acyclic compounds', parent_id: 'tag_goc_1', type: 'micro_topic' },
+    { id: 'micro_goc_1_3', name: 'IUPAC naming of cyclic & bicyclic compounds', parent_id: 'tag_goc_1', type: 'micro_topic' },
+    { id: 'micro_goc_1_4', name: 'Common names & trivial nomenclature', parent_id: 'tag_goc_1', type: 'micro_topic' },
+    { id: 'micro_goc_1_5', name: 'Degree of unsaturation (DBE calculation)', parent_id: 'tag_goc_1', type: 'micro_topic' },
+    
+    // Primary Concept 2: Electronic Effects
+    { id: 'tag_goc_2', name: 'Electronic Effects', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'micro_goc_2_1', name: 'Inductive effect (±I)', parent_id: 'tag_goc_2', type: 'micro_topic' },
+    { id: 'micro_goc_2_2', name: 'Resonance / Mesomeric effect (±M)', parent_id: 'tag_goc_2', type: 'micro_topic' },
+    { id: 'micro_goc_2_3', name: 'Hyperconjugation', parent_id: 'tag_goc_2', type: 'micro_topic' },
+    { id: 'micro_goc_2_4', name: 'Combined effect reasoning (when two effects compete)', parent_id: 'tag_goc_2', type: 'micro_topic' },
+    
+    // Primary Concept 3: Acidity & Basicity
+    { id: 'tag_goc_3', name: 'Acidity & Basicity', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'micro_goc_3_1', name: 'Acidity of C-H, O-H, N-H compounds', parent_id: 'tag_goc_3', type: 'micro_topic' },
+    { id: 'micro_goc_3_2', name: 'Effect of substituents on acidity', parent_id: 'tag_goc_3', type: 'micro_topic' },
+    { id: 'micro_goc_3_3', name: 'Basicity of amines & nitrogen compounds', parent_id: 'tag_goc_3', type: 'micro_topic' },
+    { id: 'micro_goc_3_4', name: 'Comparative acidity/basicity reasoning chains', parent_id: 'tag_goc_3', type: 'micro_topic' },
+    
+    // Primary Concept 4: Reaction Intermediates
+    { id: 'tag_goc_4', name: 'Reaction Intermediates', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'micro_goc_4_1', name: 'Carbocation — structure & stability', parent_id: 'tag_goc_4', type: 'micro_topic' },
+    { id: 'micro_goc_4_2', name: 'Carbanion — structure & stability', parent_id: 'tag_goc_4', type: 'micro_topic' },
+    { id: 'micro_goc_4_3', name: 'Free radical — structure & stability', parent_id: 'tag_goc_4', type: 'micro_topic' },
+    { id: 'micro_goc_4_4', name: 'Carbene & nitrene', parent_id: 'tag_goc_4', type: 'micro_topic' },
+    { id: 'micro_goc_4_5', name: 'Stability comparison across types', parent_id: 'tag_goc_4', type: 'micro_topic' },
+    
+    // Primary Concept 5: Electrophiles, Nucleophiles & Basic Terms
+    { id: 'tag_goc_5', name: 'Electrophiles, Nucleophiles & Basic Terms', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'micro_goc_5_1', name: 'Identifying electrophiles vs nucleophiles', parent_id: 'tag_goc_5', type: 'micro_topic' },
+    { id: 'micro_goc_5_2', name: 'Hard/soft acid-base concept', parent_id: 'tag_goc_5', type: 'micro_topic' },
+    { id: 'micro_goc_5_3', name: 'Leaving group ability', parent_id: 'tag_goc_5', type: 'micro_topic' },
+    { id: 'micro_goc_5_4', name: 'Ambident nucleophiles', parent_id: 'tag_goc_5', type: 'micro_topic' },
+    
+    // Primary Concept 6: Structural Isomerism & Tautomerism
+    { id: 'tag_goc_6', name: 'Structural Isomerism & Tautomerism', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'micro_goc_6_1', name: 'Chain isomerism', parent_id: 'tag_goc_6', type: 'micro_topic' },
+    { id: 'micro_goc_6_2', name: 'Position isomerism', parent_id: 'tag_goc_6', type: 'micro_topic' },
+    { id: 'micro_goc_6_3', name: 'Functional group isomerism', parent_id: 'tag_goc_6', type: 'micro_topic' },
+    { id: 'micro_goc_6_4', name: 'Metamerism', parent_id: 'tag_goc_6', type: 'micro_topic' },
+    { id: 'micro_goc_6_5', name: 'Tautomerism (keto-enol, others)', parent_id: 'tag_goc_6', type: 'micro_topic' },
+    
+    // Primary Concept 7: Geometrical Isomerism
+    { id: 'tag_goc_7', name: 'Geometrical Isomerism', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'micro_goc_7_1', name: 'E/Z configuration assignment', parent_id: 'tag_goc_7', type: 'micro_topic' },
+    { id: 'micro_goc_7_2', name: 'Cis/Trans in cyclic compounds', parent_id: 'tag_goc_7', type: 'micro_topic' },
+    { id: 'micro_goc_7_3', name: 'Conditions for geometrical isomerism', parent_id: 'tag_goc_7', type: 'micro_topic' },
+    { id: 'micro_goc_7_4', name: 'Geometrical isomerism in oximes & azo compounds', parent_id: 'tag_goc_7', type: 'micro_topic' },
+    
+    // Primary Concept 8: Optical Isomerism & Chirality
+    { id: 'tag_goc_8', name: 'Optical Isomerism & Chirality', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'micro_goc_8_1', name: 'Chiral centre identification', parent_id: 'tag_goc_8', type: 'micro_topic' },
+    { id: 'micro_goc_8_2', name: 'R/S configuration (CIP rules)', parent_id: 'tag_goc_8', type: 'micro_topic' },
+    { id: 'micro_goc_8_3', name: 'Optical rotation & specific rotation', parent_id: 'tag_goc_8', type: 'micro_topic' },
+    { id: 'micro_goc_8_4', name: 'Enantiomers vs diastereomers', parent_id: 'tag_goc_8', type: 'micro_topic' },
+    { id: 'micro_goc_8_5', name: 'Meso compounds', parent_id: 'tag_goc_8', type: 'micro_topic' },
+    { id: 'micro_goc_8_6', name: 'Fischer & Newman projections', parent_id: 'tag_goc_8', type: 'micro_topic' },
+    
+    // Primary Concept 9: Conformational Isomerism
+    { id: 'tag_goc_9', name: 'Conformational Isomerism', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'micro_goc_9_1', name: 'Newman projections of alkanes', parent_id: 'tag_goc_9', type: 'micro_topic' },
+    { id: 'micro_goc_9_2', name: 'Conformations of cyclohexane (axial/equatorial)', parent_id: 'tag_goc_9', type: 'micro_topic' },
+    { id: 'micro_goc_9_3', name: 'Conformations of cycloalkanes', parent_id: 'tag_goc_9', type: 'micro_topic' },
+    { id: 'micro_goc_9_4', name: 'Energy diagrams of conformers', parent_id: 'tag_goc_9', type: 'micro_topic' },
+    
+    // Primary Concept 10: Huckel's Rule & Aromaticity
+    { id: 'tag_goc_10', name: 'Huckel\'s Rule & Aromaticity', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'micro_goc_10_1', name: 'Aromatic vs antiaromatic vs non-aromatic', parent_id: 'tag_goc_10', type: 'micro_topic' },
+    { id: 'micro_goc_10_2', name: 'Huckel\'s rule application (4n+2 π electrons)', parent_id: 'tag_goc_10', type: 'micro_topic' },
+    { id: 'micro_goc_10_3', name: 'Aromaticity in charged species & heterocycles', parent_id: 'tag_goc_10', type: 'micro_topic' },
+    { id: 'micro_goc_10_4', name: 'Homoaromaticity (advanced)', parent_id: 'tag_goc_10', type: 'micro_topic' },
+    
+    // Primary Concept 11: Allenes, Atropisomers & Spiro Compounds
+    { id: 'tag_goc_11', name: 'Allenes, Atropisomers & Spiro Compounds', parent_id: 'ch11_goc', type: 'topic' },
+    { id: 'micro_goc_11_1', name: 'Axial chirality in allenes', parent_id: 'tag_goc_11', type: 'micro_topic' },
+    { id: 'micro_goc_11_2', name: 'Atropisomerism (restricted rotation)', parent_id: 'tag_goc_11', type: 'micro_topic' },
+    { id: 'micro_goc_11_3', name: 'Spiro compound nomenclature & isomerism', parent_id: 'tag_goc_11', type: 'micro_topic' },
 
     { id: 'ch11_hydrocarbon', name: 'Hydrocarbons', parent_id: null, type: 'chapter', sequence_order: 12, class_level: 11, chapterType: 'organic' },
-    { id: 'tag_hydrocarbon_1', name: 'Alkynes (Acidity & Rxns)', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'tag_hydrocarbon_2', name: 'Electrophilic addition across C=C', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'tag_hydrocarbon_3', name: 'Misc. Reactions of Hydrocarbons', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'tag_hydrocarbon_4', name: 'Oxidation Reactions of Alkenes', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'tag_hydrocarbon_5', name: 'Preparation & properties of benzene', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'tag_hydrocarbon_6', name: 'Preparation Reactions of Alkanes', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'tag_hydrocarbon_7', name: 'Preparation and Properties of Alkenes', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'tag_hydrocarbon_8', name: 'Reactions of Alkanes', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'tag_hydrocarbon_9', name: 'Reactions of Benzene & Derivatives', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'tag_hydrocarbon_10', name: 'Multi-Concept', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'tag_ch11_hydrocarbon_1771659235901', name: 'Electrophilic Aromatic Substitution (SEAr)', parent_id: 'ch11_hydrocarbon', type: 'topic' },
+    
+    // Primary Concept 1: Preparation & Properties of Alkanes
+    { id: 'tag_hydrocarbon_1', name: 'Preparation & Properties of Alkanes', parent_id: 'ch11_hydrocarbon', type: 'topic' },
+    { id: 'micro_hydrocarbon_1_1', name: 'Wurtz reaction, Kolbe\'s electrolysis, Corey-House synthesis', parent_id: 'tag_hydrocarbon_1', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_1_2', name: 'Free radical halogenation (mechanism & selectivity)', parent_id: 'tag_hydrocarbon_1', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_1_3', name: 'Combustion & oxidation', parent_id: 'tag_hydrocarbon_1', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_1_4', name: 'Physical properties & trends', parent_id: 'tag_hydrocarbon_1', type: 'micro_topic' },
+    
+    // Primary Concept 2: Preparation & Properties of Alkenes
+    { id: 'tag_hydrocarbon_2', name: 'Preparation & Properties of Alkenes', parent_id: 'ch11_hydrocarbon', type: 'topic' },
+    { id: 'micro_hydrocarbon_2_1', name: 'Dehydration of alcohols & dehydrohalogenation', parent_id: 'tag_hydrocarbon_2', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_2_2', name: 'Saytzeff\'s rule', parent_id: 'tag_hydrocarbon_2', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_2_3', name: 'Addition reactions — HX, H₂O, H₂ (Markovnikov & anti-Markovnikov)', parent_id: 'tag_hydrocarbon_2', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_2_4', name: 'Hydroboration-oxidation', parent_id: 'tag_hydrocarbon_2', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_2_5', name: 'Ozonolysis', parent_id: 'tag_hydrocarbon_2', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_2_6', name: 'Physical properties & trends', parent_id: 'tag_hydrocarbon_2', type: 'micro_topic' },
+    
+    // Primary Concept 3: Alkynes — Acidity & Reactions
+    { id: 'tag_hydrocarbon_3', name: 'Alkynes — Acidity & Reactions', parent_id: 'ch11_hydrocarbon', type: 'topic' },
+    { id: 'micro_hydrocarbon_3_1', name: 'Acidic nature of terminal alkynes', parent_id: 'tag_hydrocarbon_3', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_3_2', name: 'Reactions with NaNH₂ & heavy metal salts', parent_id: 'tag_hydrocarbon_3', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_3_3', name: 'Addition reactions across C≡C', parent_id: 'tag_hydrocarbon_3', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_3_4', name: 'Hydration (tautomerism to carbonyl)', parent_id: 'tag_hydrocarbon_3', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_3_5', name: 'Linear geometry & hybridisation reasoning', parent_id: 'tag_hydrocarbon_3', type: 'micro_topic' },
+    
+    // Primary Concept 4: Electrophilic Addition across C=C
+    { id: 'tag_hydrocarbon_4', name: 'Electrophilic Addition across C=C', parent_id: 'ch11_hydrocarbon', type: 'topic' },
+    { id: 'micro_hydrocarbon_4_1', name: 'Markovnikov addition mechanism', parent_id: 'tag_hydrocarbon_4', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_4_2', name: 'Anti-Markovnikov (peroxide effect)', parent_id: 'tag_hydrocarbon_4', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_4_3', name: 'Addition of halogens (anti addition)', parent_id: 'tag_hydrocarbon_4', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_4_4', name: 'Halogenation in presence of water (halohydrin)', parent_id: 'tag_hydrocarbon_4', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_4_5', name: 'Carbocation rearrangements during addition', parent_id: 'tag_hydrocarbon_4', type: 'micro_topic' },
+    
+    // Primary Concept 5: Oxidation Reactions of Alkenes
+    { id: 'tag_hydrocarbon_5', name: 'Oxidation Reactions of Alkenes', parent_id: 'ch11_hydrocarbon', type: 'topic' },
+    { id: 'micro_hydrocarbon_5_1', name: 'Cold dilute KMnO₄ (syn dihydroxylation)', parent_id: 'tag_hydrocarbon_5', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_5_2', name: 'Hot conc. KMnO₄ (oxidative cleavage)', parent_id: 'tag_hydrocarbon_5', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_5_3', name: 'OsO₄ oxidation', parent_id: 'tag_hydrocarbon_5', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_5_4', name: 'Ozonolysis — reductive vs oxidative workup', parent_id: 'tag_hydrocarbon_5', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_5_5', name: 'Predicting ozonolysis products', parent_id: 'tag_hydrocarbon_5', type: 'micro_topic' },
+    
+    // Primary Concept 6: Preparation & Properties of Benzene
+    { id: 'tag_hydrocarbon_6', name: 'Preparation & Properties of Benzene', parent_id: 'ch11_hydrocarbon', type: 'topic' },
+    { id: 'micro_hydrocarbon_6_1', name: 'Kekulé structure & resonance energy', parent_id: 'tag_hydrocarbon_6', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_6_2', name: 'Reactions — halogenation, nitration, sulphonation, Friedel-Crafts', parent_id: 'tag_hydrocarbon_6', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_6_3', name: 'Physical properties', parent_id: 'tag_hydrocarbon_6', type: 'micro_topic' },
+    
+    // Primary Concept 7: Electrophilic Aromatic Substitution (SEAr)
+    { id: 'tag_hydrocarbon_7', name: 'Electrophilic Aromatic Substitution (SEAr)', parent_id: 'ch11_hydrocarbon', type: 'topic' },
+    { id: 'micro_hydrocarbon_7_1', name: 'Mechanism of SEAr (sigma complex / arenium ion)', parent_id: 'tag_hydrocarbon_7', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_7_2', name: 'Ortho/para vs meta directors', parent_id: 'tag_hydrocarbon_7', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_7_3', name: 'Activating vs deactivating groups', parent_id: 'tag_hydrocarbon_7', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_7_4', name: 'Directive effects in disubstituted benzene', parent_id: 'tag_hydrocarbon_7', type: 'micro_topic' },
+    { id: 'micro_hydrocarbon_7_5', name: 'Birch reduction', parent_id: 'tag_hydrocarbon_7', type: 'micro_topic' },
 
     { id: 'ch11_prac_org', name: 'Practical Organic Chemistry', parent_id: null, type: 'chapter', sequence_order: 13, class_level: 11, chapterType: 'practical' },
-    { id: 'tag_prac_org_1', name: 'Purification Methods (Distillation, Chromatography, Sublimation)', parent_id: 'ch11_prac_org', type: 'topic' },
-    { id: 'tag_prac_org_2', name: 'Detection of Elements (Lassaigne\'s Test: N, S, Halogens)', parent_id: 'ch11_prac_org', type: 'topic' },
-    { id: 'tag_prac_org_3', name: 'Quantitative Analysis (Dumas, Kjeldahl, Carius Methods)', parent_id: 'ch11_prac_org', type: 'topic' },
-    { id: 'tag_prac_org_4', name: 'Tests for Unsaturation (Bromine Water, Bayer\'s Reagent)', parent_id: 'ch11_prac_org', type: 'topic' },
-    { id: 'tag_prac_org_5', name: 'Tests for Hydroxyl Group (Ceric Ammonium Nitrate, Lucas Test)', parent_id: 'ch11_prac_org', type: 'topic' },
-    { id: 'tag_prac_org_6', name: 'Tests for Carbonyls & Carboxyls (2, 4-DNP, Sodium Bicarbonate, Esterification)', parent_id: 'ch11_prac_org', type: 'topic' },
-    { id: 'tag_prac_org_7', name: 'Tests for Amines (Hinsberg Test, Azo Dye Test, Carbylamine)', parent_id: 'ch11_prac_org', type: 'topic' },
+    
+    // Primary Concept 1: Purification Methods
+    { id: 'tag_prac_org_1', name: 'Purification Methods', parent_id: 'ch11_prac_org', type: 'topic' },
+    { id: 'micro_prac_org_1_1', name: 'Simple & fractional distillation', parent_id: 'tag_prac_org_1', type: 'micro_topic' },
+    { id: 'micro_prac_org_1_2', name: 'Steam distillation (principle & use cases)', parent_id: 'tag_prac_org_1', type: 'micro_topic' },
+    { id: 'micro_prac_org_1_3', name: 'Sublimation', parent_id: 'tag_prac_org_1', type: 'micro_topic' },
+    { id: 'micro_prac_org_1_4', name: 'Chromatography — TLC, column, paper', parent_id: 'tag_prac_org_1', type: 'micro_topic' },
+    { id: 'micro_prac_org_1_5', name: 'Crystallisation', parent_id: 'tag_prac_org_1', type: 'micro_topic' },
+    
+    // Primary Concept 2: Detection of Elements (Lassaigne's Test)
+    { id: 'tag_prac_org_2', name: 'Detection of Elements (Lassaigne\'s Test)', parent_id: 'ch11_prac_org', type: 'topic' },
+    { id: 'micro_prac_org_2_1', name: 'Sodium fusion extract preparation', parent_id: 'tag_prac_org_2', type: 'micro_topic' },
+    { id: 'micro_prac_org_2_2', name: 'Test for Nitrogen (Prussian blue)', parent_id: 'tag_prac_org_2', type: 'micro_topic' },
+    { id: 'micro_prac_org_2_3', name: 'Test for Sulphur (sodium nitroprusside)', parent_id: 'tag_prac_org_2', type: 'micro_topic' },
+    { id: 'micro_prac_org_2_4', name: 'Test for Halogens (AgNO₃ precipitate)', parent_id: 'tag_prac_org_2', type: 'micro_topic' },
+    { id: 'micro_prac_org_2_5', name: 'Test for N+S together (blood red)', parent_id: 'tag_prac_org_2', type: 'micro_topic' },
+    
+    // Primary Concept 3: Quantitative Analysis
+    { id: 'tag_prac_org_3', name: 'Quantitative Analysis', parent_id: 'ch11_prac_org', type: 'topic' },
+    { id: 'micro_prac_org_3_1', name: 'Dumas method (Nitrogen %)', parent_id: 'tag_prac_org_3', type: 'micro_topic' },
+    { id: 'micro_prac_org_3_2', name: 'Kjeldahl method (Nitrogen %)', parent_id: 'tag_prac_org_3', type: 'micro_topic' },
+    { id: 'micro_prac_org_3_3', name: 'Carius method (Halogens & Sulphur %)', parent_id: 'tag_prac_org_3', type: 'micro_topic' },
+    { id: 'micro_prac_org_3_4', name: 'Calculation of empirical & molecular formula', parent_id: 'tag_prac_org_3', type: 'micro_topic' },
+    
+    // Primary Concept 4: Tests for Unsaturation
+    { id: 'tag_prac_org_4', name: 'Tests for Unsaturation', parent_id: 'ch11_prac_org', type: 'topic' },
+    { id: 'micro_prac_org_4_1', name: 'Bromine water test', parent_id: 'tag_prac_org_4', type: 'micro_topic' },
+    { id: 'micro_prac_org_4_2', name: 'Baeyer\'s reagent (cold alkaline KMnO₄)', parent_id: 'tag_prac_org_4', type: 'micro_topic' },
+    { id: 'micro_prac_org_4_3', name: 'Distinguishing alkene vs alkyne', parent_id: 'tag_prac_org_4', type: 'micro_topic' },
+    
+    // Primary Concept 5: Tests for Hydroxyl Group
+    { id: 'tag_prac_org_5', name: 'Tests for Hydroxyl Group', parent_id: 'ch11_prac_org', type: 'topic' },
+    { id: 'micro_prac_org_5_1', name: 'Lucas test (1°/2°/3° alcohols)', parent_id: 'tag_prac_org_5', type: 'micro_topic' },
+    { id: 'micro_prac_org_5_2', name: 'Ceric ammonium nitrate test', parent_id: 'tag_prac_org_5', type: 'micro_topic' },
+    { id: 'micro_prac_org_5_3', name: 'Esterification test', parent_id: 'tag_prac_org_5', type: 'micro_topic' },
+    { id: 'micro_prac_org_5_4', name: 'Sodium metal test (active H)', parent_id: 'tag_prac_org_5', type: 'micro_topic' },
+    
+    // Primary Concept 6: Tests for Carbonyl & Carboxyl Groups
+    { id: 'tag_prac_org_6', name: 'Tests for Carbonyl & Carboxyl Groups', parent_id: 'ch11_prac_org', type: 'topic' },
+    { id: 'micro_prac_org_6_1', name: '2,4-DNP test (aldehydes & ketones)', parent_id: 'tag_prac_org_6', type: 'micro_topic' },
+    { id: 'micro_prac_org_6_2', name: 'Tollen\'s test (aldehydes only)', parent_id: 'tag_prac_org_6', type: 'micro_topic' },
+    { id: 'micro_prac_org_6_3', name: 'Fehling\'s test (aldehydes only)', parent_id: 'tag_prac_org_6', type: 'micro_topic' },
+    { id: 'micro_prac_org_6_4', name: 'Sodium bicarbonate test (carboxylic acids)', parent_id: 'tag_prac_org_6', type: 'micro_topic' },
+    { id: 'micro_prac_org_6_5', name: 'Esterification for carboxylic acids', parent_id: 'tag_prac_org_6', type: 'micro_topic' },
+    
+    // Primary Concept 7: Tests for Amines
+    { id: 'tag_prac_org_7', name: 'Tests for Amines', parent_id: 'ch11_prac_org', type: 'topic' },
+    { id: 'micro_prac_org_7_1', name: 'Hinsberg test (1°/2°/3° amines)', parent_id: 'tag_prac_org_7', type: 'micro_topic' },
+    { id: 'micro_prac_org_7_2', name: 'Carbylamine test (1° amines only)', parent_id: 'tag_prac_org_7', type: 'micro_topic' },
+    { id: 'micro_prac_org_7_3', name: 'Azo dye test (1° aromatic amines)', parent_id: 'tag_prac_org_7', type: 'micro_topic' },
+    { id: 'micro_prac_org_7_4', name: 'Distinguishing primary/secondary/tertiary', parent_id: 'tag_prac_org_7', type: 'micro_topic' },
 
     // Class 12
     { id: 'ch12_solutions', name: 'Solutions', parent_id: null, type: 'chapter', sequence_order: 15, class_level: 12, chapterType: 'physical' },
@@ -206,14 +359,60 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_coord_9', name: 'Werner\'s Theory', parent_id: 'ch12_coord', type: 'topic' },
 
     { id: 'ch12_haloalkanes', name: 'Haloalkanes & Haloarenes', parent_id: null, type: 'chapter', sequence_order: 21, class_level: 12, chapterType: 'organic' },
-    { id: 'tag_haloalkanes_1', name: 'Aryl Halides & Their Reactions', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'tag_haloalkanes_2', name: 'Elimination Reactions', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'tag_haloalkanes_4', name: 'Nucleophilicity, Basicity & Leaving Group', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'tag_haloalkanes_5', name: 'Physical properties of Haloalkanes', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'tag_haloalkanes_6', name: 'SN Reactions (SN1, SN2, SNi) & NGP', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'tag_haloalkanes_7', name: 'Preparation (From Alcohols, Hydrocarbons)', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'tag_haloalkanes_8', name: 'Elimination Reactions vs Substitution', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'tag_haloalkanes_9', name: 'Multi-Concept', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    
+    // Primary Concept 1: Physical Properties of Haloalkanes
+    { id: 'tag_haloalkanes_1', name: 'Physical Properties of Haloalkanes', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'micro_haloalkanes_1_1', name: 'Boiling point trends (size, branching, halogen)', parent_id: 'tag_haloalkanes_1', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_1_2', name: 'Dipole moment & polarity', parent_id: 'tag_haloalkanes_1', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_1_3', name: 'Solubility behaviour', parent_id: 'tag_haloalkanes_1', type: 'micro_topic' },
+    
+    // Primary Concept 2: Preparation of Haloalkanes
+    { id: 'tag_haloalkanes_2', name: 'Preparation of Haloalkanes', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'micro_haloalkanes_2_1', name: 'From alcohols (HX, SOCl₂, PCl₃/PCl₅)', parent_id: 'tag_haloalkanes_2', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_2_2', name: 'From alkenes (HX addition, anti-Markovnikov)', parent_id: 'tag_haloalkanes_2', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_2_3', name: 'Halogen exchange (Finkelstein, Swarts)', parent_id: 'tag_haloalkanes_2', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_2_4', name: 'From hydrocarbons (free radical halogenation)', parent_id: 'tag_haloalkanes_2', type: 'micro_topic' },
+    
+    // Primary Concept 3: Nucleophilicity, Basicity & Leaving Group Ability
+    { id: 'tag_haloalkanes_3', name: 'Nucleophilicity, Basicity & Leaving Group Ability', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'micro_haloalkanes_3_1', name: 'Nucleophilicity trends (protic vs aprotic solvent)', parent_id: 'tag_haloalkanes_3', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_3_2', name: 'Basicity vs nucleophilicity distinction', parent_id: 'tag_haloalkanes_3', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_3_3', name: 'Leaving group ability order', parent_id: 'tag_haloalkanes_3', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_3_4', name: 'Effect of solvent on nucleophilicity', parent_id: 'tag_haloalkanes_3', type: 'micro_topic' },
+    
+    // Primary Concept 4: SN1 & SN2 Mechanisms
+    { id: 'tag_haloalkanes_4', name: 'SN1 & SN2 Mechanisms', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'micro_haloalkanes_4_1', name: 'SN1 — mechanism, stereochemistry, rate law', parent_id: 'tag_haloalkanes_4', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_4_2', name: 'SN2 — mechanism, stereochemistry, rate law', parent_id: 'tag_haloalkanes_4', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_4_3', name: 'Factors favouring SN1 vs SN2', parent_id: 'tag_haloalkanes_4', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_4_4', name: 'Stereochemical outcome (racemisation vs inversion)', parent_id: 'tag_haloalkanes_4', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_4_5', name: 'Rearrangements in SN1', parent_id: 'tag_haloalkanes_4', type: 'micro_topic' },
+    
+    // Primary Concept 5: SNi & Neighbouring Group Participation (NGP)
+    { id: 'tag_haloalkanes_5', name: 'SNi & Neighbouring Group Participation (NGP)', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'micro_haloalkanes_5_1', name: 'SNi mechanism (retention of configuration)', parent_id: 'tag_haloalkanes_5', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_5_2', name: 'NGP — definition & examples', parent_id: 'tag_haloalkanes_5', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_5_3', name: 'Anchimeric assistance', parent_id: 'tag_haloalkanes_5', type: 'micro_topic' },
+    
+    // Primary Concept 6: Elimination Reactions (E1 & E2)
+    { id: 'tag_haloalkanes_6', name: 'Elimination Reactions (E1 & E2)', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'micro_haloalkanes_6_1', name: 'E1 mechanism & conditions', parent_id: 'tag_haloalkanes_6', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_6_2', name: 'E2 mechanism & conditions (Saytzeff vs Hofmann)', parent_id: 'tag_haloalkanes_6', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_6_3', name: 'Zaitsev\'s rule', parent_id: 'tag_haloalkanes_6', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_6_4', name: 'Stereochemistry of E2 (anti-periplanar requirement)', parent_id: 'tag_haloalkanes_6', type: 'micro_topic' },
+    
+    // Primary Concept 7: Substitution vs Elimination — Selectivity
+    { id: 'tag_haloalkanes_7', name: 'Substitution vs Elimination — Selectivity', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'micro_haloalkanes_7_1', name: 'Factors determining SN vs E (temperature, base strength, substrate)', parent_id: 'tag_haloalkanes_7', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_7_2', name: 'Predicting major product in competing pathways', parent_id: 'tag_haloalkanes_7', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_7_3', name: 'Strong base + 3° substrate cases', parent_id: 'tag_haloalkanes_7', type: 'micro_topic' },
+    
+    // Primary Concept 8: Aryl Halides & Their Reactions
+    { id: 'tag_haloalkanes_8', name: 'Aryl Halides & Their Reactions', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'micro_haloalkanes_8_1', name: 'Lower reactivity of aryl halides (resonance explanation)', parent_id: 'tag_haloalkanes_8', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_8_2', name: 'Nucleophilic aromatic substitution (SNAr) — conditions', parent_id: 'tag_haloalkanes_8', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_8_3', name: 'Benzyne mechanism', parent_id: 'tag_haloalkanes_8', type: 'micro_topic' },
+    { id: 'micro_haloalkanes_8_4', name: 'Reactions — Fittig, Wurtz-Fittig', parent_id: 'tag_haloalkanes_8', type: 'micro_topic' },
 
     { id: 'ch12_alcohols', name: 'Alcohols, Phenols & Ethers', parent_id: null, type: 'chapter', sequence_order: 22, class_level: 12, chapterType: 'organic' },
     { id: 'tag_alcohols_1', name: 'Alcohols Preparation (Grignard, Reduction)', parent_id: 'ch12_alcohols', type: 'topic' },
