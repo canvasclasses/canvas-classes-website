@@ -134,11 +134,10 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'micro_goc_5_3', name: 'Leaving group ability', parent_id: 'tag_goc_5', type: 'micro_topic' },
     { id: 'micro_goc_5_4', name: 'Ambident nucleophiles', parent_id: 'tag_goc_5', type: 'micro_topic' },
     { id: 'tag_goc_6', name: 'Structural Isomerism & Tautomerism', parent_id: 'ch11_goc', type: 'topic' },
-    { id: 'micro_goc_6_1', name: 'Chain isomerism', parent_id: 'tag_goc_6', type: 'micro_topic' },
-    { id: 'micro_goc_6_2', name: 'Position isomerism', parent_id: 'tag_goc_6', type: 'micro_topic' },
-    { id: 'micro_goc_6_3', name: 'Functional group isomerism', parent_id: 'tag_goc_6', type: 'micro_topic' },
-    { id: 'micro_goc_6_4', name: 'Metamerism', parent_id: 'tag_goc_6', type: 'micro_topic' },
-    { id: 'micro_goc_6_5', name: 'Tautomerism (keto-enol, others)', parent_id: 'tag_goc_6', type: 'micro_topic' },
+    { id: 'micro_goc_6_1', name: 'Chain & Position isomerism', parent_id: 'tag_goc_6', type: 'micro_topic' },
+    { id: 'micro_goc_6_2', name: 'Calculating number of structural isomers', parent_id: 'tag_goc_6', type: 'micro_topic' },
+    { id: 'micro_goc_6_3', name: 'Functional group isomerism & metamerism', parent_id: 'tag_goc_6', type: 'micro_topic' },
+    { id: 'micro_goc_6_4', name: 'Tautomerism (keto-enol, others)', parent_id: 'tag_goc_6', type: 'micro_topic' },
     { id: 'tag_goc_7', name: 'Geometrical Isomerism', parent_id: 'ch11_goc', type: 'topic' },
     { id: 'micro_goc_7_1', name: 'E/Z configuration assignment', parent_id: 'tag_goc_7', type: 'micro_topic' },
     { id: 'micro_goc_7_2', name: 'Cis/Trans in cyclic compounds', parent_id: 'tag_goc_7', type: 'micro_topic' },
@@ -608,5 +607,5 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
 // Summary Statistics
 // Total Chapters: 67
 // Total Tags: 405
-// Total Micro Topics: 49
-// Last saved: 2026-03-11T08:35:01.338Z
+// Total Micro Topics: 48
+// Last saved: 2026-03-11T09:22:00.000Z
