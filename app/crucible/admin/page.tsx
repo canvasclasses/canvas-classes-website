@@ -1057,10 +1057,10 @@ export default function AdminPage() {
                 ) : selectedQuestion ? (
                     <>
                     {/* TOP: Full-width metadata & tagging */}
-                    <div className="shrink-0 border-b border-gray-800/50 overflow-y-auto" style={{maxHeight:'38vh'}}>
-                        <div className="p-5 space-y-4">
+                    <div className="shrink-0 border-b border-gray-800/50 overflow-y-auto" style={{maxHeight:'30vh'}}>
+                        <div className="p-3 space-y-2.5">
                             {/* Header Row */}
-                            <div className="flex items-center gap-3 pb-4 border-b border-gray-800/50">
+                            <div className="flex items-center gap-2 pb-2.5 border-b border-gray-800/50">
                                 <div className="flex flex-col">
                                     <span className="text-xs text-gray-500 mb-1">Display ID</span>
                                     <input
@@ -1185,7 +1185,7 @@ export default function AdminPage() {
                             </div>
 
                             {/* Exam Source Row */}
-                            <div className="flex flex-wrap items-end gap-3 p-3 bg-gray-800/30 border border-gray-700/40 rounded-lg">
+                            <div className="flex flex-wrap items-end gap-2 p-2 bg-gray-800/30 border border-gray-700/40 rounded">
                                 {(() => {
                                     const es = selectedQuestion.metadata.exam_source;
                                     const patchSrc = (patch: Partial<{ exam: string; year: number; month: string; day: number; shift: string }>) => {
@@ -1262,7 +1262,7 @@ export default function AdminPage() {
                             </div>
 
                             {/* Tag Status Indicator */}
-                            <div className="flex items-center gap-3 p-3 rounded-lg border-2 ${
+                            <div className="flex items-center gap-2 p-2 rounded border-2 ${
                                 !selectedQuestion.metadata.chapter_id 
                                     ? 'bg-red-900/20 border-red-600/50' 
                                     : !isTagValid(selectedQuestion.metadata.tags)
@@ -1314,7 +1314,7 @@ export default function AdminPage() {
                             )}
 
                             {/* Chapter and Tag Selection */}
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-3">
                                 <div>
                                     <label className="text-xs text-gray-500 mb-2 flex items-center gap-2">
                                         Chapter
@@ -1378,7 +1378,7 @@ export default function AdminPage() {
                             </div>
 
                             {/* Adaptive Engine Tags */}
-                            <div className="p-3 bg-teal-900/10 border border-teal-700/30 rounded-lg space-y-3">
+                            <div className="p-2 bg-teal-900/10 border border-teal-700/30 rounded space-y-2">
                                 <div className="flex items-center gap-2 mb-1">
                                     <Zap size={12} className="text-teal-400" />
                                     <span className="text-[10px] font-bold text-teal-400 uppercase tracking-widest">Adaptive Engine Tags</span>
