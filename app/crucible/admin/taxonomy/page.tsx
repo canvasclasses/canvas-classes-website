@@ -58,10 +58,19 @@ export default function TaxonomyPage() {
     const loadData = async () => {
         try {
             setLoading(true);
-            setTaxonomy(NEW_TAXONOMY);
+            // Always load from the API (reads the file directly) to avoid stale module cache
+            const res = await fetch('/api/v2/taxonomy/load');
+            const data = await res.json();
+            if (data.success && Array.isArray(data.nodes) && data.nodes.length > 0) {
+                setTaxonomy(data.nodes);
+            } else {
+                // Fallback to static import if API fails
+                setTaxonomy(NEW_TAXONOMY);
+            }
         } catch (error) {
             console.error('Error loading taxonomy:', error);
-            setMessage({ type: 'error', text: 'Failed to load taxonomy data' });
+            // Fallback to static import
+            setTaxonomy(NEW_TAXONOMY);
         } finally {
             setLoading(false);
         }
@@ -99,7 +108,13 @@ export default function TaxonomyPage() {
             });
             const data = await res.json();
             if (!data.success) throw new Error(data.error || 'Save failed');
-            setMessage({ type: 'success', text: `Saved to file — ${data.chapters} chapters, ${data.tags} tags` });
+            setMessage({ type: 'success', text: `Saved — ${data.chapters} chapters, ${data.tags} tags, ${data.microTopics} micro topics` });
+            // Reload from file to keep in-memory state perfectly in sync
+            const reloadRes = await fetch('/api/v2/taxonomy/load');
+            const reloadData = await reloadRes.json();
+            if (reloadData.success && Array.isArray(reloadData.nodes) && reloadData.nodes.length > 0) {
+                setTaxonomy(reloadData.nodes);
+            }
         } catch (err: any) {
             setMessage({ type: 'error', text: `File save failed: ${err.message}` });
         } finally {
