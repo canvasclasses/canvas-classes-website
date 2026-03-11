@@ -1282,15 +1282,26 @@ export default function AdminPage() {
                                     {/* Micro Concept */}
                                     <div className="col-span-2">
                                         <label className="text-[10px] text-gray-500 block mb-1">Micro Concept</label>
-                                        <input
-                                            type="text"
+                                        <select
                                             value={selectedQuestion.metadata.microConcept ?? ''}
                                             onChange={(e) => handleUpdate(selectedQuestion._id, {
                                                 metadata: { ...selectedQuestion.metadata, microConcept: e.target.value }
                                             })}
-                                            placeholder="e.g. Nucleophilic addition"
-                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs text-teal-300 focus:border-teal-500 outline-none placeholder-gray-600"
-                                        />
+                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs text-teal-300 focus:border-teal-500 outline-none"
+                                        >
+                                            <option value="">— select micro concept —</option>
+                                            {(() => {
+                                                const primaryTagId = selectedQuestion.metadata.tags?.[0]?.tag_id;
+                                                if (!primaryTagId) return <option value="" disabled>Select a Primary Tag first</option>;
+                                                const microTopics = TAXONOMY_FROM_CSV.filter(node => 
+                                                    node.parent_id === primaryTagId && node.type === 'micro_topic'
+                                                );
+                                                if (microTopics.length === 0) return <option value="" disabled>No micro concepts for this tag</option>;
+                                                return microTopics.map(micro => (
+                                                    <option key={micro.id} value={micro.name}>{micro.name}</option>
+                                                ));
+                                            })()}
+                                        </select>
                                     </div>
 
                                     {/* Cognitive Type */}
