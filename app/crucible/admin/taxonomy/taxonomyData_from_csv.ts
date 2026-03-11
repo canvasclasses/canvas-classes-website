@@ -13,11 +13,10 @@ export interface TaxonomyNode {
 }
 
 export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
-    // Unsorted - For bulk ingestion before categorization
+    // Class 11
     { id: 'ch_unsorted', name: 'Unsorted Questions', parent_id: null, type: 'chapter', sequence_order: 0, class_level: 11, chapterType: 'physical' },
     { id: 'tag_unsorted', name: 'Needs Categorization', parent_id: 'ch_unsorted', type: 'topic' },
 
-    // Class 11
     { id: 'ch11_mole', name: 'Some Basic Concepts of Chemistry (Mole Concept)', parent_id: null, type: 'chapter', sequence_order: 1, class_level: 11, chapterType: 'physical' },
     { id: 'tag_mole_1', name: 'Laws Of Chemical Combination, Sig. Fig, Accuracy', parent_id: 'ch11_mole', type: 'topic' },
     { id: 'tag_mole_2', name: 'Concentration Terms (M, m, X)', parent_id: 'ch11_mole', type: 'topic' },
@@ -189,297 +188,22 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'micro_goc_11_3', name: 'Spiro compound nomenclature & isomerism', parent_id: 'tag_goc_11', type: 'micro_topic' },
 
     { id: 'ch11_hydrocarbon', name: 'Hydrocarbons', parent_id: null, type: 'chapter', sequence_order: 12, class_level: 11, chapterType: 'organic' },
-    
-    // Primary Concept 1: Preparation & Properties of Alkanes
     { id: 'tag_hydrocarbon_1', name: 'Preparation & Properties of Alkanes', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'micro_hydrocarbon_1_1', name: 'Wurtz reaction, Kolbe\'s electrolysis, Corey-House synthesis', parent_id: 'tag_hydrocarbon_1', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_1_2', name: 'Free radical halogenation (mechanism & selectivity)', parent_id: 'tag_hydrocarbon_1', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_1_3', name: 'Combustion & oxidation', parent_id: 'tag_hydrocarbon_1', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_1_4', name: 'Physical properties & trends', parent_id: 'tag_hydrocarbon_1', type: 'micro_topic' },
-    
-    // Primary Concept 2: Preparation & Properties of Alkenes
     { id: 'tag_hydrocarbon_2', name: 'Preparation & Properties of Alkenes', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'micro_hydrocarbon_2_1', name: 'Dehydration of alcohols & dehydrohalogenation', parent_id: 'tag_hydrocarbon_2', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_2_2', name: 'Saytzeff\'s rule', parent_id: 'tag_hydrocarbon_2', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_2_3', name: 'Addition reactions — HX, H₂O, H₂ (Markovnikov & anti-Markovnikov)', parent_id: 'tag_hydrocarbon_2', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_2_4', name: 'Hydroboration-oxidation', parent_id: 'tag_hydrocarbon_2', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_2_5', name: 'Ozonolysis', parent_id: 'tag_hydrocarbon_2', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_2_6', name: 'Physical properties & trends', parent_id: 'tag_hydrocarbon_2', type: 'micro_topic' },
-    
-    // Primary Concept 3: Alkynes — Acidity & Reactions
     { id: 'tag_hydrocarbon_3', name: 'Alkynes — Acidity & Reactions', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'micro_hydrocarbon_3_1', name: 'Acidic nature of terminal alkynes', parent_id: 'tag_hydrocarbon_3', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_3_2', name: 'Reactions with NaNH₂ & heavy metal salts', parent_id: 'tag_hydrocarbon_3', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_3_3', name: 'Addition reactions across C≡C', parent_id: 'tag_hydrocarbon_3', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_3_4', name: 'Hydration (tautomerism to carbonyl)', parent_id: 'tag_hydrocarbon_3', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_3_5', name: 'Linear geometry & hybridisation reasoning', parent_id: 'tag_hydrocarbon_3', type: 'micro_topic' },
-    
-    // Primary Concept 4: Electrophilic Addition across C=C
     { id: 'tag_hydrocarbon_4', name: 'Electrophilic Addition across C=C', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'micro_hydrocarbon_4_1', name: 'Markovnikov addition mechanism', parent_id: 'tag_hydrocarbon_4', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_4_2', name: 'Anti-Markovnikov (peroxide effect)', parent_id: 'tag_hydrocarbon_4', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_4_3', name: 'Addition of halogens (anti addition)', parent_id: 'tag_hydrocarbon_4', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_4_4', name: 'Halogenation in presence of water (halohydrin)', parent_id: 'tag_hydrocarbon_4', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_4_5', name: 'Carbocation rearrangements during addition', parent_id: 'tag_hydrocarbon_4', type: 'micro_topic' },
-    
-    // Primary Concept 5: Oxidation Reactions of Alkenes
     { id: 'tag_hydrocarbon_5', name: 'Oxidation Reactions of Alkenes', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'micro_hydrocarbon_5_1', name: 'Cold dilute KMnO₄ (syn dihydroxylation)', parent_id: 'tag_hydrocarbon_5', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_5_2', name: 'Hot conc. KMnO₄ (oxidative cleavage)', parent_id: 'tag_hydrocarbon_5', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_5_3', name: 'OsO₄ oxidation', parent_id: 'tag_hydrocarbon_5', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_5_4', name: 'Ozonolysis — reductive vs oxidative workup', parent_id: 'tag_hydrocarbon_5', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_5_5', name: 'Predicting ozonolysis products', parent_id: 'tag_hydrocarbon_5', type: 'micro_topic' },
-    
-    // Primary Concept 6: Preparation & Properties of Benzene
     { id: 'tag_hydrocarbon_6', name: 'Preparation & Properties of Benzene', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'micro_hydrocarbon_6_1', name: 'Kekulé structure & resonance energy', parent_id: 'tag_hydrocarbon_6', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_6_2', name: 'Reactions — halogenation, nitration, sulphonation, Friedel-Crafts', parent_id: 'tag_hydrocarbon_6', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_6_3', name: 'Physical properties', parent_id: 'tag_hydrocarbon_6', type: 'micro_topic' },
-    
-    // Primary Concept 7: Electrophilic Aromatic Substitution (SEAr)
     { id: 'tag_hydrocarbon_7', name: 'Electrophilic Aromatic Substitution (SEAr)', parent_id: 'ch11_hydrocarbon', type: 'topic' },
-    { id: 'micro_hydrocarbon_7_1', name: 'Mechanism of SEAr (sigma complex / arenium ion)', parent_id: 'tag_hydrocarbon_7', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_7_2', name: 'Ortho/para vs meta directors', parent_id: 'tag_hydrocarbon_7', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_7_3', name: 'Activating vs deactivating groups', parent_id: 'tag_hydrocarbon_7', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_7_4', name: 'Directive effects in disubstituted benzene', parent_id: 'tag_hydrocarbon_7', type: 'micro_topic' },
-    { id: 'micro_hydrocarbon_7_5', name: 'Birch reduction', parent_id: 'tag_hydrocarbon_7', type: 'micro_topic' },
 
     { id: 'ch11_prac_org', name: 'Practical Organic Chemistry', parent_id: null, type: 'chapter', sequence_order: 13, class_level: 11, chapterType: 'practical' },
-    
-    // Primary Concept 1: Purification Methods
     { id: 'tag_prac_org_1', name: 'Purification Methods', parent_id: 'ch11_prac_org', type: 'topic' },
-    { id: 'micro_prac_org_1_1', name: 'Simple & fractional distillation', parent_id: 'tag_prac_org_1', type: 'micro_topic' },
-    { id: 'micro_prac_org_1_2', name: 'Steam distillation (principle & use cases)', parent_id: 'tag_prac_org_1', type: 'micro_topic' },
-    { id: 'micro_prac_org_1_3', name: 'Sublimation', parent_id: 'tag_prac_org_1', type: 'micro_topic' },
-    { id: 'micro_prac_org_1_4', name: 'Chromatography — TLC, column, paper', parent_id: 'tag_prac_org_1', type: 'micro_topic' },
-    { id: 'micro_prac_org_1_5', name: 'Crystallisation', parent_id: 'tag_prac_org_1', type: 'micro_topic' },
-    
-    // Primary Concept 2: Detection of Elements (Lassaigne's Test)
     { id: 'tag_prac_org_2', name: 'Detection of Elements (Lassaigne\'s Test)', parent_id: 'ch11_prac_org', type: 'topic' },
-    { id: 'micro_prac_org_2_1', name: 'Sodium fusion extract preparation', parent_id: 'tag_prac_org_2', type: 'micro_topic' },
-    { id: 'micro_prac_org_2_2', name: 'Test for Nitrogen (Prussian blue)', parent_id: 'tag_prac_org_2', type: 'micro_topic' },
-    { id: 'micro_prac_org_2_3', name: 'Test for Sulphur (sodium nitroprusside)', parent_id: 'tag_prac_org_2', type: 'micro_topic' },
-    { id: 'micro_prac_org_2_4', name: 'Test for Halogens (AgNO₃ precipitate)', parent_id: 'tag_prac_org_2', type: 'micro_topic' },
-    { id: 'micro_prac_org_2_5', name: 'Test for N+S together (blood red)', parent_id: 'tag_prac_org_2', type: 'micro_topic' },
-    
-    // Primary Concept 3: Quantitative Analysis
     { id: 'tag_prac_org_3', name: 'Quantitative Analysis', parent_id: 'ch11_prac_org', type: 'topic' },
-    { id: 'micro_prac_org_3_1', name: 'Dumas method (Nitrogen %)', parent_id: 'tag_prac_org_3', type: 'micro_topic' },
-    { id: 'micro_prac_org_3_2', name: 'Kjeldahl method (Nitrogen %)', parent_id: 'tag_prac_org_3', type: 'micro_topic' },
-    { id: 'micro_prac_org_3_3', name: 'Carius method (Halogens & Sulphur %)', parent_id: 'tag_prac_org_3', type: 'micro_topic' },
-    { id: 'micro_prac_org_3_4', name: 'Calculation of empirical & molecular formula', parent_id: 'tag_prac_org_3', type: 'micro_topic' },
-    
-    // Primary Concept 4: Tests for Unsaturation
     { id: 'tag_prac_org_4', name: 'Tests for Unsaturation', parent_id: 'ch11_prac_org', type: 'topic' },
-    { id: 'micro_prac_org_4_1', name: 'Bromine water test', parent_id: 'tag_prac_org_4', type: 'micro_topic' },
-    { id: 'micro_prac_org_4_2', name: 'Baeyer\'s reagent (cold alkaline KMnO₄)', parent_id: 'tag_prac_org_4', type: 'micro_topic' },
-    { id: 'micro_prac_org_4_3', name: 'Distinguishing alkene vs alkyne', parent_id: 'tag_prac_org_4', type: 'micro_topic' },
-    
-    // Primary Concept 5: Tests for Hydroxyl Group
     { id: 'tag_prac_org_5', name: 'Tests for Hydroxyl Group', parent_id: 'ch11_prac_org', type: 'topic' },
-    { id: 'micro_prac_org_5_1', name: 'Lucas test (1°/2°/3° alcohols)', parent_id: 'tag_prac_org_5', type: 'micro_topic' },
-    { id: 'micro_prac_org_5_2', name: 'Ceric ammonium nitrate test', parent_id: 'tag_prac_org_5', type: 'micro_topic' },
-    { id: 'micro_prac_org_5_3', name: 'Esterification test', parent_id: 'tag_prac_org_5', type: 'micro_topic' },
-    { id: 'micro_prac_org_5_4', name: 'Sodium metal test (active H)', parent_id: 'tag_prac_org_5', type: 'micro_topic' },
-    
-    // Primary Concept 6: Tests for Carbonyl & Carboxyl Groups
     { id: 'tag_prac_org_6', name: 'Tests for Carbonyl & Carboxyl Groups', parent_id: 'ch11_prac_org', type: 'topic' },
-    { id: 'micro_prac_org_6_1', name: '2,4-DNP test (aldehydes & ketones)', parent_id: 'tag_prac_org_6', type: 'micro_topic' },
-    { id: 'micro_prac_org_6_2', name: 'Tollen\'s test (aldehydes only)', parent_id: 'tag_prac_org_6', type: 'micro_topic' },
-    { id: 'micro_prac_org_6_3', name: 'Fehling\'s test (aldehydes only)', parent_id: 'tag_prac_org_6', type: 'micro_topic' },
-    { id: 'micro_prac_org_6_4', name: 'Sodium bicarbonate test (carboxylic acids)', parent_id: 'tag_prac_org_6', type: 'micro_topic' },
-    { id: 'micro_prac_org_6_5', name: 'Esterification for carboxylic acids', parent_id: 'tag_prac_org_6', type: 'micro_topic' },
-    
-    // Primary Concept 7: Tests for Amines
     { id: 'tag_prac_org_7', name: 'Tests for Amines', parent_id: 'ch11_prac_org', type: 'topic' },
-    { id: 'micro_prac_org_7_1', name: 'Hinsberg test (1°/2°/3° amines)', parent_id: 'tag_prac_org_7', type: 'micro_topic' },
-    { id: 'micro_prac_org_7_2', name: 'Carbylamine test (1° amines only)', parent_id: 'tag_prac_org_7', type: 'micro_topic' },
-    { id: 'micro_prac_org_7_3', name: 'Azo dye test (1° aromatic amines)', parent_id: 'tag_prac_org_7', type: 'micro_topic' },
-    { id: 'micro_prac_org_7_4', name: 'Distinguishing primary/secondary/tertiary', parent_id: 'tag_prac_org_7', type: 'micro_topic' },
-
-    // Class 12
-    { id: 'ch12_solutions', name: 'Solutions', parent_id: null, type: 'chapter', sequence_order: 15, class_level: 12, chapterType: 'physical' },
-    { id: 'tag_solutions_1', name: 'Vapour Pressure & RLVP', parent_id: 'ch12_solutions', type: 'topic' },
-    { id: 'tag_solutions_2', name: 'Basics & Definitions', parent_id: 'ch12_solutions', type: 'topic' },
-    { id: 'tag_solutions_3', name: 'Raoult\'s Law (Ideal & Non ideal soln)', parent_id: 'ch12_solutions', type: 'topic' },
-    { id: 'tag_solutions_4', name: 'Concentration Terms', parent_id: 'ch12_solutions', type: 'topic' },
-    { id: 'tag_solutions_5', name: 'Elevation in BP / Depression in FP', parent_id: 'ch12_solutions', type: 'topic' },
-    { id: 'tag_solutions_6', name: 'Osmotic Pressure & Van\'t Hoff Factor', parent_id: 'ch12_solutions', type: 'topic' },
-    { id: 'tag_solutions_7', name: 'Solubility & Henry\'s Law', parent_id: 'ch12_solutions', type: 'topic' },
-
-    { id: 'ch12_electrochem', name: 'Electrochemistry', parent_id: null, type: 'chapter', sequence_order: 16, class_level: 12, chapterType: 'physical' },
-    { id: 'tag_electrochem_1', name: 'Batteries, Fuel Cells & Corrosion', parent_id: 'ch12_electrochem', type: 'topic' },
-    { id: 'tag_electrochem_2', name: 'Conductance & Kohlrausch Law', parent_id: 'ch12_electrochem', type: 'topic' },
-    { id: 'tag_electrochem_3', name: 'Electrochemical Series & its Applications', parent_id: 'ch12_electrochem', type: 'topic' },
-    { id: 'tag_electrochem_4', name: 'Electrode Potential and Galvanic Cell', parent_id: 'ch12_electrochem', type: 'topic' },
-    { id: 'tag_electrochem_5', name: 'Electrolysis & Faraday\'s Laws', parent_id: 'ch12_electrochem', type: 'topic' },
-    { id: 'tag_electrochem_6', name: 'Nernst Equation & Latimer Diagram', parent_id: 'ch12_electrochem', type: 'topic' },
-    { id: 'tag_electrochem_7', name: 'Multi-Concept', parent_id: 'ch12_electrochem', type: 'topic' },
-
-    { id: 'ch12_kinetics', name: 'Chemical Kinetics', parent_id: null, type: 'chapter', sequence_order: 17, class_level: 12, chapterType: 'physical' },
-    { id: 'tag_kinetics_1', name: 'Arrhenius Eq & Activation Energy', parent_id: 'ch12_kinetics', type: 'topic' },
-    { id: 'tag_kinetics_2', name: 'Complex Reactions', parent_id: 'ch12_kinetics', type: 'topic' },
-    { id: 'tag_kinetics_3', name: 'Radioactive Decay', parent_id: 'ch12_kinetics', type: 'topic' },
-    { id: 'tag_kinetics_4', name: 'Rate Law, Order of Reaction, Molecularity', parent_id: 'ch12_kinetics', type: 'topic' },
-    { id: 'tag_kinetics_5', name: 'Rate of Reactions and Factors affecting it', parent_id: 'ch12_kinetics', type: 'topic' },
-    { id: 'tag_kinetics_6', name: 'Reaction Mechanisms & Catalysis', parent_id: 'ch12_kinetics', type: 'topic' },
-    { id: 'tag_kinetics_7', name: 'Zero Order Reactions', parent_id: 'ch12_kinetics', type: 'topic' },
-    { id: 'tag_kinetics_8', name: 'First Order Reactions & Special cases', parent_id: 'ch12_kinetics', type: 'topic' },
-
-    { id: 'ch12_pblock', name: 'P Block (12th)', parent_id: null, type: 'chapter', sequence_order: 18, class_level: 12, chapterType: 'inorganic' },
-    { id: 'tag_pblock12_1', name: 'Properties of P-Block', parent_id: 'ch12_pblock', type: 'topic' },
-    { id: 'tag_pblock12_2', name: 'Compounds of Halides', parent_id: 'ch12_pblock', type: 'topic' },
-    { id: 'tag_pblock12_3', name: 'Compounds of Nitrogen', parent_id: 'ch12_pblock', type: 'topic' },
-    { id: 'tag_pblock12_4', name: 'Compounds of Phosphorus', parent_id: 'ch12_pblock', type: 'topic' },
-    { id: 'tag_pblock12_5', name: 'Compounds of Sulphur', parent_id: 'ch12_pblock', type: 'topic' },
-    { id: 'tag_pblock12_6', name: 'Noble gases and their Reactions', parent_id: 'ch12_pblock', type: 'topic' },
-    { id: 'tag_pblock12_7', name: 'Properties of Halogens', parent_id: 'ch12_pblock', type: 'topic' },
-    { id: 'tag_pblock12_8', name: 'Properties of Nitrogen Family', parent_id: 'ch12_pblock', type: 'topic' },
-    { id: 'tag_pblock12_9', name: 'Properties of Oxygen Family', parent_id: 'ch12_pblock', type: 'topic' },
-
-    { id: 'ch12_dblock', name: 'D & F Block', parent_id: null, type: 'chapter', sequence_order: 19, class_level: 12, chapterType: 'inorganic' },
-    { id: 'tag_dblock_1', name: 'Reactions of Transition Metals', parent_id: 'ch12_dblock', type: 'topic' },
-    { id: 'tag_dblock_2', name: 'Electronic Config. and Exceptions', parent_id: 'ch12_dblock', type: 'topic' },
-    { id: 'tag_dblock_3', name: 'I.E. ,Oxidation states, SRP', parent_id: 'ch12_dblock', type: 'topic' },
-    { id: 'tag_dblock_4', name: 'Preparation & Properties of KMnO4 & K2Cr2O7', parent_id: 'ch12_dblock', type: 'topic' },
-    { id: 'tag_dblock_5', name: 'Magnetic properties & Colour', parent_id: 'ch12_dblock', type: 'topic' },
-    { id: 'tag_dblock_6', name: 'Oxides, Catalytic Properties', parent_id: 'ch12_dblock', type: 'topic' },
-    { id: 'tag_dblock_7', name: 'Physical Properties of Transition metals', parent_id: 'ch12_dblock', type: 'topic' },
-    { id: 'tag_dblock_8', name: 'Properties of F block elements', parent_id: 'ch12_dblock', type: 'topic' },
-
-    { id: 'ch12_coord', name: 'Coordination Compounds', parent_id: null, type: 'chapter', sequence_order: 20, class_level: 12, chapterType: 'inorganic' },
-    { id: 'tag_coord_1', name: 'Basic Definitions & Ligands', parent_id: 'ch12_coord', type: 'topic' },
-    { id: 'tag_coord_2', name: 'Color & Magnetic Properties', parent_id: 'ch12_coord', type: 'topic' },
-    { id: 'tag_coord_3', name: 'Crystal Field Theory (CFT)', parent_id: 'ch12_coord', type: 'topic' },
-    { id: 'tag_coord_4', name: 'IUPAC Nomenclature', parent_id: 'ch12_coord', type: 'topic' },
-    { id: 'tag_coord_5', name: 'Isomerism (Structural/Stereo)', parent_id: 'ch12_coord', type: 'topic' },
-    { id: 'tag_coord_6', name: 'Metal Carbonyls & EAN', parent_id: 'ch12_coord', type: 'topic' },
-    { id: 'tag_coord_7', name: 'Stability & Applications', parent_id: 'ch12_coord', type: 'topic' },
-    { id: 'tag_coord_8', name: 'Valence Bond Theory (VBT)', parent_id: 'ch12_coord', type: 'topic' },
-    { id: 'tag_coord_9', name: 'Werner\'s Theory', parent_id: 'ch12_coord', type: 'topic' },
-
-    { id: 'ch12_haloalkanes', name: 'Haloalkanes & Haloarenes', parent_id: null, type: 'chapter', sequence_order: 21, class_level: 12, chapterType: 'organic' },
-    
-    // Primary Concept 1: Physical Properties of Haloalkanes
-    { id: 'tag_haloalkanes_1', name: 'Physical Properties of Haloalkanes', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'micro_haloalkanes_1_1', name: 'Boiling point trends (size, branching, halogen)', parent_id: 'tag_haloalkanes_1', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_1_2', name: 'Dipole moment & polarity', parent_id: 'tag_haloalkanes_1', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_1_3', name: 'Solubility behaviour', parent_id: 'tag_haloalkanes_1', type: 'micro_topic' },
-    
-    // Primary Concept 2: Preparation of Haloalkanes
-    { id: 'tag_haloalkanes_2', name: 'Preparation of Haloalkanes', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'micro_haloalkanes_2_1', name: 'From alcohols (HX, SOCl₂, PCl₃/PCl₅)', parent_id: 'tag_haloalkanes_2', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_2_2', name: 'From alkenes (HX addition, anti-Markovnikov)', parent_id: 'tag_haloalkanes_2', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_2_3', name: 'Halogen exchange (Finkelstein, Swarts)', parent_id: 'tag_haloalkanes_2', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_2_4', name: 'From hydrocarbons (free radical halogenation)', parent_id: 'tag_haloalkanes_2', type: 'micro_topic' },
-    
-    // Primary Concept 3: Nucleophilicity, Basicity & Leaving Group Ability
-    { id: 'tag_haloalkanes_3', name: 'Nucleophilicity, Basicity & Leaving Group Ability', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'micro_haloalkanes_3_1', name: 'Nucleophilicity trends (protic vs aprotic solvent)', parent_id: 'tag_haloalkanes_3', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_3_2', name: 'Basicity vs nucleophilicity distinction', parent_id: 'tag_haloalkanes_3', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_3_3', name: 'Leaving group ability order', parent_id: 'tag_haloalkanes_3', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_3_4', name: 'Effect of solvent on nucleophilicity', parent_id: 'tag_haloalkanes_3', type: 'micro_topic' },
-    
-    // Primary Concept 4: SN1 & SN2 Mechanisms
-    { id: 'tag_haloalkanes_4', name: 'SN1 & SN2 Mechanisms', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'micro_haloalkanes_4_1', name: 'SN1 — mechanism, stereochemistry, rate law', parent_id: 'tag_haloalkanes_4', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_4_2', name: 'SN2 — mechanism, stereochemistry, rate law', parent_id: 'tag_haloalkanes_4', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_4_3', name: 'Factors favouring SN1 vs SN2', parent_id: 'tag_haloalkanes_4', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_4_4', name: 'Stereochemical outcome (racemisation vs inversion)', parent_id: 'tag_haloalkanes_4', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_4_5', name: 'Rearrangements in SN1', parent_id: 'tag_haloalkanes_4', type: 'micro_topic' },
-    
-    // Primary Concept 5: SNi & Neighbouring Group Participation (NGP)
-    { id: 'tag_haloalkanes_5', name: 'SNi & Neighbouring Group Participation (NGP)', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'micro_haloalkanes_5_1', name: 'SNi mechanism (retention of configuration)', parent_id: 'tag_haloalkanes_5', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_5_2', name: 'NGP — definition & examples', parent_id: 'tag_haloalkanes_5', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_5_3', name: 'Anchimeric assistance', parent_id: 'tag_haloalkanes_5', type: 'micro_topic' },
-    
-    // Primary Concept 6: Elimination Reactions (E1 & E2)
-    { id: 'tag_haloalkanes_6', name: 'Elimination Reactions (E1 & E2)', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'micro_haloalkanes_6_1', name: 'E1 mechanism & conditions', parent_id: 'tag_haloalkanes_6', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_6_2', name: 'E2 mechanism & conditions (Saytzeff vs Hofmann)', parent_id: 'tag_haloalkanes_6', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_6_3', name: 'Zaitsev\'s rule', parent_id: 'tag_haloalkanes_6', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_6_4', name: 'Stereochemistry of E2 (anti-periplanar requirement)', parent_id: 'tag_haloalkanes_6', type: 'micro_topic' },
-    
-    // Primary Concept 7: Substitution vs Elimination — Selectivity
-    { id: 'tag_haloalkanes_7', name: 'Substitution vs Elimination — Selectivity', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'micro_haloalkanes_7_1', name: 'Factors determining SN vs E (temperature, base strength, substrate)', parent_id: 'tag_haloalkanes_7', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_7_2', name: 'Predicting major product in competing pathways', parent_id: 'tag_haloalkanes_7', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_7_3', name: 'Strong base + 3° substrate cases', parent_id: 'tag_haloalkanes_7', type: 'micro_topic' },
-    
-    // Primary Concept 8: Aryl Halides & Their Reactions
-    { id: 'tag_haloalkanes_8', name: 'Aryl Halides & Their Reactions', parent_id: 'ch12_haloalkanes', type: 'topic' },
-    { id: 'micro_haloalkanes_8_1', name: 'Lower reactivity of aryl halides (resonance explanation)', parent_id: 'tag_haloalkanes_8', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_8_2', name: 'Nucleophilic aromatic substitution (SNAr) — conditions', parent_id: 'tag_haloalkanes_8', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_8_3', name: 'Benzyne mechanism', parent_id: 'tag_haloalkanes_8', type: 'micro_topic' },
-    { id: 'micro_haloalkanes_8_4', name: 'Reactions — Fittig, Wurtz-Fittig', parent_id: 'tag_haloalkanes_8', type: 'micro_topic' },
-
-    { id: 'ch12_alcohols', name: 'Alcohols, Phenols & Ethers', parent_id: null, type: 'chapter', sequence_order: 22, class_level: 12, chapterType: 'organic' },
-    { id: 'tag_alcohols_1', name: 'Alcohols Preparation (Grignard, Reduction)', parent_id: 'ch12_alcohols', type: 'topic' },
-    { id: 'tag_alcohols_2', name: 'Dehydration & Oxidation of Alcohols', parent_id: 'ch12_alcohols', type: 'topic' },
-    { id: 'tag_alcohols_3', name: 'Phenols Preparation & Acidic Nature', parent_id: 'ch12_alcohols', type: 'topic' },
-    { id: 'tag_alcohols_4', name: 'Phenol Reactions (Reimer-Tiemann, Kolbe etc)', parent_id: 'ch12_alcohols', type: 'topic' },
-    { id: 'tag_alcohols_5', name: 'Reactions of ethers, epoxides', parent_id: 'ch12_alcohols', type: 'topic' },
-    { id: 'tag_alcohols_6', name: 'Other Reactions of Alcohols', parent_id: 'ch12_alcohols', type: 'topic' },
-    { id: 'tag_ch12_alcohols_1771659358099', name: 'SEAr Reactions of Phenols & Ethers', parent_id: 'ch12_alcohols', type: 'topic' },
-
-    { id: 'ch12_carbonyl', name: 'Aldehydes, Ketones and Carboxylic Acids', parent_id: null, type: 'chapter', sequence_order: 23, class_level: 12, chapterType: 'organic' },
-    { id: 'tag_aldehydes_1', name: 'Grignard Reagent', parent_id: 'ch12_carbonyl', type: 'topic' },
-    { id: 'tag_aldehydes_2', name: 'Name Reactions (Aldol, Cannizzaro, Perkins, Haloform, Claisen etc)', parent_id: 'ch12_carbonyl', type: 'topic' },
-    { id: 'tag_aldehydes_3', name: 'Other name reactions of carbonyl', parent_id: 'ch12_carbonyl', type: 'topic' },
-    { id: 'tag_aldehydes_4', name: 'Preparation raections of carbonyl', parent_id: 'ch12_carbonyl', type: 'topic' },
-    { id: 'tag_aldehydes_5', name: 'Tests for carbonyl compounds (Tollen\'s, Fehling, Benedict etc)', parent_id: 'ch12_carbonyl', type: 'topic' },
-    { id: 'tag_aldehydes_6', name: 'Nucleophilic Addition Reactions', parent_id: 'ch12_carbonyl', type: 'topic' },
-    { id: 'tag_aldehydes_7', name: 'Oxidation & Reduction Reactions of Carbony!', parent_id: 'ch12_carbonyl', type: 'topic' },
-    { id: 'tag_ch12_aldehydes_1771659373017', name: 'Reactions of Aromatic Aldehydes & Ketones', parent_id: 'ch12_carbonyl', type: 'topic' },
-    { id: 'tag_carboxylic_1', name: 'Acid Derivatives (Esters, Anhydrides, Amides)', parent_id: 'ch12_carbonyl', type: 'topic' },
-    { id: 'tag_carboxylic_2', name: 'Acidity Trends & Substituent Effects', parent_id: 'ch12_carbonyl', type: 'topic' },
-    { id: 'tag_carboxylic_3', name: 'Name Reactions (Dearboxylation, HVZ, Arndt Eistert etc.)', parent_id: 'ch12_carbonyl', type: 'topic' },
-    { id: 'tag_carboxylic_4', name: 'Preparation Methods', parent_id: 'ch12_carbonyl', type: 'topic' },
-    { id: 'tag_ch12_carboxylic_1771659384907', name: 'Reactions of Aromatic Acids & Derivatives', parent_id: 'ch12_carbonyl', type: 'topic' },
-
-    { id: 'ch12_amines', name: 'Amines', parent_id: null, type: 'chapter', sequence_order: 25, class_level: 12, chapterType: 'organic' },
-    { id: 'tag_amines_1', name: 'Reactions of Aliphatic Amines', parent_id: 'ch12_amines', type: 'topic' },
-    { id: 'tag_amines_2', name: 'Tests for Amines (Hinsberg, Carbylamine, Hoffmann)', parent_id: 'ch12_amines', type: 'topic' },
-    { id: 'tag_amines_3', name: 'Basic Character (Gaseous vs Aqueous Phase)', parent_id: 'ch12_amines', type: 'topic' },
-    { id: 'tag_amines_4', name: 'Diazonium Salts & Coupling Reactions', parent_id: 'ch12_amines', type: 'topic' },
-    { id: 'tag_amines_5', name: 'Gabriel Phthalimide, Hofmann Bromamide & Carbylamine', parent_id: 'ch12_amines', type: 'topic' },
-    { id: 'tag_ch12_amines_1771659399884', name: 'Reactions of Nitrobenzene & Aniline', parent_id: 'ch12_amines', type: 'topic' },
-
-    { id: 'ch12_biomolecules', name: 'Biomolecules', parent_id: null, type: 'chapter', sequence_order: 26, class_level: 12, chapterType: 'organic' },
-    { id: 'tag_biomolecules_1', name: 'Carbohydrates (Glucose Structure & Reactions)', parent_id: 'ch12_biomolecules', type: 'topic' },
-    { id: 'tag_biomolecules_2', name: 'Tests for Biomolecules', parent_id: 'ch12_biomolecules', type: 'topic' },
-    { id: 'tag_biomolecules_3', name: 'Di and Polysachharides', parent_id: 'ch12_biomolecules', type: 'topic' },
-    { id: 'tag_biomolecules_4', name: 'Nucleic Acids (DNA/RNA)', parent_id: 'ch12_biomolecules', type: 'topic' },
-    { id: 'tag_biomolecules_5', name: 'Proteins & Amino Acids', parent_id: 'ch12_biomolecules', type: 'topic' },
-    { id: 'tag_biomolecules_6', name: 'Vitamins & Enzymes', parent_id: 'ch12_biomolecules', type: 'topic' },
-
-    { id: 'ch12_salt', name: 'Salt Analysis', parent_id: null, type: 'chapter', sequence_order: 27, class_level: 12, chapterType: 'practical' },
-    { id: 'tag_salt_1', name: 'Anion Analysis', parent_id: 'ch12_salt', type: 'topic' },
-    { id: 'tag_salt_2', name: 'Cation Analysis', parent_id: 'ch12_salt', type: 'topic' },
-    { id: 'tag_salt_3', name: 'Anions: Conc. H2SO4 Group', parent_id: 'ch12_salt', type: 'topic' },
-    { id: 'tag_salt_4', name: 'Anions: Dil. H2SO4 Group', parent_id: 'ch12_salt', type: 'topic' },
-    { id: 'tag_salt_5', name: 'Anions: Special Group (S04, PO4)', parent_id: 'ch12_salt', type: 'topic' },
-    { id: 'tag_salt_6', name: 'Cations: Group I (Pb, Ag, Hg)', parent_id: 'ch12_salt', type: 'topic' },
-    { id: 'tag_salt_7', name: 'Cations: Group II (Cu, As, etc)', parent_id: 'ch12_salt', type: 'topic' },
-    { id: 'tag_salt_8', name: 'Cations: Group III (Fe, Al, Cr)', parent_id: 'ch12_salt', type: 'topic' },
-    { id: 'tag_salt_9', name: 'Cations: Group IV (Zn, Mn, Ni, Co)', parent_id: 'ch12_salt', type: 'topic' },
-    { id: 'tag_salt_10', name: 'Cations: Group V (Ba, Sr, Ca)', parent_id: 'ch12_salt', type: 'topic' },
-    { id: 'tag_salt_11', name: 'Cations: Group VI (Mg)', parent_id: 'ch12_salt', type: 'topic' },
-    { id: 'tag_salt_12', name: 'Cations: Zero Group (NH4+)', parent_id: 'ch12_salt', type: 'topic' },
-    { id: 'tag_salt_13', name: 'Dry Tests (Flame/Borax)', parent_id: 'ch12_salt', type: 'topic' },
-    { id: 'tag_salt_14', name: 'Solubility Rules & Precipitation Colors', parent_id: 'ch12_salt', type: 'topic' },
-
-    { id: 'ch12_prac_phys', name: 'Practical Physical Chemistry', parent_id: null, type: 'chapter', sequence_order: 28, class_level: 12, chapterType: 'practical' },
-    { id: 'tag_prac_phys_1', name: 'Laboratory Apparatus & Errors in Measurement', parent_id: 'ch12_prac_phys', type: 'topic' },
-    { id: 'tag_prac_phys_2', name: 'Acid-Base Titration & Selection of Indicators (Phenolphthalein/Methyl Orange)', parent_id: 'ch12_prac_phys', type: 'topic' },
-    { id: 'tag_prac_phys_3', name: 'Redox Titrations (K MnO4 / Oxalic Acid / Mohr\'s Salt)', parent_id: 'ch12_prac_phys', type: 'topic' },
-    { id: 'tag_prac_phys_4', name: 'lodometric vs lodimetric Titrations (Starch Indicator)', parent_id: 'ch12_prac_phys', type: 'topic' },
-    { id: 'tag_prac_phys_5', name: 'Hardness of Water (EDTA Titration)', parent_id: 'ch12_prac_phys', type: 'topic' },
-    { id: 'tag_prac_phys_6', name: 'Surface Chemistry Practicals (Lyophilic/Lyophobic Sols & Dialysis)', parent_id: 'ch12_prac_phys', type: 'topic' },
-
-
-    // ─── PHYSICS (Class 11) ─────────────────────────────────────────────────
 
     { id: 'ph11_units', name: 'Units, Dimensions & Errors', parent_id: null, type: 'chapter', sequence_order: 101, class_level: 11, chapterType: 'physical' },
     { id: 'tag_units_1', name: 'SI Units & Fundamental/Derived Quantities', parent_id: 'ph11_units', type: 'topic' },
@@ -504,7 +228,7 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_k2d_5', name: 'River-Boat & Rain Problems', parent_id: 'ph11_kinematics2d', type: 'topic' },
 
     { id: 'ph11_nlm', name: 'Laws of Motion', parent_id: null, type: 'chapter', sequence_order: 104, class_level: 11, chapterType: 'physical' },
-    { id: 'tag_nlm_1', name: "Newton's Laws (1st, 2nd, 3rd)", parent_id: 'ph11_nlm', type: 'topic' },
+    { id: 'tag_nlm_1', name: 'Newton\'s Laws (1st, 2nd, 3rd)', parent_id: 'ph11_nlm', type: 'topic' },
     { id: 'tag_nlm_2', name: 'Free Body Diagrams & Constraint Motion', parent_id: 'ph11_nlm', type: 'topic' },
     { id: 'tag_nlm_3', name: 'Friction (Static, Kinetic, Rolling)', parent_id: 'ph11_nlm', type: 'topic' },
     { id: 'tag_nlm_4', name: 'Pulley Systems & Connected Bodies', parent_id: 'ph11_nlm', type: 'topic' },
@@ -535,9 +259,9 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_rot_6', name: 'Equilibrium of Rigid Bodies', parent_id: 'ph11_rotation', type: 'topic' },
 
     { id: 'ph11_gravitation', name: 'Gravitation', parent_id: null, type: 'chapter', sequence_order: 108, class_level: 11, chapterType: 'physical' },
-    { id: 'tag_grav_1', name: "Newton's Law of Gravitation", parent_id: 'ph11_gravitation', type: 'topic' },
+    { id: 'tag_grav_1', name: 'Newton\'s Law of Gravitation', parent_id: 'ph11_gravitation', type: 'topic' },
     { id: 'tag_grav_2', name: 'Gravitational Field & Potential', parent_id: 'ph11_gravitation', type: 'topic' },
-    { id: 'tag_grav_3', name: "Kepler's Laws & Orbital Motion", parent_id: 'ph11_gravitation', type: 'topic' },
+    { id: 'tag_grav_3', name: 'Kepler\'s Laws & Orbital Motion', parent_id: 'ph11_gravitation', type: 'topic' },
     { id: 'tag_grav_4', name: 'Escape Velocity & Satellites', parent_id: 'ph11_gravitation', type: 'topic' },
     { id: 'tag_grav_5', name: 'Variation of g (Depth, Height, Rotation)', parent_id: 'ph11_gravitation', type: 'topic' },
 
@@ -569,77 +293,6 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_waves_3', name: 'Standing Waves (Strings & Pipes)', parent_id: 'ph11_waves', type: 'topic' },
     { id: 'tag_waves_4', name: 'Doppler Effect', parent_id: 'ph11_waves', type: 'topic' },
     { id: 'tag_waves_5', name: 'Intensity & Loudness of Sound', parent_id: 'ph11_waves', type: 'topic' },
-
-    // ─── PHYSICS (Class 12) ─────────────────────────────────────────────────
-
-    { id: 'ph12_electrostatics', name: 'Electrostatics', parent_id: null, type: 'chapter', sequence_order: 113, class_level: 12, chapterType: 'physical' },
-    { id: 'tag_elst_1', name: "Coulomb's Law & Electric Force", parent_id: 'ph12_electrostatics', type: 'topic' },
-    { id: 'tag_elst_2', name: 'Electric Field (Point Charges, Dipole, Continuous)', parent_id: 'ph12_electrostatics', type: 'topic' },
-    { id: 'tag_elst_3', name: "Gauss's Law & Applications", parent_id: 'ph12_electrostatics', type: 'topic' },
-    { id: 'tag_elst_4', name: 'Electric Potential & Potential Energy', parent_id: 'ph12_electrostatics', type: 'topic' },
-    { id: 'tag_elst_5', name: 'Conductors, Capacitors & Dielectrics', parent_id: 'ph12_electrostatics', type: 'topic' },
-    { id: 'tag_elst_6', name: 'Energy Stored in Capacitors & Circuits', parent_id: 'ph12_electrostatics', type: 'topic' },
-
-    { id: 'ph12_current', name: 'Current Electricity', parent_id: null, type: 'chapter', sequence_order: 114, class_level: 12, chapterType: 'physical' },
-    { id: 'tag_curr_1', name: 'Ohm\'s Law, Resistance & Resistivity', parent_id: 'ph12_current', type: 'topic' },
-    { id: 'tag_curr_2', name: 'Kirchhoff\'s Laws (KVL, KCL)', parent_id: 'ph12_current', type: 'topic' },
-    { id: 'tag_curr_3', name: 'Wheatstone Bridge & Potentiometer', parent_id: 'ph12_current', type: 'topic' },
-    { id: 'tag_curr_4', name: 'Cell EMF, Internal Resistance & Combination', parent_id: 'ph12_current', type: 'topic' },
-    { id: 'tag_curr_5', name: 'Power Dissipation & Heating Effect', parent_id: 'ph12_current', type: 'topic' },
-
-    { id: 'ph12_magnetism', name: 'Magnetism & Moving Charges', parent_id: null, type: 'chapter', sequence_order: 115, class_level: 12, chapterType: 'physical' },
-    { id: 'tag_mag_1', name: 'Magnetic Force on Charges & Wires (Lorentz)', parent_id: 'ph12_magnetism', type: 'topic' },
-    { id: 'tag_mag_2', name: 'Biot-Savart Law & Ampere\'s Law', parent_id: 'ph12_magnetism', type: 'topic' },
-    { id: 'tag_mag_3', name: 'Magnetic Field of Solenoid & Toroid', parent_id: 'ph12_magnetism', type: 'topic' },
-    { id: 'tag_mag_4', name: 'Motion of Charges in Magnetic Field', parent_id: 'ph12_magnetism', type: 'topic' },
-    { id: 'tag_mag_5', name: 'Torque on Current Loop & Moving Coil Galvanometer', parent_id: 'ph12_magnetism', type: 'topic' },
-    { id: 'tag_mag_6', name: 'Diamagnetism, Paramagnetism & Ferromagnetism', parent_id: 'ph12_magnetism', type: 'topic' },
-
-    { id: 'ph12_emi', name: 'Electromagnetic Induction', parent_id: null, type: 'chapter', sequence_order: 116, class_level: 12, chapterType: 'physical' },
-    { id: 'tag_emi_1', name: 'Magnetic Flux & Faraday\'s Law', parent_id: 'ph12_emi', type: 'topic' },
-    { id: 'tag_emi_2', name: 'Lenz\'s Law & Motional EMF', parent_id: 'ph12_emi', type: 'topic' },
-    { id: 'tag_emi_3', name: 'Self Inductance & Mutual Inductance', parent_id: 'ph12_emi', type: 'topic' },
-    { id: 'tag_emi_4', name: 'Energy Stored in Inductors', parent_id: 'ph12_emi', type: 'topic' },
-    { id: 'tag_emi_5', name: 'Eddy Currents & Applications', parent_id: 'ph12_emi', type: 'topic' },
-
-    { id: 'ph12_ac', name: 'Alternating Current', parent_id: null, type: 'chapter', sequence_order: 117, class_level: 12, chapterType: 'physical' },
-    { id: 'tag_ac_1', name: 'AC Fundamentals (RMS, Peak, Frequency)', parent_id: 'ph12_ac', type: 'topic' },
-    { id: 'tag_ac_2', name: 'R, L, C in AC Circuits', parent_id: 'ph12_ac', type: 'topic' },
-    { id: 'tag_ac_3', name: 'Series LCR & Resonance', parent_id: 'ph12_ac', type: 'topic' },
-    { id: 'tag_ac_4', name: 'Power in AC Circuits & Power Factor', parent_id: 'ph12_ac', type: 'topic' },
-    { id: 'tag_ac_5', name: 'Transformers', parent_id: 'ph12_ac', type: 'topic' },
-
-    { id: 'ph12_ray_optics', name: 'Ray Optics', parent_id: null, type: 'chapter', sequence_order: 118, class_level: 12, chapterType: 'physical' },
-    { id: 'tag_rop_1', name: 'Reflection (Plane & Curved Mirrors)', parent_id: 'ph12_ray_optics', type: 'topic' },
-    { id: 'tag_rop_2', name: 'Refraction at Plane Surfaces & TIR', parent_id: 'ph12_ray_optics', type: 'topic' },
-    { id: 'tag_rop_3', name: 'Prism & Dispersion', parent_id: 'ph12_ray_optics', type: 'topic' },
-    { id: 'tag_rop_4', name: 'Refraction at Curved Surfaces & Lenses', parent_id: 'ph12_ray_optics', type: 'topic' },
-    { id: 'tag_rop_5', name: 'Optical Instruments (Microscope, Telescope)', parent_id: 'ph12_ray_optics', type: 'topic' },
-    { id: 'tag_rop_6', name: 'Power of Lens & Lens Maker\'s Equation', parent_id: 'ph12_ray_optics', type: 'topic' },
-
-    { id: 'ph12_wave_optics', name: 'Wave Optics', parent_id: null, type: 'chapter', sequence_order: 119, class_level: 12, chapterType: 'physical' },
-    { id: 'tag_wvop_1', name: 'Huygens\' Principle & Wavefronts', parent_id: 'ph12_wave_optics', type: 'topic' },
-    { id: 'tag_wvop_2', name: 'Young\'s Double Slit Experiment (YDSE)', parent_id: 'ph12_wave_optics', type: 'topic' },
-    { id: 'tag_wvop_3', name: 'Interference Conditions & Fringe Width', parent_id: 'ph12_wave_optics', type: 'topic' },
-    { id: 'tag_wvop_4', name: 'Diffraction (Single Slit)', parent_id: 'ph12_wave_optics', type: 'topic' },
-    { id: 'tag_wvop_5', name: 'Polarisation', parent_id: 'ph12_wave_optics', type: 'topic' },
-
-    { id: 'ph12_modern', name: 'Modern Physics', parent_id: null, type: 'chapter', sequence_order: 120, class_level: 12, chapterType: 'physical' },
-    { id: 'tag_mod_1', name: 'Photoelectric Effect & Einstein\'s Equation', parent_id: 'ph12_modern', type: 'topic' },
-    { id: 'tag_mod_2', name: 'de Broglie Waves & Davisson-Germer', parent_id: 'ph12_modern', type: 'topic' },
-    { id: 'tag_mod_3', name: 'Bohr\'s Model & Hydrogen Spectrum', parent_id: 'ph12_modern', type: 'topic' },
-    { id: 'tag_mod_4', name: 'Nuclear Structure, Binding Energy & Mass Defect', parent_id: 'ph12_modern', type: 'topic' },
-    { id: 'tag_mod_5', name: 'Radioactivity & Nuclear Reactions', parent_id: 'ph12_modern', type: 'topic' },
-    { id: 'tag_mod_6', name: 'X-Rays', parent_id: 'ph12_modern', type: 'topic' },
-
-    { id: 'ph12_semiconductors', name: 'Semiconductors & Communication', parent_id: null, type: 'chapter', sequence_order: 121, class_level: 12, chapterType: 'physical' },
-    { id: 'tag_semi_1', name: 'Semiconductor Basics (n-type, p-type, Energy Bands)', parent_id: 'ph12_semiconductors', type: 'topic' },
-    { id: 'tag_semi_2', name: 'p-n Junction Diode & Characteristics', parent_id: 'ph12_semiconductors', type: 'topic' },
-    { id: 'tag_semi_3', name: 'Rectifiers (Half-wave, Full-wave)', parent_id: 'ph12_semiconductors', type: 'topic' },
-    { id: 'tag_semi_4', name: 'Zener Diode & Voltage Regulation', parent_id: 'ph12_semiconductors', type: 'topic' },
-    { id: 'tag_semi_5', name: 'Transistors (BJT, CE Config) & Logic Gates', parent_id: 'ph12_semiconductors', type: 'topic' },
-
-    // ─── MATHEMATICS (Class 11) ─────────────────────────────────────────────
 
     { id: 'ma11_sets', name: 'Sets, Relations & Functions', parent_id: null, type: 'chapter', sequence_order: 201, class_level: 11, chapterType: 'physical' },
     { id: 'tag_sets_1', name: 'Sets & Set Operations (Union, Intersection, Complement)', parent_id: 'ma11_sets', type: 'topic' },
@@ -712,7 +365,207 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_stat_3', name: 'Classical Probability & Sample Space', parent_id: 'ma11_stats', type: 'topic' },
     { id: 'tag_stat_4', name: 'Conditional Probability & Independent Events', parent_id: 'ma11_stats', type: 'topic' },
 
-    // ─── MATHEMATICS (Class 12) ─────────────────────────────────────────────
+    // Class 12
+    { id: 'ch12_solutions', name: 'Solutions', parent_id: null, type: 'chapter', sequence_order: 15, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_solutions_1', name: 'Vapour Pressure & RLVP', parent_id: 'ch12_solutions', type: 'topic' },
+    { id: 'tag_solutions_2', name: 'Basics & Definitions', parent_id: 'ch12_solutions', type: 'topic' },
+    { id: 'tag_solutions_3', name: 'Raoult\'s Law (Ideal & Non ideal soln)', parent_id: 'ch12_solutions', type: 'topic' },
+    { id: 'tag_solutions_4', name: 'Concentration Terms', parent_id: 'ch12_solutions', type: 'topic' },
+    { id: 'tag_solutions_5', name: 'Elevation in BP / Depression in FP', parent_id: 'ch12_solutions', type: 'topic' },
+    { id: 'tag_solutions_6', name: 'Osmotic Pressure & Van\'t Hoff Factor', parent_id: 'ch12_solutions', type: 'topic' },
+    { id: 'tag_solutions_7', name: 'Solubility & Henry\'s Law', parent_id: 'ch12_solutions', type: 'topic' },
+
+    { id: 'ch12_electrochem', name: 'Electrochemistry', parent_id: null, type: 'chapter', sequence_order: 16, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_electrochem_1', name: 'Batteries, Fuel Cells & Corrosion', parent_id: 'ch12_electrochem', type: 'topic' },
+    { id: 'tag_electrochem_2', name: 'Conductance & Kohlrausch Law', parent_id: 'ch12_electrochem', type: 'topic' },
+    { id: 'tag_electrochem_3', name: 'Electrochemical Series & its Applications', parent_id: 'ch12_electrochem', type: 'topic' },
+    { id: 'tag_electrochem_4', name: 'Electrode Potential and Galvanic Cell', parent_id: 'ch12_electrochem', type: 'topic' },
+    { id: 'tag_electrochem_5', name: 'Electrolysis & Faraday\'s Laws', parent_id: 'ch12_electrochem', type: 'topic' },
+    { id: 'tag_electrochem_6', name: 'Nernst Equation & Latimer Diagram', parent_id: 'ch12_electrochem', type: 'topic' },
+    { id: 'tag_electrochem_7', name: 'Multi-Concept', parent_id: 'ch12_electrochem', type: 'topic' },
+
+    { id: 'ch12_kinetics', name: 'Chemical Kinetics', parent_id: null, type: 'chapter', sequence_order: 17, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_kinetics_1', name: 'Arrhenius Eq & Activation Energy', parent_id: 'ch12_kinetics', type: 'topic' },
+    { id: 'tag_kinetics_2', name: 'Complex Reactions', parent_id: 'ch12_kinetics', type: 'topic' },
+    { id: 'tag_kinetics_3', name: 'Radioactive Decay', parent_id: 'ch12_kinetics', type: 'topic' },
+    { id: 'tag_kinetics_4', name: 'Rate Law, Order of Reaction, Molecularity', parent_id: 'ch12_kinetics', type: 'topic' },
+    { id: 'tag_kinetics_5', name: 'Rate of Reactions and Factors affecting it', parent_id: 'ch12_kinetics', type: 'topic' },
+    { id: 'tag_kinetics_6', name: 'Reaction Mechanisms & Catalysis', parent_id: 'ch12_kinetics', type: 'topic' },
+    { id: 'tag_kinetics_7', name: 'Zero Order Reactions', parent_id: 'ch12_kinetics', type: 'topic' },
+    { id: 'tag_kinetics_8', name: 'First Order Reactions & Special cases', parent_id: 'ch12_kinetics', type: 'topic' },
+
+    { id: 'ch12_pblock', name: 'P Block (12th)', parent_id: null, type: 'chapter', sequence_order: 18, class_level: 12, chapterType: 'inorganic' },
+    { id: 'tag_pblock12_1', name: 'Properties of P-Block', parent_id: 'ch12_pblock', type: 'topic' },
+    { id: 'tag_pblock12_2', name: 'Compounds of Halides', parent_id: 'ch12_pblock', type: 'topic' },
+    { id: 'tag_pblock12_3', name: 'Compounds of Nitrogen', parent_id: 'ch12_pblock', type: 'topic' },
+    { id: 'tag_pblock12_4', name: 'Compounds of Phosphorus', parent_id: 'ch12_pblock', type: 'topic' },
+    { id: 'tag_pblock12_5', name: 'Compounds of Sulphur', parent_id: 'ch12_pblock', type: 'topic' },
+    { id: 'tag_pblock12_6', name: 'Noble gases and their Reactions', parent_id: 'ch12_pblock', type: 'topic' },
+    { id: 'tag_pblock12_7', name: 'Properties of Halogens', parent_id: 'ch12_pblock', type: 'topic' },
+    { id: 'tag_pblock12_8', name: 'Properties of Nitrogen Family', parent_id: 'ch12_pblock', type: 'topic' },
+    { id: 'tag_pblock12_9', name: 'Properties of Oxygen Family', parent_id: 'ch12_pblock', type: 'topic' },
+
+    { id: 'ch12_dblock', name: 'D & F Block', parent_id: null, type: 'chapter', sequence_order: 19, class_level: 12, chapterType: 'inorganic' },
+    { id: 'tag_dblock_1', name: 'Reactions of Transition Metals', parent_id: 'ch12_dblock', type: 'topic' },
+    { id: 'tag_dblock_2', name: 'Electronic Config. and Exceptions', parent_id: 'ch12_dblock', type: 'topic' },
+    { id: 'tag_dblock_3', name: 'I.E. ,Oxidation states, SRP', parent_id: 'ch12_dblock', type: 'topic' },
+    { id: 'tag_dblock_4', name: 'Preparation & Properties of KMnO4 & K2Cr2O7', parent_id: 'ch12_dblock', type: 'topic' },
+    { id: 'tag_dblock_5', name: 'Magnetic properties & Colour', parent_id: 'ch12_dblock', type: 'topic' },
+    { id: 'tag_dblock_6', name: 'Oxides, Catalytic Properties', parent_id: 'ch12_dblock', type: 'topic' },
+    { id: 'tag_dblock_7', name: 'Physical Properties of Transition metals', parent_id: 'ch12_dblock', type: 'topic' },
+    { id: 'tag_dblock_8', name: 'Properties of F block elements', parent_id: 'ch12_dblock', type: 'topic' },
+
+    { id: 'ch12_coord', name: 'Coordination Compounds', parent_id: null, type: 'chapter', sequence_order: 20, class_level: 12, chapterType: 'inorganic' },
+    { id: 'tag_coord_1', name: 'Basic Definitions & Ligands', parent_id: 'ch12_coord', type: 'topic' },
+    { id: 'tag_coord_2', name: 'Color & Magnetic Properties', parent_id: 'ch12_coord', type: 'topic' },
+    { id: 'tag_coord_3', name: 'Crystal Field Theory (CFT)', parent_id: 'ch12_coord', type: 'topic' },
+    { id: 'tag_coord_4', name: 'IUPAC Nomenclature', parent_id: 'ch12_coord', type: 'topic' },
+    { id: 'tag_coord_5', name: 'Isomerism (Structural/Stereo)', parent_id: 'ch12_coord', type: 'topic' },
+    { id: 'tag_coord_6', name: 'Metal Carbonyls & EAN', parent_id: 'ch12_coord', type: 'topic' },
+    { id: 'tag_coord_7', name: 'Stability & Applications', parent_id: 'ch12_coord', type: 'topic' },
+    { id: 'tag_coord_8', name: 'Valence Bond Theory (VBT)', parent_id: 'ch12_coord', type: 'topic' },
+    { id: 'tag_coord_9', name: 'Werner\'s Theory', parent_id: 'ch12_coord', type: 'topic' },
+
+    { id: 'ch12_haloalkanes', name: 'Haloalkanes & Haloarenes', parent_id: null, type: 'chapter', sequence_order: 21, class_level: 12, chapterType: 'organic' },
+    { id: 'tag_haloalkanes_1', name: 'Physical Properties of Haloalkanes', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'tag_haloalkanes_2', name: 'Preparation of Haloalkanes', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'tag_haloalkanes_3', name: 'Nucleophilicity, Basicity & Leaving Group Ability', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'tag_haloalkanes_4', name: 'SN1 & SN2 Mechanisms', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'tag_haloalkanes_5', name: 'SNi & Neighbouring Group Participation (NGP)', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'tag_haloalkanes_6', name: 'Elimination Reactions (E1 & E2)', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'tag_haloalkanes_7', name: 'Substitution vs Elimination — Selectivity', parent_id: 'ch12_haloalkanes', type: 'topic' },
+    { id: 'tag_haloalkanes_8', name: 'Aryl Halides & Their Reactions', parent_id: 'ch12_haloalkanes', type: 'topic' },
+
+    { id: 'ch12_alcohols', name: 'Alcohols, Phenols & Ethers', parent_id: null, type: 'chapter', sequence_order: 22, class_level: 12, chapterType: 'organic' },
+    { id: 'tag_alcohols_1', name: 'Alcohols Preparation (Grignard, Reduction)', parent_id: 'ch12_alcohols', type: 'topic' },
+    { id: 'tag_alcohols_2', name: 'Dehydration & Oxidation of Alcohols', parent_id: 'ch12_alcohols', type: 'topic' },
+    { id: 'tag_alcohols_3', name: 'Phenols Preparation & Acidic Nature', parent_id: 'ch12_alcohols', type: 'topic' },
+    { id: 'tag_alcohols_4', name: 'Phenol Reactions (Reimer-Tiemann, Kolbe etc)', parent_id: 'ch12_alcohols', type: 'topic' },
+    { id: 'tag_alcohols_5', name: 'Reactions of ethers, epoxides', parent_id: 'ch12_alcohols', type: 'topic' },
+    { id: 'tag_alcohols_6', name: 'Other Reactions of Alcohols', parent_id: 'ch12_alcohols', type: 'topic' },
+    { id: 'tag_ch12_alcohols_1771659358099', name: 'SEAr Reactions of Phenols & Ethers', parent_id: 'ch12_alcohols', type: 'topic' },
+
+    { id: 'ch12_carbonyl', name: 'Aldehydes, Ketones and Carboxylic Acids', parent_id: null, type: 'chapter', sequence_order: 23, class_level: 12, chapterType: 'organic' },
+    { id: 'tag_aldehydes_1', name: 'Grignard Reagent', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_aldehydes_2', name: 'Name Reactions (Aldol, Cannizzaro, Perkins, Haloform, Claisen etc)', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_aldehydes_3', name: 'Other name reactions of carbonyl', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_aldehydes_4', name: 'Preparation raections of carbonyl', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_aldehydes_5', name: 'Tests for carbonyl compounds (Tollen\'s, Fehling, Benedict etc)', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_aldehydes_6', name: 'Nucleophilic Addition Reactions', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_aldehydes_7', name: 'Oxidation & Reduction Reactions of Carbony!', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_ch12_aldehydes_1771659373017', name: 'Reactions of Aromatic Aldehydes & Ketones', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_carboxylic_1', name: 'Acid Derivatives (Esters, Anhydrides, Amides)', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_carboxylic_2', name: 'Acidity Trends & Substituent Effects', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_carboxylic_3', name: 'Name Reactions (Dearboxylation, HVZ, Arndt Eistert etc.)', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_carboxylic_4', name: 'Preparation Methods', parent_id: 'ch12_carbonyl', type: 'topic' },
+    { id: 'tag_ch12_carboxylic_1771659384907', name: 'Reactions of Aromatic Acids & Derivatives', parent_id: 'ch12_carbonyl', type: 'topic' },
+
+    { id: 'ch12_amines', name: 'Amines', parent_id: null, type: 'chapter', sequence_order: 25, class_level: 12, chapterType: 'organic' },
+    { id: 'tag_amines_1', name: 'Reactions of Aliphatic Amines', parent_id: 'ch12_amines', type: 'topic' },
+    { id: 'tag_amines_2', name: 'Tests for Amines (Hinsberg, Carbylamine, Hoffmann)', parent_id: 'ch12_amines', type: 'topic' },
+    { id: 'tag_amines_3', name: 'Basic Character (Gaseous vs Aqueous Phase)', parent_id: 'ch12_amines', type: 'topic' },
+    { id: 'tag_amines_4', name: 'Diazonium Salts & Coupling Reactions', parent_id: 'ch12_amines', type: 'topic' },
+    { id: 'tag_amines_5', name: 'Gabriel Phthalimide, Hofmann Bromamide & Carbylamine', parent_id: 'ch12_amines', type: 'topic' },
+    { id: 'tag_ch12_amines_1771659399884', name: 'Reactions of Nitrobenzene & Aniline', parent_id: 'ch12_amines', type: 'topic' },
+
+    { id: 'ch12_biomolecules', name: 'Biomolecules', parent_id: null, type: 'chapter', sequence_order: 26, class_level: 12, chapterType: 'organic' },
+    { id: 'tag_biomolecules_1', name: 'Carbohydrates (Glucose Structure & Reactions)', parent_id: 'ch12_biomolecules', type: 'topic' },
+    { id: 'tag_biomolecules_2', name: 'Tests for Biomolecules', parent_id: 'ch12_biomolecules', type: 'topic' },
+    { id: 'tag_biomolecules_3', name: 'Di and Polysachharides', parent_id: 'ch12_biomolecules', type: 'topic' },
+    { id: 'tag_biomolecules_4', name: 'Nucleic Acids (DNA/RNA)', parent_id: 'ch12_biomolecules', type: 'topic' },
+    { id: 'tag_biomolecules_5', name: 'Proteins & Amino Acids', parent_id: 'ch12_biomolecules', type: 'topic' },
+    { id: 'tag_biomolecules_6', name: 'Vitamins & Enzymes', parent_id: 'ch12_biomolecules', type: 'topic' },
+
+    { id: 'ch12_salt', name: 'Salt Analysis', parent_id: null, type: 'chapter', sequence_order: 27, class_level: 12, chapterType: 'practical' },
+    { id: 'tag_salt_1', name: 'Anion Analysis', parent_id: 'ch12_salt', type: 'topic' },
+    { id: 'tag_salt_2', name: 'Cation Analysis', parent_id: 'ch12_salt', type: 'topic' },
+    { id: 'tag_salt_3', name: 'Anions: Conc. H2SO4 Group', parent_id: 'ch12_salt', type: 'topic' },
+    { id: 'tag_salt_4', name: 'Anions: Dil. H2SO4 Group', parent_id: 'ch12_salt', type: 'topic' },
+    { id: 'tag_salt_5', name: 'Anions: Special Group (S04, PO4)', parent_id: 'ch12_salt', type: 'topic' },
+    { id: 'tag_salt_6', name: 'Cations: Group I (Pb, Ag, Hg)', parent_id: 'ch12_salt', type: 'topic' },
+    { id: 'tag_salt_7', name: 'Cations: Group II (Cu, As, etc)', parent_id: 'ch12_salt', type: 'topic' },
+    { id: 'tag_salt_8', name: 'Cations: Group III (Fe, Al, Cr)', parent_id: 'ch12_salt', type: 'topic' },
+    { id: 'tag_salt_9', name: 'Cations: Group IV (Zn, Mn, Ni, Co)', parent_id: 'ch12_salt', type: 'topic' },
+    { id: 'tag_salt_10', name: 'Cations: Group V (Ba, Sr, Ca)', parent_id: 'ch12_salt', type: 'topic' },
+    { id: 'tag_salt_11', name: 'Cations: Group VI (Mg)', parent_id: 'ch12_salt', type: 'topic' },
+    { id: 'tag_salt_12', name: 'Cations: Zero Group (NH4+)', parent_id: 'ch12_salt', type: 'topic' },
+    { id: 'tag_salt_13', name: 'Dry Tests (Flame/Borax)', parent_id: 'ch12_salt', type: 'topic' },
+    { id: 'tag_salt_14', name: 'Solubility Rules & Precipitation Colors', parent_id: 'ch12_salt', type: 'topic' },
+
+    { id: 'ch12_prac_phys', name: 'Practical Physical Chemistry', parent_id: null, type: 'chapter', sequence_order: 28, class_level: 12, chapterType: 'practical' },
+    { id: 'tag_prac_phys_1', name: 'Laboratory Apparatus & Errors in Measurement', parent_id: 'ch12_prac_phys', type: 'topic' },
+    { id: 'tag_prac_phys_2', name: 'Acid-Base Titration & Selection of Indicators (Phenolphthalein/Methyl Orange)', parent_id: 'ch12_prac_phys', type: 'topic' },
+    { id: 'tag_prac_phys_3', name: 'Redox Titrations (K MnO4 / Oxalic Acid / Mohr\'s Salt)', parent_id: 'ch12_prac_phys', type: 'topic' },
+    { id: 'tag_prac_phys_4', name: 'lodometric vs lodimetric Titrations (Starch Indicator)', parent_id: 'ch12_prac_phys', type: 'topic' },
+    { id: 'tag_prac_phys_5', name: 'Hardness of Water (EDTA Titration)', parent_id: 'ch12_prac_phys', type: 'topic' },
+    { id: 'tag_prac_phys_6', name: 'Surface Chemistry Practicals (Lyophilic/Lyophobic Sols & Dialysis)', parent_id: 'ch12_prac_phys', type: 'topic' },
+
+    { id: 'ph12_electrostatics', name: 'Electrostatics', parent_id: null, type: 'chapter', sequence_order: 113, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_elst_1', name: 'Coulomb\'s Law & Electric Force', parent_id: 'ph12_electrostatics', type: 'topic' },
+    { id: 'tag_elst_2', name: 'Electric Field (Point Charges, Dipole, Continuous)', parent_id: 'ph12_electrostatics', type: 'topic' },
+    { id: 'tag_elst_3', name: 'Gauss\'s Law & Applications', parent_id: 'ph12_electrostatics', type: 'topic' },
+    { id: 'tag_elst_4', name: 'Electric Potential & Potential Energy', parent_id: 'ph12_electrostatics', type: 'topic' },
+    { id: 'tag_elst_5', name: 'Conductors, Capacitors & Dielectrics', parent_id: 'ph12_electrostatics', type: 'topic' },
+    { id: 'tag_elst_6', name: 'Energy Stored in Capacitors & Circuits', parent_id: 'ph12_electrostatics', type: 'topic' },
+
+    { id: 'ph12_current', name: 'Current Electricity', parent_id: null, type: 'chapter', sequence_order: 114, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_curr_1', name: 'Ohm\'s Law, Resistance & Resistivity', parent_id: 'ph12_current', type: 'topic' },
+    { id: 'tag_curr_2', name: 'Kirchhoff\'s Laws (KVL, KCL)', parent_id: 'ph12_current', type: 'topic' },
+    { id: 'tag_curr_3', name: 'Wheatstone Bridge & Potentiometer', parent_id: 'ph12_current', type: 'topic' },
+    { id: 'tag_curr_4', name: 'Cell EMF, Internal Resistance & Combination', parent_id: 'ph12_current', type: 'topic' },
+    { id: 'tag_curr_5', name: 'Power Dissipation & Heating Effect', parent_id: 'ph12_current', type: 'topic' },
+
+    { id: 'ph12_magnetism', name: 'Magnetism & Moving Charges', parent_id: null, type: 'chapter', sequence_order: 115, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_mag_1', name: 'Magnetic Force on Charges & Wires (Lorentz)', parent_id: 'ph12_magnetism', type: 'topic' },
+    { id: 'tag_mag_2', name: 'Biot-Savart Law & Ampere\'s Law', parent_id: 'ph12_magnetism', type: 'topic' },
+    { id: 'tag_mag_3', name: 'Magnetic Field of Solenoid & Toroid', parent_id: 'ph12_magnetism', type: 'topic' },
+    { id: 'tag_mag_4', name: 'Motion of Charges in Magnetic Field', parent_id: 'ph12_magnetism', type: 'topic' },
+    { id: 'tag_mag_5', name: 'Torque on Current Loop & Moving Coil Galvanometer', parent_id: 'ph12_magnetism', type: 'topic' },
+    { id: 'tag_mag_6', name: 'Diamagnetism, Paramagnetism & Ferromagnetism', parent_id: 'ph12_magnetism', type: 'topic' },
+
+    { id: 'ph12_emi', name: 'Electromagnetic Induction', parent_id: null, type: 'chapter', sequence_order: 116, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_emi_1', name: 'Magnetic Flux & Faraday\'s Law', parent_id: 'ph12_emi', type: 'topic' },
+    { id: 'tag_emi_2', name: 'Lenz\'s Law & Motional EMF', parent_id: 'ph12_emi', type: 'topic' },
+    { id: 'tag_emi_3', name: 'Self Inductance & Mutual Inductance', parent_id: 'ph12_emi', type: 'topic' },
+    { id: 'tag_emi_4', name: 'Energy Stored in Inductors', parent_id: 'ph12_emi', type: 'topic' },
+    { id: 'tag_emi_5', name: 'Eddy Currents & Applications', parent_id: 'ph12_emi', type: 'topic' },
+
+    { id: 'ph12_ac', name: 'Alternating Current', parent_id: null, type: 'chapter', sequence_order: 117, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_ac_1', name: 'AC Fundamentals (RMS, Peak, Frequency)', parent_id: 'ph12_ac', type: 'topic' },
+    { id: 'tag_ac_2', name: 'R, L, C in AC Circuits', parent_id: 'ph12_ac', type: 'topic' },
+    { id: 'tag_ac_3', name: 'Series LCR & Resonance', parent_id: 'ph12_ac', type: 'topic' },
+    { id: 'tag_ac_4', name: 'Power in AC Circuits & Power Factor', parent_id: 'ph12_ac', type: 'topic' },
+    { id: 'tag_ac_5', name: 'Transformers', parent_id: 'ph12_ac', type: 'topic' },
+
+    { id: 'ph12_ray_optics', name: 'Ray Optics', parent_id: null, type: 'chapter', sequence_order: 118, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_rop_1', name: 'Reflection (Plane & Curved Mirrors)', parent_id: 'ph12_ray_optics', type: 'topic' },
+    { id: 'tag_rop_2', name: 'Refraction at Plane Surfaces & TIR', parent_id: 'ph12_ray_optics', type: 'topic' },
+    { id: 'tag_rop_3', name: 'Prism & Dispersion', parent_id: 'ph12_ray_optics', type: 'topic' },
+    { id: 'tag_rop_4', name: 'Refraction at Curved Surfaces & Lenses', parent_id: 'ph12_ray_optics', type: 'topic' },
+    { id: 'tag_rop_5', name: 'Optical Instruments (Microscope, Telescope)', parent_id: 'ph12_ray_optics', type: 'topic' },
+    { id: 'tag_rop_6', name: 'Power of Lens & Lens Maker\'s Equation', parent_id: 'ph12_ray_optics', type: 'topic' },
+
+    { id: 'ph12_wave_optics', name: 'Wave Optics', parent_id: null, type: 'chapter', sequence_order: 119, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_wvop_1', name: 'Huygens\' Principle & Wavefronts', parent_id: 'ph12_wave_optics', type: 'topic' },
+    { id: 'tag_wvop_2', name: 'Young\'s Double Slit Experiment (YDSE)', parent_id: 'ph12_wave_optics', type: 'topic' },
+    { id: 'tag_wvop_3', name: 'Interference Conditions & Fringe Width', parent_id: 'ph12_wave_optics', type: 'topic' },
+    { id: 'tag_wvop_4', name: 'Diffraction (Single Slit)', parent_id: 'ph12_wave_optics', type: 'topic' },
+    { id: 'tag_wvop_5', name: 'Polarisation', parent_id: 'ph12_wave_optics', type: 'topic' },
+
+    { id: 'ph12_modern', name: 'Modern Physics', parent_id: null, type: 'chapter', sequence_order: 120, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_mod_1', name: 'Photoelectric Effect & Einstein\'s Equation', parent_id: 'ph12_modern', type: 'topic' },
+    { id: 'tag_mod_2', name: 'de Broglie Waves & Davisson-Germer', parent_id: 'ph12_modern', type: 'topic' },
+    { id: 'tag_mod_3', name: 'Bohr\'s Model & Hydrogen Spectrum', parent_id: 'ph12_modern', type: 'topic' },
+    { id: 'tag_mod_4', name: 'Nuclear Structure, Binding Energy & Mass Defect', parent_id: 'ph12_modern', type: 'topic' },
+    { id: 'tag_mod_5', name: 'Radioactivity & Nuclear Reactions', parent_id: 'ph12_modern', type: 'topic' },
+    { id: 'tag_mod_6', name: 'X-Rays', parent_id: 'ph12_modern', type: 'topic' },
+
+    { id: 'ph12_semiconductors', name: 'Semiconductors & Communication', parent_id: null, type: 'chapter', sequence_order: 121, class_level: 12, chapterType: 'physical' },
+    { id: 'tag_semi_1', name: 'Semiconductor Basics (n-type, p-type, Energy Bands)', parent_id: 'ph12_semiconductors', type: 'topic' },
+    { id: 'tag_semi_2', name: 'p-n Junction Diode & Characteristics', parent_id: 'ph12_semiconductors', type: 'topic' },
+    { id: 'tag_semi_3', name: 'Rectifiers (Half-wave, Full-wave)', parent_id: 'ph12_semiconductors', type: 'topic' },
+    { id: 'tag_semi_4', name: 'Zener Diode & Voltage Regulation', parent_id: 'ph12_semiconductors', type: 'topic' },
+    { id: 'tag_semi_5', name: 'Transistors (BJT, CE Config) & Logic Gates', parent_id: 'ph12_semiconductors', type: 'topic' },
 
     { id: 'ma12_functions', name: 'Relations, Functions & Inverse Trigonometry', parent_id: null, type: 'chapter', sequence_order: 212, class_level: 12, chapterType: 'physical' },
     { id: 'tag_func_1', name: 'Types of Functions & Graphs', parent_id: 'ma12_functions', type: 'topic' },
@@ -770,12 +623,10 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_prob2_2', name: 'Probability Distributions (Binomial, Poisson)', parent_id: 'ma12_probability', type: 'topic' },
     { id: 'tag_prob2_3', name: 'Random Variables & Expected Value', parent_id: 'ma12_probability', type: 'topic' },
     { id: 'tag_prob2_4', name: 'Total Probability Theorem', parent_id: 'ma12_probability', type: 'topic' },
+
 ];
 
 // Summary Statistics
-// Total Chapters: 65 (26 Chemistry + 19 Physics + 20 Maths)
-// Total Tags: ~430
-// Last saved: 2026-03-05T04:30:00.000Z
-// Chemistry chapters: ch11_*, ch12_*
-// Physics chapters:   ph11_*, ph12_*
-// Maths chapters:     ma11_*, ma12_*
+// Total Chapters: 67
+// Total Tags: 405
+// Last saved: 2026-03-11T07:25:44.423Z
