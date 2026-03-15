@@ -324,14 +324,16 @@ export default function TestView({ questions, onBack }: { questions: Question[];
       return (
         <div style={{ minHeight: '100vh', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
           <WatermarkOverlay />
-          <header style={{ height: 48, borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(10,12,20,0.98)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px', flexShrink: 0 }}>
-            <button onClick={() => setReviewing(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}>
-              <ChevronLeft style={{ width: 14, height: 14 }} /> Back to Results
-            </button>
-            <span style={{ fontSize: 13, fontWeight: 600 }}>Review Solutions</span>
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>{revIdx + 1}/{questions.length}</span>
-              <button onClick={onBack} style={{ padding: '4px 10px', borderRadius: 7, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: 'rgba(255,255,255,0.5)', fontSize: 11, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>🏠 Home</button>
+          <header style={{ height: 48, borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(10,12,20,0.98)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <div style={{ width: '100%', maxWidth: isMobile ? '100%' : 900, padding: '0 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <button onClick={() => setReviewing(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}>
+                <ChevronLeft style={{ width: 14, height: 14 }} /> Back to Results
+              </button>
+              <span style={{ fontSize: 13, fontWeight: 600 }}>Review Solutions</span>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>{revIdx + 1}/{questions.length}</span>
+                <button onClick={onBack} style={{ padding: '4px 10px', borderRadius: 7, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: 'rgba(255,255,255,0.5)', fontSize: 11, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>🏠 Home</button>
+              </div>
             </div>
           </header>
           <div style={{ flex: 1, overflowY: 'auto', padding: isMobile ? '12px 10px 60px' : '24px 32px 80px' }}>

@@ -137,14 +137,16 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
     return (
         <div style={{ minHeight: '100vh', background: '#080a0f', color: '#fff' }}>
             {/* Nav */}
-            <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(8,10,15,0.96)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.07)', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
-                <button onClick={() => router.push('/the-crucible')}
-                    style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.07)', border: 'none', color: '#fff', cursor: 'pointer', fontSize: 12 }}>
-                    ← Back
-                </button>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 13, fontWeight: 800, color, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{chapter.name}</div>
-                    <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>Class {chapter.class_level} · {chapter.category} · {qCount} Questions</div>
+            <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(8,10,15,0.96)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.07)', padding: '10px 16px', display: 'flex', justifyContent: 'center' }}>
+                <div style={{ width: '100%', maxWidth: 600, display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <button onClick={() => router.push('/the-crucible')}
+                        style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.07)', border: 'none', color: '#fff', cursor: 'pointer', fontSize: 12 }}>
+                        ← Back
+                    </button>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: 13, fontWeight: 800, color, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{chapter.name}</div>
+                        <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>Class {chapter.class_level} · {chapter.category} · {qCount} Questions</div>
+                    </div>
                 </div>
             </nav>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { X, LogIn } from 'lucide-react';
+import { X, LogIn, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 
@@ -73,6 +73,7 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn }: ProgressP
   } | null>(isLocalDev ? DEV_PLACEHOLDER_STATS : null);
   const [testResults, setTestResults] = useState<any[]>(isLocalDev ? DEV_PLACEHOLDER_TESTS() : []);
   const [showTests, setShowTests] = useState(isLocalDev);
+  const [chapters, setChapters] = useState<Record<string, string>>({});
 
   // Fetch stats and test results when panel opens
   useEffect(() => {
@@ -94,13 +95,16 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn }: ProgressP
         }
       } catch { /* non-critical — APIs will return 401 and we fall back to empty */ }
 
-      const [statsData, testsData] = await Promise.all([
+      const [statsData, testsData, chaptersData] = await Promise.all([
         fetch('/api/v2/user/stats', { headers: authHeader })
           .then(res => res.ok ? res.json() : { stats: null })
           .catch(() => ({ stats: null })),
         fetch('/api/v2/test-results?limit=5', { headers: authHeader })
           .then(res => res.ok ? res.json() : { results: [] })
           .catch(() => ({ results: [] })),
+        fetch('/api/v2/chapters')
+          .then(res => res.ok ? res.json() : { chapters: [] })
+          .catch(() => ({ chapters: [] })),
       ]);
 
       if (statsData.stats) {
@@ -115,6 +119,21 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn }: ProgressP
       } else if (isLocalDev) {
         setTestResults(DEV_PLACEHOLDER_TESTS());
         setShowTests(true);
+      }
+
+      // Build chapter ID -> name map
+      if (chaptersData.chapters && chaptersData.chapters.length > 0) {
+        const chapterMap: Record<string, string> = {};
+        chaptersData.chapters.forEach((ch: any) => {
+          chapterMap[ch.id] = ch.name;
+        });
+        setChapters(chapterMap);
+      } else if (isLocalDev) {
+        setChapters({
+          'ch11_goc': 'GOC',
+          'ch11_isomerism': 'Isomerism',
+          'ch12_carbonyl': 'Aldehydes, Ketones & Carboxylic Acids',
+        });
       }
 
       setLoading(false);
@@ -318,14 +337,30 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn }: ProgressP
                           const color = percentage >= 70 ? '#34d399' : percentage >= 50 ? '#fbbf24' : '#f87171';
                           const date = new Date(test.created_at);
                           const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                          const chapterName = chapters[test.chapter_id] || test.chapter_id;
                           
                           return (
-                            <div key={test._id} className="bg-white/[0.02] border border-white/[0.04] rounded-lg p-3">
+                            <button
+                              key={test._id}
+                              onClick={() => {
+                                // TODO: Navigate to test review page
+                                console.log('View test:', test._id);
+                              }}
+                              className="w-full bg-white/[0.02] border border-white/[0.04] rounded-lg p-3 hover:bg-white/[0.04] hover:border-white/[0.08] transition-all cursor-pointer text-left group"
+                            >
                               <div className="flex items-center justify-between mb-2">
-                                <span className="text-xs font-medium text-zinc-300">
-                                  {test.test_config?.count || 0}Q Test
-                                </span>
-                                <span className="text-[10px] text-slate-400">{dateStr}</span>
+                                <div className="flex flex-col gap-0.5">
+                                  <span className="text-[11px] font-semibold text-zinc-200">
+                                    {chapterName}
+                                  </span>
+                                  <span className="text-[10px] font-medium text-zinc-400">
+                                    {test.test_config?.count || 0}Q Test
+                                  </span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-[10px] text-slate-400">{dateStr}</span>
+                                  <ChevronRight className="w-3 h-3 text-zinc-500 group-hover:text-zinc-300 transition-colors" />
+                                </div>
                               </div>
                               <div className="flex items-center gap-3">
                                 <div className="text-lg font-bold" style={{ color }}>
@@ -341,7 +376,7 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn }: ProgressP
                                   {percentage}%
                                 </div>
                               </div>
-                            </div>
+                            </button>
                           );
                         })}
                       </div>

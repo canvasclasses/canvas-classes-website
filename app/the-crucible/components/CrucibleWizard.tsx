@@ -10,14 +10,14 @@ import BrowseView from './BrowseView';
 import TestView from './TestView';
 import AuthRequiredDialog from './AuthRequiredDialog';
 import GuidedPracticeWizard from './GuidedPracticeWizard';
+import TestConfigModal, { DifficultyMix, QuestionSort } from './TestConfigModal';
+import { buildSmartTest, AttemptedEntry } from './testGenerator';
 
 type ActiveView = 'wizard' | 'shloka' | 'browse' | 'guided' | 'test';
 type GuidedDifficulty = 'Easy' | 'Medium' | 'Hard' | 'Mixed';
 
 const CAT_COLOR: Record<string, string> = { Physical: '#3b82f6', Organic: '#8b5cf6', Inorganic: '#10b981', Practical: '#f59e0b' };
 const CAT_ORDER = ['Physical', 'Inorganic', 'Organic', 'Practical'];
-
-type DifficultyMix = 'balanced' | 'easy' | 'hard' | 'pyq';
 
 const COLLAPSE_TRANSITION = '0.38s cubic-bezier(0.16, 1, 0.3, 1)';
 
@@ -314,6 +314,9 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
   const [toast, setToast] = useState<string | null>(null);
   const [showProgress, setShowProgress] = useState(false);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [showTestConfig, setShowTestConfig] = useState(false);
+  const [testQuestions, setTestQuestions] = useState<Question[]>([]);
+  const [isBuilding, setIsBuilding] = useState(false);
   const [pendingView, setPendingView] = useState<'browse' | 'test' | null>(null);
   const [shlokaExited, setShlokaExited] = useState(false);
   const [pendingQuestions, setPendingQuestions] = useState<Question[] | null>(null);
@@ -361,12 +364,9 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
   const handleChapterTap = (id: string) => {
     setSelectedChapterId(id);
     setStep1Open(false);
-    // Scroll to step 2 after 280ms
+    // Open step 2 after 280ms (no forced scroll - let it expand naturally)
     setTimeout(() => {
       setStep2Open(true);
-      setTimeout(() => {
-        step2Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 50);
     }, 280);
   };
 
@@ -402,17 +402,111 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
     }, 1800);
   };
 
-  // Launch Timed Test
+  // Launch Timed Test - show config modal
   const handleTestLaunch = () => {
     if (!selectedChapterId) return;
     if (!isLoggedIn) { setShowAuthDialog(true); return; }
-    setLoading(true);
+    setShowTestConfig(true);
+  };
+
+  // Start test after configuration
+  const startTest = useCallback(async (count: number, mix: DifficultyMix, sort: QuestionSort = 'random') => {
+    if (!selectedChapterId) return;
+    
+    // Set shloka view first to avoid flash of wizard
     setShlokaExited(false);
     setActiveView('shloka');
-    setTimeout(() => {
-      router.push(`/the-crucible/${selectedChapterId}?mode=test`);
-    }, 1800);
-  };
+    setIsBuilding(true);
+    setLoading(true);
+    
+    // Close modal after view transition
+    setTimeout(() => setShowTestConfig(false), 0);
+
+    try {
+      // Step 1: Fetch questions for the selected chapter
+      const params = new URLSearchParams();
+      params.append('chapter_id', selectedChapterId);
+      params.set('limit', '500');
+      
+      const questionsRes = await fetch(`/api/v2/questions?${params.toString()}`);
+      const questionsJson = await questionsRes.json();
+      const fetchedQuestions: Question[] = (questionsJson.data || []).map((q: any) => ({
+        id: q._id,
+        display_id: q.display_id,
+        question_text: q.question_text,
+        type: q.question_type || q.type || 'SCQ',
+        options: q.options,
+        answer: q.answer,
+        solution: q.solution,
+        metadata: q.metadata,
+        svg_scales: q.svg_scales,
+      }));
+
+      if (fetchedQuestions.length === 0) {
+        notify('No questions found for this chapter.');
+        setIsBuilding(false);
+        setLoading(false);
+        return;
+      }
+
+      // Step 2: Fetch user progress for smart scoring
+      let attempted: AttemptedEntry[] = [];
+      let starredIds = new Set<string>();
+      let last3Sessions: string[][] = [];
+
+      const supabase = createSupabaseClient();
+      if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        const token = session?.access_token;
+
+        if (token) {
+          try {
+            const res = await fetch(`/api/v2/user/progress?chapterId=${selectedChapterId}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            if (res.ok) {
+              const progress = await res.json();
+              attempted = progress.attempted_ids ?? [];
+              starredIds = new Set<string>(progress.starred_ids ?? []);
+              last3Sessions = progress.last_3_sessions ?? [];
+            }
+          } catch { /* continue with empty progress */ }
+        }
+      }
+
+      // Step 3: Build the smart test
+      const picked = buildSmartTest({
+        questions: fetchedQuestions,
+        count,
+        mix,
+        sort,
+        starredIds,
+        attempted,
+        last3Sessions,
+      });
+
+      if (picked.length === 0) {
+        notify('Could not generate test with selected filters.');
+        setIsBuilding(false);
+        setLoading(false);
+        return;
+      }
+
+      // Step 4: Set questions and transition to test after shloka
+      setTestQuestions(picked);
+      
+      setTimeout(() => {
+        setActiveView('test');
+        setLoading(false);
+        setIsBuilding(false);
+      }, 1800);
+    } catch (error) {
+      console.error('Error building test:', error);
+      notify('Failed to build test. Please try again.');
+      setIsBuilding(false);
+      setLoading(false);
+    }
+  }, [selectedChapterId, notify]);
 
   const handleBackToWizard = () => {
     setActiveView('wizard');
@@ -428,7 +522,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
 
   if (activeView === 'shloka') return <ShlokaScreen onDone={onShlokaDone} />;
   if (activeView === 'browse') return <BrowseView questions={questions} chapters={chapters} onBack={handleBackToWizard} />;
-  if (activeView === 'test') return <TestView questions={questions} onBack={handleBackToWizard} />;
+  if (activeView === 'test') return <TestView questions={testQuestions} onBack={handleBackToWizard} />;
   if (activeView === 'guided') return <GuidedPracticeWizard chapters={chapters} onBack={handleBackToWizard} preSelectedChapterId={selectedChapterId ?? undefined} preSelectedDifficulty={guidedDifficulty} preSelectedSessionLength={sessionLength} />;
 
   // Chapter list data
@@ -646,13 +740,36 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
                         style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '14px 16px', background: 'transparent', border: 'none', cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}
                       >
                         <BookOpen style={{ width: 18, height: 18, color: '#818cf8', flexShrink: 0 }} />
-                        <span style={{ flex: 1, fontSize: 14, fontWeight: 700, color: '#fafafa', textAlign: 'left' }}>Guided Practice</span>
+                        <div style={{ flex: 1, textAlign: 'left' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
+                            <span style={{ fontSize: 14, fontWeight: 700, color: '#fafafa' }}>Guided Practice</span>
+                            <span style={{ fontSize: 9, padding: '2px 6px', borderRadius: 4, background: 'rgba(251,191,36,0.15)', color: '#fbbf24', fontWeight: 700, letterSpacing: '0.05em', border: '1px solid rgba(251,191,36,0.3)' }}>BETA</span>
+                          </div>
+                          <div style={{ fontSize: 11, color: 'rgba(165,180,252,0.7)', fontWeight: 500 }}>Currently: GOC only</div>
+                        </div>
                         <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 6, background: 'rgba(99,102,241,0.15)', color: '#a5b4fc', fontWeight: 700, letterSpacing: '0.04em', border: '1px solid rgba(99,102,241,0.25)' }}>RECOMMENDED</span>
                         <ChevronDown style={{ width: 16, height: 16, color: 'rgba(255,255,255,0.3)', transform: guidedExpanded ? 'rotate(180deg)' : 'rotate(0)', transition: `transform ${COLLAPSE_TRANSITION}` }} />
                       </button>
 
                       {guidedExpanded && (
                         <div style={{ padding: '0 16px 16px' }}>
+                          {/* Check if chapter is GOC */}
+                          {selectedChapterId !== 'ch12_goc' && (
+                            <div style={{ marginBottom: 16, padding: '12px 14px', borderRadius: 10, background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.2)' }}>
+                              <div style={{ display: 'flex', alignItems: 'start', gap: 10 }}>
+                                <div style={{ fontSize: 18, flexShrink: 0 }}>🚧</div>
+                                <div>
+                                  <div style={{ fontSize: 12, fontWeight: 700, color: '#fbbf24', marginBottom: 3 }}>Coming Soon for {selectedChapter?.name}</div>
+                                  <div style={{ fontSize: 11, color: 'rgba(251,191,36,0.8)', lineHeight: 1.5, marginBottom: 8 }}>
+                                    Guided Practice requires micro-concept tagging. Currently available for <strong style={{ color: '#fbbf24' }}>General Organic Chemistry (GOC)</strong> only.
+                                  </div>
+                                  <div style={{ fontSize: 10, color: 'rgba(251,191,36,0.6)' }}>
+                                    💡 Try Free Browse or Timed Test for this chapter, or switch to GOC for the full adaptive experience.
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
                           {/* Difficulty */}
                           <div style={{ marginBottom: 16 }}>
                             <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 8 }}>Difficulty</div>
@@ -721,6 +838,12 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
                                     </div>
                                   </div>
                                 ))}
+                                <div style={{ marginTop: 6, padding: '10px 12px', borderRadius: 8, background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.15)' }}>
+                                  <div style={{ fontSize: 10, color: '#fbbf24', fontWeight: 700, marginBottom: 3, letterSpacing: '0.05em' }}>🧪 BETA FEATURE</div>
+                                  <div style={{ fontSize: 11, color: 'rgba(251,191,36,0.8)', lineHeight: 1.5 }}>
+                                    Adaptive practice is currently available for GOC only. We're adding micro-concept tags to more chapters — check back soon!
+                                  </div>
+                                </div>
                               </div>
                             )}
                           </div>
@@ -732,20 +855,28 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
 
                           {/* Begin Session button */}
                           <button
-                            onClick={handleGuidedLaunch}
-                            onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg,#4f46e5 0%,#6366f1 50%,#818cf8 100%)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(99,102,241,0.45)'; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg,#3730a3 0%,#4f46e5 50%,#6366f1 100%)'; e.currentTarget.style.boxShadow = '0 6px 24px rgba(99,102,241,0.35)'; }}
+                            onClick={selectedChapterId === 'ch12_goc' ? handleGuidedLaunch : undefined}
+                            disabled={selectedChapterId !== 'ch12_goc'}
+                            onMouseEnter={e => { if (selectedChapterId === 'ch12_goc') { e.currentTarget.style.background = 'linear-gradient(135deg,#4f46e5 0%,#6366f1 50%,#818cf8 100%)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(99,102,241,0.45)'; } }}
+                            onMouseLeave={e => { if (selectedChapterId === 'ch12_goc') { e.currentTarget.style.background = 'linear-gradient(135deg,#3730a3 0%,#4f46e5 50%,#6366f1 100%)'; e.currentTarget.style.boxShadow = '0 6px 24px rgba(99,102,241,0.35)'; } }}
                             style={{
                               width: '100%', padding: '15px 0', borderRadius: 12, border: 'none',
-                              background: 'linear-gradient(135deg,#3730a3 0%,#4f46e5 50%,#6366f1 100%)',
-                              color: '#fff', fontSize: 15, fontWeight: 700,
-                              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                              boxShadow: '0 6px 24px rgba(99,102,241,0.35)',
+                              background: selectedChapterId === 'ch12_goc' ? 'linear-gradient(135deg,#3730a3 0%,#4f46e5 50%,#6366f1 100%)' : 'rgba(255,255,255,0.05)',
+                              color: selectedChapterId === 'ch12_goc' ? '#fff' : 'rgba(255,255,255,0.3)',
+                              fontSize: 15, fontWeight: 700,
+                              cursor: selectedChapterId === 'ch12_goc' ? 'pointer' : 'not-allowed',
+                              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                              boxShadow: selectedChapterId === 'ch12_goc' ? '0 6px 24px rgba(99,102,241,0.35)' : 'none',
                               transition: 'all 0.2s ease',
                               WebkitTapHighlightColor: 'transparent',
+                              opacity: selectedChapterId === 'ch12_goc' ? 1 : 0.5,
                             }}
                           >
-                            Begin Session <ChevronRight style={{ width: 18, height: 18 }} />
+                            {selectedChapterId === 'ch12_goc' ? (
+                              <>Begin Session <ChevronRight style={{ width: 18, height: 18 }} /></>
+                            ) : (
+                              <>Available for GOC Only</>
+                            )}
                           </button>
                         </div>
                       )}
@@ -788,7 +919,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
                       <Clock style={{ width: 20, height: 20, color: '#f97316', flexShrink: 0 }} />
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontSize: 14, fontWeight: 600, color: '#fafafa', marginBottom: 2 }}>Timed Test</div>
-                        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Simulate exam conditions with a timer</div>
+                        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Simulate exam conditions • Test your speed & accuracy</div>
                       </div>
                       <ChevronRight style={{ width: 16, height: 16, color: 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
                     </button>
@@ -809,6 +940,15 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
 
         {/* Auth Required Dialog */}
         {showAuthDialog && <AuthRequiredDialog onClose={() => setShowAuthDialog(false)} />}
+
+        {/* Test Config Modal */}
+        {showTestConfig && (
+          <TestConfigModal
+            maxQ={chapterQCount}
+            onStart={startTest}
+            onClose={() => setShowTestConfig(false)}
+          />
+        )}
 
         {/* Toast */}
         {toast && (

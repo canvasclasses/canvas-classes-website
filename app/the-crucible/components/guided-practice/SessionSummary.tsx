@@ -4,8 +4,9 @@
 // Shows accuracy, per-concept breakdown, proficiency deltas, and two CTAs.
 // Writes concept deltas back to DB after session completes.
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChevronRight, RefreshCw, BookOpen, TrendingUp, AlertCircle } from 'lucide-react';
+import SessionReflection from './SessionReflection';
 import type { MicroFeedback, ConceptLevel, UserConceptProfile } from '@/lib/adaptiveEngine';
 import { updateConceptLevel } from '@/lib/adaptiveEngine';
 import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
@@ -48,11 +49,11 @@ interface SessionSummaryProps {
 
 const LEVEL_ORDER: ConceptLevel[] = ['unseen', 'weak', 'developing', 'strong', 'mastered'];
 const LEVEL_COLOR: Record<ConceptLevel, string> = {
-  unseen: '#4b5563',
-  weak: '#f87171',
-  developing: '#fbbf24',
-  strong: '#34d399',
-  mastered: '#10b981',
+  unseen: '#6b7280',
+  weak: '#ef4444',
+  developing: '#f59e0b',
+  strong: '#10b981',
+  mastered: '#059669',
 };
 const LEVEL_LABEL: Record<ConceptLevel, string> = {
   unseen: 'Unseen',
@@ -125,6 +126,8 @@ export default function SessionSummary({
   onReviewMistakes,
 }: SessionSummaryProps) {
   const writtenRef = useRef(false);
+  const [showReflection, setShowReflection] = useState(true);
+  const [reflectionData, setReflectionData] = useState<any>(null);
 
   const totalAttempted = feedbackHistory.length + conceptBaseline.length;
   const totalCorrect = feedbackHistory.filter(f => f.answeredCorrectly).length +
@@ -144,6 +147,17 @@ export default function SessionSummary({
   const wrongQuestionIds = feedbackHistory
     .filter(f => !f.answeredCorrectly)
     .map(f => f.questionId);
+
+  const handleReflectionComplete = (answers: any) => {
+    setReflectionData(answers);
+    setShowReflection(false);
+    // TODO: Send reflection data to API for storage
+    console.log('Session reflection:', answers);
+  };
+
+  const handleReflectionSkip = () => {
+    setShowReflection(false);
+  };
 
   // Write session result to DB once on mount
   useEffect(() => {
@@ -175,6 +189,39 @@ export default function SessionSummary({
   // Today's date for the header
   const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
   const conceptsCovered = conceptDeltas.length;
+
+  // Show reflection first if there's a weak concept and user hasn't completed it yet
+  if (showReflection && weakest && (weakest.newLevel === 'weak' || weakest.newLevel === 'developing')) {
+    const weakestAcc = weakest.questionsAttempted > 0
+      ? Math.round((weakest.correctCount / weakest.questionsAttempted) * 100)
+      : 0;
+    
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: '#0a0a0f',
+        color: '#fff',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '48px 16px 40px',
+      }}>
+        <div style={{ marginBottom: 32, textAlign: 'center' }}>
+          <h2 style={{ fontSize: 24, fontWeight: 800, marginBottom: 8 }}>Quick Reflection</h2>
+          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)' }}>
+            Help us understand your learning better
+          </p>
+        </div>
+        <SessionReflection
+          weakestConceptName={weakest.conceptName}
+          weakestConceptAccuracy={weakestAcc}
+          onComplete={handleReflectionComplete}
+          onSkip={handleReflectionSkip}
+        />
+      </div>
+    );
+  }
 
   return (
     <div style={{
@@ -291,12 +338,14 @@ export default function SessionSummary({
                       {/* Level badge */}
                       <div style={{
                         fontSize: 10, fontWeight: 800,
-                        color: LEVEL_COLOR[delta.newLevel],
-                        padding: '2px 7px',
-                        borderRadius: 5,
-                        border: `1px solid ${LEVEL_COLOR[delta.newLevel]}40`,
-                        background: `${LEVEL_COLOR[delta.newLevel]}12`,
-                        letterSpacing: '0.05em',
+                        color: delta.newLevel === 'weak' ? '#fff' : LEVEL_COLOR[delta.newLevel],
+                        padding: '3px 8px',
+                        borderRadius: 6,
+                        border: `1.5px solid ${LEVEL_COLOR[delta.newLevel]}${delta.newLevel === 'weak' ? '60' : '50'}`,
+                        background: delta.newLevel === 'weak' 
+                          ? `linear-gradient(135deg, ${LEVEL_COLOR[delta.newLevel]}30, ${LEVEL_COLOR[delta.newLevel]}20)`
+                          : `${LEVEL_COLOR[delta.newLevel]}${delta.newLevel === 'strong' || delta.newLevel === 'mastered' ? '20' : '15'}`,
+                        letterSpacing: '0.06em',
                         flexShrink: 0,
                       }}>
                         {LEVEL_LABEL[delta.newLevel].toUpperCase()}
@@ -341,13 +390,13 @@ export default function SessionSummary({
                 Focus Area: <span style={{ color: '#10b981' }}>{weakest.conceptName}</span>
               </div>
             </div>
-            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', lineHeight: 1.6 }}>
+            <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.65)', lineHeight: 1.7 }}>
               You attempted {weakest.questionsAttempted} question{weakest.questionsAttempted !== 1 ? 's' : ''} from
               this concept with {weakest.questionsAttempted > 0 ? Math.round((weakest.correctCount / weakest.questionsAttempted) * 100) : 0}% accuracy.
               Next session: try 5 targeted questions on{' '}
-              <strong style={{ color: 'rgba(255,255,255,0.8)' }}>{weakest.conceptName}</strong>
+              <strong style={{ color: '#fff', fontWeight: 700 }}>{weakest.conceptName}</strong>
               {' '}at{' '}
-              <strong style={{ color: 'rgba(255,255,255,0.8)' }}>
+              <strong style={{ color: '#10b981', fontWeight: 700 }}>
                 {weakest.newLevel === 'weak' ? 'Easy' : 'Medium'}
               </strong>
               {' '}difficulty to build confidence before attempting Hard ones.

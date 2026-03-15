@@ -590,3 +590,32 @@ sup {
 sub {
   bottom: -0.25em;
 }
+
+/* ════════════════════════════════════════════════════
+   PHYSICAL CHEMISTRY HUB — Design Tokens
+════════════════════════════════════════════════════ */
+:root {
+  --pc-bg-dark:      #080c14;
+  --pc-bg-gradient:  radial-gradient(circle at top center, #121c2f 0%, #080c14 100%);
+  --pc-s1:           #111827;
+  --pc-s2:           #1f2937;
+  --pc-s3:           #374151;
+
+  --pc-t1: #d6e0f5;
+  --pc-t2: #9eb1d1;
+  --pc-t3: #64748b;
+
+  --pc-teal:    #2dd4bf;
+  --pc-teal-d:  rgba(45,212,191,0.15);
+  --pc-amber:   #fbbf24;
+  --pc-amber-d: rgba(251,191,36,0.15);
+  --pc-green:   #10b981;
+  --pc-purple:  #8b5cf6;
+  --pc-purple-d: rgba(139,92,246,0.15);
+  --pc-purple-l: #c4b5fd;
+  --pc-red:     #f43f5e;
+  --pc-blue:    #3b82f6;
+
+  --pc-max-w: 1300px;
+  --pc-radius: 12px;
+}

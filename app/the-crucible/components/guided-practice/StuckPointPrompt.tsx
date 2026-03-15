@@ -14,11 +14,11 @@ interface StuckPointPromptProps {
 }
 
 const OPTIONS: { value: StuckPoint; emoji: string; label: string; sublabel: string }[] = [
-  { value: 'concept-gap',    emoji: '🧠', label: 'Concept Gap',     sublabel: "Didn't understand the core idea" },
-  { value: 'unclear-entry',  emoji: '🚪', label: 'Unclear Entry',   sublabel: "Didn't know how to start" },
-  { value: 'calc-error',     emoji: '🔢', label: 'Calc Error',      sublabel: 'Made a calculation mistake' },
-  { value: 'time-pressure',  emoji: '⏱️', label: 'Time Pressure',   sublabel: 'Knew it but ran out of time' },
-  { value: 'silly-mistake',  emoji: '😅', label: 'Silly Mistake',   sublabel: 'Knew it but slipped up' },
+  { value: 'concept-gap',    emoji: '🧠', label: 'Concept Unclear',     sublabel: "Didn't understand the theory" },
+  { value: 'unclear-entry',  emoji: '🤔', label: 'Couldn\'t Start',   sublabel: "Didn't know the first step" },
+  { value: 'calc-error',     emoji: '🔢', label: 'Calculation Error',      sublabel: 'Made a math mistake' },
+  { value: 'time-pressure',  emoji: '⏱️', label: 'Ran Out of Time',   sublabel: 'Understood but too slow' },
+  { value: 'silly-mistake',  emoji: '😅', label: 'Careless Mistake',   sublabel: 'Knew it but made a slip' },
 ];
 
 export default function StuckPointPrompt({ onSelect, onSkip }: StuckPointPromptProps) {
@@ -49,22 +49,22 @@ export default function StuckPointPrompt({ onSelect, onSkip }: StuckPointPromptP
         transform: visible ? 'translateY(0)' : 'translateY(20px)',
         opacity: visible ? 1 : 0,
         transition: 'transform 0.22s cubic-bezier(0.34,1.56,0.64,1), opacity 0.18s ease',
-        maxWidth: 480,
+        maxWidth: 900,
         width: '100%',
         pointerEvents: selected ? 'none' : 'auto',
       }}
     >
-      <div style={{ marginBottom: 10 }}>
-        <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>
-          Where did you get stuck?
-        </span>
-        <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', marginLeft: 8 }}>
-          This helps us adapt
-        </span>
+      <div style={{ marginBottom: 16 }}>
+        <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginBottom: 4 }}>
+          What went wrong?
+        </div>
+        <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>
+          Help us understand so we can adapt better
+        </div>
       </div>
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-        {OPTIONS.map(({ value, emoji, label }) => {
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 10 }}>
+        {OPTIONS.map(({ value, emoji, label, sublabel }) => {
           const isSelected = selected === value;
           return (
             <button
@@ -72,37 +72,52 @@ export default function StuckPointPrompt({ onSelect, onSkip }: StuckPointPromptP
               onClick={() => handlePick(value)}
               style={{
                 display: 'flex',
-                alignItems: 'center',
-                gap: 5,
-                padding: '6px 12px',
-                borderRadius: 99,
-                border: `1px solid ${isSelected ? 'rgba(251,191,36,0.5)' : 'rgba(255,255,255,0.12)'}`,
-                background: isSelected ? 'rgba(251,191,36,0.1)' : 'transparent',
-                color: isSelected ? '#fbbf24' : 'rgba(255,255,255,0.55)',
-                fontSize: 12,
-                fontWeight: 600,
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                gap: 6,
+                padding: '14px 16px',
+                borderRadius: 12,
+                border: `1.5px solid ${isSelected ? 'rgba(251,191,36,0.6)' : 'rgba(255,255,255,0.12)'}`,
+                background: isSelected ? 'rgba(251,191,36,0.12)' : 'rgba(255,255,255,0.03)',
                 cursor: 'pointer',
-                transition: 'border-color 0.15s, background 0.15s, color 0.15s',
+                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                 userSelect: 'none',
                 WebkitTapHighlightColor: 'transparent',
+                textAlign: 'left',
               }}
               onMouseEnter={e => {
                 if (!selected) {
-                  e.currentTarget.style.borderColor = 'rgba(251,191,36,0.4)';
-                  e.currentTarget.style.background = 'rgba(251,191,36,0.06)';
-                  e.currentTarget.style.color = 'rgba(255,255,255,0.85)';
+                  e.currentTarget.style.borderColor = 'rgba(251,191,36,0.5)';
+                  e.currentTarget.style.background = 'rgba(251,191,36,0.08)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
                 }
               }}
               onMouseLeave={e => {
                 if (!selected) {
                   e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
-                  e.currentTarget.style.background = 'transparent';
-                  e.currentTarget.style.color = 'rgba(255,255,255,0.55)';
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
+                  e.currentTarget.style.transform = 'translateY(0)';
                 }
               }}
             >
-              <span style={{ fontSize: 13 }}>{emoji}</span>
-              {label}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%' }}>
+                <span style={{ fontSize: 20 }}>{emoji}</span>
+                <span style={{ 
+                  fontSize: 13, 
+                  fontWeight: 700, 
+                  color: isSelected ? '#fbbf24' : '#fff',
+                  flex: 1,
+                }}>
+                  {label}
+                </span>
+              </div>
+              <span style={{ 
+                fontSize: 11, 
+                color: isSelected ? 'rgba(251,191,36,0.7)' : 'rgba(255,255,255,0.45)',
+                lineHeight: 1.4,
+              }}>
+                {sublabel}
+              </span>
             </button>
           );
         })}
@@ -111,17 +126,21 @@ export default function StuckPointPrompt({ onSelect, onSkip }: StuckPointPromptP
       <button
         onClick={handleSkip}
         style={{
-          marginTop: 8,
-          padding: '5px 0',
+          marginTop: 12,
+          padding: '8px 0',
           border: 'none',
           background: 'transparent',
-          color: 'rgba(255,255,255,0.3)',
-          fontSize: 11,
-          fontWeight: 500,
+          color: 'rgba(255,255,255,0.35)',
+          fontSize: 12,
+          fontWeight: 600,
           cursor: 'pointer',
+          width: '100%',
+          textAlign: 'center',
         }}
+        onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.6)'}
+        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.35)'}
       >
-        Skip
+        Skip for now
       </button>
     </div>
   );

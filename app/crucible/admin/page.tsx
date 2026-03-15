@@ -1846,8 +1846,8 @@ export default function AdminPage() {
                     <div className="flex-1 overflow-y-auto p-4 flex justify-center">
                         {selectedQuestion ? (
                             <div className={`space-y-4 transition-all duration-300 ${previewMode === 'mobile'
-                                ? 'w-[390px] border border-gray-700/60 rounded-2xl overflow-y-auto shadow-2xl shadow-black/50 bg-gray-900 max-h-full'
-                                : 'w-full'
+                                ? 'w-[420px] border border-gray-700/60 rounded-2xl overflow-y-auto shadow-2xl shadow-black/50 bg-gray-900 max-h-full'
+                                : 'w-full max-w-[860px]'
                                 }`}>
                                 {previewMode === 'mobile' && (
                                     <div className="flex items-center justify-center gap-1 py-2 bg-gray-950/80 border-b border-gray-800">

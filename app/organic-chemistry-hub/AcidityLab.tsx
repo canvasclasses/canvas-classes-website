@@ -8,6 +8,8 @@ import {
 import type { SimSlot, Position } from './acidity-data';
 import AcidPatternsTab from './AcidPatternsTab';
 import QuizModeTab from './QuizModeTab';
+import UniversalAcidityLab from './UniversalAcidityLab';
+import BasicityLab from './BasicityLab.v2';
 
 function acidLabel(pka: number): { txt: string; col: string } {
   if (pka < 7) return { txt: 'Strong Acid', col: '#fb7185' };
@@ -288,42 +290,55 @@ function PhenolLab() {
 // ═══════════════════════════════════════════════════════════════════════════════
 // MAIN EXPORT — ACIDITY LAB (with sub-tab navigation)
 // ═══════════════════════════════════════════════════════════════════════════════
-type SubTab = 'phenol' | 'patterns' | 'quiz';
+type SubTab = 'universal' | 'basicity' | 'quiz';
 
 const SUB_TABS: { id: SubTab; label: string; desc: string }[] = [
-  { id: 'phenol', label: 'Phenol Acidity Lab', desc: 'Interactive simulator with 5.3 Million+ comparison combinations' },
-  { id: 'patterns', label: 'Acid Patterns & Trends', desc: 'pKa data table + trend analysis' },
+  { id: 'universal', label: 'Universal Acidity Lab', desc: 'Phenol, Benzoic Acid, Aniline & Aliphatic derivatives with experimental pKa values' },
+  { id: 'basicity', label: 'Basicity Lab', desc: 'Nitrogen bases · NCERT-aligned data and explanations' },
   { id: 'quiz', label: 'Quiz Mode', desc: '10 questions with explanations' },
 ];
 
 export default function AcidityLab() {
-  const [sub, setSub] = useState<SubTab>('phenol');
+  const [sub, setSub] = useState<SubTab>('universal');
 
   return (
     <div>
-      {/* Sub-tab nav */}
-      <div style={{ display: 'flex', gap: 4, marginBottom: 28, padding: '4px', background: 'rgba(139,92,246,0.06)', borderRadius: 12, border: '1px solid rgba(139,92,246,0.18)', width: 'fit-content' }}>
-        {SUB_TABS.map(t => {
-          const isActive = sub === t.id;
-          return (
-            <button key={t.id} onClick={() => setSub(t.id)}
-              style={{ padding: '9px 22px', borderRadius: 9, fontSize: 14, fontWeight: isActive ? 650 : 450, cursor: 'pointer', border: 'none', background: isActive ? 'rgba(139,92,246,0.25)' : 'transparent', color: isActive ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.45)', transition: 'all .18s', boxShadow: isActive ? '0 1px 8px rgba(139,92,246,0.3)' : 'none' }}
-              onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = 'rgba(255,255,255,0.7)'; }}
-              onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = 'rgba(255,255,255,0.45)'; }}>
-              {t.label}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Sub-tab description */}
-      <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.32)', marginBottom: 24 }}>
-        {SUB_TABS.find(t => t.id === sub)?.desc}
+      {/* Sub-tab nav - sticky on scroll */}
+      <div style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)', paddingTop: 16, paddingBottom: 16, marginBottom: 12, borderBottom: '1px solid rgba(255,255,255,0.08)', marginLeft: -16, marginRight: -16, paddingLeft: 16, paddingRight: 16 }}>
+        <div style={{ overflowX: 'auto', paddingBottom: 4 }}>
+          <div style={{ display: 'flex', gap: 4, padding: '4px', background: 'rgba(139,92,246,0.06)', borderRadius: 12, border: '1px solid rgba(139,92,246,0.18)', width: 'fit-content', minWidth: '100%' }}>
+            {SUB_TABS.map(t => {
+              const isActive = sub === t.id;
+              return (
+                <button key={t.id} onClick={() => setSub(t.id)}
+                  style={{ padding: '9px 22px', borderRadius: 9, fontSize: 14, fontWeight: isActive ? 650 : 450, cursor: 'pointer', border: 'none', background: isActive ? 'rgba(139,92,246,0.25)' : 'transparent', color: isActive ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.45)', transition: 'all .18s', boxShadow: isActive ? '0 1px 8px rgba(139,92,246,0.3)' : 'none', whiteSpace: 'nowrap' }}
+                  onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = 'rgba(255,255,255,0.7)'; }}
+                  onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = 'rgba(255,255,255,0.45)'; }}>
+                  {t.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        
+        {/* Sub-tab description */}
+        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.32)', marginTop: 12 }}>
+          {SUB_TABS.find(t => t.id === sub)?.desc}
+        </div>
+        
+        <style jsx>{`
+          @media (max-width: 640px) {
+            button {
+              padding: 8px 16px !important;
+              fontSize: 13px !important;
+            }
+          }
+        `}</style>
       </div>
 
       {/* Content */}
-      {sub === 'phenol' && <PhenolLab />}
-      {sub === 'patterns' && <AcidPatternsTab />}
+      {sub === 'universal' && <UniversalAcidityLab />}
+      {sub === 'basicity' && <BasicityLab />}
       {sub === 'quiz' && <QuizModeTab />}
     </div>
   );

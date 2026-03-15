@@ -59,11 +59,14 @@ function selectDiagnosticQuestions(
   pool: Question[],
   count: number
 ): Question[] {
+  // Shuffle Easy questions first to avoid always getting the same warm-up set
+  const easy = pool.filter(q => q.metadata.difficulty === 'Easy');
+  const shuffled = [...easy].sort(() => Math.random() - 0.5);
+  
   // One Easy question per distinct concept tag, up to count
   const seen = new Set<string>();
   const result: Question[] = [];
-  const easy = pool.filter(q => q.metadata.difficulty === 'Easy');
-  for (const q of easy) {
+  for (const q of shuffled) {
     const tag = q.metadata.tags?.[0]?.tag_id ?? q.metadata.chapter_id;
     if (!seen.has(tag)) {
       seen.add(tag);
@@ -71,9 +74,9 @@ function selectDiagnosticQuestions(
     }
     if (result.length >= count) break;
   }
-  // Pad with any easy questions if not enough concept variety
+  // Pad with any shuffled easy questions if not enough concept variety
   if (result.length < count) {
-    for (const q of easy) {
+    for (const q of shuffled) {
       if (!result.includes(q)) result.push(q);
       if (result.length >= count) break;
     }
@@ -485,61 +488,61 @@ export default function AdaptiveSession({
         )}
       </div>
 
-      {/* Question card — padding-bottom so fixed bottom bar doesn't cover content */}
-      <div style={{ flex: 1, paddingBottom: 120 }}>
+      {/* Question card with inline feedback below */}
+      <div style={{ flex: 1, paddingBottom: 40 }}>
         <AdaptiveQuestionCard
           key={currentQuestion.id}
           question={currentQuestion}
           onAnswered={handleQuestionAnswered}
         />
+
+        {/* MicroFeedback — shown inline after answer */}
+        {showMicroFeedback && pendingFeedbackQ && (
+          <div style={{
+            maxWidth: 900,
+            margin: '0 auto',
+            padding: '0 20px 20px',
+          }}>
+            <div style={{
+              background: 'rgba(10,10,15,0.6)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: 16,
+              padding: '20px 24px',
+            }}>
+              <MicroFeedback
+                questionId={pendingFeedbackQ.id}
+                answeredCorrectly={pendingAnswerRef.current?.correct ?? false}
+                timeSpentMs={pendingAnswerRef.current?.timeMs ?? 0}
+                viewedSolutionBeforeAnswering={pendingAnswerRef.current?.viewedSol ?? false}
+                onFeedback={handleMicroFeedback}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* StuckPoint follow-up — shown inline after too_hard or wrong answer */}
+        {showStuckPoint && (
+          <div style={{
+            maxWidth: 900,
+            margin: '0 auto',
+            padding: '0 20px 20px',
+          }}>
+            <div style={{
+              background: 'rgba(10,10,15,0.6)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: 16,
+              padding: '20px 24px',
+            }}>
+              <StuckPointPrompt
+                onSelect={handleStuckPoint}
+                onSkip={handleStuckPointSkip}
+              />
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* MicroFeedback overlay — slides up after answer */}
-      {showMicroFeedback && pendingFeedbackQ && (
-        <div style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          zIndex: 60,
-          background: 'rgba(10,10,15,0.98)',
-          backdropFilter: 'blur(20px)',
-          borderTop: '1px solid rgba(255,255,255,0.07)',
-          padding: '12px 20px 20px',
-          display: 'flex',
-          justifyContent: 'center',
-        }}>
-          <MicroFeedback
-            questionId={pendingFeedbackQ.id}
-            answeredCorrectly={pendingAnswerRef.current?.correct ?? false}
-            timeSpentMs={pendingAnswerRef.current?.timeMs ?? 0}
-            viewedSolutionBeforeAnswering={pendingAnswerRef.current?.viewedSol ?? false}
-            onFeedback={handleMicroFeedback}
-          />
-        </div>
-      )}
-
-      {/* StuckPoint follow-up — shown after too_hard or wrong answer */}
-      {showStuckPoint && (
-        <div style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          zIndex: 65,
-          background: 'rgba(10,10,15,0.98)',
-          backdropFilter: 'blur(20px)',
-          borderTop: '1px solid rgba(255,255,255,0.07)',
-          padding: '14px 20px 22px',
-          display: 'flex',
-          justifyContent: 'center',
-        }}>
-          <StuckPointPrompt
-            onSelect={handleStuckPoint}
-            onSkip={handleStuckPointSkip}
-          />
-        </div>
-      )}
     </div>
   );
 }
@@ -587,13 +590,19 @@ function SessionTopBar({
       backdropFilter: 'blur(20px)',
       borderBottom: '1px solid rgba(255,255,255,0.06)',
     }}>
-      {/* Row 1: Q counter · reason text · badge · End Session */}
+      {/* Constrained container to prevent stretching on wide screens */}
       <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 10,
-        padding: '10px 14px 6px',
+        maxWidth: 1200,
+        margin: '0 auto',
+        width: '100%',
       }}>
+        {/* Row 1: Q counter · reason text · badge · End Session */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 10,
+          padding: '10px 14px 6px',
+        }}>
         {/* Q1 of N */}
         <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', flexShrink: 0, fontFamily: 'monospace' }}>
           <span style={{ color: 'rgba(255,255,255,0.5)' }}>Q</span>
@@ -662,40 +671,41 @@ function SessionTopBar({
         </button>
       </div>
 
-      {/* Row 2: Linear progress bar */}
-      <div style={{ padding: '0 14px', marginBottom: 4 }}>
+        {/* Row 2: Linear progress bar */}
+        <div style={{ padding: '0 14px', marginBottom: 4 }}>
+          <div style={{
+            height: 4,
+            borderRadius: 99,
+            background: 'rgba(255,255,255,0.08)',
+            overflow: 'hidden',
+          }}>
+            <div style={{
+              height: '100%',
+              borderRadius: 99,
+              width: `${progressPct}%`,
+              background: '#10b981',
+              transition: 'width 0.4s ease',
+            }} />
+          </div>
+        </div>
+
+        {/* Row 3: accuracy% left · remaining right */}
         <div style={{
-          height: 4,
-          borderRadius: 99,
-          background: 'rgba(255,255,255,0.08)',
-          overflow: 'hidden',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 14px 8px',
         }}>
           <div style={{
-            height: '100%',
-            borderRadius: 99,
-            width: `${progressPct}%`,
-            background: '#10b981',
-            transition: 'width 0.4s ease',
-          }} />
-        </div>
-      </div>
-
-      {/* Row 3: accuracy% left · remaining right */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0 14px 8px',
-      }}>
-        <div style={{
-          fontSize: 12,
-          fontWeight: 700,
-          color: accentColor,
-        }}>
-          {totalServed === 0 ? '—' : `${accuracy}%`}
-        </div>
-        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', fontFamily: 'monospace' }}>
-          {remaining} question{remaining !== 1 ? 's' : ''} remaining
+            fontSize: 12,
+            fontWeight: 700,
+            color: accentColor,
+          }}>
+            {totalServed === 0 ? '—' : `${accuracy}%`}
+          </div>
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', fontFamily: 'monospace' }}>
+            {remaining} question{remaining !== 1 ? 's' : ''} remaining
+          </div>
         </div>
       </div>
     </div>
