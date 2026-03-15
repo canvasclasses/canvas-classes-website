@@ -596,7 +596,7 @@ export default function AdminPage() {
         const question = questions.find(q => q._id === questionId);
         if (!question) return;
         if (field === 'question') {
-            const newText = question.question_text.markdown
+            const newText = question.question_text?.markdown
                 ? `${question.question_text.markdown}\n${markdownLink}`
                 : markdownLink;
             setQuestions(prev => prev.map(q =>
@@ -606,12 +606,13 @@ export default function AdminPage() {
             ));
             handleUpdate(questionId, { question_text: { markdown: newText, latex_validated: false } });
         } else {
-            const newText = question.solution.text_markdown
-                ? `${question.solution.text_markdown}\n${markdownLink}`
+            const existingSolution = question.solution?.text_markdown || '';
+            const newText = existingSolution
+                ? `${existingSolution}\n${markdownLink}`
                 : markdownLink;
             setQuestions(prev => prev.map(q =>
                 q._id === questionId
-                    ? { ...q, solution: { ...q.solution, text_markdown: newText } }
+                    ? { ...q, solution: { ...(q.solution || {}), text_markdown: newText } }
                     : q
             ));
             handleUpdate(questionId, { solution: { text_markdown: newText, latex_validated: false } });
