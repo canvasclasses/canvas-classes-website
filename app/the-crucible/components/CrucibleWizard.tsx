@@ -304,8 +304,11 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
   // Guided practice config
   const [guidedDifficulty, setGuidedDifficulty] = useState<GuidedDifficulty>('Mixed');
   const [sessionLength, setSessionLength] = useState(20);
-  const [guidedExpanded, setGuidedExpanded] = useState(true);
+  const [guidedExpanded, setGuidedExpanded] = useState(false); // Collapsed by default (BETA)
   const [howItWorksOpen, setHowItWorksOpen] = useState(false);
+
+  // Live chapter stats for Free Browse card
+  const [chapterStats, setChapterStats] = useState<{ total: number; jeeMain: number; jeeAdv: number; nonPyq: number } | null>(null);
 
   // View state
   const [activeView, setActiveView] = useState<ActiveView>('wizard');
@@ -360,9 +363,33 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
   const chapterConfirmed = !!selectedChapterId;
   const chapterQCount = selectedChapter?.question_count ?? 0;
 
+  // Fetch live chapter stats for the Free Browse card
+  const fetchChapterStats = useCallback(async (chapterId: string) => {
+    setChapterStats(null);
+    try {
+      const [totalRes, mainRes, advRes, nonPyqRes] = await Promise.all([
+        fetch(`/api/v2/questions?chapter_id=${chapterId}&countOnly=true`),
+        fetch(`/api/v2/questions?chapter_id=${chapterId}&countOnly=true&is_pyq=true&exam_level=mains`),
+        fetch(`/api/v2/questions?chapter_id=${chapterId}&countOnly=true&is_pyq=true&exam_level=adv`),
+        fetch(`/api/v2/questions?chapter_id=${chapterId}&countOnly=true&is_pyq=false`),
+      ]);
+      const [t, m, a, n] = await Promise.all([totalRes.json(), mainRes.json(), advRes.json(), nonPyqRes.json()]);
+      setChapterStats({
+        total: t.pagination?.total ?? 0,
+        jeeMain: m.pagination?.total ?? 0,
+        jeeAdv: a.pagination?.total ?? 0,
+        nonPyq: n.pagination?.total ?? 0,
+      });
+    } catch {
+      setChapterStats(null);
+    }
+  }, []);
+
   // Chapter selection handler
   const handleChapterTap = (id: string) => {
     setSelectedChapterId(id);
+    setChapterStats(null);
+    fetchChapterStats(id);
     setStep1Open(false);
     // Open step 2 after 280ms (no forced scroll - let it expand naturally)
     setTimeout(() => {
@@ -882,11 +909,11 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
                       )}
                     </div>
 
-                    {/* B. Free Browse — row card */}
+                    {/* B. Free Browse — enhanced card with stats */}
                     <button
                       onClick={handleBrowseLaunch}
                       style={{
-                        width: '100%', display: 'flex', alignItems: 'center', gap: 12,
+                        width: '100%', display: 'flex', flexDirection: 'column', gap: 10,
                         padding: '16px', borderRadius: 12,
                         border: '1px solid #222525', background: '#0f1010',
                         cursor: 'pointer', transition: 'all 0.15s', textAlign: 'left',
@@ -895,12 +922,38 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
                       onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(56,189,248,0.3)'; e.currentTarget.style.background = 'rgba(56,189,248,0.05)'; }}
                       onMouseLeave={e => { e.currentTarget.style.borderColor = '#222525'; e.currentTarget.style.background = '#0f1010'; }}
                     >
-                      <LayoutGrid style={{ width: 20, height: 20, color: '#3b82f6', flexShrink: 0 }} />
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontSize: 14, fontWeight: 600, color: '#fafafa', marginBottom: 2 }}>Free Browse</div>
-                        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Explore questions at your own pace</div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                        <LayoutGrid style={{ width: 20, height: 20, color: '#3b82f6', flexShrink: 0 }} />
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ fontSize: 14, fontWeight: 600, color: '#fafafa', marginBottom: 2 }}>Free Browse</div>
+                          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Explore questions at your own pace</div>
+                        </div>
+                        <ChevronRight style={{ width: 16, height: 16, color: 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
                       </div>
-                      <ChevronRight style={{ width: 16, height: 16, color: 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
+                      {/* Chapter stats mini-grid — live from API */}
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 6, paddingTop: 4 }}>
+                        {chapterStats === null ? (
+                          // Loading skeleton
+                          [['Total', 'rgba(255,255,255,0.5)'], ['JEE Main', '#38bdf8'], ['JEE Adv', '#a78bfa'], ['Non-PYQ', '#34d399']].map(([label, c]) => (
+                            <div key={label} style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${c}22`, borderRadius: 8, padding: '6px 4px', textAlign: 'center' }}>
+                              <div style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.15)', fontFamily: 'monospace', lineHeight: 1 }}>—</div>
+                              <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', marginTop: 2, lineHeight: 1 }}>{label}</div>
+                            </div>
+                          ))
+                        ) : (
+                          [
+                            [String(chapterStats.total), 'Total', 'rgba(255,255,255,0.5)'],
+                            [String(chapterStats.jeeMain), 'JEE Main', '#38bdf8'],
+                            [String(chapterStats.jeeAdv), 'JEE Adv', '#a78bfa'],
+                            [String(chapterStats.nonPyq), 'Non-PYQ', '#34d399'],
+                          ].map(([val, label, c]) => (
+                            <div key={label} style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${c}22`, borderRadius: 8, padding: '6px 4px', textAlign: 'center' }}>
+                              <div style={{ fontSize: 15, fontWeight: 800, color: c, fontFamily: 'monospace', lineHeight: 1 }}>{val}</div>
+                              <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', marginTop: 2, lineHeight: 1 }}>{label}</div>
+                            </div>
+                          ))
+                        )}
+                      </div>
                     </button>
 
                     {/* C. Timed Test — row card */}

@@ -172,8 +172,8 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
                     </div>
                 ) : (
                     <>
-                        {/* Stats row */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 28 }}>
+                        {/* Stats row 1: totals */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 10 }}>
                             {[
                                 [String(qCount), 'Total Qs', color],
                                 [String(questions.filter(q => q.metadata.is_pyq).length), 'PYQs', '#fbbf24'],
@@ -182,6 +182,19 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
                                 <div key={label} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 10px', textAlign: 'center' }}>
                                     <div style={{ fontSize: 22, fontWeight: 800, color: c, fontFamily: 'monospace' }}>{val}</div>
                                     <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', marginTop: 3 }}>{label}</div>
+                                </div>
+                            ))}
+                        </div>
+                        {/* Stats row 2: source breakdown */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 28 }}>
+                            {[
+                                [String(questions.filter(q => q.metadata.is_pyq && /main/i.test(q.metadata.exam_source?.exam ?? '')).length), 'JEE Main', '#38bdf8'],
+                                [String(questions.filter(q => q.metadata.is_pyq && /adv/i.test(q.metadata.exam_source?.exam ?? '')).length), 'JEE Adv', '#a78bfa'],
+                                [String(questions.filter(q => !q.metadata.is_pyq).length), 'Non-PYQ', '#34d399'],
+                            ].map(([val, label, c]) => (
+                                <div key={label} style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${c}22`, borderRadius: 12, padding: '10px', textAlign: 'center' }}>
+                                    <div style={{ fontSize: 18, fontWeight: 800, color: c, fontFamily: 'monospace' }}>{val}</div>
+                                    <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{label}</div>
                                 </div>
                             ))}
                         </div>

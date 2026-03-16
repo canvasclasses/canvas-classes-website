@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Star, Check, ChevronDown, MonitorPlay, Volume2, ChevronUp, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { Chapter, Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
 import WatermarkOverlay from '@/components/WatermarkOverlay';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
+import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 
 async function fetchOptionStats(questionId: string): Promise<Record<string, number>> {
   try {
@@ -50,6 +51,9 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
   const [activeNavIdx, setActiveNavIdx] = useState(0);
   // 'all' | 'mains' | 'advanced' | 'non-pyq'
   const [examFilter, setExamFilter] = useState<'all' | 'mains' | 'advanced' | 'non-pyq'>('all');
+  const [yearFilter, setYearFilter] = useState<string>('all');
+  const [conceptTagFilter, setConceptTagFilter] = useState<string>('all');
+  const [jumpInput, setJumpInput] = useState('');
   // Video and audio expansion state
   const [videoExpanded, setVideoExpanded] = useState<Record<number, boolean>>({});
   const [audioExpanded, setAudioExpanded] = useState<Record<string, boolean>>({});
@@ -60,14 +64,44 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
     return (a.display_id || '').localeCompare(b.display_id || '', undefined, { numeric: true, sensitivity: 'base' });
   };
 
-  // Filter questions client-side based on exam filter + SORT BY display_id
+  // Concept tags available for the current chapter (from taxonomy)
+  const availableConceptTags = useMemo(() => {
+    if (!chapterId) return [];
+    return TAXONOMY_FROM_CSV
+      .filter((node: any) => node.type === 'topic' && node.parent_id === chapterId)
+      .map((node: any) => ({ id: node.id, name: node.name }));
+  }, [chapterId]);
+
+  // Distinct years available for the selected PYQ source
+  const availableYears = useMemo(() => {
+    if (examFilter !== 'mains' && examFilter !== 'advanced') return [];
+    const years = questions
+      .filter(q => {
+        const exam = (q.metadata.exam_source?.exam ?? '').toLowerCase();
+        return examFilter === 'mains'
+          ? q.metadata.is_pyq && /main/i.test(exam)
+          : q.metadata.is_pyq && /adv/i.test(exam);
+      })
+      .map(q => q.metadata.exam_source?.year)
+      .filter((y): y is number => typeof y === 'number');
+    return [...new Set(years)].sort((a, b) => b - a);
+  }, [questions, examFilter]);
+
+  // Filter questions client-side based on exam filter + year filter + concept tag + SORT BY display_id
   const filteredQuestions = questions
     .filter(q => {
-      if (examFilter === 'all') return true;
-      if (examFilter === 'non-pyq') return !q.metadata.is_pyq;
-      const exam = (q.metadata.exam_source?.exam ?? '').toLowerCase();
-      if (examFilter === 'mains') return q.metadata.is_pyq && /main/i.test(exam);
-      if (examFilter === 'advanced') return q.metadata.is_pyq && /adv/i.test(exam);
+      if (examFilter === 'non-pyq') { if (q.metadata.is_pyq) return false; }
+      else if (examFilter !== 'all') {
+        const exam = (q.metadata.exam_source?.exam ?? '').toLowerCase();
+        if (examFilter === 'mains' && (!q.metadata.is_pyq || !/main/i.test(exam))) return false;
+        if (examFilter === 'advanced' && (!q.metadata.is_pyq || !/adv/i.test(exam))) return false;
+      }
+      if (yearFilter !== 'all' && (examFilter === 'mains' || examFilter === 'advanced')) {
+        if (q.metadata.exam_source?.year !== Number(yearFilter)) return false;
+      }
+      if (conceptTagFilter !== 'all') {
+        if (!q.metadata.tags.some(t => t.tag_id === conceptTagFilter)) return false;
+      }
       return true;
     })
     .sort(sortQuestions);
@@ -574,10 +608,46 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
         style={{ padding: '8px 16px', borderRadius: 9, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: page === 0 ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.8)', fontSize: 13, fontWeight: 600, cursor: page === 0 ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
         <ChevronLeft style={{ width: 14, height: 14 }} /> Prev
       </button>
-      <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', fontFamily: 'monospace' }}>
-        {page + 1} / {totalPages}
-        <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', marginLeft: 6 }}>({filteredQuestions.length} Qs)</span>
-      </span>
+
+      {/* Centre: page indicator + Go-to-Q# jump */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+        <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', fontFamily: 'monospace' }}>
+          {page + 1} / {totalPages}
+          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', marginLeft: 6 }}>({filteredQuestions.length} Qs)</span>
+        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <input
+            type="number"
+            min={1}
+            max={filteredQuestions.length}
+            value={jumpInput}
+            onChange={e => setJumpInput(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                const n = parseInt(jumpInput);
+                if (n >= 1 && n <= filteredQuestions.length) {
+                  changePage(Math.floor((n - 1) / PAGE_SIZE));
+                  setJumpInput('');
+                }
+              }
+            }}
+            placeholder="Go to Q#"
+            style={{
+              width: 72, padding: '3px 8px', borderRadius: 7,
+              border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.05)',
+              color: 'rgba(255,255,255,0.7)', fontSize: 11, outline: 'none', textAlign: 'center',
+            }}
+          />
+          <button
+            onClick={() => {
+              const n = parseInt(jumpInput);
+              if (n >= 1 && n <= filteredQuestions.length) { changePage(Math.floor((n - 1) / PAGE_SIZE)); setJumpInput(''); }
+            }}
+            style={{ padding: '3px 8px', borderRadius: 7, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(124,58,237,0.2)', color: '#a78bfa', fontSize: 11, cursor: 'pointer' }}
+          >↵</button>
+        </div>
+      </div>
+
       <button onClick={() => changePage(page + 1)} disabled={page === totalPages - 1}
         style={{ padding: '8px 16px', borderRadius: 9, border: '1px solid rgba(255,255,255,0.1)', background: page === totalPages - 1 ? 'rgba(255,255,255,0.03)' : 'rgba(124,58,237,0.15)', color: page === totalPages - 1 ? 'rgba(255,255,255,0.2)' : '#a78bfa', fontSize: 13, fontWeight: 600, cursor: page === totalPages - 1 ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
         Next <ChevronRight style={{ width: 14, height: 14 }} />
@@ -587,16 +657,16 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
 
   const header = (
     <header style={{ background: 'rgba(8,10,15,0.97)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.07)', flexShrink: 0 }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '10px 20px', display: 'flex', alignItems: 'center', gap: 12 }}>
-        <button onClick={handleExit} style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.07)', border: 'none', color: '#fff', cursor: 'pointer', fontSize: 12, flexShrink: 0 }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '8px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <button onClick={handleExit} style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '5px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.07)', border: 'none', color: '#fff', cursor: 'pointer', fontSize: 12, flexShrink: 0 }}>
           <ChevronLeft style={{ width: 14, height: 14 }} /> Back
         </button>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 14, fontWeight: 700 }}>Browse Questions</div>
-          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)' }}>{questions.length} Questions · Scroll to explore</div>
+          <span style={{ fontSize: 13, fontWeight: 700, color: '#fafafa' }}>Browse</span>
+          <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', marginLeft: 6 }}>{filteredQuestions.length} of {questions.length} Qs</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 12px', background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.3)', borderRadius: 99, fontSize: 12, color: '#34d399', fontWeight: 700, flexShrink: 0 }}>
-          {String.fromCodePoint(0x1F525)} 0 STREAK
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 9px', background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.25)', borderRadius: 99, fontSize: 11, color: '#34d399', fontWeight: 700, flexShrink: 0 }}>
+          {String.fromCodePoint(0x1F525)} 0
         </div>
       </div>
     </header>
@@ -610,29 +680,92 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
     { id: 'non-pyq', label: 'Non-PYQ' },
   ];
 
+  const sourceAccent = examFilter === 'mains' ? '#38bdf8' : examFilter === 'advanced' ? '#a78bfa' : '#34d399';
+
   const filterBar = (
-    <div style={{ background: 'rgba(8,10,15,0.95)', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '6px 16px', display: 'flex', alignItems: 'center', gap: 6, overflowX: 'auto', flexShrink: 0 }}>
-      {EXAM_FILTERS.map(({ id, label }) => {
-        const active = examFilter === id;
-        const accentColor = id === 'mains' ? '#38bdf8' : id === 'advanced' ? '#a78bfa' : id === 'non-pyq' ? '#34d399' : 'rgba(255,255,255,0.6)';
-        return (
+    <div style={{ background: 'rgba(8,10,15,0.95)', borderBottom: '1px solid rgba(255,255,255,0.05)', flexShrink: 0 }}>
+      {/* Source pills row */}
+      <div style={{ padding: '6px 16px', display: 'flex', alignItems: 'center', gap: 6, overflowX: 'auto' }}>
+        {EXAM_FILTERS.map(({ id, label }) => {
+          const active = examFilter === id;
+          const accentColor = id === 'mains' ? '#38bdf8' : id === 'advanced' ? '#a78bfa' : id === 'non-pyq' ? '#34d399' : 'rgba(255,255,255,0.6)';
+          return (
+            <button
+              key={id}
+              onClick={() => { setExamFilter(id); setYearFilter('all'); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
+              style={{
+                padding: '5px 12px', borderRadius: 99, border: `1px solid ${active ? accentColor + '66' : 'rgba(255,255,255,0.1)'}`,
+                background: active ? accentColor + '1a' : 'transparent',
+                color: active ? accentColor : 'rgba(255,255,255,0.4)', fontSize: 11, fontWeight: active ? 700 : 500,
+                cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.15s',
+              }}
+            >
+              {label}
+            </button>
+          );
+        })}
+        <span style={{ marginLeft: 'auto', fontSize: 10, color: 'rgba(255,255,255,0.25)', whiteSpace: 'nowrap' }}>
+          {filteredQuestions.length} questions
+        </span>
+      </div>
+      {/* Year sub-pills — visible only when JEE Main or JEE Advanced is selected */}
+      {availableYears.length > 0 && (
+        <div style={{ padding: '4px 16px 6px', display: 'flex', alignItems: 'center', gap: 5, overflowX: 'auto' }}>
+          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', whiteSpace: 'nowrap', marginRight: 2 }}>Year:</span>
           <button
-            key={id}
-            onClick={() => { setExamFilter(id); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
+            onClick={() => { setYearFilter('all'); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
             style={{
-              padding: '5px 12px', borderRadius: 99, border: `1px solid ${active ? accentColor + '66' : 'rgba(255,255,255,0.1)'}`,
-              background: active ? accentColor + '1a' : 'transparent',
-              color: active ? accentColor : 'rgba(255,255,255,0.4)', fontSize: 11, fontWeight: active ? 700 : 500,
-              cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.15s',
+              padding: '3px 10px', borderRadius: 99,
+              border: `1px solid ${yearFilter === 'all' ? sourceAccent + '66' : 'rgba(255,255,255,0.08)'}`,
+              background: yearFilter === 'all' ? sourceAccent + '1a' : 'transparent',
+              color: yearFilter === 'all' ? sourceAccent : 'rgba(255,255,255,0.35)',
+              fontSize: 10, fontWeight: yearFilter === 'all' ? 700 : 500, cursor: 'pointer', whiteSpace: 'nowrap',
             }}
-          >
-            {label}
-          </button>
-        );
-      })}
-      <span style={{ marginLeft: 'auto', fontSize: 10, color: 'rgba(255,255,255,0.25)', whiteSpace: 'nowrap' }}>
-        {filteredQuestions.length} questions
-      </span>
+          >All</button>
+          {availableYears.map(y => (
+            <button
+              key={y}
+              onClick={() => { setYearFilter(String(y)); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
+              style={{
+                padding: '3px 10px', borderRadius: 99,
+                border: `1px solid ${yearFilter === String(y) ? sourceAccent + '66' : 'rgba(255,255,255,0.08)'}`,
+                background: yearFilter === String(y) ? sourceAccent + '1a' : 'transparent',
+                color: yearFilter === String(y) ? sourceAccent : 'rgba(255,255,255,0.35)',
+                fontSize: 10, fontWeight: yearFilter === String(y) ? 700 : 500, cursor: 'pointer', whiteSpace: 'nowrap',
+              }}
+            >{y}</button>
+          ))}
+        </div>
+      )}
+      {/* Concept tag pills — visible when chapter has concept tags */}
+      {availableConceptTags.length > 0 && (
+        <div style={{ padding: '4px 16px 6px', display: 'flex', alignItems: 'center', gap: 5, overflowX: 'auto', borderTop: '1px solid rgba(255,255,255,0.03)' }}>
+          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', whiteSpace: 'nowrap', marginRight: 2 }}>Topic:</span>
+          <button
+            onClick={() => { setConceptTagFilter('all'); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
+            style={{
+              padding: '3px 10px', borderRadius: 99,
+              border: `1px solid ${conceptTagFilter === 'all' ? '#34d39966' : 'rgba(255,255,255,0.08)'}`,
+              background: conceptTagFilter === 'all' ? '#34d3991a' : 'transparent',
+              color: conceptTagFilter === 'all' ? '#34d399' : 'rgba(255,255,255,0.35)',
+              fontSize: 10, fontWeight: conceptTagFilter === 'all' ? 700 : 500, cursor: 'pointer', whiteSpace: 'nowrap',
+            }}
+          >All</button>
+          {availableConceptTags.map((tag: { id: string; name: string }) => (
+            <button
+              key={tag.id}
+              onClick={() => { setConceptTagFilter(tag.id); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
+              style={{
+                padding: '3px 10px', borderRadius: 99,
+                border: `1px solid ${conceptTagFilter === tag.id ? '#34d39966' : 'rgba(255,255,255,0.08)'}`,
+                background: conceptTagFilter === tag.id ? '#34d3991a' : 'transparent',
+                color: conceptTagFilter === tag.id ? '#34d399' : 'rgba(255,255,255,0.35)',
+                fontSize: 10, fontWeight: conceptTagFilter === tag.id ? 700 : 500, cursor: 'pointer', whiteSpace: 'nowrap',
+              }}
+            >{tag.name}</button>
+          ))}
+        </div>
+      )}
     </div>
   );
 

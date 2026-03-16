@@ -152,6 +152,8 @@ export async function GET(request: NextRequest) {
     const is_pyq = searchParams.get('is_pyq');
     const is_top_pyq = searchParams.get('is_top_pyq');
     const exam_level = searchParams.get('exam_level');
+    const year = searchParams.get('year');
+    const tag_id = searchParams.get('tag_id');
     const searchTerm = searchParams.get('search');
     const isCountOnly = searchParams.get('countOnly') === 'true';
 
@@ -173,9 +175,12 @@ export async function GET(request: NextRequest) {
     if (type) query.type = type;
     if (difficulty) query['metadata.difficulty'] = difficulty;
     if (is_pyq === 'true') query['metadata.is_pyq'] = true;
+    if (is_pyq === 'false') query['metadata.is_pyq'] = false;
     if (is_top_pyq === 'true') query['metadata.is_top_pyq'] = true;
     if (exam_level === 'mains') query['metadata.exam_source.exam'] = { $regex: /main/i };
     if (exam_level === 'adv') query['metadata.exam_source.exam'] = { $regex: /adv/i };
+    if (year) query['metadata.exam_source.year'] = Number(year);
+    if (tag_id) query['metadata.tags'] = { $elemMatch: { tag_id } };
 
     if (searchTerm) {
       query.$or = [

@@ -153,6 +153,7 @@ export default function AdminPage() {
     const [solutionLatexValidation, setSolutionLatexValidation] = useState<LaTeXValidationResult | null>(null);
 
     // Filters
+    const [searchInput, setSearchInput] = useState(''); // draft — applied on Enter
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedSubjectFilter, setSelectedSubjectFilter] = useState<'chemistry' | 'physics' | 'maths' | 'all'>('chemistry');
     const [selectedChapterFilter, setSelectedChapterFilter] = useState('all');
@@ -165,8 +166,7 @@ export default function AdminPage() {
     const [selectedDifficultyFilter, setSelectedDifficultyFilter] = useState('all');
     const [selectedTagStatusFilter, setSelectedTagStatusFilter] = useState('all');
     const [selectedYearFilter, setSelectedYearFilter] = useState('all');
-    const [selectedPaperFilter, setSelectedPaperFilter] = useState('all');
-    const [selectedExamLevelFilter, setSelectedExamLevelFilter] = useState<string>('all');
+    const [selectedTagFilter, setSelectedTagFilter] = useState('all');
 
     // Get chapter-specific tags from taxonomy
     const [availableTags, setAvailableTags] = useState<Array<{ id: string, name: string }>>([]);
@@ -260,7 +260,20 @@ export default function AdminPage() {
     // Load questions when filters or search change
     useEffect(() => {
         loadQuestions(0);
-    }, [selectedChapterFilter, selectedTypeFilter, selectedDifficultyFilter, selectedSourceFilter, selectedExamLevelFilter, searchQuery]);
+    }, [selectedChapterFilter, selectedTypeFilter, selectedDifficultyFilter, selectedSourceFilter, selectedYearFilter, searchQuery]);
+
+    // Reset year when source switches away from PYQ
+    useEffect(() => {
+        if (selectedSourceFilter === 'non_pyq' || selectedSourceFilter === 'all') {
+            setSelectedYearFilter('all');
+            setSelectedShiftFilter('all');
+        }
+    }, [selectedSourceFilter]);
+
+    // Reset concept tag filter when chapter changes
+    useEffect(() => {
+        setSelectedTagFilter('all');
+    }, [selectedChapterFilter]);
 
     // Update available tags when selected question changes
     useEffect(() => {
@@ -292,8 +305,14 @@ export default function AdminPage() {
         if (selectedChapterFilter !== 'all') params.set('chapter_id', selectedChapterFilter);
         if (selectedTypeFilter !== 'all') params.set('type', selectedTypeFilter);
         if (selectedDifficultyFilter !== 'all') params.set('difficulty', selectedDifficultyFilter);
-        if (selectedSourceFilter === 'mains_pyq' || selectedSourceFilter === 'adv_pyq') params.set('is_pyq', 'true');
-        if (selectedExamLevelFilter !== 'all') params.set('exam_level', selectedExamLevelFilter);
+        // Source filters are mutually exclusive: JEE Main/Adv require is_pyq=true
+        if (selectedSourceFilter === 'jee_main') { params.set('exam_level', 'mains'); params.set('is_pyq', 'true'); }
+        else if (selectedSourceFilter === 'jee_adv') { params.set('exam_level', 'adv'); params.set('is_pyq', 'true'); }
+        else if (selectedSourceFilter === 'non_pyq') params.set('is_pyq', 'false');
+        // Year (only when a PYQ source is selected)
+        if (selectedYearFilter !== 'all' && (selectedSourceFilter === 'jee_main' || selectedSourceFilter === 'jee_adv')) {
+            params.set('year', selectedYearFilter);
+        }
         if (searchQuery) params.set('search', searchQuery);
 
         return params.toString();
@@ -498,10 +517,18 @@ export default function AdminPage() {
             const data = await res.json();
             if (!data.success) {
                 console.error('Failed to save:', data);
+                alert(`❌ Update failed: ${data.error}\n${data.details || ''}\n\nPlease check console for details.`);
+                // Reload the question from server to revert optimistic update
+                const reloadRes = await fetch(`/api/v2/questions/${id}`);
+                const reloadData = await reloadRes.json();
+                if (reloadData.success) {
+                    setQuestions(prev => prev.map(q => q._id === id ? reloadData.data : q));
+                }
             }
             return data;
         } catch (error) {
             console.error('Error updating:', error);
+            alert(`❌ Network error while saving. Please check your connection.`);
             return { success: false, error };
         } finally {
             setTimeout(() => setSavingId(null), 1000);
@@ -539,7 +566,7 @@ export default function AdminPage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     question_text: question.question_text.markdown,
-                    solution_text: question.solution.text_markdown
+                    solution_text: question.solution?.text_markdown || ''
                 })
             });
             const data = await res.json();
@@ -611,12 +638,14 @@ export default function AdminPage() {
             ));
             handleUpdate(questionId, { question_text: { markdown: newText, latex_validated: false } });
         } else {
-            const newText = question.solution.text_markdown
-                ? `${question.solution.text_markdown}\n${markdownLink}`
+            // Handle null/undefined solution object safely
+            const existingSolution = question.solution || { text_markdown: '', latex_validated: false };
+            const newText = existingSolution.text_markdown
+                ? `${existingSolution.text_markdown}\n${markdownLink}`
                 : markdownLink;
             setQuestions(prev => prev.map(q =>
                 q._id === questionId
-                    ? { ...q, solution: { ...q.solution, text_markdown: newText } }
+                    ? { ...q, solution: { ...existingSolution, text_markdown: newText } }
                     : q
             ));
             handleUpdate(questionId, { solution: { text_markdown: newText, latex_validated: false } });
@@ -627,22 +656,28 @@ export default function AdminPage() {
 
     const selectedQuestion = questions.find(q => q._id === selectedQuestionId);
 
-    const filteredQuestions = questions;
+    const filteredQuestions = questions.filter(q => {
+        // Tag status (client-side — fast on loaded batch)
+        if (selectedTagStatusFilter === 'untagged' && q.metadata.chapter_id && isTagValid(q.metadata.tags)) return false;
+        if (selectedTagStatusFilter === 'no-chapter' && q.metadata.chapter_id) return false;
+        if (selectedTagStatusFilter === 'no-tag' && (!q.metadata.chapter_id || isTagValid(q.metadata.tags))) return false;
+        if (selectedTagStatusFilter === 'flagged' && !q.flags?.some(f => !f.resolved)) return false;
+        // Top PYQ
+        if (selectedTopPYQFilter === 'top' && !q.metadata.is_top_pyq) return false;
+        if (selectedTopPYQFilter === 'not-top' && q.metadata.is_top_pyq) return false;
+        // Shift (client-side — only 2 values)
+        if (selectedShiftFilter !== 'all' && q.metadata.exam_source?.shift !== selectedShiftFilter) return false;
+        // Concept tag (primary)
+        if (selectedTagFilter !== 'all' && !q.metadata.tags.some(t => t.tag_id === selectedTagFilter)) return false;
+        return true;
+    });
     filteredQuestionsRef.current = filteredQuestions;
 
-    // Compute distinct papers from loaded questions for Previous Papers dropdown
-    const distinctPapers = Array.from(
-        new Map(
-            questions
-                .filter(q => q.metadata?.exam_source?.year && q.metadata?.exam_source?.day)
-                .map(q => {
-                    const es = q.metadata.exam_source!;
-                    const key = `${es.exam}|${es.year}|${es.month}|${es.day}|${es.shift}`;
-                    const label = `${es.exam} ${es.year} ${es.month ?? ''} ${es.day ?? ''} ${es.shift ?? ''}`.trim();
-                    return [key, label] as [string, string];
-                })
-        ).entries()
-    ).sort((a, b) => b[0].localeCompare(a[0]));
+    // Tags for the active chapter — used by concept tag filter dropdown
+    const chapterFilterTags = selectedChapterFilter !== 'all'
+        ? TAXONOMY_FROM_CSV.filter(n => n.type === 'topic' && n.parent_id === selectedChapterFilter)
+            .map(t => ({ id: t.id, name: t.name }))
+        : [];
 
     // Calculate tag status counts for filter display
     const untaggedCount = questions.filter(q => !q.metadata.chapter_id || !isTagValid(q.metadata.tags)).length;
@@ -715,14 +750,27 @@ export default function AdminPage() {
 
                     <div className="w-px h-4 bg-gray-700/50 shrink-0" />
 
-                    {/* Search */}
-                    <input
-                        type="text"
-                        placeholder="Search ID, Text..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-32 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none shrink-0 placeholder-gray-500"
-                    />
+                    {/* Search — press Enter to apply, Escape to clear */}
+                    <div className="relative shrink-0 flex items-center">
+                        <input
+                            type="text"
+                            placeholder="Search… ↵"
+                            value={searchInput}
+                            onChange={(e) => setSearchInput(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') { setSearchQuery(searchInput); }
+                                if (e.key === 'Escape') { setSearchInput(''); setSearchQuery(''); }
+                            }}
+                            className={`w-36 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none placeholder-gray-500 ${searchQuery ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
+                        />
+                        {(searchInput || searchQuery) && (
+                            <button
+                                onClick={() => { setSearchInput(''); setSearchQuery(''); }}
+                                className="absolute right-1.5 text-gray-500 hover:text-gray-200 text-xs leading-none"
+                                title="Clear search"
+                            >✕</button>
+                        )}
+                    </div>
 
                     {/* ── Prev / Next — centred in the bar ── */}
                     <div className="flex items-center gap-1 shrink-0">
@@ -894,35 +942,6 @@ export default function AdminPage() {
                         ))}
                     </select>
 
-                    {/* Source Filter */}
-                    <select
-                        value={selectedSourceFilter}
-                        onChange={(e) => {
-                            setSelectedSourceFilter(e.target.value);
-                            setCurrentPage(0);
-                        }}
-                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                    >
-                        <option value="all">Any Source</option>
-                        <option value="mains_pyq">JEE Main PYQ</option>
-                        <option value="adv_pyq">JEE Adv PYQ</option>
-                        <option value="non_pyq">Non-PYQ</option>
-                    </select>
-
-                    {/* Exam Level Filter */}
-                    <select
-                        value={selectedExamLevelFilter}
-                        onChange={(e) => {
-                            setSelectedExamLevelFilter(e.target.value);
-                            setCurrentPage(0);
-                        }}
-                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                    >
-                        <option value="all">Any Level</option>
-                        <option value="mains">JEE Main Level</option>
-                        <option value="adv">JEE Adv Level</option>
-                    </select>
-
                     {/* Page navigation */}
                     {totalCount > PAGE_SIZE && (!searchQuery && selectedChapterFilter !== 'all') && (
                         <div className="flex items-center gap-1 shrink-0 ml-auto">
@@ -948,59 +967,76 @@ export default function AdminPage() {
                     )}
                 </div>
 
-                {/* Row 2: secondary filters — Difficulty, Source, Year, Shift, PYQ, Tags */}
+                {/* Row 2: secondary filters */}
                 <div className="flex items-center gap-2 px-3 py-1.5 overflow-x-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as any}>
                     <Filter size={11} className="text-purple-400 shrink-0" />
+
+                    {/* Difficulty */}
                     <select
                         value={selectedDifficultyFilter}
                         onChange={(e) => setSelectedDifficultyFilter(e.target.value)}
-                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
+                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedDifficultyFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
                     >
-                        <option value="all">All Levels</option>
+                        <option value="all">All Difficulties</option>
                         <option value="Easy">Easy</option>
                         <option value="Medium">Medium</option>
                         <option value="Hard">Hard</option>
                     </select>
+
+                    {/* Source — unified JEE Main / JEE Advanced / Non-PYQ */}
                     <select
                         value={selectedSourceFilter}
-                        onChange={(e) => { setSelectedSourceFilter(e.target.value); setSelectedShiftFilter('all'); }}
-                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
+                        onChange={(e) => { setSelectedSourceFilter(e.target.value); setCurrentPage(0); }}
+                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedSourceFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
                     >
                         <option value="all">All Sources</option>
-                        <option value="mains_pyq">JEE Main</option>
-                        <option value="adv_pyq">JEE Adv</option>
+                        <option value="jee_main">JEE Main</option>
+                        <option value="jee_adv">JEE Advanced</option>
                         <option value="non_pyq">Non-PYQ</option>
                     </select>
-                    <select
-                        value={selectedYearFilter}
-                        onChange={(e) => setSelectedYearFilter(e.target.value)}
-                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                    >
-                        <option value="all">All Years</option>
-                        {[2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015].map(y => (
-                            <option key={y} value={String(y)}>{y}</option>
-                        ))}
-                    </select>
-                    <select
-                        value={selectedShiftFilter}
-                        onChange={(e) => setSelectedShiftFilter(e.target.value)}
-                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                    >
-                        <option value="all">All Shifts</option>
-                        <option value="Morning">Morning</option>
-                        <option value="Evening">Evening</option>
-                    </select>
-                    <select
-                        value={selectedPaperFilter}
-                        onChange={(e) => setSelectedPaperFilter(e.target.value)}
-                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedPaperFilter !== 'all' ? 'border-purple-500 text-purple-300' : 'border-gray-700/50'
-                            }`}
-                    >
-                        <option value="all">📄 All Papers</option>
-                        {distinctPapers.map(([key, label]) => (
-                            <option key={key} value={key}>{label}</option>
-                        ))}
-                    </select>
+
+                    {/* Year — only visible when a PYQ source is selected */}
+                    {(selectedSourceFilter === 'jee_main' || selectedSourceFilter === 'jee_adv') && (
+                        <select
+                            value={selectedYearFilter}
+                            onChange={(e) => setSelectedYearFilter(e.target.value)}
+                            className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedYearFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
+                        >
+                            <option value="all">All Years</option>
+                            {[2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015].map(y => (
+                                <option key={y} value={String(y)}>{y}</option>
+                            ))}
+                        </select>
+                    )}
+
+                    {/* Shift — only visible when a PYQ source is selected */}
+                    {(selectedSourceFilter === 'jee_main' || selectedSourceFilter === 'jee_adv') && (
+                        <select
+                            value={selectedShiftFilter}
+                            onChange={(e) => setSelectedShiftFilter(e.target.value)}
+                            className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedShiftFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
+                        >
+                            <option value="all">All Shifts</option>
+                            <option value="Morning">Morning</option>
+                            <option value="Evening">Evening</option>
+                        </select>
+                    )}
+
+                    {/* Concept / Topic tag — only when a chapter is loaded */}
+                    {selectedChapterFilter !== 'all' && chapterFilterTags.length > 0 && (
+                        <select
+                            value={selectedTagFilter}
+                            onChange={(e) => setSelectedTagFilter(e.target.value)}
+                            className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedTagFilter !== 'all' ? 'border-emerald-500/70 text-emerald-300' : 'border-gray-700/50'}`}
+                        >
+                            <option value="all">All Topics</option>
+                            {chapterFilterTags.map(tag => (
+                                <option key={tag.id} value={tag.id}>{tag.name}</option>
+                            ))}
+                        </select>
+                    )}
+
+                    {/* Top PYQ */}
                     <select
                         value={selectedTopPYQFilter}
                         onChange={(e) => setSelectedTopPYQFilter(e.target.value)}
@@ -1010,11 +1046,12 @@ export default function AdminPage() {
                         <option value="top">⭐ Top</option>
                         <option value="not-top">Other</option>
                     </select>
+
+                    {/* Tag / QC status */}
                     <select
                         value={selectedTagStatusFilter}
                         onChange={(e) => setSelectedTagStatusFilter(e.target.value)}
-                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs outline-none ${selectedTagStatusFilter !== 'all' ? 'border-red-500 text-red-300' : 'border-gray-700/50'
-                            }`}
+                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs outline-none ${selectedTagStatusFilter !== 'all' ? 'border-red-500 text-red-300' : 'border-gray-700/50'}`}
                     >
                         <option value="all">Tags ✓</option>
                         <option value="untagged">⚠ Untagged ({untaggedCount})</option>
@@ -1022,7 +1059,14 @@ export default function AdminPage() {
                         <option value="no-tag">🟡 No Tag ({noTagCount})</option>
                         <option value="flagged">🚨 Flagged ({questions.filter(q => q.flags?.some(f => !f.resolved)).length})</option>
                     </select>
-                    {(selectedChapterFilter !== 'all' || selectedTypeFilter !== 'all' || selectedSourceFilter !== 'all' || selectedTopPYQFilter !== 'all' || selectedDifficultyFilter !== 'all' || selectedTagStatusFilter !== 'all' || selectedYearFilter !== 'all' || selectedShiftFilter !== 'all' || selectedPaperFilter !== 'all') && (
+
+                    {/* Count of filtered vs total */}
+                    {filteredQuestions.length !== questions.length && (
+                        <span className="text-xs text-purple-400 font-mono shrink-0">{filteredQuestions.length}/{questions.length}</span>
+                    )}
+
+                    {/* Clear all filters */}
+                    {(selectedChapterFilter !== 'all' || selectedTypeFilter !== 'all' || selectedSourceFilter !== 'all' || selectedTopPYQFilter !== 'all' || selectedDifficultyFilter !== 'all' || selectedTagStatusFilter !== 'all' || selectedYearFilter !== 'all' || selectedShiftFilter !== 'all' || selectedTagFilter !== 'all') && (
                         <button
                             onClick={() => {
                                 setSelectedChapterFilter('all');
@@ -1033,7 +1077,7 @@ export default function AdminPage() {
                                 setSelectedTagStatusFilter('all');
                                 setSelectedYearFilter('all');
                                 setSelectedShiftFilter('all');
-                                setSelectedPaperFilter('all');
+                                setSelectedTagFilter('all');
                             }}
                             className="shrink-0 text-xs text-red-400 hover:text-red-300 px-2"
                         >
@@ -1736,7 +1780,7 @@ export default function AdminPage() {
                                             </button>
                                         </div>
                                         <div className="text-xs text-gray-400 truncate font-mono bg-gray-900/50 px-2 py-1 rounded">
-                                            {selectedQuestion.solution.video_url}
+                                            {selectedQuestion.solution?.video_url || ''}
                                         </div>
                                     </div>
                                 )}

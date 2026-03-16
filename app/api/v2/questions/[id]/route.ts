@@ -125,13 +125,15 @@ export async function PATCH(
     }
     
     if (body.solution) {
+      // Handle null/undefined solution object safely
+      const existingSolution = existing.solution || { text_markdown: '', latex_validated: false };
       changes.push({
         field: 'solution.text_markdown',
-        old_value: existing.solution.text_markdown,
-        new_value: body.solution.text_markdown
+        old_value: existingSolution.text_markdown || '',
+        new_value: body.solution.text_markdown || ''
       });
       updates.solution = {
-        ...existing.solution,
+        ...existingSolution,
         ...body.solution,
         latex_validated: false
       };
@@ -225,12 +227,19 @@ export async function PATCH(
     // Increment version
     updates.version = existing.version + 1;
     
-    // Update question
+    // Update question — no runValidators to avoid rejecting docs with stale enum values
     const updatedQuestion = await QuestionV2.findByIdAndUpdate(
       id,
       { $set: updates },
       { new: true }
     );
+    
+    if (!updatedQuestion) {
+      return NextResponse.json(
+        { success: false, error: 'Update failed - question not found' },
+        { status: 404 }
+      );
+    }
     
     // Create audit log
     if (changes.length > 0) {
@@ -256,10 +265,10 @@ export async function PATCH(
       message: 'Question updated successfully'
     });
     
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error updating question:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to update question' },
+      { success: false, error: 'Failed to update question', details: error?.message },
       { status: 500 }
     );
   }

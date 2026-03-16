@@ -146,7 +146,7 @@ const QuestionAnswerSchema = new Schema<IQuestionAnswer>({
 }, { _id: false });
 
 const QuestionSolutionSchema = new Schema<IQuestionSolution>({
-  text_markdown: { type: String, required: true, minlength: 20 },
+  text_markdown: { type: String, default: '' },
   latex_validated: { type: Boolean, default: false },
   asset_ids: {
     images: [{ type: String }],
