@@ -1809,7 +1809,7 @@ export default function AdminPage() {
                         </h3>
                         <div className="flex items-center gap-2">
                             {/* Options layout toggle */}
-                            {selectedQuestion && selectedQuestion.type !== 'NVT' && (
+                            {selectedQuestion && selectedQuestion.type !== 'NVT' && selectedQuestion.type !== 'SUBJ' && (
                                 <div className="flex items-center gap-1 bg-gray-800/60 rounded-lg p-0.5">
                                     <button
                                         onClick={() => setOptionsLayout('list')}
@@ -1875,7 +1875,7 @@ export default function AdminPage() {
                                         fontSize={20}
                                         imageScale={getSvgScale('question')}
                                     />
-                                    {selectedQuestion.type !== 'NVT' && (() => {
+                                    {selectedQuestion.type !== 'NVT' && selectedQuestion.type !== 'SUBJ' && (() => {
                                         const hasImages = selectedQuestion.options.some(opt =>
                                             opt.text.includes('![') || opt.text.includes('<img') || opt.text.includes('.svg') || opt.text.includes('.png')
                                         );

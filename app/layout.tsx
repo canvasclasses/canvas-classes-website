@@ -170,6 +170,7 @@ const jsonLd = {
 };
 
 import { AuthButton } from "./components/AuthButton";
+import { ConditionalFooter } from "./components/ConditionalFooter";
 
 // ... existing imports ...
 
@@ -192,7 +193,7 @@ export default function RootLayout({
         <CommandPalette itemsPromise={getSearchItems()} />
         <Navbar authButton={<AuthButton />} />
         {children}
-        <Footer />
+        <ConditionalFooter />
         <Analytics />
       </body>
     </html>

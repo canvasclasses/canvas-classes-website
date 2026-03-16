@@ -4,9 +4,10 @@ import { useState } from 'react';
 import GasLaws from './GasLaws';
 import Titration from './Titration';
 import Electrochemistry from './Electrochemistry';
-import { Wind, FlaskConical, Zap, Sparkles } from 'lucide-react';
+import AtomicModels from './AtomicModels';
+import { Wind, FlaskConical, Zap, Sparkles, Atom } from 'lucide-react';
 
-type Section = 'gaslaws' | 'titration' | 'electrochemistry';
+type Section = 'gaslaws' | 'titration' | 'electrochemistry' | 'atomicmodels';
 
 const NAV_ITEMS: { id: Section; label: string; badge: string; icon: typeof Wind; color: string; activeClass: string }[] = [
   {
@@ -32,6 +33,14 @@ const NAV_ITEMS: { id: Section; label: string; badge: string; icon: typeof Wind;
     icon: Zap,
     color: 'amber',
     activeClass: 'bg-amber-500/15 text-amber-400',
+  },
+  {
+    id: 'atomicmodels',
+    label: 'Atomic Models',
+    badge: 'New',
+    icon: Atom,
+    color: 'purple',
+    activeClass: 'bg-purple-500/15 text-purple-400',
   },
 ];
 
@@ -73,8 +82,8 @@ export default function PhysChemHubContent() {
                   <Icon
                     size={17}
                     className={active
-                      ? (item.color === 'teal' ? 'text-teal-400' : item.color === 'blue' ? 'text-blue-400' : 'text-amber-400')
-                      : `text-gray-500 group-hover:${item.color === 'teal' ? 'text-teal-400' : item.color === 'blue' ? 'text-blue-400' : 'text-amber-400'}`
+                      ? (item.color === 'teal' ? 'text-teal-400' : item.color === 'blue' ? 'text-blue-400' : item.color === 'amber' ? 'text-amber-400' : 'text-purple-400')
+                      : `text-gray-500 group-hover:${item.color === 'teal' ? 'text-teal-400' : item.color === 'blue' ? 'text-blue-400' : item.color === 'amber' ? 'text-amber-400' : 'text-purple-400'}`
                     }
                   />
                   {item.label}
@@ -91,6 +100,7 @@ export default function PhysChemHubContent() {
             {section === 'gaslaws' && <GasLaws />}
             {section === 'titration' && <Titration />}
             {section === 'electrochemistry' && <Electrochemistry />}
+            {section === 'atomicmodels' && <AtomicModels />}
           </div>
         </main>
       </div>
@@ -101,22 +111,29 @@ export default function PhysChemHubContent() {
           onClick={() => setSection('gaslaws')}
           className={`flex flex-col items-center justify-center w-full h-full gap-1 ${section === 'gaslaws' ? 'text-teal-400' : 'text-gray-500 hover:text-gray-300'}`}
         >
-          <Wind size={20} />
+          <Wind size={18} />
           <span className="text-[10px] font-semibold">Gas Laws</span>
         </button>
         <button
           onClick={() => setSection('titration')}
           className={`flex flex-col items-center justify-center w-full h-full gap-1 ${section === 'titration' ? 'text-blue-400' : 'text-gray-500 hover:text-gray-300'}`}
         >
-          <FlaskConical size={20} />
+          <FlaskConical size={18} />
           <span className="text-[10px] font-semibold">Titration</span>
         </button>
         <button
           onClick={() => setSection('electrochemistry')}
           className={`flex flex-col items-center justify-center w-full h-full gap-1 ${section === 'electrochemistry' ? 'text-amber-400' : 'text-gray-500 hover:text-gray-300'}`}
         >
-          <Zap size={20} />
+          <Zap size={18} />
           <span className="text-[10px] font-semibold">Electrochem</span>
+        </button>
+        <button
+          onClick={() => setSection('atomicmodels')}
+          className={`flex flex-col items-center justify-center w-full h-full gap-1 ${section === 'atomicmodels' ? 'text-purple-400' : 'text-gray-500 hover:text-gray-300'}`}
+        >
+          <Atom size={18} />
+          <span className="text-[10px] font-semibold">Atomic</span>
         </button>
       </nav>
 
