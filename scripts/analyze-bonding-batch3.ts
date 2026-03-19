@@ -14,7 +14,7 @@ if (!MONGODB_URI) {
 }
 
 async function main() {
-  await mongoose.connect(MONGODB_URI);
+  await mongoose.connect(MONGODB_URI!);
   console.log('✅ Connected to MongoDB\n');
 
   const questions = await QuestionV2.find({
