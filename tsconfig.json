@@ -38,6 +38,7 @@
   ],
   "exclude": [
     "node_modules",
-    "question-ingestion-workspace"
+    "question-ingestion-workspace",
+    "scripts"
   ]
 }
