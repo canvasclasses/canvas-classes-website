@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { QuestionV2 } from '@/lib/models/Question.v2';
-import dbConnect from '@/lib/dbConnect';
+import connectToDatabase from '@/lib/mongodb';
 import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 
 /**
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     const batchSize = 30;
     const skip = (batchNumber - 1) * batchSize;
 
-    await dbConnect();
+    await connectToDatabase();
 
     const questions = await QuestionV2.find({
       'metadata.chapter_id': 'ch11_bonding',
