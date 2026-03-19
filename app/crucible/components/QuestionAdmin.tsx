@@ -26,6 +26,7 @@ const QUESTION_TYPES = [
   { id: 'NVT', name: 'Numerical Value', color: 'bg-purple-500/20 text-purple-400' },
   { id: 'AR', name: 'Assertion-Reason', color: 'bg-orange-500/20 text-orange-400' },
   { id: 'MST', name: 'Multi-Statement', color: 'bg-cyan-500/20 text-cyan-400' },
+  { id: 'WKEX', name: 'Worked Example', color: 'bg-teal-500/20 text-teal-400' },
 ];
 
 const DIFFICULTY_LEVELS = ['Easy', 'Medium', 'Hard'];

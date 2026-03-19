@@ -28,7 +28,7 @@ interface Question {
         markdown: string;
         latex_validated: boolean;
     };
-    type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ';
+    type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ' | 'WKEX';
     options: Array<{
         id: string;
         text: string;
@@ -104,6 +104,7 @@ const QUESTION_TYPES = [
     { id: 'MST', name: 'Multi-Statement', color: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30' },
     { id: 'MTC', name: 'Match Column', color: 'bg-pink-500/20 text-pink-400 border-pink-500/30' },
     { id: 'SUBJ', name: 'Subjective / Example', color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' },
+    { id: 'WKEX', name: 'Worked Example', color: 'bg-teal-500/20 text-teal-400 border-teal-500/30' },
 ];
 
 export default function AdminPage() {
@@ -777,26 +778,26 @@ export default function AdminPage() {
                         <button
                             title="Previous question (← or ↑)"
                             onClick={() => {
-                                const idx = questions.findIndex(q => q._id === selectedQuestionId);
-                                if (idx > 0) setSelectedQuestionId(questions[idx - 1]._id);
+                                const idx = filteredQuestions.findIndex(q => q._id === selectedQuestionId);
+                                if (idx > 0) setSelectedQuestionId(filteredQuestions[idx - 1]._id);
                             }}
-                            disabled={!selectedQuestionId || questions.findIndex(q => q._id === selectedQuestionId) <= 0}
+                            disabled={!selectedQuestionId || filteredQuestions.findIndex(q => q._id === selectedQuestionId) <= 0}
                             className="px-2.5 py-1 bg-indigo-600/80 hover:bg-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded-lg text-xs font-medium transition shrink-0"
                         >
                             ← Prev
                         </button>
                         {selectedQuestionId && (
                             <span className="text-xs text-gray-500 font-mono shrink-0">
-                                {questions.findIndex(q => q._id === selectedQuestionId) + 1}/{questions.length}
+                                {filteredQuestions.findIndex(q => q._id === selectedQuestionId) + 1}/{filteredQuestions.length}
                             </span>
                         )}
                         <button
                             title="Next question (→ or ↓)"
                             onClick={() => {
-                                const idx = questions.findIndex(q => q._id === selectedQuestionId);
-                                if (idx < questions.length - 1) setSelectedQuestionId(questions[idx + 1]._id);
+                                const idx = filteredQuestions.findIndex(q => q._id === selectedQuestionId);
+                                if (idx < filteredQuestions.length - 1) setSelectedQuestionId(filteredQuestions[idx + 1]._id);
                             }}
-                            disabled={!selectedQuestionId || questions.findIndex(q => q._id === selectedQuestionId) >= questions.length - 1}
+                            disabled={!selectedQuestionId || filteredQuestions.findIndex(q => q._id === selectedQuestionId) >= filteredQuestions.length - 1}
                             className="px-2.5 py-1 bg-indigo-600/80 hover:bg-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded-lg text-xs font-medium transition shrink-0"
                         >
                             Next →
@@ -833,7 +834,7 @@ export default function AdminPage() {
                         </div>
                     ) : bulkMode ? (
                         <div className="flex-1 max-h-32 overflow-y-auto bg-gray-800/30 border border-gray-700/50 rounded-lg p-2 space-y-1">
-                            {questions.slice(0, 50).map(q => {
+                            {filteredQuestions.slice(0, 50).map(q => {
                                 const hasChapter = !!q.metadata.chapter_id;
                                 const hasPrimaryTag = isTagValid(q.metadata.tags);
                                 const statusDot = !hasChapter ? '🔴' : !hasPrimaryTag ? '🟡' : '🟢';
@@ -862,8 +863,8 @@ export default function AdminPage() {
                                     </label>
                                 );
                             })}
-                            {questions.length > 50 && (
-                                <div className="text-xs text-gray-500 text-center py-1">Showing first 50 of {questions.length}</div>
+                            {filteredQuestions.length > 50 && (
+                                <div className="text-xs text-gray-500 text-center py-1">Showing first 50 of {filteredQuestions.length}</div>
                             )}
                         </div>
                     ) : (
@@ -872,8 +873,8 @@ export default function AdminPage() {
                             onChange={(e) => setSelectedQuestionId(e.target.value || null)}
                             className="w-56 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none shrink-0"
                         >
-                            <option value="">Select ({questions.length})</option>
-                            {questions.map(q => {
+                            <option value="">Select ({filteredQuestions.length})</option>
+                            {filteredQuestions.map(q => {
                                 const hasChapter = !!q.metadata.chapter_id;
                                 const hasPrimaryTag = isTagValid(q.metadata.tags);
                                 const statusDot = !hasChapter ? '🔴' : !hasPrimaryTag ? '🟡' : '🟢';
@@ -1121,10 +1122,10 @@ export default function AdminPage() {
                                             const oldType = selectedQuestion.type;
                                             if (newType === oldType) return;
                                             const update: Partial<Question> = { type: newType };
-                                            if (newType === 'NVT') {
+                                            if (newType === 'NVT' || newType === 'WKEX' || newType === 'SUBJ') {
                                                 update.options = [] as any;
-                                                update.answer = { integer_value: 0 } as any;
-                                            } else if (oldType === 'NVT' || !selectedQuestion.options || selectedQuestion.options.length === 0) {
+                                                update.answer = {} as any;
+                                            } else if (oldType === 'NVT' || oldType === 'WKEX' || oldType === 'SUBJ' || !selectedQuestion.options || selectedQuestion.options.length === 0) {
                                                 update.options = [
                                                     { id: 'a', text: 'Option A', is_correct: newType === 'SCQ' },
                                                     { id: 'b', text: 'Option B', is_correct: false },
@@ -1510,21 +1511,6 @@ export default function AdminPage() {
                                 </div>
                             </div>
 
-                            {/* Shared SVG drop zone for options — drag here, copy link, paste into option */}
-                            {selectedQuestion.type !== 'NVT' && selectedQuestion.type !== 'SUBJ' && (
-                                <div className="rounded-lg border border-dashed border-gray-700/40 bg-gray-800/20 px-3 py-2">
-                                    <p className="text-[10px] text-gray-500 mb-2 font-medium uppercase tracking-wide">Option SVG — drop here → copy link → paste into option text</p>
-                                    <SVGDropZone
-                                        questionId={selectedQuestion._id}
-                                        fieldType="question"
-                                        onUploaded={(markdownLink) => {
-                                            navigator.clipboard.writeText(markdownLink);
-                                        }}
-                                        compact={true}
-                                    />
-                                </div>
-                            )}
-
                             {/* Options or Numerical Answer or Subjective */}
                             {selectedQuestion.type === 'NVT' ? (
                                 <div>
@@ -1580,6 +1566,19 @@ export default function AdminPage() {
                                         Provide the detailed answer directly in the Solution box below.
                                     </p>
                                 </div>
+                            ) : selectedQuestion.type === 'WKEX' ? (
+                                <div className="p-4 bg-teal-900/10 border border-teal-500/20 rounded-lg">
+                                    <p className="text-sm text-teal-400/80 mb-1 font-medium flex items-center gap-2">
+                                        <Info size={16} />
+                                        Worked Example Document
+                                    </p>
+                                    <p className="text-xs text-gray-500">
+                                        Worked examples have no options or answer. Write the step-by-step walkthrough
+                                        (including Key insight and Common mistake) in the Solution box below.
+                                        Use the <strong className="text-gray-400">Question Text</strong> field for the title and scenario.
+                                        Set <strong className="text-gray-400">microConcept</strong> and <strong className="text-gray-400">tag</strong> so the engine can serve it for the right concept.
+                                    </p>
+                                </div>
                             ) : (
                                 <div>
                                     <label className="text-xs text-gray-500 mb-2 block font-medium">
@@ -1595,36 +1594,44 @@ export default function AdminPage() {
                                                     }`}
                                             >
                                                 <div className="flex items-center justify-between mb-2">
-                                                    <button
-                                                        onClick={() => {
-                                                            let newOptions;
-                                                            if (selectedQuestion.type === 'MCQ') {
-                                                                // MCQ: toggle this option's is_correct (checkbox)
-                                                                newOptions = selectedQuestion.options.map(o => ({
-                                                                    ...o,
-                                                                    is_correct: o.id === opt.id ? !o.is_correct : o.is_correct
-                                                                }));
-                                                            } else {
-                                                                // SCQ/AR/MST/MTC: exclusive (radio) — only this one is correct
-                                                                newOptions = selectedQuestion.options.map(o => ({
-                                                                    ...o,
-                                                                    is_correct: o.id === opt.id
-                                                                }));
-                                                            }
-                                                            setQuestions(prev => prev.map(q =>
-                                                                q._id === selectedQuestion._id
-                                                                    ? { ...q, options: newOptions }
-                                                                    : q
-                                                            ));
-                                                            handleUpdate(selectedQuestion._id, { options: newOptions });
-                                                        }}
-                                                        className={`text-xs font-bold px-2 py-1 rounded-lg transition ${opt.is_correct
-                                                            ? 'bg-green-500 text-white'
-                                                            : 'bg-gray-700 text-gray-400 hover:bg-gray-600 hover:text-white'
-                                                            }`}
-                                                    >
-                                                        {opt.id.toUpperCase()} {opt.is_correct ? '✓' : '○'}
-                                                    </button>
+                                                    <div className="flex items-center gap-2">
+                                                        <button
+                                                            onClick={() => {
+                                                                let newOptions;
+                                                                if (selectedQuestion.type === 'MCQ') {
+                                                                    // MCQ: toggle this option's is_correct (checkbox)
+                                                                    newOptions = selectedQuestion.options.map(o => ({
+                                                                        ...o,
+                                                                        is_correct: o.id === opt.id ? !o.is_correct : o.is_correct
+                                                                    }));
+                                                                } else {
+                                                                    // SCQ/AR/MST/MTC: exclusive (radio) — only this one is correct
+                                                                    newOptions = selectedQuestion.options.map(o => ({
+                                                                        ...o,
+                                                                        is_correct: o.id === opt.id
+                                                                    }));
+                                                                }
+                                                                setQuestions(prev => prev.map(q =>
+                                                                    q._id === selectedQuestion._id
+                                                                        ? { ...q, options: newOptions }
+                                                                        : q
+                                                                ));
+                                                                handleUpdate(selectedQuestion._id, { options: newOptions });
+                                                            }}
+                                                            className={`text-xs font-bold px-2 py-1 rounded-lg transition ${opt.is_correct
+                                                                ? 'bg-green-500 text-white'
+                                                                : 'bg-gray-700 text-gray-400 hover:bg-gray-600 hover:text-white'
+                                                                }`}
+                                                        >
+                                                            {opt.id.toUpperCase()} {opt.is_correct ? '✓' : '○'}
+                                                        </button>
+                                                        <SVGScaleControls
+                                                            compact={true}
+                                                            step={5}
+                                                            initialScale={getSvgScale(`option_${opt.id}`)}
+                                                            onScaleChange={(scale) => handleScaleChange(selectedQuestion._id, `option_${opt.id}`, scale)}
+                                                        />
+                                                    </div>
                                                     {!opt.is_correct && (
                                                         <span className="text-xs text-gray-500">
                                                             {selectedQuestion.type === 'MCQ' ? 'click to toggle' : 'click to mark correct'}
@@ -1650,14 +1657,8 @@ export default function AdminPage() {
                                                         );
                                                         handleUpdate(selectedQuestion._id, { options: newOptions });
                                                     }}
-                                                    className="w-full bg-gray-900/50 border border-gray-700/50 rounded px-2 py-1.5 text-base focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 hover:border-gray-600 font-mono mb-2 text-gray-100"
+                                                    className="w-full bg-gray-900/50 border border-gray-700/50 rounded px-2 py-1.5 text-base focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 hover:border-gray-600 font-mono text-gray-100"
                                                     placeholder="✏️ Click to edit option text..."
-                                                />
-                                                <SVGScaleControls
-                                                    compact={true}
-                                                    step={5}
-                                                    initialScale={getSvgScale(`option_${opt.id}`)}
-                                                    onScaleChange={(scale) => handleScaleChange(selectedQuestion._id, `option_${opt.id}`, scale)}
                                                 />
                                             </div>
                                         ))}
@@ -2114,6 +2115,7 @@ export default function AdminPage() {
                     questions={questions}
                     chapters={chapters}
                     onClose={() => setShowAnalytics(false)}
+                    selectedChapterId={selectedChapterFilter !== 'all' ? selectedChapterFilter : undefined}
                 />
             )}
 

@@ -5,10 +5,11 @@ import { ChevronLeft, ChevronRight, BookOpen, Check, Target, GraduationCap, Spar
 import { Chapter, Question } from './types';
 import BrowseView from './BrowseView';
 import AdaptiveSession from './guided-practice/AdaptiveSession';
+import WorkedExamplesCarousel from './guided-practice/WorkedExamplesCarousel';
 import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 import { FEATURE_ADAPTIVE_PRACTICE } from '@/constants/adaptivePractice';
 
-type GuidedStep = 'chapter' | 'loading' | 'path' | 'filters' | 'practice';
+type GuidedStep = 'chapter' | 'loading' | 'path' | 'examples' | 'filters' | 'practice';
 type LearningPath = 'fundamentals' | 'practice';
 type Difficulty = 'Easy' | 'Medium' | 'Hard' | 'Mixed';
 type FeedbackType = 'too_easy' | 'just_right' | 'too_hard';
@@ -203,6 +204,7 @@ export default function GuidedPracticeWizard({ chapters, onBack, preSelectedChap
   const [sessionMaxQuestions, setSessionMaxQuestions] = useState(preSelectedSessionLength || 20);
   const [sessionKey, setSessionKey] = useState(0);           // bump to force AdaptiveSession re-mount
   const [reviewQuestionIds, setReviewQuestionIds] = useState<string[]>([]); // wrong Qs from previous session
+  const [viewedExampleMicroConcepts, setViewedExampleMicroConcepts] = useState<Set<string>>(new Set());
 
   const fetchChapterQuestions = useCallback(async (chapterId: string) => {
     setStep('loading');
@@ -246,8 +248,8 @@ export default function GuidedPracticeWizard({ chapters, onBack, preSelectedChap
       if (!preSelectedDifficulty) setDifficulty('Mixed');
       setPyqOnly(false);
       setSessionStats({ totalAnswered: 0, correctCount: 0, lastFeedbackAt: 0, currentDifficulty: preSelectedDifficulty || 'Mixed' });
-      // Skip 'path' screen in adaptive mode - go straight to filters
-      setStep(FEATURE_ADAPTIVE_PRACTICE ? 'filters' : 'path');
+      // In adaptive mode show the launch screen (path) so student can choose worked examples or jump to practice
+      setStep('path');
     } catch (err) {
       console.error('Failed to load questions:', err);
       setLoadError('Failed to load questions. Please try again.');
@@ -339,6 +341,7 @@ export default function GuidedPracticeWizard({ chapters, onBack, preSelectedChap
           pyqOnly={pyqOnly}
           sessionMaxQuestions={sessionMaxQuestions}
           priorityQuestionIds={reviewQuestionIds}
+          viewedExampleMicroConcepts={viewedExampleMicroConcepts}
           onBack={() => { setReviewQuestionIds([]); setStep('filters'); }}
           onReviewMistakes={(wrongIds) => {
             setReviewQuestionIds(wrongIds);
@@ -405,19 +408,25 @@ export default function GuidedPracticeWizard({ chapters, onBack, preSelectedChap
             <p style={{ fontSize:13, color:'rgba(255,255,255,0.4)', margin:0 }}>Build fundamentals first, or jump straight into practice</p>
           </div>
           <div style={{ display:'grid', gap:14 }}>
-            <button onClick={() => {}} style={{ padding:'22px 20px', borderRadius:16, border:'1px solid rgba(139,92,246,0.2)', background:'rgba(139,92,246,0.06)', cursor:'not-allowed', textAlign:'left', opacity:0.7, position:'relative' }}>
-              <div style={{ position:'absolute', top:12, right:12, padding:'2px 8px', borderRadius:6, background:'rgba(139,92,246,0.15)', border:'1px solid rgba(139,92,246,0.3)', fontSize:10, fontWeight:700, color:'#a78bfa', textTransform:'uppercase', letterSpacing:'0.06em' }}>Coming Soon</div>
+            <button onClick={() => {
+                const workedExamples = allQuestions.filter(q => q.type === 'WKEX');
+                if (workedExamples.length === 0) { setStep('filters'); return; }
+                setStep('examples');
+              }} style={{ padding:'22px 20px', borderRadius:16, border:'1px solid rgba(139,92,246,0.2)', background:'rgba(139,92,246,0.06)', cursor:'pointer', textAlign:'left', transition:'all 0.18s', position:'relative' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(139,92,246,0.45)'; e.currentTarget.style.background='rgba(139,92,246,0.12)'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(139,92,246,0.2)'; e.currentTarget.style.background='rgba(139,92,246,0.06)'; }}>
               <div style={{ display:'flex', alignItems:'flex-start', gap:14 }}>
                 <div style={{ width:44, height:44, borderRadius:12, background:'rgba(139,92,246,0.12)', border:'1px solid rgba(139,92,246,0.25)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
                   <GraduationCap style={{ width:22, height:22, color:'#a78bfa' }} />
                 </div>
-                <div>
+                <div style={{ flex:1 }}>
                   <div style={{ fontSize:16, fontWeight:700, color:'#fafafa', marginBottom:5 }}>Build Fundamentals</div>
                   <p style={{ fontSize:13, color:'rgba(255,255,255,0.45)', margin:'0 0 10px', lineHeight:1.6 }}>Learn through solved examples with step-by-step explanations. Master the methodology before attempting MCQs.</p>
                   <div style={{ display:'flex', gap:6, flexWrap:'wrap' }}>
                     {['Solved Examples','Step-by-Step','Concept Mastery'].map(t => <span key={t} style={{ fontSize:11, padding:'3px 8px', borderRadius:6, background:'rgba(139,92,246,0.1)', color:'#c4b5fd', border:'1px solid rgba(139,92,246,0.2)' }}>{t}</span>)}
                   </div>
                 </div>
+                <ChevronRight style={{ width:18, height:18, color:'rgba(139,92,246,0.5)', flexShrink:0, marginTop:4 }} />
               </div>
             </button>
             <button onClick={() => setStep('filters')} style={{ padding:'22px 20px', borderRadius:16, border:'1px solid rgba(16,185,129,0.25)', background:'rgba(16,185,129,0.08)', cursor:'pointer', textAlign:'left', transition:'all 0.18s' }}
@@ -445,6 +454,20 @@ export default function GuidedPracticeWizard({ chapters, onBack, preSelectedChap
       </div>
     </div>
   );
+
+  if (step === 'examples') {
+    const workedExamples = allQuestions.filter(q => q.type === 'WKEX');
+    return (
+      <WorkedExamplesCarousel
+        examples={workedExamples}
+        chapterName={selectedChapter?.name ?? ''}
+        onComplete={(viewedMCs) => {
+          setViewedExampleMicroConcepts(viewedMCs);
+          setStep('filters');
+        }}
+      />
+    );
+  }
 
   if (step === 'filters') {
     const filterDesc = [

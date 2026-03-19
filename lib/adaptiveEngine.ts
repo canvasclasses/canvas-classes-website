@@ -69,6 +69,7 @@ export interface NextQuestionDecision {
 
 export interface AdaptiveEngineInputV2 extends AdaptiveEngineInput {
   chapterProfile?: IStudentChapterProfile | null;  // from DB, null = first session
+  viewedExampleMicroConcepts?: Set<string>;        // from Phase 1 carousel, if student viewed examples
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

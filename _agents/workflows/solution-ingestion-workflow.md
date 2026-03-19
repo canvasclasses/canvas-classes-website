@@ -49,7 +49,7 @@ $$\boxed{\text{Answer: (Option) [Final Value/Name]}}$$
 > 1. Analyze each question. 
 > 2. Skip "Complex" questions (Mechanisms/Stereo-complexity).
 > 3. For "Simple" questions, generate high-quality solutions using the **Solution Ingestion Workflow**.
-> 4. Use `\ce{}` for all chemical formulas.
+> 4. Use `\ce{}` for all chemical formulas (EXCEPT for coordination compounds with `[` and `]`; for those, use `\mathrm{}` with explicit subscripts).
 > 5. Keep logic concise; merge baseline rules into the steps.
 > 6. Output a JS update script that uses `db.collection('questions_v2').updateOne` to update the `solution.text_markdown` and `answer.explanation` fields for each processed question.
 > 

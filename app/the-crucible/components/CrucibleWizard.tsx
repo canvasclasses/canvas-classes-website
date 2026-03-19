@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, ChevronDown, ChevronRight, Check, BarChart2, UserCircle, BookOpen, LayoutGrid, Clock, Lock, Sparkles } from 'lucide-react';
+import { ChevronLeft, ChevronDown, ChevronRight, Check, BarChart2, UserCircle, BookOpen, LayoutGrid, Clock, Lock, Sparkles, Star } from 'lucide-react';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { Chapter, Question } from './types';
 import ProgressPanel from './ProgressPanel';
@@ -363,9 +363,29 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
   const chapterConfirmed = !!selectedChapterId;
   const chapterQCount = selectedChapter?.question_count ?? 0;
 
-  // Fetch live chapter stats for the Free Browse card
+  // Fetch live chapter stats for the Free Browse card with 24-hour caching
   const fetchChapterStats = useCallback(async (chapterId: string) => {
     setChapterStats(null);
+    
+    // Check cache first
+    try {
+      const cacheKey = `chapter_stats_${chapterId}`;
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        const { data, timestamp } = JSON.parse(cached);
+        const age = Date.now() - timestamp;
+        const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+        
+        if (age < CACHE_DURATION) {
+          setChapterStats(data);
+          return;
+        }
+      }
+    } catch (error) {
+      // Cache read failed, continue to fetch
+    }
+    
+    // Fetch fresh data
     try {
       const [totalRes, mainRes, advRes, nonPyqRes] = await Promise.all([
         fetch(`/api/v2/questions?chapter_id=${chapterId}&countOnly=true`),
@@ -374,12 +394,24 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
         fetch(`/api/v2/questions?chapter_id=${chapterId}&countOnly=true&is_pyq=false`),
       ]);
       const [t, m, a, n] = await Promise.all([totalRes.json(), mainRes.json(), advRes.json(), nonPyqRes.json()]);
-      setChapterStats({
+      const stats = {
         total: t.pagination?.total ?? 0,
         jeeMain: m.pagination?.total ?? 0,
         jeeAdv: a.pagination?.total ?? 0,
         nonPyq: n.pagination?.total ?? 0,
-      });
+      };
+      setChapterStats(stats);
+      
+      // Cache the result
+      try {
+        const cacheKey = `chapter_stats_${chapterId}`;
+        localStorage.setItem(cacheKey, JSON.stringify({
+          data: stats,
+          timestamp: Date.now(),
+        }));
+      } catch (error) {
+        // Cache write failed, not critical
+      }
     } catch {
       setChapterStats(null);
     }
@@ -429,6 +461,17 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
     }, 1800);
   };
 
+  // Launch Quick Revision — browse mode filtered to star-marked questions
+  const handleQuickRevisionLaunch = () => {
+    if (!selectedChapterId || loading) return;
+    setLoading(true);
+    setShlokaExited(false);
+    setActiveView('shloka');
+    setTimeout(() => {
+      router.push(`/the-crucible/${selectedChapterId}?mode=browse&is_top_pyq=true`);
+    }, 1800);
+  };
+
   // Launch Timed Test - show config modal
   const handleTestLaunch = () => {
     if (!selectedChapterId) return;
@@ -437,7 +480,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
   };
 
   // Start test after configuration
-  const startTest = useCallback(async (count: number, mix: DifficultyMix, sort: QuestionSort = 'random') => {
+  const startTest = useCallback(async (count: number, mix: DifficultyMix, sort: QuestionSort = 'random', useStarOnly?: boolean) => {
     if (!selectedChapterId) return;
     
     // Set shloka view first to avoid flash of wizard
@@ -452,8 +495,11 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
     try {
       // Step 1: Fetch questions for the selected chapter
       const params = new URLSearchParams();
-      params.append('chapter_id', selectedChapterId);
+      params.set('chapter_id', selectedChapterId);
       params.set('limit', '500');
+      if (useStarOnly) {
+        params.set('is_top_pyq', 'true');
+      }
       
       const questionsRes = await fetch(`/api/v2/questions?${params.toString()}`);
       const questionsJson = await questionsRes.json();
@@ -956,7 +1002,30 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
                       </div>
                     </button>
 
-                    {/* C. Timed Test — row card */}
+                    {/* C. Quick Revision — only if chapter has ≥20 star questions */}
+                    {(selectedChapter?.star_question_count ?? 0) >= 20 && (
+                      <button
+                        onClick={handleQuickRevisionLaunch}
+                        style={{
+                          width: '100%', display: 'flex', alignItems: 'center', gap: 12,
+                          padding: '16px', borderRadius: 12,
+                          border: '1px solid rgba(251,191,36,0.15)', background: 'rgba(251,191,36,0.03)',
+                          cursor: 'pointer', transition: 'all 0.15s', textAlign: 'left',
+                          WebkitTapHighlightColor: 'transparent',
+                        }}
+                        onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(251,191,36,0.35)'; e.currentTarget.style.background = 'rgba(251,191,36,0.08)'; }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(251,191,36,0.15)'; e.currentTarget.style.background = 'rgba(251,191,36,0.03)'; }}
+                      >
+                        <Star style={{ width: 20, height: 20, color: '#fbbf24', fill: '#fbbf24', flexShrink: 0 }} />
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ fontSize: 14, fontWeight: 600, color: '#fafafa', marginBottom: 2 }}>Quick Revision</div>
+                          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>{selectedChapter?.star_question_count} hand-picked must-solve questions</div>
+                        </div>
+                        <ChevronRight style={{ width: 16, height: 16, color: 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
+                      </button>
+                    )}
+
+                    {/* D. Timed Test — row card */}
                     <button
                       onClick={handleTestLaunch}
                       style={{
@@ -998,6 +1067,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
         {showTestConfig && (
           <TestConfigModal
             maxQ={chapterQCount}
+            starQuestionCount={selectedChapter?.star_question_count ?? 0}
             onStart={startTest}
             onClose={() => setShowTestConfig(false)}
           />

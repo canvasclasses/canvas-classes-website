@@ -7,6 +7,7 @@ export interface Chapter {
   display_order?: number;
   category?: 'Physical' | 'Inorganic' | 'Organic' | 'Practical';
   question_count?: number;
+  star_question_count?: number;
 }
 
 export interface Question {
@@ -15,7 +16,7 @@ export interface Question {
   question_text: {
     markdown: string;
   };
-  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ';
+  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ' | 'WKEX';
   options?: Array<{
     id: string;
     text: string;

@@ -76,6 +76,7 @@ e.g. for ALCO-155: `alco-155`
 - ALL math inside `$...$` — NEVER `$$...$$`
 - NEVER `\dfrac` — use `\frac` only
 - Chemical formulas: `$\ce{H2SO4}$`, `$\ce{CH3OH}$`
+- **Coordination Compounds (Square Brackets):** NEVER use `\ce{}` for formulas with `[` and `]`. Use `\mathrm{}` with explicit subscripts: `$\mathrm{[Fe(CN)_6]^{4-}}$` instead of `$\ce{[Fe(CN)6]^4-}$`. Our renderer replaces `[...]` within `\ce` with `\overset`, causing failure.
 - Arrows: `$\rightarrow$`, `$\rightleftharpoons$` — NEVER raw `→` outside `$`
 - Count `$` per line — must be even
 - No LaTeX command outside `$...$`

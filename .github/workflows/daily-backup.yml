@@ -1,0 +1,39 @@
+name: Daily MongoDB Backup
+
+on:
+  schedule:
+    # Run daily at 2:00 AM UTC (7:30 AM IST)
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run MongoDB backup to R2
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET_NAME: canvas-chemistry-assets
+        run: npx tsx scripts/mongodb-backup.ts --r2
+      
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Daily backup failed on $(date)"
+          # Add notification logic here (email, Slack, Discord, etc.)

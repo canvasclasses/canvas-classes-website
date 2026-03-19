@@ -7,7 +7,7 @@ interface Question {
   _id: string;
   display_id: string;
   question_text: { markdown: string };
-  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ';
+  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ' | 'WKEX';
   options: Array<{ id: string; text: string; is_correct: boolean }>;
   answer?: { integer_value?: number; decimal_value?: number };
   solution: { text_markdown: string };

@@ -92,7 +92,7 @@ export interface IQuestion {
   display_id: string; // e.g., "ATOM-001"
 
   question_text: IQuestionText;
-  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ';
+  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ' | 'WKEX';
   options: IQuestionOption[];
   answer?: IQuestionAnswer;
   solution: IQuestionSolution;
@@ -232,6 +232,12 @@ const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
 //   BIO    → ch12_biomolecules  (Biomolecules)
 //   POC    → ch11_prac_org      (Practical Organic)
 //
+// ── WORKED EXAMPLE PREFIXES (type: WKEX) ────────────────────────────────────
+// WKEX documents live in the same collection but are NEVER served in practice
+// or diagnostic pools. They are served only via the inline example trigger.
+// Prefix convention: {CHAPTERPREFIX}WX — e.g. GOCWX, HCWX, ALDOWX
+//   GOCWX  → ch11_goc  worked examples
+//
 // RULE: When adding a new chapter, add its prefix here BEFORE writing any
 // insertion scripts, and verify the regex below still matches it.
 // REGEX: ^[A-Z0-9]{2,10}-\d{3,}$
@@ -258,7 +264,7 @@ const QuestionSchema = new Schema<IQuestion>({
   question_text: { type: QuestionTextSchema, required: true },
   type: {
     type: String,
-    enum: ['SCQ', 'MCQ', 'NVT', 'AR', 'MST', 'MTC', 'SUBJ'],
+    enum: ['SCQ', 'MCQ', 'NVT', 'AR', 'MST', 'MTC', 'SUBJ', 'WKEX'],
     required: true
   },
   options: [QuestionOptionSchema],

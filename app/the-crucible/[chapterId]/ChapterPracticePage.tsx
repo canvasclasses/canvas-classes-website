@@ -127,7 +127,11 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
     }, [mode, testQuestions.length, isBuilding, questions.length, startTest, searchParams]);
 
     if (mode === 'browse') {
-        return <BrowseView questions={questions} chapters={allChapters} onBack={() => updateMode('choose')} chapterId={chapter.id} />;
+        const isTopPYQFilter = searchParams.get('is_top_pyq') === 'true';
+        const browseQuestions = isTopPYQFilter
+            ? questions.filter(q => q.metadata?.is_top_pyq === true)
+            : questions;
+        return <BrowseView questions={browseQuestions} chapters={allChapters} onBack={() => updateMode('choose')} chapterId={chapter.id} />;
     }
 
     if (mode === 'test') {

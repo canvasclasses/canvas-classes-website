@@ -49,6 +49,7 @@ interface AdaptiveSessionProps {
   pyqOnly: boolean;
   sessionMaxQuestions: number;             // from SessionSetupScreen (10/20/30)
   priorityQuestionIds?: string[];          // wrong Qs from previous session — served first
+  viewedExampleMicroConcepts?: Set<string>; // from Phase 1 carousel — passed to engine
   onBack: () => void;
   onReviewMistakes: (wrongIds: string[]) => void;
 }
@@ -135,6 +136,7 @@ export default function AdaptiveSession({
   pyqOnly,
   sessionMaxQuestions,
   priorityQuestionIds = [],
+  viewedExampleMicroConcepts,
   onBack,
   onReviewMistakes,
 }: AdaptiveSessionProps) {
@@ -173,8 +175,9 @@ export default function AdaptiveSession({
   }, [chapter.id]);
 
   // Full pool for diagnostic — memoized to avoid stale closure in useCallback
+  // WKEX (worked example) documents are excluded here — they are never answerable questions.
   const basePool = useMemo(() => {
-    let pool = allQuestions;
+    let pool = allQuestions.filter(q => q.type !== 'WKEX');
     if (pyqOnly) pool = pool.filter(q => q.metadata.is_pyq);
     pool = applyConceptFilter(pool, conceptTagFilter);
     return pool;
@@ -218,6 +221,7 @@ export default function AdaptiveSession({
       sessionMaxQuestions,
       initialDifficulty: initialDifficulty === 'Mixed' ? undefined : initialDifficulty,
       chapterProfile,
+      viewedExampleMicroConcepts,
     } as AdaptiveEngineInputV2);
 
     if (!decision) {
@@ -345,6 +349,7 @@ export default function AdaptiveSession({
       seenQuestionIds: seenIds,
       sessionMaxQuestions,
       chapterProfile,
+      viewedExampleMicroConcepts,
     } as AdaptiveEngineInputV2);
 
     if (!decision) {

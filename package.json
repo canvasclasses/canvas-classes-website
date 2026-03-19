@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "cross-env NODE_OPTIONS='--max-old-space-size=4096' next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "backup:local": "tsx scripts/mongodb-backup.ts --local",
+    "backup:r2": "tsx scripts/mongodb-backup.ts --r2",
+    "backup:full": "tsx scripts/mongodb-backup.ts --local --r2",
+    "backup:r2-assets": "tsx scripts/r2-backup.ts ./r2-backup",
+    "backup:cleanup": "tsx scripts/backup-retention-cleanup.ts",
+    "restore": "tsx scripts/mongodb-restore.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.991.0",

@@ -21,13 +21,14 @@ async function fetchOptionStats(questionId: string): Promise<Record<string, numb
 const DIFF_COLOR = (d: string) => d === 'Easy' ? '#34d399' : d === 'Medium' ? '#fbbf24' : '#f87171';
 const PAGE_SIZE = 15;
 
-const isShortOptions = (opts: { id: string; text: string; is_correct: boolean }[]): boolean => {
+const isShortOptions = (opts: { id: string; text: string; is_correct: boolean }[], isMobile: boolean): boolean => {
   if (!opts || opts.length !== 4) return false;
   return opts.every(o => {
     const t = (o.text || '');
     if (t.includes('$') || t.includes('![')) return false;
     const plain = t.replace(/\*\*/g, '').replace(/\*/g, '').trim();
-    return plain.length <= 28;
+    // Very strict limit on mobile: only 1-2 word options get grid (e.g., "Structure A", "Three", "One")
+    return plain.length <= (isMobile ? 12 : 28);
   });
 };
 
@@ -322,7 +323,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
       ? (Array.isArray(optChosen) ? optChosen : [])
       : (typeof optChosen === 'string' ? [optChosen] : []);
     const solDivId = `sol-${page}-${i}`;
-    const useGrid = qq.options ? isShortOptions(qq.options) : false;
+    const useGrid = qq.options ? isShortOptions(qq.options, isMobile) : false;
 
     return (
       <div>
@@ -361,36 +362,65 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
                 if (rev && correct) { bc = '#34d399'; bg = 'rgba(52,211,153,0.1)'; } else if (rev && sel && !correct) { bc = '#f87171'; bg = 'rgba(248,113,113,0.08)'; }
                 const pct = stats[opt.id] ?? 0;
                 return (
-                  <button key={opt.id}
-                    onClick={() => {
-                      if (solShown) return;
-                      if (isMCQ) {
-                        const newArr = sel ? chosenArr.filter(id => id !== opt.id) : [...chosenArr, opt.id];
-                        setCardOpt(s => ({ ...s, [i]: newArr }));
-                      } else {
-                        // SCQ — reveal immediately, track locally
-                        setCardOpt(s => ({ ...s, [i]: opt.id }));
-                        setCardSol(s => ({ ...s, [i]: true }));
-                        trackBrowseAttempt(qq, opt.is_correct, opt.id);
-                      }
-                    }}
-                    style={{ position: 'relative', overflow: 'hidden', padding: useGrid ? '11px 12px' : '12px 16px', borderRadius: 10, border: `1.5px solid ${bc}`, background: bg, display: 'flex', flexDirection: 'column', gap: 5, cursor: solShown ? 'default' : 'pointer', textAlign: 'left', color: '#fff', fontSize: 15, width: '100%', minWidth: 0 }}>
-
-                    {/* Background Progress Fill (Poll Style) */}
-                    {rev && (
-                      <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${pct}%`, background: correct ? '#34d399' : '#f87171', opacity: 0.15, transition: 'width 0.5s ease', zIndex: 0 }} />
-                    )}
-
-                    {/* Content Wrapper */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%', position: 'relative', zIndex: 10 }}>
-                      <span style={{ width: 22, height: 22, borderRadius: 6, border: `1.5px solid ${bc}`, background: sel ? (rev ? (correct ? '#34d399' : '#f87171') : '#3b82f6') : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: sel ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
-                        {rev && correct ? <Check style={{ width: 11, height: 11 }} /> : opt.id.toUpperCase()}
-                      </span>
-                      <span style={{ flex: 1, minWidth: 0, overflowX: 'auto', WebkitOverflowScrolling: 'touch' } as any}>
-                        <MathRenderer markdown={opt.text || ''} className="text-sm" fontSize={16} imageScale={qq.svg_scales?.[`option_${opt.id}`] ?? 100} />
-                      </span>
+                  <div key={opt.id} style={{ display: 'flex', alignItems: 'stretch', gap: isMobile ? 6 : 8 }}>
+                    {/* External Option Label */}
+                    <div style={{ 
+                      width: isMobile ? 20 : 24, 
+                      flexShrink: 0, 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      fontSize: isMobile ? 11 : 12,
+                      fontWeight: 700,
+                      color: rev ? (correct ? '#34d399' : sel ? '#f87171' : 'rgba(255,255,255,0.4)') : (sel ? '#3b82f6' : 'rgba(255,255,255,0.4)'),
+                      paddingTop: 2
+                    }}>
+                      {rev && correct ? <Check style={{ width: isMobile ? 13 : 15, height: isMobile ? 13 : 15 }} /> : opt.id.toUpperCase()}
                     </div>
-                  </button>
+
+                    {/* Option Box */}
+                    <button
+                      onClick={() => {
+                        if (solShown) return;
+                        if (isMCQ) {
+                          const newArr = sel ? chosenArr.filter(id => id !== opt.id) : [...chosenArr, opt.id];
+                          setCardOpt(s => ({ ...s, [i]: newArr }));
+                        } else {
+                          // SCQ — reveal immediately, track locally
+                          setCardOpt(s => ({ ...s, [i]: opt.id }));
+                          setCardSol(s => ({ ...s, [i]: true }));
+                          trackBrowseAttempt(qq, opt.is_correct, opt.id);
+                        }
+                      }}
+                      style={{ 
+                        position: 'relative', 
+                        overflow: 'hidden', 
+                        padding: isMobile ? (useGrid ? '8px 10px' : '10px 12px') : (useGrid ? '11px 12px' : '12px 14px'),
+                        borderRadius: isMobile ? 8 : 10, 
+                        border: `1.5px solid ${bc}`, 
+                        background: bg, 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        gap: 5, 
+                        cursor: solShown ? 'default' : 'pointer', 
+                        textAlign: 'left', 
+                        color: '#fff', 
+                        fontSize: 15, 
+                        flex: 1,
+                        minWidth: 0 
+                      }}>
+
+                      {/* Background Progress Fill (Poll Style) */}
+                      {rev && (
+                        <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${pct}%`, background: correct ? '#34d399' : '#f87171', opacity: 0.15, transition: 'width 0.5s ease', zIndex: 0 }} />
+                      )}
+
+                      {/* Content - No internal label, just text */}
+                      <div style={{ position: 'relative', zIndex: 10, width: '100%' }}>
+                        <MathRenderer markdown={opt.text || ''} className="text-sm" fontSize={isMobile ? 15 : 16} imageScale={qq.svg_scales?.[`option_${opt.id}`] ?? 100} />
+                      </div>
+                    </button>
+                  </div>
                 );
               })}
             </div>
@@ -543,7 +573,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
             {qq.solution?.video_url && videoExpanded[i] && (
               <div style={{ marginBottom: 14, transition: 'all 0.3s ease-in-out' }}>
                 {qq.solution.video_url.includes('youtube.com') || qq.solution.video_url.includes('youtu.be') ? (
-                  <div style={{ position: 'relative', paddingBottom: '100%', height: 0, overflow: 'hidden', borderRadius: 8, background: '#000' }}>
+                  <div style={{ position: 'relative', paddingBottom: '125%', height: 0, overflow: 'hidden', borderRadius: 8, background: '#000', maxWidth: '100%' }}>
                     <iframe
                       src={qq.solution.video_url.replace('watch?v=', 'embed/').split('&')[0].replace('youtu.be/', 'youtube.com/embed/')}
                       style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
@@ -552,27 +582,25 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
                     />
                   </div>
                 ) : (
-                  <div style={{ aspectRatio: '1/1', borderRadius: 8, overflow: 'hidden', background: '#000' }}>
-                    <video 
-                      controls 
-                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                      onKeyDown={(e) => {
-                        if (e.key === ' ') {
-                          e.preventDefault();
-                          const video = e.currentTarget;
-                          video.paused ? video.play() : video.pause();
-                        } else if (e.key === 'ArrowRight') {
-                          e.preventDefault();
-                          e.currentTarget.currentTime += 5;
-                        } else if (e.key === 'ArrowLeft') {
-                          e.preventDefault();
-                          e.currentTarget.currentTime -= 5;
-                        }
-                      }}
-                    >
-                      <source src={qq.solution.video_url} type="video/mp4" />
-                    </video>
-                  </div>
+                  <video 
+                    controls 
+                    style={{ width: '100%', maxHeight: isMobile ? '70vh' : '600px', borderRadius: 8, background: '#000', display: 'block' }}
+                    onKeyDown={(e) => {
+                      if (e.key === ' ') {
+                        e.preventDefault();
+                        const video = e.currentTarget;
+                        video.paused ? video.play() : video.pause();
+                      } else if (e.key === 'ArrowRight') {
+                        e.preventDefault();
+                        e.currentTarget.currentTime += 5;
+                      } else if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        e.currentTarget.currentTime -= 5;
+                      }
+                    }}
+                  >
+                    <source src={qq.solution.video_url} type="video/mp4" />
+                  </video>
                 )}
               </div>
             )}
@@ -673,20 +701,21 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
   );
 
   // ── Exam filter bar ─────────────────────────────────────────────────────────
-  const EXAM_FILTERS: { id: typeof examFilter; label: string }[] = [
-    { id: 'all', label: 'All' },
-    { id: 'mains', label: 'JEE Mains' },
-    { id: 'advanced', label: 'JEE Advanced' },
-    { id: 'non-pyq', label: 'Non-PYQ' },
+  const EXAM_FILTERS: { id: typeof examFilter; label: string; shortLabel: string }[] = [
+    { id: 'all', label: 'All', shortLabel: 'All' },
+    { id: 'mains', label: 'JEE Mains', shortLabel: 'Mains' },
+    { id: 'advanced', label: 'JEE Advanced', shortLabel: 'Adv' },
+    { id: 'non-pyq', label: 'Non-PYQ', shortLabel: 'Non-PYQ' },
   ];
 
   const sourceAccent = examFilter === 'mains' ? '#38bdf8' : examFilter === 'advanced' ? '#a78bfa' : '#34d399';
 
   const filterBar = (
     <div style={{ background: 'rgba(8,10,15,0.95)', borderBottom: '1px solid rgba(255,255,255,0.05)', flexShrink: 0 }}>
-      {/* Source pills row */}
-      <div style={{ padding: '6px 16px', display: 'flex', alignItems: 'center', gap: 6, overflowX: 'auto' }}>
-        {EXAM_FILTERS.map(({ id, label }) => {
+      {/* Compact single-row filter bar */}
+      <div style={{ padding: isMobile ? '5px 8px' : '6px 16px', display: 'flex', alignItems: 'center', gap: isMobile ? 4 : 6, overflowX: 'auto', flexWrap: isMobile ? 'nowrap' : 'wrap' }}>
+        {/* Source pills */}
+        {EXAM_FILTERS.map(({ id, label, shortLabel }) => {
           const active = examFilter === id;
           const accentColor = id === 'mains' ? '#38bdf8' : id === 'advanced' ? '#a78bfa' : id === 'non-pyq' ? '#34d399' : 'rgba(255,255,255,0.6)';
           return (
@@ -694,61 +723,73 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
               key={id}
               onClick={() => { setExamFilter(id); setYearFilter('all'); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
               style={{
-                padding: '5px 12px', borderRadius: 99, border: `1px solid ${active ? accentColor + '66' : 'rgba(255,255,255,0.1)'}`,
+                padding: isMobile ? '4px 9px' : '5px 12px', 
+                borderRadius: 99, 
+                border: `1px solid ${active ? accentColor + '66' : 'rgba(255,255,255,0.1)'}`,
                 background: active ? accentColor + '1a' : 'transparent',
-                color: active ? accentColor : 'rgba(255,255,255,0.4)', fontSize: 11, fontWeight: active ? 700 : 500,
-                cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.15s',
+                color: active ? accentColor : 'rgba(255,255,255,0.4)', 
+                fontSize: isMobile ? 10 : 11, 
+                fontWeight: active ? 700 : 500,
+                cursor: 'pointer', 
+                whiteSpace: 'nowrap', 
+                transition: 'all 0.15s',
+                flexShrink: 0,
               }}
             >
-              {label}
+              {isMobile ? shortLabel : label}
             </button>
           );
         })}
-        <span style={{ marginLeft: 'auto', fontSize: 10, color: 'rgba(255,255,255,0.25)', whiteSpace: 'nowrap' }}>
-          {filteredQuestions.length} questions
-        </span>
-      </div>
-      {/* Year sub-pills — visible only when JEE Main or JEE Advanced is selected */}
-      {availableYears.length > 0 && (
-        <div style={{ padding: '4px 16px 6px', display: 'flex', alignItems: 'center', gap: 5, overflowX: 'auto' }}>
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', whiteSpace: 'nowrap', marginRight: 2 }}>Year:</span>
-          <button
-            onClick={() => { setYearFilter('all'); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
+        
+        {/* Year dropdown (compact) - only when JEE Mains selected */}
+        {examFilter === 'mains' && availableYears.length > 0 && (
+          <select
+            value={yearFilter}
+            onChange={(e) => { setYearFilter(e.target.value); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
             style={{
-              padding: '3px 10px', borderRadius: 99,
-              border: `1px solid ${yearFilter === 'all' ? sourceAccent + '66' : 'rgba(255,255,255,0.08)'}`,
-              background: yearFilter === 'all' ? sourceAccent + '1a' : 'transparent',
-              color: yearFilter === 'all' ? sourceAccent : 'rgba(255,255,255,0.35)',
-              fontSize: 10, fontWeight: yearFilter === 'all' ? 700 : 500, cursor: 'pointer', whiteSpace: 'nowrap',
+              padding: isMobile ? '3px 6px' : '4px 8px',
+              borderRadius: 6,
+              border: `1px solid ${yearFilter !== 'all' ? sourceAccent + '66' : 'rgba(255,255,255,0.15)'}`,
+              background: yearFilter !== 'all' ? sourceAccent + '1a' : 'rgba(255,255,255,0.05)',
+              color: yearFilter !== 'all' ? sourceAccent : 'rgba(255,255,255,0.5)',
+              fontSize: isMobile ? 10 : 11,
+              fontWeight: yearFilter !== 'all' ? 700 : 500,
+              cursor: 'pointer',
+              outline: 'none',
+              flexShrink: 0,
             }}
-          >All</button>
-          {availableYears.map(y => (
-            <button
-              key={y}
-              onClick={() => { setYearFilter(String(y)); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
-              style={{
-                padding: '3px 10px', borderRadius: 99,
-                border: `1px solid ${yearFilter === String(y) ? sourceAccent + '66' : 'rgba(255,255,255,0.08)'}`,
-                background: yearFilter === String(y) ? sourceAccent + '1a' : 'transparent',
-                color: yearFilter === String(y) ? sourceAccent : 'rgba(255,255,255,0.35)',
-                fontSize: 10, fontWeight: yearFilter === String(y) ? 700 : 500, cursor: 'pointer', whiteSpace: 'nowrap',
-              }}
-            >{y}</button>
-          ))}
-        </div>
-      )}
-      {/* Concept tag pills — visible when chapter has concept tags */}
+          >
+            <option value="all" style={{ background: '#1a1a1a', color: '#fff' }}>All Years</option>
+            {availableYears.map(y => (
+              <option key={y} value={String(y)} style={{ background: '#1a1a1a', color: '#fff' }}>{y}</option>
+            ))}
+          </select>
+        )}
+        
+        {!isMobile && (
+          <span style={{ marginLeft: 'auto', fontSize: 10, color: 'rgba(255,255,255,0.25)', whiteSpace: 'nowrap' }}>
+            {filteredQuestions.length} questions
+          </span>
+        )}
+      </div>
+      
+      {/* Topic pills — separate row only if chapter has concept tags */}
       {availableConceptTags.length > 0 && (
-        <div style={{ padding: '4px 16px 6px', display: 'flex', alignItems: 'center', gap: 5, overflowX: 'auto', borderTop: '1px solid rgba(255,255,255,0.03)' }}>
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', whiteSpace: 'nowrap', marginRight: 2 }}>Topic:</span>
+        <div style={{ padding: isMobile ? '4px 8px 5px' : '4px 16px 6px', display: 'flex', alignItems: 'center', gap: isMobile ? 4 : 5, overflowX: 'auto', borderTop: '1px solid rgba(255,255,255,0.03)' }}>
+          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', whiteSpace: 'nowrap', marginRight: 2, flexShrink: 0 }}>Topic:</span>
           <button
             onClick={() => { setConceptTagFilter('all'); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
             style={{
-              padding: '3px 10px', borderRadius: 99,
+              padding: isMobile ? '3px 8px' : '3px 10px', 
+              borderRadius: 99,
               border: `1px solid ${conceptTagFilter === 'all' ? '#34d39966' : 'rgba(255,255,255,0.08)'}`,
               background: conceptTagFilter === 'all' ? '#34d3991a' : 'transparent',
               color: conceptTagFilter === 'all' ? '#34d399' : 'rgba(255,255,255,0.35)',
-              fontSize: 10, fontWeight: conceptTagFilter === 'all' ? 700 : 500, cursor: 'pointer', whiteSpace: 'nowrap',
+              fontSize: 10, 
+              fontWeight: conceptTagFilter === 'all' ? 700 : 500, 
+              cursor: 'pointer', 
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
             }}
           >All</button>
           {availableConceptTags.map((tag: { id: string; name: string }) => (
@@ -756,11 +797,16 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
               key={tag.id}
               onClick={() => { setConceptTagFilter(tag.id); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
               style={{
-                padding: '3px 10px', borderRadius: 99,
+                padding: isMobile ? '3px 8px' : '3px 10px', 
+                borderRadius: 99,
                 border: `1px solid ${conceptTagFilter === tag.id ? '#34d39966' : 'rgba(255,255,255,0.08)'}`,
                 background: conceptTagFilter === tag.id ? '#34d3991a' : 'transparent',
                 color: conceptTagFilter === tag.id ? '#34d399' : 'rgba(255,255,255,0.35)',
-                fontSize: 10, fontWeight: conceptTagFilter === tag.id ? 700 : 500, cursor: 'pointer', whiteSpace: 'nowrap',
+                fontSize: 10, 
+                fontWeight: conceptTagFilter === tag.id ? 700 : 500, 
+                cursor: 'pointer', 
+                whiteSpace: 'nowrap',
+                flexShrink: 0,
               }}
             >{tag.name}</button>
           ))}
@@ -777,7 +823,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
     const diffColor = DIFF_COLOR(qq.metadata.difficulty);
     const examSrc = qq.metadata.exam_source;
     const examLabel = examSrc?.year
-      ? `${examSrc.exam ?? 'JEE Main'} ${examSrc.year}${examSrc.month ? ` · ${examSrc.month}` : ''}${examSrc.shift ? ` (${examSrc.shift[0]})` : ''}`
+      ? `${examSrc.exam ?? 'JEE Main'} ${examSrc.year}${examSrc.month ? ` · ${examSrc.month}` : ''}${examSrc.shift ? ` (${examSrc.shift.replace('Shift ', 'S').replace('Session ', 'S')})` : ''}`
       : null;
 
     return (
@@ -786,7 +832,16 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
         ref={el => { cardRefs.current[localIdx] = el; }}
         id={`card-${page}-${localIdx}`}
         data-index={localIdx}
-        style={{
+        style={isMobile ? {
+          background: 'transparent',
+          borderBottom: '1px solid rgba(255,255,255,0.08)',
+          borderLeft: `2px solid ${diffColor}`,
+          paddingLeft: 8,
+          paddingBottom: 20,
+          marginBottom: 20,
+          marginLeft: 3,
+    
+        } : {
           background: 'rgba(255,255,255,0.025)',
           border: '1px solid rgba(255,255,255,0.07)',
           borderLeft: `3px solid ${diffColor}88`,
@@ -796,15 +851,12 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
         }}
       >
         {/* Header row: badges + star */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 18px 10px', borderBottom: '1px solid rgba(255,255,255,0.05)', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: isMobile ? '10px 8px 8px 0' : '12px 18px 10px', borderBottom: isMobile ? 'none' : '1px solid rgba(255,255,255,0.05)', flexWrap: 'wrap' }}>
           <span style={{ minWidth: 30, height: 22, borderRadius: 6, background: 'rgba(255,255,255,0.08)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, padding: '0 6px', color: 'rgba(255,255,255,0.5)' }}>
             Q{globalIdx + 1}
           </span>
           <span style={{ fontSize: 10, fontWeight: 700, color: diffColor, background: diffColor + '18', padding: '2px 8px', borderRadius: 99 }}>{qq.metadata.difficulty}</span>
           <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.06)', padding: '2px 8px', borderRadius: 99 }}>{qq.type}</span>
-          {hasImageMarkdown(qq.question_text.markdown) && (
-            <span style={{ fontSize: 10, color: '#fb923c', background: 'rgba(251,146,60,0.1)', padding: '2px 8px', borderRadius: 99, border: '1px solid rgba(251,146,60,0.2)' }}>🖼 Diagram</span>
-          )}
           {examLabel && (
             <span style={{ fontSize: 10, color: '#60a5fa', background: 'rgba(96,165,250,0.08)', border: '1px solid rgba(96,165,250,0.18)', padding: '2px 8px', borderRadius: 99 }}>{examLabel}</span>
           )}
@@ -814,7 +866,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
         </div>
 
         {/* Full question text (always visible) */}
-        <div style={{ padding: '16px 20px' }}>
+        <div style={{ padding: isMobile ? '12px 8px' : '16px 20px' }}>
           <MathRenderer
             markdown={qq.question_text.markdown}
             className="text-sm leading-relaxed"
@@ -825,7 +877,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
 
         {/* CTA footer */}
         {!expanded ? (
-          <div style={{ padding: '10px 20px 14px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+          <div style={{ padding: isMobile ? '10px 8px 0' : '10px 20px 14px', borderTop: isMobile ? 'none' : '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
             <button
               onClick={() => expandCard(localIdx, qq)}
               style={{ padding: '9px 20px', borderRadius: 10, border: 'none', background: 'linear-gradient(135deg, #7c3aed, #4f46e5)', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -848,7 +900,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
             )}
           </div>
         ) : (
-          <div style={{ padding: '4px 20px 16px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+          <div style={{ padding: isMobile ? '4px 8px 0' : '4px 20px 16px', borderTop: isMobile ? 'none' : '1px solid rgba(255,255,255,0.05)' }}>
             <div style={{ paddingTop: 14 }}>
               {renderOptions(qq, localIdx)}
             </div>
