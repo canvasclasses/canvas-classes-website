@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { getTaxonomy, getChapterQuestions, getChapterQuestionCounts } from '../actions';
+import { getTaxonomy, getChapterQuestions, getChapterQuestionCounts, getChapterStarCounts } from '../actions';
 import ChapterPracticePage from './ChapterPracticePage';
 
 // ISR: revalidate every 10 minutes — question content changes infrequently
@@ -45,10 +45,11 @@ export async function generateMetadata({ params }: { params: Promise<{ chapterId
 export default async function Page({ params }: { params: Promise<{ chapterId: string }> }) {
     const { chapterId } = await params;
 
-    const [chapters, questions, questionCounts] = await Promise.all([
+    const [chapters, questions, questionCounts, starCounts] = await Promise.all([
         getTaxonomy(),
         getChapterQuestions(chapterId),
         getChapterQuestionCounts(),
+        getChapterStarCounts(),
     ]);
 
     const chapter = chapters.find(ch => ch.id === chapterId);
@@ -57,11 +58,16 @@ export default async function Page({ params }: { params: Promise<{ chapterId: st
     const chaptersWithCounts = chapters.map(ch => ({
         ...ch,
         question_count: questionCounts[ch.id] ?? 0,
+        star_question_count: starCounts[ch.id] ?? 0,
     }));
 
     return (
         <ChapterPracticePage
-            chapter={{ ...chapter, question_count: questionCounts[chapterId] ?? 0 }}
+            chapter={{ 
+                ...chapter, 
+                question_count: questionCounts[chapterId] ?? 0,
+                star_question_count: starCounts[chapterId] ?? 0,
+            }}
             questions={questions}
             allChapters={chaptersWithCounts}
         />

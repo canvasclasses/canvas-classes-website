@@ -210,6 +210,16 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
                                 📖 Browse All Questions
                                 <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 400 }}>Solutions visible</span>
                             </button>
+                            
+                            {/* Quick Revision - only show if ≥20 star questions */}
+                            {(chapter.star_question_count ?? 0) >= 20 && (
+                                <button onClick={() => router.push(`/the-crucible/${chapter.id}?mode=browse&is_top_pyq=true`)}
+                                    style={{ padding: '18px', borderRadius: 14, border: '1px solid rgba(251,191,36,0.3)', background: 'rgba(251,191,36,0.1)', color: '#fbbf24', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+                                    ⭐ Quick Revision
+                                    <span style={{ fontSize: 12, color: 'rgba(251,191,36,0.6)', fontWeight: 400 }}>{chapter.star_question_count} hand-picked questions</span>
+                                </button>
+                            )}
+                            
                             <button onClick={() => setShowTestConfig(true)} disabled={isBuilding}
                                 style={{ padding: '18px', borderRadius: 14, border: 'none', background: isBuilding ? 'rgba(124,58,237,0.4)' : 'linear-gradient(135deg,#7c3aed,#5b21b6)', color: '#fff', fontSize: 15, fontWeight: 800, cursor: isBuilding ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, boxShadow: '0 4px 20px rgba(124,58,237,0.4)' }}>
                                 {isBuilding ? '⏳ Building test…' : '⏱ Take Timed Test'}
@@ -237,7 +247,12 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
             </div>
 
             {showTestConfig && (
-                <TestConfigModal maxQ={qCount} onStart={startTest} onClose={() => setShowTestConfig(false)} />
+                <TestConfigModal 
+                    maxQ={qCount} 
+                    starQuestionCount={chapter.star_question_count ?? 0}
+                    onStart={startTest} 
+                    onClose={() => setShowTestConfig(false)} 
+                />
             )}
         </div>
     );

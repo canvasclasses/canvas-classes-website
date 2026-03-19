@@ -258,6 +258,7 @@ export async function getChapterQuestionCounts(): Promise<Record<string, number>
         await connectToDatabase();
         const { QuestionV2 } = await import('@/lib/models/Question.v2');
         const agg = await QuestionV2.aggregate([
+            { $match: { deleted_at: null } },
             { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
         ]);
         const result: Record<string, number> = {};
@@ -267,6 +268,25 @@ export async function getChapterQuestionCounts(): Promise<Record<string, number>
         return result;
     } catch (error) {
         console.error('Failed to get chapter question counts:', error);
+        return {};
+    }
+}
+
+export async function getChapterStarCounts(): Promise<Record<string, number>> {
+    try {
+        await connectToDatabase();
+        const { QuestionV2 } = await import('@/lib/models/Question.v2');
+        const agg = await QuestionV2.aggregate([
+            { $match: { 'metadata.is_top_pyq': true, deleted_at: null } },
+            { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
+        ]);
+        const result: Record<string, number> = {};
+        for (const row of agg) {
+            if (row._id) result[row._id] = row.count;
+        }
+        return result;
+    } catch (error) {
+        console.error('Failed to get chapter star counts:', error);
         return {};
     }
 }
