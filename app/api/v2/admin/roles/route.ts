@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import { UserRole } from '@/lib/models/UserRole';
-import { AuditLog } from '@/lib/models/AuditLog';
+import { RoleAuditLog } from '@/lib/models/RoleAuditLog';
 import { getUserPermissions } from '@/lib/rbac';
 import { createServerClient } from '@supabase/ssr';
 import { z } from 'zod';
@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
       await existingRole.save();
 
       // Audit log
-      await AuditLog.create({
+      await RoleAuditLog.create({
         action: 'role_updated',
         user_id: isLocalhost ? 'local-dev' : userEmail,
         user_email: userEmail,
@@ -151,7 +151,7 @@ export async function POST(request: NextRequest) {
       });
 
       // Audit log
-      await AuditLog.create({
+      await RoleAuditLog.create({
         action: 'role_created',
         user_id: isLocalhost ? 'local-dev' : userEmail,
         user_email: userEmail,
@@ -226,7 +226,7 @@ export async function DELETE(request: NextRequest) {
     await role.save();
 
     // Audit log
-    await AuditLog.create({
+    await RoleAuditLog.create({
       action: 'role_deleted',
       user_id: isLocalhost ? 'local-dev' : userEmail,
       user_email: userEmail,
