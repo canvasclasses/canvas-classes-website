@@ -10,6 +10,7 @@ description: Question Ingestion Workflow — Two-Phase System
 
 ## QUICK REFERENCE (read this first)
 
+**Chemistry (Legacy Pattern)**
 ```
 CHAPTER_ID    PREFIX   TAGS (use tag_id exactly as shown)
 ─────────────────────────────────────────────────────────────────────────────
@@ -38,6 +39,15 @@ ch12_amines   AMIN     tag_amines_1..5, tag_ch12_amines_1771659399884
 ch12_biomolecules BIO  tag_biomolecules_1..6
 ch12_salt     SALT     tag_salt_1..14
 ch12_prac_phys PPC     tag_prac_phys_1..6
+```
+
+**Mathematics (Uniform Pattern)**
+```
+Applies to all 33 math chapters (e.g., ma_quadratic, ma_matrices, ma_probability)
+─────────────────────────────────────────────────────────────────────────────
+CHAPTER_ID:  ma_[name]             (e.g., ma_complex)
+PREFIX:      First 4 chars upper   (e.g., COMP)
+TAGS:        tag_{chapter_id}      (e.g., tag_ma_complex)
 ```
 
 **Type detection:**

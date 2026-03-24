@@ -43,15 +43,25 @@ export async function POST(request: NextRequest) {
       "    type: 'chapter' | 'topic' | 'micro_topic';",
       "    sequence_order?: number;",
       "    class_level?: 11 | 12;",
-      "    chapterType?: 'physical' | 'inorganic' | 'organic' | 'practical';",
+      "    chapterType?: 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra';",
       '}',
       '',
       'export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [',
     ];
 
     // Group chapters by class and type for organized output
-    const class11 = chapters.filter((c: any) => c.class_level === 11).sort((a: any, b: any) => (a.sequence_order || 0) - (b.sequence_order || 0));
-    const class12 = chapters.filter((c: any) => c.class_level === 12).sort((a: any, b: any) => (a.sequence_order || 0) - (b.sequence_order || 0));
+    const class11 = chapters
+      .filter((c: any) => c.class_level === 11 && !c.id.startsWith('ma_') && !c.id.startsWith('ph'))
+      .sort((a: any, b: any) => (a.sequence_order || 0) - (b.sequence_order || 0));
+    const class12 = chapters
+      .filter((c: any) => c.class_level === 12 && !c.id.startsWith('ma_') && !c.id.startsWith('ph'))
+      .sort((a: any, b: any) => (a.sequence_order || 0) - (b.sequence_order || 0));
+    const physChapters = chapters
+      .filter((c: any) => c.id.startsWith('ph11_') || c.id.startsWith('ph12_'))
+      .sort((a: any, b: any) => (a.sequence_order || 0) - (b.sequence_order || 0));
+    const mathChapters = chapters
+      .filter((c: any) => c.id.startsWith('ma_'))
+      .sort((a: any, b: any) => (a.sequence_order || 0) - (b.sequence_order || 0));
 
     const escapeStr = (s: string) => s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 
@@ -68,35 +78,24 @@ export async function POST(request: NextRequest) {
       return `    { ${parts.join(', ')} },`;
     };
 
-    lines.push('    // Class 11');
-    for (const ch of class11) {
-      lines.push(nodeToLine(ch));
-      const chTags = tags.filter((t: any) => t.parent_id === ch.id);
-      for (const tag of chTags) {
-        lines.push(nodeToLine(tag));
-        // Write micro_topics for this tag
-        const tagMicroTopics = microTopics.filter((mt: any) => mt.parent_id === tag.id);
-        for (const microTopic of tagMicroTopics) {
-          lines.push(nodeToLine(microTopic));
+    const writeChapterGroup = (chList: any[], label: string) => {
+      lines.push(`    // ${label}`);
+      for (const ch of chList) {
+        lines.push(nodeToLine(ch));
+        const chTags = tags.filter((t: any) => t.parent_id === ch.id);
+        for (const tag of chTags) {
+          lines.push(nodeToLine(tag));
+          const tagMicroTopics = microTopics.filter((mt: any) => mt.parent_id === tag.id);
+          for (const mt of tagMicroTopics) lines.push(nodeToLine(mt));
         }
+        lines.push('');
       }
-      lines.push('');
-    }
+    };
 
-    lines.push('    // Class 12');
-    for (const ch of class12) {
-      lines.push(nodeToLine(ch));
-      const chTags = tags.filter((t: any) => t.parent_id === ch.id);
-      for (const tag of chTags) {
-        lines.push(nodeToLine(tag));
-        // Write micro_topics for this tag
-        const tagMicroTopics = microTopics.filter((mt: any) => mt.parent_id === tag.id);
-        for (const microTopic of tagMicroTopics) {
-          lines.push(nodeToLine(microTopic));
-        }
-      }
-      lines.push('');
-    }
+    writeChapterGroup(class11, 'Class 11 Chemistry');
+    writeChapterGroup(class12, 'Class 12 Chemistry');
+    writeChapterGroup(physChapters, 'Physics');
+    writeChapterGroup(mathChapters, 'Mathematics (Competitive Syllabus)');
 
     lines.push('];');
     lines.push('');

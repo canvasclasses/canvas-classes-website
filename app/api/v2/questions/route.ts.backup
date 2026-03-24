@@ -6,7 +6,6 @@ import { AuditLog } from '@/lib/models/AuditLog';
 import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 import { z } from 'zod';
 import { createServerClient } from '@supabase/ssr';
-import { getUserPermissions, getQuestionFilter, canEditQuestion } from '@/lib/rbac';
 
 // Canonical chapter_id → display_id prefix map (single source of truth: taxonomyData_from_csv.ts)
 const CHAPTER_PREFIX_MAP: Record<string, string> = {
@@ -28,18 +27,15 @@ const CHAPTER_PREFIX_MAP: Record<string, string> = {
   ph12_electrostatics: 'ELST', ph12_current: 'CURR', ph12_magnetism: 'MAG',
   ph12_emi: 'EMI', ph12_ac: 'ACE', ph12_ray_optics: 'ROPY',
   ph12_wave_optics: 'WVOP', ph12_modern: 'MOD', ph12_semiconductors: 'SEMI',
-  // ── Mathematics (Competitive Syllabus) ──
-  ma_basic_math: 'BOMA', ma_quadratic: 'QUAD', ma_complex: 'CMPL',
-  ma_sequence: 'SQSR', ma_pnc: 'PMCM', ma_binomial: 'BNML',
-  ma_reasoning: 'MRES', ma_statistics: 'STAT', ma_matrices: 'MTRX',
-  ma_determinants: 'DTRM', ma_probability: 'PROB', ma_sets_rel: 'STRL',
-  ma_functions: 'FUNC', ma_limits: 'LIMS', ma_continuity_diff: 'CTDF',
-  ma_differentiation: 'DIFF', ma_aod: 'AODV', ma_indef_int: 'ININ',
-  ma_def_int: 'DFIN', ma_auc: 'AUC', ma_diff_eq: 'DFEQ',
-  ma_straight_lines: 'STLN', ma_circle: 'CRCL', ma_parabola: 'PRBL',
-  ma_ellipse: 'ELPS', ma_hyperbola: 'HYPB', ma_trig_ratios: 'TRRI',
-  ma_trig_eq: 'TREQ', ma_itf: 'ITF', ma_height_dist: 'HTDT',
-  ma_triangle_prop: 'PRTR', ma_vector_algebra: 'VCAL', ma_3d_geom: 'TDGM',
+  // ── Mathematics (Class 11) ──
+  ma11_sets: 'SETS', ma11_complex: 'CMPX', ma11_sequences: 'SEQ',
+  ma11_pnc: 'PNC', ma11_binomial: 'BINO', ma11_trigonometry: 'TRIG',
+  ma11_straight_lines: 'STLN', ma11_conics: 'CONI', ma11_limits: 'LIM',
+  ma11_math_induction: 'MI', ma11_stats: 'STAT',
+  // ── Mathematics (Class 12) ──
+  ma12_functions: 'FUNC', ma12_matrices: 'MATR', ma12_diff_calculus: 'DIFF',
+  ma12_aod: 'AOD', ma12_integrals: 'INTG', ma12_aoi: 'AOI',
+  ma12_vectors: 'VEC', ma12_3d: 'TDG', ma12_probability: 'PROB',
 };
 
 // Simple in-memory rate limiter (per IP, resets every minute)
@@ -166,16 +162,8 @@ export async function GET(request: NextRequest) {
     const limit = isAuthenticated && !isCountOnly ? requestedLimit : Math.min(requestedLimit, 50); // cap public at 50
     const skip = parseInt(searchParams.get('skip') || '0');
 
-    // Build query with RBAC filtering
-    let query: any = { deleted_at: null };
-    
-    // Apply subject-level access control for authenticated users
-    if (isAuthenticated && user) {
-      const rbacFilter = await getQuestionFilter(user.email!);
-      // Merge RBAC filter with base query
-      query = { ...query, ...rbacFilter };
-    }
-    
+    // Build query
+    const query: any = { deleted_at: null };
     if (chapter_ids.length === 1) query['metadata.chapter_id'] = chapter_ids[0];
     else if (chapter_ids.length > 1) query['metadata.chapter_id'] = { $in: chapter_ids };
     // subject filter — supports multi-subject future tests
@@ -257,17 +245,6 @@ export async function POST(request: NextRequest) {
     }
 
     const data = validation.data;
-
-    // Check RBAC: Can user create questions in this chapter?
-    if (user && !isLocalDev) {
-      const hasPermission = await canEditQuestion(user.email!, data.metadata.chapter_id);
-      if (!hasPermission) {
-        return NextResponse.json(
-          { success: false, error: 'Forbidden: You do not have permission to create questions in this subject' },
-          { status: 403 }
-        );
-      }
-    }
 
     // Generate UUID
     const questionId = uuidv4();

@@ -35,11 +35,11 @@ const UserRoleSchema = new Schema<IUserRole>(
       enum: ['chemistry', 'physics', 'mathematics'],
       default: [],
       validate: {
-        validator: function (this: IUserRole, subjects: Subject[]) {
+        validator: function (subjects: Subject[]): boolean {
           // Super admins should have empty subjects array (they get all)
-          if (this.role === 'super_admin') return subjects.length === 0;
+          if ((this as any).role === 'super_admin') return subjects.length === 0;
           // Subject admins must have at least one subject
-          if (this.role === 'subject_admin') return subjects.length > 0;
+          if ((this as any).role === 'subject_admin') return subjects.length > 0;
           // Viewers can have subjects (read-only access)
           return true;
         },

@@ -7,13 +7,26 @@ import {
 } from 'lucide-react';
 import { TAXONOMY_FROM_CSV, type TaxonomyNode } from './taxonomyData_from_csv';
 
-type ChapterType = 'physical' | 'inorganic' | 'organic' | 'practical';
+type ChapterType = 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra';
+type SubjectTab = 'chemistry' | 'physics' | 'mathematics';
 
-const BRANCHES = [
+const CHEM_BRANCHES = [
     { id: 'physical', name: 'Physical Chemistry', icon: Beaker, color: '#8B5CF6' },
     { id: 'inorganic', name: 'Inorganic Chemistry', icon: Atom, color: '#3B82F6' },
     { id: 'organic', name: 'Organic Chemistry', icon: Leaf, color: '#10B981' },
     { id: 'practical', name: 'Practical Chemistry', icon: FlaskConical, color: '#F59E0B' },
+];
+
+const PHYSICS_BRANCHES = [
+    { id: 'physics', name: 'Physics', icon: Atom, color: '#06B6D4' },
+];
+
+const MATH_BRANCHES = [
+    { id: 'algebra', name: 'Algebra', icon: Tag, color: '#8B5CF6' },
+    { id: 'calculus', name: 'Calculus', icon: Beaker, color: '#3B82F6' },
+    { id: 'coordinate_geometry', name: 'Coordinate Geometry', icon: Leaf, color: '#10B981' },
+    { id: 'trigonometry', name: 'Trigonometry', icon: FlaskConical, color: '#F59E0B' },
+    { id: 'vector_algebra', name: 'Vector Algebra', icon: Atom, color: '#EC4899' },
 ];
 
 // CRITICAL: This taxonomy data is from user's CSV - DO NOT OVERWRITE
@@ -36,10 +49,16 @@ export default function TaxonomyPage() {
     const [editingNode, setEditingNode] = useState<EditingNode | null>(null);
     const [newNode, setNewNode] = useState<Partial<TaxonomyNode>>({});
     const [showAddForm, setShowAddForm] = useState(false);
+    const [selectedSubject, setSelectedSubject] = useState<SubjectTab>('chemistry');
     const [selectedChapterType, setSelectedChapterType] = useState<ChapterType>('physical');
     const [selectedClassLevel, setSelectedClassLevel] = useState<11 | 12>(11);
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
     const [saving, setSaving] = useState(false);
+
+    // Derive branches for the active subject
+    const activeBranches = selectedSubject === 'chemistry' ? CHEM_BRANCHES
+        : selectedSubject === 'physics' ? PHYSICS_BRANCHES
+        : MATH_BRANCHES;
 
     useEffect(() => {
         loadData();
@@ -223,17 +242,20 @@ export default function TaxonomyPage() {
     };
 
     const getBranchIcon = (branchId: ChapterType) => {
-        const branch = BRANCHES.find(b => b.id === branchId);
+        const allBranches = [...CHEM_BRANCHES, ...PHYSICS_BRANCHES, ...MATH_BRANCHES];
+        const branch = allBranches.find(b => b.id === branchId);
         return branch ? branch.icon : Folder;
     };
 
     const getBranchColor = (branchId: ChapterType) => {
-        const branch = BRANCHES.find(b => b.id === branchId);
+        const allBranches = [...CHEM_BRANCHES, ...PHYSICS_BRANCHES, ...MATH_BRANCHES];
+        const branch = allBranches.find(b => b.id === branchId);
         return branch ? branch.color : '#6B7280';
     };
 
     const getBranchName = (branchId: ChapterType) => {
-        const branch = BRANCHES.find(b => b.id === branchId);
+        const allBranches = [...CHEM_BRANCHES, ...PHYSICS_BRANCHES, ...MATH_BRANCHES];
+        const branch = allBranches.find(b => b.id === branchId);
         return branch ? branch.name : branchId;
     };
 
@@ -469,8 +491,10 @@ export default function TaxonomyPage() {
         );
     };
 
-    const chapters11 = taxonomy.filter(n => n.type === 'chapter' && n.class_level === 11);
-    const chapters12 = taxonomy.filter(n => n.type === 'chapter' && n.class_level === 12);
+    const chapters11 = taxonomy.filter(n => n.type === 'chapter' && n.class_level === 11 && !n.id.startsWith('ma_') && !n.id.startsWith('ph'));
+    const chapters12 = taxonomy.filter(n => n.type === 'chapter' && n.class_level === 12 && !n.id.startsWith('ma_') && !n.id.startsWith('ph'));
+    const mathChapters = taxonomy.filter(n => n.type === 'chapter' && n.id.startsWith('ma_'));
+    const physicsChapters = taxonomy.filter(n => n.type === 'chapter' && (n.id.startsWith('ph11_') || n.id.startsWith('ph12_')));
 
     if (loading) {
         return (
@@ -488,8 +512,8 @@ export default function TaxonomyPage() {
                 <div className="bg-gray-800 rounded-xl shadow-sm p-6 mb-6 border border-gray-700">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div>
-                            <h1 className="text-2xl font-bold text-white">Chemistry Taxonomy Manager</h1>
-                            <p className="text-gray-400 mt-1">Manage chapters and concept tags for JEE Chemistry</p>
+                            <h1 className="text-2xl font-bold text-white">Taxonomy Manager</h1>
+                            <p className="text-gray-400 mt-1">Manage chapters and concept tags for JEE Preparation (Chemistry, Physics & Mathematics)</p>
                         </div>
                         <div className="flex items-center gap-3">
                             {saving && (
@@ -507,9 +531,26 @@ export default function TaxonomyPage() {
                         </div>
                     </div>
 
-                    {/* Stats */}
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
-                        {BRANCHES.map(branch => {
+                    {/* Subject Tabs */}
+                    <div className="flex gap-2 mt-4">
+                        {(['chemistry', 'physics', 'mathematics'] as SubjectTab[]).map(subj => (
+                            <button
+                                key={subj}
+                                onClick={() => setSelectedSubject(subj)}
+                                className={`px-4 py-2 rounded-lg text-sm font-semibold capitalize transition-colors ${
+                                    selectedSubject === subj
+                                        ? 'bg-blue-600 text-white'
+                                        : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                                }`}
+                            >
+                                {subj === 'chemistry' ? '⚗️ Chemistry' : subj === 'physics' ? '⚡ Physics' : '📐 Mathematics'}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Branch Stats for selected subject */}
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
+                        {activeBranches.map(branch => {
                             const BranchIcon = branch.icon;
                             const count = taxonomy.filter(n => n.type === 'chapter' && n.chapterType === branch.id).length;
                             return (
@@ -529,7 +570,15 @@ export default function TaxonomyPage() {
                                 <Tag className="w-5 h-5 text-gray-300" />
                             </div>
                             <div>
-                                <div className="text-xl font-bold text-gray-300">{taxonomy.filter(n => n.type === 'topic').length}</div>
+                                <div className="text-xl font-bold text-gray-300">
+                                    {taxonomy.filter(n => n.type === 'topic' && (
+                                        selectedSubject === 'chemistry'
+                                            ? (n.parent_id?.startsWith('ch1') ?? false)
+                                            : selectedSubject === 'physics'
+                                            ? (n.parent_id?.startsWith('ph1') ?? false)
+                                            : (n.parent_id?.startsWith('ma_') ?? false)
+                                    )).length}
+                                </div>
                                 <div className="text-xs text-gray-400">Total Tags</div>
                             </div>
                         </div>
@@ -579,7 +628,7 @@ export default function TaxonomyPage() {
                                     onChange={(e) => setSelectedChapterType(e.target.value as ChapterType)}
                                     className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
                                 >
-                                    {BRANCHES.map(branch => (
+                                    {[...CHEM_BRANCHES, ...PHYSICS_BRANCHES, ...MATH_BRANCHES].map(branch => (
                                         <option key={branch.id} value={branch.id}>{branch.name}</option>
                                     ))}
                                 </select>
@@ -605,33 +654,82 @@ export default function TaxonomyPage() {
                     </div>
                 )}
 
-                {/* Chapters List */}
+                {/* Chapters List — subject-scoped */}
                 <div className="space-y-8">
-                    {/* Class 11 Section */}
-                    <div>
-                        <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
-                            <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">11</span>
-                            Class 11 Chapters
-                            <span className="text-sm font-normal text-gray-500">({chapters11.length} chapters)</span>
-                        </h2>
-                        <div className="space-y-3">
-                            {chapters11.map(chapter => renderChapter(chapter))}
-                        </div>
-                    </div>
+                    {selectedSubject === 'chemistry' && (
+                        <>
+                            <div>
+                                <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
+                                    <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">11</span>
+                                    Class 11 Chemistry
+                                    <span className="text-sm font-normal text-gray-500">({chapters11.length} chapters)</span>
+                                </h2>
+                                <div className="space-y-3">
+                                    {chapters11.map(chapter => renderChapter(chapter))}
+                                </div>
+                            </div>
+                            <div>
+                                <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
+                                    <span className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center text-sm font-bold">12</span>
+                                    Class 12 Chemistry
+                                    <span className="text-sm font-normal text-gray-500">({chapters12.length} chapters)</span>
+                                </h2>
+                                <div className="space-y-3">
+                                    {chapters12.map(chapter => renderChapter(chapter))}
+                                </div>
+                            </div>
+                        </>
+                    )}
 
-                    {/* Class 12 Section */}
-                    <div>
-                        <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
-                            <span className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center text-sm font-bold">12</span>
-                            Class 12 Chapters
-                            <span className="text-sm font-normal text-gray-500">({chapters12.length} chapters)</span>
-                        </h2>
-                        <div className="space-y-3">
-                            {chapters12.map(chapter => renderChapter(chapter))}
-                        </div>
-                    </div>
+                    {selectedSubject === 'physics' && (
+                        <>
+                            <div>
+                                <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
+                                    <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">11</span>
+                                    Class 11 Physics
+                                    <span className="text-sm font-normal text-gray-500">({physicsChapters.filter(c => c.id.startsWith('ph11_')).length} chapters)</span>
+                                </h2>
+                                <div className="space-y-3">
+                                    {physicsChapters.filter(c => c.id.startsWith('ph11_')).map(chapter => renderChapter(chapter))}
+                                </div>
+                            </div>
+                            <div>
+                                <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
+                                    <span className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center text-sm font-bold">12</span>
+                                    Class 12 Physics
+                                    <span className="text-sm font-normal text-gray-500">({physicsChapters.filter(c => c.id.startsWith('ph12_')).length} chapters)</span>
+                                </h2>
+                                <div className="space-y-3">
+                                    {physicsChapters.filter(c => c.id.startsWith('ph12_')).map(chapter => renderChapter(chapter))}
+                                </div>
+                            </div>
+                        </>
+                    )}
+
+                    {selectedSubject === 'mathematics' && (
+                        <>
+                            {MATH_BRANCHES.map(branch => {
+                                const branchChapters = mathChapters.filter(c => c.chapterType === branch.id);
+                                return (
+                                    <div key={branch.id}>
+                                        <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
+                                            <span className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: branch.color }}>
+                                                {branchChapters.length}
+                                            </span>
+                                            {branch.name}
+                                            <span className="text-sm font-normal text-gray-500">({branchChapters.length} chapters)</span>
+                                        </h2>
+                                        <div className="space-y-3">
+                                            {branchChapters.map(chapter => renderChapter(chapter))}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </>
+                    )}
                 </div>
             </div>
         </div>
     );
 }
+
