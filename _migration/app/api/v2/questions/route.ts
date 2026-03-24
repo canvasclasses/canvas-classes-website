@@ -6,7 +6,6 @@ import { AuditLog } from '@/lib/models/AuditLog';
 import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 import { z } from 'zod';
 import { createServerClient } from '@supabase/ssr';
-import { getUserPermissions, getQuestionFilter, canEditQuestion } from '@/lib/rbac';
 
 // Canonical chapter_id → display_id prefix map (single source of truth: taxonomyData_from_csv.ts)
 const CHAPTER_PREFIX_MAP: Record<string, string> = {
@@ -166,16 +165,8 @@ export async function GET(request: NextRequest) {
     const limit = isAuthenticated && !isCountOnly ? requestedLimit : Math.min(requestedLimit, 50); // cap public at 50
     const skip = parseInt(searchParams.get('skip') || '0');
 
-    // Build query with RBAC filtering
-    let query: any = { deleted_at: null };
-    
-    // Apply subject-level access control for authenticated users
-    if (isAuthenticated && user) {
-      const rbacFilter = await getQuestionFilter(user.email!);
-      // Merge RBAC filter with base query
-      query = { ...query, ...rbacFilter };
-    }
-    
+    // Build query
+    const query: any = { deleted_at: null };
     if (chapter_ids.length === 1) query['metadata.chapter_id'] = chapter_ids[0];
     else if (chapter_ids.length > 1) query['metadata.chapter_id'] = { $in: chapter_ids };
     // subject filter — supports multi-subject future tests
@@ -257,17 +248,6 @@ export async function POST(request: NextRequest) {
     }
 
     const data = validation.data;
-
-    // Check RBAC: Can user create questions in this chapter?
-    if (user && !isLocalDev) {
-      const hasPermission = await canEditQuestion(user.email!, data.metadata.chapter_id);
-      if (!hasPermission) {
-        return NextResponse.json(
-          { success: false, error: 'Forbidden: You do not have permission to create questions in this subject' },
-          { status: 403 }
-        );
-      }
-    }
 
     // Generate UUID
     const questionId = uuidv4();

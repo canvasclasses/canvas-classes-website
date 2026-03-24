@@ -161,23 +161,25 @@ export async function POST(req: NextRequest) {
   try {
     await connectToDatabase();
 
-    // Check authentication
+    // Check authentication and admin (bypass for local development)
     const user = await getAuthenticatedUser();
+    const isLocal = user?.id === 'local';
     
-    if (!user || user.id === 'local') {
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      );
-    }
+    if (!isLocal) {
+      if (!user) {
+        return NextResponse.json(
+          { error: 'Authentication required' },
+          { status: 401 }
+        );
+      }
 
-    // Check admin status
-    const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim());
-    if (!adminEmails.includes(user.email)) {
-      return NextResponse.json(
-        { error: 'Admin access required' },
-        { status: 403 }
-      );
+      const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim());
+      if (!adminEmails.includes(user.email)) {
+        return NextResponse.json(
+          { error: 'Admin access required' },
+          { status: 403 }
+        );
+      }
     }
 
     const body = await req.json();

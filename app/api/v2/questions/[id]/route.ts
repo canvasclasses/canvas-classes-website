@@ -5,6 +5,7 @@ import { QuestionV2 } from '@/lib/models/Question.v2';
 import { Chapter } from '@/lib/models/Chapter';
 import { AuditLog } from '@/lib/models/AuditLog';
 import { createServerClient } from '@supabase/ssr';
+import { canEditQuestion, canDeleteQuestion } from '@/lib/rbac';
 
 async function getAuthenticatedUser(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -88,6 +89,17 @@ export async function PATCH(
         { success: false, error: 'Question not found' },
         { status: 404 }
       );
+    }
+    
+    // Check RBAC: Can user edit this question?
+    if (user && !isLocalDev) {
+      const hasPermission = await canEditQuestion(user.email!, existingQuestion.metadata.chapter_id);
+      if (!hasPermission) {
+        return NextResponse.json(
+          { success: false, error: 'Forbidden: You do not have permission to edit questions in this subject' },
+          { status: 403 }
+        );
+      }
     }
     
     // Convert Mongoose document to plain object to avoid internal properties corrupting $set
@@ -302,6 +314,17 @@ export async function DELETE(
         { success: false, error: 'Question not found' },
         { status: 404 }
       );
+    }
+    
+    // Check RBAC: Can user delete this question?
+    if (user && !isLocalDev) {
+      const hasPermission = await canDeleteQuestion(user.email!, question.metadata.chapter_id);
+      if (!hasPermission) {
+        return NextResponse.json(
+          { success: false, error: 'Forbidden: Only super admins can delete questions' },
+          { status: 403 }
+        );
+      }
     }
     
     // Soft delete — use updateOne to bypass pre-save middleware (avoids 'next is not a function' in Next.js App Router)

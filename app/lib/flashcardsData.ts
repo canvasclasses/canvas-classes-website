@@ -21,7 +21,7 @@ export interface FlashcardItem {
 // Cache for ISR (Incremental Static Regeneration)
 let flashcardsCache: FlashcardItem[] | null = null;
 let cacheTimestamp = 0;
-const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes (reduced for active development — restore to 24h for production)
 
 /**
  * Fetch all flashcards from MongoDB
