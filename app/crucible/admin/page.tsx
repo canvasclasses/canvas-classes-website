@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2, Library, Info, Volume2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2, Library, Info, Volume2, ChevronDown, ChevronUp, Shield } from 'lucide-react';
 // uuid removed — display_id is now generated inline
 import AnalyticsDashboard from './AnalyticsDashboard';
 import ExportDashboard from './components/ExportDashboard';
@@ -14,6 +14,8 @@ import AudioPlayer from './components/AudioPlayer';
 import SVGScaleControls from './components/SVGScaleControls';
 import SVGDropZone from './components/SVGDropZone';
 import VideoDropZone from './components/VideoDropZone';
+import RoleManagement from './components/RoleManagement';
+import { usePermissions } from './hooks/usePermissions';
 
 const VALID_TOPIC_IDS = new Set(TAXONOMY_FROM_CSV.filter(t => t.type === 'topic').map(t => t.id));
 const isTagValid = (tags: any[] | undefined | null) => {
@@ -132,6 +134,10 @@ export default function AdminPage() {
     // Analytics
     const [showAnalytics, setShowAnalytics] = useState(false);
     const [showExport, setShowExport] = useState(false);
+    const [showRoleManagement, setShowRoleManagement] = useState(false);
+
+    // Permissions
+    const { permissions, loading: permissionsLoading, canEdit, canDelete, canManageRoles, canAccessChapter } = usePermissions();
 
     // Bulk import
     const [showBulkImport, setShowBulkImport] = useState(false);
@@ -410,14 +416,18 @@ export default function AdminPage() {
             ph12_electrostatics: 'ELST', ph12_current: 'CURR', ph12_magnetism: 'MAG',
             ph12_emi: 'EMI', ph12_ac: 'ACE', ph12_ray_optics: 'ROPY',
             ph12_wave_optics: 'WVOP', ph12_modern: 'MOD', ph12_semiconductors: 'SEMI',
-            // Maths
-            ma11_sets: 'SETS', ma11_complex: 'CMPX', ma11_sequences: 'SEQ',
-            ma11_pnc: 'PNC', ma11_binomial: 'BINO', ma11_trigonometry: 'TRIG',
-            ma11_straight_lines: 'STLN', ma11_conics: 'CONI', ma11_limits: 'LIM',
-            ma11_math_induction: 'MI', ma11_stats: 'STAT',
-            ma12_functions: 'FUNC', ma12_matrices: 'MATR', ma12_diff_calculus: 'DIFF',
-            ma12_aod: 'AOD', ma12_integrals: 'INTG', ma12_aoi: 'AOI',
-            ma12_vectors: 'VEC', ma12_3d: 'TDG', ma12_probability: 'PROB',
+            // Maths (Competitive Syllabus — 33 chapters)
+            ma_basic_math: 'BOMA', ma_quadratic: 'QUAD', ma_complex: 'CMPL',
+            ma_sequence: 'SQSR', ma_pnc: 'PMCM', ma_binomial: 'BNML',
+            ma_reasoning: 'MRES', ma_statistics: 'STAT', ma_matrices: 'MTRX',
+            ma_determinants: 'DTRM', ma_probability: 'PROB', ma_sets_rel: 'STRL',
+            ma_functions: 'FUNC', ma_limits: 'LIMS', ma_continuity_diff: 'CTDF',
+            ma_differentiation: 'DIFF', ma_aod: 'AODV', ma_indef_int: 'ININ',
+            ma_def_int: 'DFIN', ma_auc: 'AUC', ma_diff_eq: 'DFEQ',
+            ma_straight_lines: 'STLN', ma_circle: 'CRCL', ma_parabola: 'PRBL',
+            ma_ellipse: 'ELPS', ma_hyperbola: 'HYPB', ma_trig_ratios: 'TRRI',
+            ma_trig_eq: 'TREQ', ma_itf: 'ITF', ma_height_dist: 'HTDT',
+            ma_triangle_prop: 'PRTR', ma_vector_algebra: 'VCAL', ma_3d_geom: 'TDGM',
         };
         const prefix = CHAPTER_PREFIX_MAP[defaultChapter] || defaultChapter.split('_').pop()?.toUpperCase().substring(0, 4) || 'QUES';
         // Find current max display_id with this prefix from loaded questions
@@ -653,7 +663,7 @@ export default function AdminPage() {
         }
     };
 
-    if (loading) return <div className="p-8 text-white">Loading Admin...</div>;
+    if (loading || permissionsLoading) return <div className="p-8 text-white">Loading Admin...</div>;
 
     const selectedQuestion = questions.find(q => q._id === selectedQuestionId);
 
@@ -748,6 +758,12 @@ export default function AdminPage() {
                         className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-blue-600/60 rounded-lg transition shrink-0">
                         <FileJson size={13} />
                     </button>
+                    {canManageRoles && (
+                        <button onClick={() => setShowRoleManagement(!showRoleManagement)} title="Role Management"
+                            className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-purple-600/60 rounded-lg transition shrink-0">
+                            <Shield size={13} />
+                        </button>
+                    )}
 
                     <div className="w-px h-4 bg-gray-700/50 shrink-0" />
 
@@ -922,10 +938,12 @@ export default function AdminPage() {
                         {chapters
                             .filter(ch => {
                                 const id = ch._id;
-                                if (selectedSubjectFilter === 'chemistry') return id.startsWith('ch11_') || id.startsWith('ch12_');
-                                if (selectedSubjectFilter === 'physics') return id.startsWith('ph11_') || id.startsWith('ph12_');
-                                if (selectedSubjectFilter === 'maths') return id.startsWith('ma11_') || id.startsWith('ma12_');
-                                return true;
+                                // Subject filter
+                                if (selectedSubjectFilter === 'chemistry' && !(id.startsWith('ch11_') || id.startsWith('ch12_'))) return false;
+                                if (selectedSubjectFilter === 'physics' && !(id.startsWith('ph11_') || id.startsWith('ph12_'))) return false;
+                                if (selectedSubjectFilter === 'maths' && !id.startsWith('ma_')) return false;
+                                // Permission filter - only show chapters user can access
+                                return canAccessChapter(id);
                             })
                             .map(ch => (
                                 <option key={ch._id} value={ch._id}>{ch.name}</option>
@@ -1292,8 +1310,11 @@ export default function AdminPage() {
                                         className={`p-1.5 rounded transition ${selectedQuestion.flags?.some(f => !f.resolved) ? 'bg-red-500/20 text-red-500' : 'bg-gray-800/50 text-gray-500 hover:text-red-400'}`} title="Flag">
                                         <AlertTriangle size={14} />
                                     </button>
-                                    <button onClick={() => handleDelete(selectedQuestion._id)}
-                                        className={`p-1.5 rounded transition ${deletingId === selectedQuestion._id ? 'bg-red-500 text-white' : 'bg-gray-800/50 text-gray-500 hover:text-red-400'}`}>
+                                    <button 
+                                        onClick={() => handleDelete(selectedQuestion._id)}
+                                        disabled={!canDelete}
+                                        title={!canDelete ? 'Only super admins can delete questions' : 'Delete question'}
+                                        className={`p-1.5 rounded transition ${deletingId === selectedQuestion._id ? 'bg-red-500 text-white' : 'bg-gray-800/50 text-gray-500 hover:text-red-400'} ${!canDelete ? 'opacity-30 cursor-not-allowed' : ''}`}>
                                         <Trash2 size={14} />
                                     </button>
                                 </div>
@@ -2135,6 +2156,29 @@ export default function AdminPage() {
                     initialSelected={bulkMode && selectedQuestions.size > 0 ? selectedQuestions : undefined}
                     onClose={() => setShowExport(false)}
                 />
+            )}
+
+            {/* Role Management Modal */}
+            {showRoleManagement && canManageRoles && permissions && (
+                <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4 overflow-y-auto">
+                    <div className="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-4xl my-8 overflow-hidden shadow-2xl">
+                        <div className="p-6 border-b border-gray-800 flex items-center justify-between bg-gray-900/50">
+                            <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                                <Shield className="text-purple-400" size={24} />
+                                Role Management
+                            </h2>
+                            <button 
+                                onClick={() => setShowRoleManagement(false)} 
+                                className="text-gray-500 hover:text-white transition text-2xl leading-none"
+                            >
+                                ✕
+                            </button>
+                        </div>
+                        <div className="p-6 max-h-[80vh] overflow-y-auto">
+                            <RoleManagement currentUserEmail={permissions.email} />
+                        </div>
+                    </div>
+                </div>
             )}
 
             {/* Flag Modal */}

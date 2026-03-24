@@ -48,6 +48,35 @@
 }
 
 /* Control other elements */
+
+/* KaTeX Fraction Size Fix - Make fractions more legible without being too large */
+/* Target the fraction numerator and denominator specifically */
+.latex-preview .katex .mfrac > .vlist-t {
+  font-size: 1.05em !important;
+}
+
+/* Make fraction line slightly thicker for visibility */
+.latex-preview .katex .frac-line {
+  border-bottom-width: 0.05em !important;
+}
+
+/* Prevent KaTeX from making fraction parts too small */
+.latex-preview .katex .sizing.reset-size6.size3 {
+  font-size: 0.75em !important;
+}
+
+/* Better vertical alignment for inline fractions */
+.latex-preview .katex .mfrac {
+  vertical-align: -0.4em !important;
+  margin: 0 0.08em !important;
+}
+
+/* Display mode fractions (centered equations) slightly larger */
+.latex-preview .katex-display .mfrac > .vlist-t {
+  font-size: 1.1em !important;
+}
+
+/* Control other elements */
 .solution-text strong {
   display: inline;
 }
