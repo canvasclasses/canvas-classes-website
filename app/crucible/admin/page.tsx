@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2, Library, Info, Volume2, ChevronDown, ChevronUp, Shield } from 'lucide-react';
 // uuid removed — display_id is now generated inline
@@ -110,7 +110,7 @@ const QUESTION_TYPES = [
     { id: 'WKEX', name: 'Worked Example', color: 'bg-teal-500/20 text-teal-400 border-teal-500/30' },
 ];
 
-export default function AdminPage() {
+function AdminPageContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     
@@ -2272,3 +2272,18 @@ export default function AdminPage() {
     );
 }
 
+// Wrapper component with Suspense boundary for useSearchParams
+export default function AdminPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+                <div className="text-center">
+                    <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mb-4"></div>
+                    <p className="text-gray-400">Loading admin dashboard...</p>
+                </div>
+            </div>
+        }>
+            <AdminPageContent />
+        </Suspense>
+    );
+}
