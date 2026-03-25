@@ -1,10 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 
-// Admin emails allowed to access /crucible/admin
-// Add your team members' emails here
-const ADMIN_EMAILS: string[] = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(Boolean);
-
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
@@ -57,15 +53,14 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(loginUrl);
     }
 
-    // /crucible/admin requires email to be in the ADMIN_EMAILS allowlist (skip on local dev)
-    if (pathname.startsWith('/crucible/admin') && user && !isLocalDev) {
-        const userEmail = user.email || '';
-        if (ADMIN_EMAILS.length > 0 && !ADMIN_EMAILS.includes(userEmail)) {
-            return NextResponse.json(
-                { error: 'Forbidden: Admin access only' },
-                { status: 403 }
-            );
-        }
+    // /crucible/admin requires authentication
+    // RBAC permissions are checked client-side by usePermissions hook in the admin page
+    // This just ensures user is logged in
+    if (pathname.startsWith('/crucible/admin') && !user && !isLocalDev) {
+        const loginUrl = request.nextUrl.clone();
+        loginUrl.pathname = '/login';
+        loginUrl.searchParams.set('next', pathname);
+        return NextResponse.redirect(loginUrl);
     }
 
     return supabaseResponse;

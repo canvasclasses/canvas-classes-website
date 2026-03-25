@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2, Library, Info, Volume2, ChevronDown, ChevronUp, Shield } from 'lucide-react';
 // uuid removed — display_id is now generated inline
 import AnalyticsDashboard from './AnalyticsDashboard';
@@ -110,6 +111,9 @@ const QUESTION_TYPES = [
 ];
 
 export default function AdminPage() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    
     const [questions, setQuestions] = useState<Question[]>([]);
     const [chapters, setChapters] = useState<Chapter[]>([]);
     const [loading, setLoading] = useState(true);
@@ -159,21 +163,21 @@ export default function AdminPage() {
     const [questionLatexValidation, setQuestionLatexValidation] = useState<LaTeXValidationResult | null>(null);
     const [solutionLatexValidation, setSolutionLatexValidation] = useState<LaTeXValidationResult | null>(null);
 
-    // Filters
-    const [searchInput, setSearchInput] = useState(''); // draft — applied on Enter
-    const [searchQuery, setSearchQuery] = useState('');
-    const [selectedSubjectFilter, setSelectedSubjectFilter] = useState<'chemistry' | 'physics' | 'maths' | 'all'>('chemistry');
-    const [selectedChapterFilter, setSelectedChapterFilter] = useState('all');
-    const [selectedTypeFilter, setSelectedTypeFilter] = useState('all');
-    const [selectedSourceFilter, setSelectedSourceFilter] = useState('all');
-    const [selectedShiftFilter, setSelectedShiftFilter] = useState('all');
+    // Filters - initialize from URL params
+    const [searchInput, setSearchInput] = useState(searchParams.get('search') || ''); // draft — applied on Enter
+    const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+    const [selectedSubjectFilter, setSelectedSubjectFilter] = useState<'chemistry' | 'physics' | 'maths' | 'all'>((searchParams.get('subject') as any) || 'chemistry');
+    const [selectedChapterFilter, setSelectedChapterFilter] = useState(searchParams.get('chapter') || 'all');
+    const [selectedTypeFilter, setSelectedTypeFilter] = useState(searchParams.get('type') || 'all');
+    const [selectedSourceFilter, setSelectedSourceFilter] = useState(searchParams.get('source') || 'all');
+    const [selectedShiftFilter, setSelectedShiftFilter] = useState(searchParams.get('shift') || 'all');
 
     // Filter state (continued)
-    const [selectedTopPYQFilter, setSelectedTopPYQFilter] = useState('all');
-    const [selectedDifficultyFilter, setSelectedDifficultyFilter] = useState('all');
-    const [selectedTagStatusFilter, setSelectedTagStatusFilter] = useState('all');
-    const [selectedYearFilter, setSelectedYearFilter] = useState('all');
-    const [selectedTagFilter, setSelectedTagFilter] = useState('all');
+    const [selectedTopPYQFilter, setSelectedTopPYQFilter] = useState(searchParams.get('topPyq') || 'all');
+    const [selectedDifficultyFilter, setSelectedDifficultyFilter] = useState(searchParams.get('difficulty') || 'all');
+    const [selectedTagStatusFilter, setSelectedTagStatusFilter] = useState(searchParams.get('tagStatus') || 'all');
+    const [selectedYearFilter, setSelectedYearFilter] = useState(searchParams.get('year') || 'all');
+    const [selectedTagFilter, setSelectedTagFilter] = useState(searchParams.get('tag') || 'all');
 
     // Get chapter-specific tags from taxonomy
     const [availableTags, setAvailableTags] = useState<Array<{ id: string, name: string }>>([]);
@@ -263,6 +267,39 @@ export default function AdminPage() {
     useEffect(() => {
         loadData();
     }, []);
+
+    // Sync filter state to URL params
+    useEffect(() => {
+        const params = new URLSearchParams();
+        
+        if (searchQuery) params.set('search', searchQuery);
+        if (selectedSubjectFilter !== 'chemistry') params.set('subject', selectedSubjectFilter);
+        if (selectedChapterFilter !== 'all') params.set('chapter', selectedChapterFilter);
+        if (selectedTypeFilter !== 'all') params.set('type', selectedTypeFilter);
+        if (selectedSourceFilter !== 'all') params.set('source', selectedSourceFilter);
+        if (selectedShiftFilter !== 'all') params.set('shift', selectedShiftFilter);
+        if (selectedTopPYQFilter !== 'all') params.set('topPyq', selectedTopPYQFilter);
+        if (selectedDifficultyFilter !== 'all') params.set('difficulty', selectedDifficultyFilter);
+        if (selectedTagStatusFilter !== 'all') params.set('tagStatus', selectedTagStatusFilter);
+        if (selectedYearFilter !== 'all') params.set('year', selectedYearFilter);
+        if (selectedTagFilter !== 'all') params.set('tag', selectedTagFilter);
+        
+        const newUrl = params.toString() ? `?${params.toString()}` : '/crucible/admin';
+        router.replace(newUrl, { scroll: false });
+    }, [
+        searchQuery,
+        selectedSubjectFilter,
+        selectedChapterFilter,
+        selectedTypeFilter,
+        selectedSourceFilter,
+        selectedShiftFilter,
+        selectedTopPYQFilter,
+        selectedDifficultyFilter,
+        selectedTagStatusFilter,
+        selectedYearFilter,
+        selectedTagFilter,
+        router
+    ]);
 
     // Load questions when filters or search change
     useEffect(() => {
@@ -1535,7 +1572,7 @@ export default function AdminPage() {
                             {/* Options or Numerical Answer or Subjective */}
                             {selectedQuestion.type === 'NVT' ? (
                                 <div>
-                                    <label className="text-xs text-gray-500 mb-2 block font-medium">Numerical Answer</label>
+                                    <label className="text-xs text-gray-500 mb-2 block font-medium">Numerical Answer (accepts negative numbers and decimals)</label>
                                     <input
                                         type="text"
                                         value={
@@ -1547,9 +1584,16 @@ export default function AdminPage() {
                                         }
                                         onChange={(e) => {
                                             const raw = e.target.value;
+                                            // Allow typing: digits, minus sign (only at start), decimal point, and empty string
+                                            // This regex allows partial input like "-", ".", "-.", "12.", etc.
+                                            if (raw !== '' && !/^-?\d*\.?\d*$/.test(raw)) {
+                                                return; // Block invalid characters
+                                            }
+                                            
+                                            // Update local state immediately for responsive typing
                                             const num = parseFloat(raw);
                                             const isDecimal = raw.includes('.');
-                                            const answerUpdate = isNaN(num)
+                                            const answerUpdate = isNaN(num) || raw === '' || raw === '-' || raw === '.' || raw === '-.'
                                                 ? {}
                                                 : isDecimal
                                                     ? { decimal_value: num }
@@ -1561,9 +1605,10 @@ export default function AdminPage() {
                                             ));
                                         }}
                                         onBlur={(e) => {
-                                            const raw = e.target.value;
+                                            const raw = e.target.value.trim();
+                                            if (raw === '' || raw === '-' || raw === '.' || raw === '-.') return;
                                             const num = parseFloat(raw);
-                                            if (isNaN(num) || raw.trim() === '') return;
+                                            if (isNaN(num)) return;
                                             const isDecimal = raw.includes('.');
                                             const answerUpdate = isDecimal
                                                 ? { decimal_value: num }
@@ -1573,7 +1618,7 @@ export default function AdminPage() {
                                             });
                                         }}
                                         className="w-full bg-gray-800/50 border border-gray-700/50 rounded-lg px-4 py-3 text-2xl font-bold text-blue-400 focus:border-purple-500 outline-none"
-                                        placeholder="Enter numerical answer"
+                                        placeholder="e.g., -5, 3.14, -0.5"
                                     />
                                 </div>
                             ) : selectedQuestion.type === 'SUBJ' ? (
