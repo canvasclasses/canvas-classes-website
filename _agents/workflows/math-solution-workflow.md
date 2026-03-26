@@ -23,9 +23,9 @@ You must rigorously strip away the "AI-designed" feel. Avoid generic corporate l
 ## 🗂 Formatting & Style Rules
 
 - **Alignment & Layout**: Keep all text cleanly left-aligned. Use bolding strategically for emphasis or crucial conceptual shifts, but do not clutter the page.
-- **Math Typography**: Use standard LaTeX formatting for all mathematical expressions. Use `$` for inline equations and `$$` for display equations. Do not skip `\frac{}{}` for fractions.
+- **Math Typography**: Use standard LaTeX formatting for all mathematical expressions. Use `$` for all equations. NEVER use `$$` for display equations, as it centers the output; all solutions must be cleanly left-aligned. Do not skip `\frac{}{}` for fractions.
 - **Syllabus Bounds**: Strictly adhere to the JEE Mains and Advanced syllabus. Do not use higher-level college math unless it acts as a verified, legal shortcut for JEE. 
-- **Boxed Answer**: Always end with `$$\boxed{\text{Answer: (Option)}}$$` or `$$\boxed{\text{Answer: [Value]}}$$`.
+- **Boxed Answer**: Always end with `$\boxed{\text{Answer: (Option)}}$` or `$\boxed{\text{Answer: [Value]}}$` (ensuring the final answer is also left-aligned).
 
 ---
 

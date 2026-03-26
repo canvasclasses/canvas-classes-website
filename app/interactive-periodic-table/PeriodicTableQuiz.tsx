@@ -211,48 +211,245 @@ export default function PeriodicTableQuiz() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="text-center py-8"
+                        className="grid grid-cols-1 lg:grid-cols-2 gap-8 py-8 px-4"
                     >
-                        <p className="text-gray-400 mb-4">
-                            Test your memory! Place elements in their correct positions.
-                        </p>
-
-                        {/* Block filter */}
-                        <div className="flex flex-wrap justify-center gap-2 mb-6">
-                            {[
-                                { id: 'all', label: 'All Elements', color: 'gray' },
-                                { id: 's', label: 's-Block', color: 'red' },
-                                { id: 'p', label: 'p-Block', color: 'green' },
-                                { id: 'd', label: 'd-Block', color: 'blue' },
-                            ].map(block => (
-                                <button
-                                    key={block.id}
-                                    onClick={() => setBlockFilter(block.id as BlockFilter)}
-                                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${blockFilter === block.id
-                                        ? `bg-${block.color}-500 text-white`
-                                        : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
-                                        }`}
-                                    style={{
-                                        backgroundColor: blockFilter === block.id
-                                            ? block.id === 's' ? '#ef4444'
-                                                : block.id === 'p' ? '#22c55e'
-                                                    : block.id === 'd' ? '#3b82f6'
-                                                        : '#6b7280'
-                                            : undefined
-                                    }}
-                                >
-                                    {block.label}
-                                </button>
-                            ))}
-                        </div>
-
-                        <button
-                            onClick={startGame}
-                            className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold px-6 py-3 rounded-xl hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/25"
+                        {/* Left: Stunning authentic periodic table with glassmorphism */}
+                        <motion.div
+                            initial={{ x: -50, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="relative flex items-center justify-center min-h-[400px]"
                         >
-                            <Play size={20} />
-                            Start Practice
-                        </button>
+                            {/* Ambient glow background */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-pink-500/5 rounded-3xl blur-3xl" />
+                            
+                            {/* Authentic periodic table structure */}
+                            <div className="relative w-full" style={{ 
+                                display: 'grid', 
+                                gridTemplateColumns: 'repeat(18, minmax(0, 1fr))', 
+                                gap: '4px',
+                                padding: '10px'
+                            }}>
+                                {/* Generate authentic periodic table layout */}
+                                {(() => {
+                                    const elements = [];
+                                    const blockColors = {
+                                        s: ['from-red-500/50 to-orange-500/50', 'shadow-red-500/30'],
+                                        p: ['from-green-500/50 to-emerald-500/50', 'shadow-green-500/30'],
+                                        d: ['from-blue-500/50 to-cyan-500/50', 'shadow-blue-500/30'],
+                                        f: ['from-purple-500/50 to-pink-500/50', 'shadow-purple-500/30'],
+                                    };
+                                    
+                                    // Period 1: H and He
+                                    elements.push({ row: 1, col: 1, block: 's', delay: 0 }); // H
+                                    elements.push({ row: 1, col: 18, block: 'p', delay: 0.05 }); // He
+                                    
+                                    // Period 2: Li-Ne
+                                    for (let col = 1; col <= 2; col++) elements.push({ row: 2, col, block: 's', delay: 0.1 + col * 0.02 });
+                                    for (let col = 13; col <= 18; col++) elements.push({ row: 2, col, block: 'p', delay: 0.1 + col * 0.02 });
+                                    
+                                    // Period 3: Na-Ar
+                                    for (let col = 1; col <= 2; col++) elements.push({ row: 3, col, block: 's', delay: 0.2 + col * 0.02 });
+                                    for (let col = 13; col <= 18; col++) elements.push({ row: 3, col, block: 'p', delay: 0.2 + col * 0.02 });
+                                    
+                                    // Period 4: K-Kr
+                                    for (let col = 1; col <= 2; col++) elements.push({ row: 4, col, block: 's', delay: 0.3 + col * 0.02 });
+                                    for (let col = 3; col <= 12; col++) elements.push({ row: 4, col, block: 'd', delay: 0.3 + col * 0.02 });
+                                    for (let col = 13; col <= 18; col++) elements.push({ row: 4, col, block: 'p', delay: 0.3 + col * 0.02 });
+                                    
+                                    // Period 5: Rb-Xe
+                                    for (let col = 1; col <= 2; col++) elements.push({ row: 5, col, block: 's', delay: 0.4 + col * 0.02 });
+                                    for (let col = 3; col <= 12; col++) elements.push({ row: 5, col, block: 'd', delay: 0.4 + col * 0.02 });
+                                    for (let col = 13; col <= 18; col++) elements.push({ row: 5, col, block: 'p', delay: 0.4 + col * 0.02 });
+                                    
+                                    // Period 6: Cs-Rn (with lanthanide gap)
+                                    for (let col = 1; col <= 2; col++) elements.push({ row: 6, col, block: 's', delay: 0.5 + col * 0.02 });
+                                    elements.push({ row: 6, col: 3, block: 'f', delay: 0.52, isLanthanide: true }); // La placeholder
+                                    for (let col = 4; col <= 12; col++) elements.push({ row: 6, col, block: 'd', delay: 0.5 + col * 0.02 });
+                                    for (let col = 13; col <= 18; col++) elements.push({ row: 6, col, block: 'p', delay: 0.5 + col * 0.02 });
+                                    
+                                    // Period 7: Fr-Og (with actinide gap)
+                                    for (let col = 1; col <= 2; col++) elements.push({ row: 7, col, block: 's', delay: 0.6 + col * 0.02 });
+                                    elements.push({ row: 7, col: 3, block: 'f', delay: 0.62, isActinide: true }); // Ac placeholder
+                                    for (let col = 4; col <= 12; col++) elements.push({ row: 7, col, block: 'd', delay: 0.6 + col * 0.02 });
+                                    for (let col = 13; col <= 18; col++) elements.push({ row: 7, col, block: 'p', delay: 0.6 + col * 0.02 });
+                                    
+                                    return elements.map((elem, idx) => {
+                                        const [gradient, shadow] = blockColors[elem.block as keyof typeof blockColors];
+                                        const isSpecial = elem.isLanthanide || elem.isActinide;
+                                        
+                                        return (
+                                            <motion.div
+                                                key={`${elem.row}-${elem.col}`}
+                                                initial={{ opacity: 0, scale: 0.3, rotateY: -90 }}
+                                                animate={{ 
+                                                    opacity: [0.6, 1, 0.6],
+                                                    scale: [0.95, 1, 0.95],
+                                                    rotateY: 0,
+                                                }}
+                                                transition={{
+                                                    opacity: {
+                                                        duration: 3,
+                                                        delay: elem.delay,
+                                                        repeat: Infinity,
+                                                        ease: "easeInOut"
+                                                    },
+                                                    scale: {
+                                                        duration: 3,
+                                                        delay: elem.delay,
+                                                        repeat: Infinity,
+                                                        ease: "easeInOut"
+                                                    },
+                                                    rotateY: {
+                                                        duration: 0.6,
+                                                        delay: elem.delay,
+                                                        ease: "backOut"
+                                                    }
+                                                }}
+                                                style={{
+                                                    gridColumn: elem.col,
+                                                    gridRow: elem.row,
+                                                }}
+                                                className={`relative aspect-square rounded-lg backdrop-blur-md bg-gradient-to-br ${gradient} border border-white/30 ${shadow} shadow-lg overflow-hidden group cursor-pointer`}
+                                            >
+                                                {/* Shimmer effect */}
+                                                <motion.div
+                                                    animate={{
+                                                        x: ['-100%', '200%'],
+                                                        opacity: [0, 1, 0],
+                                                    }}
+                                                    transition={{
+                                                        duration: 2.5,
+                                                        delay: elem.delay + 1,
+                                                        repeat: Infinity,
+                                                        repeatDelay: 3,
+                                                        ease: "easeInOut"
+                                                    }}
+                                                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"
+                                                />
+                                                
+                                                {/* Inner glow */}
+                                                <motion.div
+                                                    animate={{
+                                                        opacity: [0.3, 0.7, 0.3],
+                                                        scale: [0.8, 1.2, 0.8],
+                                                    }}
+                                                    transition={{
+                                                        duration: 2,
+                                                        delay: elem.delay + 0.5,
+                                                        repeat: Infinity,
+                                                        ease: "easeInOut"
+                                                    }}
+                                                    className="absolute inset-0 bg-gradient-radial from-white/40 via-transparent to-transparent blur-sm"
+                                                />
+                                                
+                                                {/* Particle effect for special elements */}
+                                                {isSpecial && (
+                                                    <motion.div
+                                                        animate={{
+                                                            scale: [1, 1.5, 1],
+                                                            opacity: [0.5, 0, 0.5],
+                                                        }}
+                                                        transition={{
+                                                            duration: 2,
+                                                            delay: elem.delay,
+                                                            repeat: Infinity,
+                                                            ease: "easeOut"
+                                                        }}
+                                                        className="absolute inset-0 rounded-lg border-2 border-white/50"
+                                                    />
+                                                )}
+                                                
+                                                {/* Hover glow */}
+                                                <div className="absolute inset-0 bg-white/0 group-hover:bg-white/20 transition-all duration-300" />
+                                            </motion.div>
+                                        );
+                                    });
+                                })()}
+                            </div>
+                        </motion.div>
+
+                        {/* Right: Text content */}
+                        <motion.div
+                            initial={{ x: 50, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="flex flex-col justify-center"
+                        >
+                            <motion.div
+                                initial={{ y: -20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.4 }}
+                                className="mb-6"
+                            >
+                                <h3 className="text-3xl font-black text-white mb-4 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                                    Test Your Periodic Table Memory
+                                </h3>
+                                <p className="text-gray-300 text-base mb-3 leading-relaxed">
+                                    Can you place each element in its correct position? Challenge yourself!
+                                </p>
+                                <p className="text-cyan-400 text-sm font-semibold">
+                                    🧠 Click on the grid where each element belongs
+                                </p>
+                            </motion.div>
+
+                            {/* Block filter */}
+                            <motion.div
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.6 }}
+                                className="mb-8"
+                            >
+                                <p className="text-gray-400 text-sm mb-3 font-medium">Choose practice mode:</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {[
+                                        { id: 'all', label: 'All Elements', color: 'gray' },
+                                        { id: 's', label: 's-Block', color: 'red' },
+                                        { id: 'p', label: 'p-Block', color: 'green' },
+                                        { id: 'd', label: 'd-Block', color: 'blue' },
+                                    ].map(block => (
+                                        <button
+                                            key={block.id}
+                                            onClick={() => setBlockFilter(block.id as BlockFilter)}
+                                            className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all border-2 ${
+                                                blockFilter === block.id
+                                                    ? 'text-white shadow-lg'
+                                                    : 'bg-gray-800/50 text-gray-400 hover:bg-gray-700/50 border-gray-700'
+                                            }`}
+                                            style={{
+                                                backgroundColor: blockFilter === block.id
+                                                    ? block.id === 's' ? '#ef4444'
+                                                        : block.id === 'p' ? '#22c55e'
+                                                            : block.id === 'd' ? '#3b82f6'
+                                                                : '#6b7280'
+                                                    : undefined,
+                                                borderColor: blockFilter === block.id
+                                                    ? block.id === 's' ? '#f87171'
+                                                        : block.id === 'p' ? '#4ade80'
+                                                            : block.id === 'd' ? '#60a5fa'
+                                                                : '#9ca3af'
+                                                    : undefined
+                                            }}
+                                        >
+                                            {block.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            </motion.div>
+
+                            <motion.button
+                                initial={{ scale: 0.9, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ delay: 0.8 }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={startGame}
+                                className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold px-8 py-4 rounded-xl hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50"
+                            >
+                                <Play size={20} />
+                                Start Practice
+                            </motion.button>
+                        </motion.div>
                     </motion.div>
                 )}
 

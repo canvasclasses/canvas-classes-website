@@ -1,65 +1,90 @@
-
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import { inorganicTrendsData } from '@/app/lib/inorganicTrendsData';
-import { BookOpen, Trophy, Sparkles, Lightbulb } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { BookOpen, Trophy, Sparkles, Lightbulb, ChevronDown, Hash } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-function LazyTrendBlock({ block, theme }: { block: any, theme: any }) {
-    const { ref, inView } = useInView({
-        triggerOnce: true,
-        rootMargin: '200px 0px',
-    });
+interface TrendCardProps {
+    block: {
+        id: number;
+        title: string;
+        trend: string;
+        logic: string;
+    };
+    theme: {
+        accent: string;
+        border: string;
+        hoverBorder: string;
+        bg: string;
+        text: string;
+        badgeBg: string;
+        trendText: string;
+    };
+    index: number;
+}
+
+function TrendCard({ block, theme, index }: TrendCardProps) {
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.5 }}
-            className={`bg-[#161b22] rounded-xl border ${theme.border} ${theme.hoverBorder} transition-all duration-300 flex flex-col h-full group`}
-        >
-            <div className="p-5 flex-grow">
-                {/* Block Header (Always render title to avoid pop-in size changes if possible, or render skeleton) */}
-                <div className="flex justify-between items-start mb-4">
-                    <h4 className={`font-semibold text-gray-200 text-lg group-hover:${theme.text} transition-colors`}>
-                        {block.title}
-                    </h4>
-                    <span className={`text-xs font-mono ${theme.text} ${theme.badgeBg} px-2 py-1 rounded border ${theme.border}`}>
-                        #{block.id}
-                    </span>
+        <div className={`rounded-xl border ${theme.border} bg-[#161b22] overflow-hidden transition-all duration-300 ${theme.hoverBorder}`}>
+            {/* Card Header - Always Visible */}
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-full p-5 flex items-center gap-4 text-left hover:bg-white/[0.02] transition-colors"
+            >
+                {/* Number Badge */}
+                <div className={`flex-shrink-0 w-8 h-8 rounded-lg ${theme.badgeBg} border ${theme.border} flex items-center justify-center`}>
+                    <span className={`text-sm font-bold ${theme.text}`}>{index + 1}</span>
                 </div>
 
-                {inView ? (
-                    <>
-                        {/* Trend Visual */}
-                        <div className={`mb-6 p-4 ${theme.bg} rounded-lg border ${theme.border}`}>
-                            <div className={`text-center font-mono text-base md:text-lg ${theme.trendText} overflow-x-auto whitespace-nowrap scrollbar-thin scrollbar-thumb-gray-700 pb-1`}>
-                                <ReactMarkdown
-                                    remarkPlugins={[remarkMath]}
-                                    rehypePlugins={[rehypeKatex]}
-                                    components={{
-                                        p: ({ node, ...props }) => <span {...props} />
-                                    }}
-                                >
-                                    {block.trend}
-                                </ReactMarkdown>
-                            </div>
-                        </div>
+                {/* Content */}
+                <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-gray-200 text-base mb-2 pr-2">
+                        {block.title}
+                    </h4>
+                    <div className={`inline-block px-3 py-1.5 rounded-lg ${theme.bg} border ${theme.border}`}>
+                        <ReactMarkdown
+                            remarkPlugins={[remarkMath]}
+                            rehypePlugins={[rehypeKatex]}
+                            components={{
+                                p: ({ node, ...props }) => <span {...props} />
+                            }}
+                        >
+                            {block.trend}
+                        </ReactMarkdown>
+                    </div>
+                </div>
 
-                        {/* Logic/Explanation */}
-                        <div className="space-y-3">
-                            <div className="flex items-start gap-2">
-                                <BookOpen size={16} className="text-gray-500 mt-1 flex-shrink-0" />
-                                <div className="text-sm text-gray-400 leading-relaxed">
-                                    <span className="text-gray-300 font-semibold block mb-1">Examiner's Logic:</span>
-                                    <div className="prose prose-invert prose-sm max-w-none [&>p]:leading-relaxed">
+                {/* Expand Icon */}
+                <div className={`flex-shrink-0 p-1.5 rounded-lg border ${theme.border} ${theme.badgeBg} transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+                    <ChevronDown size={18} className={theme.text} />
+                </div>
+            </button>
+
+            {/* Expandable Content - Examiner's Logic */}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                        className="overflow-hidden"
+                    >
+                        <div className={`px-5 pb-5 pt-0 border-t ${theme.border}`}>
+                            <div className="pt-4 flex gap-3">
+                                <div className={`flex-shrink-0 w-8 h-8 rounded-lg ${theme.badgeBg} border ${theme.border} flex items-center justify-center mt-0.5`}>
+                                    <BookOpen size={16} className={theme.text} />
+                                </div>
+                                <div className="flex-1">
+                                    <p className={`text-sm font-semibold ${theme.text} mb-2`}>Examiner&apos;s Logic</p>
+                                    <div className="text-base text-gray-400 leading-relaxed prose prose-invert prose-sm max-w-none [&>p]:leading-relaxed">
                                         <ReactMarkdown
                                             remarkPlugins={[remarkMath]}
                                             rehypePlugins={[rehypeKatex]}
@@ -70,25 +95,21 @@ function LazyTrendBlock({ block, theme }: { block: any, theme: any }) {
                                 </div>
                             </div>
                         </div>
-                    </>
-                ) : (
-                    <div className="h-40 flex items-center justify-center">
-                        <div className="w-8 h-8 border-4 border-gray-600 border-t-amber-500 rounded-full animate-spin opacity-50"></div>
-                    </div>
+                    </motion.div>
                 )}
-            </div>
-        </motion.div>
+            </AnimatePresence>
+        </div>
     );
 }
 
 // Section color themes for visual variety
 const SECTION_THEMES = [
-    { accent: 'amber', border: 'border-amber-500/30', hoverBorder: 'hover:border-amber-500/50', bg: 'bg-amber-500/5', text: 'text-amber-400', badgeBg: 'bg-amber-500/10', trendText: 'text-amber-300', numberBg: 'bg-amber-900/30', numberBorder: 'border-amber-700/50' },
-    { accent: 'cyan', border: 'border-cyan-500/30', hoverBorder: 'hover:border-cyan-500/50', bg: 'bg-cyan-500/5', text: 'text-cyan-400', badgeBg: 'bg-cyan-500/10', trendText: 'text-cyan-300', numberBg: 'bg-cyan-900/30', numberBorder: 'border-cyan-700/50' },
-    { accent: 'purple', border: 'border-purple-500/30', hoverBorder: 'hover:border-purple-500/50', bg: 'bg-purple-500/5', text: 'text-purple-400', badgeBg: 'bg-purple-500/10', trendText: 'text-purple-300', numberBg: 'bg-purple-900/30', numberBorder: 'border-purple-700/50' },
-    { accent: 'emerald', border: 'border-emerald-500/30', hoverBorder: 'hover:border-emerald-500/50', bg: 'bg-emerald-500/5', text: 'text-emerald-400', badgeBg: 'bg-emerald-500/10', trendText: 'text-emerald-300', numberBg: 'bg-emerald-900/30', numberBorder: 'border-emerald-700/50' },
-    { accent: 'rose', border: 'border-rose-500/30', hoverBorder: 'hover:border-rose-500/50', bg: 'bg-rose-500/5', text: 'text-rose-400', badgeBg: 'bg-rose-500/10', trendText: 'text-rose-300', numberBg: 'bg-rose-900/30', numberBorder: 'border-rose-700/50' },
-    { accent: 'blue', border: 'border-blue-500/30', hoverBorder: 'hover:border-blue-500/50', bg: 'bg-blue-500/5', text: 'text-blue-400', badgeBg: 'bg-blue-500/10', trendText: 'text-blue-300', numberBg: 'bg-blue-900/30', numberBorder: 'border-blue-700/50' },
+    { accent: 'amber', border: 'border-amber-500/30', hoverBorder: 'hover:border-amber-500/50', bg: 'bg-amber-500/10', text: 'text-amber-400', badgeBg: 'bg-amber-500/10', trendText: 'text-amber-300' },
+    { accent: 'cyan', border: 'border-cyan-500/30', hoverBorder: 'hover:border-cyan-500/50', bg: 'bg-cyan-500/10', text: 'text-cyan-400', badgeBg: 'bg-cyan-500/10', trendText: 'text-cyan-300' },
+    { accent: 'purple', border: 'border-purple-500/30', hoverBorder: 'hover:border-purple-500/50', bg: 'bg-purple-500/10', text: 'text-purple-400', badgeBg: 'bg-purple-500/10', trendText: 'text-purple-300' },
+    { accent: 'emerald', border: 'border-emerald-500/30', hoverBorder: 'hover:border-emerald-500/50', bg: 'bg-emerald-500/10', text: 'text-emerald-400', badgeBg: 'bg-emerald-500/10', trendText: 'text-emerald-300' },
+    { accent: 'rose', border: 'border-rose-500/30', hoverBorder: 'hover:border-rose-500/50', bg: 'bg-rose-500/10', text: 'text-rose-400', badgeBg: 'bg-rose-500/10', trendText: 'text-rose-300' },
+    { accent: 'blue', border: 'border-blue-500/30', hoverBorder: 'hover:border-blue-500/50', bg: 'bg-blue-500/10', text: 'text-blue-400', badgeBg: 'bg-blue-500/10', trendText: 'text-blue-300' },
 ];
 
 export default function TopInorganicTrends() {
@@ -139,31 +160,36 @@ export default function TopInorganicTrends() {
                     </div>
                 </div>
 
-                {/* Content Sections */}
-                <div className="space-y-16">
-                    {inorganicTrendsData.map((section, index) => {
-                        const theme = SECTION_THEMES[index % SECTION_THEMES.length];
+                {/* Content Sections - List View */}
+                <div className="space-y-10">
+                    {inorganicTrendsData.map((section, sectionIndex) => {
+                        const theme = SECTION_THEMES[sectionIndex % SECTION_THEMES.length];
                         return (
-                            <div key={index} className="scroll-mt-24" id={`section-${index}`}>
+                            <div key={sectionIndex} className="scroll-mt-24" id={`section-${sectionIndex}`}>
                                 {/* Section Header */}
-                                <div className="flex items-center gap-4 mb-8">
-                                    <span className={`flex-shrink-0 w-10 h-10 rounded-lg ${theme.numberBg} flex items-center justify-center text-lg font-bold ${theme.text} border ${theme.numberBorder}`}>
-                                        {index + 1}
-                                    </span>
+                                <div className="flex items-center gap-3 mb-5">
+                                    <div className={`flex-shrink-0 w-10 h-10 rounded-xl ${theme.badgeBg} border ${theme.border} flex items-center justify-center`}>
+                                        <Hash size={20} className={theme.text} />
+                                    </div>
                                     <div>
-                                        <h3 className="text-2xl font-bold text-white shadow-sm">
+                                        <h3 className="text-xl font-bold text-white">
                                             {section.title.replace(/Section \d+: /, '')}
                                         </h3>
                                         {section.description && (
-                                            <p className="text-gray-500 text-sm mt-1">{section.description}</p>
+                                            <p className="text-gray-500 text-sm mt-0.5">{section.description}</p>
                                         )}
                                     </div>
                                 </div>
 
-                                {/* Cards Grid */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {section.blocks.map((block) => (
-                                        <LazyTrendBlock key={block.id} block={block} theme={theme} />
+                                {/* Cards List */}
+                                <div className="space-y-3">
+                                    {section.blocks.map((block, blockIndex) => (
+                                        <TrendCard
+                                            key={block.id}
+                                            block={block}
+                                            theme={theme}
+                                            index={blockIndex}
+                                        />
                                     ))}
                                 </div>
                             </div>

@@ -13,6 +13,11 @@ const TopInorganicTrends = dynamic(() => import('./TopInorganicTrends'), {
     loading: () => <div className="h-[400px] flex items-center justify-center text-gray-400 bg-gray-900/20 rounded-2xl border border-gray-700/50 animate-pulse mt-12">Loading Top Trends...</div>
 });
 
+const ColorsOfCompoundsSection = dynamic(() => import('./ColorsOfCompoundsSection'), {
+    ssr: false,
+    loading: () => <div className="h-[600px] flex items-center justify-center text-gray-400 bg-gray-900/20 rounded-2xl border border-gray-700/50 animate-pulse mt-12">Loading Colors...</div>
+});
+
 export default function PeriodicTrendsPage() {
     return (
         <main className="min-h-screen bg-[#0d1117] text-white">
@@ -79,6 +84,9 @@ export default function PeriodicTrendsPage() {
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
                 <TrendsComponent />
             </section>
+
+            {/* Colors of Inorganic Compounds Section */}
+            <ColorsOfCompoundsSection />
 
             {/* Top 50 Trends Section */}
             <TopInorganicTrends />

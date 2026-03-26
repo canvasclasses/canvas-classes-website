@@ -13,6 +13,7 @@ import {
     TrendingUp,
     BarChart3,
     BookOpen,
+    Layers,
 } from 'lucide-react';
 import {
     ELEMENTS,
@@ -25,10 +26,180 @@ import {
     type CategoryType,
 } from '../lib/elementsData';
 import PeriodicTableQuiz from './PeriodicTableQuiz';
+import OxidesReferenceSection from './OxidesReferenceSection';
+import PeriodicTableMCQQuiz from './PeriodicTableMCQQuiz';
 
 type ViewMode = 'category' | 'property' | 'exceptions';
 
 const PROPERTIES = Object.keys(PROPERTY_INFO);
+
+const BLOCK_INFO = {
+    s: {
+        name: 's-Block Elements',
+        description: 'Groups 1 & 2: Alkali and Alkaline Earth Metals',
+        sections: [
+            {
+                title: 'General Configuration',
+                points: [
+                    'Valence electrons in s-orbital: ns¹ (Group 1) or ns² (Group 2)',
+                    'Form the bridge between noble gases and p-block elements',
+                    'Largest atomic radii in their respective periods'
+                ]
+            },
+            {
+                title: 'Key Properties & Trends',
+                points: [
+                    'Highly reactive metals — reactivity increases down the group',
+                    'Low ionization energies and electronegativities (lowest in periods)',
+                    'Strong reducing agents (readily lose valence electrons)',
+                    'Soft metals with low melting points (except Be, Mg)',
+                    'Good conductors of heat and electricity',
+                    'Form predominantly ionic compounds with high lattice energies'
+                ]
+            },
+            {
+                title: 'Chemical Behavior',
+                points: [
+                    'Show fixed oxidation states: +1 (Group 1) or +2 (Group 2)',
+                    'Form basic oxides and hydroxides (except BeO, which is amphoteric)',
+                    'React vigorously with water (Li reacts slowly, Na/K violently)',
+                    'Characteristic flame colors: Li (crimson), Na (yellow), K (violet), Ca (brick red), Sr (crimson), Ba (apple green)'
+                ]
+            },
+            {
+                title: 'Anomalous Behavior of First Elements',
+                points: [
+                    'Li and Be show diagonal relationships with Mg and Al respectively',
+                    'Smaller size and higher charge density lead to covalent character',
+                    'Be forms covalent compounds (e.g., BeCl₂) unlike other Group 2 elements'
+                ]
+            }
+        ],
+        color: '#3b82f6'
+    },
+    p: {
+        name: 'p-Block Elements',
+        description: 'Groups 13–18: Metals, Metalloids, and Non-metals',
+        sections: [
+            {
+                title: 'General Configuration',
+                points: [
+                    'Valence shell configuration: ns²np¹⁻⁶',
+                    'Unique block containing metals (Al, Ga), metalloids (Si, Ge, As), and non-metals (C, N, O, halogens)',
+                    'Includes the most electronegative element (F) and inert noble gases (Group 18)'
+                ]
+            },
+            {
+                title: 'Key Anomalies of First Members (B, C, N, O, F)',
+                points: [
+                    'Size & Orbitals: Exceptionally small, highly electronegative, and crucially lack vacant d-orbitals in valence shell',
+                    'Restricted Covalency: Maximum covalency of 4 (e.g., B cannot form BF₆³⁻). Heavier members expand octets (SF₆, PF₆⁻)',
+                    'Multiple Bonding: Form strong pπ–pπ bonds (C≡C, N≡N, O=O). Heavier elements use weaker dπ–pπ or single bonds due to diffuse orbitals'
+                ]
+            },
+            {
+                title: 'High-Yield Trends',
+                points: [
+                    'Inert Pair Effect: Down Groups 13–15, the state two units lower becomes stable (Tl⁺ > Tl³⁺, Pb²⁺ > Pb⁴⁺) due to poor shielding by d/f electrons',
+                    'Group 15 Hydrides: NH₃ to BiH₃ — bond dissociation enthalpy ↓, thermal stability ↓, basicity ↓, reducing power ↑ (BiH₃ strongest)',
+                    'Group 16 & 17 EGE Anomaly: O and F have less negative electron gain enthalpies than S and Cl due to strong inter-electronic repulsions in compact 2p orbitals',
+                    'F₂ Oxidizing Power: Despite lower EGE, F₂ is strongest oxidizer due to exceptionally low F–F bond dissociation enthalpy and high hydration enthalpy of F⁻'
+                ]
+            },
+            {
+                title: 'Noble Gases (Group 18)',
+                points: [
+                    'Stable closed-shell structures → very high ionization enthalpies and large positive electron gain enthalpies',
+                    'Xe chemistry: First ionization enthalpy (1170 kJ/mol) ≈ O₂ (1175 kJ/mol), enabling XeF₂, XeF₄, XeF₆ formation',
+                    'Neil Bartlett synthesized first noble gas compound Xe⁺[PtF₆]⁻ by analogy with O₂⁺[PtF₆]⁻'
+                ]
+            }
+        ],
+        color: '#10b981'
+    },
+    d: {
+        name: 'd-Block Elements',
+        description: 'Transition Metals (3d, 4d, 5d series)',
+        sections: [
+            {
+                title: 'General Configuration',
+                points: [
+                    'Configuration: (n–1)d¹⁻¹⁰ns¹⁻² — form bridge between s- and p-blocks',
+                    'Zn, Cd, Hg excluded: Possess completely filled d¹⁰ configurations in ground and common oxidation states',
+                    'Characteristic metallic properties: high density, hardness, melting/boiling points'
+                ]
+            },
+            {
+                title: 'Important Properties & Trends',
+                points: [
+                    'Enthalpies of Atomization: Very high, peaking near middle of series (d⁵ configurations like Cr, Mo, W) due to maximum unpaired electrons → strong metallic bonding. Mn is anomalous (lower MP)',
+                    'Atomic Radii & Lanthanoid Contraction: Radii decrease initially, remain constant mid-series, rise slightly at end. Crucially, 5d series radii ≈ 4d series (e.g., Zr = 160 pm, Hf = 159 pm) due to poor shielding by 14 intervening 4f electrons',
+                    'Colored Compounds: Form colored ions/complexes due to d-d electronic transitions (except d⁰ like Sc³⁺, Ti⁴⁺ and d¹⁰ like Zn²⁺, Cu⁺)',
+                    'Paramagnetic: Possess unpaired d-electrons (except d⁰ and d¹⁰ configurations)'
+                ]
+            },
+            {
+                title: 'Oxidation States',
+                points: [
+                    'Variable Oxidation States: Differ by units of one (V²⁺, V³⁺, V⁴⁺, V⁵⁺). Highest state = +7 (Mn in Mn₂O₇)',
+                    'Stabilization: Higher states stabilized by F and O (can form multiple bonds). Lower states (like zero) stabilized by π-acceptor ligands (CO in Ni(CO)₄)',
+                    'Oxygen vs Fluorine: O superior at stabilizing highest states (Mn forms Mn₂O₇ but only MnF₄) due to multiple bonding capability'
+                ]
+            },
+            {
+                title: 'Standard Electrode Potentials (E°)',
+                points: [
+                    'General trend: Decreasing tendency to form M²⁺ across 3d series',
+                    'Copper Anomaly: Only 3d metal with positive E° (+0.34V) → cannot liberate H₂ from acids. High energy for Cu(s) → Cu²⁺(aq) atomization + ionization not balanced by hydration enthalpy',
+                    'Catalytic Activity: Fe, Ni, Pt, V₂O₅ are excellent catalysts due to variable oxidation states and ability to form reaction intermediates'
+                ]
+            }
+        ],
+        color: '#f59e0b'
+    },
+    f: {
+        name: 'f-Block Elements',
+        description: 'Inner Transition Metals: Lanthanoids (4f) and Actinoids (5f)',
+        sections: [
+            {
+                title: 'General Configuration',
+                points: [
+                    'Electrons filling deep within atomic core: (n–2)f¹⁻¹⁴(n–1)d⁰⁻¹ns²',
+                    'Lanthanoids (Z = 58–71): 4f series, Ce to Lu',
+                    'Actinoids (Z = 90–103): 5f series, Th to Lr — all radioactive'
+                ]
+            },
+            {
+                title: 'Lanthanoids (4f series)',
+                points: [
+                    'Oxidation States: +3 most stable and common. Anomalous +2 and +4 states occur only when leading to extra-stable f⁰, f⁷, or f¹⁴ configurations',
+                    'Example: Ce⁴⁺ (f⁰) is excellent analytical oxidizing agent, slowly reverting to +3. Eu²⁺ (f⁷) and Yb²⁺ (f¹⁴) are strong reducing agents',
+                    'Lanthanoid Contraction: Gradual decrease in ionic radii across series due to imperfect shielding by 4f electrons',
+                    'Colored Ions: Form colored M³⁺ ions (except La³⁺ with f⁰ and Lu³⁺ with f¹⁴ — both colorless)',
+                    'Paramagnetic: Due to unpaired 4f electrons'
+                ]
+            },
+            {
+                title: 'Actinoids (5f series)',
+                points: [
+                    'Chemistry & Reactivity: Much more complex than lanthanoids — exhibit wider range of oxidation states because 5f, 6d, and 7s energy levels are comparable',
+                    'Bonding Participation: 5f orbitals not as deeply buried as 4f → 5f electrons participate in bonding to far greater extent than 4f electrons',
+                    'Actinoid Contraction: Similar to lanthanoid contraction but greater from element to element due to poorer shielding by 5f electrons vs 4f',
+                    'All Radioactive: Used in nuclear reactors, weapons, and research',
+                    'Higher Oxidation States: Show +4, +5, +6, +7 states more commonly than lanthanoids (e.g., U⁶⁺, Np⁷⁺)'
+                ]
+            },
+            {
+                title: 'Applications',
+                points: [
+                    'Lanthanoids: Powerful permanent magnets (Nd, Sm), phosphors in LEDs/displays, catalysts, glass additives',
+                    'Actinoids: Nuclear fuel (U, Pu), medical isotopes, smoke detectors (Am), research'
+                ]
+            }
+        ],
+        color: '#8b5cf6'
+    }
+};
 
 export default function PeriodicTableClient() {
     const [viewMode, setViewMode] = useState<ViewMode>('category');
@@ -37,6 +208,7 @@ export default function PeriodicTableClient() {
     const [selectedElement, setSelectedElement] = useState<Element | null>(null);
     const [compareElements, setCompareElements] = useState<Element[]>([]);
     const [showPropertyDropdown, setShowPropertyDropdown] = useState(false);
+    const [showBlockInfo, setShowBlockInfo] = useState<'s' | 'p' | 'd' | 'f' | null>(null);
 
     const comparisonRef = useRef<HTMLDivElement>(null);
 
@@ -160,8 +332,8 @@ export default function PeriodicTableClient() {
                 }}
                 onClick={() => setSelectedElement(element)}
             >
-                {/* Exception indicator */}
-                {element.isException && viewMode !== 'exceptions' && (
+                {/* Rich data indicator - yellow pulsating dot */}
+                {(element.hasRichData || element.isException) && viewMode !== 'exceptions' && (
                     <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-yellow-400 rounded-full animate-pulse border border-gray-900" />
                 )}
 
@@ -291,6 +463,77 @@ export default function PeriodicTableClient() {
         </div>
     );
 
+    // Block Information Modal - Enhanced with sections and larger design
+    const BlockInfoModal = ({ block }: { block: 's' | 'p' | 'd' | 'f' }) => {
+        const info = BLOCK_INFO[block];
+        return (
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-3 md:p-6 overflow-y-auto"
+                onClick={() => setShowBlockInfo(null)}
+            >
+                <motion.div
+                    initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                    animate={{ scale: 1, opacity: 1, y: 0 }}
+                    exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                    className="bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 rounded-2xl p-6 md:p-10 max-w-5xl w-full border-2 shadow-2xl my-6 max-h-[90vh] overflow-y-auto"
+                    style={{ borderColor: info.color }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    {/* Header */}
+                    <div className="flex items-start justify-between mb-8 pb-6 border-b-2" style={{ borderColor: `${info.color}40` }}>
+                        <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-3">
+                                <div className="p-3 rounded-xl" style={{ backgroundColor: `${info.color}20`, border: `2px solid ${info.color}40` }}>
+                                    <Layers size={28} style={{ color: info.color }} />
+                                </div>
+                                <h2 className="text-3xl md:text-4xl font-bold" style={{ color: info.color }}>
+                                    {info.name}
+                                </h2>
+                            </div>
+                            <p className="text-gray-300 text-lg md:text-xl font-medium">{info.description}</p>
+                        </div>
+                        <button
+                            onClick={() => setShowBlockInfo(null)}
+                            className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-gray-800 transition-colors ml-4"
+                        >
+                            <X size={28} />
+                        </button>
+                    </div>
+
+                    {/* Content Sections */}
+                    <div className="space-y-8">
+                        {info.sections.map((section, idx) => (
+                            <div key={idx} className="space-y-4">
+                                <h3 className="text-xl md:text-2xl font-bold flex items-center gap-3" style={{ color: info.color }}>
+                                    <span className="w-2 h-8 rounded-full" style={{ backgroundColor: info.color }} />
+                                    {section.title}
+                                </h3>
+                                <ul className="space-y-4 ml-5">
+                                    {section.points.map((point, i) => (
+                                        <li key={i} className="flex items-start gap-4 text-gray-200 text-base md:text-lg leading-relaxed">
+                                            <span className="mt-1.5 shrink-0 font-bold text-xl" style={{ color: info.color }}>•</span>
+                                            <span className="flex-1">{point}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Footer */}
+                    <div className="mt-10 pt-6 border-t border-gray-700 text-center">
+                        <p className="text-gray-400 text-sm md:text-base">
+                            Based on NCERT Chemistry • JEE/NEET Relevant Content
+                        </p>
+                    </div>
+                </motion.div>
+            </motion.div>
+        );
+    };
+
     const PropertyLegend = () => {
         const info = PROPERTY_INFO[selectedProperty];
         return (
@@ -327,6 +570,11 @@ export default function PeriodicTableClient() {
                 )}
             </AnimatePresence>
 
+            {/* Block Information Modal */}
+            <AnimatePresence>
+                {showBlockInfo && <BlockInfoModal block={showBlockInfo} />}
+            </AnimatePresence>
+
             {/* Hero Header */}
             <section className="relative pt-20 pb-6 md:pt-24 md:pb-8 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-gray-900 to-gray-950" />
@@ -345,7 +593,8 @@ export default function PeriodicTableClient() {
                         </span>
                     </h1>
                     <p className="text-gray-400 text-base md:text-lg max-w-3xl mx-auto mb-6 leading-relaxed">
-                        Explore trends, compare properties, and discover exceptions. <span className="text-blue-400 font-medium">Trained on NCERT data for JEE, NEET & CBSE.</span>
+                        <span className="text-white font-semibold">Every periodic trend. One page.</span><br />
+                        Stop hunting through NCERT. All the data, exceptions, and trends from s, p, d, and f blocks — organized, visual, and searchable.
                     </p>
                 </div>
             </section>
@@ -431,6 +680,38 @@ export default function PeriodicTableClient() {
                     </div>
                 )}
 
+                {/* Block Information Buttons */}
+                <div className="flex flex-wrap justify-center gap-3 mb-4">
+                    <button
+                        onClick={() => setShowBlockInfo('s')}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 border border-blue-500/30"
+                    >
+                        <Layers size={16} />
+                        s-Block Info
+                    </button>
+                    <button
+                        onClick={() => setShowBlockInfo('p')}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30"
+                    >
+                        <Layers size={16} />
+                        p-Block Info
+                    </button>
+                    <button
+                        onClick={() => setShowBlockInfo('d')}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 border border-amber-500/30"
+                    >
+                        <Layers size={16} />
+                        d-Block Info
+                    </button>
+                    <button
+                        onClick={() => setShowBlockInfo('f')}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 border border-purple-500/30"
+                    >
+                        <Layers size={16} />
+                        f-Block Info
+                    </button>
+                </div>
+
                 {/* Main grid layout */}
                 <div className="flex flex-col gap-2">
                     {/* Table */}
@@ -464,9 +745,21 @@ export default function PeriodicTableClient() {
                                 <ElementCell key={element.atomicNumber} element={element} />
                             ))}
 
-                            {/* Lanthanide label */}
-                            <div className="text-xs text-pink-400 flex items-center" style={{ gridColumn: 1, gridRow: 8 }}>Lanthanides</div>
-                            <div className="text-xs text-purple-400 flex items-center" style={{ gridColumn: 1, gridRow: 9 }}>Actinides</div>
+                            {/* Lanthanide/Actinide labels - now clickable */}
+                            <button
+                                onClick={() => setShowBlockInfo('f')}
+                                className="text-xs text-pink-400 flex items-center hover:text-pink-300 transition-colors cursor-pointer"
+                                style={{ gridColumn: 1, gridRow: 8 }}
+                            >
+                                Lanthanides*
+                            </button>
+                            <button
+                                onClick={() => setShowBlockInfo('f')}
+                                className="text-xs text-purple-400 flex items-center hover:text-purple-300 transition-colors cursor-pointer"
+                                style={{ gridColumn: 1, gridRow: 9 }}
+                            >
+                                Actinides*
+                            </button>
                         </div>
 
                         {/* Legend */}
@@ -511,6 +804,13 @@ export default function PeriodicTableClient() {
                     <PeriodicTableQuiz />
                 </div>
 
+                {/* Nature of Oxides/Hydroxides Reference */}
+                <OxidesReferenceSection />
+
+                {/* Knowledge Check MCQ Quiz */}
+                <div className="mt-12 mb-8">
+                    <PeriodicTableMCQQuiz />
+                </div>
 
             </div>
         </div >
@@ -544,28 +844,28 @@ const SpecialChemistry = ({ element }: { element: Element }) => {
         <div className="space-y-6 text-base">
             {/* Transition Metal Chemistry (Specific Layout) */}
             {element.block === 'd' && (
-                <div className="bg-cyan-950/30 rounded-xl p-5 border border-cyan-500/30">
-                    <h3 className="text-xl font-bold text-cyan-400 mb-5 flex items-center gap-2">
-                        <span className="text-2xl">🧪</span> Transition Metal Chemistry
+                <div className="bg-cyan-950/20 rounded-lg p-3 border border-cyan-500/20">
+                    <h3 className="text-lg font-semibold text-cyan-400 mb-3 flex items-center gap-1.5">
+                        <span className="text-lg">🧪</span> Transition Metal Chemistry
                     </h3>
 
-                    <div className="space-y-6">
+                    <div className="space-y-4">
                         {/* 1. Aquated Ion Colors */}
                         {element.ionColors && element.ionColors.length > 0 && (
                             <div>
-                                <h4 className="text-cyan-200/80 font-medium mb-3">Aquated Ion Colors:</h4>
-                                <div className="space-y-3 pl-2">
+                                <h4 className="text-cyan-200/70 font-medium mb-2 text-sm">Aquated Ion Colors:</h4>
+                                <div className="space-y-2 pl-1">
                                     {element.ionColors.map((ion, i) => (
-                                        <div key={i} className="flex items-center gap-3">
+                                        <div key={i} className="flex items-center gap-2">
                                             <div
                                                 className="w-5 h-5 rounded-full border border-white/20 shadow-sm"
                                                 style={{ backgroundColor: ion.hexColor === 'transparent' ? '#1f2937' : ion.hexColor }}
                                             />
-                                            <div className="flex items-baseline gap-2 text-gray-200">
-                                                <span className="font-bold text-lg">{formatFormula(ion.ion)}</span>
-                                                {ion.config && <span className="text-gray-500 font-mono text-sm">({ion.config})</span>}
-                                                <span className="text-gray-500">→</span>
-                                                <span className={`${ion.hexColor !== 'transparent' ? 'text-white' : 'text-gray-400'}`}>
+                                            <div className="flex items-baseline gap-1.5 text-gray-200">
+                                                <span className="font-semibold text-base">{formatFormula(ion.ion)}</span>
+                                                {ion.config && <span className="text-gray-500 font-mono text-xs">({ion.config})</span>}
+                                                <span className="text-gray-500 text-sm">→</span>
+                                                <span className={`text-sm ${ion.hexColor !== 'transparent' ? 'text-white' : 'text-gray-400'}`}>
                                                     {ion.color}
                                                 </span>
                                             </div>
@@ -575,33 +875,26 @@ const SpecialChemistry = ({ element }: { element: Element }) => {
                             </div>
                         )}
 
-                        {/* 2. Oxides Formed */}
+                        {/* 2. Oxides Formed - Compact inline layout */}
                         {(element.oxides || element.oxideNature) && (
                             <div>
-                                {element.oxides && (
-                                    <>
-                                        <h4 className="text-cyan-200/80 font-medium mb-3">Oxides Formed:</h4>
-                                        <div className="flex flex-wrap gap-2 mb-3">
-                                            {element.oxides.map(oxide => (
-                                                <span key={oxide} className="bg-orange-900/30 text-orange-200 border border-orange-700/30 px-3 py-1.5 rounded-lg text-base font-mono">
-                                                    {formatFormula(oxide)}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </>
-                                )}
-
-                                {element.oxideNature && (
-                                    <div className="mt-2">
-                                        <span className={`px-3 py-1 rounded-md text-sm font-semibold border ${getNatureColor(element.oxideNature)}`}>
-                                            {element.oxideNature.charAt(0).toUpperCase() + element.oxideNature.slice(1)} Oxide
+                                <h4 className="text-cyan-200/70 font-medium mb-2 text-sm">Oxides Formed:</h4>
+                                <div className="flex flex-wrap gap-2 mb-2">
+                                    {element.oxides && element.oxides.map(oxide => (
+                                        <span key={oxide} className="bg-orange-900/30 text-orange-200 border border-orange-700/30 px-2 py-1 rounded text-sm font-mono">
+                                            {formatFormula(oxide)}
                                         </span>
-                                        {element.oxideNatureDetails && (
-                                            <p className="mt-2 text-cyan-100/70 text-sm leading-relaxed">
-                                                {formatFormula(element.oxideNatureDetails)}
-                                            </p>
-                                        )}
-                                    </div>
+                                    ))}
+                                    {element.oxideNature && (
+                                        <span className={`px-2 py-1 rounded text-xs font-semibold border ${getNatureColor(element.oxideNature)}`}>
+                                            {element.oxideNature.charAt(0).toUpperCase() + element.oxideNature.slice(1)}
+                                        </span>
+                                    )}
+                                </div>
+                                {element.oxideNatureDetails && (
+                                    <p className="text-cyan-100/70 text-sm leading-relaxed">
+                                        {formatFormula(element.oxideNatureDetails)}
+                                    </p>
                                 )}
                             </div>
                         )}
@@ -609,15 +902,15 @@ const SpecialChemistry = ({ element }: { element: Element }) => {
                         {/* 3. Halides Formed (New Section) */}
                         {element.halides && element.halides.length > 0 && (
                             <div>
-                                <h4 className="text-cyan-200/80 font-medium mb-3">Halides Formed:</h4>
-                                <div className="flex flex-wrap gap-2 mb-2">
+                                <h4 className="text-cyan-200/70 font-medium mb-2 text-sm">Halides Formed:</h4>
+                                <div className="flex flex-wrap gap-2 mb-1">
                                     {element.halides.map(halide => (
-                                        <span key={halide} className="bg-green-900/30 text-green-200 border border-green-700/30 px-3 py-1.5 rounded-lg text-base font-mono">
+                                        <span key={halide} className="bg-green-900/30 text-green-200 border border-green-700/30 px-2 py-1 rounded text-sm font-mono">
                                             {formatFormula(halide)}
                                         </span>
                                     ))}
                                 </div>
-                                <p className="text-gray-500 text-sm italic">X = F, Cl, Br, I (unless specified)</p>
+                                <p className="text-gray-500 text-xs italic">X = F, Cl, Br, I (unless specified)</p>
                             </div>
                         )}
                     </div>
@@ -695,34 +988,35 @@ const SpecialChemistry = ({ element }: { element: Element }) => {
                 </>
             )}
 
-            {/* Flame/Gas Colors (General) */}
+            {/* Flame/Gas Colors - Compact inline */}
             {(element.flameColor || element.gasColor) && (
-                <div className="bg-gray-800/30 rounded-xl p-5 border border-gray-700">
-                    <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                        <Sparkles className="text-yellow-400" size={20} /> Physical Appearance
-                    </h3>
-                    <div className="space-y-4">
+                <div className="mb-6 md:mb-8">
+                    <div className="flex items-center gap-2 mb-3 pb-2 border-b border-yellow-500/30">
+                        <Sparkles className="text-yellow-400" size={18} />
+                        <h3 className="text-lg md:text-xl font-bold text-yellow-400">Physical Appearance</h3>
+                    </div>
+                    <div className="space-y-3 pl-1">
                         {element.flameColor && (
                             <div className="flex items-center gap-3">
-                                <span className="text-gray-400 w-32">Flame Color:</span>
-                                <div className="flex items-center gap-2">
+                                <span className="text-gray-400 text-base min-w-[110px]">Flame Color:</span>
+                                <div className="flex items-center gap-3">
                                     <div
-                                        className="w-6 h-6 rounded-full border border-white/20 shadow-[0_0_10px_currentColor]"
+                                        className="w-7 h-7 rounded-full border border-white/20 shadow-[0_0_10px_currentColor]"
                                         style={{ color: element.flameColor.hexColor, backgroundColor: element.flameColor.hexColor }}
                                     />
-                                    <span className="text-white text-lg">{element.flameColor.color}</span>
+                                    <span className="text-white text-base md:text-lg">{element.flameColor.color}</span>
                                 </div>
                             </div>
                         )}
                         {element.gasColor && (
                             <div className="flex items-center gap-3">
-                                <span className="text-gray-400 w-32">Gas Color:</span>
-                                <div className="flex items-center gap-2">
+                                <span className="text-gray-400 text-base min-w-[110px]">Gas Color:</span>
+                                <div className="flex items-center gap-3">
                                     <div
-                                        className="w-6 h-6 rounded-full border border-white/20"
+                                        className="w-7 h-7 rounded-full border border-white/20"
                                         style={{ backgroundColor: element.gasColor.hexColor }}
                                     />
-                                    <span className="text-white text-lg">{element.gasColor.color} ({formatFormula(element.gasColor.formula)})</span>
+                                    <span className="text-white text-base md:text-lg">{element.gasColor.color} ({formatFormula(element.gasColor.formula)})</span>
                                 </div>
                             </div>
                         )}
@@ -732,31 +1026,27 @@ const SpecialChemistry = ({ element }: { element: Element }) => {
 
             {/* Common Compounds (General) */}
             {element.compoundsInfo && element.compoundsInfo.length > 0 && (
-                <div className="bg-emerald-900/10 rounded-xl p-5 border border-emerald-500/20">
-                    <h3 className="text-lg font-semibold text-emerald-400 mb-4">Important Compounds</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="bg-emerald-900/10 rounded-lg p-4 border border-emerald-500/20">
+                    <h3 className="text-base font-semibold text-emerald-400 mb-3">Important Compounds</h3>
+                    <div className="space-y-2">
                         {element.compoundsInfo.map((comp, i) => (
-                            <div key={i} className="bg-gray-800/40 p-3 rounded-lg flex flex-col gap-1 border border-gray-700/50">
-                                <div className="flex justify-between items-start">
-                                    <span className="text-white font-mono font-bold text-lg">{formatFormula(comp.formula)}</span>
-                                    {comp.nature && (
-                                        <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded ${comp.nature.includes('acidic') ? 'bg-red-900/40 text-red-300' :
-                                            comp.nature.includes('basic') ? 'bg-blue-900/40 text-blue-300' :
-                                                'bg-gray-700 text-gray-300'
-                                            }`}>
-                                            {comp.nature}
-                                        </span>
-                                    )}
-                                </div>
-                                <div className="flex items-center gap-2 mt-1">
-                                    {comp.hexColor && (
-                                        <div
-                                            className="w-3 h-3 rounded-full border border-gray-600 shrink-0"
-                                            style={{ backgroundColor: comp.hexColor }}
-                                        />
-                                    )}
-                                    <span className="text-gray-400 text-sm">{comp.color}</span>
-                                </div>
+                            <div key={i} className="flex items-center gap-3 py-1">
+                                {comp.hexColor && (
+                                    <div
+                                        className="w-4 h-4 rounded-full border border-gray-600 shrink-0"
+                                        style={{ backgroundColor: comp.hexColor }}
+                                    />
+                                )}
+                                <span className="text-gray-300 font-mono text-sm">{formatFormula(comp.formula)}</span>
+                                {comp.nature && (
+                                    <span className={`text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded ${comp.nature.includes('acidic') ? 'bg-red-900/40 text-red-300' :
+                                        comp.nature.includes('basic') ? 'bg-blue-900/40 text-blue-300' :
+                                            'bg-gray-700 text-gray-300'
+                                        }`}>
+                                        {comp.nature}
+                                    </span>
+                                )}
+                                <span className="text-gray-400 text-sm">{comp.color}</span>
                             </div>
                         ))}
                     </div>
@@ -768,8 +1058,83 @@ const SpecialChemistry = ({ element }: { element: Element }) => {
 
 // Helper to format chemical formulas (subscript numbers)
 const formatFormula = (formula: string) => {
-    return formula.split(/(\d+)/).map((part, index) =>
-        /^\d+$/.test(part) ? <sub key={index} className="text-[0.7em]">{part}</sub> : part
+    // Split by digits but preserve context to avoid subscripting standalone numbers
+    const parts = formula.split(/(\d+)/);
+    return parts.map((part, index) => {
+        // Only subscript if it's a digit AND preceded by a letter (chemical formula pattern)
+        if (/^\d+$/.test(part) && index > 0 && /[A-Za-z]$/.test(parts[index - 1])) {
+            return <sub key={index} className="text-[0.7em] align-baseline">{part}</sub>;
+        }
+        return <span key={index}>{part}</span>;
+    });
+};
+
+// ZONE 4: Collapsible Data Grid Component (Clean Design)
+const DataGridSection = ({ element }: { element: Element }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    return (
+        <div className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-gray-700/50">
+            {/* Compact Header - Always Visible */}
+            <div className="grid grid-cols-3 gap-4 mb-4">
+                <div className="text-center">
+                    <div className="text-gray-400 text-sm mb-1.5">Ionization Energy</div>
+                    <div className="text-gray-200 font-semibold text-base md:text-lg">
+                        {element.ionizationEnergy ? `${element.ionizationEnergy} kJ/mol` : '-'}
+                    </div>
+                </div>
+                <div className="text-center">
+                    <div className="text-gray-400 text-sm mb-1.5">Electronegativity</div>
+                    <div className="text-gray-200 font-semibold text-base md:text-lg">
+                        {element.electronegativity ?? '-'}
+                    </div>
+                </div>
+                <div className="text-center">
+                    <div className="text-gray-400 text-sm mb-1.5">Atomic Radius</div>
+                    <div className="text-gray-200 font-semibold text-base md:text-lg">
+                        {element.atomicRadius ? `${element.atomicRadius} pm` : '-'}
+                    </div>
+                </div>
+            </div>
+
+            {/* Toggle Button */}
+            <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="w-full py-2 hover:bg-gray-800/30 transition-colors flex items-center justify-center gap-2 text-gray-400 text-sm rounded"
+            >
+                {isExpanded ? (
+                    <>
+                        <ChevronDown size={14} className="rotate-180 transition-transform" />
+                        Hide Additional Data
+                    </>
+                ) : (
+                    <>
+                        <ChevronDown size={14} className="transition-transform" />
+                        Show More Data
+                    </>
+                )}
+            </button>
+
+            {/* Expanded Content */}
+            {isExpanded && (
+                <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="pt-4"
+                >
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <DetailItem label="Electron Config" value={element.electronConfig} />
+                        <DetailItem label="Ionic Radius" value={element.ionicRadius ? `${element.ionicRadius} pm` : '-'} />
+                        <DetailItem label="Electron Affinity" value={element.electronAffinity !== undefined ? `${element.electronAffinity} kJ/mol` : '-'} />
+                        <DetailItem label="Density" value={element.density ? `${element.density} g/cm³` : '-'} />
+                        <DetailItem label="Melting Point" value={element.meltingPoint ? `${element.meltingPoint} K` : '-'} />
+                        <DetailItem label="Boiling Point" value={element.boilingPoint ? `${element.boilingPoint} K` : '-'} />
+                        <DetailItem label="Standard Potential" value={element.standardReductionPotential ? `${element.standardReductionPotential} V` : '-'} />
+                    </div>
+                </motion.div>
+            )}
+        </div>
     );
 };
 
@@ -821,32 +1186,41 @@ const ElementModalContent = ({
                     className="w-full h-full overflow-y-auto bg-gray-900 rounded-2xl shadow-2xl border border-gray-700"
                     style={{ backgroundColor: '#111827' }}
                 >
-                    {/* Header Colored Strip */}
+                    {/* Header Colored Strip - Compact on Mobile */}
                     <div
-                        className="p-5 md:p-6 relative"
+                        className="p-3 md:p-6 relative"
                         style={{ backgroundColor: bgColor }}
                     >
                         <div className="flex justify-between items-start">
                             <div>
-                                <div className={`text-4xl md:text-5xl font-bold mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                                <div className={`text-3xl md:text-5xl font-bold mb-0.5 md:mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                                     {element.symbol}
                                 </div>
-                                <div className={`text-lg md:text-xl font-medium ${isDark ? 'text-white/90' : 'text-gray-900/90'}`}>
+                                <div className={`text-base md:text-xl font-medium ${isDark ? 'text-white/90' : 'text-gray-900/90'}`}>
                                     {element.name}
                                 </div>
                                 <div className={`text-xs md:text-sm font-medium opacity-80 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                                     {element.category}
                                 </div>
                             </div>
-                            <div className={`text-right mt-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                                <div className="text-2xl md:text-3xl font-bold opacity-50 leading-none">{element.atomicNumber}</div>
-                                <div className="text-sm md:text-base font-medium opacity-80 mt-1">{element.atomicMass} u</div>
+                            <div className={`text-right ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                                <div className="text-xl md:text-3xl font-bold opacity-50 leading-none">{element.atomicNumber}</div>
+                                <div className="text-xs md:text-base font-medium opacity-80 mt-0.5 md:mt-1">{element.atomicMass} u</div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Content Body */}
-                    <div className="p-4 md:p-6 bg-gray-900 text-white">
+                    {/* Content Body - Reduced padding on mobile */}
+                    <div className="p-3 md:p-6 bg-gray-900 text-white">
+                        {/* Trend Position Summary - Right after header */}
+                        {element.trendPosition && (
+                            <div className="mb-5 pb-4 border-b border-gray-700/50">
+                                <p className="text-base md:text-lg text-gray-300 leading-relaxed italic">
+                                    {element.trendPosition}
+                                </p>
+                            </div>
+                        )}
+
                         {/* Comparison Action */}
                         <div className="flex gap-3 mb-6">
                             <button
@@ -867,32 +1241,98 @@ const ElementModalContent = ({
                             </button>
                         </div>
 
-                        {/* Exception Alert */}
-                        {element.isException && (
-                            <div className="bg-yellow-500/10 border border-yellow-500/40 rounded-xl p-5 mb-8">
-                                <div className="flex items-center gap-2 text-yellow-400 font-bold text-lg mb-2">
-                                    <AlertTriangle size={20} />
-                                    Exception: {element.exceptionType}
+                        {/* ZONE 1: Anomalous Behavior (Clean Design) */}
+                        {element.anomalousBehavior && (
+                            <div className="mb-6 md:mb-8">
+                                <div className="flex items-center gap-2 mb-3 pb-2 border-b border-amber-500/30">
+                                    <AlertTriangle size={18} className="text-amber-400 shrink-0" />
+                                    <h3 className="text-lg md:text-xl font-bold text-amber-400 flex-1">Anomalous Behavior</h3>
+                                    <span className="text-xs md:text-sm px-2 py-0.5 bg-amber-500/20 rounded text-amber-300 font-medium">
+                                        JEE {element.anomalousBehavior.jeeRelevance.toUpperCase()}
+                                    </span>
                                 </div>
-                                <p className="text-yellow-100/80 leading-relaxed">{element.exceptionExplanation}</p>
+                                <ul className="space-y-2.5 md:space-y-3 text-base md:text-lg text-gray-300 leading-relaxed">
+                                    {element.anomalousBehavior.facts.map((fact, i) => (
+                                        <li key={i} className="flex items-start gap-2.5 pl-1">
+                                            <span className="text-amber-400 mt-0.5 shrink-0 font-bold">•</span>
+                                            <span>{formatFormula(fact)}</span>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                         )}
 
-                        {/* Properties Grid */}
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
-                            <DetailItem label="Electron Config" value={element.electronConfig} />
-                            <DetailItem label="Atomic Radius" value={element.atomicRadius ? `${element.atomicRadius} pm` : '-'} />
-                            <DetailItem label="Ionization Energy" value={element.ionizationEnergy ? `${element.ionizationEnergy} kJ/mol` : '-'} />
-                            <DetailItem label="Electronegativity" value={element.electronegativity} />
-                            <DetailItem label="Electron Affinity" value={element.electronAffinity !== undefined ? `${element.electronAffinity} kJ/mol` : '-'} />
-                            <DetailItem label="Density" value={element.density ? `${element.density} g/cm³` : '-'} />
-                            <DetailItem label="Melting Point" value={element.meltingPoint ? `${element.meltingPoint} K` : '-'} />
-                            <DetailItem label="Boiling Point" value={element.boilingPoint ? `${element.boilingPoint} K` : '-'} />
-                            <DetailItem label="Standard Potential" value={element.standardReductionPotential ? `${element.standardReductionPotential} V` : '-'} />
-                        </div>
+                        {/* Oxidation States (Clean Design) */}
+                        {element.oxidationStateCompounds && element.oxidationStateCompounds.length > 0 && (
+                            <div className="mb-6 md:mb-8">
+                                <div className="flex items-center gap-2 mb-3 pb-2 border-b border-blue-500/30">
+                                    <Zap size={18} className="text-blue-400 shrink-0" />
+                                    <h3 className="text-lg md:text-xl font-bold text-blue-400">Oxidation States</h3>
+                                </div>
+                                <div className="space-y-3 md:space-y-4">
+                                    {element.oxidationStateCompounds.map((oxState, i) => (
+                                        <div key={i} className="flex items-start gap-3">
+                                            <span className="text-blue-300 font-bold text-xl md:text-2xl min-w-[50px]">
+                                                {oxState.state > 0 ? `+${oxState.state}` : oxState.state}
+                                            </span>
+                                            <div className="flex flex-wrap gap-2">
+                                                {oxState.compounds.map((compound, j) => (
+                                                    <span key={j} className="bg-blue-500/10 text-blue-200 px-3 md:px-4 py-1.5 rounded text-sm md:text-base font-mono">
+                                                        {formatFormula(compound)}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
-                        {/* Special Chemistry Sections */}
+                        {/* ZONE 2: Key Reactions (Clean Design) */}
+                        {element.keyReactions && element.keyReactions.length > 0 && (
+                            <div className="mb-6 md:mb-8">
+                                <div className="flex items-center gap-2 mb-3 pb-2 border-b border-emerald-500/30">
+                                    <Atom size={18} className="text-emerald-400 shrink-0" />
+                                    <h3 className="text-lg md:text-xl font-bold text-emerald-400">Key Reactions</h3>
+                                </div>
+                                <div className="space-y-4 md:space-y-5">
+                                    {element.keyReactions.map((reaction, i) => (
+                                        <div key={i} className="pl-1">
+                                            <div className="font-mono text-emerald-200 text-base md:text-lg mb-2 font-semibold">
+                                                {formatFormula(reaction.equation)}
+                                            </div>
+                                            {reaction.conditions && (
+                                                <div className="text-sm md:text-base text-gray-400 mb-1.5">
+                                                    <span className="font-medium text-gray-300">Conditions:</span> {reaction.conditions}
+                                                </div>
+                                            )}
+                                            {reaction.note && (
+                                                <div className="text-sm md:text-base text-gray-300 leading-relaxed">
+                                                    {formatFormula(reaction.note)}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* ZONE 3: Special Chemistry Sections (Important Compounds, Ion Colors, etc.) */}
                         <SpecialChemistry element={element} />
+
+                        {/* Old Exception Alert (Clean Design - backward compatibility) */}
+                        {element.isException && !element.anomalousBehavior && (
+                            <div className="mb-6 md:mb-8">
+                                <div className="flex items-center gap-2 mb-2 pb-2 border-b border-yellow-500/30">
+                                    <AlertTriangle size={18} className="text-yellow-400 shrink-0" />
+                                    <h3 className="text-lg md:text-xl font-bold text-yellow-400">Exception: {element.exceptionType}</h3>
+                                </div>
+                                <p className="text-base md:text-lg text-gray-300 leading-relaxed pl-1">{element.exceptionExplanation}</p>
+                            </div>
+                        )}
+
+                        {/* ZONE 4: Data Grid (Collapsible, Secondary) */}
+                        <DataGridSection element={element} />
                     </div>
                 </div>
             </motion.div>
