@@ -52,6 +52,9 @@ async function connectToDatabase(): Promise<Mongoose | null> {
         const opts = {
             bufferCommands: false,
             maxPoolSize: 10,
+            serverSelectionTimeoutMS: 5000,  // Fail fast if Atlas is unreachable
+            socketTimeoutMS: 45000,          // Prevent zombie connections
+            connectTimeoutMS: 10000,         // Timeout on initial connect
         };
 
         mongoose.set('strictQuery', false);

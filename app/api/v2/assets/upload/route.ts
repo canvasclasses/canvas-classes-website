@@ -47,14 +47,16 @@ export async function POST(request: NextRequest) {
     }
     
     // Validate file type
-    const allowedTypes = [
+    // Strip codec suffix (e.g. 'audio/webm;codecs=opus' → 'audio/webm') for comparison
+    const baseFileType = file.type.split(';')[0].trim();
+    const allowedBaseTypes = [
       'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp',
       'image/svg+xml',
-      'audio/mpeg', 'audio/wav', 'audio/mp3', 'audio/webm',
+      'audio/mpeg', 'audio/wav', 'audio/mp3', 'audio/webm', 'audio/mp4', 'audio/aac', 'audio/ogg',
       'video/mp4', 'video/webm'
     ];
     
-    if (!allowedTypes.includes(file.type)) {
+    if (!allowedBaseTypes.includes(baseFileType)) {
       return NextResponse.json(
         { success: false, error: `File type ${file.type} not allowed` },
         { status: 400 }
@@ -62,7 +64,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Validate file size (max 10MB for images/svg, 50MB for audio/video)
-    const maxSize = file.type.startsWith('audio/') || file.type.startsWith('video/') 
+    const maxSize = baseFileType.startsWith('audio/') || baseFileType.startsWith('video/') 
       ? 50 * 1024 * 1024 
       : 10 * 1024 * 1024;
     
@@ -98,8 +100,8 @@ export async function POST(request: NextRequest) {
     
     // Generate asset ID and determine type
     const assetId = uuidv4();
-    const assetType = getAssetType(file.type);
-    const extension = getExtensionFromMimeType(file.type) || path.extname(file.name).replace('.', '') || 'bin';
+    const assetType = getAssetType(baseFileType);
+    const extension = getExtensionFromMimeType(baseFileType) || path.extname(file.name).replace('.', '') || 'bin';
     
     // Organised R2 path: questions/{question_id}/{type}/{timestamp}_{assetId}.{ext}
     // or shared/{type}/{timestamp}_{assetId}.{ext} for non-question assets
@@ -114,12 +116,12 @@ export async function POST(request: NextRequest) {
     console.log('Uploading to R2:', {
       filename,
       assetType,
-      contentType: file.type,
+      contentType: baseFileType,
       storagePath,
       size: buffer.length
     });
     
-    const r2Result = await uploadToR2(buffer, filename, assetType, file.type, storagePath);
+    const r2Result = await uploadToR2(buffer, filename, assetType, baseFileType, storagePath);
     if (!r2Result.success) {
       console.error('R2 upload failed:', r2Result.error);
       return NextResponse.json(
@@ -138,7 +140,7 @@ export async function POST(request: NextRequest) {
       type: assetType,
       file: {
         original_name: file.name,
-        mime_type: file.type,
+        mime_type: baseFileType,
         size_bytes: file.size,
         storage_path: r2Result.path || storagePath,
         cdn_url: cdnUrl,

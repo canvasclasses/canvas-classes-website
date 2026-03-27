@@ -36,34 +36,43 @@ function TrendCard({ block, theme, index }: TrendCardProps) {
             {/* Card Header - Always Visible */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full p-5 flex items-center gap-4 text-left hover:bg-white/[0.02] transition-colors"
+                className="w-full p-3 md:p-5 flex flex-col gap-3 md:gap-4 text-left hover:bg-white/[0.02] transition-colors"
             >
-                {/* Number Badge */}
-                <div className={`flex-shrink-0 w-8 h-8 rounded-lg ${theme.badgeBg} border ${theme.border} flex items-center justify-center`}>
-                    <span className={`text-sm font-bold ${theme.text}`}>{index + 1}</span>
-                </div>
+                {/* Row 1: Number, Title, Expand Icon */}
+                <div className="flex w-full items-center gap-2 md:gap-4">
+                    {/* Number Badge */}
+                    <div className={`flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-lg ${theme.badgeBg} border ${theme.border} flex items-center justify-center`}>
+                        <span className={`text-xs md:text-sm font-bold ${theme.text}`}>{index + 1}</span>
+                    </div>
 
-                {/* Content */}
-                <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-gray-200 text-base mb-2 pr-2">
-                        {block.title}
-                    </h4>
-                    <div className={`inline-block px-3 py-1.5 rounded-lg ${theme.bg} border ${theme.border}`}>
-                        <ReactMarkdown
-                            remarkPlugins={[remarkMath]}
-                            rehypePlugins={[rehypeKatex]}
-                            components={{
-                                p: ({ node, ...props }) => <span {...props} />
-                            }}
-                        >
-                            {block.trend}
-                        </ReactMarkdown>
+                    {/* Title */}
+                    <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-gray-200 text-sm md:text-base pr-1 md:pr-2 truncate">
+                            {block.title}
+                        </h4>
+                    </div>
+
+                    {/* Expand Icon */}
+                    <div className={`flex-shrink-0 p-1 md:p-1.5 rounded-lg border ${theme.border} ${theme.badgeBg} transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+                        <ChevronDown size={16} className={theme.text} />
                     </div>
                 </div>
 
-                {/* Expand Icon */}
-                <div className={`flex-shrink-0 p-1.5 rounded-lg border ${theme.border} ${theme.badgeBg} transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
-                    <ChevronDown size={18} className={theme.text} />
+                {/* Row 2: Trend equation full width */}
+                <div className="w-full -mt-1 md:-mt-2">
+                    <div className={`w-full overflow-x-auto whitespace-nowrap rounded-lg ${theme.bg} border ${theme.border} [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}>
+                        <div className="px-3 py-2 w-max min-w-full inline-block">
+                            <ReactMarkdown
+                                remarkPlugins={[remarkMath]}
+                                rehypePlugins={[rehypeKatex]}
+                                components={{
+                                    p: ({ node, ...props }) => <span {...props} />
+                                }}
+                            >
+                                {block.trend}
+                            </ReactMarkdown>
+                        </div>
+                    </div>
                 </div>
             </button>
 
@@ -77,10 +86,10 @@ function TrendCard({ block, theme, index }: TrendCardProps) {
                         transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
                         className="overflow-hidden"
                     >
-                        <div className={`px-5 pb-5 pt-0 border-t ${theme.border}`}>
-                            <div className="pt-4 flex gap-3">
-                                <div className={`flex-shrink-0 w-8 h-8 rounded-lg ${theme.badgeBg} border ${theme.border} flex items-center justify-center mt-0.5`}>
-                                    <BookOpen size={16} className={theme.text} />
+                        <div className={`px-3 pb-3 pt-0 md:px-5 md:pb-5 border-t ${theme.border}`}>
+                            <div className="pt-3 md:pt-4 flex gap-2 md:gap-3">
+                                <div className={`flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-lg ${theme.badgeBg} border ${theme.border} flex items-center justify-center mt-0.5`}>
+                                    <BookOpen size={14} className={`md:w-4 md:h-4 w-3.5 h-3.5 ${theme.text}`} />
                                 </div>
                                 <div className="flex-1">
                                     <p className={`text-sm font-semibold ${theme.text} mb-2`}>Examiner&apos;s Logic</p>
@@ -114,30 +123,30 @@ const SECTION_THEMES = [
 
 export default function TopInorganicTrends() {
     return (
-        <section id="top-trends" className="py-16 relative overflow-hidden">
+        <section id="top-trends" className="py-10 md:py-16 relative overflow-hidden">
             {/* Background Decorations */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl -z-10" />
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl -z-10" />
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
                 {/* Header */}
-                <div className="text-center mb-12">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm font-medium mb-4">
-                        <Trophy size={14} />
+                <div className="text-center mb-8 md:mb-12">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs md:text-sm font-medium mb-3 md:mb-4">
+                        <Trophy size={12} className="w-3 h-3 md:w-3.5 md:h-3.5" />
                         <span>High Yield Topic</span>
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                    <h2 className="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4">
                         Top Trends of <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-yellow-500">Inorganic Chemistry</span>
                     </h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+                    <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-lg">
                         Directly from the notes of toppers. Master these trends to secure easy marks in JEE, NEET & BITSAT.
                     </p>
                 </div>
 
                 {/* Coach's Corner */}
-                <div className="mb-16 bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl border border-gray-700 p-6 md:p-8 relative overflow-hidden group hover:border-amber-500/30 transition-colors">
+                <div className="mb-10 md:mb-16 bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl border border-gray-700 p-4 md:p-8 relative overflow-hidden group hover:border-amber-500/30 transition-colors">
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <Sparkles size={120} />
+                        <Sparkles size={80} className="md:w-[120px] md:h-[120px]" />
                     </div>
                     <div className="flex flex-col md:flex-row gap-6 items-start md:items-center relative z-10">
                         <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0 border border-amber-500/30">
@@ -167,9 +176,9 @@ export default function TopInorganicTrends() {
                         return (
                             <div key={sectionIndex} className="scroll-mt-24" id={`section-${sectionIndex}`}>
                                 {/* Section Header */}
-                                <div className="flex items-center gap-3 mb-5">
-                                    <div className={`flex-shrink-0 w-10 h-10 rounded-xl ${theme.badgeBg} border ${theme.border} flex items-center justify-center`}>
-                                        <Hash size={20} className={theme.text} />
+                                <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-5">
+                                    <div className={`flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-xl ${theme.badgeBg} border ${theme.border} flex items-center justify-center`}>
+                                        <Hash size={16} className={`md:w-5 md:h-5 w-4 h-4 ${theme.text}`} />
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-bold text-white">

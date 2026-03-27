@@ -17,6 +17,9 @@ export const metadata: Metadata = {
         'NEET Chemistry',
         'Canvas Classes Crucible'
     ],
+    alternates: {
+        canonical: 'https://www.canvasclasses.in/the-crucible',
+    },
 };
 
 export default async function Page() {

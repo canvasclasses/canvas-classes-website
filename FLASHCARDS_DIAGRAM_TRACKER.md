@@ -32,5 +32,20 @@ This file tracks all flashcards that require SVG diagrams for enhanced learning.
 | F-P12-1801 | Xenon Compounds | Molecular shapes of **$XeF_2, XeF_4, XeF_6$** based on VSEPR theory | ⏳ Pending |
 
 ---
+## 🧪 Redox Reactions (Class 11)
+| ID | Topic | Required SVG Diagram | Status |
+|:---|:---|:---|:---|
+| RDX-099 | Brown Ring | Coordination sphere of $[Fe(H_2O)_5NO]^{2+}$ showing electron transfer | ⏳ Pending |
+| RDX-100 | P-Oxoacids | Structures of $H_3PO_4$ vs. $H_3PO_3$ (highlighting P-H bond) | ⏳ Pending |
+| RDX-103 | O-Species | Structures comparing $BaO_2$ (Peroxide) vs. $KO_2$ (Superoxide) | ⏳ Pending |
+| RDX-107 | Disporportionation | Flow diagram showing $Br_2 (0) \rightarrow Br^- (-1) + BrO_3^- (+5)$ | ⏳ Pending |
+| RDX-111 | Cr-Peroxo | Structure of $[Cr(CN)_2O_2(O_2)NH_3]^{2-}$ (Oxo vs. Peroxo) | ⏳ Pending |
+| RDX-112 | N-Ladder | Structures of $N_2H_4$ and $NH_2OH$ bond comparisons | ⏳ Pending |
+| RDX-124 | Hydrocarbon ON | Structure of Propene with EN arrows for per-atom calculation | ⏳ Pending |
+| RDX-126 | Acetic Acid | Detailed structure showing methyl vs. carboxyl carbon environments | ⏳ Pending |
+| RDX-128 | CrO5 Butterfly | **Butterfly structure** of $CrO_5$ with peroxo wings | ⏳ Pending |
+| RDX-133 | S-Oxoacids | Structures of **Caro’s Acid** and **Marshall’s Acid** (peroxo bonds) | ⏳ Pending |
+
+---
 *Append new chapter requirements below this line.*
 

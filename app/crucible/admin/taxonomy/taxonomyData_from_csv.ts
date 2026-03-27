@@ -13,7 +13,7 @@ export interface TaxonomyNode {
 }
 
 export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
-    // Class 11
+    // Class 11 Chemistry
     { id: 'ch_unsorted', name: 'Unsorted Questions', parent_id: null, type: 'chapter', sequence_order: 0, class_level: 11, chapterType: 'physical' },
     { id: 'tag_unsorted', name: 'Needs Categorization', parent_id: 'ch_unsorted', type: 'topic' },
 
@@ -278,6 +278,7 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'micro_hydrocarbon_7_10', name: 'Elimination addition (Benzyne) mechanism', parent_id: 'tag_hydrocarbon_7', type: 'micro_topic' },
     { id: 'micro_hydrocarbon_7_11', name: 'Acetanilide formation & its reactions', parent_id: 'tag_hydrocarbon_7', type: 'micro_topic' },
     { id: 'micro_tag_hydrocarbon_7_1773917965233', name: 'Use of protecting groups', parent_id: 'tag_hydrocarbon_7', type: 'micro_topic' },
+    { id: 'micro_tag_hydrocarbon_7_1774602790020', name: 'Reactivity Order of SEAr', parent_id: 'tag_hydrocarbon_7', type: 'micro_topic' },
 
     { id: 'ch11_prac_org', name: 'Practical Organic Chemistry', parent_id: null, type: 'chapter', sequence_order: 13, class_level: 11, chapterType: 'practical' },
     { id: 'tag_prac_org_1', name: 'Purification Methods', parent_id: 'ch11_prac_org', type: 'topic' },
@@ -288,107 +289,7 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_prac_org_6', name: 'Tests for Carbonyl & Carboxyl Groups', parent_id: 'ch11_prac_org', type: 'topic' },
     { id: 'tag_prac_org_7', name: 'Tests for Amines', parent_id: 'ch11_prac_org', type: 'topic' },
 
-    { id: 'ph11_units', name: 'Units, Dimensions & Errors', parent_id: null, type: 'chapter', sequence_order: 101, class_level: 11, chapterType: 'physics' },
-    { id: 'tag_units_1', name: 'SI Units & Fundamental/Derived Quantities', parent_id: 'ph11_units', type: 'topic' },
-    { id: 'tag_units_2', name: 'Dimensional Analysis & Applications', parent_id: 'ph11_units', type: 'topic' },
-    { id: 'tag_units_3', name: 'Significant Figures & Rounding', parent_id: 'ph11_units', type: 'topic' },
-    { id: 'tag_units_4', name: 'Error Analysis (Absolute, Relative, % Error)', parent_id: 'ph11_units', type: 'topic' },
-    { id: 'tag_units_5', name: 'Vernier Callipers & Screw Gauge', parent_id: 'ph11_units', type: 'topic' },
-
-    { id: 'ph11_kinematics1d', name: 'Kinematics 1D', parent_id: null, type: 'chapter', sequence_order: 102, class_level: 11, chapterType: 'physics' },
-    { id: 'tag_k1d_1', name: 'Distance, Displacement & Speed', parent_id: 'ph11_kinematics1d', type: 'topic' },
-    { id: 'tag_k1d_2', name: 'Velocity & Acceleration', parent_id: 'ph11_kinematics1d', type: 'topic' },
-    { id: 'tag_k1d_3', name: 'Equations of Motion (SUVAT)', parent_id: 'ph11_kinematics1d', type: 'topic' },
-    { id: 'tag_k1d_4', name: 'Motion Under Gravity (Free Fall)', parent_id: 'ph11_kinematics1d', type: 'topic' },
-    { id: 'tag_k1d_5', name: 'Graphs (x-t, v-t, a-t)', parent_id: 'ph11_kinematics1d', type: 'topic' },
-    { id: 'tag_k1d_6', name: 'Relative Motion in 1D', parent_id: 'ph11_kinematics1d', type: 'topic' },
-
-    { id: 'ph11_kinematics2d', name: 'Kinematics 2D', parent_id: null, type: 'chapter', sequence_order: 103, class_level: 11, chapterType: 'physics' },
-    { id: 'tag_k2d_1', name: 'Vectors (Addition, Resolution, Dot & Cross Product)', parent_id: 'ph11_kinematics2d', type: 'topic' },
-    { id: 'tag_k2d_2', name: 'Projectile Motion', parent_id: 'ph11_kinematics2d', type: 'topic' },
-    { id: 'tag_k2d_3', name: 'Relative Motion in 2D', parent_id: 'ph11_kinematics2d', type: 'topic' },
-    { id: 'tag_k2d_4', name: 'Circular Motion (Uniform & Non-uniform)', parent_id: 'ph11_kinematics2d', type: 'topic' },
-    { id: 'tag_k2d_5', name: 'River-Boat & Rain Problems', parent_id: 'ph11_kinematics2d', type: 'topic' },
-
-    { id: 'ph11_nlm', name: 'Laws of Motion', parent_id: null, type: 'chapter', sequence_order: 104, class_level: 11, chapterType: 'physics' },
-    { id: 'tag_nlm_1', name: 'Newton\'s Laws (1st, 2nd, 3rd)', parent_id: 'ph11_nlm', type: 'topic' },
-    { id: 'tag_nlm_2', name: 'Free Body Diagrams & Constraint Motion', parent_id: 'ph11_nlm', type: 'topic' },
-    { id: 'tag_nlm_3', name: 'Friction (Static, Kinetic, Rolling)', parent_id: 'ph11_nlm', type: 'topic' },
-    { id: 'tag_nlm_4', name: 'Pulley Systems & Connected Bodies', parent_id: 'ph11_nlm', type: 'topic' },
-    { id: 'tag_nlm_5', name: 'Pseudo Force & Non-inertial Frames', parent_id: 'ph11_nlm', type: 'topic' },
-    { id: 'tag_nlm_6', name: 'Circular Dynamics (Banking, Conical Pendulum)', parent_id: 'ph11_nlm', type: 'topic' },
-
-    { id: 'ph11_wep', name: 'Work, Energy & Power', parent_id: null, type: 'chapter', sequence_order: 105, class_level: 11, chapterType: 'physics' },
-    { id: 'tag_wep_1', name: 'Work Done by Constant & Variable Force', parent_id: 'ph11_wep', type: 'topic' },
-    { id: 'tag_wep_2', name: 'Kinetic & Potential Energy', parent_id: 'ph11_wep', type: 'topic' },
-    { id: 'tag_wep_3', name: 'Work-Energy Theorem', parent_id: 'ph11_wep', type: 'topic' },
-    { id: 'tag_wep_4', name: 'Conservation of Energy', parent_id: 'ph11_wep', type: 'topic' },
-    { id: 'tag_wep_5', name: 'Power & Efficiency', parent_id: 'ph11_wep', type: 'topic' },
-    { id: 'tag_wep_6', name: 'Conservative vs Non-conservative Forces', parent_id: 'ph11_wep', type: 'topic' },
-
-    { id: 'ph11_com_mom', name: 'Centre of Mass & Momentum', parent_id: null, type: 'chapter', sequence_order: 106, class_level: 11, chapterType: 'physics' },
-    { id: 'tag_com_1', name: 'Centre of Mass (Discrete & Continuous)', parent_id: 'ph11_com_mom', type: 'topic' },
-    { id: 'tag_com_2', name: 'Linear Momentum & Impulse', parent_id: 'ph11_com_mom', type: 'topic' },
-    { id: 'tag_com_3', name: 'Conservation of Momentum', parent_id: 'ph11_com_mom', type: 'topic' },
-    { id: 'tag_com_4', name: 'Collisions (Elastic, Inelastic, Perfectly Inelastic)', parent_id: 'ph11_com_mom', type: 'topic' },
-    { id: 'tag_com_5', name: 'Coefficient of Restitution', parent_id: 'ph11_com_mom', type: 'topic' },
-
-    { id: 'ph11_rotation', name: 'Rotational Motion', parent_id: null, type: 'chapter', sequence_order: 107, class_level: 11, chapterType: 'physics' },
-    { id: 'tag_rot_1', name: 'Moment of Inertia & Theorems (PA, PP)', parent_id: 'ph11_rotation', type: 'topic' },
-    { id: 'tag_rot_2', name: 'Torque & Angular Momentum', parent_id: 'ph11_rotation', type: 'topic' },
-    { id: 'tag_rot_3', name: 'Rolling Motion (Pure Rolling)', parent_id: 'ph11_rotation', type: 'topic' },
-    { id: 'tag_rot_4', name: 'Rotational Kinematics & Dynamics', parent_id: 'ph11_rotation', type: 'topic' },
-    { id: 'tag_rot_5', name: 'Conservation of Angular Momentum', parent_id: 'ph11_rotation', type: 'topic' },
-    { id: 'tag_rot_6', name: 'Equilibrium of Rigid Bodies', parent_id: 'ph11_rotation', type: 'topic' },
-
-    { id: 'ph11_gravitation', name: 'Gravitation', parent_id: null, type: 'chapter', sequence_order: 108, class_level: 11, chapterType: 'physics' },
-    { id: 'tag_grav_1', name: 'Newton\'s Law of Gravitation', parent_id: 'ph11_gravitation', type: 'topic' },
-    { id: 'tag_grav_2', name: 'Gravitational Field & Potential', parent_id: 'ph11_gravitation', type: 'topic' },
-    { id: 'tag_grav_3', name: 'Kepler\'s Laws & Orbital Motion', parent_id: 'ph11_gravitation', type: 'topic' },
-    { id: 'tag_grav_4', name: 'Escape Velocity & Satellites', parent_id: 'ph11_gravitation', type: 'topic' },
-    { id: 'tag_grav_5', name: 'Variation of g (Depth, Height, Rotation)', parent_id: 'ph11_gravitation', type: 'topic' },
-
-    { id: 'ph11_matter', name: 'Properties of Matter', parent_id: null, type: 'chapter', sequence_order: 109, class_level: 11, chapterType: 'physics' },
-    { id: 'tag_matter_1', name: 'Elasticity (Stress, Strain, Young\'s Modulus)', parent_id: 'ph11_matter', type: 'topic' },
-    { id: 'tag_matter_2', name: 'Fluid Statics (Pressure, Buoyancy, Archimedes)', parent_id: 'ph11_matter', type: 'topic' },
-    { id: 'tag_matter_3', name: 'Fluid Dynamics (Bernoulli, Continuity)', parent_id: 'ph11_matter', type: 'topic' },
-    { id: 'tag_matter_4', name: 'Viscosity & Stokes\' Law', parent_id: 'ph11_matter', type: 'topic' },
-    { id: 'tag_matter_5', name: 'Surface Tension & Capillarity', parent_id: 'ph11_matter', type: 'topic' },
-
-    { id: 'ph11_thermo_phy', name: 'Thermodynamics & Kinetic Theory', parent_id: null, type: 'chapter', sequence_order: 110, class_level: 11, chapterType: 'physics' },
-    { id: 'tag_phth_1', name: 'Thermal Expansion & Calorimetry', parent_id: 'ph11_thermo_phy', type: 'topic' },
-    { id: 'tag_phth_2', name: 'Heat Transfer (Conduction, Convection, Radiation)', parent_id: 'ph11_thermo_phy', type: 'topic' },
-    { id: 'tag_phth_3', name: 'Laws of Thermodynamics & Processes', parent_id: 'ph11_thermo_phy', type: 'topic' },
-    { id: 'tag_phth_4', name: 'Carnot Engine & Efficiency', parent_id: 'ph11_thermo_phy', type: 'topic' },
-    { id: 'tag_phth_5', name: 'Kinetic Theory (KE, RMS speed, Degrees of Freedom)', parent_id: 'ph11_thermo_phy', type: 'topic' },
-    { id: 'tag_phth_6', name: 'Specific Heats (Cp, Cv) & Poisson\'s Ratio', parent_id: 'ph11_thermo_phy', type: 'topic' },
-
-    { id: 'ph11_shm', name: 'Simple Harmonic Motion', parent_id: null, type: 'chapter', sequence_order: 111, class_level: 11, chapterType: 'physics' },
-    { id: 'tag_shm_1', name: 'SHM Equations & Characteristics', parent_id: 'ph11_shm', type: 'topic' },
-    { id: 'tag_shm_2', name: 'Energy in SHM', parent_id: 'ph11_shm', type: 'topic' },
-    { id: 'tag_shm_3', name: 'Spring-Mass Systems', parent_id: 'ph11_shm', type: 'topic' },
-    { id: 'tag_shm_4', name: 'Simple & Compound Pendulum', parent_id: 'ph11_shm', type: 'topic' },
-    { id: 'tag_shm_5', name: 'Forced Oscillations & Resonance', parent_id: 'ph11_shm', type: 'topic' },
-
-    { id: 'ph11_waves', name: 'Waves & Sound', parent_id: null, type: 'chapter', sequence_order: 112, class_level: 11, chapterType: 'physics' },
-    { id: 'tag_waves_1', name: 'Wave Equation & Speed', parent_id: 'ph11_waves', type: 'topic' },
-    { id: 'tag_waves_2', name: 'Superposition, Interference & Beats', parent_id: 'ph11_waves', type: 'topic' },
-    { id: 'tag_waves_3', name: 'Standing Waves (Strings & Pipes)', parent_id: 'ph11_waves', type: 'topic' },
-    { id: 'tag_waves_4', name: 'Doppler Effect', parent_id: 'ph11_waves', type: 'topic' },
-    { id: 'tag_waves_5', name: 'Intensity & Loudness of Sound', parent_id: 'ph11_waves', type: 'topic' },
-
-
-
-
-
-
-
-
-
-
-
-
-    // Class 12
+    // Class 12 Chemistry
     { id: 'ch12_solutions', name: 'Solutions', parent_id: null, type: 'chapter', sequence_order: 15, class_level: 12, chapterType: 'physical' },
     { id: 'tag_solutions_1', name: 'Vapour Pressure & RLVP', parent_id: 'ch12_solutions', type: 'topic' },
     { id: 'tag_solutions_2', name: 'Basics & Definitions', parent_id: 'ch12_solutions', type: 'topic' },
@@ -523,6 +424,96 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_prac_phys_5', name: 'Hardness of Water (EDTA Titration)', parent_id: 'ch12_prac_phys', type: 'topic' },
     { id: 'tag_prac_phys_6', name: 'Surface Chemistry Practicals (Lyophilic/Lyophobic Sols & Dialysis)', parent_id: 'ch12_prac_phys', type: 'topic' },
 
+    // Physics
+    { id: 'ph11_units', name: 'Units, Dimensions & Errors', parent_id: null, type: 'chapter', sequence_order: 101, class_level: 11, chapterType: 'physics' },
+    { id: 'tag_units_1', name: 'SI Units & Fundamental/Derived Quantities', parent_id: 'ph11_units', type: 'topic' },
+    { id: 'tag_units_2', name: 'Dimensional Analysis & Applications', parent_id: 'ph11_units', type: 'topic' },
+    { id: 'tag_units_3', name: 'Significant Figures & Rounding', parent_id: 'ph11_units', type: 'topic' },
+    { id: 'tag_units_4', name: 'Error Analysis (Absolute, Relative, % Error)', parent_id: 'ph11_units', type: 'topic' },
+    { id: 'tag_units_5', name: 'Vernier Callipers & Screw Gauge', parent_id: 'ph11_units', type: 'topic' },
+
+    { id: 'ph11_kinematics1d', name: 'Kinematics 1D', parent_id: null, type: 'chapter', sequence_order: 102, class_level: 11, chapterType: 'physics' },
+    { id: 'tag_k1d_1', name: 'Distance, Displacement & Speed', parent_id: 'ph11_kinematics1d', type: 'topic' },
+    { id: 'tag_k1d_2', name: 'Velocity & Acceleration', parent_id: 'ph11_kinematics1d', type: 'topic' },
+    { id: 'tag_k1d_3', name: 'Equations of Motion (SUVAT)', parent_id: 'ph11_kinematics1d', type: 'topic' },
+    { id: 'tag_k1d_4', name: 'Motion Under Gravity (Free Fall)', parent_id: 'ph11_kinematics1d', type: 'topic' },
+    { id: 'tag_k1d_5', name: 'Graphs (x-t, v-t, a-t)', parent_id: 'ph11_kinematics1d', type: 'topic' },
+    { id: 'tag_k1d_6', name: 'Relative Motion in 1D', parent_id: 'ph11_kinematics1d', type: 'topic' },
+
+    { id: 'ph11_kinematics2d', name: 'Kinematics 2D', parent_id: null, type: 'chapter', sequence_order: 103, class_level: 11, chapterType: 'physics' },
+    { id: 'tag_k2d_1', name: 'Vectors (Addition, Resolution, Dot & Cross Product)', parent_id: 'ph11_kinematics2d', type: 'topic' },
+    { id: 'tag_k2d_2', name: 'Projectile Motion', parent_id: 'ph11_kinematics2d', type: 'topic' },
+    { id: 'tag_k2d_3', name: 'Relative Motion in 2D', parent_id: 'ph11_kinematics2d', type: 'topic' },
+    { id: 'tag_k2d_4', name: 'Circular Motion (Uniform & Non-uniform)', parent_id: 'ph11_kinematics2d', type: 'topic' },
+    { id: 'tag_k2d_5', name: 'River-Boat & Rain Problems', parent_id: 'ph11_kinematics2d', type: 'topic' },
+
+    { id: 'ph11_nlm', name: 'Laws of Motion', parent_id: null, type: 'chapter', sequence_order: 104, class_level: 11, chapterType: 'physics' },
+    { id: 'tag_nlm_1', name: 'Newton\'s Laws (1st, 2nd, 3rd)', parent_id: 'ph11_nlm', type: 'topic' },
+    { id: 'tag_nlm_2', name: 'Free Body Diagrams & Constraint Motion', parent_id: 'ph11_nlm', type: 'topic' },
+    { id: 'tag_nlm_3', name: 'Friction (Static, Kinetic, Rolling)', parent_id: 'ph11_nlm', type: 'topic' },
+    { id: 'tag_nlm_4', name: 'Pulley Systems & Connected Bodies', parent_id: 'ph11_nlm', type: 'topic' },
+    { id: 'tag_nlm_5', name: 'Pseudo Force & Non-inertial Frames', parent_id: 'ph11_nlm', type: 'topic' },
+    { id: 'tag_nlm_6', name: 'Circular Dynamics (Banking, Conical Pendulum)', parent_id: 'ph11_nlm', type: 'topic' },
+
+    { id: 'ph11_wep', name: 'Work, Energy & Power', parent_id: null, type: 'chapter', sequence_order: 105, class_level: 11, chapterType: 'physics' },
+    { id: 'tag_wep_1', name: 'Work Done by Constant & Variable Force', parent_id: 'ph11_wep', type: 'topic' },
+    { id: 'tag_wep_2', name: 'Kinetic & Potential Energy', parent_id: 'ph11_wep', type: 'topic' },
+    { id: 'tag_wep_3', name: 'Work-Energy Theorem', parent_id: 'ph11_wep', type: 'topic' },
+    { id: 'tag_wep_4', name: 'Conservation of Energy', parent_id: 'ph11_wep', type: 'topic' },
+    { id: 'tag_wep_5', name: 'Power & Efficiency', parent_id: 'ph11_wep', type: 'topic' },
+    { id: 'tag_wep_6', name: 'Conservative vs Non-conservative Forces', parent_id: 'ph11_wep', type: 'topic' },
+
+    { id: 'ph11_com_mom', name: 'Centre of Mass & Momentum', parent_id: null, type: 'chapter', sequence_order: 106, class_level: 11, chapterType: 'physics' },
+    { id: 'tag_com_1', name: 'Centre of Mass (Discrete & Continuous)', parent_id: 'ph11_com_mom', type: 'topic' },
+    { id: 'tag_com_2', name: 'Linear Momentum & Impulse', parent_id: 'ph11_com_mom', type: 'topic' },
+    { id: 'tag_com_3', name: 'Conservation of Momentum', parent_id: 'ph11_com_mom', type: 'topic' },
+    { id: 'tag_com_4', name: 'Collisions (Elastic, Inelastic, Perfectly Inelastic)', parent_id: 'ph11_com_mom', type: 'topic' },
+    { id: 'tag_com_5', name: 'Coefficient of Restitution', parent_id: 'ph11_com_mom', type: 'topic' },
+
+    { id: 'ph11_rotation', name: 'Rotational Motion', parent_id: null, type: 'chapter', sequence_order: 107, class_level: 11, chapterType: 'physics' },
+    { id: 'tag_rot_1', name: 'Moment of Inertia & Theorems (PA, PP)', parent_id: 'ph11_rotation', type: 'topic' },
+    { id: 'tag_rot_2', name: 'Torque & Angular Momentum', parent_id: 'ph11_rotation', type: 'topic' },
+    { id: 'tag_rot_3', name: 'Rolling Motion (Pure Rolling)', parent_id: 'ph11_rotation', type: 'topic' },
+    { id: 'tag_rot_4', name: 'Rotational Kinematics & Dynamics', parent_id: 'ph11_rotation', type: 'topic' },
+    { id: 'tag_rot_5', name: 'Conservation of Angular Momentum', parent_id: 'ph11_rotation', type: 'topic' },
+    { id: 'tag_rot_6', name: 'Equilibrium of Rigid Bodies', parent_id: 'ph11_rotation', type: 'topic' },
+
+    { id: 'ph11_gravitation', name: 'Gravitation', parent_id: null, type: 'chapter', sequence_order: 108, class_level: 11, chapterType: 'physics' },
+    { id: 'tag_grav_1', name: 'Newton\'s Law of Gravitation', parent_id: 'ph11_gravitation', type: 'topic' },
+    { id: 'tag_grav_2', name: 'Gravitational Field & Potential', parent_id: 'ph11_gravitation', type: 'topic' },
+    { id: 'tag_grav_3', name: 'Kepler\'s Laws & Orbital Motion', parent_id: 'ph11_gravitation', type: 'topic' },
+    { id: 'tag_grav_4', name: 'Escape Velocity & Satellites', parent_id: 'ph11_gravitation', type: 'topic' },
+    { id: 'tag_grav_5', name: 'Variation of g (Depth, Height, Rotation)', parent_id: 'ph11_gravitation', type: 'topic' },
+
+    { id: 'ph11_matter', name: 'Properties of Matter', parent_id: null, type: 'chapter', sequence_order: 109, class_level: 11, chapterType: 'physics' },
+    { id: 'tag_matter_1', name: 'Elasticity (Stress, Strain, Young\'s Modulus)', parent_id: 'ph11_matter', type: 'topic' },
+    { id: 'tag_matter_2', name: 'Fluid Statics (Pressure, Buoyancy, Archimedes)', parent_id: 'ph11_matter', type: 'topic' },
+    { id: 'tag_matter_3', name: 'Fluid Dynamics (Bernoulli, Continuity)', parent_id: 'ph11_matter', type: 'topic' },
+    { id: 'tag_matter_4', name: 'Viscosity & Stokes\' Law', parent_id: 'ph11_matter', type: 'topic' },
+    { id: 'tag_matter_5', name: 'Surface Tension & Capillarity', parent_id: 'ph11_matter', type: 'topic' },
+
+    { id: 'ph11_thermo_phy', name: 'Thermodynamics & Kinetic Theory', parent_id: null, type: 'chapter', sequence_order: 110, class_level: 11, chapterType: 'physics' },
+    { id: 'tag_phth_1', name: 'Thermal Expansion & Calorimetry', parent_id: 'ph11_thermo_phy', type: 'topic' },
+    { id: 'tag_phth_2', name: 'Heat Transfer (Conduction, Convection, Radiation)', parent_id: 'ph11_thermo_phy', type: 'topic' },
+    { id: 'tag_phth_3', name: 'Laws of Thermodynamics & Processes', parent_id: 'ph11_thermo_phy', type: 'topic' },
+    { id: 'tag_phth_4', name: 'Carnot Engine & Efficiency', parent_id: 'ph11_thermo_phy', type: 'topic' },
+    { id: 'tag_phth_5', name: 'Kinetic Theory (KE, RMS speed, Degrees of Freedom)', parent_id: 'ph11_thermo_phy', type: 'topic' },
+    { id: 'tag_phth_6', name: 'Specific Heats (Cp, Cv) & Poisson\'s Ratio', parent_id: 'ph11_thermo_phy', type: 'topic' },
+
+    { id: 'ph11_shm', name: 'Simple Harmonic Motion', parent_id: null, type: 'chapter', sequence_order: 111, class_level: 11, chapterType: 'physics' },
+    { id: 'tag_shm_1', name: 'SHM Equations & Characteristics', parent_id: 'ph11_shm', type: 'topic' },
+    { id: 'tag_shm_2', name: 'Energy in SHM', parent_id: 'ph11_shm', type: 'topic' },
+    { id: 'tag_shm_3', name: 'Spring-Mass Systems', parent_id: 'ph11_shm', type: 'topic' },
+    { id: 'tag_shm_4', name: 'Simple & Compound Pendulum', parent_id: 'ph11_shm', type: 'topic' },
+    { id: 'tag_shm_5', name: 'Forced Oscillations & Resonance', parent_id: 'ph11_shm', type: 'topic' },
+
+    { id: 'ph11_waves', name: 'Waves & Sound', parent_id: null, type: 'chapter', sequence_order: 112, class_level: 11, chapterType: 'physics' },
+    { id: 'tag_waves_1', name: 'Wave Equation & Speed', parent_id: 'ph11_waves', type: 'topic' },
+    { id: 'tag_waves_2', name: 'Superposition, Interference & Beats', parent_id: 'ph11_waves', type: 'topic' },
+    { id: 'tag_waves_3', name: 'Standing Waves (Strings & Pipes)', parent_id: 'ph11_waves', type: 'topic' },
+    { id: 'tag_waves_4', name: 'Doppler Effect', parent_id: 'ph11_waves', type: 'topic' },
+    { id: 'tag_waves_5', name: 'Intensity & Loudness of Sound', parent_id: 'ph11_waves', type: 'topic' },
+
     { id: 'ph12_electrostatics', name: 'Electrostatics', parent_id: null, type: 'chapter', sequence_order: 113, class_level: 12, chapterType: 'physics' },
     { id: 'tag_elst_1', name: 'Coulomb\'s Law & Electric Force', parent_id: 'ph12_electrostatics', type: 'topic' },
     { id: 'tag_elst_2', name: 'Electric Field (Point Charges, Dipole, Continuous)', parent_id: 'ph12_electrostatics', type: 'topic' },
@@ -589,15 +580,6 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_semi_3', name: 'Rectifiers (Half-wave, Full-wave)', parent_id: 'ph12_semiconductors', type: 'topic' },
     { id: 'tag_semi_4', name: 'Zener Diode & Voltage Regulation', parent_id: 'ph12_semiconductors', type: 'topic' },
     { id: 'tag_semi_5', name: 'Transistors (BJT, CE Config) & Logic Gates', parent_id: 'ph12_semiconductors', type: 'topic' },
-
-
-
-
-
-
-
-
-
 
     // Mathematics (Competitive Syllabus)
     { id: 'ma_basic_math', name: 'Basic of Mathematics', parent_id: null, type: 'chapter', sequence_order: 301, class_level: 11, chapterType: 'algebra' },
@@ -702,7 +684,7 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
 ];
 
 // Summary Statistics
-// Total Chapters: 67
-// Total Tags: 404
-// Total Micro Topics: 154
-// Last saved: 2026-03-24T04:56:40.155Z
+// Total Chapters: 80
+// Total Tags: 349
+// Total Micro Topics: 155
+// Last saved: 2026-03-27T09:13:10.494Z

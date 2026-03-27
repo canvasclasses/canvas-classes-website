@@ -22,7 +22,7 @@ export default function PeriodicTrendsPage() {
     return (
         <main className="min-h-screen bg-[#0d1117] text-white">
             {/* Hero Header */}
-            <section className="relative pt-20 pb-8 md:pt-24 md:pb-10 overflow-hidden">
+            <section className="relative pt-12 pb-6 md:pt-24 md:pb-10 overflow-hidden">
                 {/* Background gradient */}
                 <div className="absolute inset-0 bg-gradient-to-b from-violet-900/20 via-transparent to-transparent" />
                 <div className="absolute top-20 left-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl" />
@@ -36,14 +36,14 @@ export default function PeriodicTrendsPage() {
                     </div>
 
                     {/* Main Title with Gradient */}
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
                         <span className="bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
                             Periodic Trends & Exceptions
                         </span>
                     </h1>
 
                     {/* Subtitle */}
-                    <p className="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto mb-8">
+                    <p className="text-gray-400 text-base md:text-xl max-w-3xl mx-auto mb-6 md:mb-8">
                         Interactive graphs for s, p, d, and f block elements with all properties and
                         exceptions from NCERT Class 11 & 12 Chemistry
                     </p>
@@ -63,15 +63,15 @@ export default function PeriodicTrendsPage() {
             </section>
 
             {/* Quick Stats */}
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 mb-10">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <section className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 -mt-4 mb-6 md:mb-10">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
                     {[
                         { label: 'Block Types', value: '4', desc: 's, p, d, f' },
                         { label: 'Data Tables', value: '15+', desc: 'From NCERT' },
                         { label: 'Properties', value: '50+', desc: 'Graphable' },
                         { label: 'Elements', value: '118', desc: 'Covered' },
                     ].map((stat, idx) => (
-                        <div key={idx} className="bg-gray-900/60 rounded-xl border border-gray-700/50 p-4 text-center backdrop-blur-sm">
+                        <div key={idx} className="bg-gray-900/60 rounded-xl border border-gray-700/50 p-3 md:p-4 text-center backdrop-blur-sm">
                             <div className="text-2xl font-bold text-white">{stat.value}</div>
                             <div className="text-sm text-gray-400">{stat.label}</div>
                             <div className="text-xs text-gray-500">{stat.desc}</div>

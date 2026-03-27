@@ -23,17 +23,17 @@ const cardHoverStyles = "hover:translate-y-[-4px] hover:shadow-[0_12px_30px_-5px
 
 export default function ColorsOfCompoundsSection() {
     return (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 mb-12">
+        <section className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 mt-6 md:mt-10 mb-8 md:mb-12">
             {/* Header Section */}
-            <div className="text-center mb-10 bg-gradient-to-br from-[#1A233A] to-[#111827] p-6 rounded-2xl shadow-lg border border-[#283550]">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-4">
-                    <Bookmark className="w-4 h-4 text-indigo-400" />
-                    <span className="text-indigo-400 font-bold tracking-widest uppercase text-xs">Canvas Classes Study Material</span>
+            <div className="text-center mb-6 md:mb-10 bg-gradient-to-br from-[#1A233A] to-[#111827] p-4 md:p-6 rounded-2xl shadow-lg border border-[#283550]">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-3 md:mb-4">
+                    <Bookmark className="w-3 h-3 md:w-4 md:h-4 text-indigo-400" />
+                    <span className="text-indigo-400 font-bold tracking-widest uppercase text-[10px] md:text-xs">Canvas Classes Study Material</span>
                 </div>
-                <h1 className="text-3xl font-extrabold text-white sm:text-4xl md:text-5xl tracking-tight mb-4">
+                <h1 className="text-2xl font-extrabold text-white sm:text-3xl md:text-5xl tracking-tight mb-2 md:mb-4">
                     Colours of Inorganic <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Ions & Compounds</span>
                 </h1>
-                <p className="mt-3 text-lg text-slate-400 max-w-3xl mx-auto font-medium">
+                <p className="mt-2 md:mt-3 text-sm md:text-lg text-slate-400 max-w-3xl mx-auto font-medium">
                     Visual memorization guide for 3d series aquated ions, precipitates, and distinct chemical compounds.
                 </p>
             </div>

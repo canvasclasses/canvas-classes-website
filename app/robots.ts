@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: '*',
             allow: '/',
-            disallow: ['/api/', '/crucible/admin', '/crucible/dashboard', '/login'],
+            disallow: ['/api/', '/crucible/admin', '/the-crucible/dashboard', '/login'],
         },
         sitemap: 'https://www.canvasclasses.in/sitemap.xml',
     };

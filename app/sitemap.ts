@@ -3,6 +3,9 @@ import { getFlashcardChapters } from './lib/revisionData';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 
+// Cache sitemap for 24 hours — question/chapter data changes infrequently
+export const revalidate = 86400;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Static pages
     const staticPages = [

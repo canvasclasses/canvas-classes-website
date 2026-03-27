@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache';
 import { fetchOrganicReactions } from './organicReactionsData';
 import { fetchTop50Data } from './top50Data';
 import { fetch2MinData } from './twoMinData';
@@ -13,7 +14,8 @@ export type SearchItem = {
     icon?: string;
 };
 
-export async function getSearchItems(): Promise<SearchItem[]> {
+export const getSearchItems = unstable_cache(
+  async (): Promise<SearchItem[]> => {
     try {
         // Fetch all dynamic data concurrently
         const [reactions, top50, shortVideos, chapters] = await Promise.all([
@@ -184,4 +186,7 @@ export async function getSearchItems(): Promise<SearchItem[]> {
         console.error('Error getting search items:', error);
         return [];
     }
-}
+  },
+  ['search-items-v1'],
+  { revalidate: 3600 } // Cache for 1 hour — content changes infrequently
+);
