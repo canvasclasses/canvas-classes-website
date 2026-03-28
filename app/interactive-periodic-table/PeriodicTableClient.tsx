@@ -81,39 +81,82 @@ const BLOCK_INFO = {
     },
     p: {
         name: 'p-Block Elements',
-        description: 'Groups 13–18: Metals, Metalloids, and Non-metals',
+        description: 'Groups 13–18: From Boron to Noble Gases',
         sections: [
             {
-                title: 'General Configuration',
+                title: 'What Makes p-Block Special?',
                 points: [
-                    'Valence shell configuration: ns²np¹⁻⁶',
-                    'Unique block containing metals (Al, Ga), metalloids (Si, Ge, As), and non-metals (C, N, O, halogens)',
-                    'Includes the most electronegative element (F) and inert noble gases (Group 18)'
+                    'Valence config: ns² followed by np¹ to np⁶ — six groups of diverse chemistry!',
+                    'The only block with all three types: metals (Al, Ga), metalloids (Si, Ge, As), and non-metals (C, N, O, halogens)',
+                    'Home to the most electronegative element Fluorine (F) and the inert Noble Gases',
+                    'Key exam tip: p-block questions dominate JEE Inorganic — focus on trends, not rote memorization!'
                 ]
             },
             {
-                title: 'Key Anomalies of First Members (B, C, N, O, F)',
+                title: 'Why First Members Behave Differently (B, C, N, O, F)',
                 points: [
-                    'Size & Orbitals: Exceptionally small, highly electronegative, and crucially lack vacant d-orbitals in valence shell',
-                    'Restricted Covalency: Maximum covalency of 4 (e.g., B cannot form BF₆³⁻). Heavier members expand octets (SF₆, PF₆⁻)',
-                    'Multiple Bonding: Form strong pπ–pπ bonds (C≡C, N≡N, O=O). Heavier elements use weaker dπ–pπ or single bonds due to diffuse orbitals'
+                    'Small size + high electronegativity + NO vacant d-orbitals = unique behavior',
+                    'Maximum covalency is 4 (not 6!): BF₆³⁻ does not exist, but SF₆ and PF₆⁻ do (they have 3d orbitals)',
+                    'pπ-pπ bonding: First members form strong multiple bonds (C≡C, N≡N, O=O). Heavier elements cannot due to larger size — they form dπ-pπ or single bonds instead',
+                    'Remember: BF₃ is electron-deficient (acts as Lewis acid), but AlF₆³⁻ is stable!'
                 ]
             },
             {
-                title: 'High-Yield Trends',
+                title: 'Must-Know Trends for JEE/NEET',
                 points: [
-                    'Inert Pair Effect: Down Groups 13–15, the state two units lower becomes stable (Tl⁺ > Tl³⁺, Pb²⁺ > Pb⁴⁺) due to poor shielding by d/f electrons',
-                    'Group 15 Hydrides: NH₃ to BiH₃ — bond dissociation enthalpy ↓, thermal stability ↓, basicity ↓, reducing power ↑ (BiH₃ strongest)',
-                    'Group 16 & 17 EGE Anomaly: O and F have less negative electron gain enthalpies than S and Cl due to strong inter-electronic repulsions in compact 2p orbitals',
-                    'F₂ Oxidizing Power: Despite lower EGE, F₂ is strongest oxidizer due to exceptionally low F–F bond dissociation enthalpy and high hydration enthalpy of F⁻'
+                    'Inert Pair Effect: As you go down Groups 13-15, the lower oxidation state becomes MORE stable. Tl⁺ is more stable than Tl³⁺, Pb²⁺ more than Pb⁴⁺ — blame poor shielding by d and f electrons!',
+                    'Group 15 Hydrides (NH₃ to BiH₃): Bond strength decreases down the group → thermal stability drops, basicity drops, but reducing power INCREASES (BiH₃ is the strongest reducing agent)',
+                    'Electron Gain Enthalpy Anomaly: O and F have LESS negative EGE than S and Cl! Why? Compact 2p orbitals have high inter-electronic repulsion — adding an electron is harder than in larger 3p orbitals',
+                    'F₂ is the strongest oxidizer despite lower EGE: Very weak F-F bond (high repulsion in small atoms) + very high hydration energy of F⁻ ion make fluorine unbeatable!'
                 ]
             },
             {
-                title: 'Noble Gases (Group 18)',
+                title: 'Group 13 & 14: Boron to Lead',
                 points: [
-                    'Stable closed-shell structures → very high ionization enthalpies and large positive electron gain enthalpies',
-                    'Xe chemistry: First ionization enthalpy (1170 kJ/mol) ≈ O₂ (1175 kJ/mol), enabling XeF₂, XeF₄, XeF₆ formation',
-                    'Neil Bartlett synthesized first noble gas compound Xe⁺[PtF₆]⁻ by analogy with O₂⁺[PtF₆]⁻'
+                    'Boron is a metalloid, rest are metals. Al shows amphoteric nature — reacts with both acids and bases!',
+                    'Borax bead test: Borax forms colored beads with metal oxides — classic qualitative analysis trick',
+                    'Carbon catenation: Forms longest chains (C-C bond is very strong). Silicon cannot catenate well (Si-Si is weaker)',
+                    'Pb²⁺ more stable than Pb⁴⁺ due to inert pair effect — but PbO₂ is still a strong oxidizing agent!',
+                    'CO vs CO₂: CO is neutral oxide, CO₂ is acidic. NO and NO₂ are also tricky — remember their nature!'
+                ]
+            },
+            {
+                title: 'Group 15: Nitrogen Family Essentials',
+                points: [
+                    'N₂ is inert due to strong triple bond (N≡N: 941 kJ/mol). Needs Haber process (Fe catalyst, 400°C, 200 atm) to make ammonia!',
+                    'HNO₃ (Nitric acid): Strong oxidizer. Passivates Fe and Al (forms protective oxide layer) — can be stored in Al containers!',
+                    'PH₃ (Phosphine): Prepared from white P + NaOH. Smells like rotten fish, highly poisonous, used in Holme\'s signal',
+                    'PCl₃ hydrolyzes to H₃PO₃ + 3HCl, PCl₅ gives POCl₃ + 2HCl (partial) or H₃PO₄ + 5HCl (complete)',
+                    'Allotropes of phosphorus: White (toxic, P₄ tetrahedron), Red (stable, used in safety matches), Black (graphite-like)'
+                ]
+            },
+            {
+                title: 'Group 16: Oxygen to Polonium',
+                points: [
+                    'Ozone (O₃): Bent shape, diamagnetic, powerful oxidizer. Decomposes to O₂ — used for water purification',
+                    'Sulphuric acid (H₂SO₄): King of chemicals. Contact process: 2SO₂ + O₂ → 2SO₃ (V₂O₅ catalyst, 450°C)',
+                    'Oleum (H₂S₂O₇) is intermediate — SO₃ dissolved in H₂SO₄. Dilute carefully: always acid to water!',
+                    'Sodium thiosulphate (Na₂S₂O₃): Fixes photography, removes chlorine, gives white precipitate with Ag⁺ that dissolves in excess',
+                    'H₂S is toxic with rotten egg smell — great reducing agent, precipitates metal sulphides in qualitative analysis'
+                ]
+            },
+            {
+                title: 'Group 17: Halogens — The Salt Makers',
+                points: [
+                    'Trend: Atomic radius ↑, ionization energy ↓, electronegativity ↓, oxidizing power ↓ as you go down',
+                    'Cl₂ water: Acts as oxidizing AND bleaching agent. Bleaches via oxidation (permanent), not reduction',
+                    'Iodine test: I₂ + starch → blue-black complex. I⁻ does NOT give this test!',
+                    'Interhalogen compounds: XX\' type (ClF, BrF), XX\'₃ type (ClF₃, BrF₃), XX\'₅ type (BrF₅, IF₅), XX\'₇ type (IF₇)',
+                    'Pseudohalogens: (CN)₂, (OCN)₂, (SCN)₂ — resemble halogens in properties and reactions'
+                ]
+            },
+            {
+                title: 'Noble Gases: Not So Inert Anymore!',
+                points: [
+                    'Xe can form compounds! Its first ionization energy (1170 kJ/mol) is almost equal to O₂ (1175 kJ/mol)',
+                    'Neil Bartlett\'s breakthrough: Made Xe⁺[PtF₆]⁻ by analogy with O₂⁺[PtF₆]⁻ — proved noble gases can react!',
+                    'XeF₂ (linear), XeF₄ (square planar), XeF₆ (distorted octahedral) — prepared by direct combination at high temp/pressure',
+                    'Uses: He for balloons (non-flammable, though H₂ gives better lift), Ne in discharge tubes, Ar in welding shield, Kr in high-end bulbs, Rn in cancer therapy'
                 ]
             }
         ],
@@ -763,7 +806,7 @@ export default function PeriodicTableClient() {
                                                         {section.points.map((point, pIdx) => (
                                                             <li key={pIdx} className="flex items-start gap-4 text-gray-200 text-base md:text-lg leading-relaxed">
                                                                 <span className="mt-1.5 shrink-0 font-bold text-xl" style={{ color: info.color }}>•</span>
-                                                                <span className="flex-1">{point}</span>
+                                                                <span className="flex-1">{renderBlockContent(point)}</span>
                                                             </li>
                                                         ))}
                                                     </ul>
@@ -1334,6 +1377,64 @@ const formatFormula = (formula: string) => {
         }
         return <span key={index}>{part}</span>;
     });
+};
+
+// Helper to render block info content with HTML tags (sup, sub) for larger, readable superscripts/subscripts
+const renderBlockContent = (content: string) => {
+    // Replace HTML tags with React elements for proper styling
+    const parts: React.ReactNode[] = [];
+    let remaining = content;
+    let key = 0;
+    
+    while (remaining.length > 0) {
+        // Find next HTML tag
+        const supMatch = remaining.match(/<sup>(.*?)<\/sup>/);
+        const subMatch = remaining.match(/<sub>(.*?)<\/sub>/);
+        
+        // Find which tag comes first
+        let firstMatch: RegExpMatchArray | null = null;
+        let matchType: 'sup' | 'sub' | null = null;
+        let matchIndex = Infinity;
+        
+        if (supMatch && supMatch.index !== undefined && supMatch.index < matchIndex) {
+            firstMatch = supMatch;
+            matchType = 'sup';
+            matchIndex = supMatch.index;
+        }
+        if (subMatch && subMatch.index !== undefined && subMatch.index < matchIndex) {
+            firstMatch = subMatch;
+            matchType = 'sub';
+            matchIndex = subMatch.index;
+        }
+        
+        if (firstMatch && matchType) {
+            // Add text before the tag
+            if (matchIndex > 0) {
+                parts.push(<span key={key++}>{remaining.substring(0, matchIndex)}</span>);
+            }
+            
+            // Add the styled tag content - larger font size for readability
+            const innerContent = firstMatch[1];
+            if (matchType === 'sup') {
+                parts.push(
+                    <sup key={key++} className="text-[0.85em] font-semibold align-super">{innerContent}</sup>
+                );
+            } else {
+                parts.push(
+                    <sub key={key++} className="text-[0.85em] font-semibold align-sub">{innerContent}</sub>
+                );
+            }
+            
+            // Continue with remaining text
+            remaining = remaining.substring(matchIndex + firstMatch[0].length);
+        } else {
+            // No more tags, add remaining text
+            parts.push(<span key={key++}>{remaining}</span>);
+            break;
+        }
+    }
+    
+    return parts.length > 0 ? parts : content;
 };
 
 // ZONE 4: Collapsible Data Grid Component (Clean Design)
