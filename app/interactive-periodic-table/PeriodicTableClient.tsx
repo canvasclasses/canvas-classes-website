@@ -520,6 +520,71 @@ export default function PeriodicTableClient() {
             window.addEventListener('keydown', handleKeyDown);
             return () => window.removeEventListener('keydown', handleKeyDown);
         }, [slideIndex]);
+
+        // Custom touch handling for mobile swipe (without interfering with pinch-to-zoom)
+        const carouselRef = useRef<HTMLDivElement>(null);
+        const touchStartX = useRef(0);
+        const touchStartY = useRef(0);
+        const touchStartTime = useRef(0);
+        const isPinching = useRef(false);
+
+        const handleTouchStart = (e: React.TouchEvent) => {
+            if (e.touches.length === 2) {
+                // Two fingers = pinch gesture, don't interfere
+                isPinching.current = true;
+                return;
+            }
+            if (e.touches.length === 1) {
+                isPinching.current = false;
+                touchStartX.current = e.touches[0].clientX;
+                touchStartY.current = e.touches[0].clientY;
+                touchStartTime.current = Date.now();
+            }
+        };
+
+        const handleTouchMove = (e: React.TouchEvent) => {
+            if (isPinching.current || e.touches.length !== 1) {
+                return; // Allow default pinch-to-zoom behavior
+            }
+            // Prevent default only for horizontal swipes
+            const touchX = e.touches[0].clientX;
+            const touchY = e.touches[0].clientY;
+            const deltaX = Math.abs(touchX - touchStartX.current);
+            const deltaY = Math.abs(touchY - touchStartY.current);
+            
+            // Only prevent if it's clearly a horizontal swipe
+            if (deltaX > deltaY && deltaX > 10) {
+                e.preventDefault();
+            }
+        };
+
+        const handleTouchEnd = (e: React.TouchEvent) => {
+            if (isPinching.current) {
+                isPinching.current = false;
+                return;
+            }
+            if (e.changedTouches.length !== 1) return;
+
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            const deltaX = touchEndX - touchStartX.current;
+            const deltaY = touchEndY - touchStartY.current;
+            const deltaTime = Date.now() - touchStartTime.current;
+            
+            const swipeThreshold = 50;
+            const swipeTimeLimit = 300; // ms
+
+            // Only trigger if it's a quick horizontal swipe
+            if (Math.abs(deltaX) > Math.abs(deltaY) && 
+                Math.abs(deltaX) > swipeThreshold && 
+                deltaTime < swipeTimeLimit) {
+                if (deltaX > 0 && slideIndex > 0) {
+                    setSlideIndex(slideIndex - 1);
+                } else if (deltaX < 0 && slideIndex < totalSlides - 1) {
+                    setSlideIndex(slideIndex + 1);
+                }
+            }
+        };
         
         // Define slides for d-block with hand-drawn images
         const dBlockSlides = [
@@ -541,8 +606,40 @@ export default function PeriodicTableClient() {
             }
         ];
 
-        // Use slides for d-block, otherwise just content
-        const slides = block === 'd' ? dBlockSlides : [{ type: 'content' as const, sections: info.sections }];
+        // Define slides for p-block with hand-drawn images
+        const pBlockSlides = [
+            {
+                type: 'content' as const,
+                sections: info.sections
+            },
+            {
+                type: 'image' as const,
+                title: 'Group 13 & 14 Compounds',
+                imageUrl: 'https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/svg/1%20(1).svg',
+                caption: 'Boron and aluminium compounds structures'
+            },
+            {
+                type: 'image' as const,
+                title: 'Group 15 Compounds',
+                imageUrl: 'https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/svg/2%20(1).svg',
+                caption: 'Nitrogen and phosphorus compounds'
+            },
+            {
+                type: 'image' as const,
+                title: 'Group 16 Compounds',
+                imageUrl: 'https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/svg/3%20(1).svg',
+                caption: 'Sulphur and oxygen compounds'
+            },
+            {
+                type: 'image' as const,
+                title: 'Group 17 & 18 Compounds',
+                imageUrl: 'https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/svg/4%20(1).svg',
+                caption: 'Halogens and noble gas compounds'
+            }
+        ];
+
+        // Use slides for d-block and p-block, otherwise just content
+        const slides = block === 'd' ? dBlockSlides : block === 'p' ? pBlockSlides : [{ type: 'content' as const, sections: info.sections }];
         const totalSlides = slides.length;
 
         const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
@@ -600,9 +697,9 @@ export default function PeriodicTableClient() {
                         </div>
                         
                         {/* Navigation Controls in Header */}
-                        <div className="flex items-center gap-2 ml-4">
+                        <div className="flex items-center gap-2 ml-4 flex-shrink-0">
                             {totalSlides > 1 && (
-                                <>
+                                <div className="flex items-center gap-1">
                                     <button
                                         onClick={prevSlide}
                                         disabled={slideIndex === 0}
@@ -610,23 +707,11 @@ export default function PeriodicTableClient() {
                                         style={{ color: info.color }}
                                         title="Previous (←)"
                                     >
-                                        <ChevronLeft size={24} />
+                                        <ChevronLeft size={20} />
                                     </button>
-                                    <div className="flex items-center gap-1.5 px-3">
-                                        {slides.map((_, idx) => (
-                                            <button
-                                                key={idx}
-                                                onClick={() => goToSlide(idx)}
-                                                className="transition-all duration-300"
-                                                style={{
-                                                    width: slideIndex === idx ? '24px' : '6px',
-                                                    height: '6px',
-                                                    borderRadius: '3px',
-                                                    backgroundColor: slideIndex === idx ? info.color : '#4B5563'
-                                                }}
-                                            />
-                                        ))}
-                                    </div>
+                                    <span className="text-sm font-medium text-gray-400 px-2">
+                                        {slideIndex + 1}/{totalSlides}
+                                    </span>
                                     <button
                                         onClick={nextSlide}
                                         disabled={slideIndex === totalSlides - 1}
@@ -634,33 +719,35 @@ export default function PeriodicTableClient() {
                                         style={{ color: info.color }}
                                         title="Next (→)"
                                     >
-                                        <ChevronRight size={24} />
+                                        <ChevronRight size={20} />
                                     </button>
-                                </>
+                                </div>
                             )}
                             <button
                                 onClick={() => {
                                     setShowBlockInfo(null);
                                     setSlideIndex(0);
                                 }}
-                                className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-gray-800 transition-colors"
+                                className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-gray-800 transition-colors ml-2"
                                 title="Close (ESC)"
                             >
-                                <X size={28} />
+                                <X size={24} />
                             </button>
                         </div>
                     </div>
 
-                    {/* Carousel Container */}
-                    <div className="relative overflow-hidden">
+                    {/* Carousel Container with Touch Handling */}
+                    <div 
+                        className="relative overflow-hidden touch-pan-y"
+                        ref={carouselRef}
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
+                    >
                         <motion.div
                             className="flex"
                             animate={{ x: `-${slideIndex * 100}%` }}
                             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                            drag="x"
-                            dragConstraints={{ left: 0, right: 0 }}
-                            dragElastic={0.2}
-                            onDragEnd={handleDragEnd}
                         >
                             {slides.map((slide, idx) => (
                                 <div key={idx} className="w-full flex-shrink-0 p-6 md:p-10 pt-8 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 200px)' }}>
@@ -684,13 +771,13 @@ export default function PeriodicTableClient() {
                                             ))}
                                         </div>
                                     ) : (
-                                        <div className="flex flex-col items-center justify-center h-full">
-                                            <div className="relative w-full h-full flex items-center justify-center">
+                                        <div className="flex flex-col items-center justify-center min-h-0">
+                                            <div className="relative w-full flex items-start justify-center">
                                                 <img 
                                                     src={slide.imageUrl} 
                                                     alt={slide.title}
-                                                    className="w-full h-full object-contain"
-                                                    style={{ maxHeight: 'calc(90vh - 250px)' }}
+                                                    className="max-w-full h-auto object-contain"
+                                                    style={{ maxHeight: 'calc(90vh - 180px)' }}
                                                 />
                                             </div>
                                         </div>

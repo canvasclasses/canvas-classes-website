@@ -17,7 +17,7 @@ export default function Footer() {
     return (
         <footer className="bg-[#050505] border-t border-white/8 relative overflow-hidden">
 
-            <div className="max-w-6xl mx-auto px-6 py-16 relative z-10">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16 relative z-10">
                 {/* Main Footer Content */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12">
                     {/* Brand Section - 5 Columns */}
@@ -37,44 +37,49 @@ export default function Footer() {
                             Empowering students with free, high-quality chemistry education. From concept building to exam success.
                         </p>
 
-                        {/* Stats Badges */}
-                        <div className="flex flex-wrap gap-2.5 mb-8">
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/3 text-zinc-300 text-[11px] font-medium border border-white/8">
-                                <Users size={12} className="text-teal-400" /> 1M+ Students
+                        {/* Stats Badges - Compact on mobile */}
+                        <div className="flex flex-wrap gap-2 sm:gap-2.5 mb-6 sm:mb-8">
+                            <span className="inline-flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white/3 text-zinc-300 text-[10px] sm:text-[11px] font-medium border border-white/8">
+                                <Users size={11} className="text-teal-400 sm:hidden" />
+                                <Users size={12} className="text-teal-400 hidden sm:block" /> 1M+ Students
                             </span>
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/3 text-zinc-300 text-[11px] font-medium border border-white/8">
-                                <Video size={12} className="text-purple-400" /> 2000+ Videos
+                            <span className="inline-flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white/3 text-zinc-300 text-[10px] sm:text-[11px] font-medium border border-white/8">
+                                <Video size={11} className="text-purple-400 sm:hidden" />
+                                <Video size={12} className="text-purple-400 hidden sm:block" /> 2000+ Videos
                             </span>
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/3 text-zinc-300 text-[11px] font-medium border border-white/8">
-                                <Award size={12} className="text-rose-400" /> 15+ Years
+                            <span className="inline-flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white/3 text-zinc-300 text-[10px] sm:text-[11px] font-medium border border-white/8">
+                                <Award size={11} className="text-rose-400 sm:hidden" />
+                                <Award size={12} className="text-rose-400 hidden sm:block" /> 15+ Years
                             </span>
                         </div>
 
                         {/* Social Links */}
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2 sm:gap-3">
                             <a
-                                href="https://www.youtube.com/@canvasclasses"
+                                href="https://www.youtube.com/@CanvasClassesOfficial"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-2.5 rounded-xl bg-white/3 text-zinc-400 hover:text-white hover:bg-white/8 hover:border-white/12 border border-white/5 transition-all"
+                                className="p-2 sm:p-2.5 rounded-xl bg-white/3 text-zinc-400 hover:text-white hover:bg-white/8 hover:border-white/12 border border-white/5 transition-all"
                                 aria-label="YouTube"
                             >
-                                <Youtube size={18} />
+                                <Youtube size={16} className="sm:hidden" />
+                                <Youtube size={18} className="hidden sm:block" />
                             </a>
                             <a
                                 href="mailto:paaras.thakur07@gmail.com"
-                                className="p-2.5 rounded-xl bg-white/3 text-zinc-400 hover:text-white hover:bg-white/8 hover:border-white/12 border border-white/5 transition-all"
+                                className="p-2 sm:p-2.5 rounded-xl bg-white/3 text-zinc-400 hover:text-white hover:bg-white/8 hover:border-white/12 border border-white/5 transition-all"
                                 aria-label="Email"
                             >
-                                <Mail size={18} />
+                                <Mail size={16} className="sm:hidden" />
+                                <Mail size={18} className="hidden sm:block" />
                             </a>
                         </div>
                     </div>
 
                     {/* Courses - Horizontal Links */}
                     <div className="md:col-span-2 md:mt-2">
-                        <h4 className="text-white font-medium mb-6 text-sm">Courses</h4>
-                        <ul className="space-y-3.5">
+                        <h4 className="text-white font-medium mb-4 sm:mb-6 text-sm">Courses</h4>
+                        <ul className="space-y-2.5 sm:space-y-3.5">
                             <li><Link href="/detailed-lectures" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">JEE/NEET Prep</Link></li>
                             <li><Link href="/ncert-solutions" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">NCERT Solutions</Link></li>
                             <li><Link href="/cbse-12-ncert-revision" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">CBSE Revision</Link></li>
@@ -83,8 +88,8 @@ export default function Footer() {
 
                     {/* Interactive Tools - Horizontal Links */}
                     <div className="md:col-span-3 md:mt-2">
-                        <h4 className="text-white font-medium mb-6 text-sm">Interactive Tools</h4>
-                        <ul className="space-y-3.5">
+                        <h4 className="text-white font-medium mb-4 sm:mb-6 text-sm">Interactive Tools</h4>
+                        <ul className="space-y-2.5 sm:space-y-3.5">
                             <li><Link href="/interactive-periodic-table" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">Periodic Table</Link></li>
                             <li><Link href="/salt-analysis" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">Salt Analysis</Link></li>
                             <li><Link href="/chemistry-flashcards" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">Flashcards</Link></li>
@@ -95,8 +100,8 @@ export default function Footer() {
 
                     {/* Resources & More - Horizontal Links */}
                     <div className="md:col-span-2 md:mt-2">
-                        <h4 className="text-white font-medium mb-6 text-sm">Resources</h4>
-                        <ul className="space-y-3.5">
+                        <h4 className="text-white font-medium mb-4 sm:mb-6 text-sm">Resources</h4>
+                        <ul className="space-y-2.5 sm:space-y-3.5">
                             <li><Link href="/handwritten-notes" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">Notes</Link></li>
                             <li><Link href="/one-shot-lectures" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">One Shots</Link></li>
                             <li><Link href="/top-50-concepts" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">Top 50 Concepts</Link></li>
@@ -108,7 +113,7 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="mt-16 pt-8 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-500">
+                <div className="mt-10 sm:mt-16 pt-6 sm:pt-8 border-t border-white/8 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-xs sm:text-sm text-zinc-500">
                     <p>© {currentYear} Canvas Classes by Paaras Sir. All rights reserved.</p>
                     <p>Made with <span className="text-red-500/80">❤️</span> for Students</p>
                 </div>
