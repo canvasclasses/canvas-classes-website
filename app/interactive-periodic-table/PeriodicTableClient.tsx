@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import {
     Atom,
     Zap,
@@ -14,6 +14,8 @@ import {
     BarChart3,
     BookOpen,
     Layers,
+    ChevronLeft,
+    ChevronRight,
 } from 'lucide-react';
 import {
     ELEMENTS,
@@ -135,7 +137,10 @@ const BLOCK_INFO = {
                     'Enthalpies of Atomization: Very high, peaking near middle of series (d⁵ configurations like Cr, Mo, W) due to maximum unpaired electrons → strong metallic bonding. Mn is anomalous (lower MP)',
                     'Atomic Radii & Lanthanoid Contraction: Radii decrease initially, remain constant mid-series, rise slightly at end. Crucially, 5d series radii ≈ 4d series (e.g., Zr = 160 pm, Hf = 159 pm) due to poor shielding by 14 intervening 4f electrons',
                     'Colored Compounds: Form colored ions/complexes due to d-d electronic transitions (except d⁰ like Sc³⁺, Ti⁴⁺ and d¹⁰ like Zn²⁺, Cu⁺)',
-                    'Paramagnetic: Possess unpaired d-electrons (except d⁰ and d¹⁰ configurations)'
+                    'Paramagnetic: Possess unpaired d-electrons (except d⁰ and d¹⁰ configurations)',
+                    'Metallic Structures: With the exception of Zn, Cd, Hg and Mn, they have one or more typical metallic structures at normal temperature',
+                    'Hardness & Melting/Boiling Points: Transition metals (except Zn, Cd & Hg) are very hard and have high m.p. & b.p.',
+                    'Density: Density ↑ up to Cu and then ↓ for Zn'
                 ]
             },
             {
@@ -143,15 +148,32 @@ const BLOCK_INFO = {
                 points: [
                     'Variable Oxidation States: Differ by units of one (V²⁺, V³⁺, V⁴⁺, V⁵⁺). Highest state = +7 (Mn in Mn₂O₇)',
                     'Stabilization: Higher states stabilized by F and O (can form multiple bonds). Lower states (like zero) stabilized by π-acceptor ligands (CO in Ni(CO)₄)',
-                    'Oxygen vs Fluorine: O superior at stabilizing highest states (Mn forms Mn₂O₇ but only MnF₄) due to multiple bonding capability'
+                    'Oxygen vs Fluorine: O superior at stabilizing highest states (Mn forms Mn₂O₇ but only MnF₄) due to multiple bonding capability',
+                    'Cr(+6) in dichromate: In the form of dichromate in acidic medium is a strong oxidizing agent, but MoO₃ and WO₃ are not (higher O.S. become more stable down the group)'
                 ]
             },
             {
                 title: 'Standard Electrode Potentials (E°)',
                 points: [
                     'General trend: Decreasing tendency to form M²⁺ across 3d series',
-                    'Copper Anomaly: Only 3d metal with positive E° (+0.34V) → cannot liberate H₂ from acids. High energy for Cu(s) → Cu²⁺(aq) atomization + ionization not balanced by hydration enthalpy',
-                    'Catalytic Activity: Fe, Ni, Pt, V₂O₅ are excellent catalysts due to variable oxidation states and ability to form reaction intermediates'
+                    'Copper Anomaly: Only 3d metal with positive E° (+0.34V) → cannot liberate H₂ from acids. High energy for Cu(s) → Cu²⁺(aq) atomization + ionization not balanced by hydration enthalpy. Cu²⁺ is more stable than Cu⁺ because the high energy for Cu(s) → Cu²⁺ atomization + ionization is not balanced by hydration enthalpy',
+                    'Catalytic Activity: Fe, Ni, Pt, V₂O₅ are excellent catalysts due to variable oxidation states and ability to form reaction intermediates. Transition metals show catalytic activity because: (1) can have multiple oxidation states, (2) can form complexes',
+                    'Fe³⁺ catalyzes the reaction between I⁻ and S₂O₈²⁻ ions: 2Fe³⁺ + 2I⁻ → 2Fe²⁺ + I₂ (oxidizing agent), then 2Fe²⁺ + S₂O₈²⁻ → 2Fe³⁺ + 2SO₄²⁻. Net reaction: 2I⁻ + S₂O₈²⁻ → I₂ + 2SO₄²⁻'
+                ]
+            },
+            {
+                title: 'Interstitial Compounds',
+                points: [
+                    'Interstitial compounds: Higher m.p. than pure metals, very hard, conducting, chemically inert'
+                ]
+            },
+            {
+                title: 'Oxides',
+                points: [
+                    'Mn₂O₇ is covalent green oil',
+                    'V₂O₅ is amphoteric though mainly acidic. V₂O₃ is basic. V₂O₄ is mildly basic',
+                    'CrO is basic. Cr₂O₃ is amphoteric. CrO₃ is acidic',
+                    'MnO is more basic. Mn₂O₃ is basic. MnO₂ is neutral. MnO₃ is acidic. Mn₂O₇ is more acidic'
                 ]
             }
         ],
@@ -209,6 +231,21 @@ export default function PeriodicTableClient() {
     const [compareElements, setCompareElements] = useState<Element[]>([]);
     const [showPropertyDropdown, setShowPropertyDropdown] = useState(false);
     const [showBlockInfo, setShowBlockInfo] = useState<'s' | 'p' | 'd' | 'f' | null>(null);
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    // Keyboard shortcuts for block info modal
+    useEffect(() => {
+        if (!showBlockInfo) return;
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                setShowBlockInfo(null);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [showBlockInfo]);
 
     const comparisonRef = useRef<HTMLDivElement>(null);
 
@@ -463,27 +500,93 @@ export default function PeriodicTableClient() {
         </div>
     );
 
-    // Block Information Modal - Enhanced with sections and larger design
+    // Block Information Modal - Enhanced with swipeable carousel
     const BlockInfoModal = ({ block }: { block: 's' | 'p' | 'd' | 'f' }) => {
         const info = BLOCK_INFO[block];
+        const [slideIndex, setSlideIndex] = useState(0);
+
+        // Keyboard navigation for slides
+        useEffect(() => {
+            const handleKeyDown = (e: KeyboardEvent) => {
+                if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    prevSlide();
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    nextSlide();
+                }
+            };
+
+            window.addEventListener('keydown', handleKeyDown);
+            return () => window.removeEventListener('keydown', handleKeyDown);
+        }, [slideIndex]);
+        
+        // Define slides for d-block with hand-drawn images
+        const dBlockSlides = [
+            {
+                type: 'content' as const,
+                sections: info.sections
+            },
+            {
+                type: 'image' as const,
+                title: 'Dichromate Ion - Oxidizing Agent',
+                imageUrl: 'https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/svg/K2Cr2O7.svg',
+                caption: 'Cr₂O₇²⁻ in acidic medium acts as a strong oxidizing agent'
+            },
+            {
+                type: 'image' as const,
+                title: 'Permanganate Ion - KMnO₄',
+                imageUrl: 'https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/svg/KMnO4.svg',
+                caption: 'KMnO₄ oxidation reactions and color changes'
+            }
+        ];
+
+        // Use slides for d-block, otherwise just content
+        const slides = block === 'd' ? dBlockSlides : [{ type: 'content' as const, sections: info.sections }];
+        const totalSlides = slides.length;
+
+        const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+            const swipeThreshold = 50;
+            if (info.offset.x > swipeThreshold && slideIndex > 0) {
+                setSlideIndex(slideIndex - 1);
+            } else if (info.offset.x < -swipeThreshold && slideIndex < totalSlides - 1) {
+                setSlideIndex(slideIndex + 1);
+            }
+        };
+
+        const goToSlide = (index: number) => {
+            setSlideIndex(index);
+        };
+
+        const nextSlide = () => {
+            if (slideIndex < totalSlides - 1) setSlideIndex(slideIndex + 1);
+        };
+
+        const prevSlide = () => {
+            if (slideIndex > 0) setSlideIndex(slideIndex - 1);
+        };
+
         return (
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-3 md:p-6 overflow-y-auto"
-                onClick={() => setShowBlockInfo(null)}
+                onClick={() => {
+                    setShowBlockInfo(null);
+                    setSlideIndex(0);
+                }}
             >
                 <motion.div
                     initial={{ scale: 0.95, opacity: 0, y: 20 }}
                     animate={{ scale: 1, opacity: 1, y: 0 }}
                     exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                    className="bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 rounded-2xl p-6 md:p-10 max-w-5xl w-full border-2 shadow-2xl my-6 max-h-[90vh] overflow-y-auto"
+                    className="bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 rounded-2xl max-w-5xl w-full border-2 shadow-2xl my-6 max-h-[90vh] overflow-hidden relative"
                     style={{ borderColor: info.color }}
                     onClick={(e) => e.stopPropagation()}
                 >
-                    {/* Header */}
-                    <div className="flex items-start justify-between mb-8 pb-6 border-b-2" style={{ borderColor: `${info.color}40` }}>
+                    {/* Header - Fixed with Navigation */}
+                    <div className="flex items-start justify-between p-6 md:p-10 pb-6 border-b-2" style={{ borderColor: `${info.color}40` }}>
                         <div className="flex-1">
                             <div className="flex items-center gap-3 mb-3">
                                 <div className="p-3 rounded-xl" style={{ backgroundColor: `${info.color}20`, border: `2px solid ${info.color}40` }}>
@@ -495,40 +598,117 @@ export default function PeriodicTableClient() {
                             </div>
                             <p className="text-gray-300 text-lg md:text-xl font-medium">{info.description}</p>
                         </div>
-                        <button
-                            onClick={() => setShowBlockInfo(null)}
-                            className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-gray-800 transition-colors ml-4"
-                        >
-                            <X size={28} />
-                        </button>
+                        
+                        {/* Navigation Controls in Header */}
+                        <div className="flex items-center gap-2 ml-4">
+                            {totalSlides > 1 && (
+                                <>
+                                    <button
+                                        onClick={prevSlide}
+                                        disabled={slideIndex === 0}
+                                        className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                                        style={{ color: info.color }}
+                                        title="Previous (←)"
+                                    >
+                                        <ChevronLeft size={24} />
+                                    </button>
+                                    <div className="flex items-center gap-1.5 px-3">
+                                        {slides.map((_, idx) => (
+                                            <button
+                                                key={idx}
+                                                onClick={() => goToSlide(idx)}
+                                                className="transition-all duration-300"
+                                                style={{
+                                                    width: slideIndex === idx ? '24px' : '6px',
+                                                    height: '6px',
+                                                    borderRadius: '3px',
+                                                    backgroundColor: slideIndex === idx ? info.color : '#4B5563'
+                                                }}
+                                            />
+                                        ))}
+                                    </div>
+                                    <button
+                                        onClick={nextSlide}
+                                        disabled={slideIndex === totalSlides - 1}
+                                        className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                                        style={{ color: info.color }}
+                                        title="Next (→)"
+                                    >
+                                        <ChevronRight size={24} />
+                                    </button>
+                                </>
+                            )}
+                            <button
+                                onClick={() => {
+                                    setShowBlockInfo(null);
+                                    setSlideIndex(0);
+                                }}
+                                className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-gray-800 transition-colors"
+                                title="Close (ESC)"
+                            >
+                                <X size={28} />
+                            </button>
+                        </div>
                     </div>
 
-                    {/* Content Sections */}
-                    <div className="space-y-8">
-                        {info.sections.map((section, idx) => (
-                            <div key={idx} className="space-y-4">
-                                <h3 className="text-xl md:text-2xl font-bold flex items-center gap-3" style={{ color: info.color }}>
-                                    <span className="w-2 h-8 rounded-full" style={{ backgroundColor: info.color }} />
-                                    {section.title}
-                                </h3>
-                                <ul className="space-y-4 ml-5">
-                                    {section.points.map((point, i) => (
-                                        <li key={i} className="flex items-start gap-4 text-gray-200 text-base md:text-lg leading-relaxed">
-                                            <span className="mt-1.5 shrink-0 font-bold text-xl" style={{ color: info.color }}>•</span>
-                                            <span className="flex-1">{point}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
+                    {/* Carousel Container */}
+                    <div className="relative overflow-hidden">
+                        <motion.div
+                            className="flex"
+                            animate={{ x: `-${slideIndex * 100}%` }}
+                            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                            drag="x"
+                            dragConstraints={{ left: 0, right: 0 }}
+                            dragElastic={0.2}
+                            onDragEnd={handleDragEnd}
+                        >
+                            {slides.map((slide, idx) => (
+                                <div key={idx} className="w-full flex-shrink-0 p-6 md:p-10 pt-8 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 200px)' }}>
+                                    {slide.type === 'content' ? (
+                                        <div className="space-y-8">
+                                            {slide.sections.map((section, sIdx) => (
+                                                <div key={sIdx} className="space-y-4">
+                                                    <h3 className="text-xl md:text-2xl font-bold flex items-center gap-3" style={{ color: info.color }}>
+                                                        <span className="w-2 h-8 rounded-full" style={{ backgroundColor: info.color }} />
+                                                        {section.title}
+                                                    </h3>
+                                                    <ul className="space-y-4 ml-5">
+                                                        {section.points.map((point, pIdx) => (
+                                                            <li key={pIdx} className="flex items-start gap-4 text-gray-200 text-base md:text-lg leading-relaxed">
+                                                                <span className="mt-1.5 shrink-0 font-bold text-xl" style={{ color: info.color }}>•</span>
+                                                                <span className="flex-1">{point}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-col items-center justify-center h-full">
+                                            <div className="relative w-full h-full flex items-center justify-center">
+                                                <img 
+                                                    src={slide.imageUrl} 
+                                                    alt={slide.title}
+                                                    className="w-full h-full object-contain"
+                                                    style={{ maxHeight: 'calc(90vh - 250px)' }}
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </motion.div>
                     </div>
+
 
                     {/* Footer */}
-                    <div className="mt-10 pt-6 border-t border-gray-700 text-center">
-                        <p className="text-gray-400 text-sm md:text-base">
-                            Based on NCERT Chemistry • JEE/NEET Relevant Content
-                        </p>
-                    </div>
+                    {totalSlides === 1 && (
+                        <div className="px-6 md:px-10 pb-6 pt-6 border-t border-gray-700 text-center">
+                            <p className="text-gray-400 text-sm md:text-base">
+                                Based on NCERT Chemistry • JEE/NEET Relevant Content
+                            </p>
+                        </div>
+                    )}
                 </motion.div>
             </motion.div>
         );
