@@ -16,6 +16,11 @@ import {
     Layers,
     ChevronLeft,
     ChevronRight,
+    Youtube,
+    Lightbulb,
+    Compass,
+    Trophy,
+    Eye,
 } from 'lucide-react';
 import {
     ELEMENTS,
@@ -1088,6 +1093,9 @@ export default function PeriodicTableClient() {
                 {/* Comparison panel */}
                 <ComparisonPanel />
 
+                {/* YouTube Video Lectures Section */}
+                <YouTubeLecturesSection />
+
                 {/* Link to NCERT Trends Page */}
                 <div id="trends-section" className="mt-8 px-2 sm:px-0">
                     <a href="/periodic-trends" className="block bg-gradient-to-r from-violet-900/40 to-fuchsia-900/40 rounded-xl border border-violet-500/30 p-4 sm:p-5 hover:border-violet-500/60 transition-all group">
@@ -1126,6 +1134,201 @@ export default function PeriodicTableClient() {
         </div >
     );
 }
+
+// --- YouTube Video Lectures Section ---
+const YouTubeLecturesSection = () => {
+    const [activeVideo, setActiveVideo] = useState<string | null>(null);
+
+    const videos = [
+        {
+            id: 'p-NdkOfm0tQ',
+            title: 'Periodic Table & Periodicity',
+            description: 'NCERT Summary in 15 min',
+            duration: '15:00'
+        },
+        {
+            id: 'YYRoWfl3O8s',
+            title: 'Chemical Bonding Structures',
+            description: 'JEE/NEET important structures',
+            duration: '12:00'
+        }
+    ];
+
+    return (
+        <>
+            {/* Video Modal */}
+            <AnimatePresence>
+                {activeVideo && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+                        onClick={() => setActiveVideo(null)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="relative w-full max-w-4xl aspect-video bg-gray-900 rounded-lg overflow-hidden shadow-2xl"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {/* Close Button */}
+                            <button
+                                onClick={() => setActiveVideo(null)}
+                                className="absolute top-3 right-3 z-10 p-2 rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors"
+                                aria-label="Close video"
+                            >
+                                <X size={20} />
+                            </button>
+
+                            {/* YouTube Embed */}
+                            <iframe
+                                src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1&rel=0`}
+                                title="YouTube video player"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                className="w-full h-full"
+                            />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Section Header - Compact */}
+            <section className="mt-8 mb-4 px-2 sm:px-0">
+                {/* Single Row of 4 Beautiful Buttons */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                    
+                    {/* Video 1 */}
+                    <button
+                        onClick={() => setActiveVideo(videos[0].id)}
+                        className="group flex items-center gap-3 p-3 rounded-xl bg-gray-800/60 border border-gray-700/50 hover:border-red-500/50 hover:bg-gray-800/80 transition-all text-left"
+                    >
+                        {/* Creative Video Icon - Red YouTube Style */}
+                        <div className="relative w-11 h-11 flex-shrink-0">
+                            {/* Shadow layer */}
+                            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-red-800 to-red-950 translate-y-1" />
+                            {/* Main body - YouTube Red */}
+                            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-red-500 via-red-600 to-red-700 border border-red-400/50 shadow-[inset_0_2px_0_rgba(255,255,255,0.25),0_4px_8px_rgba(239,68,68,0.4)] overflow-hidden">
+                                {/* Film strip holes */}
+                                <div className="absolute left-1 top-2 bottom-2 w-1 flex flex-col justify-between">
+                                    <div className="w-1 h-1.5 rounded-sm bg-red-900/50" />
+                                    <div className="w-1 h-1.5 rounded-sm bg-red-900/50" />
+                                    <div className="w-1 h-1.5 rounded-sm bg-red-900/50" />
+                                </div>
+                                <div className="absolute right-1 top-2 bottom-2 w-1 flex flex-col justify-between">
+                                    <div className="w-1 h-1.5 rounded-sm bg-red-900/50" />
+                                    <div className="w-1 h-1.5 rounded-sm bg-red-900/50" />
+                                    <div className="w-1 h-1.5 rounded-sm bg-red-900/50" />
+                                </div>
+                                {/* Center play triangle */}
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="w-0 h-0 border-l-[8px] border-l-white border-y-[5px] border-y-transparent drop-shadow-md ml-0.5" />
+                                </div>
+                                {/* Shine */}
+                                <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/25 to-transparent" />
+                            </div>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <h4 className="text-sm font-semibold text-gray-200 group-hover:text-white truncate">Periodic Table in 15 minutes</h4>
+                            <p className="text-xs text-gray-500 truncate">Complete chapter summary</p>
+                        </div>
+                    </button>
+
+                    {/* Video 2 */}
+                    <button
+                        onClick={() => setActiveVideo(videos[1].id)}
+                        className="group flex items-center gap-3 p-3 rounded-xl bg-gray-800/60 border border-gray-700/50 hover:border-red-500/50 hover:bg-gray-800/80 transition-all text-left"
+                    >
+                        {/* Creative Video Icon - Red YouTube Style */}
+                        <div className="relative w-11 h-11 flex-shrink-0">
+                            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-red-800 to-red-950 translate-y-1" />
+                            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-red-500 via-red-600 to-red-700 border border-red-400/50 shadow-[inset_0_2px_0_rgba(255,255,255,0.25),0_4px_8px_rgba(239,68,68,0.4)] overflow-hidden">
+                                <div className="absolute left-1 top-2 bottom-2 w-1 flex flex-col justify-between">
+                                    <div className="w-1 h-1.5 rounded-sm bg-red-900/50" />
+                                    <div className="w-1 h-1.5 rounded-sm bg-red-900/50" />
+                                    <div className="w-1 h-1.5 rounded-sm bg-red-900/50" />
+                                </div>
+                                <div className="absolute right-1 top-2 bottom-2 w-1 flex flex-col justify-between">
+                                    <div className="w-1 h-1.5 rounded-sm bg-red-900/50" />
+                                    <div className="w-1 h-1.5 rounded-sm bg-red-900/50" />
+                                    <div className="w-1 h-1.5 rounded-sm bg-red-900/50" />
+                                </div>
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="w-0 h-0 border-l-[8px] border-l-white border-y-[5px] border-y-transparent drop-shadow-md ml-0.5" />
+                                </div>
+                                <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/25 to-transparent" />
+                            </div>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <h4 className="text-sm font-semibold text-gray-200 group-hover:text-white leading-snug">Most Important Structures of Chemical Bonding</h4>
+                        </div>
+                    </button>
+
+                    {/* Complete Lectures */}
+                    <a
+                        href="https://www.canvasclasses.in/detailed-lectures/periodic-properties"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center gap-3 p-3 rounded-xl bg-gradient-to-br from-violet-900/40 via-violet-800/20 to-transparent border border-violet-700/40 hover:border-violet-500/60 transition-all"
+                    >
+                        {/* Creative Stack/Layers Icon */}
+                        <div className="relative w-11 h-11 flex-shrink-0">
+                            {/* Shadow */}
+                            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-violet-800 to-fuchsia-900 translate-y-1.5" />
+                            {/* Stacked layers */}
+                            <div className="absolute bottom-0 left-1 right-1 h-2 rounded-lg bg-violet-600/80 border border-violet-400/30" />
+                            <div className="absolute bottom-1.5 left-0.5 right-0.5 h-2 rounded-lg bg-violet-500 border border-violet-400/50 shadow-sm" />
+                            <div className="absolute bottom-3 left-0 right-0 h-6 rounded-xl bg-gradient-to-br from-violet-400 via-violet-500 to-fuchsia-500 border border-violet-300/60 shadow-[inset_0_2px_0_rgba(255,255,255,0.35),0_3px_8px_rgba(139,92,246,0.4)] flex items-center justify-center">
+                                {/* Stack lines */}
+                                <div className="flex flex-col gap-0.5">
+                                    <div className="w-4 h-0.5 rounded-full bg-white/50" />
+                                    <div className="w-3 h-0.5 rounded-full bg-white/40" />
+                                </div>
+                            </div>
+                            {/* Shine */}
+                            <div className="absolute top-0 left-2 right-2 h-2 rounded-full bg-gradient-to-b from-white/30 to-transparent" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <h4 className="text-sm font-semibold text-gray-200 group-hover:text-white leading-snug">Learn periodic properties from basics</h4>
+                        </div>
+                    </a>
+
+                    {/* Practice PYQs */}
+                    <a
+                        href="https://www.canvasclasses.in/the-crucible/ch11_periodic?mode=browse"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center gap-3 p-3 rounded-xl bg-gradient-to-br from-amber-900/40 via-orange-900/20 to-transparent border border-amber-700/40 hover:border-amber-500/60 transition-all"
+                    >
+                        {/* Creative Star Badge Icon */}
+                        <div className="relative w-11 h-11 flex-shrink-0">
+                            {/* Shadow */}
+                            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-amber-700 to-orange-900 translate-y-1.5 rotate-2" />
+                            {/* Background burst */}
+                            <div className="absolute inset-0.5 rounded-xl bg-gradient-to-br from-amber-300 via-amber-400 to-orange-500 border border-amber-200/60 shadow-[inset_0_2px_0_rgba(255,255,255,0.4),0_4px_10px_rgba(245,158,11,0.5)] flex items-center justify-center overflow-hidden">
+                                {/* Star */}
+                                <svg className="w-6 h-6 text-white drop-shadow-md" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                {/* Sparkle accents */}
+                                <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full" />
+                                <div className="absolute bottom-1 left-1 w-1 h-1 bg-amber-100 rounded-full" />
+                            </div>
+                            {/* Shine */}
+                            <div className="absolute top-0.5 left-2 right-2 h-2 rounded-full bg-gradient-to-b from-white/45 to-transparent" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <h4 className="text-sm font-semibold text-gray-200 group-hover:text-white leading-snug">Practise JEE Main and Advanced PYQ</h4>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </>
+    );
+};
 
 // --- Extracted Components ---
 
