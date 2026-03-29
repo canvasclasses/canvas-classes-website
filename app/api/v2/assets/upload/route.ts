@@ -6,6 +6,8 @@ import connectToDatabase from '@/lib/mongodb';
 import { Asset } from '@/lib/models/Asset';
 import { AuditLog } from '@/lib/models/AuditLog';
 import { uploadToR2, getExtensionFromMimeType, type AssetType } from '@/lib/r2Storage';
+import { createClient } from '@/app/utils/supabase/server';
+import { getUserPermissions } from '@/lib/rbac';
 
 // Configure route to handle large file uploads (videos up to 100MB)
 export const runtime = 'nodejs';
@@ -31,6 +33,32 @@ export async function POST(request: NextRequest) {
   
   try {
     await connectToDatabase();
+    
+    // SECURITY FIX: Require authentication for file uploads
+    const supabase = await createClient();
+    if (!supabase) {
+      return NextResponse.json(
+        { success: false, error: 'Authentication service unavailable' },
+        { status: 503 }
+      );
+    }
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return NextResponse.json(
+        { success: false, error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    // SECURITY FIX: Check permissions
+    const permissions = await getUserPermissions(user.email!);
+    if (!permissions.canEditQuestions) {
+      return NextResponse.json(
+        { success: false, error: 'Forbidden - Insufficient permissions to upload assets' },
+        { status: 403 }
+      );
+    }
     
     formData = await request.formData();
     file = formData.get('file') as File;

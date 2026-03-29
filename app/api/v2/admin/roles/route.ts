@@ -11,7 +11,7 @@ async function getAuthenticatedUser(request: NextRequest) {
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   
   if (!supabaseUrl || !supabaseAnonKey) {
-    return { id: 'local', email: 'local' };
+    return null;
   }
   
   const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
@@ -32,11 +32,10 @@ const RoleSchema = z.object({
 // GET /api/v2/admin/roles - List all user roles
 export async function GET(request: NextRequest) {
   try {
-    // Localhost bypass - skip authentication
-    const host = request.headers.get('host') || '';
-    const isLocalhost = host.startsWith('localhost') || host.startsWith('127.0.0.1');
+    // SECURITY FIX: Use NODE_ENV instead of hostname check
+    const isDevelopment = process.env.NODE_ENV === 'development';
     
-    if (!isLocalhost) {
+    if (!isDevelopment) {
       const user = await getAuthenticatedUser(request);
       if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -66,13 +65,12 @@ export async function GET(request: NextRequest) {
 // POST /api/v2/admin/roles - Create or update a user role
 export async function POST(request: NextRequest) {
   try {
-    // Localhost bypass - skip authentication
-    const host = request.headers.get('host') || '';
-    const isLocalhost = host.startsWith('localhost') || host.startsWith('127.0.0.1');
+    // SECURITY FIX: Use NODE_ENV instead of hostname check
+    const isDevelopment = process.env.NODE_ENV === 'development';
     
     let userEmail = 'local-dev';
     
-    if (!isLocalhost) {
+    if (!isDevelopment) {
       const user = await getAuthenticatedUser(request);
       if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -90,8 +88,8 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const validated = RoleSchema.parse(body);
 
-    // Prevent self-modification (security measure) - skip on localhost
-    if (!isLocalhost && validated.email.toLowerCase() === userEmail.toLowerCase()) {
+    // Prevent self-modification (except in development)
+    if (process.env.NODE_ENV !== 'development' && validated.email.toLowerCase() === userEmail.toLowerCase()) {
       return NextResponse.json({ 
         error: 'Cannot modify your own role. Ask another super admin.' 
       }, { status: 403 });
@@ -125,7 +123,7 @@ export async function POST(request: NextRequest) {
       // Audit log
       await RoleAuditLog.create({
         action: 'role_updated',
-        user_id: isLocalhost ? 'local-dev' : userEmail,
+        user_id: userEmail,
         user_email: userEmail,
         resource_type: 'user_role',
         resource_id: existingRole._id.toString(),
@@ -153,7 +151,7 @@ export async function POST(request: NextRequest) {
       // Audit log
       await RoleAuditLog.create({
         action: 'role_created',
-        user_id: isLocalhost ? 'local-dev' : userEmail,
+        user_id: userEmail,
         user_email: userEmail,
         resource_type: 'user_role',
         resource_id: newRole._id.toString(),
@@ -181,13 +179,12 @@ export async function POST(request: NextRequest) {
 // DELETE /api/v2/admin/roles?email=user@example.com - Deactivate a user role
 export async function DELETE(request: NextRequest) {
   try {
-    // Localhost bypass - skip authentication
-    const host = request.headers.get('host') || '';
-    const isLocalhost = host.startsWith('localhost') || host.startsWith('127.0.0.1');
+    // SECURITY FIX: Use NODE_ENV instead of hostname check
+    const isDevelopment = process.env.NODE_ENV === 'development';
     
     let userEmail = 'local-dev';
     
-    if (!isLocalhost) {
+    if (!isDevelopment) {
       const user = await getAuthenticatedUser(request);
       if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -209,8 +206,8 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Email parameter required' }, { status: 400 });
     }
 
-    // Prevent self-deletion (security measure) - skip on localhost
-    if (!isLocalhost && targetEmail.toLowerCase() === userEmail.toLowerCase()) {
+    // Prevent self-deletion (except in development)
+    if (process.env.NODE_ENV !== 'development' && targetEmail.toLowerCase() === userEmail.toLowerCase()) {
       return NextResponse.json({ 
         error: 'Cannot delete your own role. Ask another super admin.' 
       }, { status: 403 });
@@ -228,7 +225,7 @@ export async function DELETE(request: NextRequest) {
     // Audit log
     await RoleAuditLog.create({
       action: 'role_deleted',
-      user_id: isLocalhost ? 'local-dev' : userEmail,
+      user_id: userEmail,
       user_email: userEmail,
       resource_type: 'user_role',
       resource_id: role._id.toString(),

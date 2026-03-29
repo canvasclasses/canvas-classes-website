@@ -16,15 +16,13 @@ async function getUserId(req: NextRequest): Promise<string | null> {
 
 export async function GET(req: NextRequest) {
     try {
-        // Localhost dev bypass — no auth needed when running locally
-        const host = req.headers.get('host') || '';
-        const isLocalDev = host.startsWith('localhost') || host.startsWith('127.0.0.1');
+        const isDevelopment = process.env.NODE_ENV === 'development';
 
-        const userId = isLocalDev ? 'local-dev' : await getUserId(req);
+        const userId = isDevelopment ? 'local-dev' : await getUserId(req);
         if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         // For local dev, return placeholder data so dashboard UI is previewable
-        if (isLocalDev) {
+        if (isDevelopment) {
             return NextResponse.json({
                 stats: { total_questions_attempted: 247, total_correct: 182, overall_accuracy: 74, streak_days: 5 },
                 mastered_chapters: 3,
