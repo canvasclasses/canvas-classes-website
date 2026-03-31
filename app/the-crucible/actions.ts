@@ -56,8 +56,9 @@ export async function getQuestionBySlug(
         latex_validated: doc.solution?.latex_validated || false,
       },
       metadata: {
-        difficulty: doc.metadata?.difficulty || 'Medium',
+        difficultyLevel: doc.metadata?.difficultyLevel || 3,
         chapter_id: doc.metadata?.chapter_id || '',
+        subject: doc.metadata?.subject || 'chemistry',
         tags: doc.metadata?.tags || [],
         is_pyq: doc.metadata?.is_pyq || false,
         is_top_pyq: doc.metadata?.is_top_pyq || false,
@@ -112,14 +113,14 @@ export async function getRelatedCrucibleQuestions(
   chapterId: string,
   excludeId: string,
   limit = 5
-): Promise<Array<{ id: string; display_id: string; question_text: string; metadata: { difficulty: string; exam_source?: any } }>> {
+): Promise<Array<{ id: string; display_id: string; question_text: string; metadata: { difficultyLevel: number; exam_source?: any } }>> {
   try {
     await connectToDatabase();
     const { QuestionV2 } = await import('@/lib/models/Question.v2');
 
     const docs = await QuestionV2.find(
       { 'metadata.chapter_id': chapterId, deleted_at: null, status: 'published', _id: { $ne: excludeId } },
-      { _id: 1, display_id: 1, 'question_text.markdown': 1, 'metadata.difficulty': 1, 'metadata.exam_source': 1 }
+      { _id: 1, display_id: 1, 'question_text.markdown': 1, 'metadata.difficultyLevel': 1, 'metadata.exam_source': 1 }
     )
       .sort({ 'metadata.is_top_pyq': -1, display_id: 1 })
       .limit(limit)
@@ -130,7 +131,7 @@ export async function getRelatedCrucibleQuestions(
       display_id: d.display_id,
       question_text: d.question_text?.markdown || '',
       metadata: {
-        difficulty: d.metadata?.difficulty || 'Medium',
+        difficultyLevel: d.metadata?.difficultyLevel || 3,
         exam_source: d.metadata?.exam_source,
       },
     }));
@@ -322,8 +323,9 @@ export async function getChapterQuestions(chapterId: string): Promise<QuestionPa
                 latex_validated: q.solution?.latex_validated || false,
             },
             metadata: {
-                difficulty: q.metadata?.difficulty || 'Medium',
+                difficultyLevel: q.metadata?.difficultyLevel || 3,
                 chapter_id: q.metadata?.chapter_id || '',
+                subject: q.metadata?.subject || 'chemistry',
                 tags: q.metadata?.tags || [],
                 is_pyq: q.metadata?.is_pyq || false,
                 is_top_pyq: q.metadata?.is_top_pyq || false,

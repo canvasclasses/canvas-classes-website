@@ -145,7 +145,7 @@ export const inorganicTrendsData: TrendSection[] = [
             {
                 id: 20,
                 title: "Bond Angle (Group 16 Hydrides)",
-                trend: "$H_2O(104^\\circ) > H_2S(92^\\circ) > H_2Se(91^\\circ) > H_2Te(90^\\circ)$",
+                trend: "$\\underset{\\color{orange}104^\\circ}{H_2O} > \\underset{\\color{orange}92^\\circ}{H_2S} > \\underset{\\color{orange}91^\\circ}{H_2Se} > \\underset{\\color{orange}90^\\circ}{H_2Te}$",
                 logic: "Same logic as Group 15. Repulsion decreases as the central atom size increases."
             },
             {

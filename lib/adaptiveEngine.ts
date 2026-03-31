@@ -17,7 +17,7 @@ import type { IStudentChapterProfile, IMicroConceptProfile, DominantWeakness } f
 
 export type MicroFeedbackResponse = 'too_hard' | 'got_it' | 'too_easy';
 export type ConceptLevel = 'unseen' | 'weak' | 'developing' | 'strong' | 'mastered';
-export type Difficulty = 'Easy' | 'Medium' | 'Hard';
+export type Difficulty = 'Level 1-2' | 'Level 3' | 'Level 4-5' | string | number; // string for dynamic level labels or numeric 1-5
 
 export interface MicroFeedback {
   questionId: string;
@@ -253,8 +253,14 @@ function getNextQuestionLegacy(input: AdaptiveEngineInput): NextQuestionDecision
 
   let candidates = unseenPool;
 
-  // Filter by target difficulty
-  const byDifficulty = candidates.filter(q => q.metadata.difficulty === targetDifficulty);
+  // Filter by target difficulty level
+  const diffMap: Record<string, number[]> = {
+    'Level 1-2': [1, 2],
+    'Level 3': [3],
+    'Level 4-5': [4, 5],
+  };
+  const targetLevels = diffMap[targetDifficulty as keyof typeof diffMap] || [3];
+  const byDifficulty = candidates.filter(q => targetLevels.includes(q.metadata.difficultyLevel));
   if (byDifficulty.length > 0) candidates = byDifficulty;
 
   // Filter by PYQ if in final stretch
@@ -380,7 +386,13 @@ function getNextQuestionV2(input: AdaptiveEngineInputV2): NextQuestionDecision |
 
   // Apply difficulty targeting based on proficiency
   const targetDiff = getTargetDifficulty(mcProfile, initialDifficulty);
-  const byDiff = candidates.filter(q => q.metadata.difficulty === targetDiff);
+  const diffMap: Record<string, number[]> = {
+    'Level 1-2': [1, 2],
+    'Level 3': [3],
+    'Level 4-5': [4, 5],
+  };
+  const targetLevels = diffMap[targetDiff as keyof typeof diffMap] || [3];
+  const byDiff = candidates.filter(q => targetLevels.includes(q.metadata.difficultyLevel));
   if (byDiff.length > 0) candidates = byDiff;
 
   // Final 20% → prefer PYQ
@@ -401,7 +413,7 @@ function getNextQuestionV2(input: AdaptiveEngineInputV2): NextQuestionDecision |
     return {
       question: fallback,
       reason: truncReason('Continuing practice'),
-      targetDifficulty: fallback.metadata.difficulty,
+      targetDifficulty: `Level ${fallback.metadata.difficultyLevel}`,
       targetConceptId: getQuestionConceptIds(fallback)[0] ?? null,
     };
   }
@@ -431,28 +443,21 @@ function pickDiagnosticQuestion(
   // (We infer from profile's recent attempts, but since diagnostic is positions 0-4,
   //  we just use the pool filtering approach)
 
-  // Prefer questions tagged: cognitiveType=conceptual, calcLoad=calc-none, entryPoint=clear-entry
+  // Filter diagnostic pool: avoid repeating micro concepts
   let diagnosticPool = pool.filter(q => {
-    const ct = q.metadata.cognitiveType;
-    const cl = q.metadata.calcLoad;
-    const ep = q.metadata.entryPoint;
     const mc = q.metadata.microConcept ?? '';
     // Don't repeat same micro concept in diagnostic
     if (mc && seenMicroConcepts.has(mc)) return false;
-    // Prefer conceptual + calc-none + clear-entry when tagged
-    const matchesDiagnostic = (!ct || ct === 'conceptual') &&
-                              (!cl || cl === 'calc-none' || cl === 'calc-light') &&
-                              (!ep || ep === 'clear-entry');
-    return matchesDiagnostic;
+    return true;
   });
 
-  // Prefer Easy difficulty for diagnostic
-  const easyDiag = diagnosticPool.filter(q => q.metadata.difficulty === 'Easy');
+  // Prefer Level 1-2 difficulty for diagnostic
+  const easyDiag = diagnosticPool.filter(q => q.metadata.difficultyLevel <= 2);
   if (easyDiag.length > 0) diagnosticPool = easyDiag;
 
-  // Fallback: if not enough tagged questions, use any Easy from pool
+  // Fallback: if not enough tagged questions, use any Level 1-2 from pool
   if (diagnosticPool.length === 0) {
-    diagnosticPool = pool.filter(q => q.metadata.difficulty === 'Easy');
+    diagnosticPool = pool.filter(q => q.metadata.difficultyLevel <= 2);
   }
   if (diagnosticPool.length === 0) {
     diagnosticPool = pool;
@@ -464,7 +469,7 @@ function pickDiagnosticQuestion(
   return {
     question: fallback,
     reason: truncReason('Warm-up question'),
-    targetDifficulty: 'Easy',
+    targetDifficulty: 'Level 1-2',
     targetConceptId: getQuestionConceptIds(fallback)[0] ?? null,
   };
 }
@@ -491,12 +496,11 @@ function findWorkedExample(
   conceptId: string,
   seenIds: Set<string>,
 ): Question | null {
-  // A "worked example" is an Easy question with clear-entry on the target concept
+  // A "worked example" is a Level 1-2 question on the target concept
   const examples = pool.filter(q =>
     !seenIds.has(q.id) &&
     getQuestionConceptIds(q).includes(conceptId) &&
-    q.metadata.difficulty === 'Easy' &&
-    (!q.metadata.entryPoint || q.metadata.entryPoint === 'clear-entry')
+    q.metadata.difficultyLevel <= 2
   );
   return examples.length > 0 ? examples[Math.floor(Math.random() * examples.length)] : null;
 }
@@ -538,32 +542,12 @@ function applyWeaknessFilter(candidates: Question[], weakness: DominantWeakness)
 
   switch (weakness) {
     case 'concept-gap':
-      // Prefer conceptual, calc-none, clear-entry
-      filtered = candidates.filter(q =>
-        (!q.metadata.cognitiveType || q.metadata.cognitiveType === 'conceptual') &&
-        (!q.metadata.calcLoad || q.metadata.calcLoad === 'calc-none')
-      );
-      break;
-
     case 'unclear-entry':
-      // Prefer strategy-first at student's accuracy level
-      filtered = candidates.filter(q =>
-        q.metadata.entryPoint === 'strategy-first'
-      );
-      break;
-
     case 'calc-error':
-      // Prefer calc-moderate or calc-heavy, procedural type
-      filtered = candidates.filter(q =>
-        q.metadata.calcLoad === 'calc-moderate' ||
-        q.metadata.calcLoad === 'calc-heavy' ||
-        q.metadata.cognitiveType === 'procedural'
-      );
-      break;
-
     case 'time-pressure':
     case 'silly-mistake':
-      // No special filtering — serve normally
+      // AI will analyze solution content to understand question nuances
+      // No special filtering needed - serve normally
       return candidates;
   }
 
@@ -594,21 +578,21 @@ function getTargetDifficulty(
   mcProfile: IMicroConceptProfile | null | undefined,
   initialDifficulty?: Difficulty,
 ): Difficulty {
-  if (!mcProfile) return initialDifficulty ?? 'Easy';
+  if (!mcProfile) return initialDifficulty ?? 'Level 1-2';
 
   switch (mcProfile.proficiencyLevel) {
     case 'unseen':
     case 'weak':
-      return 'Easy';
+      return 'Level 1-2';
     case 'developing':
-      return 'Medium';
+      return 'Level 3';
     case 'strong':
-      // If dominant weakness exists, stay Medium to drill it
-      return mcProfile.dominantWeakness ? 'Medium' : 'Hard';
+      // If dominant weakness exists, stay Level 3 to drill it
+      return mcProfile.dominantWeakness ? 'Level 3' : 'Level 4-5';
     case 'mastered':
-      return 'Hard';
+      return 'Level 4-5';
     default:
-      return initialDifficulty ?? 'Medium';
+      return initialDifficulty ?? 'Level 3';
   }
 }
 

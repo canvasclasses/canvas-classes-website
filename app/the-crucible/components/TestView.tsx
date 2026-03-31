@@ -17,7 +17,12 @@ async function fetchOptionStats(questionId: string): Promise<Record<string, numb
   } catch { return {}; }
 }
 
-const DIFF_COLOR = (d: string) => d === 'Easy' ? '#34d399' : d === 'Medium' ? '#fbbf24' : '#f87171';
+const DIFF_COLOR = (d: number | string) => {
+  if (typeof d === 'number') {
+    return d <= 2 ? '#34d399' : d === 3 ? '#fbbf24' : '#f87171';
+  }
+  return d === 'Easy' ? '#34d399' : d === 'Medium' ? '#fbbf24' : '#f87171';
+};
 
 // Returns true when all 4 options are short enough for a 2×2 grid.
 // Threshold is 28 chars (accounts for 20px font in half-width column ~220px).
@@ -164,7 +169,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
             question_id: qq.id,
             display_id: qq.display_id,
             chapter_id: qq.metadata.chapter_id,
-            difficulty: qq.metadata.difficulty,
+            difficulty: qq.metadata.difficultyLevel,
             concept_tags: qq.metadata.tags?.map((t: any) => t.tag_id) ?? [],
             is_correct: isCorrect,
             selected_option: selectedOption,
@@ -199,7 +204,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
           return {
             question_id: qq.id,
             display_id: qq.display_id,
-            difficulty: qq.metadata.difficulty,
+            difficulty: qq.metadata.difficultyLevel,
             is_correct: hasAnswer ? isQuestionCorrect(qq) : false,
             selected_option: qq.type === 'NVT' ? nvtInputs[qq.id] : answers[qq.id],
             time_spent_seconds: questionTimings[qq.id] || 0,
@@ -340,7 +345,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
             <div style={{ maxWidth: isMobile ? 680 : 900, margin: '0 auto' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
                 <span style={{ fontSize: isMobile ? 18 : 24, fontWeight: 800 }}>Q{revIdx + 1}</span>
-                <span style={{ fontSize: isMobile ? 11 : 13, color: DIFF_COLOR(rq.metadata.difficulty), background: DIFF_COLOR(rq.metadata.difficulty) + '18', padding: '2px 8px', borderRadius: 99, fontWeight: 700 }}>{rq.metadata.difficulty}</span>
+                <span style={{ fontSize: isMobile ? 11 : 13, color: DIFF_COLOR(rq.metadata.difficultyLevel), background: DIFF_COLOR(rq.metadata.difficultyLevel) + '18', padding: '2px 8px', borderRadius: 99, fontWeight: 700 }}>L{rq.metadata.difficultyLevel}</span>
                 {userAns ? (
                   <span style={{ fontSize: isMobile ? 11 : 13, padding: '2px 10px', borderRadius: 99, background: isCorrect ? 'rgba(52,211,153,0.15)' : 'rgba(248,113,113,0.15)', color: isCorrect ? '#34d399' : '#f87171', fontWeight: 700 }}>{isCorrect ? 'Correct' : 'Wrong'}</span>
                 ) : (
@@ -578,7 +583,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
         <span style={{ fontSize: isMobile ? 17 : 20, fontWeight: 800 }}>Q{idx + 1}</span>
         <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>/{questions.length}</span>
-        <span style={{ fontSize: 11, color: DIFF_COLOR(q.metadata.difficulty), background: DIFF_COLOR(q.metadata.difficulty) + '18', padding: '2px 8px', borderRadius: 99, fontWeight: 700 }}>{q.metadata.difficulty}</span>
+        <span style={{ fontSize: 11, color: DIFF_COLOR(q.metadata.difficultyLevel), background: DIFF_COLOR(q.metadata.difficultyLevel) + '18', padding: '2px 8px', borderRadius: 99, fontWeight: 700 }}>L{q.metadata.difficultyLevel}</span>
         <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 99, background: 'rgba(52,211,153,0.12)', color: '#34d399' }}>+4</span>
         <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 99, background: 'rgba(248,113,113,0.12)', color: '#f87171' }}>-1</span>
         <button onClick={() => toggleStar(q.id)} style={{ marginLeft: 'auto', width: 30, height: 30, borderRadius: 8, background: starred.has(q.id) ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.06)', border: `1px solid ${starred.has(q.id) ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.1)'}`, color: starred.has(q.id) ? '#fbbf24' : 'rgba(255,255,255,0.4)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

@@ -25,18 +25,6 @@ export interface IMicroConceptProfile {
   accuracyRate: number;  // 0.0–1.0
   proficiencyLevel: ProficiencyLevel;
 
-  // Breakdown by cognitive type
-  byCognitiveType: {
-    [key: string]: IDimensionBreakdown;
-    // keys: recall, conceptual, application, procedural, multi-step, analytical
-  };
-
-  // Breakdown by calc load
-  byCalcLoad: {
-    [key: string]: IDimensionBreakdown;
-    // keys: calc-none, calc-light, calc-moderate, calc-heavy, calc-trap
-  };
-
   // Stuck point counts (from StuckPointPrompt)
   stuckPointCounts: {
     'concept-gap': number;
@@ -90,16 +78,6 @@ const MicroConceptProfileSchema = new Schema<IMicroConceptProfile>({
     type: String,
     enum: ['unseen', 'weak', 'developing', 'strong', 'mastered'],
     default: 'unseen',
-  },
-  byCognitiveType: {
-    type: Map,
-    of: DimensionBreakdownSchema,
-    default: () => new Map(),
-  },
-  byCalcLoad: {
-    type: Map,
-    of: DimensionBreakdownSchema,
-    default: () => new Map(),
   },
   stuckPointCounts: {
     type: {

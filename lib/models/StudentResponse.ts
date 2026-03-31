@@ -19,9 +19,6 @@ export interface IStudentResponse {
   // question context (copied from question at time of attempt)
   primaryConcept: string;
   microConcept: string;
-  cognitiveType: string;
-  calcLoad: string;
-  entryPoint: string;
 
   // what the student did
   answeredCorrectly: boolean;
@@ -46,21 +43,6 @@ const StudentResponseSchema = new Schema<IStudentResponse>({
   // question context
   primaryConcept: { type: String, default: '' },
   microConcept: { type: String, default: '' },
-  cognitiveType: {
-    type: String,
-    enum: ['recall', 'conceptual', 'application', 'procedural', 'multi-step', 'analytical', ''],
-    default: '',
-  },
-  calcLoad: {
-    type: String,
-    enum: ['calc-none', 'calc-light', 'calc-moderate', 'calc-heavy', 'calc-trap', ''],
-    default: '',
-  },
-  entryPoint: {
-    type: String,
-    enum: ['clear-entry', 'strategy-first', 'novel-framing', ''],
-    default: '',
-  },
 
   // what the student did
   answeredCorrectly: { type: Boolean, required: true },

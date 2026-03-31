@@ -134,20 +134,6 @@ export function updateProfileFromResponse(
   mcp.accuracyRate = mcp.attempts > 0 ? mcp.correctCount / mcp.attempts : 0;
   mcp.lastPracticed = new Date(response.timestamp);
 
-  // Update by cognitive type
-  if (response.cognitiveType) {
-    const key = response.cognitiveType;
-    const existing = mcp.byCognitiveType[key];
-    mcp.byCognitiveType[key] = updateDimension(existing, response.answeredCorrectly);
-  }
-
-  // Update by calc load
-  if (response.calcLoad) {
-    const key = response.calcLoad;
-    const existing = mcp.byCalcLoad[key];
-    mcp.byCalcLoad[key] = updateDimension(existing, response.answeredCorrectly);
-  }
-
   // Update stuck point counts
   if (response.stuckPoint) {
     mcp.stuckPointCounts[response.stuckPoint] =
@@ -222,8 +208,6 @@ export function createEmptyMicroConceptProfile(microConcept: string): IMicroConc
     correctCount: 0,
     accuracyRate: 0,
     proficiencyLevel: 'unseen',
-    byCognitiveType: {},
-    byCalcLoad: {},
     stuckPointCounts: {
       'concept-gap': 0,
       'unclear-entry': 0,

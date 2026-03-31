@@ -82,15 +82,15 @@ function scoreQuestion(
     if (recentSessionIds.has(q.id)) score -= 50;
 
     // ── Difficulty multiplier ────────────────────────────────────────────────
-    const diff = q.metadata.difficulty;
+    const diffLevel = q.metadata.difficultyLevel;
     if (mix === 'easy') {
-        score *= diff === 'Easy' ? 1.8 : diff === 'Medium' ? 1.2 : 0.3;
+        score *= diffLevel <= 2 ? 1.8 : diffLevel === 3 ? 1.2 : 0.3;
     } else if (mix === 'hard') {
-        score *= diff === 'Hard' ? 1.8 : diff === 'Medium' ? 1.2 : 0.3;
-    } else if (mix === 'pyq') {
-        if (!q.metadata.is_pyq) score -= 200; // heavily deprioritise non-PYQs
+        score *= diffLevel >= 4 ? 1.8 : diffLevel === 3 ? 1.2 : 0.3;
+    } else {
+        score *= diffLevel === 3 ? 1.3 : 1.0;
     }
-    // 'balanced' — no multiplier
+    if (mix === 'pyq' && !q.metadata.is_pyq) score -= 200; // heavily deprioritise non-PYQs
 
     return score;
 }
@@ -231,12 +231,11 @@ export function buildSmartTest({
 
     // ── Final sorting ─────────────────────────────────────────────────────────
     if (sort === 'difficulty') {
-        // Sort by difficulty: Easy → Medium → Hard
-        const diffOrder = { 'Easy': 1, 'Medium': 2, 'Hard': 3 };
+        // Sort by difficulty: Easy (1-2) → Medium (3) → Hard (4-5)
         return selected.sort((a, b) => {
-            const aOrder = diffOrder[a.metadata.difficulty as keyof typeof diffOrder] || 2;
-            const bOrder = diffOrder[b.metadata.difficulty as keyof typeof diffOrder] || 2;
-            return aOrder - bOrder;
+            const aLevel = a.metadata.difficultyLevel;
+            const bLevel = b.metadata.difficultyLevel;
+            return aLevel - bLevel;
         });
     } else if (sort === 'topic') {
         // Group by primary topic tag, shuffle within groups

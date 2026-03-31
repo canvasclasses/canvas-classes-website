@@ -44,7 +44,7 @@ interface AdaptiveSessionProps {
   chapter: { id: string; name: string };
   chapters: Chapter[];
   allQuestions: Question[];                // full pool for this chapter
-  initialDifficulty: 'Easy' | 'Medium' | 'Hard' | 'Mixed';
+  initialDifficulty: 'Easy' | 'Medium' | 'Hard' | 'Challenging' | 'Mixed';
   conceptTagFilter: Set<string>;
   pyqOnly: boolean;
   sessionMaxQuestions: number;             // from SessionSetupScreen (10/20/30)
@@ -61,7 +61,7 @@ function selectDiagnosticQuestions(
   count: number
 ): Question[] {
   // Shuffle Easy questions first to avoid always getting the same warm-up set
-  const easy = pool.filter(q => q.metadata.difficulty === 'Easy');
+  const easy = pool.filter(q => q.metadata.difficultyLevel <= 2);
   const shuffled = [...easy].sort(() => Math.random() - 0.5);
   
   // One Easy question per distinct concept tag, up to count
@@ -92,7 +92,11 @@ function applyConceptFilter(pool: Question[], tags: Set<string>): Question[] {
 
 function applyDifficultyFilter(pool: Question[], diff: string): Question[] {
   if (diff === 'Mixed') return pool;
-  return pool.filter(q => q.metadata.difficulty === diff);
+  // Map old difficulty strings to new numeric levels
+  if (diff === 'Easy') return pool.filter(q => q.metadata.difficultyLevel <= 2);
+  if (diff === 'Medium') return pool.filter(q => q.metadata.difficultyLevel === 3);
+  if (diff === 'Hard') return pool.filter(q => q.metadata.difficultyLevel >= 4);
+  return pool;
 }
 
 // ── Context Banner — shown above the next question based on last feedback ────
@@ -188,7 +192,16 @@ export default function AdaptiveSession({
   const filteredPool = useMemo(() => {
     let pool = initialDifficulty === 'Mixed'
       ? basePool
-      : (() => { const pref = basePool.filter(q => q.metadata.difficulty === initialDifficulty); return pref.length >= 5 ? pref : basePool; })();
+      : (() => { 
+          const pref = initialDifficulty === 'Easy'
+            ? basePool.filter(q => q.metadata.difficultyLevel <= 2)
+            : initialDifficulty === 'Medium'
+            ? basePool.filter(q => q.metadata.difficultyLevel === 3)
+            : initialDifficulty === 'Hard'
+            ? basePool.filter(q => q.metadata.difficultyLevel === 4)
+            : basePool.filter(q => q.metadata.difficultyLevel === 5); // Challenging
+          return pref.length >= 5 ? pref : basePool;
+        })();
     if (priorityQuestionIds.length > 0) {
       const prioSet = new Set(priorityQuestionIds);
       const prio = pool.filter(q => prioSet.has(q.id));
@@ -267,9 +280,6 @@ export default function AdaptiveSession({
       chapterId: chapter.id,
       primaryConcept: meta.q.metadata.tags?.[0]?.tag_id ?? '',
       microConcept: meta.q.metadata.microConcept ?? '',
-      cognitiveType: meta.q.metadata.cognitiveType ?? '',
-      calcLoad: meta.q.metadata.calcLoad ?? '',
-      entryPoint: meta.q.metadata.entryPoint ?? '',
       answeredCorrectly: meta.correct,
       timeSpentMs: meta.timeMs,
       viewedSolutionBeforeAnswer: meta.viewedSol,
@@ -302,7 +312,7 @@ export default function AdaptiveSession({
       timeSpentMs: meta.timeMs,
       viewedSolutionBeforeAnswering: meta.viewedSol,
       conceptIds: meta.q.metadata.tags?.map(t => t.tag_id) ?? [],
-      difficulty: meta.q.metadata.difficulty,
+      difficulty: meta.q.metadata.difficultyLevel,
     };
 
     const newHistory = [...feedbackHistory, feedbackEntry];

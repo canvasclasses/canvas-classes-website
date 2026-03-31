@@ -31,14 +31,19 @@ interface Props {
     id: string;
     display_id: string;
     question_text: string;
-    metadata: { difficulty: string; exam_source?: any };
+    metadata: { difficultyLevel: number; exam_source?: any };
   }>;
 }
 
-const DIFF_COLOR: Record<string, string> = {
+const DIFF_COLOR: Record<string | number, string> = {
   Easy: '#34d399',
   Medium: '#fbbf24',
   Hard: '#f87171',
+  1: '#34d399',
+  2: '#34d399',
+  3: '#fbbf24',
+  4: '#f87171',
+  5: '#f87171',
 };
 
 const CAT_COLOR: Record<string, string> = {
@@ -70,7 +75,7 @@ export default function QuestionDetailPage({ question, chapter, adjacent, relate
     : null;
 
   const chapterColor = CAT_COLOR[chapter?.category ?? 'Physical'] ?? '#a78bfa';
-  const diffColor = DIFF_COLOR[question.metadata.difficulty] ?? '#fbbf24';
+  const diffColor = DIFF_COLOR[question.metadata.difficultyLevel] ?? '#fbbf24';
 
   const hasMedia = !!(
     question.solution.video_url ||
@@ -176,7 +181,7 @@ export default function QuestionDetailPage({ question, chapter, adjacent, relate
                 padding: '3px 10px', borderRadius: 6, fontSize: 11, fontWeight: 600,
                 background: `${diffColor}18`, border: `1px solid ${diffColor}40`,
                 color: diffColor,
-              }}>{question.metadata.difficulty}</span>
+              }}>L{question.metadata.difficultyLevel}</span>
 
               {chapter && (
                 <span style={{
@@ -460,7 +465,7 @@ export default function QuestionDetailPage({ question, chapter, adjacent, relate
                 {related.map((rq) => {
                   const rqExam = rq.metadata.exam_source;
                   const rqLabel = rqExam?.exam && rqExam?.year ? `${rqExam.exam} ${rqExam.year}` : null;
-                  const rqDiff = DIFF_COLOR[rq.metadata.difficulty] ?? '#fbbf24';
+                  const rqDiff = DIFF_COLOR[rq.metadata.difficultyLevel] ?? '#fbbf24';
                   const snippet = rq.question_text
                     .replace(/!\[.*?\]\(.*?\)/g, '[diagram]')
                     .replace(/\$\$?[^$]*\$\$?/g, '[formula]')
@@ -483,7 +488,7 @@ export default function QuestionDetailPage({ question, chapter, adjacent, relate
                         <div style={{ display: 'flex', gap: 6, marginBottom: 6, flexWrap: 'wrap' }}>
                           <span style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.5)' }}>{rq.display_id}</span>
                           {rqLabel && <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>{rqLabel}</span>}
-                          <span style={{ fontSize: 11, color: rqDiff }}>{rq.metadata.difficulty}</span>
+                          <span style={{ fontSize: 11, color: rqDiff }}>L{rq.metadata.difficultyLevel}</span>
                         </div>
                         <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', lineHeight: 1.5 }}>
                           {snippet}{snippet.length >= 110 ? '…' : ''}

@@ -309,18 +309,18 @@ function selectTestQuestions(all: Question[], count: number, mix: DifficultyMix)
     pool = all.filter(q => q.metadata.is_pyq);
     if (pool.length === 0) pool = all; // fallback if no PYQs tagged yet
   } else if (mix === 'easy') {
-    const easy = shuffle(all.filter(q => q.metadata.difficulty === 'Easy'));
-    const medium = shuffle(all.filter(q => q.metadata.difficulty === 'Medium'));
+    const easy = shuffle(all.filter(q => q.metadata.difficultyLevel <= 2));
+    const medium = shuffle(all.filter(q => q.metadata.difficultyLevel === 3));
     pool = [...easy, ...medium];
   } else if (mix === 'hard') {
-    const medium = shuffle(all.filter(q => q.metadata.difficulty === 'Medium'));
-    const hard = shuffle(all.filter(q => q.metadata.difficulty === 'Hard'));
+    const medium = shuffle(all.filter(q => q.metadata.difficultyLevel === 3));
+    const hard = shuffle(all.filter(q => q.metadata.difficultyLevel >= 4));
     pool = [...medium, ...hard];
   } else {
     // balanced: ~30% easy, ~40% medium, ~30% hard — interleaved
-    const easy = shuffle(all.filter(q => q.metadata.difficulty === 'Easy'));
-    const medium = shuffle(all.filter(q => q.metadata.difficulty === 'Medium'));
-    const hard = shuffle(all.filter(q => q.metadata.difficulty === 'Hard'));
+    const easy = shuffle(all.filter(q => q.metadata.difficultyLevel <= 2));
+    const medium = shuffle(all.filter(q => q.metadata.difficultyLevel === 3));
+    const hard = shuffle(all.filter(q => q.metadata.difficultyLevel >= 4));
     const eN = Math.round(count * 0.3), hN = Math.round(count * 0.3), mN = count - eN - hN;
     pool = [
       ...easy.slice(0, eN),
@@ -356,7 +356,7 @@ async function fetchTopPYQs(examLevel?: 'mains' | 'advanced'): Promise<Question[
     answer: q.answer,
     solution: { text_markdown: q.solution?.text_markdown || '' },
     metadata: {
-      difficulty: q.metadata?.difficulty || 'Medium',
+      difficultyLevel: q.metadata?.difficultyLevel || 3,
       chapter_id: q.metadata?.chapter_id || '',
       tags: q.metadata?.tags || [],
       is_pyq: q.metadata?.is_pyq || false,
@@ -389,7 +389,7 @@ async function fetchQuestions(chapterIds: string[], limit?: number, topPYQOnly?:
       latex_validated: q.solution?.latex_validated || false,
     },
     metadata: {
-      difficulty: q.metadata?.difficulty || 'Medium',
+      difficultyLevel: q.metadata?.difficultyLevel || 3,
       chapter_id: q.metadata?.chapter_id || '',
       tags: q.metadata?.tags || [],
       is_pyq: q.metadata?.is_pyq || false,

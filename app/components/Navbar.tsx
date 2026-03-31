@@ -26,6 +26,7 @@ const ncertBoardsLinks = [
 const revisionToolsLinks = [
   { label: 'Organic Hub', href: '/organic-chemistry-hub', external: false },
   { label: 'Physical Chemistry Hub', href: '/physical-chemistry-hub', external: false },
+  { label: 'Inorganic Hub', href: '/inorganic-chemistry-hub', external: false },
   { label: 'Flashcards', href: '/chemistry-flashcards', external: false },
   { label: 'Assertion & Reason', href: '/assertion-reason', external: false },
   { label: 'Interactive P Table', href: '/interactive-periodic-table', external: false },
