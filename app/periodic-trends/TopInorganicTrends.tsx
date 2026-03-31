@@ -201,7 +201,7 @@ function TrendCard({ block, theme, index }: TrendCardProps) {
 
                     {/* Title */}
                     <div className="flex-1 min-w-0">
-                        <h4 className={`font-medium text-[17px] md:text-base leading-snug ${theme.titleColor || 'text-gray-200'}`}>
+                        <h4 className={`font-medium text-[17px] md:text-base leading-snug ${(theme as any).titleColor || 'text-gray-200'}`}>
                             {block.title}
                         </h4>
                     </div>

@@ -17,7 +17,7 @@ import type { IStudentChapterProfile, IMicroConceptProfile, DominantWeakness } f
 
 export type MicroFeedbackResponse = 'too_hard' | 'got_it' | 'too_easy';
 export type ConceptLevel = 'unseen' | 'weak' | 'developing' | 'strong' | 'mastered';
-export type Difficulty = 'Level 1-2' | 'Level 3' | 'Level 4-5' | string; // string for dynamic level labels
+export type Difficulty = 'Level 1-2' | 'Level 3' | 'Level 4-5' | string | number; // string for dynamic level labels or numeric 1-5
 
 export interface MicroFeedback {
   questionId: string;

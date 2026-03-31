@@ -106,7 +106,7 @@ const CHALLENGES = [
 ];
 
 // --- Insight Engine ---
-const getInsight = (tab, molId) => {
+const getInsight = (tab: string, molId: string) => {
   if (tab === 'sandbox') return { title: "The Ghost Scaffold", text: "Notice the faint dashed lines? That's the 'Ghost Scaffold' showing the mathematically perfect, ideal geometry (109.5° for 4 domains). Watch how changing the electronegativity and adding lone pairs physically warps the molecule away from perfection!" };
   if (tab === 'challenges') return { title: "Trust the Visuals", text: "Look closely at the lone pair orbitals and the glowing electron clouds. The answers to these anomalies are physically rendered right in front of you. Pay special attention to the dashed pπ-dπ back-bonds!" };
   
@@ -119,7 +119,7 @@ const getInsight = (tab, molId) => {
   return { title: "Molecular Mechanics", text: "Observe how the physical forces of electronegativity and steric repulsion dictate the final geometry of the molecule."};
 };
 
-const getBulkRadius = (label, isCentral = false) => {
+const getBulkRadius = (label: string, isCentral = false) => {
   if (!label) return isCentral ? 36 : 22;
   const clean = label.replace(/[^a-zA-Z]/g, '');
   let sizeLevel = 1; 
@@ -133,23 +133,23 @@ const getBulkRadius = (label, isCentral = false) => {
   return isCentral ? 30 + (sizeLevel * 3) : 18 + (sizeLevel * 4);
 };
 
-const getTerminalTextClass = (radius) => {
+const getTerminalTextClass = (radius: number) => {
   if (radius <= 18) return "text-sm";
   if (radius <= 22) return "text-xl";
   if (radius <= 26) return "text-2xl";
   return "text-3xl";
 };
 
-const getCentralTextClass = (radius) => {
+const getCentralTextClass = (radius: number) => {
   if (radius <= 33) return "text-2xl";
   if (radius <= 36) return "text-3xl";
   return "text-4xl";
 };
 
 // --- Custom SVG Formula Formatter ---
-const formatSvgLabel = (label) => {
+const formatSvgLabel = (label: string) => {
   if (!label) return null;
-  return label.split(/(\d+|\+|-)/).map((part, i) => {
+  return label.split(/(\d+|\+|-)/).map((part: string, i: number) => {
     if (/\d+/.test(part)) return <tspan key={i} baselineShift="sub" fontSize="0.75em">{part}</tspan>;
     if (part === '+' || part === '-') return <tspan key={i} baselineShift="super" fontSize="0.75em">{part}</tspan>;
     return <tspan key={i}>{part}</tspan>;
@@ -157,7 +157,7 @@ const formatSvgLabel = (label) => {
 };
 
 // --- Reusable Visualizer Component ---
-const MoleculeVisualizer = ({ data, hideAngle = false, idSuffix = "main" }) => {
+const MoleculeVisualizer = ({ data, hideAngle = false, idSuffix = "main" }: { data: any; hideAngle?: boolean; idSuffix?: string }) => {
   const cx = 200;
   const cy = 145; 
   const bondLen = 120; 
@@ -254,7 +254,7 @@ const MoleculeVisualizer = ({ data, hideAngle = false, idSuffix = "main" }) => {
     topCloudColor = `hsla(${topCloudHue}, 100%, 50%, ${0.2 + topRepulsionFactor * 0.4})`;
   }
 
-  const renderBond = (startX, startY, endX, endY, type, ux, uy, px, py, targetRadius) => {
+  const renderBond = (startX: number, startY: number, endX: number, endY: number, type: string, ux: number, uy: number, px: number, py: number, targetRadius: number) => {
     const baseStroke = 7 - (repulsionFactor * 2); 
 
     if (type === 'double') {
@@ -287,7 +287,7 @@ const MoleculeVisualizer = ({ data, hideAngle = false, idSuffix = "main" }) => {
     return <line x1={startX} y1={startY} x2={endX} y2={endY} stroke="#64748b" strokeWidth={baseStroke} strokeLinecap="round" className="transition-all duration-300" />;
   };
 
-  const renderElectrons = (type, ex, ey, px, py, ux, uy) => {
+  const renderElectrons = (type: string, ex: number, ey: number, px: number, py: number, ux: number, uy: number) => {
     const radius = 3;
     if (type === 'double') {
       return (
@@ -455,11 +455,11 @@ const App = () => {
   const [activeMoleculeId, setActiveMoleculeId] = useState(CONCEPT_GROUPS[0].molecules[0].id);
 
   const [activeChallengeIdx, setActiveChallengeIdx] = useState(0);
-  const [challengeGuess, setChallengeGuess] = useState(null); 
+  const [challengeGuess, setChallengeGuess] = useState<'A' | 'B' | null>(null); 
   const activeChallenge = CHALLENGES[activeChallengeIdx];
 
-  const activeGroup = CONCEPT_GROUPS.find(g => g.id === activeGroupId);
-  const activeMolecule = activeGroup.molecules.find(m => m.id === activeMoleculeId);
+  const activeGroup = CONCEPT_GROUPS.find(g => g.id === activeGroupId)!;
+  const activeMolecule = activeGroup.molecules.find(m => m.id === activeMoleculeId)!;
 
   const displayData = useMemo(() => {
     if (activeTab === 'trends') {
@@ -474,10 +474,10 @@ const App = () => {
         t_en: activeMolecule.t_en,
         leftBond: activeMolecule.leftBond || 'single',
         rightBond: activeMolecule.rightBond || 'single',
-        charge: activeMolecule.charge || null,
-        top_label: activeMolecule.top_label || null,
-        top_en: activeMolecule.top_en || null,
-        topBond: activeMolecule.topBond || null,
+        charge: (activeMolecule as any).charge || null,
+        top_label: (activeMolecule as any).top_label || null,
+        top_en: (activeMolecule as any).top_en || null,
+        topBond: (activeMolecule as any).topBond || null,
       };
     } else {
       let base = 109.5; 
@@ -507,8 +507,8 @@ const App = () => {
 
   const insightData = getInsight(activeTab, displayData.id);
 
-  const formatFormula = (formula) => {
-    return formula.split(/(\d+|\+|-)/).map((part, i) => {
+  const formatFormula = (formula: string) => {
+    return formula.split(/(\d+|\+|-)/).map((part: string, i: number) => {
       if (/\d+/.test(part)) return <sub key={i} className="font-sans text-[0.7em] relative top-1 opacity-90">{part}</sub>;
       if (part === '+' || part === '-') return <sup key={i} className="font-sans text-[0.7em] relative -top-1 opacity-90">{part}</sup>;
       return part;

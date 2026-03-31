@@ -11,7 +11,7 @@ import { FEATURE_ADAPTIVE_PRACTICE } from '@/constants/adaptivePractice';
 
 type GuidedStep = 'chapter' | 'loading' | 'path' | 'examples' | 'filters' | 'practice';
 type LearningPath = 'fundamentals' | 'practice';
-type Difficulty = 'Easy' | 'Medium' | 'Hard' | 'Mixed';
+type Difficulty = 'Easy' | 'Medium' | 'Hard' | 'Challenging' | 'Mixed';
 type FeedbackType = 'too_easy' | 'just_right' | 'too_hard';
 
 const CAT_COLOR: Record<string, string> = {
@@ -20,9 +20,10 @@ const CAT_COLOR: Record<string, string> = {
 const CAT_ORDER = ['Physical', 'Inorganic', 'Organic', 'Practical'];
 
 const DIFF_OPTIONS: { id: Difficulty; label: string; color: string }[] = [
-  { id: 'Easy',   label: 'Easy',   color: '#34d399' },
-  { id: 'Medium', label: 'Medium', color: '#fbbf24' },
-  { id: 'Hard',   label: 'Hard',   color: '#f87171' },
+  { id: 'Easy',        label: 'Easy',        color: '#34d399' },
+  { id: 'Medium',      label: 'Medium',      color: '#fbbf24' },
+  { id: 'Hard',        label: 'Hard',        color: '#f87171' },
+  { id: 'Challenging', label: 'Challenging', color: '#c084fc' },
   { id: 'Mixed',  label: 'Mixed',  color: '#a78bfa' },
 ];
 
@@ -30,7 +31,7 @@ interface GuidedPracticeWizardProps {
   chapters: Chapter[];
   onBack: () => void;
   preSelectedChapterId?: string;
-  preSelectedDifficulty?: 'Easy' | 'Medium' | 'Hard' | 'Mixed';
+  preSelectedDifficulty?: 'Easy' | 'Medium' | 'Hard' | 'Challenging' | 'Mixed';
   preSelectedSessionLength?: number;
 }
 
@@ -64,7 +65,12 @@ function extractTags(qs: Question[], chapterId: string): ConceptTag[] {
 
 function applyFilters(all: Question[], diff: Difficulty, tags: Set<string>, pyq: boolean): Question[] {
   let pool = all;
-  if (diff !== 'Mixed') pool = pool.filter(q => q.metadata.difficulty === diff);
+  if (diff !== 'Mixed') {
+    if (diff === 'Easy')        pool = pool.filter(q => q.metadata.difficultyLevel <= 2);
+    else if (diff === 'Medium')      pool = pool.filter(q => q.metadata.difficultyLevel === 3);
+    else if (diff === 'Hard')        pool = pool.filter(q => q.metadata.difficultyLevel === 4);
+    else if (diff === 'Challenging') pool = pool.filter(q => q.metadata.difficultyLevel === 5);
+  }
   if (pyq) pool = pool.filter(q => q.metadata.is_pyq);
   if (tags.size > 0) pool = pool.filter(q => q.metadata.tags?.some(t => tags.has(t.tag_id)));
   return [...pool].sort(() => Math.random() - 0.5);
@@ -78,20 +84,26 @@ function getAdaptiveDifficulty(stats: SessionStats, feedback: FeedbackType | nul
   if (feedback === 'too_easy') {
     if (stats.currentDifficulty === 'Easy') return 'Medium';
     if (stats.currentDifficulty === 'Medium') return 'Hard';
-    return 'Hard';
+    if (stats.currentDifficulty === 'Hard') return 'Challenging';
+    return 'Challenging';
   }
   if (feedback === 'too_hard') {
+    if (stats.currentDifficulty === 'Challenging') return 'Hard';
     if (stats.currentDifficulty === 'Hard') return 'Medium';
     if (stats.currentDifficulty === 'Medium') return 'Easy';
     return 'Easy';
   }
   
   // Auto-adjust based on accuracy if user says "just right" or no feedback yet
-  if (accuracy >= 0.8 && stats.currentDifficulty !== 'Hard') {
-    return stats.currentDifficulty === 'Easy' ? 'Medium' : 'Hard';
+  if (accuracy >= 0.8 && stats.currentDifficulty !== 'Challenging') {
+    if (stats.currentDifficulty === 'Easy') return 'Medium';
+    if (stats.currentDifficulty === 'Medium') return 'Hard';
+    return 'Challenging';
   }
   if (accuracy <= 0.4 && stats.currentDifficulty !== 'Easy') {
-    return stats.currentDifficulty === 'Hard' ? 'Medium' : 'Easy';
+    if (stats.currentDifficulty === 'Challenging') return 'Hard';
+    if (stats.currentDifficulty === 'Hard') return 'Medium';
+    return 'Easy';
   }
   
   return stats.currentDifficulty;
@@ -228,13 +240,11 @@ export default function GuidedPracticeWizard({ chapters, onBack, preSelectedChap
           latex_validated: q.solution?.latex_validated || false,
         },
         metadata: {
-          difficulty: q.metadata?.difficulty || 'Medium',
+          difficultyLevel: q.metadata?.difficultyLevel ?? 3,
           chapter_id: q.metadata?.chapter_id || '',
+          subject: q.metadata?.subject || 'chemistry',
           tags: q.metadata?.tags || [],
           microConcept: q.metadata?.microConcept,
-          cognitiveType: q.metadata?.cognitiveType,
-          calcLoad: q.metadata?.calcLoad,
-          entryPoint: q.metadata?.entryPoint,
           isMultiConcept: q.metadata?.isMultiConcept ?? false,
           is_pyq: q.metadata?.is_pyq || false,
           is_top_pyq: q.metadata?.is_top_pyq || false,
@@ -479,7 +489,9 @@ export default function GuidedPracticeWizard({ chapters, onBack, preSelectedChap
     // Compute difficulty distribution for the visual bar
     const diffCounts = { Easy: 0, Medium: 0, Hard: 0 };
     for (const q of allQuestions) {
-      if (q.metadata.difficulty in diffCounts) diffCounts[q.metadata.difficulty as keyof typeof diffCounts]++;
+      if (q.metadata.difficultyLevel <= 2) diffCounts.Easy++;
+      else if (q.metadata.difficultyLevel === 3) diffCounts.Medium++;
+      else if (q.metadata.difficultyLevel >= 4) diffCounts.Hard++;
     }
     const diffTotal = allQuestions.length || 1;
 

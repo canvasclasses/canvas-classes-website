@@ -1048,11 +1048,11 @@ function AdminPageContent() {
                         className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedDifficultyFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
                     >
                         <option value="all">All Difficulties</option>
-                        <option value="1">Level 1</option>
-                        <option value="2">Level 2</option>
-                        <option value="3">Level 3</option>
-                        <option value="4">Level 4</option>
-                        <option value="5">Level 5</option>
+                        <option value="1">L1 — Easy</option>
+                        <option value="2">L2 — Easy+</option>
+                        <option value="3">L3 — Medium</option>
+                        <option value="4">L4 — Hard</option>
+                        <option value="5">L5 — Challenging</option>
                     </select>
 
                     {/* Exam Board */}

@@ -117,7 +117,7 @@ export default function AdaptiveQuestionCard({ question, onAnswered }: AdaptiveQ
     return { border: '1.5px solid rgba(255,255,255,0.15)', background: 'transparent', color: 'rgba(255,255,255,0.3)' };
   };
 
-  const diffColor = question.metadata.difficulty === 'Easy' ? '#34d399' : question.metadata.difficulty === 'Medium' ? '#fbbf24' : '#f87171';
+  const diffColor = question.metadata.difficultyLevel <= 2 ? '#34d399' : question.metadata.difficultyLevel === 3 ? '#fbbf24' : '#f87171';
 
   return (
     <div style={{ maxWidth: 900, margin: '0 auto', padding: '24px 20px' }}>
@@ -133,7 +133,7 @@ export default function AdaptiveQuestionCard({ question, onAnswered }: AdaptiveQ
             {question.display_id}
           </span>
           <span style={{ fontSize: 11, fontWeight: 700, color: diffColor, background: `${diffColor}18`, padding: '4px 10px', borderRadius: 6 }}>
-            {question.metadata.difficulty}
+            L{question.metadata.difficultyLevel}
           </span>
           <span style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.05)', padding: '4px 10px', borderRadius: 6 }}>
             {question.type}

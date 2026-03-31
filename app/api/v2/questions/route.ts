@@ -101,7 +101,8 @@ const QuestionSchema = z.object({
     video_timestamp_start: z.number().optional()
   }),
   metadata: z.object({
-    difficulty: z.enum(['Easy', 'Medium', 'Hard']),
+    difficultyLevel: z.number().min(1).max(5).default(3),
+    difficulty: z.enum(['Easy', 'Medium', 'Hard']).optional(), // DEPRECATED: kept for backward compat
     chapter_id: z.string(),
     subject: z.enum(['chemistry', 'physics', 'maths', 'biology']).optional(),
     tags: z.array(z.object({

@@ -140,13 +140,13 @@ function selectTestQuestions(all: Question[], count: number, mix: DifficultyMix)
     pool = all.filter(q => q.metadata.is_pyq);
     if (pool.length === 0) pool = all;
   } else if (mix === 'easy') {
-    pool = [...shuffle(all.filter(q => q.metadata.difficulty === 'Easy')), ...shuffle(all.filter(q => q.metadata.difficulty === 'Medium'))];
+    pool = [...shuffle(all.filter(q => q.metadata.difficultyLevel <= 2)), ...shuffle(all.filter(q => q.metadata.difficultyLevel === 3))];
   } else if (mix === 'hard') {
-    pool = [...shuffle(all.filter(q => q.metadata.difficulty === 'Medium')), ...shuffle(all.filter(q => q.metadata.difficulty === 'Hard'))];
+    pool = [...shuffle(all.filter(q => q.metadata.difficultyLevel === 3)), ...shuffle(all.filter(q => q.metadata.difficultyLevel >= 4))];
   } else {
-    const easy = shuffle(all.filter(q => q.metadata.difficulty === 'Easy'));
-    const medium = shuffle(all.filter(q => q.metadata.difficulty === 'Medium'));
-    const hard = shuffle(all.filter(q => q.metadata.difficulty === 'Hard'));
+    const easy = shuffle(all.filter(q => q.metadata.difficultyLevel <= 2));
+    const medium = shuffle(all.filter(q => q.metadata.difficultyLevel === 3));
+    const hard = shuffle(all.filter(q => q.metadata.difficultyLevel >= 4));
     const eN = Math.round(count * 0.3), hN = Math.round(count * 0.3), mN = count - eN - hN;
     pool = [...easy.slice(0, eN), ...medium.slice(0, mN), ...hard.slice(0, hN)];
     if (pool.length < count) {

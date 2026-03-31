@@ -37,6 +37,7 @@ export interface Question {
   metadata: {
     difficultyLevel: 1 | 2 | 3 | 4 | 5;
     chapter_id: string;
+    subject: 'chemistry' | 'physics' | 'maths' | 'biology';
     tags: Array<{ tag_id: string; weight: number }>;
     // Multi-dimensional tagging
     microConcept?: string;

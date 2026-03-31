@@ -8,6 +8,7 @@ import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
 import WatermarkOverlay from '@/components/WatermarkOverlay';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
+import { difficultyColor } from '@/lib/difficultyUtils';
 
 async function fetchOptionStats(questionId: string): Promise<Record<string, number>> {
   try {
@@ -18,7 +19,11 @@ async function fetchOptionStats(questionId: string): Promise<Record<string, numb
   } catch { return {}; }
 }
 
-const DIFF_COLOR = (d: string) => d === 'Easy' ? '#34d399' : d === 'Medium' ? '#fbbf24' : '#f87171';
+const DIFF_COLOR = (d: number | string) => {
+  if (typeof d === 'number') return difficultyColor(d);
+  const strMap: Record<string, string> = { Easy: '#34d399', Medium: '#fbbf24', Hard: '#f87171', Challenging: '#c084fc' };
+  return strMap[d] ?? '#fbbf24';
+};
 const PAGE_SIZE = 15;
 
 const isShortOptions = (opts: { id: string; text: string; is_correct: boolean }[], isMobile: boolean): boolean => {
@@ -164,7 +169,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
           question_id: qq.id,
           display_id: qq.display_id,
           chapter_id: qq.metadata.chapter_id,
-          difficulty: qq.metadata.difficulty,
+          difficulty: qq.metadata.difficultyLevel,
           concept_tags: qq.metadata.tags?.map(t => t.tag_id) ?? [],
           is_correct,
           selected_option,
@@ -268,7 +273,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
               question_id: qq.id,
               display_id: qq.display_id,
               chapter_id: qq.metadata.chapter_id,
-              difficulty: qq.metadata.difficulty,
+              difficulty: qq.metadata.difficultyLevel,
               concept_tags: qq.metadata.tags?.map(t => t.tag_id) ?? [],
               is_correct,
               selected_option,
@@ -820,7 +825,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
     const globalIdx = page * PAGE_SIZE + localIdx;
     const isStarred = starred.has(qq.id);
     const expanded = cardExpanded[localIdx] ?? false;
-    const diffColor = DIFF_COLOR(qq.metadata.difficulty);
+    const diffColor = DIFF_COLOR(qq.metadata.difficultyLevel);
     const examSrc = qq.metadata.exam_source;
     const examLabel = examSrc?.year
       ? `${examSrc.exam ?? 'JEE Main'} ${examSrc.year}${examSrc.month ? ` · ${examSrc.month}` : ''}${examSrc.shift ? ` (${examSrc.shift.replace('Shift ', 'S').replace('Session ', 'S')})` : ''}`
@@ -855,7 +860,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
           <span style={{ minWidth: 30, height: 22, borderRadius: 6, background: 'rgba(255,255,255,0.08)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, padding: '0 6px', color: 'rgba(255,255,255,0.5)' }}>
             Q{globalIdx + 1}
           </span>
-          <span style={{ fontSize: 10, fontWeight: 700, color: diffColor, background: diffColor + '18', padding: '2px 8px', borderRadius: 99 }}>{qq.metadata.difficulty}</span>
+          <span style={{ fontSize: 10, fontWeight: 700, color: diffColor, background: diffColor + '18', padding: '2px 8px', borderRadius: 99 }}>L{qq.metadata.difficultyLevel}</span>
           <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.06)', padding: '2px 8px', borderRadius: 99 }}>{qq.type}</span>
           {examLabel && (
             <span style={{ fontSize: 10, color: '#60a5fa', background: 'rgba(96,165,250,0.08)', border: '1px solid rgba(96,165,250,0.18)', padding: '2px 8px', borderRadius: 99 }}>{examLabel}</span>
@@ -1000,7 +1005,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
             {pageQuestions.map((qq, i) => {
               const globalIdx = page * PAGE_SIZE + i;
               const isActive = activeNavIdx === i;
-              const diffColor = DIFF_COLOR(qq.metadata.difficulty);
+              const diffColor = DIFF_COLOR(qq.metadata.difficultyLevel);
               return (
                 <button
                   key={qq.id}
