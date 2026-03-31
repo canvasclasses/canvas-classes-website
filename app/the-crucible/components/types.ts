@@ -35,17 +35,28 @@ export interface Question {
     latex_validated?: boolean;
   };
   metadata: {
-    difficulty: 'Easy' | 'Medium' | 'Hard';
+    difficultyLevel: 1 | 2 | 3 | 4 | 5;
     chapter_id: string;
     tags: Array<{ tag_id: string; weight: number }>;
-    // Multi-dimensional tagging (Step 1 upgrade)
+    // Multi-dimensional tagging
     microConcept?: string;
-    cognitiveType?: 'recall' | 'conceptual' | 'application' | 'procedural' | 'multi-step' | 'analytical';
-    calcLoad?: 'calc-none' | 'calc-light' | 'calc-moderate' | 'calc-heavy' | 'calc-trap';
-    entryPoint?: 'clear-entry' | 'strategy-first' | 'novel-framing';
     isMultiConcept?: boolean;
-    is_pyq: boolean;
-    is_top_pyq: boolean;
+    questionNature?: 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis';
+    // NEW: 3-Tier Exam Taxonomy
+    examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
+    sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
+    examDetails?: {
+      exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG';
+      year?: number;
+      month?: string;
+      phase?: string;
+      shift?: string;
+      paper?: string;
+      question_number?: string;
+    };
+    // DEPRECATED (kept for backward compatibility)
+    is_pyq?: boolean;
+    is_top_pyq?: boolean;
     exam_source?: {
       exam?: string;
       year?: number;
@@ -59,7 +70,7 @@ export interface Question {
 export interface PracticeFilters {
   conceptTag: string | null;
   topPYQ: boolean;
-  difficulty: 'all' | 'Easy' | 'Medium' | 'Hard';
+  difficultyLevel: 'all' | 1 | 2 | 3 | 4 | 5;
 }
 
 export interface ExamConfig {

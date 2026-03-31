@@ -138,9 +138,9 @@ export default function AnalyticsDashboard({ questions, chapters, onClose, selec
 
     // ── 2. Difficulty breakdown ──────────────────────────────────────────────
     const diffData = [
-        { label: 'Easy', value: chapterQs.filter(q => q.metadata.difficulty === 'Easy').length, count: chapterQs.filter(q => q.metadata.difficulty === 'Easy').length, color: '#10b981' },
-        { label: 'Medium', value: chapterQs.filter(q => q.metadata.difficulty === 'Medium').length, count: chapterQs.filter(q => q.metadata.difficulty === 'Medium').length, color: '#f59e0b' },
-        { label: 'Hard', value: chapterQs.filter(q => q.metadata.difficulty === 'Hard').length, count: chapterQs.filter(q => q.metadata.difficulty === 'Hard').length, color: '#ef4444' },
+        { label: 'Level 1-2', value: chapterQs.filter(q => q.metadata.difficultyLevel <= 2).length, count: chapterQs.filter(q => q.metadata.difficultyLevel <= 2).length, color: '#10b981' },
+        { label: 'Level 3', value: chapterQs.filter(q => q.metadata.difficultyLevel === 3).length, count: chapterQs.filter(q => q.metadata.difficultyLevel === 3).length, color: '#f59e0b' },
+        { label: 'Level 4-5', value: chapterQs.filter(q => q.metadata.difficultyLevel >= 4).length, count: chapterQs.filter(q => q.metadata.difficultyLevel >= 4).length, color: '#ef4444' },
     ];
 
     // ── 3. Exam source breakdown ─────────────────────────────────────────────

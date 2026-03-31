@@ -2,6 +2,8 @@
 import dynamic from 'next/dynamic';
 import { TrendingUp, Sparkles, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const TrendsComponent = dynamic(() => import('../interactive-periodic-table/TrendsComponent'), {
     ssr: false,
@@ -17,6 +19,110 @@ const ColorsOfCompoundsSection = dynamic(() => import('./ColorsOfCompoundsSectio
     ssr: false,
     loading: () => <div className="h-[600px] flex items-center justify-center text-gray-400 bg-gray-900/20 rounded-2xl border border-gray-700/50 animate-pulse mt-12">Loading Colors...</div>
 });
+
+const YouTubeLecturesSection = () => {
+    const [activeVideo, setActiveVideo] = useState<string | null>(null);
+
+    const videos = [
+        { id: 'zmnRASd0GhA', title: 'Revise s block', subtitle: 'in 15 minutes', thumbnail: 'mqdefault' },
+        { id: 'bm4A9FSyjPg', title: 'All about diborane', subtitle: 'B₂H₆ structures', thumbnail: 'mqdefault' },
+        { id: '9A-5gd9Q8os', title: 'All structures', subtitle: 'from p-block', thumbnail: 'mqdefault' },
+        { id: 'MtgYnKCJehk', title: 'Revise hydrogen', subtitle: 'in 15 minutes', thumbnail: 'mqdefault' },
+        { id: 'uRPfNa5_RPk', title: 'Coordination compounds', subtitle: 'NCERT revision', thumbnail: 'mqdefault' },
+    ];
+
+    return (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+            {/* Video Modal */}
+            <AnimatePresence>
+                {activeVideo && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+                        onClick={() => setActiveVideo(null)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="relative w-full max-w-4xl aspect-video bg-gray-900 rounded-lg overflow-hidden shadow-2xl"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <button
+                                onClick={() => setActiveVideo(null)}
+                                className="absolute top-3 right-3 z-10 p-2 rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors"
+                                aria-label="Close video"
+                            >
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                            <iframe
+                                src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1&rel=0`}
+                                title="YouTube video player"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                className="w-full h-full"
+                            />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Section Title */}
+            <div className="flex items-center gap-3 mb-5">
+                <div className="relative w-10 h-10">
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-red-700 to-red-900 translate-y-1" />
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-red-500 via-red-600 to-red-700 border border-red-400/50 shadow-[inset_0_2px_0_rgba(255,255,255,0.25),0_4px_8px_rgba(239,68,68,0.3)] flex items-center justify-center">
+                        <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h2 className="text-lg sm:text-xl font-bold text-white">Quick Revision Videos</h2>
+                    <p className="text-sm text-gray-400">NCERT summaries by Paaras Sir</p>
+                </div>
+            </div>
+
+            {/* Video Grid - Thumbnail Style */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                {videos.map((video) => (
+                    <button
+                        key={video.id}
+                        onClick={() => setActiveVideo(video.id)}
+                        className="group relative rounded-xl bg-gray-800/60 border border-gray-700/50 hover:border-red-500/50 hover:bg-gray-800/90 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-0.5 transition-all duration-200 text-left overflow-hidden cursor-pointer"
+                    >
+                        {/* Thumbnail */}
+                        <div className="relative aspect-video w-full overflow-hidden">
+                            <img 
+                                src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
+                                alt={video.title}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                            />
+                            {/* Play overlay */}
+                            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-10 h-10 rounded-full bg-red-600/90 group-hover:bg-red-600 group-hover:scale-110 transition-all duration-200 flex items-center justify-center shadow-lg">
+                                    <div className="w-0 h-0 border-l-[14px] border-l-white border-y-[9px] border-y-transparent ml-1" />
+                                </div>
+                            </div>
+                            {/* Duration badge (optional - can add if known) */}
+                        </div>
+                        
+                        {/* Info */}
+                        <div className="p-2.5">
+                            <h4 className="text-sm font-medium text-gray-200 group-hover:text-white leading-tight line-clamp-1">{video.title}</h4>
+                            <p className="text-xs text-gray-500 group-hover:text-gray-400 transition-colors mt-0.5">{video.subtitle}</p>
+                        </div>
+                    </button>
+                ))}
+            </div>
+        </section>
+    );
+};
 
 export default function PeriodicTrendsPage() {
     return (
@@ -62,19 +168,18 @@ export default function PeriodicTrendsPage() {
                 </div>
             </section>
 
-            {/* Quick Stats */}
-            <section className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 -mt-4 mb-6 md:mb-10">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+            {/* Quick Stats - 3 Cards */}
+            <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 mb-8 md:mb-12">
+                <div className="grid grid-cols-3 gap-4">
                     {[
-                        { label: 'Block Types', value: '4', desc: 's, p, d, f' },
-                        { label: 'Data Tables', value: '15+', desc: 'From NCERT' },
-                        { label: 'Properties', value: '50+', desc: 'Graphable' },
-                        { label: 'Elements', value: '118', desc: 'Covered' },
+                        { value: '200+', label: 'Data Points', sub: 'From NCERT visualized' },
+                        { value: '15', label: 'Properties', sub: 'From atomic radius to E°' },
+                        { value: '100+', label: 'Exceptions', sub: 'With examiner logic' },
                     ].map((stat, idx) => (
-                        <div key={idx} className="bg-gray-900/60 rounded-xl border border-gray-700/50 p-3 md:p-4 text-center backdrop-blur-sm">
-                            <div className="text-2xl font-bold text-white">{stat.value}</div>
-                            <div className="text-sm text-gray-400">{stat.label}</div>
-                            <div className="text-xs text-gray-500">{stat.desc}</div>
+                        <div key={idx} className="bg-gray-900/60 rounded-xl border border-gray-700/50 p-4 md:p-5 text-center backdrop-blur-sm hover:border-violet-500/30 transition-colors">
+                            <div className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.value}</div>
+                            <div className="text-sm font-medium text-gray-300">{stat.label}</div>
+                            <div className="text-xs text-gray-500 mt-1">{stat.sub}</div>
                         </div>
                     ))}
                 </div>
@@ -84,6 +189,9 @@ export default function PeriodicTrendsPage() {
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
                 <TrendsComponent />
             </section>
+
+            {/* YouTube Lectures Section */}
+            <YouTubeLecturesSection />
 
             {/* Colors of Inorganic Compounds Section */}
             <ColorsOfCompoundsSection />

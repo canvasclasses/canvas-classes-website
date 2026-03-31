@@ -11,7 +11,21 @@ interface Question {
   options: Array<{ id: string; text: string; is_correct: boolean }>;
   answer?: { integer_value?: number; decimal_value?: number };
   solution: { text_markdown: string };
-  metadata: { difficulty: 'Easy' | 'Medium' | 'Hard'; chapter_id: string };
+  metadata: { 
+    difficultyLevel: 1 | 2 | 3 | 4 | 5; 
+    chapter_id: string;
+    questionNature?: 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis';
+    examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
+    sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
+    examDetails?: {
+      exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG';
+      year?: number;
+      month?: string;
+      phase?: string;
+      shift?: string;
+      paper?: string;
+    };
+  };
   svg_scales?: Record<string, number>; // keys: 'question', 'solution', 'option_a'…
 }
 interface ExportDashboardProps {
@@ -20,7 +34,7 @@ interface ExportDashboardProps {
   onClose: () => void;
 }
 
-const DIFF_COLOR: Record<string, string> = { Easy: '#34d399', Medium: '#fbbf24', Hard: '#f87171' };
+const DIFF_COLOR: Record<number, string> = { 1: '#34d399', 2: '#34d399', 3: '#fbbf24', 4: '#f87171', 5: '#f87171' };
 const TYPE_COLOR: Record<string, string> = {
   SCQ: '#818cf8', MCQ: '#60a5fa', NVT: '#c084fc', AR: '#fb923c', MST: '#22d3ee', MTC: '#f472b6',
 };
@@ -499,13 +513,13 @@ async function runPDFExport(
     y = ensureSpace(y, neededH);
 
     // ── Question header — compact single line, no background bar ──
-    const diffHex = q.metadata.difficulty === 'Easy' ? '#16a34a' : q.metadata.difficulty === 'Medium' ? '#d97706' : '#dc2626';
+    const diffHex = q.metadata.difficultyLevel <= 2 ? '#16a34a' : q.metadata.difficultyLevel === 3 ? '#d97706' : '#dc2626';
     setF('bold', 11); setC('#3730a3');
     pdf.text(`Q${qi + 1}.`, ML, y);
     setF('bold', 7); setC('#4f46e5');
     pdf.text(q.type, ML + 11, y);
     setF('normal', 7); setC(diffHex);
-    pdf.text(q.metadata.difficulty, ML + 11 + pdf.getTextWidth(q.type) + 3, y);
+    pdf.text(`L${q.metadata.difficultyLevel}`, ML + 11 + pdf.getTextWidth(q.type) + 3, y);
     setF('normal', 6.5); setC('#aaaaaa');
     pdf.text((q.display_id || q._id.substring(0, 8)).substring(0, 20), PW - MR, y, { align: 'right' });
     setDraw('#d1d5db'); pdf.setLineWidth(0.15);
@@ -747,9 +761,9 @@ async function runPPTExport(
     });
 
     // Difficulty color
-    const diffC = q.metadata.difficulty === 'Easy'
+    const diffC = q.metadata.difficultyLevel <= 2
       ? (dark ? '34d399' : '16a34a')
-      : q.metadata.difficulty === 'Medium'
+      : q.metadata.difficultyLevel === 3
         ? (dark ? 'fbbf24' : 'd97706')
         : (dark ? 'f87171' : 'dc2626');
 
@@ -768,7 +782,7 @@ async function runPPTExport(
       align: 'center', valign: 'mid',
     });
     slide.texts.push({
-      text: q.metadata.difficulty,
+      text: `Level ${q.metadata.difficultyLevel}`,
       x: PAD + 1.45, y: 0.14, w: 1.1, h: 0.34,
       fontSize: 9, bold: true, color: diffC, fontFace: 'Helvetica',
     });
@@ -951,7 +965,7 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
       const s = searchFilter.toLowerCase();
       if (!q.display_id.toLowerCase().includes(s) && !q.question_text.markdown.toLowerCase().includes(s)) return false;
     }
-    if (filterDifficulty && q.metadata.difficulty !== filterDifficulty) return false;
+    if (filterDifficulty && q.metadata.difficultyLevel !== Number(filterDifficulty)) return false;
     if (filterType && q.type !== filterType) return false;
     if (filterChapter && q.metadata.chapter_id !== filterChapter) return false;
     return true;
@@ -1081,10 +1095,12 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
                 <div className="flex items-center gap-2 flex-wrap">
                   <select value={filterDifficulty} onChange={e => { setFilterDifficulty(e.target.value); setPage(0); }}
                     className="px-2 py-1 rounded-lg bg-[#1e2a3a] border border-[#2d3f55] text-xs text-gray-300 focus:outline-none focus:border-indigo-500">
-                    <option value="">All Difficulties</option>
-                    <option value="Easy">Easy</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Hard">Hard</option>
+                    <option value="">All Levels</option>
+                    <option value="1">Level 1</option>
+                    <option value="2">Level 2</option>
+                    <option value="3">Level 3</option>
+                    <option value="4">Level 4</option>
+                    <option value="5">Level 5</option>
                   </select>
                   <select value={filterType} onChange={e => { setFilterType(e.target.value); setPage(0); }}
                     className="px-2 py-1 rounded-lg bg-[#1e2a3a] border border-[#2d3f55] text-xs text-gray-300 focus:outline-none focus:border-indigo-500">
@@ -1150,8 +1166,8 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
                             {q.type}
                           </span>
                           <span className="text-[8px] font-semibold leading-none"
-                            style={{ color: DIFF_COLOR[q.metadata.difficulty] }}>
-                            {q.metadata.difficulty[0]}
+                            style={{ color: DIFF_COLOR[q.metadata.difficultyLevel] }}>
+                            L{q.metadata.difficultyLevel}
                           </span>
                         </div>
 

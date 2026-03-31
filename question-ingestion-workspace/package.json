@@ -1,0 +1,19 @@
+{
+  "name": "question-ingestion-workspace",
+  "version": "3.1.0",
+  "description": "Self-contained workspace for ingesting questions into Crucible database",
+  "private": true,
+  "scripts": {
+    "check-id": "node scripts/check_next_id.js",
+    "insert-chem": "node scripts/template_insert_chemistry.js",
+    "insert-math": "node scripts/template_insert_math.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.0",
+    "mongodb": "^6.3.0",
+    "uuid": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

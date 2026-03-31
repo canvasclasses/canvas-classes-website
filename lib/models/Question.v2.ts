@@ -37,9 +37,7 @@ export interface IQuestionSolution {
   video_timestamp_start?: number;
 }
 
-export type CognitiveType = 'recall' | 'conceptual' | 'application' | 'procedural' | 'multi-step' | 'analytical';
-export type CalcLoad = 'calc-none' | 'calc-light' | 'calc-moderate' | 'calc-heavy' | 'calc-trap';
-export type EntryPoint = 'clear-entry' | 'strategy-first' | 'novel-framing';
+// Removed: CognitiveType, CalcLoad, EntryPoint — AI will infer from solution content
 
 export interface ICommunityDifficulty {
   tooHardCount: number;
@@ -51,7 +49,8 @@ export interface ICommunityDifficulty {
 }
 
 export interface IQuestionMetadata {
-  difficulty: 'Easy' | 'Medium' | 'Hard';
+  difficultyLevel: 1 | 2 | 3 | 4 | 5; // Granular difficulty: 1=easiest, 5=hardest
+  difficulty?: 'Easy' | 'Medium' | 'Hard'; // DEPRECATED: Keep temporarily for backward compatibility during migration
   chapter_id: string;
   // subject is the top-level discipline the question belongs to.
   // Always set at ingestion time. Existing Chemistry questions are
@@ -61,12 +60,25 @@ export interface IQuestionMetadata {
     tag_id: string;
     weight: number;
   }>;
-  // ── Multi-dimensional tagging (Step 1 upgrade) ──
+  // ── Multi-dimensional tagging ──
   microConcept?: string;           // e.g. 'Hyperconjugation', 'Carbocation Stability'
-  cognitiveType?: CognitiveType;
-  calcLoad?: CalcLoad;
-  entryPoint?: EntryPoint;
   isMultiConcept?: boolean;        // default false
+  questionNature?: 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis';  // Question cognitive nature
+  
+  // ── NEW: 3-Tier Exam Taxonomy (for multi-exam support: JEE, NEET, etc.) ──
+  examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
+  sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
+  examDetails?: {
+    exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG';
+    year?: number;
+    month?: string;
+    phase?: string;      // For NEET (Phase 1, Phase 2)
+    shift?: string;      // For JEE Main (Shift 1, Shift 2)
+    paper?: string;      // For JEE Advanced (Paper 1, Paper 2)
+    question_number?: string;
+  };
+  
+  // ── DEPRECATED: Keep for backward compatibility during migration ──
   exam_source?: {
     exam: string;
     year?: number;
@@ -75,8 +87,8 @@ export interface IQuestionMetadata {
     shift?: string;
     question_number?: string;
   };
-  is_pyq: boolean;
-  is_top_pyq: boolean;
+  is_pyq?: boolean;      // DEPRECATED: Use sourceType instead
+  is_top_pyq?: boolean;  // DEPRECATED: Will be replaced by quality_score or tags
 }
 
 export interface IQuestionFlag {
@@ -158,10 +170,16 @@ const QuestionSolutionSchema = new Schema<IQuestionSolution>({
 }, { _id: false });
 
 const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
+  difficultyLevel: {
+    type: Number,
+    enum: [1, 2, 3, 4, 5],
+    required: true,
+    default: 3
+  },
   difficulty: {
     type: String,
     enum: ['Easy', 'Medium', 'Hard'],
-    required: true
+    required: false, // DEPRECATED: Optional for backward compatibility during migration
   },
   chapter_id: { type: String, required: true },
   // subject: always set going forward; defaults to 'chemistry' so existing
@@ -183,21 +201,39 @@ const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
     shift: { type: String },
     question_number: { type: String }
   },
-  // Multi-dimensional tagging fields (all optional for backward compat)
+  // Multi-dimensional tagging fields
   microConcept: { type: String },
-  cognitiveType: {
-    type: String,
-    enum: ['recall', 'conceptual', 'application', 'procedural', 'multi-step', 'analytical'],
-  },
-  calcLoad: {
-    type: String,
-    enum: ['calc-none', 'calc-light', 'calc-moderate', 'calc-heavy', 'calc-trap'],
-  },
-  entryPoint: {
-    type: String,
-    enum: ['clear-entry', 'strategy-first', 'novel-framing'],
-  },
   isMultiConcept: { type: Boolean, default: false },
+  questionNature: {
+    type: String,
+    enum: ['Recall', 'Rule_Application', 'Mechanistic', 'Synthesis'],
+    required: false,
+  },
+  // NEW: 3-Tier Exam Taxonomy
+  examBoard: {
+    type: String,
+    enum: ['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD'],
+    required: false,
+  },
+  sourceType: {
+    type: String,
+    enum: ['PYQ', 'NCERT_Textbook', 'NCERT_Exemplar', 'Practice', 'Mock'],
+    required: false,
+  },
+  examDetails: {
+    exam: {
+      type: String,
+      enum: ['JEE_Main', 'JEE_Advanced', 'NEET_UG', 'NEET_PG'],
+      required: false,
+    },
+    year: { type: Number },
+    month: { type: String },
+    phase: { type: String },
+    shift: { type: String },
+    paper: { type: String },
+    question_number: { type: String },
+  },
+  // DEPRECATED fields (kept for backward compatibility)
   is_pyq: { type: Boolean, default: false },
   is_top_pyq: { type: Boolean, default: false }
 }, { _id: false });

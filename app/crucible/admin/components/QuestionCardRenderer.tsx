@@ -12,7 +12,13 @@ interface Question {
   options: Array<{ id: string; text: string; is_correct: boolean }>;
   answer?: { integer_value?: number; decimal_value?: number };
   solution: { text_markdown: string };
-  metadata: { difficulty: 'Easy' | 'Medium' | 'Hard'; chapter_id: string };
+  metadata: { 
+    difficultyLevel: 1 | 2 | 3 | 4 | 5; 
+    chapter_id: string;
+    questionNature?: 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis';
+    examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
+    sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
+  };
   svg_scales?: Record<string, number>;
 }
 
@@ -49,10 +55,12 @@ const TYPE_PILL: Record<string, { bg: string; text: string }> = {
   MTC: { bg: 'rgba(244,114,182,0.2)', text: '#f9a8d4' },
 };
 
-const DIFF_PILL: Record<string, { text: string }> = {
-  Easy:   { text: '#34d399' },
-  Medium: { text: '#fbbf24' },
-  Hard:   { text: '#f87171' },
+const DIFF_PILL: Record<number, { text: string; label: string }> = {
+  1: { text: '#34d399', label: 'L1' },
+  2: { text: '#34d399', label: 'L2' },
+  3: { text: '#fbbf24', label: 'L3' },
+  4: { text: '#f87171', label: 'L4' },
+  5: { text: '#f87171', label: 'L5' },
 };
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
@@ -79,7 +87,7 @@ export function getSvgScaleForQ(q: Question, field: string): number {
 const QuestionCard = forwardRef<HTMLDivElement, QuestionCardProps>(
   ({ question: q, index, total, showAnswerKey, includeSolution, sheetTitle, width = 1200, height }, ref) => {
     const tp = TYPE_PILL[q.type] ?? TYPE_PILL.SCQ;
-    const dp = DIFF_PILL[q.metadata.difficulty] ?? DIFF_PILL.Medium;
+    const dp = DIFF_PILL[q.metadata.difficultyLevel] ?? DIFF_PILL[3];
 
     const PAD_H = Math.round(width * 0.055);  // ~66px at 1200
     const PAD_V = Math.round(width * 0.038);  // ~46px at 1200
@@ -150,7 +158,7 @@ const QuestionCard = forwardRef<HTMLDivElement, QuestionCardProps>(
               whiteSpace: 'nowrap',
               flexShrink: 0,
             }}>
-              {q.metadata.difficulty}
+              {dp.label}
             </span>
           </div>
 

@@ -181,7 +181,7 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
                             {[
                                 [String(qCount), 'Total Qs', color],
                                 [String(questions.filter(q => q.metadata.is_pyq).length), 'PYQs', '#fbbf24'],
-                                [String(questions.filter(q => q.metadata.difficulty === 'Hard').length), 'Hard', '#f87171'],
+                                [String(questions.filter(q => q.metadata.difficultyLevel >= 4).length), 'Hard', '#f87171'],
                             ].map(([val, label, c]) => (
                                 <div key={label} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 10px', textAlign: 'center' }}>
                                     <div style={{ fontSize: 22, fontWeight: 800, color: c, fontFamily: 'monospace' }}>{val}</div>

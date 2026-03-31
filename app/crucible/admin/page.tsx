@@ -54,7 +54,7 @@ interface Question {
         };
     };
     metadata: {
-        difficulty: 'Easy' | 'Medium' | 'Hard';
+        difficultyLevel: 1 | 2 | 3 | 4 | 5;
         chapter_id: string;
         tags: Array<{
             tag_id: string;
@@ -71,10 +71,20 @@ interface Question {
         is_top_pyq: boolean;
         source_id?: string;
         microConcept?: string;
-        cognitiveType?: 'conceptual' | 'procedural' | 'application' | 'analytical' | 'recall' | 'multi-step' | '';
-        calcLoad?: 'calc-none' | 'calc-light' | 'calc-moderate' | 'calc-heavy' | 'calc-intense' | '';
-        entryPoint?: 'clear-entry' | 'strategy-first' | 'ambiguous-entry' | '';
         isMultiConcept?: boolean;
+        questionNature?: 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis';
+        // NEW: 3-Tier Exam Taxonomy
+        examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
+        sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
+        examDetails?: {
+            exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG';
+            year?: number;
+            month?: string;
+            phase?: string;
+            shift?: string;
+            paper?: string;
+            question_number?: string;
+        };
     };
     status: 'draft' | 'review' | 'published' | 'archived';
     quality_score: number;
@@ -349,12 +359,16 @@ function AdminPageContent() {
         if (selectedChapterFilter !== 'all') params.set('chapter_id', selectedChapterFilter);
         if (selectedTypeFilter !== 'all') params.set('type', selectedTypeFilter);
         if (selectedDifficultyFilter !== 'all') params.set('difficulty', selectedDifficultyFilter);
-        // Source filters are mutually exclusive: JEE Main/Adv require is_pyq=true
-        if (selectedSourceFilter === 'jee_main') { params.set('exam_level', 'mains'); params.set('is_pyq', 'true'); }
-        else if (selectedSourceFilter === 'jee_adv') { params.set('exam_level', 'adv'); params.set('is_pyq', 'true'); }
-        else if (selectedSourceFilter === 'non_pyq') params.set('is_pyq', 'false');
-        // Year (only when a PYQ source is selected)
-        if (selectedYearFilter !== 'all' && (selectedSourceFilter === 'jee_main' || selectedSourceFilter === 'jee_adv')) {
+        
+        // NEW: Exam taxonomy filters (separated)
+        // Exam Board filter
+        if (selectedSourceFilter !== 'all') params.set('examBoard', selectedSourceFilter);
+        
+        // Source Type filter (using selectedShiftFilter variable for now)
+        if (selectedShiftFilter !== 'all') params.set('sourceType', selectedShiftFilter);
+        
+        // Year filter
+        if (selectedYearFilter !== 'all') {
             params.set('year', selectedYearFilter);
         }
         if (searchQuery) params.set('search', searchQuery);
@@ -487,7 +501,7 @@ function AdminPageContent() {
             ],
             solution: { text_markdown: "Solution placeholder - to be written.", latex_validated: false },
             metadata: {
-                difficulty: 'Medium',
+                difficultyLevel: 3,
                 chapter_id: defaultChapter,
                 tags: [],
                 is_pyq: false,
@@ -1023,8 +1037,8 @@ function AdminPageContent() {
                     )}
                 </div>
 
-                {/* Row 2: secondary filters */}
-                <div className="flex items-center gap-2 px-3 py-1.5 overflow-x-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as any}>
+                {/* Row 2: All filters consolidated in one row */}
+                <div className="flex items-center gap-2 px-3 py-1.5 overflow-x-auto border-t border-gray-800/50" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as any}>
                     <Filter size={11} className="text-purple-400 shrink-0" />
 
                     {/* Difficulty */}
@@ -1034,25 +1048,42 @@ function AdminPageContent() {
                         className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedDifficultyFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
                     >
                         <option value="all">All Difficulties</option>
-                        <option value="Easy">Easy</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Hard">Hard</option>
+                        <option value="1">Level 1</option>
+                        <option value="2">Level 2</option>
+                        <option value="3">Level 3</option>
+                        <option value="4">Level 4</option>
+                        <option value="5">Level 5</option>
                     </select>
 
-                    {/* Source — unified JEE Main / JEE Advanced / Non-PYQ */}
+                    {/* Exam Board */}
                     <select
                         value={selectedSourceFilter}
                         onChange={(e) => { setSelectedSourceFilter(e.target.value); setCurrentPage(0); }}
                         className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedSourceFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
                     >
-                        <option value="all">All Sources</option>
-                        <option value="jee_main">JEE Main</option>
-                        <option value="jee_adv">JEE Advanced</option>
-                        <option value="non_pyq">Non-PYQ</option>
+                        <option value="all">All Boards</option>
+                        <option value="JEE">JEE</option>
+                        <option value="NEET">NEET</option>
+                        <option value="CBSE">CBSE</option>
+                        <option value="BITSAT">BITSAT</option>
                     </select>
 
-                    {/* Year — only visible when a PYQ source is selected */}
-                    {(selectedSourceFilter === 'jee_main' || selectedSourceFilter === 'jee_adv') && (
+                    {/* Source Type */}
+                    <select
+                        value={selectedShiftFilter}
+                        onChange={(e) => { setSelectedShiftFilter(e.target.value); setCurrentPage(0); }}
+                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedShiftFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
+                    >
+                        <option value="all">All Sources</option>
+                        <option value="PYQ">PYQ</option>
+                        <option value="Practice">Practice</option>
+                        <option value="NCERT_Textbook">NCERT Text</option>
+                        <option value="NCERT_Exemplar">NCERT Exem</option>
+                        <option value="Mock">Mock</option>
+                    </select>
+
+                    {/* Year — visible when PYQ source or exam board is selected */}
+                    {(selectedShiftFilter === 'PYQ' || selectedSourceFilter === 'JEE' || selectedSourceFilter === 'NEET') && (
                         <select
                             value={selectedYearFilter}
                             onChange={(e) => setSelectedYearFilter(e.target.value)}
@@ -1062,19 +1093,6 @@ function AdminPageContent() {
                             {[2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015].map(y => (
                                 <option key={y} value={String(y)}>{y}</option>
                             ))}
-                        </select>
-                    )}
-
-                    {/* Shift — only visible when a PYQ source is selected */}
-                    {(selectedSourceFilter === 'jee_main' || selectedSourceFilter === 'jee_adv') && (
-                        <select
-                            value={selectedShiftFilter}
-                            onChange={(e) => setSelectedShiftFilter(e.target.value)}
-                            className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedShiftFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
-                        >
-                            <option value="all">All Shifts</option>
-                            <option value="Morning">Morning</option>
-                            <option value="Evening">Evening</option>
                         </select>
                     )}
 
@@ -1135,12 +1153,13 @@ function AdminPageContent() {
                                 setSelectedShiftFilter('all');
                                 setSelectedTagFilter('all');
                             }}
-                            className="shrink-0 text-xs text-red-400 hover:text-red-300 px-2"
+                            className="px-2 py-1 bg-red-600/20 hover:bg-red-600/30 text-red-400 rounded-lg text-xs transition shrink-0 ml-auto"
                         >
-                            ✕ Clear
+                            Clear All
                         </button>
                     )}
                 </div>
+
             </header>
 
             {/* MAIN AREA: full-width metadata top + split editor/preview bottom */}
@@ -1196,74 +1215,120 @@ function AdminPageContent() {
                                         {QUESTION_TYPES.map(qt => <option key={qt.id} value={qt.id}>{qt.name}</option>)}
                                     </select>
                                     <select
-                                        value={selectedQuestion.metadata.difficulty}
-                                        onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, difficulty: e.target.value as any } })}
+                                        value={selectedQuestion.metadata.difficultyLevel}
+                                        onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, difficultyLevel: Number(e.target.value) as any } })}
                                         className={`bg-gray-800/50 border rounded px-2 py-1 text-xs font-medium ${
-                                            selectedQuestion.metadata.difficulty === 'Hard' ? 'border-red-500/50 text-red-400' :
-                                            selectedQuestion.metadata.difficulty === 'Medium' ? 'border-orange-500/50 text-orange-400' :
+                                            selectedQuestion.metadata.difficultyLevel >= 4 ? 'border-red-500/50 text-red-400' :
+                                            selectedQuestion.metadata.difficultyLevel === 3 ? 'border-orange-500/50 text-orange-400' :
                                             'border-emerald-500/50 text-emerald-400'}`}
                                     >
-                                        <option value="Easy">Easy</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="Hard">Hard</option>
+                                        <option value="1">Level 1</option>
+                                        <option value="2">Level 2</option>
+                                        <option value="3">Level 3</option>
+                                        <option value="4">Level 4</option>
+                                        <option value="5">Level 5</option>
                                     </select>
                                 </div>
 
-                                {/* Group B: Exam Source (always visible; year/month/day/shift appear when PYQ checked) */}
+                                {/* Group B: NEW Exam Taxonomy (examBoard → sourceType → examDetails) */}
                                 {(() => {
-                                    const es = selectedQuestion.metadata.exam_source;
-                                    const patchSrc = (patch: Partial<{ exam: string; year: number; month: string; day: number; shift: string }>) => {
-                                        const merged = { exam: es?.exam ?? '', year: es?.year, month: es?.month, day: es?.day, shift: es?.shift, ...patch };
-                                        handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, exam_source: { ...merged, exam: merged.exam } } });
+                                    const ed = selectedQuestion.metadata.examDetails;
+                                    const patchExamDetails = (patch: Partial<typeof ed>) => {
+                                        const merged = { ...ed, ...patch };
+                                        handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, examDetails: merged } });
                                     };
+                                    const isPYQ = selectedQuestion.metadata.sourceType === 'PYQ';
                                     return (
                                         <div className="flex items-end gap-1.5 pr-3 mr-2 border-r border-gray-700/60">
+                                            {/* Exam Board */}
                                             <div className="flex flex-col">
-                                                <span className="text-[10px] text-gray-500 mb-0.5">Exam</span>
-                                                <select value={es?.exam ?? ''} onChange={(e) => patchSrc({ exam: e.target.value })}
-                                                    className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none">
+                                                <span className="text-[10px] text-gray-500 mb-0.5">Board</span>
+                                                <select value={selectedQuestion.metadata.examBoard ?? ''} 
+                                                    onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, examBoard: e.target.value as any } })}
+                                                    className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-blue-500 outline-none w-20">
                                                     <option value="">—</option>
-                                                    <option value="JEE Main">JEE Main</option>
-                                                    <option value="JEE Advanced">JEE Adv</option>
+                                                    <option value="JEE">JEE</option>
+                                                    <option value="NEET">NEET</option>
+                                                    <option value="CBSE">CBSE</option>
+                                                    <option value="BITSAT">BITSAT</option>
                                                 </select>
                                             </div>
-                                            <label className="flex items-center gap-1 cursor-pointer mb-1">
-                                                <input type="checkbox" checked={!!selectedQuestion.metadata.is_pyq}
-                                                    onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, is_pyq: e.target.checked } })}
-                                                    className="h-3 w-3 accent-blue-500" />
-                                                <span className="text-[10px] text-gray-400 font-medium">PYQ</span>
-                                            </label>
-                                            {selectedQuestion.metadata.is_pyq && (<>
+                                            {/* Source Type */}
+                                            <div className="flex flex-col">
+                                                <span className="text-[10px] text-gray-500 mb-0.5">Source</span>
+                                                <select value={selectedQuestion.metadata.sourceType ?? ''} 
+                                                    onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, sourceType: e.target.value as any } })}
+                                                    className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-blue-500 outline-none w-28">
+                                                    <option value="">—</option>
+                                                    <option value="PYQ">PYQ</option>
+                                                    <option value="NCERT_Textbook">NCERT Text</option>
+                                                    <option value="NCERT_Exemplar">NCERT Exem</option>
+                                                    <option value="Practice">Practice</option>
+                                                    <option value="Mock">Mock</option>
+                                                </select>
+                                            </div>
+                                            {/* Exam Details (conditional - only for PYQ) */}
+                                            {isPYQ && (<>
+                                                <div className="flex flex-col">
+                                                    <span className="text-[10px] text-gray-500 mb-0.5">Exam</span>
+                                                    <select value={ed?.exam ?? ''} onChange={(e) => patchExamDetails({ exam: e.target.value as any })}
+                                                        className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-24">
+                                                        <option value="">—</option>
+                                                        <option value="JEE_Main">JEE Main</option>
+                                                        <option value="JEE_Advanced">JEE Adv</option>
+                                                        <option value="NEET_UG">NEET UG</option>
+                                                    </select>
+                                                </div>
                                                 <div className="flex flex-col">
                                                     <span className="text-[10px] text-gray-500 mb-0.5">Year</span>
-                                                    <select value={es?.year ?? ''} onChange={(e) => patchSrc({ year: Number(e.target.value) })}
+                                                    <select value={ed?.year ?? ''} onChange={(e) => patchExamDetails({ year: Number(e.target.value) })}
                                                         className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-16">
                                                         <option value="">—</option>
                                                         {[2026,2025,2024,2023,2022,2021,2020,2019,2018,2017,2016,2015].map(y => <option key={y} value={y}>{y}</option>)}
                                                     </select>
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className="text-[10px] text-gray-500 mb-0.5">Mon</span>
-                                                    <select value={es?.month ?? ''} onChange={(e) => patchSrc({ month: e.target.value })}
+                                                    <span className="text-[10px] text-gray-500 mb-0.5">Month</span>
+                                                    <select value={ed?.month ?? ''} onChange={(e) => patchExamDetails({ month: e.target.value })}
                                                         className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-14">
                                                         <option value="">—</option>
                                                         {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map(m => <option key={m} value={m}>{m}</option>)}
                                                     </select>
                                                 </div>
-                                                <div className="flex flex-col">
-                                                    <span className="text-[10px] text-gray-500 mb-0.5">Day</span>
-                                                    <input type="number" min={1} max={31} value={es?.day ?? ''} onChange={(e) => patchSrc({ day: Number(e.target.value) })}
-                                                        className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-12" placeholder="—" />
-                                                </div>
-                                                <div className="flex flex-col">
-                                                    <span className="text-[10px] text-gray-500 mb-0.5">Shift</span>
-                                                    <select value={es?.shift ?? ''} onChange={(e) => patchSrc({ shift: e.target.value })}
-                                                        className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-16">
-                                                        <option value="">—</option>
-                                                        <option value="Morning">Morn</option>
-                                                        <option value="Evening">Eve</option>
-                                                    </select>
-                                                </div>
+                                                {/* Shift (JEE) or Phase (NEET) */}
+                                                {ed?.exam?.startsWith('JEE') && (
+                                                    <div className="flex flex-col">
+                                                        <span className="text-[10px] text-gray-500 mb-0.5">Shift</span>
+                                                        <select value={ed?.shift ?? ''} onChange={(e) => patchExamDetails({ shift: e.target.value })}
+                                                            className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-16">
+                                                            <option value="">—</option>
+                                                            <option value="Shift 1">S1</option>
+                                                            <option value="Shift 2">S2</option>
+                                                        </select>
+                                                    </div>
+                                                )}
+                                                {ed?.exam === 'NEET_UG' && (
+                                                    <div className="flex flex-col">
+                                                        <span className="text-[10px] text-gray-500 mb-0.5">Phase</span>
+                                                        <select value={ed?.phase ?? ''} onChange={(e) => patchExamDetails({ phase: e.target.value })}
+                                                            className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-20">
+                                                            <option value="">—</option>
+                                                            <option value="Phase 1">P1</option>
+                                                            <option value="Phase 2">P2</option>
+                                                        </select>
+                                                    </div>
+                                                )}
+                                                {ed?.exam === 'JEE_Advanced' && (
+                                                    <div className="flex flex-col">
+                                                        <span className="text-[10px] text-gray-500 mb-0.5">Paper</span>
+                                                        <select value={ed?.paper ?? ''} onChange={(e) => patchExamDetails({ paper: e.target.value })}
+                                                            className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-16">
+                                                            <option value="">—</option>
+                                                            <option value="Paper 1">P1</option>
+                                                            <option value="Paper 2">P2</option>
+                                                        </select>
+                                                    </div>
+                                                )}
                                             </>)}
                                         </div>
                                     );
@@ -1374,98 +1439,35 @@ function AdminPageContent() {
                                 </div>
                             )}
 
-                            {/* ── ROW 2: Adaptive Engine Tags ── */}
-                            <div className="p-2 bg-teal-900/10 border border-teal-700/30 rounded space-y-2">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <Zap size={12} className="text-teal-400" />
-                                    <span className="text-[10px] font-bold text-teal-400 uppercase tracking-widest">Adaptive Engine Tags</span>
-                                    <span className="text-[10px] text-gray-600 ml-1">— used by the V2 practice engine</span>
-                                </div>
-                                <div className="grid grid-cols-5 gap-3">
-                                    {/* Micro Concept */}
-                                    <div className="col-span-2">
-                                        <label className="text-[10px] text-gray-500 block mb-1">Micro Concept</label>
-                                        <select
-                                            value={selectedQuestion.metadata.microConcept ?? ''}
-                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                                metadata: { ...selectedQuestion.metadata, microConcept: e.target.value }
-                                            })}
-                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs text-teal-300 focus:border-teal-500 outline-none"
-                                        >
-                                            <option value="">— select micro concept —</option>
-                                            {(() => {
-                                                const primaryTagId = selectedQuestion.metadata.tags?.[0]?.tag_id;
-                                                if (!primaryTagId) return <option value="" disabled>Select a Primary Tag first</option>;
-                                                const microTopics = TAXONOMY_FROM_CSV.filter(node => 
-                                                    node.parent_id === primaryTagId && node.type === 'micro_topic'
-                                                );
-                                                if (microTopics.length === 0) return <option value="" disabled>No micro concepts for this tag</option>;
-                                                return microTopics.map(micro => (
-                                                    <option key={micro.id} value={micro.name}>{micro.name}</option>
-                                                ));
-                                            })()}
-                                        </select>
-                                    </div>
-
-                                    {/* Cognitive Type */}
-                                    <div>
-                                        <label className="text-[10px] text-gray-500 block mb-1">Cognitive Type</label>
-                                        <select
-                                            value={selectedQuestion.metadata.cognitiveType ?? ''}
-                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                                metadata: { ...selectedQuestion.metadata, cognitiveType: e.target.value as any }
-                                            })}
-                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs focus:border-teal-500 outline-none"
-                                        >
-                                            <option value="">— unset —</option>
-                                            <option value="conceptual">Conceptual</option>
-                                            <option value="procedural">Procedural</option>
-                                            <option value="application">Application</option>
-                                            <option value="analytical">Analytical</option>
-                                            <option value="recall">Recall</option>
-                                            <option value="multi-step">Multi-step</option>
-                                        </select>
-                                    </div>
-
-                                    {/* Calc Load */}
-                                    <div>
-                                        <label className="text-[10px] text-gray-500 block mb-1">Calc Load</label>
-                                        <select
-                                            value={selectedQuestion.metadata.calcLoad ?? ''}
-                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                                metadata: { ...selectedQuestion.metadata, calcLoad: e.target.value as any }
-                                            })}
-                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs focus:border-teal-500 outline-none"
-                                        >
-                                            <option value="">— unset —</option>
-                                            <option value="calc-none">None</option>
-                                            <option value="calc-light">Light</option>
-                                            <option value="calc-moderate">Moderate</option>
-                                            <option value="calc-heavy">Heavy</option>
-                                            <option value="calc-intense">Intense</option>
-                                        </select>
-                                    </div>
-
-                                    {/* Entry Point */}
-                                    <div>
-                                        <label className="text-[10px] text-gray-500 block mb-1">Entry Point</label>
-                                        <select
-                                            value={selectedQuestion.metadata.entryPoint ?? ''}
-                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                                metadata: { ...selectedQuestion.metadata, entryPoint: e.target.value as any }
-                                            })}
-                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs focus:border-teal-500 outline-none"
-                                        >
-                                            <option value="">— unset —</option>
-                                            <option value="clear-entry">Clear Entry</option>
-                                            <option value="strategy-first">Strategy First</option>
-                                            <option value="ambiguous-entry">Ambiguous</option>
-                                        </select>
-                                    </div>
+                            {/* ── ROW 2: Micro Concept + Question Nature (consolidated) ── */}
+                            <div className="flex items-center gap-3 p-2 bg-gradient-to-r from-teal-900/10 to-purple-900/10 border border-teal-700/30 rounded">
+                                {/* Micro Concept */}
+                                <div className="flex-1">
+                                    <label className="text-[10px] text-gray-500 block mb-1">Micro Concept</label>
+                                    <select
+                                        value={selectedQuestion.metadata.microConcept ?? ''}
+                                        onChange={(e) => handleUpdate(selectedQuestion._id, {
+                                            metadata: { ...selectedQuestion.metadata, microConcept: e.target.value }
+                                        })}
+                                        className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs text-teal-300 focus:border-teal-500 outline-none"
+                                    >
+                                        <option value="">— select micro concept —</option>
+                                        {(() => {
+                                            const primaryTagId = selectedQuestion.metadata.tags?.[0]?.tag_id;
+                                            if (!primaryTagId) return <option value="" disabled>Select a Primary Tag first</option>;
+                                            const microTopics = TAXONOMY_FROM_CSV.filter(node => 
+                                                node.parent_id === primaryTagId && node.type === 'micro_topic'
+                                            );
+                                            if (microTopics.length === 0) return <option value="" disabled>No micro concepts for this tag</option>;
+                                            return microTopics.map(micro => (
+                                                <option key={micro.id} value={micro.name}>{micro.name}</option>
+                                            ));
+                                        })()}
+                                    </select>
                                 </div>
 
-                                {/* Multi-Concept toggle on its own line */}
-                                <label className="flex items-center gap-2 cursor-pointer w-fit">
+                                {/* Multi-Concept Checkbox */}
+                                <label className="flex items-center gap-2 cursor-pointer shrink-0">
                                     <input
                                         type="checkbox"
                                         checked={!!selectedQuestion.metadata.isMultiConcept}
@@ -1474,8 +1476,35 @@ function AdminPageContent() {
                                         })}
                                         className="h-3.5 w-3.5 accent-teal-500"
                                     />
-                                    <span className="text-xs text-gray-400">Multi-Concept question (spans &gt;1 micro concept)</span>
+                                    <span className="text-xs text-gray-400">Multi</span>
                                 </label>
+
+                                {/* Question Nature */}
+                                <div className="flex-1">
+                                    <label className="text-[10px] text-gray-500 block mb-1">Question Nature</label>
+                                    <select
+                                        value={selectedQuestion.metadata.questionNature ?? ''}
+                                        onChange={(e) => handleUpdate(selectedQuestion._id, {
+                                            metadata: { ...selectedQuestion.metadata, questionNature: e.target.value as any }
+                                        })}
+                                        className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs text-purple-300 focus:border-purple-500 outline-none"
+                                    >
+                                        <option value="">— select nature —</option>
+                                        <option value="Recall">Recall</option>
+                                        <option value="Rule_Application">Rule Application</option>
+                                        <option value="Mechanistic">Mechanistic</option>
+                                        <option value="Synthesis">Synthesis</option>
+                                    </select>
+                                </div>
+
+                                {/* Nature Description */}
+                                <div className="text-[10px] text-gray-500 shrink-0 w-[140px]">
+                                    {selectedQuestion.metadata.questionNature === 'Recall' && 'Fact/definition recall'}
+                                    {selectedQuestion.metadata.questionNature === 'Rule_Application' && 'Apply rules/formulas'}
+                                    {selectedQuestion.metadata.questionNature === 'Mechanistic' && 'Reaction mechanisms'}
+                                    {selectedQuestion.metadata.questionNature === 'Synthesis' && 'Multi-step solving'}
+                                    {!selectedQuestion.metadata.questionNature && 'Cognitive approach'}
+                                </div>
                             </div>
 
                         </div>
@@ -1973,11 +2002,11 @@ function AdminPageContent() {
                                             }`}>
                                             {selectedQuestion.type}
                                         </span>
-                                        <span className={`text-xs px-2 py-0.5 rounded ${selectedQuestion.metadata.difficulty === 'Hard' ? 'bg-red-500/20 text-red-400' :
-                                            selectedQuestion.metadata.difficulty === 'Medium' ? 'bg-orange-500/20 text-orange-400' :
+                                        <span className={`text-xs px-2 py-0.5 rounded ${selectedQuestion.metadata.difficultyLevel >= 4 ? 'bg-red-500/20 text-red-400' :
+                                            selectedQuestion.metadata.difficultyLevel === 3 ? 'bg-orange-500/20 text-orange-400' :
                                                 'bg-green-500/20 text-green-400'
                                             }`}>
-                                            {selectedQuestion.metadata.difficulty}
+                                            Level {selectedQuestion.metadata.difficultyLevel}
                                         </span>
                                     </div>
                                     <MathRenderer

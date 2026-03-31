@@ -160,6 +160,10 @@ export async function GET(request: NextRequest) {
     const tag_id = searchParams.get('tag_id');
     const searchTerm = searchParams.get('search');
     const isCountOnly = searchParams.get('countOnly') === 'true';
+    // NEW: Exam taxonomy filters
+    const examBoard = searchParams.get('examBoard');
+    const sourceType = searchParams.get('sourceType');
+    const exam = searchParams.get('exam');
 
     // Authenticated users (admin dashboard) get full list (unless counting); public gets max 50
     const requestedLimit = parseInt(searchParams.get('limit') || (isAuthenticated ? '5000' : '50'));
@@ -185,13 +189,26 @@ export async function GET(request: NextRequest) {
     }
     if (status) query.status = status;
     if (type) query.type = type;
-    if (difficulty) query['metadata.difficulty'] = difficulty;
+    if (difficulty) {
+      // Map old difficulty names to new levels for API compatibility
+      const diffMap: Record<string, number> = { 'Easy': 2, 'Medium': 3, 'Hard': 4 };
+      query['metadata.difficultyLevel'] = diffMap[difficulty] || Number(difficulty) || 3;
+    }
+    // NEW: Exam taxonomy filters (preferred)
+    if (examBoard) query['metadata.examBoard'] = examBoard;
+    if (sourceType) query['metadata.sourceType'] = sourceType;
+    if (exam) query['metadata.examDetails.exam'] = exam;
+    if (year && (sourceType === 'PYQ' || examBoard)) {
+      query['metadata.examDetails.year'] = Number(year);
+    }
+    
+    // OLD: Legacy filters (backward compatibility)
     if (is_pyq === 'true') query['metadata.is_pyq'] = true;
     if (is_pyq === 'false') query['metadata.is_pyq'] = false;
     if (is_top_pyq === 'true') query['metadata.is_top_pyq'] = true;
     if (exam_level === 'mains') query['metadata.exam_source.exam'] = { $regex: /main/i };
     if (exam_level === 'adv') query['metadata.exam_source.exam'] = { $regex: /adv/i };
-    if (year) query['metadata.exam_source.year'] = Number(year);
+    if (year && !sourceType && !examBoard) query['metadata.exam_source.year'] = Number(year);
     if (tag_id) query['metadata.tags'] = { $elemMatch: { tag_id } };
 
     if (searchTerm) {
