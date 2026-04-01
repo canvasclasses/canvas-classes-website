@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import MoleculeViewer from '../MoleculeViewer';
 import { Level } from '../ConversionGame';
 import { ArrowRight, Play, Square, Music, Check } from 'lucide-react';
+import DOMPurify from 'isomorphic-dompurify';
 
 const AudioPlayer = ({ url }: { url: string }) => {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -117,7 +118,12 @@ const ArenaPreview: React.FC<ArenaPreviewProps> = ({ level }) => {
                 {level.explanation_svg && (
                     <div
                         className="w-full bg-white/5 border border-white/10 rounded-xl p-4 flex justify-center overflow-hidden"
-                        dangerouslySetInnerHTML={{ __html: level.explanation_svg }}
+                        dangerouslySetInnerHTML={{ 
+                            __html: DOMPurify.sanitize(level.explanation_svg, {
+                                ALLOWED_TAGS: ['svg', 'path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'text', 'g', 'defs', 'use', 'ellipse'],
+                                ALLOWED_ATTR: ['width', 'height', 'viewBox', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'd', 'cx', 'cy', 'r', 'rx', 'ry', 'x', 'y', 'x1', 'y1', 'x2', 'y2', 'points', 'transform', 'font-family', 'font-size', 'opacity', 'class']
+                            })
+                        }}
                     />
                 )}
 

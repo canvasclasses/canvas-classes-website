@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import DOMPurify from 'isomorphic-dompurify';
 
 interface LatexPreviewProps {
     latex: string;
@@ -86,7 +87,12 @@ export default function LatexPreview({ latex, className = '' }: LatexPreviewProp
             )}
             <div 
                 className="prose prose-invert prose-sm max-w-none"
-                dangerouslySetInnerHTML={{ __html: rendered }}
+                dangerouslySetInnerHTML={{ 
+                    __html: DOMPurify.sanitize(rendered, {
+                        ALLOWED_TAGS: ['span', 'div', 'sub', 'sup', 'strong', 'em'],
+                        ALLOWED_ATTR: ['class']
+                    })
+                }}
             />
             <style jsx>{`
                 .latex-preview :global(.math-inline) {

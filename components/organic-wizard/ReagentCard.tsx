@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import DOMPurify from 'isomorphic-dompurify';
 
 interface ReagentCardProps {
     reagent: {
@@ -45,7 +46,12 @@ const ReagentCard: React.FC<ReagentCardProps> = ({
 
             <div
                 className="text-sm font-bold leading-tight"
-                dangerouslySetInnerHTML={{ __html: reagent.display }} // Allow HTML for subscripts
+                dangerouslySetInnerHTML={{ 
+                    __html: DOMPurify.sanitize(reagent.display, {
+                        ALLOWED_TAGS: ['sub', 'sup', 'span'],
+                        ALLOWED_ATTR: []
+                    })
+                }}
             />
         </motion.div>
     );
