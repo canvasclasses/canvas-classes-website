@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig: NextConfig = {
   // Redirects and other config...
   async headers() {
@@ -21,17 +23,22 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com",
+              // cdnjs & cdn.tailwindcss needed by the self-hosted VSEPR/simulator HTML files
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.tailwindcss.com https://www.googletagmanager.com https://www.google-analytics.com",
               "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net",
               "connect-src 'self' https://*.supabase.co https://www.google-analytics.com",
               "media-src 'self' https: blob:",
               "object-src 'none'",
+              "frame-src 'self' https://www.youtube.com https://youtube.com https://drive.google.com https://docs.google.com https://phet.colorado.edu",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",
-              "upgrade-insecure-requests",
+              // upgrade-insecure-requests must ONLY run in production HTTPS.
+              // On localhost (HTTP), it causes iframes to be upgraded to https://localhost
+              // which has no listener, producing "refused to connect".
+              ...(isProd ? ["upgrade-insecure-requests"] : []),
             ].join('; ')
           }
         ],
@@ -45,6 +52,31 @@ const nextConfig: NextConfig = {
           { key: 'Access-Control-Allow-Methods', value: 'GET,POST,PUT,PATCH,DELETE,OPTIONS' },
           { key: 'Access-Control-Allow-Headers', value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization' },
           { key: 'Access-Control-Max-Age', value: '86400' },
+        ],
+      },
+      {
+        // Override framing headers for self-hosted simulator files so they can
+        // be embedded in iframes on the same origin (the VSEPR/Bond Angles pages).
+        // X-Frame-Options: DENY and CSP frame-ancestors 'none' both block same-origin iframes.
+        source: '/simulators/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          {
+            key: 'Content-Security-Policy',
+            // Minimal CSP for simulators: allow same-origin framing and required CDNs
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.tailwindcss.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "img-src 'self' data: https: blob:",
+              "font-src 'self' data: https://fonts.gstatic.com",
+              "connect-src 'self'",
+              "media-src 'self' blob:",
+              "object-src 'none'",
+              // Allow this document to be framed by the same origin
+              "frame-ancestors 'self'",
+            ].join('; ')
+          },
         ],
       },
     ];
