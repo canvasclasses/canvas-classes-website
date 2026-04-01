@@ -10,8 +10,7 @@ import { canEditQuestion, canDeleteQuestion } from '@/lib/rbac';
 async function getAuthenticatedUser(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  // If Supabase is not configured (local dev), treat as authenticated
-  if (!supabaseUrl || !supabaseAnonKey) return { id: 'local', email: 'local' };
+  if (!supabaseUrl || !supabaseAnonKey) return null;
   const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
     cookies: { getAll: () => request.cookies.getAll(), setAll: () => {} },
   });
@@ -67,9 +66,8 @@ export async function PATCH(
   try {
     // Require authentication for all write operations
     const user = await getAuthenticatedUser(request);
-    const host = request.headers.get('host') || '';
-    const isLocalDev = host.startsWith('localhost') || host.startsWith('127.0.0.1');
-    if (!user && !isLocalDev) {
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    if (!user && !isDevelopment) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -92,7 +90,7 @@ export async function PATCH(
     }
     
     // Check RBAC: Can user edit this question?
-    if (user && !isLocalDev) {
+    if (user && !isDevelopment) {
       const hasPermission = await canEditQuestion(user.email!, existingQuestion.metadata.chapter_id);
       if (!hasPermission) {
         return NextResponse.json(
@@ -294,9 +292,8 @@ export async function DELETE(
   try {
     // Require authentication for delete
     const user = await getAuthenticatedUser(request);
-    const host = request.headers.get('host') || '';
-    const isLocalDev = host.startsWith('localhost') || host.startsWith('127.0.0.1');
-    if (!user && !isLocalDev) {
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    if (!user && !isDevelopment) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -317,7 +314,7 @@ export async function DELETE(
     }
     
     // Check RBAC: Can user delete this question?
-    if (user && !isLocalDev) {
+    if (user && !isDevelopment) {
       const hasPermission = await canDeleteQuestion(user.email!, question.metadata.chapter_id);
       if (!hasPermission) {
         return NextResponse.json(

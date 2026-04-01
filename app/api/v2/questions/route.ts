@@ -62,8 +62,7 @@ function checkRateLimit(ip: string): boolean {
 async function getAuthenticatedUser(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  // If Supabase is not configured (local dev), treat as authenticated
-  if (!supabaseUrl || !supabaseAnonKey) return { id: 'local', email: 'local' };
+  if (!supabaseUrl || !supabaseAnonKey) return null;
   const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
     cookies: { getAll: () => request.cookies.getAll(), setAll: () => { } },
   });
@@ -126,12 +125,10 @@ const QuestionSchema = z.object({
 // GET - Fetch all questions
 export async function GET(request: NextRequest) {
   try {
-    // Check if request is from an authenticated admin (internal dashboard)
+    // SECURITY FIX: Use NODE_ENV instead of hostname check
     const user = await getAuthenticatedUser(request);
-    // Also treat localhost as authenticated (dev bypass — Supabase may be configured but no session cookie)
-    const host = request.headers.get('host') || '';
-    const isLocalDev = host.startsWith('localhost') || host.startsWith('127.0.0.1');
-    const isAuthenticated = !!user || isLocalDev;
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    const isAuthenticated = !!user || isDevelopment;
 
     // Rate limit unauthenticated requests
     if (!isAuthenticated) {
@@ -212,10 +209,12 @@ export async function GET(request: NextRequest) {
     if (year && !sourceType && !examBoard) query['metadata.exam_source.year'] = Number(year);
     if (tag_id) query['metadata.tags'] = { $elemMatch: { tag_id } };
 
+    // SECURITY FIX: Escape regex special characters to prevent MongoDB injection
     if (searchTerm) {
+      const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       query.$or = [
-        { display_id: { $regex: searchTerm, $options: 'i' } },
-        { 'question_text.markdown': { $regex: searchTerm, $options: 'i' } }
+        { display_id: { $regex: escapedSearchTerm, $options: 'i' } },
+        { 'question_text.markdown': { $regex: escapedSearchTerm, $options: 'i' } }
       ];
     }
 
@@ -253,11 +252,10 @@ export async function GET(request: NextRequest) {
 // POST - Create new question
 export async function POST(request: NextRequest) {
   try {
-    // Require authentication (with localhost dev bypass)
+    // Require authentication (development bypass via NODE_ENV only)
     const user = await getAuthenticatedUser(request);
-    const host = request.headers.get('host') || '';
-    const isLocalDev = host.startsWith('localhost') || host.startsWith('127.0.0.1');
-    if (!user && !isLocalDev) {
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    if (!user && !isDevelopment) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -277,7 +275,7 @@ export async function POST(request: NextRequest) {
     const data = validation.data;
 
     // Check RBAC: Can user create questions in this chapter?
-    if (user && !isLocalDev) {
+    if (user && !isDevelopment) {
       const hasPermission = await canEditQuestion(user.email!, data.metadata.chapter_id);
       if (!hasPermission) {
         return NextResponse.json(

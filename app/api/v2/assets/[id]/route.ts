@@ -5,6 +5,8 @@ import { QuestionV2 } from '@/lib/models/Question.v2';
 import { AuditLog } from '@/lib/models/AuditLog';
 import { deleteFromR2 } from '@/lib/r2Storage';
 import { v4 as uuidv4 } from 'uuid';
+import { createClient } from '@/app/utils/supabase/server';
+import { getUserPermissions } from '@/lib/rbac';
 
 // DELETE - Delete asset from R2 and database
 export async function DELETE(
@@ -13,6 +15,32 @@ export async function DELETE(
 ) {
   try {
     await connectToDatabase();
+    
+    // SECURITY FIX: Require authentication
+    const supabase = await createClient();
+    if (!supabase) {
+      return NextResponse.json(
+        { success: false, error: 'Authentication service unavailable' },
+        { status: 503 }
+      );
+    }
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return NextResponse.json(
+        { success: false, error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    // SECURITY FIX: Check permissions
+    const permissions = await getUserPermissions(user.email!);
+    if (!permissions.canDeleteQuestions) {
+      return NextResponse.json(
+        { success: false, error: 'Forbidden - Insufficient permissions to delete assets' },
+        { status: 403 }
+      );
+    }
     
     const { id } = await params;
     
@@ -56,7 +84,7 @@ export async function DELETE(
     asset.deleted_at = new Date();
     await asset.save();
     
-    // Create audit log
+    // Create audit log with actual user information
     const auditLog = new AuditLog({
       _id: uuidv4(),
       entity_type: 'asset',
@@ -67,8 +95,8 @@ export async function DELETE(
         old_value: null,
         new_value: asset.deleted_at
       }],
-      user_id: 'admin',
-      user_email: 'admin@canvasclasses.com',
+      user_id: user.id,
+      user_email: user.email!,
       timestamp: new Date(),
       can_rollback: false
     });

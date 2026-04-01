@@ -7,8 +7,10 @@ async function getAuthenticatedUser() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
+  // SECURITY FIX: Don't return fake user in production
   if (!supabaseUrl || !supabaseKey) {
-    return { id: 'local', email: 'local' };
+    console.error('Supabase credentials not configured');
+    return null;
   }
 
   try {
@@ -82,11 +84,11 @@ export async function PATCH(
     await connectToDatabase();
     const { id } = await params;
 
-    // Check authentication and admin (bypass for local development)
-    const user = await getAuthenticatedUser();
-    const isLocal = user?.id === 'local';
+    // SECURITY FIX: Use NODE_ENV instead of user ID check
+    const isDevelopment = process.env.NODE_ENV === 'development';
     
-    if (!isLocal) {
+    if (!isDevelopment) {
+      const user = await getAuthenticatedUser();
       if (!user) {
         return NextResponse.json(
           { error: 'Authentication required' },
@@ -94,8 +96,16 @@ export async function PATCH(
         );
       }
 
-      const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim());
-      if (!adminEmails.includes(user.email)) {
+      const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(e => e.length > 0);
+      if (adminEmails.length === 0) {
+        console.error('ADMIN_EMAILS not configured');
+        return NextResponse.json(
+          { error: 'Admin system not configured' },
+          { status: 500 }
+        );
+      }
+      
+      if (!user.email || !adminEmails.includes(user.email)) {
         return NextResponse.json(
           { error: 'Admin access required' },
           { status: 403 }
@@ -163,11 +173,11 @@ export async function DELETE(
     await connectToDatabase();
     const { id } = await params;
 
-    // Check authentication and admin (bypass for local development)
-    const user = await getAuthenticatedUser();
-    const isLocal = user?.id === 'local';
+    // SECURITY FIX: Use NODE_ENV instead of user ID check
+    const isDevelopment = process.env.NODE_ENV === 'development';
     
-    if (!isLocal) {
+    if (!isDevelopment) {
+      const user = await getAuthenticatedUser();
       if (!user) {
         return NextResponse.json(
           { error: 'Authentication required' },
@@ -175,8 +185,16 @@ export async function DELETE(
         );
       }
 
-      const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim());
-      if (!adminEmails.includes(user.email)) {
+      const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(e => e.length > 0);
+      if (adminEmails.length === 0) {
+        console.error('ADMIN_EMAILS not configured');
+        return NextResponse.json(
+          { error: 'Admin system not configured' },
+          { status: 500 }
+        );
+      }
+      
+      if (!user.email || !adminEmails.includes(user.email)) {
         return NextResponse.json(
           { error: 'Admin access required' },
           { status: 403 }

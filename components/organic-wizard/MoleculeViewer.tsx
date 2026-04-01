@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import * as OCL from 'openchemlib';
+import DOMPurify from 'isomorphic-dompurify';
 
 interface MoleculeViewerProps {
     smiles?: string;
@@ -104,7 +105,12 @@ const MoleculeViewer: React.FC<MoleculeViewerProps> = ({
         <div
             className={`relative ${className} select-none flex items-center justify-center`}
             style={{ width, height }}
-            dangerouslySetInnerHTML={{ __html: svgContent }}
+            dangerouslySetInnerHTML={{ 
+                __html: DOMPurify.sanitize(svgContent, {
+                    ALLOWED_TAGS: ['svg', 'path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'text', 'g', 'defs', 'use'],
+                    ALLOWED_ATTR: ['width', 'height', 'viewBox', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'd', 'cx', 'cy', 'r', 'x', 'y', 'x1', 'y1', 'x2', 'y2', 'points', 'transform', 'font-family', 'font-size', 'opacity', 'class']
+                })
+            }}
         />
     );
 };

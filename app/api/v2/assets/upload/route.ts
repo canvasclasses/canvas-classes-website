@@ -6,6 +6,9 @@ import connectToDatabase from '@/lib/mongodb';
 import { Asset } from '@/lib/models/Asset';
 import { AuditLog } from '@/lib/models/AuditLog';
 import { uploadToR2, getExtensionFromMimeType, type AssetType } from '@/lib/r2Storage';
+import { createClient } from '@/app/utils/supabase/server';
+import { getUserPermissions } from '@/lib/rbac';
+import { fileTypeFromBuffer } from 'file-type';
 
 // Configure route to handle large file uploads (videos up to 100MB)
 export const runtime = 'nodejs';
@@ -31,6 +34,32 @@ export async function POST(request: NextRequest) {
   
   try {
     await connectToDatabase();
+    
+    // SECURITY FIX: Require authentication for file uploads
+    const supabase = await createClient();
+    if (!supabase) {
+      return NextResponse.json(
+        { success: false, error: 'Authentication service unavailable' },
+        { status: 503 }
+      );
+    }
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return NextResponse.json(
+        { success: false, error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    // SECURITY FIX: Check permissions
+    const permissions = await getUserPermissions(user.email!);
+    if (!permissions.canEditQuestions) {
+      return NextResponse.json(
+        { success: false, error: 'Forbidden - Insufficient permissions to upload assets' },
+        { status: 403 }
+      );
+    }
     
     formData = await request.formData();
     file = formData.get('file') as File;
@@ -78,6 +107,37 @@ export async function POST(request: NextRequest) {
     // Read file buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
+    
+    // SECURITY FIX: Verify actual file type using magic numbers (file signatures)
+    // This prevents attackers from uploading malicious files with spoofed MIME types
+    const detectedType = await fileTypeFromBuffer(buffer);
+    
+    // For SVG files, file-type cannot detect them (they're XML-based), so we allow them if MIME type says SVG
+    if (baseFileType !== 'image/svg+xml') {
+      if (!detectedType) {
+        return NextResponse.json(
+          { success: false, error: 'Unable to verify file type - file may be corrupted or invalid' },
+          { status: 400 }
+        );
+      }
+      
+      // Verify that detected MIME type matches the claimed MIME type
+      const detectedMime = detectedType.mime;
+      
+      // Allow some flexibility for common variations (e.g., 'image/jpg' vs 'image/jpeg')
+      const normalizedBase = baseFileType.replace('image/jpg', 'image/jpeg');
+      const normalizedDetected = detectedMime.replace('image/jpg', 'image/jpeg');
+      
+      if (normalizedBase !== normalizedDetected) {
+        return NextResponse.json(
+          { 
+            success: false, 
+            error: `File type mismatch: claimed ${baseFileType} but detected ${detectedMime}. Possible file spoofing attempt.` 
+          },
+          { status: 400 }
+        );
+      }
+    }
     
     // Calculate checksum
     const checksum = calculateChecksum(buffer);

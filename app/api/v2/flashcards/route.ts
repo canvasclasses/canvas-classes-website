@@ -38,8 +38,7 @@ async function getAuthenticatedUser() {
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseKey) {
-    // Local dev mode - bypass auth
-    return { id: 'local', email: 'local' };
+    return null;
   }
 
   try {
@@ -62,10 +61,10 @@ export async function GET(req: NextRequest) {
   try {
     await connectToDatabase();
 
-    // Check authentication (bypass on localhost for development)
-    const isLocalhost = req.headers.get('host')?.includes('localhost') || req.headers.get('host')?.includes('127.0.0.1');
+    // Check authentication (development bypass via NODE_ENV only)
+    const isDevelopment = process.env.NODE_ENV === 'development';
     const user = await getAuthenticatedUser();
-    const isAuthenticated = isLocalhost || !!user;
+    const isAuthenticated = isDevelopment || !!user;
 
     // Rate limiting
     const rateLimitKey = getRateLimitKey(req);
@@ -161,11 +160,11 @@ export async function POST(req: NextRequest) {
   try {
     await connectToDatabase();
 
-    // Check authentication and admin (bypass for local development)
-    const user = await getAuthenticatedUser();
-    const isLocal = user?.id === 'local';
+    // Check authentication and admin (development bypass via NODE_ENV only)
+    const isDevelopment = process.env.NODE_ENV === 'development';
     
-    if (!isLocal) {
+    if (!isDevelopment) {
+      const user = await getAuthenticatedUser();
       if (!user) {
         return NextResponse.json(
           { error: 'Authentication required' },
@@ -173,8 +172,17 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim());
-      if (!adminEmails.includes(user.email)) {
+      // SECURITY FIX: Validate ADMIN_EMAILS properly
+      const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(e => e.length > 0);
+      if (adminEmails.length === 0) {
+        console.error('ADMIN_EMAILS not configured');
+        return NextResponse.json(
+          { error: 'Admin system not configured' },
+          { status: 500 }
+        );
+      }
+      
+      if (!user.email || !adminEmails.includes(user.email)) {
         return NextResponse.json(
           { error: 'Admin access required' },
           { status: 403 }

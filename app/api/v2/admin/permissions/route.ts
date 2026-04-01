@@ -6,8 +6,10 @@ async function getAuthenticatedUser(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   
+  // SECURITY FIX: Don't return fake user
   if (!supabaseUrl || !supabaseAnonKey) {
-    return { id: 'local', email: 'local' };
+    console.error('Supabase credentials not configured');
+    return null;
   }
   
   const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
@@ -21,11 +23,10 @@ async function getAuthenticatedUser(request: NextRequest) {
 // GET /api/v2/admin/permissions - Get current user's permissions
 export async function GET(request: NextRequest) {
   try {
-    // Localhost bypass - grant full super admin access
-    const host = request.headers.get('host') || '';
-    const isLocalhost = host.startsWith('localhost') || host.startsWith('127.0.0.1');
+    // SECURITY FIX: Use NODE_ENV instead of hostname check
+    const isDevelopment = process.env.NODE_ENV === 'development';
     
-    if (isLocalhost) {
+    if (isDevelopment) {
       return NextResponse.json({
         email: 'local-dev',
         role: 'super_admin',

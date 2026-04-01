@@ -8,6 +8,7 @@ import MoleculeViewer from './MoleculeViewer';
 import ReagentCard from './ReagentCard';
 import LevelSidebar from './LevelSidebar';
 import gameData from '../../data/conversion_game_data.json';
+import DOMPurify from 'isomorphic-dompurify';
 
 // Types from JSON
 export interface Level {
@@ -263,7 +264,13 @@ const OrganicWizardGame = () => {
                                             <div
                                                 className="font-handwriting text-[#e0e0e0] text-sm font-bold leading-tight"
                                                 dangerouslySetInnerHTML={{
-                                                    __html: availableReagents.find(r => r.id === placedReagents[idx])?.display || '?'
+                                                    __html: DOMPurify.sanitize(
+                                                        availableReagents.find(r => r.id === placedReagents[idx])?.display || '?',
+                                                        {
+                                                            ALLOWED_TAGS: ['sub', 'sup', 'span'],
+                                                            ALLOWED_ATTR: []
+                                                        }
+                                                    )
                                                 }}
                                             />
                                             {/* Only show delete if NOT correct (locked) */}

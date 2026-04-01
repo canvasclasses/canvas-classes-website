@@ -7,10 +7,11 @@ async function getUserId(req: NextRequest): Promise<string | null> {
     const authHeader = req.headers.get('Authorization');
     if (!authHeader?.startsWith('Bearer ')) return null;
     const token = authHeader.slice(7);
-    // Create the client lazily so env vars are only read at request time, not build time
+    // SECURITY FIX: Use anon key instead of service role key
+    // Service role key bypasses RLS and should NEVER be used in client-accessible routes
     const supabase = createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
     const { data: { user }, error } = await supabase.auth.getUser(token);
     if (error || !user) return null;
