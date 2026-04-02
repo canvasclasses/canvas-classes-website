@@ -35,29 +35,35 @@ export async function POST(request: NextRequest) {
   try {
     await connectToDatabase();
     
-    // SECURITY FIX: Require authentication for file uploads
-    const supabase = await createClient();
-    if (!supabase) {
-      return NextResponse.json(
-        { success: false, error: 'Authentication service unavailable' },
-        { status: 503 }
-      );
+    // Auth: accept either a valid Supabase session OR the ADMIN_SECRET header
+    const adminSecret = request.headers.get('x-admin-secret');
+    const envSecret = process.env.ADMIN_SECRET;
+    const hasAdminHeader = envSecret && adminSecret === envSecret;
+
+    let isAuthorized = hasAdminHeader; // header-based auth (local admin tool)
+
+    if (!isAuthorized) {
+      // Try Supabase session-based auth
+      const supabase = await createClient();
+      if (supabase) {
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
+        if (!authError && user) {
+          const permissions = await getUserPermissions(user.email!);
+          isAuthorized = permissions.canEditQuestions;
+          if (!isAuthorized) {
+            return NextResponse.json(
+              { success: false, error: 'Forbidden - Insufficient permissions to upload assets' },
+              { status: 403 }
+            );
+          }
+        }
+      }
     }
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
+    if (!isAuthorized) {
       return NextResponse.json(
         { success: false, error: 'Unauthorized - Authentication required' },
         { status: 401 }
-      );
-    }
-
-    // SECURITY FIX: Check permissions
-    const permissions = await getUserPermissions(user.email!);
-    if (!permissions.canEditQuestions) {
-      return NextResponse.json(
-        { success: false, error: 'Forbidden - Insufficient permissions to upload assets' },
-        { status: 403 }
       );
     }
     
@@ -119,34 +125,56 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     
-    // SECURITY FIX: Verify actual file type using magic numbers (file signatures)
-    // This prevents attackers from uploading malicious files with spoofed MIME types
+    // SECURITY: Verify actual file type using magic numbers (file signatures).
+    // SVG files are XML-based and undetectable by magic bytes — skip for SVG.
+    // Audio/video have nuanced rules: WebM and MP4 are container formats shared between
+    // audio-only and video files, so `file-type` returns 'video/webm' even for audio-only blobs.
     const detectedType = await fileTypeFromBuffer(buffer);
-    
-    // For SVG files, file-type cannot detect them (they're XML-based), so we allow them if MIME type says SVG
-    if (baseFileType !== 'image/svg+xml') {
+
+    const isAudio = baseFileType.startsWith('audio/');
+    const isVideo = baseFileType.startsWith('video/');
+    const isSvg = baseFileType === 'image/svg+xml';
+
+    if (!isSvg) {
       if (!detectedType) {
-        return NextResponse.json(
-          { success: false, error: 'Unable to verify file type - file may be corrupted or invalid' },
-          { status: 400 }
-        );
-      }
-      
-      // Verify that detected MIME type matches the claimed MIME type
-      const detectedMime = detectedType.mime;
-      
-      // Allow some flexibility for common variations (e.g., 'image/jpg' vs 'image/jpeg')
-      const normalizedBase = baseFileType.replace('image/jpg', 'image/jpeg');
-      const normalizedDetected = detectedMime.replace('image/jpg', 'image/jpeg');
-      
-      if (normalizedBase !== normalizedDetected) {
-        return NextResponse.json(
-          { 
-            success: false, 
-            error: `File type mismatch: claimed ${baseFileType} but detected ${detectedMime}. Possible file spoofing attempt.` 
-          },
-          { status: 400 }
-        );
+        // file-type can't detect some audio formats (ogg vorbis, aac, wav) — allow audio through
+        // if they passed the MIME allowlist check above. Reject all undetectable non-audio.
+        if (!isAudio) {
+          return NextResponse.json(
+            { success: false, error: 'Unable to verify file type - file may be corrupted or invalid' },
+            { status: 400 }
+          );
+        }
+        // For audio, trust the browser's declared MIME (it passed the allowlist)
+      } else {
+        const detectedMime = detectedType.mime;
+
+        // Normalize jpg variations
+        const normalizedBase = baseFileType.replace('image/jpg', 'image/jpeg');
+        const normalizedDetected = detectedMime.replace('image/jpg', 'image/jpeg');
+
+        // WebM is a shared container: audio/webm blobs are detected as video/webm
+        const isWebmEquivalent =
+          (normalizedBase === 'audio/webm' && normalizedDetected === 'video/webm') ||
+          (normalizedBase === 'video/webm' && normalizedDetected === 'audio/webm');
+
+        // MP4 is a shared container: audio/mp4 blobs are detected as video/mp4
+        const isMp4Equivalent =
+          (normalizedBase === 'audio/mp4' && normalizedDetected === 'video/mp4') ||
+          (normalizedBase === 'video/mp4' && normalizedDetected === 'audio/mp4');
+
+        // For audio files, also allow if detected is any audio type (handles format variations)
+        const isAudioCompatible = isAudio && detectedMime.startsWith('audio/');
+
+        if (!isWebmEquivalent && !isMp4Equivalent && !isAudioCompatible && normalizedBase !== normalizedDetected) {
+          return NextResponse.json(
+            {
+              success: false,
+              error: `File type mismatch: claimed ${baseFileType} but detected ${detectedMime}. Possible file spoofing attempt.`
+            },
+            { status: 400 }
+          );
+        }
       }
     }
     

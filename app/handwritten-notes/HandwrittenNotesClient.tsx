@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { HandwrittenNote, getUniqueCategories, getNotesStats } from '../lib/handwrittenNotesData';
 import { Search, Download, FileText, BookOpen, FlaskConical, Atom, Sparkles, Filter, ExternalLink, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+// Removed framer-motion - using CSS transitions for better INP
 
 // Category icons and colors
 // Category icons and colors with BRIGHTER variants
@@ -65,15 +65,11 @@ export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNote
 
     return (
         <div className="min-h-screen bg-slate-950 font-sans">
-            {/* PDF Reader Modal */}
-            <AnimatePresence>
-                {viewingNote && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col"
-                    >
+            {/* PDF Reader Modal - Using CSS transitions for better INP */}
+            {viewingNote && (
+                <div
+                    className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col animate-fade-in"
+                >
                         {/* Toolbar */}
                         <div className="h-16 border-b border-gray-800 bg-gray-900/90 flex items-center justify-between px-4 md:px-6">
                             <div className="flex items-center gap-3 overflow-hidden">
@@ -113,9 +109,8 @@ export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNote
                                 title={viewingNote.title}
                             />
                         </div>
-                    </motion.div>
+                    </div>
                 )}
-            </AnimatePresence>
 
             {/* Hero Section */}
             <section className="pt-32 pb-16 px-4 relative overflow-hidden">
@@ -124,11 +119,7 @@ export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNote
                 <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
 
                 <div className="max-w-6xl mx-auto text-center relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                    >
+                    <div className="animate-fade-in-up">
                         <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
                             <FileText size={16} />
                             Free Resources
@@ -140,28 +131,24 @@ export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNote
                             Download my personal handwritten notes, highlighted NCERTs, and revision sheets
                             for <span className="font-semibold">JEE, NEET & CBSE</span> Chemistry
                         </p>
-                    </motion.div>
+                    </div>
 
-                    {/* Stats Cards */}
+                    {/* Stats Cards - Using CSS hover instead of Framer Motion */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mt-8">
                         {[
                             { label: 'Total Notes', value: stats.total, icon: FileText, color: 'bg-slate-800/50 border border-white/5 hover:bg-slate-800' },
                             { label: 'Organic', value: stats.organic, icon: FlaskConical, color: 'bg-pink-500/10 border border-pink-500/20 hover:bg-pink-500/20' },
                             { label: 'Inorganic', value: stats.inorganic, icon: Atom, color: 'bg-purple-500/10 border border-purple-500/20 hover:bg-purple-500/20' },
                             { label: 'Physical', value: stats.physical, icon: Sparkles, color: 'bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/20' },
-                        ].map((stat, i) => (
-                            <motion.div
+                        ].map((stat) => (
+                            <div
                                 key={stat.label}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 * i }}
-                                whileHover={{ scale: 1.05, y: -5 }}
-                                className={`${stat.color} backdrop-blur-sm rounded-xl p-4 text-white cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-black/20`}
+                                className={`${stat.color} backdrop-blur-sm rounded-xl p-4 text-white cursor-pointer transition-all duration-200 hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20`}
                             >
                                 <stat.icon className="w-6 h-6 mx-auto mb-2 opacity-80" />
                                 <div className="text-2xl font-bold">{stat.value}</div>
                                 <div className="text-sm opacity-80">{stat.label}</div>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -203,76 +190,59 @@ export default function HandwrittenNotesClient({ initialNotes }: HandwrittenNote
                 </div>
             </section>
 
-            {/* Notes Grid */}
+            {/* Notes Grid - Using CSS transitions instead of Framer Motion */}
             <section className="px-4 pb-20">
                 <div className="max-w-6xl mx-auto">
-                    <AnimatePresence mode="wait">
-                        {filteredNotes.length > 0 ? (
-                            <motion.div
-                                key="notes-list"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                className="flex flex-col gap-4"
-                            >
-                                {filteredNotes.map((note, index) => {
-                                    const style = getCategoryStyle(note.category);
-                                    const IconComponent = style.icon;
+                    {filteredNotes.length > 0 ? (
+                        <div className="flex flex-col gap-4">
+                            {filteredNotes.map((note) => {
+                                const style = getCategoryStyle(note.category);
+                                const IconComponent = style.icon;
 
-                                    return (
-                                        <motion.div
-                                            key={note.id}
-                                            onClick={() => setViewingNote(note)}
-                                            initial={{ opacity: 0, y: 10 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: index * 0.03 }}
-                                            className={`group relative flex items-center justify-between bg-white/5 rounded-xl p-4 border border-white/5 hover:border-amber-500/30 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer`}
-                                        >
-                                            <div className="flex items-center gap-3 overflow-hidden flex-1">
-                                                {/* Icon Box */}
-                                                <div className={`shrink-0 w-10 h-10 rounded-lg ${style.bg} flex items-center justify-center ${style.text}`}>
-                                                    <IconComponent size={20} />
-                                                </div>
+                                return (
+                                    <div
+                                        key={note.id}
+                                        onClick={() => setViewingNote(note)}
+                                        className={`group relative flex items-center justify-between bg-white/5 rounded-xl p-4 border border-white/5 hover:border-amber-500/30 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer hover:bg-white/[0.07]`}
+                                    >
+                                        <div className="flex items-center gap-3 overflow-hidden flex-1">
+                                            {/* Icon Box */}
+                                            <div className={`shrink-0 w-10 h-10 rounded-lg ${style.bg} flex items-center justify-center ${style.text}`}>
+                                                <IconComponent size={20} />
+                                            </div>
 
-                                                {/* Text Info */}
-                                                <div className="flex flex-col min-w-0 flex-1">
-                                                    <h3 className="text-sm md:text-base font-bold text-slate-200 group-hover:text-amber-400 transition-colors truncate">
-                                                        {note.title}
-                                                    </h3>
-                                                    <div className="flex items-center gap-2 mt-1">
-                                                        <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 group-hover:bg-amber-500/10 group-hover:text-amber-400 group-hover:border-amber-500/20 transition-colors">
-                                                            {note.category}
-                                                        </span>
-                                                    </div>
+                                            {/* Text Info */}
+                                            <div className="flex flex-col min-w-0 flex-1">
+                                                <h3 className="text-sm md:text-base font-bold text-slate-200 group-hover:text-amber-400 transition-colors truncate">
+                                                    {note.title}
+                                                </h3>
+                                                <div className="flex items-center gap-2 mt-1">
+                                                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 group-hover:bg-amber-500/10 group-hover:text-amber-400 group-hover:border-amber-500/20 transition-colors">
+                                                        {note.category}
+                                                    </span>
                                                 </div>
                                             </div>
-                                        </motion.div>
-                                    );
-                                })}
-                            </motion.div>
-                        ) : (
-                            <motion.div
-                                key="no-results"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                className="text-center py-16 bg-slate-900/50 rounded-2xl border border-white/5"
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <div className="text-center py-16 bg-slate-900/50 rounded-2xl border border-white/5">
+                            <FileText size={48} className="mx-auto mb-4 text-slate-700" />
+                            <h3 className="text-xl font-semibold text-slate-200 mb-2">No notes found</h3>
+                            <p className="text-slate-500 mb-4">Try adjusting your search or filter</p>
+                            <button
+                                onClick={() => {
+                                    setSearchQuery('');
+                                    setCategoryFilter('all');
+                                }}
+                                className="text-amber-600 hover:text-amber-700 font-medium"
                             >
-                                <FileText size={48} className="mx-auto mb-4 text-slate-700" />
-                                <h3 className="text-xl font-semibold text-slate-200 mb-2">No notes found</h3>
-                                <p className="text-slate-500 mb-4">Try adjusting your search or filter</p>
-                                <button
-                                    onClick={() => {
-                                        setSearchQuery('');
-                                        setCategoryFilter('all');
-                                    }}
-                                    className="text-amber-600 hover:text-amber-700 font-medium"
-                                >
-                                    Clear all filters
-                                </button>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                                Clear all filters
+                            </button>
+                        </div>
+                    )}
                 </div>
             </section>
         </div>

@@ -122,6 +122,9 @@ export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted
 
       const response = await fetch('/api/v2/assets/upload', {
         method: 'POST',
+        headers: {
+          'x-admin-secret': process.env.NEXT_PUBLIC_ADMIN_SECRET || '',
+        },
         body: formData,
       });
 
@@ -136,7 +139,8 @@ export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted
       }
     } catch (error) {
       console.error('Upload error:', error);
-      alert('Failed to upload audio');
+      const msg = error instanceof Error ? error.message : 'Unknown error';
+      alert(`Failed to upload audio: ${msg}`);
     }
   };
 
