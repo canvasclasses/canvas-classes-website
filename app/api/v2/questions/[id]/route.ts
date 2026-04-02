@@ -369,7 +369,11 @@ export async function DELETE(
     console.error('Error deleting question:', error?.message ?? error);
     console.error('Stack:', error?.stack);
     return NextResponse.json(
-      { success: false, error: 'Failed to delete question', detail: error?.message ?? String(error) },
+      { 
+        success: false, 
+        error: 'Failed to delete question',
+        ...(process.env.NODE_ENV === 'development' && { detail: error?.message ?? String(error) })
+      },
       { status: 500 }
     );
   }

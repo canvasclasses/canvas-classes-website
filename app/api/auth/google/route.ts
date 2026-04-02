@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/app/utils/supabase/server';
+import { sanitizeRedirect } from '@/lib/redirectValidation';
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
-    const next = searchParams.get('next') || '/';
+    const next = sanitizeRedirect(searchParams.get('next'), '/');
 
     try {
         const supabase = await createClient();

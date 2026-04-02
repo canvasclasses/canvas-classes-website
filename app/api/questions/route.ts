@@ -106,7 +106,10 @@ export async function GET(request: NextRequest) {
     } catch (error) {
         console.error('Questions fetch error:', error);
         return NextResponse.json(
-            { error: 'Internal server error', details: String(error) },
+            { 
+                error: 'Internal server error',
+                ...(process.env.NODE_ENV === 'development' && { details: String(error) })
+            },
             { status: 500 }
         );
     }
@@ -204,7 +207,10 @@ export async function POST(request: NextRequest) {
     } catch (error) {
         console.error('Questions POST error:', error);
         return NextResponse.json(
-            { error: 'Internal server error', details: String(error) },
+            { 
+                error: 'Internal server error',
+                ...(process.env.NODE_ENV === 'development' && { details: String(error) })
+            },
             { status: 500 }
         );
     }

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/app/utils/supabase/server';
+import { sanitizeRedirect } from '@/lib/redirectValidation';
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
@@ -25,7 +26,7 @@ export async function GET(request: NextRequest) {
     if (state) {
         try {
             const stateData = JSON.parse(decodeURIComponent(state));
-            next = stateData.next || '/';
+            next = sanitizeRedirect(stateData.next, '/');
         } catch (e) {
             console.error('Failed to parse state:', e);
         }
