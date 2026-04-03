@@ -3,6 +3,12 @@ import type { NextConfig } from "next";
 const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig: NextConfig = {
+  // SECURITY FIX: Request body size limits to prevent DoS
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '2mb',
+    },
+  },
   // Redirects and other config...
   async headers() {
     return [
