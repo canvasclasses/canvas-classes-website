@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
 
     // Load or create profile
     let profileDoc = await StudentChapterProfile.findOne({ studentId: userId, chapterId });
-    let profileData: any;
+    let profileData: Record<string, unknown>;
 
     if (profileDoc) {
       profileData = profileDoc.toObject();

@@ -31,14 +31,14 @@ interface Question {
     difficulty?: string;
     examSource?: string;
     isTopPYQ?: boolean;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 interface SolutionAsset {
     videoUrl?: string;
     handwrittenSolutionImageUrl?: string;
     textSolutionLatex?: string;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 interface SourceReference {
@@ -48,7 +48,7 @@ interface SourceReference {
     ncertBook?: string;
     ncertChapter?: string;
     sourceName?: string;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 interface SolutionViewerProps {

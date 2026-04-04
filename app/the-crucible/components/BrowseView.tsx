@@ -14,8 +14,8 @@ async function fetchOptionStats(questionId: string): Promise<Record<string, numb
   try {
     const res = await fetch(`/api/v2/questions/${questionId}/stats`);
     if (!res.ok) return {};
-    const data = await res.json();
-    return data.optionStats || {};
+    const data = await res.json() as Record<string, unknown>;
+    return (data.optionStats as Record<string, number> | undefined) || {};
   } catch { return {}; }
 }
 
@@ -132,8 +132,8 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
   const availableConceptTags = useMemo(() => {
     if (!chapterId) return [];
     return TAXONOMY_FROM_CSV
-      .filter((node: any) => node.type === 'topic' && node.parent_id === chapterId)
-      .map((node: any) => ({ id: node.id, name: node.name }));
+      .filter((node: { type?: string; parent_id?: string; id?: string; name?: string }) => node.type === 'topic' && node.parent_id === chapterId)
+      .map((node: { type?: string; parent_id?: string; id?: string; name?: string }) => ({ id: node.id || '', name: node.name || '' }));
   }, [chapterId]);
 
   // Distinct years available for the selected PYQ source
@@ -1105,7 +1105,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
           <WatermarkOverlay />
           {header}
           {filterBar}
-          <div ref={scrollAreaRef} style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: '16px 14px' } as any}>
+          <div ref={scrollAreaRef} style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: '16px 14px' } as React.CSSProperties}>
             {showStarredOnly && filteredQuestions.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '48px 16px', color: 'rgba(255,255,255,0.3)' }}>
                 <Star style={{ width: 32, height: 32, margin: '0 auto 12px', opacity: 0.3 }} />

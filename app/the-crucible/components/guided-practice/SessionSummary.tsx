@@ -127,7 +127,7 @@ export default function SessionSummary({
 }: SessionSummaryProps) {
   const writtenRef = useRef(false);
   const [showReflection, setShowReflection] = useState(true);
-  const [reflectionData, setReflectionData] = useState<any>(null);
+  const [reflectionData, setReflectionData] = useState<Record<string, unknown> | null>(null);
 
   const totalAttempted = feedbackHistory.length + conceptBaseline.length;
   const totalCorrect = feedbackHistory.filter(f => f.answeredCorrectly).length +
@@ -148,7 +148,7 @@ export default function SessionSummary({
     .filter(f => !f.answeredCorrectly)
     .map(f => f.questionId);
 
-  const handleReflectionComplete = (answers: any) => {
+  const handleReflectionComplete = (answers: Record<string, unknown>) => {
     setReflectionData(answers);
     setShowReflection(false);
     // TODO: Send reflection data to API for storage

@@ -110,18 +110,23 @@ export async function POST(request: NextRequest) {
 
             // Convert Supabase Snake_Case -> MongoDB Schema Format
             // Note: MongoDB 'tags' are weighted, Supabase 'concept_tags' are JSONB
-            const conceptTags = supaQuestion.concept_tags || [];
+            interface ConceptTag {
+              tagId?: string;
+              tag_id?: string;
+              weight?: number;
+            }
+            const conceptTags = (supaQuestion.concept_tags || []) as ConceptTag[];
 
             question = {
                 _id: supaQuestion.id,
-                tags: conceptTags.map((tag: any) => ({
+                tags: conceptTags.map((tag: ConceptTag) => ({
                     tag_id: tag.tagId || tag.tag_id, // Handle likely variations
                     weight: tag.weight || 1.0
                 })),
                 meta: {
                     difficulty: supaQuestion.difficulty || 'Medium'
                 }
-            } as any;
+            } as unknown;
         }
 
         // Extract tags
@@ -150,7 +155,7 @@ export async function POST(request: NextRequest) {
         await activityLog.save();
 
         // Update user's mastery map if logged in
-        let masteryUpdates: Record<string, any> = {};
+        let masteryUpdates: Record<string, unknown> = {};
 
         if (userId !== 'anonymous') {
             // Find or create UserMastery document

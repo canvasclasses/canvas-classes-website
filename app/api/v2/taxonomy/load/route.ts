@@ -22,10 +22,19 @@ export async function GET() {
     const arrayContent = match[1];
     const nodeRegex = /\{\s*id:\s*'([^']+)',\s*name:\s*'((?:[^'\\]|\\[\s\S])*)',\s*parent_id:\s*(null|'[^']*'),\s*type:\s*'([^']+)'([\s\S]*?)\}/g;
 
-    const nodes: any[] = [];
+    interface TaxonomyNode {
+      id: string;
+      name: string;
+      parent_id: string | null;
+      type: string;
+      sequence_order?: number;
+      class_level?: number;
+      chapterType?: string;
+    }
+    const nodes: TaxonomyNode[] = [];
     let m: RegExpExecArray | null;
     while ((m = nodeRegex.exec(arrayContent)) !== null) {
-      const node: any = {
+      const node: TaxonomyNode = {
         id: m[1],
         name: m[2].replace(/\\'/g, "'").replace(/\\\\/g, '\\'),
         parent_id: m[3] === 'null' ? null : m[3].replace(/'/g, ''),
@@ -45,8 +54,9 @@ export async function GET() {
     }
 
     return NextResponse.json({ success: true, nodes });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Taxonomy load error:', error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return NextResponse.json({ success: false, error: errorMessage }, { status: 500 });
   }
 }

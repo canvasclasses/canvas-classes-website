@@ -16,19 +16,19 @@ function convertToHtml(text: string): string {
     '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9',
     '⁺': '+', '⁻': '-', '⁼': '='
   };
-  
+
   let result = text;
-  
+
   // Replace subscripts
-  Object.entries(subMap).forEach(([unicode, digit]) => {
+  Object.entries(subMap).forEach(([unicode, digit]: [string, string]) => {
     result = result.replace(new RegExp(unicode, 'g'), `<sub>${digit}</sub>`);
   });
-  
+
   // Replace superscripts
-  Object.entries(supMap).forEach(([unicode, char]) => {
+  Object.entries(supMap).forEach(([unicode, char]: [string, string]) => {
     result = result.replace(new RegExp(unicode.replace(/[+\-=]/g, '\\$&'), 'g'), `<sup>${char}</sup>`);
   });
-  
+
   return result;
 }
 
@@ -58,7 +58,7 @@ function heatText(v: number | null, sel: boolean): string {
   return '#ffffff';
 }
 
-function MiniRingSVG({ sub, pos, col, pka }: { sub: string; pos: 'ortho' | 'meta' | 'para'; col: string; pka: string }) {
+function MiniRingSVG({ sub, pos, col, pka }: { sub: string; pos: 'ortho' | 'meta' | 'para'; col: string; pka: string }): React.ReactElement {
   const w = 150, h = 190, cx = w / 2, cy = h / 2 + 8, r = 36, bo = 3.8;
   const pts = Array.from({ length: 6 }, (_, k) => {
     const a = -Math.PI / 2 + k * Math.PI / 3;
@@ -94,7 +94,7 @@ function MiniRingSVG({ sub, pos, col, pka }: { sub: string; pos: 'ortho' | 'meta
   );
 }
 
-function TrendCard({ title, badge, children }: { title: string; badge: string; children: React.ReactNode }) {
+function TrendCard({ title, badge, children }: { title: string; badge: string; children: React.ReactNode }): React.ReactElement {
   const [open, setOpen] = useState(false);
   return (
     <div style={{ border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, overflow: 'hidden', marginBottom: 14 }}>
@@ -592,7 +592,13 @@ function ActiveMethylenePkaTable() {
     </div>
   );
 
-  const TableRow = ({ item }: { item: any }) => (
+  interface TableRowItem {
+    type: string;
+    svg: React.ReactNode;
+    pka: string;
+  }
+
+  const TableRow = ({ item }: { item: TableRowItem }) => (
     <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.04)', padding: '8px', fontSize: 13 }}>
       <div style={{ width: '33%', color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>{item.type}</div>
       <div style={{ width: '40%', display: 'flex', justifyContent: 'center' }}>{item.svg}</div>

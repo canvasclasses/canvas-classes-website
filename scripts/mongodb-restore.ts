@@ -119,24 +119,29 @@ async function performRestore(): Promise<void> {
   
   // Read backup metadata if available
   const metadataPath = path.join(backupFolder, 'backup-metadata.json');
-  let metadata: any = null;
-  
+  interface BackupMetadataFile {
+    date: string;
+    collections: { name: string; document_count: number }[];
+    total_documents: number;
+  }
+  let metadata: BackupMetadataFile | null = null;
+
   if (fs.existsSync(metadataPath)) {
-    metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+    metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8')) as BackupMetadataFile;
     console.log('📋 Backup Information:');
     console.log(`   Date: ${metadata.date}`);
     console.log(`   Collections: ${metadata.collections.length}`);
     console.log(`   Total documents: ${metadata.total_documents.toLocaleString()}`);
     console.log('');
   }
-  
+
   // Determine which collections to restore
   let collectionsToRestore: string[];
-  
+
   if (specificCollections) {
     collectionsToRestore = specificCollections;
   } else if (metadata) {
-    collectionsToRestore = metadata.collections.map((c: any) => c.name);
+    collectionsToRestore = metadata.collections.map((c) => c.name);
   } else {
     // Scan backup folder for .json or .json.gz files
     const files = fs.readdirSync(backupFolder);
@@ -176,11 +181,11 @@ async function performRestore(): Promise<void> {
     try {
       const stats = await restoreCollection(collectionName, backupFolder);
       totalRestored += stats.inserted;
-    } catch (error: any) {
-      console.error(`  ❌ ${collectionName}: ${error.message}`);
+    } catch (error: unknown) {
+      console.error(`  ❌ ${collectionName}: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
-  
+
   const duration = (Date.now() - startTime) / 1000;
   
   // Disconnect

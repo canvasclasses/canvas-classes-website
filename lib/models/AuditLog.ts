@@ -7,8 +7,8 @@ import mongoose, { Schema } from 'mongoose';
 
 export interface IAuditLogChanges {
   field: string;
-  old_value: any;
-  new_value: any;
+  old_value: unknown;
+  new_value: unknown;
 }
 
 export interface IAuditLog {
@@ -28,7 +28,7 @@ export interface IAuditLog {
   user_agent?: string;
   
   can_rollback: boolean;
-  rollback_data?: any; // Snapshot of previous state
+  rollback_data?: unknown; // Snapshot of previous state
 }
 
 const AuditLogChangesSchema = new Schema<IAuditLogChanges>({

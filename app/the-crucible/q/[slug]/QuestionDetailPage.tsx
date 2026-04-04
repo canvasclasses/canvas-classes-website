@@ -31,7 +31,7 @@ interface Props {
     id: string;
     display_id: string;
     question_text: string;
-    metadata: { difficultyLevel: number; exam_source?: any };
+    metadata: { difficultyLevel: number; exam_source?: Record<string, unknown> };
   }>;
 }
 
@@ -227,7 +227,7 @@ export default function QuestionDetailPage({ question, chapter, adjacent, relate
             {/* Options */}
             {question.options && question.options.length > 0 && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {question.options.map((opt: any) => (
+                {question.options.map((opt: { id: string; text: string; is_correct: boolean }) => (
                   <div key={opt.id} style={{
                     display: 'flex', alignItems: 'flex-start', gap: 10,
                     padding: '10px 14px',

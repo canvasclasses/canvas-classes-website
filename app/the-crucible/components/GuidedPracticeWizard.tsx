@@ -9,6 +9,30 @@ import WorkedExamplesCarousel from './guided-practice/WorkedExamplesCarousel';
 import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 import { FEATURE_ADAPTIVE_PRACTICE } from '@/constants/adaptivePractice';
 
+// API response types
+interface ApiQuestion {
+  _id: string;
+  display_id: string;
+  question_text?: { markdown?: string };
+  type: string;
+  options?: unknown[];
+  answer?: unknown;
+  solution?: {
+    text_markdown?: string;
+    video_url?: string;
+    asset_ids?: unknown;
+    latex_validated?: boolean;
+  };
+  metadata?: {
+    difficultyLevel?: number;
+    chapter_id?: string;
+    tags?: unknown[];
+    is_pyq?: boolean;
+    is_top_pyq?: boolean;
+  };
+  svg_scales?: Record<string, number>;
+}
+
 type GuidedStep = 'chapter' | 'loading' | 'path' | 'examples' | 'filters' | 'practice';
 type LearningPath = 'fundamentals' | 'practice';
 type Difficulty = 'Easy' | 'Medium' | 'Hard' | 'Challenging' | 'Mixed';
@@ -51,11 +75,15 @@ function getTagName(tagId: string): string {
 
 function extractTags(qs: Question[], chapterId: string): ConceptTag[] {
   const map = new Map<string, number>();
-  for (const q of qs)
-    for (const t of q.metadata.tags || [])
+  for (const q of qs) {
+    for (const t of q.metadata.tags || []) {
       map.set(t.tag_id, (map.get(t.tag_id) || 0) + 1);
+    }
+  }
   const chapterTagIds = new Set(
-    TAXONOMY_FROM_CSV.filter(n => n.type === 'topic' && n.parent_id === chapterId).map(n => n.id)
+    TAXONOMY_FROM_CSV
+      .filter((n: { type?: string; parent_id?: string; id?: string }) => n.type === 'topic' && n.parent_id === chapterId)
+      .map((n: { type?: string; parent_id?: string; id?: string }) => n.id)
   );
   return Array.from(map.entries())
     .filter(([id]) => chapterTagIds.has(id))
@@ -226,7 +254,7 @@ export default function GuidedPracticeWizard({ chapters, onBack, preSelectedChap
       if (!res.ok) throw new Error('API error');
       const json = await res.json();
       if (!json.data || !Array.isArray(json.data)) throw new Error('Invalid data');
-      const qs: Question[] = json.data.map((q: any) => ({
+      const qs: Question[] = json.data.map((q: ApiQuestion): Question => ({
         id: q._id,
         display_id: q.display_id || q._id?.slice(0,8)?.toUpperCase() || 'Q',
         question_text: { markdown: q.question_text?.markdown || '' },

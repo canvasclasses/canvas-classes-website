@@ -6,10 +6,16 @@ import { Type, Image as ImageIcon, Music, Trash2, Plus, ArrowRight, Save, Toggle
 import { Level } from '../ConversionGame';
 import { uploadAsset } from '../../../lib/uploadUtils';
 
+interface Reagent {
+    id: string;
+    display: string;
+    isCorrect?: boolean;
+}
+
 interface LevelEditorProps {
     level: Level;
     onUpdate: (level: Level) => void;
-    reagents: any[];
+    reagents: Reagent[];
 }
 
 const SVGDropZone = ({ onSvgUpload, value, label }: { onSvgUpload: (svg: string) => void, value?: string, label: string }) => {
@@ -71,7 +77,7 @@ const AudioRecorder = ({ onUploadSuccess, currentUrl, levelId }: { onUploadSucce
 
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const chunksRef = useRef<Blob[]>([]);
-    const timerRef = useRef<any>(null);
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     const startRecording = async () => {

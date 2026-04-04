@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
 
         console.error('❌ [OAuth] No URL returned from Supabase');
         return NextResponse.redirect(new URL('/login?error=No OAuth URL returned', request.url));
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('❌ [OAuth] Unexpected error:', error);
         return NextResponse.redirect(
             new URL('/login?error=Connection failed', request.url)

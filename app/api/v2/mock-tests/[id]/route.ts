@@ -47,7 +47,8 @@ export async function GET(
     if (!set) return NextResponse.json({ success: false, error: 'Not found' }, { status: 404 });
 
     // Non-admins can only see published sets
-    if (!admin && (set as any).status !== 'published') {
+    const mockSet = set as unknown & { status: string };
+    if (!admin && mockSet.status !== 'published') {
       return NextResponse.json({ success: false, error: 'Not found' }, { status: 404 });
     }
 
@@ -88,7 +89,7 @@ export async function PATCH(
     ];
     for (const field of allowedFields) {
       if (body[field] !== undefined) {
-        (set as any)[field] = body[field];
+        (set as unknown & Record<string, unknown>)[field] = body[field];
       }
     }
 

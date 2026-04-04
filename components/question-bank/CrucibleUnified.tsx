@@ -19,14 +19,14 @@ interface Question {
     difficulty?: string;
     examSource?: string;
     isTopPYQ?: boolean;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 interface TaxonomyNode {
     id: string;
     name: string;
     type: string;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 import { useCrucibleProgress } from '@/hooks/useCrucibleProgress';
 import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
@@ -468,7 +468,7 @@ export default function CrucibleUnified({ initialQuestions, taxonomy = [] }: Cru
         // Filter by type
         if (questionType !== 'Mix') {
             filtered = filtered.filter(q => {
-                const qType = (q as any).type || 'SCQ';
+                const qType = (q as unknown as {type?: string}).type || 'SCQ';
                 return qType === questionType;
             });
         }
@@ -1500,14 +1500,14 @@ export default function CrucibleUnified({ initialQuestions, taxonomy = [] }: Cru
                                     <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 block">Type</label>
                                     <div className="flex flex-wrap gap-1.5">
                                         {[
-                                            { id: 'Mix', label: 'Mix', icon: Zap },
-                                            { id: 'MCQ', label: 'MCQ', icon: CheckCircle2 },
-                                            { id: 'Numerical', label: 'Num', icon: BarChart3 },
-                                            { id: 'AR', label: 'A/R', icon: Activity }
+                                            { id: 'Mix' as const, label: 'Mix', icon: Zap },
+                                            { id: 'MCQ' as const, label: 'MCQ', icon: CheckCircle2 },
+                                            { id: 'Numerical' as const, label: 'Num', icon: BarChart3 },
+                                            { id: 'AR' as const, label: 'A/R', icon: Activity }
                                         ].map(({ id, label, icon: Icon }) => (
                                             <button
                                                 key={id}
-                                                onClick={() => setQuestionType(id as any)}
+                                                onClick={() => setQuestionType(id)}
                                                 className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
                                                     questionType === id
                                                         ? 'bg-indigo-500/20 border border-indigo-500/40 text-indigo-300'

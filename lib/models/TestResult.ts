@@ -5,7 +5,7 @@ export interface IQuestionResult {
     display_id: string;
     difficulty: 'Easy' | 'Medium' | 'Hard';
     is_correct: boolean;
-    selected_option: any;
+    selected_option: string | number | boolean | null;
     time_spent_seconds: number;
     marked_for_review: boolean;
 }

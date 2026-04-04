@@ -28,7 +28,15 @@ export async function GET(req: NextRequest) {
 
         await connectToDatabase();
 
-        const progress = await UserProgress.findById(userId).lean() as any;
+        interface StarredEntry {
+            question_id: string;
+            chapter_id: string;
+            starred_at: Date;
+        }
+
+        const progress = await UserProgress.findById(userId).lean() as unknown as {
+            starred_questions?: StarredEntry[];
+        } | null;
         if (!progress || !progress.starred_questions?.length) {
             return NextResponse.json({ success: true, questions: [], total: 0 });
         }
@@ -36,16 +44,16 @@ export async function GET(req: NextRequest) {
         const chapterId = req.nextUrl.searchParams.get('chapterId');
 
         // Filter starred entries by chapter if requested
-        const starredEntries: Array<{ question_id: string; chapter_id: string; starred_at: Date }> =
+        const starredEntries: StarredEntry[] =
             chapterId
-                ? progress.starred_questions.filter((s: any) => s.chapter_id === chapterId)
+                ? progress.starred_questions.filter((s: StarredEntry) => s.chapter_id === chapterId)
                 : progress.starred_questions;
 
         if (starredEntries.length === 0) {
             return NextResponse.json({ success: true, questions: [], total: 0 });
         }
 
-        const questionIds = starredEntries.map((s: any) => s.question_id);
+        const questionIds = starredEntries.map((s: StarredEntry) => s.question_id);
 
         // Fetch full question documents from questions_v2
         const questions = await QuestionV2.find({
@@ -56,10 +64,12 @@ export async function GET(req: NextRequest) {
 
         // Sort questions to match the starred_questions order (most recently starred first)
         const idToStarredAt: Record<string, Date> = {};
-        starredEntries.forEach((s: any) => { idToStarredAt[s.question_id] = s.starred_at; });
-        questions.sort((a: any, b: any) => {
-            const ta = new Date(idToStarredAt[a._id] ?? 0).getTime();
-            const tb = new Date(idToStarredAt[b._id] ?? 0).getTime();
+        starredEntries.forEach((s: StarredEntry) => { idToStarredAt[s.question_id] = s.starred_at; });
+        questions.sort((a: unknown, b: unknown) => {
+            const aId = (a as Record<string, unknown>)._id as string;
+            const bId = (b as Record<string, unknown>)._id as string;
+            const ta = new Date(idToStarredAt[aId] ?? 0).getTime();
+            const tb = new Date(idToStarredAt[bId] ?? 0).getTime();
             return tb - ta; // most recently starred first
         });
 
@@ -101,7 +111,7 @@ export async function POST(req: NextRequest) {
         }
 
         const alreadyStarred = progress.starred_questions.some(
-            (s: any) => s.question_id === question_id
+            (s: StarredEntry) => s.question_id === question_id
         );
 
         if (action === 'star' && !alreadyStarred) {
@@ -110,7 +120,7 @@ export async function POST(req: NextRequest) {
             await progress.save();
         } else if (action === 'unstar' && alreadyStarred) {
             progress.starred_questions = progress.starred_questions.filter(
-                (s: any) => s.question_id !== question_id
+                (s: StarredEntry) => s.question_id !== question_id
             );
             progress.updated_at = new Date();
             await progress.save();

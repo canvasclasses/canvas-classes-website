@@ -53,7 +53,11 @@ export async function GET(request: NextRequest) {
       : 'student';
 
     // Build query — all flag filters are scoped to the requested source
-    let flagFilter: any;
+    interface FlagFilter {
+      flags: Record<string, unknown>;
+      $nor?: Array<Record<string, unknown>>;
+    }
+    let flagFilter: FlagFilter;
     if (showAll) {
       flagFilter = { flags: { $elemMatch: { source: sourceMatch } } };
     } else if (showResolved) {
@@ -77,7 +81,7 @@ export async function GET(request: NextRequest) {
       .lean();
 
     return NextResponse.json({ success: true, questions, total: questions.length });
-  } catch (err) {
+  } catch (err: unknown) {
     console.error('[GET /api/v2/questions/flagged]', err);
     return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }

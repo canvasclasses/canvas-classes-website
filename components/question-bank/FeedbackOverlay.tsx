@@ -7,7 +7,7 @@ import { AlertTriangle, BookOpen, XCircle, ArrowRight } from 'lucide-react';
 interface TrapInfo {
     optionId: string;
     explanation: string;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 import ReactMarkdown from 'react-markdown';

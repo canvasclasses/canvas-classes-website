@@ -10,7 +10,7 @@ interface ReagentCardProps {
         display: string;
     };
     isDraggable?: boolean;
-    onDragStart?: (e: any, reagent: any) => void;
+    onDragStart?: (e: React.DragEvent<HTMLDivElement>, reagent: ReagentCardProps['reagent']) => void;
     onClick?: () => void;
 }
 

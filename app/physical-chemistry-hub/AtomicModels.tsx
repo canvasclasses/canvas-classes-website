@@ -15,7 +15,21 @@ export default function AtomicModels() {
   const [statsStarted, setStatsStarted] = useState(false);
   const [showComparison, setShowComparison] = useState(false);
   const [showImpactParam, setShowImpactParam] = useState(false);
-  const engineRef = useRef<any>(null);
+  const engineRef = useRef<{
+    thCtx: CanvasRenderingContext2D | null;
+    ruCtx: CanvasRenderingContext2D | null;
+    w: number;
+    h: number;
+    cx: number;
+    cy: number;
+    particles: Array<{x: number; y: number; vx: number; vy: number; trail: Array<{x: number; y: number}>; type: string; active: boolean}>;
+    flashes: Array<{x: number; y: number; life: number}>;
+    gunY: number;
+    autoFire: boolean;
+    slowMotion: boolean;
+    lastFire: number;
+    animationId: number | null;
+  } | null>(null);
   const statsRef = useRef({ straight: 0, smallDeflection: 0, largeDeflection: 0, total: 0 });
   const statsStartedRef = useRef(false);
 
@@ -30,8 +44,8 @@ export default function AtomicModels() {
       h: 0,
       cx: 0,
       cy: 0,
-      particles: [] as any[],
-      flashes: [] as any[],
+      particles: [] as Array<{x: number; y: number; vx: number; vy: number; trail: Array<{x: number; y: number}>; type: string; active: boolean}>,
+      flashes: [] as Array<{x: number; y: number; life: number}>,
       gunY: 0,
       autoFire: true,
       slowMotion: false,

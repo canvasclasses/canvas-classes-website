@@ -4,6 +4,44 @@ import { Question as QuestionPageType, TaxonomyNode, Chapter } from './component
 import connectToDatabase from '@/lib/mongodb';
 import { Chapter as ChapterModel } from '@/lib/models/Chapter';
 
+// MongoDB document types (lean queries return plain objects)
+interface MongoQuestionDoc {
+  _id: string;
+  display_id: string;
+  question_text?: { markdown?: string };
+  type: string;
+  options?: Array<{ id: string; text: string; is_correct: boolean }>;
+  answer?: Record<string, unknown>;
+  solution?: {
+    markdown?: string;
+    text_markdown?: string;
+    video_url?: string;
+    asset_ids?: unknown;
+    latex_validated?: boolean;
+  };
+  metadata?: {
+    difficultyLevel?: number;
+    chapter_id?: string;
+    subject?: string;
+    tags?: Array<{ tag_id: string; weight: number }>;
+    is_pyq?: boolean;
+    is_top_pyq?: boolean;
+    exam_source?: Record<string, unknown>;
+    examBoard?: string;
+    sourceType?: string;
+    examDetails?: Record<string, unknown>;
+  };
+  svg_scales?: Record<string, number>;
+  updated_at?: Date;
+  created_at?: Date;
+  status?: string;
+}
+
+interface AdjacentQuestionRef {
+  _id: string;
+  display_id: string;
+}
+
 // Full question shape returned by question detail page (superset of QuestionPageType)
 export interface QuestionDetail extends QuestionPageType {
   updated_at: string;
@@ -24,7 +62,7 @@ export async function getQuestionBySlug(
     // UUID pattern: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
     const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
 
-    let doc: any = null;
+    let doc: MongoQuestionDoc | null = null;
     let redirectTo: string | null = null;
 
     if (isUUID) {
@@ -93,11 +131,11 @@ export async function getAdjacentQuestions(
       .sort({ display_id: 1 })
       .lean();
 
-    const idx = allInChapter.findIndex((q: any) => q.display_id === currentDisplayId);
+    const idx = allInChapter.findIndex((q: AdjacentQuestionRef) => q.display_id === currentDisplayId);
     if (idx === -1) return { prev: null, next: null };
 
-    const prevDoc = allInChapter[idx - 1] as any;
-    const nextDoc = allInChapter[idx + 1] as any;
+    const prevDoc = allInChapter[idx - 1] as AdjacentQuestionRef | undefined;
+    const nextDoc = allInChapter[idx + 1] as AdjacentQuestionRef | undefined;
 
     return {
       prev: prevDoc ? { id: toString(prevDoc._id), display_id: prevDoc.display_id } : null,
@@ -109,11 +147,21 @@ export async function getAdjacentQuestions(
 }
 
 // Fetch a small set of related questions (same chapter, excluding current).
+interface RelatedQuestion {
+  id: string;
+  display_id: string;
+  question_text: string;
+  metadata: {
+    difficultyLevel: number;
+    exam_source?: Record<string, unknown>;
+  };
+}
+
 export async function getRelatedCrucibleQuestions(
   chapterId: string,
   excludeId: string,
   limit = 5
-): Promise<Array<{ id: string; display_id: string; question_text: string; metadata: { difficultyLevel: number; exam_source?: any } }>> {
+): Promise<RelatedQuestion[]> {
   try {
     await connectToDatabase();
     const { QuestionV2 } = await import('@/lib/models/Question.v2');
@@ -126,7 +174,7 @@ export async function getRelatedCrucibleQuestions(
       .limit(limit)
       .lean();
 
-    return docs.map((d: any) => ({
+    return docs.map((d: MongoQuestionDoc): RelatedQuestion => ({
       id: toString(d._id),
       display_id: d.display_id,
       question_text: d.question_text?.markdown || '',
@@ -152,7 +200,7 @@ export async function getAllPublishedPYQSlugs(): Promise<Array<{ id: string; dis
     )
       .lean();
 
-    return docs.map((d: any) => ({
+    return docs.map((d: MongoQuestionDoc) => ({
       id: toString(d._id),
       display_id: d.display_id || '',
       updated_at: d.updated_at?.toISOString?.() || new Date().toISOString(),
@@ -163,7 +211,12 @@ export async function getAllPublishedPYQSlugs(): Promise<Array<{ id: string; dis
 }
 
 // Helper to safely convert ObjectId to string
-const toString = (val: any) => (val && val.toString ? val.toString() : val);
+const toString = (val: unknown): string => {
+  if (val && typeof val === 'object' && 'toString' in val && typeof val.toString === 'function') {
+    return val.toString();
+  }
+  return String(val);
+};
 
 // Category mapping by chapter name keywords (derived from taxonomyData_from_csv.ts)
 // Maps lowercase name fragments → category
@@ -303,7 +356,7 @@ export async function getChapterQuestions(chapterId: string, examBoard?: 'JEE' |
     try {
         await connectToDatabase();
         const { QuestionV2 } = await import('@/lib/models/Question.v2');
-        const filter: Record<string, any> = {
+        const filter: Record<string, unknown> = {
             'metadata.chapter_id': chapterId,
             deleted_at: null,
         };
@@ -312,31 +365,31 @@ export async function getChapterQuestions(chapterId: string, examBoard?: 'JEE' |
             .sort({ display_id: 1 })
             .lean();
 
-        return docs.map((q: any) => ({
+        return docs.map((q: MongoQuestionDoc): QuestionPageType => ({
             id: toString(q._id),
             display_id: q.display_id || toString(q._id)?.slice(0, 8)?.toUpperCase() || 'Q',
             question_text: { markdown: q.question_text?.markdown || '' },
-            type: q.type,
+            type: q.type as QuestionPageType['type'],
             options: q.options || [],
-            answer: q.answer || {},
+            answer: q.answer,
             solution: {
                 text_markdown: q.solution?.markdown || q.solution?.text_markdown || '',
                 video_url: q.solution?.video_url || undefined,
-                asset_ids: q.solution?.asset_ids || undefined,
+                asset_ids: q.solution?.asset_ids as Record<string, string[]> | undefined,
                 latex_validated: q.solution?.latex_validated || false,
             },
             metadata: {
-                difficultyLevel: q.metadata?.difficultyLevel || 3,
+                difficultyLevel: (q.metadata?.difficultyLevel || 3) as 1 | 2 | 3 | 4 | 5,
                 chapter_id: q.metadata?.chapter_id || '',
-                subject: q.metadata?.subject || 'chemistry',
+                subject: (q.metadata?.subject || 'chemistry') as 'chemistry' | 'physics' | 'maths' | 'biology',
                 tags: q.metadata?.tags || [],
                 is_pyq: q.metadata?.is_pyq || false,
                 is_top_pyq: q.metadata?.is_top_pyq || false,
-                exam_source: q.metadata?.exam_source,
+                exam_source: q.metadata?.exam_source as Record<string, unknown> | undefined,
                 // New exam taxonomy fields — needed for correct filtering in BrowseView
-                examBoard: q.metadata?.examBoard,
-                sourceType: q.metadata?.sourceType,
-                examDetails: q.metadata?.examDetails,
+                examBoard: q.metadata?.examBoard as 'JEE' | 'NEET' | undefined,
+                sourceType: q.metadata?.sourceType as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined,
+                examDetails: q.metadata?.examDetails as Record<string, unknown> | undefined,
             },
             svg_scales: q.svg_scales || {},
         }));

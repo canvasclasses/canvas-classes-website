@@ -15,7 +15,7 @@ interface Question {
     difficulty?: string;
     examSource?: string;
     isTopPYQ?: boolean;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 import { useCrucibleProgress } from '@/hooks/useCrucibleProgress';
 import StudentProgressDashboard from './StudentProgressDashboard';
@@ -23,7 +23,7 @@ import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_fr
 
 interface NewCrucibleHomeProps {
     initialQuestions: Question[];
-    onStart: (config: any) => void;
+    onStart: (config: {chapters: string[]; difficulty: string; questionCount: number; mode: string; questionType: string}) => void;
 }
 
 // Chapter icons mapping

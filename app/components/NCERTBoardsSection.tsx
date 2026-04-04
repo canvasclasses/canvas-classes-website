@@ -96,7 +96,7 @@ const ncertResources: NCERTResource[] = [
 
 // Color variations helper
 const getColorStyles = (color: string) => {
-    const colors: Record<string, any> = {
+    const colors: Record<string, { bg: string; text: string; border: string; glow: string }> = {
         blue: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20', glow: 'group-hover:shadow-blue-500/20' },
         purple: { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/20', glow: 'group-hover:shadow-purple-500/20' },
         emerald: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20', glow: 'group-hover:shadow-emerald-500/20' },

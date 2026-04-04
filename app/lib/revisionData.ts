@@ -121,7 +121,7 @@ export async function fetchRevisionTopics(): Promise<RevisionTopic[]> {
         // Skip header
         const dataRows = rows.slice(1);
 
-        return dataRows.map((row: any) => ({
+        return dataRows.map((row: string[]) => ({
             id: row[0] || '',
             classNum: row[1] || '',
             chapterNum: row[2] || '',
@@ -146,7 +146,7 @@ export async function fetchFlashcards(): Promise<FlashcardItem[]> {
         // Header: ID,Class,Category,Chapter,Question,Answer,Topic Name
         const dataRows = rows.slice(1);
 
-        return dataRows.map((row: any) => ({
+        return dataRows.map((row: string[]) => ({
             id: row[0] || '',
             classNum: row[1] || '',
             category: row[2] || 'Physical Chemistry',

@@ -49,8 +49,12 @@ export async function POST(
     if (!set) return NextResponse.json({ success: false, error: 'Set not found' }, { status: 404 });
 
     // Determine next question_number
+    interface MockQuestion {
+      question_number?: number;
+      [key: string]: unknown;
+    }
     const nextNumber = set.questions.length > 0
-      ? Math.max(...set.questions.map((q: any) => q.question_number ?? 0)) + 1
+      ? Math.max(...set.questions.map((q: MockQuestion) => q.question_number ?? 0)) + 1
       : 1;
 
     const newQuestion = {
@@ -87,16 +91,17 @@ export async function POST(
       updated_at: new Date(),
     };
 
-    set.questions.push(newQuestion as any);
+    set.questions.push(newQuestion as unknown);
     set.updated_at = new Date();
     set.updated_by = authorEmail ?? 'script';
 
     await set.save();
 
     return NextResponse.json({ success: true, data: newQuestion }, { status: 201 });
-  } catch (err: any) {
-    if (err.name === 'ValidationError') {
-      return NextResponse.json({ success: false, error: 'Validation failed', details: err.errors }, { status: 400 });
+  } catch (err: unknown) {
+    if (err instanceof Error && err.name === 'ValidationError') {
+      const validationErr = err as unknown & { errors: unknown };
+      return NextResponse.json({ success: false, error: 'Validation failed', details: validationErr.errors }, { status: 400 });
     }
     console.error('[mock-tests questions POST]', err);
     return NextResponse.json({ success: false, error: 'Failed to add question' }, { status: 500 });

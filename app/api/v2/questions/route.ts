@@ -169,15 +169,15 @@ export async function GET(request: NextRequest) {
     const skip = parseInt(searchParams.get('skip') || '0');
 
     // Build query with RBAC filtering
-    let query: any = { deleted_at: null };
-    
+    let query: Record<string, unknown> = { deleted_at: null };
+
     // Apply subject-level access control for authenticated users
     if (isAuthenticated && user) {
       const rbacFilter = await getQuestionFilter(user.email!);
       // Merge RBAC filter with base query
       query = { ...query, ...rbacFilter };
     }
-    
+
     if (chapter_ids.length === 1) query['metadata.chapter_id'] = chapter_ids[0];
     else if (chapter_ids.length > 1) query['metadata.chapter_id'] = { $in: chapter_ids };
     // subject filter — supports multi-subject future tests
@@ -199,7 +199,7 @@ export async function GET(request: NextRequest) {
     if (year && (sourceType === 'PYQ' || examBoard)) {
       query['metadata.examDetails.year'] = Number(year);
     }
-    
+
     // OLD: Legacy filters (backward compatibility)
     if (is_pyq === 'true') query['metadata.is_pyq'] = true;
     if (is_pyq === 'false') query['metadata.is_pyq'] = false;
@@ -220,7 +220,7 @@ export async function GET(request: NextRequest) {
 
     const total = await QuestionV2.countDocuments(query);
 
-    let questions: any[] = [];
+    let questions: unknown[] = [];
     if (!isCountOnly) {
       questions = await QuestionV2.find(query)
         .sort({ created_at: 1 })
@@ -300,7 +300,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Resolve display_id: use caller-supplied value, or auto-generate from max existing sequence
-    let display_id = (data as any).display_id as string | undefined;
+    let display_id = data.display_id as string | undefined;
 
     if (!display_id) {
       const prefix = CHAPTER_PREFIX_MAP[data.metadata.chapter_id]
@@ -318,8 +318,8 @@ export async function POST(request: NextRequest) {
         { display_id: 1 }
       ).sort({ display_id: -1 }).lean();
 
-      const maxActive = lastQ ? parseInt((lastQ as any).display_id.split('-')[1], 10) : 0;
-      const maxAll = lastQAny ? parseInt((lastQAny as any).display_id.split('-')[1], 10) : 0;
+      const maxActive = lastQ ? parseInt(((lastQ as Record<string, unknown>).display_id as string).split('-')[1], 10) : 0;
+      const maxAll = lastQAny ? parseInt(((lastQAny as Record<string, unknown>).display_id as string).split('-')[1], 10) : 0;
       const nextSeq = Math.max(maxActive, maxAll) + 1;
       display_id = `${prefix}-${String(nextSeq).padStart(3, '0')}`;
     }
@@ -370,7 +370,7 @@ export async function POST(request: NextRequest) {
 
     // Use insertOne on the raw collection to avoid Mongoose middleware issues
     const col = QuestionV2.collection;
-    await col.insertOne(questionDoc as any);
+    await col.insertOne(questionDoc as Record<string, unknown>);
 
     // Chapter stats in MongoDB are no longer updated — taxonomy is code-based (taxonomyData_from_csv.ts).
     // Stats are computed on-demand by querying questions_v2 directly.
@@ -378,7 +378,7 @@ export async function POST(request: NextRequest) {
     // Create audit log (non-blocking)
     try {
       await AuditLog.collection.insertOne({
-        _id: uuidv4() as any,
+        _id: uuidv4() as Record<string, unknown>,
         entity_type: 'question',
         entity_id: questionId,
         action: 'create',
@@ -402,13 +402,14 @@ export async function POST(request: NextRequest) {
       message: 'Question created successfully'
     }, { status: 201 });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error creating question:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: 'Failed to create question',
-        ...(process.env.NODE_ENV === 'development' && { detail: error?.message || String(error) })
+        ...(process.env.NODE_ENV === 'development' && { detail: errorMessage })
       },
       { status: 500 }
     );

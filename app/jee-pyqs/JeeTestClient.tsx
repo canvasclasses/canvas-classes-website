@@ -26,15 +26,17 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
     const [isActive, setIsActive] = useState(false);
 
     useEffect(() => {
-        let interval: any = null;
+        let interval: NodeJS.Timeout | null = null;
         if (isActive && mode === 'test') {
             interval = setInterval(() => {
                 setSeconds(seconds => seconds + 1);
             }, 1000);
         } else if (!isActive && seconds !== 0) {
-            clearInterval(interval);
+            if (interval) clearInterval(interval);
         }
-        return () => clearInterval(interval);
+        return () => {
+            if (interval) clearInterval(interval);
+        };
     }, [isActive, seconds, mode]);
 
     const formatTime = (totalSeconds: number) => {

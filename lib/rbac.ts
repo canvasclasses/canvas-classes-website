@@ -42,16 +42,21 @@ export function getSubjectFromChapterId(chapterId: string): Subject | null {
 /**
  * Get all chapter IDs for a given subject
  */
+interface TaxonomyNode {
+  type: string;
+  id: string;
+}
+
 export function getChapterIdsForSubject(subject: Subject): string[] {
   const { TAXONOMY_FROM_CSV } = require('@/app/crucible/admin/taxonomy/taxonomyData_from_csv');
-  
+
   return TAXONOMY_FROM_CSV
-    .filter((node: any) => node.type === 'chapter')
-    .filter((node: any) => {
+    .filter((node: TaxonomyNode) => node.type === 'chapter')
+    .filter((node: TaxonomyNode) => {
       const nodeSubject = getSubjectFromChapterId(node.id);
       return nodeSubject === subject;
     })
-    .map((node: any) => node.id);
+    .map((node: TaxonomyNode) => node.id);
 }
 
 /**
@@ -151,21 +156,21 @@ export async function canDeleteQuestion(email: string, chapterId: string): Promi
  */
 export async function getAccessibleChapters(email: string): Promise<string[]> {
   const permissions = await getUserPermissions(email);
-  
+
   if (permissions.role === 'super_admin') {
     // Super admin gets all chapters
     const { TAXONOMY_FROM_CSV } = require('@/app/crucible/admin/taxonomy/taxonomyData_from_csv');
     return TAXONOMY_FROM_CSV
-      .filter((node: any) => node.type === 'chapter')
-      .map((node: any) => node.id);
+      .filter((node: TaxonomyNode) => node.type === 'chapter')
+      .map((node: TaxonomyNode) => node.id);
   }
-  
+
   // Get chapters for allowed subjects only
   const allowedChapters: string[] = [];
   for (const subject of permissions.subjects) {
     allowedChapters.push(...getChapterIdsForSubject(subject));
   }
-  
+
   return allowedChapters;
 }
 
@@ -173,7 +178,7 @@ export async function getAccessibleChapters(email: string): Promise<string[]> {
  * Build MongoDB filter for questions based on user permissions
  * CRITICAL: Use this in all question queries to enforce access control
  */
-export async function getQuestionFilter(email: string): Promise<Record<string, any>> {
+export async function getQuestionFilter(email: string): Promise<Record<string, unknown>> {
   const accessibleChapters = await getAccessibleChapters(email);
   
   if (accessibleChapters.length === 0) {

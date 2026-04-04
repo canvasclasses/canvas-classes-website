@@ -194,8 +194,8 @@ export default function FlashcardAdminClient() {
       setIsCreating(false);
       setSelectedFlashcard(null);
       fetchFlashcards();
-    } catch (error: any) {
-      showMessage('error', error.message);
+    } catch (error: unknown) {
+      showMessage('error', error instanceof Error ? error.message : 'Unknown error');
     } finally {
       setSaving(false);
     }
@@ -213,7 +213,7 @@ export default function FlashcardAdminClient() {
 
       showMessage('success', 'Flashcard deleted!');
       fetchFlashcards();
-    } catch (error) {
+    } catch (error: unknown) {
       showMessage('error', 'Failed to delete flashcard');
     }
   };

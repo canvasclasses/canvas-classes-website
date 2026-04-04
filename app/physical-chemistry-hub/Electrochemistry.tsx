@@ -111,7 +111,7 @@ export default function Electrochemistry() {
             role="tab"
             aria-selected={tab === id}
             className={`ec-tab${tab === id ? ' ec-tab--active' : ''}`}
-            onClick={() => setTab(id as any)}
+            onClick={() => setTab(id as string)}
           >
             {label}
           </button>
@@ -1086,7 +1086,7 @@ So inside the cell, current direction is anode → cathode; outside the cell, it
   return (
     <div className="ec-faq">
       {faqs.map((faq, i) => (
-        <div key={i} className={`ec-faq-item${open === i ? ' ec-faq-item--open' : ''}`} style={{'--faq-color': faq.color} as any}>
+        <div key={i} className={`ec-faq-item${open === i ? ' ec-faq-item--open' : ''}`} style={{'--faq-color': faq.color} as React.CSSProperties}>
           <button className="ec-faq-q" onClick={() => setOpen(open === i ? null : i)}>
             <span className="ec-faq-icon">{open === i ? '−' : '+'}</span>
             <span>{faq.q}</span>

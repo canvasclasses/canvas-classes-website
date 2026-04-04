@@ -132,7 +132,14 @@ export async function PATCH(
     const existing = existingFlashcard.toObject();
 
     // Update fields
-    const updateData: any = {
+    interface FlashcardUpdateData {
+      chapter: unknown;
+      topic: unknown;
+      question: unknown;
+      answer: unknown;
+      metadata: Record<string, unknown>;
+    }
+    const updateData: FlashcardUpdateData = {
       chapter: body.chapter || existing.chapter,
       topic: body.topic || existing.topic,
       question: body.question !== undefined ? body.question : existing.question,

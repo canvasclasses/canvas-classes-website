@@ -35,12 +35,13 @@ export async function GET() {
             authenticated: !!data.session,
             timestamp: new Date().toISOString(),
         });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Health check error:', error);
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json(
             {
                 status: 'error',
-                message: `Health check failed: ${error.message || 'Unknown error'}`,
+                message: `Health check failed: ${errorMessage}`,
                 timestamp: new Date().toISOString(),
             },
             { status: 500 }

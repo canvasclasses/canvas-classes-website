@@ -37,11 +37,11 @@ export interface Level {
 const OrganicWizardGame = () => {
     const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
     const [placedReagents, setPlacedReagents] = useState<(string | null)[]>([]);
-    const [availableReagents, setAvailableReagents] = useState<any[]>([]);
+    const [availableReagents, setAvailableReagents] = useState<Array<{id: string; display: string; isCorrect: boolean}>>([]);
     const [showHint, setShowHint] = useState(false);
     const [showExplanation, setShowExplanation] = useState(false);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-    const [draggedReagent, setDraggedReagent] = useState<any>(null);
+    const [draggedReagent, setDraggedReagent] = useState<{id: string; display: string; isCorrect: boolean} | null>(null);
     const [completedLevels, setCompletedLevels] = useState<number[]>([]);
 
     // Audio Player State
@@ -83,7 +83,7 @@ const OrganicWizardGame = () => {
         setAvailableReagents(deck);
     }, [currentLevelIndex, totalSteps]);
 
-    const handleDrop = (stepIndex: number, reagent: any) => {
+    const handleDrop = (stepIndex: number, reagent: {id: string; display: string; isCorrect: boolean}) => {
         const newPlaced = [...placedReagents];
         newPlaced[stepIndex] = reagent.id;
         setPlacedReagents(newPlaced);

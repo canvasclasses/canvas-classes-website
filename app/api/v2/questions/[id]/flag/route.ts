@@ -74,8 +74,17 @@ export async function POST(
     }
 
     // Prevent duplicate unresolved flags from the same user for the same type
+    interface QuestionFlag {
+      flagged_by?: string;
+      type?: string;
+      resolved?: boolean;
+      [key: string]: unknown;
+    }
     const existingFlag = (question.flags ?? []).find(
-      (f: any) => f.flagged_by === user.id && f.type === type && !f.resolved
+      (f: unknown) => {
+        const flag = f as QuestionFlag;
+        return flag.flagged_by === user.id && flag.type === type && !flag.resolved;
+      }
     );
     if (existingFlag) {
       return NextResponse.json({
@@ -106,7 +115,7 @@ export async function POST(
       message: 'Thank you — your report has been sent to our team.',
     });
 
-  } catch (err) {
+  } catch (err: unknown) {
     console.error('[POST /api/v2/questions/[id]/flag]', err);
     return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }

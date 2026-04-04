@@ -87,7 +87,7 @@ export async function GET(req: NextRequest) {
     const skip = searchParams.get('skip');
 
     // Build filter
-    const filter: any = { deleted_at: null };
+    const filter: Record<string, unknown> = { deleted_at: null };
     
     if (chapterId) {
       filter['chapter.id'] = chapterId;
@@ -216,10 +216,10 @@ export async function POST(req: NextRequest) {
       flashcard,
     }, { status: 201 });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error creating flashcard:', error);
-    
-    if (error.code === 11000) {
+
+    if (error instanceof Error && (error as unknown & { code: number }).code === 11000) {
       return NextResponse.json(
         { error: 'Flashcard ID already exists' },
         { status: 409 }

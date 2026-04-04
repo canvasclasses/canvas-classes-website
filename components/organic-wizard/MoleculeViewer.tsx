@@ -34,7 +34,7 @@ const MoleculeViewer: React.FC<MoleculeViewerProps> = ({
         try {
             // Using OCL.Molecule ensures compatibility if named exports fail
             // Fallback used because sometimes OCL is the module, sometimes it's the default export
-            const Molecule = OCL.Molecule || (OCL as any).default?.Molecule || (OCL as any);
+            const Molecule = OCL.Molecule || (OCL as unknown as {default?: {Molecule: typeof OCL.Molecule}})?.default?.Molecule || (OCL as unknown as {Molecule: typeof OCL.Molecule});
             const molecule = Molecule.fromSmiles(smiles);
 
             // Configure rendering to show terminal METHYL groups (CH3) only.
@@ -87,7 +87,7 @@ const MoleculeViewer: React.FC<MoleculeViewerProps> = ({
 
             setSvgContent(styledSvg);
             setError(false);
-        } catch (e: any) {
+        } catch (e: unknown) {
             console.error("OpenChemLib Error for SMILES:", smiles, e);
             setError(true);
         }

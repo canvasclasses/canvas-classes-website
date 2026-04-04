@@ -51,10 +51,20 @@ export async function GET(req: NextRequest) {
         }
 
         // Calculate mastered chapters
+        interface ChapterProgress {
+            mastery_level?: string;
+            [key: string]: unknown;
+        }
+        interface Attempt {
+            attempted_at: Date | string;
+            [key: string]: unknown;
+        }
+
         let masteredCount = 0;
         if (progress.chapter_progress) {
-            Object.values(progress.chapter_progress).forEach((cp: any) => {
-                if (cp.mastery_level === 'Mastered') masteredCount++;
+            Object.values(progress.chapter_progress).forEach((cp: unknown) => {
+                const chapterProg = cp as ChapterProgress;
+                if (chapterProg.mastery_level === 'Mastered') masteredCount++;
             });
         }
 
@@ -68,8 +78,9 @@ export async function GET(req: NextRequest) {
         startOfWeek.setDate(diff);
         startOfWeek.setHours(0, 0, 0, 0);
 
-        (progress.recent_attempts || []).forEach((a: any) => {
-            const attemptedDate = new Date(a.attempted_at);
+        (progress.recent_attempts || []).forEach((a: unknown) => {
+            const attempt = a as Attempt;
+            const attemptedDate = new Date(attempt.attempted_at);
             if (attemptedDate >= startOfWeek) {
                 let d = attemptedDate.getDay();
                 d = d === 0 ? 6 : d - 1; // map Sun->6, Mon->0

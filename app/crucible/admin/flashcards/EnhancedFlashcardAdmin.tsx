@@ -202,8 +202,8 @@ export default function EnhancedFlashcardAdmin() {
       setIsCreating(false);
       setSelectedFlashcard(null);
       fetchFlashcards();
-    } catch (error: any) {
-      showMessage('error', error.message);
+    } catch (error: unknown) {
+      showMessage('error', error instanceof Error ? error.message : 'Unknown error');
     } finally {
       setSaving(false);
     }

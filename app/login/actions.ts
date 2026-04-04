@@ -31,10 +31,11 @@ export async function login(formData: FormData) {
 
         revalidatePath('/', 'layout')
         redirect(next)
-    } catch (error: any) {
-        console.error('Login error:', error)
-        return { 
-            error: 'Connection failed. Please check your internet connection and try again.' 
+    } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : String(error)
+        console.error('Login error:', errorMessage)
+        return {
+            error: 'Connection failed. Please check your internet connection and try again.'
         }
     }
 }
@@ -64,10 +65,11 @@ export async function signup(formData: FormData) {
 
         revalidatePath('/', 'layout')
         redirect('/')
-    } catch (error: any) {
-        console.error('Signup error:', error)
-        return { 
-            error: 'Connection failed. Please check your internet connection and try again.' 
+    } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : String(error)
+        console.error('Signup error:', errorMessage)
+        return {
+            error: 'Connection failed. Please check your internet connection and try again.'
         }
     }
 }
@@ -98,8 +100,9 @@ export async function signInWithGoogle(next: string = '/') {
         if (data.url) {
             redirect(data.url)
         }
-    } catch (error: any) {
-        console.error('Google OAuth error:', error)
+    } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : String(error)
+        console.error('Google OAuth error:', errorMessage)
         redirect('/login?error=Connection failed. Please check your internet connection.')
     }
 }

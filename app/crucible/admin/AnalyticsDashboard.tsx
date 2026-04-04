@@ -4,9 +4,26 @@ import { useState } from 'react';
 import { BarChart3, TrendingUp, AlertTriangle, CheckCircle, Tag, BookOpen, Layers, Target, FlaskConical, GraduationCap } from 'lucide-react';
 import { TAXONOMY_FROM_CSV } from './taxonomy/taxonomyData_from_csv';
 
+interface Question {
+    metadata: {
+        chapter_id: string;
+        tags?: Array<{ tag_id: string }>;
+        difficultyLevel?: number;
+        is_pyq?: boolean;
+        exam_source?: { exam: string };
+        microConcept?: string;
+    };
+    type?: string;
+}
+
+interface Chapter {
+    _id: string;
+    name: string;
+}
+
 interface AnalyticsDashboardProps {
-    questions: any[];
-    chapters: any[];
+    questions: Question[];
+    chapters: Chapter[];
     onClose: () => void;
     selectedChapterId?: string;
 }
@@ -124,12 +141,12 @@ export default function AnalyticsDashboard({ questions, chapters, onClose, selec
 
     // Count questions per topic
     const conceptCounts: { id: string; name: string; count: number; microCounts: { id: string; name: string; count: number }[] }[] = topicNodes.map((t, i) => {
-        const qs = chapterQs.filter(q => q.metadata.tags?.some((tag: any) => tag.tag_id === t.id));
+        const qs = chapterQs.filter(q => q.metadata.tags?.some((tag) => tag.tag_id === t.id));
         const micros = microByTopic[t.id] ?? [];
         const microCounts = micros.map(m => ({
             id: m.id,
             name: m.name,
-            count: qs.filter(q => q.metadata.microConcept === m.id || q.metadata.tags?.some((tag: any) => tag.tag_id === m.id)).length,
+            count: qs.filter(q => q.metadata.microConcept === m.id || q.metadata.tags?.some((tag) => tag.tag_id === m.id)).length,
         }));
         return { id: t.id, name: t.name, count: qs.length, microCounts };
     }).sort((a, b) => b.count - a.count);
@@ -171,7 +188,7 @@ export default function AnalyticsDashboard({ questions, chapters, onClose, selec
     const tagFrequency: Record<string, number> = {};
     questions.forEach(q => {
         if (q.metadata.tags?.length > 0) {
-            q.metadata.tags.forEach((tag: any) => {
+            q.metadata.tags.forEach((tag) => {
                 tagFrequency[tag.tag_id] = (tagFrequency[tag.tag_id] || 0) + 1;
             });
         }

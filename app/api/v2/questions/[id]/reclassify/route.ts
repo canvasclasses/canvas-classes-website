@@ -70,7 +70,11 @@ export async function POST(
     }
 
     // 1. Load question
-    const question = await QuestionV2.findById(questionId).lean() as any;
+    const question = await QuestionV2.findById(questionId).lean() as unknown as {
+      _id: string;
+      metadata: {chapter_id: string};
+      display_id: string;
+    } | null;
     if (!question) {
       return NextResponse.json(
         { success: false, error: 'Question not found' },
@@ -97,7 +101,7 @@ export async function POST(
     const lastInChapter = await QuestionV2.findOne(
       { display_id: prefixRegex },
       { display_id: 1 }
-    ).sort({ display_id: -1 }).lean() as any;
+    ).sort({ display_id: -1 }).lean() as unknown as {display_id: string} | null;
 
     let newSequence = 1;
     if (lastInChapter?.display_id) {

@@ -88,8 +88,8 @@ export default function FlagsDashboard() {
       } else {
         setError(data.error ?? 'Failed to load');
       }
-    } catch (e: any) {
-      setError(e.message ?? 'Network error');
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Network error');
     } finally {
       setLoading(false);
     }
@@ -122,11 +122,12 @@ export default function FlagsDashboard() {
       if (res.ok) {
         setQuestions(prev => prev.map(q => {
           if (q._id !== questionId) return q;
-          const newFlags = q.flags.map(f =>
-            (f as any).originalIdx === flagIdx
+          const newFlags = q.flags.map(f => {
+            const fWithIdx = f as QuestionFlag & { originalIdx?: number };
+            return fWithIdx.originalIdx === flagIdx
               ? { ...f, resolved: true, resolved_at: new Date().toISOString() }
-              : f
-          );
+              : f;
+          });
           return { ...q, flags: newFlags };
         }));
       }
@@ -201,6 +202,8 @@ export default function FlagsDashboard() {
         {!loading && !error && visible.map(q => {
           const isExpanded = expanded[q._id] ?? false;
           const snippet = q.question_text.markdown.replace(/!\[[^\]]*\]\([^)]+\)/g, '[img]').slice(0, 120);
+          type FlagWithIdx = FlaggedQuestion['flags'][0] & { unresolvedCount?: number };
+          const qWithUnresolved = q as FlaggedQuestion & { unresolvedCount: number };
 
           return (
             <div
@@ -214,7 +217,7 @@ export default function FlagsDashboard() {
               >
                 {/* Flag count badge */}
                 <div className={`shrink-0 mt-0.5 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${
-                  q.unresolvedCount > 0
+                  qWithUnresolved.unresolvedCount > 0
                     ? 'bg-red-500/20 text-red-400 border border-red-500/30'
                     : 'bg-gray-700/40 text-gray-500 border border-gray-700/40'
                 }`}>
@@ -225,9 +228,9 @@ export default function FlagsDashboard() {
                   <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                     <span className="text-xs font-bold text-purple-400 font-mono">{q.display_id}</span>
                     <span className="text-[10px] text-gray-500">{q.metadata.subject} · {q.metadata.chapter_id}</span>
-                    {q.unresolvedCount > 0 && (
+                    {qWithUnresolved.unresolvedCount > 0 && (
                       <span className="text-[10px] font-bold text-red-400 bg-red-500/10 px-1.5 py-0.5 rounded border border-red-500/20">
-                        {q.unresolvedCount} unresolved
+                        {qWithUnresolved.unresolvedCount} unresolved
                       </span>
                     )}
                   </div>
@@ -256,7 +259,8 @@ export default function FlagsDashboard() {
                     // i is the local index within the already-filtered student flags array.
                     // The PATCH endpoint needs the index in the original DB flags array,
                     // which we store as originalIdx on each flag during load (see loadFlagged).
-                    const dbIdx = (f as any).originalIdx ?? i;
+                    const fWithIdx = f as QuestionFlag & { originalIdx?: number };
+                    const dbIdx = fWithIdx.originalIdx ?? i;
                     return (
                     <div key={i} className={`px-3 py-2.5 flex items-start gap-3 ${f.resolved ? 'opacity-40' : ''}`}>
                       <div

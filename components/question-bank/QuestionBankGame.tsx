@@ -11,7 +11,7 @@ interface Question {
     difficulty?: string;
     examSource?: string;
     isTopPYQ?: boolean;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 import QuestionCard from '@/components/question-bank/QuestionCard';
 import FeedbackOverlay from '@/components/question-bank/FeedbackOverlay';
@@ -394,7 +394,7 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
             filteredQuestions.forEach((q, idx) => {
                 const answer = examAnswers[idx];
                 if (answer) {
-                    const isCorrect = q.options.find((o: any) => o.id === answer)?.isCorrect;
+                    const isCorrect = q.options.find((o: {id: string; isCorrect?: boolean}) => o.id === answer)?.isCorrect;
                     recordAttempt(q.id, q.chapterId || 'Unknown', q.difficulty || 'Medium', !!isCorrect);
 
                     // Log to backend API for 4-Bucket Architecture (exam mode)
@@ -535,7 +535,7 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
             const answer = examAnswers[idx];
             if (!answer) skippedCount++;
             else {
-                const correct = q.options.find((o: any) => o.id === answer)?.isCorrect;
+                const correct = q.options.find((o: {id: string; isCorrect?: boolean}) => o.id === answer)?.isCorrect;
                 if (correct) solvedCount++;
                 else incorrectCount++;
             }
@@ -818,7 +818,7 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
                                         <span className="text-sm font-bold text-slate-300">Question {currentIndex + 1}</span>
                                         {/* Source/Year Tags */}
                                         <div className="flex flex-wrap gap-1.5">
-                                            {filteredQuestions[currentIndex].sourceReferences?.map((ref: any, i: number) => (
+                                            {filteredQuestions[currentIndex].sourceReferences?.map((ref: {type?: string; pyqExam?: string; pyqShift?: string; ncertBook?: string; ncertChapter?: string; sourceName?: string}, i: number) => (
                                                 <span key={i} className="text-[9px] font-bold uppercase tracking-wider text-slate-500 bg-white/5 px-1.5 py-0.5 rounded border border-white/5 whitespace-nowrap">
                                                     {ref.type === 'PYQ' ? `${ref.pyqExam || ''} ${ref.pyqShift || ''}`.trim() || 'PYQ' :
                                                         ref.type === 'NCERT' ? `${ref.ncertBook || ''} ${ref.ncertChapter || ''}`.trim() || 'NCERT' :

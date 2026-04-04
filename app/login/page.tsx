@@ -81,19 +81,20 @@ function LoginContent() {
             }
             
             setFailureCount(0)
-        } catch (error: any) {
-            console.error('Auth error:', error)
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : String(error)
+            console.error('Auth error:', errorMessage)
             setIsLoading(false)
             const newCount = failureCount + 1
             setFailureCount(newCount)
-            
+
             if (newCount >= 2) {
                 setShowDnsBanner(true)
             }
-            
-            setMessage({ 
-                text: 'Connection failed. Please check your internet connection.', 
-                type: 'error' 
+
+            setMessage({
+                text: 'Connection failed. Please check your internet connection.',
+                type: 'error'
             })
         }
     }

@@ -72,7 +72,7 @@ async function main() {
       console.log(`    ✓ Updated ${result.modifiedCount} document(s).`);
     } else {
       docs.slice(0, 5).forEach(d =>
-        console.log(`    [preview] ${(d as any).display_id} — current difficultyLevel: ${(d as any).metadata?.difficultyLevel} → ${diffLevel}`)
+        console.log(`    [preview] ${(d as Record<string, unknown>).display_id} — current difficultyLevel: ${((d as Record<string, unknown>).metadata as Record<string, unknown>)?.difficultyLevel} → ${diffLevel}`)
       );
       if (docs.length > 5) console.log(`    ... and ${docs.length - 5} more.`);
     }
@@ -102,7 +102,7 @@ async function main() {
       console.log(`    ✓ Defaulted ${result.modifiedCount} document(s) to Level 3 (Medium).`);
     } else {
       missingDocs.slice(0, 5).forEach(d =>
-        console.log(`    [preview] ${(d as any).display_id} — no difficultyLevel → 3`)
+        console.log(`    [preview] ${(d as Record<string, unknown>).display_id} — no difficultyLevel → 3`)
       );
       if (missingDocs.length > 5) console.log(`    ... and ${missingDocs.length - 5} more.`);
     }

@@ -102,7 +102,7 @@ export const useChemiHexLogic = () => {
                 id: `node_${Date.now()}`,
                 name: result.outputName || 'Product',
                 smiles: result.outputSmiles || 'C',
-                type: result.outputType as any,
+                type: (result.outputType || 'alkane') as keyof typeof PRODUCT_MAP,
                 q: newQ,
                 r: newR
             };

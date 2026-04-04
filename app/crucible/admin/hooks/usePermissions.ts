@@ -56,10 +56,10 @@ export function usePermissions() {
         throw new Error('Failed to fetch permissions');
       }
       
-      const data = await response.json();
+      const data = await response.json() as UserPermissions;
       setPermissions(data);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Unknown error');
       // Default to no permissions on error
       setPermissions({
         email: '',

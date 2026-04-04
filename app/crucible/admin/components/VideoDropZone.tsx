@@ -76,10 +76,10 @@ export default function VideoDropZone({ questionId, onUploaded, context }: Video
 
             // Reset to idle after 4s so zone is reusable
             setTimeout(() => setState('idle'), 4000);
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Video upload error:', err);
             setState('error');
-            setErrorMsg(err.message || 'Upload failed');
+            setErrorMsg(err instanceof Error ? err.message : 'Upload failed');
             setTimeout(() => setState('idle'), 4000);
         }
     }, [questionId, onUploaded]);

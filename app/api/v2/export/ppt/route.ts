@@ -75,10 +75,15 @@ export async function POST(request: NextRequest) {
 
     const pptx = new PptxGenJS();
     pptx.layout = 'LAYOUT_WIDE';
-    const shapeMap: Record<PptShapeType, any> = {
-      rect: (pptx as any).ShapeType.rect,
-      line: (pptx as any).ShapeType.line,
-      roundRect: (pptx as any).ShapeType.roundRect,
+    interface ShapeTypeMap {
+      rect: unknown;
+      line: unknown;
+      roundRect: unknown;
+    }
+    const shapeMap: ShapeTypeMap = {
+      rect: (pptx as unknown & { ShapeType: Record<string, unknown> }).ShapeType.rect,
+      line: (pptx as unknown & { ShapeType: Record<string, unknown> }).ShapeType.line,
+      roundRect: (pptx as unknown & { ShapeType: Record<string, unknown> }).ShapeType.roundRect,
     };
 
     for (const s of slides) {
@@ -98,7 +103,22 @@ export async function POST(request: NextRequest) {
       }
 
       for (const t of s.texts || []) {
-        const textOptions: any = {
+        interface TextOptions {
+          x: number;
+          y: number;
+          w: number;
+          h: number;
+          fontSize?: number;
+          bold?: boolean;
+          color?: string;
+          fontFace?: string;
+          align?: string;
+          valign?: string;
+          shape?: unknown;
+          fill?: Record<string, unknown>;
+          rectRadius?: number;
+        }
+        const textOptions: TextOptions = {
           x: t.x,
           y: t.y,
           w: t.w,
@@ -113,7 +133,7 @@ export async function POST(request: NextRequest) {
           fill: t.fillColor ? { color: t.fillColor } : undefined,
           rectRadius: t.rectRadius,
         };
-        slide.addText(t.text as any, textOptions);
+        slide.addText(t.text as unknown, textOptions);
       }
 
       for (const img of s.images || []) {

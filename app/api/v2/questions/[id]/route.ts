@@ -42,7 +42,8 @@ export async function GET(
     
     // Strip solution for unauthenticated requests
     const user = await getAuthenticatedUser(request);
-    const responseData = user ? question : (() => { const { solution, ...rest } = question as any; return rest; })();
+    const questionObj = question as Record<string, unknown>;
+    const responseData = user ? question : (() => { const { solution: _, ...rest } = questionObj; return rest; })();
 
     return NextResponse.json({
       success: true,
@@ -102,12 +103,17 @@ export async function PATCH(
     
     // Convert Mongoose document to plain object to avoid internal properties corrupting $set
     const existing = existingQuestion.toObject();
-    
+
+    interface Change {
+      field: string;
+      old_value: unknown;
+      new_value: unknown;
+    }
     // Track changes for audit log
-    const changes: any[] = [];
-    
+    const changes: Change[] = [];
+
     // Update fields
-    const updates: any = {
+    const updates: Record<string, unknown> = {
       updated_at: new Date(),
       updated_by: 'admin'
     };
@@ -199,11 +205,19 @@ export async function PATCH(
 
     if (body.resolve_flags !== undefined) {
       // Mark all flags resolved
-      updates.flags = (existing.flags ?? []).map((f: any) => ({
-        ...f,
-        resolved: true,
-        resolved_at: new Date(),
-      }));
+      interface Flag {
+        resolved?: boolean;
+        resolved_at?: Date;
+        [key: string]: unknown;
+      }
+      updates.flags = (existing.flags ?? []).map((f: unknown) => {
+        const flag = f as Flag;
+        return {
+          ...flag,
+          resolved: true,
+          resolved_at: new Date(),
+        };
+      });
       changes.push({ field: 'flags', old_value: 'flagged', new_value: 'resolved' });
     }
 
@@ -224,7 +238,7 @@ export async function PATCH(
       try {
         const oldStatus = existing.status;
         const newStatus = body.status;
-        const statsUpdate: any = {};
+        const statsUpdate: Record<string, number> = {};
         if (oldStatus === 'draft') statsUpdate['stats.draft_questions'] = -1;
         if (oldStatus === 'published') statsUpdate['stats.published_questions'] = -1;
         if (newStatus === 'draft') statsUpdate['stats.draft_questions'] = 1;
@@ -234,24 +248,24 @@ export async function PATCH(
         // Chapter may not exist in MongoDB — safe to ignore
       }
     }
-    
+
     // Increment version
-    updates.version = existing.version + 1;
-    
+    updates.version = (existing.version as number) + 1;
+
     // Update question — no runValidators to avoid rejecting docs with stale enum values
     const updatedQuestion = await QuestionV2.findByIdAndUpdate(
       id,
       { $set: updates },
       { new: true }
     );
-    
+
     if (!updatedQuestion) {
       return NextResponse.json(
         { success: false, error: 'Update failed - question not found' },
         { status: 404 }
       );
     }
-    
+
     // Create audit log
     if (changes.length > 0) {
       const auditLog = new AuditLog({
@@ -266,20 +280,21 @@ export async function PATCH(
         can_rollback: true,
         rollback_data: existingQuestion.toObject()
       });
-      
+
       await auditLog.save();
     }
-    
+
     return NextResponse.json({
       success: true,
       data: updatedQuestion,
       message: 'Question updated successfully'
     });
-    
-  } catch (error: any) {
+
+  } catch (error: unknown) {
     console.error('Error updating question:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { success: false, error: 'Failed to update question', details: error?.message },
+      { success: false, error: 'Failed to update question', details: errorMessage },
       { status: 500 }
     );
   }
@@ -334,14 +349,14 @@ export async function DELETE(
 
     // Update chapter stats (optional - don't fail delete if chapter doesn't exist in MongoDB)
     try {
-      const statsUpdate: any = { 'stats.total_questions': -1 };
+      const statsUpdate: Record<string, number> = { 'stats.total_questions': -1 };
       if (question.status === 'draft') statsUpdate['stats.draft_questions'] = -1;
       if (question.status === 'published') statsUpdate['stats.published_questions'] = -1;
       await Chapter.findByIdAndUpdate(question.metadata.chapter_id, { $inc: statsUpdate });
     } catch (chapterError) {
       // Chapter may not exist in MongoDB (taxonomy is code-based) — safe to ignore
     }
-    
+
     // Create audit log (optional - don't fail delete if audit log fails)
     try {
       const auditLog = new AuditLog({
@@ -360,20 +375,22 @@ export async function DELETE(
     } catch (auditError) {
       console.warn('Audit log failed (non-fatal):', auditError);
     }
-    
+
     return NextResponse.json({
       success: true,
       message: 'Question deleted successfully'
     });
-    
-  } catch (error: any) {
-    console.error('Error deleting question:', error?.message ?? error);
-    console.error('Stack:', error?.stack);
+
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : '';
+    console.error('Error deleting question:', errorMessage);
+    console.error('Stack:', errorStack);
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: 'Failed to delete question',
-        ...(process.env.NODE_ENV === 'development' && { detail: error?.message ?? String(error) })
+        ...(process.env.NODE_ENV === 'development' && { detail: errorMessage })
       },
       { status: 500 }
     );

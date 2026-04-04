@@ -10,14 +10,14 @@ interface Question {
     difficulty?: string;
     examSource?: string;
     isTopPYQ?: boolean;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 interface TaxonomyNode {
     id: string;
     name: string;
     type: string;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 interface CrucibleClientWrapperProps {

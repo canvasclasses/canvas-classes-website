@@ -154,7 +154,13 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
   );
 }
 
-function NavDropdown({ label, links, active, onMouseEnter, onMouseLeave }: { label: string, links: any[], active: boolean, onMouseEnter: () => void, onMouseLeave: () => void }) {
+interface NavLink {
+  label: string;
+  href: string;
+  external: boolean;
+}
+
+function NavDropdown({ label, links, active, onMouseEnter, onMouseLeave }: { label: string, links: NavLink[], active: boolean, onMouseEnter: () => void, onMouseLeave: () => void }) {
   return (
     <div className="relative" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <button className={`flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-full transition-all ${active ? 'text-white bg-white/[0.08]' : 'text-zinc-400 hover:text-white hover:bg-white/[0.04]'}`}>
@@ -200,7 +206,7 @@ function NavLink({ href, label, className = "" }: { href: string, label: string,
   );
 }
 
-function MobileDropdown({ label, links, onLinkClick }: { label: string, links: any[], onLinkClick: () => void }) {
+function MobileDropdown({ label, links, onLinkClick }: { label: string, links: NavLink[], onLinkClick: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

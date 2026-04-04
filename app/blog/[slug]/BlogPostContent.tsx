@@ -12,32 +12,42 @@ export default function BlogPostContent({ content }: { content: string }) {
     const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
     // Custom Rehype Plugin to group consecutive images into a single paragraph
-    const rehypeImageGrouper = () => {
-        return (tree: any) => {
-            const newChildren: any[] = [];
-            let bufferedImages: any[] = [];
+    interface HastNode {
+        tagName?: string;
+        type: string;
+        value?: string;
+        children?: HastNode[];
+    }
 
-            const isImageNode = (node: any) => node.tagName === 'img';
-            const isWhitespace = (node: any) => node.type === 'text' && !node.value.trim();
-            const isImageParagraph = (node: any) => {
+    interface HastTree {
+        children: HastNode[];
+    }
+
+    const rehypeImageGrouper = () => {
+        return (tree: HastTree) => {
+            const newChildren: HastNode[] = [];
+            let bufferedImages: HastNode[] = [];
+
+            const isImageNode = (node: HastNode) => node.tagName === 'img';
+            const isWhitespace = (node: HastNode) => node.type === 'text' && !node.value?.trim();
+            const isImageParagraph = (node: HastNode) => {
                 if (node.tagName !== 'p') return false;
                 if (!node.children) return false;
-                const meaningfulChildren = node.children.filter((child: any) => !isWhitespace(child));
+                const meaningfulChildren = node.children.filter((child: HastNode) => !isWhitespace(child));
                 return meaningfulChildren.length > 0 && meaningfulChildren.every(isImageNode);
             };
 
-            tree.children.forEach((child: any) => {
+            tree.children.forEach((child: HastNode) => {
                 if (isImageParagraph(child)) {
-                    const images = child.children.filter(isImageNode);
+                    const images = child.children?.filter(isImageNode) ?? [];
                     bufferedImages.push(...images);
                 } else {
                     if (bufferedImages.length > 0) {
                         newChildren.push({
                             type: 'element',
                             tagName: 'p',
-                            properties: {},
                             children: [...bufferedImages]
-                        });
+                        } as HastNode);
                         bufferedImages = [];
                     }
                     newChildren.push(child);
@@ -48,18 +58,29 @@ export default function BlogPostContent({ content }: { content: string }) {
                 newChildren.push({
                     type: 'element',
                     tagName: 'p',
-                    properties: {},
                     children: [...bufferedImages]
-                });
+                } as HastNode);
             }
             tree.children = newChildren;
         };
     };
 
+    interface MarkdownPProps {
+        node?: HastNode;
+        children?: React.ReactNode;
+        [key: string]: unknown;
+    }
+
+    interface MarkdownImgProps {
+        src?: string;
+        alt?: string;
+        className?: string;
+    }
+
     const markdownComponents = {
-        p: ({ node, children, ...props }: any) => {
+        p: ({ node, children, ...props }: MarkdownPProps) => {
             const textContent = typeof children === 'string' ? children :
-                (Array.isArray(children) ? children.map((c: any) => typeof c === 'string' ? c : '').join('') : '');
+                (Array.isArray(children) ? children.map((c: React.ReactNode) => typeof c === 'string' ? c : '').join('') : '');
 
             // 1. Heading Detection
             if (textContent.trim().endsWith(':') && textContent.length < 80) {
@@ -71,10 +92,10 @@ export default function BlogPostContent({ content }: { content: string }) {
             }
 
             // 2. Image Gallery Detection
-            const hasImages = node?.children?.some((child: any) => child.tagName === 'img');
+            const hasImages = node?.children?.some((child: HastNode) => child.tagName === 'img');
             if (hasImages) {
-                const nonImageChildren = node?.children?.filter((child: any) =>
-                    !(child.tagName === 'img' || (child.type === 'text' && !child.value.trim()))
+                const nonImageChildren = node?.children?.filter((child: HastNode) =>
+                    !(child.tagName === 'img' || (child.type === 'text' && !child.value?.trim()))
                 );
 
                 if (!nonImageChildren || nonImageChildren.length === 0) {
@@ -84,8 +105,8 @@ export default function BlogPostContent({ content }: { content: string }) {
                     if (validChildren.length > 1) {
                         return (
                             <div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl mx-auto" {...props}>
-                                {React.Children.map(validChildren, (child: any) =>
-                                    React.cloneElement(child, { className: 'w-full h-full' })
+                                {React.Children.map(validChildren, (child) =>
+                                    React.isValidElement(child) ? React.cloneElement(child, { className: 'w-full h-full' }) : child
                                 )}
                             </div>
                         );
@@ -95,7 +116,7 @@ export default function BlogPostContent({ content }: { content: string }) {
             }
             return <p className="mb-6 text-gray-400 leading-8 text-lg" {...props}>{children}</p>;
         },
-        img: ({ src, alt, className }: any) => (
+        img: ({ src, alt, className }: MarkdownImgProps) => (
             <div
                 className={`rounded-xl overflow-hidden border border-gray-800 shadow-lg bg-gray-900 cursor-pointer group relative ${className || 'max-w-2xl w-full mx-auto my-10'}`}
                 onClick={() => setLightboxImage(src)}
@@ -113,23 +134,23 @@ export default function BlogPostContent({ content }: { content: string }) {
                 )}
             </div>
         ),
-        h1: ({ children }: any) => <h1 className="text-4xl font-extrabold text-gray-100 mt-12 mb-8 pb-3 border-b border-gray-800/60">{children}</h1>,
-        h2: ({ children }: any) => <h2 className="text-3xl font-bold text-gray-100 mt-12 mb-6">{children}</h2>,
-        h3: ({ children }: any) => <h3 className="text-2xl font-bold text-gray-100 mt-10 mb-4">{children}</h3>,
-        ul: ({ children }: any) => <ul className="space-y-4 mb-8 ml-1">{children}</ul>,
-        ol: ({ children }: any) => <ol className="list-decimal list-outside ml-6 space-y-4 mb-8 text-gray-400 marker:text-purple-500 marker:font-bold">{children}</ol>,
-        li: ({ children }: any) => (
+        h1: ({ children }: { children?: React.ReactNode }) => <h1 className="text-4xl font-extrabold text-gray-100 mt-12 mb-8 pb-3 border-b border-gray-800/60">{children}</h1>,
+        h2: ({ children }: { children?: React.ReactNode }) => <h2 className="text-3xl font-bold text-gray-100 mt-12 mb-6">{children}</h2>,
+        h3: ({ children }: { children?: React.ReactNode }) => <h3 className="text-2xl font-bold text-gray-100 mt-10 mb-4">{children}</h3>,
+        ul: ({ children }: { children?: React.ReactNode }) => <ul className="space-y-4 mb-8 ml-1">{children}</ul>,
+        ol: ({ children }: { children?: React.ReactNode }) => <ol className="list-decimal list-outside ml-6 space-y-4 mb-8 text-gray-400 marker:text-purple-500 marker:font-bold">{children}</ol>,
+        li: ({ children }: { children?: React.ReactNode }) => (
             <li className="flex items-start gap-3 text-gray-400 text-lg">
                 <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0" />
                 <span className="leading-relaxed">{children}</span>
             </li>
         ),
-        blockquote: ({ children }: any) => (
+        blockquote: ({ children }: { children?: React.ReactNode }) => (
             <blockquote className="border-l-4 border-purple-500 pl-6 py-5 my-10 bg-purple-500/5 rounded-r-2xl italic text-gray-400 text-lg leading-relaxed">
                 {children}
             </blockquote>
         ),
-        code: ({ children, inline }: any) => {
+        code: ({ children, inline }: { children?: React.ReactNode; inline?: boolean }) => {
             if (inline) {
                 return <code className="bg-gray-800 text-purple-300 px-1.5 py-0.5 rounded text-sm font-mono border border-gray-700">{children}</code>;
             }
@@ -143,7 +164,7 @@ export default function BlogPostContent({ content }: { content: string }) {
                 <ReactMarkdown
                     remarkPlugins={[remarkMath]}
                     rehypePlugins={[rehypeKatex, rehypeRaw, rehypeImageGrouper]}
-                    components={markdownComponents as any}
+                    components={markdownComponents}
                 >
                     {content}
                 </ReactMarkdown>

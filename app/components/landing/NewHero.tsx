@@ -101,7 +101,7 @@ const ELEMENTS = [
     { n: 19, s: 'K', c: 1, r: 4 }, { n: 20, s: 'Ca', c: 2, r: 4 }, { n: 21, s: 'Sc', c: 3, r: 4 }, { n: 22, s: 'Ti', c: 4, r: 4 }, { n: 23, s: 'V', c: 5, r: 4 }, { n: 24, s: 'Cr', c: 6, r: 4 }, { n: 25, s: 'Mn', c: 7, r: 4 }, { n: 26, s: 'Fe', c: 8, r: 4 }, { n: 27, s: 'Co', c: 9, r: 4 }, { n: 28, s: 'Ni', c: 10, r: 4 }, { n: 29, s: 'Cu', c: 11, r: 4 }, { n: 30, s: 'Zn', c: 12, r: 4 }, { n: 31, s: 'Ga', c: 13, r: 4 }, { n: 32, s: 'Ge', c: 14, r: 4 }, { n: 33, s: 'As', c: 15, r: 4 }, { n: 34, s: 'Se', c: 16, r: 4 }, { n: 35, s: 'Br', c: 17, r: 4 }, { n: 36, s: 'Kr', c: 18, r: 4 }
 ];
 
-function ElementTile({ data, scrollY }: { data: typeof ELEMENTS[0], scrollY: any }) {
+function ElementTile({ data, scrollY }: { data: typeof ELEMENTS[0], scrollY: ReturnType<typeof useScroll>['scrollY'] }) {
     // Generate random diffusion factors once
     const { x, y, r, d } = useMemo(() => ({
         x: (Math.random() - 0.5) * 150,     // Random horizontal scatter

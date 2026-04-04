@@ -186,8 +186,9 @@ export async function POST(request: NextRequest) {
     const existingAsset = await Asset.findOne({ 'file.checksum': checksum });
     if (existingAsset && questionId) {
       // File already exists, just add reference to this question
-      if (!existingAsset.used_in.questions.includes(questionId)) {
-        existingAsset.used_in.questions.push(questionId);
+      const questions = Array.isArray(existingAsset.used_in.questions) ? existingAsset.used_in.questions : [];
+      if (!questions.includes(questionId)) {
+        questions.push(questionId);
         await existingAsset.save();
       }
       
@@ -323,7 +324,7 @@ export async function GET(request: NextRequest) {
     const questionId = searchParams.get('question_id');
     const type = searchParams.get('type');
     
-    const query: any = { deleted_at: null };
+    const query: Record<string, unknown> = { deleted_at: null };
     if (questionId) query['used_in.questions'] = questionId;
     if (type) query.type = type;
     

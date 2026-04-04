@@ -53,8 +53,8 @@ export default async function DashboardPage() {
 
   // For local dev without user, show empty state
   const userId = user?.id || 'local-dev';
-  let testResults: any[] = [];
-  
+  let testResults: ReturnType<typeof getTestResults> extends Promise<infer R> ? R : unknown[] = [];
+
   if (user) {
     try {
       testResults = await getTestResults(userId);

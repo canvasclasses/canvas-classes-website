@@ -47,10 +47,14 @@ export async function PATCH(
     const set = await MockTestSet.findOne({ _id: id, deleted_at: { $in: [null, undefined] } });
     if (!set) return NextResponse.json({ success: false, error: 'Set not found' }, { status: 404 });
 
-    const qIndex = set.questions.findIndex((q: any) => q._id === qid);
+    interface MockQuestion {
+      _id: string;
+      [key: string]: unknown;
+    }
+    const qIndex = set.questions.findIndex((q: MockQuestion) => q._id === qid);
     if (qIndex === -1) return NextResponse.json({ success: false, error: 'Question not found' }, { status: 404 });
 
-    const question = set.questions[qIndex] as any;
+    const question = set.questions[qIndex] as unknown & Record<string, unknown>;
 
     // Merge updates — support full or partial question body
     const updatable = [
@@ -99,15 +103,21 @@ export async function DELETE(
     if (!set) return NextResponse.json({ success: false, error: 'Set not found' }, { status: 404 });
 
     const originalLength = set.questions.length;
-    set.questions = set.questions.filter((q: any) => q._id !== qid) as any;
+    interface MockQuestion {
+      _id: string;
+      question_number?: number;
+      [key: string]: unknown;
+    }
+    set.questions = set.questions.filter((q: MockQuestion) => q._id !== qid) as unknown[];
 
     if (set.questions.length === originalLength) {
       return NextResponse.json({ success: false, error: 'Question not found' }, { status: 404 });
     }
 
     // Re-number remaining questions sequentially
-    set.questions.forEach((q: any, i: number) => {
-      q.question_number = i + 1;
+    set.questions.forEach((q, i: number) => {
+      const question = q as unknown & { question_number?: number };
+      question.question_number = i + 1;
     });
 
     set.markModified('questions');

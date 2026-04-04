@@ -58,7 +58,16 @@ export async function syncProgressWithCloud(
 
         // 2. Merge Data
         const mergedMap: ProgressMap = { ...localData };
-        const updatesToPush: any[] = [];
+        interface UpdateRecord {
+            user_id: string;
+            feature_type: FeatureType;
+            item_id: string;
+            data: CardProgress;
+            mastery_level: string;
+            next_review_at: string | null;
+            updated_at: string;
+        }
+        const updatesToPush: UpdateRecord[] = [];
 
         // Process cloud items -> Local
         Object.entries(cloudMap).forEach(([itemId, cloudProgress]) => {
@@ -120,8 +129,9 @@ export async function syncProgressWithCloud(
 
         return mergedMap;
 
-    } catch (err) {
-        console.error('Unexpected error during sync:', err);
+    } catch (err: unknown) {
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        console.error('Unexpected error during sync:', errorMessage);
         return localData;
     }
 }

@@ -32,9 +32,9 @@ export default function SmartUploader({
                 const result = await uploadAsset(file, bucket, questionId);
                 onUploadComplete(result.url, result.originalName);
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error("Upload failed:", err);
-            setError(err.message || 'Upload failed');
+            setError(err instanceof Error ? err.message : 'Upload failed');
         } finally {
             setUploading(false);
         }

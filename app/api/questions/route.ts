@@ -40,19 +40,27 @@ export async function GET(request: NextRequest) {
                 let questions = JSON.parse(rawData);
 
                 // Apply filters
+                interface QuestionRecord {
+                  chapter_id?: string;
+                  chapterId?: string;
+                  meta?: { difficulty?: string };
+                  difficulty?: string;
+                  tags?: Array<{ tag_id?: string }>;
+                  tagId?: string;
+                }
                 if (chapter) {
-                    questions = questions.filter((q: any) =>
+                    questions = questions.filter((q: QuestionRecord) =>
                         q.chapter_id === chapter || q.chapterId === chapter
                     );
                 }
                 if (difficulty) {
-                    questions = questions.filter((q: any) =>
+                    questions = questions.filter((q: QuestionRecord) =>
                         q.meta?.difficulty === difficulty || q.difficulty === difficulty
                     );
                 }
                 if (tagId) {
-                    questions = questions.filter((q: any) =>
-                        q.tags?.some((t: any) => t.tag_id === tagId) || q.tagId === tagId
+                    questions = questions.filter((q: QuestionRecord) =>
+                        q.tags?.some((t: { tag_id?: string }) => t.tag_id === tagId) || q.tagId === tagId
                     );
                 }
 
@@ -75,7 +83,7 @@ export async function GET(request: NextRequest) {
         }
 
         // Build MongoDB query
-        const query: any = {};
+        const query: Record<string, unknown> = {};
         if (chapter) query.chapter_id = chapter;
         if (difficulty) query['meta.difficulty'] = difficulty;
         if (tagId) query['tags.tag_id'] = tagId;
@@ -131,7 +139,21 @@ export async function POST(request: NextRequest) {
 
         // Handle seed operation
         if (body.action === 'seed') {
-            let seedData: any[];
+            interface SeedQuestion {
+              _id: string;
+              text_markdown: string;
+              type: string;
+              options: unknown;
+              integer_answer: unknown;
+              tags: Array<{ tag_id: string; weight: number }>;
+              meta: Record<string, unknown>;
+              chapter_id: unknown;
+              is_pyq: boolean;
+              is_top_pyq: boolean;
+              solution: Record<string, unknown>;
+              trap: unknown;
+            }
+            let seedData: SeedQuestion[];
 
             try {
                 // Try migrated format first
@@ -140,10 +162,25 @@ export async function POST(request: NextRequest) {
             } catch {
                 // Fallback to legacy format and transform
                 const rawData = await fs.readFile(QUESTIONS_LEGACY_PATH, 'utf-8');
-                const legacyQuestions = JSON.parse(rawData);
+                interface LegacyQuestion {
+                  id: string;
+                  textMarkdown: string;
+                  type?: string;
+                  options: unknown;
+                  integerAnswer?: unknown;
+                  tagId?: string;
+                  chapterId?: string;
+                  isPYQ?: boolean;
+                  isTopPYQ?: boolean;
+                  solution?: Record<string, unknown>;
+                  trap?: unknown;
+                  examSource?: string;
+                  difficulty?: string;
+                }
+                const legacyQuestions: LegacyQuestion[] = JSON.parse(rawData);
 
                 // Transform to new schema
-                seedData = legacyQuestions.map((q: any) => ({
+                seedData = legacyQuestions.map((q: LegacyQuestion): SeedQuestion => ({
                     _id: q.id,
                     text_markdown: q.textMarkdown,
                     type: q.type || 'MCQ',

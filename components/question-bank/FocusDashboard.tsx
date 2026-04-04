@@ -13,14 +13,14 @@ interface Question {
     difficulty?: string;
     examSource?: string;
     isTopPYQ?: boolean;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 interface TaxonomyNode {
     id: string;
     name: string;
     type: string;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 import { DAILY_QUOTES } from './quotes';
 
@@ -114,7 +114,7 @@ const CHAPTER_MAPPINGS: Record<string, string[]> = {
 interface FocusDashboardProps {
     initialQuestions: Question[];
     taxonomy?: TaxonomyNode[];
-    onStart: (config: any) => void;
+    onStart: (config: {chapters: string[]; difficulty: string; questionCount: number; mode: string; questionType: string}) => void;
 }
 
 export default function FocusDashboard({ initialQuestions, taxonomy = [], onStart }: FocusDashboardProps) {
@@ -173,7 +173,7 @@ export default function FocusDashboard({ initialQuestions, taxonomy = [], onStar
             if (taxonomy && taxonomy.length > 0) {
                 const taxNode = taxonomy.find(t => t.name === displayName && t.type === 'chapter');
                 if (taxNode) {
-                    matches.add(taxNode.id || (taxNode as any)._id);
+                    matches.add(taxNode.id || (taxNode as unknown as {_id?: string})._id || '');
                 }
             }
 
@@ -303,7 +303,7 @@ export default function FocusDashboard({ initialQuestions, taxonomy = [], onStar
                         return (
                             <button
                                 key={opt.id}
-                                onClick={() => setSelectionTier(opt.id as any)}
+                                onClick={() => setSelectionTier(opt.id as unknown as typeof selectionTier)}
                                 className={`flex flex-col gap-0.5 md:gap-1 p-2.5 rounded-lg border text-left transition-all ${isActive ? 'bg-purple-900/20 border-purple-500/50' : 'bg-gray-900 border-gray-800 hover:border-gray-600'}`}
                             >
                                 <div className="flex justify-between items-start mb-0.5">
@@ -328,7 +328,7 @@ export default function FocusDashboard({ initialQuestions, taxonomy = [], onStar
                     {[{ id: 'Mix', label: 'Mix' }, { id: 'Easy', label: 'Easy' }, { id: 'Medium', label: 'Med' }, { id: 'Hard', label: 'Hard' }].map(opt => (
                         <button
                             key={opt.id}
-                            onClick={() => setDifficulty(opt.id as any)}
+                            onClick={() => setDifficulty(opt.id as 'Mix' | 'Easy' | 'Medium' | 'Hard')}
                             className={`py-2 rounded-md text-xs font-semibold transition-all ${difficulty === opt.id ? 'bg-gray-800 text-white shadow-sm border border-gray-700' : 'text-gray-500 hover:text-gray-300'}`}
                         >
                             {opt.label}
@@ -349,7 +349,7 @@ export default function FocusDashboard({ initialQuestions, taxonomy = [], onStar
                         return (
                             <button
                                 key={type.id}
-                                onClick={() => setQuestionType(type.id as any)}
+                                onClick={() => setQuestionType(type.id as unknown as typeof questionType)}
                                 className={`px-3 py-1.5 rounded-md text-xs font-semibold border transition-all ${isActive ? 'bg-emerald-900/20 border-emerald-500/50 text-emerald-100' : 'bg-gray-900 border-gray-800 text-gray-500 hover:border-gray-600'}`}
                             >
                                 {type.label}
@@ -393,10 +393,10 @@ export default function FocusDashboard({ initialQuestions, taxonomy = [], onStar
                     Simulation Mode
                 </label>
                 <div className="grid grid-cols-2 gap-3">
-                    {['practice', 'exam'].map(mode => (
+                    {(['practice', 'exam'] as const).map(mode => (
                         <button
                             key={mode}
-                            onClick={() => setTimerMode(mode as any)}
+                            onClick={() => setTimerMode(mode)}
                             className={`py-3 px-4 rounded-xl border transition-all flex items-center justify-center gap-2 ${timerMode === mode ? (mode === 'practice' ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-red-600 border-red-500 text-white') : 'bg-gray-900 border-gray-800 text-gray-500 hover:bg-gray-800'}`}
                         >
                             {mode === 'practice' ? <BookOpen size={16} /> : <Clock size={16} />}
@@ -518,13 +518,13 @@ export default function FocusDashboard({ initialQuestions, taxonomy = [], onStar
                     </div>
 
                     <div className="hidden lg:flex px-6 md:px-10 border-b border-gray-800 bg-[#0B0F15] items-center gap-8 overflow-x-auto custom-scrollbar">
-                        {[{ id: 'chapter', label: 'Chapters', icon: LayoutGrid }, { id: 'pyq', label: 'Previous Papers', icon: FileText }, { id: 'saved', label: 'Saved', icon: Bookmark }].map(tab => {
+                        {[{ id: 'chapter' as const, label: 'Chapters', icon: LayoutGrid }, { id: 'pyq' as const, label: 'Previous Papers', icon: FileText }, { id: 'saved' as const, label: 'Saved', icon: Bookmark }].map(tab => {
                             const Icon = tab.icon;
                             const isActive = selectedTab === tab.id;
                             return (
                                 <button
                                     key={tab.id}
-                                    onClick={() => { setSelectedTab(tab.id as any); setSelectedItems([]); }}
+                                    onClick={() => { setSelectedTab(tab.id); setSelectedItems([]); }}
                                     className={`relative py-4 text-sm font-medium flex items-center gap-2 transition-colors ${isActive ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
                                 >
                                     <Icon size={16} strokeWidth={2} className={isActive ? 'text-indigo-400' : 'opacity-60'} />
@@ -578,7 +578,7 @@ export default function FocusDashboard({ initialQuestions, taxonomy = [], onStar
                                             <button
                                                 key={tab.id}
                                                 onClick={() => {
-                                                    setSelectedTab(tab.id as any);
+                                                    setSelectedTab(tab.id);
                                                     setSelectedItems([]);
                                                     setIsScopeDropdownOpen(false);
                                                 }}

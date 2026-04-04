@@ -118,11 +118,37 @@ export default function ChapterPage() {
 
     // Markdown Renderers for Custom Summary Layout - Light Theme Design
     // Content Block Types: Numbered Sections, Headings, Bullet Points, Images, Paragraphs, LaTeX
+    interface MarkdownOlProps {
+        children?: React.ReactNode;
+        start?: number;
+        [key: string]: unknown;
+    }
+
+    interface MarkdownLiProps {
+        children?: React.ReactNode;
+        node?: HastNode;
+        'data-is-numbered-section'?: boolean;
+        'data-number'?: number;
+        [key: string]: unknown;
+    }
+
+    interface MarkdownPProps {
+        node?: HastNode;
+        children?: React.ReactNode;
+        [key: string]: unknown;
+    }
+
+    interface MarkdownImgProps {
+        src?: string;
+        alt?: string;
+        className?: string;
+    }
+
     const markdownComponents = {
         // Ordered Lists → Numbered Section Headings with Teal Badges
-        ol: ({ children, start, ...props }: any) => {
+        ol: ({ children, start, ...props }: MarkdownOlProps) => {
             // Get the starting number (defaults to 1)
-            const startNum = start || 1;
+            const startNum = (start as number) || 1;
             // Filter to only valid React elements (skip whitespace text nodes)
             const validChildren = React.Children.toArray(children).filter(
                 (child) => React.isValidElement(child)
@@ -134,7 +160,7 @@ export default function ChapterPage() {
                         if (React.isValidElement(child)) {
                             const currentNumber = startNum + itemIndex;
                             itemIndex++;
-                            return React.cloneElement(child as React.ReactElement<any>, {
+                            return React.cloneElement(child, {
                                 'data-number': currentNumber,
                                 'data-is-numbered-section': true
                             });
@@ -145,9 +171,9 @@ export default function ChapterPage() {
             );
         },
         // List Items - Handle both ordered (numbered badges) and unordered (checkmarks)
-        li: ({ children, node, ...props }: any) => {
-            const isNumberedSection = props['data-is-numbered-section'];
-            const number = props['data-number'];
+        li: ({ children, node, ...props }: MarkdownLiProps) => {
+            const isNumberedSection = (props['data-is-numbered-section'] as boolean | undefined);
+            const number = (props['data-number'] as number | undefined);
 
             if (isNumberedSection && number) {
                 // Numbered Section Heading with Teal Badge
@@ -174,12 +200,12 @@ export default function ChapterPage() {
             );
         },
         // Unordered Lists → Bullet Points with Checkmarks
-        ul: ({ children }: any) => <ul className="space-y-2 mb-4 ml-0">{children}</ul>,
+        ul: ({ children }: { children?: React.ReactNode }) => <ul className="space-y-2 mb-4 ml-0">{children}</ul>,
         // Paragraphs - Smart handling for Headings and Image Layouts
-        p: ({ node, children, ...props }: any) => {
+        p: ({ node, children, ...props }: MarkdownPProps) => {
             // Check for colon-based headings (e.g., "Key Concepts:")
             const textContent = typeof children === 'string' ? children :
-                (Array.isArray(children) ? children.map((c: any) => typeof c === 'string' ? c : '').join('') : '');
+                (Array.isArray(children) ? children.map((c: React.ReactNode) => typeof c === 'string' ? c : '').join('') : '');
 
             // 1. Heading Detection
             if (textContent.trim().endsWith(':') && textContent.length < 80) {
@@ -192,10 +218,10 @@ export default function ChapterPage() {
 
             // 2. Image Gallery Detection
             // Check if paragraph contains only images (ignoring whitespace)
-            const hasImages = node?.children?.some((child: any) => child.tagName === 'img');
+            const hasImages = node?.children?.some((child: HastNode) => child.tagName === 'img');
             if (hasImages) {
-                const nonImageChildren = node?.children?.filter((child: any) =>
-                    !(child.tagName === 'img' || (child.type === 'text' && !child.value.trim()))
+                const nonImageChildren = node?.children?.filter((child: HastNode) =>
+                    !(child.tagName === 'img' || (child.type === 'text' && !child.value?.trim()))
                 );
 
                 if (!nonImageChildren || nonImageChildren.length === 0) {
@@ -208,8 +234,8 @@ export default function ChapterPage() {
                     if (validChildren.length > 1) {
                         return (
                             <div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl mx-auto" {...props}>
-                                {React.Children.map(validChildren, (child: any) =>
-                                    React.cloneElement(child, { className: 'w-full h-full' })
+                                {React.Children.map(validChildren, (child) =>
+                                    React.isValidElement(child) ? React.cloneElement(child, { className: 'w-full h-full' }) : child
                                 )}
                             </div>
                         );
@@ -223,11 +249,11 @@ export default function ChapterPage() {
             return <p className="mb-4 text-gray-700 leading-relaxed text-[15px]" {...props}>{children}</p>;
         },
         // Bold Text
-        strong: ({ children }: any) => <strong className="text-gray-900 font-semibold">{children}</strong>,
+        strong: ({ children }: { children?: React.ReactNode }) => <strong className="text-gray-900 font-semibold">{children}</strong>,
         // Italic Text
-        em: ({ children }: any) => <em className="text-gray-800 italic">{children}</em>,
+        em: ({ children }: { children?: React.ReactNode }) => <em className="text-gray-800 italic">{children}</em>,
         // Images with Captions - Default to "Single Card" style (Constrained & Centered)
-        img: ({ src, alt, className }: any) => (
+        img: ({ src, alt, className }: MarkdownImgProps) => (
             <div
                 className={`rounded-xl overflow-hidden border border-gray-200 shadow-lg bg-white cursor-pointer group relative ${className || 'max-w-2xl w-full mx-auto my-8'}`}
                 onClick={() => setLightboxImage(src)}
@@ -246,18 +272,18 @@ export default function ChapterPage() {
             </div>
         ),
         // Headers (if used directly in markdown)
-        h1: ({ children }: any) => <h1 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{children}</h1>,
-        h2: ({ children }: any) => <h2 className="text-xl font-bold text-gray-900 mt-6 mb-3">{children}</h2>,
-        h3: ({ children }: any) => <h3 className="text-lg font-semibold text-gray-900 mt-5 mb-2">{children}</h3>,
+        h1: ({ children }: { children?: React.ReactNode }) => <h1 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{children}</h1>,
+        h2: ({ children }: { children?: React.ReactNode }) => <h2 className="text-xl font-bold text-gray-900 mt-6 mb-3">{children}</h2>,
+        h3: ({ children }: { children?: React.ReactNode }) => <h3 className="text-lg font-semibold text-gray-900 mt-5 mb-2">{children}</h3>,
         // Code blocks
-        code: ({ children, inline }: any) => {
+        code: ({ children, inline }: { children?: React.ReactNode; inline?: boolean }) => {
             if (inline) {
                 return <code className="bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded text-sm font-mono">{children}</code>;
             }
             return <code className="block bg-gray-100 text-gray-800 p-4 rounded-lg text-sm font-mono overflow-x-auto my-4">{children}</code>;
         },
         // Blockquotes
-        blockquote: ({ children }: any) => (
+        blockquote: ({ children }: { children?: React.ReactNode }) => (
             <blockquote className="border-l-4 border-teal-500 pl-4 py-2 my-4 bg-teal-50 rounded-r-lg italic text-gray-700">
                 {children}
             </blockquote>
@@ -266,27 +292,38 @@ export default function ChapterPage() {
 
     // Custom Rehype Plugin to group consecutive images into a single paragraph
     // This allows images on separate lines to still be rendered in the grid layout
-    const rehypeImageGrouper = () => {
-        return (tree: any) => {
-            const newChildren: any[] = [];
-            let bufferedImages: any[] = [];
+    interface HastNode {
+        tagName?: string;
+        type: string;
+        value?: string;
+        children?: HastNode[];
+    }
 
-            const isImageNode = (node: any) => node.tagName === 'img';
-            const isWhitespace = (node: any) => node.type === 'text' && !node.value.trim();
+    interface HastTree {
+        children: HastNode[];
+    }
+
+    const rehypeImageGrouper = () => {
+        return (tree: HastTree) => {
+            const newChildren: HastNode[] = [];
+            let bufferedImages: HastNode[] = [];
+
+            const isImageNode = (node: HastNode) => node.tagName === 'img';
+            const isWhitespace = (node: HastNode) => node.type === 'text' && !node.value?.trim();
 
             // Helper to check if a paragraph contains ONLY images (and optional whitespace)
-            const isImageParagraph = (node: any) => {
+            const isImageParagraph = (node: HastNode) => {
                 if (node.tagName !== 'p') return false;
                 if (!node.children) return false;
 
-                const meaningfulChildren = node.children.filter((child: any) => !isWhitespace(child));
+                const meaningfulChildren = node.children.filter((child: HastNode) => !isWhitespace(child));
                 return meaningfulChildren.length > 0 && meaningfulChildren.every(isImageNode);
             };
 
-            tree.children.forEach((child: any) => {
+            tree.children.forEach((child: HastNode) => {
                 if (isImageParagraph(child)) {
                     // Extract proper image nodes
-                    const images = child.children.filter(isImageNode);
+                    const images = child.children?.filter(isImageNode) ?? [];
                     bufferedImages.push(...images);
                 } else {
                     // Flush buffer if we hit non-image content
@@ -295,9 +332,8 @@ export default function ChapterPage() {
                         newChildren.push({
                             type: 'element',
                             tagName: 'p',
-                            properties: {},
                             children: [...bufferedImages]
-                        });
+                        } as HastNode);
                         bufferedImages = [];
                     }
                     newChildren.push(child);
@@ -309,9 +345,8 @@ export default function ChapterPage() {
                 newChildren.push({
                     type: 'element',
                     tagName: 'p',
-                    properties: {},
                     children: [...bufferedImages]
-                });
+                } as HastNode);
             }
 
             tree.children = newChildren;

@@ -111,7 +111,7 @@ export async function GET(request: NextRequest) {
         }
 
         return NextResponse.redirect(new URL(next, request.url));
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('❌ [Google Direct] Unexpected error:', error);
         return NextResponse.redirect(
             new URL('/login?error=Authentication failed', request.url)

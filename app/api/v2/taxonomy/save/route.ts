@@ -26,9 +26,18 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const chapters = nodes.filter((n: any) => n.type === 'chapter');
-    const tags = nodes.filter((n: any) => n.type === 'topic');
-    const microTopics = nodes.filter((n: any) => n.type === 'micro_topic');
+    interface TaxonomyNode {
+      id: string;
+      name: string;
+      parent_id: string | null;
+      type: string;
+      sequence_order?: number;
+      class_level?: number;
+      chapterType?: string;
+    }
+    const chapters = nodes.filter((n: TaxonomyNode) => n.type === 'chapter');
+    const tags = nodes.filter((n: TaxonomyNode) => n.type === 'topic');
+    const microTopics = nodes.filter((n: TaxonomyNode) => n.type === 'micro_topic');
 
     // Generate the TypeScript file content
     const lines: string[] = [
@@ -51,21 +60,21 @@ export async function POST(request: NextRequest) {
 
     // Group chapters by class and type for organized output
     const class11 = chapters
-      .filter((c: any) => c.class_level === 11 && !c.id.startsWith('ma_') && !c.id.startsWith('ph'))
-      .sort((a: any, b: any) => (a.sequence_order || 0) - (b.sequence_order || 0));
+      .filter((c: TaxonomyNode) => c.class_level === 11 && !c.id.startsWith('ma_') && !c.id.startsWith('ph'))
+      .sort((a: TaxonomyNode, b: TaxonomyNode) => (a.sequence_order || 0) - (b.sequence_order || 0));
     const class12 = chapters
-      .filter((c: any) => c.class_level === 12 && !c.id.startsWith('ma_') && !c.id.startsWith('ph'))
-      .sort((a: any, b: any) => (a.sequence_order || 0) - (b.sequence_order || 0));
+      .filter((c: TaxonomyNode) => c.class_level === 12 && !c.id.startsWith('ma_') && !c.id.startsWith('ph'))
+      .sort((a: TaxonomyNode, b: TaxonomyNode) => (a.sequence_order || 0) - (b.sequence_order || 0));
     const physChapters = chapters
-      .filter((c: any) => c.id.startsWith('ph11_') || c.id.startsWith('ph12_'))
-      .sort((a: any, b: any) => (a.sequence_order || 0) - (b.sequence_order || 0));
+      .filter((c: TaxonomyNode) => c.id.startsWith('ph11_') || c.id.startsWith('ph12_'))
+      .sort((a: TaxonomyNode, b: TaxonomyNode) => (a.sequence_order || 0) - (b.sequence_order || 0));
     const mathChapters = chapters
-      .filter((c: any) => c.id.startsWith('ma_'))
-      .sort((a: any, b: any) => (a.sequence_order || 0) - (b.sequence_order || 0));
+      .filter((c: TaxonomyNode) => c.id.startsWith('ma_'))
+      .sort((a: TaxonomyNode, b: TaxonomyNode) => (a.sequence_order || 0) - (b.sequence_order || 0));
 
     const escapeStr = (s: string) => s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 
-    const nodeToLine = (node: any): string => {
+    const nodeToLine = (node: TaxonomyNode): string => {
       const parts: string[] = [
         `id: '${node.id}'`,
         `name: '${escapeStr(node.name)}'`,
@@ -78,14 +87,14 @@ export async function POST(request: NextRequest) {
       return `    { ${parts.join(', ')} },`;
     };
 
-    const writeChapterGroup = (chList: any[], label: string) => {
+    const writeChapterGroup = (chList: TaxonomyNode[], label: string) => {
       lines.push(`    // ${label}`);
       for (const ch of chList) {
         lines.push(nodeToLine(ch));
-        const chTags = tags.filter((t: any) => t.parent_id === ch.id);
+        const chTags = tags.filter((t: TaxonomyNode) => t.parent_id === ch.id);
         for (const tag of chTags) {
           lines.push(nodeToLine(tag));
-          const tagMicroTopics = microTopics.filter((mt: any) => mt.parent_id === tag.id);
+          const tagMicroTopics = microTopics.filter((mt: TaxonomyNode) => mt.parent_id === tag.id);
           for (const mt of tagMicroTopics) lines.push(nodeToLine(mt));
         }
         lines.push('');
@@ -119,10 +128,11 @@ export async function POST(request: NextRequest) {
       microTopics: microTopics.length,
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Taxonomy save error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to save taxonomy';
     return NextResponse.json(
-      { success: false, error: error.message || 'Failed to save taxonomy' },
+      { success: false, error: errorMessage },
       { status: 500 }
     );
   }

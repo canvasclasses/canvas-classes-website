@@ -84,20 +84,24 @@ export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted
       timerRef.current = setInterval(() => {
         setRecordingTime(prev => prev + 1);
       }, 1000);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error accessing microphone:', error);
       let errorMessage = 'Could not access microphone.';
-      
-      if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
-        errorMessage += ' Permission was denied. Please check your browser settings and site permissions.';
-      } else if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
-        errorMessage += ' No microphone found. Please connect a microphone.';
-      } else if (error.name === 'NotReadableError' || error.name === 'TrackStartError') {
-        errorMessage += ' Microphone is already in use by another application.';
+
+      if (error instanceof Error) {
+        if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+          errorMessage += ' Permission was denied. Please check your browser settings and site permissions.';
+        } else if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
+          errorMessage += ' No microphone found. Please connect a microphone.';
+        } else if (error.name === 'NotReadableError' || error.name === 'TrackStartError') {
+          errorMessage += ' Microphone is already in use by another application.';
+        } else {
+          errorMessage += ' ' + (error.message || 'Unknown error occurred.');
+        }
       } else {
-        errorMessage += ' ' + (error.message || 'Unknown error occurred.');
+        errorMessage += ' Unknown error occurred.';
       }
-      
+
       alert(errorMessage);
     }
   };
@@ -157,8 +161,8 @@ export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted
         if (isR2Audio) {
           // Find and delete the asset from R2
           const res = await fetch(`/api/v2/assets?question_id=${questionId}&type=audio`);
-          const data = await res.json();
-          const asset = data.data?.find((a: any) => a.file.cdn_url === existingAudioUrl);
+          const data = await res.json() as { data?: Array<{ _id: string; file: { cdn_url: string } }> };
+          const asset = data.data?.find((a) => a.file.cdn_url === existingAudioUrl);
           
           if (asset) {
             await fetch(`/api/v2/assets/${asset._id}`, { method: 'DELETE' });

@@ -105,7 +105,7 @@ export default function NeetCrashCourseClient({ initialChapters }: NeetCrashCour
     );
 }
 
-function ChapterCard({ chapter, index, accentColor }: { chapter: any, index: number, accentColor: 'cyan' | 'teal' }) {
+function ChapterCard({ chapter, index, accentColor }: { chapter: NeetChapter; index: number; accentColor: 'cyan' | 'teal' }) {
     const colorMap = {
         cyan: {
             border: 'hover:border-cyan-400/50',

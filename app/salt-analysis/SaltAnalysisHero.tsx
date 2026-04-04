@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ComponentType } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     ChevronDown,
@@ -448,7 +448,7 @@ export default function SaltAnalysisHero() {
     );
 }
 
-function FeatureBadge({ icon: Icon, text }: { icon: any, text: string }) {
+function FeatureBadge({ icon: Icon, text }: { icon: ComponentType<{ size: number; className: string }>; text: string }) {
     return (
         <div className="flex items-center gap-2 px-3 py-2 md:px-4 md:py-2 bg-white/5 border border-white/10 rounded-lg backdrop-blur-sm">
             <Icon size={14} className="text-cyan-400 md:hidden" />

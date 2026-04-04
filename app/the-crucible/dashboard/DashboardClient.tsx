@@ -7,15 +7,39 @@ import RecentTests from './components/RecentTests';
 import { calculateAnalytics } from './utils/calculateAnalytics';
 import { ITestResult } from '@/lib/models/TestResult';
 
+interface TestResultDoc {
+  _id?: string;
+  user_id?: string;
+  chapter_id?: string;
+  test_config?: {
+    count?: number;
+    difficulty_mix?: string;
+    question_sort?: string;
+  };
+  score?: {
+    correct?: number;
+    total?: number;
+    percentage?: number;
+  };
+  timing?: {
+    started_at?: string;
+    completed_at?: string;
+    total_seconds?: number;
+  };
+  created_at?: string;
+  updated_at?: string;
+  [key: string]: unknown;
+}
+
 interface DashboardClientProps {
-  testResults: any[];
+  testResults: TestResultDoc[];
   chapterMap: Record<string, string>;
   isLocalDev?: boolean;
 }
 
 export default function DashboardClient({ testResults, chapterMap, isLocalDev }: DashboardClientProps) {
   const router = useRouter();
-  const analytics = calculateAnalytics(testResults as ITestResult[], chapterMap);
+  const analytics = calculateAnalytics(testResults as unknown as ITestResult[], chapterMap);
 
   if (isLocalDev) {
     return (
@@ -155,7 +179,7 @@ export default function DashboardClient({ testResults, chapterMap, isLocalDev }:
             onChapterClick={(chapterId) => router.push(`/the-crucible/${chapterId}`)}
           />
           <RecentTests
-            tests={testResults.slice(0, 5) as any}
+            tests={testResults.slice(0, 5) as TestResultDoc[]}
             chapterMap={chapterMap}
             onRetake={(chapterId) => router.push(`/the-crucible/${chapterId}?mode=test`)}
           />

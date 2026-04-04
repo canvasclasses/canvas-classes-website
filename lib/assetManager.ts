@@ -160,11 +160,14 @@ export async function listQuestionAssets(
         sb.storage.from('audio').list(prefix)
     ]);
     
-    const images = imageResult.data?.map((f: any) => 
+    interface StorageFile {
+      name: string;
+    }
+    const images = imageResult.data?.map((f: StorageFile) =>
         sb.storage.from('questions').getPublicUrl(`${prefix}/${f.name}`).data.publicUrl
     ) || [];
-    
-    const audio = audioResult.data?.map((f: any) => 
+
+    const audio = audioResult.data?.map((f: StorageFile) =>
         sb.storage.from('audio').getPublicUrl(`${prefix}/${f.name}`).data.publicUrl
     ) || [];
     
@@ -187,12 +190,15 @@ export async function getChapterAssetStats(
         sb.storage.from('audio').list(chapterId)
     ]);
     
-    const images = imageResult.data || [];
-    const audio = audioResult.data || [];
-    
+    interface FileWithMetadata {
+      metadata?: { size?: number };
+    }
+    const images: FileWithMetadata[] = imageResult.data || [];
+    const audio: FileWithMetadata[] = audioResult.data || [];
+
     // Calculate sizes (metadata may not always be available)
-    const imageSize = images.reduce((sum: number, f: any) => sum + (f.metadata?.size || 0), 0);
-    const audioSize = audio.reduce((sum: number, f: any) => sum + (f.metadata?.size || 0), 0);
+    const imageSize = images.reduce((sum: number, f: FileWithMetadata) => sum + (f.metadata?.size || 0), 0);
+    const audioSize = audio.reduce((sum: number, f: FileWithMetadata) => sum + (f.metadata?.size || 0), 0);
     
     return {
         totalImages: images.length,
@@ -276,8 +282,9 @@ export async function bulkUploadAssets(
                 type
             });
             success.push(result);
-        } catch (error: any) {
-            failed.push({ file: file.name, error: error.message });
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            failed.push({ file: file.name, error: errorMessage });
         }
     }
     
@@ -295,30 +302,34 @@ export async function moveQuestionAssets(
     const oldPrefix = chapterId ? `${chapterId}/${oldQuestionId}` : oldQuestionId;
     const newPrefix = chapterId ? `${chapterId}/${newQuestionId}` : newQuestionId;
     
+    interface FileMetadata {
+      name: string;
+      metadata?: { mimetype?: string };
+    }
     let moved = 0;
     let failed = 0;
-    
+
     const sb = getSupabaseClient();
     // List and move from both buckets
     for (const bucket of ['questions', 'audio'] as const) {
         const { data: files } = await sb.storage.from(bucket).list(oldPrefix);
-        
+
         if (!files) continue;
-        
-        for (const file of files) {
+
+        for (const file of files as FileMetadata[]) {
             const oldPath = `${oldPrefix}/${file.name}`;
             const newPath = `${newPrefix}/${file.name}`;
-            
+
             // Download and re-upload (Supabase doesn't support move directly)
             const { data: downloadData } = await sb.storage
                 .from(bucket)
                 .download(oldPath);
-            
+
             if (!downloadData) {
                 failed++;
                 continue;
             }
-            
+
             try {
                 // Upload to new location
                 await sb.storage
@@ -327,11 +338,11 @@ export async function moveQuestionAssets(
                         upsert: true,
                         contentType: file.metadata?.mimetype || 'application/octet-stream'
                     });
-                
+
                 // Delete old file
                 await sb.storage.from(bucket).remove([oldPath]);
                 moved++;
-            } catch (error) {
+            } catch (error: unknown) {
                 console.error(`Failed to move ${oldPath}:`, error);
                 failed++;
             }

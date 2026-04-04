@@ -10,16 +10,23 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  {
+    ignores: [
+      ".next/**",
+      "_migration/**",
+      "server/**",
+    ],
+  },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
-      // These were never enforced before the ESLint config fix.
-      // Disabling them to restore the previous build behaviour rather than
-      // touching hundreds of pre-existing files across the codebase.
-      "@typescript-eslint/no-explicit-any": "off",
+      // Enforced — all `any` types have been replaced with proper types.
+      "@typescript-eslint/no-explicit-any": "error",
+      // Keep these as warnings for now — low severity, will clean up over time.
       "@typescript-eslint/no-unused-vars": "off",
-      "react/no-unescaped-entities": "off",
       "prefer-const": "off",
+      // Quotes in JSX — too many instances, low severity, kept off.
+      "react/no-unescaped-entities": "off",
     },
   },
 ];

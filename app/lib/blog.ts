@@ -22,6 +22,15 @@ export function getPostSlugs() {
     return fs.readdirSync(postsDirectory);
 }
 
+interface FrontMatterData {
+    title?: string;
+    date?: string;
+    excerpt?: string;
+    author?: string;
+    tags?: string[];
+    image?: string;
+}
+
 export function getPostBySlug(slug: string, fields: string[] = []): Post {
     const realSlug = slug.replace(/\.mdx$/, '');
     const fullPath = path.join(postsDirectory, `${realSlug}.mdx`);
@@ -42,19 +51,22 @@ export function getPostBySlug(slug: string, fields: string[] = []): Post {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
 
-    const post: any = {};
+    const frontMatterData = data as FrontMatterData;
+    const post: Post = {
+        slug: realSlug,
+        content: content,
+        title: frontMatterData.title || 'Untitled Post',
+        date: frontMatterData.date || new Date().toISOString(),
+        excerpt: frontMatterData.excerpt || '',
+        author: frontMatterData.author || 'Canvas Classes',
+        tags: frontMatterData.tags || []
+    };
 
-    // Ensure minimal required fields
-    post.slug = realSlug;
-    post.content = content;
-    post.title = data.title || 'Untitled Post';
-    post.date = data.date || new Date().toISOString();
-    post.excerpt = data.excerpt || '';
-    post.author = data.author || 'Canvas Classes';
-    post.tags = data.tags || [];
-    if (data.image) post.image = data.image;
+    if (frontMatterData.image) {
+        post.image = frontMatterData.image;
+    }
 
-    return post as Post;
+    return post;
 }
 
 export function getAllPosts(): Post[] {

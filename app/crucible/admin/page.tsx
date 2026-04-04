@@ -21,7 +21,7 @@ import FlagsDashboard from './components/FlagsDashboard';
 import { usePermissions } from './hooks/usePermissions';
 
 const VALID_TOPIC_IDS = new Set(TAXONOMY_FROM_CSV.filter(t => t.type === 'topic').map(t => t.id));
-const isTagValid = (tags: any[] | undefined | null) => {
+const isTagValid = (tags: Array<{ tag_id: string }> | undefined | null): tags is Array<{ tag_id: string }> => {
     return !!(tags && tags.length > 0 && typeof tags[0] === 'object' && !!tags[0].tag_id && VALID_TOPIC_IDS.has(tags[0].tag_id));
 };
 
@@ -181,7 +181,7 @@ function AdminPageContent() {
     // Filters - initialize from URL params
     const [searchInput, setSearchInput] = useState(searchParams.get('search') || ''); // draft — applied on Enter
     const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
-    const [selectedSubjectFilter, setSelectedSubjectFilter] = useState<'chemistry' | 'physics' | 'maths' | 'all'>((searchParams.get('subject') as any) || 'chemistry');
+    const [selectedSubjectFilter, setSelectedSubjectFilter] = useState<'chemistry' | 'physics' | 'maths' | 'all'>((searchParams.get('subject') as 'chemistry' | 'physics' | 'maths' | 'all' | null) || 'chemistry');
     const [selectedChapterFilter, setSelectedChapterFilter] = useState(searchParams.get('chapter') || 'all');
     const [selectedTypeFilter, setSelectedTypeFilter] = useState(searchParams.get('type') || 'all');
     const [selectedSourceFilter, setSelectedSourceFilter] = useState(searchParams.get('source') || 'all');
@@ -659,7 +659,7 @@ function AdminPageContent() {
         return { valid: true };
     };
 
-    const handleReclassify = async (questionId: string, newChapterId: string, currentTags: any[]) => {
+    const handleReclassify = async (questionId: string, newChapterId: string, currentTags: Array<{ tag_id: string; weight: number }>) => {
         if (!newChapterId || reclassifying) return;
         setReclassifying(true);
         try {
@@ -755,12 +755,12 @@ function AdminPageContent() {
         if (!selectedQuestion) return;
         await handleUpdate(selectedQuestion._id, {
             add_flag: { type: flagReason, note: flagNote }
-        } as any);
+        } as Partial<Question>);
         setFlagModalOpen(false);
         setFlagReason('latex_error');
         setFlagNote('');
 
-        const newFlag = { type: flagReason as any, note: flagNote, flagged_at: new Date().toISOString(), resolved: false };
+        const newFlag = { type: flagReason as 'latex_error' | 'table_error' | 'mismatch' | 'solution_incorrect' | 'other', note: flagNote, flagged_at: new Date().toISOString(), resolved: false };
         setQuestions(prev => prev.map(q =>
             q._id === selectedQuestion._id ? { ...q, flags: [...(q.flags || []), newFlag] } : q
         ));
@@ -770,7 +770,7 @@ function AdminPageContent() {
         if (!selectedQuestion) return;
         await handleUpdate(selectedQuestion._id, {
             resolve_flags: true
-        } as any);
+        } as Partial<Question>);
         setQuestions(prev => prev.map(q =>
             q._id === selectedQuestion._id ? {
                 ...q,
@@ -1084,7 +1084,7 @@ function AdminPageContent() {
                 </div>
 
                 {/* Row 2: All filters consolidated in one row — practice bank only */}
-                {adminSection === 'practice' && <div className="flex items-center gap-2 px-3 py-1.5 overflow-x-auto border-t border-gray-800/50" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as any}>
+                {adminSection === 'practice' && <div className="flex items-center gap-2 px-3 py-1.5 overflow-x-auto border-t border-gray-800/50" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}>
                     <Filter size={11} className="text-purple-400 shrink-0" />
 
                     {/* Difficulty */}
@@ -1257,16 +1257,16 @@ function AdminPageContent() {
                                             if (newType === oldType) return;
                                             const update: Partial<Question> = { type: newType };
                                             if (newType === 'NVT' || newType === 'WKEX' || newType === 'SUBJ') {
-                                                update.options = [] as any;
-                                                update.answer = {} as any;
+                                                update.options = [] as Question['options'];
+                                                update.answer = {} as Question['answer'];
                                             } else if (oldType === 'NVT' || oldType === 'WKEX' || oldType === 'SUBJ' || !selectedQuestion.options || selectedQuestion.options.length === 0) {
                                                 update.options = [
                                                     { id: 'a', text: 'Option A', is_correct: newType === 'SCQ' },
                                                     { id: 'b', text: 'Option B', is_correct: false },
                                                     { id: 'c', text: 'Option C', is_correct: false },
                                                     { id: 'd', text: 'Option D', is_correct: false }
-                                                ] as any;
-                                                update.answer = {} as any;
+                                                ] as Question['options'];
+                                                update.answer = {} as Question['answer'];
                                             }
                                             handleUpdate(selectedQuestion._id, update);
                                         }}
@@ -1276,7 +1276,7 @@ function AdminPageContent() {
                                     </select>
                                     <select
                                         value={selectedQuestion.metadata.difficultyLevel}
-                                        onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, difficultyLevel: Number(e.target.value) as any } })}
+                                        onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, difficultyLevel: Number(e.target.value) as 1 | 2 | 3 | 4 | 5 } })}
                                         className={`bg-gray-800/50 border rounded px-2 py-1 text-xs font-medium ${
                                             selectedQuestion.metadata.difficultyLevel >= 4 ? 'border-red-500/50 text-red-400' :
                                             selectedQuestion.metadata.difficultyLevel === 3 ? 'border-orange-500/50 text-orange-400' :
@@ -1303,8 +1303,8 @@ function AdminPageContent() {
                                             {/* Exam Board */}
                                             <div className="flex flex-col">
                                                 <span className="text-[10px] text-gray-500 mb-0.5">Board</span>
-                                                <select value={selectedQuestion.metadata.examBoard ?? ''} 
-                                                    onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, examBoard: e.target.value as any } })}
+                                                <select value={selectedQuestion.metadata.examBoard ?? ''}
+                                                    onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, examBoard: e.target.value as 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD' | '' } })}
                                                     className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-blue-500 outline-none w-20">
                                                     <option value="">—</option>
                                                     <option value="JEE">JEE</option>
@@ -1316,8 +1316,8 @@ function AdminPageContent() {
                                             {/* Source Type */}
                                             <div className="flex flex-col">
                                                 <span className="text-[10px] text-gray-500 mb-0.5">Source</span>
-                                                <select value={selectedQuestion.metadata.sourceType ?? ''} 
-                                                    onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, sourceType: e.target.value as any } })}
+                                                <select value={selectedQuestion.metadata.sourceType ?? ''}
+                                                    onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, sourceType: e.target.value as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | '' } })}
                                                     className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-blue-500 outline-none w-28">
                                                     <option value="">—</option>
                                                     <option value="PYQ">PYQ</option>
@@ -1331,7 +1331,7 @@ function AdminPageContent() {
                                             {isPYQ && (<>
                                                 <div className="flex flex-col">
                                                     <span className="text-[10px] text-gray-500 mb-0.5">Exam</span>
-                                                    <select value={ed?.exam ?? ''} onChange={(e) => patchExamDetails({ exam: e.target.value as any })}
+                                                    <select value={ed?.exam ?? ''} onChange={(e) => patchExamDetails({ exam: e.target.value as 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG' | '' })}
                                                         className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-24">
                                                         <option value="">—</option>
                                                         <option value="JEE_Main">JEE Main</option>
@@ -1545,7 +1545,7 @@ function AdminPageContent() {
                                     <select
                                         value={selectedQuestion.metadata.questionNature ?? ''}
                                         onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                            metadata: { ...selectedQuestion.metadata, questionNature: e.target.value as any }
+                                            metadata: { ...selectedQuestion.metadata, questionNature: e.target.value as 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis' | '' }
                                         })}
                                         className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs text-purple-300 focus:border-purple-500 outline-none"
                                     >
@@ -1910,8 +1910,8 @@ function AdminPageContent() {
                                                         // Find asset by CDN URL
                                                         try {
                                                             const res = await fetch(`/api/v2/assets?question_id=${selectedQuestion._id}&type=video`);
-                                                            const data = await res.json();
-                                                            const asset = data.data?.find((a: any) => a.file.cdn_url === videoUrl);
+                                                            const data = await res.json() as { data?: Array<{ _id: string; file: { cdn_url: string } }> };
+                                                            const asset = data.data?.find((a) => a.file.cdn_url === videoUrl);
                                                             
                                                             if (asset) {
                                                                 // Delete from R2 and DB

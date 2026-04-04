@@ -114,7 +114,7 @@ AssetSchema.index({ created_at: -1 });
 AssetSchema.index({ processing_status: 1 });
 
 // Pre-save middleware
-AssetSchema.pre('save', async function(this: any) {
+AssetSchema.pre('save', async function(this: IAsset) {
   this.updated_at = new Date();
 });
 

@@ -134,8 +134,8 @@ export default function TaxonomyPage() {
             if (reloadData.success && Array.isArray(reloadData.nodes) && reloadData.nodes.length > 0) {
                 setTaxonomy(reloadData.nodes);
             }
-        } catch (err: any) {
-            setMessage({ type: 'error', text: `File save failed: ${err.message}` });
+        } catch (err: unknown) {
+            setMessage({ type: 'error', text: `File save failed: ${err instanceof Error ? err.message : 'Unknown error'}` });
         } finally {
             setSaving(false);
             setTimeout(() => setMessage(null), 4000);

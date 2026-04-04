@@ -75,7 +75,17 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn, userEmail, 
     mastered_chapters: number;
     active_days: number[];
   } | null>(isLocalDev ? DEV_PLACEHOLDER_STATS : null);
-  const [testResults, setTestResults] = useState<any[]>(isLocalDev ? DEV_PLACEHOLDER_TESTS() : []);
+  interface TestResult {
+    _id: string;
+    chapter_id: string;
+    test_config: { count: number; difficulty_mix: string; question_sort: string };
+    score: { correct: number; total: number; percentage: number };
+    timing: { total_seconds: number };
+    created_at: string;
+    saved_to_progress: boolean;
+  }
+
+  const [testResults, setTestResults] = useState<TestResult[]>(isLocalDev ? DEV_PLACEHOLDER_TESTS() : []);
   const [showTests, setShowTests] = useState(isLocalDev);
   const [chapters, setChapters] = useState<Record<string, string>>({});
 
@@ -128,8 +138,10 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn, userEmail, 
       // Build chapter ID -> name map
       if (chaptersData.chapters && chaptersData.chapters.length > 0) {
         const chapterMap: Record<string, string> = {};
-        chaptersData.chapters.forEach((ch: any) => {
-          chapterMap[ch.id] = ch.name;
+        chaptersData.chapters.forEach((ch: { id?: string; name?: string }) => {
+          if (ch.id && ch.name) {
+            chapterMap[ch.id] = ch.name;
+          }
         });
         setChapters(chapterMap);
       } else if (isLocalDev) {
@@ -336,7 +348,7 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn, userEmail, 
                     </div>
                     {showTests && (
                       <div className="space-y-2">
-                        {testResults.slice(0, 3).map((test: any) => {
+                        {testResults.slice(0, 3).map((test: TestResult) => {
                           const percentage = test.score?.percentage || 0;
                           const color = percentage >= 70 ? '#34d399' : percentage >= 50 ? '#fbbf24' : '#f87171';
                           const date = new Date(test.created_at);

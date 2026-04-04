@@ -55,7 +55,7 @@ export default function BohrModel() {
     hoveredN: -1,
     isAnimating: false,
     angle: 0,
-    photons: [] as any[],
+    photons: [] as Array<{x: number; y: number; life: number; vx: number; vy: number; color: string}>,
     burntLines: [] as { nm: number; color: string }[],
     atomW: 0, atomH: 0, atomCx: 0, atomCy: 0,
     specW: 0, specH: 0,
@@ -159,7 +159,7 @@ export default function BohrModel() {
         const metrics = ctx.measureText(txt);
         ctx.fillStyle = 'rgba(15,23,42,0.95)';
         ctx.beginPath();
-        (ctx as any).roundRect(tx - 6, ty - 14, metrics.width + 12, 22, 6);
+        (ctx as unknown as {roundRect: (x: number, y: number, w: number, h: number, r: number) => void}).roundRect(tx - 6, ty - 14, metrics.width + 12, 22, 6);
         ctx.fill();
         ctx.strokeStyle = 'rgba(255,255,255,0.2)';
         ctx.lineWidth = 1;

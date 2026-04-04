@@ -46,14 +46,15 @@ export default function OrganicAdminDashboard() {
         try {
             setLoading(true);
             const res = await fetch('/api/organic/reactions');
-            const data = await res.json();
-            if (data.success) {
+            const data = await res.json() as { success: boolean; data?: Reaction[]; error?: string };
+            if (data.success && data.data) {
                 setReactions(data.data);
             } else {
-                setStatusMessage({ type: 'error', text: data.error });
+                setStatusMessage({ type: 'error', text: data.error || 'Failed to fetch reactions' });
             }
-        } catch (err: any) {
-            setStatusMessage({ type: 'error', text: err.message });
+        } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : String(err);
+            setStatusMessage({ type: 'error', text: errorMessage });
         } finally {
             setLoading(false);
         }
@@ -91,7 +92,7 @@ export default function OrganicAdminDashboard() {
 
             // Merge into reactions list
             let updatedList = [...reactions];
-            const existingIdx = updatedList.findIndex(r => r.id === formData.id);
+            const existingIdx = updatedList.findIndex((r: Reaction) => r.id === formData.id);
 
             if (existingIdx >= 0) {
                 updatedList[existingIdx] = formData;
@@ -118,8 +119,9 @@ export default function OrganicAdminDashboard() {
             if (selectedId === 'new') {
                 setSelectedId(formData.id);
             }
-        } catch (err: any) {
-            setStatusMessage({ type: 'error', text: err.message });
+        } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : String(err);
+            setStatusMessage({ type: 'error', text: errorMessage });
         } finally {
             setSaving(false);
             setTimeout(() => setStatusMessage(null), 3000);
@@ -306,9 +308,9 @@ export default function OrganicAdminDashboard() {
                                 <div key={field.name} className="flex flex-col gap-1.5 focus-within:text-emerald-400 transition-colors">
                                     <label className="text-xs font-bold uppercase tracking-wider text-inherit">{field.label}</label>
                                     {(field.rows === 1) ? (
-                                        <input name={field.name} value={(formData as any)[field.name] || ''} onChange={handleChange} className="bg-black/40 border border-white/10 rounded-lg px-3 py-2.5 text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition text-white" />
+                                        <input name={field.name} value={(formData[field.name as keyof Reaction] as string) || ''} onChange={handleChange} className="bg-black/40 border border-white/10 rounded-lg px-3 py-2.5 text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition text-white" />
                                     ) : (
-                                        <textarea name={field.name} value={(formData as any)[field.name] || ''} onChange={handleChange} rows={field.rows} className="bg-black/40 border border-white/10 rounded-lg px-3 py-2.5 text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition text-white custom-scrollbar resize-y" />
+                                        <textarea name={field.name} value={(formData[field.name as keyof Reaction] as string) || ''} onChange={handleChange} rows={field.rows} className="bg-black/40 border border-white/10 rounded-lg px-3 py-2.5 text-sm focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition text-white custom-scrollbar resize-y" />
                                     )}
                                 </div>
                             ))}

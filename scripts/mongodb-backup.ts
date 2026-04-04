@@ -200,14 +200,14 @@ async function performBackup(): Promise<void> {
       if (stats.compressedSize) {
         metadata.total_compressed_bytes! += stats.compressedSize;
       }
-    } catch (error: any) {
-      console.error(`  ❌ ${collectionName}: ${error.message}`);
+    } catch (error: unknown) {
+      console.error(`  ❌ ${collectionName}: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
-  
+
   const duration = (Date.now() - startTime) / 1000;
   metadata.duration_seconds = duration;
-  
+
   // Save metadata
   if (shouldBackupLocal) {
     const metadataPath = path.join(backupFolder, 'backup-metadata.json');
@@ -227,8 +227,8 @@ async function performBackup(): Promise<void> {
       try {
         await uploadToR2(filePath, r2Key);
         console.log(`  ✅ Uploaded: ${file}`);
-      } catch (error: any) {
-        console.error(`  ❌ Failed to upload ${file}: ${error.message}`);
+      } catch (error: unknown) {
+        console.error(`  ❌ Failed to upload ${file}: ${error instanceof Error ? error.message : String(error)}`);
       }
     }
     

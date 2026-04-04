@@ -53,11 +53,16 @@ export async function GET(request: NextRequest) {
       .lean();
 
     // Project and attach question count
-    const setsWithData = sets.map((s: any) => {
+    interface MockTestSetWithCount {
+      questions?: Record<string, unknown>[];
+      question_count: number;
+      [key: string]: unknown;
+    }
+    const setsWithData = sets.map((s): MockTestSetWithCount => {
       const { questions, ...rest } = s;
       return {
         ...(includeQuestions ? s : rest),
-        question_count: (questions as any[])?.length ?? 0,
+        question_count: Array.isArray(questions) ? questions.length : 0,
       };
     });
 
@@ -127,12 +132,14 @@ export async function POST(request: NextRequest) {
     await newSet.save();
 
     return NextResponse.json({ success: true, data: newSet.toObject() }, { status: 201 });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('[mock-tests POST]', err);
+    const errorMessage = err instanceof Error ? err.message : 'Failed to create mock test set';
+    const errorName = err instanceof Error ? err.name : '';
     return NextResponse.json({
       success: false,
-      error: err?.message ?? 'Failed to create mock test set',
-      detail: err?.name ?? '',
+      error: errorMessage,
+      detail: errorName,
     }, { status: 500 });
   }
 }

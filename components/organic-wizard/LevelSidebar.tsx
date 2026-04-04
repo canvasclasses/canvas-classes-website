@@ -9,6 +9,7 @@ interface Level {
     title: string;
     description: string;
     difficulty: string;
+    chapter?: string;
 }
 
 interface LevelSidebarProps {
@@ -35,12 +36,12 @@ const LevelSidebar: React.FC<LevelSidebarProps> = ({
     ];
 
     const groupedLevels = chapters.reduce((acc, chapter) => {
-        acc[chapter] = levels.filter((l: any) => l.chapter === chapter);
+        acc[chapter] = levels.filter((l) => l.chapter === chapter);
         return acc;
     }, {} as Record<string, Level[]>);
 
     // Fallback for levels without chapter or unknown chapter
-    const otherLevels = levels.filter((l: any) => !chapters.includes(l.chapter));
+    const otherLevels = levels.filter((l) => !chapters.includes(l.chapter || ''));
     if (otherLevels.length > 0) {
         groupedLevels["Others"] = otherLevels;
         chapters.push("Others");
@@ -51,8 +52,8 @@ const LevelSidebar: React.FC<LevelSidebarProps> = ({
     // Auto-expand the chapter of the current level on first load
     React.useEffect(() => {
         const currentLevel = levels[currentLevelIndex];
-        if (currentLevel && (currentLevel as any).chapter) {
-            setExpandedChapters(prev => Array.from(new Set([...prev, (currentLevel as any).chapter])));
+        if (currentLevel && currentLevel.chapter) {
+            setExpandedChapters(prev => Array.from(new Set([...prev, currentLevel.chapter])));
         }
     }, [currentLevelIndex, levels]);
 

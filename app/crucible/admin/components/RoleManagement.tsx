@@ -47,8 +47,8 @@ export default function RoleManagement({ currentUserEmail }: RoleManagementProps
       if (!response.ok) throw new Error('Failed to fetch roles');
       const data = await response.json();
       setRoles(data.roles);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
     }
@@ -67,16 +67,16 @@ export default function RoleManagement({ currentUserEmail }: RoleManagementProps
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Failed to save role');
+        const data = await response.json() as Record<string, unknown>;
+        throw new Error(typeof data.error === 'string' ? data.error : 'Failed to save role');
       }
 
       setSuccess('Role saved successfully');
       setShowAddForm(false);
       setFormData({ email: '', role: 'subject_admin', subjects: [], notes: '' });
       fetchRoles();
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Unknown error');
     }
   };
 
@@ -89,14 +89,14 @@ export default function RoleManagement({ currentUserEmail }: RoleManagementProps
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Failed to delete role');
+        const data = await response.json() as Record<string, unknown>;
+        throw new Error(typeof data.error === 'string' ? data.error : 'Failed to delete role');
       }
 
       setSuccess('Role removed successfully');
       fetchRoles();
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Unknown error');
     }
   };
 

@@ -5,6 +5,36 @@ import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronDown, ChevronRight, Check, BarChart2, UserCircle, BookOpen, LayoutGrid, Clock, Lock, Sparkles, Star, LogOut, ClipboardList } from 'lucide-react';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { Chapter, Question } from './types';
+
+// API response types
+interface ApiQuestion {
+  _id: string;
+  display_id: string;
+  question_text?: { markdown?: string };
+  type: string;
+  options?: unknown[];
+  answer?: unknown;
+  solution?: {
+    markdown?: string;
+    text_markdown?: string;
+    video_url?: string;
+    asset_ids?: unknown;
+    latex_validated?: boolean;
+  };
+  metadata?: {
+    difficulty?: string;
+    chapter_id?: string;
+    tags?: unknown[];
+    is_pyq?: boolean;
+    is_top_pyq?: boolean;
+    exam_source?: unknown;
+    difficultyLevel?: number;
+    examBoard?: string;
+    sourceType?: string;
+    examDetails?: unknown;
+  };
+  svg_scales?: Record<string, number>;
+}
 import ProgressPanel from './ProgressPanel';
 import BrowseView from './BrowseView';
 import TestView from './TestView';
@@ -83,7 +113,7 @@ async function fetchTopPYQs(): Promise<Question[]> {
   params.set('limit', '500');
   const res = await fetch(`/api/v2/questions?${params.toString()}`);
   const json = await res.json();
-  return (json.data || []).map((q: any) => ({
+  return (json.data || []).map((q: ApiQuestion): Question => ({
     id: q._id,
     display_id: q.display_id || q._id?.slice(0, 8)?.toUpperCase() || 'Q',
     question_text: { markdown: q.question_text?.markdown || '' },
@@ -111,7 +141,7 @@ async function fetchQuestions(chapterIds: string[], limit?: number, topPYQOnly?:
   if (examBoard) params.set('examBoard', examBoard);
   const res = await fetch(`/api/v2/questions?${params.toString()}`);
   const json = await res.json();
-  return (json.data || []).map((q: any) => ({
+  return (json.data || []).map((q: ApiQuestion): Question => ({
     id: q._id,
     display_id: q.display_id || q._id?.slice(0, 8)?.toUpperCase() || 'Q',
     question_text: { markdown: q.question_text?.markdown || '' },
@@ -608,7 +638,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
 
       const questionsRes = await fetch(`/api/v2/questions?${params.toString()}`);
       const questionsJson = await questionsRes.json();
-      const fetchedQuestions: Question[] = (questionsJson.data || []).map((q: any) => ({
+      const fetchedQuestions: Question[] = (questionsJson.data || []).map((q: ApiQuestion): Question => ({
         id: q._id,
         display_id: q.display_id,
         question_text: q.question_text,

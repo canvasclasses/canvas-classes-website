@@ -125,7 +125,7 @@ export async function getUserProgressSummary(
 
     // Transform chapter progress
     const chaptersProgress: ChapterSummary[] = Array.from(
-      progress.chapter_progress.entries() as IterableIterator<[string, any]>
+      progress.chapter_progress.entries() as IterableIterator<[string, { chapter_id: string; total_attempted: number; correct_count: number; accuracy_percentage: number; mastery_level: string; last_attempted_at: Date | null }]>
     ).map(([chapterId, data]) => ({
       chapterId,
       chapterName: data.chapter_id,
@@ -149,7 +149,7 @@ export async function getUserProgressSummary(
 
     // Get weak areas (concepts with < 50% accuracy and > 5 attempts)
     const weakAreas: WeakArea[] = Array.from(
-      progress.concept_mastery.entries() as IterableIterator<[string, any]>
+      progress.concept_mastery.entries() as IterableIterator<[string, { tag_name: string; total_attempted: number; accuracy_percentage: number }]>
     )
       .filter(([_, data]) => data.total_attempted >= 5 && data.accuracy_percentage < 50)
       .map(([tagId, data]) => ({
@@ -324,11 +324,11 @@ export async function getLeaderboard(
       .select('stats.streak_days stats.total_correct stats.overall_accuracy')
       .lean();
 
-    return leaders.map((user: any) => ({
+    return leaders.map((user: Record<string, unknown>) => ({
       userId: user._id,
-      streakDays: user.stats.streak_days,
-      totalCorrect: user.stats.total_correct,
-      accuracy: Math.round(user.stats.overall_accuracy),
+      streakDays: (user.stats as Record<string, unknown>)?.streak_days,
+      totalCorrect: (user.stats as Record<string, unknown>)?.total_correct,
+      accuracy: Math.round((user.stats as Record<string, unknown>)?.overall_accuracy as number),
     }));
   } catch (error) {
     console.error('Error fetching leaderboard:', error);

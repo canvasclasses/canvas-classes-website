@@ -43,7 +43,7 @@ export default function GasLaws() {
         // Two rAF frames to ensure React has fully painted the DOM
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            if (!cancelled) (window as any).initPhysChemHub?.();
+            if (!cancelled) (window as unknown as {initPhysChemHub?: () => void}).initPhysChemHub?.();
           });
         });
       } catch (e) {
@@ -54,9 +54,9 @@ export default function GasLaws() {
     return () => {
       cancelled = true;
       // Cancel canvas animation loops on unmount to prevent stale rAF callbacks
-      const w = window as any;
-      if (w._gcAnimId) { cancelAnimationFrame(w._gcAnimId); w._gcAnimId = null; }
-      if (w._dcAnimId) { cancelAnimationFrame(w._dcAnimId); w._dcAnimId = null; }
+      const w = window as unknown as {_gcAnimId?: number; _dcAnimId?: number};
+      if (w._gcAnimId) { cancelAnimationFrame(w._gcAnimId); (w as unknown as {_gcAnimId: null})._gcAnimId = null; }
+      if (w._dcAnimId) { cancelAnimationFrame(w._dcAnimId); (w as unknown as {_dcAnimId: null})._dcAnimId = null; }
     };
   }, []);
 
@@ -419,8 +419,8 @@ export default function GasLaws() {
                 <div className={styles.quizSolText} id="bq-sol-text"/>
               </div>
               <div className={styles.quizActionsRow}>
-                <button className={styles.quizBtnSkip} id="bq-skip-btn" onClick={() => (window as any).bqSwipeOut(-1)}>Skip ⏭</button>
-                <button className={styles.quizNextBtn} id="bq-next-btn" onClick={() => (window as any).bqSwipeOut(1)}>Next →</button>
+                <button className={styles.quizBtnSkip} id="bq-skip-btn" onClick={() => (window as unknown as {bqSwipeOut?: (n: number) => void}).bqSwipeOut?.(-1)}>Skip ⏭</button>
+                <button className={styles.quizNextBtn} id="bq-next-btn" onClick={() => (window as unknown as {bqSwipeOut?: (n: number) => void}).bqSwipeOut?.(1)}>Next →</button>
               </div>
             </div>
           </div>
@@ -586,8 +586,8 @@ export default function GasLaws() {
                 <div className={styles.quizSolText} id="cq-sol-text"/>
               </div>
               <div className={styles.quizActionsRow}>
-                <button className={styles.quizBtnSkip} id="cq-skip-btn" onClick={() => (window as any).cqSwipeOut(-1)}>Skip ⏭</button>
-                <button className={styles.quizNextBtn} id="cq-next-btn" onClick={() => (window as any).cqSwipeOut(1)} style={{background:'var(--pc-purple-d)',color:'var(--pc-purple)',borderColor:'var(--pc-purple)'}}>Next →</button>
+                <button className={styles.quizBtnSkip} id="cq-skip-btn" onClick={() => (window as unknown as {cqSwipeOut?: (n: number) => void}).cqSwipeOut?.(-1)}>Skip ⏭</button>
+                <button className={styles.quizNextBtn} id="cq-next-btn" onClick={() => (window as unknown as {cqSwipeOut?: (n: number) => void}).cqSwipeOut?.(1)} style={{background:'var(--pc-purple-d)',color:'var(--pc-purple)',borderColor:'var(--pc-purple)'}}>Next →</button>
               </div>
             </div>
           </div>

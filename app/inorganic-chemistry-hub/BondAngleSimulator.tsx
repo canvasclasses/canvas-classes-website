@@ -156,8 +156,26 @@ const formatSvgLabel = (label: string) => {
   });
 };
 
+interface MoleculeData {
+  id: string;
+  formula: string;
+  idealAngle: number;
+  angle: number;
+  c_en: number;
+  t_en: number;
+  lp: number;
+  c_label: string;
+  t_label: string;
+  leftBond: string;
+  rightBond: string;
+  charge?: string | null;
+  top_label?: string;
+  top_en?: number;
+  topBond?: string;
+}
+
 // --- Reusable Visualizer Component ---
-const MoleculeVisualizer = ({ data, hideAngle = false, idSuffix = "main" }: { data: any; hideAngle?: boolean; idSuffix?: string }) => {
+const MoleculeVisualizer = ({ data, hideAngle = false, idSuffix = "main" }: { data: MoleculeData; hideAngle?: boolean; idSuffix?: string }) => {
   const cx = 200;
   const cy = 145; 
   const bondLen = 120; 
@@ -474,10 +492,10 @@ const App = () => {
         t_en: activeMolecule.t_en,
         leftBond: activeMolecule.leftBond || 'single',
         rightBond: activeMolecule.rightBond || 'single',
-        charge: (activeMolecule as any).charge || null,
-        top_label: (activeMolecule as any).top_label || null,
-        top_en: (activeMolecule as any).top_en || null,
-        topBond: (activeMolecule as any).topBond || null,
+        charge: (activeMolecule as Partial<typeof activeMolecule>).charge || null,
+        top_label: (activeMolecule as Partial<typeof activeMolecule>).top_label || null,
+        top_en: (activeMolecule as Partial<typeof activeMolecule>).top_en || null,
+        topBond: (activeMolecule as Partial<typeof activeMolecule>).topBond || null,
       };
     } else {
       let base = 109.5; 

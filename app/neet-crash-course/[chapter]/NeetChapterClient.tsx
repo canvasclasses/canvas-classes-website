@@ -289,7 +289,7 @@ function VideoSection({ videos, activeVideo, onPlay, onClose, emptyMessage }: { 
 
     return (
         <div className="space-y-3">
-            {videos.map((video: any) => (
+            {videos.map((video: NeetLecture) => (
                 <div
                     key={video.id}
                     onClick={() => onPlay(video)}

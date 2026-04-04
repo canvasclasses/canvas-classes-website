@@ -2,9 +2,17 @@
 
 import { useEffect, useRef } from 'react';
 
+interface Chart {
+  destroy: () => void;
+}
+
+interface ChartWindow extends Window {
+  Chart: unknown;
+}
+
 export default function Titration() {
   const chartRef = useRef<HTMLCanvasElement>(null);
-  const chartInstanceRef = useRef<any>(null);
+  const chartInstanceRef = useRef<Chart | null>(null);
   const stateRef = useRef({
     type: 'SA-SB',
     indicator: 'phenolphthalein',
@@ -19,12 +27,12 @@ export default function Titration() {
   useEffect(() => {
     // Load Chart.js dynamically if not already loaded
     const loadChart = async () => {
-      if (!(window as any).Chart) {
+      if (!(window as ChartWindow).Chart) {
         await new Promise<void>((resolve, reject) => {
           const script = document.createElement('script');
           script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
           script.onload = () => resolve();
-          script.onerror = reject;
+          script.onerror = () => reject(new Error('Failed to load Chart.js'));
           document.head.appendChild(script);
         });
       }
@@ -248,7 +256,7 @@ export default function Titration() {
   }
 
   function initChart() {
-    const Chart = (window as any).Chart;
+    const Chart = (window as ChartWindow).Chart;
     if (!Chart || !chartRef.current) return;
 
     if (chartInstanceRef.current) {
@@ -257,9 +265,14 @@ export default function Titration() {
 
     const state = stateRef.current;
 
+    interface ChartContext {
+      ctx: CanvasRenderingContext2D;
+      scales: Record<string, { getPixelForValue: (value: number) => number; left: number; right: number }>;
+    }
+
     const indicatorBandsPlugin = {
       id: 'titIndicatorBands',
-      beforeDatasetsDraw(chart: any) {
+      beforeDatasetsDraw(chart: ChartContext) {
         const ctx = chart.ctx;
         const yAxis = chart.scales.y;
         const xAxis = chart.scales.x;
@@ -278,7 +291,9 @@ export default function Titration() {
       }
     };
 
-    chartInstanceRef.current = new Chart(chartRef.current.getContext('2d'), {
+    type ChartConstructor = new (ctx: CanvasRenderingContext2D, config: object) => Chart;
+    const ChartConstructor = (window as ChartWindow).Chart as unknown as ChartConstructor;
+    chartInstanceRef.current = new ChartConstructor(chartRef.current.getContext('2d')!, {
       type: 'line',
       plugins: [indicatorBandsPlugin],
       data: {
@@ -334,14 +349,14 @@ export default function Titration() {
           legend: { display: false },
           tooltip: {
             callbacks: {
-              label: function (ctx: any) {
+              label: function (ctx: { datasetIndex: number; parsed: { x: number; y: number } }) {
                 if (ctx.datasetIndex === 1) return 'Click to Analyze Region';
                 return `Vol: ${ctx.parsed.x} mL | pH: ${ctx.parsed.y.toFixed(2)}`;
               }
             }
           }
         },
-        onClick: (_event: any, elements: any[]) => {
+        onClick: (_event: unknown, elements: Array<{ datasetIndex: number; index: number }>) => {
           if (elements.length > 0 && elements[0].datasetIndex === 1) {
             updateExplainer(elements[0].index);
           }

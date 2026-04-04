@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
     if (chapterId) {
       try {
         let profileDoc = await StudentChapterProfile.findOne({ studentId: userId, chapterId });
-        let profileData: any = profileDoc ? profileDoc.toObject() : createEmptyProfile(userId, chapterId);
+        let profileData: Record<string, unknown> = profileDoc ? profileDoc.toObject() : createEmptyProfile(userId, chapterId);
         const updatedProfile = updateProfileFromResponse(profileData, {
           studentId: userId,
           sessionId,

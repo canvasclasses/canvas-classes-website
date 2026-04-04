@@ -12,8 +12,8 @@ async function fetchOptionStats(questionId: string): Promise<Record<string, numb
   try {
     const res = await fetch(`/api/v2/questions/${questionId}/stats`);
     if (!res.ok) return {};
-    const data = await res.json();
-    return data.optionStats || {};
+    const data = await res.json() as Record<string, unknown>;
+    return (data.optionStats as Record<string, number> | undefined) || {};
   } catch { return {}; }
 }
 
@@ -26,7 +26,7 @@ const DIFF_COLOR = (d: number | string) => {
 
 // Returns true when all 4 options are short enough for a 2×2 grid.
 // Threshold is 28 chars (accounts for 20px font in half-width column ~220px).
-const isShortOptions = (opts: any[]): boolean => {
+const isShortOptions = (opts: Array<{ text?: string }>): boolean => {
   if (!opts || opts.length !== 4) return false;
   return opts.every(o => {
     const t = (o.text || '');
@@ -164,13 +164,13 @@ export default function TestView({ questions, onBack }: { questions: Question[];
           const selectedOption = qq.type === 'NVT'
             ? nvtInputs[qq.id] ?? null
             : (answers[qq.id] ?? null);
-          
+
           return {
             question_id: qq.id,
             display_id: qq.display_id,
             chapter_id: qq.metadata.chapter_id,
             difficulty: qq.metadata.difficultyLevel,
-            concept_tags: qq.metadata.tags?.map((t: any) => t.tag_id) ?? [],
+            concept_tags: qq.metadata.tags?.map((t: { tag_id: string }) => t.tag_id) ?? [],
             is_correct: isCorrect,
             selected_option: selectedOption,
             source: 'test',
@@ -302,12 +302,12 @@ export default function TestView({ questions, onBack }: { questions: Question[];
     }
     if (qq.type === 'MCQ') {
       const userSel = Array.isArray(answers[qq.id]) ? (answers[qq.id] as string[]) : [];
-      const correctIds = (qq.options || []).filter((o: any) => o.is_correct).map((o: any) => o.id);
+      const correctIds = (qq.options || []).filter((o: { id: string; text: string; is_correct: boolean }) => o.is_correct).map((o: { id: string; text: string; is_correct: boolean }) => o.id);
       if (userSel.length !== correctIds.length) return false;
       return correctIds.every((id: string) => userSel.includes(id));
     }
     // SCQ
-    return !!qq.options?.find((o: any) => o.id === answers[qq.id] && o.is_correct);
+    return !!qq.options?.find((o: { id: string; text: string; is_correct: boolean }) => o.id === answers[qq.id] && o.is_correct);
   };
 
   const score = submitted ? questions.filter(qq => isQuestionCorrect(qq)).length : 0;
@@ -359,7 +359,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                 const useGrid = isShortOptions(rq.options);
                 return (
                   <div style={{ display: useGrid ? 'grid' : 'flex', gridTemplateColumns: useGrid ? '1fr 1fr' : undefined, flexDirection: useGrid ? undefined : 'column', gap: 8, marginBottom: 24 }}>
-                    {rq.options.map((opt: any) => {
+                    {rq.options.map((opt: { id: string; text: string; is_correct: boolean }) => {
                       const sel = userSelArr.includes(opt.id);
                       const correct = opt.is_correct;
                       let borderC = 'rgba(255,255,255,0.1)', bgC = 'rgba(255,255,255,0.03)';
@@ -597,7 +597,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
         const useGrid = isShortOptions(q.options);
         return (
           <div style={{ display: useGrid ? 'grid' : 'flex', gridTemplateColumns: useGrid ? '1fr 1fr' : undefined, flexDirection: useGrid ? undefined : 'column', gap: 8, marginBottom: 16 }}>
-            {q.options.map((opt: any) => {
+            {q.options.map((opt: { id: string; text: string; is_correct: boolean }) => {
               const isMCQ = q.type === 'MCQ';
               const userSelArr: string[] = isMCQ ? (Array.isArray(answers[q.id]) ? answers[q.id] as string[] : []) : (typeof answers[q.id] === 'string' ? [answers[q.id] as string] : []);
               const sel = userSelArr.includes(opt.id);

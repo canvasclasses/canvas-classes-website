@@ -17,6 +17,10 @@ export async function GET(
     const { id: questionId } = await params;
 
     // Aggregate option pick counts from ActivityLog
+    interface AggregationResult {
+      _id: string;
+      count: number;
+    }
     const results = await ActivityLog.aggregate([
       { $match: { question_id: questionId, selected_option_id: { $ne: null } } },
       {
@@ -27,16 +31,17 @@ export async function GET(
       },
     ]);
 
-    const total = results.reduce((sum: number, r: any) => sum + r.count, 0);
+    const total = results.reduce((sum: number, r: unknown) => sum + ((r as AggregationResult).count || 0), 0);
 
     // Build map: optionId -> percentage (0-100, rounded)
     const optionStats: Record<string, number> = {};
     for (const r of results) {
-      optionStats[r._id] = total > 0 ? Math.round((r.count / total) * 100) : 0;
+      const result = r as AggregationResult;
+      optionStats[result._id] = total > 0 ? Math.round((result.count / total) * 100) : 0;
     }
 
     return NextResponse.json({ optionStats, total });
-  } catch (err) {
+  } catch (err: unknown) {
     console.error('Question stats error:', err);
     return NextResponse.json({ optionStats: {}, total: 0 });
   }

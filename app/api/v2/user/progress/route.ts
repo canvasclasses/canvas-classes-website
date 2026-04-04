@@ -29,7 +29,30 @@ export async function GET(req: NextRequest) {
         const chapterId = req.nextUrl.searchParams.get('chapterId');
 
         await connectToDatabase();
-        const progress = await UserProgress.findById(userId).lean() as any;
+        interface StarredQuestion {
+            question_id: string;
+            chapter_id?: string;
+            starred_at?: Date;
+        }
+        interface AttemptedId {
+            question_id: string;
+            chapter_id: string;
+            difficulty?: string;
+            times_attempted?: number;
+            times_correct?: number;
+            last_correct_at?: Date;
+        }
+        interface TestSession {
+            chapter_id: string;
+            started_at: Date;
+            question_ids: string[];
+        }
+
+        const progress = await UserProgress.findById(userId).lean() as unknown as {
+            starred_questions?: StarredQuestion[];
+            all_attempted_ids?: AttemptedId[];
+            test_sessions?: TestSession[];
+        } | null;
 
         if (!progress) {
             // New user — return empty sets
@@ -42,24 +65,24 @@ export async function GET(req: NextRequest) {
 
         // Starred IDs — all chapters (needed for the star button across pages)
         const starred_ids: string[] = (progress.starred_questions ?? []).map(
-            (s: any) => s.question_id
+            (s: StarredQuestion) => s.question_id
         );
 
         // Attempted IDs — filtered to this chapter if provided
-        const all_attempted: any[] = progress.all_attempted_ids ?? [];
+        const all_attempted: AttemptedId[] = progress.all_attempted_ids ?? [];
         const attempted_ids = chapterId
-            ? all_attempted.filter((e: any) => e.chapter_id === chapterId)
+            ? all_attempted.filter((e: AttemptedId) => e.chapter_id === chapterId)
             : all_attempted;
 
         // Last 3 test sessions for this chapter
-        const all_sessions: any[] = progress.test_sessions ?? [];
+        const all_sessions: TestSession[] = progress.test_sessions ?? [];
         const chapter_sessions = chapterId
-            ? all_sessions.filter((s: any) => s.chapter_id === chapterId)
+            ? all_sessions.filter((s: TestSession) => s.chapter_id === chapterId)
             : all_sessions;
         const last_3_sessions = chapter_sessions
-            .sort((a: any, b: any) => new Date(b.started_at).getTime() - new Date(a.started_at).getTime())
+            .sort((a: TestSession, b: TestSession) => new Date(b.started_at).getTime() - new Date(a.started_at).getTime())
             .slice(0, 3)
-            .map((s: any) => s.question_ids);
+            .map((s: TestSession) => s.question_ids);
 
         return NextResponse.json({ starred_ids, attempted_ids, last_3_sessions });
     } catch (err) {

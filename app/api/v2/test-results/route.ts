@@ -73,7 +73,7 @@ export async function GET(req: NextRequest) {
 
         await connectToDatabase();
 
-        const query: any = { user_id: userId };
+        const query: Record<string, unknown> = { user_id: userId };
         if (chapterId) query.chapter_id = chapterId;
 
         const results = await TestResult.find(query)

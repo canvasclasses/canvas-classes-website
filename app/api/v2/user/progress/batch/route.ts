@@ -79,8 +79,16 @@ export async function POST(req: NextRequest) {
             if (is_correct) totalCorrect++;
 
             // Update all_attempted_ids
+            interface AttemptedIdEntry {
+                question_id: string;
+                chapter_id: string;
+                difficulty?: string;
+                times_attempted?: number;
+                times_correct?: number;
+                last_correct_at?: Date;
+            }
             const existingIdx = progress.all_attempted_ids.findIndex(
-                (e: any) => e.question_id === question_id
+                (e: AttemptedIdEntry) => e.question_id === question_id
             );
 
             if (existingIdx >= 0) {

@@ -66,9 +66,9 @@ export default function SVGDropZone({ questionId, fieldType, onUploaded, compact
 
       // Reset to idle after 4s so zone is reusable
       setTimeout(() => setState('idle'), 4000);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setState('error');
-      setErrorMsg(err.message || 'Upload failed');
+      setErrorMsg(err instanceof Error ? err.message : 'Upload failed');
       setTimeout(() => setState('idle'), 4000);
     }
   }, [questionId, fieldType, onUploaded]);

@@ -5,6 +5,30 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Flame, ChevronLeft, ChevronRight, LogIn, LayoutGrid, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { Chapter, Question } from './types';
+
+// API response types
+interface ApiQuestion {
+  _id: string;
+  display_id: string;
+  question_text?: { markdown?: string };
+  type: string;
+  options?: unknown[];
+  answer?: unknown;
+  solution?: {
+    text_markdown?: string;
+    video_url?: string;
+    asset_ids?: unknown;
+    latex_validated?: boolean;
+  };
+  metadata?: {
+    difficultyLevel?: number;
+    chapter_id?: string;
+    tags?: unknown[];
+    is_pyq?: boolean;
+    is_top_pyq?: boolean;
+  };
+  svg_scales?: Record<string, number>;
+}
 import BrowseView from './BrowseView';
 import TestView from './TestView';
 import TestConfigModal, { DifficultyMix } from './TestConfigModal';
@@ -347,7 +371,7 @@ async function fetchTopPYQs(examLevel?: 'mains' | 'advanced'): Promise<Question[
   if (examLevel) params.set('exam_level', examLevel);
   const res = await fetch(`/api/v2/questions?${params.toString()}`);
   const json = await res.json();
-  return (json.data || []).map((q: any) => ({
+  return (json.data || []).map((q: ApiQuestion): Question => ({
     id: q._id,
     display_id: q.display_id || q._id?.slice(0, 8)?.toUpperCase() || 'Q',
     question_text: { markdown: q.question_text?.markdown || '' },
@@ -375,7 +399,7 @@ async function fetchQuestions(chapterIds: string[], limit?: number, topPYQOnly?:
   if (examLevel) params.set('exam_level', examLevel);
   const res = await fetch(`/api/v2/questions?${params.toString()}`);
   const json = await res.json();
-  return (json.data || []).map((q: any) => ({
+  return (json.data || []).map((q: ApiQuestion): Question => ({
     id: q._id,
     display_id: q.display_id || q._id?.slice(0, 8)?.toUpperCase() || 'Q',
     question_text: { markdown: q.question_text?.markdown || '' },
