@@ -632,12 +632,12 @@ export default function PeriodTrendsChart() {
             <AlertTriangle size={15} />
             Key Exceptions — {selectedProperty.label}
           </h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {visibleExceptions.map(exc => (
-              <div key={exc.symbol} className="flex flex-col gap-2 p-3 rounded-xl bg-gray-800/40 border border-gray-700/50 border-l-2 border-l-amber-500/60">
-                <span className="text-sm font-semibold text-amber-300 leading-snug">{exc.title}</span>
-                <p className="text-xs text-gray-400 leading-relaxed flex-1">{exc.explanation}</p>
-                <span className="self-start inline-flex items-center gap-1 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 text-[10px] text-amber-400 font-medium">
+              <div key={exc.symbol} className="flex flex-col gap-2.5 p-4 rounded-xl bg-gray-800/40 border border-gray-700/50 border-l-2 border-l-amber-500/60">
+                <span className="text-base font-semibold text-amber-300 leading-snug">{exc.title}</span>
+                <p className="text-sm text-gray-300 leading-relaxed flex-1">{exc.explanation}</p>
+                <span className="self-start inline-flex items-center gap-1 px-2 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-xs text-amber-400 font-medium">
                   {exc.jeeTag}
                 </span>
               </div>
