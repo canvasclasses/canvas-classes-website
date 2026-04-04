@@ -173,7 +173,7 @@ export async function POST(request: NextRequest) {
                   isPYQ?: boolean;
                   isTopPYQ?: boolean;
                   solution?: Record<string, unknown>;
-                  trap?: unknown;
+                  trap?: { likelyWrongChoiceId?: string; message?: string; conceptGapTag?: string };
                   examSource?: string;
                   difficulty?: string;
                 }
