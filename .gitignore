@@ -59,6 +59,10 @@ query_db.js
 html_output.txt
 *.html
 
+# Simulator/public HTML files must be deployed — un-ignore them
+!public/**/*.html
+!public/*.html
+
 # automation one-time scripts (insert/fix/check/audit)
 /automation/insert_*.js
 /automation/fix_*.js
