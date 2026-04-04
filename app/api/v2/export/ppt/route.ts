@@ -81,9 +81,9 @@ export async function POST(request: NextRequest) {
       roundRect: unknown;
     }
     const shapeMap: ShapeTypeMap = {
-      rect: (pptx as unknown & { ShapeType: Record<string, unknown> }).ShapeType.rect,
-      line: (pptx as unknown & { ShapeType: Record<string, unknown> }).ShapeType.line,
-      roundRect: (pptx as unknown & { ShapeType: Record<string, unknown> }).ShapeType.roundRect,
+      rect: (pptx as unknown as { ShapeType: Record<string, unknown> }).ShapeType.rect,
+      line: (pptx as unknown as { ShapeType: Record<string, unknown> }).ShapeType.line,
+      roundRect: (pptx as unknown as { ShapeType: Record<string, unknown> }).ShapeType.roundRect,
     };
 
     for (const s of slides) {

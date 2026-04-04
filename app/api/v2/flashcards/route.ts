@@ -219,7 +219,7 @@ export async function POST(req: NextRequest) {
   } catch (error: unknown) {
     console.error('Error creating flashcard:', error);
 
-    if (error instanceof Error && (error as unknown & { code: number }).code === 11000) {
+    if (error instanceof Error && (error as Error & { code?: number }).code === 11000) {
       return NextResponse.json(
         { error: 'Flashcard ID already exists' },
         { status: 409 }

@@ -54,7 +54,7 @@ export async function PATCH(
     const qIndex = set.questions.findIndex((q: MockQuestion) => q._id === qid);
     if (qIndex === -1) return NextResponse.json({ success: false, error: 'Question not found' }, { status: 404 });
 
-    const question = set.questions[qIndex] as unknown & Record<string, unknown>;
+    const question = set.questions[qIndex] as unknown as Record<string, unknown>;
 
     // Merge updates — support full or partial question body
     const updatable = [
@@ -116,8 +116,7 @@ export async function DELETE(
 
     // Re-number remaining questions sequentially
     set.questions.forEach((q, i: number) => {
-      const question = q as unknown & { question_number?: number };
-      question.question_number = i + 1;
+      (q as unknown as { question_number?: number }).question_number = i + 1;
     });
 
     set.markModified('questions');

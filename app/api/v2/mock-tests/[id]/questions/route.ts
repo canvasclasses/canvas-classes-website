@@ -100,8 +100,7 @@ export async function POST(
     return NextResponse.json({ success: true, data: newQuestion }, { status: 201 });
   } catch (err: unknown) {
     if (err instanceof Error && err.name === 'ValidationError') {
-      const validationErr = err as unknown & { errors: unknown };
-      return NextResponse.json({ success: false, error: 'Validation failed', details: validationErr.errors }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'Validation failed', details: (err as Error & { errors?: unknown }).errors }, { status: 400 });
     }
     console.error('[mock-tests questions POST]', err);
     return NextResponse.json({ success: false, error: 'Failed to add question' }, { status: 500 });
