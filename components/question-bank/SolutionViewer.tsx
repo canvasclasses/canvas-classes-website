@@ -52,29 +52,33 @@ interface SourceReference {
 }
 
 interface SolutionViewerProps {
-    solution: SolutionAsset;
-    sourceReferences?: SourceReference[];
-    imageScale?: number;
+    solution: SolutionAsset | unknown;
+    sourceReferences?: SourceReference[] | unknown;
+    imageScale?: number | unknown;
 }
 
 type TabType = 'analysis' | 'video' | 'handwritten';
 
 export default function SolutionViewer({
-    solution,
-    sourceReferences,
-    imageScale
+    solution: solutionProp,
+    sourceReferences: sourceReferencesProp,
+    imageScale: imageScaleProp
 }: SolutionViewerProps) {
-    const hasVideo = !!solution.videoUrl;
-    const hasHandwritten = !!solution.handwrittenSolutionImageUrl;
+    const solution = solutionProp as SolutionAsset || {};
+    const sourceReferences = sourceReferencesProp as SourceReference[] || undefined;
+    const imageScale = typeof imageScaleProp === 'number' ? imageScaleProp : undefined;
+
+    const hasVideo = !!(solution as Record<string, unknown>)?.videoUrl;
+    const hasHandwritten = !!(solution as Record<string, unknown>)?.handwrittenSolutionImageUrl;
     const [activeTab, setActiveTab] = useState<TabType>('analysis');
 
     // Process solution text - simpler processing, focusing on clean markdown
     const processedContent = useMemo(() => {
-        let content = solution.textSolutionLatex || "";
+        let content = String((solution as Record<string, unknown>)?.textSolutionLatex || "");
         // 1. Convert literal \n to real newlines ONLY if not followed by a letter (preserves LaTeX like \nu, \neq)
         content = content.replace(/\\n(?![a-zA-Z])/g, '\n');
         return content;
-    }, [solution.textSolutionLatex]);
+    }, [(solution as Record<string, unknown>)?.textSolutionLatex]);
 
     return (
         <div className="flex flex-col h-full bg-[#0B0F1A] font-sans">
@@ -122,11 +126,11 @@ export default function SolutionViewer({
                 <div className="max-w-3xl mx-auto p-6 md:p-8">
 
                     {/* 1. ANALYSIS TAB - Clean, Elegant Typography */}
-                    {activeTab === 'analysis' && (
+                    {activeTab === 'analysis' ? (
                         <div className="animate-in fade-in duration-500">
 
                             {/* Audio Player - Compact & Clean */}
-                            {solution.audioExplanationUrl && (
+                            {!!(solution as Record<string, unknown>)?.audioExplanationUrl && (
                                 <div className="mb-8 flex items-center gap-4 p-3 rounded-lg border border-white/10 bg-white/5 hover:border-white/20 transition-colors">
                                     <div className="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0">
                                         <Mic size={16} />
@@ -135,7 +139,7 @@ export default function SolutionViewer({
                                         <div className="text-xs font-medium text-indigo-200 mb-1 uppercase tracking-wider">Audio Explanation</div>
                                         <audio
                                             controls
-                                            src={solution.audioExplanationUrl}
+                                            src={String((solution as Record<string, unknown>)?.audioExplanationUrl || "")}
                                             className="w-full h-8 opacity-80 hover:opacity-100 transition-opacity"
                                             style={{ filter: 'invert(1) hue-rotate(180deg)' }}
                                         />
@@ -157,12 +161,12 @@ export default function SolutionViewer({
                                     rehypePlugins={[rehypeKatex, rehypeRaw]}
                                     components={{
                                         // Custom styling for specific elements to improve "calligraphy" / feel
-                                        h1: ({ children }) => <h1 className="text-xl md:text-2xl font-bold text-white mb-3 pb-2 border-b border-white/5">{children}</h1>,
-                                        h2: ({ children }) => <h2 className="text-lg md:text-xl font-bold text-white mt-5 mb-2 opacity-95">{children}</h2>,
-                                        h3: ({ children }) => <h3 className="text-base font-bold text-indigo-400 mt-4 mb-2 uppercase tracking-wider">
-                                            {children}
+                                        h1: ({ children }: { children?: React.ReactNode }) => <h1 className="text-xl md:text-2xl font-bold text-white mb-3 pb-2 border-b border-white/5">{children as React.ReactNode}</h1>,
+                                        h2: ({ children }: { children?: React.ReactNode }) => <h2 className="text-lg md:text-xl font-bold text-white mt-5 mb-2 opacity-95">{children as React.ReactNode}</h2>,
+                                        h3: ({ children }: { children?: React.ReactNode }) => <h3 className="text-base font-bold text-indigo-400 mt-4 mb-2 uppercase tracking-wider">
+                                            {children as React.ReactNode}
                                         </h3>,
-                                        img: (props) => (
+                                        img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
                                             <img
                                                 {...props}
                                                 style={{
@@ -174,7 +178,7 @@ export default function SolutionViewer({
                                                 className="rounded-lg border border-white/5 my-4"
                                             />
                                         ),
-                                        p: ({ children }) => {
+                                        p: ({ children }: { children?: React.ReactNode }) => {
                                             const childrenArray = React.Children.toArray(children);
                                             const firstChild = childrenArray[0];
                                             const isHighlighted = typeof firstChild === 'string' && firstChild.trimStart().startsWith('!!');
@@ -187,19 +191,19 @@ export default function SolutionViewer({
                                                 return (
                                                     <div className="my-4 py-3 px-4 bg-white/[0.015] rounded-xl border border-white/5 text-center font-medium text-emerald-100/90 overflow-x-auto shadow-inner">
                                                         <div className="text-lg md:text-xl tracking-tight">
-                                                            {newChildren}
+                                                            {newChildren as React.ReactNode}
                                                         </div>
                                                     </div>
                                                 );
                                             }
 
-                                            const content = children?.toString() || "";
+                                            const content = String(children || "");
 
                                             // Key Notes (subtle)
                                             if (content.toLowerCase().startsWith('note:') || content.toLowerCase().startsWith('key point')) {
                                                 return (
                                                     <div className="my-3 p-3 bg-indigo-500/05 border-l-2 border-indigo-500/30 rounded-r-lg text-indigo-100/90 text-[14px] leading-relaxed font-medium">
-                                                        {children}
+                                                        {children as React.ReactNode}
                                                     </div>
                                                 );
                                             }
@@ -207,30 +211,30 @@ export default function SolutionViewer({
                                             // Remove empty paragraphs
                                             if (!content || content.trim() === '') return null;
 
-                                            return <p className="mb-1 leading-snug tracking-normal text-[15px] text-gray-300/90 whitespace-pre-wrap">{children}</p>;
+                                            return <p className="mb-1 leading-snug tracking-normal text-[15px] text-gray-300/90 whitespace-pre-wrap">{children as React.ReactNode}</p>;
                                         },
-                                        ul: ({ children }) => <ul className="list-disc pl-5 mb-2 space-y-1 text-gray-300">{children}</ul>,
-                                        ol: ({ children }) => <ol className="list-decimal pl-5 mb-2 space-y-1 text-gray-300">{children}</ol>,
-                                        table: ({ children }) => (
+                                        ul: ({ children }: { children?: React.ReactNode }) => <ul className="list-disc pl-5 mb-2 space-y-1 text-gray-300">{children as React.ReactNode}</ul>,
+                                        ol: ({ children }: { children?: React.ReactNode }) => <ol className="list-decimal pl-5 mb-2 space-y-1 text-gray-300">{children as React.ReactNode}</ol>,
+                                        table: ({ children }: { children?: React.ReactNode }) => (
                                             <div className="my-6 overflow-x-auto rounded-xl border border-white/10 bg-white/[0.02] shadow-sm">
-                                                <table className="w-full text-sm text-left border-collapse">{children}</table>
+                                                <table className="w-full text-sm text-left border-collapse">{children as React.ReactNode}</table>
                                             </div>
                                         ),
-                                        th: ({ children }) => <th className="px-5 py-4 bg-white/5 font-bold text-indigo-300 border-b border-white/10 uppercase tracking-wider text-xs min-w-[140px]">{children}</th>,
-                                        td: ({ children }) => <td className="px-5 py-4 border-b border-white/5 text-gray-400 leading-relaxed">{children}</td>,
-                                        blockquote: ({ children }) => (
+                                        th: ({ children }: { children?: React.ReactNode }) => <th className="px-5 py-4 bg-white/5 font-bold text-indigo-300 border-b border-white/10 uppercase tracking-wider text-xs min-w-[140px]">{children as React.ReactNode}</th>,
+                                        td: ({ children }: { children?: React.ReactNode }) => <td className="px-5 py-4 border-b border-white/5 text-gray-400 leading-relaxed">{children as React.ReactNode}</td>,
+                                        blockquote: ({ children }: { children?: React.ReactNode }) => (
                                             <blockquote className="border-l-2 border-gray-600 pl-4 my-3 italic text-gray-400">
-                                                {children}
+                                                {children as React.ReactNode}
                                             </blockquote>
                                         )
                                     }}
                                 >
-                                    {processedContent}
+                                    {String(processedContent)}
                                 </ReactMarkdown>
                             </div>
 
                             {/* Question Origins - Compact & Minimal */}
-                            {sourceReferences && sourceReferences.length > 0 && (
+                            {sourceReferences && (sourceReferences as SourceReference[])?.length > 0 && (
                                 <div className="mt-8 border-t border-white/5 pt-4">
                                     <div className="flex items-center gap-2 mb-3">
                                         <Sparkles size={14} className="text-amber-400" />
@@ -240,7 +244,7 @@ export default function SolutionViewer({
                                     </div>
 
                                     <div className="space-y-2">
-                                        {sourceReferences.map((ref, idx) => (
+                                        {(sourceReferences as SourceReference[]).map((ref: SourceReference, idx: number) => (
                                             <div key={idx} className="flex items-start gap-3 p-2 rounded bg-white/[0.02] border border-white/5 text-sm hover:bg-white/[0.04] transition-colors">
                                                 {/* Compact Badge */}
                                                 <div className={`shrink-0 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide border ${ref.type === 'NCERT' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
@@ -255,31 +259,31 @@ export default function SolutionViewer({
                                                     <div className="flex flex-wrap items-center gap-x-2 text-gray-300 text-xs">
                                                         {ref.type === 'NCERT' && (
                                                             <>
-                                                                {ref.ncertBook && <span className="font-medium text-emerald-200">{ref.ncertBook}</span>}
+                                                                {ref.ncertBook && <span className="font-medium text-emerald-200">{String(ref.ncertBook) || ''}</span>}
                                                                 {ref.ncertChapter && <span className="text-gray-500">/</span>}
-                                                                {ref.ncertChapter && <span>{ref.ncertChapter}</span>}
+                                                                {ref.ncertChapter && <span>{String(ref.ncertChapter)}</span>}
                                                                 {ref.ncertPage && (
-                                                                    <span className="text-gray-500 ml-auto font-mono text-[10px]">Pg. {ref.ncertPage}</span>
+                                                                    <span className="text-gray-500 ml-auto font-mono text-[10px]">Pg. {String(ref.ncertPage)}</span>
                                                                 )}
                                                             </>
                                                         )}
                                                         {ref.type === 'PYQ' && (
                                                             <>
-                                                                <span className="font-medium text-blue-200">{ref.pyqExam} {ref.pyqYear}</span>
-                                                                {ref.pyqShift && <span className="text-gray-500">- {ref.pyqShift}</span>}
+                                                                <span className="font-medium text-blue-200">{String(ref.pyqExam)} {String(ref.pyqYear)}</span>
+                                                                {ref.pyqShift && <span className="text-gray-500">- {String(ref.pyqShift)}</span>}
                                                             </>
                                                         )}
                                                         {(ref.type === 'COACHING' || ref.type === 'OTHER') && (
-                                                            <span className="font-medium text-purple-200">{ref.sourceName}</span>
+                                                            <span className="font-medium text-purple-200">{String(ref.sourceName)}</span>
                                                         )}
                                                     </div>
 
                                                     {/* Concise Description line if exists */}
-                                                    {ref.description && (
+                                                    {ref.description ? (
                                                         <div className="mt-1 text-[11px] text-gray-500 line-clamp-1 italic">
-                                                            {ref.description}
+                                                            {String(ref.description)}
                                                         </div>
-                                                    )}
+                                                    ) : null}
                                                 </div>
                                             </div>
                                         ))}
@@ -287,14 +291,14 @@ export default function SolutionViewer({
                                 </div>
                             )}
                         </div>
-                    )}
+                    ) : null}
 
                     {/* 2. VIDEO TAB - Clean Player */}
-                    {activeTab === 'video' && solution.videoUrl && (
+                    {activeTab === 'video' && (solution as Record<string, unknown>)?.videoUrl ? (
                         <div className="animate-in fade-in duration-500">
                             <div className="aspect-video w-full bg-black rounded-lg overflow-hidden border border-white/10 shadow-lg">
                                 <iframe
-                                    src={solution.videoUrl}
+                                    src={String((solution as Record<string, unknown>)?.videoUrl || "")}
                                     title="Video Solution"
                                     className="w-full h-full"
                                     allowFullScreen
@@ -305,14 +309,14 @@ export default function SolutionViewer({
                                 Video solution breakdown
                             </div>
                         </div>
-                    )}
+                    ) : null}
 
                     {/* 3. HANDWRITTEN TAB - Focus on Content */}
-                    {activeTab === 'handwritten' && solution.handwrittenSolutionImageUrl && (
+                    {activeTab === 'handwritten' && (solution as Record<string, unknown>)?.handwrittenSolutionImageUrl ? (
                         <div className="animate-in fade-in duration-500">
                             <div className="rounded-lg overflow-hidden border border-white/10 bg-white/5">
                                 <img
-                                    src={solution.handwrittenSolutionImageUrl}
+                                    src={String((solution as Record<string, unknown>)?.handwrittenSolutionImageUrl || "")}
                                     alt="Handwritten Solution"
                                     className="w-full h-auto"
                                 />
@@ -321,7 +325,7 @@ export default function SolutionViewer({
                                 Handwritten notes by the expert
                             </div>
                         </div>
-                    )}
+                    ) : null}
                 </div>
             </div>
         </div>

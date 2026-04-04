@@ -28,7 +28,7 @@ const ReagentCard: React.FC<ReagentCardProps> = ({
             whileTap={{ scale: 0.95 }}
             drag={isDraggable}
             dragSnapToOrigin
-            onDragStart={(e) => onDragStart && onDragStart(e, reagent)}
+            onDragStart={(e) => onDragStart && onDragStart(e as unknown as React.DragEvent<HTMLDivElement>, reagent)}
             className={`
                 relative w-32 h-24 p-3 flex items-center justify-center text-center
                 bg-yellow-100 shadow-md cursor-grab active:cursor-grabbing

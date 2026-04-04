@@ -114,7 +114,7 @@ const CHAPTER_MAPPINGS: Record<string, string[]> = {
 interface FocusDashboardProps {
     initialQuestions: Question[];
     taxonomy?: TaxonomyNode[];
-    onStart: (config: {chapters: string[]; difficulty: string; questionCount: number; mode: string; questionType: string}) => void;
+    onStart: (config: {chapters?: string[]; selectedScope?: string[]; difficulty: string; questionCount: number; mode: string; questionType: string; filterType?: string; selectionTier?: string}) => void;
 }
 
 export default function FocusDashboard({ initialQuestions, taxonomy = [], onStart }: FocusDashboardProps) {
@@ -236,7 +236,7 @@ export default function FocusDashboard({ initialQuestions, taxonomy = [], onStar
 
         onStart({
             mode: timerMode,
-            questionCount: questionCount > 50 ? 'Max' : questionCount,
+            questionCount: questionCount > 50 ? 55 : questionCount,
             difficulty,
             selectedScope,
             filterType: selectedTab,
@@ -578,7 +578,7 @@ export default function FocusDashboard({ initialQuestions, taxonomy = [], onStar
                                             <button
                                                 key={tab.id}
                                                 onClick={() => {
-                                                    setSelectedTab(tab.id);
+                                                    setSelectedTab(tab.id as 'chapter' | 'pyq' | 'saved');
                                                     setSelectedItems([]);
                                                     setIsScopeDropdownOpen(false);
                                                 }}

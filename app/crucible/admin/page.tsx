@@ -1303,8 +1303,8 @@ function AdminPageContent() {
                                             {/* Exam Board */}
                                             <div className="flex flex-col">
                                                 <span className="text-[10px] text-gray-500 mb-0.5">Board</span>
-                                                <select value={selectedQuestion.metadata.examBoard ?? ''}
-                                                    onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, examBoard: e.target.value as 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD' | '' } })}
+                                                <select value={(selectedQuestion.metadata.examBoard ?? '') as string}
+                                                    onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, examBoard: (e.target.value || undefined) as 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD' | undefined } })}
                                                     className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-blue-500 outline-none w-20">
                                                     <option value="">—</option>
                                                     <option value="JEE">JEE</option>
@@ -1316,8 +1316,8 @@ function AdminPageContent() {
                                             {/* Source Type */}
                                             <div className="flex flex-col">
                                                 <span className="text-[10px] text-gray-500 mb-0.5">Source</span>
-                                                <select value={selectedQuestion.metadata.sourceType ?? ''}
-                                                    onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, sourceType: e.target.value as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | '' } })}
+                                                <select value={(selectedQuestion.metadata.sourceType ?? '') as string}
+                                                    onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, sourceType: (e.target.value || undefined) as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined } })}
                                                     className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-blue-500 outline-none w-28">
                                                     <option value="">—</option>
                                                     <option value="PYQ">PYQ</option>
@@ -1331,7 +1331,7 @@ function AdminPageContent() {
                                             {isPYQ && (<>
                                                 <div className="flex flex-col">
                                                     <span className="text-[10px] text-gray-500 mb-0.5">Exam</span>
-                                                    <select value={ed?.exam ?? ''} onChange={(e) => patchExamDetails({ exam: e.target.value as 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG' | '' })}
+                                                    <select value={(ed?.exam ?? '') as string} onChange={(e) => patchExamDetails({ exam: (e.target.value || undefined) as 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG' | undefined })}
                                                         className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-24">
                                                         <option value="">—</option>
                                                         <option value="JEE_Main">JEE Main</option>
@@ -1341,7 +1341,7 @@ function AdminPageContent() {
                                                 </div>
                                                 <div className="flex flex-col">
                                                     <span className="text-[10px] text-gray-500 mb-0.5">Year</span>
-                                                    <select value={ed?.year ?? ''} onChange={(e) => patchExamDetails({ year: Number(e.target.value) })}
+                                                    <select value={(ed?.year ?? '') as string | number} onChange={(e) => patchExamDetails({ year: e.target.value ? Number(e.target.value) : undefined })}
                                                         className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none w-16">
                                                         <option value="">—</option>
                                                         {[2026,2025,2024,2023,2022,2021,2020,2019,2018,2017,2016,2015].map(y => <option key={y} value={y}>{y}</option>)}
@@ -1545,7 +1545,7 @@ function AdminPageContent() {
                                     <select
                                         value={selectedQuestion.metadata.questionNature ?? ''}
                                         onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                            metadata: { ...selectedQuestion.metadata, questionNature: e.target.value as 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis' | '' }
+                                            metadata: { ...selectedQuestion.metadata, questionNature: (e.target.value || undefined) as 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis' | undefined }
                                         })}
                                         className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs text-purple-300 focus:border-purple-500 outline-none"
                                     >

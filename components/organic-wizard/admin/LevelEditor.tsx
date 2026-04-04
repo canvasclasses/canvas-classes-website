@@ -8,8 +8,10 @@ import { uploadAsset } from '../../../lib/uploadUtils';
 
 interface Reagent {
     id: string;
-    display: string;
+    display?: string;
+    name?: string;
     isCorrect?: boolean;
+    [key: string]: unknown;
 }
 
 interface LevelEditorProps {
@@ -243,10 +245,10 @@ const LevelEditor: React.FC<LevelEditorProps> = ({ level, onUpdate, reagents }) 
     const addStep = () => {
         const newSteps = [...level.steps, {
             step_order: level.steps.length + 1,
-            reagent_id: reagents[0].id,
-            reagent_display: reagents[0].display,
+            reagent_id: reagents[0]?.id || '',
+            reagent_display: reagents[0]?.display || '',
             mechanism_hint: "Add hint..."
-        }];
+        }] as typeof level.steps;
         onUpdate({ ...level, steps: newSteps });
     };
 

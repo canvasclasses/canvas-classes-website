@@ -53,7 +53,7 @@ const LevelSidebar: React.FC<LevelSidebarProps> = ({
     React.useEffect(() => {
         const currentLevel = levels[currentLevelIndex];
         if (currentLevel && currentLevel.chapter) {
-            setExpandedChapters(prev => Array.from(new Set([...prev, currentLevel.chapter])));
+            setExpandedChapters(prev => Array.from(new Set<string>([...prev, currentLevel.chapter!])));
         }
     }, [currentLevelIndex, levels]);
 

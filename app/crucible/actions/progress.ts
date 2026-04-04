@@ -324,11 +324,11 @@ export async function getLeaderboard(
       .select('stats.streak_days stats.total_correct stats.overall_accuracy')
       .lean();
 
-    return leaders.map((user: Record<string, unknown>) => ({
-      userId: user._id,
-      streakDays: (user.stats as Record<string, unknown>)?.streak_days,
-      totalCorrect: (user.stats as Record<string, unknown>)?.total_correct,
-      accuracy: Math.round((user.stats as Record<string, unknown>)?.overall_accuracy as number),
+    return (leaders as Array<Record<string, unknown>>).map((user) => ({
+      userId: String(user._id),
+      streakDays: Number(((user.stats as Record<string, unknown>)?.streak_days ?? 0)),
+      totalCorrect: Number(((user.stats as Record<string, unknown>)?.total_correct ?? 0)),
+      accuracy: Math.round(Number(((user.stats as Record<string, unknown>)?.overall_accuracy ?? 0))),
     }));
   } catch (error) {
     console.error('Error fetching leaderboard:', error);

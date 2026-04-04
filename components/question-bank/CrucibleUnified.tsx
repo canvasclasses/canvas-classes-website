@@ -19,6 +19,8 @@ interface Question {
     difficulty?: string;
     examSource?: string;
     isTopPYQ?: boolean;
+    solution?: unknown;
+    options?: unknown;
     [key: string]: unknown;
 }
 
@@ -758,7 +760,11 @@ export default function CrucibleUnified({ initialQuestions, taxonomy = [] }: Cru
                                         {isExpanded && window.innerWidth < 1024 && (
                                             <div className="mt-4 pt-4 border-t border-white/5">
                                                 <QuestionCard
-                                                    question={question}
+                                                    question={{
+                                                        id: String((question as unknown as Record<string, unknown>).id || ''),
+                                                        textMarkdown: String((question as unknown as Record<string, unknown>).textMarkdown || ''),
+                                                        ...(question as unknown as Record<string, unknown>)
+                                                    }}
                                                     onAnswerSubmit={handleAnswerSubmit}
                                                     showFeedback={!!selectedOptionId && idx === currentIndex}
                                                     selectedOptionId={idx === currentIndex ? selectedOptionId : null}
@@ -776,18 +782,22 @@ export default function CrucibleUnified({ initialQuestions, taxonomy = [] }: Cru
                         <div className="flex-1 overflow-y-auto p-6 scroll-smooth bg-[#0B1120]">
                             <div className="bg-[#151E32] rounded-xl border border-white/5 p-6 mb-6 shadow-lg">
                                 <QuestionCard
-                                    question={activeQuestion}
+                                    question={{
+                                        id: String((activeQuestion as unknown as Record<string, unknown>).id || ''),
+                                        textMarkdown: String((activeQuestion as unknown as Record<string, unknown>).textMarkdown || ''),
+                                        ...(activeQuestion as unknown as Record<string, unknown>)
+                                    }}
                                     onAnswerSubmit={handleAnswerSubmit}
                                     showFeedback={!!selectedOptionId}
                                     selectedOptionId={selectedOptionId}
                                 />
                             </div>
                             
-                            {showSolution && activeQuestion.solution && (
+                            {showSolution && activeQuestion.solution ? (
                                 <div className="bg-black/20 rounded-xl p-6 border border-white/5">
-                                    <SolutionViewer solution={activeQuestion.solution} />
+                                    <SolutionViewer solution={activeQuestion.solution as Record<string, unknown>} />
                                 </div>
-                            )}
+                            ) : null}
                         </div>
                         
                         {/* Navigation */}

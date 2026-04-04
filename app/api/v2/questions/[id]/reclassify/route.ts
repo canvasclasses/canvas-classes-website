@@ -72,8 +72,13 @@ export async function POST(
     // 1. Load question
     const question = await QuestionV2.findById(questionId).lean() as unknown as {
       _id: string;
-      metadata: {chapter_id: string};
       display_id: string;
+      status: string;
+      metadata: {
+        chapter_id: string;
+        is_pyq?: boolean;
+        tags?: Array<{tag_id: string; weight: number}>;
+      };
     } | null;
     if (!question) {
       return NextResponse.json(

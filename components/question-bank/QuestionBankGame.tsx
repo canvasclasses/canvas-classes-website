@@ -11,6 +11,9 @@ interface Question {
     difficulty?: string;
     examSource?: string;
     isTopPYQ?: boolean;
+    options?: unknown;
+    solution?: unknown;
+    sourceReferences?: Array<{type?: string; pyqExam?: string; pyqShift?: string; ncertBook?: string; ncertChapter?: string; sourceName?: string}>;
     [key: string]: unknown;
 }
 import QuestionCard from '@/components/question-bank/QuestionCard';
@@ -394,7 +397,8 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
             filteredQuestions.forEach((q, idx) => {
                 const answer = examAnswers[idx];
                 if (answer) {
-                    const isCorrect = q.options.find((o: {id: string; isCorrect?: boolean}) => o.id === answer)?.isCorrect;
+                    const options = q.options as Array<{id: string; isCorrect?: boolean}> || [];
+                    const isCorrect = options.find((o: {id: string; isCorrect?: boolean}) => o.id === answer)?.isCorrect;
                     recordAttempt(q.id, q.chapterId || 'Unknown', q.difficulty || 'Medium', !!isCorrect);
 
                     // Log to backend API for 4-Bucket Architecture (exam mode)
@@ -435,7 +439,7 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
                 : (selectedExamSource === 'All Papers' || q.examSource === selectedExamSource);
 
             const tagMatch = isChapterMode
-                ? (selectedTags.length === 0 || (q.tagId && selectedTags.includes(q.tagId)))
+                ? (selectedTags.length === 0 || (q.tagId && selectedTags.includes(q.tagId as string)))
                 : true; // Disable tag filtering in Paper mode for now, or keep it optional
 
             const diffMatch = selectedDifficulty === 'Any Difficulty' || q.difficulty === selectedDifficulty;
@@ -535,7 +539,8 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
             const answer = examAnswers[idx];
             if (!answer) skippedCount++;
             else {
-                const correct = q.options.find((o: {id: string; isCorrect?: boolean}) => o.id === answer)?.isCorrect;
+                const options = q.options as Array<{id: string; isCorrect?: boolean}> || [];
+                const correct = options.find((o: {id: string; isCorrect?: boolean}) => o.id === answer)?.isCorrect;
                 if (correct) solvedCount++;
                 else incorrectCount++;
             }
@@ -591,16 +596,18 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
         return (
             <FocusDashboard
                 initialQuestions={initialQuestions}
-                taxonomy={taxonomy}
-                onStart={(config) => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                taxonomy={taxonomy as unknown as any}
+                onStart={(config: Record<string, unknown>) => {
                     // Filter Logic
                     let filtered = [...initialQuestions];
 
                     // 1. Filter by Scope
+                    const selectedScope = (config.selectedScope as string[]) || [];
                     if (config.filterType === 'chapter') {
-                        filtered = filtered.filter(q => config.selectedScope.includes(q.chapterId));
+                        filtered = filtered.filter(q => selectedScope.includes(q.chapterId as string));
                     } else if (config.filterType === 'pyq') {
-                        filtered = filtered.filter(q => config.selectedScope.includes(q.examSource));
+                        filtered = filtered.filter(q => selectedScope.includes(q.examSource as string));
                     }
 
                     // 2. Filter by Difficulty
@@ -631,7 +638,7 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
                         setShowShloka(false);
                         setFilteredQuestions(playSet);
                         setMode('playing');
-                        setGameMode(config.mode); // 'practice' or 'exam'
+                        setGameMode((config.mode as 'practice' | 'exam') || 'practice');
                         setCurrentIndex(0);
                         setQuestionStatus({});
                         setTimerSeconds(0);
@@ -775,7 +782,11 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
                                             {isExpanded && (
                                                 <div className="mt-3 pt-3 border-t border-white/5 animate-in slide-in-from-top-2">
                                                     <QuestionCard
-                                                        question={question}
+                                                        question={{
+                                                            id: String((question as unknown as Record<string, unknown>).id || ''),
+                                                            textMarkdown: String((question as unknown as Record<string, unknown>).textMarkdown || ''),
+                                                            ...(question as unknown as Record<string, unknown>)
+                                                        }}
                                                         onAnswerSubmit={(cor, optId) => {
                                                             setQuestionStatus(prev => ({ ...prev, [idx]: cor ? 'solved' : 'incorrect' }));
                                                             handleAnswerSubmit(cor, optId);
@@ -792,7 +803,7 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
                                                     </button>
                                                     {showSolutions[idx] && (
                                                         <div className="mt-3 p-3 bg-black/20 rounded-lg">
-                                                            <SolutionViewer solution={question.solution} sourceReferences={question.sourceReferences} imageScale={question.solutionImageScale} />
+                                                            <SolutionViewer solution={question.solution} sourceReferences={question.sourceReferences} imageScale={question.solutionImageScale as number} />
                                                         </div>
                                                     )}
                                                 </div>
@@ -889,7 +900,11 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
                                     {/* Question Card (Interactive) */}
                                     <div className="bg-[#151E32] rounded-xl border border-white/5 p-6 mb-6 shadow-lg">
                                         <QuestionCard
-                                            question={filteredQuestions[currentIndex]}
+                                            question={{
+                                                id: String((filteredQuestions[currentIndex] as unknown as Record<string, unknown>).id || ''),
+                                                textMarkdown: String((filteredQuestions[currentIndex] as unknown as Record<string, unknown>).textMarkdown || ''),
+                                                ...(filteredQuestions[currentIndex] as unknown as Record<string, unknown>)
+                                            }}
                                             onAnswerSubmit={(cor, optId) => {
                                                 handleAnswerSubmit(cor, optId);
                                             }}
@@ -944,9 +959,9 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
                                                 </div>
                                                 <h3 className="text-emerald-400 text-xs font-black uppercase tracking-widest mb-4">Detailed Explanation</h3>
                                                 <SolutionViewer
-                                                    solution={filteredQuestions[currentIndex].solution}
-                                                    sourceReferences={filteredQuestions[currentIndex].sourceReferences}
-                                                    imageScale={filteredQuestions[currentIndex].solutionImageScale}
+                                                    solution={filteredQuestions[currentIndex].solution as Record<string, unknown>}
+                                                    sourceReferences={filteredQuestions[currentIndex].sourceReferences as Record<string, unknown>[]}
+                                                    imageScale={filteredQuestions[currentIndex].solutionImageScale as number}
                                                 />
                                             </div>
                                         </div>
@@ -1076,7 +1091,11 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
                         {/* The Question */}
                         <div className="bg-[#151E32] rounded-xl md:rounded-2xl border border-white/5 p-3 md:p-8 shadow-sm">
                             <QuestionCard
-                                question={activeQuestion}
+                                question={{
+                                    id: String((activeQuestion as unknown as Record<string, unknown>).id || ''),
+                                    textMarkdown: String((activeQuestion as unknown as Record<string, unknown>).textMarkdown || ''),
+                                    ...(activeQuestion as unknown as Record<string, unknown>)
+                                }}
                                 onAnswerSubmit={handleAnswerSubmit}
                                 showFeedback={isReviewing} // Show feedback in review mode
                                 selectedOptionId={selectedOptionId}
@@ -1091,7 +1110,7 @@ export default function QuestionBankGame({ initialQuestions, taxonomy = [] }: Qu
                                     <SolutionViewer
                                         solution={activeQuestion.solution}
                                         sourceReferences={activeQuestion.sourceReferences}
-                                        imageScale={activeQuestion.solutionImageScale}
+                                        imageScale={activeQuestion.solutionImageScale as number}
                                     />
                                 </div>
                             </div>

@@ -115,7 +115,7 @@ export async function DELETE(
     }
 
     // Re-number remaining questions sequentially
-    set.questions.forEach((q, i: number) => {
+    set.questions.forEach((q: unknown, i: number) => {
       (q as unknown as { question_number?: number }).question_number = i + 1;
     });
 

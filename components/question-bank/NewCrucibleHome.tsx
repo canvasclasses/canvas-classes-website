@@ -151,7 +151,7 @@ export default function NewCrucibleHome({ initialQuestions, onStart }: NewCrucib
     
     const handleStart = () => {
         onStart({
-            chapters: selectedChapters.length > 0 ? selectedChapters : 'all',
+            chapters: selectedChapters.length > 0 ? selectedChapters : [],
             questionCount,
             difficulty,
             mode,

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import connectToDatabase from '@/lib/mongodb';
 import { StudentResponse } from '@/lib/models/StudentResponse';
-import { StudentChapterProfile } from '@/lib/models/StudentChapterProfile';
+import { StudentChapterProfile, IStudentChapterProfile } from '@/lib/models/StudentChapterProfile';
 import { updateProfileFromResponse, createEmptyProfile } from '@/lib/profileEngine';
 
 async function getUserId(req: NextRequest): Promise<string | null> {
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
     if (chapterId) {
       try {
         let profileDoc = await StudentChapterProfile.findOne({ studentId: userId, chapterId });
-        let profileData: Record<string, unknown> = profileDoc ? profileDoc.toObject() : createEmptyProfile(userId, chapterId);
+        let profileData: IStudentChapterProfile = profileDoc ? profileDoc.toObject() : createEmptyProfile(userId, chapterId);
         const updatedProfile = updateProfileFromResponse(profileData, {
           studentId: userId,
           sessionId,
@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
           sessionPhase,
           positionInSession,
           timestamp: new Date(),
-        });
+        } as Parameters<typeof updateProfileFromResponse>[1]);
         await StudentChapterProfile.findOneAndUpdate(
           { studentId: userId, chapterId },
           { $set: updatedProfile },

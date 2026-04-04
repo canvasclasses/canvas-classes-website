@@ -77,7 +77,7 @@ export default function BlogPostContent({ content }: { content: string }) {
         className?: string;
     }
 
-    const markdownComponents = {
+    const markdownComponents: Partial<Record<string, React.ElementType<Record<string, unknown>>>> = {
         p: ({ node, children, ...props }: MarkdownPProps) => {
             const textContent = typeof children === 'string' ? children :
                 (Array.isArray(children) ? children.map((c: React.ReactNode) => typeof c === 'string' ? c : '').join('') : '');
@@ -106,7 +106,7 @@ export default function BlogPostContent({ content }: { content: string }) {
                         return (
                             <div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl mx-auto" {...props}>
                                 {React.Children.map(validChildren, (child) =>
-                                    React.isValidElement(child) ? React.cloneElement(child, { className: 'w-full h-full' }) : child
+                                    React.isValidElement(child) ? React.cloneElement(child as React.ReactElement<Record<string, unknown>>, { className: 'w-full h-full' }) : child
                                 )}
                             </div>
                         );
@@ -119,7 +119,7 @@ export default function BlogPostContent({ content }: { content: string }) {
         img: ({ src, alt, className }: MarkdownImgProps) => (
             <div
                 className={`rounded-xl overflow-hidden border border-gray-800 shadow-lg bg-gray-900 cursor-pointer group relative ${className || 'max-w-2xl w-full mx-auto my-10'}`}
-                onClick={() => setLightboxImage(src)}
+                onClick={() => setLightboxImage(src ?? null)}
             >
                 <img src={src} alt={alt || ''} className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center pointer-events-none">

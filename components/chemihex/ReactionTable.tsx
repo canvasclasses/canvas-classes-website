@@ -119,8 +119,7 @@ export const ReactionTable = () => {
 
                                     {/* Data Cells */}
                                     {tableData.columns.map(col => {
-                                        // @ts-expect-error - Dynamic property access from JSON data
-                                        const val = row.data[col.id];
+                                        const val = (row.data as Record<string, string>)[col.id];
                                         const isActive = val && val !== '';
                                         const cellStyle = getCellClass(val);
 
@@ -132,10 +131,8 @@ export const ReactionTable = () => {
                                             >
                                                 <div
                                                     onClick={() => isActive && setSelectedCell({
-                                                        // @ts-expect-error - Dynamic property from row data
-                                                        reagent: row.reagent,
-                                                        // @ts-expect-error - Dynamic property access from JSON briefs
-                                                        mechanism: (row.briefs && row.briefs[col.id]) ? row.briefs[col.id] : row.mechanism,
+                                                        reagent: row.reagent as string,
+                                                        mechanism: (row.briefs && (row.briefs as Record<string, unknown>)[col.id]) ? (row.briefs as Record<string, unknown>)[col.id] as string : row.mechanism as string,
                                                         group: col.id,
                                                         groupLabel: col.label,
                                                         result: val

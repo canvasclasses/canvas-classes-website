@@ -55,7 +55,7 @@ export default function BohrModel() {
     hoveredN: -1,
     isAnimating: false,
     angle: 0,
-    photons: [] as Array<{x: number; y: number; life: number; vx: number; vy: number; color: string}>,
+    photons: [] as Array<{x: number; y: number; life: number; vx: number; vy: number; color: string; type?: 'emission' | 'absorption'; wl?: number; targetN?: number}>,
     burntLines: [] as { nm: number; color: string }[],
     atomW: 0, atomH: 0, atomCx: 0, atomCy: 0,
     specW: 0, specH: 0,
@@ -219,12 +219,12 @@ export default function BohrModel() {
 
       if (p.type === 'emission' && p.x > w) {
         s.photons.splice(i, 1);
-        recordLine(p.wl, p.color);
+        recordLine(p.wl ?? 400, p.color);
       } else if (p.type === 'absorption' && p.x >= cx - ORBITS[Math.round(s.elecN)]) {
         s.photons.splice(i, 1);
-        s.targetN = p.targetN;
+        s.targetN = p.targetN ?? 1;
         s.isAnimating = true;
-        recordLine(p.wl, 'rgba(0,0,0,0.8)');
+        recordLine(p.wl ?? 400, 'rgba(0,0,0,0.8)');
       }
     }
   }
@@ -414,7 +414,7 @@ export default function BohrModel() {
       setMathCb({ n1: n, n2: nInitial, wl, color, isAbsorption: false });
       setFeedbackCb({ main: `Photon emitted at ${wl} nm`, sub: info.text, color });
       setTimeout(() => {
-        s.photons.push({ type: 'emission', x: s.atomCx + ORBITS[nInitial], y: s.atomCy, vx: 7, color, wl });
+        s.photons.push({ type: 'emission', x: s.atomCx + ORBITS[nInitial], y: s.atomCy, vx: 7, vy: 0, life: 1, color, wl });
       }, 300);
     } else {
       const nInitial = Math.round(s.elecN);
@@ -423,7 +423,7 @@ export default function BohrModel() {
       const info = getSeriesInfo(nInitial);
       setMathCb({ n1: nInitial, n2: n, wl, color, isAbsorption: true });
       setFeedbackCb({ main: `Photon of ${wl} nm absorbed`, sub: info.text, color });
-      s.photons.push({ type: 'absorption', x: -10, y: s.atomCy, vx: 7, color, wl, targetN: n });
+      s.photons.push({ type: 'absorption', x: -10, y: s.atomCy, vx: 7, vy: 0, life: 1, color, wl, targetN: n });
     }
   }
 

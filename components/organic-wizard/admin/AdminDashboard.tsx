@@ -193,7 +193,7 @@ const AdminDashboard = () => {
                             <LevelEditor
                                 level={activeLevel}
                                 onUpdate={handleUpdateLevel}
-                                reagents={reagentsData}
+                                reagents={reagentsData as Array<{id: string; display?: string; name?: string; [key: string]: unknown}>}
                             />
                         </div>
 

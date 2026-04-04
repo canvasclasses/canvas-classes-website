@@ -23,7 +23,7 @@ export default function AtomicModels() {
     cx: number;
     cy: number;
     particles: Array<{x: number; y: number; vx: number; vy: number; trail: Array<{x: number; y: number}>; type: string; active: boolean}>;
-    flashes: Array<{x: number; y: number; life: number}>;
+    flashes: Array<{x: number; y: number; life: number; ctx: CanvasRenderingContext2D}>;
     gunY: number;
     autoFire: boolean;
     slowMotion: boolean;
@@ -45,7 +45,7 @@ export default function AtomicModels() {
       cx: 0,
       cy: 0,
       particles: [] as Array<{x: number; y: number; vx: number; vy: number; trail: Array<{x: number; y: number}>; type: string; active: boolean}>,
-      flashes: [] as Array<{x: number; y: number; life: number}>,
+      flashes: [] as Array<{x: number; y: number; life: number; ctx: CanvasRenderingContext2D}>,
       gunY: 0,
       autoFire: true,
       slowMotion: false,

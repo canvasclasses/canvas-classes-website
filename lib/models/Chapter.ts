@@ -75,9 +75,9 @@ ChapterSchema.index({ class_level: 1, subject: 1 });
 ChapterSchema.index({ is_active: 1 });
 
 // Pre-save middleware
-ChapterSchema.pre('save', function(this: mongoose.Document & IChapter, next: (err?: Error) => void) {
-  const doc = this as unknown as {updated_at?: Date};
-  doc.updated_at = new Date();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ChapterSchema.pre('save', function(this: any, next: any) {
+  this.updated_at = new Date();
   next();
 });
 

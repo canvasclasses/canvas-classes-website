@@ -14,6 +14,15 @@ export interface IUserRole extends Document {
   notes?: string;
 }
 
+const subjectValidator = function (this: IUserRole, subjects: Subject[]): boolean {
+  // Super admins should have empty subjects array (they get all)
+  if (this.role === 'super_admin') return subjects.length === 0;
+  // Subject admins must have at least one subject
+  if (this.role === 'subject_admin') return subjects.length > 0;
+  // Viewers can have subjects (read-only access)
+  return true;
+};
+
 const UserRoleSchema = new Schema<IUserRole>(
   {
     email: {
@@ -35,17 +44,11 @@ const UserRoleSchema = new Schema<IUserRole>(
       enum: ['chemistry', 'physics', 'mathematics'],
       default: [],
       validate: {
-        validator: function (this: IUserRole, subjects: Subject[]): boolean {
-          // Super admins should have empty subjects array (they get all)
-          if (this.role === 'super_admin') return subjects.length === 0;
-          // Subject admins must have at least one subject
-          if (this.role === 'subject_admin') return subjects.length > 0;
-          // Viewers can have subjects (read-only access)
-          return true;
-        },
+        validator: subjectValidator,
         message: 'Invalid subjects configuration for role',
       },
-    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } as unknown as any,
     granted_by: {
       type: String,
       required: true,

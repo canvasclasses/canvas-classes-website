@@ -368,9 +368,9 @@ QuestionSchema.index({ deleted_at: 1 }); // For soft deletes
 QuestionSchema.index({ 'metadata.exam_source.year': 1, 'metadata.exam_source.exam': 1 });
 
 // Pre-save middleware to update timestamps
-QuestionSchema.pre('save', function (this: mongoose.Document & IQuestion, next: (err?: Error) => void) {
-  const doc = this as unknown as {updated_at?: Date};
-  doc.updated_at = new Date();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+QuestionSchema.pre('save', function (this: any, next: any) {
+  this.updated_at = new Date();
   next();
 });
 

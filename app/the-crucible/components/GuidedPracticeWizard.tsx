@@ -26,9 +26,13 @@ interface ApiQuestion {
   metadata?: {
     difficultyLevel?: number;
     chapter_id?: string;
+    subject?: string;
     tags?: unknown[];
     is_pyq?: boolean;
     is_top_pyq?: boolean;
+    microConcept?: string;
+    isMultiConcept?: boolean;
+    exam_source?: unknown;
   };
   svg_scales?: Record<string, number>;
 }
@@ -81,9 +85,9 @@ function extractTags(qs: Question[], chapterId: string): ConceptTag[] {
     }
   }
   const chapterTagIds = new Set(
-    TAXONOMY_FROM_CSV
-      .filter((n: { type?: string; parent_id?: string; id?: string }) => n.type === 'topic' && n.parent_id === chapterId)
-      .map((n: { type?: string; parent_id?: string; id?: string }) => n.id)
+    (TAXONOMY_FROM_CSV as Array<{ type?: string; parent_id?: string; id?: string }>)
+      .filter((n) => n.type === 'topic' && n.parent_id === chapterId)
+      .map((n) => n.id)
   );
   return Array.from(map.entries())
     .filter(([id]) => chapterTagIds.has(id))
@@ -258,25 +262,25 @@ export default function GuidedPracticeWizard({ chapters, onBack, preSelectedChap
         id: q._id,
         display_id: q.display_id || q._id?.slice(0,8)?.toUpperCase() || 'Q',
         question_text: { markdown: q.question_text?.markdown || '' },
-        type: q.type,
-        options: q.options,
-        answer: q.answer,
+        type: (q.type as 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ' | 'WKEX') || 'SCQ',
+        options: (q.options as Array<{ id: string; text: string; is_correct: boolean }> | undefined) || [],
+        answer: (q.answer as { integer_value?: number; correct_option?: string } | undefined) || {},
         solution: {
           text_markdown: q.solution?.text_markdown || '',
-          video_url: q.solution?.video_url,
-          asset_ids: q.solution?.asset_ids,
+          video_url: q.solution?.video_url || undefined,
+          asset_ids: (q.solution?.asset_ids as { audio?: string[] } | undefined) || undefined,
           latex_validated: q.solution?.latex_validated || false,
         },
         metadata: {
-          difficultyLevel: q.metadata?.difficultyLevel ?? 3,
+          difficultyLevel: ((q.metadata?.difficultyLevel ?? 3) as 1 | 2 | 3 | 4 | 5),
           chapter_id: q.metadata?.chapter_id || '',
-          subject: q.metadata?.subject || 'chemistry',
-          tags: q.metadata?.tags || [],
+          subject: (q.metadata?.subject || 'chemistry') as 'chemistry' | 'physics' | 'maths' | 'biology',
+          tags: ((q.metadata?.tags as Array<{ tag_id: string; weight: number }>) || []),
           microConcept: q.metadata?.microConcept,
           isMultiConcept: q.metadata?.isMultiConcept ?? false,
           is_pyq: q.metadata?.is_pyq || false,
           is_top_pyq: q.metadata?.is_top_pyq || false,
-          exam_source: q.metadata?.exam_source,
+          exam_source: (q.metadata?.exam_source as Record<string, unknown> | undefined),
         },
         svg_scales: q.svg_scales || {},
       }));

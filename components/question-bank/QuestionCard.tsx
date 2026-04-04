@@ -17,7 +17,7 @@ interface Question {
     examSource?: string;
     isTopPYQ?: boolean;
     [key: string]: unknown;
-    options?: Array<{id: string; isCorrect?: boolean}>;
+    options?: Array<{id: string; text?: string; isCorrect?: boolean; imageScale?: number}>;
     integerAnswer?: string;
     imageScale?: number;
 }
@@ -152,13 +152,13 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                     // Logic: Determine layout based on content
                     // User Request: "The grid is best when we have 4 images... otherwise keep the text options in one line only"
 
-                    const isAllImages = question.options?.every((o: {text: string}) =>
-                        o.text.trim().startsWith('![') ||
-                        o.text.includes('<img') ||
-                        o.text.includes('[smiles:')
+                    const isAllImages = question.options?.every((o: {text?: string}) =>
+                        (o.text || '').trim().startsWith('![') ||
+                        (o.text || '').includes('<img') ||
+                        (o.text || '').includes('[smiles:')
                     );
 
-                    const isVeryShort = question.options?.every((o: {text: string}) => o.text.length < 10 && !o.text.includes('\n'));
+                    const isVeryShort = question.options?.every((o: {text?: string}) => (o.text || '').length < 10 && !(o.text || '').includes('\n'));
 
                     // Strict Rule: Grid ONLY if all are images or very short labels
                     if (isAllImages || isVeryShort) return 'grid-cols-2';
@@ -166,7 +166,7 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                     // Default to List for everything else (text, mixed content, long formulas)
                     return 'grid-cols-1';
                 })()}`}>
-                    {question.options?.map((option: {id: string; text: string; isCorrect?: boolean}) => {
+                    {question.options?.map((option: {id: string; text?: string; isCorrect?: boolean; imageScale?: number}) => {
                         const isSelected = selectedOptionId === option.id;
                         const isCorrect = option.isCorrect;
 
@@ -200,9 +200,9 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                                         {option.id.split('_').pop()?.toUpperCase()}
                                     </span>
                                     <span className="flex-1 text-sm md:text-base font-medium text-left">
-                                        {option.text.includes('[smiles:') ? (
+                                        {(option.text || '').includes('[smiles:') ? (
                                             <span className="flex flex-col gap-2">
-                                                {option.text.split(/(\[smiles:(?:[^\[\]]|\[[^\]]*\])*\])/).map((part: string, idx: number) => {
+                                                {(option.text || '').split(/(\[smiles:(?:[^\[\]]|\[[^\]]*\])*\])/).map((part: string, idx: number) => {
                                                     if (part.startsWith('[smiles:') && part.endsWith(']')) {
                                                         const inner = part.slice(8, -1);
                                                         const [code, ...params] = inner.split('|');
@@ -245,7 +245,7 @@ export default function QuestionCard({ question, onAnswerSubmit, showFeedback, s
                                                     )
                                                 }}
                                             >
-                                                {processContent(option.text)}
+                                                {processContent(option.text || '')}
                                             </ReactMarkdown>
                                         )}
                                     </span>

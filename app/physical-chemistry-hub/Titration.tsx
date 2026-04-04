@@ -4,6 +4,13 @@ import { useEffect, useRef } from 'react';
 
 interface Chart {
   destroy: () => void;
+  data: {
+    datasets: Array<{
+      data: Array<{ x: number; y: number }> | number[];
+      borderColor?: string;
+    }>;
+  };
+  update: () => void;
 }
 
 interface ChartWindow extends Window {
@@ -27,7 +34,7 @@ export default function Titration() {
   useEffect(() => {
     // Load Chart.js dynamically if not already loaded
     const loadChart = async () => {
-      if (!(window as ChartWindow).Chart) {
+      if (!(window as unknown as ChartWindow).Chart) {
         await new Promise<void>((resolve, reject) => {
           const script = document.createElement('script');
           script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
@@ -256,7 +263,7 @@ export default function Titration() {
   }
 
   function initChart() {
-    const Chart = (window as ChartWindow).Chart;
+    const Chart = (window as unknown as ChartWindow).Chart;
     if (!Chart || !chartRef.current) return;
 
     if (chartInstanceRef.current) {
@@ -292,7 +299,7 @@ export default function Titration() {
     };
 
     type ChartConstructor = new (ctx: CanvasRenderingContext2D, config: object) => Chart;
-    const ChartConstructor = (window as ChartWindow).Chart as unknown as ChartConstructor;
+    const ChartConstructor = (window as unknown as ChartWindow).Chart as unknown as ChartConstructor;
     chartInstanceRef.current = new ChartConstructor(chartRef.current.getContext('2d')!, {
       type: 'line',
       plugins: [indicatorBandsPlugin],

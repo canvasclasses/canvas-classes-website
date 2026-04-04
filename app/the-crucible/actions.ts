@@ -84,7 +84,7 @@ export async function getQuestionBySlug(
       id: toString(doc._id),
       display_id: doc.display_id || toString(doc._id)?.slice(0, 8)?.toUpperCase() || 'Q',
       question_text: { markdown: doc.question_text?.markdown || '' },
-      type: doc.type,
+      type: (doc.type as 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ' | 'WKEX') || 'SCQ',
       options: doc.options || [],
       answer: doc.answer || {},
       solution: {
@@ -94,9 +94,9 @@ export async function getQuestionBySlug(
         latex_validated: doc.solution?.latex_validated || false,
       },
       metadata: {
-        difficultyLevel: doc.metadata?.difficultyLevel || 3,
+        difficultyLevel: (doc.metadata?.difficultyLevel || 3) as 1 | 2 | 3 | 4 | 5,
         chapter_id: doc.metadata?.chapter_id || '',
-        subject: doc.metadata?.subject || 'chemistry',
+        subject: (doc.metadata?.subject || 'chemistry') as 'chemistry' | 'physics' | 'maths' | 'biology',
         tags: doc.metadata?.tags || [],
         is_pyq: doc.metadata?.is_pyq || false,
         is_top_pyq: doc.metadata?.is_top_pyq || false,

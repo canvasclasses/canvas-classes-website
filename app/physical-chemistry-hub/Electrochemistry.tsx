@@ -110,7 +110,7 @@ export default function Electrochemistry() {
             role="tab"
             aria-selected={tab === id}
             className={`ec-tab${tab === id ? ' ec-tab--active' : ''}`}
-            onClick={() => setTab(id as string)}
+            onClick={() => setTab(id as 'sim' | 'howit' | 'theory')}
           >
             {label}
           </button>
@@ -460,7 +460,7 @@ function drawScene(ctx:CanvasRenderingContext2D, W:number, H:number, s:CellState
   }
 }
 
-function drawBeaker(ctx, cx, top, bw, bh, cell:HalfCell, conc, erosion, deposit, isGalv, isElec, isAnode, time) {
+function drawBeaker(ctx: CanvasRenderingContext2D, cx: number, top: number, bw: number, bh: number, cell:HalfCell, conc: number, erosion: number, deposit: number, isGalv: boolean, isElec: boolean, isAnode: boolean, time: number) {
   const bx=cx-bw/2, st=top+30, sh=bh-30;
   const al=Math.min(0.8, 0.3+conc*0.28);
   const sc=hexRgb(cell.solutionColor);
@@ -539,7 +539,7 @@ function drawBeaker(ctx, cx, top, bw, bh, cell:HalfCell, conc, erosion, deposit,
   }
 }
 
-function drawElectrode(ctx, cx, bTop, bh, cell:HalfCell, erosion, deposit, isAnode, isGalv) {
+function drawElectrode(ctx: CanvasRenderingContext2D, cx: number, bTop: number, bh: number, cell:HalfCell, erosion: number, deposit: number, isAnode: boolean, isGalv: boolean) {
   const eW=22, eH=145-erosion, ex=cx-eW/2, ey=bTop-20;
   const ec=hexRgb(cell.electrodeColor);
 
@@ -576,7 +576,7 @@ function drawElectrode(ctx, cx, bTop, bh, cell:HalfCell, erosion, deposit, isAno
   ctx.textAlign='center'; ctx.fillText(cell.symbol, cx, ey+eH/2+5);
 }
 
-function drawSaltBridge(ctx, AX, CX, BT, BW, midY, isGalv, isElec, time) {
+function drawSaltBridge(ctx: CanvasRenderingContext2D, AX: number, CX: number, BT: number, BW: number, midY: number, isGalv: boolean, isElec: boolean, time: number) {
   const lx=AX+BW/2-10, rx=CX-BW/2+10, R=13, D=46, midX=(lx+rx)/2;
   const topY = midY-D-R;
   const dipDepth = 35; /* How deep the bridge dips into solution */
@@ -623,7 +623,7 @@ function drawSaltBridge(ctx, AX, CX, BT, BW, midY, isGalv, isElec, time) {
   }
 }
 
-function drawWire(ctx, AX, CX, BT, WY, W, isGalv) {
+function drawWire(ctx: CanvasRenderingContext2D, AX: number, CX: number, BT: number, WY: number, W: number, isGalv: boolean) {
   const mL=W/2-50, mR=W/2+50;
   ctx.lineWidth=3; ctx.lineCap='round';
   ctx.strokeStyle=isGalv?'#6b7280':'#c0392b';
@@ -632,7 +632,7 @@ function drawWire(ctx, AX, CX, BT, WY, W, isGalv) {
   ctx.beginPath(); ctx.moveTo(CX,BT-36); ctx.lineTo(CX,WY); ctx.lineTo(mR,WY); ctx.stroke();
 }
 
-function drawVoltmeter(ctx, cx, cy, ecell) {
+function drawVoltmeter(ctx: CanvasRenderingContext2D, cx: number, cy: number, ecell: number) {
   const W=88, H=56, x=cx-W/2, y=cy-H/2+16;
   /* body */
   ctx.fillStyle='#242c3a'; ctx.strokeStyle='#374151'; ctx.lineWidth=1;
@@ -652,7 +652,7 @@ function drawVoltmeter(ctx, cx, cy, ecell) {
   ctx.fillText('voltmeter', cx, y+H+13);
 }
 
-function drawBattery(ctx, cx, y, voltage, isElec) {
+function drawBattery(ctx: CanvasRenderingContext2D, cx: number, y: number, voltage: number, isElec: boolean) {
   const bw=82, bh=34, bx=cx-bw/2;
   const col = isElec ? '#d97706' : '#6b7280';
   ctx.fillStyle = isElec ? '#1c0f00' : '#1a1f2a';
@@ -670,7 +670,7 @@ function drawBattery(ctx, cx, y, voltage, isElec) {
   ctx.fillText('battery', cx, y+bh/2+25);
 }
 
-function drawLabels(ctx, AX, CX, BT, BW, isGalv, isElec, an:HalfCell, ca:HalfCell) {
+function drawLabels(ctx: CanvasRenderingContext2D, AX: number, CX: number, BT: number, BW: number, isGalv: boolean, isElec: boolean, an:HalfCell, ca:HalfCell) {
   const ac = isGalv ? '#e57373' : '#5b9bd5';
   const cc = isGalv ? '#5b9bd5' : '#e57373';
   ctx.textAlign='center';
@@ -717,7 +717,7 @@ function tickParticles(s:CellState, isGalv:boolean, isElec:boolean, an:HalfCell,
   s.particles.forEach(p => { p.progress+=p.speed; if (p.progress>=1) p.active=false; });
 }
 
-function drawParticles(ctx, particles:Particle[], AX, CX, WY, BMID, BW, BT, isGalv, isElec) {
+function drawParticles(ctx: CanvasRenderingContext2D, particles:Particle[], AX: number, CX: number, WY: number, BMID: number, BW: number, BT: number, isGalv: boolean, isElec: boolean) {
   const fromX = isGalv?AX:CX, toX = isGalv?CX:AX;
   const lx=AX+BW/2-10, rx=CX-BW/2+10, D=46, R=13, bridgeY=BMID-D-R;
   particles.forEach(p => {
@@ -745,7 +745,7 @@ function drawParticles(ctx, particles:Particle[], AX, CX, WY, BMID, BW, BT, isGa
 }
 
 /* ════ NERNST TAB ════ */
-function NernstTab({ anode, cathode, n, concAnode, concCathode, eStd, eActual }) {
+function NernstTab({ anode, cathode, n, concAnode, concCathode, eStd, eActual }: { anode: HalfCell; cathode: HalfCell; n: number; concAnode: number; concCathode: number; eStd: number; eActual: number }) {
   const q    = concAnode / Math.max(1e-10, concCathode);
   const corr = -(R_GAS*TEMP/(n*F_CONST))*Math.log(q);
   return (
@@ -895,7 +895,7 @@ function FaradayTab() {
 }
 
 /* ════ HOW IT WORKS TAB ════ */
-function HowItWorksTab({ anode, cathode }) {
+function HowItWorksTab({ anode, cathode }: { anode: HalfCell; cathode: HalfCell }) {
   return (
     <div>
       <div className="ec-herocard">

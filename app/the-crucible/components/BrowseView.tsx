@@ -131,9 +131,9 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
   // Concept tags available for the current chapter (from taxonomy)
   const availableConceptTags = useMemo(() => {
     if (!chapterId) return [];
-    return TAXONOMY_FROM_CSV
-      .filter((node: { type?: string; parent_id?: string; id?: string; name?: string }) => node.type === 'topic' && node.parent_id === chapterId)
-      .map((node: { type?: string; parent_id?: string; id?: string; name?: string }) => ({ id: node.id || '', name: node.name || '' }));
+    return (TAXONOMY_FROM_CSV as Array<{ type?: string; parent_id?: string; id?: string; name?: string }>)
+      .filter((node) => node.type === 'topic' && node.parent_id === chapterId)
+      .map((node) => ({ id: node.id || '', name: node.name || '' }));
   }, [chapterId]);
 
   // Distinct years available for the selected PYQ source

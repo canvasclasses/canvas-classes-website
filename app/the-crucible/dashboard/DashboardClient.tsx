@@ -179,7 +179,7 @@ export default function DashboardClient({ testResults, chapterMap, isLocalDev }:
             onChapterClick={(chapterId) => router.push(`/the-crucible/${chapterId}`)}
           />
           <RecentTests
-            tests={testResults.slice(0, 5) as TestResultDoc[]}
+            tests={testResults.slice(0, 5) as unknown as ITestResult[]}
             chapterMap={chapterMap}
             onRetake={(chapterId) => router.push(`/the-crucible/${chapterId}?mode=test`)}
           />

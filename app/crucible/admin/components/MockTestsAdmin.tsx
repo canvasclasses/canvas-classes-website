@@ -912,7 +912,7 @@ export default function MockTestsAdmin() {
                 </div>
                 {solutionLatex && solutionLatex.errors.length > 0 && (
                   <div className="mb-2 text-[11px] text-red-400 bg-red-900/20 border border-red-600/30 rounded-lg px-3 py-2 space-y-0.5">
-                    {solutionLatex.errors.map((e, i) => <div key={i}>⚠ {e}</div>)}
+                    {solutionLatex.errors.map((e, i) => <div key={i}>⚠ {e.message}</div>)}
                   </div>
                 )}
                 {solutionLatex && solutionLatex.errors.length === 0 && (

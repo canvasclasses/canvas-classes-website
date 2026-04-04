@@ -109,9 +109,9 @@ export default function AnalyticsDashboard({ questions, chapters, onClose, selec
 
     // ── Global stats (across all loaded questions) ───────────────────────────
     const totalQuestions = questions.length;
-    const fullyTagged = questions.filter(q => q.metadata.chapter_id && q.metadata.tags?.length > 0).length;
+    const fullyTagged = questions.filter(q => q.metadata.chapter_id && (q.metadata.tags?.length ?? 0) > 0).length;
     const missingChapter = questions.filter(q => !q.metadata.chapter_id).length;
-    const missingTag = questions.filter(q => q.metadata.chapter_id && (!q.metadata.tags || q.metadata.tags.length === 0)).length;
+    const missingTag = questions.filter(q => q.metadata.chapter_id && ((q.metadata.tags?.length ?? 0) === 0)).length;
     const taggedPercentage = totalQuestions > 0 ? ((fullyTagged / totalQuestions) * 100).toFixed(1) : '0';
 
     // Chapter options for the selector (only those with questions)
@@ -155,9 +155,9 @@ export default function AnalyticsDashboard({ questions, chapters, onClose, selec
 
     // ── 2. Difficulty breakdown ──────────────────────────────────────────────
     const diffData = [
-        { label: 'Level 1-2', value: chapterQs.filter(q => q.metadata.difficultyLevel <= 2).length, count: chapterQs.filter(q => q.metadata.difficultyLevel <= 2).length, color: '#10b981' },
-        { label: 'Level 3', value: chapterQs.filter(q => q.metadata.difficultyLevel === 3).length, count: chapterQs.filter(q => q.metadata.difficultyLevel === 3).length, color: '#f59e0b' },
-        { label: 'Level 4-5', value: chapterQs.filter(q => q.metadata.difficultyLevel >= 4).length, count: chapterQs.filter(q => q.metadata.difficultyLevel >= 4).length, color: '#ef4444' },
+        { label: 'Level 1-2', value: chapterQs.filter(q => (q.metadata.difficultyLevel ?? 0) <= 2).length, count: chapterQs.filter(q => (q.metadata.difficultyLevel ?? 0) <= 2).length, color: '#10b981' },
+        { label: 'Level 3', value: chapterQs.filter(q => (q.metadata.difficultyLevel ?? 0) === 3).length, count: chapterQs.filter(q => (q.metadata.difficultyLevel ?? 0) === 3).length, color: '#f59e0b' },
+        { label: 'Level 4-5', value: chapterQs.filter(q => (q.metadata.difficultyLevel ?? 0) >= 4).length, count: chapterQs.filter(q => (q.metadata.difficultyLevel ?? 0) >= 4).length, color: '#ef4444' },
     ];
 
     // ── 3. Exam source breakdown ─────────────────────────────────────────────
@@ -187,8 +187,8 @@ export default function AnalyticsDashboard({ questions, chapters, onClose, selec
     // ── Global tag frequency (for overall tab) ───────────────────────────────
     const tagFrequency: Record<string, number> = {};
     questions.forEach(q => {
-        if (q.metadata.tags?.length > 0) {
-            q.metadata.tags.forEach((tag) => {
+        if ((q.metadata.tags?.length ?? 0) > 0) {
+            (q.metadata.tags ?? []).forEach((tag) => {
                 tagFrequency[tag.tag_id] = (tagFrequency[tag.tag_id] || 0) + 1;
             });
         }
@@ -197,7 +197,7 @@ export default function AnalyticsDashboard({ questions, chapters, onClose, selec
 
     const chapterStats = chapters.map(ch => {
         const chQs = questions.filter(q => q.metadata.chapter_id === ch._id);
-        const chFullyTagged = chQs.filter(q => q.metadata.tags?.length > 0).length;
+        const chFullyTagged = chQs.filter(q => (q.metadata.tags?.length ?? 0) > 0).length;
         return {
             name: ch.name,
             total: chQs.length,

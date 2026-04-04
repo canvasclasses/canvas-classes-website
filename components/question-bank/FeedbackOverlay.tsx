@@ -65,7 +65,7 @@ export default function FeedbackOverlay({ isOpen, isCorrect, trap, onNext, onVie
                                 ) : trap ? (
                                     <div className="text-sm md:text-base text-amber-100 font-medium leading-relaxed">
                                         <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
-                                            {trap.message}
+                                            {trap.message as string || ''}
                                         </ReactMarkdown>
                                     </div>
                                 ) : (

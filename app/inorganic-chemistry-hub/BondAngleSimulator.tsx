@@ -261,7 +261,7 @@ const MoleculeVisualizer = ({ data, hideAngle = false, idSuffix = "main" }: { da
   let topCloudColor = '';
 
   if (data.top_label) {
-    const topEnDiff = data.top_en - data.c_en;
+    const topEnDiff = (data.top_en ?? 0) - data.c_en;
     const topMinT = (cRadius + 8) / bondLen;
     const topMaxT = 1 - ((topRadius + 8) / bondLen);
     topBondT = Math.max(topMinT, Math.min(topMaxT, 0.5 + (topEnDiff * 0.12)));
@@ -386,7 +386,7 @@ const MoleculeVisualizer = ({ data, hideAngle = false, idSuffix = "main" }: { da
       )}
 
       {/* Bonds */}
-      {data.top_label && renderBond(cx, cy, topX, topY, data.topBond, topUx, topUy, topPx, topPy, topRadius)}
+      {data.top_label && renderBond(cx, cy, topX, topY, data.topBond ?? 'single', topUx, topUy, topPx, topPy, topRadius)}
       {renderBond(cx, cy, leftX, leftY, data.leftBond, lUx, lUy, lPx, lPy, tRadius)}
       {renderBond(cx, cy, rightX, rightY, data.rightBond, rUx, rUy, rPx, rPy, tRadius)}
 
@@ -394,7 +394,7 @@ const MoleculeVisualizer = ({ data, hideAngle = false, idSuffix = "main" }: { da
         {data.top_label && (
           <>
             <circle cx={topEx} cy={topEy} r={12 + topRepulsionFactor * 17 + (data.topBond === 'double' ? 7 : 0)} fill={topCloudColor} filter={`url(#cloudGlow-${idSuffix})`} className="transition-all duration-300" />
-            {renderElectrons(data.topBond, topEx, topEy, topPx, topPy, topUx, topUy)}
+            {renderElectrons(data.topBond ?? 'single', topEx, topEy, topPx, topPy, topUx, topUy)}
           </>
         )}
       
@@ -483,6 +483,7 @@ const App = () => {
     if (activeTab === 'trends') {
       return {
         id: activeMolecule.id,
+        formula: activeMolecule.formula,
         idealAngle: activeMolecule.idealAngle,
         angle: activeMolecule.angle,
         c_label: activeMolecule.c_label,
@@ -492,10 +493,10 @@ const App = () => {
         t_en: activeMolecule.t_en,
         leftBond: activeMolecule.leftBond || 'single',
         rightBond: activeMolecule.rightBond || 'single',
-        charge: (activeMolecule as Partial<typeof activeMolecule>).charge || null,
-        top_label: (activeMolecule as Partial<typeof activeMolecule>).top_label || null,
-        top_en: (activeMolecule as Partial<typeof activeMolecule>).top_en || null,
-        topBond: (activeMolecule as Partial<typeof activeMolecule>).topBond || null,
+        charge: ('charge' in activeMolecule ? (activeMolecule as unknown as Record<string, unknown>).charge : null) || null,
+        top_label: ('top_label' in activeMolecule ? (activeMolecule as unknown as Record<string, unknown>).top_label : null) || null,
+        top_en: ('top_en' in activeMolecule ? (activeMolecule as unknown as Record<string, unknown>).top_en : null) || null,
+        topBond: ('topBond' in activeMolecule ? (activeMolecule as unknown as Record<string, unknown>).topBond : null) || null,
       };
     } else {
       let base = 109.5; 
@@ -506,6 +507,7 @@ const App = () => {
       
       return {
         id: 'sandbox',
+        formula: 'Custom',
         idealAngle: 109.5,
         angle: Math.max(85, Math.min(180, base)),
         c_label: 'C',
@@ -666,7 +668,7 @@ const App = () => {
 
               </div>
             ) : (
-              <MoleculeVisualizer data={displayData} />
+              <MoleculeVisualizer data={displayData as MoleculeData} />
             )}
           </div>
 

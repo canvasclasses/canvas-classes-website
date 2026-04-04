@@ -4,6 +4,12 @@ import connectToDatabase from '@/lib/mongodb';
 import { UserProgress } from '@/lib/models/UserProgress';
 import { QuestionV2 } from '@/lib/models/Question.v2';
 
+interface StarredEntry {
+    question_id: string;
+    chapter_id: string;
+    starred_at: Date;
+}
+
 async function getUserId(req: NextRequest): Promise<string | null> {
     const authHeader = req.headers.get('Authorization');
     if (!authHeader?.startsWith('Bearer ')) return null;
@@ -27,12 +33,6 @@ export async function GET(req: NextRequest) {
         if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         await connectToDatabase();
-
-        interface StarredEntry {
-            question_id: string;
-            chapter_id: string;
-            starred_at: Date;
-        }
 
         const progress = await UserProgress.findById(userId).lean() as unknown as {
             starred_questions?: StarredEntry[];

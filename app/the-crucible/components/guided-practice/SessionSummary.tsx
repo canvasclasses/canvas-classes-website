@@ -11,6 +11,12 @@ import type { MicroFeedback, ConceptLevel, UserConceptProfile } from '@/lib/adap
 import { updateConceptLevel } from '@/lib/adaptiveEngine';
 import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 
+interface ReflectionAnswer {
+  confidence: 'very-confident' | 'somewhat-confident' | 'not-confident' | null;
+  preparation: 'studied-and-practiced' | 'studied-only' | 'not-covered' | null;
+  difficulty: 'too-easy' | 'just-right' | 'too-hard' | null;
+}
+
 // Build a lookup map for concept tag IDs → human-readable names
 const TAG_NAME_MAP = new Map<string, string>(
   TAXONOMY_FROM_CSV.filter(n => n.type === 'topic').map(n => [n.id, n.name])
@@ -127,7 +133,7 @@ export default function SessionSummary({
 }: SessionSummaryProps) {
   const writtenRef = useRef(false);
   const [showReflection, setShowReflection] = useState(true);
-  const [reflectionData, setReflectionData] = useState<Record<string, unknown> | null>(null);
+  const [reflectionData, setReflectionData] = useState<ReflectionAnswer | null>(null);
 
   const totalAttempted = feedbackHistory.length + conceptBaseline.length;
   const totalCorrect = feedbackHistory.filter(f => f.answeredCorrectly).length +
@@ -148,7 +154,7 @@ export default function SessionSummary({
     .filter(f => !f.answeredCorrectly)
     .map(f => f.questionId);
 
-  const handleReflectionComplete = (answers: Record<string, unknown>) => {
+  const handleReflectionComplete = (answers: ReflectionAnswer) => {
     setReflectionData(answers);
     setShowReflection(false);
     // TODO: Send reflection data to API for storage

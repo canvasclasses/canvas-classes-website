@@ -144,7 +144,7 @@ export default function ChapterPage() {
         className?: string;
     }
 
-    const markdownComponents = {
+    const markdownComponents: Partial<Record<string, React.ElementType<Record<string, unknown>>>> = {
         // Ordered Lists → Numbered Section Headings with Teal Badges
         ol: ({ children, start, ...props }: MarkdownOlProps) => {
             // Get the starting number (defaults to 1)
@@ -160,7 +160,7 @@ export default function ChapterPage() {
                         if (React.isValidElement(child)) {
                             const currentNumber = startNum + itemIndex;
                             itemIndex++;
-                            return React.cloneElement(child, {
+                            return React.cloneElement(child as React.ReactElement<Record<string, unknown>>, {
                                 'data-number': currentNumber,
                                 'data-is-numbered-section': true
                             });
@@ -235,7 +235,7 @@ export default function ChapterPage() {
                         return (
                             <div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl mx-auto" {...props}>
                                 {React.Children.map(validChildren, (child) =>
-                                    React.isValidElement(child) ? React.cloneElement(child, { className: 'w-full h-full' }) : child
+                                    React.isValidElement(child) ? React.cloneElement(child as React.ReactElement<Record<string, unknown>>, { className: 'w-full h-full' }) : child
                                 )}
                             </div>
                         );
@@ -256,7 +256,7 @@ export default function ChapterPage() {
         img: ({ src, alt, className }: MarkdownImgProps) => (
             <div
                 className={`rounded-xl overflow-hidden border border-gray-200 shadow-lg bg-white cursor-pointer group relative ${className || 'max-w-2xl w-full mx-auto my-8'}`}
-                onClick={() => setLightboxImage(src)}
+                onClick={() => setLightboxImage(src ?? null)}
             >
                 <img src={src} alt={alt || ''} className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center pointer-events-none">

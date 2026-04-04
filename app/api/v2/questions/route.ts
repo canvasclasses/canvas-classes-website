@@ -370,7 +370,7 @@ export async function POST(request: NextRequest) {
 
     // Use insertOne on the raw collection to avoid Mongoose middleware issues
     const col = QuestionV2.collection;
-    await col.insertOne(questionDoc as Record<string, unknown>);
+    await col.insertOne(questionDoc as unknown as Record<string, unknown>);
 
     // Chapter stats in MongoDB are no longer updated — taxonomy is code-based (taxonomyData_from_csv.ts).
     // Stats are computed on-demand by querying questions_v2 directly.
@@ -378,7 +378,7 @@ export async function POST(request: NextRequest) {
     // Create audit log (non-blocking)
     try {
       await AuditLog.collection.insertOne({
-        _id: uuidv4() as Record<string, unknown>,
+        _id: uuidv4(),
         entity_type: 'question',
         entity_id: questionId,
         action: 'create',
@@ -391,7 +391,7 @@ export async function POST(request: NextRequest) {
         user_email: 'admin@canvasclasses.com',
         timestamp: new Date(),
         can_rollback: false
-      });
+      } as unknown as Record<string, unknown>);
     } catch (auditErr) {
       console.warn('Audit log creation failed (non-critical):', auditErr);
     }
