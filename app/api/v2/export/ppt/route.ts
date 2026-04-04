@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
       slide.background = { color: s.backgroundColor || 'ffffff' };
 
       for (const sh of s.shapes || []) {
-        slide.addShape(shapeMap[sh.shape] || shapeMap.rect, {
+        slide.addShape((shapeMap[sh.shape] || shapeMap.rect) as Parameters<typeof slide.addShape>[0], {
           x: sh.x,
           y: sh.y,
           w: sh.w,
