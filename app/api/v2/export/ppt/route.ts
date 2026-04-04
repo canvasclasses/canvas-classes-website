@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
           fill: t.fillColor ? { color: t.fillColor } : undefined,
           rectRadius: t.rectRadius,
         };
-        slide.addText(t.text as unknown, textOptions);
+        slide.addText(t.text as Parameters<typeof slide.addText>[0], textOptions);
       }
 
       for (const img of s.images || []) {
