@@ -6,8 +6,12 @@ export interface Chapter {
   class_level: number;
   display_order?: number;
   category?: 'Physical' | 'Inorganic' | 'Organic' | 'Practical';
+  // JEE question counts
   question_count?: number;
   star_question_count?: number;
+  // NEET question counts (same chapter taxonomy, separate tallies)
+  neet_question_count?: number;
+  neet_star_question_count?: number;
 }
 
 export interface Question {

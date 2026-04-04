@@ -185,10 +185,11 @@ export async function PATCH(
 
     // Flag operations
     if (body.add_flag) {
-      // Append a new flag
+      // Append a new internal admin flag — always tagged source:'admin'
       const newFlag = {
         type: body.add_flag.type,
         note: body.add_flag.note ?? '',
+        source: 'admin' as const,
         flagged_at: new Date(),
         resolved: false,
       };

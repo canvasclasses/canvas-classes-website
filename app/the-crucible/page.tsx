@@ -45,20 +45,30 @@ export default async function Page() {
             (node.id.startsWith('ch11_') || node.id.startsWith('ch12_'))
         );
         
-        // Run both aggregations in parallel
-        const [starCounts, allCounts] = await Promise.all([
+        // Run 4 aggregations in parallel — separate counts for JEE and NEET
+        const [jeeStarCounts, jeeAllCounts, neetStarCounts, neetAllCounts] = await Promise.all([
             QuestionV2.aggregate([
-                { $match: { 'metadata.is_top_pyq': true, deleted_at: null } },
+                { $match: { 'metadata.examBoard': 'JEE', 'metadata.is_top_pyq': true, deleted_at: null } },
                 { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
             ]),
             QuestionV2.aggregate([
-                { $match: { deleted_at: null } },
+                { $match: { 'metadata.examBoard': 'JEE', deleted_at: null } },
+                { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
+            ]),
+            QuestionV2.aggregate([
+                { $match: { 'metadata.examBoard': 'NEET', 'metadata.is_top_pyq': true, deleted_at: null } },
+                { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
+            ]),
+            QuestionV2.aggregate([
+                { $match: { 'metadata.examBoard': 'NEET', deleted_at: null } },
                 { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
             ]),
         ]);
 
-        const starCountMap = new Map(starCounts.map((item: { _id: string; count: number }) => [item._id, item.count]));
-        const questionCountMap = new Map(allCounts.map((item: { _id: string; count: number }) => [item._id, item.count]));
+        const jeeStarMap  = new Map(jeeStarCounts.map( (item: { _id: string; count: number }) => [item._id, item.count]));
+        const jeeCountMap = new Map(jeeAllCounts.map(  (item: { _id: string; count: number }) => [item._id, item.count]));
+        const neetStarMap  = new Map(neetStarCounts.map((item: { _id: string; count: number }) => [item._id, item.count]));
+        const neetCountMap = new Map(neetAllCounts.map( (item: { _id: string; count: number }) => [item._id, item.count]));
 
         // Helper to capitalize category
         const capitalizeCategory = (cat?: string): 'Physical' | 'Inorganic' | 'Organic' | 'Practical' => {
@@ -71,14 +81,19 @@ export default async function Page() {
             return 'Physical';
         };
 
+        // Build two parallel chapter lists — same taxonomy, different counts
         chaptersWithCounts = baseChapters.map((node) => ({
             id: node.id,
             name: node.name,
             class_level: node.class_level ?? 11,
             display_order: node.sequence_order ?? 0,
             category: capitalizeCategory(node.chapterType),
-            question_count: questionCountMap.get(node.id) ?? 0,
-            star_question_count: starCountMap.get(node.id) ?? 0,
+            // JEE counts
+            question_count: jeeCountMap.get(node.id) ?? 0,
+            star_question_count: jeeStarMap.get(node.id) ?? 0,
+            // NEET counts (same chapters, separate tallies)
+            neet_question_count: neetCountMap.get(node.id) ?? 0,
+            neet_star_question_count: neetStarMap.get(node.id) ?? 0,
         }));
     } catch (error) {
         console.error('Failed to fetch chapters:', error);

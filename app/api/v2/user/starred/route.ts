@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import connectToDatabase from '@/lib/mongodb';
 import { UserProgress } from '@/lib/models/UserProgress';
+import { QuestionV2 } from '@/lib/models/Question.v2';
 
 async function getUserId(req: NextRequest): Promise<string | null> {
     const authHeader = req.headers.get('Authorization');
@@ -15,6 +16,58 @@ async function getUserId(req: NextRequest): Promise<string | null> {
     const { data: { user }, error } = await supabase.auth.getUser(token);
     if (error || !user) return null;
     return user.id;
+}
+
+// ─── GET /api/v2/user/starred ─────────────────────────────────────────────────
+// Returns full question documents for all starred questions.
+// Optional query param: ?chapterId=ch11_atom  to filter by chapter
+export async function GET(req: NextRequest) {
+    try {
+        const userId = await getUserId(req);
+        if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+        await connectToDatabase();
+
+        const progress = await UserProgress.findById(userId).lean() as any;
+        if (!progress || !progress.starred_questions?.length) {
+            return NextResponse.json({ success: true, questions: [], total: 0 });
+        }
+
+        const chapterId = req.nextUrl.searchParams.get('chapterId');
+
+        // Filter starred entries by chapter if requested
+        const starredEntries: Array<{ question_id: string; chapter_id: string; starred_at: Date }> =
+            chapterId
+                ? progress.starred_questions.filter((s: any) => s.chapter_id === chapterId)
+                : progress.starred_questions;
+
+        if (starredEntries.length === 0) {
+            return NextResponse.json({ success: true, questions: [], total: 0 });
+        }
+
+        const questionIds = starredEntries.map((s: any) => s.question_id);
+
+        // Fetch full question documents from questions_v2
+        const questions = await QuestionV2.find({
+            _id: { $in: questionIds },
+            deleted_at: null,
+            status: { $in: ['published', 'review'] },
+        }).lean();
+
+        // Sort questions to match the starred_questions order (most recently starred first)
+        const idToStarredAt: Record<string, Date> = {};
+        starredEntries.forEach((s: any) => { idToStarredAt[s.question_id] = s.starred_at; });
+        questions.sort((a: any, b: any) => {
+            const ta = new Date(idToStarredAt[a._id] ?? 0).getTime();
+            const tb = new Date(idToStarredAt[b._id] ?? 0).getTime();
+            return tb - ta; // most recently starred first
+        });
+
+        return NextResponse.json({ success: true, questions, total: questions.length });
+    } catch (err) {
+        console.error('[GET /api/v2/user/starred]', err);
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    }
 }
 
 // ─── POST /api/v2/user/starred ────────────────────────────────────────────────

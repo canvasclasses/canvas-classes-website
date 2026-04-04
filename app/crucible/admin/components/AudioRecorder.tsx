@@ -8,9 +8,11 @@ interface AudioRecorderProps {
   onAudioSaved: (audioUrl: string) => void;
   onAudioDeleted?: () => void;
   existingAudioUrl?: string;
+  /** Optional context tag stored with the asset (e.g. 'mock_test') for filtering */
+  context?: string;
 }
 
-export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted, existingAudioUrl }: AudioRecorderProps) {
+export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted, existingAudioUrl, context }: AudioRecorderProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(existingAudioUrl || null);
@@ -119,6 +121,7 @@ export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted
       formData.append('file', audioBlob, `solution_${questionId}.webm`);
       formData.append('question_id', questionId);
       formData.append('field_type', 'solution');
+      if (context) formData.append('context', context);
 
       const response = await fetch('/api/v2/assets/upload', {
         method: 'POST',

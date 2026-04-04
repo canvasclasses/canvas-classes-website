@@ -60,7 +60,16 @@ export default function CationFlowchartSimulator() {
     const [currentStageIndex, setCurrentStageIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
     const [pptFormed, setPptFormed] = useState(false);
-    const [history, setHistory] = useState<string[]>([]);
+    // Track results per stage instead of simple history array
+type StageResult = 'pending' | 'precipitate' | 'no_precipitate';
+const [stageResults, setStageResults] = useState<Record<Exclude<GroupStage, 'Finished'>, StageResult>>({
+    'I': 'pending',
+    'II': 'pending',
+    'III': 'pending',
+    'IV': 'pending',
+    'V': 'pending',
+    'VI': 'pending'
+});
     const [resultCation, setResultCation] = useState<CationData | null>(null);
 
     const currentStage = STAGES[currentStageIndex];
@@ -70,7 +79,14 @@ export default function CationFlowchartSimulator() {
         setResultCation(null);
         setCurrentStageIndex(0);
         setPptFormed(false);
-        setHistory([]);
+        setStageResults({
+            'I': 'pending',
+            'II': 'pending',
+            'III': 'pending',
+            'IV': 'pending',
+            'V': 'pending',
+            'VI': 'pending'
+        });
         setIsAnimating(false);
     };
 
@@ -95,9 +111,9 @@ export default function CationFlowchartSimulator() {
             if (shouldFormPpt && matchingCation) {
                 setPptFormed(true);
                 setResultCation(matchingCation);
-                setHistory(prev => [...prev, `Group ${currentStage.id}: Precipitate Formed`]);
+                setStageResults(prev => ({ ...prev, [currentStage.id]: 'precipitate' }));
             } else {
-                setHistory(prev => [...prev, `Group ${currentStage.id}: No Precipitate`]);
+                setStageResults(prev => ({ ...prev, [currentStage.id]: 'no_precipitate' }));
             }
             setIsAnimating(false);
         }, 1500);
@@ -113,7 +129,9 @@ export default function CationFlowchartSimulator() {
         }
     };
 
-    const showNextStepControl = !pptFormed && !isAnimating && history.length > 0 && history[history.length - 1].includes('No Precipitate');
+    // Fix: Check current stage's result instead of history
+    const currentStageResult = stageResults[currentStage.id as Exclude<GroupStage, 'Finished'>];
+    const showNextStepControl = !pptFormed && !isAnimating && currentStageResult === 'no_precipitate' && currentStageIndex < STAGES.length - 1;
 
     return (
         <div className="w-full max-w-7xl mx-auto my-8 md:my-12 px-2 md:px-4">
@@ -155,7 +173,7 @@ export default function CationFlowchartSimulator() {
                             {STAGES.map((stage, index) => {
                                 const isActive = index === currentStageIndex;
                                 const isPassed = index < currentStageIndex;
-                                const result = history.find(h => h.startsWith(`Group ${stage.id}`));
+                                const stageResult = stageResults[stage.id as Exclude<GroupStage, 'Finished'>];
 
                                 return (
                                     <div key={stage.id} className={`relative flex items-start gap-4 transition-opacity duration-300 ${isActive ? 'opacity-100' : isPassed ? 'opacity-50' : 'opacity-30'
@@ -163,10 +181,10 @@ export default function CationFlowchartSimulator() {
                                         <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shrink-0 border-2 transition-all ${isActive
                                             ? 'bg-purple-500 border-purple-400 text-white shadow-[0_0_15px_rgba(168,85,247,0.5)]'
                                             : isPassed
-                                                ? result?.includes('Precipitate Formed') ? 'bg-green-900 border-green-700 text-green-400' : 'bg-gray-800 border-gray-700 text-gray-500'
+                                                ? stageResult === 'precipitate' ? 'bg-green-900 border-green-700 text-green-400' : 'bg-gray-800 border-gray-700 text-gray-500'
                                                 : 'bg-gray-900 border-gray-800 text-gray-600'
                                             }`}>
-                                            {isPassed && result?.includes('Precipitate Formed') ? <CheckCircle2 size={16} /> : stage.id}
+                                            {isPassed && stageResult === 'precipitate' ? <CheckCircle2 size={16} /> : stage.id}
                                         </div>
                                         <div className={`flex-1 p-2 md:p-3 rounded-xl border ${isActive
                                             ? 'bg-purple-900/20 border-purple-500/30'
@@ -177,14 +195,14 @@ export default function CationFlowchartSimulator() {
                                                     {stage.title}
                                                 </span>
                                                 {isPassed && (
-                                                    <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full ${result?.includes('Precipitate Formed') ? 'bg-green-900/50 text-green-400' : 'bg-gray-800 text-gray-500'
+                                                    <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full ${stageResult === 'precipitate' ? 'bg-green-900/50 text-green-400' : 'bg-gray-800 text-gray-500'
                                                         }`}>
-                                                        {result?.includes('Precipitate Formed') ? 'Found' : 'Next'}
+                                                        {stageResult === 'precipitate' ? 'Found' : 'Next'}
                                                     </span>
                                                 )}
                                             </div>
                                             <div className="text-xs text-gray-500 mb-1">Reagent: <span className="text-gray-300">{stage.reagent}</span></div>
-                                            {isActive && !pptFormed && (
+                                            {isActive && !pptFormed && stageResult === 'pending' && (
                                                 <div className="mt-2 text-[10px] text-purple-200 bg-purple-900/40 p-1 md:p-2 rounded animate-pulse">
                                                     Current Step
                                                 </div>

@@ -13,6 +13,7 @@ interface Props {
     chapter: Chapter;
     questions: Question[];
     allChapters: Chapter[];
+    examBoard?: 'JEE' | 'NEET';
 }
 
 type Mode = 'choose' | 'browse' | 'test';
@@ -44,10 +45,17 @@ async function recordTestSession(token: string, chapterId: string, questionIds: 
     } catch { /* non-critical — test still starts */ }
 }
 
-export default function ChapterPracticePage({ chapter, questions, allChapters }: Props) {
+export default function ChapterPracticePage({ chapter, questions, allChapters, examBoard }: Props) {
     const router = useRouter();
     const searchParams = useSearchParams();
-    
+
+    // Helper: build a URL for this chapter, preserving examBoard if set
+    const chapterUrl = (chapterId: string, extra?: string) => {
+        const board = examBoard ? `examBoard=${examBoard}` : '';
+        const parts = [extra, board].filter(Boolean).join('&');
+        return `/the-crucible/${chapterId}${parts ? `?${parts}` : ''}`;
+    };
+
     // Initialize mode from URL query param (e.g., ?mode=browse)
     const initialMode = (searchParams.get('mode') as Mode) || 'choose';
     const [mode, setMode] = useState<Mode>(initialMode);
@@ -58,14 +66,14 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
     const color = CAT_COLOR[chapter.category ?? 'Physical'] ?? '#a78bfa';
     const qCount = questions.length;
 
-    // Helper to update mode and URL together
+    // Helper to update mode and URL together — preserves examBoard param
     const updateMode = useCallback((newMode: Mode) => {
         setMode(newMode);
-        const url = newMode === 'choose' 
-            ? `/the-crucible/${chapter.id}`
-            : `/the-crucible/${chapter.id}?mode=${newMode}`;
+        const url = newMode === 'choose'
+            ? chapterUrl(chapter.id)
+            : chapterUrl(chapter.id, `mode=${newMode}`);
         router.push(url, { scroll: false });
-    }, [chapter.id, router]);
+    }, [chapter.id, router, examBoard]);
 
     const startTest = useCallback(async (count: number, mix: DifficultyMix, sort: QuestionSort = 'random') => {
         setShowTestConfig(false);
@@ -131,7 +139,7 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
         const browseQuestions = isTopPYQFilter
             ? questions.filter(q => q.metadata?.is_top_pyq === true)
             : questions;
-        return <BrowseView questions={browseQuestions} chapters={allChapters} onBack={() => updateMode('choose')} chapterId={chapter.id} />;
+        return <BrowseView questions={browseQuestions} chapters={allChapters} onBack={() => updateMode('choose')} chapterId={chapter.id} examBoard={examBoard} />;
     }
 
     if (mode === 'test') {
@@ -163,7 +171,9 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
                     <h1 style={{ fontSize: 'clamp(22px,5vw,32px)', fontWeight: 900, lineHeight: 1.2, margin: '0 0 12px' }}>{chapter.name}</h1>
                     <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>
                         {qCount > 0
-                            ? `${qCount} curated PYQs from JEE Main, JEE Advanced & NEET`
+                            ? examBoard === 'NEET'
+                                ? `${qCount} curated NEET questions`
+                                : `${qCount} curated PYQs from JEE Main & JEE Advanced`
                             : 'Questions coming soon — check back shortly.'}
                     </p>
                 </div>
@@ -189,13 +199,20 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
                                 </div>
                             ))}
                         </div>
-                        {/* Stats row 2: source breakdown */}
+                        {/* Stats row 2: source breakdown — labels adapt to exam */}
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 28 }}>
-                            {[
-                                [String(questions.filter(q => q.metadata.is_pyq && /main/i.test(q.metadata.exam_source?.exam ?? '')).length), 'JEE Main', '#38bdf8'],
-                                [String(questions.filter(q => q.metadata.is_pyq && /adv/i.test(q.metadata.exam_source?.exam ?? '')).length), 'JEE Adv', '#a78bfa'],
-                                [String(questions.filter(q => !q.metadata.is_pyq).length), 'Non-PYQ', '#34d399'],
-                            ].map(([val, label, c]) => (
+                            {(examBoard === 'NEET'
+                                ? [
+                                    [String(questions.filter(q => q.metadata.is_pyq && (q.metadata.examDetails?.exam === 'NEET_UG' || /neet/i.test(q.metadata.exam_source?.exam ?? ''))).length), 'NEET PYQ', '#34d399'],
+                                    [String(questions.filter(q => !q.metadata.is_pyq).length), 'Non-PYQ', '#a78bfa'],
+                                    [String(questions.filter(q => q.metadata.difficultyLevel >= 4).length), 'Hard', '#f87171'],
+                                ]
+                                : [
+                                    [String(questions.filter(q => q.metadata.is_pyq && /main/i.test(q.metadata.exam_source?.exam ?? '')).length), 'JEE Main', '#38bdf8'],
+                                    [String(questions.filter(q => q.metadata.is_pyq && /adv/i.test(q.metadata.exam_source?.exam ?? '')).length), 'JEE Adv', '#a78bfa'],
+                                    [String(questions.filter(q => !q.metadata.is_pyq).length), 'Non-PYQ', '#34d399'],
+                                ]
+                            ).map(([val, label, c]) => (
                                 <div key={label} style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${c}22`, borderRadius: 12, padding: '10px', textAlign: 'center' }}>
                                     <div style={{ fontSize: 18, fontWeight: 800, color: c, fontFamily: 'monospace' }}>{val}</div>
                                     <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{label}</div>
@@ -213,7 +230,7 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
                             
                             {/* Quick Revision - only show if ≥20 star questions */}
                             {(chapter.star_question_count ?? 0) >= 20 && (
-                                <button onClick={() => router.push(`/the-crucible/${chapter.id}?mode=browse&is_top_pyq=true`)}
+                                <button onClick={() => router.push(chapterUrl(chapter.id, 'mode=browse&is_top_pyq=true'))}
                                     style={{ padding: '18px', borderRadius: 14, border: '1px solid rgba(251,191,36,0.3)', background: 'rgba(251,191,36,0.1)', color: '#fbbf24', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
                                     ⭐ Quick Revision
                                     <span style={{ fontSize: 12, color: 'rgba(251,191,36,0.6)', fontWeight: 400 }}>{chapter.star_question_count} hand-picked questions</span>
@@ -235,7 +252,7 @@ export default function ChapterPracticePage({ chapter, questions, allChapters }:
                                     .filter(ch => ch.id !== chapter.id && (ch.question_count ?? 0) > 0)
                                     .slice(0, 12)
                                     .map(ch => (
-                                        <button key={ch.id} onClick={() => router.push(`/the-crucible/${ch.id}`)}
+                                        <button key={ch.id} onClick={() => router.push(chapterUrl(ch.id))}
                                             style={{ padding: '6px 12px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.6)', fontSize: 11, cursor: 'pointer', transition: 'all 0.15s' }}>
                                             {ch.name} <span style={{ color: 'rgba(255,255,255,0.3)' }}>{ch.question_count}</span>
                                         </button>

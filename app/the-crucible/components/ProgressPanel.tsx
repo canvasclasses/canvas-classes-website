@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { X, LogIn, ChevronRight } from 'lucide-react';
+import { X, LogIn, ChevronRight, LogOut, RefreshCw } from 'lucide-react';
 import Link from 'next/link';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 
@@ -12,6 +12,10 @@ interface ProgressPanelProps {
   isOpen: boolean;
   onClose: () => void;
   isLoggedIn: boolean;
+  userEmail?: string | null;
+  selectedExam?: string | null;
+  onChangeExam?: () => void;
+  onSignOut?: () => void;
 }
 
 // Placeholder data used only on localhost for UI preview
@@ -59,7 +63,7 @@ const DEV_PLACEHOLDER_TESTS = () => {
   ];
 };
 
-export default function ProgressPanel({ isOpen, onClose, isLoggedIn }: ProgressPanelProps) {
+export default function ProgressPanel({ isOpen, onClose, isLoggedIn, userEmail, selectedExam, onChangeExam, onSignOut }: ProgressPanelProps) {
   // Check if local dev (bypass login + show placeholder data)
   // This variable is only ever true on localhost — safe for production deployment
   const isLocalDev = typeof window !== 'undefined' && window.location.hostname === 'localhost';
@@ -387,6 +391,39 @@ export default function ProgressPanel({ isOpen, onClose, isLoggedIn }: ProgressP
             )}
           </div>
         </div>
+
+        {/* ── Account footer ───────────────────────────────────────── */}
+        {isLoggedIn && (
+          <div className="shrink-0 border-t border-white/[0.05] px-5 py-4 mt-auto">
+            {userEmail && (
+              <div className="text-[11px] text-zinc-500 mb-3 truncate" title={userEmail}>
+                Signed in as <span className="text-zinc-400">{userEmail}</span>
+              </div>
+            )}
+            <div className="flex items-center gap-2">
+              {/* Change Exam */}
+              {onChangeExam && (
+                <button
+                  onClick={() => { onChangeExam(); onClose(); }}
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.07] text-xs text-zinc-400 hover:bg-white/[0.07] hover:text-zinc-200 transition-all"
+                >
+                  <RefreshCw className="w-3 h-3" />
+                  {selectedExam ? `Switch from ${selectedExam}` : 'Change Exam'}
+                </button>
+              )}
+              {/* Sign Out */}
+              {onSignOut && (
+                <button
+                  onClick={() => { onSignOut(); onClose(); }}
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.07] text-xs text-zinc-400 hover:bg-red-500/10 hover:border-red-500/20 hover:text-red-400 transition-all ml-auto"
+                >
+                  <LogOut className="w-3 h-3" />
+                  Sign Out
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       <style>{`

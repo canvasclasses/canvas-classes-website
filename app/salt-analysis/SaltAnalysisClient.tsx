@@ -313,6 +313,11 @@ export default function SaltAnalysisClient() {
     const [score, setScore] = useState(0);
     const [expandedTest, setExpandedTest] = useState<string | null>(null);
     const [timeLeft, setTimeLeft] = useState(600); // 10 minutes for exam
+    const [revealedHints, setRevealedHints] = useState<Set<number>>(new Set());
+    // Anion and cation selection state for confirmatory tests
+    const [suspectedAnion, setSuspectedAnion] = useState<string | null>(null);
+    const [suspectedCationGroup, setSuspectedCationGroup] = useState<number | null>(null);
+    const [suspectedCation, setSuspectedCation] = useState<string | null>(null);
 
     // Timer logic
     useEffect(() => {
@@ -350,6 +355,11 @@ export default function SaltAnalysisClient() {
         setScore(0);
         setExpandedTest(null);
         setTimeLeft(600); // Reset timer to 10 mins
+        setRevealedHints(new Set());
+        // Reset confirmatory test selections
+        setSuspectedAnion(null);
+        setSuspectedCationGroup(null);
+        setSuspectedCation(null);
     };
 
     // Perform a test
@@ -398,11 +408,24 @@ export default function SaltAnalysisClient() {
                     observation = 'No characteristic gas evolved.';
                     inference = 'Group B anions (Cl⁻, Br⁻, I⁻, NO₃⁻, C₂O₄²⁻) may be absent';
                 }
-            } else if (testId.startsWith('confirm_')) {
-                const confirmTest = saltAnion.confirmatoryTests[0];
-                if (confirmTest) {
-                    observation = confirmTest.observation;
-                    inference = `${saltAnion.symbol} confirmed!`;
+            } else if (testId.startsWith('confirm_anion_')) {
+                // Get the suspected anion's confirmatory test
+                const suspectedAnionData = getAnionById(suspectedAnion || '');
+                if (suspectedAnionData) {
+                    // Find the specific confirmatory test being performed
+                    const testIndex = parseInt(testName.split('_')[1] || '0');
+                    const confirmTest = suspectedAnionData.confirmatoryTests[testIndex];
+                    if (confirmTest) {
+                        // Check if suspected anion matches actual anion
+                        if (suspectedAnion === saltAnion.id) {
+                            observation = confirmTest.observation;
+                            inference = `${saltAnion.symbol} confirmed!`;
+                        } else {
+                            // Wrong anion suspected - show negative result
+                            observation = `No characteristic reaction observed. The test is negative.`;
+                            inference = `${suspectedAnionData.symbol} NOT confirmed. Your deduction may be incorrect.`;
+                        }
+                    }
                 }
             }
         } else if (testType === 'cation') {
@@ -414,11 +437,24 @@ export default function SaltAnalysisClient() {
                         : `Tested with ${group.reagent}. Precipitate observed.`;
                     inference = `Cation belongs to ${group.name}`;
                 }
-            } else if (testId.startsWith('confirm_')) {
-                const confirmTest = saltCation.confirmatoryTests[0];
-                if (confirmTest) {
-                    observation = confirmTest.observation;
-                    inference = `${saltCation.symbol} confirmed!`;
+            } else if (testId.startsWith('confirm_cation_')) {
+                // Get the suspected cation's confirmatory test
+                const suspectedCationData = getCationById(suspectedCation || '');
+                if (suspectedCationData) {
+                    // Find the specific confirmatory test being performed
+                    const testIndex = parseInt(testName.split('_')[1] || '0');
+                    const confirmTest = suspectedCationData.confirmatoryTests[testIndex];
+                    if (confirmTest) {
+                        // Check if suspected cation matches actual cation
+                        if (suspectedCation === saltCation.id) {
+                            observation = confirmTest.observation;
+                            inference = `${saltCation.symbol} confirmed!`;
+                        } else {
+                            // Wrong cation suspected - show negative result
+                            observation = `No characteristic reaction observed. The test is negative.`;
+                            inference = `${suspectedCationData.symbol} NOT confirmed. Your deduction may be incorrect.`;
+                        }
+                    }
                 }
             }
         }
@@ -450,6 +486,11 @@ export default function SaltAnalysisClient() {
         }
 
         setGameState('finished');
+    };
+
+    // Reveal hint for a specific observation in Practice mode
+    const revealHint = (index: number) => {
+        setRevealedHints(prev => new Set([...prev, index]));
     };
 
 
@@ -812,15 +853,64 @@ export default function SaltAnalysisClient() {
                                                         isExpanded={expandedTest === 'concH2SO4'}
                                                         onToggle={() => setExpandedTest(expandedTest === 'concH2SO4' ? null : 'concH2SO4')}
                                                     />
-                                                    {saltAnion && (
-                                                        <TestButton
-                                                            id={`confirm_anion_${saltAnion.id}`}
-                                                            name={`Confirmatory: ${saltAnion.confirmatoryTests[0]?.testName || 'Test'}`}
-                                                            procedure={saltAnion.confirmatoryTests[0]?.procedure || ''}
-                                                            onPerform={() => performTest('anion', `confirm_${saltAnion.id}`, saltAnion.confirmatoryTests[0]?.testName || 'Confirmatory Test')}
-                                                            isExpanded={expandedTest === `confirm_anion_${saltAnion.id}`}
-                                                            onToggle={() => setExpandedTest(expandedTest === `confirm_anion_${saltAnion.id}` ? null : `confirm_anion_${saltAnion.id}`)}
-                                                        />
+                                                    
+                                                    {/* Suspected Anion Selection */}
+                                                    <div className="mt-4 p-4 bg-purple-900/20 border border-purple-500/30 rounded-xl">
+                                                        <h4 className="text-sm font-bold text-purple-300 mb-3 flex items-center gap-2">
+                                                            <FlaskConical size={16} />
+                                                            Step 1: Select Suspected Anion
+                                                        </h4>
+                                                        <select
+                                                            value={suspectedAnion || ''}
+                                                            onChange={(e) => setSuspectedAnion(e.target.value || null)}
+                                                            className="w-full p-3 bg-gray-700 rounded-lg text-white border border-gray-600 focus:border-purple-500 focus:outline-none mb-2"
+                                                        >
+                                                            <option value="">-- Select suspected anion --</option>
+                                                            <optgroup label="Group A (Dilute H₂SO₄)">
+                                                                {ANIONS.filter(a => a.group === 'A').map(a => (
+                                                                    <option key={a.id} value={a.id}>{a.symbol} - {a.name}</option>
+                                                                ))}
+                                                            </optgroup>
+                                                            <optgroup label="Group B (Conc. H₂SO₄)">
+                                                                {ANIONS.filter(a => a.group === 'B').map(a => (
+                                                                    <option key={a.id} value={a.id}>{a.symbol} - {a.name}</option>
+                                                                ))}
+                                                            </optgroup>
+                                                            <optgroup label="Independent">
+                                                                {ANIONS.filter(a => a.group === 'independent').map(a => (
+                                                                    <option key={a.id} value={a.id}>{a.symbol} - {a.name}</option>
+                                                                ))}
+                                                            </optgroup>
+                                                        </select>
+                                                        {gameMode === 'learning' && saltAnion && (
+                                                            <p className="text-xs text-emerald-400 mt-1">
+                                                                💡 Hint: Based on your observations, suspect {saltAnion.symbol}
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                    
+                                                    {/* Confirmatory Tests for Selected Anion */}
+                                                    {suspectedAnion && (
+                                                        <div className="mt-3 space-y-2">
+                                                            <h4 className="text-sm font-bold text-amber-300 flex items-center gap-2">
+                                                                <Check size={16} />
+                                                                Step 2: Perform Confirmatory Test(s)
+                                                            </h4>
+                                                            {(() => {
+                                                                const selectedAnion = getAnionById(suspectedAnion);
+                                                                return selectedAnion?.confirmatoryTests.map((test, idx) => (
+                                                                    <TestButton
+                                                                        key={`${suspectedAnion}_confirm_${idx}`}
+                                                                        id={`confirm_anion_${suspectedAnion}_${idx}`}
+                                                                        name={test.testName}
+                                                                        procedure={test.procedure}
+                                                                        onPerform={() => performTest('anion', `confirm_anion_${suspectedAnion}`, `${test.testName}_${idx}`)}
+                                                                        isExpanded={expandedTest === `confirm_anion_${suspectedAnion}_${idx}`}
+                                                                        onToggle={() => setExpandedTest(expandedTest === `confirm_anion_${suspectedAnion}_${idx}` ? null : `confirm_anion_${suspectedAnion}_${idx}`)}
+                                                                    />
+                                                                ));
+                                                            })()}
+                                                        </div>
                                                     )}
                                                 </>
                                             )}
@@ -835,15 +925,85 @@ export default function SaltAnalysisClient() {
                                                         isExpanded={expandedTest === 'groupTest'}
                                                         onToggle={() => setExpandedTest(expandedTest === 'groupTest' ? null : 'groupTest')}
                                                     />
-                                                    {saltCation && (
-                                                        <TestButton
-                                                            id={`confirm_cation_${saltCation.id}`}
-                                                            name={`Confirmatory: ${saltCation.confirmatoryTests[0]?.testName || 'Test'}`}
-                                                            procedure={saltCation.confirmatoryTests[0]?.procedure || ''}
-                                                            onPerform={() => performTest('cation', `confirm_${saltCation.id}`, saltCation.confirmatoryTests[0]?.testName || 'Confirmatory Test')}
-                                                            isExpanded={expandedTest === `confirm_cation_${saltCation.id}`}
-                                                            onToggle={() => setExpandedTest(expandedTest === `confirm_cation_${saltCation.id}` ? null : `confirm_cation_${saltCation.id}`)}
-                                                        />
+                                                    
+                                                    {/* Suspected Cation Group Selection */}
+                                                    <div className="mt-4 p-4 bg-orange-900/20 border border-orange-500/30 rounded-xl">
+                                                        <h4 className="text-sm font-bold text-orange-300 mb-3 flex items-center gap-2">
+                                                            <FlaskConical size={16} />
+                                                            Step 1: Select Suspected Group
+                                                        </h4>
+                                                        <select
+                                                            value={suspectedCationGroup !== null ? String(suspectedCationGroup) : ''}
+                                                            onChange={(e) => {
+                                                                const value = e.target.value;
+                                                                setSuspectedCationGroup(value ? parseInt(value) : null);
+                                                                setSuspectedCation(null); // Reset cation when group changes
+                                                            }}
+                                                            className="w-full p-3 bg-gray-700 rounded-lg text-white border border-gray-600 focus:border-orange-500 focus:outline-none mb-2"
+                                                        >
+                                                            <option value="">-- Select suspected group --</option>
+                                                            {CATION_GROUPS.map(g => (
+                                                                <option key={g.group} value={g.group}>
+                                                                    Group {g.group === 0 ? 'Zero' : g.group} - {g.name} ({g.cations.join(', ')})
+                                                                </option>
+                                                            ))}
+                                                        </select>
+                                                        {gameMode === 'learning' && saltCation && (
+                                                            <p className="text-xs text-emerald-400 mt-1">
+                                                                💡 Hint: Based on group test, suspect Group {saltCation.group === 0 ? 'Zero' : saltCation.group}
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                    
+                                                    {/* Suspected Cation Selection */}
+                                                    {suspectedCationGroup !== null && (
+                                                        <div className="mt-3 p-4 bg-amber-900/20 border border-amber-500/30 rounded-xl">
+                                                            <h4 className="text-sm font-bold text-amber-300 mb-3 flex items-center gap-2">
+                                                                <Check size={16} />
+                                                                Step 2: Select Suspected Cation
+                                                            </h4>
+                                                            <select
+                                                                value={suspectedCation || ''}
+                                                                onChange={(e) => setSuspectedCation(e.target.value || null)}
+                                                                className="w-full p-3 bg-gray-700 rounded-lg text-white border border-gray-600 focus:border-amber-500 focus:outline-none mb-2"
+                                                            >
+                                                                <option value="">-- Select suspected cation --</option>
+                                                                {CATIONS.filter(c => c.group === suspectedCationGroup).map(c => (
+                                                                    <option key={c.id} value={c.id}>
+                                                                        {c.symbol} - {c.name} {c.precipitateColor ? `(${c.precipitateColor})` : ''}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+                                                            {gameMode === 'learning' && saltCation && saltCation.group === suspectedCationGroup && (
+                                                                <p className="text-xs text-emerald-400 mt-1">
+                                                                    💡 Hint: Based on precipitate colour, suspect {saltCation.symbol}
+                                                                </p>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                    
+                                                    {/* Confirmatory Tests for Selected Cation */}
+                                                    {suspectedCation && (
+                                                        <div className="mt-3 space-y-2">
+                                                            <h4 className="text-sm font-bold text-cyan-300 flex items-center gap-2">
+                                                                <Check size={16} />
+                                                                Step 3: Perform Confirmatory Test(s)
+                                                            </h4>
+                                                            {(() => {
+                                                                const selectedCation = getCationById(suspectedCation);
+                                                                return selectedCation?.confirmatoryTests.map((test, idx) => (
+                                                                    <TestButton
+                                                                        key={`${suspectedCation}_confirm_${idx}`}
+                                                                        id={`confirm_cation_${suspectedCation}_${idx}`}
+                                                                        name={test.testName}
+                                                                        procedure={test.procedure}
+                                                                        onPerform={() => performTest('cation', `confirm_cation_${suspectedCation}`, `${test.testName}_${idx}`)}
+                                                                        isExpanded={expandedTest === `confirm_cation_${suspectedCation}_${idx}`}
+                                                                        onToggle={() => setExpandedTest(expandedTest === `confirm_cation_${suspectedCation}_${idx}` ? null : `confirm_cation_${suspectedCation}_${idx}`)}
+                                                                    />
+                                                                ));
+                                                            })()}
+                                                        </div>
                                                     )}
                                                 </>
                                             )}
@@ -921,10 +1081,22 @@ export default function SaltAnalysisClient() {
                                                             <span className="text-lg font-semibold text-white">{obs.testName}</span>
                                                         </div>
                                                         <p className="text-base text-gray-300">{obs.observation}</p>
-                                                        {gameMode !== 'exam' ? (
+                                                        {gameMode === 'learning' ? (
                                                             <p className="text-base text-green-400 mt-1 font-medium">→ {obs.inference}</p>
+                                                        ) : gameMode === 'practice' ? (
+                                                            revealedHints.has(idx) ? (
+                                                                <p className="text-base text-amber-400 mt-1 font-medium">→ {obs.inference}</p>
+                                                            ) : (
+                                                                <button
+                                                                    onClick={() => revealHint(idx)}
+                                                                    className="mt-2 text-xs flex items-center gap-1 text-amber-400 hover:text-amber-300 transition-colors"
+                                                                >
+                                                                    <Lightbulb size={12} />
+                                                                    Reveal Hint
+                                                                </button>
+                                                            )
                                                         ) : (
-                                                            <p className="text-sm text-gray-500 mt-1 italic">→ Inference hidden in Exam Mode</p>
+                                                            <p className="text-sm text-gray-500 mt-1 italic">→ Inference hidden</p>
                                                         )}
                                                     </motion.div>
                                                 ))}

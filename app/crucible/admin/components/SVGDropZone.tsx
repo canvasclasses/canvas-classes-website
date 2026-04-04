@@ -8,11 +8,13 @@ interface SVGDropZoneProps {
   fieldType: 'question' | 'solution';
   onUploaded: (markdownLink: string, cdnUrl: string) => void;
   compact?: boolean;
+  /** Optional context tag stored with the asset (e.g. 'mock_test') for filtering */
+  context?: string;
 }
 
 type UploadState = 'idle' | 'dragging' | 'uploading' | 'success' | 'error';
 
-export default function SVGDropZone({ questionId, fieldType, onUploaded, compact = false }: SVGDropZoneProps) {
+export default function SVGDropZone({ questionId, fieldType, onUploaded, compact = false, context }: SVGDropZoneProps) {
   const [state, setState] = useState<UploadState>('idle');
   const [lastUrl, setLastUrl] = useState<string>('');
   const [errorMsg, setErrorMsg] = useState<string>('');
@@ -39,6 +41,7 @@ export default function SVGDropZone({ questionId, fieldType, onUploaded, compact
       formData.append('file', file);
       formData.append('question_id', questionId);
       formData.append('field_type', fieldType);
+      if (context) formData.append('context', context);
 
       const res = await fetch('/api/v2/assets/upload', {
         method: 'POST',

@@ -73,6 +73,7 @@ export async function POST(request: NextRequest) {
     const fieldType = formData.get('field_type') as string; // 'question', 'option', 'solution'
     const altText = formData.get('alt_text') as string;
     const caption = formData.get('caption') as string;
+    const context = (formData.get('context') as string) || 'practice'; // e.g. 'mock_test', 'practice'
     
     if (!file) {
       return NextResponse.json(
@@ -241,6 +242,7 @@ export async function POST(request: NextRequest) {
       metadata: {
         alt_text: altText || '',
         caption: caption || '',
+        context: context || 'practice',
       },
       version: 1,
       previous_versions: [],

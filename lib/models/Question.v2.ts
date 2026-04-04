@@ -92,8 +92,11 @@ export interface IQuestionMetadata {
 }
 
 export interface IQuestionFlag {
-  type: string;   // e.g. 'latex_rendering', 'question_mismatch', etc.
-  note?: string;  // optional free-text note
+  type: string;                    // e.g. 'wrong_answer', 'latex_rendering', etc.
+  note?: string;                   // optional free-text note (max 500 chars)
+  flagged_by?: string;             // Supabase user UUID of the reporter (student) or admin email
+  source?: 'admin' | 'student';   // 'admin' = internal team flag; 'student' = reported by a student
+                                   // Flags without a source field are legacy admin flags (pre-separation)
   flagged_at: Date;
   resolved: boolean;
   resolved_at?: Date;
@@ -331,6 +334,8 @@ const QuestionSchema = new Schema<IQuestion>({
     type: [{
       type: { type: String, required: true },
       note: { type: String },
+      flagged_by: { type: String },             // UUID (student) or admin email
+      source: { type: String, enum: ['admin', 'student'] }, // undefined = legacy admin flag
       flagged_at: { type: Date, default: Date.now },
       resolved: { type: Boolean, default: false },
       resolved_at: { type: Date }

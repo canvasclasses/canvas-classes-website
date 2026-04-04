@@ -6,11 +6,13 @@ import { Upload, Loader2, Check, Copy, AlertCircle, Video } from 'lucide-react';
 interface VideoDropZoneProps {
     questionId: string;
     onUploaded: (videoUrl: string) => void;
+    /** Optional context tag stored with the asset (e.g. 'mock_test') for filtering */
+    context?: string;
 }
 
 type UploadState = 'idle' | 'dragging' | 'uploading' | 'success' | 'error';
 
-export default function VideoDropZone({ questionId, onUploaded }: VideoDropZoneProps) {
+export default function VideoDropZone({ questionId, onUploaded, context }: VideoDropZoneProps) {
     const [state, setState] = useState<UploadState>('idle');
     const [lastUrl, setLastUrl] = useState<string>('');
     const [errorMsg, setErrorMsg] = useState<string>('');
@@ -44,6 +46,7 @@ export default function VideoDropZone({ questionId, onUploaded }: VideoDropZoneP
             formData.append('file', file);
             formData.append('question_id', questionId);
             formData.append('field_type', 'solution');
+            if (context) formData.append('context', context);
 
             const res = await fetch('/api/v2/assets/upload', {
                 method: 'POST',

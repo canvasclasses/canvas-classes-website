@@ -20,6 +20,11 @@ const ColorsOfCompoundsSection = dynamic(() => import('./ColorsOfCompoundsSectio
     loading: () => <div className="h-[600px] flex items-center justify-center text-gray-400 bg-gray-900/20 rounded-2xl border border-gray-700/50 animate-pulse mt-12">Loading Colors...</div>
 });
 
+const PeriodTrendsChart = dynamic(() => import('./PeriodTrendsChart'), {
+    ssr: false,
+    loading: () => <div className="h-[500px] flex items-center justify-center text-gray-400 bg-gray-900/20 rounded-2xl border border-gray-700/50 animate-pulse">Loading Period Trends...</div>
+});
+
 const YouTubeLecturesSection = () => {
     const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
@@ -185,9 +190,19 @@ export default function PeriodicTrendsPage() {
                 </div>
             </section>
 
-            {/* Trends Component */}
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+            {/* Trends Component — group-wise (down a group) */}
+            <section id="trends-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
                 <TrendsComponent />
+            </section>
+
+            {/* Period Trends Chart — across a period */}
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+                <div className="flex items-center gap-3 mb-5">
+                    <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent" />
+                    <span className="text-xs text-gray-600 uppercase tracking-widest px-3">Across a Period</span>
+                    <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent" />
+                </div>
+                <PeriodTrendsChart />
             </section>
 
             {/* YouTube Lectures Section */}

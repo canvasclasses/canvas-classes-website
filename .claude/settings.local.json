@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r \"\\\\/canvas\\\\b\\\\|\\\\/crucible\\\\b\\\\|dbName\" /Users/CanvasClasses/Desktop/canvas/scripts --include=\"*.js\" -n 2>/dev/null | head -20; grep -r \"canvas\\\\|crucible\" /Users/CanvasClasses/Desktop/canvas/.env.local 2>/dev/null | head -5 || echo \"\\(no .env.local or no match\\)\")",
+      "Bash(node scripts/insert_salt_b1.js)",
+      "Bash(node scripts/insert_salt_b2.js)",
+      "Bash(node scripts/insert_salt_b3.js)",
+      "Bash(node scripts/insert_salt_b4.js)",
+      "Bash(node scripts/insert_salt_b5.js)",
+      "Bash(node scripts/insert_salt_b6.js)",
+      "Bash(node scripts/insert_salt_b7.js)",
+      "Bash(node scripts/insert_salt_b8.js)",
+      "Bash(node scripts/insert_salt_b9.js)"
+    ]
+  }
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { ChevronLeft, ChevronRight, Star, Check, ChevronDown, MonitorPlay, Volume2, ChevronUp, ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, Check, ChevronDown, MonitorPlay, Volume2, ChevronUp, ExternalLink, Flag, X } from 'lucide-react';
 import Link from 'next/link';
 import { Chapter, Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
@@ -39,13 +39,14 @@ const isShortOptions = (opts: { id: string; text: string; is_correct: boolean }[
 
 const hasImageMarkdown = (markdown: string): boolean => /!\[[^\]]*\]\([^)]+\)/.test(markdown);
 
-export default function BrowseView({ questions, chapters, onBack, chapterId, guidedMode, onQuestionAnswered }: {
+export default function BrowseView({ questions, chapters, onBack, chapterId, guidedMode, onQuestionAnswered, examBoard }: {
   questions: Question[];
   chapters: Chapter[];
   onBack: () => void;
   chapterId?: string;
   guidedMode?: boolean;
   onQuestionAnswered?: (isCorrect: boolean) => void;
+  examBoard?: 'JEE' | 'NEET';
 }) {
   const [page, setPage] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -59,11 +60,68 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
   const [examFilter, setExamFilter] = useState<'all' | 'mains' | 'advanced' | 'non-pyq'>('all');
   const [yearFilter, setYearFilter] = useState<string>('all');
   const [conceptTagFilter, setConceptTagFilter] = useState<string>('all');
+  const [showStarredOnly, setShowStarredOnly] = useState(false);
   const [jumpInput, setJumpInput] = useState('');
   // Video and audio expansion state
   const [videoExpanded, setVideoExpanded] = useState<Record<number, boolean>>({});
   const [audioExpanded, setAudioExpanded] = useState<Record<string, boolean>>({});
   const [copiedQuestionId, setCopiedQuestionId] = useState<string | null>(null);
+
+  // Flag modal state
+  const [flagModalQuestion, setFlagModalQuestion] = useState<{ id: string; displayId: string } | null>(null);
+  const [flagType, setFlagType] = useState<string>('wrong_answer');
+  const [flagNote, setFlagNote] = useState('');
+  const [flagSubmitting, setFlagSubmitting] = useState(false);
+  const [flagResult, setFlagResult] = useState<{ ok: boolean; msg: string } | null>(null);
+  const [flaggedIds, setFlaggedIds] = useState<Set<string>>(new Set()); // questions already flagged this session
+
+  const FLAG_TYPES = [
+    { id: 'wrong_answer',   label: 'Answer seems incorrect' },
+    { id: 'wrong_question', label: 'Question text has an error' },
+    { id: 'latex_rendering', label: 'Math / formula not rendering' },
+    { id: 'image_missing',  label: 'Diagram or image missing' },
+    { id: 'option_error',   label: 'Error in one of the options' },
+    { id: 'solution_error', label: 'Solution is wrong or incomplete' },
+    { id: 'other',          label: 'Other (describe below)' },
+  ];
+
+  const openFlagModal = (id: string, displayId: string) => {
+    setFlagModalQuestion({ id, displayId });
+    setFlagType('wrong_answer');
+    setFlagNote('');
+    setFlagResult(null);
+  };
+
+  const submitFlag = async () => {
+    if (!flagModalQuestion) return;
+    setFlagSubmitting(true);
+    setFlagResult(null);
+    try {
+      const supabase = createSupabaseClient();
+      let authHeader: Record<string, string> = {};
+      if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.access_token) authHeader = { Authorization: `Bearer ${session.access_token}` };
+      }
+      const res = await fetch(`/api/v2/questions/${flagModalQuestion.id}/flag`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...authHeader },
+        body: JSON.stringify({ type: flagType, note: flagNote.trim() || undefined }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setFlaggedIds(prev => new Set(prev).add(flagModalQuestion.id));
+        setFlagResult({ ok: true, msg: data.message });
+        setTimeout(() => setFlagModalQuestion(null), 1800);
+      } else {
+        setFlagResult({ ok: false, msg: data.error ?? 'Failed to submit. Please try again.' });
+      }
+    } catch {
+      setFlagResult({ ok: false, msg: 'Network error. Please try again.' });
+    } finally {
+      setFlagSubmitting(false);
+    }
+  };
 
   // Helper for alphanumeric sorting (e.g., GOC-001 < GOC-002)
   const sortQuestions = (a: Question, b: Question) => {
@@ -93,9 +151,10 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
     return [...new Set(years)].sort((a, b) => b - a);
   }, [questions, examFilter]);
 
-  // Filter questions client-side based on exam filter + year filter + concept tag + SORT BY display_id
+  // Filter questions client-side based on exam filter + year filter + concept tag + starred + SORT BY display_id
   const filteredQuestions = questions
     .filter(q => {
+      if (showStarredOnly && !starred.has(q.id)) return false;
       if (examFilter === 'non-pyq') { if (q.metadata.is_pyq) return false; }
       else if (examFilter !== 'all') {
         const exam = (q.metadata.exam_source?.exam ?? '').toLowerCase();
@@ -706,12 +765,19 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
   );
 
   // ── Exam filter bar ─────────────────────────────────────────────────────────
-  const EXAM_FILTERS: { id: typeof examFilter; label: string; shortLabel: string }[] = [
-    { id: 'all', label: 'All', shortLabel: 'All' },
-    { id: 'mains', label: 'JEE Mains', shortLabel: 'Mains' },
-    { id: 'advanced', label: 'JEE Advanced', shortLabel: 'Adv' },
-    { id: 'non-pyq', label: 'Non-PYQ', shortLabel: 'Non-PYQ' },
-  ];
+  // For NEET, show NEET PYQ instead of JEE Mains / JEE Advanced
+  const EXAM_FILTERS: { id: typeof examFilter; label: string; shortLabel: string }[] = examBoard === 'NEET'
+    ? [
+        { id: 'all', label: 'All', shortLabel: 'All' },
+        { id: 'mains', label: 'NEET PYQ', shortLabel: 'PYQ' },   // reuse 'mains' slot — filter logic matches PYQ
+        { id: 'non-pyq', label: 'Non-PYQ', shortLabel: 'Non-PYQ' },
+      ]
+    : [
+        { id: 'all', label: 'All', shortLabel: 'All' },
+        { id: 'mains', label: 'JEE Mains', shortLabel: 'Mains' },
+        { id: 'advanced', label: 'JEE Advanced', shortLabel: 'Adv' },
+        { id: 'non-pyq', label: 'Non-PYQ', shortLabel: 'Non-PYQ' },
+      ];
 
   const sourceAccent = examFilter === 'mains' ? '#38bdf8' : examFilter === 'advanced' ? '#a78bfa' : '#34d399';
 
@@ -771,6 +837,28 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
           </select>
         )}
         
+        {/* Bookmarks toggle */}
+        <button
+          onClick={() => { setShowStarredOnly(v => !v); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
+          title={showStarredOnly ? 'Show all questions' : 'Show bookmarked questions only'}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 4,
+            padding: isMobile ? '3px 8px' : '3px 10px', borderRadius: 99,
+            border: `1px solid ${showStarredOnly ? 'rgba(251,191,36,0.5)' : 'rgba(255,255,255,0.1)'}`,
+            background: showStarredOnly ? 'rgba(251,191,36,0.12)' : 'rgba(255,255,255,0.04)',
+            color: showStarredOnly ? '#fbbf24' : 'rgba(255,255,255,0.4)',
+            fontSize: 10, fontWeight: showStarredOnly ? 700 : 500,
+            cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0,
+            transition: 'all 0.15s',
+          }}
+        >
+          <Star style={{ width: 10, height: 10, fill: showStarredOnly ? '#fbbf24' : 'none', flexShrink: 0 }} />
+          {showStarredOnly ? 'Bookmarked' : 'Bookmarks'}
+          {showStarredOnly && starred.size > 0 && (
+            <span style={{ marginLeft: 2, opacity: 0.7 }}>({starred.size})</span>
+          )}
+        </button>
+
         {!isMobile && (
           <span style={{ marginLeft: 'auto', fontSize: 10, color: 'rgba(255,255,255,0.25)', whiteSpace: 'nowrap' }}>
             {filteredQuestions.length} questions
@@ -827,9 +915,31 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
     const expanded = cardExpanded[localIdx] ?? false;
     const diffColor = DIFF_COLOR(qq.metadata.difficultyLevel);
     const examSrc = qq.metadata.exam_source;
-    const examLabel = examSrc?.year
-      ? `${examSrc.exam ?? 'JEE Main'} ${examSrc.year}${examSrc.month ? ` · ${examSrc.month}` : ''}${examSrc.shift ? ` (${examSrc.shift.replace('Shift ', 'S').replace('Session ', 'S')})` : ''}`
-      : null;
+    const examDet = qq.metadata.examDetails;
+
+    // Build the exam badge label — prefer new examDetails field, fall back to legacy exam_source
+    let examLabel: string | null = null;
+    let examLabelColor = '#60a5fa';     // blue for JEE
+    let examLabelBg   = 'rgba(96,165,250,0.08)';
+    let examLabelBorder = 'rgba(96,165,250,0.18)';
+
+    if (examDet?.year) {
+      // New-style NEET / JEE questions (examDetails populated)
+      const isNEET = examDet.exam === 'NEET_UG' || examDet.exam === 'NEET_PG';
+      const examName = isNEET ? 'NEET' : examDet.exam === 'JEE_Main' ? 'JEE Main' : examDet.exam === 'JEE_Advanced' ? 'JEE Advanced' : (examDet.exam ?? '');
+      const suffix = examDet.phase
+        ? ` · ${examDet.phase}`
+        : examDet.shift ? ` (${examDet.shift.replace('Shift ', 'S').replace('Session ', 'S')})` : '';
+      examLabel = `${examName} ${examDet.year}${suffix}`;
+      if (isNEET) {
+        examLabelColor  = '#34d399';
+        examLabelBg     = 'rgba(52,211,153,0.08)';
+        examLabelBorder = 'rgba(52,211,153,0.2)';
+      }
+    } else if (examSrc?.year) {
+      // Legacy exam_source field (older JEE questions)
+      examLabel = `${examSrc.exam ?? 'JEE Main'} ${examSrc.year}${examSrc.month ? ` · ${examSrc.month}` : ''}${examSrc.shift ? ` (${examSrc.shift.replace('Shift ', 'S').replace('Session ', 'S')})` : ''}`;
+    }
 
     return (
       <div
@@ -863,10 +973,25 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
           <span style={{ fontSize: 10, fontWeight: 700, color: diffColor, background: diffColor + '18', padding: '2px 8px', borderRadius: 99 }}>L{qq.metadata.difficultyLevel}</span>
           <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.06)', padding: '2px 8px', borderRadius: 99 }}>{qq.type}</span>
           {examLabel && (
-            <span style={{ fontSize: 10, color: '#60a5fa', background: 'rgba(96,165,250,0.08)', border: '1px solid rgba(96,165,250,0.18)', padding: '2px 8px', borderRadius: 99 }}>{examLabel}</span>
+            <span style={{ fontSize: 10, color: examLabelColor, background: examLabelBg, border: `1px solid ${examLabelBorder}`, padding: '2px 8px', borderRadius: 99 }}>{examLabel}</span>
           )}
-          <button onClick={() => toggleStar(qq.id, qq)} style={{ marginLeft: 'auto', width: 28, height: 28, borderRadius: 7, background: isStarred ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.05)', border: `1px solid ${isStarred ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.08)'}`, color: isStarred ? '#fbbf24' : 'rgba(255,255,255,0.35)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          {/* Star / bookmark */}
+          <button onClick={() => toggleStar(qq.id, qq)} style={{ marginLeft: 'auto', width: 28, height: 28, borderRadius: 7, background: isStarred ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.05)', border: `1px solid ${isStarred ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.08)'}`, color: isStarred ? '#fbbf24' : 'rgba(255,255,255,0.35)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }} title="Bookmark this question">
             <Star style={{ width: 13, height: 13, fill: isStarred ? '#fbbf24' : 'none' }} />
+          </button>
+          {/* Flag / report inaccuracy */}
+          <button
+            onClick={() => openFlagModal(qq.id, qq.display_id)}
+            title="Report an issue with this question"
+            style={{
+              width: 28, height: 28, borderRadius: 7,
+              background: flaggedIds.has(qq.id) ? 'rgba(239,68,68,0.1)' : 'rgba(255,255,255,0.05)',
+              border: `1px solid ${flaggedIds.has(qq.id) ? 'rgba(239,68,68,0.35)' : 'rgba(255,255,255,0.08)'}`,
+              color: flaggedIds.has(qq.id) ? '#f87171' : 'rgba(255,255,255,0.3)',
+              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+            }}
+          >
+            <Flag style={{ width: 12, height: 12, fill: flaggedIds.has(qq.id) ? '#f87171' : 'none' }} />
           </button>
         </div>
 
@@ -981,7 +1106,15 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
           {header}
           {filterBar}
           <div ref={scrollAreaRef} style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: '16px 14px' } as any}>
-            {pageQuestions.map((qq, i) => renderCard(qq, i))}
+            {showStarredOnly && filteredQuestions.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '48px 16px', color: 'rgba(255,255,255,0.3)' }}>
+                <Star style={{ width: 32, height: 32, margin: '0 auto 12px', opacity: 0.3 }} />
+                <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 6 }}>No bookmarks yet</div>
+                <div style={{ fontSize: 13 }}>Tap the ★ on any question to save it here.</div>
+              </div>
+            ) : (
+              pageQuestions.map((qq, i) => renderCard(qq, i))
+            )}
             <div style={{ height: 8 }} />
           </div>
           {paginationBar}
@@ -1051,13 +1184,133 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
           {/* Main feed area */}
           <div ref={scrollAreaRef} style={{ flex: 1, overflowY: 'auto', padding: '24px 40px 60px' }}>
             <div style={{ maxWidth: 860, margin: '0 auto' }}>
-              {pageQuestions.map((qq, i) => renderCard(qq, i))}
+              {showStarredOnly && filteredQuestions.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '64px 16px', color: 'rgba(255,255,255,0.3)' }}>
+                  <Star style={{ width: 36, height: 36, margin: '0 auto 14px', opacity: 0.25 }} />
+                  <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>No bookmarks in this chapter</div>
+                  <div style={{ fontSize: 13 }}>Click ★ on any question to bookmark it for later review.</div>
+                </div>
+              ) : (
+                pageQuestions.map((qq, i) => renderCard(qq, i))
+              )}
             </div>
           </div>
         </div>
       </div>
 
       {saveModalElement}
+
+      {/* ── Flag / Report Modal ──────────────────────────────────────────── */}
+      {flagModalQuestion && (
+        <>
+          {/* Backdrop */}
+          <div
+            onClick={() => setFlagModalQuestion(null)}
+            style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)' }}
+          />
+          {/* Modal */}
+          <div style={{
+            position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
+            zIndex: 301, width: '90%', maxWidth: 440,
+            background: '#0f1117', border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: 16, padding: 24, boxShadow: '0 24px 64px rgba(0,0,0,0.6)',
+          }}>
+            {/* Header */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
+              <Flag style={{ width: 16, height: 16, color: '#f87171' }} />
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#fafafa' }}>Report an Issue</div>
+                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginTop: 1 }}>
+                  {flagModalQuestion.displayId}
+                </div>
+              </div>
+              <button
+                onClick={() => setFlagModalQuestion(null)}
+                style={{ width: 28, height: 28, borderRadius: 7, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              >
+                <X style={{ width: 14, height: 14 }} />
+              </button>
+            </div>
+
+            {/* Flag type list */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 14 }}>
+              {FLAG_TYPES.map(ft => (
+                <button
+                  key={ft.id}
+                  onClick={() => setFlagType(ft.id)}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 10,
+                    padding: '9px 12px', borderRadius: 9,
+                    border: `1px solid ${flagType === ft.id ? 'rgba(239,68,68,0.4)' : 'rgba(255,255,255,0.07)'}`,
+                    background: flagType === ft.id ? 'rgba(239,68,68,0.1)' : 'rgba(255,255,255,0.03)',
+                    cursor: 'pointer', textAlign: 'left', transition: 'all 0.12s',
+                  }}
+                >
+                  <div style={{
+                    width: 14, height: 14, borderRadius: '50%', flexShrink: 0,
+                    border: `2px solid ${flagType === ft.id ? '#f87171' : 'rgba(255,255,255,0.25)'}`,
+                    background: flagType === ft.id ? '#f87171' : 'transparent',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    {flagType === ft.id && <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#fff' }} />}
+                  </div>
+                  <span style={{ fontSize: 13, color: flagType === ft.id ? '#fca5a5' : 'rgba(255,255,255,0.65)' }}>
+                    {ft.label}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Optional note */}
+            <textarea
+              value={flagNote}
+              onChange={e => setFlagNote(e.target.value.slice(0, 500))}
+              placeholder="Any additional detail? (optional)"
+              rows={2}
+              style={{
+                width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: 9, padding: '9px 12px', fontSize: 13, color: '#e2e8f0',
+                resize: 'vertical', outline: 'none', fontFamily: 'inherit', boxSizing: 'border-box',
+                marginBottom: 14,
+              }}
+            />
+
+            {/* Result message */}
+            {flagResult && (
+              <div style={{
+                padding: '9px 12px', borderRadius: 9, marginBottom: 12,
+                background: flagResult.ok ? 'rgba(52,211,153,0.1)' : 'rgba(239,68,68,0.1)',
+                border: `1px solid ${flagResult.ok ? 'rgba(52,211,153,0.3)' : 'rgba(239,68,68,0.3)'}`,
+                fontSize: 13, color: flagResult.ok ? '#6ee7b7' : '#fca5a5',
+              }}>
+                {flagResult.msg}
+              </div>
+            )}
+
+            {/* Actions */}
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+              <button
+                onClick={() => setFlagModalQuestion(null)}
+                style={{ padding: '8px 16px', borderRadius: 9, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: 'rgba(255,255,255,0.5)', fontSize: 13, cursor: 'pointer' }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={submitFlag}
+                disabled={flagSubmitting}
+                style={{
+                  padding: '8px 18px', borderRadius: 9, border: 'none',
+                  background: flagSubmitting ? 'rgba(239,68,68,0.4)' : '#dc2626',
+                  color: '#fff', fontSize: 13, fontWeight: 600,
+                  cursor: flagSubmitting ? 'not-allowed' : 'pointer', opacity: flagSubmitting ? 0.7 : 1,
+                }}
+              >
+                {flagSubmitting ? 'Sending…' : 'Submit Report'}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }

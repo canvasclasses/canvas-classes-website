@@ -42,12 +42,24 @@ export async function generateMetadata({ params }: { params: Promise<{ chapterId
     };
 }
 
-export default async function Page({ params }: { params: Promise<{ chapterId: string }> }) {
+export default async function Page({
+    params,
+    searchParams,
+}: {
+    params: Promise<{ chapterId: string }>;
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
     const { chapterId } = await params;
+    const resolvedSearch = await searchParams;
+
+    // Read examBoard from URL (?examBoard=NEET or ?examBoard=JEE)
+    // This is set by CrucibleWizard when the user navigates from a NEET session.
+    const rawBoard = resolvedSearch['examBoard'];
+    const examBoard = rawBoard === 'NEET' ? 'NEET' : rawBoard === 'JEE' ? 'JEE' : undefined;
 
     const [chapters, questions, questionCounts, starCounts] = await Promise.all([
         getTaxonomy(),
-        getChapterQuestions(chapterId),
+        getChapterQuestions(chapterId, examBoard),
         getChapterQuestionCounts(),
         getChapterStarCounts(),
     ]);
@@ -63,13 +75,14 @@ export default async function Page({ params }: { params: Promise<{ chapterId: st
 
     return (
         <ChapterPracticePage
-            chapter={{ 
-                ...chapter, 
+            chapter={{
+                ...chapter,
                 question_count: questionCounts[chapterId] ?? 0,
                 star_question_count: starCounts[chapterId] ?? 0,
             }}
             questions={questions}
             allChapters={chaptersWithCounts}
+            examBoard={examBoard}
         />
     );
 }

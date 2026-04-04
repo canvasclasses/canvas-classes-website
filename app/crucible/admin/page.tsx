@@ -16,6 +16,8 @@ import SVGScaleControls from './components/SVGScaleControls';
 import SVGDropZone from './components/SVGDropZone';
 import VideoDropZone from './components/VideoDropZone';
 import RoleManagement from './components/RoleManagement';
+import MockTestsAdmin from './components/MockTestsAdmin';
+import FlagsDashboard from './components/FlagsDashboard';
 import { usePermissions } from './hooks/usePermissions';
 
 const VALID_TOPIC_IDS = new Set(TAXONOMY_FROM_CSV.filter(t => t.type === 'topic').map(t => t.id));
@@ -123,7 +125,10 @@ const QUESTION_TYPES = [
 function AdminPageContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    
+
+    // Top-level section: 'practice' | 'mock-tests' | 'flags'
+    const [adminSection, setAdminSection] = useState<'practice' | 'mock-tests' | 'flags'>('practice');
+
     const [questions, setQuestions] = useState<Question[]>([]);
     const [chapters, setChapters] = useState<Chapter[]>([]);
     const [loading, setLoading] = useState(true);
@@ -783,8 +788,46 @@ function AdminPageContent() {
                     <h1 className="text-sm font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 bg-clip-text text-transparent shrink-0">
                         Crucible Admin
                     </h1>
-                    <span className="text-gray-600 text-xs font-mono shrink-0">{questions.length}/{totalCount}</span>
 
+                    {/* Section tabs */}
+                    <div className="flex items-center gap-0.5 bg-gray-800/60 rounded-lg p-0.5 shrink-0">
+                        <button
+                            onClick={() => setAdminSection('practice')}
+                            className={`px-2.5 py-1 rounded-md text-xs font-semibold transition ${
+                                adminSection === 'practice'
+                                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-sm'
+                                    : 'text-gray-400 hover:text-gray-200'
+                            }`}
+                        >
+                            Practice Bank
+                        </button>
+                        <button
+                            onClick={() => setAdminSection('mock-tests')}
+                            className={`px-2.5 py-1 rounded-md text-xs font-semibold transition ${
+                                adminSection === 'mock-tests'
+                                    ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-sm'
+                                    : 'text-gray-400 hover:text-gray-200'
+                            }`}
+                        >
+                            Mock Tests
+                        </button>
+                        <button
+                            onClick={() => setAdminSection('flags')}
+                            className={`px-2.5 py-1 rounded-md text-xs font-semibold transition ${
+                                adminSection === 'flags'
+                                    ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-sm'
+                                    : 'text-gray-400 hover:text-gray-200'
+                            }`}
+                        >
+                            🚩 Reports
+                        </button>
+                    </div>
+
+                    {adminSection === 'practice' && (
+                        <span className="text-gray-600 text-xs font-mono shrink-0">{questions.length}/{totalCount}</span>
+                    )}
+
+                    {adminSection === 'practice' && (<>
                     <div className="w-px h-4 bg-gray-700/50 shrink-0" />
 
                     {/* Icon-only action buttons */}
@@ -870,7 +913,9 @@ function AdminPageContent() {
                             Next →
                         </button>
                     </div>
+                    </>)}
 
+                    {adminSection === 'practice' && (<>
                     <div className="w-px h-4 bg-gray-700/50 shrink-0" />
 
                     {/* Question Selector or Bulk Selection Info */}
@@ -1035,10 +1080,11 @@ function AdminPageContent() {
                             <Save size={12} className="animate-spin" /> Saving...
                         </span>
                     )}
+                    </>)}
                 </div>
 
-                {/* Row 2: All filters consolidated in one row */}
-                <div className="flex items-center gap-2 px-3 py-1.5 overflow-x-auto border-t border-gray-800/50" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as any}>
+                {/* Row 2: All filters consolidated in one row — practice bank only */}
+                {adminSection === 'practice' && <div className="flex items-center gap-2 px-3 py-1.5 overflow-x-auto border-t border-gray-800/50" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as any}>
                     <Filter size={11} className="text-purple-400 shrink-0" />
 
                     {/* Difficulty */}
@@ -1158,12 +1204,26 @@ function AdminPageContent() {
                             Clear All
                         </button>
                     )}
-                </div>
+                </div>}
 
             </header>
 
-            {/* MAIN AREA: full-width metadata top + split editor/preview bottom */}
-            <div className="flex-1 flex flex-col overflow-hidden">
+            {/* MOCK TESTS section — full content area replacement */}
+            {adminSection === 'mock-tests' && (
+                <div className="flex-1 overflow-hidden">
+                    <MockTestsAdmin />
+                </div>
+            )}
+
+            {/* FLAGS / REPORTS section */}
+            {adminSection === 'flags' && (
+                <div className="flex-1 overflow-hidden">
+                    <FlagsDashboard />
+                </div>
+            )}
+
+            {/* PRACTICE BANK section — full-width metadata top + split editor/preview bottom */}
+            {adminSection === 'practice' && <div className="flex-1 flex flex-col overflow-hidden">
                 {selectedChapterFilter === 'all' && !searchQuery ? (
                     <div className="flex-1 flex flex-col items-center justify-center p-8 text-center text-gray-500">
                         <Library size={48} className="mb-4 text-gray-600 opacity-50" />
@@ -2202,7 +2262,7 @@ function AdminPageContent() {
                         </div>
                     </div>
                 )}
-            </div>
+            </div>}
 
             {/* Analytics Dashboard Modal */}
             {showAnalytics && (

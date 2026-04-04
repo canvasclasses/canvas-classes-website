@@ -298,14 +298,17 @@ export async function syncSupabaseToMongo(): Promise<{ success: boolean; message
 }
 
 // Fetch all published questions for a single chapter (used by per-chapter pages)
-export async function getChapterQuestions(chapterId: string): Promise<QuestionPageType[]> {
+// Pass examBoard to scope results to JEE or NEET only. Omit for unfiltered (legacy).
+export async function getChapterQuestions(chapterId: string, examBoard?: 'JEE' | 'NEET'): Promise<QuestionPageType[]> {
     try {
         await connectToDatabase();
         const { QuestionV2 } = await import('@/lib/models/Question.v2');
-        const docs = await QuestionV2.find({
+        const filter: Record<string, any> = {
             'metadata.chapter_id': chapterId,
             deleted_at: null,
-        })
+        };
+        if (examBoard) filter['metadata.examBoard'] = examBoard;
+        const docs = await QuestionV2.find(filter)
             .sort({ display_id: 1 })
             .lean();
 
@@ -330,6 +333,10 @@ export async function getChapterQuestions(chapterId: string): Promise<QuestionPa
                 is_pyq: q.metadata?.is_pyq || false,
                 is_top_pyq: q.metadata?.is_top_pyq || false,
                 exam_source: q.metadata?.exam_source,
+                // New exam taxonomy fields — needed for correct filtering in BrowseView
+                examBoard: q.metadata?.examBoard,
+                sourceType: q.metadata?.sourceType,
+                examDetails: q.metadata?.examDetails,
             },
             svg_scales: q.svg_scales || {},
         }));

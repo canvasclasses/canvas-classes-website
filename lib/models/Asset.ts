@@ -25,6 +25,7 @@ export interface IAssetMetadata {
   width?: number;
   height?: number;
   duration_seconds?: number; // For audio/video
+  context?: string; // e.g. 'practice', 'mock_test' — which part of the app uploaded this
 }
 
 export interface IAsset {
@@ -66,7 +67,8 @@ const AssetMetadataSchema = new Schema<IAssetMetadata>({
   caption: { type: String },
   width: { type: Number },
   height: { type: Number },
-  duration_seconds: { type: Number }
+  duration_seconds: { type: Number },
+  context: { type: String, default: 'practice' },
 }, { _id: false });
 
 const AssetSchema = new Schema<IAsset>({
