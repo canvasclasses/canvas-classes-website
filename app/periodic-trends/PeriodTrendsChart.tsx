@@ -267,48 +267,32 @@ interface ChartProps {
   showDBlock: boolean;
 }
 
-// Fixed SVG viewBox dimensions — same approach as TrendsComponent
+// SVG viewBox — same as TrendsComponent desktop
 const VB_W = 600;
 const VB_H = 375;
-const PAD_L = 10;
-const PAD_R = 10;
-const PAD_T = 50;  // top — room for value labels above first points
-// Bottom padding scales with number of periods: each period row needs ~18px
-const basePAD_B = 28;
-const perPeriodPAD_B = 18;
-const PLOT_X0 = PAD_L + 30;
-const PLOT_X1 = VB_W - PAD_R;
+const PLOT_X0 = 40;
+const PLOT_X1 = 590;
+const PLOT_Y0 = 40;
+const PLOT_Y1 = 320; // leaves 55px for x-axis labels at y=340
+const PLOT_W = PLOT_X1 - PLOT_X0;
+const PLOT_H = PLOT_Y1 - PLOT_Y0;
+
 
 function PeriodLineChart({ periods, property, showDBlock }: ChartProps) {
   const [hoveredPoint, setHoveredPoint] = useState<{ period: number; idx: number } | null>(null);
-  const [openException, setOpenException] = useState<{ exc: Exception; periodIdx: number; elIdx: number } | null>(null);
+  const [openException, setOpenException] = useState<Exception | null>(null);
 
-  const series = useMemo(() =>
-    periods.map(p => ({
-      period: p,
-      cfg: PERIOD_CONFIG.find(c => c.period === p)!,
-      elements: getElementsForPeriod(p, property.key, showDBlock),
-    })),
-    [periods, property.key, showDBlock]
+  // Single period only — the selected one (periods array always has exactly 1 item now)
+  const period = periods[0];
+  const elements = useMemo(
+    () => getElementsForPeriod(period, property.key, showDBlock),
+    [period, property.key, showDBlock]
   );
 
-  // Dynamic bottom padding — one row per active period for staggered x-axis labels
-  const PAD_B = basePAD_B + periods.length * perPeriodPAD_B;
-  const PLOT_Y0 = PAD_T;
-  const PLOT_Y1 = VB_H - PAD_B;
-  const PLOT_W = PLOT_X1 - PLOT_X0;
-  const PLOT_H = PLOT_Y1 - PLOT_Y0;
-
-  // Global min/max
-  const allVals = useMemo(() =>
-    series.flatMap(s => s.elements.map(e => e.value)).filter((v): v is number => v !== null),
-    [series]
-  );
-
+  const allVals = elements.map(e => e.value).filter((v): v is number => v !== null);
   const rawMin = allVals.length ? Math.min(...allVals) : 0;
   const rawMax = allVals.length ? Math.max(...allVals) : 1;
   const useLog = property.key === 'density';
-  const multiPeriod = periods.length > 1;
 
   const toNorm = (v: number): number => {
     if (useLog) {
@@ -322,14 +306,10 @@ function PeriodLineChart({ periods, property, showDBlock }: ChartProps) {
 
   const toSvgY = (v: number) => PLOT_Y0 + (1 - toNorm(v)) * PLOT_H;
 
-  const excData = EXCEPTIONS[property.key] || {};
+  const getX = (idx: number) =>
+    elements.length <= 1 ? PLOT_X0 + PLOT_W / 2 : PLOT_X0 + (idx / (elements.length - 1)) * PLOT_W;
 
-  const getX = (elements: ElementPoint[], idx: number) => {
-    if (elements.length <= 1) return PLOT_X0 + PLOT_W / 2;
-    return PLOT_X0 + (idx / (elements.length - 1)) * PLOT_W;
-  };
-
-  const isValley = (elements: ElementPoint[], idx: number): boolean => {
+  const isValley = (idx: number): boolean => {
     const cur = elements[idx].value;
     if (cur === null) return false;
     const prev = elements.slice(0, idx).reverse().find(e => e.value !== null)?.value ?? null;
@@ -337,63 +317,50 @@ function PeriodLineChart({ periods, property, showDBlock }: ChartProps) {
     return prev !== null && next !== null && cur < prev && cur < next;
   };
 
-  const gridYs = [PLOT_Y0 + PLOT_H * 0.07, PLOT_Y0 + PLOT_H * 0.5, PLOT_Y0 + PLOT_H * 0.93];
+  const excData = EXCEPTIONS[property.key] || {};
+  const validPts = elements
+    .map((e, idx) => ({ e, idx, x: getX(idx), y: e.value !== null ? toSvgY(e.value) : null }))
+    .filter(p => p.y !== null) as { e: ElementPoint; idx: number; x: number; y: number }[];
 
-  // Height of the SVG viewBox must accommodate the dynamic bottom padding
-  const svgVBH = PLOT_Y1 + PAD_B;
+  const pathD = validPts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x},${p.y}`).join(' ');
+  const gridYs = [PLOT_Y0 + PLOT_H * 0.07, PLOT_Y0 + PLOT_H * 0.5, PLOT_Y0 + PLOT_H * 0.93];
 
   return (
     <>
-      {/* Desktop graph */}
-      <div className="hidden md:block relative bg-gray-900/40 rounded-xl border border-gray-700/40 p-5" style={{ minHeight: 420 }}>
-        {/* Property name top-left */}
+      {/* Desktop */}
+      <div className="hidden md:block relative h-[500px] bg-gray-900/40 rounded-xl border border-gray-700/40 p-5">
         <div className="absolute top-3 left-6 text-base text-gray-200 font-bold flex items-center gap-2">
           {property.label}
           <span className="text-sm font-normal text-gray-500">({property.unit})</span>
         </div>
+        {Object.keys(excData).length > 0 && (
+          <div className="absolute top-3 right-6 flex items-center gap-1.5">
+            <span className="inline-block w-3 h-3 rounded-full bg-amber-400" />
+            <span className="text-xs text-gray-400">Exception — click to expand</span>
+          </div>
+        )}
 
-        {/* Period colour key top-right */}
-        <div className="absolute top-3 right-6 flex gap-4">
-          {series.map(({ period, cfg }) => (
-            <div key={period} className="flex items-center gap-1.5">
-              <svg width="20" height="4"><line x1="0" y1="2" x2="20" y2="2" stroke={cfg.color} strokeWidth="2.5" strokeLinecap="round" /></svg>
-              <span className="text-xs text-gray-400">{cfg.label}</span>
-            </div>
-          ))}
-          {Object.keys(excData).length > 0 && (
-            <div className="flex items-center gap-1.5">
-              <span className="inline-block w-3 h-3 rounded-full bg-amber-400" />
-              <span className="text-xs text-gray-400">Exception</span>
-            </div>
-          )}
-        </div>
-
-        <svg viewBox={`0 0 ${VB_W} ${svgVBH}`} className="w-full overflow-visible" style={{ display: 'block' }}>
+        <svg viewBox={`0 0 ${VB_W} ${VB_H}`} className="w-full h-full overflow-visible">
           <defs>
-            {series.map(({ period }) => (
-              <linearGradient key={period} id={`grad-p${period}`} x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%"   stopColor="#f472b6" />
-                <stop offset="50%"  stopColor="#fb923c" />
-                <stop offset="100%" stopColor="#a3e635" />
-              </linearGradient>
-            ))}
+            <linearGradient id="grad-period" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stopColor="#f472b6" />
+              <stop offset="50%"  stopColor="#fb923c" />
+              <stop offset="100%" stopColor="#a3e635" />
+            </linearGradient>
           </defs>
 
-          {/* Grid lines */}
           {gridYs.map(y => (
             <line key={y} x1={PLOT_X0} x2={PLOT_X1} y1={y} y2={y}
               stroke="#374151" strokeDasharray="2" strokeWidth="0.5" />
           ))}
 
-          {/* D-block shaded band for Period 4 */}
-          {periods.includes(4) && showDBlock && (() => {
-            const s = series.find(s => s.period === 4);
-            if (!s) return null;
-            const dbStart = s.elements.findIndex(e => e.isDBlock);
-            const dbEnd = s.elements.reduceRight((acc, e, i) => acc === -1 && e.isDBlock ? i : acc, -1);
+          {/* D-block shading */}
+          {showDBlock && (() => {
+            const dbStart = elements.findIndex(e => e.isDBlock);
+            const dbEnd = elements.reduceRight((acc, e, i) => acc === -1 && e.isDBlock ? i : acc, -1);
             if (dbStart < 0) return null;
-            const x0 = getX(s.elements, dbStart) - 8;
-            const x1 = getX(s.elements, dbEnd) + 8;
+            const x0 = getX(dbStart) - 8;
+            const x1 = getX(dbEnd) + 8;
             return (
               <g>
                 <rect x={x0} y={PLOT_Y0} width={x1 - x0} height={PLOT_H}
@@ -405,239 +372,146 @@ function PeriodLineChart({ periods, property, showDBlock }: ChartProps) {
             );
           })()}
 
-          {/* Lines and points per period */}
-          {series.map(({ period, cfg, elements }, si) => {
-            const validPts = elements
-              .map((e, idx) => ({ e, idx, x: getX(elements, idx), y: e.value !== null ? toSvgY(e.value) : null }))
-              .filter(p => p.y !== null) as { e: ElementPoint; idx: number; x: number; y: number }[];
+          {/* Animated line */}
+          {validPts.length > 1 && (
+            <motion.path
+              key={`${period}-${property.key}`}
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 0.9 }}
+              d={pathD}
+              fill="none"
+              stroke="url(#grad-period)"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          )}
 
-            const pathD = validPts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x},${p.y}`).join(' ');
-
-            // Each period gets its own x-axis row: row 0 = closest below chart, row 1 = further, etc.
-            const periodRowIdx = periods.indexOf(period);
-            const xLabelY = PLOT_Y1 + 16 + periodRowIdx * perPeriodPAD_B;
+          {validPts.map(({ e, idx, x, y }) => {
+            const isHov = hoveredPoint?.period === period && hoveredPoint?.idx === idx;
+            const hasExc = excData[e.symbol] !== undefined;
+            const valley = isValley(idx);
+            const valLabelY = y + (valley ? 22 : -15);
 
             return (
-              <g key={period}>
-                {/* Coloured period label at left of its symbol row */}
-                <text x={PLOT_X0 - 4} y={xLabelY} textAnchor="end" fill={cfg.color} fontSize="9" fontWeight="bold" opacity="0.8">
-                  P{period}
-                </text>
-
-                {/* Animated line */}
-                {validPts.length > 1 && (
-                  <motion.path
-                    key={`${period}-${property.key}`}
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.9 }}
-                    d={pathD}
-                    fill="none"
-                    stroke={`url(#grad-p${period})`}
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
+              <g key={e.atomicNumber}
+                onMouseEnter={() => setHoveredPoint({ period, idx })}
+                onMouseLeave={() => setHoveredPoint(null)}
+                onClick={() => {
+                  if (hasExc) setOpenException(openException?.symbol === e.symbol ? null : excData[e.symbol]);
+                }}
+                style={{ cursor: hasExc ? 'pointer' : 'default' }}
+              >
+                {hasExc && (
+                  <circle cx={x} cy={y} r={10}
+                    fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.35)"
+                    strokeWidth="1.5" strokeDasharray="3 2" />
                 )}
-
-                {validPts.map(({ e, idx, x, y }) => {
-                  const isHov = hoveredPoint?.period === period && hoveredPoint?.idx === idx;
-                  const hasExc = excData[e.symbol] !== undefined;
-                  const valley = isValley(elements, idx);
-                  const valLabelY = y + (valley ? 22 : -16);
-                  // Show value label: always if single period; only on hover if multi-period
-                  const showVal = isHov || (!multiPeriod && validPts.length <= 10);
-
-                  return (
-                    <g key={e.atomicNumber}
-                      onMouseEnter={() => setHoveredPoint({ period, idx })}
-                      onMouseLeave={() => setHoveredPoint(null)}
-                      onClick={() => {
-                        if (hasExc) {
-                          setOpenException(
-                            openException?.exc.symbol === e.symbol
-                              ? null
-                              : { exc: excData[e.symbol], periodIdx: si, elIdx: idx }
-                          );
-                        }
-                      }}
-                      style={{ cursor: hasExc ? 'pointer' : 'default' }}
-                    >
-                      {/* Exception amber glow ring */}
-                      {hasExc && (
-                        <circle cx={x} cy={y} r={10}
-                          fill="rgba(251,191,36,0.08)"
-                          stroke="rgba(251,191,36,0.35)"
-                          strokeWidth="1.5"
-                          strokeDasharray="3 2" />
-                      )}
-
-                      {/* Dot */}
-                      <circle
-                        cx={x} cy={y}
-                        r={isHov ? 5 : 3.5}
-                        className="transition-all"
-                        fill={hasExc ? '#fbbf24' : 'white'}
-                        stroke={hasExc ? '#f59e0b' : cfg.color}
-                        strokeWidth="1.5"
-                      />
-
-                      {/* Exception "!" badge */}
-                      {hasExc && !isHov && (
-                        <text x={x} y={y - 10} textAnchor="middle"
-                          fill="#fbbf24" fontSize="9" fontWeight="bold">!</text>
-                      )}
-
-                      {/* Value label — only on hover when multi-period */}
-                      {showVal && e.value !== null && (
-                        <text
-                          x={x} y={valLabelY}
-                          textAnchor="middle"
-                          fill="white"
-                          fontSize="11"
-                          fontWeight="500"
-                          stroke="#111827"
-                          strokeWidth="2.5"
-                          strokeLinejoin="round"
-                          style={{ paintOrder: 'stroke' }}
-                        >
-                          {formatValue(e.value, property.key)}
-                        </text>
-                      )}
-
-                      {/* X-axis element symbol — in this period's own row, coloured */}
-                      <text x={x} y={xLabelY} textAnchor="middle" fill={cfg.color} fontSize="11" opacity="0.85">
-                        {e.symbol}
-                      </text>
-                    </g>
-                  );
-                })}
+                <circle cx={x} cy={y} r={isHov ? 5 : 3.5} className="transition-all"
+                  fill={hasExc ? '#fbbf24' : 'white'}
+                  stroke={hasExc ? '#f59e0b' : '#f472b6'}
+                  strokeWidth="1.5" />
+                {hasExc && !isHov && (
+                  <text x={x} y={y - 10} textAnchor="middle" fill="#fbbf24" fontSize="9" fontWeight="bold">!</text>
+                )}
+                {/* Value label — always show (≤10 pts), same as TrendsComponent */}
+                {e.value !== null && (validPts.length <= 10 || isHov) && (
+                  <text x={x} y={valLabelY} textAnchor="middle"
+                    fill="white" fontSize="13" fontWeight="500"
+                    stroke="#111827" strokeWidth="3" strokeLinejoin="round"
+                    style={{ paintOrder: 'stroke' }}>
+                    {formatValue(e.value, property.key)}
+                  </text>
+                )}
+                {/* X-axis element symbol — same fontSize as TrendsComponent equivalent */}
+                <text x={x} y={340} textAnchor="middle" fill="#9ca3af" fontSize="13">
+                  {e.symbol}
+                </text>
               </g>
             );
           })}
         </svg>
-
-        {/* Hover hint when multi-period */}
-        {multiPeriod && (
-          <p className="absolute bottom-2 right-4 text-[11px] text-gray-600 italic">Hover a dot to see its value</p>
-        )}
       </div>
 
-      {/* Mobile graph */}
-      <div className="block md:hidden relative bg-gray-900/40 rounded-xl border border-gray-700/40 p-2">
+      {/* Mobile */}
+      <div className="block md:hidden relative h-[460px] bg-gray-900/40 rounded-xl border border-gray-700/40 p-2">
         <div className="absolute top-3 left-4 text-sm text-gray-200 font-bold">{property.label}</div>
-        {(() => {
-          const MX0 = 20, MX1 = 280, MY0 = 40, MY1 = 340;
-          const MW = MX1 - MX0;
-          const MH = MY1 - MY0;
-          const mobPadB = 16 + periods.length * 20;
-          const mobVBH = MY1 + mobPadB;
-          return (
-            <svg viewBox={`0 0 300 ${mobVBH}`} className="w-full overflow-visible" style={{ display: 'block' }}>
-              <defs>
-                {series.map(({ period }) => (
-                  <linearGradient key={period} id={`grad-mob-p${period}`} x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%"   stopColor="#f472b6" />
-                    <stop offset="50%"  stopColor="#fb923c" />
-                    <stop offset="100%" stopColor="#a3e635" />
-                  </linearGradient>
-                ))}
-              </defs>
-
-              {[MY0 + MH * 0.07, MY0 + MH * 0.5, MY0 + MH * 0.93].map(y => (
-                <line key={y} x1={MX0} x2={MX1} y1={y} y2={y}
-                  stroke="#374151" strokeDasharray="2" strokeWidth="0.5" />
-              ))}
-
-              {series.map(({ period, cfg, elements }, si) => {
-                const getXm = (idx: number) => elements.length <= 1 ? MX0 + MW / 2 : MX0 + (idx / (elements.length - 1)) * MW;
-                const toYm = (v: number) => MY0 + (1 - toNorm(v)) * MH;
-                const periodRowIdx = periods.indexOf(period);
-                const xLabelY = MY1 + 14 + periodRowIdx * 20;
-
-                const validPts = elements
-                  .map((e, idx) => ({ e, idx, x: getXm(idx), y: e.value !== null ? toYm(e.value) : null }))
-                  .filter(p => p.y !== null) as { e: ElementPoint; idx: number; x: number; y: number }[];
-
-                const pathD = validPts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x},${p.y}`).join(' ');
-
-                return (
-                  <g key={period}>
-                    <text x={MX0 - 3} y={xLabelY} textAnchor="end" fill={cfg.color} fontSize="8" fontWeight="bold" opacity="0.8">P{period}</text>
-                    {validPts.length > 1 && (
-                      <motion.path
-                        key={`mob-${period}-${property.key}`}
-                        initial={{ pathLength: 0 }}
-                        animate={{ pathLength: 1 }}
-                        transition={{ duration: 0.9 }}
-                        d={pathD}
-                        fill="none"
-                        stroke={`url(#grad-mob-p${period})`}
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    )}
-
-                    {validPts.map(({ e, idx, x, y }) => {
-                      const isHov = hoveredPoint?.period === period && hoveredPoint?.idx === idx;
-                      const hasExc = excData[e.symbol] !== undefined;
-                      const valley = isValley(elements, idx);
-                      const valLabelY = y + (valley ? 20 : -12);
-                      const showVal = isHov || (!multiPeriod && validPts.length <= 8);
-
-                      return (
-                        <g key={e.atomicNumber}
-                          onMouseEnter={() => setHoveredPoint({ period, idx })}
-                          onMouseLeave={() => setHoveredPoint(null)}
-                          onClick={() => hasExc && setOpenException(
-                            openException?.exc.symbol === e.symbol ? null : { exc: excData[e.symbol], periodIdx: si, elIdx: idx }
-                          )}
-                          style={{ cursor: hasExc ? 'pointer' : 'default' }}
-                        >
-                          {hasExc && (
-                            <circle cx={x} cy={y} r={8} fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.35)" strokeWidth="1.5" strokeDasharray="3 2" />
-                          )}
-                          <circle cx={x} cy={y} r={isHov ? 6 : 4}
-                            fill={hasExc ? '#fbbf24' : 'white'}
-                            stroke={hasExc ? '#f59e0b' : cfg.color}
-                            strokeWidth="1.5" />
-                          {hasExc && !isHov && (
-                            <text x={x} y={y - 10} textAnchor="middle" fill="#fbbf24" fontSize="10" fontWeight="bold">!</text>
-                          )}
-                          {showVal && e.value !== null && (
-                            <text x={x} y={valLabelY} textAnchor="middle"
-                              fill="white" fontSize="11" fontWeight="600"
-                              stroke="#111827" strokeWidth="3" strokeLinejoin="round"
-                              style={{ paintOrder: 'stroke' }}>
-                              {formatValue(e.value, property.key)}
-                            </text>
-                          )}
-                          <text x={x} y={xLabelY} textAnchor="middle" fill={cfg.color} fontSize="10" opacity="0.85">
-                            {e.symbol}
-                          </text>
-                        </g>
-                      );
-                    })}
-                  </g>
-                );
-              })}
-            </svg>
-          );
-        })()}
+        <svg viewBox="0 0 300 420" className="w-full h-full overflow-visible">
+          <defs>
+            <linearGradient id="grad-period-mob" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#f472b6" />
+              <stop offset="50%"  stopColor="#fb923c" />
+              <stop offset="100%" stopColor="#a3e635" />
+            </linearGradient>
+          </defs>
+          {[40, 210, 380].map(y => (
+            <line key={y} x1="5%" x2="95%" y1={y} y2={y} stroke="#374151" strokeDasharray="2" strokeWidth="0.5" />
+          ))}
+          {(() => {
+            const MX0 = 20, MX1 = 280, MY0 = 40, MY1 = 370;
+            const MW = MX1 - MX0, MH = MY1 - MY0;
+            const getXm = (idx: number) => elements.length <= 1 ? MX0 + MW / 2 : MX0 + (idx / (elements.length - 1)) * MW;
+            const toYm = (v: number) => MY0 + (1 - toNorm(v)) * MH;
+            const vpts = elements
+              .map((e, idx) => ({ e, idx, x: getXm(idx), y: e.value !== null ? toYm(e.value) : null }))
+              .filter(p => p.y !== null) as { e: ElementPoint; idx: number; x: number; y: number }[];
+            const pd = vpts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x},${p.y}`).join(' ');
+            return (
+              <>
+                {vpts.length > 1 && (
+                  <motion.path key={`mob-${period}-${property.key}`}
+                    initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.9 }} d={pd}
+                    fill="none" stroke="url(#grad-period-mob)" strokeWidth="2.5"
+                    strokeLinecap="round" strokeLinejoin="round" />
+                )}
+                {vpts.map(({ e, idx, x, y }) => {
+                  const isHov = hoveredPoint?.period === period && hoveredPoint?.idx === idx;
+                  const hasExc = excData[e.symbol] !== undefined;
+                  const valley = isValley(idx);
+                  const valLabelY = y + (valley ? 20 : -12);
+                  const xLabelY = MY1 + (idx % 2 === 0 ? 14 : 24);
+                  return (
+                    <g key={e.atomicNumber}
+                      onMouseEnter={() => setHoveredPoint({ period, idx })}
+                      onMouseLeave={() => setHoveredPoint(null)}
+                      onClick={() => hasExc && setOpenException(openException?.symbol === e.symbol ? null : excData[e.symbol])}
+                      style={{ cursor: hasExc ? 'pointer' : 'default' }}
+                    >
+                      {hasExc && <circle cx={x} cy={y} r={8} fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.35)" strokeWidth="1.5" strokeDasharray="3 2" />}
+                      <circle cx={x} cy={y} r={isHov ? 6 : 4}
+                        fill={hasExc ? '#fbbf24' : 'white'} stroke={hasExc ? '#f59e0b' : '#f472b6'} strokeWidth="1.5" />
+                      {hasExc && !isHov && <text x={x} y={y - 10} textAnchor="middle" fill="#fbbf24" fontSize="10" fontWeight="bold">!</text>}
+                      {(isHov || vpts.length <= 8) && e.value !== null && (
+                        <text x={x} y={valLabelY} textAnchor="middle"
+                          fill="white" fontSize="11" fontWeight="600"
+                          stroke="#111827" strokeWidth="3" strokeLinejoin="round"
+                          style={{ paintOrder: 'stroke' }}>
+                          {formatValue(e.value, property.key)}
+                        </text>
+                      )}
+                      <text x={x} y={xLabelY} textAnchor="middle" fill="#9ca3af" fontSize="11">{e.symbol}</text>
+                    </g>
+                  );
+                })}
+              </>
+            );
+          })()}
+        </svg>
       </div>
 
       {/* Exception hint */}
       {Object.keys(excData).length > 0 && (
-        <p className="text-center text-sm text-amber-500/70 mt-2">
-          <span className="inline-block w-2.5 h-2.5 rounded-full bg-amber-400 mr-1.5 align-middle" />
+        <p className="text-center text-xs text-amber-500/60 mt-2">
+          <span className="inline-block w-2 h-2 rounded-full bg-amber-400 mr-1.5 align-middle" />
           Amber dots mark exceptions — click to read the explanation
         </p>
       )}
 
-      {/* Inline exception card (below chart) */}
+      {/* Inline exception popup */}
       {openException && (
-        <ExceptionCard exc={openException.exc} onClose={() => setOpenException(null)} />
+        <ExceptionCard exc={openException} onClose={() => setOpenException(null)} />
       )}
     </>
   );
@@ -646,17 +520,11 @@ function PeriodLineChart({ periods, property, showDBlock }: ChartProps) {
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export default function PeriodTrendsChart() {
-  const [selectedPeriods, setSelectedPeriods] = useState<number[]>([2]);
+  const [selectedPeriod, setSelectedPeriod] = useState<number>(2);
   const [selectedProperty, setSelectedProperty] = useState<Property>(PROPERTIES[0]);
   const [showDBlock, setShowDBlock] = useState(false);
 
-  const togglePeriod = (p: number) => {
-    setSelectedPeriods(prev =>
-      prev.includes(p) ? (prev.length > 1 ? prev.filter(x => x !== p) : prev) : [...prev, p]
-    );
-  };
-
-  const hasPeriod4 = selectedPeriods.includes(4);
+  const hasPeriod4 = selectedPeriod === 4;
 
   const visibleExceptions = useMemo(() => {
     const excData = EXCEPTIONS[selectedProperty.key] || {};
@@ -681,103 +549,111 @@ export default function PeriodTrendsChart() {
         </p>
       </div>
 
-      {/* Top controls row: periods (left) + d-block (right) */}
-      <div className="flex items-center gap-3 mb-4">
-        <div className="flex gap-2 bg-gray-800/60 rounded-xl p-1.5">
-          {PERIOD_CONFIG.map(cfg => {
-            const active = selectedPeriods.includes(cfg.period);
-            return (
-              <button
-                key={cfg.period}
-                onClick={() => togglePeriod(cfg.period)}
-                className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${
-                  active ? 'text-white shadow-lg' : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
-                }`}
-                style={active ? { background: cfg.color } : {}}
-              >
-                {cfg.label}
-              </button>
-            );
-          })}
-        </div>
-        {hasPeriod4 && (
-          <button
-            onClick={() => setShowDBlock(v => !v)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
-              showDBlock
-                ? 'bg-violet-500/20 border-violet-500/40 text-violet-200'
-                : 'bg-gray-800/60 border-gray-700 text-gray-400 hover:border-gray-600 hover:text-gray-200'
-            }`}
-          >
-            {showDBlock ? '✓ d-block' : '+ d-block'}
-          </button>
-        )}
-      </div>
+      {/* Layout: property list LEFT + chart + controls RIGHT */}
+      <div className="flex gap-4 items-start">
 
-      {/* Main layout: property stack LEFT + chart RIGHT */}
-      <div className="flex gap-3 items-start">
-
-        {/* ── Left sidebar: property buttons only ── */}
-        <div className="flex-shrink-0 w-32 flex flex-col gap-1">
-          <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Property</p>
+        {/* Property list — mirrors TrendsComponent exactly */}
+        <div className="flex-shrink-0 w-40 hidden md:flex flex-col gap-2">
+          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Select Property</h3>
           {PROPERTIES.map(prop => {
             const active = prop.key === selectedProperty.key;
             return (
               <button
                 key={prop.key}
                 onClick={() => setSelectedProperty(prop)}
-                className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium border transition-all ${
+                className={`text-left px-3 py-2 rounded-lg text-sm transition-all ${
                   active
-                    ? 'bg-violet-500/20 border-violet-500/50 text-violet-200'
-                    : 'bg-gray-800/50 border-gray-700/50 text-gray-400 hover:text-gray-200 hover:bg-gray-800 hover:border-gray-600'
+                    ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-md font-semibold'
+                    : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700 hover:text-white'
                 }`}
               >
-                {prop.label}
+                {prop.label.length > 18 ? prop.label.slice(0, 16) + '…' : prop.label}
               </button>
             );
           })}
         </div>
 
-        {/* ── Right: chart ── */}
-        <div className="flex-1 min-w-0">
+        {/* Chart + period + d-block controls */}
+        <div className="flex-1 min-w-0 flex flex-col gap-3">
+          {/* Period pills + d-block toggle */}
+          <div className="flex items-center gap-2">
+            <div className="flex gap-2 bg-gray-800/60 rounded-xl p-1.5">
+              {PERIOD_CONFIG.map(cfg => {
+                const active = selectedPeriod === cfg.period;
+                return (
+                  <button
+                    key={cfg.period}
+                    onClick={() => setSelectedPeriod(cfg.period)}
+                    className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+                      active ? 'text-white shadow-lg' : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                    }`}
+                    style={active ? { background: cfg.color } : {}}
+                  >
+                    {cfg.label}
+                  </button>
+                );
+              })}
+            </div>
+            {hasPeriod4 && (
+              <button
+                onClick={() => setShowDBlock(v => !v)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+                  showDBlock
+                    ? 'bg-violet-500/20 border-violet-500/40 text-violet-200'
+                    : 'bg-gray-800/60 border-gray-700 text-gray-400 hover:border-gray-600 hover:text-gray-200'
+                }`}
+              >
+                {showDBlock ? '✓ d-block' : '+ d-block'}
+              </button>
+            )}
+            {/* Mobile property selector */}
+            <select
+              value={selectedProperty.key}
+              onChange={e => setSelectedProperty(PROPERTIES.find(p => p.key === e.target.value)!)}
+              className="md:hidden ml-auto appearance-none bg-gray-800/50 text-white border border-gray-700 rounded-xl px-3 py-1.5 text-sm focus:outline-none"
+            >
+              {PROPERTIES.map(p => <option key={p.key} value={p.key}>{p.label}</option>)}
+            </select>
+          </div>
+
+          {/* Chart */}
           <PeriodLineChart
-            periods={selectedPeriods}
+            periods={[selectedPeriod]}
             property={selectedProperty}
             showDBlock={showDBlock && hasPeriod4}
           />
         </div>
       </div>
 
-      {/* Key exceptions list — same style as TrendsComponent notes panel */}
+      {/* Key exceptions — grid layout */}
       {visibleExceptions.length > 0 && (
-        <div className="mt-6 bg-gray-800/30 rounded-xl border border-gray-700/40 p-5">
-          <h4 className="text-base font-semibold text-yellow-400 flex items-center gap-2 mb-4">
-            <AlertTriangle size={18} />
+        <div className="mt-6">
+          <h4 className="text-sm font-semibold text-yellow-400 flex items-center gap-2 mb-3">
+            <AlertTriangle size={15} />
             Key Exceptions — {selectedProperty.label}
           </h4>
-          <ul className="space-y-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {visibleExceptions.map(exc => (
-              <li key={exc.symbol} className="text-base text-gray-300 leading-relaxed pl-4 border-l-2 border-yellow-500/40">
-                <span className="font-semibold text-amber-300">{exc.title}</span>
-                <span className="text-gray-500 mx-2">·</span>
-                {exc.explanation}
-                <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 text-xs text-amber-400 font-medium align-middle">
+              <div key={exc.symbol} className="flex flex-col gap-2 p-3 rounded-xl bg-gray-800/40 border border-gray-700/50 border-l-2 border-l-amber-500/60">
+                <span className="text-sm font-semibold text-amber-300 leading-snug">{exc.title}</span>
+                <p className="text-xs text-gray-400 leading-relaxed flex-1">{exc.explanation}</p>
+                <span className="self-start inline-flex items-center gap-1 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 text-[10px] text-amber-400 font-medium">
                   {exc.jeeTag}
                 </span>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       )}
 
       {/* Sign-convention footnotes */}
       {selectedProperty.key === 'electronAffinity' && (
-        <p className="text-sm text-gray-500 italic mt-4 border-t border-gray-700/30 pt-3">
+        <p className="text-xs text-gray-500 italic mt-4 border-t border-gray-700/30 pt-3">
           Sign convention: Negative = exothermic (element readily accepts the electron). Positive = endothermic. Noble gases and alkaline earth metals show near-zero or positive EA.
         </p>
       )}
       {selectedProperty.key === 'density' && (
-        <p className="text-sm text-gray-500 italic mt-4 border-t border-gray-700/30 pt-3">
+        <p className="text-xs text-gray-500 italic mt-4 border-t border-gray-700/30 pt-3">
           Y-axis is logarithmic. Gas-phase elements (N₂, O₂, F₂, Cl₂, noble gases) have near-zero density and cannot be meaningfully compared to solids on the same scale.
         </p>
       )}
