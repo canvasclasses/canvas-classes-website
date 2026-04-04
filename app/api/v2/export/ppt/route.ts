@@ -103,22 +103,7 @@ export async function POST(request: NextRequest) {
       }
 
       for (const t of s.texts || []) {
-        interface TextOptions {
-          x: number;
-          y: number;
-          w: number;
-          h: number;
-          fontSize?: number;
-          bold?: boolean;
-          color?: string;
-          fontFace?: string;
-          align?: string;
-          valign?: string;
-          shape?: unknown;
-          fill?: Record<string, unknown>;
-          rectRadius?: number;
-        }
-        const textOptions: TextOptions = {
+        const textOptions = {
           x: t.x,
           y: t.y,
           w: t.w,
@@ -132,7 +117,7 @@ export async function POST(request: NextRequest) {
           shape: t.shape ? shapeMap[t.shape] : undefined,
           fill: t.fillColor ? { color: t.fillColor } : undefined,
           rectRadius: t.rectRadius,
-        };
+        } as Parameters<typeof slide.addText>[1];
         slide.addText(t.text as Parameters<typeof slide.addText>[0], textOptions);
       }
 
