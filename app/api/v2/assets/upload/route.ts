@@ -69,11 +69,22 @@ export async function POST(request: NextRequest) {
     
     formData = await request.formData();
     file = formData.get('file') as File;
-    const questionId = formData.get('question_id') as string;
+    const questionId = formData.get('questionId') as string | null;
     const fieldType = formData.get('field_type') as string; // 'question', 'option', 'solution'
     const altText = formData.get('alt_text') as string;
     const caption = formData.get('caption') as string;
     const context = (formData.get('context') as string) || 'practice'; // e.g. 'mock_test', 'practice'
+    
+    // SECURITY FIX: Validate questionId format to prevent path traversal
+    if (questionId) {
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      if (!uuidRegex.test(questionId)) {
+        return NextResponse.json(
+          { success: false, error: 'Invalid questionId format - must be a valid UUID' },
+          { status: 400 }
+        );
+      }
+    }
     
     if (!file) {
       return NextResponse.json(
@@ -195,7 +206,16 @@ export async function POST(request: NextRequest) {
     // Organised R2 path: questions/{question_id}/{type}/{timestamp}_{assetId}.{ext}
     // or shared/{type}/{timestamp}_{assetId}.{ext} for non-question assets
     const timestamp = Date.now();
-    const safeOriginalName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_').replace(/\.[^.]+$/, '');
+    
+    // SECURITY FIX: Sanitize filename to prevent path traversal
+    // Remove any path separators and limit to safe characters
+    const safeOriginalName = file.name
+      .replace(/[\/\\]/g, '') // Remove path separators
+      .replace(/\.\./g, '') // Remove parent directory references
+      .replace(/[^a-zA-Z0-9.-]/g, '_') // Only allow alphanumeric, dots, and hyphens
+      .replace(/\.[^.]+$/, '') // Remove extension (we'll add our own)
+      .slice(0, 50); // Limit length
+    
     const filename = `${timestamp}_${safeOriginalName}_${assetId.slice(0, 8)}.${extension}`;
     const storagePath = questionId
       ? `questions/${questionId}/${assetType}/${filename}`

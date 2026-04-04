@@ -45,16 +45,24 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Check authentication via Supabase (The Gatekeeper)
+        // SECURITY FIX: Require authentication for activity logging
         const supabase = await createClient();
-        let userId = 'anonymous';
-
-        if (supabase) {
-            const { data: { user } } = await supabase.auth.getUser();
-            if (user) {
-                userId = user.id;
-            }
+        if (!supabase) {
+            return NextResponse.json(
+                { error: 'Authentication service unavailable' },
+                { status: 503 }
+            );
         }
+
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
+        if (authError || !user) {
+            return NextResponse.json(
+                { error: 'Unauthorized - Authentication required for activity logging' },
+                { status: 401 }
+            );
+        }
+
+        const userId = user.id;
 
         const body: LogActivityRequest = await request.json();
         const {
@@ -236,7 +244,10 @@ export async function POST(request: NextRequest) {
     } catch (error) {
         console.error('Activity log error:', error);
         return NextResponse.json(
-            { error: 'Internal server error', details: String(error) },
+            { 
+                error: 'Internal server error',
+                ...(process.env.NODE_ENV === 'development' && { details: String(error) })
+            },
             { status: 500 }
         );
     }
