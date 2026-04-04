@@ -412,8 +412,8 @@ export default function MockTestsAdmin() {
       await fetchSet(selectedSetId);
       setShowBulkImport(false);
       setBulkJson('');
-    } catch (e: any) {
-      setBulkError(e.message ?? 'Invalid JSON');
+    } catch (e: unknown) {
+      setBulkError(e instanceof Error ? e.message : 'Invalid JSON');
     } finally {
       setBulkImporting(false);
     }
@@ -435,7 +435,7 @@ export default function MockTestsAdmin() {
 
   const qTypeInfo = (type: string) => QUESTION_TYPES.find(t => t.id === type);
 
-  const useGrid = (q: MockQuestion | null) => {
+  const shouldUseGrid = (q: MockQuestion | null) => {
     if (!q || q.type === 'NVT' || q.type === 'SUBJ') return false;
     if (optionsLayout === 'grid') return true;
     if (optionsLayout === 'list') return false;
@@ -690,7 +690,7 @@ export default function MockTestsAdmin() {
                 <div className="flex flex-col gap-0.5">
                   <span className="text-[10px] text-gray-500">Subject</span>
                   <select value={editingQ.metadata.subject}
-                    onChange={e => setEditingQ(prev => prev ? { ...prev, metadata: { ...prev.metadata, subject: e.target.value as any } } : prev)}
+                    onChange={e => setEditingQ(prev => prev ? { ...prev, metadata: { ...prev.metadata, subject: e.target.value as 'chemistry' | 'physics' | 'maths' | 'biology' } } : prev)}
                     className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none capitalize">
                     <option value="physics">Physics</option>
                     <option value="chemistry">Chemistry</option>
@@ -703,7 +703,7 @@ export default function MockTestsAdmin() {
                 <div className="flex flex-col gap-0.5">
                   <span className="text-[10px] text-gray-500">Difficulty</span>
                   <select value={editingQ.metadata.difficultyLevel}
-                    onChange={e => setEditingQ(prev => prev ? { ...prev, metadata: { ...prev.metadata, difficultyLevel: Number(e.target.value) as any } } : prev)}
+                    onChange={e => setEditingQ(prev => prev ? { ...prev, metadata: { ...prev.metadata, difficultyLevel: Number(e.target.value) as 1 | 2 | 3 | 4 | 5 } } : prev)}
                     className={`bg-gray-800/50 border rounded px-2 py-1 text-xs outline-none ${DIFF_COLORS(editingQ.metadata.difficultyLevel)}`}>
                     <option value="1">D1 — Easy</option>
                     <option value="2">D2 — Easy+</option>
@@ -779,7 +779,7 @@ export default function MockTestsAdmin() {
                 </div>
                 {questionLatex && questionLatex.errors.length > 0 && (
                   <div className="mb-2 text-[11px] text-red-400 bg-red-900/20 border border-red-600/30 rounded-lg px-3 py-2 space-y-0.5">
-                    {questionLatex.errors.map((e, i) => <div key={i}>⚠ {e}</div>)}
+                    {questionLatex.errors.map((e, i) => <div key={i}>⚠ {e.message}</div>)}
                   </div>
                 )}
                 {questionLatex && questionLatex.errors.length === 0 && (
@@ -824,7 +824,7 @@ export default function MockTestsAdmin() {
                     ><Plus size={10} /> Add Option</button>
                   </div>
                   <div className="space-y-2">
-                    {editingQ.options.map((opt, i) => (
+                    {editingQ.options.map((opt) => (
                       <div key={opt.id} className="flex items-start gap-2">
                         <button
                           onClick={() => setOptionCorrect(opt.id, !opt.is_correct)}
@@ -1085,7 +1085,7 @@ export default function MockTestsAdmin() {
 
                   {/* Options */}
                   {editingQ.type !== 'NVT' && editingQ.type !== 'SUBJ' && (
-                    <div className={`mt-4 ${useGrid(editingQ) ? 'grid grid-cols-2 gap-3' : 'space-y-2'}`}>
+                    <div className={`mt-4 ${shouldUseGrid(editingQ) ? 'grid grid-cols-2 gap-3' : 'space-y-2'}`}>
                       {editingQ.options.map(opt => (
                         <div key={opt.id} className="flex items-center gap-3">
                           <div className={`shrink-0 w-8 h-8 rounded-md flex items-center justify-center text-sm font-semibold ${
@@ -1175,7 +1175,7 @@ export default function MockTestsAdmin() {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="text-xs text-gray-500 block mb-1">Exam</label>
-                  <select value={createForm.exam} onChange={e => setCreateForm(f => ({ ...f, exam: e.target.value as any }))}
+                  <select value={createForm.exam} onChange={e => setCreateForm(f => ({ ...f, exam: e.target.value as 'JEE' | 'NEET' }))}
                     className="w-full bg-gray-800/50 border border-gray-700/50 rounded-lg px-3 py-2 text-sm outline-none">
                     <option value="NEET">NEET</option>
                     <option value="JEE">JEE</option>
