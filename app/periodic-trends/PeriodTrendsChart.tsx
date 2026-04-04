@@ -494,10 +494,10 @@ function PeriodLineChart({ periods, property, showDBlock }: ChartProps) {
                           x={x} y={valLabelY}
                           textAnchor="middle"
                           fill="white"
-                          fontSize="13"
+                          fontSize="11"
                           fontWeight="500"
                           stroke="#111827"
-                          strokeWidth="3"
+                          strokeWidth="2.5"
                           strokeLinejoin="round"
                           style={{ paintOrder: 'stroke' }}
                         >
@@ -681,68 +681,61 @@ export default function PeriodTrendsChart() {
         </p>
       </div>
 
-      {/* Main layout: property stack LEFT + chart RIGHT */}
-      <div className="flex gap-4 items-start">
+      {/* Top controls row: periods (left) + d-block (right) */}
+      <div className="flex items-center gap-3 mb-4">
+        <div className="flex gap-2 bg-gray-800/60 rounded-xl p-1.5">
+          {PERIOD_CONFIG.map(cfg => {
+            const active = selectedPeriods.includes(cfg.period);
+            return (
+              <button
+                key={cfg.period}
+                onClick={() => togglePeriod(cfg.period)}
+                className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+                  active ? 'text-white shadow-lg' : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                }`}
+                style={active ? { background: cfg.color } : {}}
+              >
+                {cfg.label}
+              </button>
+            );
+          })}
+        </div>
+        {hasPeriod4 && (
+          <button
+            onClick={() => setShowDBlock(v => !v)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+              showDBlock
+                ? 'bg-violet-500/20 border-violet-500/40 text-violet-200'
+                : 'bg-gray-800/60 border-gray-700 text-gray-400 hover:border-gray-600 hover:text-gray-200'
+            }`}
+          >
+            {showDBlock ? '✓ d-block' : '+ d-block'}
+          </button>
+        )}
+      </div>
 
-        {/* ── Left sidebar: property stack ── */}
-        <div className="flex-shrink-0 w-36 flex flex-col gap-1.5">
-          <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-0.5">Property</p>
+      {/* Main layout: property stack LEFT + chart RIGHT */}
+      <div className="flex gap-3 items-start">
+
+        {/* ── Left sidebar: property buttons only ── */}
+        <div className="flex-shrink-0 w-32 flex flex-col gap-1">
+          <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Property</p>
           {PROPERTIES.map(prop => {
             const active = prop.key === selectedProperty.key;
             return (
               <button
                 key={prop.key}
                 onClick={() => setSelectedProperty(prop)}
-                className={`w-full text-left px-3 py-2.5 rounded-xl text-xs font-semibold border transition-all ${
+                className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium border transition-all ${
                   active
                     ? 'bg-violet-500/20 border-violet-500/50 text-violet-200'
                     : 'bg-gray-800/50 border-gray-700/50 text-gray-400 hover:text-gray-200 hover:bg-gray-800 hover:border-gray-600'
                 }`}
               >
-                <span className="block text-[11px] font-bold">{prop.shortLabel}</span>
-                <span className={`block text-[10px] mt-0.5 ${active ? 'text-violet-400' : 'text-gray-500'}`}>{prop.label}</span>
-                <span className={`block text-[9px] mt-0.5 ${active ? 'text-violet-500/70' : 'text-gray-600'}`}>{prop.unit}</span>
+                {prop.label}
               </button>
             );
           })}
-
-          {/* Period pills stacked below property buttons */}
-          <div className="mt-3">
-            <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Period</p>
-            <div className="flex flex-col gap-1.5">
-              {PERIOD_CONFIG.map(cfg => {
-                const active = selectedPeriods.includes(cfg.period);
-                return (
-                  <button
-                    key={cfg.period}
-                    onClick={() => togglePeriod(cfg.period)}
-                    className={`w-full px-3 py-2 rounded-xl text-xs font-semibold border transition-all ${
-                      active ? 'text-white border-transparent' : 'bg-gray-800/50 border-gray-700/50 text-gray-400 hover:text-white hover:bg-gray-700/50'
-                    }`}
-                    style={active ? { background: cfg.color, borderColor: cfg.color } : {}}
-                  >
-                    {cfg.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* D-block toggle */}
-          {hasPeriod4 && (
-            <div className="mt-2">
-              <button
-                onClick={() => setShowDBlock(v => !v)}
-                className={`w-full px-3 py-2 rounded-xl text-[10px] font-semibold border transition-all ${
-                  showDBlock
-                    ? 'bg-violet-500/20 border-violet-500/40 text-violet-200'
-                    : 'bg-gray-800/50 border-gray-700/50 text-gray-400 hover:border-gray-600 hover:text-gray-200'
-                }`}
-              >
-                {showDBlock ? '✓ d-block' : '+ d-block'}
-              </button>
-            </div>
-          )}
         </div>
 
         {/* ── Right: chart ── */}
