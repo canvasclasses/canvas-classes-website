@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { ChevronLeft, ChevronDown, ChevronRight, Check, BarChart2, UserCircle, BookOpen, LayoutGrid, Clock, Lock, Sparkles, Star, LogOut, ClipboardList } from 'lucide-react';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { Chapter, Question } from './types';
@@ -923,13 +924,13 @@ export default function CrucibleWizard({ chapters, isLoggedIn }: CrucibleWizardP
               >
                 <BarChart2 style={{ width: 14, height: 14 }} /> {isMobile ? '' : 'Progress'}
               </button>
-              <a href="/"
+              <Link href="/"
                 onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
                 style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 12px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)', color: 'rgba(203,213,225,0.8)', fontSize: 12, fontWeight: 500, textDecoration: 'none', transition: 'all 0.15s ease' }}
               >
                 <ChevronLeft style={{ width: 14, height: 14 }} /> Home
-              </a>
+              </Link>
               {!isMobile && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.15)' }}>
                   <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#10b981', animation: 'pulse 2s infinite' }} />

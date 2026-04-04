@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { RefreshCcw, ArrowRight, HelpCircle, Check, X, FlaskConical, Volume2, Play, Pause } from 'lucide-react';
@@ -156,9 +157,9 @@ const OrganicWizardGame = () => {
                 {/* Header */}
                 <header className="relative z-10 px-8 py-4 flex items-center justify-between border-b border-[#333] bg-[#1e1e1e] shadow-md">
                     <div className="flex items-center gap-6">
-                        <a href="/" className="bg-[#2a2a2a] p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#333] transition-colors border-b-4 border-[#1a1a1a] active:border-b-0 active:translate-y-1" aria-label="Back to Home">
+                        <Link href="/" className="bg-[#2a2a2a] p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#333] transition-colors border-b-4 border-[#1a1a1a] active:border-b-0 active:translate-y-1" aria-label="Back to Home">
                             <ArrowRight className="rotate-180" size={20} />
-                        </a>
+                        </Link>
                         <div>
                             <p className="text-teal-500 text-xs font-outfit font-bold tracking-widest uppercase mb-1">
                                 {currentLevel.title}

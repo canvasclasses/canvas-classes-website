@@ -10,6 +10,7 @@
 
 import { UserRole, type Subject, type RoleType, type IUserRole } from './models/UserRole';
 import connectToDatabase from './mongodb';
+import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 
 export interface UserPermissions {
   email: string;
@@ -48,8 +49,6 @@ interface TaxonomyNode {
 }
 
 export function getChapterIdsForSubject(subject: Subject): string[] {
-  const { TAXONOMY_FROM_CSV } = require('@/app/crucible/admin/taxonomy/taxonomyData_from_csv');
-
   return TAXONOMY_FROM_CSV
     .filter((node: TaxonomyNode) => node.type === 'chapter')
     .filter((node: TaxonomyNode) => {
@@ -159,7 +158,6 @@ export async function getAccessibleChapters(email: string): Promise<string[]> {
 
   if (permissions.role === 'super_admin') {
     // Super admin gets all chapters
-    const { TAXONOMY_FROM_CSV } = require('@/app/crucible/admin/taxonomy/taxonomyData_from_csv');
     return TAXONOMY_FROM_CSV
       .filter((node: TaxonomyNode) => node.type === 'chapter')
       .map((node: TaxonomyNode) => node.id);

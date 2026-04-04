@@ -777,9 +777,9 @@ export default function CrucibleLanding({ chapters, isLoggedIn }: CrucibleLandin
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.55)', fontSize: 12, fontWeight: 600, textDecoration: 'none', transition: 'all 0.15s' }}>
+              <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.55)', fontSize: 12, fontWeight: 600, textDecoration: 'none', transition: 'all 0.15s' }}>
                 <ChevronLeft style={{ width: 13, height: 13 }} /> Home
-              </a>
+              </Link>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', animation: 'pulse 2s infinite' }} />
                 <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)' }}>Live</span>

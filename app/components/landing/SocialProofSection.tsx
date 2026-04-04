@@ -20,6 +20,22 @@ function useAnimatedCounter(target: number, isInView: boolean, duration = 2) {
     return value;
 }
 
+// Stat card component
+function StatCard({ stat, isInView }: { stat: typeof STATS[0]; isInView: boolean }) {
+    const Icon = stat.icon;
+    const count = useAnimatedCounter(stat.value, isInView);
+
+    return (
+        <div className="text-center rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-6">
+            <Icon size={20} className={`${stat.color} mx-auto mb-3 opacity-60`} />
+            <div className="text-2xl md:text-3xl font-bold text-white mb-1">
+                {stat.value >= 1000 ? `${Math.round(count / 1000)}k` : count}{stat.suffix}
+            </div>
+            <div className="text-xs text-slate-500">{stat.label}</div>
+        </div>
+    );
+}
+
 const STATS = [
     { icon: Users, value: 300000, suffix: '+', label: 'Students Trusted Us', color: 'text-blue-400' },
     { icon: BookOpen, value: 2000, suffix: '+', label: 'Video Lectures', color: 'text-emerald-400' },
@@ -66,22 +82,9 @@ export default function SocialProofSection() {
                     transition={{ duration: 0.5 }}
                     className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20"
                 >
-                    {STATS.map((stat, i) => {
-                        const Icon = stat.icon;
-                        const count = useAnimatedCounter(stat.value, isInView);
-                        return (
-                            <div
-                                key={i}
-                                className="text-center rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-6"
-                            >
-                                <Icon size={20} className={`${stat.color} mx-auto mb-3 opacity-60`} />
-                                <div className="text-2xl md:text-3xl font-bold text-white mb-1">
-                                    {stat.value >= 1000 ? `${Math.round(count / 1000)}k` : count}{stat.suffix}
-                                </div>
-                                <div className="text-xs text-slate-500">{stat.label}</div>
-                            </div>
-                        );
-                    })}
+                    {STATS.map((stat, i) => (
+                        <StatCard key={i} stat={stat} isInView={isInView} />
+                    ))}
                 </motion.div>
 
                 {/* Testimonials heading */}

@@ -63,7 +63,7 @@ export default function JeeTestClient({ chapterName, questions }: JeeTestClientP
             <div className="min-h-screen bg-slate-950 flex items-center justify-center">
                 <div className="text-center">
                     <p className="text-slate-400 text-lg mb-4">No questions available for this chapter yet.</p>
-                    <a href="/jee-pyqs" className="text-blue-400 hover:text-blue-300 transition-colors">← Back to chapters</a>
+                    <Link href="/jee-pyqs" className="text-blue-400 hover:text-blue-300 transition-colors">← Back to chapters</Link>
                 </div>
             </div>
         );
