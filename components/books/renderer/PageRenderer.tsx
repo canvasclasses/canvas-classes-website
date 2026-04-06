@@ -17,8 +17,16 @@ import TableBlockRenderer from './blocks/TableBlockRenderer';
 import TimelineBlockRenderer from './blocks/TimelineBlockRenderer';
 import ComparisonCardBlockRenderer from './blocks/ComparisonCardBlockRenderer';
 import AnimationBlockRenderer from './blocks/AnimationBlockRenderer';
+import InlineQuizRenderer from './blocks/InlineQuizRenderer';
+import WorkedExampleRenderer from './blocks/WorkedExampleRenderer';
 
-function BlockRenderer({ block }: { block: ContentBlock }) {
+function BlockRenderer({
+  block,
+  onQuizPass,
+}: {
+  block: ContentBlock;
+  onQuizPass?: (blockId: string, score: number) => void;
+}) {
   switch (block.type) {
     case 'text':              return <TextBlockRenderer block={block} />;
     case 'heading':           return <HeadingBlockRenderer block={block} />;
@@ -35,15 +43,18 @@ function BlockRenderer({ block }: { block: ContentBlock }) {
     case 'timeline':          return <TimelineBlockRenderer block={block} />;
     case 'comparison_card':   return <ComparisonCardBlockRenderer block={block} />;
     case 'animation':         return <AnimationBlockRenderer block={block} />;
+    case 'inline_quiz':       return <InlineQuizRenderer block={block} onPass={score => onQuizPass?.(block.id, score)} />;
+    case 'worked_example':    return <WorkedExampleRenderer block={block} />;
     default:                  return null;
   }
 }
 
 interface PageRendererProps {
   page: Pick<BookPage, 'title' | 'subtitle' | 'blocks' | 'reading_time_min'>;
+  onQuizPass?: (blockId: string, score: number) => void;
 }
 
-export default function PageRenderer({ page }: PageRendererProps) {
+export default function PageRenderer({ page, onQuizPass }: PageRendererProps) {
   const sorted = [...page.blocks].sort((a, b) => a.order - b.order);
 
   return (
@@ -67,7 +78,7 @@ export default function PageRenderer({ page }: PageRendererProps) {
       <div className="flex flex-col gap-2">
         {sorted.map((block) => (
           <div key={block.id}>
-            <BlockRenderer block={block} />
+            <BlockRenderer block={block} onQuizPass={onQuizPass} />
           </div>
         ))}
       </div>

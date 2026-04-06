@@ -1,32 +1,20 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
+import { BookPage } from '@/types/books';
 
-// Blocks are stored as schema-less Mixed to support all 15 block types.
-// ContentBlock type safety is enforced at the API layer via Zod, not here.
-export interface IBookPage extends Document {
-  book_id: string;
-  chapter_number: number;
-  page_number: number;
-  slug: string;
-  title: string;
-  subtitle?: string;
-  blocks: unknown[];
-  tags: string[];
-  published: boolean;
-  reading_time_min?: number;
-  created_at: Date;
-  updated_at: Date;
-}
+// Blocks are stored as schema-less Mixed to support all block types.
+// ContentBlock type safety is enforced at the API layer, not here.
+export type IBookPage = Omit<Document, '_id'> & { _id: string } & Omit<BookPage, '_id'>;
 
 const BookPageSchema = new Schema<IBookPage>(
   {
-    _id: { type: String, required: true },
+    _id: { type: String, required: true } as any,
     book_id: { type: String, required: true, index: true },
     chapter_number: { type: Number, required: true },
     page_number: { type: Number, required: true },
     slug: { type: String, required: true },
     title: { type: String, required: true },
     subtitle: String,
-    blocks: { type: [Schema.Types.Mixed], default: [] },
+    blocks: { type: [Schema.Types.Mixed], default: [] } as any,
     tags: { type: [String], default: [] },
     published: { type: Boolean, default: false },
     reading_time_min: Number,

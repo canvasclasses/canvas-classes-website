@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 import { Book, BookChapter } from '@/types/books';
 
-export interface IBook extends Omit<Book, '_id'>, Document {}
+export type IBook = Omit<Document, '_id'> & { _id: string } & Omit<Book, '_id'>;
 
 const ChapterSchema = new Schema<BookChapter>(
   {
@@ -16,7 +16,7 @@ const ChapterSchema = new Schema<BookChapter>(
 
 const BookSchema = new Schema<IBook>(
   {
-    _id: { type: String, required: true },
+    _id: { type: String, required: true } as any,
     slug: { type: String, required: true, unique: true, index: true },
     title: { type: String, required: true },
     subject: {
