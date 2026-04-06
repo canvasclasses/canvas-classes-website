@@ -24,6 +24,9 @@
 .DS_Store
 *.pem
 
+# Claude Code worktree marker files (local only, no content)
+.claude/worktrees/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
