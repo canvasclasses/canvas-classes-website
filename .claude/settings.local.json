@@ -27,7 +27,8 @@
       "Bash(pwdx 30423)",
       "Read(//proc/30423/**)",
       "Bash(ps -p 30423 -o args=)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
