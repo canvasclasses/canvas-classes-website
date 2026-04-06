@@ -19,6 +19,7 @@ export interface IBookPage extends Document {
 
 const BookPageSchema = new Schema<IBookPage>(
   {
+    _id: { type: String, required: true },
     book_id: { type: String, required: true, index: true },
     chapter_number: { type: Number, required: true },
     page_number: { type: Number, required: true },

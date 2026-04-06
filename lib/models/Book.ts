@@ -16,6 +16,7 @@ const ChapterSchema = new Schema<BookChapter>(
 
 const BookSchema = new Schema<IBook>(
   {
+    _id: { type: String, required: true },
     slug: { type: String, required: true, unique: true, index: true },
     title: { type: String, required: true },
     subject: {

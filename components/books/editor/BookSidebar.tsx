@@ -187,6 +187,40 @@ export default function BookSidebar({
     const chapterPages = pages.filter((p) => p.chapter_number === chapterNum);
     const pageNum = chapterPages.length + 1;
     const slug = toSlug(newPageTitle) || `page-${pageNum}`;
+
+    const templateBlocks = [
+      {
+        id: crypto.randomUUID(),
+        type: 'callout',
+        order: 0,
+        variant: 'fun_fact',
+        title: 'The Hook',
+        markdown: 'Why does this matter in real life? Start with a relatable example or surprising fact.',
+      },
+      {
+        id: crypto.randomUUID(),
+        type: 'text',
+        order: 1,
+        markdown: 'Explain the core concept here in simple, jargon-free language.',
+      },
+      {
+        id: crypto.randomUUID(),
+        type: 'image',
+        order: 2,
+        src: '',
+        alt: '',
+        width: 'full',
+      },
+      {
+        id: crypto.randomUUID(),
+        type: 'callout',
+        order: 3,
+        variant: 'exam_tip',
+        title: 'Real-World / Exam Insight',
+        markdown: 'How does this appear in JEE/NEET? Any industrial or practical application worth noting?',
+      },
+    ];
+
     try {
       const res = await fetch(`/api/v2/books/${bookSlug}/pages`, {
         method: 'POST',
@@ -196,7 +230,7 @@ export default function BookSidebar({
           slug,
           chapter_number: chapterNum,
           page_number: pageNum,
-          blocks: [],
+          blocks: templateBlocks,
         }),
       });
       const d = await res.json();
