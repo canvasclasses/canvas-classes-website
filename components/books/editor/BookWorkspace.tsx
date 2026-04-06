@@ -28,6 +28,8 @@ function defaultBlock(type: BlockType, order: number): ContentBlock {
     case 'timeline':         return { ...base, type, orientation: 'vertical', events: [{ id: crypto.randomUUID(), label: 'Step 1' }] };
     case 'comparison_card':  return { ...base, type, columns: [{ heading: 'Option A', points: [''] }, { heading: 'Option B', points: [''] }] };
     case 'animation':        return { ...base, type, src: '', loop: true, autoplay: true };
+    case 'inline_quiz':      return { ...base, type, questions: [{ id: crypto.randomUUID(), question: '', options: ['', '', '', ''], correct_index: 0, explanation: '' }], pass_threshold: 0.7 };
+    case 'worked_example':   return { ...base, type, label: 'Solved Example', variant: 'solved_example', problem: '', solution: '', reveal_mode: 'always_visible' };
   }
 }
 

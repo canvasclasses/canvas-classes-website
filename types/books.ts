@@ -15,7 +15,9 @@ export type BlockType =
   | 'table'
   | 'timeline'
   | 'comparison_card'
-  | 'animation';
+  | 'animation'
+  | 'inline_quiz'
+  | 'worked_example';
 
 export interface BaseBlock {
   id: string;        // crypto.randomUUID() — stable, used for drag-drop keys
@@ -171,6 +173,31 @@ export interface AnimationBlock extends BaseBlock {
   width?: 'full' | 'half';
 }
 
+// 16. INLINE QUIZ — milestone gate MCQ
+export interface InlineQuizQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correct_index: number;
+  explanation?: string;
+}
+export interface InlineQuizBlock extends BaseBlock {
+  type: 'inline_quiz';
+  questions: InlineQuizQuestion[];
+  pass_threshold: number;  // 0–1, e.g. 0.7 = 70%
+}
+
+// 17. WORKED EXAMPLE — solved example or NCERT intext question
+export interface WorkedExampleBlock extends BaseBlock {
+  type: 'worked_example';
+  label: string;           // e.g. "Solved Example 3.1" or "NCERT Intext 2.3"
+  variant: 'solved_example' | 'ncert_intext';
+  problem: string;         // Markdown + LaTeX
+  solution: string;        // Markdown + LaTeX
+  reveal_mode: 'always_visible' | 'tap_to_reveal';
+  video_src?: string;      // R2 URL for walkthrough video
+}
+
 // ─── Union type ───────────────────────────────────────────────────────────────
 export type ContentBlock =
   | TextBlock
@@ -187,7 +214,9 @@ export type ContentBlock =
   | TableBlock
   | TimelineBlock
   | ComparisonCardBlock
-  | AnimationBlock;
+  | AnimationBlock
+  | InlineQuizBlock
+  | WorkedExampleBlock;
 
 
 // ─── Page & Book documents ────────────────────────────────────────────────────
