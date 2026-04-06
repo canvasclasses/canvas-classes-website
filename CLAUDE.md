@@ -122,7 +122,23 @@ No automated test suite. Data integrity validation scripts are in `scripts/` (e.
 
 ---
 
-## 6. ARCHITECTURE
+## 6. SIMULATIONS — READ THIS FIRST
+
+**All interactive simulations** (Chemistry, Physics, Biology) must follow `_agents/workflows/SIMULATION_DESIGN_WORKFLOW.md` exactly. That document is the canonical ruleset for:
+- Background colors and surface hierarchy
+- Typography scale and font sizes
+- Full color palette and atom colors
+- Every reusable component pattern (StepBar, nav buttons, sidebars, SVG canvas)
+- Academic accuracy gates and anti-hallucination rules
+- Anti-patterns (what never to do)
+
+**When building or editing any simulator:** Read `SIMULATION_DESIGN_WORKFLOW.md` before writing a single line. Never invent new colors, font sizes, or component structures — use only what is defined there.
+
+Simulators live at: `app/[subject]-[hub-name]/[Topic]Simulator.tsx`
+
+---
+
+## 7. ARCHITECTURE
 
 ### Data Flow
 
