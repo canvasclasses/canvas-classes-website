@@ -1081,6 +1081,7 @@ export default function MockTestsAdmin() {
                     markdown={editingQ.question_text.markdown}
                     className="text-gray-300"
                     fontSize={20}
+                    imageScale={getSvgScale('question')}
                   />
 
                   {/* Options */}
@@ -1098,7 +1099,7 @@ export default function MockTestsAdmin() {
                               ? 'bg-green-900/20 border-green-600/50'
                               : 'bg-gray-800/30 border-gray-700/50'
                           }`}>
-                            <MathRenderer markdown={opt.text} className="text-gray-300 option-text" fontSize={20} />
+                            <MathRenderer markdown={opt.text} className="text-gray-300 option-text" fontSize={20} imageScale={getSvgScale(`option_${opt.id}`)} />
                           </div>
                         </div>
                       ))}
@@ -1143,7 +1144,7 @@ export default function MockTestsAdmin() {
                     </div>
                   )}
 
-                  <MathRenderer markdown={editingQ.solution.text_markdown} className="text-gray-300" fontSize={18} />
+                  <MathRenderer markdown={editingQ.solution.text_markdown} className="text-gray-300" fontSize={18} imageScale={getSvgScale('solution')} />
                   {editingQ.metadata.topic_hint && (
                     <div className="mt-3 text-[10px] text-gray-600 font-mono">Topic: {editingQ.metadata.topic_hint}</div>
                   )}
