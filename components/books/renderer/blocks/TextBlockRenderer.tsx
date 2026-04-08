@@ -24,7 +24,7 @@ const components: Components = {
     </h3>
   ),
   p: ({ children }) => (
-    <p className="text-[15px] leading-[1.85] text-white/82 my-4">
+    <p className="text-[16px] leading-[1.85] text-white/82 my-4">
       {children}
     </p>
   ),
@@ -45,7 +45,7 @@ const components: Components = {
     </ol>
   ),
   li: ({ children }) => (
-    <li className="text-[15px] leading-[1.75] text-white/78">{children}</li>
+    <li className="text-[16px] leading-[1.75] text-white/78">{children}</li>
   ),
   hr: () => <hr className="my-8 border-white/10" />,
   blockquote: ({ children }) => (

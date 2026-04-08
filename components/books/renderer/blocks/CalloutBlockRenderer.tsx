@@ -18,7 +18,7 @@ function ExamTipCallout({ block }: { block: CalloutBlock }) {
         <span className="text-white/15">·</span>
         <span>JEE / NEET</span>
       </p>
-      <div className="text-[14px] leading-[1.75] text-white/75
+      <div className="text-[15px] leading-[1.75] text-white/75
         prose prose-invert max-w-none
         prose-p:my-2 prose-p:leading-[1.75] prose-strong:text-white/90 prose-strong:font-semibold
         prose-ul:my-2 prose-li:my-1 prose-li:text-white/75">
@@ -39,7 +39,7 @@ function FunFactCallout({ block }: { block: CalloutBlock }) {
       <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-emerald-500/50 mb-2 select-none">
         {block.title ?? 'Real World'}
       </p>
-      <div className="text-[14px] leading-[1.75] text-white/65 italic
+      <div className="text-[15px] leading-[1.75] text-white/65 italic
         prose prose-invert max-w-none
         prose-p:my-2 prose-p:leading-[1.75] prose-strong:text-white/75 prose-strong:font-medium prose-strong:not-italic">
         <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
@@ -58,7 +58,7 @@ function RememberCallout({ block }: { block: CalloutBlock }) {
       <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-blue-400/60 mb-2 select-none">
         {block.title ?? 'Remember'}
       </p>
-      <div className="text-[14px] leading-[1.75] text-white/75
+      <div className="text-[15px] leading-[1.75] text-white/75
         prose prose-invert max-w-none prose-p:my-1.5 prose-p:leading-[1.75]
         prose-strong:text-white/90 prose-strong:font-semibold">
         <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
@@ -76,7 +76,7 @@ function WarningCallout({ block }: { block: CalloutBlock }) {
       <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-red-400/60 mb-2 select-none">
         {block.title ?? 'Warning'}
       </p>
-      <div className="text-[14px] leading-[1.75] text-white/75
+      <div className="text-[15px] leading-[1.75] text-white/75
         prose prose-invert max-w-none prose-p:my-1.5 prose-p:leading-[1.75]
         prose-strong:text-white/90 prose-strong:font-semibold">
         <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
@@ -96,7 +96,7 @@ function NoteCallout({ block }: { block: CalloutBlock }) {
           {block.title}
         </p>
       )}
-      <div className="text-[14px] leading-[1.75] text-white/55
+      <div className="text-[15px] leading-[1.75] text-white/55
         prose prose-invert max-w-none prose-p:my-1 prose-p:leading-[1.75]">
         <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
           {block.markdown}
