@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Eye, EyeOff, Save, BookOpen } from 'lucide-react';
+import { Save, BookOpen, PanelLeft, Columns2, Eye } from 'lucide-react';
 import { Book, BookPage, ContentBlock, BlockType } from '@/types/books';
 import BookSidebar from './BookSidebar';
 import BlockEditor from './BlockEditor';
@@ -28,6 +28,8 @@ function defaultBlock(type: BlockType, order: number): ContentBlock {
     case 'timeline':         return { ...base, type, orientation: 'vertical', events: [{ id: crypto.randomUUID(), label: 'Step 1' }] };
     case 'comparison_card':  return { ...base, type, columns: [{ heading: 'Option A', points: [''] }, { heading: 'Option B', points: [''] }] };
     case 'animation':        return { ...base, type, src: '', loop: true, autoplay: true };
+    case 'inline_quiz':      return { ...base, type, questions: [{ id: crypto.randomUUID(), question: '', options: ['', '', '', ''], correct_index: 0, explanation: '' }], pass_threshold: 0.7 };
+    case 'worked_example':   return { ...base, type, label: 'Solved Example', variant: 'solved_example', problem: '', solution: '', reveal_mode: 'always_visible' };
   }
 }
 
@@ -63,7 +65,7 @@ export default function BookWorkspace() {
   const [pageSubtitle, setPageSubtitle] = useState('');
 
   // UI state
-  const [previewMode, setPreviewMode] = useState(false);
+  const [viewMode, setViewMode] = useState<'edit' | 'split' | 'preview'>('split');
   const [isDirty, setIsDirty] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -245,31 +247,31 @@ export default function BookWorkspace() {
 
       {/* ── Topbar ──────────────────────────────────────────────────────── */}
       <header className="shrink-0 flex items-center justify-between px-4 h-12
-        border-b border-white/8 bg-[#0B0F15]">
-        <div className="flex items-center gap-2">
-          <BookOpen size={16} className="text-orange-500" />
-          <span className="text-sm font-semibold text-white/80">Digital Books</span>
+        border-b border-white/8 bg-[#0B0F15] gap-4 overflow-hidden">
+        <div className="flex items-center gap-2 min-w-0 overflow-hidden">
+          <BookOpen size={16} className="text-orange-500 shrink-0" />
+          <span className="text-sm font-semibold text-white/80 shrink-0">Digital Books</span>
           {selectedBook && (
             <>
-              <span className="text-white/20 text-sm">/</span>
-              <span className="text-sm text-white/50 truncate max-w-48">{selectedBook.title}</span>
+              <span className="text-white/20 text-sm shrink-0">/</span>
+              <span className="text-sm text-white/50 truncate max-w-32">{selectedBook.title}</span>
             </>
           )}
           {currentPage && (
             <>
-              <span className="text-white/20 text-sm">/</span>
+              <span className="text-white/20 text-sm shrink-0">/</span>
               <input
                 value={pageTitle}
                 onChange={(e) => { setPageTitle(e.target.value); setIsDirty(true); }}
                 className="text-sm text-white bg-transparent border-none outline-none
-                  hover:bg-white/5 focus:bg-white/5 px-1.5 py-0.5 rounded-md max-w-52"
+                  hover:bg-white/5 focus:bg-white/5 px-1.5 py-0.5 rounded-md w-36 min-w-0"
                 placeholder="Page title"
               />
             </>
           )}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           {saveError && (
             <span className="text-xs text-red-400">{saveError}</span>
           )}
@@ -278,14 +280,24 @@ export default function BookWorkspace() {
           )}
 
           {currentPage && (
-            <button
-              onClick={() => setPreviewMode((v) => !v)}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg
-                bg-white/5 border border-white/10 hover:bg-white/10 text-xs transition-colors"
-            >
-              {previewMode ? <EyeOff size={13} /> : <Eye size={13} />}
-              {previewMode ? 'Edit' : 'Preview'}
-            </button>
+            <div className="flex items-center rounded-lg border border-white/10 overflow-hidden">
+              {([
+                { mode: 'edit',    icon: <PanelLeft size={13} />,  label: 'Edit'    },
+                { mode: 'split',   icon: <Columns2  size={13} />,  label: 'Split'   },
+                { mode: 'preview', icon: <Eye       size={13} />,  label: 'Preview' },
+              ] as const).map(({ mode, icon, label }) => (
+                <button
+                  key={mode}
+                  onClick={() => setViewMode(mode)}
+                  className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs transition-colors
+                    ${viewMode === mode
+                      ? 'bg-orange-500/20 text-orange-300'
+                      : 'bg-white/5 text-white/40 hover:text-white/70 hover:bg-white/8'}`}
+                >
+                  {icon}{label}
+                </button>
+              ))}
+            </div>
           )}
 
           <button
@@ -320,45 +332,62 @@ export default function BookWorkspace() {
         />
 
         {/* Main content */}
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 flex overflow-hidden">
+
+          {/* Empty states */}
           {!selectedBook && (
-            <div className="flex flex-col items-center justify-center h-full gap-3 text-white/30">
+            <div className="flex-1 flex flex-col items-center justify-center gap-3 text-white/30">
               <BookOpen size={40} />
               <p className="text-sm">Select or create a book to get started</p>
             </div>
           )}
 
           {selectedBook && !selectedPageSlug && (
-            <div className="flex flex-col items-center justify-center h-full gap-2 text-white/30">
+            <div className="flex-1 flex flex-col items-center justify-center gap-2 text-white/30">
               <p className="text-sm">Select a page from the sidebar to start editing</p>
             </div>
           )}
 
           {selectedBook && selectedPageSlug && loadingPage && (
-            <div className="flex items-center justify-center h-full text-white/30 text-sm">
+            <div className="flex-1 flex items-center justify-center text-white/30 text-sm">
               Loading page…
             </div>
           )}
 
           {selectedBook && currentPage && !loadingPage && (
-            previewMode ? (
-              <div className="bg-[#050505]">
-                <PageRenderer
-                  page={{ title: pageTitle, subtitle: pageSubtitle || undefined, blocks, reading_time_min: currentPage.reading_time_min }}
-                />
-              </div>
-            ) : (
-              <BlockEditor
-                blocks={blocks}
-                pageSubtitle={pageSubtitle}
-                onSubtitleChange={(v) => { setPageSubtitle(v); setIsDirty(true); }}
-                onAddBlock={addBlock}
-                onUpdateBlock={updateBlock}
-                onDeleteBlock={deleteBlock}
-                onReorder={reorderBlocks}
-                onUpload={upload}
-              />
-            )
+            <>
+              {/* Editor pane — hidden in preview-only mode */}
+              {viewMode !== 'preview' && (
+                <div className={`overflow-y-auto ${viewMode === 'split' ? 'w-1/2 border-r border-white/8' : 'flex-1'}`}>
+                  <BlockEditor
+                    blocks={blocks}
+                    pageSubtitle={pageSubtitle}
+                    onSubtitleChange={(v) => { setPageSubtitle(v); setIsDirty(true); }}
+                    onAddBlock={addBlock}
+                    onUpdateBlock={updateBlock}
+                    onDeleteBlock={deleteBlock}
+                    onReorder={reorderBlocks}
+                    onUpload={upload}
+                  />
+                </div>
+              )}
+
+              {/* Preview pane — hidden in edit-only mode */}
+              {viewMode !== 'edit' && (
+                <div className={`overflow-y-auto bg-[#050505] ${viewMode === 'split' ? 'w-1/2' : 'flex-1'}`}>
+                  {viewMode === 'split' && (
+                    <div className="sticky top-0 z-10 px-4 py-1.5 bg-[#0B0F15] border-b border-white/8
+                      flex items-center gap-1.5">
+                      <Eye size={11} className="text-orange-400" />
+                      <span className="text-[11px] text-white/40 font-medium uppercase tracking-wide">Live Preview</span>
+                    </div>
+                  )}
+                  <PageRenderer
+                    page={{ title: pageTitle, subtitle: pageSubtitle || undefined, blocks, reading_time_min: currentPage.reading_time_min }}
+                  />
+                </div>
+              )}
+            </>
           )}
         </main>
       </div>

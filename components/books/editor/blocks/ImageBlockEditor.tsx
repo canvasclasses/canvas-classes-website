@@ -1,18 +1,37 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { Upload } from 'lucide-react';
+import { Upload, ImageIcon } from 'lucide-react';
 import { ImageBlock } from '@/types/books';
 import { UploadFn } from '../BookWorkspace';
 
 interface Props { block: ImageBlock; onChange: (p: Partial<ImageBlock>) => void; onUpload: UploadFn; }
 
+const WIDTH_LABELS: Record<NonNullable<ImageBlock['width']>, string> = {
+  full: 'Full',
+  half: 'Half',
+  third: 'Third',
+};
+
+const WIDTH_PREVIEW: Record<NonNullable<ImageBlock['width']>, string> = {
+  full: 'w-full',
+  half: 'w-1/2',
+  third: 'w-1/3',
+};
+
 export default function ImageBlockEditor({ block, onChange, onUpload }: Props) {
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
+  const [dragging, setDragging] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  const width = block.width ?? 'full';
+
   async function handleFile(file: File) {
+    if (!file.type.startsWith('image/')) {
+      setUploadError('Please drop an image file (PNG, JPG, SVG, WebP).');
+      return;
+    }
     setUploading(true);
     setUploadError('');
     try {
@@ -25,14 +44,80 @@ export default function ImageBlockEditor({ block, onChange, onUpload }: Props) {
     }
   }
 
+  function onDragOver(e: React.DragEvent) {
+    e.preventDefault();
+    setDragging(true);
+  }
+
+  function onDragLeave(e: React.DragEvent) {
+    e.preventDefault();
+    setDragging(false);
+  }
+
+  function onDrop(e: React.DragEvent) {
+    e.preventDefault();
+    setDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) handleFile(file);
+  }
+
   return (
     <div className="flex flex-col gap-3">
-      {/* Upload / URL */}
+
+      {/* Drop zone */}
+      <div
+        onDragOver={onDragOver}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
+        onClick={() => !block.src && fileRef.current?.click()}
+        className={`relative flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed
+          transition-colors cursor-pointer
+          ${dragging
+            ? 'border-orange-500/70 bg-orange-500/5'
+            : block.src
+              ? 'border-white/10 bg-transparent cursor-default'
+              : 'border-white/15 bg-white/[0.02] hover:border-white/25 hover:bg-white/[0.04]'}
+          ${block.src ? 'p-2' : 'p-6'}`}
+      >
+        {uploading && (
+          <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black/60 z-10">
+            <p className="text-xs text-orange-400 animate-pulse">Uploading…</p>
+          </div>
+        )}
+
+        {block.src ? (
+          /* Live preview at selected width */
+          <div className="w-full flex flex-col items-start gap-2">
+            <div className={`${WIDTH_PREVIEW[width]} transition-all duration-200`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={block.src}
+                alt={block.alt}
+                className="w-full rounded-lg object-contain border border-white/10 max-h-64"
+              />
+            </div>
+            <p className="text-[10px] text-white/30">
+              Previewing at <span className="text-white/50 font-medium">{WIDTH_LABELS[width]}</span> width —
+              change below to compare
+            </p>
+          </div>
+        ) : (
+          <>
+            <ImageIcon size={28} className="text-white/20" />
+            <p className="text-xs text-white/35 text-center">
+              Drag &amp; drop an image here<br />
+              <span className="text-white/20">or click to browse</span>
+            </p>
+          </>
+        )}
+      </div>
+
+      {/* URL input + upload button (for when src is already set or manual URL) */}
       <div className="flex gap-2">
         <input
           value={block.src}
           onChange={(e) => onChange({ src: e.target.value })}
-          placeholder="https://… or upload below"
+          placeholder="https://… or drag & drop above"
           className="flex-1 px-3 py-2 bg-[#0B0F15] border border-white/10 rounded-lg
             text-sm text-white placeholder-white/25 focus:outline-none focus:border-orange-500/40"
         />
@@ -56,12 +141,6 @@ export default function ImageBlockEditor({ block, onChange, onUpload }: Props) {
 
       {uploadError && <p className="text-xs text-red-400">{uploadError}</p>}
 
-      {/* Preview */}
-      {block.src && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={block.src} alt={block.alt} className="max-h-40 rounded-lg object-contain border border-white/10" />
-      )}
-
       {/* Alt + Caption */}
       <div className="grid grid-cols-2 gap-2">
         <div>
@@ -80,17 +159,17 @@ export default function ImageBlockEditor({ block, onChange, onUpload }: Props) {
         </div>
       </div>
 
-      {/* Width */}
+      {/* Width selector */}
       <div>
         <label className="text-xs text-white/40 mb-1 block">Width</label>
         <div className="flex gap-2">
           {(['full', 'half', 'third'] as const).map((w) => (
             <button key={w} onClick={() => onChange({ width: w })}
               className={`px-3 py-1 rounded-lg text-xs transition-colors
-                ${block.width === w
+                ${width === w
                   ? 'bg-orange-500 text-black font-bold'
                   : 'bg-white/5 border border-white/10 text-white/50 hover:border-white/20'}`}>
-              {w}
+              {WIDTH_LABELS[w]}
             </button>
           ))}
         </div>

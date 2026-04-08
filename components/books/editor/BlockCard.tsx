@@ -22,6 +22,8 @@ import TableBlockEditor from './blocks/TableBlockEditor';
 import TimelineEditor from './blocks/TimelineEditor';
 import ComparisonCardEditor from './blocks/ComparisonCardEditor';
 import AnimationBlockEditor from './blocks/AnimationBlockEditor';
+import InlineQuizEditor from './blocks/InlineQuizEditor';
+import WorkedExampleEditor from './blocks/WorkedExampleEditor';
 
 const BLOCK_LABELS: Record<BlockType, string> = {
   text: 'Text',
@@ -39,6 +41,8 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   timeline: 'Timeline',
   comparison_card: 'Comparison',
   animation: 'Animation',
+  inline_quiz: 'Quiz (Milestone)',
+  worked_example: 'Worked Example',
 };
 
 const BLOCK_ICONS: Record<BlockType, string> = {
@@ -57,6 +61,8 @@ const BLOCK_ICONS: Record<BlockType, string> = {
   timeline: '⟶',
   comparison_card: '⇌',
   animation: '✨',
+  inline_quiz: '🧠',
+  worked_example: '📘',
 };
 
 function blockPreview(block: ContentBlock): string {
@@ -76,6 +82,8 @@ function blockPreview(block: ContentBlock): string {
     case 'timeline':       return `${block.events.length} event${block.events.length !== 1 ? 's' : ''}`;
     case 'comparison_card':return `${block.columns.length} columns`;
     case 'animation':      return block.caption || block.src.split('/').pop() || '(animation)';
+    case 'inline_quiz':    return `${block.questions.length} question${block.questions.length !== 1 ? 's' : ''} · ${Math.round(block.pass_threshold * 100)}% to pass`;
+    case 'worked_example': return block.label || '(example)';
   }
 }
 
@@ -110,6 +118,8 @@ export default function BlockCard({
       case 'timeline':         return <TimelineEditor block={block} onChange={onChange} />;
       case 'comparison_card':  return <ComparisonCardEditor block={block} onChange={onChange} />;
       case 'animation':        return <AnimationBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
+      case 'inline_quiz':      return <InlineQuizEditor block={block} onChange={onChange} />;
+      case 'worked_example':   return <WorkedExampleEditor block={block} onChange={onChange} onUpload={onUpload} />;
       default:                 return null;
     }
   }
