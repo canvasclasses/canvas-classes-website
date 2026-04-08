@@ -11,7 +11,7 @@ import { CalloutBlock, CalloutVariant } from '@/types/books';
 // caps label lets the content breathe and feel like an editorial aside.
 function ExamTipCallout({ block }: { block: CalloutBlock }) {
   return (
-    <div className="my-8 pt-5 border-t border-white/10">
+    <div className="my-6 lg:my-0 pt-4 lg:pt-3 border-t border-white/10">
       <p className="flex items-center gap-1.5 text-[10px] font-semibold tracking-[0.18em] uppercase text-amber-500/60 mb-3 select-none">
         <span className="text-[11px]">✦</span>
         {block.title ?? 'Exam Insight'}
@@ -35,7 +35,7 @@ function ExamTipCallout({ block }: { block: CalloutBlock }) {
 // italic tone. Feels like a magazine sidebar, not a UI notification.
 function FunFactCallout({ block }: { block: CalloutBlock }) {
   return (
-    <div className="my-7 pl-5 border-l-[3px] border-emerald-500/35">
+    <div className="my-6 lg:my-0 pl-4 border-l-[3px] border-emerald-500/35">
       <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-emerald-500/50 mb-2 select-none">
         {block.title ?? 'Real World'}
       </p>
@@ -54,7 +54,7 @@ function FunFactCallout({ block }: { block: CalloutBlock }) {
 // Left-rule accent, no background. Blue accent, clean.
 function RememberCallout({ block }: { block: CalloutBlock }) {
   return (
-    <div className="my-6 pl-5 border-l-[3px] border-blue-500/40">
+    <div className="my-6 lg:my-0 pl-4 border-l-[3px] border-blue-500/40">
       <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-blue-400/60 mb-2 select-none">
         {block.title ?? 'Remember'}
       </p>
