@@ -1,5 +1,3 @@
-'use client';
-
 import { ComparisonCardBlock } from '@/types/books';
 
 const COLUMN_COLORS: Record<string, { border: string; heading: string; dot: string }> = {

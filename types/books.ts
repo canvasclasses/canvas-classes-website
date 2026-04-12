@@ -17,7 +17,9 @@ export type BlockType =
   | 'comparison_card'
   | 'animation'
   | 'inline_quiz'
-  | 'worked_example';
+  | 'worked_example'
+  | 'simulation'
+  | 'section';
 
 export interface BaseBlock {
   id: string;        // crypto.randomUUID() — stable, used for drag-drop keys
@@ -39,12 +41,18 @@ export interface HeadingBlock extends BaseBlock {
 }
 
 // 3. IMAGE — static image with optional caption
+// When `align` is 'left' or 'right' AND `side_text` is set, the image renders
+// inline with the text beside it (magazine-style). Otherwise it behaves as a
+// centred figure at the chosen `width`.
 export interface ImageBlock extends BaseBlock {
   type: 'image';
-  src: string;       // R2 CDN URL
+  src: string;       // R2 CDN URL — empty string means image not yet uploaded
   alt: string;
   caption?: string;
   width?: 'full' | 'half' | 'third';
+  align?: 'center' | 'left' | 'right';   // horizontal placement — default 'center'
+  side_text?: string;                    // markdown shown beside image when align ≠ 'center'
+  generation_prompt?: string;  // AI image generation prompt — shown as placeholder until src is filled
 }
 
 // 4. INTERACTIVE IMAGE — SVG/PNG with tappable hotspot annotations
@@ -126,6 +134,9 @@ export interface CalloutBlock extends BaseBlock {
   variant: CalloutVariant;
   title?: string;
   markdown: string;
+  // Optional thumbnail shown on the left side of note callouts (scientist profiles, etc.)
+  image_src?: string;    // R2 CDN URL — empty string means not yet uploaded
+  image_prompt?: string; // AI generation prompt — shown as placeholder spec until image is uploaded
 }
 
 // 12. TABLE — structured data table
@@ -198,6 +209,22 @@ export interface WorkedExampleBlock extends BaseBlock {
   video_src?: string;      // R2 URL for walkthrough video
 }
 
+// 18. SIMULATION — embedded interactive lab/simulator
+export interface SimulationBlock extends BaseBlock {
+  type: 'simulation';
+  simulation_id: string;  // e.g. 'fractional-distillation', 'crystallisation-column'
+  title?: string;
+}
+
+// 19. SECTION — column layout container
+export type SectionLayout = 'single-column' | '50-50' | '60-40' | '40-60' | 'full-bleed';
+export interface SectionBlock extends BaseBlock {
+  type: 'section';
+  layout: SectionLayout;
+  columns: ContentBlock[][];  // columns[0] = left, columns[1] = right (for 2-col)
+  title?: string;             // optional visible section heading
+}
+
 // ─── Union type ───────────────────────────────────────────────────────────────
 export type ContentBlock =
   | TextBlock
@@ -216,7 +243,9 @@ export type ContentBlock =
   | ComparisonCardBlock
   | AnimationBlock
   | InlineQuizBlock
-  | WorkedExampleBlock;
+  | WorkedExampleBlock
+  | SimulationBlock
+  | SectionBlock;
 
 
 // ─── Page & Book documents ────────────────────────────────────────────────────
@@ -243,6 +272,7 @@ export interface BookChapter {
   slug: string;
   page_ids: string[];
   description?: string;
+  is_published: boolean;
 }
 
 export interface Book {

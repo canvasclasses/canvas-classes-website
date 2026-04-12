@@ -5,7 +5,16 @@ import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight, BookOpen, Trophy, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import PageRenderer from '../renderer/PageRenderer';
-import { Book, BookPage } from '@/types/books';
+import { Book, BookPage, BlockType, ContentBlock } from '@/types/books';
+import { useBookProgress } from '@/hooks/useBookProgress';
+
+function hasBlockType(blocks: ContentBlock[], type: BlockType): boolean {
+  return blocks.some(b => {
+    if (b.type === type) return true;
+    if (b.type === 'section') return b.columns.some(col => hasBlockType(col, type));
+    return false;
+  });
+}
 
 interface PageSummary {
   _id: string;
@@ -30,48 +39,46 @@ export default function BookReader({
   book, page, chapterPages, prevPageSlug, nextPageSlug, bookSlug,
 }: Props) {
   const router = useRouter();
-  const [completedSlugs, setCompletedSlugs] = useState<Set<string>>(new Set());
+
+  // Progress is now owned by the useBookProgress hook, which caches the
+  // result at the module level for the whole tab session. Navigating between
+  // pages inside the same book no longer re-fetches.
+  const { completedSlugs, markComplete } = useBookProgress(bookSlug);
+
   const [quizPassed, setQuizPassed] = useState(false);
   const [showMilestone, setShowMilestone] = useState(false);
   const [milestoneScore, setMilestoneScore] = useState(0);
 
-  const hasQuiz = page.blocks.some(b => b.type === 'inline_quiz');
+  const hasQuiz = hasBlockType(page.blocks, 'inline_quiz');
 
-  // Load existing progress for this book
+  // Flip quizPassed to true whenever the current page lands in the completed
+  // set — covers both fresh mounts of an already-completed page and the
+  // optimistic update applied by markComplete.
   useEffect(() => {
-    fetch(`/api/v2/books/progress?book_slug=${bookSlug}`)
-      .then(r => r.json())
-      .then(d => {
-        if (d.success) {
-          setCompletedSlugs(new Set(d.data.map((r: { page_slug: string }) => r.page_slug)));
-          if (d.data.some((r: { page_slug: string }) => r.page_slug === page.slug)) {
-            setQuizPassed(true);
-          }
-        }
-      })
-      .catch(() => {});
-  }, [bookSlug, page.slug]);
+    if (completedSlugs.has(page.slug)) {
+      setQuizPassed(true);
+    } else {
+      setQuizPassed(false);
+    }
+  }, [completedSlugs, page.slug]);
 
-  const completePage = useCallback(async (score: number) => {
-    if (completedSlugs.has(page.slug)) return;
-    try {
-      await fetch('/api/v2/books/progress', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          book_slug: bookSlug,
-          chapter_number: page.chapter_number,
-          page_slug: page.slug,
-          quiz_score: score,
-        }),
+  const completePage = useCallback(
+    async (score: number) => {
+      if (completedSlugs.has(page.slug)) return;
+      const ok = await markComplete({
+        pageSlug: page.slug,
+        chapterNumber: page.chapter_number,
+        quizScore: score,
       });
-      setCompletedSlugs(prev => new Set([...prev, page.slug]));
-      setMilestoneScore(score);
-      setShowMilestone(true);
-    } catch {}
-  }, [bookSlug, page.slug, page.chapter_number, completedSlugs]);
+      if (ok) {
+        setMilestoneScore(score);
+        setShowMilestone(true);
+      }
+    },
+    [markComplete, completedSlugs, page.slug, page.chapter_number]
+  );
 
-  function handleQuizPass(blockId: string, score: number) {
+  function handleQuizPass(_blockId: string, score: number) {
     setQuizPassed(true);
     completePage(score);
   }
@@ -82,7 +89,7 @@ export default function BookReader({
       completePage(100);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasQuiz]);
+  }, [hasQuiz, page.slug]);
 
   const completedInChapter = chapterPages.filter(p => completedSlugs.has(p.slug)).length;
   const progressPct = chapterPages.length > 0
@@ -97,7 +104,7 @@ export default function BookReader({
 
       {/* ── Top nav ─────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-40 bg-[#0B0F15]/95 backdrop-blur border-b border-white/8">
-        <div className="max-w-3xl mx-auto px-4 h-12 flex items-center gap-3">
+        <div className="max-w-[1060px] mx-auto px-4 h-12 flex items-center gap-3">
           <Link href={`/books/${bookSlug}`}
             className="text-white/40 hover:text-white/70 transition-colors shrink-0">
             <ChevronLeft size={18} />
@@ -110,10 +117,13 @@ export default function BookReader({
         </div>
 
         {/* Chapter progress bar */}
-        <div className="h-1 bg-white/5">
+        <div className="relative h-[2px] bg-white/8">
           <div
-            className="h-full bg-gradient-to-r from-orange-500 to-amber-400 transition-all duration-700"
-            style={{ width: `${progressPct}%` }}
+            className="absolute inset-y-0 left-0 bg-gradient-to-r from-orange-500 via-amber-400 to-amber-300 transition-all duration-700 ease-out"
+            style={{
+              width: `${progressPct}%`,
+              boxShadow: progressPct > 0 ? '0 0 10px 1px rgba(251,146,60,0.55)' : 'none',
+            }}
           />
         </div>
       </header>
@@ -128,7 +138,7 @@ export default function BookReader({
 
       {/* ── Bottom nav ──────────────────────────────────────────────────── */}
       <nav className="sticky bottom-0 z-40 bg-[#0B0F15]/95 backdrop-blur border-t border-white/8">
-        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between gap-3">
+        <div className="max-w-[1060px] mx-auto px-4 h-14 flex items-center justify-between gap-3">
           {/* Previous */}
           {prevPageSlug ? (
             <Link href={`/books/${bookSlug}/${prevPageSlug}`}

@@ -2,31 +2,20 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import BookModel from '@/lib/models/Book';
 import BookPageModel from '@/lib/models/BookPage';
-import { createClient } from '@/app/utils/supabase/server';
+import { requireAdmin, isAdminRequest } from '@/lib/bookAuth';
+import { BookChapter } from '@/types/books';
 
-async function requireAdmin(): Promise<{ email: string } | null> {
-  if (process.env.NODE_ENV === 'development') {
-    return { email: 'dev@localhost' };
-  }
-  try {
-    const supabase = await createClient();
-    if (!supabase) return null;
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user?.email) return null;
-    const adminEmails = (process.env.ADMIN_EMAILS || '')
-      .split(',')
-      .map((e) => e.trim())
-      .filter(Boolean);
-    if (!adminEmails.includes(user.email)) return null;
-    return { email: user.email };
-  } catch {
-    return null;
-  }
-}
+// GET branches on isAdminRequest() — admins see unpublished chapters, students
+// don't. Caching would leak one view into the other. Students load book data
+// via the SSR route app/books/[bookSlug]/page.tsx which is cached via ISR.
+export const dynamic = 'force-dynamic';
 
 type Params = { params: Promise<{ bookSlug: string }> };
 
 // GET /api/v2/books/[bookSlug] — get book with chapters
+//
+// Non-admins only see the book if it is published, and only the published
+// chapters inside it. Admins see everything for editing purposes.
 export async function GET(_req: NextRequest, { params }: Params) {
   const { bookSlug } = await params;
   try {
@@ -35,6 +24,17 @@ export async function GET(_req: NextRequest, { params }: Params) {
     if (!book) {
       return NextResponse.json({ success: false, error: 'Book not found' }, { status: 404 });
     }
+
+    const isAdmin = await isAdminRequest();
+    if (!isAdmin) {
+      if (!book.is_published) {
+        return NextResponse.json({ success: false, error: 'Book not found' }, { status: 404 });
+      }
+      // Strip unpublished chapters from the response so the client ToC only
+      // shows what students are actually allowed to read.
+      book.chapters = book.chapters.filter((c: BookChapter) => c.is_published);
+    }
+
     return NextResponse.json({ success: true, data: book });
   } catch (error) {
     console.error(`GET /api/v2/books/${bookSlug} error:`, error);

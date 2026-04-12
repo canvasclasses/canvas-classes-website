@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 import { uploadToR2, getExtensionFromMimeType, type AssetType } from '@/lib/r2Storage';
-import { createClient } from '@/app/utils/supabase/server';
+import { isAdminRequest } from '@/lib/bookAuth';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -30,23 +30,6 @@ const MAX_SIZE: Record<AssetType, number> = {
   video: 100 * 1024 * 1024,   // 100 MB
 };
 
-async function requireAdmin(): Promise<boolean> {
-  if (process.env.NODE_ENV === 'development') return true;
-  try {
-    const supabase = await createClient();
-    if (!supabase) return false;
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user?.email) return false;
-    const adminEmails = (process.env.ADMIN_EMAILS || '')
-      .split(',')
-      .map((e) => e.trim())
-      .filter(Boolean);
-    return adminEmails.includes(user.email);
-  } catch {
-    return false;
-  }
-}
-
 // POST /api/v2/books/assets/upload
 // FormData fields:
 //   file        — the file
@@ -54,7 +37,7 @@ async function requireAdmin(): Promise<boolean> {
 //   chapter_number — number (used for R2 path)
 //   block_id    — block ID (used in filename)
 export async function POST(request: NextRequest) {
-  const isAdmin = await requireAdmin();
+  const isAdmin = await isAdminRequest();
   if (!isAdmin) {
     return NextResponse.json({ success: false, error: 'Admin access required' }, { status: 403 });
   }

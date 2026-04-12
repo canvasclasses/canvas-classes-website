@@ -1,5 +1,3 @@
-'use client';
-
 import { Molecule3DBlock } from '@/types/books';
 
 // 3Dmol.js WebGL integration requires a separate initialisation pass.

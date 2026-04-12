@@ -2,27 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import BookModel from '@/lib/models/Book';
 import BookPageModel from '@/lib/models/BookPage';
-import { createClient } from '@/app/utils/supabase/server';
-
-async function requireAdmin(): Promise<{ email: string } | null> {
-  if (process.env.NODE_ENV === 'development') {
-    return { email: 'dev@localhost' };
-  }
-  try {
-    const supabase = await createClient();
-    if (!supabase) return null;
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user?.email) return null;
-    const adminEmails = (process.env.ADMIN_EMAILS || '')
-      .split(',')
-      .map((e) => e.trim())
-      .filter(Boolean);
-    if (!adminEmails.includes(user.email)) return null;
-    return { email: user.email };
-  } catch {
-    return null;
-  }
-}
+import { requireAdmin } from '@/lib/bookAuth';
 
 type Params = { params: Promise<{ bookSlug: string; pageSlug: string }> };
 

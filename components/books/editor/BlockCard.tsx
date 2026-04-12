@@ -24,6 +24,7 @@ import ComparisonCardEditor from './blocks/ComparisonCardEditor';
 import AnimationBlockEditor from './blocks/AnimationBlockEditor';
 import InlineQuizEditor from './blocks/InlineQuizEditor';
 import WorkedExampleEditor from './blocks/WorkedExampleEditor';
+import SectionBlockEditor from './blocks/SectionBlockEditor';
 
 const BLOCK_LABELS: Record<BlockType, string> = {
   text: 'Text',
@@ -43,6 +44,8 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   animation: 'Animation',
   inline_quiz: 'Quiz (Milestone)',
   worked_example: 'Worked Example',
+  simulation: 'Simulation',
+  section: 'Section',
 };
 
 const BLOCK_ICONS: Record<BlockType, string> = {
@@ -63,27 +66,36 @@ const BLOCK_ICONS: Record<BlockType, string> = {
   animation: '✨',
   inline_quiz: '🧠',
   worked_example: '📘',
+  simulation: '⚙️',
+  section: '▦',
 };
 
 function blockPreview(block: ContentBlock): string {
-  switch (block.type) {
-    case 'text':           return block.markdown.slice(0, 80) || '(empty)';
-    case 'heading':        return block.text || '(empty)';
-    case 'image':          return block.caption || block.alt || block.src.split('/').pop() || '(image)';
-    case 'interactive_image': return `${block.hotspots.length} hotspot${block.hotspots.length !== 1 ? 's' : ''}`;
-    case 'video':          return block.caption || block.src || '(video)';
-    case 'audio_note':     return block.label;
-    case 'molecule_2d':    return block.name || block.smiles || '(molecule)';
-    case 'molecule_3d':    return block.name || block.smiles || '(molecule)';
-    case 'latex_block':    return block.latex.slice(0, 60) || '(equation)';
-    case 'practice_link':  return block.label;
-    case 'callout':        return `${block.variant}: ${block.markdown.slice(0, 60)}`;
-    case 'table':          return `${block.headers.length} cols × ${block.rows.length} rows`;
-    case 'timeline':       return `${block.events.length} event${block.events.length !== 1 ? 's' : ''}`;
-    case 'comparison_card':return `${block.columns.length} columns`;
-    case 'animation':      return block.caption || block.src.split('/').pop() || '(animation)';
-    case 'inline_quiz':    return `${block.questions.length} question${block.questions.length !== 1 ? 's' : ''} · ${Math.round(block.pass_threshold * 100)}% to pass`;
-    case 'worked_example': return block.label || '(example)';
+  try {
+    switch (block.type) {
+      case 'text':           return (block.markdown || '').slice(0, 80) || '(empty)';
+      case 'heading':        return block.text || '(empty)';
+      case 'image':          return block.caption || block.alt || block.src?.split('/').pop() || '(image)';
+      case 'interactive_image': return `${(block.hotspots || []).length} hotspot${block.hotspots?.length !== 1 ? 's' : ''}`;
+      case 'video':          return block.caption || block.src || '(video)';
+      case 'audio_note':     return block.label || '(audio)';
+      case 'molecule_2d':    return block.name || block.smiles || '(molecule)';
+      case 'molecule_3d':    return block.name || block.smiles || '(molecule)';
+      case 'latex_block':    return (block.latex || '').slice(0, 60) || '(equation)';
+      case 'practice_link':  return block.label || '(link)';
+      case 'callout':        return `${block.variant}: ${(block.markdown || '').slice(0, 60)}`;
+      case 'table':          return `${(block.headers || []).length} cols × ${(block.rows || []).length} rows`;
+      case 'timeline':       return `${(block.events || []).length} event${(block.events || []).length !== 1 ? 's' : ''}`;
+      case 'comparison_card':return `${(block.columns || []).length} columns`;
+      case 'animation':      return block.caption || block.src?.split('/').pop() || '(animation)';
+      case 'inline_quiz':    return `${(block.questions || []).length} question${block.questions?.length !== 1 ? 's' : ''} · ${Math.round((block.pass_threshold ?? 0.7) * 100)}% to pass`;
+      case 'worked_example': return block.label || '(example)';
+      case 'simulation':     return block.title || block.simulation_id || '(simulation)';
+      case 'section':        return `${block.layout} · ${block.columns.reduce((sum, col) => sum + col.length, 0)} blocks`;
+      default:               return `(${(block as ContentBlock).type})`;
+    }
+  } catch {
+    return `(${block.type})`;
   }
 }
 
@@ -120,6 +132,7 @@ export default function BlockCard({
       case 'animation':        return <AnimationBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'inline_quiz':      return <InlineQuizEditor block={block} onChange={onChange} />;
       case 'worked_example':   return <WorkedExampleEditor block={block} onChange={onChange} onUpload={onUpload} />;
+      case 'section':          return <SectionBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
       default:                 return null;
     }
   }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { Save, BookOpen, PanelLeft, Columns2, Eye } from 'lucide-react';
 import { Book, BookPage, ContentBlock, BlockType } from '@/types/books';
 import BookSidebar from './BookSidebar';
@@ -9,7 +10,7 @@ import PageRenderer from '../renderer/PageRenderer';
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
 
-function defaultBlock(type: BlockType, order: number): ContentBlock {
+export function defaultBlock(type: BlockType, order: number): ContentBlock {
   const id = crypto.randomUUID();
   const base = { id, order };
   switch (type) {
@@ -30,6 +31,8 @@ function defaultBlock(type: BlockType, order: number): ContentBlock {
     case 'animation':        return { ...base, type, src: '', loop: true, autoplay: true };
     case 'inline_quiz':      return { ...base, type, questions: [{ id: crypto.randomUUID(), question: '', options: ['', '', '', ''], correct_index: 0, explanation: '' }], pass_threshold: 0.7 };
     case 'worked_example':   return { ...base, type, label: 'Solved Example', variant: 'solved_example', problem: '', solution: '', reveal_mode: 'always_visible' };
+    case 'simulation':       return { ...base, type, simulation_id: 'fractional-distillation' };
+    case 'section':          return { ...base, type, layout: '50-50', columns: [[], []] };
   }
 }
 
@@ -52,11 +55,22 @@ interface PageSummary {
 // ─── component ────────────────────────────────────────────────────────────────
 
 export default function BookWorkspace() {
-  // Books + navigation
+  // Navigation helpers — selection is persisted via URL search params so a
+  // refresh lands the admin back on the same book + page.
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Books + navigation. Seed state lazily from URL so the first render already
+  // reflects ?book=...&page=... on reload.
   const [books, setBooks] = useState<Book[]>([]);
-  const [selectedBookSlug, setSelectedBookSlug] = useState<string | null>(null);
+  const [selectedBookSlug, setSelectedBookSlug] = useState<string | null>(
+    () => searchParams.get('book')
+  );
   const [pages, setPages] = useState<PageSummary[]>([]);
-  const [selectedPageSlug, setSelectedPageSlug] = useState<string | null>(null);
+  const [selectedPageSlug, setSelectedPageSlug] = useState<string | null>(
+    () => searchParams.get('page')
+  );
 
   // Editor state
   const [currentPage, setCurrentPage] = useState<BookPage | null>(null);
@@ -71,6 +85,36 @@ export default function BookWorkspace() {
   const [saveError, setSaveError] = useState<string | null>(null);
   const [loadingPage, setLoadingPage] = useState(false);
 
+  // Resizable split — editor width as a percentage of the main content area
+  const [splitPos, setSplitPos] = useState(45);
+  const isDragging = useRef(false);
+  const mainRef = useRef<HTMLDivElement>(null);
+
+  const onDividerMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    isDragging.current = true;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+
+    const onMouseMove = (ev: MouseEvent) => {
+      if (!isDragging.current || !mainRef.current) return;
+      const rect = mainRef.current.getBoundingClientRect();
+      const pct = ((ev.clientX - rect.left) / rect.width) * 100;
+      setSplitPos(Math.min(Math.max(pct, 20), 80));
+    };
+
+    const onMouseUp = () => {
+      isDragging.current = false;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  }, []);
+
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const selectedBook = books.find((b) => b.slug === selectedBookSlug) ?? null;
 
@@ -80,6 +124,20 @@ export default function BookWorkspace() {
       .then((r) => r.json())
       .then((d) => { if (d.success) setBooks(d.data); });
   }, []);
+
+  // ── Keep URL in sync with selection ───────────────────────────────────────
+  // Source of truth is React state; the URL is a mirror so refreshes restore
+  // the same view. Initial seeding happens lazily in useState above.
+  useEffect(() => {
+    const desired = new URLSearchParams();
+    if (selectedBookSlug) desired.set('book', selectedBookSlug);
+    if (selectedBookSlug && selectedPageSlug) desired.set('page', selectedPageSlug);
+    const desiredQs = desired.toString();
+    const currentQs = searchParams.toString();
+    if (desiredQs === currentQs) return;
+    const nextUrl = desiredQs ? `${pathname}?${desiredQs}` : pathname;
+    router.replace(nextUrl, { scroll: false });
+  }, [selectedBookSlug, selectedPageSlug, pathname, router, searchParams]);
 
   // ── Load pages when book changes ──────────────────────────────────────────
   useEffect(() => {
@@ -216,30 +274,58 @@ export default function BookWorkspace() {
     return data.url as string;
   };
 
-  // ── Sidebar callbacks ─────────────────────────────────────────────────────
-  function onBookCreated(book: Book) {
+  // ── Sidebar callbacks (stable refs so memo'd sidebar doesn't re-render) ──
+  const onSelectBookForSidebar = useCallback((slug: string) => {
+    setSelectedBookSlug(slug);
+    setSelectedPageSlug(null);
+  }, []);
+
+  const onBookCreated = useCallback((book: Book) => {
     setBooks((prev) => [book, ...prev]);
     setSelectedBookSlug(book.slug);
     setSelectedPageSlug(null);
-  }
+  }, []);
 
-  function onBookUpdated(book: Book) {
+  const onBookUpdated = useCallback((book: Book) => {
     setBooks((prev) => prev.map((b) => (b.slug === book.slug ? book : b)));
-  }
+  }, []);
 
-  function onPageCreated(page: PageSummary) {
+  const onPageCreated = useCallback((page: PageSummary) => {
     setPages((prev) => [...prev, page]);
     setSelectedPageSlug(page.slug);
-  }
+  }, []);
 
-  function onPageDeleted(slug: string) {
+  const onPageDeleted = useCallback((slug: string) => {
     setPages((prev) => prev.filter((p) => p.slug !== slug));
-    if (selectedPageSlug === slug) setSelectedPageSlug(null);
-  }
+    setSelectedPageSlug((cur) => (cur === slug ? null : cur));
+  }, []);
 
-  function onPageTogglePublish(slug: string, published: boolean) {
+  const onPageTogglePublish = useCallback((slug: string, published: boolean) => {
     setPages((prev) => prev.map((p) => (p.slug === slug ? { ...p, published } : p)));
-  }
+  }, []);
+
+  // When an admin publishes/unpublishes a chapter the API also cascades
+  // published=true onto every page in that chapter (on publish only), so we
+  // update both the chapter flag in the book and the in-memory page list.
+  const onChapterTogglePublish = useCallback((bookSlug: string, chapterNumber: number, isPublished: boolean) => {
+    setBooks((prev) =>
+      prev.map((b) =>
+        b.slug !== bookSlug
+          ? b
+          : {
+              ...b,
+              chapters: b.chapters.map((c) =>
+                c.number === chapterNumber ? { ...c, is_published: isPublished } : c
+              ),
+            }
+      )
+    );
+    if (isPublished) {
+      setPages((prev) =>
+        prev.map((p) => (p.chapter_number === chapterNumber ? { ...p, published: true } : p))
+      );
+    }
+  }, []);
 
   // ─────────────────────────────────────────────────────────────────────────
   return (
@@ -322,17 +408,18 @@ export default function BookWorkspace() {
           pages={pages}
           selectedBookSlug={selectedBookSlug}
           selectedPageSlug={selectedPageSlug}
-          onSelectBook={(slug) => { setSelectedBookSlug(slug); setSelectedPageSlug(null); }}
+          onSelectBook={onSelectBookForSidebar}
           onSelectPage={setSelectedPageSlug}
           onBookCreated={onBookCreated}
           onBookUpdated={onBookUpdated}
           onPageCreated={onPageCreated}
           onPageDeleted={onPageDeleted}
           onPageTogglePublish={onPageTogglePublish}
+          onChapterTogglePublish={onChapterTogglePublish}
         />
 
         {/* Main content */}
-        <main className="flex-1 flex overflow-hidden">
+        <main ref={mainRef} className="flex-1 flex overflow-hidden">
 
           {/* Empty states */}
           {!selectedBook && (
@@ -358,7 +445,10 @@ export default function BookWorkspace() {
             <>
               {/* Editor pane — hidden in preview-only mode */}
               {viewMode !== 'preview' && (
-                <div className={`overflow-y-auto ${viewMode === 'split' ? 'w-1/2 border-r border-white/8' : 'flex-1'}`}>
+                <div
+                  className="overflow-y-auto shrink-0"
+                  style={viewMode === 'split' ? { width: `${splitPos}%` } : { flex: 1 }}
+                >
                   <BlockEditor
                     blocks={blocks}
                     pageSubtitle={pageSubtitle}
@@ -372,9 +462,30 @@ export default function BookWorkspace() {
                 </div>
               )}
 
+              {/* Draggable divider — only in split mode */}
+              {viewMode === 'split' && (
+                <div
+                  onMouseDown={onDividerMouseDown}
+                  className="w-1 shrink-0 cursor-col-resize bg-white/8 hover:bg-orange-500/50
+                    transition-colors duration-150 relative group"
+                  title="Drag to resize"
+                >
+                  {/* grip dots */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+                    flex flex-col gap-[3px] opacity-0 group-hover:opacity-100 transition-opacity">
+                    {[0,1,2,3,4].map((i) => (
+                      <div key={i} className="w-[3px] h-[3px] rounded-full bg-orange-400/80" />
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Preview pane — hidden in edit-only mode */}
               {viewMode !== 'edit' && (
-                <div className={`overflow-y-auto bg-[#050505] ${viewMode === 'split' ? 'w-1/2' : 'flex-1'}`}>
+                <div
+                  className="overflow-y-auto bg-[#050505]"
+                  style={viewMode === 'split' ? { flex: 1 } : { flex: 1 }}
+                >
                   {viewMode === 'split' && (
                     <div className="sticky top-0 z-10 px-4 py-1.5 bg-[#0B0F15] border-b border-white/8
                       flex items-center gap-1.5">

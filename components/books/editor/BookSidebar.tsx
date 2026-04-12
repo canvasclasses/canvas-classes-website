@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import {
   Plus, ChevronDown, ChevronRight, FileText, Eye, EyeOff,
   Trash2, BookOpen, ChevronUp, Globe, GlobeLock,
@@ -29,6 +29,7 @@ interface Props {
   onPageCreated: (page: PageSummary) => void;
   onPageDeleted: (slug: string) => void;
   onPageTogglePublish: (slug: string, published: boolean) => void;
+  onChapterTogglePublish: (bookSlug: string, chapterNumber: number, isPublished: boolean) => void;
 }
 
 type Subject = 'chemistry' | 'biology' | 'physics' | 'mathematics';
@@ -114,14 +115,33 @@ function NewBookForm({ onCreated, onCancel }: { onCreated: (b: Book) => void; on
 }
 
 // ── Main Sidebar ───────────────────────────────────────────────────────────────
-export default function BookSidebar({
+const ALL_GRADES = [6, 7, 8, 9, 10, 11, 12];
+
+function BookSidebarInner({
   books, pages, selectedBookSlug, selectedPageSlug,
   onSelectBook, onSelectPage, onBookCreated, onBookUpdated,
-  onPageCreated, onPageDeleted, onPageTogglePublish,
+  onPageCreated, onPageDeleted, onPageTogglePublish, onChapterTogglePublish,
 }: Props) {
   const [showNewBook, setShowNewBook] = useState(false);
   const [expandedBooks, setExpandedBooks] = useState<Set<string>>(new Set());
   const [expandedChapters, setExpandedChapters] = useState<Set<string>>(new Set());
+
+  // Grade filter — null means "All classes"
+  const [gradeFilter, setGradeFilter] = useState<number | null>(null);
+
+  // Count books per grade for badge display
+  const gradeCount = ALL_GRADES.reduce<Record<number, number>>((acc, g) => {
+    acc[g] = books.filter((b) => b.grade === g).length;
+    return acc;
+  }, {});
+
+  // Only the grades that have at least one book are shown as pills
+  const activeGrades = ALL_GRADES.filter((g) => gradeCount[g] > 0);
+
+  // Books visible in the list after applying the grade filter
+  const visibleBooks = gradeFilter === null
+    ? books
+    : books.filter((b) => b.grade === gradeFilter);
 
   // New chapter form per book
   const [addingChapter, setAddingChapter] = useState<string | null>(null);
@@ -132,6 +152,11 @@ export default function BookSidebar({
   const [addingPage, setAddingPage] = useState<string | null>(null);
   const [newPageTitle, setNewPageTitle] = useState('');
   const [savingPage, setSavingPage] = useState(false);
+
+  // Track which chapter publish request is currently in-flight by "bookSlug:num"
+  const [publishingChapter, setPublishingChapter] = useState<string | null>(null);
+  // Track which book publish request is currently in-flight
+  const [publishingBook, setPublishingBook] = useState<string | null>(null);
 
   const selectedBook = books.find((b) => b.slug === selectedBookSlug) ?? null;
 
@@ -169,7 +194,11 @@ export default function BookSidebar({
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          chapters: [...book.chapters, { number: nextNum, title: newChapterTitle, slug, page_ids: [] }],
+          chapters: [
+            ...book.chapters,
+            // New chapters start as drafts — admin publishes explicitly.
+            { number: nextNum, title: newChapterTitle, slug, page_ids: [], is_published: false },
+          ],
         }),
       });
       const d = await res.json();
@@ -179,6 +208,64 @@ export default function BookSidebar({
       }
     } catch { /* silent */ }
     finally { setSavingChapter(false); setAddingChapter(null); setNewChapterTitle(''); }
+  }
+
+  async function toggleChapterPublish(bookSlug: string, chapter: BookChapter) {
+    const chKey = `${bookSlug}:${chapter.number}`;
+    if (publishingChapter === chKey) return;
+
+    const willPublish = !chapter.is_published;
+    if (!willPublish) {
+      if (!confirm(`Unpublish "${chapter.title}"? Students will no longer see its pages.`)) return;
+    }
+
+    setPublishingChapter(chKey);
+    try {
+      const res = await fetch(
+        `/api/v2/books/${bookSlug}/chapters/${chapter.number}/publish`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ publish: willPublish }),
+        }
+      );
+      const d = await res.json();
+      if (d.success) {
+        onChapterTogglePublish(bookSlug, chapter.number, d.data.is_published);
+      } else {
+        alert(d.error || 'Failed to toggle chapter publish state');
+      }
+    } catch {
+      alert('Network error while toggling chapter publish state');
+    } finally {
+      setPublishingChapter(null);
+    }
+  }
+
+  async function toggleBookPublish(book: Book) {
+    if (publishingBook === book.slug) return;
+    const willPublish = !book.is_published;
+    if (!willPublish) {
+      if (!confirm(`Unpublish "${book.title}"? The entire book will disappear for students.`)) return;
+    }
+    setPublishingBook(book.slug);
+    try {
+      const res = await fetch(`/api/v2/books/${book.slug}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ is_published: willPublish }),
+      });
+      const d = await res.json();
+      if (d.success) {
+        onBookUpdated(d.data);
+      } else {
+        alert(d.error || 'Failed to toggle book publish state');
+      }
+    } catch {
+      alert('Network error while toggling book publish state');
+    } finally {
+      setPublishingBook(null);
+    }
   }
 
   async function addPage(bookSlug: string, chapterNum: number) {
@@ -276,13 +363,52 @@ export default function BookSidebar({
         />
       )}
 
+      {/* ── Grade filter pills ────────────────────────────────────────── */}
+      {activeGrades.length > 0 && (
+        <div className="flex items-center gap-1 px-3 py-2 border-b border-white/8 overflow-x-auto shrink-0">
+          {/* "All" pill */}
+          <button
+            onClick={() => setGradeFilter(null)}
+            className={`shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all ${
+              gradeFilter === null
+                ? 'bg-orange-500/25 text-orange-300 border border-orange-500/40'
+                : 'text-white/35 hover:text-white/60 border border-transparent hover:border-white/15'
+            }`}
+          >
+            All
+            <span className={`ml-1 tabular-nums ${gradeFilter === null ? 'text-orange-300/70' : 'text-white/20'}`}>
+              {books.length}
+            </span>
+          </button>
+
+          {activeGrades.map((g) => (
+            <button
+              key={g}
+              onClick={() => setGradeFilter(gradeFilter === g ? null : g)}
+              className={`shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all ${
+                gradeFilter === g
+                  ? 'bg-orange-500/25 text-orange-300 border border-orange-500/40'
+                  : 'text-white/35 hover:text-white/60 border border-transparent hover:border-white/15'
+              }`}
+            >
+              Cl {g}
+              <span className={`ml-1 tabular-nums ${gradeFilter === g ? 'text-orange-300/70' : 'text-white/20'}`}>
+                {gradeCount[g]}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* Book list */}
       <div className="flex-1 overflow-y-auto">
-        {books.length === 0 && (
-          <p className="px-3 py-4 text-xs text-white/25 text-center">No books yet</p>
+        {visibleBooks.length === 0 && (
+          <p className="px-3 py-4 text-xs text-white/25 text-center">
+            {gradeFilter ? `No Class ${gradeFilter} books yet` : 'No books yet'}
+          </p>
         )}
 
-        {books.map((book) => {
+        {visibleBooks.map((book) => {
           const isBookExpanded = expandedBooks.has(book.slug) || selectedBookSlug === book.slug;
           const isSelected = selectedBookSlug === book.slug;
           const bookPages = pages; // pages already filtered by selectedBookSlug in workspace
@@ -290,20 +416,46 @@ export default function BookSidebar({
           return (
             <div key={book.slug}>
               {/* Book row */}
-              <button
-                onClick={() => toggleBook(book.slug)}
-                className={`w-full flex items-center gap-2 px-3 py-2 text-left transition-colors
-                  ${isSelected ? 'bg-orange-500/10' : 'hover:bg-white/[0.03]'}`}
-              >
-                <BookOpen size={13} className={isSelected ? 'text-orange-400' : 'text-white/40'} />
-                <span className={`flex-1 text-xs truncate ${isSelected ? 'text-white font-medium' : 'text-white/70'}`}>
-                  {book.title}
-                </span>
-                {isBookExpanded
-                  ? <ChevronDown size={12} className="text-white/30 shrink-0" />
-                  : <ChevronRight size={12} className="text-white/30 shrink-0" />
-                }
-              </button>
+              <div className={`group flex items-center gap-2 px-3 py-2 transition-colors
+                ${isSelected ? 'bg-orange-500/10' : 'hover:bg-white/[0.03]'}`}>
+                <button
+                  onClick={() => toggleBook(book.slug)}
+                  className="flex items-center gap-2 flex-1 min-w-0 text-left"
+                >
+                  <BookOpen size={13} className={isSelected ? 'text-orange-400' : 'text-white/40'} />
+                  <span className={`flex-1 text-xs truncate ${isSelected ? 'text-white font-medium' : 'text-white/70'}`}>
+                    {book.title}
+                  </span>
+                </button>
+
+                {/* Book publish toggle */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); toggleBookPublish(book); }}
+                  disabled={publishingBook === book.slug}
+                  title={
+                    publishingBook === book.slug
+                      ? 'Working…'
+                      : book.is_published
+                        ? 'Book is LIVE — click to unpublish'
+                        : 'Book is DRAFT — click to publish'
+                  }
+                  className={`shrink-0 p-0.5 rounded transition-opacity disabled:opacity-40 ${
+                    book.is_published
+                      ? 'opacity-100'
+                      : 'opacity-40 group-hover:opacity-100'
+                  }`}
+                >
+                  {book.is_published
+                    ? <Globe size={12} className="text-emerald-400" />
+                    : <GlobeLock size={12} className="text-white/40 hover:text-orange-400" />}
+                </button>
+
+                <button onClick={() => toggleBook(book.slug)} className="shrink-0">
+                  {isBookExpanded
+                    ? <ChevronDown size={12} className="text-white/30" />
+                    : <ChevronRight size={12} className="text-white/30" />}
+                </button>
+              </div>
 
               {/* Chapters (only show for selected book) */}
               {isSelected && isBookExpanded && (
@@ -318,19 +470,52 @@ export default function BookSidebar({
                         .filter((p) => p.chapter_number === chapter.number)
                         .sort((a, b) => a.page_number - b.page_number);
 
+                      const isChapterPublished = Boolean(chapter.is_published);
+                      const isPublishingThis = publishingChapter === chKey;
+
                       return (
                         <div key={chapter.number}>
                           {/* Chapter row */}
-                          <button
-                            onClick={() => toggleChapter(chKey)}
-                            className="w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-white/[0.03] transition-colors"
+                          <div
+                            className="group w-full flex items-center gap-2 px-3 py-1.5 hover:bg-white/[0.03] transition-colors"
                           >
-                            {isChExpanded
-                              ? <ChevronDown size={11} className="text-white/25 shrink-0" />
-                              : <ChevronRight size={11} className="text-white/25 shrink-0" />}
-                            <span className="flex-1 text-xs text-white/50 truncate">{chapter.title}</span>
-                            <span className="text-[10px] text-white/25">{chPages.length}</span>
-                          </button>
+                            <button
+                              onClick={() => toggleChapter(chKey)}
+                              className="flex items-center gap-2 flex-1 min-w-0 text-left"
+                            >
+                              {isChExpanded
+                                ? <ChevronDown size={11} className="text-white/25 shrink-0" />
+                                : <ChevronRight size={11} className="text-white/25 shrink-0" />}
+                              <span className={`flex-1 text-xs truncate ${
+                                isChapterPublished ? 'text-emerald-300/85' : 'text-white/50'
+                              }`}>
+                                {chapter.title}
+                              </span>
+                              <span className="text-[10px] text-white/25">{chPages.length}</span>
+                            </button>
+
+                            {/* Chapter publish toggle */}
+                            <button
+                              onClick={(e) => { e.stopPropagation(); toggleChapterPublish(book.slug, chapter); }}
+                              disabled={isPublishingThis}
+                              title={
+                                isPublishingThis
+                                  ? 'Working…'
+                                  : isChapterPublished
+                                    ? 'Chapter is LIVE — click to unpublish'
+                                    : 'Chapter is DRAFT — click to publish'
+                              }
+                              className={`shrink-0 p-0.5 rounded transition-opacity disabled:opacity-40 ${
+                                isChapterPublished
+                                  ? 'opacity-100'
+                                  : 'opacity-40 group-hover:opacity-100'
+                              }`}
+                            >
+                              {isChapterPublished
+                                ? <Globe size={12} className="text-emerald-400" />
+                                : <GlobeLock size={12} className="text-white/40 hover:text-orange-400" />}
+                            </button>
+                          </div>
 
                           {/* Pages */}
                           {isChExpanded && (
@@ -448,3 +633,9 @@ export default function BookSidebar({
     </aside>
   );
 }
+
+// Memo prevents re-rendering the sidebar when only editor state (blocks,
+// save status) changes — the sidebar only needs to re-render when books,
+// pages, or selection changes.
+const BookSidebar = memo(BookSidebarInner);
+export default BookSidebar;

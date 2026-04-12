@@ -1,5 +1,3 @@
-'use client';
-
 import { PracticeLinkBlock } from '@/types/books';
 
 export default function PracticeLinkBlockRenderer({ block }: { block: PracticeLinkBlock }) {

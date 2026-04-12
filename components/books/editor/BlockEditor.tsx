@@ -21,7 +21,7 @@ export default function BlockEditor({
   onAddBlock, onUpdateBlock, onDeleteBlock, onReorder, onUpload,
 }: Props) {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-6">
+    <div className="w-full px-5 py-6">
       {/* Subtitle */}
       <input
         value={pageSubtitle}

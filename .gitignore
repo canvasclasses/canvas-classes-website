@@ -43,8 +43,22 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# one-time batch insertion scripts
+# Reference material — local only, not part of the codebase
+class 11 & 12/
+
+# Source PDFs for book building — large files, local only
+_source_pdfs/
+
+# one-time batch insertion scripts (atom/book/crucible data pipelines)
 /scripts/insert_*_b*.js
+/scripts/insert_book_*.js
+/scripts/atom_*.js
+/scripts/fix_*.js
+/scripts/add_*.js
+/scripts/swap_*.js
+/scripts/update_*.js
+/scripts/register_*.json
+/scripts/book_ch*.json
 /scripts/audit_*_final.js
 /scripts/check_aldehyde_carboxylic_questions.js
 /scripts/update_carbonyl_chapter_ids.js
@@ -74,3 +88,4 @@ html_output.txt
 /automation/bio_b*.js
 /automation/biomolecules_batch*.js
 /automation/amines_batch*.js
+.next-preview

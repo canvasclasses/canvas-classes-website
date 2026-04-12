@@ -415,8 +415,9 @@ function AdminPageContent() {
     };
 
     const loadQuestions = async (page = 0) => {
-        // Only load questions if a chapter is selected or there's a search query
-        if (selectedChapterFilter === 'all' && !searchQuery) {
+        // Only load questions if a chapter is selected, there's a search query, OR exam filters are applied
+        const hasExamFilters = selectedSourceFilter !== 'all' || selectedShiftFilter !== 'all' || selectedYearFilter !== 'all';
+        if (selectedChapterFilter === 'all' && !searchQuery && !hasExamFilters) {
             setQuestions([]);
             return;
         }
@@ -732,8 +733,8 @@ function AdminPageContent() {
         // Top PYQ
         if (selectedTopPYQFilter === 'top' && !q.metadata.is_top_pyq) return false;
         if (selectedTopPYQFilter === 'not-top' && q.metadata.is_top_pyq) return false;
-        // Shift (client-side — only 2 values)
-        if (selectedShiftFilter !== 'all' && q.metadata.exam_source?.shift !== selectedShiftFilter) return false;
+        // Source Type (client-side filter for new metadata.sourceType field)
+        if (selectedShiftFilter !== 'all' && q.metadata.sourceType !== selectedShiftFilter) return false;
         // Concept tag (primary)
         if (selectedTagFilter !== 'all' && !q.metadata.tags.some(t => t.tag_id === selectedTagFilter)) return false;
         return true;

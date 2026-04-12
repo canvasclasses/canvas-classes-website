@@ -10,19 +10,23 @@ const ChapterSchema = new Schema<BookChapter>(
     slug: { type: String, required: true },
     page_ids: { type: [String], default: [] },
     description: String,
+    // Default false — new chapters are drafts until the admin explicitly
+    // publishes them via POST /api/v2/books/[bookSlug]/chapters/[number]/publish.
+    is_published: { type: Boolean, default: false },
   },
   { _id: false }
 );
 
 const BookSchema = new Schema<IBook>(
   {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     _id: { type: String, required: true } as any,
     slug: { type: String, required: true, unique: true, index: true },
     title: { type: String, required: true },
     subject: {
       type: String,
       required: true,
-      enum: ['chemistry', 'biology', 'physics', 'mathematics'],
+      enum: ['chemistry', 'biology', 'physics', 'mathematics', 'science', 'social_science'],
     },
     grade: { type: Number, required: true, min: 6, max: 12 },
     board: {

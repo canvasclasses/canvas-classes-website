@@ -2,54 +2,38 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import BookModel from '@/lib/models/Book';
 import BookPageModel from '@/lib/models/BookPage';
-import { createClient } from '@/app/utils/supabase/server';
+import { requireAdmin, isAdminRequest } from '@/lib/bookAuth';
 import { ContentBlock } from '@/types/books';
+import { validateBlocks } from '@/lib/schemas/blocks';
+import { computeReadingTime } from '@/lib/utils/books';
 
-async function requireAdmin(): Promise<{ email: string } | null> {
-  if (process.env.NODE_ENV === 'development') {
-    return { email: 'dev@localhost' };
-  }
-  try {
-    const supabase = await createClient();
-    if (!supabase) return null;
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user?.email) return null;
-    const adminEmails = (process.env.ADMIN_EMAILS || '')
-      .split(',')
-      .map((e) => e.trim())
-      .filter(Boolean);
-    if (!adminEmails.includes(user.email)) return null;
-    return { email: user.email };
-  } catch {
-    return null;
-  }
-}
-
-function computeReadingTime(blocks: ContentBlock[]): number {
-  let wordCount = 0;
-  let videoCount = 0;
-  let audioCount = 0;
-
-  for (const block of blocks) {
-    if (block.type === 'text') wordCount += block.markdown.split(/\s+/).length;
-    if (block.type === 'heading') wordCount += block.text.split(/\s+/).length;
-    if (block.type === 'callout') wordCount += block.markdown.split(/\s+/).length;
-    if (block.type === 'video') videoCount++;
-    if (block.type === 'audio_note') audioCount++;
-  }
-
-  return Math.max(1, Math.ceil(wordCount / 200) + videoCount * 2 + audioCount * 1);
-}
+// GET branches on isAdminRequest() — admins see drafts, students see only
+// published. Caching this response would leak draft content to students (or
+// stale published content to admins), so it must never be cached.
+// Students should load pages via the SSR route at app/books/[bookSlug]/[pageSlug]
+// which is cached via ISR; this API route exists primarily for the admin editor.
+export const dynamic = 'force-dynamic';
 
 type Params = { params: Promise<{ bookSlug: string; pageSlug: string }> };
 
 // GET /api/v2/books/[bookSlug]/pages/[pageSlug] — get full page with all blocks
+//
+// Public by default: only returns pages where the book is published, the
+// parent chapter is published, and the page itself is published.
+// Admins bypass all three gates so the editor can load drafts.
 export async function GET(_req: NextRequest, { params }: Params) {
   const { bookSlug, pageSlug } = await params;
   try {
     await connectToDatabase();
 
-    const book = await BookModel.findOne({ slug: bookSlug }).lean();
+    // Run auth check and book lookup in parallel — they're independent.
+    // Page lookup needs book._id so it runs after, but auth overlaps with
+    // the book query instead of running sequentially after it.
+    const [isAdmin, book] = await Promise.all([
+      isAdminRequest(),
+      BookModel.findOne({ slug: bookSlug }).lean(),
+    ]);
+
     if (!book) {
       return NextResponse.json({ success: false, error: 'Book not found' }, { status: 404 });
     }
@@ -63,6 +47,19 @@ export async function GET(_req: NextRequest, { params }: Params) {
       return NextResponse.json({ success: false, error: 'Page not found' }, { status: 404 });
     }
 
+    if (!isAdmin) {
+      if (!book.is_published) {
+        return NextResponse.json({ success: false, error: 'Page not found' }, { status: 404 });
+      }
+      const parentChapter = book.chapters.find((c) => c.number === page.chapter_number);
+      if (!parentChapter?.is_published) {
+        return NextResponse.json({ success: false, error: 'Page not found' }, { status: 404 });
+      }
+      if (!page.published) {
+        return NextResponse.json({ success: false, error: 'Page not found' }, { status: 404 });
+      }
+    }
+
     return NextResponse.json({ success: true, data: page });
   } catch (error) {
     console.error(`GET /api/v2/books/${bookSlug}/pages/${pageSlug} error:`, error);
@@ -70,7 +67,9 @@ export async function GET(_req: NextRequest, { params }: Params) {
   }
 }
 
-// PUT /api/v2/books/[bookSlug]/pages/[pageSlug] — save page (full block array replace)
+// PUT /api/v2/books/[bookSlug]/pages/[pageSlug] — save page metadata and/or blocks
+// SAFETY RULE: blocks are only updated when explicitly provided in the request body.
+// Sending only metadata fields (e.g. page_number, title) will NEVER wipe existing blocks.
 export async function PUT(req: NextRequest, { params }: Params) {
   const admin = await requireAdmin();
   if (!admin) {
@@ -93,17 +92,36 @@ export async function PUT(req: NextRequest, { params }: Params) {
     delete body.book_id;
     delete body.slug;
 
-    const blocks: ContentBlock[] = body.blocks || [];
+    const updateFields: Record<string, unknown> = { ...body };
+
+    // Only update blocks + reading_time when blocks are explicitly provided.
+    // A PUT with only metadata fields (e.g. page_number) must NEVER wipe content.
+    if (Array.isArray(body.blocks)) {
+      // Zod validation at the API edge — rejects malformed block payloads
+      // before they hit Mongo. Catches: unknown block types, missing required
+      // fields, wrong field types, typos in enums (variant/align/level/etc).
+      const validated = validateBlocks(body.blocks);
+      if (!validated.ok) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: `Invalid block payload: ${validated.error}`,
+            issues: validated.issues,
+          },
+          { status: 400 }
+        );
+      }
+      const blocks = validated.blocks as ContentBlock[];
+      updateFields.blocks = blocks;
+      updateFields.reading_time_min = computeReadingTime(blocks);
+    } else {
+      delete updateFields.blocks;
+      delete updateFields.reading_time_min;
+    }
 
     const page = await BookPageModel.findOneAndUpdate(
       { book_id: String(book._id), slug: pageSlug },
-      {
-        $set: {
-          ...body,
-          blocks,
-          reading_time_min: computeReadingTime(blocks),
-        },
-      },
+      { $set: updateFields },
       { new: true, runValidators: false }
     ).lean();
 

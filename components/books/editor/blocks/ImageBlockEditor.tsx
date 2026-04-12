@@ -174,6 +174,52 @@ export default function ImageBlockEditor({ block, onChange, onUpload }: Props) {
           ))}
         </div>
       </div>
+
+      {/* Alignment selector — controls whether the image sits centred on its own row
+          or floats to one side with text beside it */}
+      <div>
+        <label className="text-xs text-white/40 mb-1 block">Placement</label>
+        <div className="flex gap-2">
+          {([
+            { key: 'center', label: 'Centre' },
+            { key: 'left',   label: 'Left + text right' },
+            { key: 'right',  label: 'Right + text left' },
+          ] as const).map(({ key, label }) => {
+            const current = block.align ?? 'center';
+            return (
+              <button key={key} onClick={() => onChange({ align: key })}
+                className={`px-3 py-1 rounded-lg text-xs transition-colors
+                  ${current === key
+                    ? 'bg-sky-500 text-black font-bold'
+                    : 'bg-white/5 border border-white/10 text-white/50 hover:border-white/20'}`}>
+                {label}
+              </button>
+            );
+          })}
+        </div>
+        <p className="mt-1.5 text-[10px] text-white/30 leading-snug">
+          Centre = standalone figure. Left/Right = image floats to that side with the text below sitting beside it on desktop.
+        </p>
+      </div>
+
+      {/* Side text — only meaningful when align is left or right */}
+      {(block.align === 'left' || block.align === 'right') && (
+        <div>
+          <label className="text-xs text-white/40 mb-1 flex items-center justify-between">
+            <span>Side text (markdown, sits next to the image)</span>
+            <span className="text-[10px] text-white/25">Supports **bold**, *italic*, lists, $LaTeX$</span>
+          </label>
+          <textarea
+            value={block.side_text ?? ''}
+            onChange={(e) => onChange({ side_text: e.target.value })}
+            rows={6}
+            placeholder="Write the text that should appear beside the image…"
+            className="w-full px-3 py-2 bg-[#0B0F15] border border-white/10 rounded-lg
+              text-sm text-white placeholder-white/25 focus:outline-none focus:border-orange-500/40
+              font-mono leading-relaxed resize-y"
+          />
+        </div>
+      )}
     </div>
   );
 }

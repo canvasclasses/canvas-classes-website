@@ -7,6 +7,7 @@ export type IBookPage = Omit<Document, '_id'> & { _id: string } & Omit<BookPage,
 
 const BookPageSchema = new Schema<IBookPage>(
   {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     _id: { type: String, required: true } as any,
     book_id: { type: String, required: true, index: true },
     chapter_number: { type: Number, required: true },
@@ -14,6 +15,7 @@ const BookPageSchema = new Schema<IBookPage>(
     slug: { type: String, required: true },
     title: { type: String, required: true },
     subtitle: String,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     blocks: { type: [Schema.Types.Mixed], default: [] } as any,
     tags: { type: [String], default: [] },
     published: { type: Boolean, default: false },

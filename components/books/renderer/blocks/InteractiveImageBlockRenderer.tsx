@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Image from 'next/image';
 import { InteractiveImageBlock, Hotspot } from '@/types/books';
 import ReactMarkdown from 'react-markdown';
 
@@ -19,6 +20,8 @@ export default function InteractiveImageBlockRenderer({
   const containerRef = useRef<HTMLDivElement>(null);
 
   const activeHotspot = block.hotspots.find((h) => h.id === activeId);
+  // SVGs bypass the Next.js optimizer (not allowed by default for security).
+  const isSvg = /\.svg(\?|#|$)/i.test(block.src);
 
   return (
     <figure className="my-4">
@@ -26,13 +29,26 @@ export default function InteractiveImageBlockRenderer({
         ref={containerRef}
         className="relative w-full overflow-hidden rounded-xl border border-white/10 select-none"
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={block.src}
-          alt={block.alt}
-          className="w-full h-auto object-contain"
-          draggable={false}
-        />
+        {isSvg ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={block.src}
+            alt={block.alt}
+            className="w-full h-auto object-contain block"
+            draggable={false}
+          />
+        ) : (
+          <Image
+            src={block.src}
+            alt={block.alt}
+            width={0}
+            height={0}
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 960px"
+            style={{ width: '100%', height: 'auto' }}
+            className="object-contain block"
+            draggable={false}
+          />
+        )}
 
         {/* Hotspot dots */}
         {block.hotspots.map((hotspot, idx) => (

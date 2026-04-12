@@ -3,6 +3,10 @@ import type { NextConfig } from "next";
 const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig: NextConfig = {
+  // Isolated cache dir — lets secondary/preview servers use NEXT_DIST_DIR=.next-preview
+  // so they never write to the primary .next directory and corrupt the main dev server.
+  distDir: process.env.NEXT_DIST_DIR ?? '.next',
+
   // SECURITY FIX: Request body size limits to prevent DoS
   experimental: {
     serverActions: {
@@ -88,13 +92,30 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    unoptimized: true,
+    // Enable next/image optimization (AVIF/WebP, responsive srcsets, blur placeholders).
+    // Every existing <Image> in the app points at local /public assets — those stay
+    // optimized regardless. Remote R2 hosts below cover the books CMS and shared assets.
+    unoptimized: false,
     minimumCacheTTL: 31536000,
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'img.youtube.com',
         pathname: '/vi/**',
+      },
+      // Cloudflare R2 public bucket — canvas-chemistry-assets legacy host
+      {
+        protocol: 'https',
+        hostname: 'canvas-chemistry-assets.r2.dev',
+        pathname: '/**',
+      },
+      // Cloudflare R2 public bucket — shared pub-* alias (used by BohrModel,
+      // AcidityEducationCards, PeriodicTableClient, and book image blocks)
+      {
+        protocol: 'https',
+        hostname: 'pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev',
+        pathname: '/**',
       },
     ],
   },

@@ -575,13 +575,15 @@ body {
   border-bottom-width: 0.06em !important;
 }
 
-/* Scale up inline fractions without disturbing KaTeX's internal vlist geometry.
-   zoom (unlike transform:scale) participates in layout flow, so surrounding operators
-   (= signs etc.) correctly reposition around the enlarged fraction. */
-/* .katex .mfrac {
+/* Scale up inline fractions everywhere inside the book page reader.
+   Scoped to .book-page-content so admin / question-bank math is unaffected.
+   zoom (unlike transform:scale) participates in layout flow, so surrounding
+   operators (= signs, ×, etc.) correctly reposition around the enlarged fraction.
+   Covers text blocks, callouts, worked examples, quiz explanations — all at once. */
+.book-page-content .katex .mfrac {
   zoom: 1.35;
   display: inline-block;
-} */
+}
 
 /* Inside option buttons: extra size boost for legibility */
 button .katex,

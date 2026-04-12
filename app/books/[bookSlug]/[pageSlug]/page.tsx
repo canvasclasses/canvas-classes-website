@@ -4,6 +4,13 @@ import BookModel from '@/lib/models/Book';
 import BookPageModel from '@/lib/models/BookPage';
 import BookReader from '@/components/books/reader/BookReader';
 
+// ISR — cache the rendered RSC payload for each (bookSlug, pageSlug) tuple
+// for 60 seconds. Auth is enforced by middleware on every request, so cache
+// hits still pass through the gate. Admins editing drafts bypass this route
+// entirely (they use the /crucible/admin editor), so stale draft content is
+// not a concern here.
+export const revalidate = 60;
+
 interface Props {
   params: Promise<{ bookSlug: string; pageSlug: string }>;
 }
@@ -13,16 +20,37 @@ export default async function BookPageRoute({ params }: Props) {
 
   await connectToDatabase();
 
-  const [book, page] = await Promise.all([
-    BookModel.findOne({ slug: bookSlug }).lean(),
-    BookPageModel.findOne({ slug: pageSlug }).lean(),
-  ]);
+  const book = await BookModel.findOne({ slug: bookSlug }).lean();
+  if (!book) notFound();
 
-  if (!book || !page) notFound();
+  // Book-level gate
+  if (!book.is_published) notFound();
 
-  // Get all pages in this book sorted by chapter + page number
+  // Scope page lookup to this book so two books can't collide on slug.
+  const page = await BookPageModel
+    .findOne({ book_id: String(book._id), slug: pageSlug })
+    .lean();
+  if (!page) notFound();
+
+  // Chapter-level gate — must exist AND be published.
+  const parentChapter = book.chapters.find((c) => c.number === page.chapter_number);
+  if (!parentChapter || !parentChapter.is_published) notFound();
+
+  // Page-level gate
+  if (!page.published) notFound();
+
+  // Nav / progress bar data — only walk through pages the student is
+  // allowed to see (published chapters + published pages).
+  const publishedChapterNumbers = book.chapters
+    .filter((c) => c.is_published)
+    .map((c) => c.number);
+
   const allPages = await BookPageModel
-    .find({ book_id: String(book._id) })
+    .find({
+      book_id: String(book._id),
+      chapter_number: { $in: publishedChapterNumbers },
+      published: true,
+    })
     .select('_id slug title chapter_number page_number published')
     .sort({ chapter_number: 1, page_number: 1 })
     .lean();

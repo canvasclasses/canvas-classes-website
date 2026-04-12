@@ -1,5 +1,3 @@
-'use client';
-
 import { TimelineBlock } from '@/types/books';
 
 export default function TimelineBlockRenderer({ block }: { block: TimelineBlock }) {
