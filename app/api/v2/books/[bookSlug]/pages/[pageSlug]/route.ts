@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { randomUUID } from 'crypto';
 import connectToDatabase from '@/lib/mongodb';
 import BookModel from '@/lib/models/Book';
 import BookPageModel from '@/lib/models/BookPage';
@@ -6,6 +7,40 @@ import { requireAdmin, isAdminRequest } from '@/lib/bookAuth';
 import { ContentBlock } from '@/types/books';
 import { validateBlocks } from '@/lib/schemas/blocks';
 import { computeReadingTime } from '@/lib/utils/books';
+
+/**
+ * Ensures every block (and every child block inside section columns) has a
+ * non-empty string `id`. Old pages stored before the id was required can arrive
+ * here with id=undefined; rather than rejecting a perfectly valid edit, we
+ * silently assign a new UUID so Zod validation passes and the page self-heals.
+ */
+function ensureBlockIds(blocks: unknown[]): unknown[] {
+  return blocks.map((block) => {
+    if (typeof block !== 'object' || block === null) return block;
+    const b = { ...(block as Record<string, unknown>) };
+
+    if (!b.id || typeof b.id !== 'string') {
+      b.id = randomUUID();
+    }
+
+    // Recurse into section columns
+    if (b.type === 'section' && Array.isArray(b.columns)) {
+      b.columns = (b.columns as unknown[][]).map((col) => {
+        if (!Array.isArray(col)) return col;
+        return col.map((child) => {
+          if (typeof child !== 'object' || child === null) return child;
+          const c = { ...(child as Record<string, unknown>) };
+          if (!c.id || typeof c.id !== 'string') {
+            c.id = randomUUID();
+          }
+          return c;
+        });
+      });
+    }
+
+    return b;
+  });
+}
 
 // GET branches on isAdminRequest() — admins see drafts, students see only
 // published. Caching this response would leak draft content to students (or
@@ -97,10 +132,14 @@ export async function PUT(req: NextRequest, { params }: Params) {
     // Only update blocks + reading_time when blocks are explicitly provided.
     // A PUT with only metadata fields (e.g. page_number) must NEVER wipe content.
     if (Array.isArray(body.blocks)) {
+      // Heal any blocks that are missing an id (legacy data / race conditions)
+      // before Zod sees them — this must run before validateBlocks.
+      const healed = ensureBlockIds(body.blocks);
+
       // Zod validation at the API edge — rejects malformed block payloads
       // before they hit Mongo. Catches: unknown block types, missing required
       // fields, wrong field types, typos in enums (variant/align/level/etc).
-      const validated = validateBlocks(body.blocks);
+      const validated = validateBlocks(healed);
       if (!validated.ok) {
         return NextResponse.json(
           {

@@ -11,7 +11,8 @@
  *   • We use a discriminated union on `type` so errors point at the exact block
  *     (e.g. "blocks.3.variant: Invalid enum value").
  *   • String fields accept any length; markdown/latex validation is out of scope.
- *   • Unknown fields on a block are stripped by `.strict()` — catches typos early.
+ *   • Unknown fields on a block are stripped by Zod's default `.strip()` behaviour —
+ *     legacy extra keys are silently dropped on the next save, keeping old data compatible.
  */
 
 import { z } from 'zod';
@@ -58,13 +59,13 @@ const InlineQuizQuestionSchema = z.object({
 const TextBlockSchema = BaseBlockSchema.extend({
   type: z.literal('text'),
   markdown: z.string(),
-}).strict();
+});
 
 const HeadingBlockSchema = BaseBlockSchema.extend({
   type: z.literal('heading'),
   text: z.string(),
   level: z.union([z.literal(1), z.literal(2), z.literal(3)]),
-}).strict();
+});
 
 const ImageBlockSchema = BaseBlockSchema.extend({
   type: z.literal('image'),
@@ -75,7 +76,7 @@ const ImageBlockSchema = BaseBlockSchema.extend({
   align: z.enum(['center', 'left', 'right']).optional(),
   side_text: z.string().optional(),
   generation_prompt: z.string().optional(),
-}).strict();
+});
 
 const InteractiveImageBlockSchema = BaseBlockSchema.extend({
   type: z.literal('interactive_image'),
@@ -83,7 +84,7 @@ const InteractiveImageBlockSchema = BaseBlockSchema.extend({
   alt: z.string(),
   hotspots: z.array(HotspotSchema),
   caption: z.string().optional(),
-}).strict();
+});
 
 const VideoBlockSchema = BaseBlockSchema.extend({
   type: z.literal('video'),
@@ -93,7 +94,7 @@ const VideoBlockSchema = BaseBlockSchema.extend({
   caption: z.string().optional(),
   duration_sec: z.number().nonnegative(),
   autoplay: z.literal(false).optional(),
-}).strict();
+});
 
 const AudioNoteBlockSchema = BaseBlockSchema.extend({
   type: z.literal('audio_note'),
@@ -101,7 +102,7 @@ const AudioNoteBlockSchema = BaseBlockSchema.extend({
   label: z.string(),
   duration_sec: z.number().nonnegative(),
   transcript: z.string().optional(),
-}).strict();
+});
 
 const Molecule2DBlockSchema = BaseBlockSchema.extend({
   type: z.literal('molecule_2d'),
@@ -110,21 +111,21 @@ const Molecule2DBlockSchema = BaseBlockSchema.extend({
   iupac: z.string().optional(),
   rendered_svg_url: z.string().optional(),
   caption: z.string().optional(),
-}).strict();
+});
 
 const Molecule3DBlockSchema = BaseBlockSchema.extend({
   type: z.literal('molecule_3d'),
   smiles: z.string(),
   name: z.string(),
   caption: z.string().optional(),
-}).strict();
+});
 
 const LatexBlockSchema = BaseBlockSchema.extend({
   type: z.literal('latex_block'),
   latex: z.string(),
   label: z.string().optional(),
   note: z.string().optional(),
-}).strict();
+});
 
 const PracticeLinkBlockSchema = BaseBlockSchema.extend({
   type: z.literal('practice_link'),
@@ -132,7 +133,7 @@ const PracticeLinkBlockSchema = BaseBlockSchema.extend({
   chapter_tag: z.string().optional(),
   label: z.string(),
   style: z.enum(['inline_quiz', 'link_to_crucible']),
-}).strict();
+});
 
 const CalloutBlockSchema = BaseBlockSchema.extend({
   type: z.literal('callout'),
@@ -141,7 +142,7 @@ const CalloutBlockSchema = BaseBlockSchema.extend({
   markdown: z.string(),
   image_src: z.string().optional(),    // thumbnail — empty string = not yet uploaded
   image_prompt: z.string().optional(), // AI generation spec for the thumbnail
-}).strict();
+});
 
 const TableBlockSchema = BaseBlockSchema.extend({
   type: z.literal('table'),
@@ -149,20 +150,20 @@ const TableBlockSchema = BaseBlockSchema.extend({
   headers: z.array(z.string()),
   rows: z.array(z.array(z.string())),
   highlight_row: z.array(z.number().int().nonnegative()).optional(),
-}).strict();
+});
 
 const TimelineBlockSchema = BaseBlockSchema.extend({
   type: z.literal('timeline'),
   title: z.string().optional(),
   orientation: z.enum(['horizontal', 'vertical']),
   events: z.array(TimelineEventSchema),
-}).strict();
+});
 
 const ComparisonCardBlockSchema = BaseBlockSchema.extend({
   type: z.literal('comparison_card'),
   title: z.string().optional(),
   columns: z.array(ComparisonColumnSchema),
-}).strict();
+});
 
 const AnimationBlockSchema = BaseBlockSchema.extend({
   type: z.literal('animation'),
@@ -171,13 +172,13 @@ const AnimationBlockSchema = BaseBlockSchema.extend({
   loop: z.boolean(),
   autoplay: z.boolean(),
   width: z.enum(['full', 'half']).optional(),
-}).strict();
+});
 
 const InlineQuizBlockSchema = BaseBlockSchema.extend({
   type: z.literal('inline_quiz'),
   questions: z.array(InlineQuizQuestionSchema).min(1),
   pass_threshold: z.number().min(0).max(1),
-}).strict();
+});
 
 const WorkedExampleBlockSchema = BaseBlockSchema.extend({
   type: z.literal('worked_example'),
@@ -187,13 +188,13 @@ const WorkedExampleBlockSchema = BaseBlockSchema.extend({
   solution: z.string(),
   reveal_mode: z.enum(['always_visible', 'tap_to_reveal']),
   video_src: z.string().optional(),
-}).strict();
+});
 
 const SimulationBlockSchema = BaseBlockSchema.extend({
   type: z.literal('simulation'),
   simulation_id: z.string().min(1),
   title: z.string().optional(),
-}).strict();
+});
 
 // ─── Child block union (excludes section to prevent nesting) ─────────────────
 
@@ -223,7 +224,7 @@ const SectionBlockSchema = BaseBlockSchema.extend({
   layout: z.enum(['single-column', '50-50', '60-40', '40-60', 'full-bleed']),
   columns: z.array(z.array(ChildContentBlockSchema)).min(1).max(2),
   title: z.string().optional(),
-}).strict();
+});
 
 // ─── Union ───────────────────────────────────────────────────────────────────
 

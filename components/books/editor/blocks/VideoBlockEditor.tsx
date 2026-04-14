@@ -32,7 +32,19 @@ export default function VideoBlockEditor({ block, onChange, onUpload }: Props) {
         <label className="text-xs text-white/40 mb-1 block">Source</label>
         <div className="flex gap-2">
           {(['r2_direct', 'cloudflare_stream', 'youtube_nocookie'] as const).map((p) => (
-            <button key={p} onClick={() => onChange({ provider: p })}
+            <button key={p} onClick={() => {
+              // When switching to YouTube, extract video ID from whatever is already in src
+              // so users who paste a URL first and switch provider later still get the right ID
+              let src = block.src;
+              if (p === 'youtube_nocookie' && src) {
+                const m =
+                  src.match(/[?&]v=([a-zA-Z0-9_-]{11})/) ||
+                  src.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/) ||
+                  src.match(/\/embed\/([a-zA-Z0-9_-]{11})/);
+                if (m) src = m[1];
+              }
+              onChange({ provider: p, src });
+            }}
               className={`px-2.5 py-1 rounded-lg text-xs transition-colors
                 ${block.provider === p
                   ? 'bg-orange-500 text-black font-bold'
@@ -47,8 +59,19 @@ export default function VideoBlockEditor({ block, onChange, onUpload }: Props) {
       <div className="flex gap-2">
         <input
           value={block.src}
-          onChange={(e) => onChange({ src: e.target.value })}
-          placeholder={block.provider === 'cloudflare_stream' ? 'Stream ID' : block.provider === 'youtube_nocookie' ? 'YouTube video ID' : 'URL or upload'}
+          onChange={(e) => {
+            let val = e.target.value.trim();
+            // Auto-extract video ID from any YouTube URL format
+            if (block.provider === 'youtube_nocookie' && val.includes('youtube')) {
+              const match =
+                val.match(/[?&]v=([a-zA-Z0-9_-]{11})/) ||   // ?v=ID or &v=ID
+                val.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/) || // youtu.be/ID
+                val.match(/\/embed\/([a-zA-Z0-9_-]{11})/);    // /embed/ID
+              if (match) val = match[1];
+            }
+            onChange({ src: val });
+          }}
+          placeholder={block.provider === 'cloudflare_stream' ? 'Stream ID' : block.provider === 'youtube_nocookie' ? 'YouTube URL or video ID' : 'URL or upload'}
           className="flex-1 px-3 py-2 bg-[#0B0F15] border border-white/10 rounded-lg
             text-sm text-white placeholder-white/25 focus:outline-none focus:border-orange-500/40"
         />

@@ -8,18 +8,30 @@ export const runtime = 'nodejs';
 export const maxDuration = 60;
 
 const ALLOWED_TYPES: Record<string, AssetType> = {
+  // ── Images ──────────────────────────────────────────────────────────────
   'image/jpeg': 'image',
   'image/jpg': 'image',
   'image/png': 'image',
   'image/webp': 'image',
+  'image/gif': 'image',
   'image/svg+xml': 'svg',
+  // ── Audio — uploaded files ───────────────────────────────────────────────
   'audio/mpeg': 'audio',
   'audio/mp3': 'audio',
-  'audio/mp4': 'audio',
+  'audio/mp4': 'audio',   // AAC in MP4 container (common upload format)
   'audio/m4a': 'audio',
+  'audio/wav': 'audio',
+  'audio/x-wav': 'audio',
+  'audio/ogg': 'audio',   // Firefox default MediaRecorder output
+  // ── Audio — browser MediaRecorder output ────────────────────────────────
+  // Chrome / Edge record as audio/webm (codec suffix is stripped in baseType)
+  'audio/webm': 'audio',
+  // Safari records as audio/mp4 (already covered above) or audio/aac
+  'audio/aac': 'audio',
+  // ── Video ────────────────────────────────────────────────────────────────
   'video/mp4': 'video',
   'video/webm': 'video',
-  // Lottie animations are JSON files
+  // ── Lottie animations (JSON) ─────────────────────────────────────────────
   'application/json': 'image', // stored as-is, no R2 type restriction needed
 };
 

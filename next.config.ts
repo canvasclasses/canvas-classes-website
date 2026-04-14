@@ -41,7 +41,7 @@ const nextConfig: NextConfig = {
               "connect-src 'self' https://*.supabase.co https://www.google-analytics.com",
               "media-src 'self' https: blob:",
               "object-src 'none'",
-              "frame-src 'self' https://www.youtube.com https://youtube.com https://drive.google.com https://docs.google.com https://phet.colorado.edu",
+              "frame-src 'self' https://www.youtube.com https://youtube.com https://www.youtube-nocookie.com https://customer-stream.cloudflarestream.com https://drive.google.com https://docs.google.com https://phet.colorado.edu",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",

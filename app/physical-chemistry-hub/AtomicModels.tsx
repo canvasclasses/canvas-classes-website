@@ -2,10 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
-import BohrModel from './BohrModel';
 
 export default function AtomicModels() {
-  const [activeTab, setActiveTab] = useState<'classical' | 'bohr'>('classical');
   const canvasThomsonRef = useRef<HTMLCanvasElement>(null);
   const canvasRutherfordRef = useRef<HTMLCanvasElement>(null);
   const [gunY, setGunY] = useState(0);
@@ -13,8 +11,6 @@ export default function AtomicModels() {
   const [slowMotion, setSlowMotion] = useState(false);
   const [stats, setStats] = useState({ straight: 0, smallDeflection: 0, largeDeflection: 0, total: 0 });
   const [statsStarted, setStatsStarted] = useState(false);
-  const [showComparison, setShowComparison] = useState(false);
-  const [showImpactParam, setShowImpactParam] = useState(false);
   const engineRef = useRef<{
     thCtx: CanvasRenderingContext2D | null;
     ruCtx: CanvasRenderingContext2D | null;
@@ -34,9 +30,6 @@ export default function AtomicModels() {
   const statsStartedRef = useRef(false);
 
   useEffect(() => {
-    // Only run simulation when on classical tab
-    if (activeTab !== 'classical') return;
-
     const ENGINE = {
       thCtx: null as CanvasRenderingContext2D | null,
       ruCtx: null as CanvasRenderingContext2D | null,
@@ -301,7 +294,7 @@ export default function AtomicModels() {
       ENGINE.particles = [];
       ENGINE.flashes = [];
     };
-  }, [activeTab]);
+  }, []);
 
   useEffect(() => {
     if (engineRef.current) {
@@ -351,50 +344,6 @@ export default function AtomicModels() {
 
   return (
     <div className="w-full">
-      {/* Tab Navigation */}
-      <div className="flex gap-1 mb-8 bg-black/30 p-1 rounded-xl border border-white/8 w-fit">
-        <button
-          onClick={() => setActiveTab('classical')}
-          className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-all ${
-            activeTab === 'classical'
-              ? 'bg-white/10 text-teal-300 border border-white/10 shadow-md'
-              : 'text-white/40 hover:text-white/70'
-          }`}
-        >
-          Thomson &amp; Rutherford
-        </button>
-        <button
-          onClick={() => setActiveTab('bohr')}
-          className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-all ${
-            activeTab === 'bohr'
-              ? 'bg-white/10 text-purple-300 border border-white/10 shadow-md'
-              : 'text-white/40 hover:text-white/70'
-          }`}
-        >
-          Bohr Model &amp; Spectra
-        </button>
-      </div>
-
-      {/* Bohr Tab */}
-      {activeTab === 'bohr' && <BohrModel />}
-
-      {/* Classical Tab */}
-      {activeTab === 'classical' && <>
-      {/* Header */}
-      <div className="flex items-center justify-between mb-8 pb-5 border-b border-white/5">
-        <div>
-          <div className="text-xs font-semibold text-white/40 tracking-[0.2em] uppercase mb-1">
-            Atomic Structure Simulator · Phase 1
-          </div>
-          <h1 className="text-3xl font-extrabold tracking-tight">
-            Classical <span className="text-teal-400 italic font-serif">Models</span>
-          </h1>
-        </div>
-        <div className="text-xs font-semibold text-teal-400 bg-teal-400/10 px-4 py-1.5 rounded-full border border-teal-400/20">
-          ALPHA SCATTERING ENGINE
-        </div>
-      </div>
-
       {/* Simulator Chambers */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Thomson Chamber */}
@@ -535,214 +484,6 @@ export default function AtomicModels() {
           </div>
         </div>
       )}
-
-      {/* Experimental Setup Image */}
-      <div className="mb-8 -mx-4 md:mx-0">
-        <img
-          src="https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/physical%20chemistry%20hub/Screenshot%202026-03-15%20at%206.29.48%E2%80%AFPM_result.webp"
-          alt="Rutherford Experimental Setup"
-          className="w-full h-auto object-cover block rounded-none md:rounded-2xl"
-        />
-      </div>
-
-      {/* Theory Section */}
-      <div className="max-w-4xl mx-auto flex flex-col gap-8 mt-12">
-        <div className="flex items-center gap-2 text-xl font-semibold text-teal-400">
-          <div className="w-1 h-5 bg-teal-400 rounded" />
-          The Geiger-Marsden Experiment (1909)
-        </div>
-
-        <p className="text-lg text-[#9eb1d1] leading-relaxed">
-          Under Ernest Rutherford&apos;s direction, Hans Geiger and Ernest Marsden fired a beam of massive,
-          high-speed alpha particles (He²⁺) at a piece of gold foil just 86 nanometers thick. If Thomson&apos;s
-          &quot;Plum Pudding&quot; model was correct, the diffuse positive charge of the gold atoms should have been far
-          too weak to affect the massive alpha particles, allowing them to pass straight through like
-          cannonballs through tissue paper.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-4">
-          <div className="flex flex-col gap-2">
-            <div className="font-mono text-4xl font-extrabold text-teal-400 leading-none">&gt;99%</div>
-            <div className="text-sm font-semibold text-[#9eb1d1] uppercase tracking-wide">
-              Passed Straight Through
-            </div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="font-mono text-4xl font-extrabold text-teal-400 leading-none">~0.5%</div>
-            <div className="text-sm font-semibold text-[#9eb1d1] uppercase tracking-wide">
-              Deflected Slightly
-            </div>
-          </div>
-          <div className="flex flex-col gap-2 border-l-2 border-[#e5b567] pl-4">
-            <div className="font-mono text-4xl font-extrabold text-[#e5b567] leading-none">1 in 20,000</div>
-            <div className="text-sm font-semibold text-[#d6e0f5] uppercase tracking-wide">
-              Bounced Backwards (&gt;90°)
-            </div>
-          </div>
-        </div>
-
-        <p className="text-lg text-[#9eb1d1] leading-relaxed">
-          The discovery of those rare backscatters destroyed the Plum Pudding model overnight. The only
-          mathematical explanation was that <strong className="text-[#d6e0f5] font-semibold">99.9% of the atom&apos;s mass and all of its positive charge</strong> was concentrated in an unimaginably tiny, infinitely dense core: the nucleus.
-        </p>
-
-        <div className="relative bg-gradient-to-br from-amber-400/15 via-orange-400/10 to-yellow-400/15 border-l-[6px] border-amber-400 p-8 rounded-r-2xl my-4 shadow-[0_0_40px_rgba(251,191,36,0.15)]">
-          <div className="absolute top-4 right-4 text-6xl text-amber-400/20 font-serif">&ldquo;</div>
-          <div className="font-serif text-2xl font-normal italic text-amber-50 leading-relaxed mb-4 relative z-10">
-            &quot;It was quite the most incredible event that has ever happened to me in my life. It was almost as
-            incredible as if you fired a 15-inch shell at a piece of tissue paper and it came back and hit
-            you.&quot;
-          </div>
-          <div className="text-base font-bold text-amber-300 uppercase tracking-widest flex items-center gap-2">
-            <span className="text-amber-400">—</span> Ernest Rutherford
-          </div>
-        </div>
-
-        {/* Model Comparison Table */}
-        <div className="my-8">
-          <div className="flex items-center gap-2 mb-6">
-            <div className="w-1 h-5 bg-blue-400 rounded" />
-            <h3 className="text-xl font-bold text-blue-400">Model Comparison</h3>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse bg-[#080c14]">
-              <thead>
-                <tr className="border-b border-white/20">
-                  <th className="py-4 px-4 text-sm font-bold text-white/70 uppercase tracking-wide">Feature</th>
-                  <th className="py-4 px-4 text-sm font-bold text-rose-300 uppercase tracking-wide">Thomson Model</th>
-                  <th className="py-4 px-4 text-sm font-bold text-teal-300 uppercase tracking-wide">Rutherford Model</th>
-                </tr>
-              </thead>
-              <tbody className="text-base">
-                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                  <td className="py-4 px-4 font-semibold text-white/80">Positive Charge</td>
-                  <td className="py-4 px-4 text-white/60">Diffuse (spread throughout)</td>
-                  <td className="py-4 px-4 text-white/60">Concentrated in nucleus</td>
-                </tr>
-                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                  <td className="py-4 px-4 font-semibold text-white/80">Atom Size</td>
-                  <td className="py-4 px-4 text-white/60">~10⁻¹⁰ m</td>
-                  <td className="py-4 px-4 text-white/60">~10⁻¹⁰ m</td>
-                </tr>
-                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                  <td className="py-4 px-4 font-semibold text-white/80">Nucleus Size</td>
-                  <td className="py-4 px-4 text-white/60">N/A (no nucleus)</td>
-                  <td className="py-4 px-4 text-white/60">~10⁻¹⁵ m (100,000× smaller)</td>
-                </tr>
-                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                  <td className="py-4 px-4 font-semibold text-white/80">Mass Distribution</td>
-                  <td className="py-4 px-4 text-white/60">Uniform throughout atom</td>
-                  <td className="py-4 px-4 text-white/60">99.9% in nucleus</td>
-                </tr>
-                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                  <td className="py-4 px-4 font-semibold text-white/80">Prediction for α-particles</td>
-                  <td className="py-4 px-4 text-rose-400 font-semibold">No deflection expected</td>
-                  <td className="py-4 px-4 text-teal-400 font-semibold">Rare backscattering (✓ Observed)</td>
-                </tr>
-                <tr className="hover:bg-white/5 transition-colors">
-                  <td className="py-4 px-4 font-semibold text-white/80">Experimental Verdict</td>
-                  <td className="py-4 px-4 text-red-400 font-bold">❌ Disproved</td>
-                  <td className="py-4 px-4 text-green-400 font-bold">✓ Confirmed</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div className="mt-4 pt-8 border-t border-white/5">
-          <div className="flex items-center gap-2 text-xl font-semibold text-purple-400 mb-6">
-            <div className="w-1 h-5 bg-purple-400 rounded" />
-            Critical Design Choices
-          </div>
-
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-              <div className="text-xl font-bold bg-gradient-to-r from-rose-300 via-pink-300 to-fuchsia-300 bg-clip-text text-transparent">
-                Why was Gold used? Why not another metal?
-              </div>
-              <div className="text-lg text-[#9eb1d1] leading-relaxed pl-4 border-l-2 border-white/10">
-                Gold is the most malleable metal on Earth. It can be hammered into incredibly thin sheets—just
-                about 1000 atoms thick. If Rutherford used a thicker metal foil, the alpha particles would
-                suffer multiple subsequent collisions as they passed through, completely ruining the
-                mathematical analysis of the scattering angles.
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-3 mt-6">
-              <div className="text-xl font-bold bg-gradient-to-r from-cyan-300 via-sky-300 to-blue-300 bg-clip-text text-transparent">
-                Why Alpha particles? Why not Beta or Gamma?
-              </div>
-              <div className="text-lg text-[#9eb1d1] leading-relaxed pl-4 border-l-2 border-white/10">
-                <strong className="text-[#d6e0f5] font-semibold">Alpha particles</strong> are relatively heavy
-                (roughly 8,000 times heavier than an electron) and carry a dense +2 charge. Because they carry
-                so much momentum (moving at 2 × 10⁷ m/s), Rutherford knew that incredibly powerful forces would
-                be needed to deflect them.
-                <br />
-                <br />
-                If he used <strong className="text-[#d6e0f5] font-semibold">Beta particles</strong> (electrons),
-                they would be so light that they would scatter wildly off the gold atom&apos;s own electrons, muddying
-                the data completely. If he used <strong className="text-[#d6e0f5] font-semibold">Gamma rays</strong>{' '}
-                (high-energy photons), they would not experience Coulombic electrostatic repulsion because they
-                have zero mass and zero charge.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <p className="text-lg text-[#9eb1d1] leading-relaxed pb-10 mt-10 border-t border-white/5 pt-8">
-          <strong className="text-xl font-bold bg-gradient-to-r from-red-300 via-orange-300 to-amber-300 bg-clip-text text-transparent">The Fatal Flaw:</strong> While Rutherford discovered
-          the nucleus, his model created a terrifying paradox. According to Maxwell&apos;s laws of classical
-          electromagnetism, negatively charged electrons orbiting a positive nucleus should constantly radiate
-          energy, lose speed, and spiral inward—collapsing the entire atom in 10⁻⁸ seconds. To solve this,
-          physics required a completely new set of rules: Quantum Mechanics.
-        </p>
-
-        {/* Mathematical Insight (Advanced) */}
-        <div className="bg-gradient-to-br from-indigo-500/10 to-violet-500/10 border border-indigo-400/30 rounded-2xl p-6 my-8">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-1 h-5 bg-indigo-400 rounded" />
-            <h3 className="text-xl font-bold text-indigo-400">Rutherford&apos;s Scattering Formula</h3>
-            <span className="ml-auto text-xs bg-indigo-400/20 px-3 py-1 rounded-full text-indigo-300 font-mono">
-              JEE Advanced
-            </span>
-          </div>
-          <p className="text-base text-white/70 leading-relaxed mb-4">
-            Rutherford derived a mathematical relationship showing how the number of scattered particles varies with scattering angle:
-          </p>
-          <div className="bg-black/30 rounded-xl p-6 border border-indigo-400/20 mb-4">
-            <div className="text-center mb-4">
-              <div className="text-2xl font-mono text-indigo-300 mb-2">
-                N(θ) ∝ 1/sin⁴(θ/2)
-              </div>
-              <div className="text-sm text-white/50">
-                where N(θ) = number of particles scattered at angle θ
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-              <div className="bg-indigo-500/10 rounded-lg p-4 text-center">
-                <div className="text-lg font-bold text-indigo-300 mb-1">θ = 10°</div>
-                <div className="text-sm text-white/60">sin⁴(5°) ≈ 0.000046</div>
-                <div className="text-xs text-white/40 mt-1">Many particles</div>
-              </div>
-              <div className="bg-indigo-500/10 rounded-lg p-4 text-center">
-                <div className="text-lg font-bold text-indigo-300 mb-1">θ = 90°</div>
-                <div className="text-sm text-white/60">sin⁴(45°) ≈ 0.25</div>
-                <div className="text-xs text-white/40 mt-1">Few particles</div>
-              </div>
-              <div className="bg-indigo-500/10 rounded-lg p-4 text-center">
-                <div className="text-lg font-bold text-indigo-300 mb-1">θ = 180°</div>
-                <div className="text-sm text-white/60">sin⁴(90°) = 1</div>
-                <div className="text-xs text-white/40 mt-1">Extremely rare</div>
-              </div>
-            </div>
-          </div>
-          <div className="text-sm text-white/60 leading-relaxed">
-            <strong className="text-indigo-300">Key Insight:</strong> As the scattering angle increases, the probability drops <em>dramatically</em> (fourth power!). This explains why backscattering (θ &gt; 90°) is so incredibly rare — the sin⁴ function makes large-angle deflections exponentially less likely.
-          </div>
-        </div>
-      </div>
-
-      </> }
 
       <style jsx>{`
         @keyframes shine {

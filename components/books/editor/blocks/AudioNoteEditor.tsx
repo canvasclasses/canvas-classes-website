@@ -38,17 +38,35 @@ export default function AudioNoteEditor({ block, onChange, onUpload }: Props) {
     }
   }
 
+  // Pick the best supported MIME type for recording. Prefer webm (Chrome/Edge),
+  // fall back to ogg (Firefox), then let the browser choose (Safari → mp4/aac).
+  function getBestMimeType(): { mimeType: string; ext: string } {
+    const candidates = [
+      { mimeType: 'audio/webm;codecs=opus', ext: 'webm' },
+      { mimeType: 'audio/webm',             ext: 'webm' },
+      { mimeType: 'audio/ogg;codecs=opus',  ext: 'ogg'  },
+      { mimeType: 'audio/ogg',              ext: 'ogg'  },
+      { mimeType: 'audio/mp4',              ext: 'mp4'  },
+    ];
+    for (const c of candidates) {
+      if (MediaRecorder.isTypeSupported(c.mimeType)) return c;
+    }
+    return { mimeType: '', ext: 'webm' }; // browser default
+  }
+
   async function startRecording() {
     setUploadError('');
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mr = new MediaRecorder(stream);
+      const { mimeType, ext } = getBestMimeType();
+      const mr = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+      const recordedMime = mr.mimeType.split(';')[0] || `audio/${ext}`;
       chunksRef.current = [];
       mr.ondataavailable = (e) => { if (e.data.size > 0) chunksRef.current.push(e.data); };
       mr.onstop = async () => {
         stream.getTracks().forEach((t) => t.stop());
-        const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
-        const file = new File([blob], `recording-${Date.now()}.webm`, { type: 'audio/webm' });
+        const blob = new Blob(chunksRef.current, { type: recordedMime });
+        const file = new File([blob], `recording-${Date.now()}.${ext}`, { type: recordedMime });
         setRecording(false);
         if (timerRef.current) clearInterval(timerRef.current);
         const elapsed = recordingTimeRef.current;

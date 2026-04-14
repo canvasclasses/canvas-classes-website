@@ -1,6 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import remarkGfm from 'remark-gfm';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css';
+import 'katex/contrib/mhchem';
 import { InlineQuizBlock } from '@/types/books';
 import { Trophy, RotateCcw } from 'lucide-react';
 
@@ -8,6 +14,38 @@ interface Props {
   block: InlineQuizBlock;
   onPass?: (score: number) => void;
 }
+
+// ── Shared markdown + KaTeX pipeline ─────────────────────────────────────────
+// Used for question text, option labels, and explanation. The `p` override
+// strips the <p> wrapper so inline math renders cleanly inside buttons/spans.
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const remarkPlugins = [remarkMath, remarkGfm] as any[];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const rehypePlugins = [rehypeKatex] as any[];
+
+// For question text — allow full paragraph styling
+const questionComponents = {
+  p: ({ children }: { children?: React.ReactNode }) => (
+    <span className="leading-relaxed">{children}</span>
+  ),
+};
+
+// For option labels — strip the <p> so it renders inline inside <button>
+const optionComponents = {
+  p: ({ children }: { children?: React.ReactNode }) => (
+    <span>{children}</span>
+  ),
+};
+
+// For the explanation note — subtle paragraph styling
+const explanationComponents = {
+  p: ({ children }: { children?: React.ReactNode }) => (
+    <span className="leading-relaxed">{children}</span>
+  ),
+};
+
+// ── Component ─────────────────────────────────────────────────────────────────
 
 export default function InlineQuizRenderer({ block, onPass }: Props) {
   const [answers, setAnswers] = useState<Record<string, number>>({});
@@ -49,19 +87,27 @@ export default function InlineQuizRenderer({ block, onPass }: Props) {
       <div className="px-5 py-4 flex flex-col gap-6">
         {block.questions.map((q, qi) => (
           <div key={q.id}>
+            {/* Question text — rendered through the markdown + KaTeX pipeline */}
             <p className="text-sm text-white/90 mb-3">
               <span className="text-violet-400 font-semibold mr-2">Q{qi + 1}.</span>
-              {q.question}
+              <ReactMarkdown
+                remarkPlugins={remarkPlugins}
+                rehypePlugins={rehypePlugins}
+                components={questionComponents}
+              >
+                {q.question}
+              </ReactMarkdown>
             </p>
+
             <div className="flex flex-col gap-2">
               {q.options.map((opt, oi) => {
                 const chosen = answers[q.id] === oi;
                 const isCorrect = oi === q.correct_index;
                 let cls = 'border border-white/10 bg-white/5 text-white/70';
                 if (submitted) {
-                  if (isCorrect) cls = 'border border-emerald-500/60 bg-emerald-500/10 text-emerald-300';
-                  else if (chosen) cls = 'border border-red-500/60 bg-red-500/10 text-red-300';
-                  else cls = 'border border-white/5 bg-transparent text-white/30';
+                  if (isCorrect)      cls = 'border border-emerald-500/60 bg-emerald-500/10 text-emerald-300';
+                  else if (chosen)    cls = 'border border-red-500/60 bg-red-500/10 text-red-300';
+                  else                cls = 'border border-white/5 bg-transparent text-white/30';
                 } else if (chosen) {
                   cls = 'border border-violet-500/60 bg-violet-500/15 text-violet-200';
                 }
@@ -76,16 +122,31 @@ export default function InlineQuizRenderer({ block, onPass }: Props) {
                     }`}
                   >
                     <span className="text-white/40 mr-2">{String.fromCharCode(65 + oi)}.</span>
-                    {opt}
+                    {/* Option text — rendered through the markdown + KaTeX pipeline */}
+                    <ReactMarkdown
+                      remarkPlugins={remarkPlugins}
+                      rehypePlugins={rehypePlugins}
+                      components={optionComponents}
+                    >
+                      {opt}
+                    </ReactMarkdown>
                     {submitted && isCorrect && <span className="ml-2 text-emerald-400">✓</span>}
                     {submitted && chosen && !isCorrect && <span className="ml-2 text-red-400">✗</span>}
                   </button>
                 );
               })}
             </div>
+
+            {/* Explanation — rendered through the markdown + KaTeX pipeline */}
             {submitted && q.explanation && (
               <p className="mt-2 text-xs text-white/50 bg-white/5 rounded-lg px-3 py-2 border border-white/8">
-                {q.explanation}
+                <ReactMarkdown
+                  remarkPlugins={remarkPlugins}
+                  rehypePlugins={rehypePlugins}
+                  components={explanationComponents}
+                >
+                  {q.explanation}
+                </ReactMarkdown>
               </p>
             )}
           </div>
@@ -109,7 +170,9 @@ export default function InlineQuizRenderer({ block, onPass }: Props) {
               ? 'bg-emerald-500/10 border border-emerald-500/30'
               : 'bg-red-500/10 border border-red-500/30'
           }`}>
-            {passed ? <Trophy size={16} className="text-emerald-400 shrink-0" /> : <RotateCcw size={16} className="text-red-400 shrink-0" />}
+            {passed
+              ? <Trophy size={16} className="text-emerald-400 shrink-0" />
+              : <RotateCcw size={16} className="text-red-400 shrink-0" />}
             <div className="flex-1">
               <p className={`text-sm font-semibold ${passed ? 'text-emerald-300' : 'text-red-300'}`}>
                 {passed ? 'Nice work! You passed.' : 'Not quite — try again.'}

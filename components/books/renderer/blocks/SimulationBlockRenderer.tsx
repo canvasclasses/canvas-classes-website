@@ -57,6 +57,56 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/BulbEvolutionSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
+  'quantum-number-explorer': dynamic(
+    () => import('./simulations/QuantumNumberExplorerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'orbital-shape-explorer': dynamic(
+    () => import('./simulations/OrbitalShapeExplorerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'radial-distribution': dynamic(
+    () => import('./simulations/RadialDistributionSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'electron-density': dynamic(
+    () => import('./simulations/ElectronDensitySim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // ── Class 9 Physics — Chapter 2: Force and Laws of Motion ───────────────
+  'inertia-sandbox': dynamic(
+    () => import('./simulations/InertiaSandboxSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'newtons-second-law': dynamic(
+    () => import('./simulations/NewtonsSecondLawSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'momentum-collision': dynamic(
+    () => import('./simulations/MomentumCollisionSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'newtons-third-law': dynamic(
+    () => import('./simulations/NewtonsThirdLawSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // ── Class 9 Physics — Chapter 1: Motion ──────────────────────────────────
+  'velocity-time-graph': dynamic(
+    () => import('./simulations/VelocityTimeGraphSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'uniform-nonuniform-motion': dynamic(
+    () => import('./simulations/UniformNonUniformSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'distance-displacement': dynamic(
+    () => import('./simulations/DistanceDisplacementSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'equations-of-motion': dynamic(
+    () => import('./simulations/EquationsOfMotionSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
 };
 
 function SimulationSkeleton() {

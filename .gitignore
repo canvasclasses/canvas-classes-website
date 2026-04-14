@@ -24,8 +24,15 @@
 .DS_Store
 *.pem
 
-# Claude Code worktree marker files (local only, no content)
+# Claude Code — local-only files (conversation history, local settings, commands)
 .claude/worktrees/
+.claude/projects/
+.claude/commands/
+.claude/settings.local.json
+
+# Backup / temp files
+*.bak
+*.bak.*
 
 # debug
 npm-debug.log*

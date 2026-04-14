@@ -53,6 +53,8 @@ export default function AudioNoteBlockRenderer({ block }: { block: AudioNoteBloc
     audioRef.current.currentTime = ratio * (audioRef.current.duration || block.duration_sec);
   };
 
+  if (!block.src) return null;
+
   return (
     <div className="my-3 p-4 rounded-xl border border-white/10 bg-[#0E1420]">
       <audio
@@ -79,9 +81,8 @@ export default function AudioNoteBlockRenderer({ block }: { block: AudioNoteBloc
                 width: 3,
                 transformOrigin: 'bottom',
                 animation: playing
-                  ? `audioWave ${BAR_DURATIONS[i]}s ease-in-out infinite alternate`
+                  ? `audioWave ${BAR_DURATIONS[i]}s ease-in-out ${i * 35}ms infinite alternate`
                   : 'none',
-                animationDelay: `${i * 35}ms`,
               }}
             />
           ))}

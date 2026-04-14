@@ -4,6 +4,22 @@ import { useState } from 'react';
 import { Play, ChevronDown, ChevronUp } from 'lucide-react';
 import { VideoBlock } from '@/types/books';
 
+/**
+ * YouTube blocks store just the 11-char video ID.
+ * If someone managed to save a full URL (e.g. pasted before switching provider),
+ * extract the ID here so the embed never gets a malformed src.
+ */
+function extractYouTubeId(src: string): string {
+  if (!src) return '';
+  // Already a bare 11-char ID — common case, fast path
+  if (/^[a-zA-Z0-9_-]{11}$/.test(src)) return src;
+  const m =
+    src.match(/[?&]v=([a-zA-Z0-9_-]{11})/) ||
+    src.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/) ||
+    src.match(/\/embed\/([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : src;
+}
+
 function formatDuration(sec: number): string {
   if (!sec) return '';
   const m = Math.floor(sec / 60);
@@ -65,7 +81,7 @@ export default function VideoBlockRenderer({ block }: { block: VideoBlock }) {
           )}
           {block.provider === 'youtube_nocookie' && (
             <iframe
-              src={`https://www.youtube-nocookie.com/embed/${block.src}?rel=0&modestbranding=1&autoplay=1`}
+              src={`https://www.youtube-nocookie.com/embed/${extractYouTubeId(block.src)}?rel=0&modestbranding=1&autoplay=1`}
               className="w-full h-full"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
