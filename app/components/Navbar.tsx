@@ -4,36 +4,161 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, ChevronDown, X } from 'lucide-react';
+import { Menu, ChevronDown, X, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const jeeNeetLinks = [
-  { label: 'The Crucible', href: '/the-crucible', external: false },
-  { label: 'Detailed Lectures', href: '/detailed-lectures', external: false },
-  { label: 'One Shot Lectures', href: '/one-shot-lectures', external: false },
-  { label: 'Top 50 Concepts', href: '/top-50-concepts', external: false },
-  { label: '2 Minute Chemistry', href: '/2-minute-chemistry', external: false },
-  { label: 'NEET Crash Course', href: '/neet-crash-course', external: false },
+// =====================================================================
+// TYPES
+// =====================================================================
+
+type NavLinkItem = {
+  label: string;
+  href: string;
+  badge?: 'soon' | 'new';
+};
+
+type MegaMenuColumn = {
+  heading: string;
+  links: NavLinkItem[];
+};
+
+type FeaturedCard = {
+  label: string;
+  tagline: string;
+  href: string;
+  cta: string;
+};
+
+type MegaMenuDef = {
+  id: string;
+  label: string;
+  anchor: 'left' | 'center' | 'right';
+  featured?: FeaturedCard;   // renders as an orange hero panel (left slot)
+  columns: MegaMenuColumn[];
+  width?: string;            // override default panel width
+};
+
+// =====================================================================
+// NAV DATA
+// =====================================================================
+
+const class9to10Menu: MegaMenuDef = {
+  id: 'class-9-10',
+  label: 'Class 9–10',
+  anchor: 'left',
+  width: 'w-44',
+  columns: [
+    {
+      heading: '',
+      links: [
+        { label: 'Class 9', href: '/class-9' },
+        { label: 'Class 10', href: '/class-10' },
+      ],
+    },
+  ],
+};
+
+const class11to12Menu: MegaMenuDef = {
+  id: 'class-11-12',
+  label: 'Class 11–12',
+  anchor: 'left',
+  columns: [
+    {
+      heading: 'Chemistry',
+      links: [
+        { label: 'Class 11 Chemistry', href: '/class-11/chemistry', badge: 'soon' },
+        { label: 'Class 12 Chemistry', href: '/class-12/chemistry', badge: 'soon' },
+        { label: 'NCERT Solutions', href: '/ncert-solutions' },
+      ],
+    },
+    {
+      heading: 'Resources',
+      links: [
+        { label: 'Handwritten Notes', href: '/handwritten-notes' },
+        { label: 'NCERT Book PDFs', href: '/download-ncert-books' },
+      ],
+    },
+  ],
+};
+
+// JEE/NEET: The Crucible gets a featured hero panel — first thing seen on hover.
+const jeeNeetMenu: MegaMenuDef = {
+  id: 'jee-neet',
+  label: 'JEE/NEET',
+  anchor: 'center',
+  featured: {
+    label: 'The Crucible',
+    tagline: 'Adaptive question practice for JEE & NEET. Track progress, drill chapters, attempt mocks.',
+    href: '/the-crucible',
+    cta: 'Start Practicing',
+  },
+  columns: [
+    {
+      heading: 'Learn',
+      links: [
+        { label: 'Detailed Lectures', href: '/detailed-lectures' },
+        { label: 'One Shot Lectures', href: '/one-shot-lectures' },
+        { label: 'NEET Crash Course', href: '/neet-crash-course' },
+        { label: 'JEE PYQs', href: '/jee-pyqs' },
+      ],
+    },
+    {
+      heading: 'Revise',
+      links: [
+        { label: 'Top 50 Concepts', href: '/top-50-concepts' },
+        { label: '2 Minute Chemistry', href: '/2-minute-chemistry' },
+        { label: 'Quick Recap', href: '/quick-recap' },
+      ],
+    },
+  ],
+};
+
+// Study Lab: all interactive tools, visualizers, and reference hubs.
+const studyLabMenu: MegaMenuDef = {
+  id: 'study-lab',
+  label: 'Study Lab',
+  anchor: 'right',
+  columns: [
+    {
+      heading: 'Explore',
+      links: [
+        { label: 'Interactive Periodic Table', href: '/interactive-periodic-table' },
+        { label: 'Periodic Trends', href: '/periodic-trends' },
+        { label: 'Salt Analysis Simulator', href: '/salt-analysis' },
+        { label: 'ChemiHex', href: '/chemihex' },
+      ],
+    },
+    {
+      heading: 'Practice',
+      links: [
+        { label: 'Chemistry Flashcards', href: '/chemistry-flashcards' },
+        { label: 'Assertion & Reason', href: '/assertion-reason' },
+        { label: 'Organic Wizard', href: '/organic-wizard' },
+        { label: 'Ksp Calculator', href: '/solubility-product-ksp-calculator' },
+      ],
+    },
+    {
+      heading: 'Reference',
+      links: [
+        { label: 'Organic Name Reactions', href: '/organic-name-reactions' },
+        { label: 'Organic Hub', href: '/organic-chemistry-hub' },
+        { label: 'Physical Chemistry Hub', href: '/physical-chemistry-hub' },
+        { label: 'Inorganic Hub', href: '/inorganic-chemistry-hub' },
+      ],
+    },
+  ],
+};
+
+const allMenus: MegaMenuDef[] = [
+  class9to10Menu,
+  class11to12Menu,
+  jeeNeetMenu,
+  studyLabMenu,
 ];
 
-const ncertBoardsLinks = [
-  { label: 'NCERT Solutions', href: '/ncert-solutions', external: false },
-  { label: 'CBSE 12 NCERT Revision', href: '/cbse-12-ncert-revision', external: false },
-  { label: 'Download NCERT Books', href: '/download-ncert-books', external: false },
-  { label: 'Organic Name Reactions', href: '/organic-name-reactions', external: false },
-];
-
-const revisionToolsLinks = [
-  { label: 'Organic Hub', href: '/organic-chemistry-hub', external: false },
-  { label: 'Physical Chemistry Hub', href: '/physical-chemistry-hub', external: false },
-  { label: 'Inorganic Hub', href: '/inorganic-chemistry-hub', external: false },
-  { label: 'Flashcards', href: '/chemistry-flashcards', external: false },
-  { label: 'Assertion & Reason', href: '/assertion-reason', external: false },
-  { label: 'Interactive P Table', href: '/interactive-periodic-table', external: false },
-  { label: 'Periodic Trends', href: '/periodic-trends', external: false },
-  { label: 'Salt Analysis', href: '/salt-analysis', external: false },
-  { label: 'Ksp Calculator', href: '/solubility-product-ksp-calculator', external: false },
-];
+// =====================================================================
+// NAVBAR
+// =====================================================================
 
 export default function Navbar({ authButton }: { authButton: React.ReactNode }) {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -43,15 +168,13 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
-
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY < 20) setIsVisible(true);
-      else if (currentScrollY > lastScrollY && currentScrollY > 100) setIsVisible(false);
-      else if (currentScrollY < lastScrollY) setIsVisible(true);
-      lastScrollY = currentScrollY;
+      const cur = window.scrollY;
+      if (cur < 20) setIsVisible(true);
+      else if (cur > lastScrollY && cur > 100) setIsVisible(false);
+      else if (cur < lastScrollY) setIsVisible(true);
+      lastScrollY = cur;
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -61,13 +184,14 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
 
   return (
     <nav
-      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-[1200px] transition-all duration-300 ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-[150%] opacity-0 pointer-events-none'
-        }`}
+      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-[1280px] transition-all duration-300 ${
+        isVisible ? 'translate-y-0 opacity-100' : '-translate-y-[150%] opacity-0 pointer-events-none'
+      }`}
     >
       <div className="relative px-6 py-3 rounded-full bg-[#050505]/80 backdrop-blur-xl border border-white/[0.08] shadow-2xl shadow-black/50 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center justify-center group">
+        <Link href="/" className="flex items-center justify-center group shrink-0">
           <Image
             src="/Canvas Logo white.svg"
             alt="Canvas Classes"
@@ -79,53 +203,38 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-1">
-          {/* JEE/NEET Dropdown */}
-          <NavDropdown
-            label="JEE/NEET"
-            links={jeeNeetLinks}
-            active={activeDropdown === 'jee'}
-            onMouseEnter={() => setActiveDropdown('jee')}
-            onMouseLeave={() => setActiveDropdown(null)}
+        <div className="hidden md:flex items-center gap-0.5">
+          {allMenus.map((menu) => (
+            <MegaMenuDropdown
+              key={menu.id}
+              menu={menu}
+              active={activeDropdown === menu.id}
+              onMouseEnter={() => setActiveDropdown(menu.id)}
+              onMouseLeave={() => setActiveDropdown(null)}
+            />
+          ))}
+          <NavLink
+            href="/blog"
+            label="Blog"
+            className="!text-purple-400 hover:!text-purple-300"
           />
-
-          {/* NCERT Dropdown */}
-          <NavDropdown
-            label="NCERT & Boards"
-            links={ncertBoardsLinks}
-            active={activeDropdown === 'ncert'}
-            onMouseEnter={() => setActiveDropdown('ncert')}
-            onMouseLeave={() => setActiveDropdown(null)}
-          />
-
-          {/* Revision Dropdown */}
-          <NavDropdown
-            label="Revision Tools"
-            links={revisionToolsLinks}
-            active={activeDropdown === 'revision'}
-            onMouseEnter={() => setActiveDropdown('revision')}
-            onMouseLeave={() => setActiveDropdown(null)}
-          />
-
-          <NavLink href="/handwritten-notes" label="My Notes" />
-          <NavLink href="/blog" label="Blog" className="!text-purple-400 hover:!text-purple-300" />
         </div>
 
-        {/* Right Side: Auth & Mobile Toggle */}
-        <div className="flex items-center gap-3">
+        {/* Auth + Mobile toggle */}
+        <div className="flex items-center gap-3 shrink-0">
           <div className="hidden md:block scale-90 origin-right opacity-90 hover:opacity-100 transition-opacity">
             {authButton}
           </div>
-
           <button
             className="md:hidden p-2 text-zinc-400 hover:text-white transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
-        {/* Mobile Menu AnimatePresence */}
+        {/* Mobile Menu */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
@@ -133,20 +242,23 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full left-0 right-0 mt-2 p-4 bg-[#0a0a0a]/95 backdrop-blur-2xl rounded-3xl border border-white/[0.08] shadow-xl overflow-hidden flex flex-col gap-2"
+              className="absolute top-full left-0 right-0 mt-2 p-4 bg-[#0a0a0a]/95 backdrop-blur-2xl rounded-3xl border border-white/[0.08] shadow-xl flex flex-col gap-2 max-h-[82vh] overflow-y-auto"
             >
-              <MobileDropdown label="JEE/NEET" links={jeeNeetLinks} onLinkClick={() => setMobileMenuOpen(false)} />
-              <MobileDropdown label="NCERT & Boards" links={ncertBoardsLinks} onLinkClick={() => setMobileMenuOpen(false)} />
-              <MobileDropdown label="Revision Tools" links={revisionToolsLinks} onLinkClick={() => setMobileMenuOpen(false)} />
-              <Link href="/handwritten-notes" onClick={() => setMobileMenuOpen(false)} className="px-4 py-3 text-sm font-medium text-zinc-400 hover:text-white hover:bg-white/[0.05] rounded-xl transition-colors">
-                My Notes
-              </Link>
-              <Link href="/blog" onClick={() => setMobileMenuOpen(false)} className="px-4 py-3 text-sm font-medium text-purple-400 hover:text-purple-300 hover:bg-purple-500/10 rounded-xl transition-colors">
+              {allMenus.map((menu) => (
+                <MobileMegaMenu
+                  key={menu.id}
+                  menu={menu}
+                  onLinkClick={() => setMobileMenuOpen(false)}
+                />
+              ))}
+              <Link
+                href="/blog"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-4 py-3 text-sm font-medium text-purple-400 hover:text-purple-300 hover:bg-purple-500/10 rounded-xl transition-colors"
+              >
                 Blog
               </Link>
-              <div className="pt-2 border-t border-white/[0.08]">
-                {authButton}
-              </div>
+              <div className="pt-2 border-t border-white/[0.08]">{authButton}</div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -155,40 +267,115 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
   );
 }
 
-interface NavLink {
-  label: string;
-  href: string;
-  external: boolean;
-}
+// =====================================================================
+// DESKTOP MEGA-MENU
+// =====================================================================
 
-function NavDropdown({ label, links, active, onMouseEnter, onMouseLeave }: { label: string, links: NavLink[], active: boolean, onMouseEnter: () => void, onMouseLeave: () => void }) {
+function MegaMenuDropdown({
+  menu,
+  active,
+  onMouseEnter,
+  onMouseLeave,
+}: {
+  menu: MegaMenuDef;
+  active: boolean;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+}) {
+  const anchorClass = {
+    left: 'left-0',
+    center: 'left-1/2 -translate-x-1/2',
+    right: 'right-0',
+  }[menu.anchor];
+
+  const numCols = menu.columns.length;
+  const totalCols = (menu.featured ? 1 : 0) + numCols;
+  const widthClass =
+    menu.width ??
+    (totalCols >= 3 ? 'w-[680px]' : totalCols === 2 ? 'w-[460px]' : 'w-64');
+
   return (
     <div className="relative" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <button className={`flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-full transition-all ${active ? 'text-white bg-white/[0.08]' : 'text-zinc-400 hover:text-white hover:bg-white/[0.04]'}`}>
-        {label}
-        <ChevronDown size={14} className={`transition-transform duration-300 ${active ? 'rotate-180' : ''}`} />
+      <button
+        className={`flex items-center gap-1 px-3.5 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${
+          active
+            ? 'text-white bg-white/[0.08]'
+            : 'text-zinc-400 hover:text-white hover:bg-white/[0.04]'
+        }`}
+      >
+        {menu.label}
+        <ChevronDown
+          size={14}
+          className={`transition-transform duration-300 ${active ? 'rotate-180' : ''}`}
+        />
       </button>
 
       <AnimatePresence>
         {active && (
           <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            initial={{ opacity: 0, y: 8, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 mt-2 w-56 p-1.5 bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/[0.08] rounded-2xl shadow-xl overflow-hidden z-50"
+            exit={{ opacity: 0, y: 8, scale: 0.97 }}
+            transition={{ duration: 0.18 }}
+            className={`absolute top-full mt-3 ${anchorClass} ${widthClass} p-5 bg-[#0a0a0a]/95 backdrop-blur-xl border border-white/[0.08] rounded-2xl shadow-2xl z-50`}
           >
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                target={link.external ? "_blank" : undefined}
-                className="block px-3 py-2.5 text-sm rounded-xl text-zinc-400 hover:text-white hover:bg-white/[0.08] transition-colors"
-                rel={link.external ? "noopener noreferrer" : undefined}
-              >
-                {link.label}
-              </Link>
-            ))}
+            <div
+              className="grid gap-4"
+              style={{
+                gridTemplateColumns: `repeat(${totalCols}, minmax(0, 1fr))`,
+              }}
+            >
+              {/* Featured card — The Crucible gets the orange hero panel */}
+              {menu.featured && (
+                <Link
+                  href={menu.featured.href}
+                  className="group flex flex-col gap-3 p-4 rounded-xl bg-gradient-to-br from-orange-500/10 to-amber-500/5 border border-orange-500/20 hover:border-orange-500/50 hover:from-orange-500/15 hover:to-amber-500/10 transition-all"
+                >
+                  <div className="text-sm font-semibold text-orange-400 group-hover:text-orange-300 transition-colors">
+                    {menu.featured.label}
+                  </div>
+                  <div className="text-xs text-zinc-400 group-hover:text-zinc-300 leading-relaxed flex-1 transition-colors">
+                    {menu.featured.tagline}
+                  </div>
+                  <div className="flex items-center gap-1.5 text-xs font-medium text-orange-400/80 group-hover:text-orange-300 transition-colors mt-auto">
+                    {menu.featured.cta}
+                    <ArrowRight size={11} />
+                  </div>
+                </Link>
+              )}
+
+              {/* Regular columns */}
+              {menu.columns.map((col) => (
+                <div key={col.heading}>
+                  {col.heading && (
+                    <div className="px-2 pb-2 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+                      {col.heading}
+                    </div>
+                  )}
+                  <div className="flex flex-col gap-0.5">
+                    {col.links.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className="group flex items-center justify-between gap-2 px-2 py-2 text-sm rounded-lg text-zinc-300 hover:text-white hover:bg-white/[0.08] transition-colors"
+                      >
+                        <span className="truncate">{link.label}</span>
+                        {link.badge === 'soon' && (
+                          <span className="shrink-0 text-[10px] uppercase tracking-wide text-zinc-500 group-hover:text-zinc-400">
+                            Soon
+                          </span>
+                        )}
+                        {link.badge === 'new' && (
+                          <span className="shrink-0 text-[10px] uppercase tracking-wide text-emerald-400/80">
+                            New
+                          </span>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -196,18 +383,40 @@ function NavDropdown({ label, links, active, onMouseEnter, onMouseLeave }: { lab
   );
 }
 
-function NavLink({ href, label, className = "" }: { href: string, label: string, className?: string }) {
+// =====================================================================
+// PLAIN NAV LINK (Blog)
+// =====================================================================
+
+function NavLink({
+  href,
+  label,
+  className = '',
+}: {
+  href: string;
+  label: string;
+  className?: string;
+}) {
   return (
     <Link
       href={href}
-      className={`px-4 py-2 text-sm font-medium text-zinc-400 hover:text-white hover:bg-white/[0.04] rounded-full transition-all ${className}`}
+      className={`px-3.5 py-2 text-sm font-medium text-zinc-400 hover:text-white hover:bg-white/[0.04] rounded-full transition-all ${className}`}
     >
       {label}
     </Link>
   );
 }
 
-function MobileDropdown({ label, links, onLinkClick }: { label: string, links: NavLink[], onLinkClick: () => void }) {
+// =====================================================================
+// MOBILE MEGA-MENU
+// =====================================================================
+
+function MobileMegaMenu({
+  menu,
+  onLinkClick,
+}: {
+  menu: MegaMenuDef;
+  onLinkClick: () => void;
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -216,28 +425,67 @@ function MobileDropdown({ label, links, onLinkClick }: { label: string, links: N
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center justify-between w-full px-4 py-3 text-sm font-medium text-zinc-300"
       >
-        {label}
-        <ChevronDown size={14} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        {menu.label}
+        <ChevronDown
+          size={14}
+          className={`transition-transform ${isOpen ? 'rotate-180' : ''}`}
+        />
       </button>
+
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ height: 0 }}
-            animate={{ height: "auto" }}
+            animate={{ height: 'auto' }}
             exit={{ height: 0 }}
             className="overflow-hidden"
           >
-            <div className="px-2 pb-2 space-y-0.5">
-              {links.map((link) => (
+            <div className="px-2 pb-3 space-y-3">
+              {/* Featured card on mobile */}
+              {menu.featured && (
                 <Link
-                  key={link.href}
-                  href={link.href}
-                  target={link.external ? "_blank" : undefined}
+                  href={menu.featured.href}
                   onClick={onLinkClick}
-                  className="block px-3 py-2 text-sm rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-white/[0.04] transition-colors"
+                  className="flex items-center justify-between mx-1 mt-1 px-3 py-3 rounded-lg bg-orange-500/10 border border-orange-500/20 hover:border-orange-500/40 transition-colors"
                 >
-                  {link.label}
+                  <div>
+                    <div className="text-sm font-semibold text-orange-400">
+                      {menu.featured.label}
+                    </div>
+                    <div className="text-[11px] text-orange-400/60 mt-0.5">
+                      {menu.featured.cta} →
+                    </div>
+                  </div>
+                  <ArrowRight size={14} className="text-orange-400/60 shrink-0" />
                 </Link>
+              )}
+
+              {/* Columns as stacked sub-sections */}
+              {menu.columns.map((col) => (
+                <div key={col.heading || 'default'}>
+                  {col.heading && (
+                    <div className="px-3 pt-2 pb-1 text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                      {col.heading}
+                    </div>
+                  )}
+                  <div className="space-y-0.5">
+                    {col.links.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={onLinkClick}
+                        className="flex items-center justify-between px-3 py-2 text-sm rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.04] transition-colors"
+                      >
+                        <span>{link.label}</span>
+                        {link.badge === 'soon' && (
+                          <span className="text-[10px] uppercase tracking-wide text-zinc-600">
+                            Soon
+                          </span>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </motion.div>
@@ -246,310 +494,3 @@ function MobileDropdown({ label, links, onLinkClick }: { label: string, links: N
     </div>
   );
 }
-
-/* 
-// ==========================================
-// OLD NAVBAR (Reference)
-// ==========================================
-/*
-export default function Navbar({ authButton }: { authButton: React.ReactNode }) {
-  const [jeeDropdownOpen, setJeeDropdownOpen] = useState(false);
-  const [ncertDropdownOpen, setNcertDropdownOpen] = useState(false);
-  const [revisionDropdownOpen, setRevisionDropdownOpen] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const pathname = usePathname();
-
-
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      // Always show at top (with small buffer)
-      if (currentScrollY < 20) {
-        setIsVisible(true);
-      }
-      // Hide when scrolling down
-      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(false);
-      }
-      // Show when scrolling up
-      else if (currentScrollY < lastScrollY) {
-        setIsVisible(true);
-      }
-
-      lastScrollY = currentScrollY;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  if (pathname?.startsWith('/the-crucible')) return null;
-  if (pathname?.startsWith('/books')) return null;
-
-  return (
-    <nav className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[98%] max-w-[1400px] flex items-center justify-between px-4 md:px-6 py-2.5 rounded-2xl bg-white/70 backdrop-blur-xl shadow-lg shadow-black/5 border border-white/50 transition-all duration-300 ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-[200%] opacity-0 pointer-events-none'
-      }`}>
-      <Link href="/" className="flex items-center pl-2">
-        <Image
-          src="/logo.webp"
-          alt="Canvas Classes"
-          width={180}
-          height={50}
-          className="h-10 md:h-12 w-auto"
-          priority
-        />
-      </Link>
-
-      {/* Desktop Navigation *}
-      <div className="hidden md:flex items-center gap-2 text-base font-bold text-gray-700">
-        {/* JEE/NEET Dropdown *}
-        <div
-          className="relative group"
-          onMouseEnter={() => setJeeDropdownOpen(true)}
-          onMouseLeave={() => setJeeDropdownOpen(false)}
-        >
-          <button className="flex items-center gap-1.5 px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all text-gray-700">
-            JEE/NEET <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${jeeDropdownOpen ? 'rotate-180 text-teal-600' : 'text-gray-400'}`} />
-          </button>
-
-          <div className={`absolute top-full left-0 pt-4 w-64 z-50 transition-all duration-300 ${jeeDropdownOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 translate-y-2 invisible'}`}>
-            <div className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl border border-white/50 p-2 overflow-hidden ring-1 ring-black/5">
-              {jeeNeetLinks.map((link) => (
-                link.external ? (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                ) : (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                )
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* NCERT & Boards Dropdown *}
-        <div
-          className="relative group"
-          onMouseEnter={() => setNcertDropdownOpen(true)}
-          onMouseLeave={() => setNcertDropdownOpen(false)}
-        >
-          <button className="flex items-center gap-1.5 px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all text-gray-700">
-            NCERT & Boards <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${ncertDropdownOpen ? 'rotate-180 text-teal-600' : 'text-gray-400'}`} />
-          </button>
-
-          <div className={`absolute top-full left-0 pt-4 w-64 z-50 transition-all duration-300 ${ncertDropdownOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 translate-y-2 invisible'}`}>
-            <div className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl border border-white/50 p-2 overflow-hidden ring-1 ring-black/5">
-              {ncertBoardsLinks.map((link) => (
-                link.external ? (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                ) : (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                )
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Revision Tools Dropdown *}
-        <div
-          className="relative group"
-          onMouseEnter={() => setRevisionDropdownOpen(true)}
-          onMouseLeave={() => setRevisionDropdownOpen(false)}
-        >
-          <button className="flex items-center gap-1.5 px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all text-gray-700">
-            Revision Tools <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${revisionDropdownOpen ? 'rotate-180 text-teal-600' : 'text-gray-400'}`} />
-          </button>
-
-          <div className={`absolute top-full left-0 pt-4 w-64 z-50 transition-all duration-300 ${revisionDropdownOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 translate-y-2 invisible'}`}>
-            <div className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl border border-white/50 p-2 overflow-hidden ring-1 ring-black/5">
-              {revisionToolsLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-600 hover:bg-teal-50 hover:text-teal-700 transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-        <Link href="/handwritten-notes" className="px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all">My Notes</Link>
-        <Link href="/blog" className="px-4 py-2 rounded-full hover:bg-teal-50/80 hover:text-teal-700 transition-all font-semibold text-purple-600 bg-purple-50/50">Blog</Link>
-        <button
-          onClick={() => window.dispatchEvent(new Event('openCommandPalette'))}
-          className="ml-2 p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-teal-600 transition-colors"
-          aria-label="Search"
-        >
-          <Search className="w-5 h-5" />
-        </button>
-        <div className="ml-2">
-          {authButton}
-        </div>
-      </div>
-
-      {/* Mobile Menu Button *}
-      <div className="md:hidden pr-2">
-        <button
-          className="p-2 text-gray-700 bg-gray-100/50 rounded-full hover:bg-gray-200/50 transition-colors"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
-      </div>
-
-      {/* Mobile Menu *}
-      <div className={`absolute top-full left-0 right-0 mt-4 mx-2 p-4 bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 md:hidden transition-all duration-300 origin-top transform ${mobileMenuOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'}`}>
-        <div className="space-y-1">
-          {/* JEE/NEET Mobile Section *}
-          <div className="rounded-2xl overflow-hidden bg-gray-50/50">
-            <button
-              onClick={() => setJeeDropdownOpen(!jeeDropdownOpen)}
-              className="flex items-center justify-between w-full px-5 py-4 font-bold text-gray-800"
-            >
-              JEE/NEET <ChevronDown className={`w-4 h-4 transition-transform ${jeeDropdownOpen ? 'rotate-180 text-teal-600' : 'text-gray-400'}`} />
-            </button>
-            <div className={`transition-all duration-300 overflow-hidden ${jeeDropdownOpen ? 'max-h-96 pb-2' : 'max-h-0'}`}>
-              <div className="px-3 space-y-1 mb-3">
-                {jeeNeetLinks.map((link) => (
-                  link.external ? (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block px-4 py-2.5 text-sm font-medium text-gray-500 hover:text-teal-600 hover:bg-teal-50/50 rounded-xl transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {link.label}
-                    </a>
-                  ) : (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="block px-4 py-2.5 text-sm font-medium text-gray-500 hover:text-teal-600 hover:bg-teal-50/50 rounded-xl transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {link.label}
-                    </Link>
-                  )
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* NCERT & Boards Mobile Section *}
-          <div className="rounded-2xl overflow-hidden bg-gray-50/50 mt-2">
-            <button
-              onClick={() => setNcertDropdownOpen(!ncertDropdownOpen)}
-              className="flex items-center justify-between w-full px-5 py-4 font-bold text-gray-800"
-            >
-              NCERT & Boards <ChevronDown className={`w-4 h-4 transition-transform ${ncertDropdownOpen ? 'rotate-180 text-teal-600' : 'text-gray-400'}`} />
-            </button>
-            <div className={`transition-all duration-300 overflow-hidden ${ncertDropdownOpen ? 'max-h-96 pb-2' : 'max-h-0'}`}>
-              <div className="px-3 space-y-1 mb-3">
-                {ncertBoardsLinks.map((link) => (
-                  link.external ? (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block px-4 py-2.5 text-sm font-medium text-gray-500 hover:text-teal-600 hover:bg-teal-50/50 rounded-xl transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {link.label}
-                    </a>
-                  ) : (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="block px-4 py-2.5 text-sm font-medium text-gray-500 hover:text-teal-600 hover:bg-teal-50/50 rounded-xl transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {link.label}
-                    </Link>
-                  )
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-2 space-y-2">
-            {/* Revision Tools Mobile Section *}
-            <div className="rounded-2xl overflow-hidden bg-gray-50/50 mt-2">
-              <button
-                onClick={() => setRevisionDropdownOpen(!revisionDropdownOpen)}
-                className="flex items-center justify-between w-full px-5 py-4 font-bold text-gray-800"
-              >
-                Revision Tools <ChevronDown className={`w-4 h-4 transition-transform ${revisionDropdownOpen ? 'rotate-180 text-teal-600' : 'text-gray-400'}`} />
-              </button>
-              <div className={`transition-all duration-300 overflow-hidden ${revisionDropdownOpen ? 'max-h-96 pb-2' : 'max-h-0'}`}>
-                <div className="px-3 space-y-1 mb-3">
-                  {revisionToolsLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="block px-4 py-2.5 text-sm font-medium text-gray-500 hover:text-teal-600 hover:bg-teal-50/50 rounded-xl transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <Link
-              href="/handwritten-notes"
-              className="block px-5 py-3 font-bold text-gray-700 hover:bg-gray-50 rounded-2xl transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              My Notes
-            </Link>
-            <Link
-              href="/blog"
-              className="block px-5 py-3 font-bold text-purple-600 bg-purple-50/50 hover:bg-purple-100/50 rounded-2xl transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Blog
-            </Link>
-            <div className="px-5 py-3">
-              {authButton}
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-  );
-}
-*/
