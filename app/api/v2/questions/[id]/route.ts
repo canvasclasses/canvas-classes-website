@@ -7,6 +7,7 @@ import { AuditLog } from '@/lib/models/AuditLog';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { canEditQuestion, canDeleteQuestion } from '@/lib/rbac';
 import { isLocalhostDev } from '@/lib/bookAuth';
+import { trackServer } from '@/lib/analytics/mixpanel';
 
 // GET - Fetch single question by ID
 export async function GET(
@@ -274,6 +275,12 @@ export async function PATCH(
       await auditLog.save();
     }
 
+    await trackServer(user?.email ?? user?.id ?? 'local_dev', 'admin_action', {
+      type: 'edit',
+      entity: 'question',
+      entity_id: id,
+    });
+
     return NextResponse.json({
       success: true,
       data: updatedQuestion,
@@ -364,6 +371,12 @@ export async function DELETE(
     } catch (auditError) {
       console.warn('Audit log failed (non-fatal):', auditError);
     }
+
+    await trackServer(user?.email ?? user?.id ?? 'local_dev', 'admin_action', {
+      type: 'delete',
+      entity: 'question',
+      entity_id: id,
+    });
 
     return NextResponse.json({
       success: true,
