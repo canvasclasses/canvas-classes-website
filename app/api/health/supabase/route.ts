@@ -19,10 +19,11 @@ export async function GET() {
         const { data, error } = await supabase.auth.getSession();
 
         if (error) {
+            console.error('Supabase connection failed:', error.message);
             return NextResponse.json(
                 {
                     status: 'error',
-                    message: `Supabase connection failed: ${error.message}`,
+                    message: 'Supabase connection failed',
                     timestamp: new Date().toISOString(),
                 },
                 { status: 502 }
@@ -37,11 +38,10 @@ export async function GET() {
         });
     } catch (error: unknown) {
         console.error('Health check error:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json(
             {
                 status: 'error',
-                message: `Health check failed: ${errorMessage}`,
+                message: 'Health check failed',
                 timestamp: new Date().toISOString(),
             },
             { status: 500 }

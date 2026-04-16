@@ -36,7 +36,15 @@ export async function POST(req: NextRequest) {
 
         await connectToDatabase();
 
-        // Upsert: create document if user has never practised before
+        const now = new Date();
+        // Retry loop: optimistic concurrency (via __v) detects concurrent
+        // modifications. On VersionError we re-read and replay the batch.
+        const MAX_RETRIES = 3;
+        let totalAttempted = 0;
+        let totalCorrect = 0;
+
+        for (let retryNum = 0; retryNum <= MAX_RETRIES; retryNum++) {
+
         let progress = await UserProgress.findById(userId);
         if (!progress) {
             progress = new UserProgress({
@@ -53,9 +61,8 @@ export async function POST(req: NextRequest) {
             });
         }
 
-        const now = new Date();
-        let totalCorrect = 0;
-        let totalAttempted = 0;
+        totalCorrect = 0;
+        totalAttempted = 0;
 
         // Process each attempt
         for (const attempt of attempts) {
@@ -153,12 +160,25 @@ export async function POST(req: NextRequest) {
         progress.stats.last_activity_at = now;
 
         progress.updated_at = now;
-        await progress.save();
 
-        return NextResponse.json({ 
-            success: true, 
+        try {
+            await progress.save();
+            break; // success — exit retry loop
+        } catch (saveErr: unknown) {
+            const isVersionError =
+                saveErr instanceof Error && saveErr.name === 'VersionError';
+            if (isVersionError && retryNum < MAX_RETRIES) {
+                continue; // re-read and replay
+            }
+            throw saveErr;
+        }
+
+        } // end retry loop
+
+        return NextResponse.json({
+            success: true,
             processed: totalAttempted,
-            message: `Saved ${totalAttempted} question attempts` 
+            message: `Saved ${totalAttempted} question attempts`
         });
     } catch (err) {
         console.error('[POST /api/v2/user/progress/batch]', err);

@@ -75,8 +75,9 @@ export async function GET(request: NextRequest) {
                     skip
                 });
             } catch (e) {
+                console.error('Failed to load questions:', e);
                 return NextResponse.json(
-                    { error: 'Failed to load questions', details: String(e) },
+                    { error: 'Failed to load questions' },
                     { status: 500 }
                 );
             }

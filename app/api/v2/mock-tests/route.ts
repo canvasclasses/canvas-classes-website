@@ -2,33 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import connectToDatabase from '@/lib/mongodb';
 import { MockTestSet } from '@/lib/models/MockTestSet';
-import { createServerClient } from '@supabase/ssr';
-
-// ── Auth helper ───────────────────────────────────────────────────────────────
-
-async function getAuthenticatedUser(request: NextRequest) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!supabaseUrl || !supabaseAnonKey) return null;
-  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
-    cookies: { getAll: () => request.cookies.getAll(), setAll: () => {} },
-  });
-  const { data: { user } } = await supabase.auth.getUser();
-  return user;
-}
-
-function isAdmin(email: string | undefined | null): boolean {
-  if (!email) return false;
-  const adminEmails = (process.env.ADMIN_EMAILS ?? '').split(',').map(e => e.trim().toLowerCase());
-  return adminEmails.includes(email.toLowerCase());
-}
-
-// Script bypass: local ingestion scripts pass x-admin-secret header instead of browser cookies
-function hasScriptSecret(request: NextRequest): boolean {
-  const secret = process.env.ADMIN_SECRET;
-  if (!secret) return false;
-  return request.headers.get('x-admin-secret') === secret;
-}
+import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
 
 // ── GET /api/v2/mock-tests — list all sets (admin: all; public: published only) ──
 
@@ -48,8 +22,13 @@ export async function GET(request: NextRequest) {
     if (exam && ['JEE', 'NEET'].includes(exam)) filter.exam = exam;
     if (admin && status) filter.status = status;
 
+    // Cap results to prevent OOM on large collections
+    const limitParam = parseInt(searchParams.get('limit') || '100', 10);
+    const safeLimit = Math.min(Math.max(1, limitParam), 200);
+
     const sets = await MockTestSet.find(filter)
       .sort({ exam: 1, year: -1, created_at: -1 })
+      .limit(safeLimit)
       .lean();
 
     // Project and attach question count

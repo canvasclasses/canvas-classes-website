@@ -2,30 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import connectToDatabase from '@/lib/mongodb';
 import { MockTestSet } from '@/lib/models/MockTestSet';
-import { createServerClient } from '@supabase/ssr';
-
-async function getAuthenticatedUser(request: NextRequest) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!supabaseUrl || !supabaseAnonKey) return null;
-  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
-    cookies: { getAll: () => request.cookies.getAll(), setAll: () => {} },
-  });
-  const { data: { user } } = await supabase.auth.getUser();
-  return user;
-}
-
-function isAdmin(email: string | undefined | null): boolean {
-  if (!email) return false;
-  const adminEmails = (process.env.ADMIN_EMAILS ?? '').split(',').map(e => e.trim().toLowerCase());
-  return adminEmails.includes(email.toLowerCase());
-}
-
-function hasScriptSecret(request: NextRequest): boolean {
-  const secret = process.env.ADMIN_SECRET;
-  if (!secret) return false;
-  return request.headers.get('x-admin-secret') === secret;
-}
+import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
 
 // ── POST /api/v2/mock-tests/[id]/questions — add a new question to a set ─────
 

@@ -4,14 +4,24 @@ export async function GET(req: NextRequest) {
   const url = req.nextUrl.searchParams.get('url');
   if (!url) return NextResponse.json({ error: 'Missing url' }, { status: 400 });
 
-  // Only allow fetching from known CDN domains
+  // Only allow fetching from known CDN domains (strict suffix/exact matching)
   let parsed: URL;
   try { parsed = new URL(url); } catch {
     return NextResponse.json({ error: 'Invalid url' }, { status: 400 });
   }
-  const allowed = ['.r2.dev', 'pub-', 'cloudflare', 'canvasclasses'];
-  const host = parsed.hostname;
-  if (!allowed.some(a => host.includes(a))) {
+  // Only allow HTTPS to prevent internal network probing
+  if (parsed.protocol !== 'https:') {
+    return NextResponse.json({ error: 'Only HTTPS URLs allowed' }, { status: 403 });
+  }
+  const host = parsed.hostname.toLowerCase();
+  const isAllowed =
+    host.endsWith('.r2.dev') ||
+    host.endsWith('.cloudflare.com') ||
+    host.endsWith('.cloudflareinsights.com') ||
+    host === 'canvasclasses.in' ||
+    host.endsWith('.canvasclasses.in') ||
+    host.endsWith('.r2.cloudflarestorage.com');
+  if (!isAllowed) {
     return NextResponse.json({ error: 'Domain not allowed' }, { status: 403 });
   }
 
@@ -33,7 +43,7 @@ export async function GET(req: NextRequest) {
         'Access-Control-Allow-Origin': '*',
       },
     });
-  } catch (e) {
-    return NextResponse.json({ error: String(e) }, { status: 500 });
+  } catch {
+    return NextResponse.json({ error: 'Failed to fetch upstream resource' }, { status: 502 });
   }
 }

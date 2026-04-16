@@ -14,12 +14,10 @@ import AudioRecorder from './AudioRecorder';
 import AudioPlayer from './AudioPlayer';
 import { validateLaTeX, autoFixLatex, type LaTeXValidationResult } from '@/lib/latexValidator';
 
-// ── Admin secret — read at call-time so Next.js inlining works correctly ──────
+// Supabase session cookie is sent automatically on same-origin requests.
+// No secret header needed — API routes authenticate via the cookie.
 function getAdminHeaders(): Record<string, string> {
-  return {
-    'Content-Type': 'application/json',
-    'x-admin-secret': process.env.NEXT_PUBLIC_ADMIN_SECRET ?? '',
-  };
+  return { 'Content-Type': 'application/json' };
 }
 
 // ── Types ─────────────────────────────────────────────────────────────────────

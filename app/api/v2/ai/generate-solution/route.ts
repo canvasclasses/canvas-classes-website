@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireAdmin } from '@/lib/bookAuth';
 
 // ============================================
 // AI SOLUTION GENERATION API
@@ -14,6 +15,11 @@ interface GenerateSolutionRequest {
 }
 
 export async function POST(request: NextRequest) {
+  const admin = await requireAdmin();
+  if (!admin) {
+    return NextResponse.json({ success: false, error: 'Admin access required' }, { status: 403 });
+  }
+
   try {
     const body: GenerateSolutionRequest = await request.json();
     const { question_text, options, correct_answer, difficulty } = body;

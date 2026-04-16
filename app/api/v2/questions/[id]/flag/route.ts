@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
+import { getAuthenticatedUser } from '@/lib/auth';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
 
@@ -15,17 +15,6 @@ const VALID_FLAG_TYPES = [
 ] as const;
 
 type FlagType = typeof VALID_FLAG_TYPES[number];
-
-async function getAuthenticatedUser(request: NextRequest) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!supabaseUrl || !supabaseAnonKey) return null;
-  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
-    cookies: { getAll: () => request.cookies.getAll(), setAll: () => {} },
-  });
-  const { data: { user } } = await supabase.auth.getUser();
-  return user;
-}
 
 // POST /api/v2/questions/[id]/flag
 // Body: { type: FlagType, note?: string }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import DOMPurify from 'isomorphic-dompurify';
 import 'katex/dist/katex.min.css';
 
 interface MathRendererProps {
@@ -76,9 +77,21 @@ export default function MathRenderer({ markdown, className = '', fontSize, image
         }
       });
 
-      // ── PHASE 4: Set innerHTML ───────────────────────────────────────────────
+      // ── PHASE 4: Sanitize & set innerHTML ────────────────────────────────────
       if (!cancelled && containerRef.current) {
-        containerRef.current.innerHTML = html;
+        // DOMPurify strips dangerous tags/attributes (script, onerror, etc.)
+        // while preserving the KaTeX and markdown HTML we generated above.
+        containerRef.current.innerHTML = DOMPurify.sanitize(html, {
+          ADD_TAGS: ['semantics', 'annotation', 'mrow', 'mi', 'mo', 'mn', 'msup', 'msub',
+                     'mfrac', 'mover', 'munder', 'munderover', 'mtable', 'mtr', 'mtd',
+                     'mtext', 'mspace', 'mpadded', 'menclose', 'mglyph', 'mstyle', 'merror',
+                     'math', 'msqrt', 'mroot', 'mmultiscripts', 'mprescripts', 'none'],
+          ADD_ATTR: ['mathvariant', 'encoding', 'displaystyle', 'scriptlevel',
+                     'columnalign', 'rowalign', 'columnspacing', 'rowspacing',
+                     'fence', 'stretchy', 'symmetric', 'maxsize', 'minsize',
+                     'largeop', 'movablelimits', 'accent', 'lspace', 'rspace',
+                     'linethickness', 'depth', 'height', 'voffset', 'width'],
+        });
       }
     })();
 

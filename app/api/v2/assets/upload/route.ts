@@ -300,16 +300,14 @@ export async function POST(request: NextRequest) {
     
   } catch (error) {
     console.error('Error uploading asset:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Failed to upload asset';
-    const errorStack = error instanceof Error ? error.stack : undefined;
     console.error('Asset upload error details:', {
-      message: errorMessage,
-      stack: errorStack,
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
       fileName: file?.name || 'unknown',
       fileType: file?.type || 'unknown',
     });
     return NextResponse.json(
-      { success: false, error: errorMessage },
+      { success: false, error: 'Failed to upload asset' },
       { status: 500 }
     );
   }

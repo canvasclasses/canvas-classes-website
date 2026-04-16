@@ -17,7 +17,7 @@ export interface AdminIdentity {
  * behavior where a preview/staging deployment with NODE_ENV=development
  * was wide open to anonymous writes.
  */
-async function isLocalhostDev(): Promise<boolean> {
+export async function isLocalhostDev(): Promise<boolean> {
   if (process.env.NODE_ENV !== 'development') return false;
   // Vercel preview builds set NODE_ENV=development but run on a public host.
   if (process.env.VERCEL === '1') return false;

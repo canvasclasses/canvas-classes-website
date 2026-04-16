@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence, useMotionValue, useMotionTemplate } from 'framer-motion'
 import { Mail, Lock, ArrowRight, Loader2, Sparkles, CheckCircle2, X } from 'lucide-react'
 import { createClient } from '../utils/supabase/client'
+import { sanitizeRedirect } from '@/lib/redirectValidation'
 import Link from 'next/link'
 import DnsBlockedBanner from '../components/DnsBlockedBanner'
 
@@ -60,7 +61,7 @@ function LoginContent() {
                     return
                 }
 
-                window.location.href = next
+                window.location.href = sanitizeRedirect(next)
             } else {
                 const { error } = await supabase.auth.signUp({
                     email,

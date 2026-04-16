@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireAdmin } from '@/lib/bookAuth';
 
 // AI-powered question analysis
 // This will analyze question difficulty and suggest appropriate tags
@@ -106,10 +107,15 @@ function analyzeQuestionDifficulty(questionText: string, solutionText: string): 
 }
 
 export async function POST(request: NextRequest) {
+  const admin = await requireAdmin();
+  if (!admin) {
+    return NextResponse.json({ success: false, error: 'Admin access required' }, { status: 403 });
+  }
+
   try {
     const body = await request.json();
     const { question_text, solution_text } = body;
-    
+
     if (!question_text || !solution_text) {
       return NextResponse.json(
         { success: false, error: 'Question text and solution text are required' },

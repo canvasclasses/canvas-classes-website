@@ -1,30 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
-import { createServerClient } from '@supabase/ssr';
-
-function isAdmin(email: string | undefined | null): boolean {
-  if (!email) return false;
-  const adminEmails = (process.env.ADMIN_EMAILS ?? '').split(',').map(e => e.trim().toLowerCase());
-  return adminEmails.includes(email.toLowerCase());
-}
-
-function hasScriptSecret(request: NextRequest): boolean {
-  const secret = process.env.ADMIN_SECRET;
-  if (!secret) return false;
-  return request.headers.get('x-admin-secret') === secret;
-}
-
-async function getAuthenticatedUser(request: NextRequest) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!supabaseUrl || !supabaseAnonKey) return null;
-  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
-    cookies: { getAll: () => request.cookies.getAll(), setAll: () => {} },
-  });
-  const { data: { user } } = await supabase.auth.getUser();
-  return user;
-}
+import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
 
 // GET /api/v2/questions/flagged
 // Returns all questions that have at least one student flag (unresolved by default).

@@ -50,9 +50,6 @@ export default function VideoDropZone({ questionId, onUploaded, context }: Video
 
             const res = await fetch('/api/v2/assets/upload', {
                 method: 'POST',
-                headers: {
-                  'x-admin-secret': process.env.NEXT_PUBLIC_ADMIN_SECRET || '',
-                },
                 body: formData,
             });
 

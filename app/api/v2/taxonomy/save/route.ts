@@ -1,14 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
+import { requireAdmin } from '@/lib/bookAuth';
 
 /**
  * POST /api/v2/taxonomy/save
  * Persists the full taxonomy array back to taxonomyData_from_csv.ts
  * Body: { nodes: TaxonomyNode[] }
  * This is the ONLY way taxonomy edits should be saved — through this endpoint.
+ *
+ * WARNING: This writes to the local filesystem which only works in non-serverless
+ * environments. On Vercel/serverless the filesystem is read-only (except /tmp).
+ * TODO: Migrate taxonomy storage to MongoDB for production scalability.
  */
 export async function POST(request: NextRequest) {
+  const admin = await requireAdmin();
+  if (!admin) {
+    return NextResponse.json({ success: false, error: 'Admin access required' }, { status: 403 });
+  }
+
+  // Guard: filesystem writes are not available in serverless environments
+  if (process.env.VERCEL === '1') {
+    return NextResponse.json(
+      { success: false, error: 'Taxonomy save is not available in serverless deployments. Use local dev or migrate to database storage.' },
+      { status: 503 }
+    );
+  }
+
   try {
     const { nodes } = await request.json();
 
@@ -51,26 +69,33 @@ export async function POST(request: NextRequest) {
       "    parent_id: string | null;",
       "    type: 'chapter' | 'topic' | 'micro_topic';",
       "    sequence_order?: number;",
-      "    class_level?: 11 | 12;",
-      "    chapterType?: 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra';",
+      "    class_level?: 9 | 10 | 11 | 12;",
+      "    chapterType?: 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra' | 'biology';",
       '}',
       '',
       'export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [',
     ];
 
     // Group chapters by class and type for organized output
+    const byOrder = (a: TaxonomyNode, b: TaxonomyNode) => (a.sequence_order || 0) - (b.sequence_order || 0);
+    const class9Chem = chapters
+      .filter((c: TaxonomyNode) => c.class_level === 9 && c.id.startsWith('ch9_'))
+      .sort(byOrder);
+    const class9Bio = chapters
+      .filter((c: TaxonomyNode) => c.id.startsWith('bio9_'))
+      .sort(byOrder);
     const class11 = chapters
       .filter((c: TaxonomyNode) => c.class_level === 11 && !c.id.startsWith('ma_') && !c.id.startsWith('ph'))
-      .sort((a: TaxonomyNode, b: TaxonomyNode) => (a.sequence_order || 0) - (b.sequence_order || 0));
+      .sort(byOrder);
     const class12 = chapters
       .filter((c: TaxonomyNode) => c.class_level === 12 && !c.id.startsWith('ma_') && !c.id.startsWith('ph'))
-      .sort((a: TaxonomyNode, b: TaxonomyNode) => (a.sequence_order || 0) - (b.sequence_order || 0));
+      .sort(byOrder);
     const physChapters = chapters
-      .filter((c: TaxonomyNode) => c.id.startsWith('ph11_') || c.id.startsWith('ph12_'))
-      .sort((a: TaxonomyNode, b: TaxonomyNode) => (a.sequence_order || 0) - (b.sequence_order || 0));
+      .filter((c: TaxonomyNode) => c.id.startsWith('ph9_') || c.id.startsWith('ph11_') || c.id.startsWith('ph12_'))
+      .sort(byOrder);
     const mathChapters = chapters
       .filter((c: TaxonomyNode) => c.id.startsWith('ma_'))
-      .sort((a: TaxonomyNode, b: TaxonomyNode) => (a.sequence_order || 0) - (b.sequence_order || 0));
+      .sort(byOrder);
 
     const escapeStr = (s: string) => s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 
@@ -101,6 +126,8 @@ export async function POST(request: NextRequest) {
       }
     };
 
+    writeChapterGroup(class9Chem, 'Class 9 Chemistry');
+    writeChapterGroup(class9Bio, 'Class 9 Biology');
     writeChapterGroup(class11, 'Class 11 Chemistry');
     writeChapterGroup(class12, 'Class 12 Chemistry');
     writeChapterGroup(physChapters, 'Physics');
@@ -130,9 +157,8 @@ export async function POST(request: NextRequest) {
 
   } catch (error: unknown) {
     console.error('Taxonomy save error:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Failed to save taxonomy';
     return NextResponse.json(
-      { success: false, error: errorMessage },
+      { success: false, error: 'Failed to save taxonomy' },
       { status: 500 }
     );
   }

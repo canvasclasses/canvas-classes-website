@@ -3,11 +3,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Flag, Check, ChevronDown, ChevronUp, RefreshCw, AlertTriangle } from 'lucide-react';
 
+// Supabase session cookie is sent automatically on same-origin requests.
+// No secret header needed — API routes authenticate via the cookie.
 function getAdminHeaders(): Record<string, string> {
-  return {
-    'Content-Type': 'application/json',
-    'x-admin-secret': process.env.NEXT_PUBLIC_ADMIN_SECRET ?? '',
-  };
+  return { 'Content-Type': 'application/json' };
 }
 
 // ── Types ─────────────────────────────────────────────────────────────────────

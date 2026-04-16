@@ -4,19 +4,9 @@ import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
 import { Chapter } from '@/lib/models/Chapter';
 import { AuditLog } from '@/lib/models/AuditLog';
-import { createServerClient } from '@supabase/ssr';
+import { getAuthenticatedUser } from '@/lib/auth';
 import { canEditQuestion, canDeleteQuestion } from '@/lib/rbac';
-
-async function getAuthenticatedUser(request: NextRequest) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!supabaseUrl || !supabaseAnonKey) return null;
-  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
-    cookies: { getAll: () => request.cookies.getAll(), setAll: () => {} },
-  });
-  const { data: { user } } = await supabase.auth.getUser();
-  return user;
-}
+import { isLocalhostDev } from '@/lib/bookAuth';
 
 // GET - Fetch single question by ID
 export async function GET(
@@ -67,31 +57,31 @@ export async function PATCH(
   try {
     // Require authentication for all write operations
     const user = await getAuthenticatedUser(request);
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    if (!user && !isDevelopment) {
+    const isLocalDev = await isLocalhostDev();
+    if (!user && !isLocalDev) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
     await connectToDatabase();
-    
+
     const body = await request.json();
     const { id } = await params;
-    
+
     // Get existing question
     const existingQuestion = await QuestionV2.findOne({
       _id: id,
       deleted_at: null
     });
-    
+
     if (!existingQuestion) {
       return NextResponse.json(
         { success: false, error: 'Question not found' },
         { status: 404 }
       );
     }
-    
+
     // Check RBAC: Can user edit this question?
-    if (user && !isDevelopment) {
+    if (user && !isLocalDev) {
       const hasPermission = await canEditQuestion(user.email!, existingQuestion.metadata.chapter_id);
       if (!hasPermission) {
         return NextResponse.json(
@@ -292,9 +282,8 @@ export async function PATCH(
 
   } catch (error: unknown) {
     console.error('Error updating question:', error);
-    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { success: false, error: 'Failed to update question', details: errorMessage },
+      { success: false, error: 'Failed to update question' },
       { status: 500 }
     );
   }
@@ -308,29 +297,29 @@ export async function DELETE(
   try {
     // Require authentication for delete
     const user = await getAuthenticatedUser(request);
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    if (!user && !isDevelopment) {
+    const isLocalDev = await isLocalhostDev();
+    if (!user && !isLocalDev) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
     await connectToDatabase();
-    
+
     const { id } = await params;
-    
+
     const question = await QuestionV2.findOne({
       _id: id,
       deleted_at: null
     });
-    
+
     if (!question) {
       return NextResponse.json(
         { success: false, error: 'Question not found' },
         { status: 404 }
       );
     }
-    
+
     // Check RBAC: Can user delete this question?
-    if (user && !isDevelopment) {
+    if (user && !isLocalDev) {
       const hasPermission = await canDeleteQuestion(user.email!, question.metadata.chapter_id);
       if (!hasPermission) {
         return NextResponse.json(

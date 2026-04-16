@@ -5,8 +5,9 @@ import { QuestionV2 } from '@/lib/models/Question.v2';
 import { AuditLog } from '@/lib/models/AuditLog';
 import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 import { z } from 'zod';
-import { createServerClient } from '@supabase/ssr';
+import { getAuthenticatedUser } from '@/lib/auth';
 import { getUserPermissions, getQuestionFilter, canEditQuestion } from '@/lib/rbac';
+import { isLocalhostDev } from '@/lib/bookAuth';
 
 // Canonical chapter_id → display_id prefix map (single source of truth: taxonomyData_from_csv.ts)
 const CHAPTER_PREFIX_MAP: Record<string, string> = {
@@ -42,13 +43,33 @@ const CHAPTER_PREFIX_MAP: Record<string, string> = {
   ma_triangle_prop: 'PRTR', ma_vector_algebra: 'VCAL', ma_3d_geom: 'TDGM',
 };
 
-// Simple in-memory rate limiter (per IP, resets every minute)
+// Simple in-memory rate limiter (per IP, resets every minute).
+// NOTE: in a multi-instance deployment each instance has its own map, so
+// effective limits are per-instance. For production at scale, swap for
+// Redis-based rate limiting (e.g. Upstash @upstash/ratelimit).
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT_MAX = 30;       // max requests per window
+const RATE_LIMIT_MAX = 30;           // max requests per window
 const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
+const RATE_LIMIT_MAX_ENTRIES = 5000; // cap map size to prevent memory leaks
+let lastCleanup = Date.now();
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
+
+  // Periodic cleanup: evict expired entries every 2 minutes to prevent
+  // unbounded memory growth from unique IPs.
+  if (now - lastCleanup > RATE_LIMIT_WINDOW_MS * 2) {
+    for (const [key, val] of rateLimitMap) {
+      if (now > val.resetAt) rateLimitMap.delete(key);
+    }
+    lastCleanup = now;
+  }
+
+  // Hard cap: if map is still huge after cleanup, reject unknown IPs
+  if (rateLimitMap.size >= RATE_LIMIT_MAX_ENTRIES && !rateLimitMap.has(ip)) {
+    return false;
+  }
+
   const entry = rateLimitMap.get(ip);
   if (!entry || now > entry.resetAt) {
     rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
@@ -59,15 +80,22 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
-async function getAuthenticatedUser(request: NextRequest) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!supabaseUrl || !supabaseAnonKey) return null;
-  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
-    cookies: { getAll: () => request.cookies.getAll(), setAll: () => { } },
-  });
-  const { data: { user } } = await supabase.auth.getUser();
-  return user;
+/**
+ * Atomically generates the next display_id for a given prefix.
+ * Queries both active and soft-deleted questions to find the current max,
+ * then returns the next sequence. Callers must retry on duplicate key error.
+ */
+async function generateNextDisplayId(prefix: string): Promise<string> {
+  // Single query covering all documents (active + deleted) to find true max
+  const lastQ = await QuestionV2.findOne(
+    { display_id: { $regex: `^${prefix}-\\d+$` } },
+    { display_id: 1 }
+  ).sort({ display_id: -1 }).lean();
+
+  const maxSeq = lastQ
+    ? parseInt(((lastQ as Record<string, unknown>).display_id as string).split('-')[1], 10)
+    : 0;
+  return `${prefix}-${String(maxSeq + 1).padStart(3, '0')}`;
 }
 
 // Validation schema
@@ -125,10 +153,9 @@ const QuestionSchema = z.object({
 // GET - Fetch all questions
 export async function GET(request: NextRequest) {
   try {
-    // SECURITY FIX: Use NODE_ENV instead of hostname check
     const user = await getAuthenticatedUser(request);
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    const isAuthenticated = !!user || isDevelopment;
+    const isLocalDev = await isLocalhostDev();
+    const isAuthenticated = !!user || isLocalDev;
 
     // Rate limit unauthenticated requests
     if (!isAuthenticated) {
@@ -252,10 +279,10 @@ export async function GET(request: NextRequest) {
 // POST - Create new question
 export async function POST(request: NextRequest) {
   try {
-    // Require authentication (development bypass via NODE_ENV only)
+    // Require authentication (safe localhost bypass for local dev only)
     const user = await getAuthenticatedUser(request);
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    if (!user && !isDevelopment) {
+    const isLocalDev = await isLocalhostDev();
+    if (!user && !isLocalDev) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -275,7 +302,7 @@ export async function POST(request: NextRequest) {
     const data = validation.data;
 
     // Check RBAC: Can user create questions in this chapter?
-    if (user && !isDevelopment) {
+    if (user && !isLocalDev) {
       const hasPermission = await canEditQuestion(user.email!, data.metadata.chapter_id);
       if (!hasPermission) {
         return NextResponse.json(
@@ -299,29 +326,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Resolve display_id: use caller-supplied value, or auto-generate from max existing sequence
+    // Resolve display_id: use caller-supplied value, or auto-generate from max existing sequence.
+    // Auto-generation uses a retry loop to handle concurrent inserts that could
+    // produce the same sequence number (race condition on the unique index).
     let display_id = data.display_id as string | undefined;
+    let autoGeneratedPrefix: string | null = null;
 
     if (!display_id) {
-      const prefix = CHAPTER_PREFIX_MAP[data.metadata.chapter_id]
+      autoGeneratedPrefix = CHAPTER_PREFIX_MAP[data.metadata.chapter_id]
         ?? data.metadata.chapter_id.split('_').pop()!.toUpperCase().substring(0, 4);
 
-      // Find the highest existing sequence number for this prefix by querying questions_v2
-      const lastQ = await QuestionV2.findOne(
-        { display_id: { $regex: `^${prefix}-\\d+$` }, deleted_at: null },
-        { display_id: 1 }
-      ).sort({ display_id: -1 }).lean();
-
-      // Also check soft-deleted to avoid reusing a number
-      const lastQAny = await QuestionV2.findOne(
-        { display_id: { $regex: `^${prefix}-\\d+$` } },
-        { display_id: 1 }
-      ).sort({ display_id: -1 }).lean();
-
-      const maxActive = lastQ ? parseInt(((lastQ as Record<string, unknown>).display_id as string).split('-')[1], 10) : 0;
-      const maxAll = lastQAny ? parseInt(((lastQAny as Record<string, unknown>).display_id as string).split('-')[1], 10) : 0;
-      const nextSeq = Math.max(maxActive, maxAll) + 1;
-      display_id = `${prefix}-${String(nextSeq).padStart(3, '0')}`;
+      display_id = await generateNextDisplayId(autoGeneratedPrefix);
     }
 
     // Collect all asset IDs
@@ -368,9 +383,27 @@ export async function POST(request: NextRequest) {
       asset_ids
     };
 
-    // Use insertOne on the raw collection to avoid Mongoose middleware issues
+    // Insert with retry: if display_id was auto-generated and a concurrent
+    // request grabbed the same sequence number, regenerate and retry (up to 3 times).
     const col = QuestionV2.collection;
-    await col.insertOne(questionDoc as unknown as Record<string, unknown>);
+    const MAX_RETRIES = 3;
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        await col.insertOne(questionDoc as unknown as Record<string, unknown>);
+        break; // success
+      } catch (insertErr: unknown) {
+        const isDuplicateKey =
+          insertErr instanceof Error &&
+          (insertErr.message.includes('E11000') || (insertErr as { code?: number }).code === 11000);
+        if (isDuplicateKey && autoGeneratedPrefix && attempt < MAX_RETRIES) {
+          // Regenerate display_id and update the doc
+          display_id = await generateNextDisplayId(autoGeneratedPrefix);
+          questionDoc.display_id = display_id;
+          continue;
+        }
+        throw insertErr; // not a dup key or out of retries
+      }
+    }
 
     // Chapter stats in MongoDB are no longer updated — taxonomy is code-based (taxonomyData_from_csv.ts).
     // Stats are computed on-demand by querying questions_v2 directly.

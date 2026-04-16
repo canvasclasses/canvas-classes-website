@@ -113,23 +113,6 @@ export async function POST(req: NextRequest) {
 
         await connectToDatabase();
 
-        // Upsert: create document if user has never practised before
-        let progress = await UserProgress.findById(userId);
-        if (!progress) {
-            progress = new UserProgress({
-                _id: userId,
-                user_email: '', // filled on profile completion
-                recent_attempts: [],
-                all_attempted_ids: [],
-                starred_questions: [],
-                test_sessions: [],
-                chapter_progress: new Map(),
-                concept_mastery: new Map(),
-                stats: {},
-                current_session: null,
-            });
-        }
-
         const attempt: IQuestionAttempt = {
             question_id,
             display_id: display_id ?? question_id.slice(0, 8).toUpperCase(),
@@ -143,7 +126,38 @@ export async function POST(req: NextRequest) {
             selected_option,
         };
 
-        await progress.recordAttempt(attempt);
+        // Retry loop: optimistic concurrency on UserProgress means a
+        // VersionError is thrown if another request modified the document
+        // between our read and save. Retry up to 3 times.
+        const MAX_RETRIES = 3;
+        for (let attempt_num = 0; attempt_num <= MAX_RETRIES; attempt_num++) {
+            try {
+                let progress = await UserProgress.findById(userId);
+                if (!progress) {
+                    progress = new UserProgress({
+                        _id: userId,
+                        user_email: '',
+                        recent_attempts: [],
+                        all_attempted_ids: [],
+                        starred_questions: [],
+                        test_sessions: [],
+                        chapter_progress: new Map(),
+                        concept_mastery: new Map(),
+                        stats: {},
+                        current_session: null,
+                    });
+                }
+                await progress.recordAttempt(attempt);
+                break; // success
+            } catch (concurrencyErr: unknown) {
+                const isVersionError =
+                    concurrencyErr instanceof Error && concurrencyErr.name === 'VersionError';
+                if (isVersionError && attempt_num < MAX_RETRIES) {
+                    continue; // re-read and retry
+                }
+                throw concurrencyErr;
+            }
+        }
 
         return NextResponse.json({ success: true });
     } catch (err) {

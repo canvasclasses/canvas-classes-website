@@ -187,3 +187,77 @@ The taxonomy file is auto-updated by the dashboard at `/crucible/admin/taxonomy`
 - Primary button: `bg-gradient-to-r from-orange-500 to-amber-500 text-black font-bold`
 - Ghost button: `bg-white/5 border border-white/10 hover:bg-white/10`
 - Card: `bg-[#151E32] border border-white/5 rounded-xl`
+
+---
+
+## 8. SECURITY RULES — MANDATORY FOR EVERY CHANGE
+
+These rules are **non-negotiable**. Every agent must follow them when creating or modifying any API route, server action, or backend logic. Violations are treated as bugs.
+
+### 8.1 Authentication Is Required by Default
+
+- **Every API route under `/api/v2/`** that performs a write (POST, PATCH, PUT, DELETE) **must** call an auth guard before touching the database. No exceptions.
+- **Admin routes**: Use `requireAdmin()` from `lib/bookAuth.ts` (for server components/actions) or `getAuthenticatedUser()` + `isAdmin()` from `lib/auth.ts` (for route handlers).
+- **Student routes** (e.g. flag submission, progress save): Use `getAuthenticatedUser()` from `lib/auth.ts` to verify the user is logged in.
+- **Public read routes** are the only exception — if a GET returns non-sensitive public data, auth may be skipped. Document this explicitly with a `// PUBLIC: no auth required` comment.
+- If you are unsure whether a route needs auth, **it needs auth**.
+
+### 8.2 Canonical Auth Files — Never Duplicate
+
+| Context | File | Functions |
+|---|---|---|
+| Route handlers (`/api/**`) | `lib/auth.ts` | `getAuthenticatedUser(request)`, `isAdmin(email)`, `hasScriptSecret(request)` |
+| Server components / actions | `lib/bookAuth.ts` | `requireAdmin()`, `getUserId()`, `isAdminRequest()`, `isLocalhostDev()` |
+
+**Never define a local `getAuthenticatedUser`, `isAdmin`, or `hasScriptSecret` inside a route file.** Always import from the shared modules above. If you need new auth logic, add it to one of these two files.
+
+### 8.3 Never Use NODE_ENV for Auth Bypass
+
+- `process.env.NODE_ENV === 'development'` must **never** be used to skip authentication. Vercel preview deployments also set `NODE_ENV=development`, making this a production bypass.
+- For local dev convenience, use `isLocalhostDev()` from `lib/bookAuth.ts` — it checks hostname + NODE_ENV + confirms the app is not on Vercel.
+
+### 8.4 Input Validation and Sanitization
+
+- **Every POST/PATCH body** must be validated with a Zod schema or explicit field whitelist before reaching the database. Never pass raw `body` to `$set` or any Mongoose update.
+- **File uploads**: Sanitize filenames (strip `..`, `/`, `\`, special chars), enforce size limits, and verify the resolved path stays within the intended directory.
+- **URL parameters**: User-supplied redirect URLs must pass through `sanitizeRedirect()` from `lib/redirectValidation.ts`. Never use `window.location.href = userInput` or `redirect(userInput)` directly.
+- **HTML rendering**: Any `innerHTML` assignment must sanitize through `DOMPurify` first. Use the KaTeX MathML allowlist pattern from `MathRenderer.tsx`.
+
+### 8.5 Error Responses Must Not Leak Internals
+
+- Never return `error.message`, `error.stack`, or raw exception strings to the client.
+- Use generic messages: `"Failed to save question"`, `"Internal server error"`.
+- Log the full error server-side with `console.error()` for debugging.
+
+### 8.6 Database Safety
+
+- **No mass assignment**: Always use explicit field whitelists when updating documents. Never `$set: body`.
+- **Concurrency**: Use Mongoose optimistic concurrency (`optimisticConcurrency: true` in schema) with retry loops for any read-modify-write pattern (e.g. user progress, counters).
+- **Unique fields**: Wrap inserts that depend on unique fields (e.g. `display_id`) in a retry loop that catches `E11000` duplicate key errors and regenerates.
+- **Queries must be bounded**: Every `.find()` that returns a list must include `.limit()`. Use URL params for pagination with a hard cap (e.g. `Math.min(requested, 200)`).
+
+### 8.7 No Secrets in Client Code
+
+- Never send secrets, API keys, or admin tokens in client-side headers or request bodies.
+- `NEXT_PUBLIC_*` env vars are visible to every browser. Only Supabase URL and anon key belong there.
+- Auth in the browser relies on Supabase session cookies — they are sent automatically on same-origin requests. No manual secret headers needed.
+
+### 8.8 SSRF and External Requests
+
+- Any server-side proxy or fetch to a user-supplied URL must validate the hostname with strict `.endsWith()` suffix matching against an allowlist. Never use `.includes()` — it allows subdomain spoofing (e.g. `evil-r2.dev.com` matches `.includes('r2.dev')`).
+- Only allow HTTPS URLs for external requests.
+
+### 8.9 Rate Limiting and Memory
+
+- In-memory rate limiters (`Map`-based) must include periodic TTL cleanup and a hard cap on entries (e.g. 5000) to prevent OOM under sustained unique-IP traffic.
+- Add a comment noting that Redis-based rate limiting (e.g. Upstash) should replace in-memory maps at production scale.
+
+### 8.10 Post-Build Security Check
+
+After completing any feature that adds or modifies API routes, **always run this checklist before considering the work done**:
+
+1. Does every mutating endpoint have an auth guard?
+2. Is the request body validated with a schema or whitelist?
+3. Do error responses avoid leaking internal details?
+4. Are database queries bounded with `.limit()`?
+5. Are there any new local auth helper functions that should use the shared imports instead?

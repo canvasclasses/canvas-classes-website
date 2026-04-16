@@ -1,32 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import Flashcard from '@/lib/models/Flashcard';
-import { createClient } from '@/app/utils/supabase/server';
-
-async function getAuthenticatedUser() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  // SECURITY FIX: Don't return fake user in production
-  if (!supabaseUrl || !supabaseKey) {
-    console.error('Supabase credentials not configured');
-    return null;
-  }
-
-  try {
-    const supabase = await createClient();
-    if (!supabase) return null;
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    if (session?.user) {
-      return { id: session.user.id, email: session.user.email || '' };
-    }
-    return null;
-  } catch (error) {
-    console.error('Auth check failed:', error);
-    return null;
-  }
-}
+import { getAuthenticatedUser } from '@/lib/auth';
+import { isLocalhostDev } from '@/lib/bookAuth';
 
 // GET /api/v2/flashcards/[id] - Get single flashcard
 export async function GET(
@@ -37,7 +13,7 @@ export async function GET(
     await connectToDatabase();
     const { id } = await params;
 
-    const user = await getAuthenticatedUser();
+    const user = await getAuthenticatedUser(req);
     const isAuthenticated = !!user;
 
     const flashcard = await Flashcard.findOne({
@@ -84,11 +60,8 @@ export async function PATCH(
     await connectToDatabase();
     const { id } = await params;
 
-    // SECURITY FIX: Use NODE_ENV instead of user ID check
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    
-    if (!isDevelopment) {
-      const user = await getAuthenticatedUser();
+    if (!(await isLocalhostDev())) {
+      const user = await getAuthenticatedUser(req);
       if (!user) {
         return NextResponse.json(
           { error: 'Authentication required' },
@@ -97,14 +70,6 @@ export async function PATCH(
       }
 
       const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(e => e.length > 0);
-      if (adminEmails.length === 0) {
-        console.error('ADMIN_EMAILS not configured');
-        return NextResponse.json(
-          { error: 'Admin system not configured' },
-          { status: 500 }
-        );
-      }
-      
       if (!user.email || !adminEmails.includes(user.email)) {
         return NextResponse.json(
           { error: 'Admin access required' },
@@ -180,11 +145,8 @@ export async function DELETE(
     await connectToDatabase();
     const { id } = await params;
 
-    // SECURITY FIX: Use NODE_ENV instead of user ID check
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    
-    if (!isDevelopment) {
-      const user = await getAuthenticatedUser();
+    if (!(await isLocalhostDev())) {
+      const user = await getAuthenticatedUser(req);
       if (!user) {
         return NextResponse.json(
           { error: 'Authentication required' },
@@ -193,14 +155,6 @@ export async function DELETE(
       }
 
       const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(e => e.length > 0);
-      if (adminEmails.length === 0) {
-        console.error('ADMIN_EMAILS not configured');
-        return NextResponse.json(
-          { error: 'Admin system not configured' },
-          { status: 500 }
-        );
-      }
-      
       if (!user.email || !adminEmails.includes(user.email)) {
         return NextResponse.json(
           { error: 'Admin access required' },

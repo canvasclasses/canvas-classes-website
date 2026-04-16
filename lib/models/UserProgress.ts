@@ -251,6 +251,7 @@ const UserProgressSchema = new Schema<IUserProgress>({
 }, {
   timestamps: false,
   collection: 'user_progress',
+  optimisticConcurrency: true, // use __v to detect concurrent modifications
 });
 
 // ============================================

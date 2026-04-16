@@ -54,13 +54,16 @@ export async function PUT(req: NextRequest, { params }: Params) {
     await connectToDatabase();
     const body = await req.json();
 
-    // Prevent overwriting _id or slug via this endpoint
-    delete body._id;
-    delete body.slug;
+    // Whitelist only the fields admins are allowed to update
+    const allowedFields = ['title', 'subject', 'grade', 'board', 'cover_image', 'chapters', 'is_published'] as const;
+    const update: Record<string, unknown> = {};
+    for (const key of allowedFields) {
+      if (key in body) update[key] = body[key];
+    }
 
     const book = await BookModel.findOneAndUpdate(
       { slug: bookSlug },
-      { $set: body },
+      { $set: update },
       { new: true, runValidators: true }
     ).lean();
 

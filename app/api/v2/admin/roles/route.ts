@@ -3,24 +3,9 @@ import connectToDatabase from '@/lib/mongodb';
 import { UserRole } from '@/lib/models/UserRole';
 import { RoleAuditLog } from '@/lib/models/RoleAuditLog';
 import { getUserPermissions } from '@/lib/rbac';
-import { createServerClient } from '@supabase/ssr';
+import { getAuthenticatedUser } from '@/lib/auth';
+import { isLocalhostDev } from '@/lib/bookAuth';
 import { z } from 'zod';
-
-async function getAuthenticatedUser(request: NextRequest) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  
-  if (!supabaseUrl || !supabaseAnonKey) {
-    return null;
-  }
-  
-  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
-    cookies: { getAll: () => request.cookies.getAll(), setAll: () => {} },
-  });
-  
-  const { data: { user } } = await supabase.auth.getUser();
-  return user;
-}
 
 const RoleSchema = z.object({
   email: z.string().email(),
@@ -32,16 +17,12 @@ const RoleSchema = z.object({
 // GET /api/v2/admin/roles - List all user roles
 export async function GET(request: NextRequest) {
   try {
-    // SECURITY FIX: Use NODE_ENV instead of hostname check
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    
-    if (!isDevelopment) {
+    if (!(await isLocalhostDev())) {
       const user = await getAuthenticatedUser(request);
       if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
 
-      // Check if user has permission to manage roles
       const permissions = await getUserPermissions(user.email!);
       if (!permissions.canManageRoles) {
         return NextResponse.json({ error: 'Forbidden: Only super admins can manage roles' }, { status: 403 });
@@ -53,6 +34,7 @@ export async function GET(request: NextRequest) {
     const roles = await UserRole.find({ is_active: true })
       .select('-__v')
       .sort({ granted_at: -1 })
+      .limit(500) // safety cap — if you ever have 500+ roles, add pagination
       .lean();
 
     return NextResponse.json({ roles });
@@ -65,19 +47,16 @@ export async function GET(request: NextRequest) {
 // POST /api/v2/admin/roles - Create or update a user role
 export async function POST(request: NextRequest) {
   try {
-    // SECURITY FIX: Use NODE_ENV instead of hostname check
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    
+    const isLocalDev = await isLocalhostDev();
     let userEmail = 'local-dev';
-    
-    if (!isDevelopment) {
+
+    if (!isLocalDev) {
       const user = await getAuthenticatedUser(request);
       if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
       userEmail = user.email!;
 
-      // Check if user has permission to manage roles
       const permissions = await getUserPermissions(userEmail);
       if (!permissions.canManageRoles) {
         return NextResponse.json({ error: 'Forbidden: Only super admins can manage roles' }, { status: 403 });
@@ -88,8 +67,8 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const validated = RoleSchema.parse(body);
 
-    // Prevent self-modification (except in development)
-    if (process.env.NODE_ENV !== 'development' && validated.email.toLowerCase() === userEmail.toLowerCase()) {
+    // Prevent self-modification (except in local development)
+    if (!isLocalDev && validated.email.toLowerCase() === userEmail.toLowerCase()) {
       return NextResponse.json({ 
         error: 'Cannot modify your own role. Ask another super admin.' 
       }, { status: 403 });
@@ -179,19 +158,16 @@ export async function POST(request: NextRequest) {
 // DELETE /api/v2/admin/roles?email=user@example.com - Deactivate a user role
 export async function DELETE(request: NextRequest) {
   try {
-    // SECURITY FIX: Use NODE_ENV instead of hostname check
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    
+    const isLocalDev = await isLocalhostDev();
     let userEmail = 'local-dev';
-    
-    if (!isDevelopment) {
+
+    if (!isLocalDev) {
       const user = await getAuthenticatedUser(request);
       if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
       userEmail = user.email!;
 
-      // Check if user has permission to manage roles
       const permissions = await getUserPermissions(userEmail);
       if (!permissions.canManageRoles) {
         return NextResponse.json({ error: 'Forbidden: Only super admins can manage roles' }, { status: 403 });
@@ -206,8 +182,8 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Email parameter required' }, { status: 400 });
     }
 
-    // Prevent self-deletion (except in development)
-    if (process.env.NODE_ENV !== 'development' && targetEmail.toLowerCase() === userEmail.toLowerCase()) {
+    // Prevent self-deletion (except in local development)
+    if (!isLocalDev && targetEmail.toLowerCase() === userEmail.toLowerCase()) {
       return NextResponse.json({ 
         error: 'Cannot delete your own role. Ask another super admin.' 
       }, { status: 403 });

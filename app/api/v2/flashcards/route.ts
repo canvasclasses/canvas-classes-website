@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import Flashcard from '@/lib/models/Flashcard';
-import { createClient } from '@/app/utils/supabase/server';
+import { getAuthenticatedUser } from '@/lib/auth';
+import { isLocalhostDev } from '@/lib/bookAuth';
 
-// Rate limiting map (in-memory, simple implementation)
+// In-memory rate limiter with periodic cleanup to prevent memory leaks.
+// NOTE: per-instance only — swap for Redis at scale.
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const UNAUTHENTICATED_LIMIT = 30;
 const AUTHENTICATED_LIMIT = 300;
+const RATE_LIMIT_MAX_ENTRIES = 5000;
+let lastCleanup = Date.now();
 
 function getRateLimitKey(req: NextRequest): string {
   const forwarded = req.headers.get('x-forwarded-for');
@@ -17,6 +21,19 @@ function getRateLimitKey(req: NextRequest): string {
 
 function checkRateLimit(key: string, limit: number): boolean {
   const now = Date.now();
+
+  // Periodic cleanup: evict expired entries
+  if (now - lastCleanup > RATE_LIMIT_WINDOW * 2) {
+    for (const [k, v] of rateLimitMap) {
+      if (now > v.resetTime) rateLimitMap.delete(k);
+    }
+    lastCleanup = now;
+  }
+
+  if (rateLimitMap.size >= RATE_LIMIT_MAX_ENTRIES && !rateLimitMap.has(key)) {
+    return false;
+  }
+
   const record = rateLimitMap.get(key);
 
   if (!record || now > record.resetTime) {
@@ -32,39 +49,14 @@ function checkRateLimit(key: string, limit: number): boolean {
   return true;
 }
 
-async function getAuthenticatedUser() {
-  // Check if Supabase is configured
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    return null;
-  }
-
-  try {
-    const supabase = await createClient();
-    if (!supabase) return null;
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    if (session?.user) {
-      return { id: session.user.id, email: session.user.email || '' };
-    }
-    return null;
-  } catch (error) {
-    console.error('Auth check failed:', error);
-    return null;
-  }
-}
-
 // GET /api/v2/flashcards - Fetch flashcards with optional filters
 export async function GET(req: NextRequest) {
   try {
     await connectToDatabase();
 
-    // Check authentication (development bypass via NODE_ENV only)
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    const user = await getAuthenticatedUser();
-    const isAuthenticated = isDevelopment || !!user;
+    // Check authentication (safe localhost bypass only)
+    const user = await getAuthenticatedUser(req);
+    const isAuthenticated = (await isLocalhostDev()) || !!user;
 
     // Rate limiting
     const rateLimitKey = getRateLimitKey(req);
@@ -160,11 +152,9 @@ export async function POST(req: NextRequest) {
   try {
     await connectToDatabase();
 
-    // Check authentication and admin (development bypass via NODE_ENV only)
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    
-    if (!isDevelopment) {
-      const user = await getAuthenticatedUser();
+    // Check authentication and admin (safe localhost bypass only)
+    if (!(await isLocalhostDev())) {
+      const user = await getAuthenticatedUser(req);
       if (!user) {
         return NextResponse.json(
           { error: 'Authentication required' },
