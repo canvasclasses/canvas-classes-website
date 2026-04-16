@@ -58,21 +58,22 @@ export async function POST(req: NextRequest) {
             score?.total > 0 ? Math.round((score.correct / score.total) * 100) : 0;
         const duration_sec = timing?.total_seconds ?? 0;
 
-        await trackServer(userId, 'practice_session_completed', {
-            chapter_id,
-            mode: test_config?.difficulty_mix ?? 'guided',
-            accuracy,
-            duration_sec,
-            correct_count: score.correct,
-            total_count: score.total,
-            session_id: testResult._id?.toString() ?? testResult.id,
-        });
-
-        await peopleSetServer(userId, { last_active_at: new Date().toISOString() });
-        await peopleIncrementServer(userId, {
-            total_questions_answered: score.total,
-            total_practice_minutes: Math.round(duration_sec / 60),
-        });
+        await Promise.all([
+            trackServer(userId, 'practice_session_completed', {
+                chapter_id,
+                mode: test_config?.difficulty_mix ?? 'guided',
+                accuracy,
+                duration_sec,
+                correct_count: score.correct,
+                total_count: score.total,
+                session_id: testResult._id?.toString() ?? testResult.id,
+            }),
+            peopleSetServer(userId, { last_active_at: new Date().toISOString() }),
+            peopleIncrementServer(userId, {
+                total_questions_answered: score.total,
+                total_practice_minutes: Math.round(duration_sec / 60),
+            }),
+        ]).catch((err) => console.error('[analytics test-results]', err));
 
         return NextResponse.json({
             success: true,

@@ -430,7 +430,7 @@ export async function POST(request: NextRequest) {
       console.warn('Audit log creation failed (non-critical):', auditErr);
     }
 
-    await trackServer(user?.email ?? user?.id ?? 'local_dev', 'admin_action', {
+    await trackServer(user?.id ?? 'local_dev', 'admin_action', {
       type: 'create',
       entity: 'question',
       entity_id: questionDoc._id,

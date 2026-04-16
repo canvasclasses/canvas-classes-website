@@ -15,6 +15,15 @@ const PII_KEYS = [
 let clientInitialized = false;
 let identified = false;
 
+// Events queued before identify() lands (e.g. a chapter page useEffect
+// fires chapter_opened while MixpanelProvider's async getUser is still
+// resolving on hydration). Flushed on identify. For users who never
+// identify (anonymous), the window below closes and the queue is
+// dropped — matches spec "anonymous users fire nothing to Mixpanel".
+const preIdentifyQueue: Array<[string, Record<string, unknown>]> = [];
+const PRE_IDENTIFY_WINDOW_MS = 2500;
+let preIdentifyWindowClosed = false;
+
 function sanitize(props: Record<string, unknown> = {}) {
   const clean: Record<string, unknown> = {};
   for (const [k, v] of Object.entries(props)) {
@@ -41,6 +50,10 @@ export function initMixpanel() {
     track_pageview: false,
   });
   clientInitialized = true;
+  setTimeout(() => {
+    preIdentifyWindowClosed = true;
+    preIdentifyQueue.length = 0;
+  }, PRE_IDENTIFY_WINDOW_MS);
 }
 
 export function identify(userId: string, traits: Record<string, unknown> = {}) {
@@ -48,10 +61,18 @@ export function identify(userId: string, traits: Record<string, unknown> = {}) {
   mixpanelBrowser.identify(userId);
   mixpanelBrowser.people.set(sanitize(traits));
   identified = true;
+  for (const [ev, p] of preIdentifyQueue) {
+    mixpanelBrowser.track(ev, sanitize(p));
+  }
+  preIdentifyQueue.length = 0;
 }
 
 export function track(event: string, props: Record<string, unknown> = {}) {
-  if (!clientInitialized || !hasConsent() || !identified) return;
+  if (!clientInitialized || !hasConsent()) return;
+  if (!identified) {
+    if (!preIdentifyWindowClosed) preIdentifyQueue.push([event, props]);
+    return;
+  }
   mixpanelBrowser.track(event, sanitize(props));
 }
 
@@ -74,6 +95,7 @@ export function reset() {
   if (!clientInitialized) return;
   mixpanelBrowser.reset();
   identified = false;
+  preIdentifyQueue.length = 0;
 }
 
 // ── SERVER ────────────────────────────────────────────────────────────────

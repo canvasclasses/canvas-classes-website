@@ -275,7 +275,7 @@ export async function PATCH(
       await auditLog.save();
     }
 
-    await trackServer(user?.email ?? user?.id ?? 'local_dev', 'admin_action', {
+    await trackServer(user?.id ?? 'local_dev', 'admin_action', {
       type: 'edit',
       entity: 'question',
       entity_id: id,
@@ -372,7 +372,7 @@ export async function DELETE(
       console.warn('Audit log failed (non-fatal):', auditError);
     }
 
-    await trackServer(user?.email ?? user?.id ?? 'local_dev', 'admin_action', {
+    await trackServer(user?.id ?? 'local_dev', 'admin_action', {
       type: 'delete',
       entity: 'question',
       entity_id: id,
