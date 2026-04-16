@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { track } from '@/lib/analytics/mixpanel';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // TYPES
@@ -764,6 +765,10 @@ function HandTrickPhase({ onBack }: { onBack:()=>void }) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function BiomoleculesSimulator() {
+  useEffect(() => {
+    track('simulation_opened', { simulation_id: 'biomolecules', subject: 'organic' });
+  }, []);
+
   const [phase,    setPhase]    = useState<Phase>('cyclization');
   const [progress, setProgress] = useState(0);
   const [anomer,   setAnomer]   = useState<Anomer>('alpha');

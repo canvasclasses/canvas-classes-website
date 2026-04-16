@@ -1,11 +1,16 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Maximize2, RotateCcw, Info } from 'lucide-react';
+import { track } from '@/lib/analytics/mixpanel';
 
 export default function VSEPRSimulator() {
     const iframeRef = useRef<HTMLIFrameElement>(null);
     const [isFullscreen, setIsFullscreen] = useState(false);
+
+    useEffect(() => {
+        track('simulation_opened', { simulation_id: 'vsepr', subject: 'inorganic' });
+    }, []);
 
     const handleReload = () => {
         if (iframeRef.current) {
