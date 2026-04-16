@@ -8,8 +8,8 @@ export interface TaxonomyNode {
     parent_id: string | null;
     type: 'chapter' | 'topic' | 'micro_topic';
     sequence_order?: number;
-    class_level?: 11 | 12;
-    chapterType?: 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra';
+    class_level?: 9 | 10 | 11 | 12;
+    chapterType?: 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra' | 'biology';
 }
 
 export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
@@ -1485,10 +1485,102 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'ma_3d_geom', name: 'Three Dimensional Geometry', parent_id: null, type: 'chapter', sequence_order: 333, class_level: 11, chapterType: 'vector_algebra' },
     { id: 'tag_ma_3d_geom', name: 'General Questions', parent_id: 'ma_3d_geom', type: 'topic' },
 
+    // Class 9 Physics
+    { id: 'ph9_motion', name: 'Motion', parent_id: null, type: 'chapter', sequence_order: 901, class_level: 9, chapterType: 'physics' },
+    { id: 'tag_ph9_motion_1', name: 'Distance, Displacement, Speed and Velocity', parent_id: 'ph9_motion', type: 'topic' },
+    { id: 'tag_ph9_motion_2', name: 'Acceleration and Retardation', parent_id: 'ph9_motion', type: 'topic' },
+    { id: 'tag_ph9_motion_3', name: 'Equations of Motion', parent_id: 'ph9_motion', type: 'topic' },
+    { id: 'tag_ph9_motion_4', name: 'Distance-Time and Velocity-Time Graphs', parent_id: 'ph9_motion', type: 'topic' },
+    { id: 'tag_ph9_motion_5', name: 'Uniform and Non-Uniform Motion', parent_id: 'ph9_motion', type: 'topic' },
+
+    { id: 'ph9_force', name: 'Force and Laws of Motion', parent_id: null, type: 'chapter', sequence_order: 902, class_level: 9, chapterType: 'physics' },
+    { id: 'tag_ph9_force_1', name: 'Balanced and Unbalanced Forces', parent_id: 'ph9_force', type: 'topic' },
+    { id: 'tag_ph9_force_2', name: "Newton's First Law of Motion (Inertia)", parent_id: 'ph9_force', type: 'topic' },
+    { id: 'tag_ph9_force_3', name: "Newton's Second Law — Momentum and F = ma", parent_id: 'ph9_force', type: 'topic' },
+    { id: 'tag_ph9_force_4', name: "Newton's Third Law of Motion", parent_id: 'ph9_force', type: 'topic' },
+    { id: 'tag_ph9_force_5', name: 'Conservation of Momentum', parent_id: 'ph9_force', type: 'topic' },
+
+    { id: 'ph9_work_energy', name: 'Work and Energy', parent_id: null, type: 'chapter', sequence_order: 903, class_level: 9, chapterType: 'physics' },
+    { id: 'tag_ph9_we_1', name: 'Work Done by a Force', parent_id: 'ph9_work_energy', type: 'topic' },
+    { id: 'tag_ph9_we_2', name: 'Kinetic Energy', parent_id: 'ph9_work_energy', type: 'topic' },
+    { id: 'tag_ph9_we_3', name: 'Potential Energy (Gravitational)', parent_id: 'ph9_work_energy', type: 'topic' },
+    { id: 'tag_ph9_we_4', name: 'Law of Conservation of Energy', parent_id: 'ph9_work_energy', type: 'topic' },
+    { id: 'tag_ph9_we_5', name: 'Power and Commercial Unit of Energy (kWh)', parent_id: 'ph9_work_energy', type: 'topic' },
+
+    { id: 'ph9_sound', name: 'Sound', parent_id: null, type: 'chapter', sequence_order: 904, class_level: 9, chapterType: 'physics' },
+    { id: 'tag_ph9_sound_1', name: 'Production and Propagation of Sound', parent_id: 'ph9_sound', type: 'topic' },
+    { id: 'tag_ph9_sound_2', name: 'Wave Properties (Amplitude, Frequency, Wavelength, Time Period)', parent_id: 'ph9_sound', type: 'topic' },
+    { id: 'tag_ph9_sound_3', name: 'Speed of Sound in Different Media', parent_id: 'ph9_sound', type: 'topic' },
+    { id: 'tag_ph9_sound_4', name: 'Reflection of Sound and Echo', parent_id: 'ph9_sound', type: 'topic' },
+    { id: 'tag_ph9_sound_5', name: 'The Human Ear', parent_id: 'ph9_sound', type: 'topic' },
+
+    // Class 9 Chemistry
+    { id: 'ch9_matter', name: 'Matter in Our Surroundings', parent_id: null, type: 'chapter', sequence_order: 911, class_level: 9, chapterType: 'physical' },
+    { id: 'tag_ch9_mat_1', name: 'States of Matter — Properties of Solids, Liquids, Gases', parent_id: 'ch9_matter', type: 'topic' },
+    { id: 'tag_ch9_mat_2', name: 'Interconversion of States (Melting, Boiling, Sublimation)', parent_id: 'ch9_matter', type: 'topic' },
+    { id: 'tag_ch9_mat_3', name: 'Evaporation and Latent Heat', parent_id: 'ch9_matter', type: 'topic' },
+    { id: 'tag_ch9_mat_4', name: 'Effect of Temperature and Pressure on States', parent_id: 'ch9_matter', type: 'topic' },
+
+    { id: 'ch9_pure_matter', name: 'Is Matter Around Us Pure?', parent_id: null, type: 'chapter', sequence_order: 912, class_level: 9, chapterType: 'physical' },
+    { id: 'tag_ch9_pur_1', name: 'Pure Substances vs Mixtures', parent_id: 'ch9_pure_matter', type: 'topic' },
+    { id: 'tag_ch9_pur_2', name: 'Homogeneous and Heterogeneous Mixtures', parent_id: 'ch9_pure_matter', type: 'topic' },
+    { id: 'tag_ch9_pur_3', name: 'Solutions, Colloids, and Suspensions', parent_id: 'ch9_pure_matter', type: 'topic' },
+    { id: 'tag_ch9_pur_4', name: 'Separation Techniques (Filtration, Distillation, Chromatography)', parent_id: 'ch9_pure_matter', type: 'topic' },
+    { id: 'tag_ch9_pur_5', name: 'Elements and Compounds', parent_id: 'ch9_pure_matter', type: 'topic' },
+
+    { id: 'ch9_atoms_molecules', name: 'Atoms and Molecules', parent_id: null, type: 'chapter', sequence_order: 913, class_level: 9, chapterType: 'physical' },
+    { id: 'tag_ch9_am_1', name: 'Laws of Chemical Combination', parent_id: 'ch9_atoms_molecules', type: 'topic' },
+    { id: 'tag_ch9_am_2', name: "Dalton's Atomic Theory", parent_id: 'ch9_atoms_molecules', type: 'topic' },
+    { id: 'tag_ch9_am_3', name: 'Atoms, Symbols, and Atomic Mass', parent_id: 'ch9_atoms_molecules', type: 'topic' },
+    { id: 'tag_ch9_am_4', name: 'Molecules, Molecular Formula, and Molecular Mass', parent_id: 'ch9_atoms_molecules', type: 'topic' },
+    { id: "tag_ch9_am_5", name: "Mole Concept and Avogadro's Number", parent_id: 'ch9_atoms_molecules', type: 'topic' },
+
+    { id: 'ch9_atomic_structure', name: 'Structure of the Atom', parent_id: null, type: 'chapter', sequence_order: 914, class_level: 9, chapterType: 'physical' },
+    { id: 'tag_ch9_sat_1', name: 'Sub-atomic Particles (Discovery of Electron, Proton, Neutron)', parent_id: 'ch9_atomic_structure', type: 'topic' },
+    { id: 'tag_ch9_sat_2', name: "Thomson's and Rutherford's Atomic Models", parent_id: 'ch9_atomic_structure', type: 'topic' },
+    { id: 'tag_ch9_sat_3', name: "Bohr's Model of the Atom", parent_id: 'ch9_atomic_structure', type: 'topic' },
+    { id: 'tag_ch9_sat_4', name: 'Distribution of Electrons, Valency, Atomic Number, Mass Number', parent_id: 'ch9_atomic_structure', type: 'topic' },
+    { id: 'tag_ch9_sat_5', name: 'Isotopes and Isobars', parent_id: 'ch9_atomic_structure', type: 'topic' },
+
+    // Class 9 Biology
+    { id: 'bio9_cell', name: 'The Fundamental Unit of Life', parent_id: null, type: 'chapter', sequence_order: 921, class_level: 9, chapterType: 'biology' },
+    { id: 'tag_bio9_cel_1', name: 'Cell Discovery and Cell Theory', parent_id: 'bio9_cell', type: 'topic' },
+    { id: 'tag_bio9_cel_2', name: 'Plant vs Animal Cells — Structural Differences', parent_id: 'bio9_cell', type: 'topic' },
+    { id: 'tag_bio9_cel_3', name: 'Cell Membrane and Cell Wall', parent_id: 'bio9_cell', type: 'topic' },
+    { id: 'tag_bio9_cel_4', name: 'Nucleus, Chromosomes, and DNA', parent_id: 'bio9_cell', type: 'topic' },
+    { id: 'tag_bio9_cel_5', name: 'Cell Organelles (Mitochondria, Plastids, ER, Golgi, Vacuole, Ribosome)', parent_id: 'bio9_cell', type: 'topic' },
+    { id: 'tag_bio9_cel_6', name: 'Osmosis, Diffusion, and Plasmolysis', parent_id: 'bio9_cell', type: 'topic' },
+
+    { id: 'bio9_tissues', name: 'Tissues', parent_id: null, type: 'chapter', sequence_order: 922, class_level: 9, chapterType: 'biology' },
+    { id: 'tag_bio9_tis_1', name: 'Meristematic Tissue (Apical, Lateral, Intercalary)', parent_id: 'bio9_tissues', type: 'topic' },
+    { id: 'tag_bio9_tis_2', name: 'Permanent Plant Tissues (Parenchyma, Collenchyma, Sclerenchyma)', parent_id: 'bio9_tissues', type: 'topic' },
+    { id: 'tag_bio9_tis_3', name: 'Complex Plant Tissues (Xylem, Phloem)', parent_id: 'bio9_tissues', type: 'topic' },
+    { id: 'tag_bio9_tis_4', name: 'Epithelial and Connective Tissue', parent_id: 'bio9_tissues', type: 'topic' },
+    { id: 'tag_bio9_tis_5', name: 'Muscular and Nervous Tissue', parent_id: 'bio9_tissues', type: 'topic' },
+
+    { id: 'bio9_diversity', name: 'Diversity in Living Organisms', parent_id: null, type: 'chapter', sequence_order: 923, class_level: 9, chapterType: 'biology' },
+    { id: 'tag_bio9_div_1', name: "Basis of Classification — Whittaker's Five Kingdoms", parent_id: 'bio9_diversity', type: 'topic' },
+    { id: 'tag_bio9_div_2', name: 'Kingdom Monera, Protista, and Fungi', parent_id: 'bio9_diversity', type: 'topic' },
+    { id: 'tag_bio9_div_3', name: 'Kingdom Plantae (Thallophyta to Angiosperms)', parent_id: 'bio9_diversity', type: 'topic' },
+    { id: 'tag_bio9_div_4', name: 'Kingdom Animalia (Non-chordates to Mammals)', parent_id: 'bio9_diversity', type: 'topic' },
+    { id: 'tag_bio9_div_5', name: 'Binomial Nomenclature', parent_id: 'bio9_diversity', type: 'topic' },
+
+    { id: 'bio9_health_disease', name: 'Why Do We Fall Ill?', parent_id: null, type: 'chapter', sequence_order: 924, class_level: 9, chapterType: 'biology' },
+    { id: 'tag_bio9_hd_1', name: 'Health and Disease — Meaning and Distinction', parent_id: 'bio9_health_disease', type: 'topic' },
+    { id: 'tag_bio9_hd_2', name: 'Infectious vs Non-infectious Diseases', parent_id: 'bio9_health_disease', type: 'topic' },
+    { id: 'tag_bio9_hd_3', name: 'Causes of Disease (Bacterial, Viral, Fungal, Protozoan)', parent_id: 'bio9_health_disease', type: 'topic' },
+    { id: 'tag_bio9_hd_4', name: 'Modes of Transmission', parent_id: 'bio9_health_disease', type: 'topic' },
+    { id: 'tag_bio9_hd_5', name: 'Prevention and Immunization', parent_id: 'bio9_health_disease', type: 'topic' },
+
+    { id: 'bio9_food_resources', name: 'Improvement in Food Resources', parent_id: null, type: 'chapter', sequence_order: 925, class_level: 9, chapterType: 'biology' },
+    { id: 'tag_bio9_fr_1', name: 'Crop Improvement (Hybridization, Varieties)', parent_id: 'bio9_food_resources', type: 'topic' },
+    { id: 'tag_bio9_fr_2', name: 'Crop Protection (Weeds, Pests, Diseases)', parent_id: 'bio9_food_resources', type: 'topic' },
+    { id: 'tag_bio9_fr_3', name: 'Animal Husbandry (Cattle, Poultry, Fish, Bee)', parent_id: 'bio9_food_resources', type: 'topic' },
+
 ];
 
 // Summary Statistics
-// Total Chapters: 80
+// Total Chapters: 93
 // Total Tags: 348
 // Total Micro Topics: 337
 // Last saved: 2026-04-06T08:23:46.713Z

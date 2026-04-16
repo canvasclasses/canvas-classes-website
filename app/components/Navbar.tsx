@@ -66,7 +66,7 @@ const class11to12Menu: MegaMenuDef = {
     {
       heading: 'Chemistry',
       links: [
-        { label: 'Class 11 Chemistry', href: '/class-11/chemistry', badge: 'soon' },
+        { label: 'Class 11 Chemistry', href: '/class-11/chemistry', badge: 'new' },
         { label: 'Class 12 Chemistry', href: '/class-12/chemistry', badge: 'soon' },
         { label: 'NCERT Solutions', href: '/ncert-solutions' },
       ],

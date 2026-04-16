@@ -19,6 +19,15 @@ const WIDTH_PREVIEW: Record<NonNullable<ImageBlock['width']>, string> = {
   third: 'w-1/3',
 };
 
+const ASPECT_RATIO_OPTIONS: { value: NonNullable<ImageBlock['aspect_ratio']> | 'natural'; label: string }[] = [
+  { value: 'natural', label: 'Natural' },
+  { value: '16:9',    label: '16 : 9'  },
+  { value: '4:3',     label: '4 : 3'   },
+  { value: '3:2',     label: '3 : 2'   },
+  { value: '1:1',     label: '1 : 1'   },
+  { value: '21:9',    label: '21 : 9'  },
+];
+
 export default function ImageBlockEditor({ block, onChange, onUpload }: Props) {
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
@@ -173,6 +182,31 @@ export default function ImageBlockEditor({ block, onChange, onUpload }: Props) {
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Aspect ratio selector */}
+      <div>
+        <label className="text-xs text-white/40 mb-1 block">Aspect Ratio</label>
+        <div className="flex flex-wrap gap-2">
+          {ASPECT_RATIO_OPTIONS.map(({ value, label }) => {
+            const current = block.aspect_ratio ?? 'natural';
+            return (
+              <button
+                key={value}
+                onClick={() => onChange({ aspect_ratio: value === 'natural' ? undefined : value as ImageBlock['aspect_ratio'] })}
+                className={`px-3 py-1 rounded-lg text-xs transition-colors
+                  ${current === value
+                    ? 'bg-violet-500 text-white font-bold'
+                    : 'bg-white/5 border border-white/10 text-white/50 hover:border-white/20'}`}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+        <p className="mt-1.5 text-[10px] text-white/30 leading-snug">
+          Natural = image shows at its full real height. Any other ratio locks the display height and crops to fill.
+        </p>
       </div>
 
       {/* Alignment selector — controls whether the image sits centred on its own row

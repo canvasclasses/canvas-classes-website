@@ -76,6 +76,7 @@ const ImageBlockSchema = BaseBlockSchema.extend({
   align: z.enum(['center', 'left', 'right']).optional(),
   side_text: z.string().optional(),
   generation_prompt: z.string().optional(),
+  aspect_ratio: z.enum(['16:9', '4:3', '3:2', '1:1', '21:9']).optional(),
 });
 
 const InteractiveImageBlockSchema = BaseBlockSchema.extend({
@@ -174,6 +175,19 @@ const AnimationBlockSchema = BaseBlockSchema.extend({
   width: z.enum(['full', 'half']).optional(),
 });
 
+const ClassifyExerciseRowSchema = z.object({
+  substance: z.string().min(1),
+  is_solution: z.boolean(),
+  explanation: z.string(),
+});
+
+const ClassifyExerciseBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('classify_exercise'),
+  question: z.string().min(1),
+  column_label: z.string().optional(),
+  rows: z.array(ClassifyExerciseRowSchema).min(1),
+});
+
 const InlineQuizBlockSchema = BaseBlockSchema.extend({
   type: z.literal('inline_quiz'),
   questions: z.array(InlineQuizQuestionSchema).min(1),
@@ -190,10 +204,26 @@ const WorkedExampleBlockSchema = BaseBlockSchema.extend({
   video_src: z.string().optional(),
 });
 
+const SimulationPredictionSchema = z.object({
+  prompt: z.string().min(1),
+  options: z.array(z.string()).min(2),
+  reveal_after: z.string().min(1),
+});
+
 const SimulationBlockSchema = BaseBlockSchema.extend({
   type: z.literal('simulation'),
   simulation_id: z.string().min(1),
   title: z.string().optional(),
+  prediction: SimulationPredictionSchema.optional(),
+});
+
+const ReasoningPromptBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('reasoning_prompt'),
+  reasoning_type: z.enum(['logical', 'spatial', 'quantitative', 'analogical']),
+  prompt: z.string().min(1),
+  options: z.array(z.string()).optional(),
+  reveal: z.string().min(1),
+  difficulty_level: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
 });
 
 // ─── Child block union (excludes section to prevent nesting) ─────────────────
@@ -214,9 +244,11 @@ const ChildContentBlockSchema = z.discriminatedUnion('type', [
   TimelineBlockSchema,
   ComparisonCardBlockSchema,
   AnimationBlockSchema,
+  ClassifyExerciseBlockSchema,
   InlineQuizBlockSchema,
   WorkedExampleBlockSchema,
   SimulationBlockSchema,
+  ReasoningPromptBlockSchema,
 ]);
 
 const SectionBlockSchema = BaseBlockSchema.extend({
@@ -244,10 +276,12 @@ export const ContentBlockSchema = z.discriminatedUnion('type', [
   TimelineBlockSchema,
   ComparisonCardBlockSchema,
   AnimationBlockSchema,
+  ClassifyExerciseBlockSchema,
   InlineQuizBlockSchema,
   WorkedExampleBlockSchema,
   SimulationBlockSchema,
   SectionBlockSchema,
+  ReasoningPromptBlockSchema,
 ]);
 
 export const ContentBlocksArraySchema = z.array(ContentBlockSchema);

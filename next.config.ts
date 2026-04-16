@@ -186,6 +186,17 @@ const nextConfig: NextConfig = {
         destination: '/detailed-lectures',
         permanent: true,
       },
+      // NCERT Simplified canonical URL moved to /class-11/chemistry
+      {
+        source: '/books/ncert-simplified',
+        destination: '/class-11/chemistry',
+        permanent: true,
+      },
+      {
+        source: '/books/ncert-simplified/:pageSlug',
+        destination: '/class-11/chemistry/:pageSlug',
+        permanent: true,
+      },
     ];
   },
 };

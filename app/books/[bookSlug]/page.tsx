@@ -41,7 +41,7 @@ export default async function BookLandingPage({ params }: Props) {
           chapter_number: { $in: publishedChapterNumbers },
           published: true,
         })
-          .select('slug title chapter_number page_number reading_time_min')
+          .select('slug title chapter_number page_number reading_time_min content_types')
           .sort({ chapter_number: 1, page_number: 1 })
           .lean();
 
@@ -52,6 +52,7 @@ export default async function BookLandingPage({ params }: Props) {
     chapter_number: p.chapter_number,
     page_number: p.page_number,
     reading_time_min: p.reading_time_min ?? null,
+    content_types: (p as Record<string, unknown>).content_types as ToCPage['content_types'] ?? null,
   }));
 
   const firstPage = pages[0];

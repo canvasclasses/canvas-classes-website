@@ -33,6 +33,8 @@ export function defaultBlock(type: BlockType, order: number): ContentBlock {
     case 'worked_example':   return { ...base, type, label: 'Solved Example', variant: 'solved_example', problem: '', solution: '', reveal_mode: 'always_visible' };
     case 'simulation':       return { ...base, type, simulation_id: 'fractional-distillation' };
     case 'section':          return { ...base, type, layout: '50-50', columns: [[], []] };
+    case 'reasoning_prompt':  return { ...base, type, reasoning_type: 'logical', prompt: '', reveal: '', difficulty_level: 2 };
+    case 'classify_exercise': return { ...base, type, question: 'Which of these are…?', rows: [{ substance: '', is_solution: true, explanation: '' }] };
   }
 }
 
@@ -336,7 +338,7 @@ export default function BookWorkspace() {
         border-b border-white/8 bg-[#0B0F15] gap-4 overflow-hidden">
         <div className="flex items-center gap-2 min-w-0 overflow-hidden">
           <BookOpen size={16} className="text-orange-500 shrink-0" />
-          <span className="text-sm font-semibold text-white/80 shrink-0">Digital Books</span>
+          <span className="text-sm font-semibold text-white/80 shrink-0">Live Books</span>
           {selectedBook && (
             <>
               <span className="text-white/20 text-sm shrink-0">/</span>

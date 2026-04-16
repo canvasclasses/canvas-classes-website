@@ -5,8 +5,9 @@ import { BookPage, ContentBlock } from '@/types/books';
 import BlockRenderer from './BlockRenderer';
 
 // Callout variants that float to the margin sidebar on desktop.
-// Everything else stays in the main prose column.
-const SIDEBAR_CALLOUT_VARIANTS = new Set(['exam_tip', 'fun_fact', 'remember']);
+// fun_fact is intentionally excluded — opening hooks must render in the main column
+// so students see them before diving into core text.
+const SIDEBAR_CALLOUT_VARIANTS = new Set(['exam_tip', 'remember']);
 
 function isSidebarBlock(block: ContentBlock): boolean {
   return block.type === 'callout' && SIDEBAR_CALLOUT_VARIANTS.has(block.variant);

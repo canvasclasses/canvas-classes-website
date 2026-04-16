@@ -4,6 +4,13 @@ import { useState } from 'react';
 import { Play, ChevronDown, ChevronUp } from 'lucide-react';
 import { VideoBlock } from '@/types/books';
 
+// YouTube requires the `origin` parameter in the embed URL to identify
+// the embedding site. Without it, the player shows "An error occurred"
+// on any deployed (non-localhost) site.
+// Source: https://developers.google.com/youtube/player_parameters#origin
+const EMBED_ORIGIN =
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.canvasclasses.in';
+
 /**
  * YouTube blocks store just the 11-char video ID.
  * If someone managed to save a full URL (e.g. pasted before switching provider),
@@ -81,10 +88,12 @@ export default function VideoBlockRenderer({ block }: { block: VideoBlock }) {
           )}
           {block.provider === 'youtube_nocookie' && (
             <iframe
-              src={`https://www.youtube-nocookie.com/embed/${extractYouTubeId(block.src)}?rel=0&modestbranding=1&autoplay=1`}
+              src={`https://www.youtube-nocookie.com/embed/${extractYouTubeId(block.src)}?rel=0&modestbranding=1&autoplay=1&enablejsapi=1&origin=${encodeURIComponent(EMBED_ORIGIN)}`}
               className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
+              referrerPolicy="strict-origin-when-cross-origin"
+              title={block.caption ?? 'Video explanation'}
             />
           )}
         </div>

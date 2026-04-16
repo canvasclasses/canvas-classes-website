@@ -2,11 +2,13 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, ChevronRight, BookOpen, Trophy, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, BookOpen, Trophy, ArrowRight, Bookmark } from 'lucide-react';
 import Link from 'next/link';
 import PageRenderer from '../renderer/PageRenderer';
 import { Book, BookPage, BlockType, ContentBlock } from '@/types/books';
 import { useBookProgress } from '@/hooks/useBookProgress';
+import { useBookBookmarks } from '@/hooks/useBookBookmarks';
+import FreeGate from './FreeGate';
 
 function hasBlockType(blocks: ContentBlock[], type: BlockType): boolean {
   return blocks.some(b => {
@@ -33,17 +35,20 @@ interface Props {
   prevPageSlug: string | null;
   nextPageSlug: string | null;
   bookSlug: string;
+  basePath?: string;
 }
 
 export default function BookReader({
-  book, page, chapterPages, prevPageSlug, nextPageSlug, bookSlug,
+  book, page, chapterPages, prevPageSlug, nextPageSlug, bookSlug, basePath,
 }: Props) {
+  const bp = basePath ?? `/books/${bookSlug}`;
   const router = useRouter();
 
   // Progress is now owned by the useBookProgress hook, which caches the
   // result at the module level for the whole tab session. Navigating between
   // pages inside the same book no longer re-fetches.
   const { completedSlugs, markComplete } = useBookProgress(bookSlug);
+  const { bookmarkedSlugs, toggleBookmark } = useBookBookmarks(bookSlug);
 
   const [quizPassed, setQuizPassed] = useState(false);
   const [showMilestone, setShowMilestone] = useState(false);
@@ -105,7 +110,7 @@ export default function BookReader({
       {/* ── Top nav ─────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-40 bg-[#0B0F15]/95 backdrop-blur border-b border-white/8">
         <div className="max-w-[1060px] mx-auto px-4 h-12 flex items-center gap-3">
-          <Link href={`/books/${bookSlug}`}
+          <Link href={bp}
             className="text-white/40 hover:text-white/70 transition-colors shrink-0">
             <ChevronLeft size={18} />
           </Link>
@@ -114,6 +119,17 @@ export default function BookReader({
           <span className="text-xs text-white/30 shrink-0">
             {completedInChapter}/{chapterPages.length}
           </span>
+          <button
+            onClick={() => toggleBookmark(page.slug, page.title, page.chapter_number)}
+            className={`shrink-0 p-1.5 rounded-lg transition-colors ${
+              bookmarkedSlugs.has(page.slug)
+                ? 'text-amber-400 bg-amber-500/10'
+                : 'text-white/25 hover:text-white/50 hover:bg-white/5'
+            }`}
+            title={bookmarkedSlugs.has(page.slug) ? 'Remove bookmark' : 'Bookmark this page'}
+          >
+            <Bookmark size={14} className={bookmarkedSlugs.has(page.slug) ? 'fill-amber-400' : ''} />
+          </button>
         </div>
 
         {/* Chapter progress bar */}
@@ -141,7 +157,7 @@ export default function BookReader({
         <div className="max-w-[1060px] mx-auto px-4 h-14 flex items-center justify-between gap-3">
           {/* Previous */}
           {prevPageSlug ? (
-            <Link href={`/books/${bookSlug}/${prevPageSlug}`}
+            <Link href={`${bp}/${prevPageSlug}`}
               className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-white/10
                 bg-white/5 hover:bg-white/10 text-sm text-white/60 transition-colors">
               <ChevronLeft size={15} /> Previous
@@ -158,7 +174,7 @@ export default function BookReader({
           {/* Next */}
           {nextPageSlug ? (
             <Link
-              href={canGoNext ? `/books/${bookSlug}/${nextPageSlug}` : '#'}
+              href={canGoNext ? `${bp}/${nextPageSlug}` : '#'}
               onClick={e => { if (!canGoNext) e.preventDefault(); }}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-colors
                 ${canGoNext
@@ -177,6 +193,9 @@ export default function BookReader({
           )}
         </div>
       </nav>
+
+      {/* ── Metered free gate ──────────────────────────────────────────── */}
+      <FreeGate bookSlug={bookSlug} pageSlug={page.slug} basePath={bp} />
 
       {/* ── Milestone overlay ───────────────────────────────────────────── */}
       {showMilestone && (
@@ -213,7 +232,7 @@ export default function BookReader({
               </button>
               {nextPageSlug && (
                 <button
-                  onClick={() => router.push(`/books/${bookSlug}/${nextPageSlug}`)}
+                  onClick={() => router.push(`${bp}/${nextPageSlug}`)}
                   className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500
                     text-black text-sm font-bold flex items-center justify-center gap-1.5">
                   Next Topic <ArrowRight size={14} />

@@ -6,34 +6,51 @@ import BookPageModel from '@/lib/models/BookPage';
 import { requireAdmin, isAdminRequest } from '@/lib/bookAuth';
 import { ContentBlock } from '@/types/books';
 import { validateBlocks } from '@/lib/schemas/blocks';
-import { computeReadingTime } from '@/lib/utils/books';
+import { computeReadingTime, computeContentTypes } from '@/lib/utils/books';
+
+const VALID_CALLOUT_VARIANTS = new Set([
+  'remember', 'note', 'warning', 'exam_tip', 'fun_fact',
+]);
 
 /**
- * Ensures every block (and every child block inside section columns) has a
- * non-empty string `id`. Old pages stored before the id was required can arrive
- * here with id=undefined; rather than rejecting a perfectly valid edit, we
- * silently assign a new UUID so Zod validation passes and the page self-heals.
+ * Sanitises a single block in-place (shallow copy already made by caller):
+ *  • Assigns a UUID if `id` is missing or not a string
+ *  • Resets an invalid callout `variant` to 'note'
+ *
+ * This lets old DB data self-heal on the next save rather than blocking
+ * every subsequent edit with a Zod validation error.
  */
-function ensureBlockIds(blocks: unknown[]): unknown[] {
+function sanitizeBlock(b: Record<string, unknown>): Record<string, unknown> {
+  if (!b.id || typeof b.id !== 'string') {
+    b.id = randomUUID();
+  }
+
+  if (
+    b.type === 'callout' &&
+    (typeof b.variant !== 'string' || !VALID_CALLOUT_VARIANTS.has(b.variant as string))
+  ) {
+    b.variant = 'note';
+  }
+
+  return b;
+}
+
+/**
+ * Walks the top-level blocks array (and child blocks inside section columns)
+ * and sanitises every block before Zod validation runs.
+ */
+function sanitizeBlocks(blocks: unknown[]): unknown[] {
   return blocks.map((block) => {
     if (typeof block !== 'object' || block === null) return block;
-    const b = { ...(block as Record<string, unknown>) };
+    const b = sanitizeBlock({ ...(block as Record<string, unknown>) });
 
-    if (!b.id || typeof b.id !== 'string') {
-      b.id = randomUUID();
-    }
-
-    // Recurse into section columns
+    // Recurse into section columns (sections cannot nest further)
     if (b.type === 'section' && Array.isArray(b.columns)) {
       b.columns = (b.columns as unknown[][]).map((col) => {
         if (!Array.isArray(col)) return col;
         return col.map((child) => {
           if (typeof child !== 'object' || child === null) return child;
-          const c = { ...(child as Record<string, unknown>) };
-          if (!c.id || typeof c.id !== 'string') {
-            c.id = randomUUID();
-          }
-          return c;
+          return sanitizeBlock({ ...(child as Record<string, unknown>) });
         });
       });
     }
@@ -132,9 +149,9 @@ export async function PUT(req: NextRequest, { params }: Params) {
     // Only update blocks + reading_time when blocks are explicitly provided.
     // A PUT with only metadata fields (e.g. page_number) must NEVER wipe content.
     if (Array.isArray(body.blocks)) {
-      // Heal any blocks that are missing an id (legacy data / race conditions)
-      // before Zod sees them — this must run before validateBlocks.
-      const healed = ensureBlockIds(body.blocks);
+      // Sanitise legacy/invalid data before Zod sees it — self-heals on save.
+      // Currently fixes: missing id, invalid callout variant.
+      const healed = sanitizeBlocks(body.blocks);
 
       // Zod validation at the API edge — rejects malformed block payloads
       // before they hit Mongo. Catches: unknown block types, missing required
@@ -153,6 +170,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
       const blocks = validated.blocks as ContentBlock[];
       updateFields.blocks = blocks;
       updateFields.reading_time_min = computeReadingTime(blocks);
+      updateFields.content_types = computeContentTypes(blocks);
     } else {
       delete updateFields.blocks;
       delete updateFields.reading_time_min;

@@ -1,4 +1,4 @@
-import { ContentBlock } from '@/types/books';
+import { BlockType, ContentBlock } from '@/types/books';
 
 /**
  * Recursively flattens section blocks into a flat array of leaf blocks.
@@ -37,4 +37,24 @@ export function computeReadingTime(blocks: ContentBlock[]): number {
   }
 
   return Math.max(1, Math.ceil(wordCount / 200) + videoCount * 2 + audioCount * 1);
+}
+
+/** Block types worth surfacing as page-level content badges in the ToC. */
+const INTERACTIVE_TYPES = new Set<BlockType>([
+  'inline_quiz', 'simulation', 'video', 'molecule_3d', 'interactive_image',
+  'classify_exercise', 'reasoning_prompt', 'worked_example', 'practice_link',
+]);
+
+/**
+ * Returns a deduplicated, sorted list of "interesting" block types present on a
+ * page. Used to show content-type icons (quiz, sim, video…) in the Table of
+ * Contents without loading the full blocks payload.
+ */
+export function computeContentTypes(blocks: ContentBlock[]): BlockType[] {
+  const flat = flattenBlocks(blocks);
+  const found = new Set<BlockType>();
+  for (const b of flat) {
+    if (INTERACTIVE_TYPES.has(b.type)) found.add(b.type);
+  }
+  return [...found].sort();
 }

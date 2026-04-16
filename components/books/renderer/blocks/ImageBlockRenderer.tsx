@@ -20,6 +20,16 @@ const fullRowWidthClass: Record<NonNullable<ImageBlock['width']>, string> = {
   third: 'w-1/3 mx-auto',
 };
 
+// ── Aspect ratio → Tailwind class ──────────────────────────────────────────
+// undefined / absent → natural proportions (no container height constraint)
+const ASPECT_RATIO_CLASS: Record<NonNullable<ImageBlock['aspect_ratio']>, string> = {
+  '16:9': 'aspect-video',
+  '4:3':  'aspect-[4/3]',
+  '3:2':  'aspect-[3/2]',
+  '1:1':  'aspect-square',
+  '21:9': 'aspect-[21/9]',
+};
+
 // ── Width presets for the IMAGE pane inside a side-by-side row ──
 // (the remaining horizontal space goes to the text pane)
 const sideImageWidthClass: Record<NonNullable<ImageBlock['width']>, string> = {
@@ -125,21 +135,32 @@ export default function ImageBlockRenderer({ block }: { block: ImageBlock }) {
   // next/image for automatic format negotiation and responsive srcsets.
   const isSvg = /\.svg(\?|#|$)/i.test(block.src);
 
+  const hasAspectRatio = !!block.aspect_ratio;
+  const aspectClass = block.aspect_ratio ? ASPECT_RATIO_CLASS[block.aspect_ratio] : '';
+
   const figure = (
     <figure className={`${hasSideText ? 'w-full' : fullRowWidthClass[width]} ${hasSideText ? '' : 'my-4'}`}>
-      <div className="relative w-full overflow-hidden rounded-xl border border-white/10">
+      <div className={`relative w-full overflow-hidden rounded-xl border border-white/10 ${aspectClass}`}>
         {/*
           All book images come from Cloudflare R2 CDN, which already serves
           optimised formats. Using a plain <img> tag avoids the next/image
           optimizer pipeline (which can silently fail with width=0/height=0
           and render the image as invisible). SVGs and raster images both
           use the same approach here — lazy loaded, full-width, auto height.
+
+          When aspect_ratio is set: the container holds the ratio, the image
+          fills it absolutely with object-cover (crops to fit).
+          When absent: natural proportions, image stretches to its full height.
         */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={block.src}
           alt={block.alt}
-          className="w-full h-auto object-contain block"
+          className={
+            hasAspectRatio
+              ? 'absolute inset-0 w-full h-full object-cover block'
+              : 'w-full h-auto object-contain block'
+          }
           loading="lazy"
         />
       </div>

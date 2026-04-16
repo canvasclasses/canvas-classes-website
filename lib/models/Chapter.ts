@@ -20,7 +20,7 @@ export interface IChapter {
   
   question_sequence: number; // Auto-increments for display_id generation
   
-  class_level: '11' | '12';
+  class_level: '9' | '10' | '11' | '12';
   subject: string;
   
   stats: IChapterStats;
@@ -52,10 +52,10 @@ const ChapterSchema = new Schema<IChapter>({
   
   question_sequence: { type: Number, default: 0 },
   
-  class_level: { 
-    type: String, 
-    enum: ['11', '12'], 
-    required: true 
+  class_level: {
+    type: String,
+    enum: ['9', '10', '11', '12'],
+    required: true
   },
   subject: { type: String, required: true },
   

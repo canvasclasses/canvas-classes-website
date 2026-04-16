@@ -20,6 +20,7 @@ const BookPageSchema = new Schema<IBookPage>(
     tags: { type: [String], default: [] },
     published: { type: Boolean, default: false },
     reading_time_min: Number,
+    content_types: { type: [String], default: [] },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },

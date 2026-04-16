@@ -89,6 +89,14 @@ async function fetchProgress(bookSlug: string): Promise<BookProgressRecord[]> {
       // logged-out session can never bleed in.
       { cache: 'no-store', credentials: 'same-origin' }
     );
+    // 401 = not logged in — silently return empty (books are publicly accessible,
+    // progress just won't be tracked for anonymous visitors).
+    if (res.status === 401) {
+      const empty: BookProgressRecord[] = [];
+      progressCache.set(bookSlug, { records: empty, fetchedAt: Date.now() });
+      publish(bookSlug, empty);
+      return empty;
+    }
     if (!res.ok) throw new Error(`Progress fetch failed: ${res.status}`);
     const body = await res.json();
     if (!body?.success) throw new Error(body?.error ?? 'Progress fetch failed');

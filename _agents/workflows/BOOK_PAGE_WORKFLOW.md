@@ -294,6 +294,8 @@ accent labels, clean technical illustration style.
 
 ## 4. Standard Page Structure
 
+### 4A. Class 11–12 (JEE / NEET) — Default Template
+
 Every page should follow this flow. Adjust as needed but don't skip the hook or the exam tip.
 
 ```
@@ -316,6 +318,95 @@ Block 11: inline_quiz         ← 2–4 questions, always last
 - Never omit images — they are part of the content structure.
 - **If content is simple:** fewer blocks is fine, but the image block stays.
 - **If no worked example exists in source:** skip it entirely.
+
+---
+
+### 4B. Class 9 — Reasoning-Embedded Template
+
+Class 9 pages follow a different structure that embeds reasoning development into the content itself.
+The goal is to build thinking skills alongside subject knowledge — never as a separate section.
+
+```
+Block 0:  reasoning_prompt    ← Opening reasoning challenge (ALWAYS FIRST on Class 9 pages)
+Block 1:  callout[fun_fact]   ← Real-life hook
+Block 2:  text                ← Core concept
+Block 3:  heading[2]          ← Sub-section
+Block 4:  text                ← Explanation
+Block 5:  image               ← Diagram (mandatory; src="" + generation_prompt)
+Block 6:  simulation          ← With prediction challenge (where a meaningful prediction exists)
+Block 7:  text                ← Deeper explanation / what the sim reveals
+Block 8:  worked_example      ← NCERT solved example (if exists)
+Block 9:  callout[exam_tip]   ← Board exam insight (CBSE Class 9 — NOT JEE/NEET)
+Block 10: inline_quiz         ← 3 questions: 1 recall + 1 application + 1 reasoning (always last)
+```
+
+#### reasoning_prompt block — Class 9 rules
+
+```json
+{
+  "id": "uuid",
+  "type": "reasoning_prompt",
+  "order": 0,
+  "reasoning_type": "logical",
+  "prompt": "A student says: 'Heavier objects always fall faster than lighter ones.' What is wrong with this reasoning, and what experiment would prove it?",
+  "options": ["The student is correct", "The student is wrong — mass doesn't affect fall speed in vacuum", "It depends on the shape of the object", "It depends on the material"],
+  "reveal": "Galileo showed that in the absence of air resistance, all objects fall at the same rate regardless of mass. The student is confusing air resistance (which does depend on shape and size) with gravitational acceleration (which does not). This is a classic example of a conclusion being correct in some conditions but stated as a universal rule.",
+  "difficulty_level": 2
+}
+```
+
+**reasoning_type values and when to use:**
+| Type | Use when | Example |
+|---|---|---|
+| `logical` | If-then relationships, cause and effect, identifying flawed reasoning | "If X, does Y always follow?" |
+| `spatial` | Spatial relationships, diagrams, geometry, structures | "What shape will the shadow be?" |
+| `quantitative` | Reasoning with numbers — NOT calculation, but estimation / plausibility | "Which is larger, and by roughly how much?" |
+| `analogical` | Structural similarities between different domains | "How is this like a [different system]?" |
+
+**difficulty_level guide for Class 9:**
+- Level 1 (Comprehension): Recall a fact and state it. Minimum bar.
+- Level 2 (Application): Apply a concept to a new but similar situation.
+- Level 3 (Analysis): Break down a scenario, identify what is and isn't true.
+- Level 4 (Evaluation): Evaluate a claim, identify the flaw, or construct a counter-argument.
+- Level 5 (Pattern/Analogy): Identify a structural similarity across domains. Use sparingly.
+
+Start with Level 2 on most pages. Level 3 when the concept naturally produces a testable prediction. Reserve Level 4–5 for chapters where the concept is well established and the student has had practice.
+
+#### inline_quiz — Class 9 question mix
+
+The final quiz on every Class 9 page must have exactly 3 questions in this order:
+1. **Recall** (Level 1) — confirms the student read the page
+2. **Application** (Level 2) — applies the concept to a new scenario
+3. **Reasoning** (Level 3) — requires the student to think, not remember
+
+Tag each question with `reasoning_level` for analytics:
+```json
+{ "id": "uuid", "question": "...", "options": [...], "correct_index": 0, "explanation": "...", "reasoning_level": 1 }
+```
+
+#### simulation prediction — when to use
+
+Add `prediction` to a simulation block only when:
+- There is a non-obvious outcome that the student can meaningfully predict
+- The prediction has a concrete, observable answer in the simulation
+- Getting it wrong teaches something (not just a trivial guess)
+
+Do NOT add prediction to exploratory simulations (e.g., sliders that just visualise a formula).
+
+```json
+{
+  "id": "uuid",
+  "type": "simulation",
+  "order": 6,
+  "simulation_id": "free-fall-gravity",
+  "title": "Free Fall Simulator",
+  "prediction": {
+    "prompt": "A 1 kg ball and a 10 kg ball are dropped from the same height at the same time. Which lands first?",
+    "options": ["The 10 kg ball lands first", "The 1 kg ball lands first", "Both land at exactly the same time"],
+    "reveal_after": "Both balls land at the same time. Gravitational acceleration (g = 9.8 m/s²) is independent of mass — every object in free fall accelerates identically. The only reason a feather falls slower on Earth is air resistance, not gravity. On the Moon, with no atmosphere, a feather and a hammer fall together."
+  }
+}
+```
 
 ---
 

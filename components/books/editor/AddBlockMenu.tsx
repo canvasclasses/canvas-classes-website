@@ -43,10 +43,11 @@ const BLOCK_GROUPS: { label: string; blocks: { type: BlockType; icon: string; la
   {
     label: 'Interactive',
     blocks: [
-      { type: 'practice_link',  icon: '🎯', label: 'Practice Link' },
-      { type: 'inline_quiz',    icon: '🧠', label: 'Quiz (Milestone)' },
-      { type: 'worked_example', icon: '📘', label: 'Worked Example' },
-      { type: 'simulation',     icon: '⚗️', label: 'Simulation' },
+      { type: 'practice_link',   icon: '🎯', label: 'Practice Link' },
+      { type: 'inline_quiz',     icon: '🧠', label: 'Quiz (Milestone)' },
+      { type: 'classify_exercise', icon: '⊡', label: 'Classify Exercise' },
+      { type: 'worked_example',  icon: '📘', label: 'Worked Example' },
+      { type: 'simulation',      icon: '⚗️', label: 'Simulation' },
     ],
   },
 ];

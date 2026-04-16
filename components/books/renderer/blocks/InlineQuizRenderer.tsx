@@ -8,187 +8,248 @@ import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
 import { InlineQuizBlock } from '@/types/books';
-import { Trophy, RotateCcw } from 'lucide-react';
 
 interface Props {
   block: InlineQuizBlock;
   onPass?: (score: number) => void;
 }
 
-// ── Shared markdown + KaTeX pipeline ─────────────────────────────────────────
-// Used for question text, option labels, and explanation. The `p` override
-// strips the <p> wrapper so inline math renders cleanly inside buttons/spans.
-
+// ── Markdown pipeline ─────────────────────────────────────────────────────────
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const remarkPlugins = [remarkMath, remarkGfm] as any[];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const rehypePlugins = [rehypeKatex] as any[];
 
-// For question text — allow full paragraph styling
-const questionComponents = {
-  p: ({ children }: { children?: React.ReactNode }) => (
-    <span className="leading-relaxed">{children}</span>
-  ),
-};
-
-// For option labels — strip the <p> so it renders inline inside <button>
-const optionComponents = {
-  p: ({ children }: { children?: React.ReactNode }) => (
-    <span>{children}</span>
-  ),
-};
-
-// For the explanation note — subtle paragraph styling
-const explanationComponents = {
-  p: ({ children }: { children?: React.ReactNode }) => (
-    <span className="leading-relaxed">{children}</span>
-  ),
-};
+const Md = ({ children }: { children: string }) => (
+  <ReactMarkdown
+    remarkPlugins={remarkPlugins}
+    rehypePlugins={rehypePlugins}
+    components={{ p: ({ children: c }) => <span>{c}</span> }}
+  >
+    {children}
+  </ReactMarkdown>
+);
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function InlineQuizRenderer({ block, onPass }: Props) {
-  const [answers, setAnswers] = useState<Record<string, number>>({});
-  const [submitted, setSubmitted] = useState(false);
-  const [passed, setPassed] = useState(false);
+  const [current, setCurrent]   = useState(0);
+  const [locked, setLocked]     = useState<number | null>(null); // chosen option for current q
+  const [results, setResults]   = useState<{ chosen: number; correct: boolean }[]>([]);
+  const [done, setDone]         = useState(false);
 
-  const allAnswered = block.questions.every(q => answers[q.id] !== undefined);
+  const q         = block.questions[current];
+  const total     = block.questions.length;
+  const isLast    = current === total - 1;
 
-  function submit() {
-    const correct = block.questions.filter(q => answers[q.id] === q.correct_index).length;
-    const score = Math.round((correct / block.questions.length) * 100);
-    const didPass = correct / block.questions.length >= block.pass_threshold;
-    setSubmitted(true);
-    setPassed(didPass);
-    if (didPass) onPass?.(score);
+  function choose(i: number) {
+    if (locked !== null) return; // already answered
+    setLocked(i);
+  }
+
+  function advance() {
+    if (locked === null) return;
+    const isCorrect = locked === q.correct_index;
+    const newResults = [...results, { chosen: locked, correct: isCorrect }];
+    setResults(newResults);
+
+    if (isLast) {
+      const passed = newResults.filter(r => r.correct).length / total >= block.pass_threshold;
+      const score  = Math.round((newResults.filter(r => r.correct).length / total) * 100);
+      setDone(true);
+      if (passed) onPass?.(score);
+    } else {
+      setCurrent(c => c + 1);
+      setLocked(null);
+    }
   }
 
   function retry() {
-    setAnswers({});
-    setSubmitted(false);
-    setPassed(false);
+    setCurrent(0);
+    setLocked(null);
+    setResults([]);
+    setDone(false);
   }
 
-  const correctCount = submitted
-    ? block.questions.filter(q => answers[q.id] === q.correct_index).length
-    : 0;
-  const scorePercent = submitted ? Math.round((correctCount / block.questions.length) * 100) : 0;
+  // ── Done screen ─────────────────────────────────────────────────────────────
+  if (done) {
+    const correct = results.filter(r => r.correct).length;
+    const passed  = correct / total >= block.pass_threshold;
+    const pct     = Math.round((correct / total) * 100);
+
+    return (
+      <div className="my-8">
+        {/* Divider label */}
+        <div className="flex items-center gap-3 mb-6">
+          <div className="h-px flex-1" style={{ background: 'rgba(255,255,255,0.06)' }} />
+          <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.2)' }}>
+            Quick Check
+          </span>
+          <div className="h-px flex-1" style={{ background: 'rgba(255,255,255,0.06)' }} />
+        </div>
+
+        <div className="text-center py-4">
+          <p
+            className="text-4xl font-black mb-1"
+            style={{ color: passed ? '#34d399' : '#f87171' }}
+          >
+            {pct}%
+          </p>
+          <p className="text-sm mb-1" style={{ color: 'rgba(255,255,255,0.45)' }}>
+            {correct} of {total} correct
+          </p>
+          <p className="text-sm font-semibold mb-6" style={{ color: passed ? '#34d399' : '#f87171' }}>
+            {passed ? 'You passed.' : 'Not quite — give it another try.'}
+          </p>
+
+          {!passed && (
+            <button
+              onClick={retry}
+              className="text-sm font-semibold px-5 py-2 rounded-xl transition-all"
+              style={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                color: 'rgba(255,255,255,0.6)',
+              }}
+            >
+              Try again
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // ── Active question ─────────────────────────────────────────────────────────
+  const isAnswered = locked !== null;
+  const isCorrect  = isAnswered && locked === q.correct_index;
 
   return (
-    <div className="my-6 border border-violet-500/20 rounded-2xl overflow-hidden bg-violet-500/5">
-      <div className="px-5 py-3 border-b border-violet-500/20 flex items-center gap-2">
-        <span className="text-lg">🧠</span>
-        <span className="text-sm font-semibold text-violet-300">Quick Check</span>
-        <span className="ml-auto text-xs text-violet-400/60">
-          Pass at {Math.round(block.pass_threshold * 100)}%
+    <div className="my-8">
+      {/* Divider label + progress dots */}
+      <div className="flex items-center gap-3 mb-6">
+        <div className="h-px flex-1" style={{ background: 'rgba(255,255,255,0.06)' }} />
+        <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.2)' }}>
+          Quick Check
         </span>
+        <div className="h-px flex-1" style={{ background: 'rgba(255,255,255,0.06)' }} />
       </div>
 
-      <div className="px-5 py-4 flex flex-col gap-6">
-        {block.questions.map((q, qi) => (
-          <div key={q.id}>
-            {/* Question text — rendered through the markdown + KaTeX pipeline */}
-            <p className="text-sm text-white/90 mb-3">
-              <span className="text-violet-400 font-semibold mr-2">Q{qi + 1}.</span>
-              <ReactMarkdown
-                remarkPlugins={remarkPlugins}
-                rehypePlugins={rehypePlugins}
-                components={questionComponents}
-              >
-                {q.question}
-              </ReactMarkdown>
-            </p>
+      {/* Progress dots */}
+      <div className="flex items-center justify-center gap-1.5 mb-6">
+        {block.questions.map((_, i) => {
+          const isDone      = i < current;
+          const isCurrent   = i === current;
+          const wasCorrect  = isDone && results[i]?.correct;
+          return (
+            <span
+              key={i}
+              className="rounded-full transition-all duration-300"
+              style={{
+                width:  isCurrent ? 20 : 7,
+                height: 7,
+                background: isDone
+                  ? (wasCorrect ? '#34d399' : '#f87171')
+                  : isCurrent
+                  ? '#818cf8'
+                  : 'rgba(255,255,255,0.12)',
+              }}
+            />
+          );
+        })}
+      </div>
 
-            <div className="flex flex-col gap-2">
-              {q.options.map((opt, oi) => {
-                const chosen = answers[q.id] === oi;
-                const isCorrect = oi === q.correct_index;
-                let cls = 'border border-white/10 bg-white/5 text-white/70';
-                if (submitted) {
-                  if (isCorrect)      cls = 'border border-emerald-500/60 bg-emerald-500/10 text-emerald-300';
-                  else if (chosen)    cls = 'border border-red-500/60 bg-red-500/10 text-red-300';
-                  else                cls = 'border border-white/5 bg-transparent text-white/30';
-                } else if (chosen) {
-                  cls = 'border border-violet-500/60 bg-violet-500/15 text-violet-200';
-                }
+      {/* Question */}
+      <p className="text-[15px] leading-relaxed mb-5" style={{ color: 'rgba(255,255,255,0.88)' }}>
+        <span className="text-xs font-bold mr-2" style={{ color: '#818cf8' }}>
+          Q{current + 1}.
+        </span>
+        <Md>{q.question}</Md>
+      </p>
 
-                return (
-                  <button
-                    key={oi}
-                    disabled={submitted}
-                    onClick={() => setAnswers(prev => ({ ...prev, [q.id]: oi }))}
-                    className={`text-left px-4 py-2.5 rounded-xl text-sm transition-colors ${cls} ${
-                      !submitted ? 'hover:border-violet-500/40 hover:bg-violet-500/10' : ''
-                    }`}
-                  >
-                    <span className="text-white/40 mr-2">{String.fromCharCode(65 + oi)}.</span>
-                    {/* Option text — rendered through the markdown + KaTeX pipeline */}
-                    <ReactMarkdown
-                      remarkPlugins={remarkPlugins}
-                      rehypePlugins={rehypePlugins}
-                      components={optionComponents}
-                    >
-                      {opt}
-                    </ReactMarkdown>
-                    {submitted && isCorrect && <span className="ml-2 text-emerald-400">✓</span>}
-                    {submitted && chosen && !isCorrect && <span className="ml-2 text-red-400">✗</span>}
-                  </button>
-                );
-              })}
-            </div>
+      {/* Options */}
+      <div className="flex flex-col gap-2 mb-4">
+        {q.options.map((opt, i) => {
+          const chosen    = locked === i;
+          const correct   = i === q.correct_index;
 
-            {/* Explanation — rendered through the markdown + KaTeX pipeline */}
-            {submitted && q.explanation && (
-              <p className="mt-2 text-xs text-white/50 bg-white/5 rounded-lg px-3 py-2 border border-white/8">
-                <ReactMarkdown
-                  remarkPlugins={remarkPlugins}
-                  rehypePlugins={rehypePlugins}
-                  components={explanationComponents}
-                >
-                  {q.explanation}
-                </ReactMarkdown>
-              </p>
-            )}
-          </div>
-        ))}
+          let bg     = 'transparent';
+          let border = 'rgba(255,255,255,0.08)';
+          let color  = 'rgba(255,255,255,0.55)';
+          let labelColor = 'rgba(255,255,255,0.2)';
 
-        {!submitted ? (
+          if (!isAnswered) {
+            // hover handled via CSS class below
+          } else if (correct) {
+            bg = 'rgba(52,211,153,0.08)';
+            border = 'rgba(52,211,153,0.5)';
+            color = '#a7f3d0';
+            labelColor = '#34d399';
+          } else if (chosen) {
+            bg = 'rgba(248,113,113,0.08)';
+            border = 'rgba(248,113,113,0.5)';
+            color = '#fecaca';
+            labelColor = '#f87171';
+          } else {
+            color = 'rgba(255,255,255,0.18)';
+            labelColor = 'rgba(255,255,255,0.1)';
+          }
+
+          return (
+            <button
+              key={i}
+              disabled={isAnswered}
+              onClick={() => choose(i)}
+              className={`text-left px-4 py-2.5 rounded-xl text-sm transition-all duration-150 ${
+                !isAnswered ? 'hover:border-indigo-500/40 hover:bg-indigo-500/5' : ''
+              }`}
+              style={{ border: `1.5px solid ${border}`, background: bg, color }}
+            >
+              <span className="text-xs font-bold mr-2" style={{ color: labelColor }}>
+                {String.fromCharCode(65 + i)}.
+              </span>
+              <Md>{opt}</Md>
+              {isAnswered && correct && (
+                <span className="ml-2 text-xs" style={{ color: '#34d399' }}>✓</span>
+              )}
+              {isAnswered && chosen && !correct && (
+                <span className="ml-2 text-xs" style={{ color: '#f87171' }}>✗</span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Explanation */}
+      {isAnswered && q.explanation && (
+        <div
+          className="text-sm leading-relaxed rounded-xl px-4 py-3 mb-4"
+          style={{
+            background: isCorrect ? 'rgba(52,211,153,0.04)' : 'rgba(255,255,255,0.03)',
+            border: `1px solid ${isCorrect ? 'rgba(52,211,153,0.15)' : 'rgba(255,255,255,0.07)'}`,
+            color: 'rgba(255,255,255,0.55)',
+          }}
+        >
+          <Md>{q.explanation}</Md>
+        </div>
+      )}
+
+      {/* Next / Finish */}
+      {isAnswered && (
+        <div className="flex justify-end">
           <button
-            onClick={submit}
-            disabled={!allAnswered}
-            className={`py-2.5 rounded-xl text-sm font-bold transition-colors ${
-              allAnswered
-                ? 'bg-violet-600 hover:bg-violet-500 text-white'
-                : 'bg-white/5 text-white/25 cursor-not-allowed'
-            }`}
+            onClick={advance}
+            className="text-sm font-semibold px-5 py-2 rounded-xl transition-all"
+            style={{
+              background: 'rgba(129,140,248,0.12)',
+              border: '1.5px solid rgba(129,140,248,0.3)',
+              color: '#a5b4fc',
+            }}
           >
-            Submit Answers
+            {isLast ? 'See results' : 'Next →'}
           </button>
-        ) : (
-          <div className={`rounded-xl px-4 py-3 flex items-center gap-3 ${
-            passed
-              ? 'bg-emerald-500/10 border border-emerald-500/30'
-              : 'bg-red-500/10 border border-red-500/30'
-          }`}>
-            {passed
-              ? <Trophy size={16} className="text-emerald-400 shrink-0" />
-              : <RotateCcw size={16} className="text-red-400 shrink-0" />}
-            <div className="flex-1">
-              <p className={`text-sm font-semibold ${passed ? 'text-emerald-300' : 'text-red-300'}`}>
-                {passed ? 'Nice work! You passed.' : 'Not quite — try again.'}
-              </p>
-              <p className="text-xs text-white/40">
-                {correctCount}/{block.questions.length} correct · {scorePercent}%
-              </p>
-            </div>
-            {!passed && (
-              <button onClick={retry} className="text-xs text-white/50 hover:text-white/80 transition-colors">
-                Retry
-              </button>
-            )}
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

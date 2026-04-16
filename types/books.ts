@@ -4,6 +4,7 @@ export type BlockType =
   | 'text'
   | 'heading'
   | 'image'
+  | 'classify_exercise'
   | 'interactive_image'
   | 'video'
   | 'audio_note'
@@ -19,7 +20,8 @@ export type BlockType =
   | 'inline_quiz'
   | 'worked_example'
   | 'simulation'
-  | 'section';
+  | 'section'
+  | 'reasoning_prompt';
 
 export interface BaseBlock {
   id: string;        // crypto.randomUUID() — stable, used for drag-drop keys
@@ -53,6 +55,9 @@ export interface ImageBlock extends BaseBlock {
   align?: 'center' | 'left' | 'right';   // horizontal placement — default 'center'
   side_text?: string;                    // markdown shown beside image when align ≠ 'center'
   generation_prompt?: string;  // AI image generation prompt — shown as placeholder until src is filled
+  // Optional display crop. undefined = natural proportions (no crop, full height).
+  // When set, the container is locked to that ratio and the image covers it (object-cover).
+  aspect_ratio?: '16:9' | '4:3' | '3:2' | '1:1' | '21:9';
 }
 
 // 4. INTERACTIVE IMAGE — SVG/PNG with tappable hotspot annotations
@@ -184,6 +189,19 @@ export interface AnimationBlock extends BaseBlock {
   width?: 'full' | 'half';
 }
 
+// 15b. CLASSIFY EXERCISE — student labels each row before seeing answers
+export interface ClassifyExerciseRow {
+  substance: string;     // Item to classify — e.g. "Steel", "Mist"
+  is_solution: boolean;  // Correct answer
+  explanation: string;   // Revealed after the student commits their answer
+}
+export interface ClassifyExerciseBlock extends BaseBlock {
+  type: 'classify_exercise';
+  question: string;       // Prompt shown above the table — e.g. "Which of these are true solutions?"
+  column_label?: string;  // Header for the first column — default 'Substance'
+  rows: ClassifyExerciseRow[];
+}
+
 // 16. INLINE QUIZ — milestone gate MCQ
 export interface InlineQuizQuestion {
   id: string;
@@ -210,10 +228,27 @@ export interface WorkedExampleBlock extends BaseBlock {
 }
 
 // 18. SIMULATION — embedded interactive lab/simulator
+export interface SimulationPrediction {
+  prompt: string;       // "What do you think will happen if...?"
+  options: string[];    // e.g. ["Yes, it will double", "No, it won't change", "It depends"]
+  reveal_after: string; // Shown below the sim after they've interacted — explains what actually happens
+}
 export interface SimulationBlock extends BaseBlock {
   type: 'simulation';
   simulation_id: string;  // e.g. 'fractional-distillation', 'crystallisation-column'
   title?: string;
+  prediction?: SimulationPrediction; // Optional predict-observe-explain layer
+}
+
+// 20. REASONING PROMPT — opening reasoning challenge that primes the student
+export type ReasoningType = 'logical' | 'spatial' | 'quantitative' | 'analogical';
+export interface ReasoningPromptBlock extends BaseBlock {
+  type: 'reasoning_prompt';
+  reasoning_type: ReasoningType;
+  prompt: string;           // The reasoning question / scenario
+  options?: string[];       // If provided: MCQ-style; if absent: open-ended (student just reads + thinks)
+  reveal: string;           // Shown after committing — not "the answer" but "what to notice"
+  difficulty_level: 1 | 2 | 3 | 4 | 5;
 }
 
 // 19. SECTION — column layout container
@@ -230,6 +265,7 @@ export type ContentBlock =
   | TextBlock
   | HeadingBlock
   | ImageBlock
+  | ClassifyExerciseBlock
   | InteractiveImageBlock
   | VideoBlock
   | AudioNoteBlock
@@ -245,7 +281,8 @@ export type ContentBlock =
   | InlineQuizBlock
   | WorkedExampleBlock
   | SimulationBlock
-  | SectionBlock;
+  | SectionBlock
+  | ReasoningPromptBlock;
 
 
 // ─── Page & Book documents ────────────────────────────────────────────────────
@@ -264,6 +301,8 @@ export interface BookPage {
   updated_at: Date;
   published: boolean;
   reading_time_min?: number;
+  /** Deduplicated list of interactive block types on this page (computed on save). */
+  content_types?: BlockType[];
 }
 
 export interface BookChapter {

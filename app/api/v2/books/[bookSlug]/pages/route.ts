@@ -6,7 +6,7 @@ import BookPageModel from '@/lib/models/BookPage';
 import { requireAdmin, isAdminRequest } from '@/lib/bookAuth';
 import { ContentBlock } from '@/types/books';
 import { validateBlocks } from '@/lib/schemas/blocks';
-import { computeReadingTime } from '@/lib/utils/books';
+import { computeReadingTime, computeContentTypes } from '@/lib/utils/books';
 
 // GET branches on isAdminRequest() — admins see drafts, students see only
 // published. Caching would leak one view into the other. Students load page
@@ -79,7 +79,7 @@ export async function GET(req: NextRequest, { params }: Params) {
 
     const pages = await BookPageModel.find(filter)
       .sort({ chapter_number: 1, page_number: 1 })
-      .select('_id slug title chapter_number page_number published reading_time_min')
+      .select('_id slug title chapter_number page_number published reading_time_min content_types')
       .lean();
 
     return NextResponse.json({ success: true, data: pages, total: pages.length });
@@ -153,6 +153,7 @@ export async function POST(req: NextRequest, { params }: Params) {
       tags: body.tags || [],
       published: false,
       reading_time_min: computeReadingTime(blocks),
+      content_types: computeContentTypes(blocks),
     });
 
     // Add page_id to the chapter in the book document

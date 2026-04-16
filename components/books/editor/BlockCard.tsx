@@ -25,6 +25,7 @@ import AnimationBlockEditor from './blocks/AnimationBlockEditor';
 import InlineQuizEditor from './blocks/InlineQuizEditor';
 import WorkedExampleEditor from './blocks/WorkedExampleEditor';
 import SectionBlockEditor from './blocks/SectionBlockEditor';
+import ClassifyExerciseEditor from './blocks/ClassifyExerciseEditor';
 
 const BLOCK_LABELS: Record<BlockType, string> = {
   text: 'Text',
@@ -46,6 +47,8 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   worked_example: 'Worked Example',
   simulation: 'Simulation',
   section: 'Section',
+  reasoning_prompt: 'Reasoning Prompt',
+  classify_exercise: 'Classify Exercise',
 };
 
 const BLOCK_ICONS: Record<BlockType, string> = {
@@ -68,6 +71,8 @@ const BLOCK_ICONS: Record<BlockType, string> = {
   worked_example: '📘',
   simulation: '⚙️',
   section: '▦',
+  reasoning_prompt: '🧩',
+  classify_exercise: '⊡',
 };
 
 function blockPreview(block: ContentBlock): string {
@@ -91,8 +96,10 @@ function blockPreview(block: ContentBlock): string {
       case 'inline_quiz':    return `${(block.questions || []).length} question${block.questions?.length !== 1 ? 's' : ''} · ${Math.round((block.pass_threshold ?? 0.7) * 100)}% to pass`;
       case 'worked_example': return block.label || '(example)';
       case 'simulation':     return block.title || block.simulation_id || '(simulation)';
-      case 'section':        return `${block.layout} · ${block.columns.reduce((sum, col) => sum + col.length, 0)} blocks`;
-      default:               return `(${(block as ContentBlock).type})`;
+      case 'section':           return `${block.layout} · ${block.columns.reduce((sum, col) => sum + col.length, 0)} blocks`;
+      case 'reasoning_prompt':   return `${block.reasoning_type} · Level ${block.difficulty_level} · ${(block.prompt || '').slice(0, 60)}`;
+      case 'classify_exercise':  return `${(block.rows || []).length} rows · ${(block.question || '').slice(0, 50)}`;
+      default:                   return `(${(block as ContentBlock).type})`;
     }
   } catch {
     return `(${block.type})`;
@@ -132,8 +139,9 @@ export default function BlockCard({
       case 'animation':        return <AnimationBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'inline_quiz':      return <InlineQuizEditor block={block} onChange={onChange} />;
       case 'worked_example':   return <WorkedExampleEditor block={block} onChange={onChange} onUpload={onUpload} />;
-      case 'section':          return <SectionBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
-      default:                 return null;
+      case 'section':           return <SectionBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
+      case 'classify_exercise': return <ClassifyExerciseEditor block={block} onChange={onChange} />;
+      default:                  return null;
     }
   }
 

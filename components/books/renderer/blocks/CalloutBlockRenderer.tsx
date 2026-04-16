@@ -62,74 +62,75 @@ function ExamTipCallout({ block }: { block: CalloutBlock }) {
 }
 
 // ─── Fun Fact / Gita Verse / Real World Hook ──────────────────────────────────
-// Uses explicit ReactMarkdown component overrides (not prose modifiers) so that
-// every element has guaranteed, predictable styling.
+// No card/box — renders as bold editorial prose directly in the content flow.
+// Large text, amber accents on strong/em, label row anchors the section visually.
 //
 // Three-layer verse markdown convention:
 //   ### Sanskrit  → h3  → 21px amber-200 bold (largest, most authoritative)
 //   ---           → hr  → visible amber divider with generous vertical gap
 //   *Hindi*       → em  → 15px amber-200/75 italic (warm, medium)
 //   ---           → hr  → separator
-//   > English     → blockquote → 13px white/45 muted (analytical, smallest)
-//   ---           → hr  → separator
+//   > English     → blockquote → 14px white/50 left-border (analytical, smallest)
 //   *Connection*  → em  → same amber italic (bridges verse to science)
 function FunFactCallout({ block }: { block: CalloutBlock }) {
   return (
-    <div className="my-6 lg:my-0 rounded-xl border border-amber-500/20 bg-amber-950/25 overflow-hidden">
+    <div className="my-8">
 
-      {/* Header — no uppercase so Devanagari renders naturally */}
-      <div className="px-5 py-3 border-b border-amber-500/10 flex items-center gap-2">
-        <span className="text-amber-400/45 text-[11px] leading-none select-none">✦</span>
-        <p className="text-[13px] font-semibold text-amber-300/70 leading-snug">
-          {block.title ?? 'Real World'}
-        </p>
+      {/* Label row — diamond + title + trailing line */}
+      <div className="flex items-center gap-2.5 mb-5">
+        <span className="text-amber-400 text-[14px] leading-none select-none">✦</span>
+        <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-amber-400/80 leading-none">
+          {block.title ?? 'Real Life Hook'}
+        </span>
+        <div className="flex-1 h-px bg-amber-400/18" />
       </div>
 
-      {/* Body — custom components for guaranteed visual hierarchy */}
-      <div className="px-5 py-5">
-        <ReactMarkdown
-          remarkPlugins={[remarkMath]}
-          rehypePlugins={[rehypeKatex]}
-          components={{
-            // Sanskrit — largest, warm amber, bold
-            h3: ({ children }) => (
-              <h3 className="text-[20px] font-bold text-amber-200 leading-[1.55] mt-2 mb-1 not-italic">
-                {children}
-              </h3>
-            ),
-            // Layer separator — rendered as a clearly visible amber rule
-            hr: () => (
-              <div className="my-5 h-px bg-amber-400/35" />
-            ),
-            // Regular paragraphs (subtitle label, etc.)
-            p: ({ children }) => (
-              <p className="text-[13.5px] leading-[1.75] text-white/55 my-2">
-                {children}
-              </p>
-            ),
-            // Hindi translation + connection line — warm amber italic
-            // (<em> is italic by default; amber color is what makes it distinctive)
-            em: ({ children }) => (
-              <em className="text-amber-200/80 text-[15px] leading-[1.8]">
-                {children}
-              </em>
-            ),
-            // English translation — muted blockquote, no left border
-            blockquote: ({ children }) => (
-              <blockquote className="bg-black/15 px-4 py-2 my-3 rounded not-italic text-white/45 text-[14px] leading-[1.7]">
-                {children}
-              </blockquote>
-            ),
-            strong: ({ children }) => (
-              <strong className="font-semibold text-amber-100/90 not-italic">
-                {children}
-              </strong>
-            ),
-          }}
-        >
-          {block.markdown}
-        </ReactMarkdown>
-      </div>
+      {/* Body */}
+      <ReactMarkdown
+        remarkPlugins={[remarkMath]}
+        rehypePlugins={[rehypeKatex]}
+        components={{
+          // Sanskrit / large header
+          h3: ({ children }) => (
+            <h3 className="text-[21px] font-bold text-amber-200 leading-[1.55] mt-2 mb-3">
+              {children}
+            </h3>
+          ),
+          // Amber hairline separator
+          hr: () => (
+            <div className="my-6 h-px bg-amber-400/20" />
+          ),
+          // Main body paragraphs — large, warm, readable
+          p: ({ children }) => (
+            <p className="text-[17px] leading-[1.85] text-white/82 mb-4 last:mb-0">
+              {children}
+            </p>
+          ),
+          // Hindi / connection lines — amber italic
+          em: ({ children }) => (
+            <em className="italic text-amber-200/80 text-[16px] leading-[1.8]">
+              {children}
+            </em>
+          ),
+          // English translation blockquote — left border, no background box
+          blockquote: ({ children }) => (
+            <blockquote className="border-l-2 border-amber-400/30 pl-4 my-4 text-white/52 text-[15px] leading-[1.75] not-italic">
+              {children}
+            </blockquote>
+          ),
+          // Bold — amber highlight, pops off the white/82 body
+          strong: ({ children }) => (
+            <strong className="font-semibold text-amber-200 not-italic">
+              {children}
+            </strong>
+          ),
+        }}
+      >
+        {block.markdown}
+      </ReactMarkdown>
+
+      {/* Bottom accent — tapers to transparent, marks end of hook zone */}
+      <div className="mt-7 h-px bg-gradient-to-r from-amber-400/25 via-amber-400/10 to-transparent" />
     </div>
   );
 }
