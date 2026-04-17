@@ -11,23 +11,39 @@ import 'katex/contrib/mhchem';
 import { TextBlock } from '@/types/books';
 import type { Components } from 'react-markdown';
 
+/**
+ * Inline image layout presets — selected via the markdown title attribute.
+ *
+ *   ![alt](src "right")                  → floats right, default size
+ *   ![alt](src "left|Caption text")      → floats left with caption
+ *   ![alt](src "center-half")            → centred block, half the column width
+ *
+ * Supported positions: right, left, right-sm, left-sm, center-half.
+ * Anything else (or omitted title) renders as a default full-width block image.
+ * On mobile (< md), all floats collapse to full-width stacks so layouts never break.
+ */
+const INLINE_IMAGE_LAYOUTS: Record<string, string> = {
+  'right':       'md:float-right md:w-1/3 md:max-w-[320px] md:ml-6 md:mb-3',
+  'left':        'md:float-left  md:w-1/3 md:max-w-[320px] md:mr-6 md:mb-3',
+  'right-sm':    'md:float-right md:w-1/4 md:max-w-[240px] md:ml-6 md:mb-3',
+  'left-sm':     'md:float-left  md:w-1/4 md:max-w-[240px] md:mr-6 md:mb-3',
+  'center-half': 'md:w-1/2 md:mx-auto',
+};
+
 // Explicit component overrides — more reliable than prose modifier classes
 // which can be tree-shaken or fail to apply in Tailwind v4.
 const components: Components = {
   h2: ({ children }) => (
-    <h2 className="text-[22px] font-bold text-sky-300 mt-10 mb-3 tracking-tight leading-tight">
+    // clear-both resets any active float from a preceding inline image so
+    // the next section starts on a fresh line
+    <h2 className="clear-both text-[22px] font-bold text-sky-300 mt-10 mb-3 tracking-tight leading-tight">
       {children}
     </h2>
   ),
   h3: ({ children }) => (
-    <h3 className="text-[17px] font-semibold text-sky-300/80 mt-7 mb-2 tracking-tight">
+    <h3 className="clear-both text-[17px] font-semibold text-sky-300/80 mt-7 mb-2 tracking-tight">
       {children}
     </h3>
-  ),
-  p: ({ children }) => (
-    <p className="text-[17px] leading-[1.65] text-white/82 my-3">
-      {children}
-    </p>
   ),
   strong: ({ children }) => (
     <strong className="font-semibold text-amber-200">{children}</strong>
@@ -97,6 +113,69 @@ const components: Components = {
       {children}
     </a>
   ),
+  /**
+   * Inline images.
+   *   ![alt](src)                       → default, full-width block image
+   *   ![alt](src "right")                → float right, text wraps
+   *   ![alt](src "left|Credit: NASA")    → float left with caption
+   *
+   * Title syntax: `"<position>"` or `"<position>|<caption>"`.
+   * Unknown positions fall back to the default block layout.
+   */
+  img: ({ src, alt, title }) => {
+    const [rawPosition, ...captionParts] = (title ?? '').split('|');
+    const position = rawPosition.trim();
+    const caption = captionParts.join('|').trim();
+    const floatClasses = INLINE_IMAGE_LAYOUTS[position];
+
+    // Default path: no title (or unknown) → full-width block image, same as before
+    if (!floatClasses) {
+      return (
+        <figure className="my-6">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={src} alt={alt ?? ''} loading="lazy"
+            className="w-full rounded-lg border border-white/10" />
+          {caption && (
+            <figcaption className="mt-2 text-[13px] text-white/45 text-center leading-snug">
+              {caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    }
+
+    // Inline layout — floats on desktop, stacks full-width on mobile
+    return (
+      <figure className={`my-3 ${floatClasses}`}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt={alt ?? ''} loading="lazy"
+          className="w-full rounded-lg border border-white/10" />
+        {caption && (
+          <figcaption className="mt-2 text-[12px] text-white/45 leading-snug">
+            {caption}
+          </figcaption>
+        )}
+      </figure>
+    );
+  },
+  // When a paragraph contains nothing but an inline-floated image, strip the
+  // wrapping <p> so the float works cleanly against subsequent paragraphs.
+  // (A <p> can't legally contain a <figure>; browsers auto-close but we avoid
+  // the weirdness by rendering a fragment here.)
+  p: ({ children }) => {
+    const kids = Array.isArray(children) ? children : [children];
+    const onlyChild = kids.length === 1 ? kids[0] : null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const asEl = onlyChild as any;
+    if (asEl && typeof asEl === 'object' && asEl.type && asEl.props?.node?.tagName === 'img') {
+      return <>{children}</>;
+    }
+    return (
+      <p className="text-[17px] leading-[1.65] text-white/82 my-3">
+        {children}
+      </p>
+    );
+  },
 };
 
 export default function TextBlockRenderer({ block }: { block: TextBlock }) {

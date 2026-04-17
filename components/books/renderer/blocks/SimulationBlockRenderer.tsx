@@ -181,6 +181,11 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/NewtonsThirdLawSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
+  // ── Class 9 Science — Chapter 2: Is Matter Around Us Pure? ──────────────
+  'tyndall-effect': dynamic(
+    () => import('./simulations/TyndallEffectSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
   // ── Class 9 Physics — Chapter 1: Motion ──────────────────────────────────
   'velocity-time-graph': dynamic(
     () => import('./simulations/VelocityTimeGraphSim'),

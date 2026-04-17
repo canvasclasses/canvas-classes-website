@@ -9,6 +9,39 @@ import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
 import { CalloutBlock } from '@/types/books';
 
+// ─── Shared bottom image ──────────────────────────────────────────────────────
+// Renders below the callout text when image_src or image_prompt is set.
+// image_src filled → real image. Empty but image_prompt set → copyable placeholder.
+function CalloutImage({ block }: { block: CalloutBlock }) {
+  if (!block.image_src && !block.image_prompt) return null;
+
+  if (block.image_src) {
+    return (
+      <figure className="mt-4">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={block.image_src}
+          alt={block.title ?? ''}
+          loading="lazy"
+          className="w-full rounded-lg border border-white/10"
+        />
+      </figure>
+    );
+  }
+
+  // Placeholder — show the generation prompt until the image is uploaded
+  return (
+    <div className="mt-4 rounded-lg border border-dashed border-white/12 bg-white/[0.02] px-3 py-2.5">
+      <p className="text-[10px] font-bold uppercase tracking-widest text-white/25 mb-1.5">
+        Image needed — generation prompt:
+      </p>
+      <p className="text-[12px] text-white/38 font-mono leading-relaxed select-all">
+        {block.image_prompt}
+      </p>
+    </div>
+  );
+}
+
 // ─── Exam Tip ─────────────────────────────────────────────────────────────────
 // Card-style with amber accent. Each paragraph renders as a bullet row.
 function ExamTipCallout({ block }: { block: CalloutBlock }) {
@@ -56,6 +89,7 @@ function ExamTipCallout({ block }: { block: CalloutBlock }) {
         >
           {block.markdown}
         </ReactMarkdown>
+        <CalloutImage block={block} />
       </div>
     </div>
   );
@@ -129,6 +163,8 @@ function FunFactCallout({ block }: { block: CalloutBlock }) {
         {block.markdown}
       </ReactMarkdown>
 
+      <CalloutImage block={block} />
+
       {/* Bottom accent — tapers to transparent, marks end of hook zone */}
       <div className="mt-7 h-px bg-gradient-to-r from-amber-400/25 via-amber-400/10 to-transparent" />
     </div>
@@ -175,6 +211,7 @@ function RememberCallout({ block }: { block: CalloutBlock }) {
       >
         {block.markdown}
       </ReactMarkdown>
+      <CalloutImage block={block} />
     </div>
   );
 }
@@ -193,6 +230,7 @@ function WarningCallout({ block }: { block: CalloutBlock }) {
           {block.markdown}
         </ReactMarkdown>
       </div>
+      <CalloutImage block={block} />
     </div>
   );
 }

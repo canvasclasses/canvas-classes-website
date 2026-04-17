@@ -26,6 +26,7 @@ import InlineQuizEditor from './blocks/InlineQuizEditor';
 import WorkedExampleEditor from './blocks/WorkedExampleEditor';
 import SectionBlockEditor from './blocks/SectionBlockEditor';
 import ClassifyExerciseEditor from './blocks/ClassifyExerciseEditor';
+import CuriosityPromptBlockEditor from './blocks/CuriosityPromptBlockEditor';
 
 const BLOCK_LABELS: Record<BlockType, string> = {
   text: 'Text',
@@ -48,6 +49,7 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   simulation: 'Simulation',
   section: 'Section',
   reasoning_prompt: 'Reasoning Prompt',
+  curiosity_prompt: 'Curiosity Prompt',
   classify_exercise: 'Classify Exercise',
 };
 
@@ -72,6 +74,7 @@ const BLOCK_ICONS: Record<BlockType, string> = {
   simulation: '⚙️',
   section: '▦',
   reasoning_prompt: '🧩',
+  curiosity_prompt: '✦',
   classify_exercise: '⊡',
 };
 
@@ -98,6 +101,7 @@ function blockPreview(block: ContentBlock): string {
       case 'simulation':     return block.title || block.simulation_id || '(simulation)';
       case 'section':           return `${block.layout} · ${block.columns.reduce((sum, col) => sum + col.length, 0)} blocks`;
       case 'reasoning_prompt':   return `${block.reasoning_type} · Level ${block.difficulty_level} · ${(block.prompt || '').slice(0, 60)}`;
+      case 'curiosity_prompt':   return (block.prompt || '').slice(0, 80) || '(empty)';
       case 'classify_exercise':  return `${(block.rows || []).length} rows · ${(block.question || '').slice(0, 50)}`;
       default:                   return `(${(block as ContentBlock).type})`;
     }
@@ -122,7 +126,7 @@ export default function BlockCard({
 
   function renderEditor() {
     switch (block.type) {
-      case 'text':             return <TextBlockEditor block={block} onChange={onChange} />;
+      case 'text':             return <TextBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'heading':          return <HeadingBlockEditor block={block} onChange={onChange} />;
       case 'image':            return <ImageBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'interactive_image':return <InteractiveImageEditor block={block} onChange={onChange} onUpload={onUpload} />;
@@ -132,7 +136,7 @@ export default function BlockCard({
       case 'molecule_3d':      return <Molecule3DEditor block={block} onChange={onChange} />;
       case 'latex_block':      return <LatexBlockEditor block={block} onChange={onChange} />;
       case 'practice_link':    return <PracticeLinkEditor block={block} onChange={onChange} />;
-      case 'callout':          return <CalloutBlockEditor block={block} onChange={onChange} />;
+      case 'callout':          return <CalloutBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'table':            return <TableBlockEditor block={block} onChange={onChange} />;
       case 'timeline':         return <TimelineEditor block={block} onChange={onChange} />;
       case 'comparison_card':  return <ComparisonCardEditor block={block} onChange={onChange} />;
@@ -141,6 +145,7 @@ export default function BlockCard({
       case 'worked_example':   return <WorkedExampleEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'section':           return <SectionBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'classify_exercise': return <ClassifyExerciseEditor block={block} onChange={onChange} />;
+      case 'curiosity_prompt':  return <CuriosityPromptBlockEditor block={block} onChange={onChange} />;
       default:                  return null;
     }
   }

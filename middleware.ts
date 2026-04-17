@@ -4,11 +4,22 @@ import { createServerClient } from '@supabase/ssr'
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
+    // ── Redirect old /books/ URLs for Class 9 books to /class-9/ ────────
+    const class9Redirect = pathname.match(/^\/books\/(class9-[^/]+)(\/(.+))?$/);
+    if (class9Redirect) {
+        const [, bookSlug, , pageSlug] = class9Redirect;
+        const dest = request.nextUrl.clone();
+        dest.pathname = pageSlug ? `/class-9/${bookSlug}/${pageSlug}` : '/class-9';
+        return NextResponse.redirect(dest, 301);
+    }
+
     // Routes that require authentication
     const isCrucibleRoute = pathname.startsWith('/crucible');
     // Books are publicly accessible (metered gate handled client-side in BookReader).
     // We still refresh the Supabase session if the user happens to be logged in.
-    const isBooksRoute = pathname.startsWith('/books');
+    const isBooksRoute = pathname.startsWith('/books')
+        || pathname.startsWith('/class-9')
+        || pathname.startsWith('/class-11');
 
     // If neither a gated nor a books route, skip entirely.
     if (!isCrucibleRoute && !isBooksRoute) {

@@ -68,5 +68,5 @@ export default async function Class9Page() {
       (p as Record<string, unknown>).content_types as GradePage['content_types'] ?? null,
   }));
 
-  return <GradeLandingPage grade={9} books={books} pages={pages} />;
+  return <GradeLandingPage grade={9} books={books} pages={pages} basePath="/class-9" />;
 }

@@ -28,12 +28,12 @@ export default function ComparisonCardBlockRenderer({ block }: { block: Comparis
               key={idx}
               className={`p-4 bg-[#0B0F15] border rounded-xl ${colors.border}`}
             >
-              <p className={`text-sm font-bold mb-3 ${colors.heading}`}>
+              <p className={`text-[15px] font-bold mb-3 ${colors.heading}`}>
                 {col.heading}
               </p>
               <ul className="flex flex-col gap-2">
                 {col.points.map((point, pi) => (
-                  <li key={pi} className="flex items-start gap-2 text-sm text-white/75">
+                  <li key={pi} className="flex items-start gap-2 text-[15px] text-white/75">
                     <span className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${colors.dot}`} />
                     {point}
                   </li>

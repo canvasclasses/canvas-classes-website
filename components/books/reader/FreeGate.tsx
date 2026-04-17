@@ -65,6 +65,9 @@ export default function FreeGate({ bookSlug, pageSlug, basePath }: Props) {
     let cancelled = false;
 
     async function check() {
+      // Bypass gate on local dev server
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') return;
+
       // Check if user is authenticated
       const supabase = createClient();
       if (supabase) {

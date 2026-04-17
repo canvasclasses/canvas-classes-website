@@ -17,6 +17,9 @@ const BookPageSchema = new Schema<IBookPage>(
     subtitle: String,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     blocks: { type: [Schema.Types.Mixed], default: [] } as any,
+    // Hinglish parallel text blocks — same id as English TextBlock counterpart.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    hinglish_blocks: { type: [Schema.Types.Mixed], default: [] } as any,
     tags: { type: [String], default: [] },
     published: { type: Boolean, default: false },
     reading_time_min: Number,

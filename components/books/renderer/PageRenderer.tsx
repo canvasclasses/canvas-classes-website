@@ -1,7 +1,7 @@
 'use client';
 
-import { memo, useMemo } from 'react';
-import { BookPage, ContentBlock } from '@/types/books';
+import { memo, useMemo, useState, useEffect, useCallback } from 'react';
+import { BookPage, ContentBlock, TextBlock } from '@/types/books';
 import BlockRenderer from './BlockRenderer';
 
 // Callout variants that float to the margin sidebar on desktop.
@@ -13,12 +13,63 @@ function isSidebarBlock(block: ContentBlock): boolean {
   return block.type === 'callout' && SIDEBAR_CALLOUT_VARIANTS.has(block.variant);
 }
 
+const HINGLISH_PREF_KEY = 'canvas_hinglish_mode';
+
 interface PageRendererProps {
-  page: Pick<BookPage, 'title' | 'subtitle' | 'blocks' | 'reading_time_min'>;
+  page: Pick<BookPage, 'title' | 'subtitle' | 'blocks' | 'reading_time_min' | 'hinglish_blocks'>;
   onQuizPass?: (blockId: string, score: number) => void;
+  /**
+   * When provided (admin preview), PageRenderer uses this value instead of its
+   * own internal state and hides its in-page toggle to avoid duplication.
+   * When undefined (student reader), the component manages its own toggle.
+   */
+  hinglishOverride?: boolean;
 }
 
-function PageRendererInner({ page, onQuizPass }: PageRendererProps) {
+function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererProps) {
+  const hasHinglish = Boolean(page.hinglish_blocks && page.hinglish_blocks.length > 0);
+  // In controlled mode (admin), the parent drives the value — no internal state needed.
+  const isControlled = hinglishOverride !== undefined;
+
+  // Read persisted preference on mount; default to English
+  const [hinglish, setHinglish] = useState(false);
+  useEffect(() => {
+    if (isControlled || !hasHinglish) return;
+    try {
+      setHinglish(localStorage.getItem(HINGLISH_PREF_KEY) === '1');
+    } catch { /* localStorage unavailable — stay English */ }
+  }, [isControlled, hasHinglish]);
+
+  const toggleHinglish = useCallback(() => {
+    setHinglish(prev => {
+      const next = !prev;
+      try { localStorage.setItem(HINGLISH_PREF_KEY, next ? '1' : '0'); } catch { /* ignore */ }
+      return next;
+    });
+  }, []);
+
+  // Effective value: parent-controlled when override is set, internal otherwise
+  const activeHinglish = isControlled ? hinglishOverride : hinglish;
+
+  // Map from block id → Hinglish TextBlock for O(1) lookup during render
+  const hinglishMap = useMemo(
+    () => new Map<string, TextBlock>(
+      (page.hinglish_blocks ?? []).map(b => [b.id, b])
+    ),
+    [page.hinglish_blocks]
+  );
+
+  // When Hinglish mode is active, swap text blocks that have a translation
+  const resolveBlock = useCallback(
+    (block: ContentBlock): ContentBlock => {
+      if (activeHinglish && block.type === 'text') {
+        return (hinglishMap.get(block.id) as ContentBlock) ?? block;
+      }
+      return block;
+    },
+    [activeHinglish, hinglishMap]
+  );
+
   // Memoize expensive sort + split so it only recalculates when blocks change
   const { sorted, mainBlocks, sidebarBlocks, hasSidebar } = useMemo(() => {
     const s = [...page.blocks].sort((a, b) => a.order - b.order);
@@ -34,12 +85,43 @@ function PageRendererInner({ page, onQuizPass }: PageRendererProps) {
 
       {/* Page header — always full width */}
       <header className="mb-5 max-w-[980px]">
-        <h1 className="text-[32px] sm:text-[38px] font-bold text-white leading-[1.15] tracking-tight">
-          {page.title}
-        </h1>
-        {page.subtitle && (
-          <p className="mt-3 text-[17px] text-white/55 leading-snug">{page.subtitle}</p>
-        )}
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <h1 className="text-[32px] sm:text-[38px] font-bold text-white leading-[1.15] tracking-tight">
+              {page.title}
+            </h1>
+            {page.subtitle && (
+              <p className="mt-3 text-[17px] text-white/55 leading-snug">{page.subtitle}</p>
+            )}
+          </div>
+
+          {/* EN / HI toggle — student reader only (hidden when parent controls via hinglishOverride) */}
+          {hasHinglish && !isControlled && (
+            <div className="shrink-0 mt-1.5 flex items-center rounded-lg overflow-hidden
+              border border-white/10 text-[11px] font-bold tracking-wider">
+              <button
+                onClick={() => activeHinglish && toggleHinglish()}
+                className={`px-3 py-1.5 transition-colors ${
+                  !activeHinglish
+                    ? 'bg-orange-500 text-black'
+                    : 'bg-transparent text-white/40 hover:text-white/70'
+                }`}
+              >
+                EN
+              </button>
+              <button
+                onClick={() => !activeHinglish && toggleHinglish()}
+                className={`px-3 py-1.5 transition-colors ${
+                  activeHinglish
+                    ? 'bg-orange-500 text-black'
+                    : 'bg-transparent text-white/40 hover:text-white/70'
+                }`}
+              >
+                HI
+              </button>
+            </div>
+          )}
+        </div>
         <div className="mt-5 h-px bg-white/8" />
       </header>
 
@@ -57,7 +139,7 @@ function PageRendererInner({ page, onQuizPass }: PageRendererProps) {
           <div className="xl:hidden flex flex-col gap-1">
             {sorted.map(block => (
               <div key={block.id}>
-                <BlockRenderer block={block} onQuizPass={onQuizPass} />
+                <BlockRenderer block={resolveBlock(block)} onQuizPass={onQuizPass} />
               </div>
             ))}
           </div>
@@ -66,7 +148,7 @@ function PageRendererInner({ page, onQuizPass }: PageRendererProps) {
           <div className="hidden xl:flex xl:flex-col xl:gap-1">
             {mainBlocks.map(block => (
               <div key={block.id}>
-                <BlockRenderer block={block} onQuizPass={onQuizPass} />
+                <BlockRenderer block={resolveBlock(block)} onQuizPass={onQuizPass} />
               </div>
             ))}
           </div>

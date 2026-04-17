@@ -21,7 +21,8 @@ export type BlockType =
   | 'worked_example'
   | 'simulation'
   | 'section'
-  | 'reasoning_prompt';
+  | 'reasoning_prompt'
+  | 'curiosity_prompt';
 
 export interface BaseBlock {
   id: string;        // crypto.randomUUID() — stable, used for drag-drop keys
@@ -240,7 +241,16 @@ export interface SimulationBlock extends BaseBlock {
   prediction?: SimulationPrediction; // Optional predict-observe-explain layer
 }
 
-// 20. REASONING PROMPT — opening reasoning challenge that primes the student
+// 21. CURIOSITY PROMPT — open-ended Block 0 hook for Class 9 pages
+// No MCQ, no correct answer — primes curiosity before the concept is introduced.
+export interface CuriosityPromptBlock extends BaseBlock {
+  type: 'curiosity_prompt';
+  prompt: string;   // Open-ended question answerable with zero prior knowledge
+  hint?: string;    // Optional one-line nudge if the student feels stuck
+  reveal?: string;  // Optional teacher-voice reflection shown after "I've thought about it"
+}
+
+// 20. REASONING PROMPT — mid-page application MCQ for Class 9 pages
 export type ReasoningType = 'logical' | 'spatial' | 'quantitative' | 'analogical';
 export interface ReasoningPromptBlock extends BaseBlock {
   type: 'reasoning_prompt';
@@ -282,7 +292,8 @@ export type ContentBlock =
   | WorkedExampleBlock
   | SimulationBlock
   | SectionBlock
-  | ReasoningPromptBlock;
+  | ReasoningPromptBlock
+  | CuriosityPromptBlock;
 
 
 // ─── Page & Book documents ────────────────────────────────────────────────────
@@ -296,6 +307,13 @@ export interface BookPage {
   title: string;
   subtitle?: string;
   blocks: ContentBlock[];
+  /**
+   * Hinglish (Hindi-English mix) parallel explanations for text blocks only.
+   * Each entry is a TextBlock whose `id` matches the English TextBlock it replaces.
+   * Headings, callouts, images, quizzes etc. are always rendered in English.
+   * When this array is empty or absent, the Hinglish toggle is hidden entirely.
+   */
+  hinglish_blocks?: TextBlock[];
   tags?: string[];       // Links to Crucible taxonomy tags
   created_at: Date;
   updated_at: Date;

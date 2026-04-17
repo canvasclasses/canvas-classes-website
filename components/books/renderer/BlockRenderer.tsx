@@ -22,6 +22,7 @@ import WorkedExampleRenderer from './blocks/WorkedExampleRenderer';
 import SimulationBlockRenderer from './blocks/SimulationBlockRenderer';
 import SectionBlockRenderer from './blocks/SectionBlockRenderer';
 import ReasoningPromptRenderer from './blocks/ReasoningPromptRenderer';
+import CuriosityPromptRenderer from './blocks/CuriosityPromptRenderer';
 import ClassifyExerciseRenderer from './blocks/ClassifyExerciseRenderer';
 
 export default function BlockRenderer({
@@ -52,6 +53,7 @@ export default function BlockRenderer({
     case 'simulation':        return <SimulationBlockRenderer block={block} />;
     case 'section':           return <SectionBlockRenderer block={block} onQuizPass={onQuizPass} />;
     case 'reasoning_prompt':   return <ReasoningPromptRenderer block={block} />;
+    case 'curiosity_prompt':   return <CuriosityPromptRenderer block={block} />;
     case 'classify_exercise':  return <ClassifyExerciseRenderer block={block} />;
     default:                   return null;
   }

@@ -91,7 +91,7 @@ function ChildBlockCard({
 
   function renderEditor() {
     switch (block.type) {
-      case 'text':             return <TextBlockEditor block={block} onChange={onChange} />;
+      case 'text':             return <TextBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'heading':          return <HeadingBlockEditor block={block} onChange={onChange} />;
       case 'image':            return <ImageBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'interactive_image':return <InteractiveImageEditor block={block} onChange={onChange} onUpload={onUpload} />;

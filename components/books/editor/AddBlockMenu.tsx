@@ -50,6 +50,13 @@ const BLOCK_GROUPS: { label: string; blocks: { type: BlockType; icon: string; la
       { type: 'simulation',      icon: '⚗️', label: 'Simulation' },
     ],
   },
+  {
+    label: 'Class 9 Reasoning',
+    blocks: [
+      { type: 'curiosity_prompt',  icon: '✦', label: 'Curiosity Prompt (Block 0)' },
+      { type: 'reasoning_prompt',  icon: '🧩', label: 'Reasoning Prompt (mid-page)' },
+    ],
+  },
 ];
 
 interface Props {

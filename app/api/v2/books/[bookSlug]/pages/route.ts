@@ -141,6 +141,16 @@ export async function POST(req: NextRequest, { params }: Params) {
       blocks = validated.blocks as ContentBlock[];
     }
 
+    // Validate hinglish_blocks — must be TextBlock[] (type: 'text', id, markdown)
+    const hinglishBlocks = Array.isArray(body.hinglish_blocks)
+      ? (body.hinglish_blocks as unknown[]).filter(
+          (b): b is Record<string, unknown> =>
+            typeof b === 'object' && b !== null &&
+            (b as Record<string, unknown>).type === 'text' &&
+            typeof (b as Record<string, unknown>).markdown === 'string'
+        )
+      : [];
+
     const page = await BookPageModel.create({
       _id: pageId,
       book_id: String(book._id),
@@ -150,6 +160,7 @@ export async function POST(req: NextRequest, { params }: Params) {
       title: body.title,
       subtitle: body.subtitle || undefined,
       blocks,
+      hinglish_blocks: hinglishBlocks,
       tags: body.tags || [],
       published: false,
       reading_time_min: computeReadingTime(blocks),

@@ -148,6 +148,19 @@ export async function PUT(req: NextRequest, { params }: Params) {
 
     // Only update blocks + reading_time when blocks are explicitly provided.
     // A PUT with only metadata fields (e.g. page_number) must NEVER wipe content.
+    // hinglish_blocks: only TextBlocks (type:'text') are accepted.
+    // Passing `null` or omitting the field leaves existing hinglish_blocks untouched.
+    if (Array.isArray(body.hinglish_blocks)) {
+      updateFields.hinglish_blocks = (body.hinglish_blocks as unknown[]).filter(
+        (b): b is Record<string, unknown> =>
+          typeof b === 'object' && b !== null &&
+          (b as Record<string, unknown>).type === 'text' &&
+          typeof (b as Record<string, unknown>).markdown === 'string'
+      );
+    } else {
+      delete updateFields.hinglish_blocks;
+    }
+
     if (Array.isArray(body.blocks)) {
       // Sanitise legacy/invalid data before Zod sees it — self-heals on save.
       // Currently fixes: missing id, invalid callout variant.

@@ -87,6 +87,47 @@ Every block has `id` (UUID v4), `type`, `order` (0-indexed).
 - Use `**bold**` for key terms on first introduction
 - Use numbered lists for processes, bullet lists for properties
 
+#### 3.1.1 Inline images inside a text block
+
+Text blocks can embed inline images using extended markdown syntax. Use these when a paragraph needs a visual **alongside** the prose — a photo, a small apparatus detail, a labelled close-up. For the **main** diagram of a concept, keep using a standalone `image` block (§3.4).
+
+**Syntax:**
+```
+![alt text](src "position|caption")
+```
+
+**Position values:**
+
+| Position | Behaviour |
+|---|---|
+| *(omitted)* | Full-width block, stands alone |
+| `right` | Floats right, text wraps left (default for side visuals) |
+| `left` | Floats left, text wraps right |
+| `right-sm` / `left-sm` | Narrower float (~¼ column width) |
+| `center-half` | Centred block at half width |
+
+On mobile (< md) all floats collapse to full-width stacks.
+
+**Rule — every inline image must ship with a generation prompt.** When you decide a paragraph warrants an inline image and the image has not yet been uploaded:
+
+1. Write the inline markdown with a meaningful `alt`, a chosen `position`, and an optional caption
+2. Set `src` to a placeholder of the form `PENDING:<short-slug>` (e.g. `PENDING:rust-flake`)
+3. Append an `IMAGE_GENERATION_PROMPTS` HTML comment at the **end** of the text block's markdown that lists every pending slug with a full prompt using the §3.4.1 template
+
+**Example inside a text block's `markdown`:**
+```
+Rust is not just discolouration — it actively eats the iron beneath.
+![red-brown rust on an iron nail](PENDING:rust-flake "right|Rust flakes, exposing fresh metal")
+Over weeks the oxide layer flakes off, exposing fresh iron to the air — so the attack never stops.
+
+<!--
+IMAGE_GENERATION_PROMPTS:
+PENDING:rust-flake — Close-up macro photograph of red-brown rust flakes on the surface of an iron nail. Visible texture of cracked, peeling iron oxide layered over metal. Natural side lighting, shallow depth of field. Dark neutral background, crisp focus, editorial photography style.
+-->
+```
+
+The §3.4.1 quality bar applies equally to inline prompts. Never write vague prompts like `diagram of rust` — be specific, visual, and technical. The agent that writes the paragraph owns both the text **and** the image spec.
+
 ### 3.2 `heading`
 ```json
 {
@@ -290,6 +331,28 @@ accent labels, clean technical illustration style.
 - `latex` field: raw LaTeX without `$` delimiters
 - JSON escaping: `\\frac`, `\\times` (double backslash in JSON = single `\` in LaTeX)
 
+### 3.11 `curiosity_prompt`
+
+Open-ended curiosity hook. **Block 0 on Class 9 pages.** Primes the student's thinking before the concept is introduced — zero prior knowledge required. There is no "correct answer", no MCQ, no grading. It sets a scene and asks the student to wonder.
+
+```json
+{
+  "id": "uuid",
+  "type": "curiosity_prompt",
+  "order": 0,
+  "prompt": "Look at a glass of tap water. Do you think you're drinking pure H₂O — or something else? What's actually in there?",
+  "hint": "Optional — one short line to nudge thinking if the student is stuck.",
+  "reveal": "Optional — a short teacher-voice reflection shown after tapping 'Show reflection'. Frame it as 'here's what's interesting about this question', not 'here's the answer'."
+}
+```
+
+**Rules:**
+- **No `options` array.** `curiosity_prompt` is never an MCQ. For MCQ-style reasoning, use `reasoning_prompt` (§4B), placed mid-page after the concept is introduced.
+- The `prompt` must be ponderable by a 9th grader with **zero prior knowledge** of the page's topic. If the student needs definitions first, the question belongs in `reasoning_prompt`, not here.
+- `reveal` is optional. Use it only when a short reflection genuinely adds something; otherwise the act of wondering is the whole point.
+- **Only ever used at Block 0.** Never place a `curiosity_prompt` mid-page.
+- Class 11–12 pages do not use `curiosity_prompt` — they open with a `callout[fun_fact]` directly.
+
 ---
 
 ## 4. Standard Page Structure
@@ -323,37 +386,60 @@ Block 11: inline_quiz         ← 2–4 questions, always last
 
 ### 4B. Class 9 — Reasoning-Embedded Template
 
-Class 9 pages follow a different structure that embeds reasoning development into the content itself.
-The goal is to build thinking skills alongside subject knowledge — never as a separate section.
+Class 9 pages embed reasoning development into the content itself — but reasoning tasks must be placed where the student has the tools to actually reason, not dropped on them cold.
+
+**Two reasoning block types, two different jobs:**
+- `curiosity_prompt` (Block 0) — open-ended wonder. No MCQ, no prior knowledge required. Primes curiosity.
+- `reasoning_prompt` (mid-page) — Application-level MCQ. Placed **after** the concept is introduced, so the student has definitions and mechanisms to apply.
 
 ```
-Block 0:  reasoning_prompt    ← Opening reasoning challenge (ALWAYS FIRST on Class 9 pages)
-Block 1:  callout[fun_fact]   ← Real-life hook
-Block 2:  text                ← Core concept
-Block 3:  heading[2]          ← Sub-section
-Block 4:  text                ← Explanation
-Block 5:  image               ← Diagram (mandatory; src="" + generation_prompt)
-Block 6:  simulation          ← With prediction challenge (where a meaningful prediction exists)
-Block 7:  text                ← Deeper explanation / what the sim reveals
-Block 8:  worked_example      ← NCERT solved example (if exists)
-Block 9:  callout[exam_tip]   ← Board exam insight (CBSE Class 9 — NOT JEE/NEET)
-Block 10: inline_quiz         ← 3 questions: 1 recall + 1 application + 1 reasoning (always last)
+Block 0:  curiosity_prompt    ← Open-ended hook (no MCQ, no wrong answer) — primes curiosity
+Block 1:  callout[fun_fact]   ← Real-life anchor
+Block 2:  text                ← Core concept introduction (definitions, what it IS)
+Block 3:  heading[2]          ← Sub-section: first major part
+Block 4:  text                ← Explanation / mechanism
+Block 5:  reasoning_prompt    ← Application-level MCQ — student now has tools to reason with
+Block 6:  image               ← Diagram (mandatory; src="" + generation_prompt)
+Block 7:  simulation          ← With prediction challenge (where meaningful)
+Block 8:  text                ← Deeper explanation / what the sim reveals
+Block 9:  worked_example      ← NCERT solved example (if exists)
+Block 10: callout[exam_tip]   ← Board exam insight (CBSE Class 9 — NOT JEE/NEET)
+Block 11: inline_quiz         ← 3 questions: 1 recall + 1 application + 1 reasoning (always last)
 ```
 
-#### reasoning_prompt block — Class 9 rules
+#### curiosity_prompt — Block 0 rules
+
+See §3.11 for the full block schema. Key constraints:
+- **Answerable with zero prior knowledge** of the page's topic. If the student must know definitions first, the question belongs in `reasoning_prompt` instead.
+- Open-ended tone, no options, no graded commit.
+- One per page, always at `order: 0`.
+
+#### reasoning_prompt — Class 9 rules
 
 ```json
 {
   "id": "uuid",
   "type": "reasoning_prompt",
-  "order": 0,
+  "order": 5,
   "reasoning_type": "logical",
-  "prompt": "A student says: 'Heavier objects always fall faster than lighter ones.' What is wrong with this reasoning, and what experiment would prove it?",
-  "options": ["The student is correct", "The student is wrong — mass doesn't affect fall speed in vacuum", "It depends on the shape of the object", "It depends on the material"],
-  "reveal": "Galileo showed that in the absence of air resistance, all objects fall at the same rate regardless of mass. The student is confusing air resistance (which does depend on shape and size) with gravitational acceleration (which does not). This is a classic example of a conclusion being correct in some conditions but stated as a universal rule.",
+  "prompt": "You mix iron filings with sulfur powder. One classmate says the result is a compound of iron and sulfur. Another says it's just a mixture. Without doing any experiment, how would you decide who is right?",
+  "options": [
+    "The first classmate is right — combining any two substances always makes a compound",
+    "You need to test whether the properties changed — a mixture keeps the individual properties of its components, while a compound has entirely new properties",
+    "The second classmate is right — mixing never forms compounds under any condition",
+    "You need a microscope to see whether the particles combined"
+  ],
+  "reveal": "A mixture retains the properties of its components — iron is still magnetic, sulfur still yellow and brittle. A compound has new properties — iron sulfide (FeS) is black, non-magnetic, and doesn't behave like either element. The answer isn't in the act of mixing; it's in what changed.",
   "difficulty_level": 2
 }
 ```
+
+**Placement rule — never skip.** A `reasoning_prompt` must appear **after** the text block(s) that introduce every concept the student needs to answer it. Test your placement: read the blocks above your `reasoning_prompt` as if you know nothing else. If you cannot answer the prompt from what's above, move the prompt later.
+
+- ❌ **Never Block 0.** A reasoning MCQ before any content is a coin flip, not reasoning.
+- ❌ **Never right after `curiosity_prompt` and `fun_fact`** — the student still has no concepts to apply.
+- ✅ **After the first or second `text` block** that defines the concept — the student now has the vocabulary and mechanism to reason with.
+- ✅ **Maximum one per page.** If a page has two distinct concepts that each warrant a reasoning check, place two `reasoning_prompt` blocks, each after its relevant concept.
 
 **reasoning_type values and when to use:**
 | Type | Use when | Example |
@@ -559,3 +645,159 @@ For pages covering carbon/hydrogen/nitrogen/halogen estimation:
 > Before writing any chemistry content, quote the exact NCERT source text (or confirm from PDF extraction) for every factual claim. If you cannot verify a fact from the source, write `NEEDS_REVIEW: [reason]`.
 >
 > Never invent reactions, test results, reagent names, or numerical values. All chemistry must come from the source PDF or verified NCERT Class 11 Chemistry content.
+
+---
+
+## 12. Hinglish Authoring — Class 9 Pages
+
+Class 9 pages ship with a parallel `hinglish_blocks` array so the student can toggle between English and Hinglish. The target reader is a North Indian 9th grader (Himachal / Uttarakhand / Punjab belt) in an English-medium school who doesn't fully follow academic English and otherwise defaults to rote learning.
+
+**What gets a Hinglish version:** only `text`-type blocks. Everything else (`heading`, `callout`, `image`, `worked_example`, `inline_quiz`, `timeline`, `table`, `comparison_card`, `simulation`, `reasoning_prompt`) renders in English in both modes.
+
+### 12.1 The Core Rule — Re-explain, Do Not Translate
+
+This is the most important rule in this section. Read it twice.
+
+> **Close the English version mentally. Read it once for the concept only. Then re-explain that concept from scratch as a Hindi-medium teacher would — in your own sentence structure, your own rhythm, your own idioms.**
+
+Translation keeps English clause structure, em-dash placement, and rhetorical patterns while swapping words. The result is Hinglish that *sounds like translated English*, not like a teacher actually talking. That is the failure mode to avoid.
+
+Signs you've slipped into translation mode:
+- Your Hinglish sentence has the same number of clauses, in the same order, as the English.
+- You used an em-dash in the exact spot the English did.
+- You translated a word literally when a well-known Hindi idiom would land better.
+- Your closing line is a word-for-word mirror of the English closing line.
+
+Signs you're re-explaining:
+- Your Hinglish has more short sentences than the English did.
+- You used idioms (*ratta maarna*, *dimaag lagao*) the English didn't contain.
+- You reordered — started the paragraph with a different sentence than the English did, because Hindi rhythm wants it that way.
+- A Hindi reader would read it and think "yes, this is how my teacher would say it," not "this is translated from English."
+
+### 12.2 Voice — Pick One Teacher and Stay There
+
+Imagine a single specific teacher — e.g. a Sharma sir, 40, teaches Science to a Class 9 section in Dehradun, explains things with scene-building and the occasional *zara socho*. Every Hinglish block on a page comes from that one voice.
+
+**Do not oscillate** between:
+- Formal literary Hindi (*vigyan ek prakriya hai*) and casual chat (*science basically ek process hai*) within the same page
+- Second-person affectionate (*tum*) and lecturer-mode (*aap*)
+- English-heavy (*scientists ne observe kiya*) and Hindi-heavy (*vaigyanikon ne avlokan kiya*) within the same paragraph
+
+Pick the register and hold it across the whole page. The default register for this book:
+- Second person **tum** (never aap, never tu)
+- Common English words stay English: *scientist, theory, experiment, atom, hypothesis, result, strategy, question, course, skill, level*
+- Hindi carries emotional weight and action verbs: *ruk ke poochha, baith gaya, haath kaanp gaye, samajh aa gayi, chhod diya*
+- Sanskrit-origin Hindi only when the concept demands it: *dharma, gyaan-parampara, prakriti, parmanu* — and only with a short gloss if it's technical
+
+### 12.3 Subheadings Stay in English
+
+Bold subheadings inside a text block — anything written as `**Title.**` at the start of a section — are **kept in the original English**, exactly as written, even in Hinglish mode. They render in the accent colour and serve as visual anchors; a Hinglish version would be inconsistent across pages and loses the visual rhythm.
+
+Only the prose paragraphs under each subheading are rewritten in Hinglish.
+
+Example from page 1:
+```
+**The battlefield was silent.**        ← stays in English
+
+Zara scene dekho. Kurukshetra ka       ← prose is Hinglish
+maidan. Do foujein aamne-saamne...
+```
+
+### 12.4 Cultural Idiom Library
+
+Use these instead of their direct translations. They land as "the way a teacher actually talks."
+
+| Concept | Use this | Not this |
+|---|---|---|
+| Memorise / rote-learn | **ratta maarna** | yaad karna |
+| Think hard / apply your mind | **dimaag lagao** | socho |
+| Consider for a second | **zara socho** | ek minute socho |
+| Straight up / honestly | **seedhi baat** | sachchi baat |
+| Just this much / that's it | **bas itni si baat hai** | yeh hi baat hai |
+| Got it? / Does it click? | **samajh aaya?** | samjhe? |
+| Stick with it / hold on to it | **tike rehna / ade rehna** | rahna / ruka rehna |
+| Quick dismissal | **"chhodo, pata nahi"** | "mujhe nahi maloom" |
+| Pretending to know | **drama kar leta** | dikhawa karta |
+| Scene-set opener | **zara scene dekho** | dekhiye / imagine karo |
+| First stirring / opening | **pehli aahat** | shuruaat |
+| A quick easy answer | **jhatpat-sa jawaab** | turant uttar |
+| Nothing special about it | **isme kya baat hai** | koi baat nahi |
+
+Add to this list as patterns repeat. Don't force an idiom where it doesn't fit — but when a concept has one of these natural Hinglish forms, use it.
+
+### 12.5 Preserve the Conceptually Important Phrases
+
+Some English phrases carry the actual point of the paragraph. If you drop them, the paragraph becomes a summary instead of an explanation. Before you finalise a Hinglish paragraph, check:
+
+1. **What's the one thing this paragraph teaches?**
+2. **Is that thing still explicit in my Hinglish version, or did I compress it away?**
+
+Example from page 1, Marie Curie sentence:
+
+> **English:** "Marie Curie asked *'what is this strange radiation?'* **rather than setting it aside as unexplained.**"
+
+The bold half is the whole lesson — the *courage to not move on*. A translated version that said *"Marie Curie ne poochha 'yeh strange radiation kya hai?' aur matter ki samajh badal di"* would lose it.
+
+Correct version:
+> *"Marie Curie ne ek ajeeb sa radiation dekha. Usko 'pata nahi kya hai, chhodo' bol ke aage nahi badhi. Usne poochha 'yeh hai kya cheez?' — aur matter ki poori samajh hi badal di."*
+
+The *"chhodo, pata nahi bol ke aage nahi badhi"* line is how you carry the concept into Hinglish rhythm.
+
+### 12.6 Closing Lines — Engineer for Hinglish Rhythm
+
+The last line of a block lands hardest. Do not translate it; design it separately.
+
+- English closing lines lean on parallel structure: *"You are not here to memorise the answers. You are here to learn how to ask."*
+- Hinglish closing lines lean on clipped rhythm and a small emotional turn: *"Tum yahaan facts ratta maarne nahi aaye ho. Tum yahaan seekhne aaye ho ki sawaal kaise poochha jaata hai."*
+
+A good closing line test: read your closing Hinglish sentence aloud. If it sounds like a textbook paraphrase, rewrite. If it sounds like how a teacher ends a thought before moving on, keep it.
+
+### 12.7 Sentence Structure — De-mirror the English
+
+- **Break long English compound sentences into two or three short Hindi sentences.** Hindi rhythm prefers short. "When Newton asked why the apple falls rather than simply accepting it does, he was doing what Arjuna did." → four short sentences in Hinglish.
+- **Use em-dashes sparingly.** English prose uses them for pace; Hindi prose uses commas and fresh sentences.
+- **Vary openers.** If the English paragraph opens with a noun phrase, try opening the Hinglish with a verb or a scene-set: *"Zara scene dekho..."*, *"Duniya ke jitne bhi bade thinkers..."*, *"Arjuna ko ladna aata tha."*
+- **Preserve italic emphasis** — when English uses `*italic*` for a quoted thought or question, keep it italic in the Hinglish too.
+
+### 12.8 Gita Shlok — Three-Part Format
+
+When a page opens with a `fun_fact` callout containing a Gita verse (or any verse from Indian knowledge tradition), the markdown must have **three parts in this order**:
+
+```
+Sanskrit verse (Devanagari, italic)
+
+Hindi rendering in Devanagari — simpler, conversational words a 9th grader
+actually uses. Not literary Hindi. Not Sanskritised. If the Sanskrit word
+has an everyday Hindi equivalent, use it.
+
+English translation — a tight 1–2 sentence rendering focused on the idea,
+not a word-for-word equivalent.
+```
+
+This block is the same in English and Hinglish mode — callouts do not get Hinglish versions. The Hindi line is written once, carefully, for the 9th grader reader.
+
+Bad Hindi line (too literary):
+> *"Yogasthaḥ kuru karmāṇi — yoga mein sthit hokar samatā-bhāv se karma karo."*
+
+Good Hindi line (everyday words):
+> *"Kaam mann laga ke karo, par result ki chinta chhod do — yahi yoga hai."*
+
+### 12.9 Authoring Checklist — Run Before Saving
+
+Before committing a Hinglish block, check every item:
+
+- [ ] Same `id` as the English TextBlock (renderer matches on id)
+- [ ] `type: "text"` and same `order` as the English block
+- [ ] Every `**bold subheading**` is identical to the English — not translated
+- [ ] Inline LaTeX / `\ce{}` formulas preserved exactly
+- [ ] Italic quotes (`*...*`) preserved where they appear in English
+- [ ] I closed the English mentally and re-explained, not substituted words
+- [ ] Voice is one consistent teacher across the whole page
+- [ ] At least one cultural idiom from §12.4 appears naturally in each paragraph
+- [ ] The conceptually important phrase (§12.5) is still explicit, not compressed away
+- [ ] Closing line is engineered, not translated
+- [ ] Read aloud — sounds like a teacher, not a translated textbook
+
+### 12.10 Reference Implementation
+
+The authoritative example is page 1 of Chapter 0 of NCERT Class 9 Science — `what-is-science`. Both text blocks (`0e4f59ae-…` and `22fd127d-…`) are the proof-of-concept. When in doubt, open that page and read the Hinglish alongside the English to calibrate.

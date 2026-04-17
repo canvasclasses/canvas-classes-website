@@ -182,6 +182,10 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
   if (pathname?.startsWith('/the-crucible')) return null;
   if (pathname?.startsWith('/books')) return null;
 
+  // Hide navbar inside book reader pages (class-X/bookSlug/pageSlug)
+  // but NOT on the grade landing pages themselves (class-X/)
+  if (/^\/class-\d+\/[^/]+\/[^/]+/.test(pathname ?? '')) return null;
+
   return (
     <nav
       className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-[1280px] transition-all duration-300 ${
