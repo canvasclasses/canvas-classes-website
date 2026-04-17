@@ -590,147 +590,98 @@ export default function TyndallEffectSim() {
   const content = SIDEBAR[regime];
 
   return (
-    <div className="p-4 md:p-6" style={{ background: '#0d1117', color: '#e2e8f0', minHeight: '80vh' }}>
+    <div className="rounded-2xl overflow-hidden" style={{ background: '#0d1117', color: '#e2e8f0' }}>
 
-      {/* Header */}
-      <div className="mb-4 flex justify-between items-start flex-wrap gap-2">
-        <div>
-          <h1 className="text-3xl font-black tracking-tight text-white">
-            Tyndall <span style={{ color: '#7c3aed' }}>Effect</span>
-          </h1>
-          <p className="text-[11px] font-bold uppercase tracking-widest mt-0.5" style={{ color: '#475569' }}>
-            Light scattering · True solution → Colloid → Suspension
-          </p>
+      {/* ── Full-width canvas ─────────────────────────────────────────────── */}
+      <div
+        className="relative overflow-hidden"
+        style={{
+          background: 'radial-gradient(circle at center,#1e204a 0%,#050614 100%)',
+          borderBottom: '1px solid rgba(99,102,241,0.15)',
+        }}
+      >
+        <canvas
+          ref={canvasRef}
+          width={W}
+          height={H}
+          style={{ width: '100%', height: 'auto', display: 'block' }}
+        />
+      </div>
+
+      {/* ── Slider + zone bar ─────────────────────────────────────────────── */}
+      <div className="px-4 pt-4 pb-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        <div className="flex items-center gap-3">
+          <span className="text-[10px] font-black uppercase tracking-widest shrink-0" style={{ color: '#475569' }}>
+            Particle Size
+          </span>
+          <input
+            type="range"
+            min={0}
+            max={100}
+            value={sliderT}
+            onChange={e => setSliderT(Number(e.target.value))}
+            className="flex-1"
+            style={{ accentColor: '#818cf8' }}
+          />
+          <span className="text-sm font-black font-mono shrink-0 w-20 text-right tabular-nums" style={{ color: content.accent }}>
+            {formatNm(displayNm)}
+          </span>
         </div>
-        <div className="text-[10px] font-black uppercase tracking-widest pt-1" style={{ color: '#64748b' }}>
-          NCERT Class 9 · Chapter 2
+
+        <div className="mt-2 flex h-1.5 rounded-full overflow-hidden">
+          <div style={{ width: '18%',  background: 'linear-gradient(to right,#10b981,#34d39966)' }} />
+          <div style={{ width: '57%',  background: 'linear-gradient(to right,#fbbf2466,#fbbf24,#fbbf2490)' }} />
+          <div style={{ width: '25%',  background: 'linear-gradient(to right,#f8717166,#f87171)' }} />
+        </div>
+        <div className="flex mt-1 text-[9px] font-bold" style={{ color: '#475569' }}>
+          <span style={{ width: '18%' }}>True Sol.</span>
+          <span style={{ width: '57%', textAlign: 'center' }}>Colloid — Tyndall Effect</span>
+          <span style={{ width: '25%', textAlign: 'right' }}>Suspension</span>
         </div>
       </div>
 
-      {/* Grid: canvas (8) + sidebar (4) */}
-      <div className="grid grid-cols-1 lg:grid-cols-[8fr_4fr] gap-6">
+      {/* ── Info panel below canvas ───────────────────────────────────────── */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-0" style={{ transition: 'opacity 0.3s ease' }}>
 
-        {/* ── Left: Canvas + controls ─────────────────────────────────────── */}
-        <div>
-          <div
-            className="relative overflow-hidden rounded-2xl flex items-center justify-center"
-            style={{
-              background: 'radial-gradient(circle at center,#1e204a 0%,#050614 100%)',
-              border: '1px solid rgba(99,102,241,0.2)',
-            }}
-          >
-            <canvas
-              ref={canvasRef}
-              width={W}
-              height={H}
-              style={{ width: '100%', height: 'auto', display: 'block' }}
-            />
-          </div>
-
-          {/* ── Slider ───────────────────────────────────────────────────── */}
-          <div className="mt-5 px-1">
-            <div className="flex items-center gap-4">
-              <span
-                className="text-[11px] font-black uppercase tracking-widest shrink-0"
-                style={{ color: '#475569' }}
-              >
-                Particle Size
-              </span>
-              <input
-                type="range"
-                min={0}
-                max={100}
-                value={sliderT}
-                onChange={e => setSliderT(Number(e.target.value))}
-                className="flex-1"
-                style={{ accentColor: '#818cf8' }}
-              />
-              <span
-                className="text-sm font-black font-mono shrink-0 w-24 text-right tabular-nums"
-                style={{ color: content.accent }}
-              >
-                {formatNm(displayNm)}
-              </span>
-            </div>
-
-            {/* Zone colour bar */}
-            <div className="mt-2.5 flex h-2 rounded-full overflow-hidden">
-              <div style={{ width: '18%',  background: 'linear-gradient(to right,#10b981,#34d39966)' }} />
-              <div style={{ width: '57%',  background: 'linear-gradient(to right,#fbbf2466,#fbbf24,#fbbf2490)' }} />
-              <div style={{ width: '25%',  background: 'linear-gradient(to right,#f8717166,#f87171)' }} />
-            </div>
-            <div className="flex mt-1.5 text-[10px] font-bold" style={{ color: '#475569' }}>
-              <span style={{ width: '18%' }}>True Sol.</span>
-              <span style={{ width: '57%', textAlign: 'center' }}>Colloid — Tyndall Effect</span>
-              <span style={{ width: '25%', textAlign: 'right' }}>Suspension</span>
-            </div>
-            <div className="flex mt-0.5 text-[10px]" style={{ color: '#334155' }}>
-              <span style={{ width: '18%' }}>&lt; 1 nm</span>
-              <span style={{ width: '57%', textAlign: 'center' }}>1 nm → 1000 nm</span>
-              <span style={{ width: '25%', textAlign: 'right' }}>&gt; 1 µm</span>
-            </div>
-          </div>
-        </div>
-
-        {/* ── Right: Sidebar ──────────────────────────────────────────────── */}
-        <div className="flex flex-col py-1 gap-5">
-          <h2 className="text-xl font-black uppercase tracking-tighter" style={{ color: '#e2e8f0' }}>
-            What&apos;s Happening
-          </h2>
-
-          {/* Regime badge */}
-          <div className="flex items-center gap-2.5">
-            <span
-              className="w-2 h-2 rounded-full shrink-0"
-              style={{ background: content.accent, boxShadow: `0 0 6px ${content.accent}` }}
-            />
-            <span
-              className="text-[11px] font-black uppercase tracking-widest"
-              style={{ color: content.accent }}
-            >
+        {/* Col 1: Regime + explanation */}
+        <div className="px-4 py-4" style={{ borderRight: '1px solid rgba(255,255,255,0.05)' }}>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-2 h-2 rounded-full shrink-0" style={{ background: content.accent, boxShadow: `0 0 5px ${content.accent}` }} />
+            <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: content.accent }}>
               {content.label}
             </span>
           </div>
+          <h4 className="font-black text-[12px] uppercase tracking-wider mb-1.5" style={{ color: content.accent }}>
+            {content.heading}
+          </h4>
+          <p className="text-[13px] leading-snug" style={{ color: '#94a3b8' }}
+            dangerouslySetInnerHTML={{ __html: content.body }}
+          />
+        </div>
 
-          {/* Explanation block */}
-          <div style={{ transition: 'opacity 0.3s ease' }}>
-            <h4
-              className="font-black text-[13px] uppercase tracking-widest mb-2"
-              style={{ color: content.accent }}
-            >
-              {content.heading}
-            </h4>
-            <p
-              className="text-base leading-snug"
-              style={{ color: '#94a3b8' }}
-              dangerouslySetInnerHTML={{ __html: content.body }}
-            />
+        {/* Col 2: Real examples */}
+        <div className="px-4 py-4" style={{ borderRight: '1px solid rgba(255,255,255,0.05)' }}>
+          <p className="text-[10px] font-black uppercase tracking-widest mb-2" style={{ color: content.accent }}>
+            Real Examples
+          </p>
+          <div className="flex flex-col gap-1.5">
+            {content.examples.map(ex => (
+              <div key={ex} className="flex items-start gap-2">
+                <span className="text-[9px] mt-1 shrink-0" style={{ color: content.accent }}>◆</span>
+                <span className="text-[13px] leading-snug" style={{ color: '#94a3b8' }}>{ex}</span>
+              </div>
+            ))}
           </div>
+        </div>
 
-          {/* Examples */}
-          <div>
-            <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: content.accent }}>
-              Real Examples
-            </p>
-            <div className="flex flex-col gap-1.5">
-              {content.examples.map(ex => (
-                <div key={ex} className="flex items-start gap-2">
-                  <span className="text-[9px] mt-1 shrink-0" style={{ color: content.accent }}>◆</span>
-                  <span className="text-sm leading-snug" style={{ color: '#94a3b8' }}>{ex}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Expert Tip */}
-          <div className="mt-auto pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-            <h5 className="text-[9px] font-black uppercase tracking-widest mb-1.5" style={{ color: '#6366f1' }}>
-              Expert Tip
-            </h5>
-            <p className="text-white text-base font-bold leading-tight italic">
-              &ldquo;{content.tip}&rdquo;
-            </p>
-          </div>
+        {/* Col 3: Expert tip */}
+        <div className="px-4 py-4">
+          <h5 className="text-[10px] font-black uppercase tracking-widest mb-2" style={{ color: '#6366f1' }}>
+            Expert Tip
+          </h5>
+          <p className="text-[13px] font-bold leading-snug italic" style={{ color: '#e2e8f0' }}>
+            &ldquo;{content.tip}&rdquo;
+          </p>
         </div>
       </div>
     </div>

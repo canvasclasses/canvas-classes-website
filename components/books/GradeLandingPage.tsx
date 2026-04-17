@@ -572,6 +572,89 @@ function WelcomePanel({ grade, books }: { grade: number; books: GradeBook[] }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── MobileBookCards — full-width tappable book + chapter cards (mobile)   */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+function MobileBookCards({
+  books, pagesForBook, onSelectChapter,
+}: {
+  books: GradeBook[];
+  pagesForBook: Map<string, GradePage[]>;
+  onSelectChapter: (bookSlug: string, chapterNum: number) => void;
+}) {
+  const [expandedBook, setExpandedBook] = useState<string | null>(
+    books.length === 1 ? books[0].slug : null,
+  );
+
+  return (
+    <div className="flex flex-col gap-3">
+      {books.map(book => {
+        const theme     = getTheme(book.subject);
+        const Icon      = theme.icon;
+        const bookPages = pagesForBook.get(book._id) ?? [];
+        const isOpen    = expandedBook === book.slug;
+
+        return (
+          <div
+            key={book.slug}
+            className={`rounded-2xl border overflow-hidden transition-colors ${
+              isOpen ? `${theme.border} ${theme.bg}` : 'border-white/8'
+            }`}
+          >
+            {/* Book header — tap to expand */}
+            <button
+              onClick={() => setExpandedBook(isOpen ? null : book.slug)}
+              className="w-full flex items-center gap-4 p-5 text-left"
+            >
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${theme.bg}`}>
+                <Icon size={22} className={theme.accent} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className={`text-[10px] font-bold uppercase tracking-wider mb-0.5 ${theme.accent}`}>
+                  {book.subject}
+                </p>
+                <p className="text-base font-bold text-white leading-tight">{book.title}</p>
+                <p className="text-xs text-white/30 mt-0.5">
+                  {book.chapters.length} {book.chapters.length === 1 ? 'chapter' : 'chapters'} · {bookPages.length} pages
+                </p>
+              </div>
+              <ChevronDown
+                size={16}
+                className={`text-white/30 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+              />
+            </button>
+
+            {/* Chapter list — shown when expanded */}
+            {isOpen && (
+              <div className="border-t border-white/8 flex flex-col">
+                {book.chapters.map(ch => {
+                  const chPages = bookPages.filter(p => p.chapter_number === ch.number);
+                  return (
+                    <button
+                      key={ch.number}
+                      onClick={() => onSelectChapter(book.slug, ch.number)}
+                      className="flex items-center gap-3 px-5 py-3.5 text-left
+                        hover:bg-white/[0.04] border-b border-white/5 last:border-0 transition-colors"
+                    >
+                      <span className={`text-[10px] font-bold uppercase tracking-wider shrink-0 ${theme.accent}`}>
+                        Ch {ch.number}
+                      </span>
+                      <span className="flex-1 text-sm text-white/70">{ch.title}</span>
+                      <span className="text-xs text-white/25 shrink-0">{chPages.length} pages</span>
+                      <ChevronRight size={14} className="text-white/20 shrink-0" />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
 /* ─── Main Component                                                         */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -650,7 +733,7 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
   /* ── Render ──────────────────────────────────────────────────────────── */
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white flex flex-col">
+    <div className="min-h-screen bg-[#050505] text-white flex flex-col pt-[72px]">
 
       {/* ── Top bar — matches BookTableOfContents header style ────────── */}
       <header className="border-b border-white/5 px-4 md:px-8 py-4 shrink-0">
@@ -741,42 +824,12 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
         </div>
       </div>
 
-      {/* ── Mobile book tabs ──────────────────────────────────────────── */}
-      <div className="md:hidden border-b border-white/5 overflow-x-auto shrink-0">
-        <div className="flex gap-1 px-4 py-2 min-w-max">
-          {books.map(book => {
-            const theme    = getTheme(book.subject);
-            const isActive = selection?.bookSlug === book.slug;
-            return (
-              <button
-                key={book.slug}
-                onClick={() => {
-                  if (isActive) {
-                    setSelection(null);
-                  } else if (book.chapters.length > 0) {
-                    selectChapter(book.slug, book.chapters[0].number);
-                  }
-                }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold
-                  whitespace-nowrap transition-all ${
-                  isActive
-                    ? `${theme.bg} ${theme.accent} border ${theme.border}`
-                    : 'text-white/40 hover:text-white/70 border border-transparent'
-                }`}
-              >
-                {book.title.length > 25 ? book.title.slice(0, 25) + '…' : book.title}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
       {/* ── Two-pane body ─────────────────────────────────────────────── */}
       <div className="flex flex-1 max-w-6xl w-full mx-auto overflow-hidden">
 
-        {/* ── Left: Book & chapter sidebar (desktop) ─────────────────── */}
+        {/* ── Left: Book & chapter sidebar (desktop only) ────────────── */}
         <aside className="hidden md:flex flex-col w-72 shrink-0 border-r border-white/5
-          sticky top-0 h-[calc(100vh-120px)] overflow-y-auto">
+          sticky top-[72px] h-[calc(100vh-72px)] overflow-y-auto">
           <div className="p-4 flex-1">
             <p className="text-[10px] text-white/25 font-semibold uppercase tracking-widest mb-3 px-2">
               Books
@@ -799,6 +852,31 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
 
         {/* ── Right: Content ────────────────────────────────────────── */}
         <main className="flex-1 overflow-y-auto p-4 md:p-8">
+
+          {/* Mobile: no selection → show prominent book cards */}
+          {!selection && (
+            <div className="md:hidden">
+              <MobileBookCards
+                books={books}
+                pagesForBook={pagesForBook}
+                onSelectChapter={selectChapter}
+              />
+            </div>
+          )}
+
+          {/* Mobile: chapter selected → back button */}
+          {selection && (
+            <button
+              onClick={() => setSelection(null)}
+              className="md:hidden flex items-center gap-1.5 text-sm text-white/45
+                hover:text-white/80 transition-colors mb-5"
+            >
+              <ChevronRight size={14} className="rotate-180 shrink-0" />
+              All Books
+            </button>
+          )}
+
+          {/* Chapter content (both desktop + mobile when selected) */}
           {selectedBook && selectedChapter ? (
             <ChapterPageList
               book={selectedBook}
@@ -808,7 +886,10 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
               basePath={basePath}
             />
           ) : (
-            <WelcomePanel grade={grade} books={books} />
+            /* Desktop welcome panel — hidden on mobile (mobile shows book cards above) */
+            <div className="hidden md:block">
+              <WelcomePanel grade={grade} books={books} />
+            </div>
           )}
         </main>
       </div>

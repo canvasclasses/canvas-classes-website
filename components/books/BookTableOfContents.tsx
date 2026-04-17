@@ -167,7 +167,7 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
   }, [toggleBookmark]);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white flex flex-col">
+    <div className="min-h-screen bg-[#050505] text-white flex flex-col pt-[72px]">
 
       {/* ── Top bar ─────────────────────────────────────────────────────── */}
       <header className="border-b border-white/5 px-4 md:px-8 py-4 shrink-0">
@@ -370,7 +370,7 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                 {prog.pct === 100 && (
                   <CheckCircle2 size={10} className="text-emerald-400" />
                 )}
-                Ch {ch.number}
+                {ch.title.length > 22 ? ch.title.slice(0, 22).trim() + '…' : ch.title}
               </button>
             );
           })}
@@ -382,7 +382,7 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
 
         {/* ── Left: Chapter sidebar (desktop only) ──────────────────────── */}
         <aside className="hidden md:flex flex-col w-64 shrink-0 border-r border-white/5
-          sticky top-0 h-[calc(100vh-73px)] overflow-y-auto">
+          sticky top-[72px] h-[calc(100vh-72px)] overflow-y-auto">
           <div className="p-4 flex-1">
             <p className="text-[10px] text-white/25 font-semibold uppercase tracking-widest mb-3 px-2">
               Chapters

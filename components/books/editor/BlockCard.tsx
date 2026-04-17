@@ -27,6 +27,7 @@ import WorkedExampleEditor from './blocks/WorkedExampleEditor';
 import SectionBlockEditor from './blocks/SectionBlockEditor';
 import ClassifyExerciseEditor from './blocks/ClassifyExerciseEditor';
 import CuriosityPromptBlockEditor from './blocks/CuriosityPromptBlockEditor';
+import SimulationBlockEditor from './blocks/SimulationBlockEditor';
 
 const BLOCK_LABELS: Record<BlockType, string> = {
   text: 'Text',
@@ -146,6 +147,7 @@ export default function BlockCard({
       case 'section':           return <SectionBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'classify_exercise': return <ClassifyExerciseEditor block={block} onChange={onChange} />;
       case 'curiosity_prompt':  return <CuriosityPromptBlockEditor block={block} onChange={onChange} />;
+      case 'simulation':        return <SimulationBlockEditor block={block} onChange={onChange} />;
       default:                  return null;
     }
   }

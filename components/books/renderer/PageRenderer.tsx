@@ -81,7 +81,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
   return (
     // Outer shell: centers content and caps total width on large screens
     // book-page-content scopes CSS fixes (e.g. fraction zoom) to this reader only
-    <div className="book-page-content w-full max-w-[1300px] mx-auto px-5 sm:px-8 pt-10 pb-10">
+    <div className="book-page-content w-full max-w-[1300px] mx-auto px-3 sm:px-8 pt-8 pb-10">
 
       {/* Page header — always full width */}
       <header className="mb-5 max-w-[980px]">
