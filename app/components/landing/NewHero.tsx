@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     Search, Atom, FlaskConical, BookOpen, GraduationCap,
     FileText, Layers, Zap, ChevronRight,
@@ -245,189 +245,117 @@ function usePlaceholderTypewriter(topics: readonly string[]) {
 }
 
 // =====================================================================
-// Hero Split Background — Vedic (amber, left) ↔ Modern Science (blue, right)
+// Hero Fusion Sigil — Vedic × Western learning, single centered composite
+// Bohr orbitals (cyan, CW) + Shatkona/outer ring (amber, CCW)
+// + lotus & flower-of-life (CW) + static ॐ nucleus. Breathes subtly.
 // =====================================================================
 
-const Va = (o: number) => `rgba(251,191,36,${o})`;
-const Mb = (o: number) => `rgba(96,165,250,${o})`;
-
-function HeroSplitBackground() {
-    const { scrollY } = useScroll();
-    const yMove  = useTransform(scrollY, [0, 500], [0, -50]);
-    const opFade = useTransform(scrollY, [0, 400], [1,  0]);
+function HeroFusionSigil() {
+    // Electron dot positions on the three tilted Bohr orbitals (rx=240, ry=85)
+    // Angles chosen so they don't visually cluster during rotation.
+    const electrons = [
+        { orbit: 0,   t:  20, r: 4.0, op: 0.32 },
+        { orbit: 0,   t: 200, r: 3.2, op: 0.20 },
+        { orbit: 60,  t:  95, r: 3.6, op: 0.28 },
+        { orbit: 60,  t: 275, r: 3.0, op: 0.18 },
+        { orbit: 120, t: 150, r: 3.6, op: 0.28 },
+        { orbit: 120, t: 330, r: 3.0, op: 0.18 },
+    ];
 
     return (
-        <div className="w-full h-full flex items-end justify-center pointer-events-none overflow-visible select-none">
-            <motion.div
+        <div className="w-full h-full flex items-center justify-center pointer-events-none select-none">
+            <div
+                className="relative w-[min(860px,96vw)] aspect-square newhero-sigil-breathe"
                 style={{
-                    y: yMove,
-                    opacity: opFade,
-                    maskImage: 'linear-gradient(to top, black 45%, transparent 100%)',
-                    WebkitMaskImage: 'linear-gradient(to top, black 45%, transparent 100%)',
+                    maskImage: 'radial-gradient(closest-side, black 60%, transparent 100%)',
+                    WebkitMaskImage: 'radial-gradient(closest-side, black 60%, transparent 100%)',
                 }}
-                className="w-full"
             >
-                <svg viewBox="0 0 1440 460" preserveAspectRatio="xMidYMax meet" className="w-full" aria-hidden="true">
-                    <defs>
-                        <filter id="hg-a" x="-80%" y="-80%" width="260%" height="260%">
-                            <feGaussianBlur stdDeviation="5" result="b" />
-                            <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-                        </filter>
-                        <filter id="hg-b" x="-60%" y="-60%" width="220%" height="220%">
-                            <feGaussianBlur stdDeviation="3" result="b" />
-                            <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-                        </filter>
-                        <linearGradient id="hg-div" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%"   stopColor="transparent" />
-                            <stop offset="55%"  stopColor="rgba(255,255,255,0.03)" />
-                            <stop offset="100%" stopColor="transparent" />
-                        </linearGradient>
-                    </defs>
+                {/* Layer 1 — Bohr orbitals + electrons (cyan), rotates CW */}
+                <div className="newhero-sigil-layer newhero-sigil-cw-slow">
+                    <svg viewBox="0 0 600 600" className="w-full h-full" aria-hidden="true">
+                        <g transform="translate(300,300)" fill="none"
+                           stroke="rgba(255,255,255,0.10)" strokeWidth="0.75">
+                            <ellipse rx="240" ry="85" />
+                            <ellipse rx="240" ry="85" transform="rotate(60)" />
+                            <ellipse rx="240" ry="85" transform="rotate(120)" />
+                        </g>
+                        <g transform="translate(300,300)" stroke="none">
+                            {electrons.map((e, i) => {
+                                const rad = (e.t * Math.PI) / 180;
+                                const px = 240 * Math.cos(rad);
+                                const py =  85 * Math.sin(rad);
+                                const rot = `rotate(${e.orbit} 0 0)`;
+                                return (
+                                    <circle
+                                        key={i}
+                                        cx={px} cy={py} r={e.r}
+                                        fill={`rgba(255,255,255,${e.op})`}
+                                        transform={rot}
+                                    />
+                                );
+                            })}
+                        </g>
+                    </svg>
+                </div>
 
-                    <text x="170" y="310" fontSize="110"
-                        fontFamily="'Noto Sans Devanagari','Mangal',Georgia,serif"
-                        fill={Va(0.018)} textAnchor="middle">ॐ</text>
+                {/* Layer 2 — Shatkona + outer ring + inner hexagon (amber), rotates CCW */}
+                <div className="newhero-sigil-layer newhero-sigil-ccw-slow">
+                    <svg viewBox="0 0 600 600" className="w-full h-full" aria-hidden="true">
+                        <g transform="translate(300,300)" fill="none">
+                            <circle r="200" stroke="rgba(255,255,255,0.06)" strokeWidth="0.55" />
+                            <circle r="220" stroke="rgba(255,255,255,0.03)" strokeWidth="0.4" />
+                            <path d="M 0 -170 L 147.2 85 L -147.2 85 Z"
+                                  stroke="rgba(255,255,255,0.10)" strokeWidth="0.7" />
+                            <path d="M 0 170 L 147.2 -85 L -147.2 -85 Z"
+                                  stroke="rgba(255,255,255,0.10)" strokeWidth="0.7" />
+                            <path d="M 85 -49 L 85 49 L 0 98 L -85 49 L -85 -49 L 0 -98 Z"
+                                  stroke="rgba(255,255,255,0.07)" strokeWidth="0.45" />
+                        </g>
+                    </svg>
+                </div>
 
-                    {/* LEFT — VEDIC (amber) */}
+                {/* Layer 3 — Lotus petals + flower-of-life seed (warm/cool mix), rotates CW */}
+                <div className="newhero-sigil-layer newhero-sigil-cw-med">
+                    <svg viewBox="0 0 600 600" className="w-full h-full" aria-hidden="true">
+                        <g transform="translate(300,300)">
+                            {[0,45,90,135,180,225,270,315].map(a => (
+                                <ellipse
+                                    key={a} cx="0" cy="-72" rx="15" ry="40"
+                                    transform={`rotate(${a})`}
+                                    fill="rgba(255,255,255,0.01)"
+                                    stroke="rgba(255,255,255,0.08)" strokeWidth="0.4"
+                                />
+                            ))}
+                            <circle r="32" fill="none"
+                                    stroke="rgba(255,255,255,0.07)" strokeWidth="0.4" />
+                            {[0,60,120,180,240,300].map(a => {
+                                const rad = (a * Math.PI) / 180;
+                                const cx  = 32 * Math.cos(rad);
+                                const cy  = 32 * Math.sin(rad);
+                                return (
+                                    <circle key={a} cx={cx} cy={cy} r="32" fill="none"
+                                            stroke="rgba(255,255,255,0.05)" strokeWidth="0.35" />
+                                );
+                            })}
+                        </g>
+                    </svg>
+                </div>
 
-                    <g transform="translate(75,340)">
-                        <circle cx="0" cy="0" r="32" fill="none" stroke={Va(0.12)} strokeWidth="0.5" />
-                        <path d="M -14 -24 A 16 16 0 0 1 14 -24" fill="none" stroke={Va(0.14)} strokeWidth="0.6" />
-                        <circle cx="0" cy="-28" r="2.5" fill={Va(0.18)} stroke="none" />
-                        <text x="0" y="13" fontSize="34"
-                            fontFamily="'Noto Sans Devanagari','Mangal',Georgia,serif"
-                            fill={Va(0.32)} textAnchor="middle">ॐ</text>
-                    </g>
-                    <text x="75" y="390" fontSize="6.5" fill={Va(0.14)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">PRANAVA</text>
-
-                    <g transform="translate(210,340)" stroke={Va(0.17)} strokeWidth="0.72" fill="none">
-                        <circle cx="0" cy="0" r="34" stroke={Va(0.11)} strokeWidth="0.5" />
-                        <path d="M 0 -27 L 23.4 13.5 L -23.4 13.5 Z" />
-                        <path d="M 0 27 L 23.4 -13.5 L -23.4 -13.5 Z" />
-                        <circle cx="0" cy="0" r="10" stroke={Va(0.11)} strokeWidth="0.5" />
-                        <circle cx="0" cy="0" r="3.5" fill={Va(0.28)} stroke="none" filter="url(#hg-a)" />
-                    </g>
-                    <text x="210" y="390" fontSize="6.5" fill={Va(0.14)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">SHATKONA</text>
-
-                    <g transform="translate(345,340)">
-                        {[0,1,2,3,4,5,6,7].map(i => (
-                            <ellipse key={i} cx="0" cy="-21" rx="7" ry="18"
-                                transform={`rotate(${i * 45})`}
-                                fill={Va(0.03)} stroke={Va(0.15)} strokeWidth="0.6" />
-                        ))}
-                        <circle cx="0" cy="0" r="9"  fill="none" stroke={Va(0.16)} strokeWidth="0.65" />
-                        <circle cx="0" cy="0" r="3.5" fill={Va(0.30)} stroke="none" filter="url(#hg-a)" />
-                    </g>
-                    <text x="345" y="390" fontSize="6.5" fill={Va(0.14)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">PADMA</text>
-
-                    <g transform="translate(480,340)" fill="none">
-                        <circle cx="0" cy="0" r="30" stroke={Va(0.15)} strokeWidth="0.65" />
-                        <circle cx="0" cy="0" r="20" stroke={Va(0.08)} strokeWidth="0.45" />
-                        <circle cx="0" cy="0" r="7"  stroke={Va(0.17)} strokeWidth="0.7" />
-                        {[0,1,2,3,4,5,6,7].map(i => {
-                            const a = (i * 45) * Math.PI / 180;
-                            return <line key={i} x1={8*Math.cos(a)} y1={8*Math.sin(a)} x2={30*Math.cos(a)} y2={30*Math.sin(a)} stroke={Va(0.15)} strokeWidth="0.6" />;
-                        })}
-                        {[0,1,2,3,4,5,6,7].map(i => {
-                            const a = ((i * 45) + 22.5) * Math.PI / 180;
-                            return <circle key={i} cx={21*Math.cos(a)} cy={21*Math.sin(a)} r={2.8} fill={Va(0.05)} stroke={Va(0.12)} strokeWidth="0.5" />;
-                        })}
-                        <circle cx="0" cy="0" r="3" fill={Va(0.28)} stroke="none" />
-                    </g>
-                    <text x="480" y="390" fontSize="6.5" fill={Va(0.14)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">CHAKRA</text>
-
-                    <g transform="translate(610,334)" stroke={Va(0.18)} strokeWidth="0.8" fill="none">
-                        <line x1="0" y1="44" x2="0" y2="-8" />
-                        <line x1="-19" y1="-2" x2="19" y2="-2" />
-                        <line x1="0" y1="-2"  x2="0"   y2="-48" />
-                        <path d="M -19 -2 C -27 -8, -28 -20, -22 -36" />
-                        <path d="M  19 -2 C  27 -8,  28 -20,  22 -36" />
-                        <circle cx="0"   cy="-48" r="2.2" fill={Va(0.22)} stroke="none" />
-                        <circle cx="-22" cy="-36" r="2"   fill={Va(0.19)} stroke="none" />
-                        <circle cx=" 22" cy="-36" r="2"   fill={Va(0.19)} stroke="none" />
-                        <path d="M 0 14 L 6 20 L 0 26 L -6 20 Z" stroke={Va(0.12)} strokeWidth="0.5" />
-                    </g>
-                    <text x="610" y="390" fontSize="6.5" fill={Va(0.14)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">TRISHUL</text>
-
-                    <line x1="720" y1="165" x2="720" y2="435" stroke="url(#hg-div)" strokeWidth="0.6" />
-
-                    {/* RIGHT — MODERN SCIENCE (blue) */}
-
-                    <g transform="translate(835,338)" fill="none">
-                        <circle cx="0" cy="0" r="9" fill={Mb(0.14)} stroke={Mb(0.28)} strokeWidth="0.8" filter="url(#hg-b)" />
-                        <ellipse cx="0" cy="0" rx="44" ry="15" stroke={Mb(0.17)} strokeWidth="0.7" />
-                        <ellipse cx="0" cy="0" rx="44" ry="15" stroke={Mb(0.17)} strokeWidth="0.7" transform="rotate(60)" />
-                        <ellipse cx="0" cy="0" rx="44" ry="15" stroke={Mb(0.17)} strokeWidth="0.7" transform="rotate(120)" />
-                        <circle cx=" 44" cy="0"  r="3" fill={Mb(0.26)} stroke="none" />
-                        <circle cx=" 22" cy="-23" r="3" fill={Mb(0.22)} stroke="none" />
-                        <circle cx="-22" cy="-23" r="3" fill={Mb(0.22)} stroke="none" />
-                    </g>
-                    <text x="835" y="397" fontSize="6.5" fill={Mb(0.15)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">PHYSICS</text>
-
-                    <g transform="translate(970,346)" stroke={Mb(0.17)} strokeWidth="0.75" fill="none">
-                        <path d="M 24 -14 L 24 14 L 0 28 L -24 14 L -24 -14 L 0 -28 Z" />
-                        <circle cx="0" cy="0" r="18" stroke={Mb(0.10)} />
-                        <circle cx="0" cy="0" r="3.5" fill={Mb(0.18)} stroke="none" />
-                    </g>
-                    <text x="970" y="390" fontSize="6.5" fill={Mb(0.15)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">CHEMISTRY</text>
-
-                    <g transform="translate(1105,0)" stroke={Mb(0.15)} strokeWidth="0.75" fill="none">
-                        <path d="M 0 302 C 28 312,28 326, 0 336 C -28 346,-28 360, 0 370 C 28 380,28 394, 0 404" />
-                        <path d="M 0 302 C -28 312,-28 326, 0 336 C 28 346,28 360, 0 370 C -28 380,-28 394, 0 404" />
-                        {[319, 353, 387].map(ry => (
-                            <g key={ry}>
-                                <line x1="-26" y1={ry} x2="26" y2={ry} stroke={Mb(0.09)} />
-                                <circle cx="-20" cy={ry} r={2} fill={Mb(0.22)} stroke="none" />
-                                <circle cx=" 20" cy={ry} r={2} fill={Mb(0.22)} stroke="none" />
-                            </g>
-                        ))}
-                    </g>
-                    <text x="1105" y="420" fontSize="6.5" fill={Mb(0.15)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">BIOLOGY</text>
-
-                    <g transform="translate(1245,340)">
-                        {([[-20,-16],[-20,16]] as [number,number][]).flatMap(([ix,iy]) =>
-                            ([[-1,-28],[-1,0],[-1,28]] as [number,number][]).map(([hx,hy]) => (
-                                <line key={`${iy}${hy}`} x1={ix} y1={iy} x2={hx} y2={hy} stroke={Mb(0.07)} strokeWidth="0.45" fill="none" />
-                            ))
-                        )}
-                        {([[-1,-28],[-1,0],[-1,28]] as [number,number][]).flatMap(([hx,hy]) =>
-                            ([[20,-16],[20,16]] as [number,number][]).map(([ox,oy]) => (
-                                <line key={`${hy}${oy}`} x1={hx} y1={hy} x2={ox} y2={oy} stroke={Mb(0.07)} strokeWidth="0.45" fill="none" />
-                            ))
-                        )}
-                        {([[-20,-16],[-20,16]] as [number,number][]).map(([cx,cy],i) => (
-                            <circle key={i} cx={cx} cy={cy} r={4.5} fill={Mb(0.07)} stroke={Mb(0.26)} strokeWidth="0.7" />
-                        ))}
-                        {([[-1,-28],[-1,0],[-1,28]] as [number,number][]).map(([cx,cy],i) => (
-                            <circle key={i} cx={cx} cy={cy} r={4.5} fill={Mb(0.05)} stroke={Mb(0.19)} strokeWidth="0.7" />
-                        ))}
-                        {([[20,-16],[20,16]] as [number,number][]).map(([cx,cy],i) => (
-                            <circle key={i} cx={cx} cy={cy} r={4.5} fill={Mb(0.07)} stroke={Mb(0.26)} strokeWidth="0.7" />
-                        ))}
-                    </g>
-                    <text x="1245" y="390" fontSize="6.5" fill={Mb(0.15)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">AI</text>
-
-                    <g transform="translate(1375,340)" fill="none">
-                        <circle cx="0" cy="0" r="22" fill={Mb(0.04)} stroke={Mb(0.17)} strokeWidth="0.75" />
-                        <ellipse cx="0" cy="0" rx="40" ry="10" stroke={Mb(0.18)} strokeWidth="0.75" />
-                        {([[-42,-42],[-28,-56],[22,-50],[44,-25],[-46,-14],[42,18],[-38,20]] as [number,number][]).map(([sx,sy],i) => (
-                            <circle key={i} cx={sx} cy={sy} r={1.4} fill={Mb(0.24)} stroke="none" />
-                        ))}
-                    </g>
-                    <text x="1375" y="390" fontSize="6.5" fill={Mb(0.15)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">SPACE</text>
-
-                </svg>
-            </motion.div>
+                {/* Layer 4 — Static nucleus glow */}
+                <div className="newhero-sigil-layer">
+                    <svg viewBox="0 0 600 600" className="w-full h-full" aria-hidden="true">
+                        <defs>
+                            <radialGradient id="sigilNucleus" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%"   stopColor="rgba(255,255,255,0.10)" />
+                                <stop offset="55%"  stopColor="rgba(255,255,255,0.04)" />
+                                <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+                            </radialGradient>
+                        </defs>
+                        <circle cx="300" cy="300" r="62" fill="url(#sigilNucleus)" />
+                    </svg>
+                </div>
+            </div>
         </div>
     );
 }
@@ -545,13 +473,13 @@ export default function NewHero() {
     return (
         <section className="relative min-h-screen w-full flex flex-col items-center text-[#fafafa] newhero-bg">
 
-            {/* Background glow + split SVG */}
-            <div className="absolute inset-0 pointer-events-none">
+            {/* Background — bottom blue wash + ambient glows + centered fusion sigil */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
                 <div className="absolute bottom-0 left-0 right-0 h-[70%] bg-gradient-to-t from-blue-900/30 via-blue-950/15 to-transparent" />
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/15 rounded-full blur-[140px]" />
                 <div className="absolute bottom-20 right-1/4 w-[400px] h-[300px] bg-blue-700/10 rounded-full blur-[100px]" />
-                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                    <HeroSplitBackground />
+                <div className="absolute inset-0 z-0">
+                    <HeroFusionSigil />
                 </div>
             </div>
 
@@ -596,10 +524,7 @@ export default function NewHero() {
                         className="text-base md:text-lg text-slate-400 font-light leading-relaxed max-w-xl mx-auto newhero-fade-up"
                         style={{ animationDelay: '230ms' }}
                     >
-                        The textbook tells you what. We show you why — and what it means for the world you are about to inherit.
-                        <span className="block mt-2 text-zinc-500 font-normal text-sm md:text-base tracking-wide">
-                            Class 9 through JEE / NEET, built by Paaras Sir.
-                        </span>
+                        The textbook tells you what. We show you why.
                     </p>
 
                     {/* ── Search bar — inline dropdown ─────────────────────── */}

@@ -448,6 +448,46 @@ select {
   color: #fff;
 }
 
+/* Fusion sigil — Vedic × Western rotating composite */
+.newhero-sigil-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+.newhero-sigil-cw-slow  { animation: newhero-sigilCW  120s linear infinite; }
+.newhero-sigil-ccw-slow { animation: newhero-sigilCCW 160s linear infinite; }
+.newhero-sigil-cw-med   { animation: newhero-sigilCW   80s linear infinite; }
+.newhero-sigil-breathe  { animation: newhero-sigilBreathe 9s ease-in-out infinite; }
+
+@keyframes newhero-sigilCW {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes newhero-sigilCCW {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+@keyframes newhero-sigilBreathe {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.035); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .newhero-sigil-cw-slow,
+  .newhero-sigil-ccw-slow,
+  .newhero-sigil-cw-med,
+  .newhero-sigil-breathe {
+    animation: none;
+  }
+}
+
 /* Crucible Logo Animations */
 @keyframes crucibleGlow {
 

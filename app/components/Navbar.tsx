@@ -107,7 +107,6 @@ const jeeNeetMenu: MegaMenuDef = {
       links: [
         { label: 'Top 50 Concepts', href: '/top-50-concepts' },
         { label: '2 Minute Chemistry', href: '/2-minute-chemistry' },
-        { label: 'Quick Recap', href: '/quick-recap' },
       ],
     },
   ],
@@ -118,6 +117,13 @@ const studyLabMenu: MegaMenuDef = {
   id: 'study-lab',
   label: 'Study Lab',
   anchor: 'right',
+  width: 'w-[860px]',
+  featured: {
+    label: 'BITSAT 2026 Master Plan',
+    tagline: '30-day Chemistry plan built from real Session 1 data. Phased revision with every Canvas resource mapped to each day.',
+    href: '/bitsat-chemistry-revision',
+    cta: 'Open the Plan',
+  },
   columns: [
     {
       heading: 'Explore',
@@ -125,7 +131,6 @@ const studyLabMenu: MegaMenuDef = {
         { label: 'Interactive Periodic Table', href: '/interactive-periodic-table' },
         { label: 'Periodic Trends', href: '/periodic-trends' },
         { label: 'Salt Analysis Simulator', href: '/salt-analysis' },
-        { label: 'ChemiHex', href: '/chemihex' },
       ],
     },
     {

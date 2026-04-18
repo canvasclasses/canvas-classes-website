@@ -1,0 +1,445 @@
+{
+  "total": 70,
+  "byTopic": {
+    "Introduction & Werner's Theory": [
+      {
+        "id": "FLASH-INORG-0066",
+        "difficulty": "medium",
+        "q": "What is the fundamental difference between a Double Salt (like Mohr's Salt) and a Coordination Complex?",
+        "a": "Double salts dissociate completely into simple ions in water, while coordination complexes retain their identity (the complex ion does not dissociate)."
+      },
+      {
+        "id": "FLASH-INORG-0067",
+        "difficulty": "medium",
+        "q": "According to Werner's Theory, which valency is ionisable and corresponds to the oxidation state?",
+        "a": "Primary Valency. (Secondary valency is non-ionisable and corresponds to the coordination number)."
+      },
+      {
+        "id": "FLASH-INORG-0068",
+        "difficulty": "medium",
+        "q": "In the complex  $$CoCl_3 \\cdot 4NH_3$$  , precipitation with  $$AgNO_3$$  yields only 1 mole of $$AgCl$$  . What is the secondary valency of Co?",
+        "a": "6. The formula is  $$[Co(NH_3)_4Cl_2]Cl$$  . 4  $$NH_3$$  + 2 $$Cl$$  satisfy the secondary valency (6), and 1 $$Cl$$   is outside (primary)."
+      },
+      {
+        "id": "FLASH-INORG-0069",
+        "difficulty": "medium",
+        "q": "Which valency in Werner's theory gives the complex its definitive geometry?",
+        "a": "Secondary Valency (Coordination Number). These bonds are directional in space."
+      },
+      {
+        "id": "FLASH-INORG-0123",
+        "difficulty": "medium",
+        "q": "Arrange these complexes in increasing order of conductivity:  $$[Co(NH_3)_3Cl_3]$$  ,  $$[Co(NH_3)_4Cl_2]Cl$$  ,  $$[Co(NH_3)_6]Cl_3$$  .",
+        "a": "$$[Co(NH_3)_3Cl_3] < [Co(NH_3)_4Cl_2]Cl < [Co(NH_3)_6]Cl_3$$  . Order depends on the number of ions produced:"
+      }
+    ],
+    "Classification of Ligands": [
+      {
+        "id": "FLASH-INORG-0070",
+        "difficulty": "medium",
+        "q": "Define a Chelating Ligand.",
+        "a": "A di- or polydentate ligand that uses two or more donor atoms to bind to a single metal ion simultaneously, forming a ring structure."
+      },
+      {
+        "id": "FLASH-INORG-0071",
+        "difficulty": "medium",
+        "q": "What is the denticity and charge of the EDTA ligand?",
+        "a": "Denticity = 6 (Hexadentate). Charge = -4 (Ethylenediaminetetraacetato)."
+      },
+      {
+        "id": "FLASH-INORG-0072",
+        "difficulty": "medium",
+        "q": "Name two common Ambidentate ligands.",
+        "a": "1.  $$NO_2^-$$  (binds via N or O). 2. $$SCN^-$$   (binds via S or N)."
+      },
+      {
+        "id": "FLASH-INORG-0132",
+        "difficulty": "medium",
+        "q": "Assertion: Toxic metal ions are removed by chelating ligands. Reason: Chelate complexes tend to be more stable. (True/False?)",
+        "a": "Both True, and Reason is the correct explanation. Chelating agents (like EDTA) form stable complexes with toxic metals, preventing them from reacting with biological systems and aiding excretion."
+      }
+    ],
+    "IUPAC Naming": [
+      {
+        "id": "FLASH-INORG-0073",
+        "difficulty": "medium",
+        "q": "What is the IUPAC name for  $$[Pt(NH_3)_2Cl(NO_2)]$$  ?",
+        "a": "Diamminechloridonitrito-N-platinum(II). (Ligands named alphabetically)."
+      },
+      {
+        "id": "FLASH-INORG-0074",
+        "difficulty": "medium",
+        "q": "How do you name the anionic complex metal ion for Iron (Fe) and Silver (Ag)?",
+        "a": "Ferrate and Argentate."
+      },
+      {
+        "id": "FLASH-INORG-0075",
+        "difficulty": "medium",
+        "q": "Calculate the oxidation state of Ni in  $$[Ni(CO)_4]$$and Fe in$$[Fe(CN)_6]^{3-}$$  .",
+        "a": "Ni = 0 (CO is neutral). Fe = +3 ( $$x + 6(-1) = -3 \\Rightarrow x = +3$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0076",
+        "difficulty": "medium",
+        "q": "What is the IUPAC name for  $$K_3[Al(C_2O_4)_3]$$  ?",
+        "a": "Potassium trioxalatoaluminate(III)."
+      },
+      {
+        "id": "FLASH-INORG-0077",
+        "difficulty": "medium",
+        "q": "Correct name for the ligand  $$H_2O$$  and $$CO$$  in complexes?",
+        "a": "$$H_2O$$  = Aqua. $$CO$$   = Carbonyl."
+      },
+      {
+        "id": "FLASH-INORG-0124",
+        "difficulty": "medium",
+        "q": "Write the correct IUPAC name for  $$[Pt(NH_3)_2Cl(NO_2)]$$  .",
+        "a": "Diamminechloridonitrito-N-platinum(II). Ligands are named alphabetically, and  $$NO_2$$   is specified as nitrito-N to indicate linkage."
+      }
+    ],
+    "Isomerism in Complexes": [
+      {
+        "id": "FLASH-INORG-0078",
+        "difficulty": "medium",
+        "q": "Which type of isomerism arises from the exchange of ligands between the coordination sphere and the ionization sphere?",
+        "a": "Ionization Isomerism. (e.g.,  $$[Co(NH_3)_5SO_4]Br$$  vs $$[Co(NH_3)_5Br]SO_4$$)."
+      },
+      {
+        "id": "FLASH-INORG-0079",
+        "difficulty": "medium",
+        "q": "What specific type of geometrical isomerism is found in octahedral complexes of the type  $$[MA_3B_3]$$  ?",
+        "a": "Facial (fac) and Meridional (mer) isomerism."
+      },
+      {
+        "id": "FLASH-INORG-0080",
+        "difficulty": "medium",
+        "q": "Identify the type of isomerism:  $$[Co(NH_3)_5(NO_2)]Cl_2$$  vs$$[Co(NH_3)_5(ONO)]Cl_2$$.",
+        "a": "Linkage Isomerism (arises due to ambidentate ligand  $$NO_2$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0081",
+        "difficulty": "medium",
+        "q": "Why do tetrahedral complexes ( $$sp^3$$  ) generally not show geometrical isomerism?",
+        "a": "All positions in a tetrahedron are adjacent and equivalent relative to one another."
+      },
+      {
+        "id": "FLASH-INORG-0082",
+        "difficulty": "medium",
+        "q": "Which specific isomer of  $$[Pt(NH_3)_2Cl_2]$$   is used as an anti-cancer drug?",
+        "a": "cis-platin (cis-isomer)."
+      },
+      {
+        "id": "FLASH-INORG-0083",
+        "difficulty": "medium",
+        "q": "What is the condition for a complex to exhibit Optical Isomerism?",
+        "a": "The complex must be chiral (non-superimposable on its mirror image), typically lacking a plane of symmetry."
+      },
+      {
+        "id": "FLASH-INORG-0084",
+        "difficulty": "medium",
+        "q": "Give an example of Coordination Isomerism.",
+        "a": "$$[Co(NH_3)_6][Cr(CN)_6]$$ and $$[Cr(NH_3)_6][Co(CN)_6]$$  . (Ligands interchange between cationic and anionic entities)."
+      },
+      {
+        "id": "FLASH-INORG-0118",
+        "difficulty": "medium",
+        "q": "When 0.1 mol of $$CoCl_3 ​(NH_3​)_5$$ ​is treated with excess $$AgNO_3$$​, 0.2 mol of $$AgCl$$ is obtained. What is the conductivity type of this electrolyte?",
+        "a": "1:2 electrolyte. The formula is $$[Co(NH_3)_5Cl]Cl_2$$, which dissociates into 1 complex cation and 2 chloride anions (Total 3 ions). "
+      },
+      {
+        "id": "FLASH-INORG-0120",
+        "difficulty": "medium",
+        "q": "Isomer 'A' $$(CoSO_4​ Cl⋅5NH_3​)$$ gives a white ppt with $$AgNO_3$$ ​but no reaction with $$BaCl_2$$​. What is its structural formula?",
+        "a": "$$[Co(SO_4)(NH_3)_5]Cl$$  . The reaction with  $$AgNO_3$$  indicates $$Cl^-$$ is outside the coordination sphere (ionisable), while $$SO_4^{2-}$$   is inside."
+      },
+      {
+        "id": "FLASH-INORG-0125",
+        "difficulty": "medium",
+        "q": "If a complex of type  $$[M(AA)_2X_2]^{n+}$$   is optically active, which geometrical isomer must it be?",
+        "a": "Cis-isomer. The trans-isomer has a plane of symmetry and is optically inactive (meso), whereas the cis-isomer lacks symmetry and is chiral."
+      },
+      {
+        "id": "FLASH-INORG-0127",
+        "difficulty": "medium",
+        "q": "What kind of isomerism exists between violet  $$[Cr(H_2O)_6]Cl_3$$  and greyish-green$$[Cr(H_2O)_5Cl]Cl_2 \\cdot H_2O$$?",
+        "a": "Solvate (or Hydrate) Isomerism. It involves the exchange of water molecules between the coordination sphere and the ionization sphere (solvent molecules)."
+      },
+      {
+        "id": "FLASH-INORG-0133",
+        "difficulty": "medium",
+        "q": "Which of these complexes shows Geometrical Isomerism:  $$[Co(NH_3)_6]^{3+}$$  ,  $$[Co(CN)_5(NC)]^{3-}$$  , or  $$[Cr(H_2O)_4Cl_2]^{+}$$  ?",
+        "a": "$$[Cr(H_2O)_4Cl_2]^{+}$$  . It is an  $$MA_4B_2$$  type complex which can form cis and trans isomers. The others are homoleptic or $$MA_5B$$   type which do not show GI."
+      }
+    ],
+    "Valence Bond Theory (VBT)": [
+      {
+        "id": "FLASH-INORG-0085",
+        "difficulty": "medium",
+        "q": "According to VBT, what is the hybridization of  $$[Ni(CN)_4]^{2-}$$  ?",
+        "a": "$$dsp^2$$   (Square Planar).  $$CN^-$$   is a strong field ligand, causing pairing."
+      },
+      {
+        "id": "FLASH-INORG-0086",
+        "difficulty": "medium",
+        "q": "Why is $$[NiCl_4]^{2-} $$paramagnetic while$$  [Ni(CO)_4]$$is diamagnetic?",
+        "a": "$$Cl^-$$ is a weak ligand (no pairing, $$sp^3$$  , unpaired  $$e^-$$  ).  $$CO$$  is strong (pairing, $$sp^3$$  , no unpaired  $$e^-$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0087",
+        "difficulty": "medium",
+        "q": "Identify the hybridization and type of complex for  $$[Co(NH_3)_6]^{3+}$$  .",
+        "a": "$$d^2sp^3$$  , Inner Orbital (Low Spin) complex. ( $$NH_3$$  acts as a strong ligand with $$Co^{3+}$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0088",
+        "difficulty": "medium",
+        "q": "What is the magnetic nature of  $$[CoF_6]^{3-}$$  ?",
+        "a": "Paramagnetic. ( $$F^-$$is weak, forms Outer Orbital $$sp^3d^2$$   complex, high spin)."
+      },
+      {
+        "id": "FLASH-INORG-0089",
+        "difficulty": "medium",
+        "q": "Define Inner Orbital Complex.",
+        "a": "A complex that uses inner  $$(n-1)d$$   orbitals for hybridization (usually formed with strong ligands)."
+      },
+      {
+        "id": "FLASH-INORG-0090",
+        "difficulty": "medium",
+        "q": "What is the \"Spin-only\" magnetic moment formula?",
+        "a": "$$\\mu = \\sqrt{n(n+2)}$$ BM, where $$n$$   is the number of unpaired electrons."
+      },
+      {
+        "id": "FLASH-INORG-0128",
+        "difficulty": "medium",
+        "q": "What is the hybridization and magnetic nature of  $$[Fe(CN)_6]^{3-}$$  ?",
+        "a": "$$d^2sp^3$$   (Inner orbital) and Paramagnetic (1 unpaired electron). Despite being inner orbital, it has an odd electron ( $$d^5$$  ) that cannot be paired."
+      }
+    ],
+    "Crystal Field Theory (CFT)": [
+      {
+        "id": "FLASH-INORG-0091",
+        "difficulty": "medium",
+        "q": "In an Octahedral crystal field, how do the d-orbitals split?",
+        "a": "Into lower energy  $$t_{2g}$$   ( $$d_{xy}, d_{yz}, d_{zx}$$  ) and higher energy  $$e_g$$   ( $$d_{x^2-y^2}, d_{z^2}$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0092",
+        "difficulty": "medium",
+        "q": "What is the relationship between Tetrahedral ( $$\\Delta_t$$  ) and Octahedral ( $$\\Delta_o$$  ) splitting energy?",
+        "a": "$$\\Delta_t \\approx \\frac{4}{9} \\Delta_o$$  ."
+      },
+      {
+        "id": "FLASH-INORG-0093",
+        "difficulty": "medium",
+        "q": "In Tetrahedral splitting, which set of orbitals has lower energy?",
+        "a": "$$e$$  orbitals ( $$d_{x^2-y^2}, d_{z^2}$$  ) are lower; $$t_2$$   are higher. (Inverse of octahedral)."
+      },
+      {
+        "id": "FLASH-INORG-0094",
+        "difficulty": "medium",
+        "q": "What condition leads to a High Spin complex in terms of  $$\\Delta_o$$  and Pairing Energy ( $$P$$  )?",
+        "a": "$$\\Delta_o < P$$  . (Energy gap is small, electrons prefer to enter $$e_g$$   rather than pair up)."
+      },
+      {
+        "id": "FLASH-INORG-0095",
+        "difficulty": "medium",
+        "q": "Explain the origin of colour in coordination complexes.",
+        "a": "It is due to d-d transition of electrons. Electrons absorb light to jump from lower d-orbitals to higher d-orbitals."
+      },
+      {
+        "id": "FLASH-INORG-0096",
+        "difficulty": "medium",
+        "q": "Why is  $$Ti^{4+}$$   ( $$TiO_2$$  ) colourless?",
+        "a": "It has a  $$d^0$$   configuration. No d-electrons available for d-d transition."
+      },
+      {
+        "id": "FLASH-INORG-0097",
+        "difficulty": "medium",
+        "q": "Define Spectrochemical Series.",
+        "a": "The experimental arrangement of ligands in increasing order of their crystal field splitting power (field strength)."
+      },
+      {
+        "id": "FLASH-INORG-0098",
+        "difficulty": "medium",
+        "q": "Which has a higher  $$\\Delta_o$$  :  $$[Co(NH_3)_6]^{3+}$$or$$[Rh(NH_3)_6]^{3+}$$  ?",
+        "a": "$$[Rh(NH_3)_6]^{3+}$$  .  $$\\Delta_o$$   increases significantly (30-50%) as we move from 3d to 4d to 5d series."
+      },
+      {
+        "id": "FLASH-INORG-0117",
+        "difficulty": "medium",
+        "q": "Arrange  $$[Co(NH_3)_6]^{3+}$$  ,  $$[Co(CN)_6]^{3-}$$  , and  $$[Co(H_2O)_6]^{3+}$$   in increasing order of wavelength of light absorbed.",
+        "a": "$$[Co(CN)_6]^{3-} < [Co(NH_3)_6]^{3+} < [Co(H_2O)_6]^{3+}$$  . Stronger ligands cause larger splitting ( $$\\Delta_o$$  ), requiring higher energy (shorter wavelength) for absorption."
+      },
+      {
+        "id": "FLASH-INORG-0119",
+        "difficulty": "medium",
+        "q": "If the Crystal Field Stabilization Energy (CFSE) for octahedral  $$[CoCl_6]^{4-}$$is$$18,000~cm^{-1}$$  , what is the CFSE for tetrahedral  $$[CoCl_4]^{2-}$$  ?",
+        "a": "$$8,000~cm^{-1}$$  . Formula:  $$\\Delta_t \\approx \\frac{4}{9} \\Delta_o$$ "
+      },
+      {
+        "id": "FLASH-INORG-0121",
+        "difficulty": "medium",
+        "q": "Why does $$[Fe(H_2O)_6]^{3+} $$have a magnetic moment of 5.92BM while [Fe(CN)_6]^{3-}$$ is only 1.74 BM?",
+        "a": "Ligand Strength. $$H_2O$$  is a weak field ligand (High Spin, 5 unpaired e−). $$CN^-$$ is a strong field ligand (Low Spin, causing pairing, leaving only 1 unpaired $$e^-$$). "
+      },
+      {
+        "id": "FLASH-INORG-0126",
+        "difficulty": "medium",
+        "q": "Why are low spin tetrahedral complexes rarely observed?",
+        "a": "The orbital splitting energy in tetrahedral geometry ($$\\Delta_t$$) is very small ($$\\approx \\frac{4}{9} \\Delta_o$$) and is usually lower than the pairing energy ($$P$$), so electrons do not pair up."
+      },
+      {
+        "id": "FLASH-INORG-0129",
+        "difficulty": "medium",
+        "q": "Why is anhydrous $$CuSO_4$$colourless while$$CuSO_4 \\cdot 5H_2O$$ is blue?",
+        "a": "In anhydrous form, ligands ( $$H_2O$$  ) are absent, so there is no crystal field splitting and no d-d transition. In hydrated form, water acts as a ligand causing splitting and colour."
+      },
+      {
+        "id": "FLASH-INORG-0130",
+        "difficulty": "medium",
+        "q": "Arrange the following anions in increasing order of field strength (Crystal Field Splitting power):  $$Cl^-$$  ,  $$CN^-$$  ,  $$F^-$$  .",
+        "a": "$$Cl^- < F^- < CN^-$$  . Halides are weak field ligands;  $$CN^-$$is a very strong field ligand (highest$$\\Delta_o$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0131",
+        "difficulty": "medium",
+        "q": "Write the electronic configuration of  $$[CoF_6]^{3-}$$  ( $$Co^{3+}$$   is $$3d^6$$  ) in terms of  $$t_{2g}$$and$$e_g$$  .",
+        "a": "$$t_{2g}^4 e_g^2$$  .  $$F^-$$   is a weak field ligand ( $$\\Delta_o < P$$  ), so it forms a High Spin complex (electrons occupy higher energy orbitals before pairing)."
+      }
+    ],
+    "Metal Carbonyls": [
+      {
+        "id": "FLASH-INORG-0099",
+        "difficulty": "medium",
+        "q": "Describe Synergic Bonding in metal carbonyls.",
+        "a": "It involves both  $$\\sigma$$  -donation (C lone pair  $$\\to$$  Metal empty orbital) and  $$\\pi$$  -back bonding (Metal filled d-orbital $$\\to $$ CO $$  \\pi^*$$ orbital)."
+      },
+      {
+        "id": "FLASH-INORG-0100",
+        "difficulty": "medium",
+        "q": "How does synergic bonding affect the C-O bond length?",
+        "a": "Back bonding adds electron density to the C-O antibonding orbital, weakening the C-O bond and increasing its bond length."
+      },
+      {
+        "id": "FLASH-INORG-0101",
+        "difficulty": "medium",
+        "q": "In metal carbonyls, the metal is usually in which oxidation state?",
+        "a": "Zero (Low oxidation states)."
+      },
+      {
+        "id": "FLASH-INORG-0102",
+        "difficulty": "medium",
+        "q": "Which is the strongest  $$\\pi$$  -acceptor ligand among  $$CO, CN^-, NO^+$$  ?",
+        "a": "$$NO^+$$   >  $$CO$$  > $$CN^-$$   (generally)."
+      }
+    ],
+    "Stability of Complexes": [
+      {
+        "id": "FLASH-INORG-0103",
+        "difficulty": "medium",
+        "q": "What is the Chelate Effect on stability?",
+        "a": "Complexes with chelating ligands are significantly more stable than those with similar monodentate ligands (due to entropy increase)."
+      },
+      {
+        "id": "FLASH-INORG-0104",
+        "difficulty": "medium",
+        "q": "Define Stepwise Stability Constant ( $$K_n$$  ).",
+        "a": "The equilibrium constant for the formation of a complex from a metal ion and ligands adding one by one."
+      },
+      {
+        "id": "FLASH-INORG-0105",
+        "difficulty": "medium",
+        "q": "Which is more stable:  $$[Co(NH_3)_6]^{3+}$$or$$[Co(en)_3]^{3+}$$  ?",
+        "a": "$$[Co(en)_3]^{3+}$$  . Due to the Chelate Effect ( $$en$$   is bidentate)."
+      },
+      {
+        "id": "FLASH-INORG-0116",
+        "difficulty": "medium",
+        "q": "Based on stability constants ( $$\\log K$$  ), which is the most stable complex:  $$[Cu(NH_3)_4]^{2+}$$  ,  $$[Cu(CN)_4]^{2-}$$  , or  $$[Cu(en)_2]^{2+}$$  ?",
+        "a": "$$[Cu(CN)_4]^{2-}$$  . (It has the highest  $$\\log K$$  value of"
+      }
+    ],
+    "Applications of Complexes": [
+      {
+        "id": "FLASH-INORG-0106",
+        "difficulty": "medium",
+        "q": "Which complex is used for the treatment of Lead (Pb) poisoning?",
+        "a": "[Ca-EDTA] complex (calcium salt of EDTA)."
+      },
+      {
+        "id": "FLASH-INORG-0107",
+        "difficulty": "medium",
+        "q": "What is the coordination compound found in Chlorophyll?",
+        "a": "A complex of Magnesium (Mg) with porphyrin ring."
+      },
+      {
+        "id": "FLASH-INORG-0108",
+        "difficulty": "medium",
+        "q": "What is the central metal ion in Vitamin B12 (Cyanocobalamin)?",
+        "a": "Cobalt (Co)."
+      },
+      {
+        "id": "FLASH-INORG-0109",
+        "difficulty": "medium",
+        "q": "Name the catalyst used in the hydrogenation of alkenes (Wilkinson's Catalyst).",
+        "a": "$$[(Ph_3P)_3RhCl]$$   (Tris(triphenylphosphine)rhodium(I) chloride)."
+      },
+      {
+        "id": "FLASH-INORG-0110",
+        "difficulty": "medium",
+        "q": "How is Hardness of Water estimated using coordination chemistry?",
+        "a": "By titration with  $$Na_2$$  EDTA using Eriochrome Black T indicator (forms stable complexes with  $$Ca^{2+}/Mg^{2+}$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0111",
+        "difficulty": "medium",
+        "q": "Which complex is formed during the fixing of photographic films (Hypo solution)?",
+        "a": "$$[Ag(S_2O_3)_2]^{3-}$$   (soluble complex)."
+      },
+      {
+        "id": "FLASH-INORG-0112",
+        "difficulty": "medium",
+        "q": "In the extraction of Gold (Au), what complex is formed with Cyanide?",
+        "a": "$$[Au(CN)_2]^-$$  . (MacArthur-Forrest Cyanide Process)."
+      },
+      {
+        "id": "FLASH-INORG-0113",
+        "difficulty": "medium",
+        "q": "What is the biological role of Hemoglobin?",
+        "a": "It is an Iron (Fe) complex that transports oxygen in the blood."
+      },
+      {
+        "id": "FLASH-INORG-0134",
+        "difficulty": "medium",
+        "q": "What is the hybridization and geometry of the central metal ion in the rosy-red complex $$[Ni(DMG)_2]$$?",
+        "a": "$$dsp^2$$ (Inner orbital complex). Square Planar geometry. Note: Nickel is in the $$+2$$ oxidation state ($$3d^8$$ system)."
+      },
+      {
+        "id": "FLASH-INORG-0135",
+        "difficulty": "medium",
+        "q": "What specific interaction provides extra stability to the $$[Ni(DMG)_2]$$ complex and maintains its planar structure?",
+        "a": "Two symmetrical H-bonds are formed between the oxygen atoms of the oxime groups, forming two additional 6-membered pseudo-rings (macrocyclic effect)."
+      }
+    ],
+    "Colour & Electronic Config": [
+      {
+        "id": "FLASH-INORG-0114",
+        "difficulty": "medium",
+        "q": "What is the electronic configuration of a  $$d^4$$  ion in a High Spin Octahedral field?",
+        "a": "$$t_{2g}^3 e_g^1$$  . (Pairing energy $$P > \\Delta_o$$  , so 4th electron goes to  $$e_g$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0115",
+        "difficulty": "medium",
+        "q": "Why does anhydrous  $$CuSO_4$$  appear white, while hydrated $$CuSO_4 \\cdot 5H_2O$$  is blue?",
+        "a": "Anhydrous $$Cu^{2+}$$   lacks ligands to cause crystal field splitting (no d-d transition). Hydrated form has water ligands causing splitting and d-d transitions."
+      },
+      {
+        "id": "FLASH-INORG-0122",
+        "difficulty": "medium",
+        "q": "Why does an aqueous pink solution of  $$Co(II)$$turn deep blue upon addition of excess$$HCl$$  ?",
+        "a": "Due to the change from octahedral  $$[Co(H_2O)_6]^{2+}$$   (Pink) to tetrahedral  $$[CoCl_4]^{2-}$$   (Blue)."
+      }
+    ]
+  }
+}

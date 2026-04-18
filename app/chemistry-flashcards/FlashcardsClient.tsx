@@ -28,6 +28,7 @@ import { FlashcardItem } from '../lib/flashcardsData';
 import { useCardProgress } from '../hooks/useCardProgress';
 import { getMasteryLevel, getMasteryColor, daysUntilReview, QualityRating } from '../lib/spacedRepetition';
 import ReactMarkdown from 'react-markdown';
+import { flashcardMarkdownComponents } from '@/app/lib/flashcardMarkdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
@@ -569,6 +570,7 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                                             remarkPlugins={[remarkMath]}
                                                             rehypePlugins={[rehypeKatex]}
                                                             components={{
+                                                                ...flashcardMarkdownComponents,
                                                                 strong: ({ node, ...props }) => <span className="text-amber-300 font-bold" {...props} />,
                                                                 p: ({ node, ...props }) => <p className="mb-4 last:mb-0" {...props} />
                                                             }}
