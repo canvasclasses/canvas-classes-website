@@ -15,6 +15,66 @@ export interface TrendSection {
 
 export const inorganicTrendsData: TrendSection[] = [
     {
+        title: "S-Block: Periodic Properties You Must Know",
+        description: "Group 1 & 2 trends that are directly tested. Many look similar but have subtle differences — the table below is your master reference.",
+        blocks: [
+            {
+                id: 101,
+                title: "Thermal Stability of Hydrides (Group 1)",
+                trend: "$LiH > NaH > KH > RbH > CsH$",
+                logic: "As you go down Group 1, the cation gets larger and the ionic **M–H bond lengthens and weakens**. A weaker bond means the compound decomposes at a lower temperature. $LiH$, with the smallest $Li^+$ and the strongest bond, is the most thermally stable hydride in the group."
+            },
+            {
+                id: 102,
+                title: "Basic Strength of Oxides (Group 2)",
+                trend: "$BeO < MgO < CaO < SrO$",
+                logic: "$BeO$ is **amphoteric** — it reacts with both acids and bases. As the cation size increases down the group, the metal–oxygen bond becomes more ionic and the oxide becomes a stronger base. The larger the cation, the lower its charge density and the more easily it yields $O^{2-}$ to act as a Brønsted base."
+            },
+            {
+                id: 103,
+                title: "Basic Strength / Solubility / Thermal Stability of Hydroxides (Group 1)",
+                trend: "$LiOH < NaOH < KOH < RbOH < CsOH$",
+                logic: "All three properties follow **the same order** because they share one root cause: charge density of the cation. Larger cations hold $OH^-$ less tightly → the compound ionizes more completely (stronger base, more soluble) and holds together less firmly under heat (lower decomposition temperature). $LiOH$ is the only alkali hydroxide that noticeably decomposes on strong heating."
+            },
+            {
+                id: 104,
+                title: "Basic Strength / Solubility of Hydroxides (Group 2)",
+                trend: "$Be(OH)_2 < Mg(OH)_2 < Ca(OH)_2 < Ba(OH)_2$",
+                logic: "$Be(OH)_2$ is **amphoteric**. Going down Group 2, the cation grows larger, its charge density falls, the M–OH bond weakens, and ionisation into $M^{2+}$ and $OH^-$ becomes easier. $Ca(OH)_2$ (slaked lime) is sparingly soluble; $Ba(OH)_2$ is a fully soluble, strong base used in titrations."
+            },
+            {
+                id: 105,
+                title: "Thermal Stability of Hydroxides (Group 2)",
+                trend: "$Be(OH)_2 < Mg(OH)_2 < Ca(OH)_2 < Sr(OH)_2 < Ba(OH)_2$",
+                logic: "Smaller cations have higher **polarising power** (high charge/radius ratio). A highly polarising cation distorts the $OH^-$ ion, weakening the O–H bond and triggering decomposition: $M(OH)_2 \\rightarrow MO + H_2O$ at lower temperatures. $Ba^{2+}$ is the largest, polarises $OH^-$ the least, so $Ba(OH)_2$ needs the highest temperature to decompose."
+            },
+            {
+                id: 106,
+                title: "Solubility / Thermal Stability of Carbonates (Group 1)",
+                trend: "$Li_2CO_3 < Na_2CO_3 < K_2CO_3 < Rb_2CO_3 < Cs_2CO_3$",
+                logic: "The tiny $Li^+$ polarises $CO_3^{2-}$ strongly, destabilising it both thermally and in solution. **$Li_2CO_3$ is the only alkali carbonate that decomposes on heating** (to $Li_2O + CO_2$) — a classic anomaly of Lithium. All heavier alkali carbonates are thermally stable and highly soluble; solubility increases smoothly down the group."
+            },
+            {
+                id: 107,
+                title: "Solubility in Water of Carbonates (Group 2)",
+                trend: "$BaCO_3 < CaCO_3 < MgCO_3 < BeCO_3$",
+                logic: "All Group 2 carbonates are sparingly soluble, but the trend is **opposite to Group 1**. The $CO_3^{2-}$ ion is large, so lattice energy falls slowly down the group. However, the **hydration energy of $M^{2+}$ drops sharply** as the cation grows. For small $Be^{2+}$ and $Mg^{2+}$, the high hydration energy compensates the lattice energy, giving net dissolution. $BaCO_3$ is least soluble because $Ba^{2+}$ has low hydration energy that barely offsets the lattice energy."
+            },
+            {
+                id: 108,
+                title: "Thermal Stability of Carbonates (Group 2)",
+                trend: "$BeCO_3 < MgCO_3 < CaCO_3 < BaCO_3$",
+                logic: "Same **polarising power** argument as hydroxides: smaller $Be^{2+}$ and $Mg^{2+}$ distort $CO_3^{2-}$ more strongly, weakening C–O bonds and causing $MCO_3 \\rightarrow MO + CO_2$ at lower temperatures. $BaCO_3$ requires the highest temperature to decompose (>1300 °C). This trend is a favourite in JEE and NEET MCQs."
+            },
+            {
+                id: 109,
+                title: "Solubility in Water of Sulphates (Group 2)",
+                trend: "$BaSO_4 < SrSO_4 < CaSO_4 < MgSO_4 < BeSO_4$",
+                logic: "$SO_4^{2-}$ is a large anion, so the **lattice energy barely changes** down the group. But the hydration energy of $M^{2+}$ falls sharply as the cation grows. The net result: larger cations like $Ba^{2+}$ gain far less energy upon dissolving → $BaSO_4$ is nearly insoluble (used in X-ray barium meals). $MgSO_4$ (Epsom salt) and $BeSO_4$ are highly soluble because the small cation's huge hydration energy drives dissolution."
+            }
+        ]
+    },
+    {
         title: "Section 1: The \"Anomalous\" Group 13 (Boron Family)",
         description: "Derived heavily from your notes and NCERT 11th P-Block.",
         blocks: [
