@@ -22,14 +22,16 @@ export async function GET(request: Request) {
                 const createdAt = new Date(user.created_at).getTime();
                 const isNewSignup = Date.now() - createdAt < 10 * 60 * 1000;
                 if (isNewSignup) {
-                    await trackServer(user.id, 'user_signed_up', {
-                        signup_method: user.app_metadata?.provider ?? 'email',
-                        email_domain: user.email?.split('@')[1],
-                    });
-                    await peopleSetOnceServer(user.id, {
-                        signup_date: user.created_at,
-                        email_domain: user.email?.split('@')[1],
-                    });
+                    void Promise.all([
+                        trackServer(user.id, 'user_signed_up', {
+                            signup_method: user.app_metadata?.provider ?? 'email',
+                            email_domain: user.email?.split('@')[1],
+                        }),
+                        peopleSetOnceServer(user.id, {
+                            signup_date: user.created_at,
+                            email_domain: user.email?.split('@')[1],
+                        }),
+                    ]).catch((err) => console.error('[analytics signup]', err));
                 }
             }
             const forwardedHost = request.headers.get('x-forwarded-host') // original origin before load balancer
