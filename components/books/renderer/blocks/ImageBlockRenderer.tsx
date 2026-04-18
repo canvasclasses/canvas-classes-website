@@ -138,31 +138,43 @@ export default function ImageBlockRenderer({ block }: { block: ImageBlock }) {
   const hasAspectRatio = !!block.aspect_ratio;
   const aspectClass = block.aspect_ratio ? ASPECT_RATIO_CLASS[block.aspect_ratio] : '';
 
+  // next/image can't safely handle SVGs (the optimizer rejects them by default
+  // for XSS reasons) or images without known dimensions displayed at natural
+  // size — for those we fall back to a plain <img> with async decoding.
+  //
+  // When aspect_ratio IS set, the container already locks the layout box, so
+  // we can use next/image with `fill` to get AVIF/WebP format negotiation,
+  // responsive srcsets, and automatic lazy loading — no CLS, no guesswork.
+  const useOptimizer = hasAspectRatio && !isSvg;
+
   const figure = (
     <figure className={`${hasSideText ? 'w-full' : fullRowWidthClass[width]} ${hasSideText ? '' : 'my-4'}`}>
       <div className={`relative w-full overflow-hidden rounded-xl border border-white/10 ${aspectClass}`}>
-        {/*
-          All book images come from Cloudflare R2 CDN, which already serves
-          optimised formats. Using a plain <img> tag avoids the next/image
-          optimizer pipeline (which can silently fail with width=0/height=0
-          and render the image as invisible). SVGs and raster images both
-          use the same approach here — lazy loaded, full-width, auto height.
-
-          When aspect_ratio is set: the container holds the ratio, the image
-          fills it absolutely with object-cover (crops to fit).
-          When absent: natural proportions, image stretches to its full height.
-        */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={block.src}
-          alt={block.alt}
-          className={
-            hasAspectRatio
-              ? 'absolute inset-0 w-full h-full object-cover block'
-              : 'w-full h-auto object-contain block'
-          }
-          loading="lazy"
-        />
+        {useOptimizer ? (
+          <Image
+            src={block.src}
+            alt={block.alt}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 66vw, 800px"
+            className="object-cover"
+            loading="lazy"
+          />
+        ) : (
+          // No aspect_ratio set: we don't know the image's intrinsic dimensions,
+          // so next/image's fill mode would collapse to zero height. Keep a plain
+          // <img> but opt into async decode + lazy load so the main thread isn't
+          // blocked on image decoding. R2 already serves through a CDN; the main
+          // win we're giving up here is AVIF/WebP negotiation, which is OK for
+          // the minority of blocks that don't pin an aspect ratio.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={block.src}
+            alt={block.alt}
+            className="w-full h-auto object-contain block"
+            loading="lazy"
+            decoding="async"
+          />
+        )}
       </div>
       {block.caption && (
         <figcaption className="mt-2 text-center text-sm text-white/50 italic">

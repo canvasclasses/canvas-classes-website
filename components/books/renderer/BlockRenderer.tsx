@@ -1,29 +1,39 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { ContentBlock } from '@/types/books';
 
+// These three are on virtually every page and cheap to hydrate — keep them
+// in the main bundle so first paint doesn't wait on a chunk fetch.
 import TextBlockRenderer from './blocks/TextBlockRenderer';
 import HeadingBlockRenderer from './blocks/HeadingBlockRenderer';
-import ImageBlockRenderer from './blocks/ImageBlockRenderer';
-import InteractiveImageBlockRenderer from './blocks/InteractiveImageBlockRenderer';
-import VideoBlockRenderer from './blocks/VideoBlockRenderer';
-import AudioNoteBlockRenderer from './blocks/AudioNoteBlockRenderer';
-import Molecule2DBlockRenderer from './blocks/Molecule2DBlockRenderer';
-import Molecule3DBlockRenderer from './blocks/Molecule3DBlockRenderer';
-import LatexBlockRenderer from './blocks/LatexBlockRenderer';
-import PracticeLinkBlockRenderer from './blocks/PracticeLinkBlockRenderer';
-import CalloutBlockRenderer from './blocks/CalloutBlockRenderer';
-import TableBlockRenderer from './blocks/TableBlockRenderer';
-import TimelineBlockRenderer from './blocks/TimelineBlockRenderer';
-import ComparisonCardBlockRenderer from './blocks/ComparisonCardBlockRenderer';
-import AnimationBlockRenderer from './blocks/AnimationBlockRenderer';
-import InlineQuizRenderer from './blocks/InlineQuizRenderer';
-import WorkedExampleRenderer from './blocks/WorkedExampleRenderer';
-import SimulationBlockRenderer from './blocks/SimulationBlockRenderer';
 import SectionBlockRenderer from './blocks/SectionBlockRenderer';
-import ReasoningPromptRenderer from './blocks/ReasoningPromptRenderer';
-import CuriosityPromptRenderer from './blocks/CuriosityPromptRenderer';
-import ClassifyExerciseRenderer from './blocks/ClassifyExerciseRenderer';
+
+// Everything else is lazy-loaded on demand. ssr: true keeps the HTML in the
+// SSR output (no layout shift / hydration mismatch). The client bundle only
+// downloads renderers whose block types actually appear on this page.
+const dynamicBlock = <P extends object>(loader: () => Promise<{ default: React.ComponentType<P> }>) =>
+  dynamic(loader, { ssr: true });
+
+const ImageBlockRenderer             = dynamicBlock(() => import('./blocks/ImageBlockRenderer'));
+const InteractiveImageBlockRenderer  = dynamicBlock(() => import('./blocks/InteractiveImageBlockRenderer'));
+const VideoBlockRenderer             = dynamicBlock(() => import('./blocks/VideoBlockRenderer'));
+const AudioNoteBlockRenderer         = dynamicBlock(() => import('./blocks/AudioNoteBlockRenderer'));
+const Molecule2DBlockRenderer        = dynamicBlock(() => import('./blocks/Molecule2DBlockRenderer'));
+const Molecule3DBlockRenderer        = dynamicBlock(() => import('./blocks/Molecule3DBlockRenderer'));
+const LatexBlockRenderer             = dynamicBlock(() => import('./blocks/LatexBlockRenderer'));
+const PracticeLinkBlockRenderer      = dynamicBlock(() => import('./blocks/PracticeLinkBlockRenderer'));
+const CalloutBlockRenderer           = dynamicBlock(() => import('./blocks/CalloutBlockRenderer'));
+const TableBlockRenderer             = dynamicBlock(() => import('./blocks/TableBlockRenderer'));
+const TimelineBlockRenderer          = dynamicBlock(() => import('./blocks/TimelineBlockRenderer'));
+const ComparisonCardBlockRenderer    = dynamicBlock(() => import('./blocks/ComparisonCardBlockRenderer'));
+const AnimationBlockRenderer         = dynamicBlock(() => import('./blocks/AnimationBlockRenderer'));
+const InlineQuizRenderer             = dynamicBlock(() => import('./blocks/InlineQuizRenderer'));
+const WorkedExampleRenderer          = dynamicBlock(() => import('./blocks/WorkedExampleRenderer'));
+const SimulationBlockRenderer        = dynamicBlock(() => import('./blocks/SimulationBlockRenderer'));
+const ReasoningPromptRenderer        = dynamicBlock(() => import('./blocks/ReasoningPromptRenderer'));
+const CuriosityPromptRenderer        = dynamicBlock(() => import('./blocks/CuriosityPromptRenderer'));
+const ClassifyExerciseRenderer      = dynamicBlock(() => import('./blocks/ClassifyExerciseRenderer'));
 
 export default function BlockRenderer({
   block,

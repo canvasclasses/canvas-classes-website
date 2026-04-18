@@ -23,6 +23,10 @@ const BookProgressSchema = new Schema<IBookProgress>(
 
 // One progress record per user+page (upsert on re-completion)
 BookProgressSchema.index({ user_id: 1, book_slug: 1, page_slug: 1 }, { unique: true });
+// Fast prefix lookup for "all progress records for this user+book" — the
+// unique index above can serve this query but the planner is happier with
+// an explicit non-unique prefix (especially as the collection grows).
+BookProgressSchema.index({ user_id: 1, book_slug: 1 });
 
 const BookProgressModel: Model<IBookProgress> =
   mongoose.models.BookProgress ||

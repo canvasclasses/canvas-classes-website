@@ -28,6 +28,19 @@ export async function getAuthenticatedUser(request: NextRequest): Promise<User |
 }
 
 /**
+ * Returns the Supabase user id for the current request, or null if the
+ * request is anonymous / Supabase is not configured. This is the route-handler
+ * equivalent of getUserId() in lib/bookAuth.ts (which is for Server Components).
+ *
+ * Use this inside /api/** route handlers that need to identify the user for
+ * per-user data (progress, bookmarks, saved notes).
+ */
+export async function getUserIdFromRequest(request: NextRequest): Promise<string | null> {
+  const user = await getAuthenticatedUser(request);
+  return user?.id ?? null;
+}
+
+/**
  * Check if an email is in the ADMIN_EMAILS allow-list.
  */
 export function isAdmin(email: string | undefined | null): boolean {

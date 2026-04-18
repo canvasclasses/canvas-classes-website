@@ -11,6 +11,7 @@ import PageRenderer from '../renderer/PageRenderer';
 import { Book, BookPage, BlockType, ContentBlock } from '@/types/books';
 import { useBookProgress } from '@/hooks/useBookProgress';
 import { useBookBookmarks } from '@/hooks/useBookBookmarks';
+import { useBookUserState } from '@/hooks/useBookUserState';
 import FreeGate from './FreeGate';
 
 function hasBlockType(blocks: ContentBlock[], type: BlockType): boolean {
@@ -46,6 +47,10 @@ export default function BookReader({
 }: Props) {
   const bp = basePath ?? `/books/${bookSlug}`;
   const router = useRouter();
+
+  // Kicks off a single combined fetch for progress + bookmarks, seeding both
+  // caches before the individual hooks would otherwise fire two round-trips.
+  useBookUserState(bookSlug);
 
   const { completedSlugs, markComplete } = useBookProgress(bookSlug);
   const { bookmarkedSlugs, toggleBookmark } = useBookBookmarks(bookSlug);

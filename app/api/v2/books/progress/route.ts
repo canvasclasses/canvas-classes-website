@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import BookProgressModel from '@/lib/models/BookProgress';
-import { getUserId } from '@/lib/bookAuth';
+import { getUserIdFromRequest } from '@/lib/auth';
 
 // Per-user data — never cache on shared caches (CDN, Next.js data cache).
 // The client layer (useBookProgress hook) does its own in-memory dedupe.
@@ -15,7 +15,7 @@ const PRIVATE_NO_STORE = {
 
 // GET /api/v2/books/progress?book_slug=x  — fetch all completed pages for a book
 export async function GET(req: NextRequest) {
-  const userId = await getUserId();
+  const userId = await getUserIdFromRequest(req);
   if (!userId) {
     return NextResponse.json(
       { success: false, error: 'Unauthenticated' },
@@ -51,7 +51,7 @@ export async function GET(req: NextRequest) {
 
 // POST /api/v2/books/progress — save or update a completed page
 export async function POST(req: NextRequest) {
-  const userId = await getUserId();
+  const userId = await getUserIdFromRequest(req);
   if (!userId) {
     return NextResponse.json(
       { success: false, error: 'Unauthenticated' },

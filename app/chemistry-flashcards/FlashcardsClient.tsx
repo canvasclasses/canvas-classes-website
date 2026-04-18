@@ -22,10 +22,16 @@ import {
     Beaker,
     Atom,
     FlaskConical,
-    ChevronDown
+    ChevronDown,
+    Flame,
+    Search,
+    PlayCircle,
+    History,
+    ArrowUpDown
 } from 'lucide-react';
 import { FlashcardItem } from '../lib/flashcardsData';
 import { useCardProgress } from '../hooks/useCardProgress';
+import { useFlashcardMeta } from '../hooks/useFlashcardMeta';
 import { getMasteryLevel, getMasteryColor, daysUntilReview, QualityRating } from '../lib/spacedRepetition';
 import ReactMarkdown from 'react-markdown';
 import { flashcardMarkdownComponents } from '@/app/lib/flashcardMarkdown';
@@ -41,6 +47,20 @@ interface ChapterGroup {
 }
 
 type PracticeMode = 'due' | 'all';
+type SortMode = 'mostDue' | 'recentlyStudied' | 'alphabetical';
+
+function formatLastReviewed(isoDate: string | null): string {
+    if (!isoDate) return 'Not started';
+    const reviewMs = new Date(isoDate).getTime();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const diff = Math.round((today.getTime() - reviewMs) / (1000 * 60 * 60 * 24));
+    if (diff <= 0) return 'Today';
+    if (diff === 1) return 'Yesterday';
+    if (diff < 7) return `${diff}d ago`;
+    if (diff < 30) return `${Math.floor(diff / 7)}w ago`;
+    return `${Math.floor(diff / 30)}mo ago`;
+}
 
 interface FlashcardsClientProps {
     initialFlashcards: FlashcardItem[];
@@ -64,6 +84,13 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
     // Session stats (temporary, for current session display)
     const [sessionStats, setSessionStats] = useState({ correct: 0, needsReview: 0 });
 
+    // Chapter grid controls
+    const [searchQuery, setSearchQuery] = useState('');
+    const [sortBy, setSortBy] = useState<SortMode>('mostDue');
+
+    // True when practice session was started from the global "today" CTA rather than a specific chapter
+    const [isGlobalReview, setIsGlobalReview] = useState(false);
+
     // Ref for scrolling to flashcard view
     const practiceContainerRef = useRef<HTMLDivElement>(null);
 
@@ -75,9 +102,21 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
         getDueCards,
         sortByPriority,
         getStatistics,
+        getTodaysQueue,
+        getAccuracy,
+        getLastReviewDate,
+        getMaxOverdue,
         resetAllProgress,
         hasAnyProgress
     } = useCardProgress();
+
+    const {
+        currentStreak,
+        longestStreak,
+        recordStudyToday,
+        lastChapter,
+        setLastChapter
+    } = useFlashcardMeta();
 
     // Group flashcards by chapter on initial load
     useEffect(() => {
@@ -129,6 +168,8 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
             queue = [...candidates].sort(() => Math.random() - 0.5);
         }
 
+        setLastChapter(selectedChapter);
+        setIsGlobalReview(false);
         setPracticeType(mode);
         setPracticeQueue(queue);
         setCurrentIndex(0);
@@ -145,11 +186,34 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
         }, 100);
     };
 
+    // Start a mixed review across every chapter, capped to the daily target
+    const startGlobalReview = () => {
+        const todayIds = getTodaysQueue(allFlashcards.map(c => c.id));
+        if (todayIds.length === 0) return;
+        const cardById = new Map(allFlashcards.map(c => [c.id, c]));
+        const queue = todayIds.map(id => cardById.get(id)!).filter(Boolean);
+
+        setIsGlobalReview(true);
+        setSelectedChapter(null);
+        setSelectedTopics([]);
+        setPracticeType('due');
+        setPracticeQueue(queue);
+        setCurrentIndex(0);
+        setIsFlipped(false);
+        setSessionStats({ correct: 0, needsReview: 0 });
+        setIsPracticeMode(true);
+
+        setTimeout(() => {
+            practiceContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+    };
+
     // Handle card responses with SM-2 quality ratings
     const handleResponse = (quality: QualityRating) => {
         const card = practiceQueue[currentIndex];
         if (card) {
             updateProgress(card.id, quality);
+            recordStudyToday();
 
             if (quality >= 3) {
                 setSessionStats(prev => ({ ...prev, correct: prev.correct + 1 }));
@@ -187,6 +251,45 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
         const chapterCardIds = selectedChapterData.cards.map(c => c.id);
         return getStatistics(chapterCardIds);
     }, [selectedChapterData, progressLoaded, getStatistics]);
+
+    // Size of today's recommended mixed queue (capped by daily limits)
+    const todaysQueueSize = useMemo(() => {
+        if (!progressLoaded) return 0;
+        return getTodaysQueue(allCardIds).length;
+    }, [progressLoaded, allCardIds, getTodaysQueue]);
+
+    // Filter + sort chapters for the grid
+    const visibleChapterGroups = useMemo(() => {
+        if (!progressLoaded) return [];
+        const q = searchQuery.trim().toLowerCase();
+        let list = chapterGroups.filter(g =>
+            (selectedCategory === 'All' || g.category === selectedCategory)
+            && (q === '' || g.chapterName.toLowerCase().includes(q))
+        );
+
+        const sorted = [...list];
+        if (sortBy === 'mostDue') {
+            sorted.sort((a, b) => {
+                const da = getStatistics(a.cards.map(c => c.id)).dueToday;
+                const db = getStatistics(b.cards.map(c => c.id)).dueToday;
+                return db - da;
+            });
+        } else if (sortBy === 'recentlyStudied') {
+            sorted.sort((a, b) => {
+                const la = getLastReviewDate(a.cards.map(c => c.id)) || '';
+                const lb = getLastReviewDate(b.cards.map(c => c.id)) || '';
+                return lb.localeCompare(la);
+            });
+        } else {
+            sorted.sort((a, b) => a.chapterName.localeCompare(b.chapterName));
+        }
+        return sorted;
+    }, [progressLoaded, chapterGroups, selectedCategory, searchQuery, sortBy, getStatistics, getLastReviewDate]);
+
+    const lastChapterGroup = useMemo(() => {
+        if (!lastChapter) return null;
+        return chapterGroups.find(g => g.chapterName === lastChapter) || null;
+    }, [lastChapter, chapterGroups]);
 
     // Get due count for topic selection
     const getDueCountForSelection = () => {
@@ -238,17 +341,25 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                     <BookOpen className="w-3.5 h-3.5 md:w-4 md:h-4 text-blue-400" />
                                     <span className="text-white font-medium text-xs md:text-sm">{chapterGroups.length} Chapters</span>
                                 </div>
+                                <div className="flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-amber-500/10 rounded-lg border border-amber-500/20">
+                                    <Target className="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-400" />
+                                    <span className="text-amber-400 font-medium text-xs md:text-sm">
+                                        Today's Goal: {todaysQueueSize}
+                                    </span>
+                                </div>
+                                {currentStreak > 0 && (
+                                    <div className="flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-orange-500/10 rounded-lg border border-orange-500/20">
+                                        <Flame className="w-3.5 h-3.5 md:w-4 md:h-4 text-orange-400" />
+                                        <span className="text-orange-400 font-medium text-xs md:text-sm">
+                                            {currentStreak} day streak
+                                        </span>
+                                    </div>
+                                )}
                                 {hasAnyProgress() && (
-                                    <>
-                                        <div className="flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-amber-500/10 rounded-lg border border-amber-500/20">
-                                            <Clock className="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-400" />
-                                            <span className="text-amber-400 font-medium text-xs md:text-sm">{globalStats.dueToday} Due Today</span>
-                                        </div>
-                                        <div className="flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
-                                            <Trophy className="w-3.5 h-3.5 md:w-4 md:h-4 text-emerald-400" />
-                                            <span className="text-emerald-400 font-medium text-xs md:text-sm">{globalStats.mastered} Mastered</span>
-                                        </div>
-                                    </>
+                                    <div className="flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
+                                        <Trophy className="w-3.5 h-3.5 md:w-4 md:h-4 text-emerald-400" />
+                                        <span className="text-emerald-400 font-medium text-xs md:text-sm">{globalStats.mastered} Mastered</span>
+                                    </div>
                                 )}
                             </div>
                         )}
@@ -272,7 +383,63 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                 >
-                                    <h2 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-6">Select a Chapter</h2>
+                                    {/* Primary CTA row: today's mixed review + continue where you left off */}
+                                    {progressLoaded && (todaysQueueSize > 0 || lastChapterGroup) && (
+                                        <div className="mb-6 md:mb-8 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-3">
+                                            {todaysQueueSize > 0 ? (
+                                                <button
+                                                    onClick={startGlobalReview}
+                                                    className="group flex items-center justify-between gap-4 p-5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold shadow-lg hover:opacity-95 transition-opacity text-left"
+                                                >
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="w-12 h-12 rounded-xl bg-slate-950/15 flex items-center justify-center shrink-0">
+                                                            <PlayCircle className="w-6 h-6" />
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-base md:text-lg">Start Today's Review</p>
+                                                            <p className="text-sm font-medium text-slate-950/80">
+                                                                {todaysQueueSize} card{todaysQueueSize === 1 ? '' : 's'} across all chapters · mixed for best recall
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <ChevronRight className="w-5 h-5 opacity-70 group-hover:translate-x-1 transition-transform" />
+                                                </button>
+                                            ) : (
+                                                <div className="flex items-center gap-4 p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+                                                    <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center shrink-0">
+                                                        <Check className="w-6 h-6 text-emerald-400" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-white font-bold">All caught up for today</p>
+                                                        <p className="text-sm text-emerald-300/80">Pick a chapter below to practice ahead.</p>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {lastChapterGroup && (
+                                                <button
+                                                    onClick={() => {
+                                                        setSelectedChapter(lastChapterGroup.chapterName);
+                                                        setSelectedTopics([]);
+                                                    }}
+                                                    className="group flex items-center gap-3 p-5 rounded-2xl bg-slate-900/60 border border-white/10 hover:border-white/20 hover:bg-slate-900 text-left transition-colors"
+                                                >
+                                                    <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
+                                                        <History className="w-5 h-5 text-slate-300" />
+                                                    </div>
+                                                    <div className="min-w-0 flex-1">
+                                                        <p className="text-xs uppercase tracking-wider text-slate-500">Continue</p>
+                                                        <p className="text-white font-semibold truncate">{lastChapterGroup.chapterName}</p>
+                                                    </div>
+                                                    <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
+                                                </button>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    <div className="flex items-center justify-between mb-4 md:mb-6">
+                                        <h2 className="text-xl md:text-2xl font-bold text-white">Or pick a chapter</h2>
+                                    </div>
 
                                     {/* Category Tabs */}
                                     <div className="flex flex-col gap-3 mb-8">
@@ -335,31 +502,79 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                         </div>
                                     </div>
 
+                                    {/* Search + Sort controls */}
+                                    <div className="flex flex-col sm:flex-row gap-2 mb-4">
+                                        <div className="relative flex-1">
+                                            <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                                            <input
+                                                type="text"
+                                                value={searchQuery}
+                                                onChange={(e) => setSearchQuery(e.target.value)}
+                                                placeholder="Search chapters…"
+                                                className="w-full pl-9 pr-3 py-2.5 bg-slate-900/60 border border-white/10 rounded-xl text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-purple-500/50"
+                                            />
+                                        </div>
+                                        <div className="flex items-center gap-2 bg-slate-900/60 border border-white/10 rounded-xl px-2 py-1.5">
+                                            <ArrowUpDown className="w-4 h-4 text-slate-500 ml-1" />
+                                            <select
+                                                value={sortBy}
+                                                onChange={(e) => setSortBy(e.target.value as SortMode)}
+                                                className="bg-transparent text-sm text-white focus:outline-none pr-2"
+                                            >
+                                                <option className="bg-slate-900" value="mostDue">Most due</option>
+                                                <option className="bg-slate-900" value="recentlyStudied">Recently studied</option>
+                                                <option className="bg-slate-900" value="alphabetical">A–Z</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     {/* Filtered Chapters Grid */}
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                        {chapterGroups
-                                            .filter(group => selectedCategory === 'All' || group.category === selectedCategory)
-                                            .map((group, idx) => {
+                                    {visibleChapterGroups.length === 0 ? (
+                                        <div className="text-center py-12 text-slate-500 text-sm">
+                                            No chapters match that search.
+                                        </div>
+                                    ) : (
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                            {visibleChapterGroups.map((group, idx) => {
                                                 const chapterCardIds = group.cards.map(c => c.id);
                                                 const stats = getStatistics(chapterCardIds);
                                                 const dueCount = stats.dueToday;
+                                                const maxOverdue = getMaxOverdue(chapterCardIds);
+                                                const accuracy = getAccuracy(chapterCardIds);
+                                                const lastReviewed = getLastReviewDate(chapterCardIds);
+                                                const hasAnyReview = stats.total !== stats.new;
 
-                                                // Get category styling
+                                                // Category styling (left-border accent)
                                                 const catStyles: Record<string, { color: string; iconColor: string; borderHex: string }> = {
                                                     'Physical Chemistry': { color: 'text-emerald-400', iconColor: 'text-emerald-500', borderHex: '#10b981' },
                                                     'JEE PYQ': { color: 'text-amber-400', iconColor: 'text-amber-500', borderHex: '#f59e0b' },
                                                     'Organic Chemistry': { color: 'text-purple-400', iconColor: 'text-purple-500', borderHex: '#a855f7' },
                                                     'Inorganic Chemistry': { color: 'text-blue-400', iconColor: 'text-blue-500', borderHex: '#3b82f6' },
                                                 };
-                                                // Default style
                                                 const styles = catStyles[group.category] || catStyles['Physical Chemistry'];
+
+                                                // Urgency pill — drives colour off how overdue the most overdue card is
+                                                let pillLabel: string | null = null;
+                                                let pillClass = '';
+                                                if (dueCount === 0) {
+                                                    pillLabel = null;
+                                                } else if (!hasAnyReview) {
+                                                    pillLabel = `${dueCount} new`;
+                                                    pillClass = 'text-slate-300 bg-slate-500/10 border-slate-500/20';
+                                                } else if (maxOverdue > 3) {
+                                                    pillLabel = `${dueCount} due`;
+                                                    pillClass = 'text-red-400 bg-red-500/10 border-red-500/20';
+                                                } else {
+                                                    pillLabel = `${dueCount} due`;
+                                                    pillClass = 'text-amber-400 bg-amber-500/10 border-amber-500/20';
+                                                }
 
                                                 return (
                                                     <motion.button
                                                         key={group.chapterName}
                                                         initial={{ opacity: 0, y: 20 }}
                                                         animate={{ opacity: 1, y: 0 }}
-                                                        transition={{ delay: idx * 0.03 }}
+                                                        transition={{ delay: idx * 0.02 }}
                                                         onClick={() => {
                                                             setSelectedChapter(group.chapterName);
                                                             setSelectedTopics([]);
@@ -368,27 +583,44 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                                         style={{ borderLeftColor: styles.borderHex }}
                                                     >
                                                         <div className="flex flex-col h-full">
-                                                            {/* Header Level: Title & Due Badge */}
+                                                            {/* Header: Title & urgency pill */}
                                                             <div className="flex items-start justify-between mb-3 gap-4">
                                                                 <h3 className="text-lg font-bold text-white group-hover:text-white/90 leading-tight">
                                                                     {group.chapterName}
                                                                 </h3>
-                                                                {dueCount > 0 && (
-                                                                    <span className={`shrink-0 px-2 py-0.5 ${styles.color} bg-white/5 rounded text-xs font-medium border border-white/5`}>
-                                                                        {dueCount} due
+                                                                {pillLabel && (
+                                                                    <span className={`shrink-0 px-2 py-0.5 ${pillClass} rounded text-xs font-medium border`}>
+                                                                        {pillLabel}
                                                                     </span>
                                                                 )}
                                                             </div>
 
-                                                            {/* Meta Level: Icon, Category name, Card count */}
-                                                            <div className="flex items-center gap-3 text-sm text-slate-500 mb-4 mt-auto">
-                                                                <Layers className={`w-4 h-4 ${styles.iconColor} opacity-80`} />
+                                                            {/* Meta row 1: category + total cards */}
+                                                            <div className="flex items-center gap-3 text-xs text-slate-500 mb-1.5">
+                                                                <Layers className={`w-3.5 h-3.5 ${styles.iconColor} opacity-80`} />
                                                                 <span>{group.category.replace(' Chemistry', '')}</span>
                                                                 <span className="w-1 h-1 rounded-full bg-slate-700" />
                                                                 <span>{group.cards.length} cards</span>
                                                             </div>
 
-                                                            {/* Progress Bar (Neat & Thin) */}
+                                                            {/* Meta row 2: last reviewed + accuracy (when applicable) */}
+                                                            <div className="flex items-center gap-3 text-xs text-slate-400 mb-4 mt-auto">
+                                                                <span className="flex items-center gap-1.5">
+                                                                    <Clock className="w-3.5 h-3.5 text-slate-500" />
+                                                                    {formatLastReviewed(lastReviewed)}
+                                                                </span>
+                                                                {accuracy !== null && (
+                                                                    <>
+                                                                        <span className="w-1 h-1 rounded-full bg-slate-700" />
+                                                                        <span className="flex items-center gap-1.5">
+                                                                            <TrendingUp className="w-3.5 h-3.5 text-slate-500" />
+                                                                            {Math.round(accuracy * 100)}% correct
+                                                                        </span>
+                                                                    </>
+                                                                )}
+                                                            </div>
+
+                                                            {/* Progress Bar */}
                                                             <div className="h-1 bg-slate-800 rounded-full overflow-hidden w-full flex">
                                                                 {stats.mastered > 0 && (
                                                                     <div className="h-full bg-emerald-500/60" style={{ width: `${(stats.mastered / stats.total) * 100}%` }} />
@@ -404,7 +636,8 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                                     </motion.button>
                                                 );
                                             })}
-                                    </div>
+                                        </div>
+                                    )}
                                 </motion.div>
                             ) : (
                                 /* Topic Selection */
@@ -586,8 +819,13 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                         </AnimatePresence>
                                     </div>
 
-                                    {/* Topic Badge */}
-                                    <div className="text-center mt-4">
+                                    {/* Topic / Chapter Badge */}
+                                    <div className="text-center mt-4 flex items-center justify-center gap-2 flex-wrap">
+                                        {isGlobalReview && (
+                                            <span className="px-3 py-1 bg-purple-500/15 border border-purple-500/20 rounded-full text-purple-300 text-sm">
+                                                {currentCard.chapterName}
+                                            </span>
+                                        )}
                                         <span className="px-3 py-1 bg-slate-800 rounded-full text-slate-400 text-sm">
                                             {currentCard.topicName}
                                         </span>
@@ -637,7 +875,10 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                     {/* Exit Button */}
                                     <div className="text-center mt-8">
                                         <button
-                                            onClick={() => setIsPracticeMode(false)}
+                                            onClick={() => {
+                                                setIsPracticeMode(false);
+                                                setIsGlobalReview(false);
+                                            }}
                                             className="text-slate-500 hover:text-white transition-colors"
                                         >
                                             Exit Practice
@@ -658,18 +899,24 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                     <p className="text-slate-400 mb-8">No cards are due for review right now. Great job staying on top of your studies!</p>
 
                                     <div className="flex flex-wrap justify-center gap-4">
+                                        {!isGlobalReview && (
+                                            <button
+                                                onClick={() => startPractice('all')}
+                                                className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold px-6 py-3 rounded-xl"
+                                            >
+                                                <Shuffle className="w-5 h-5" />
+                                                Practice All Cards Anyway
+                                            </button>
+                                        )}
                                         <button
-                                            onClick={() => startPractice('all')}
-                                            className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold px-6 py-3 rounded-xl"
-                                        >
-                                            <Shuffle className="w-5 h-5" />
-                                            Practice All Cards Anyway
-                                        </button>
-                                        <button
-                                            onClick={() => setSelectedChapter(null)}
+                                            onClick={() => {
+                                                setIsPracticeMode(false);
+                                                setIsGlobalReview(false);
+                                                setSelectedChapter(null);
+                                            }}
                                             className="px-6 py-3 border border-white/10 rounded-xl text-slate-400 hover:text-white transition-colors"
                                         >
-                                            Choose Different Chapter
+                                            Back to dashboard
                                         </button>
                                     </div>
                                 </motion.div>
@@ -698,19 +945,36 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                         </div>
                                     </div>
 
+                                    {currentStreak > 0 && (
+                                        <div className="flex items-center justify-center gap-2 mb-6 text-orange-400">
+                                            <Flame className="w-4 h-4" />
+                                            <span className="text-sm font-semibold">{currentStreak} day streak — keep it going!</span>
+                                        </div>
+                                    )}
+
                                     <div className="flex flex-wrap justify-center gap-4">
                                         <button
-                                            onClick={() => startPractice(practiceType)}
+                                            onClick={() => {
+                                                if (isGlobalReview) {
+                                                    startGlobalReview();
+                                                } else {
+                                                    startPractice(practiceType);
+                                                }
+                                            }}
                                             className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold px-6 py-3 rounded-xl"
                                         >
                                             <RefreshCw className="w-5 h-5" />
                                             Practice Again
                                         </button>
                                         <button
-                                            onClick={() => setSelectedChapter(null)}
+                                            onClick={() => {
+                                                setIsPracticeMode(false);
+                                                setIsGlobalReview(false);
+                                                setSelectedChapter(null);
+                                            }}
                                             className="px-6 py-3 border border-white/10 rounded-xl text-slate-400 hover:text-white transition-colors"
                                         >
-                                            Choose Different Chapter
+                                            Back to dashboard
                                         </button>
                                     </div>
                                 </motion.div>

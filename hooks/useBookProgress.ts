@@ -36,9 +36,24 @@ interface CacheEntry {
   fetchedAt: number;
 }
 
+// Hard cap on distinct books cached per tab. Matches CLAUDE.md §8.9 — an
+// unbounded Map can OOM if a user browses many books in one session.
+const MAX_CACHE_ENTRIES = 512;
+
 // Module-level cache shared by every BookReader mount. This survives client
 // navigations inside the /books/* segment for as long as the tab lives.
 const progressCache = new Map<string, CacheEntry>();
+
+function cacheSet(key: string, entry: CacheEntry) {
+  // Simple FIFO eviction — oldest insertion is dropped when full. Good enough
+  // for this volume (a student reads <50 books/tab); LRU would need touch
+  // tracking that doesn't justify its cost here.
+  if (!progressCache.has(key) && progressCache.size >= MAX_CACHE_ENTRIES) {
+    const oldest = progressCache.keys().next().value;
+    if (oldest !== undefined) progressCache.delete(oldest);
+  }
+  progressCache.set(key, entry);
+}
 
 // In-flight request dedupe — if two components mount simultaneously and both
 // ask for the same bookSlug, only one HTTP request actually goes out.
@@ -82,6 +97,21 @@ async function fetchProgress(bookSlug: string): Promise<BookProgressRecord[]> {
   if (existing) return existing;
 
   const p = (async () => {
+    // If the combined user-state prefetch is running for this book, piggyback
+    // on it rather than firing a redundant single-resource request.
+    // Dynamic import to avoid a static circular dependency at module load.
+    try {
+      const { getCombinedInflight } = await import('./useBookUserState');
+      const combined = getCombinedInflight(bookSlug);
+      if (combined) {
+        await combined;
+        const hit = progressCache.get(bookSlug);
+        if (hit) return hit.records;
+      }
+    } catch {
+      // Fall through to the direct fetch.
+    }
+
     const res = await fetch(
       `/api/v2/books/progress?book_slug=${encodeURIComponent(bookSlug)}`,
       // The API sets `Cache-Control: private, no-store`, but the client also
@@ -93,7 +123,7 @@ async function fetchProgress(bookSlug: string): Promise<BookProgressRecord[]> {
     // progress just won't be tracked for anonymous visitors).
     if (res.status === 401) {
       const empty: BookProgressRecord[] = [];
-      progressCache.set(bookSlug, { records: empty, fetchedAt: Date.now() });
+      cacheSet(bookSlug, { records: empty, fetchedAt: Date.now() });
       publish(bookSlug, empty);
       return empty;
     }
@@ -101,7 +131,7 @@ async function fetchProgress(bookSlug: string): Promise<BookProgressRecord[]> {
     const body = await res.json();
     if (!body?.success) throw new Error(body?.error ?? 'Progress fetch failed');
     const records: BookProgressRecord[] = Array.isArray(body.data) ? body.data : [];
-    progressCache.set(bookSlug, { records, fetchedAt: Date.now() });
+    cacheSet(bookSlug, { records, fetchedAt: Date.now() });
     publish(bookSlug, records);
     return records;
   })();
@@ -112,6 +142,18 @@ async function fetchProgress(bookSlug: string): Promise<BookProgressRecord[]> {
   } finally {
     inflight.delete(bookSlug);
   }
+}
+
+/**
+ * Seed the progress cache from an external source (e.g. the combined
+ * user-state prefetch). Also publishes to live subscribers so any mounted
+ * reader instances pick the data up immediately.
+ */
+export function seedProgressCache(bookSlug: string, records: BookProgressRecord[]) {
+  // Don't clobber an existing fresher entry with stale data.
+  if (progressCache.has(bookSlug)) return;
+  cacheSet(bookSlug, { records, fetchedAt: Date.now() });
+  publish(bookSlug, records);
 }
 
 /**
@@ -217,7 +259,7 @@ export function useBookProgress(bookSlug: string): UseBookProgressResult {
         completed_at: new Date().toISOString(),
       };
       const next = [...current, optimistic];
-      progressCache.set(bookSlug, { records: next, fetchedAt: Date.now() });
+      cacheSet(bookSlug, { records: next, fetchedAt: Date.now() });
       publish(bookSlug, next);
 
       try {
@@ -239,7 +281,7 @@ export function useBookProgress(bookSlug: string): UseBookProgressResult {
       } catch (err) {
         // Roll back the optimistic insert so the UI stays honest.
         const rolled = recordsRef.current.filter((r) => r.page_slug !== pageSlug);
-        progressCache.set(bookSlug, { records: rolled, fetchedAt: Date.now() });
+        cacheSet(bookSlug, { records: rolled, fetchedAt: Date.now() });
         publish(bookSlug, rolled);
         setError(err as Error);
         return false;

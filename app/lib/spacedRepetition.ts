@@ -12,6 +12,8 @@ export interface CardProgress {
     repetitions: number;     // Consecutive correct answers
     nextReviewDate: string;  // ISO date string
     lastReviewDate: string;  // ISO date string
+    totalReviews?: number;   // All-time review count
+    correctReviews?: number; // All-time quality>=4 count
 }
 
 export type QualityRating = 0 | 1 | 2 | 3 | 4 | 5;
@@ -21,6 +23,11 @@ const MIN_EASE_FACTOR = 1.3;
 
 // Default ease factor for new cards
 const DEFAULT_EASE_FACTOR = 2.5;
+
+// Daily caps — informed by Anki defaults. Cap new cards so a fresh deck
+// doesn't register every card as "due today" on first visit.
+export const NEW_CARDS_PER_DAY = 20;
+export const REVIEW_CARDS_PER_DAY = 100;
 
 /**
  * Create initial progress for a new card
@@ -32,7 +39,9 @@ export function createInitialProgress(cardId: string): CardProgress {
         interval: 0,
         repetitions: 0,
         nextReviewDate: new Date().toISOString().split('T')[0],
-        lastReviewDate: ''
+        lastReviewDate: '',
+        totalReviews: 0,
+        correctReviews: 0
     };
 }
 
@@ -79,7 +88,18 @@ export function calculateNextReview(
     nextDate.setDate(nextDate.getDate() + newProgress.interval);
     newProgress.nextReviewDate = nextDate.toISOString().split('T')[0];
 
+    // All-time accuracy counters
+    newProgress.totalReviews = (progress.totalReviews ?? 0) + 1;
+    newProgress.correctReviews = (progress.correctReviews ?? 0) + (quality >= 4 ? 1 : 0);
+
     return newProgress;
+}
+
+/**
+ * Days a card is past its review date (0 if not yet due, negative if in future).
+ */
+export function daysOverdue(progress: CardProgress): number {
+    return -daysUntilReview(progress);
 }
 
 /**

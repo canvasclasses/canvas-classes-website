@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import BookBookmarkModel from '@/lib/models/BookBookmark';
-import { getUserId } from '@/lib/bookAuth';
+import { getUserIdFromRequest } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,7 +11,7 @@ const PRIVATE_NO_STORE = {
 
 // GET /api/v2/books/bookmarks?book_slug=x — fetch all bookmarks for a book
 export async function GET(req: NextRequest) {
-  const userId = await getUserId();
+  const userId = await getUserIdFromRequest(req);
   if (!userId) {
     return NextResponse.json(
       { success: false, error: 'Unauthenticated' },
@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
 
 // POST /api/v2/books/bookmarks — toggle a bookmark (add or remove)
 export async function POST(req: NextRequest) {
-  const userId = await getUserId();
+  const userId = await getUserIdFromRequest(req);
   if (!userId) {
     return NextResponse.json(
       { success: false, error: 'Unauthenticated' },
