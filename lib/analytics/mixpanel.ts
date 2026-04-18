@@ -1,16 +1,11 @@
-import mixpanelBrowser from 'mixpanel-browser';
-import Mixpanel from 'mixpanel';
-import { hasConsent } from './consent';
+// Browser-side Mixpanel wrapper. Intentionally does NOT import the Node
+// SDK — importing `mixpanel` (the Node package) from a file that reaches
+// the client bundle pulls `net` / `tls` / `https-proxy-agent` and breaks
+// the build. Server-side code must import from `./mixpanel.server`.
 
-const PII_KEYS = [
-  'email',
-  'phone',
-  'name',
-  'full_name',
-  'password',
-  'question_content',
-  'answer_text',
-];
+import mixpanelBrowser from 'mixpanel-browser';
+import { hasConsent } from './consent';
+import { sanitize } from './sanitize';
 
 let clientInitialized = false;
 let identified = false;
@@ -23,22 +18,6 @@ let identified = false;
 const preIdentifyQueue: Array<[string, Record<string, unknown>]> = [];
 const PRE_IDENTIFY_WINDOW_MS = 2500;
 let preIdentifyWindowClosed = false;
-
-function sanitize(props: Record<string, unknown> = {}) {
-  const clean: Record<string, unknown> = {};
-  for (const [k, v] of Object.entries(props)) {
-    if (PII_KEYS.includes(k.toLowerCase())) {
-      if (process.env.NODE_ENV !== 'production') {
-        console.warn(`[analytics] PII key "${k}" stripped from event props`);
-      }
-      continue;
-    }
-    clean[k] = v;
-  }
-  return clean;
-}
-
-// ── CLIENT ────────────────────────────────────────────────────────────────
 
 export function initMixpanel() {
   if (typeof window === 'undefined' || clientInitialized) return;
@@ -97,94 +76,4 @@ export function reset() {
   mixpanelBrowser.reset();
   identified = false;
   preIdentifyQueue.length = 0;
-}
-
-// ── SERVER ────────────────────────────────────────────────────────────────
-
-let serverClient: ReturnType<typeof Mixpanel.init> | null = null;
-function getServerClient() {
-  if (serverClient) return serverClient;
-  const token = process.env.MIXPANEL_TOKEN;
-  if (!token) return null;
-  // Strip "https://" from the public host var so the Node SDK (which expects a bare host)
-  // can share one env var with the browser SDK (which expects a full URL).
-  const apiHost = process.env.NEXT_PUBLIC_MIXPANEL_API_HOST?.replace(/^https?:\/\//, '');
-  serverClient = Mixpanel.init(token, {
-    ...(apiHost ? { host: apiHost } : {}),
-    geolocate: false, // server IP is not the user's IP — skip wrong geo data
-  });
-  return serverClient;
-}
-
-export async function trackServer(
-  userId: string,
-  event: string,
-  props: Record<string, unknown> = {}
-) {
-  const client = getServerClient();
-  if (!client) return;
-  const { hasServerConsent } = await import('./serverConsent');
-  const ok = await hasServerConsent(userId);
-  if (!ok) return;
-  return new Promise<void>((resolve) => {
-    client.track(
-      event,
-      { distinct_id: userId, ...sanitize(props) },
-      (err) => {
-        if (err) console.error('[mixpanel server track]', err);
-        resolve();
-      }
-    );
-  });
-}
-
-export async function peopleSetOnceServer(
-  userId: string,
-  traits: Record<string, unknown>
-) {
-  const client = getServerClient();
-  if (!client) return;
-  const { hasServerConsent } = await import('./serverConsent');
-  const ok = await hasServerConsent(userId);
-  if (!ok) return;
-  return new Promise<void>((resolve) => {
-    client.people.set_once(userId, sanitize(traits), (err) => {
-      if (err) console.error('[mixpanel server set_once]', err);
-      resolve();
-    });
-  });
-}
-
-export async function peopleSetServer(
-  userId: string,
-  traits: Record<string, unknown>
-) {
-  const client = getServerClient();
-  if (!client) return;
-  const { hasServerConsent } = await import('./serverConsent');
-  const ok = await hasServerConsent(userId);
-  if (!ok) return;
-  return new Promise<void>((resolve) => {
-    client.people.set(userId, sanitize(traits), (err) => {
-      if (err) console.error('[mixpanel server set]', err);
-      resolve();
-    });
-  });
-}
-
-export async function peopleIncrementServer(
-  userId: string,
-  props: Record<string, number>
-) {
-  const client = getServerClient();
-  if (!client) return;
-  const { hasServerConsent } = await import('./serverConsent');
-  const ok = await hasServerConsent(userId);
-  if (!ok) return;
-  return new Promise<void>((resolve) => {
-    client.people.increment(userId, props, (err) => {
-      if (err) console.error('[mixpanel server increment]', err);
-      resolve();
-    });
-  });
 }

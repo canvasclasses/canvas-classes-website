@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
 import { AuditLog } from '@/lib/models/AuditLog';
-import { trackServer } from '@/lib/analytics/mixpanel';
+import { trackServer } from '@/lib/analytics/mixpanel.server';
 import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 import { z } from 'zod';
 import { getAuthenticatedUser } from '@/lib/auth';

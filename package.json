@@ -63,6 +63,7 @@
     "remark-breaks": "^4.0.0",
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
+    "server-only": "^0.0.1",
     "string-similarity": "^4.0.4",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.0",

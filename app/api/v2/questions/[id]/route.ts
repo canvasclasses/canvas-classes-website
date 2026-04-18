@@ -7,7 +7,7 @@ import { AuditLog } from '@/lib/models/AuditLog';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { canEditQuestion, canDeleteQuestion } from '@/lib/rbac';
 import { isLocalhostDev } from '@/lib/bookAuth';
-import { trackServer } from '@/lib/analytics/mixpanel';
+import { trackServer } from '@/lib/analytics/mixpanel.server';
 
 // GET - Fetch single question by ID
 export async function GET(

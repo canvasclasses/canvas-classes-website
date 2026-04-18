@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 // The client you created from the Server-Side Auth instructions
 import { createClient } from '@/app/utils/supabase/server'
 import { sanitizeRedirect } from '@/lib/redirectValidation'
-import { trackServer, peopleSetOnceServer } from '@/lib/analytics/mixpanel'
+import { trackServer, peopleSetOnceServer } from '@/lib/analytics/mixpanel.server'
 
 export async function GET(request: Request) {
     const { searchParams, origin } = new URL(request.url)
