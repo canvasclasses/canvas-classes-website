@@ -44,9 +44,10 @@ export function initMixpanel() {
   if (typeof window === 'undefined' || clientInitialized) return;
   const token = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
   if (!token) return;
+  const apiHost = process.env.NEXT_PUBLIC_MIXPANEL_API_HOST; // e.g. 'https://api-eu.mixpanel.com' or 'https://api-in.mixpanel.com'
   mixpanelBrowser.init(token, {
+    ...(apiHost ? { api_host: apiHost } : {}),
     persistence: 'localStorage',
-    ignore_dnt: false,
     track_pageview: false,
   });
   clientInitialized = true;
@@ -105,7 +106,13 @@ function getServerClient() {
   if (serverClient) return serverClient;
   const token = process.env.MIXPANEL_TOKEN;
   if (!token) return null;
-  serverClient = Mixpanel.init(token);
+  // Strip "https://" from the public host var so the Node SDK (which expects a bare host)
+  // can share one env var with the browser SDK (which expects a full URL).
+  const apiHost = process.env.NEXT_PUBLIC_MIXPANEL_API_HOST?.replace(/^https?:\/\//, '');
+  serverClient = Mixpanel.init(token, {
+    ...(apiHost ? { host: apiHost } : {}),
+    geolocate: false, // server IP is not the user's IP — skip wrong geo data
+  });
   return serverClient;
 }
 

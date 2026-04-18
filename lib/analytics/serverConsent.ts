@@ -33,7 +33,9 @@ export async function hasServerConsent(userId: string): Promise<boolean> {
   }
 
   try {
-    const admin = createClient(url, serviceKey);
+    const admin = createClient(url, serviceKey, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
     const { data, error } = await admin.auth.admin.getUserById(userId);
     if (error || !data?.user) return true;
     const consent = data.user.user_metadata?.consent;
