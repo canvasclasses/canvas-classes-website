@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { track } from '@/lib/analytics/mixpanel';
 import { 
   Atom, 
   ChevronRight, 
@@ -461,7 +462,11 @@ const MoleculeVisualizer = ({ data, hideAngle = false, idSuffix = "main" }: { da
 
 // --- Main Application ---
 const App = () => {
-  const [activeTab, setActiveTab] = useState('trends'); 
+  useEffect(() => {
+    track('simulation_opened', { simulation_id: 'bond-angles', subject: 'inorganic' });
+  }, []);
+
+  const [activeTab, setActiveTab] = useState('trends');
   const [showInsight, setShowInsight] = useState(false);
   const [showTheory, setShowTheory] = useState(false);
   

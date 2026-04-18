@@ -96,3 +96,6 @@ html_output.txt
 /automation/biomolecules_batch*.js
 /automation/amines_batch*.js
 .next-preview
+
+# Sentry Config File
+.env.sentry-build-plugin

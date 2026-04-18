@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAuthenticatedUser } from '@/lib/auth';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
+import { trackServer } from '@/lib/analytics/mixpanel';
 
 // ── Flag types students can report ─────────────────────────────────────────
 const VALID_FLAG_TYPES = [
@@ -98,6 +99,11 @@ export async function POST(
       { _id: id },
       { $push: { flags: newFlag } }
     );
+
+    await trackServer(user.id, 'flag_submitted', {
+      question_id: id,
+      reason: type,
+    });
 
     return NextResponse.json({
       success: true,
