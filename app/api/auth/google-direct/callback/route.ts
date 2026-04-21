@@ -23,10 +23,12 @@ export async function GET(request: NextRequest) {
     }
 
     let next = '/';
+    let consentFromSignup = false;
     if (state) {
         try {
             const stateData = JSON.parse(decodeURIComponent(state));
             next = sanitizeRedirect(stateData.next, '/');
+            consentFromSignup = stateData.consent === true;
         } catch (e) {
             console.error('Failed to parse state:', e);
         }
@@ -108,6 +110,28 @@ export async function GET(request: NextRequest) {
 
         if (process.env.NODE_ENV === 'development') {
             console.log('✅ [Google Direct] Successfully signed in:', data.user?.email);
+        }
+
+        if (consentFromSignup && data.user) {
+            const { PRIVACY_VERSION, TERMS_VERSION } = await import('@/lib/legal/versions');
+            const meta = data.user.user_metadata ?? {};
+            const needsUpdate =
+                meta.privacy_version !== PRIVACY_VERSION ||
+                meta.terms_version !== TERMS_VERSION;
+
+            if (needsUpdate) {
+                const { error: metaError } = await supabase.auth.updateUser({
+                    data: {
+                        privacy_version: PRIVACY_VERSION,
+                        terms_version: TERMS_VERSION,
+                        consent_accepted_at: new Date().toISOString(),
+                    },
+                });
+                if (metaError) {
+                    console.error('Failed to write consent metadata:', metaError.message);
+                    // Non-fatal: ConsentGate will prompt them on the next page load.
+                }
+            }
         }
 
         return NextResponse.redirect(new URL(next, request.url));
