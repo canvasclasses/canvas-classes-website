@@ -63,5 +63,5 @@ export function ConsentGate() {
   }, [pathname]);
 
   if (!needsConsent) return null;
-  return <ConsentRefreshModal />;
+  return <ConsentRefreshModal onAccepted={() => setNeedsConsent(false)} />;
 }

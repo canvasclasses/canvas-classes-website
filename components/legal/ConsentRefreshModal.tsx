@@ -3,7 +3,11 @@
 import { useState, useTransition } from 'react';
 import { acceptConsent } from './acceptConsent';
 
-export function ConsentRefreshModal() {
+type Props = {
+  onAccepted?: () => void;
+};
+
+export function ConsentRefreshModal({ onAccepted }: Props = {}) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
@@ -13,8 +17,9 @@ export function ConsentRefreshModal() {
       const result = await acceptConsent();
       if (!result.ok) {
         setError(result.error);
+        return;
       }
-      // On success, the page revalidates and the gate re-renders without the modal.
+      onAccepted?.();
     });
   };
 
