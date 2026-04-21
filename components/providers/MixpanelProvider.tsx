@@ -8,7 +8,6 @@ import {
   track,
   reset,
 } from '@/lib/analytics/mixpanel';
-import { hasConsent } from '@/lib/analytics/consent';
 
 export function MixpanelProvider({ children }: { children: React.ReactNode }) {
   const bootedRef = useRef(false);
@@ -17,7 +16,7 @@ export function MixpanelProvider({ children }: { children: React.ReactNode }) {
     if (bootedRef.current) return;
     bootedRef.current = true;
 
-    if (hasConsent()) initMixpanel();
+    initMixpanel();
 
     const supabase = createClient();
     if (!supabase) return;
@@ -34,7 +33,7 @@ export function MixpanelProvider({ children }: { children: React.ReactNode }) {
 
     const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session?.user) {
-        if (hasConsent()) initMixpanel();
+        initMixpanel();
         identify(session.user.id, {
           email_domain: session.user.email?.split('@')[1],
         });

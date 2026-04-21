@@ -4,7 +4,6 @@
 // the build. Server-side code must import from `./mixpanel.server`.
 
 import mixpanelBrowser from 'mixpanel-browser';
-import { hasConsent } from './consent';
 import { sanitize } from './sanitize';
 
 let clientInitialized = false;
@@ -37,7 +36,7 @@ export function initMixpanel() {
 }
 
 export function identify(userId: string, traits: Record<string, unknown> = {}) {
-  if (!clientInitialized || !hasConsent()) return;
+  if (!clientInitialized) return;
   mixpanelBrowser.identify(userId);
   mixpanelBrowser.people.set(sanitize(traits));
   identified = true;
@@ -48,7 +47,7 @@ export function identify(userId: string, traits: Record<string, unknown> = {}) {
 }
 
 export function track(event: string, props: Record<string, unknown> = {}) {
-  if (!clientInitialized || !hasConsent()) return;
+  if (!clientInitialized) return;
   if (!identified) {
     if (!preIdentifyWindowClosed) preIdentifyQueue.push([event, props]);
     return;
@@ -57,17 +56,17 @@ export function track(event: string, props: Record<string, unknown> = {}) {
 }
 
 export function peopleSet(traits: Record<string, unknown>) {
-  if (!clientInitialized || !hasConsent()) return;
+  if (!clientInitialized) return;
   mixpanelBrowser.people.set(sanitize(traits));
 }
 
 export function peopleSetOnce(traits: Record<string, unknown>) {
-  if (!clientInitialized || !hasConsent()) return;
+  if (!clientInitialized) return;
   mixpanelBrowser.people.set_once(sanitize(traits));
 }
 
 export function peopleIncrement(props: Record<string, number>) {
-  if (!clientInitialized || !hasConsent()) return;
+  if (!clientInitialized) return;
   mixpanelBrowser.people.increment(props);
 }
 
