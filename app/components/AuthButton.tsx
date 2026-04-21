@@ -32,14 +32,10 @@ export async function AuthButton() {
 
     return user ? (
         <div className="flex items-center gap-4">
-            <Link
-                href="/account"
-                title="Account"
-                className="flex items-center gap-2 text-sm text-gray-300 bg-gray-800/50 px-3 py-1.5 rounded-full border border-gray-700/50 hover:bg-gray-800/80 hover:border-purple-500/40 transition-all"
-            >
+            <div className="flex items-center gap-2 text-sm text-gray-300 bg-gray-800/50 px-3 py-1.5 rounded-full border border-gray-700/50">
                 <User size={14} className="text-purple-400" />
                 <span className="hidden sm:inline text-xs">{user.email?.split('@')[0]}</span>
-            </Link>
+            </div>
             <form action={signOut}>
                 <button
                     className="p-2 text-gray-400 hover:text-white hover:bg-red-500/10 hover:border-red-500/50 border border-transparent rounded-lg transition-all"
