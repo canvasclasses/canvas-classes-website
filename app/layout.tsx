@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { MixpanelProvider } from '@/components/providers/MixpanelProvider';
 import { ClarityScript } from '@/components/analytics/ClarityScript';
-import { ConsentBanner } from '@/components/ConsentBanner';
+import { ConsentGate } from '@/components/legal/ConsentGate';
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -201,7 +201,7 @@ export default function RootLayout({
           {children}
           <ConditionalFooter />
         </MixpanelProvider>
-        <ConsentBanner />
+        <ConsentGate />
         <Analytics />
         <SpeedInsights />
       </body>
