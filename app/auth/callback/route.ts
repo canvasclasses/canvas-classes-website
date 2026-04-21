@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 // The client you created from the Server-Side Auth instructions
 import { createClient } from '@/app/utils/supabase/server'
 import { sanitizeRedirect } from '@/lib/redirectValidation'
+import { trackServer, peopleSetOnceServer } from '@/lib/analytics/mixpanel.server'
 
 export async function GET(request: Request) {
     const { searchParams, origin } = new URL(request.url)
@@ -16,6 +17,23 @@ export async function GET(request: Request) {
         }
         const { error } = await supabase.auth.exchangeCodeForSession(code)
         if (!error) {
+            const { data: { user } } = await supabase.auth.getUser()
+            if (user) {
+                const createdAt = new Date(user.created_at).getTime();
+                const isNewSignup = Date.now() - createdAt < 10 * 60 * 1000;
+                if (isNewSignup) {
+                    void Promise.all([
+                        trackServer(user.id, 'user_signed_up', {
+                            signup_method: user.app_metadata?.provider ?? 'email',
+                            email_domain: user.email?.split('@')[1],
+                        }),
+                        peopleSetOnceServer(user.id, {
+                            signup_date: user.created_at,
+                            email_domain: user.email?.split('@')[1],
+                        }),
+                    ]).catch((err) => console.error('[analytics signup]', err));
+                }
+            }
             const forwardedHost = request.headers.get('x-forwarded-host') // original origin before load balancer
             const isLocalEnv = process.env.NODE_ENV === 'development'
             if (isLocalEnv) {

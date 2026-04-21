@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { track } from '@/lib/analytics/mixpanel';
 import { FlaskConical, Beaker, ArrowRight, CheckCircle2, AlertCircle, RefreshCcw, ChevronRight } from 'lucide-react';
 
 // --- DATA STRUCTURES ---
@@ -56,6 +57,10 @@ const STAGES: { id: GroupStage; title: string; reagent: string; condition: strin
 
 
 export default function CationFlowchartSimulator() {
+    useEffect(() => {
+        track('simulation_opened', { simulation_id: 'cation-flowchart', subject: 'inorganic' });
+    }, []);
+
     const [selectedCation, setSelectedCation] = useState<CationData | null>(null);
     const [currentStageIndex, setCurrentStageIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);

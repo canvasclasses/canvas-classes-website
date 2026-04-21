@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import connectToDatabase from '@/lib/mongodb';
 import { UserProgress } from '@/lib/models/UserProgress';
+import { trackServer } from '@/lib/analytics/mixpanel.server';
 
 async function getUserId(req: NextRequest): Promise<string | null> {
     const authHeader = req.headers.get('Authorization');
@@ -62,6 +63,13 @@ export async function POST(req: NextRequest) {
 
         progress.updated_at = new Date();
         await progress.save();
+
+        await trackServer(userId, 'practice_session_started', {
+            chapter_id,
+            mode: config?.difficulty_mix ?? config?.mix ?? 'guided',
+            question_count: question_ids.length,
+            difficulty_range: config?.difficulty_mix ?? config?.difficulty_range,
+        });
 
         return NextResponse.json({ success: true });
     } catch (err) {

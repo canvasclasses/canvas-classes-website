@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from 'react';
+import { track } from '@/lib/analytics/mixpanel';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { Chapter, Question } from '../components/types';
@@ -65,6 +66,14 @@ export default function ChapterPracticePage({ chapter, questions, allChapters, e
 
     const color = CAT_COLOR[chapter.category ?? 'Physical'] ?? '#a78bfa';
     const qCount = questions.length;
+
+    useEffect(() => {
+        if (!chapter.id) return;
+        track('chapter_opened', {
+            chapter_id: chapter.id,
+            source_page: typeof document !== 'undefined' ? document.referrer : undefined,
+        });
+    }, [chapter.id]);
 
     // Helper to update mode and URL together — preserves examBoard param
     const updateMode = useCallback((newMode: Mode) => {

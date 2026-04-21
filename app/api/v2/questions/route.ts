@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
 import { AuditLog } from '@/lib/models/AuditLog';
+import { trackServer } from '@/lib/analytics/mixpanel.server';
 import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 import { z } from 'zod';
 import { getAuthenticatedUser } from '@/lib/auth';
@@ -428,6 +429,12 @@ export async function POST(request: NextRequest) {
     } catch (auditErr) {
       console.warn('Audit log creation failed (non-critical):', auditErr);
     }
+
+    await trackServer(user?.id ?? 'local_dev', 'admin_action', {
+      type: 'create',
+      entity: 'question',
+      entity_id: questionDoc._id,
+    });
 
     return NextResponse.json({
       success: true,

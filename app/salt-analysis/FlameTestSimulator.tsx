@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Flame, TestTube, RotateCcw, Glasses, ChevronDown } from 'lucide-react';
+import { track } from '@/lib/analytics/mixpanel';
 import AtomicProcessVisualizer from './AtomicProcessVisualizer';
 
 const FLAME_DATA = [
@@ -99,6 +100,10 @@ const FLAME_DATA = [
 ];
 
 export default function FlameTestSimulator() {
+    useEffect(() => {
+        track('simulation_opened', { simulation_id: 'flame-test', subject: 'inorganic' });
+    }, []);
+
     const [selectedIon, setSelectedIon] = useState<string | null>(null);
     const [isBurning, setIsBurning] = useState(false);
     const [viewMode, setViewMode] = useState<'naked' | 'blue-glass'>('naked');

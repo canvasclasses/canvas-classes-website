@@ -115,6 +115,14 @@ export default function Footer() {
                 {/* Bottom Bar */}
                 <div className="mt-10 sm:mt-16 pt-6 sm:pt-8 border-t border-white/8 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-xs sm:text-sm text-zinc-500">
                     <p>© {currentYear} Canvas Classes by Paaras Sir. All rights reserved.</p>
+                    <div className="flex items-center gap-4">
+                        <Link href="/privacy" className="hover:text-zinc-300 transition-colors">
+                            Privacy Policy
+                        </Link>
+                        <Link href="/terms" className="hover:text-zinc-300 transition-colors">
+                            Terms &amp; Conditions
+                        </Link>
+                    </div>
                     <p>Made with <span className="text-red-500/80">❤️</span> for Students</p>
                 </div>
             </div>

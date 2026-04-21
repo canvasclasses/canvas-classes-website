@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Beaker, FlaskConical, Wind, CheckCircle2, RefreshCcw, ArrowRight, Flame, Droplets } from 'lucide-react';
+import { track } from '@/lib/analytics/mixpanel';
 
 // --- ANION DATA FOR SIMULATOR ---
 
@@ -165,6 +166,10 @@ const STAGES = [
 ];
 
 export default function AnionFlowchartSimulator() {
+    useEffect(() => {
+        track('simulation_opened', { simulation_id: 'anion-flowchart', subject: 'inorganic' });
+    }, []);
+
     const [selectedAnion, setSelectedAnion] = useState<AnionData | null>(null);
     const [currentStageIndex, setCurrentStageIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
