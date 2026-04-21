@@ -66,7 +66,7 @@ export default function Footer() {
                                 <Youtube size={18} className="hidden sm:block" />
                             </a>
                             <a
-                                href="mailto:paaras.thakur07@gmail.com"
+                                href="mailto:support@canvasclasses.in"
                                 className="p-2 sm:p-2.5 rounded-xl bg-white/3 text-zinc-400 hover:text-white hover:bg-white/8 hover:border-white/12 border border-white/5 transition-all"
                                 aria-label="Email"
                             >

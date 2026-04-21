@@ -140,7 +140,7 @@ export default function CollegePredictorPage() {
         <header className="text-center mb-8">
           <div className="flex flex-wrap items-center justify-center gap-2 mb-5">
             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-medium uppercase tracking-wider">
-              Free · JEE Main 2025
+              Free · JEE Main 2026
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-wider">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
