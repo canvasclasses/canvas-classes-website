@@ -1,23 +1,11 @@
 'use client';
 
 import Script from 'next/script';
-import { useEffect, useState } from 'react';
-import { hasConsent } from '@/lib/analytics/consent';
 
 export function ClarityScript() {
   const id = process.env.NEXT_PUBLIC_CLARITY_ID;
-  const [consented, setConsented] = useState(false);
 
-  useEffect(() => {
-    setConsented(hasConsent());
-    const interval = setInterval(() => {
-      const c = hasConsent();
-      setConsented((prev) => (prev === c ? prev : c));
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
-
-  if (!id || !consented) return null;
+  if (!id) return null;
 
   return (
     <Script id="clarity-script" strategy="afterInteractive">

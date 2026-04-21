@@ -8,6 +8,7 @@ import { createClient } from '../utils/supabase/client'
 import { sanitizeRedirect } from '@/lib/redirectValidation'
 import Link from 'next/link'
 import DnsBlockedBanner from '../components/DnsBlockedBanner'
+import { PRIVACY_VERSION, TERMS_VERSION } from '@/lib/legal/versions'
 
 function LoginContent() {
     const [isLogin, setIsLogin] = useState(true)
@@ -18,13 +19,14 @@ function LoginContent() {
     const [message, setMessage] = useState<{ text: string; type: 'error' | 'success' } | null>(null)
     const [showDnsBanner, setShowDnsBanner] = useState(false)
     const [failureCount, setFailureCount] = useState(0)
+    const [consentChecked, setConsentChecked] = useState(false)
 
     const handleGoogleLogin = async () => {
         setIsGoogleLoading(true)
         setMessage(null)
-        
-        // Redirect to our Google OAuth flow (callback on our domain, not Supabase)
-        window.location.href = `/api/auth/google-direct/start?next=${encodeURIComponent(nextPath)}`
+
+        const consentParam = !isLogin ? '&consent=1' : ''
+        window.location.href = `/api/auth/google-direct/start?next=${encodeURIComponent(nextPath)}${consentParam}`
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,6 +68,13 @@ function LoginContent() {
                 const { error } = await supabase.auth.signUp({
                     email,
                     password,
+                    options: {
+                        data: {
+                            privacy_version: PRIVACY_VERSION,
+                            terms_version: TERMS_VERSION,
+                            consent_accepted_at: new Date().toISOString(),
+                        },
+                    },
                 })
 
                 if (error) {
@@ -200,6 +209,38 @@ function LoginContent() {
                                 </motion.div>
                             </AnimatePresence>
 
+                            {!isLogin && (
+                                <label className="flex items-start gap-2 text-xs text-zinc-400 select-none cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={consentChecked}
+                                        onChange={(e) => setConsentChecked(e.target.checked)}
+                                        className="mt-0.5 accent-orange-500 cursor-pointer"
+                                    />
+                                    <span>
+                                        I have read and agree to the{' '}
+                                        <Link
+                                            href="/privacy"
+                                            target="_blank"
+                                            rel="noopener"
+                                            className="underline text-zinc-300 hover:text-white"
+                                        >
+                                            Privacy Policy
+                                        </Link>{' '}
+                                        and{' '}
+                                        <Link
+                                            href="/terms"
+                                            target="_blank"
+                                            rel="noopener"
+                                            className="underline text-zinc-300 hover:text-white"
+                                        >
+                                            Terms &amp; Conditions
+                                        </Link>
+                                        .
+                                    </span>
+                                </label>
+                            )}
+
                             {/* Messages */}
                             <AnimatePresence>
                                 {message && (
@@ -216,7 +257,7 @@ function LoginContent() {
 
                             <button
                                 type="submit"
-                                disabled={isLoading || isGoogleLoading}
+                                disabled={isLoading || isGoogleLoading || (!isLogin && !consentChecked)}
                                 className="w-full py-3 bg-white text-black font-medium text-sm rounded-xl hover:bg-slate-200 active:scale-[0.98] transition-all disabled:opacity-40 cursor-pointer"
                             >
                                 {isLoading ? (
@@ -244,7 +285,7 @@ function LoginContent() {
                         {/* Google - elevated visibility */}
                         <motion.button
                             onClick={handleGoogleLogin}
-                            disabled={isGoogleLoading || isLoading}
+                            disabled={isGoogleLoading || isLoading || (!isLogin && !consentChecked)}
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}
                             className="w-full py-3 px-4 bg-black border border-white/20 rounded-xl text-white font-medium text-sm hover:border-white/30 transition-all disabled:opacity-40 flex items-center justify-center gap-3 cursor-pointer shadow-lg shadow-black/20"

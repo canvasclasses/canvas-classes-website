@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAuthenticatedUser } from '@/lib/auth';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
-import { trackServer } from '@/lib/analytics/mixpanel';
+import { trackServer } from '@/lib/analytics/mixpanel.server';
 
 // ── Flag types students can report ─────────────────────────────────────────
 const VALID_FLAG_TYPES = [

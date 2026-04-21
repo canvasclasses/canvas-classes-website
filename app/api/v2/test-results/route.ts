@@ -7,7 +7,7 @@ import {
     trackServer,
     peopleSetServer,
     peopleIncrementServer,
-} from '@/lib/analytics/mixpanel';
+} from '@/lib/analytics/mixpanel.server';
 
 async function getUserId(req: NextRequest): Promise<string | null> {
     const authHeader = req.headers.get('Authorization');

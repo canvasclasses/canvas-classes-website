@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import connectToDatabase from '@/lib/mongodb';
 import { UserProgress } from '@/lib/models/UserProgress';
-import { trackServer } from '@/lib/analytics/mixpanel';
+import { trackServer } from '@/lib/analytics/mixpanel.server';
 
 async function getUserId(req: NextRequest): Promise<string | null> {
     const authHeader = req.headers.get('Authorization');

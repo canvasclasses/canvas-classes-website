@@ -17,7 +17,11 @@ export async function GET(request: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || request.nextUrl.origin;
     const redirectUri = `${baseUrl}/api/auth/google-direct/callback`;
 
-    const state = encodeURIComponent(JSON.stringify({ next }));
+    const consent = searchParams.get('consent') === '1';
+
+    const state = encodeURIComponent(
+        JSON.stringify({ next, consent }),
+    );
 
     const googleAuthUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth');
     googleAuthUrl.searchParams.set('client_id', clientId);
