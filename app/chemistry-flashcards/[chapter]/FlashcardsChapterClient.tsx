@@ -21,6 +21,7 @@ import { FlashcardItem } from '../../lib/flashcardsData';
 import { useCardProgress } from '../../hooks/useCardProgress';
 import { QualityRating } from '../../lib/spacedRepetition';
 import ReactMarkdown from 'react-markdown';
+import { flashcardMarkdownComponents } from '@/app/lib/flashcardMarkdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
@@ -361,6 +362,7 @@ export default function FlashcardsChapterClient({
                                                         <ReactMarkdown
                                                             remarkPlugins={[remarkMath]}
                                                             rehypePlugins={[rehypeKatex]}
+                                                            components={flashcardMarkdownComponents}
                                                         >
                                                             {isFlipped ? currentCard.answer : currentCard.question}
                                                         </ReactMarkdown>

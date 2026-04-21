@@ -220,10 +220,17 @@ const SimulationBlockSchema = BaseBlockSchema.extend({
 const ReasoningPromptBlockSchema = BaseBlockSchema.extend({
   type: z.literal('reasoning_prompt'),
   reasoning_type: z.enum(['logical', 'spatial', 'quantitative', 'analogical']),
-  prompt: z.string().min(1),
+  prompt: z.string(),
   options: z.array(z.string()).optional(),
-  reveal: z.string().min(1),
+  reveal: z.string(),
   difficulty_level: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
+});
+
+const CuriosityPromptBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('curiosity_prompt'),
+  prompt: z.string(),
+  hint: z.string().optional(),
+  reveal: z.string().optional(),
 });
 
 // ─── Child block union (excludes section to prevent nesting) ─────────────────
@@ -249,6 +256,7 @@ const ChildContentBlockSchema = z.discriminatedUnion('type', [
   WorkedExampleBlockSchema,
   SimulationBlockSchema,
   ReasoningPromptBlockSchema,
+  CuriosityPromptBlockSchema,
 ]);
 
 const SectionBlockSchema = BaseBlockSchema.extend({
@@ -282,6 +290,7 @@ export const ContentBlockSchema = z.discriminatedUnion('type', [
   SimulationBlockSchema,
   SectionBlockSchema,
   ReasoningPromptBlockSchema,
+  CuriosityPromptBlockSchema,
 ]);
 
 export const ContentBlocksArraySchema = z.array(ContentBlockSchema);

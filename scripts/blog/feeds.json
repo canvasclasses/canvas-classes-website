@@ -1,0 +1,20 @@
+{
+  "_comment": "RSS feeds the daily cron pulls from. Add/remove URLs freely — source_name is shown on RSS cards in the admin panel. NTA/PIB/Careers360 feeds were removed because their URLs returned 403/404 on first run; add them back with working URLs if you find them.",
+  "feeds": [
+    {
+      "name": "Indian Express Education",
+      "url": "https://indianexpress.com/section/education/feed/",
+      "categories": ["education", "news"]
+    },
+    {
+      "name": "The Hindu Education",
+      "url": "https://www.thehindu.com/education/feeder/default.rss",
+      "categories": ["education", "news"]
+    },
+    {
+      "name": "Times of India Education",
+      "url": "https://timesofindia.indiatimes.com/rssfeeds/913168846.cms",
+      "categories": ["education", "news"]
+    }
+  ]
+}

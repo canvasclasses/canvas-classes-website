@@ -107,7 +107,6 @@ const jeeNeetMenu: MegaMenuDef = {
       links: [
         { label: 'Top 50 Concepts', href: '/top-50-concepts' },
         { label: '2 Minute Chemistry', href: '/2-minute-chemistry' },
-        { label: 'Quick Recap', href: '/quick-recap' },
       ],
     },
   ],
@@ -118,6 +117,13 @@ const studyLabMenu: MegaMenuDef = {
   id: 'study-lab',
   label: 'Study Lab',
   anchor: 'right',
+  width: 'w-[860px]',
+  featured: {
+    label: 'BITSAT 2026 Master Plan',
+    tagline: '30-day Chemistry plan built from real Session 1 data. Phased revision with every Canvas resource mapped to each day.',
+    href: '/bitsat-chemistry-revision',
+    cta: 'Open the Plan',
+  },
   columns: [
     {
       heading: 'Explore',
@@ -125,7 +131,6 @@ const studyLabMenu: MegaMenuDef = {
         { label: 'Interactive Periodic Table', href: '/interactive-periodic-table' },
         { label: 'Periodic Trends', href: '/periodic-trends' },
         { label: 'Salt Analysis Simulator', href: '/salt-analysis' },
-        { label: 'ChemiHex', href: '/chemihex' },
       ],
     },
     {
@@ -182,6 +187,10 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
   if (pathname?.startsWith('/the-crucible')) return null;
   if (pathname?.startsWith('/books')) return null;
 
+  // Hide navbar inside book reader pages (class-X/bookSlug/pageSlug)
+  // but NOT on the grade landing pages themselves (class-X/)
+  if (/^\/class-\d+\/[^/]+\/[^/]+/.test(pathname ?? '')) return null;
+
   return (
     <nav
       className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-[1280px] transition-all duration-300 ${
@@ -213,6 +222,12 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
               onMouseLeave={() => setActiveDropdown(null)}
             />
           ))}
+          <Link
+            href="/college-predictor"
+            className="px-3.5 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap text-orange-400 hover:text-orange-300 hover:bg-orange-500/[0.06]"
+          >
+            College Predictor
+          </Link>
           <NavLink
             href="/blog"
             label="Blog"
@@ -251,6 +266,13 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
                   onLinkClick={() => setMobileMenuOpen(false)}
                 />
               ))}
+              <Link
+                href="/college-predictor"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-4 py-3 text-sm font-medium text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-xl transition-colors"
+              >
+                College Predictor
+              </Link>
               <Link
                 href="/blog"
                 onClick={() => setMobileMenuOpen(false)}

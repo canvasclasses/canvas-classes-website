@@ -46,9 +46,11 @@ export async function GET(req: NextRequest, { params }: Params) {
 
     if (chapterParam) {
       const chapterNum = parseInt(chapterParam, 10);
-      if (Number.isNaN(chapterNum)) {
+      // Bound the chapter number — no real book has more than 30 chapters,
+      // and negative / absurdly large values are always bad input.
+      if (Number.isNaN(chapterNum) || chapterNum < 0 || chapterNum > 100) {
         return NextResponse.json(
-          { success: false, error: 'chapter must be an integer' },
+          { success: false, error: 'chapter must be an integer between 0 and 100' },
           { status: 400 }
         );
       }
@@ -77,9 +79,12 @@ export async function GET(req: NextRequest, { params }: Params) {
       filter.published = true;
     }
 
+    // Hard ceiling on list size — every .find() that returns an array
+    // must be bounded per CLAUDE.md §8.6.
     const pages = await BookPageModel.find(filter)
       .sort({ chapter_number: 1, page_number: 1 })
       .select('_id slug title chapter_number page_number published reading_time_min content_types')
+      .limit(2000)
       .lean();
 
     return NextResponse.json({ success: true, data: pages, total: pages.length });
@@ -141,6 +146,16 @@ export async function POST(req: NextRequest, { params }: Params) {
       blocks = validated.blocks as ContentBlock[];
     }
 
+    // Validate hinglish_blocks — must be TextBlock[] (type: 'text', id, markdown)
+    const hinglishBlocks = Array.isArray(body.hinglish_blocks)
+      ? (body.hinglish_blocks as unknown[]).filter(
+          (b): b is Record<string, unknown> =>
+            typeof b === 'object' && b !== null &&
+            (b as Record<string, unknown>).type === 'text' &&
+            typeof (b as Record<string, unknown>).markdown === 'string'
+        )
+      : [];
+
     const page = await BookPageModel.create({
       _id: pageId,
       book_id: String(book._id),
@@ -150,19 +165,23 @@ export async function POST(req: NextRequest, { params }: Params) {
       title: body.title,
       subtitle: body.subtitle || undefined,
       blocks,
+      hinglish_blocks: hinglishBlocks,
       tags: body.tags || [],
       published: false,
       reading_time_min: computeReadingTime(blocks),
       content_types: computeContentTypes(blocks),
     });
 
-    // Add page_id to the chapter in the book document
-    const chapterIndex = book.chapters.findIndex(
-      (c) => c.number === body.chapter_number
-    );
-    if (chapterIndex !== -1) {
-      book.chapters[chapterIndex].page_ids.push(pageId);
-      await book.save();
+    // Add page_id to the chapter's page_ids array. Use a targeted $push with
+    // a positional filter so two concurrent page-creates in the same chapter
+    // can't clobber each other (the old book.save() read-modify-write pattern
+    // dropped writes under contention — CLAUDE.md §8.6).
+    const chapterExists = book.chapters.some((c) => c.number === body.chapter_number);
+    if (chapterExists) {
+      await BookModel.updateOne(
+        { _id: book._id, 'chapters.number': body.chapter_number },
+        { $push: { 'chapters.$.page_ids': pageId } }
+      );
     }
 
     return NextResponse.json({ success: true, data: page }, { status: 201 });

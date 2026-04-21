@@ -1,0 +1,3881 @@
+[
+  {
+    "flashcard_id": "COORD-001",
+    "_id": "c09831e1-8626-42f1-bb2e-fb86eca4cc12",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Werner's Theory & Double Salts",
+      "order": 1
+    },
+    "question": "In Werner's theory, what do primary and secondary valencies correspond to in modern terminology?",
+    "answer": "Primary valency = oxidation number (ionisable, satisfied by negative ions). Secondary valency = coordination number (non-ionisable, satisfied by neutral or negative ligands, fixed for a given metal and has directional/geometric character).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-002",
+    "_id": "0a8a44d4-7a1e-4abe-8be6-1c63305eb8b4",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Werner's Theory & Double Salts",
+      "order": 1
+    },
+    "question": "Complete Werner's data table for $CoCl_3 \\cdot xNH_3$: match the formula to its colour, secondary valency satisfaction and electrolyte type.",
+    "answer": "Yellow $[Co(NH_3)_6]Cl_3$ (1:3 electrolyte, 3 ionisable $Cl^-$); Purple $[Co(NH_3)_5Cl]Cl_2$ (1:2, 2 ionisable $Cl^-$); Green trans-$[Co(NH_3)_4Cl_2]Cl$ (1:1); Violet cis-$[Co(NH_3)_4Cl_2]Cl$ (1:1).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-003",
+    "_id": "69411339-9e2a-4202-a7c9-7d5c216d20bd",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Werner's Theory & Double Salts",
+      "order": 1
+    },
+    "question": "What is the fundamental difference between a double salt and a coordination complex?",
+    "answer": "A double salt (e.g. Mohr's salt $FeSO_4(NH_4)_2SO_4\\cdot 6H_2O$, carnallite $KCl\\cdot MgCl_2\\cdot 6H_2O$) dissociates completely into its simple ions in water. A coordination complex (e.g. $K_4[Fe(CN)_6]$) keeps the complex ion intact and does not give tests for its constituent ions ($Fe^{2+}, CN^-$).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-004",
+    "_id": "521610a1-4ef0-4a6f-90c7-847b06475e72",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Werner's Theory & Double Salts",
+      "order": 1
+    },
+    "question": "Assign the secondary valency of the metal in: (i) $PdCl_2\\cdot 4NH_3$, (ii) $NiCl_2\\cdot 6H_2O$, (iii) $PtCl_4\\cdot 2HCl$, (iv) $CoCl_3\\cdot 4NH_3$, (v) $PtCl_2\\cdot 2NH_3$.",
+    "answer": "(i) 4 — $[Pd(NH_3)_4]Cl_2$; (ii) 6 — $[Ni(H_2O)_6]Cl_2$; (iii) 6 — $H_2[PtCl_6]$; (iv) 6 — $[Co(NH_3)_4Cl_2]Cl$; (v) 4 — $[Pt(NH_3)_2Cl_2]$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-005",
+    "_id": "5d5666ae-93d1-4710-958d-16cd4201e067",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Werner's Theory & Double Salts",
+      "order": 1
+    },
+    "question": "A solution of $CoCl_3\\cdot 5NH_3$ gives 2 mol of AgCl per mol with excess $AgNO_3$. Write its Werner formulation and predict its conductivity.",
+    "answer": "$[Co(NH_3)_5Cl]Cl_2$ — the two $Cl^-$ outside the sphere give AgCl. It is a 1:2 electrolyte (gives 3 ions in solution: 1 complex cation + 2 $Cl^-$).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-006",
+    "_id": "ddf87e89-504c-4b11-896d-03b8e1f39055",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Werner's Theory & Double Salts",
+      "order": 1
+    },
+    "question": "Arrange these complexes in increasing order of molar conductivity: $[Co(NH_3)_3Cl_3]$, $[Co(NH_3)_4Cl_2]Cl$, $[Co(NH_3)_5Cl]Cl_2$, $[Co(NH_3)_6]Cl_3$.",
+    "answer": "$[Co(NH_3)_3Cl_3]$ (non-electrolyte, 0 ions) $<$ $[Co(NH_3)_4Cl_2]Cl$ (1:1, 2 ions) $<$ $[Co(NH_3)_5Cl]Cl_2$ (1:2, 3 ions) $<$ $[Co(NH_3)_6]Cl_3$ (1:3, 4 ions). Conductivity rises with the number of ions produced.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-007",
+    "_id": "33341b83-6ba4-47ab-8760-63057d3898c4",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Werner's Theory & Double Salts",
+      "order": 1
+    },
+    "question": "Which Werner postulate explains why $[Co(NH_3)_4Cl_2]Cl$ exists as two distinct coloured isomers (violet and green)?",
+    "answer": "The postulate that secondary valencies have fixed directional arrangements in space (i.e. a definite coordination polyhedron). An octahedral $MA_4B_2$ geometry admits two spatial arrangements — cis (violet) and trans (green) — proving that bonding is directional.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-008",
+    "_id": "16ea2209-6305-44b2-80db-12b3e5aaafcf",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Definitions & Terminology",
+      "order": 2
+    },
+    "question": "Define \"coordination entity\" and give the central atom for $[Fe(CN)_6]^{4-}$ and $[Co(NH_3)_6]^{3+}$.",
+    "answer": "A coordination entity is a central metal atom/ion bonded to a fixed number of ions or molecules. Central atom: $Fe^{2+}$ in $[Fe(CN)_6]^{4-}$; $Co^{3+}$ in $[Co(NH_3)_6]^{3+}$.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-009",
+    "_id": "dd0e73e2-7548-4f35-9af1-9d9c90093c7d",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Definitions & Terminology",
+      "order": 2
+    },
+    "question": "What is the coordination sphere and what are counter ions? Illustrate with $K_4[Fe(CN)_6]$.",
+    "answer": "The coordination sphere is the central atom plus its attached ligands, written inside square brackets. Counter ions are ions outside the brackets. In $K_4[Fe(CN)_6]$: coordination sphere $= [Fe(CN)_6]^{4-}$; counter ions $= 4 K^+$.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-010",
+    "_id": "ad3b3a68-c8b9-4b9d-8011-7fb718bf8658",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Definitions & Terminology",
+      "order": 2
+    },
+    "question": "Differentiate homoleptic and heteroleptic complexes with examples.",
+    "answer": "Homoleptic — metal bound to only one type of donor ligand (e.g. $[Co(NH_3)_6]^{3+}$, $[Ni(CO)_4]$). Heteroleptic — metal bound to more than one type of donor ligand (e.g. $[Co(NH_3)_4Cl_2]^+$, $[Pt(NH_3)_2Cl_2]$).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-011",
+    "_id": "9109b85e-a887-4495-97fc-d1f0bbde54f7",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Definitions & Terminology",
+      "order": 2
+    },
+    "question": "How is coordination number defined for the central metal? Do $\\pi$-bonds count?",
+    "answer": "Coordination number = number of $\\sigma$-bonds formed by ligand donor atoms to the metal. Only $\\sigma$-bonds are counted; any $\\pi$-bonds (as in metal carbonyls) do not add to the coordination number.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-012",
+    "_id": "b35073a4-839a-4cbc-bfd4-f817cf33997a",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Definitions & Terminology",
+      "order": 2
+    },
+    "question": "List the five common coordination polyhedra with a sample coordination number each.",
+    "answer": "Tetrahedral (CN 4), Square planar (CN 4), Trigonal bipyramidal (CN 5), Square pyramidal (CN 5), Octahedral (CN 6).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-013",
+    "_id": "01e3fb27-5fdf-4009-91dc-be061a7ff6e3",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Definitions & Terminology",
+      "order": 2
+    },
+    "question": "Why are central metal atoms in coordination entities called Lewis acids?",
+    "answer": "They accept lone pairs from ligand donor atoms (Lewis bases) to form coordinate covalent bonds. In e.g. $[Ni(H_2O)_6]^{2+}$, $Ni^{2+}$ accepts six lone pairs from six water molecules.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-014",
+    "_id": "abfbf56e-605a-4fb0-838c-e86cdc2ebaaf",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Definitions & Terminology",
+      "order": 2
+    },
+    "question": "Find the coordination number of the central atom in (i) $[Co(en)_3]^{3+}$, (ii) $[Fe(C_2O_4)_3]^{3-}$, (iii) $[Ni(DMG)_2]$.",
+    "answer": "(i) 6 — en is bidentate, $3\\times 2$. (ii) 6 — oxalate is bidentate, $3\\times 2$. (iii) 4 — DMG is bidentate, $2\\times 2$ with square-planar geometry.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-015",
+    "_id": "fa901452-943e-463d-bea8-6090e39bc118",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ligands & Denticity",
+      "order": 3
+    },
+    "question": "Define unidentate, bidentate, and polydentate ligands with one example each.",
+    "answer": "Unidentate: one donor atom (e.g. $NH_3$, $H_2O$, $Cl^-$). Bidentate: two donor atoms (e.g. ethylenediamine $en$, oxalate $C_2O_4^{2-}$). Polydentate: multiple donors (e.g. EDTA^{4-}, hexadentate).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-016",
+    "_id": "2b97783c-487d-4409-9f76-3a20b8b5f0e2",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ligands & Denticity",
+      "order": 3
+    },
+    "question": "What is the denticity and charge of the EDTA ligand, and what donor atoms does it use?",
+    "answer": "Denticity = 6 (hexadentate). Charge = $-4$ (ethylenediaminetetraacetate, EDTA^{4-}). Donor atoms: 2 N (amine) and 4 O (from four deprotonated carboxylate groups).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-017",
+    "_id": "8ddd894e-df29-42f9-a626-9174ea6fa1ee",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ligands & Denticity",
+      "order": 3
+    },
+    "question": "Write the IUPAC names (ligand forms) of the neutral ligands: $H_2O$, $NH_3$, $CO$, $NO$.",
+    "answer": "$H_2O$ = aqua; $NH_3$ = ammine (double m); $CO$ = carbonyl; $NO$ = nitrosyl.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-018",
+    "_id": "0db551fc-25ab-4561-9d85-3ccc9a190b2e",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ligands & Denticity",
+      "order": 3
+    },
+    "question": "Give the 2004 IUPAC names of the common anionic ligands: $Cl^-$, $Br^-$, $F^-$, $CN^-$, $OH^-$, $O^{2-}$, $C_2O_4^{2-}$.",
+    "answer": "$Cl^-$ = chlorido; $Br^-$ = bromido; $F^-$ = fluorido; $CN^-$ = cyanido (classical: cyano); $OH^-$ = hydroxido; $O^{2-}$ = oxido; $C_2O_4^{2-}$ = oxalato.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-019",
+    "_id": "2c81ef54-2391-4eec-bf39-26957e88dbe4",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ligands & Denticity",
+      "order": 3
+    },
+    "question": "Name three common chelating ligands used in laboratory analysis and give their denticity.",
+    "answer": "Ethylenediamine (en) — bidentate; oxalate ($C_2O_4^{2-}$) — bidentate; dimethylglyoxime (DMG) — bidentate; EDTA$^{4-}$ — hexadentate; $\\alpha$-nitroso-$\\beta$-naphthol — bidentate.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-020",
+    "_id": "cccd47ed-71e1-45f7-b135-9ffb9d84021a",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ligands & Denticity",
+      "order": 3
+    },
+    "question": "Draw/describe the structure of the EDTA ligand and explain why it wraps around a metal ion.",
+    "answer": "EDTA is $(HOOC-CH_2)_2N-CH_2CH_2-N(CH_2-COOH)_2$. On deprotonation it becomes EDTA$^{4-}$ with 2 amine N lone pairs and 4 carboxylate O$^-$ lone pairs — six donors that wrap around one $M^{n+}$ to form a very stable 1:1 octahedral chelate.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-021",
+    "_id": "2f53555d-6a26-49eb-984f-5087386808b9",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ligands & Denticity",
+      "order": 3
+    },
+    "question": "Why are chelate complexes generally more stable than analogous complexes with monodentate ligands?",
+    "answer": "Chelation leads to a large increase in entropy during complex formation ($\\Delta S > 0$): e.g. $M(H_2O)_6^{n+} + 3\\,en \\to [M(en)_3]^{n+} + 6H_2O$ releases 6 particles but consumes only 3, so $\\Delta G = \\Delta H - T\\Delta S$ becomes more negative. This is the chelate effect.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-022",
+    "_id": "6d95a37d-d666-456e-9687-7b438170ba11",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ambidentate Ligands & Chelate Effect",
+      "order": 4
+    },
+    "question": "What is an ambidentate ligand? Name the four important examples.",
+    "answer": "A monodentate ligand that has more than one donor atom and can bind via either. Examples: $NO_2^-$ (nitrito-N via N vs nitrito-O via O), $SCN^-$ (thiocyanato-S vs isothiocyanato-N), $CN^-$ (cyanido-C vs isocyanido-N).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-023",
+    "_id": "e1f14045-e823-439a-bd0e-852b748b633c",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ambidentate Ligands & Chelate Effect",
+      "order": 4
+    },
+    "question": "Distinguish nitro and nitrito linkage in IUPAC 2004 naming.",
+    "answer": "$-NO_2$ bound through N is written nitrito-$\\kappa$N (older: nitro-). Bound through O it is nitrito-$\\kappa$O (older: nitrito-). In the latest IUPAC form both are called nitrito with the donor atom specified by $\\kappa$N or $\\kappa$O.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-024",
+    "_id": "690efd1c-ecbd-4d44-87c9-b17f50cf6083",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ambidentate Ligands & Chelate Effect",
+      "order": 4
+    },
+    "question": "Jørgensen prepared two complexes of formula $[Co(NH_3)_5(NO_2)]Cl_2$. Identify them, their colours, and the type of isomerism.",
+    "answer": "Red form: $[Co(NH_3)_5(NO_2-\\kappa N)]Cl_2$ — bound through N. Yellow form: $[Co(NH_3)_5(ONO-\\kappa O)]Cl_2$ — bound through O. This is linkage isomerism (arising from an ambidentate ligand).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-025",
+    "_id": "8d921ca9-4ab2-4977-a412-11126dc5ac49",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ambidentate Ligands & Chelate Effect",
+      "order": 4
+    },
+    "question": "Define the chelate effect in one sentence, and state whether it is enthalpy- or entropy-driven.",
+    "answer": "The chelate effect is the extra thermodynamic stability of a complex with a chelating (multidentate) ligand relative to an otherwise identical complex with analogous monodentate ligands. It is primarily entropy-driven.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-026",
+    "_id": "553bd047-0864-4838-9bea-1221bac1fb20",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ambidentate Ligands & Chelate Effect",
+      "order": 4
+    },
+    "question": "Which is more stable and why: $[Ni(NH_3)_6]^{2+}$ or $[Ni(en)_3]^{2+}$?",
+    "answer": "$[Ni(en)_3]^{2+}$. Same donor atom (N) in both, but replacing 6 $NH_3$ by 3 en releases 6 water ligands while binding 3 new ligands — net increase in particle count raises entropy, giving $[Ni(en)_3]^{2+}$ a much larger $\\beta$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-027",
+    "_id": "a5f1a488-2cac-4840-be13-d80ebe2b68f5",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Nomenclature Rules",
+      "order": 5
+    },
+    "question": "State the overall order of naming in a coordination compound (2004 IUPAC rules).",
+    "answer": "Cation first, anion second (regardless of charge). Inside the sphere: ligands alphabetically, then metal, then oxidation state in Roman numerals in parentheses. Anionic complexes end in '-ate'.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-028",
+    "_id": "0ebdf138-6ae4-4235-9ef8-76c0e39b45fe",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Nomenclature Rules",
+      "order": 5
+    },
+    "question": "Which multiplier prefixes are used when a ligand name already contains a numerical prefix, and why?",
+    "answer": "bis (2), tris (3), tetrakis (4), pentakis (5), hexakis (6). Used when the ligand name itself contains di-, tri-, or a complex substituent (e.g. ethylenediamine → tris(ethane-1,2-diamine)), to avoid confusion with the ligand's own count.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-029",
+    "_id": "5810a77a-5178-4469-bed4-50bfbc75c3b4",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Nomenclature Rules",
+      "order": 5
+    },
+    "question": "When writing a formula, what is the order of ligands inside the square bracket?",
+    "answer": "Alphabetical order of the ligand symbols/names, regardless of charge. Polydentate ligands are also alphabetised. The central atom symbol comes first inside the bracket, ligands follow.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-030",
+    "_id": "2c9ecb67-2040-4fd3-843f-560333b18b9f",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Nomenclature Rules",
+      "order": 5
+    },
+    "question": "Give the Latin 'ate' names used for these metals in anionic complexes: Fe, Cu, Ag, Au, Sn, Pb, Hg.",
+    "answer": "Ferrate (Fe), cuprate (Cu), argentate (Ag), aurate (Au), stannate (Sn), plumbate (Pb), mercurate (Hg).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-031",
+    "_id": "0f1123c9-62c1-4702-b3db-64744afc0855",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Nomenclature Rules",
+      "order": 5
+    },
+    "question": "Under 2004 IUPAC rules, how are the endings changed for anionic ligands?",
+    "answer": "Classical '-ide' → '-ido' (chloride → chlorido); '-ate' → '-ato' (sulfate → sulfato); '-ite' → '-ito' (sulfite → sulfito). Exceptions: CN$^-$ still often seen as cyano in textbooks; this older form is retained in many Indian syllabi.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-032",
+    "_id": "2cac8725-1c35-464c-b7c0-72ca1869f76c",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Nomenclature Rules",
+      "order": 5
+    },
+    "question": "How is the oxidation state of the metal determined in a coordination entity like $[Cu(CN)_4]^{3-}$?",
+    "answer": "Sum of charges of all ligands plus oxidation state of metal = overall charge of entity. In $[Cu(CN)_4]^{3-}$: $x + 4(-1) = -3 \\Rightarrow x = +1$, so it is named cuprate(I) and written Cu(I).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-033",
+    "_id": "0cc3b31c-2d74-4423-8329-abd889962454",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Nomenclature Rules",
+      "order": 5
+    },
+    "question": "State the rule for bridging ligands in polynuclear complexes.",
+    "answer": "A bridging ligand that connects two metal centres is indicated by the prefix $\\mu$- before its name (e.g. $\\mu$-oxido, $\\mu$-hydroxido). The number of bridges of the same type is shown by di-$\\mu$-, tri-$\\mu$-, etc.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-034",
+    "_id": "86002df1-eed8-476d-a62c-30dd7a7ced83",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Nomenclature Rules",
+      "order": 5
+    },
+    "question": "What does the use of enclosing marks — ( ), [ ], { } — indicate in IUPAC formulae and names?",
+    "answer": "Square brackets $[\\,]$ enclose the entire coordination entity (ligands + metal). Round brackets $(\\,)$ enclose a polyatomic or abbreviated ligand, or the oxidation state. Curly braces $\\{\\,\\}$ are used for the outermost enclosure in very complex names.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-035",
+    "_id": "eb85435f-a09c-4817-acff-cc2dc56384ad",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Naming Practice",
+      "order": 6
+    },
+    "question": "Write the IUPAC name of $[Cr(NH_3)_3(H_2O)_3]Cl_3$.",
+    "answer": "Triamminetriaquachromium(III) chloride. Ligands alphabetised: ammine (a) before aqua (a) — use second letter 'm' vs 'q'; all three Cl$^-$ are counter ions.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-036",
+    "_id": "d270ebd3-4e15-49bd-99aa-6a6d45a8c7cf",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Naming Practice",
+      "order": 6
+    },
+    "question": "Write the IUPAC name of $[Co(en)_3]_2(SO_4)_3$.",
+    "answer": "Tris(ethane-1,2-diamine)cobalt(III) sulphate. en is a chelating ligand with a compound name, so 'tris' is used. Cobalt oxidation state: $2x + 3(-2) = 0$ when combined, but inside the cation $[Co(en)_3]^{3+}$, $x = +3$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-037",
+    "_id": "fe84bd4f-7a07-409d-9e39-fb98d823c743",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Naming Practice",
+      "order": 6
+    },
+    "question": "Give the IUPAC name of $[Ag(NH_3)_2][Ag(CN)_2]$.",
+    "answer": "Diamminesilver(I) dicyanidoargentate(I). Note the same metal (Ag) appears in both cation and anion but uses different names because of the '-ate' ending for the anionic complex.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-038",
+    "_id": "3cbd70c9-101b-4874-a628-b62e7fe339f1",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Naming Practice",
+      "order": 6
+    },
+    "question": "Write the formulae for: (i) potassium trioxalatoaluminate(III); (ii) dichloridobis(ethane-1,2-diamine)cobalt(III); (iii) mercury tetrathiocyanatocobaltate(III).",
+    "answer": "(i) $K_3[Al(C_2O_4)_3]$; (ii) $[CoCl_2(en)_2]^+$ (commonly as chloride: $[CoCl_2(en)_2]Cl$); (iii) $Hg[Co(SCN)_4]$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-039",
+    "_id": "4f42835b-50f7-40c1-8f66-7c70d30cd431",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Naming Practice",
+      "order": 6
+    },
+    "question": "Name $[Pt(NH_3)_2Cl(NO_2)]$ unambiguously.",
+    "answer": "Diamminechlorido(nitrito-$\\kappa$N)platinum(II). Nitrito-$\\kappa$N specifies N-bonded ambidentate $NO_2^-$ (older name: nitro). Ligands alphabetised: ammine, chlorido, nitrito.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-040",
+    "_id": "f254e573-8297-4d03-b507-f03d09c91115",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Naming Practice",
+      "order": 6
+    },
+    "question": "IUPAC-name $[Co(NH_3)_5(CO_3)]Cl$.",
+    "answer": "Pentaamminecarbonatocobalt(III) chloride. Cobalt's oxidation state: $x + 0(5) + (-2) + 0 = +1$ (overall cation charge); so $x = +3$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-041",
+    "_id": "2b8f72b4-be70-46ac-9b7e-f8fe9c841594",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "IUPAC Naming Practice",
+      "order": 6
+    },
+    "question": "Name $K_2[Zn(OH)_4]$ and $[Co(NH_3)_6][Cr(CN)_6]$.",
+    "answer": "$K_2[Zn(OH)_4]$ = potassium tetrahydroxidozincate(II). $[Co(NH_3)_6][Cr(CN)_6]$ = hexaamminecobalt(III) hexacyanidochromate(III).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-042",
+    "_id": "c2ee77b1-eaf9-48f1-a2e6-e5c49f3f92cc",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxidation State & Coordination Number",
+      "order": 7
+    },
+    "question": "Give the oxidation state of the metal in (i) $[Ni(CO)_4]$; (ii) $[Fe(CN)_6]^{3-}$; (iii) $[Cr(H_2O)_6]^{3+}$; (iv) $[MnO_4]^-$.",
+    "answer": "(i) Ni = 0 (CO is neutral). (ii) Fe: $x + 6(-1) = -3 \\Rightarrow x = +3$. (iii) Cr = +3. (iv) Mn: $x + 4(-2) = -1 \\Rightarrow x = +7$.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-043",
+    "_id": "253906a6-b93e-408c-92bf-c34f6c4f7f25",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxidation State & Coordination Number",
+      "order": 7
+    },
+    "question": "Find the coordination number and oxidation state in $K_3[Co(C_2O_4)_3]$ and cis-$[Cr(en)_2Cl_2]Cl$.",
+    "answer": "$K_3[Co(C_2O_4)_3]$: oxalate is bidentate, CN = 6; Co is $+3$. $[Cr(en)_2Cl_2]Cl$: en is bidentate, CN = $2\\times 2 + 2 = 6$; Cr is $+3$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-044",
+    "_id": "9e80f253-dda3-4e7f-be5a-1d4e9e1765cf",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxidation State & Coordination Number",
+      "order": 7
+    },
+    "question": "Ni in $[Ni(CO)_4]$ has oxidation state 0 but is not a free atom — why is the complex still diamagnetic?",
+    "answer": "In Ni(0) the configuration is $3d^{10}4s^0$ — all d-electrons paired. CO is a strong-field ligand that promotes $sp^3$ hybridisation using empty $4s/4p$ orbitals, and no unpaired electrons remain.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-045",
+    "_id": "9c46e72f-c265-45eb-8e48-8147cd5b6598",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxidation State & Coordination Number",
+      "order": 7
+    },
+    "question": "For $[Pt(NH_3)_2Cl(NH_2CH_3)]Cl$ determine (i) charge of complex cation, (ii) oxidation state of Pt, (iii) CN.",
+    "answer": "(i) $+1$ (one Cl$^-$ outside). (ii) Pt $+2$ ($x + 0 + 0 + (-1) = +1 \\Rightarrow x=+2$). (iii) 4 (two ammines, one chlorido, one methylamine — all monodentate).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-046",
+    "_id": "9123b810-481f-464a-9b30-cf05da7ac775",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxidation State & Coordination Number",
+      "order": 7
+    },
+    "question": "In $[Pt(NH_3)_4Br(NO_2)]SO_4$ the sulfate is counter ion. Give Pt oxidation state and the overall spin state/geometry expected.",
+    "answer": "Complex cation charge: $+2$ (balances $SO_4^{2-}$). Pt: $x + 4(0) + (-1) + (-1) = +2 \\Rightarrow x = +4$. $Pt^{4+}$ is $5d^6$ and with strong-field ligands forms low-spin $d^2sp^3$ octahedral, diamagnetic.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-047",
+    "_id": "efc403df-f9b6-43f1-9b22-0b2eeeda037a",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Structural Isomerism",
+      "order": 8
+    },
+    "question": "List the four types of structural isomerism observed in coordination compounds.",
+    "answer": "(i) Ionisation isomerism; (ii) Linkage isomerism; (iii) Coordination isomerism; (iv) Solvate (hydrate) isomerism.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-048",
+    "_id": "90fba4f1-5ebd-4f9a-8c8b-f0c466e07c02",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Structural Isomerism",
+      "order": 8
+    },
+    "question": "Identify and name the isomerism: $[Co(NH_3)_5SO_4]Br$ vs $[Co(NH_3)_5Br]SO_4$.",
+    "answer": "Ionisation isomerism. Counter ions and one ligand swap between the coordination and ionisation spheres. The first gives a $Br^-$ test with $AgNO_3$; the second gives a $SO_4^{2-}$ test with $BaCl_2$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-049",
+    "_id": "ec645a2d-9566-4ea7-ae16-07538dfe8abb",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Structural Isomerism",
+      "order": 8
+    },
+    "question": "Identify the isomerism in violet $[Cr(H_2O)_6]Cl_3$ vs grey-green $[Cr(H_2O)_5Cl]Cl_2\\cdot H_2O$ vs green $[Cr(H_2O)_4Cl_2]Cl\\cdot 2H_2O$.",
+    "answer": "Solvate (hydrate) isomerism — arises when water molecules move between the coordination sphere and the lattice. All three have the same empirical formula $CrCl_3\\cdot 6H_2O$ but differ in structure, colour, and the number of Cl$^-$ precipitated by $AgNO_3$ (3, 2, 1 respectively).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-050",
+    "_id": "6fa1de85-414f-4e5f-aec8-705c1e031baf",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Structural Isomerism",
+      "order": 8
+    },
+    "question": "Give an example of coordination isomerism and explain the phenomenon.",
+    "answer": "$[Co(NH_3)_6][Cr(CN)_6]$ and $[Cr(NH_3)_6][Co(CN)_6]$. Occurs in compounds where both cation and anion are complex ions — the ligands exchange between the two metal centres.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-051",
+    "_id": "13c1ec89-6bec-4fad-b0b4-304adfc86fbc",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Structural Isomerism",
+      "order": 8
+    },
+    "question": "Why does $[Co(NH_3)_6][Cr(CN)_6]$ show coordination isomerism but $[Cr(NH_3)_6][Cr(CN)_6]$ does not?",
+    "answer": "Coordination isomerism requires the two metal centres to be different elements (or in different oxidation states). In $[Cr(NH_3)_6][Cr(CN)_6]$ both metals are Cr(III); exchanging ligands gives back the same compound.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-052",
+    "_id": "7d8c8d36-d7be-4d32-b741-6ce3a3cdcaf6",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Structural Isomerism",
+      "order": 8
+    },
+    "question": "Isomer A ($CoSO_4Cl\\cdot 5NH_3$) gives a white ppt with $AgNO_3$ but none with $BaCl_2$. Isomer B gives no AgCl but a white ppt with $BaCl_2$. Write both formulae.",
+    "answer": "A: $[Co(NH_3)_5(SO_4)]Cl$ — Cl$^-$ is free (ionisable), $SO_4^{2-}$ is inside the sphere. B: $[Co(NH_3)_5Cl]SO_4$ — $SO_4^{2-}$ is free, Cl$^-$ is inside the sphere. They are ionisation isomers.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-053",
+    "_id": "d143997c-911d-4efa-a577-21c5137ef255",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Structural Isomerism",
+      "order": 8
+    },
+    "question": "How many total isomers (structural + geometrical + optical) can $[Co(NH_3)_5(NO_2)](NO_3)_2$ show?",
+    "answer": "Two linkage isomers: $[Co(NH_3)_5(NO_2-\\kappa N)]^{2+}$ (red, nitro) and $[Co(NH_3)_5(ONO-\\kappa O)]^{2+}$ (yellow, nitrito). Ionisation isomerism is also possible if the $NO_3^-$ and $NO_2^-$/$ONO^-$ swap positions: $[Co(NH_3)_5(NO_3)](NO_2)_2$ etc., giving a richer family.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-054",
+    "_id": "1d0c6ecf-1a96-48e6-930f-5244c898109a",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Structural Isomerism",
+      "order": 8
+    },
+    "question": "Predict whether $[Pt(NH_3)_2(H_2O)_2]Br_2$ and $[Pt(NH_3)_2(H_2O)Br]Br\\cdot H_2O$ are solvate or ionisation isomers.",
+    "answer": "Both — it's a hydrate/solvate isomerism because an $H_2O$ molecule has moved from the coordination sphere to the lattice; simultaneously a $Br^-$ has come in, which also qualifies as ionisation isomerism. Textbooks classify such pairs under solvate isomerism.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-055",
+    "_id": "9028c1b2-8494-4589-9c23-d61c3f64fef2",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Geometrical Isomerism",
+      "order": 9
+    },
+    "question": "In which geometries is geometrical isomerism observed for coordination entities, and in which is it not?",
+    "answer": "Observed in square-planar ($MA_2B_2$, $MA_2BC$, $MABCD$) and octahedral ($MA_4B_2$, $MA_3B_3$, $M(AA)_2B_2$) complexes. Not observed in tetrahedral complexes because all four positions are equivalent and adjacent to each other.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-056",
+    "_id": "8cf6d913-b118-4f97-9538-b2ac996fe4d4",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Geometrical Isomerism",
+      "order": 9
+    },
+    "question": "Draw/describe the cis and trans isomers of $[Pt(NH_3)_2Cl_2]$. Which is cisplatin and what is its use?",
+    "answer": "Square-planar geometry. Cis: the two $Cl^-$ occupy adjacent (90°) positions; trans: opposite (180°). Cis-$[Pt(NH_3)_2Cl_2]$ is cisplatin, an important anti-cancer drug (binds DNA cross-link). The trans isomer is clinically inactive.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-057",
+    "_id": "581492c9-273c-499e-bdc0-580593767131",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Geometrical Isomerism",
+      "order": 9
+    },
+    "question": "A square-planar complex of the type $[M(AB)_2]$ where AB is an unsymmetrical bidentate ligand. Does it show geometrical isomerism?",
+    "answer": "Yes — cis (both A's together) and trans (A's across). Example: $[Pt(gly)_2]$ where glycinate coordinates through N and O.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-058",
+    "_id": "bbb153f6-c9f1-45c0-bb27-8f81e2cff0bd",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Geometrical Isomerism",
+      "order": 9
+    },
+    "question": "How many geometrical isomers does square-planar $[Pt(NH_3)(Br)(Cl)(py)]$ have?",
+    "answer": "Three. For an $MABCD$ square planar complex, the three isomers are defined by which ligand is trans to which; the three distinct pairings give 3 geometrical isomers.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-059",
+    "_id": "a9f9e2df-3e31-4f47-a43a-5a7b705b35c4",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Geometrical Isomerism",
+      "order": 9
+    },
+    "question": "Give the number and type of geometrical isomers for octahedral $[Co(NH_3)_3(NO_2)_3]$.",
+    "answer": "Two — the facial (fac) isomer with all three similar ligands on one triangular face and the meridional (mer) isomer with the three similar ligands along a meridian. This is a $MA_3B_3$ type.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-060",
+    "_id": "c2003094-91bd-4a20-be48-3e9c3dae32da",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Geometrical Isomerism",
+      "order": 9
+    },
+    "question": "State the geometrical isomers of $[CoCl_2(en)_2]^+$ and explain how they arise.",
+    "answer": "Cis (two Cl's adjacent, 90°) and trans (Cl's opposite, 180°). Bidentate en bridges two adjacent positions, leaving the two unidentate Cl's to choose cis or trans arrangements.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-061",
+    "_id": "02ca5989-b9b4-49a5-9975-f70a31bbfb1a",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Geometrical Isomerism",
+      "order": 9
+    },
+    "question": "Can $[Co(en)_3]^{3+}$ show geometrical isomerism?",
+    "answer": "No — all three bidentate en ligands are identical and occupy equivalent positions. Only optical isomerism (d and l) is possible for $[M(AA)_3]$ type.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-062",
+    "_id": "ced74547-4331-4408-9294-60da720fcf74",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Geometrical Isomerism",
+      "order": 9
+    },
+    "question": "Draw/describe the cis and trans isomers of $[Fe(NH_3)_2(CN)_4]^-$.",
+    "answer": "Octahedral $MA_2B_4$ type. Cis: two $NH_3$ adjacent (90°); trans: two $NH_3$ opposite (180°). The four $CN^-$ fill the other four sites.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-063",
+    "_id": "98219cec-4ecc-4aac-bcac-4c2439fda2c8",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Optical Isomerism",
+      "order": 10
+    },
+    "question": "What is the necessary and sufficient condition for a coordination compound to be optically active?",
+    "answer": "The complex must be chiral — non-superimposable on its mirror image. In practice, this means it lacks any plane of symmetry, centre of symmetry, or improper rotation axis ($S_n$).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-064",
+    "_id": "66f38b8a-69fc-42a4-9427-5a557f133d25",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Optical Isomerism",
+      "order": 10
+    },
+    "question": "Why is $[Co(en)_3]^{3+}$ optically active but $[Co(NH_3)_6]^{3+}$ is not?",
+    "answer": "$[Co(en)_3]^{3+}$ is a tris-chelate with a three-blade-propeller geometry, having no plane or centre of symmetry — it forms $\\Lambda$ and $\\Delta$ enantiomers. $[Co(NH_3)_6]^{3+}$ is a regular octahedron with multiple symmetry planes — achiral.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-065",
+    "_id": "4077590c-809c-479f-a7d9-973e98f8687b",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Optical Isomerism",
+      "order": 10
+    },
+    "question": "For $[M(AA)_2X_2]^{n+}$ type octahedral complexes, which geometrical isomer is optically active?",
+    "answer": "The cis-isomer is chiral (no plane of symmetry) and shows optical activity; the trans-isomer has a plane of symmetry containing the two X ligands and the $M(AA)_2$ frame, hence is optically inactive.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-066",
+    "_id": "2807f234-8df7-4513-b9dd-241a0a53c435",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Optical Isomerism",
+      "order": 10
+    },
+    "question": "Out of cis-$[CrCl_2(ox)_2]^{3-}$ and trans-$[CrCl_2(ox)_2]^{3-}$, which is chiral?",
+    "answer": "Only the cis form is chiral (no symmetry plane). The trans form has a symmetry plane that contains both Cl's and bisects the two oxalato rings, making it optically inactive.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-067",
+    "_id": "05d455d4-5e5b-45ad-9384-cb4b60f8a535",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Optical Isomerism",
+      "order": 10
+    },
+    "question": "How many optical isomers does tetrahedral $[M(abcd)]$ possess and why?",
+    "answer": "Two. With four different ligands around a single metal centre, a tetrahedral complex is chiral (analogous to a carbon with four different substituents). Such complexes are rare because easy inversion often racemises them.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-068",
+    "_id": "ec080441-2e3e-4cd1-a886-058d3a9341e4",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Optical Isomerism",
+      "order": 10
+    },
+    "question": "Define dextro and laevo isomers in terms of polarised-light rotation.",
+    "answer": "Dextrorotatory (d or +): rotates the plane of plane-polarised light clockwise (to the right) when viewed towards the source. Laevorotatory (l or $-$): rotates the plane anticlockwise (to the left). A 1:1 mixture is a racemate (optically inactive).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-069",
+    "_id": "3da43157-d064-4ed4-ad40-967f3b805816",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Optical Isomerism",
+      "order": 10
+    },
+    "question": "Which of the following are chiral: (i) trans-$[Pt(en)_2Cl_2]^{2+}$; (ii) cis-$[Pt(en)_2Cl_2]^{2+}$; (iii) $[Co(en)_3]^{3+}$; (iv) $[PtCl_4]^{2-}$?",
+    "answer": "Only (ii) cis-$[Pt(en)_2Cl_2]^{2+}$ and (iii) $[Co(en)_3]^{3+}$. (i) trans has a symmetry plane. (iv) square-planar $[PtCl_4]^{2-}$ is highly symmetric and achiral.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-070",
+    "_id": "ab8aa044-418e-49dc-8ace-74ae7b3a7e47",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Valence Bond Theory (VBT)",
+      "order": 11
+    },
+    "question": "Complete the VBT table: hybridisation ↔ geometry for CN = 4, 5, 6.",
+    "answer": "CN 4 — $sp^3$ (tetrahedral), $dsp^2$ (square planar); CN 5 — $sp^3d$ (trigonal bipyramidal); CN 6 — $d^2sp^3$ (inner orbital, octahedral) and $sp^3d^2$ (outer orbital, octahedral).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-071",
+    "_id": "27a3ff7a-8502-4c1a-9e4f-ea553c92eb5e",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Valence Bond Theory (VBT)",
+      "order": 11
+    },
+    "question": "Define inner-orbital vs outer-orbital complexes in VBT language.",
+    "answer": "Inner-orbital (low-spin): uses $(n-1)d$ orbitals for hybridisation (e.g. $d^2sp^3$). Typically formed with strong-field ligands that force pairing. Outer-orbital (high-spin): uses $nd$ orbitals (e.g. $sp^3d^2$). Formed with weak-field ligands; no pairing.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-072",
+    "_id": "74ab6374-4eea-4bd3-9bf6-f8300fd1a7f3",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Valence Bond Theory (VBT)",
+      "order": 11
+    },
+    "question": "State the spin-only magnetic moment formula and evaluate it for 0, 1, 2, 3, 4, 5 unpaired electrons.",
+    "answer": "$\\mu = \\sqrt{n(n+2)}$ BM. $n=0 \\to 0$; $n=1 \\to 1.73$; $n=2 \\to 2.83$; $n=3 \\to 3.87$; $n=4 \\to 4.90$; $n=5 \\to 5.92$ BM.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-073",
+    "_id": "cdc72cca-3860-451d-94ea-5a792a418064",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Valence Bond Theory (VBT)",
+      "order": 11
+    },
+    "question": "List the main limitations of Valence Bond Theory.",
+    "answer": "(i) Makes many qualitative assumptions. (ii) No quantitative explanation of magnetic data. (iii) Cannot explain the colour of complexes (no excited-state treatment). (iv) No thermodynamic/kinetic stability predictions. (v) Cannot distinguish a priori between weak and strong ligands. (vi) Cannot always predict whether a 4-coordinate complex will be tetrahedral or square planar.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-074",
+    "_id": "9f13b823-1bc4-4390-8140-719b3e7b8d80",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Valence Bond Theory (VBT)",
+      "order": 11
+    },
+    "question": "Predict the hybridisation and geometry of $[MnBr_4]^{2-}$ given that its $\\mu_{so} = 5.9$ BM.",
+    "answer": "$\\mu_{so} \\approx 5.9$ BM ⇒ 5 unpaired electrons. $Mn^{2+}$ is $3d^5$; five unpaired implies a high-spin configuration. The hybridisation is $sp^3$ and the geometry tetrahedral (square planar $dsp^2$ would require pairing, leaving only 1 unpaired).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-075",
+    "_id": "94162bf2-51c5-492f-942c-2744f2cb9f2c",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Valence Bond Theory (VBT)",
+      "order": 11
+    },
+    "question": "For $[Ni(CN)_4]^{2-}$ give hybridisation, geometry, and magnetic behaviour with reasoning.",
+    "answer": "$Ni^{2+}$ is $3d^8$. With strong-field $CN^-$, the two $3d$ electrons pair up, freeing one 3d orbital. Hybridisation $dsp^2$, square-planar geometry, diamagnetic (0 unpaired electrons).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-076",
+    "_id": "0599f41f-f5c5-4941-8216-f8f333e1deed",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Valence Bond Theory (VBT)",
+      "order": 11
+    },
+    "question": "Why is $[Ni(CO)_4]$ tetrahedral and diamagnetic while $[NiCl_4]^{2-}$ is tetrahedral and paramagnetic?",
+    "answer": "In $[Ni(CO)_4]$ nickel is Ni(0), $3d^{10}4s^0$ — all paired; $sp^3$ tetrahedral, diamagnetic. In $[NiCl_4]^{2-}$ nickel is $Ni^{2+}$, $3d^8$; $Cl^-$ is weak-field and cannot force pairing — $sp^3$ tetrahedral but with 2 unpaired electrons, paramagnetic.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-077",
+    "_id": "5f1f80c9-f6b9-4d0e-868e-877041496820",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Valence Bond Theory (VBT)",
+      "order": 11
+    },
+    "question": "Explain the VBT description of $[Co(NH_3)_6]^{3+}$ and $[CoF_6]^{3-}$, including hybridisation, spin state, and colour expectation.",
+    "answer": "$Co^{3+}$ is $3d^6$. With $NH_3$ (strong field), electrons pair → $d^2sp^3$ (inner orbital), diamagnetic, low-spin, yellow-orange (large $\\Delta$). With $F^-$ (weak field), no pairing → $sp^3d^2$ (outer orbital), paramagnetic with 4 unpaired electrons, pale blue (small $\\Delta$).",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-078",
+    "_id": "2c930424-20e3-41c1-b8a9-99b1a12da7e1",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Valence Bond Theory (VBT)",
+      "order": 11
+    },
+    "question": "Explain, with an orbital diagram logic, why $[Fe(CN)_6]^{3-}$ is weakly paramagnetic.",
+    "answer": "$Fe^{3+}$ is $3d^5$. $CN^-$ (strong field) pairs four of the five d-electrons, leaving exactly one unpaired in a $t_{2g}$ orbital. Hybridisation $d^2sp^3$; $\\mu_{so} = \\sqrt{1\\cdot 3} = 1.73$ BM — a weakly paramagnetic, low-spin complex.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-079",
+    "_id": "3fc8757a-f53e-4990-9f8e-d34fd441056f",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "VBT — Example Complexes",
+      "order": 12
+    },
+    "question": "Apply VBT to $[Cr(NH_3)_6]^{3+}$: hybridisation, spin, $\\mu$.",
+    "answer": "$Cr^{3+}$: $3d^3$. Three unpaired electrons singly occupy $t_{2g}$ orbitals; two empty 3d orbitals are available. Hybridisation $d^2sp^3$ (inner orbital), paramagnetic; $\\mu_{so} = \\sqrt{3\\cdot 5} = 3.87$ BM.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-080",
+    "_id": "3491a6c7-c444-471e-a922-bfed24fc6ee8",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "VBT — Example Complexes",
+      "order": 12
+    },
+    "question": "For $[MnCl_6]^{3-}$ and $[Mn(CN)_6]^{3-}$, give the spin state and magnetic moment.",
+    "answer": "$Mn^{3+}$: $3d^4$. With Cl$^-$ (weak): high spin, 4 unpaired, $\\mu \\approx 4.9$ BM. With CN$^-$ (strong): low spin, 2 unpaired (one in $e_g$ promoted back, and pairing in $t_{2g}$), $\\mu \\approx 2.83$ BM.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-081",
+    "_id": "62397307-5a46-49d6-bc04-233022fa90be",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "VBT — Example Complexes",
+      "order": 12
+    },
+    "question": "Show the VBT picture for $[PtCl_4]^{2-}$. Why is it diamagnetic?",
+    "answer": "$Pt^{2+}$: $5d^8$. In the strong ligand field, all 8 d-electrons pair into four of the 5d orbitals, leaving one 5d empty. Hybridisation $dsp^2$ (using $5d$, $6s$, $6p_x$, $6p_y$); square planar, diamagnetic.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-082",
+    "_id": "b3cd895b-76ef-4af1-830d-8df7e5230a77",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "VBT — Example Complexes",
+      "order": 12
+    },
+    "question": "Ni(II) dimethylglyoximate $[Ni(DMG)_2]$ — give geometry, hybridisation, magnetic nature, and the special feature of its structure.",
+    "answer": "Square planar, $dsp^2$, diamagnetic ($Ni^{2+}$ is $3d^8$, paired). Two DMG ligands chelate Ni in trans fashion; two intramolecular H-bonds between the two DMG units form additional 6-membered pseudo-rings, giving the rosy-red $[Ni(DMG)_2]$ its characteristic stability used in qualitative analysis.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-083",
+    "_id": "2bae184f-9d81-492a-8e82-0dfe664d36ba",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "VBT — Example Complexes",
+      "order": 12
+    },
+    "question": "Work out whether $[Fe(H_2O)_6]^{2+}$ is high-spin or low-spin. Give $\\mu_{so}$.",
+    "answer": "$Fe^{2+}$: $3d^6$. $H_2O$ is a weak/moderate ligand (below the spin-pairing threshold for Fe^{2+}). High-spin, 4 unpaired, $\\mu_{so} = \\sqrt{4\\cdot 6} = 4.9$ BM. Hybridisation $sp^3d^2$, outer orbital, paramagnetic.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-084",
+    "_id": "fb434db9-1220-4e1b-af76-4e8deb9a36ab",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "VBT — Example Complexes",
+      "order": 12
+    },
+    "question": "$[Co(C_2O_4)_3]^{3-}$: is the complex inner or outer orbital? Explain.",
+    "answer": "$Co^{3+}$: $3d^6$. Oxalate is just above $H_2O$ in the spectrochemical series and is strong enough (with $+3$ metal charge favouring pairing) to force low-spin. Inner orbital $d^2sp^3$ — diamagnetic (0 unpaired).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-085",
+    "_id": "9b9dce40-0dcb-473d-8970-9d7d9c980a2d",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "VBT — Example Complexes",
+      "order": 12
+    },
+    "question": "Predict the structure and $\\mu$ for $[Ni(NH_3)_6]^{2+}$.",
+    "answer": "$Ni^{2+}$: $3d^8$. With $NH_3$ the complex is octahedral $sp^3d^2$ (outer orbital — 3d has only 1 vacancy, not 2). 2 unpaired electrons in $e_g$-analogue; $\\mu \\approx 2.83$ BM, paramagnetic.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-086",
+    "_id": "dc5d4b02-7f45-4731-8bef-734ec3ac30ef",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "VBT — Example Complexes",
+      "order": 12
+    },
+    "question": "Why is $[NiCl_4]^{2-}$ tetrahedral but $[Ni(CN)_4]^{2-}$ square planar?",
+    "answer": "Both are $Ni^{2+}$ ($3d^8$). Cl$^-$ is weak-field: no pairing, two unpaired in d-orbitals, $sp^3$ hybridisation ⇒ tetrahedral. CN$^-$ is strong-field: forces pairing, one 3d orbital freed, $dsp^2$ hybridisation ⇒ square planar.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-087",
+    "_id": "0ac43fd2-3f91-40dc-8b67-241f3f58c3e8",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Crystal Field Theory — Octahedral",
+      "order": 13
+    },
+    "question": "In an octahedral crystal field, how do the five $d$ orbitals split and which set has the higher energy?",
+    "answer": "Splits into lower-energy $t_{2g}$ ($d_{xy}, d_{yz}, d_{zx}$) stabilised by $-\\frac{2}{5}\\Delta_o$ and higher-energy $e_g$ ($d_{x^2-y^2}, d_{z^2}$) destabilised by $+\\frac{3}{5}\\Delta_o$. The $e_g$ set is higher because these orbitals point directly at the six ligands along the axes.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-088",
+    "_id": "841317bc-8486-4b46-a793-2a290b383e54",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Crystal Field Theory — Octahedral",
+      "order": 13
+    },
+    "question": "Define crystal field splitting energy ($\\Delta_o$). What two factors determine its magnitude for a given metal?",
+    "answer": "$\\Delta_o$ is the energy gap between $t_{2g}$ and $e_g$ sets in an octahedral complex. Magnitude depends on (i) nature and charge of the ligand (spectrochemical series) and (ii) oxidation state and identity of the metal (higher oxidation state and heavier transition series give larger $\\Delta_o$).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-089",
+    "_id": "6e834354-3881-4ae4-8139-c715aec25c48",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Crystal Field Theory — Octahedral",
+      "order": 13
+    },
+    "question": "State the condition in terms of $\\Delta_o$ and pairing energy P for a high-spin vs low-spin octahedral complex.",
+    "answer": "If $\\Delta_o < P$: 4th electron occupies $e_g$ rather than pairing ⇒ weak field, high-spin. If $\\Delta_o > P$: 4th electron pairs in $t_{2g}$ ⇒ strong field, low-spin. For $d^1, d^2, d^3, d^8, d^9, d^{10}$ the distinction does not arise.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-090",
+    "_id": "c4eea612-18ec-4428-8934-5585a484158b",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Crystal Field Theory — Octahedral",
+      "order": 13
+    },
+    "question": "Calculate the CFSE (in $\\Delta_o$ units) for high-spin $d^5$ and low-spin $d^5$ octahedral configurations.",
+    "answer": "High-spin $d^5$: $t_{2g}^3 e_g^2 \\Rightarrow 3(-\\tfrac{2}{5}) + 2(+\\tfrac{3}{5}) = 0 \\Delta_o$. Low-spin $d^5$: $t_{2g}^5 e_g^0 \\Rightarrow 5(-\\tfrac{2}{5}) = -2.0 \\Delta_o$ (plus 2P for the extra pairings).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-091",
+    "_id": "326cb38e-4492-48cb-8a92-4ec9e7af56cb",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Crystal Field Theory — Octahedral",
+      "order": 13
+    },
+    "question": "Write the ground-state $t_{2g}/e_g$ configurations and $\\mu_{so}$ for $[Fe(CN)_6]^{3-}$ and $[Fe(H_2O)_6]^{3+}$.",
+    "answer": "$Fe^{3+}$ is $d^5$. $[Fe(CN)_6]^{3-}$: strong field, $t_{2g}^5 e_g^0$, 1 unpaired, $\\mu = 1.73$ BM. $[Fe(H_2O)_6]^{3+}$: weak field, $t_{2g}^3 e_g^2$, 5 unpaired, $\\mu = 5.92$ BM.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-092",
+    "_id": "74b788bd-455b-475a-892e-63bced7fd94a",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Crystal Field Theory — Octahedral",
+      "order": 13
+    },
+    "question": "Give the configuration of $[CoF_6]^{3-}$ ($Co^{3+}$, $d^6$) in CFT terms and state its spin.",
+    "answer": "$F^-$ is a weak-field ligand, $\\Delta_o < P$ ⇒ high-spin $d^6$: $t_{2g}^4 e_g^2$, four unpaired electrons, paramagnetic, $\\mu \\approx 4.9$ BM.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-093",
+    "_id": "dce1905b-da73-486c-8431-506b260d1877",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Crystal Field Theory — Octahedral",
+      "order": 13
+    },
+    "question": "CFSE of $[CoCl_6]^{4-}$ is reported as 18,000 cm$^{-1}$. Estimate the CFSE of $[CoCl_4]^{2-}$.",
+    "answer": "$\\Delta_t \\approx \\frac{4}{9} \\Delta_o$, so CFSE scales similarly: $\\frac{4}{9}\\times 18000 \\approx 8000$ cm$^{-1}$.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-094",
+    "_id": "34364a44-c40c-4345-8bb8-e4ed7a75185b",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "CFT — Tetrahedral & Spin State",
+      "order": 14
+    },
+    "question": "How are d-orbitals split in a tetrahedral crystal field and what is the relation to octahedral splitting?",
+    "answer": "The splitting is inverted: lower-energy $e$ set ($d_{x^2-y^2}, d_{z^2}$) and higher-energy $t_2$ set ($d_{xy}, d_{yz}, d_{zx}$). $\\Delta_t \\approx \\tfrac{4}{9}\\Delta_o$ (for same metal, ligand, M–L distance).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-095",
+    "_id": "c5647f0d-ddb0-4e15-bcf3-11e45c974a81",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "CFT — Tetrahedral & Spin State",
+      "order": 14
+    },
+    "question": "Why are low-spin tetrahedral complexes rarely observed?",
+    "answer": "$\\Delta_t \\approx \\tfrac{4}{9}\\Delta_o$ is usually much smaller than the pairing energy P. So $\\Delta_t < P$ nearly always, and electrons occupy higher levels singly before pairing — high-spin is the norm for tetrahedral.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-096",
+    "_id": "3c266e91-dda0-4a61-b3b7-b0c2755957c3",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "CFT — Tetrahedral & Spin State",
+      "order": 14
+    },
+    "question": "List the five limitations of Crystal Field Theory.",
+    "answer": "(i) Treats M-L bond as purely ionic; ignores covalent character. (ii) Places anionic ligands (which should exert the strongest field on a point-charge model) low in the spectrochemical series — contrary to fact. (iii) Cannot explain nephelauxetic effect. (iv) No satisfactory explanation for π-bonding or synergic donation. (v) Quantitative predictions require adjustable parameters (10 Dq).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-097",
+    "_id": "f1b6be49-e994-4dbc-bc62-d3e826860c04",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "CFT — Tetrahedral & Spin State",
+      "order": 14
+    },
+    "question": "For a $d^7$ ion in octahedral field, compare CFSE of high-spin and low-spin configurations.",
+    "answer": "High-spin $d^7$: $t_{2g}^5 e_g^2 \\Rightarrow 5(-\\tfrac{2}{5}) + 2(+\\tfrac{3}{5}) = -\\tfrac{4}{5}\\Delta_o$ ($-0.8\\Delta_o$). Low-spin $d^7$: $t_{2g}^6 e_g^1 \\Rightarrow 6(-\\tfrac{2}{5}) + 1(+\\tfrac{3}{5}) = -\\tfrac{9}{5}\\Delta_o$ ($-1.8\\Delta_o$, plus P for the extra pair).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-098",
+    "_id": "e2607747-a42c-4da9-8869-d45df3b101d8",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "CFT — Tetrahedral & Spin State",
+      "order": 14
+    },
+    "question": "Give an electronic explanation for why $Cu^{2+}$ hexaaqua is blue but $Zn^{2+}$ hexaaqua is colourless.",
+    "answer": "$Cu^{2+}$ is $d^9$; the single $e_g$ hole allows a d–d transition (promotes an electron from $t_{2g}$ to $e_g$) absorbing in the red, giving a blue complementary colour. $Zn^{2+}$ is $d^{10}$ — no empty d-orbital available for a d–d transition — colourless.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-099",
+    "_id": "015d3ed5-aa20-4894-b390-3f1f75e16e4d",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "CFT — Tetrahedral & Spin State",
+      "order": 14
+    },
+    "question": "Why does the hexaaqua manganese(II) ion contain five unpaired electrons while hexacyanomanganate(II) has only one?",
+    "answer": "$Mn^{2+}$ is $d^5$. $H_2O$ is weak-field: $\\Delta_o < P$, high-spin $t_{2g}^3 e_g^2$, 5 unpaired. $CN^-$ is strong-field: $\\Delta_o > P$, low-spin $t_{2g}^5 e_g^0$, 1 unpaired.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-100",
+    "_id": "04625140-db1e-4dd8-a778-4629aaa8244c",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Spectrochemical Series & Colour",
+      "order": 15
+    },
+    "question": "Write the abbreviated spectrochemical series from weakest to strongest ligand.",
+    "answer": "$I^- < Br^- < SCN^- < Cl^- < S^{2-} < F^- < OH^- < C_2O_4^{2-} < H_2O < NCS^- < EDTA^{4-} < NH_3 < en < CN^- < CO$.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-101",
+    "_id": "5db8063e-d735-42e2-b4c8-23fd58aac58d",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Spectrochemical Series & Colour",
+      "order": 15
+    },
+    "question": "Why is the colour of a complex complementary to the wavelength it absorbs?",
+    "answer": "Visible white light contains all wavelengths. When a complex absorbs one wavelength (corresponding to $\\Delta_o$ for a d-d transition), the transmitted light is the white minus the absorbed colour — appearing as the complementary colour.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-102",
+    "_id": "eb961c87-d2e0-449d-88e0-765a99830c9a",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Spectrochemical Series & Colour",
+      "order": 15
+    },
+    "question": "From the table: $[Ti(H_2O)_6]^{3+}$ absorbs ~498 nm (blue-green) and looks purple; $[Co(NH_3)_6]^{3+}$ absorbs ~475 nm (blue) and looks yellow-orange. Rank these two by $\\Delta_o$.",
+    "answer": "Shorter absorption wavelength ⇒ higher energy ⇒ larger $\\Delta_o$. So $\\Delta_o([Co(NH_3)_6]^{3+}) > \\Delta_o([Ti(H_2O)_6]^{3+})$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-103",
+    "_id": "f64305c1-5f1d-4183-b314-17ed94bff705",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Spectrochemical Series & Colour",
+      "order": 15
+    },
+    "question": "Arrange $[Co(NH_3)_6]^{3+}$, $[Co(CN)_6]^{3-}$, and $[Co(H_2O)_6]^{3+}$ in increasing $\\Delta_o$ and decreasing wavelength of maximum absorption.",
+    "answer": "Increasing $\\Delta_o$: $[Co(H_2O)_6]^{3+} < [Co(NH_3)_6]^{3+} < [Co(CN)_6]^{3-}$. Therefore, decreasing $\\lambda_{abs}$ follows the same order (largest gap absorbs shortest wavelength): $[Co(H_2O)_6]^{3+} > [Co(NH_3)_6]^{3+} > [Co(CN)_6]^{3-}$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-104",
+    "_id": "3b1a0bf3-34e1-4259-a408-67ca1212dfc4",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Spectrochemical Series & Colour",
+      "order": 15
+    },
+    "question": "Why is anhydrous $CuSO_4$ white while $CuSO_4\\cdot 5H_2O$ is blue?",
+    "answer": "In anhydrous $CuSO_4$ no ligand surrounds $Cu^{2+}$ to cause crystal-field splitting — no d–d transition possible. In the pentahydrate, four $H_2O$ occupy the square plane of $Cu^{2+}$, splitting the d-orbitals and enabling a d–d absorption (orange-red), giving the complementary blue colour.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-105",
+    "_id": "d6682382-03de-46dd-9e34-94e60294f397",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Spectrochemical Series & Colour",
+      "order": 15
+    },
+    "question": "Describe the colour change as en is progressively added to $[Ni(H_2O)_6]^{2+}$.",
+    "answer": "$[Ni(H_2O)_6]^{2+}$ is green. Successive substitution gives $[Ni(H_2O)_4(en)]^{2+}$ pale blue, $[Ni(H_2O)_2(en)_2]^{2+}$ blue-purple, and finally $[Ni(en)_3]^{2+}$ violet. The shift reflects increasing $\\Delta_o$ as $H_2O$ is replaced by the stronger-field en.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-106",
+    "_id": "4ed2d743-3971-4b21-8eee-7b2e9211943a",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Spectrochemical Series & Colour",
+      "order": 15
+    },
+    "question": "Why is $[Ti(H_2O)_6]^{3+}$ coloured while $[Sc(H_2O)_6]^{3+}$ is colourless?",
+    "answer": "Ti$^{3+}$ is $3d^1$ — one d-electron can undergo a $t_{2g} \\to e_g$ d–d transition absorbing visible light. Sc$^{3+}$ is $3d^0$ — no d-electrons, no d–d transition possible, so colourless.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-107",
+    "_id": "734db3be-8402-4a19-9ae5-68bfe24cb512",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Spectrochemical Series & Colour",
+      "order": 15
+    },
+    "question": "What is the origin of the intense violet colour of $KMnO_4$? Is it a d–d transition?",
+    "answer": "No — $Mn^{7+}$ is $d^0$ so there are no d-electrons for a d–d transition. The intense colour arises from a ligand-to-metal charge-transfer (LMCT) transition (O$^{2-}$ $\\to$ $Mn^{7+}$), which is much more intense than a typical d–d absorption.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-108",
+    "_id": "a7fe1602-27d7-45b4-84d3-4626142620c7",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Magnetic Behaviour",
+      "order": 16
+    },
+    "question": "Define paramagnetic and diamagnetic behaviour in terms of electronic configuration.",
+    "answer": "Paramagnetic: has one or more unpaired electrons; is weakly attracted by a magnetic field. Diamagnetic: all electrons paired; is weakly repelled by a magnetic field.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-109",
+    "_id": "e1b1acde-25ea-4a52-a708-9ba3df47e785",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Magnetic Behaviour",
+      "order": 16
+    },
+    "question": "Compute the spin-only magnetic moment and predict the colour (coloured/colourless) for $[Fe(H_2O)_6]^{3+}$ and $[Co(CN)_6]^{3-}$.",
+    "answer": "$[Fe(H_2O)_6]^{3+}$: $d^5$ high-spin, 5 unpaired, $\\mu = 5.92$ BM, coloured. $[Co(CN)_6]^{3-}$: $d^6$ low-spin, 0 unpaired, $\\mu = 0$ BM — coloured (d–d $t_{2g}\\to e_g$ possible) but diamagnetic.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-110",
+    "_id": "263e2a67-78c2-4bc0-8d57-1fdb51c44c50",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Magnetic Behaviour",
+      "order": 16
+    },
+    "question": "Of $[MnCl_6]^{3-}$, $[FeF_6]^{3-}$, $[CoF_6]^{3-}$, $[Mn(CN)_6]^{3-}$, $[Fe(CN)_6]^{3-}$ and $[Co(C_2O_4)_3]^{3-}$: give unpaired electron count for each.",
+    "answer": "Weak-field hexahalides: $[MnCl_6]^{3-}$ ($d^4$ HS) = 4; $[FeF_6]^{3-}$ ($d^5$ HS) = 5; $[CoF_6]^{3-}$ ($d^6$ HS) = 4. Strong-field cyanides/oxalates: $[Mn(CN)_6]^{3-}$ ($d^4$ LS) = 2; $[Fe(CN)_6]^{3-}$ ($d^5$ LS) = 1; $[Co(C_2O_4)_3]^{3-}$ ($d^6$ LS) = 0.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-111",
+    "_id": "2345f8fc-6c1e-4950-90b9-eceb4375bb26",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Magnetic Behaviour",
+      "order": 16
+    },
+    "question": "Why is VBT's magnetic prediction only qualitative?",
+    "answer": "VBT counts unpaired electrons correctly but provides no quantitative expression for $\\Delta$, no temperature dependence of susceptibility, and cannot explain anomalies such as orbital contributions to $\\mu$ (T-states in Co(II), low-symmetry distortions) — CFT and LFT handle these.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-112",
+    "_id": "be167d92-3e67-4673-b6ab-e6db142d28ba",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Magnetic Behaviour",
+      "order": 16
+    },
+    "question": "Why is $[Cr(NH_3)_6]^{3+}$ paramagnetic regardless of ligand field strength?",
+    "answer": "$Cr^{3+}$ is $d^3$. Three electrons occupy the three $t_{2g}$ orbitals singly and there is no opportunity for pairing (Hund's rule). The configuration, hence $\\mu \\approx 3.87$ BM, is the same for weak- or strong-field ligands.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-113",
+    "_id": "99519c3b-db61-4dd6-a4a0-e4186c754926",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Magnetic Behaviour",
+      "order": 16
+    },
+    "question": "Rank $[Cr(H_2O)_6]^{3+}$, $[Fe(H_2O)_6]^{2+}$, $[Zn(H_2O)_6]^{2+}$ in decreasing magnetic moment.",
+    "answer": "$[Fe(H_2O)_6]^{2+}$ ($d^6$ HS, 4 unpaired, 4.9 BM) $>$ $[Cr(H_2O)_6]^{3+}$ ($d^3$, 3 unpaired, 3.87 BM) $>$ $[Zn(H_2O)_6]^{2+}$ ($d^{10}$, 0 unpaired, diamagnetic).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-114",
+    "_id": "1b2d1c54-a5bd-4e62-b96c-adf963820629",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Magnetic Behaviour",
+      "order": 16
+    },
+    "question": "The observed magnetic moment of $[Ni(H_2O)_6]^{2+}$ is slightly higher than the spin-only value. Why?",
+    "answer": "For $d^8$ in an octahedral field, some orbital angular momentum is 'quenched' by the ligand field but not entirely — a small orbital contribution adds to $\\mu_{so}$. Observed $\\mu \\approx 3.2$ BM vs $\\mu_{so} = 2.83$ BM.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-115",
+    "_id": "a8197fd9-da7a-4d67-8feb-446f0533d6fe",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Metal Carbonyls & Synergic Bonding",
+      "order": 17
+    },
+    "question": "State the geometries and oxidation states of Ni, Fe, Cr in their common homoleptic carbonyls.",
+    "answer": "$[Ni(CO)_4]$: tetrahedral, Ni(0), $sp^3$. $[Fe(CO)_5]$: trigonal bipyramidal, Fe(0), $dsp^3$. $[Cr(CO)_6]$: octahedral, Cr(0), $d^2sp^3$.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-116",
+    "_id": "3cb2cdf9-6cff-4a4c-a7fd-8522bd1e31ca",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Metal Carbonyls & Synergic Bonding",
+      "order": 17
+    },
+    "question": "Describe the two components of synergic bonding between a metal and CO.",
+    "answer": "(i) $\\sigma$-donation: the CO lone pair on C donates into an empty hybrid orbital of the metal (M $\\leftarrow$ C). (ii) $\\pi$-back-donation: a filled metal $d$-orbital donates into the empty $\\pi^*$(CO) antibonding orbital (M $\\to$ C). The two reinforce each other, strengthening the M–C bond while weakening the C–O bond.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-117",
+    "_id": "fa278e8e-3c58-4ab1-815b-b6a312354689",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Metal Carbonyls & Synergic Bonding",
+      "order": 17
+    },
+    "question": "What is the effect of synergic back-bonding on (i) C–O bond length, (ii) C–O stretching frequency?",
+    "answer": "Back-bonding populates the $\\pi^*$(CO) antibonding orbital. (i) C–O bond lengthens (bond order decreases from 3 toward 2.5). (ii) $\\nu(C-O)$ IR stretch shifts to lower wavenumber (from ~2143 cm$^{-1}$ in free CO to ~2000 cm$^{-1}$ in many carbonyls).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-118",
+    "_id": "167bb8a9-9017-48e9-9758-e1e61752aa6d",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Metal Carbonyls & Synergic Bonding",
+      "order": 17
+    },
+    "question": "Describe the polynuclear carbonyls $Mn_2(CO)_{10}$ and $Co_2(CO)_8$.",
+    "answer": "$Mn_2(CO)_{10}$: two square-pyramidal Mn(CO)$_5$ fragments joined by an Mn–Mn bond; all 10 carbonyls are terminal. $Co_2(CO)_8$: in the solid, two Co(CO)$_3$ units bridged by two $\\mu$-CO groups plus a Co–Co bond; in solution the non-bridged isomer with a direct Co–Co bond also exists.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-119",
+    "_id": "bd326d7a-1aab-4cf9-89f8-067cccd006ba",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Metal Carbonyls & Synergic Bonding",
+      "order": 17
+    },
+    "question": "Why are metals in homoleptic carbonyls typically in very low oxidation states (0 or $-1$)?",
+    "answer": "CO is a weak $\\sigma$-donor but an excellent $\\pi$-acceptor. Efficient back-donation requires filled d-orbitals on the metal, i.e. electron-rich, low oxidation states. In higher oxidation states the d-orbitals are less populated and M $\\to \\pi^*$ back-donation is ineffective.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-120",
+    "_id": "c68b8b95-0ac4-4eb9-bc81-a7c4532cf95a",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Metal Carbonyls & Synergic Bonding",
+      "order": 17
+    },
+    "question": "Rank CO, $CN^-$ and $NO^+$ as $\\pi$-acceptors and justify.",
+    "answer": "$NO^+ > CO > CN^-$. $NO^+$ is cationic with the lowest-lying empty $\\pi^*$, strongest $\\pi$-acceptor. CO is neutral, moderate. $CN^-$ is anionic, highest $\\pi^*$ energy, poorest $\\pi$-acceptor (but an excellent $\\sigma$-donor and hence still a very strong-field ligand in the spectrochemical series).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-121",
+    "_id": "3afa641a-e31a-4eeb-9c89-84fa0434883c",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Metal Carbonyls & Synergic Bonding",
+      "order": 17
+    },
+    "question": "Predict the effect of replacing CO by a more electron-donating phosphine PR$_3$ in a series M(CO)$_{n-1}$(PR$_3$) on the remaining C–O stretch.",
+    "answer": "PR$_3$ is a better $\\sigma$-donor than CO, making the metal more electron-rich. Back-donation into the remaining CO ligands strengthens, populating $\\pi^*$(CO) more, so remaining $\\nu(C-O)$ shifts to lower wavenumbers.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-122",
+    "_id": "07915455-62f9-479c-806e-d694adf89d2f",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Stability Constants & Chelate Effect",
+      "order": 18
+    },
+    "question": "Define stepwise ($K_n$) and overall ($\\beta_n$) formation constants.",
+    "answer": "For a metal M binding ligands L one by one: $K_n = \\dfrac{[ML_n]}{[ML_{n-1}][L]}$ (stepwise). The overall $\\beta_n = \\dfrac{[ML_n]}{[M][L]^n}$. Relation: $\\beta_n = K_1 \\cdot K_2 \\cdot \\ldots \\cdot K_n$.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-123",
+    "_id": "7e930454-a90a-4cf5-9f89-6494053b03f5",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Stability Constants & Chelate Effect",
+      "order": 18
+    },
+    "question": "For $Cu^{2+} + 4 NH_3 \\rightleftharpoons [Cu(NH_3)_4]^{2+}$: $\\log K_1, K_2, K_3, K_4 = 4.0, 3.2, 2.7, 2.0$. Find $\\log \\beta_4$ and comment on the stepwise trend.",
+    "answer": "$\\log \\beta_4 = 4.0 + 3.2 + 2.7 + 2.0 = 11.9$, so $\\beta_4 \\approx 10^{11.9}$. The successive $K_n$ decrease because statistical factors and increasing steric/electrostatic repulsion reduce each additional binding constant.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-124",
+    "_id": "a9712bd1-1ac6-4286-90f1-6c14264e2427",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Stability Constants & Chelate Effect",
+      "order": 18
+    },
+    "question": "The overall formation constant for $[Cu(NH_3)_4]^{2+}$ is $\\beta_4 = 2.1\\times 10^{13}$. Calculate the instability (dissociation) constant.",
+    "answer": "Instability constant $= 1/\\beta_4 = 1/(2.1\\times 10^{13}) \\approx 4.8\\times 10^{-14}$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-125",
+    "_id": "373b6b91-4761-42f3-98b5-fcfb1366e684",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Stability Constants & Chelate Effect",
+      "order": 18
+    },
+    "question": "List three factors that increase the stability constant of a complex.",
+    "answer": "(i) Higher charge on the central metal ion. (ii) Smaller size of the metal ion (higher charge density). (iii) Stronger Lewis-basicity of the ligand, and crucially, chelation — polydentate/chelating ligands greatly enhance stability.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-126",
+    "_id": "f41edbb2-aee1-4d60-9653-748dac8831ff",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Stability Constants & Chelate Effect",
+      "order": 18
+    },
+    "question": "Why is $[Cu(en)_2]^{2+}$ much more stable than $[Cu(NH_3)_4]^{2+}$ despite both having four Cu–N bonds?",
+    "answer": "Chelate effect. Replacing four $NH_3$ by two en releases the metal from four monodentate ligands (4 particles) and binds two bidentate ligands (2 particles) — a gain in entropy. $\\Delta S > 0$ makes $\\Delta G$ more negative, raising $\\beta$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-127",
+    "_id": "12e80ace-fbd6-4fd6-b9fc-4c9985c3f068",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Stability Constants & Chelate Effect",
+      "order": 18
+    },
+    "question": "Rank $[Cu(NH_3)_4]^{2+}$, $[Cu(en)_2]^{2+}$, $[Cu(CN)_4]^{2-}$ in increasing $\\log \\beta$.",
+    "answer": "$[Cu(NH_3)_4]^{2+}$ ($\\log \\beta \\approx 12$) $<$ $[Cu(en)_2]^{2+}$ ($\\log \\beta \\approx 20$) $<$ $[Cu(CN)_4]^{2-}$ ($\\log \\beta \\approx 27$). $CN^-$ is a much stronger $\\sigma$-donor and strong-field ligand.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-128",
+    "_id": "f9d1929b-92e9-445f-bfa1-f3563b6542ed",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Stability Constants & Chelate Effect",
+      "order": 18
+    },
+    "question": "Why does $FeSO_4 + (NH_4)_2SO_4$ solution give tests for $Fe^{2+}$ but $CuSO_4 + NH_3$ solution does not give tests for $Cu^{2+}$?",
+    "answer": "Mohr's salt ($FeSO_4\\cdot (NH_4)_2SO_4\\cdot 6H_2O$) is a double salt that dissociates fully, releasing free $Fe^{2+}$ — detected by $K_3[Fe(CN)_6]$. With $NH_3$, copper forms the deep-blue complex $[Cu(NH_3)_4]^{2+}$ with very high $\\beta_4$, so free $Cu^{2+}$ is essentially absent and does not give the usual $Cu^{2+}$ tests.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-129",
+    "_id": "0941d9d2-d462-4303-9457-cbc692d90c19",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications & Bioinorganic",
+      "order": 19
+    },
+    "question": "Name the coordination compound at the centre of (i) chlorophyll, (ii) haemoglobin, (iii) vitamin $B_{12}$.",
+    "answer": "(i) A porphyrin complex of $Mg^{2+}$. (ii) An iron porphyrin (haem) — Fe(II) bonded to the porphyrin ring and one axial histidine from the globin. (iii) A cobalt corrin ring — $Co^{3+}$ with a CN$^-$ axial ligand (cyanocobalamin).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-130",
+    "_id": "30916fb3-fe57-4388-bab6-671caa9c6a5e",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications & Bioinorganic",
+      "order": 19
+    },
+    "question": "Why is EDTA used in the treatment of lead poisoning and how is it administered safely?",
+    "answer": "$Pb^{2+}$ forms a very stable [Pb-EDTA]$^{2-}$ chelate that is water-soluble and excreted through urine. To avoid depleting body $Ca^{2+}$, the drug is administered as the calcium complex $[Ca(EDTA)]^{2-}$; the weaker Ca binding is displaced by the far stronger Pb binding.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-131",
+    "_id": "5bcb20e9-32ad-431c-89be-22bd4009b090",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications & Bioinorganic",
+      "order": 19
+    },
+    "question": "Describe the cyanide (Mac Arthur–Forrest) process for gold extraction, including the role of the coordination complex.",
+    "answer": "Crushed gold ore is leached with dilute NaCN in the presence of air: $4\\,Au + 8\\,CN^- + O_2 + 2\\,H_2O \\to 4\\,[Au(CN)_2]^- + 4\\,OH^-$. Gold is displaced from the soluble $[Au(CN)_2]^-$ by adding Zn: $2[Au(CN)_2]^- + Zn \\to [Zn(CN)_4]^{2-} + 2\\,Au$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-132",
+    "_id": "47985861-8abf-462f-9063-0d62c9a381b9",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications & Bioinorganic",
+      "order": 19
+    },
+    "question": "Explain how hypo ($Na_2S_2O_3$) fixes a photographic film using coordination chemistry.",
+    "answer": "Undeveloped $AgBr$ on the film is removed by forming the soluble complex $[Ag(S_2O_3)_2]^{3-}$: $AgBr + 2\\,S_2O_3^{2-} \\to [Ag(S_2O_3)_2]^{3-} + Br^-$. This washes away unreduced silver halide and 'fixes' the image.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-133",
+    "_id": "dfe1e90f-d027-4de5-83bb-18c0ead8fd0b",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications & Bioinorganic",
+      "order": 19
+    },
+    "question": "How is hardness of water estimated by complexometric titration?",
+    "answer": "The sample is titrated against standard disodium EDTA at pH ~10 (ammonia buffer) using Eriochrome Black T (EBT) as indicator. EBT forms a wine-red complex with $Ca^{2+}/Mg^{2+}$; EDTA displaces it (free EBT is blue) at the end point. Total mmol of EDTA used equals total mmol of $Ca^{2+} + Mg^{2+}$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-134",
+    "_id": "0e2f2809-1ef9-4d61-a094-9692fad642ce",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications & Bioinorganic",
+      "order": 19
+    },
+    "question": "Name Wilkinson's catalyst and state its main industrial use.",
+    "answer": "$[(PPh_3)_3RhCl]$ — chloridotris(triphenylphosphine)rhodium(I). Used for the homogeneous hydrogenation of terminal and unhindered internal alkenes at room temperature and pressure.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-135",
+    "_id": "724d433d-0fc8-44b2-9efe-a659ac199aac",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications & Bioinorganic",
+      "order": 19
+    },
+    "question": "Explain the Mond process for purification of nickel via a coordination compound.",
+    "answer": "Impure Ni is heated with CO at ~60 °C to form volatile $[Ni(CO)_4]$: $Ni + 4\\,CO \\to [Ni(CO)_4]$. The carbonyl is separated from impurities and thermally decomposed at ~200 °C to give pure Ni: $[Ni(CO)_4] \\to Ni + 4\\,CO$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-136",
+    "_id": "8d42f9dd-4223-4322-8d0b-9802771454ae",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications & Bioinorganic",
+      "order": 19
+    },
+    "question": "State the biological role of carboxypeptidase A and carbonic anhydrase.",
+    "answer": "Both are zinc metalloenzymes. Carboxypeptidase A hydrolyses C-terminal peptide bonds in proteins. Carbonic anhydrase catalyses the reversible hydration of $CO_2$ to $HCO_3^-$ in red blood cells; Zn$^{2+}$ polarises a bound water to make it a nucleophilic OH$^-$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-137",
+    "_id": "8aa918cb-1a9b-47aa-a90f-53abe4c5fdf7",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications & Bioinorganic",
+      "order": 19
+    },
+    "question": "Why is DMG a selective reagent for Ni(II) in qualitative analysis?",
+    "answer": "Ni(II) in ammoniacal solution reacts with two DMG molecules to give rosy-red square-planar $[Ni(DMG)_2]$, stabilised by two intramolecular H-bonds between oxime OH and O$^-$. The colour and insolubility in water are diagnostic; Pd(II) gives a similar yellow complex at low pH.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "COORD-138",
+    "_id": "1a837d25-2b3f-47e7-b2d4-0bb9c7622ea0",
+    "chapter": {
+      "id": "ch12_coordination",
+      "name": "Coordination Compounds",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications & Bioinorganic",
+      "order": 19
+    },
+    "question": "List three examples of coordination chemistry in industrial electroplating.",
+    "answer": "(i) Silver plating uses $[Ag(CN)_2]^-$ rather than $AgNO_3$ — gives a smoother, more adherent coat. (ii) Gold plating uses $[Au(CN)_2]^-$. (iii) Copper plating on steel uses $[Cu(CN)_3]^{2-}$. The complex ensures slow, uniform deposition at low free $M^{n+}$ concentration.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "jee",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 9",
+      "class_num": 12,
+      "created_at": "2026-04-18T13:05:01.916Z",
+      "updated_at": "2026-04-18T13:05:01.916Z"
+    },
+    "deleted_at": null
+  }
+]

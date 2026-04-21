@@ -65,8 +65,17 @@ export default async function FlashcardsChapterPage({ params }: Props) {
         card => generateChapterSlug(card.chapterName) === chapterSlug
     );
 
-    // Get unique topics for this chapter
-    const topics = [...new Set(chapterFlashcards.map(card => card.topicName))].filter(Boolean);
+    // Get unique topics sorted by topicOrder
+    const topicMap = new Map<string, number>();
+    chapterFlashcards.forEach(card => {
+      if (card.topicName && !topicMap.has(card.topicName)) {
+        topicMap.set(card.topicName, card.topicOrder);
+      }
+    });
+    const topics = [...topicMap.entries()]
+      .sort((a, b) => a[1] - b[1])
+      .map(([name]) => name)
+      .filter(Boolean);
 
     return (
         <FlashcardsChapterClient

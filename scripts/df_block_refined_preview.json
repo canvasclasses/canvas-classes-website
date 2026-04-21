@@ -1,0 +1,3249 @@
+[
+  {
+    "flashcard_id": "DFB-001",
+    "_id": "5ddb4e2a-504d-4268-8366-ce72b70619ff",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Position & Electronic Configuration",
+      "order": 1
+    },
+    "question": "What is the general outer electronic configuration of d-block elements?",
+    "answer": "General: $(n-1)d^{1-10}\\,ns^{0-2}$. Half-filled and fully-filled d-subshells cause small exceptions (e.g. Cr, Cu).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-002",
+    "_id": "f94270ec-96c6-426f-bd5f-2ee9ae495541",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Position & Electronic Configuration",
+      "order": 1
+    },
+    "question": "Why are Zn, Cd and Hg not considered transition elements?",
+    "answer": "Their d-orbitals are completely filled ($d^{10}$) in both the ground state and in their common oxidation state (+2). A transition element must have a partially filled d-subshell in at least one common oxidation state.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-003",
+    "_id": "229347a7-2677-49f6-9b3e-0e033e2815f4",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Position & Electronic Configuration",
+      "order": 1
+    },
+    "question": "Write the ground-state configuration of Cr and Cu, and explain the anomaly.",
+    "answer": "Cr: $[Ar]\\,3d^5\\,4s^1$; Cu: $[Ar]\\,3d^{10}\\,4s^1$. Extra stability of half-filled ($d^5$) and fully-filled ($d^{10}$) subshells, plus small 3d–4s energy gap, makes these configurations more stable than $3d^4 4s^2$ / $3d^9 4s^2$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-004",
+    "_id": "af336a73-f96b-4f3c-8434-3d4f48f482f0",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Position & Electronic Configuration",
+      "order": 1
+    },
+    "question": "Name the four transition series and their 3d/4d/5d/6d elements.",
+    "answer": "3d: Sc (21) → Zn (30); 4d: Y (39) → Cd (48); 5d: La (57), Hf (72) → Hg (80); 6d: Ac (89), Rf (104) → incomplete. Note: 4f elements fill between La and Hf.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-005",
+    "_id": "0aba3ff1-93f1-4f0a-8d45-74b83aac490c",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Position & Electronic Configuration",
+      "order": 1
+    },
+    "question": "Why is Ag (Z = 47) regarded as a transition element even though its ground state is $4d^{10}\\,5s^1$?",
+    "answer": "In its +2 oxidation state Ag exhibits a partially filled $4d^9$ configuration. A transition element only needs partially filled d-orbitals in its ground state OR in any common oxidation state.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-006",
+    "_id": "bac209a9-8a34-43b3-a533-369080544ba9",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Position & Electronic Configuration",
+      "order": 1
+    },
+    "question": "Which is the last member of the 3d series and the 5d series?",
+    "answer": "3d: Zinc (Zn, $Z=30$). 5d: Mercury (Hg, $Z=80$).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-007",
+    "_id": "51c2885f-4db6-4280-9408-e904be786f80",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Physical Properties",
+      "order": 2
+    },
+    "question": "Why do transition metals have high melting and boiling points?",
+    "answer": "They have a large number of unpaired (n-1)d and ns electrons available for strong metal–metal bonding (interatomic metallic bonding).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-008",
+    "_id": "6be254e2-57fc-4853-84f6-64c54ea73bf4",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Physical Properties",
+      "order": 2
+    },
+    "question": "Why are Zn, Cd and Hg soft metals with low melting points?",
+    "answer": "Their d-orbitals are completely filled ($d^{10}$) and do not participate in metallic bonding. Only the two s-electrons bond, giving very weak interatomic attraction. Hg is liquid at room temperature for this reason.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-009",
+    "_id": "7bc3e1ed-0471-4130-a4ac-1197fc2eb52a",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Physical Properties",
+      "order": 2
+    },
+    "question": "Why does manganese show an anomalously low melting point in the 3d series?",
+    "answer": "Despite having $d^5$ configuration, the half-filled d-subshell in Mn is unusually stable and its valence electrons are less available for metallic bonding, giving weaker inter-atomic interaction.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-010",
+    "_id": "2309c652-6663-411f-a93e-450c6199117a",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Physical Properties",
+      "order": 2
+    },
+    "question": "In which part of each transition series do melting points peak and why?",
+    "answer": "Near the middle (e.g. W in 5d). Maximum number of unpaired d-electrons gives the strongest interatomic metallic bonding; after the middle, d-electrons start pairing and bonding weakens.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-011",
+    "_id": "98d7d0d6-51dc-4ea6-9f2d-13a66e3b119a",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Physical Properties",
+      "order": 2
+    },
+    "question": "What is Lanthanoid Contraction?",
+    "answer": "The steady decrease in atomic and ionic radii across the lanthanoid series (La → Lu, 187 pm → 173 pm; $La^{3+}$ 103 pm → $Lu^{3+}$ 86 pm). Caused by poor shielding of the nuclear charge by 4f electrons.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-012",
+    "_id": "e32354e4-3cf8-444b-8069-99ab61e73170",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Physical Properties",
+      "order": 2
+    },
+    "question": "Name two pairs of 4d/5d metals with nearly identical radii and state the reason.",
+    "answer": "Zr (160 pm) ≈ Hf (159 pm); Nb ≈ Ta; Mo ≈ W. Reason: Lanthanoid contraction cancels the expected size increase from 4d to 5d.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-013",
+    "_id": "a20048ef-25af-4a34-bcaa-a8dff02879bd",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Physical Properties",
+      "order": 2
+    },
+    "question": "Which three 3d metals do not adopt typical metallic (hcp/bcc/ccp) structures?",
+    "answer": "Zn, Cd and Hg. (Mn also shows an atypical complex lattice.)",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-014",
+    "_id": "f393fd31-6cbc-4b55-aece-42db9eee407d",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Physical Properties",
+      "order": 2
+    },
+    "question": "How does density vary across the 3d series and why?",
+    "answer": "Density generally increases from Sc to Cu, then falls at Zn. Atomic mass rises while metallic radius decreases (due to poor d-shielding), packing more mass into smaller volume.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-015",
+    "_id": "205ef599-260c-4682-ad6f-963a9b200c4d",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Physical Properties",
+      "order": 2
+    },
+    "question": "Why are enthalpies of atomisation of 2nd (4d) and 3rd (5d) series metals greater than 1st (3d)?",
+    "answer": "Heavier d-orbitals overlap more effectively, allowing stronger metal–metal bonding. This also explains the abundance of M–M bonded clusters in heavy transition metals.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-016",
+    "_id": "58f37530-1331-4fb4-9809-c9960576a28c",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ionisation Enthalpy",
+      "order": 3
+    },
+    "question": "Why is the first ionisation enthalpy of Cr lower than that of Mn, but IE1 of Zn is very high?",
+    "answer": "Cr: removal of the 4s electron still leaves a stable half-filled $3d^5$, so it is relatively easy. Zn: removing an electron disrupts the stable $3d^{10}\\,4s^2$ and requires high energy.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-017",
+    "_id": "53de16a2-75f5-4a31-aaae-2a8086ca1e18",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ionisation Enthalpy",
+      "order": 3
+    },
+    "question": "Why is the second ionisation enthalpy (IE2) of Cu exceptionally high?",
+    "answer": "Removing a second electron from $Cu^+$ ($3d^{10}$) disrupts the stable fully-filled d-subshell, causing a large loss of exchange energy.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-018",
+    "_id": "6ee5dcd1-27b1-427c-af8a-cdde06e31b7c",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ionisation Enthalpy",
+      "order": 3
+    },
+    "question": "Why is the 3rd ionisation enthalpy of Mn very high?",
+    "answer": "$Mn^{2+}$ has the stable half-filled $3d^5$ configuration. Removing a third electron disrupts this stability, requiring unusually large energy. This is why Mn(III) is unstable in aqueous solution.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-019",
+    "_id": "0d7364b8-c40e-4efe-92ce-ac783d0abfec",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ionisation Enthalpy",
+      "order": 3
+    },
+    "question": "Why does Cu have a higher first ionisation enthalpy than K although both have a $4s^1$ outer electron?",
+    "answer": "The 3d electrons in Cu shield the 4s electron poorly from the nucleus, so the effective nuclear charge on the 4s electron is much higher in Cu than in K (where no d-electrons shield).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-020",
+    "_id": "9a1d2ab0-096b-4826-b16b-639b64ac7fdd",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ionisation Enthalpy",
+      "order": 3
+    },
+    "question": "Why is the observed variation in IE across the 3d series much smaller than across a main-group period?",
+    "answer": "Added electrons enter inner (n-1)d orbitals, which increasingly shield the outer ns electron. The effective nuclear charge felt by the ionised electron therefore rises only slightly across the series.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-021",
+    "_id": "d3b01a9b-a3e8-420b-ac09-2e943a205eed",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Ionisation Enthalpy",
+      "order": 3
+    },
+    "question": "Why are the ionisation enthalpies of the 5d series higher than those of the 3d and 4d series?",
+    "answer": "Because of lanthanoid contraction, the 5d electrons penetrate close to the nucleus and experience a much higher effective nuclear charge, tightening their hold and raising IE.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-022",
+    "_id": "de560bdd-9b30-4c5c-b792-ab6ebe80b722",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxidation States",
+      "order": 4
+    },
+    "question": "Which 3d transition element does NOT exhibit variable oxidation states?",
+    "answer": "Scandium (Sc). Only +3 is shown, as losing all three valence electrons ($3d^1\\,4s^2$) gives a stable noble-gas configuration.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-023",
+    "_id": "1309bae6-5782-4dc6-a9d2-73126730d799",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxidation States",
+      "order": 4
+    },
+    "question": "What is the highest known oxidation state of a 3d element, and in which compound does it appear?",
+    "answer": "+7 in Mn, found in $Mn_2O_7$ and in $MnO_4^-$ (permanganate). No higher oxide is stable beyond Mn.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-024",
+    "_id": "39b93275-5480-4b8c-b954-f7fc61f3178e",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxidation States",
+      "order": 4
+    },
+    "question": "Why is the highest oxidation state of a 3d metal usually found in its oxide or fluoride?",
+    "answer": "O and F are small and highly electronegative. O additionally stabilises high OS through multiple bonds ($p\\pi\\text{-}d\\pi$). F stabilises via strong polar single bonds.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-025",
+    "_id": "bb4ac7f2-e52d-4355-b7f3-6d7d66684338",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxidation States",
+      "order": 4
+    },
+    "question": "Why is the highest fluoride of Mn only $MnF_4$ while the highest oxide is $Mn_2O_7$?",
+    "answer": "Oxygen forms multiple bonds ($p\\pi\\text{-}d\\pi$) with the metal that stabilise very high oxidation states. Fluorine can only form single bonds, so it cannot support $Mn^{+7}$ in a binary fluoride.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-026",
+    "_id": "52eb7018-1492-4a2f-bcb8-b0ebc9fd9181",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxidation States",
+      "order": 4
+    },
+    "question": "Why is $Cr(VI)$ a strong oxidising agent while $Mo(VI)$ and $W(VI)$ are stable?",
+    "answer": "Down a d-block group, higher oxidation states become more stable. $Cr^{+6}$ readily reduces to the more stable $Cr^{+3}$, whereas $Mo^{+6}$ and $W^{+6}$ persist.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-027",
+    "_id": "28a49b03-f2c9-4cd0-8500-6ccfeee9f7b0",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxidation States",
+      "order": 4
+    },
+    "question": "Why can some transition metals show zero or negative oxidation states (e.g. $Ni(CO)_4$, $Fe(CO)_5$)?",
+    "answer": "Ligands like CO are strong $\\pi$-acceptors — they accept electron density from filled d-orbitals via back-bonding, stabilising the metal in an unusually low oxidation state.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-028",
+    "_id": "bdaca001-7b48-41fb-9f7d-22022deefb2f",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxidation States",
+      "order": 4
+    },
+    "question": "Which oxidation state is the most common among middle members of the 3d series?",
+    "answer": "Typically +2 and +3. In early metals (Sc, Ti, V) +2 is rare or unstable; in Mn, Fe, Co, Ni the +2 aquo ion dominates.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-029",
+    "_id": "0f1f883b-037a-45a8-97ae-4e110509886d",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxidation States",
+      "order": 4
+    },
+    "question": "What is the highest oxidation state of iron and in which species is it found?",
+    "answer": "+6, found in the ferrate ion $FeO_4^{2-}$ (stable only in strongly alkaline medium).",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-030",
+    "_id": "0759a01e-2834-4076-9f98-7e85083dcc42",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxidation States",
+      "order": 4
+    },
+    "question": "Why is Ti(IV) far more stable than Ti(II) or Ti(III)?",
+    "answer": "Losing four electrons ($3d^2\\,4s^2$) gives the stable noble-gas (Argon) configuration. Lower oxidation states have extra d-electrons that are easily removed.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-031",
+    "_id": "85763a73-a18b-40eb-a819-17ce2425b017",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Standard Electrode Potentials",
+      "order": 5
+    },
+    "question": "Write the $E^\\circ(M^{2+}/M)$ values for Ti, Mn, Fe, Cu and Zn (in V).",
+    "answer": "Ti $-1.63$, Mn $-1.18$, Fe $-0.44$, Cu $+0.34$, Zn $-0.76$. Cu is the only 3d metal with a positive $E^\\circ(M^{2+}/M)$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-032",
+    "_id": "635b19f9-58a0-4f13-bbc2-792928f60687",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Standard Electrode Potentials",
+      "order": 5
+    },
+    "question": "Why is $E^\\circ(Cu^{2+}/Cu)$ positive ($+0.34$ V)?",
+    "answer": "The high energy required to sublime Cu and ionise it ($\\Delta_a H + IE_1 + IE_2$) is not compensated by its hydration enthalpy. Cu therefore does not liberate $H_2$ from non-oxidising acids.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-033",
+    "_id": "3c33e94c-1871-4898-9cce-af315897ab63",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Standard Electrode Potentials",
+      "order": 5
+    },
+    "question": "Why are $E^\\circ(M^{2+}/M)$ values for Mn and Zn more negative than the trend predicts?",
+    "answer": "Mn: the $3d^5$ stable half-filled configuration in $Mn^{2+}$ makes the oxidation easier. Zn: $3d^{10}$ stable fully-filled configuration in $Zn^{2+}$. Both have extra driving force for $M^0 \\to M^{2+}$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-034",
+    "_id": "927aa70f-7f80-4377-b344-63b5f9409506",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Standard Electrode Potentials",
+      "order": 5
+    },
+    "question": "Why is $Cr^{2+}$ a reducing agent while $Mn^{3+}$ is an oxidising agent, although both are $d^4$?",
+    "answer": "$Cr^{2+}$ ($d^4$) loses an electron to become $Cr^{3+}$ ($t_{2g}^3$, stable half-filled $t_{2g}$). $Mn^{3+}$ ($d^4$) gains an electron to become $Mn^{2+}$ ($d^5$, stable half-filled d-shell).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-035",
+    "_id": "77d02c82-be92-483d-a991-7775334f2856",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Standard Electrode Potentials",
+      "order": 5
+    },
+    "question": "Why is $E^\\circ(Mn^{3+}/Mn^{2+})$ very positive ($+1.57$ V) compared to $E^\\circ(Cr^{3+}/Cr^{2+})$ or $E^\\circ(Fe^{3+}/Fe^{2+})$?",
+    "answer": "Reducing $Mn^{3+}$ ($d^4$) to $Mn^{2+}$ ($d^5$) gives the exceptionally stable half-filled d-shell; the large 3rd IE of Mn also disfavours $Mn^{3+}$. Hence $Mn^{3+}$ oxidises readily.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-036",
+    "_id": "4d254432-6cf9-4eba-b013-47e11acea535",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Standard Electrode Potentials",
+      "order": 5
+    },
+    "question": "Why is $Co^{3+}$ a strong oxidiser in aqueous solution but stable in complexes with strong-field ligands?",
+    "answer": "In water $Co^{3+}$ readily accepts an electron to form more stable $Co^{2+}$. With strong-field ligands (e.g. $CN^-$, $NH_3$), the large crystal-field stabilisation energy of low-spin $t_{2g}^6$ (d6) stabilises $Co^{3+}$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-037",
+    "_id": "c9ca9cf4-4898-459e-a922-9a7dbfcf8c3c",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Standard Electrode Potentials",
+      "order": 5
+    },
+    "question": "Why is the $E^\\circ(M^{3+}/M^{2+})$ value for scandium very low (strongly negative)?",
+    "answer": "$Sc^{3+}$ has an exceptionally stable noble-gas (Argon) configuration. Any $Sc^{2+}$ formed would spontaneously lose an electron to reach $Sc^{3+}$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-038",
+    "_id": "a042dc38-d2d0-4634-8858-c2f67160195a",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Standard Electrode Potentials",
+      "order": 5
+    },
+    "question": "Does copper displace hydrogen from dilute HCl? Justify.",
+    "answer": "No. $E^\\circ(Cu^{2+}/Cu) = +0.34$ V is positive, so Cu lies below $H^+$ in the activity series and cannot reduce $H^+$ to $H_2$. Cu only dissolves in oxidising acids like $HNO_3$ or hot conc. $H_2SO_4$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-039",
+    "_id": "b695cb13-ed49-49c4-ad3e-b36f1f5e808e",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Magnetic Properties",
+      "order": 6
+    },
+    "question": "Write the spin-only magnetic moment formula.",
+    "answer": "$\\mu = \\sqrt{n(n+2)}$ BM, where $n$ is the number of unpaired electrons.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-040",
+    "_id": "3e50455d-cf7f-4e0b-ae2c-11af1b6049ea",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Magnetic Properties",
+      "order": 6
+    },
+    "question": "Give the calculated spin-only magnetic moment (in BM) for 1, 2, 3, 4 and 5 unpaired electrons.",
+    "answer": "$n = 1$: 1.73; $n = 2$: 2.84; $n = 3$: 3.87; $n = 4$: 4.90; $n = 5$: 5.92 BM.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-041",
+    "_id": "c567fe1a-7eec-4940-9da3-4aac7703c6b2",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Magnetic Properties",
+      "order": 6
+    },
+    "question": "Why do observed magnetic moments of some 3d ions deviate from the spin-only value?",
+    "answer": "The spin-only formula ignores the orbital angular momentum contribution. In some ions (e.g. $Co^{2+}$), orbital motion is not fully quenched and adds to the total moment.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-042",
+    "_id": "29353133-a0f2-4deb-94e8-bab5044e89cd",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Magnetic Properties",
+      "order": 6
+    },
+    "question": "Name four common d-block ions that are diamagnetic.",
+    "answer": "$Sc^{3+}$ ($3d^0$), $Ti^{4+}$ ($3d^0$), $Cu^+$ ($3d^{10}$) and $Zn^{2+}$ ($3d^{10}$). All have zero unpaired electrons.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-043",
+    "_id": "12cfe6d4-e670-40cb-97d6-71aba553c3d2",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Magnetic Properties",
+      "order": 6
+    },
+    "question": "Calculate the spin-only magnetic moment of a divalent aqueous ion of atomic number 25.",
+    "answer": "$Z = 25$ is Mn; $Mn^{2+}$ is $3d^5$ with 5 unpaired electrons. $\\mu = \\sqrt{5(5+2)} = \\sqrt{35} \\approx 5.92$ BM.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-044",
+    "_id": "604215b8-0508-47a3-8eee-1665886796a0",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Magnetic Properties",
+      "order": 6
+    },
+    "question": "$Cr^{3+}$ and $Co^{2+}$ both have 3 unpaired electrons. Why is $\\mu_{obs}$ of $Co^{2+}$ (~4.4–5.2 BM) higher than that of $Cr^{3+}$ (~3.87 BM)?",
+    "answer": "In $Co^{2+}$ the orbital angular momentum is not fully quenched and contributes to the moment. In $Cr^{3+}$ ($t_{2g}^3$), orbital motion is effectively quenched.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-045",
+    "_id": "1dc99da5-af29-45f1-871d-3a49dc9f7bc4",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Colour in Transition Ions",
+      "order": 7
+    },
+    "question": "Why are most d-block ions coloured in solution?",
+    "answer": "Partially filled d-orbitals allow d–d electronic transitions. The ion absorbs light of a specific wavelength in the visible region and transmits its complementary colour.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-046",
+    "_id": "2423fe3c-5446-4bd4-bd3b-8040d19b63e4",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Colour in Transition Ions",
+      "order": 7
+    },
+    "question": "Why is $Ti^{4+}$ colourless while $Ti^{3+}$ is purple?",
+    "answer": "$Ti^{4+}$ is $3d^0$ — no d-electron is available for d–d transition. $Ti^{3+}$ is $3d^1$ and undergoes a d–d transition in the visible region.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-047",
+    "_id": "e614598d-d981-480a-920b-af6445ba1fb5",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Colour in Transition Ions",
+      "order": 7
+    },
+    "question": "Explain why $Cu^+$ salts are colourless but $Cu^{2+}$ salts are blue.",
+    "answer": "$Cu^+$ is $3d^{10}$ (no d–d transition possible). $Cu^{2+}$ is $3d^9$ with one hole, so a d–d transition absorbs orange light and the ion appears blue.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-048",
+    "_id": "14fe3dca-081b-44dd-9255-77c943e4392e",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Colour in Transition Ions",
+      "order": 7
+    },
+    "question": "Why is $KMnO_4$ intensely purple even though $Mn^{+7}$ has a $d^0$ configuration?",
+    "answer": "Its colour arises from Ligand-to-Metal Charge Transfer (LMCT), not d–d transitions. An electron moves from a filled O p-orbital to an empty Mn d-orbital, absorbing strongly in the visible region.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-049",
+    "_id": "33cbfd35-d6dc-4341-bb23-778746652a4d",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Colour in Transition Ions",
+      "order": 7
+    },
+    "question": "Give the colours of these common aqueous ions: $Ti^{3+}$, $V^{3+}$, $Cr^{3+}$, $Mn^{2+}$, $Fe^{3+}$, $Fe^{2+}$, $Co^{2+}$, $Ni^{2+}$, $Cu^{2+}$.",
+    "answer": "$Ti^{3+}$ purple, $V^{3+}$ green, $Cr^{3+}$ violet, $Mn^{2+}$ pale pink, $Fe^{3+}$ yellow, $Fe^{2+}$ green, $Co^{2+}$ pink, $Ni^{2+}$ green, $Cu^{2+}$ blue.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-050",
+    "_id": "45dac00a-9557-49ad-814a-4dcfa0c7ae04",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Colour in Transition Ions",
+      "order": 7
+    },
+    "question": "Why are aqueous $Zn^{2+}$ and $Sc^{3+}$ solutions colourless?",
+    "answer": "$Zn^{2+}$ is $3d^{10}$ (fully filled) and $Sc^{3+}$ is $3d^0$ (empty). In both cases no d–d transition is possible.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-051",
+    "_id": "7961fdd7-1685-4c6d-a8d8-7df0b16c18b5",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Catalysts, Interstitial Compounds & Alloys",
+      "order": 8
+    },
+    "question": "Why are transition metals and their compounds good catalysts?",
+    "answer": "Two reasons: (i) they can adopt multiple oxidation states and form unstable intermediates with reactants; (ii) partially filled d-orbitals provide surfaces on which reactants can adsorb and form transient bonds, lowering activation energy.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-052",
+    "_id": "297b4212-0f61-4d77-a046-08fe0d437f66",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Catalysts, Interstitial Compounds & Alloys",
+      "order": 8
+    },
+    "question": "Name the catalyst used in the Contact process and the reaction it catalyses.",
+    "answer": "$V_2O_5$. It catalyses the oxidation of $SO_2$ to $SO_3$ in the manufacture of sulphuric acid.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-053",
+    "_id": "977c7611-fa09-489f-8342-c70574b1c6dd",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Catalysts, Interstitial Compounds & Alloys",
+      "order": 8
+    },
+    "question": "Name the catalyst used in Haber's process.",
+    "answer": "Finely divided iron (with $Mo$ or $Al_2O_3$ as promoter) for the synthesis of ammonia: $N_2 + 3H_2 \\rightleftharpoons 2NH_3$.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-054",
+    "_id": "7f593320-4e02-43e8-9eac-7c88334216c3",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Catalysts, Interstitial Compounds & Alloys",
+      "order": 8
+    },
+    "question": "What is the Ziegler-Natta catalyst and what is it used for?",
+    "answer": "$TiCl_4$ (or $TiCl_3$) + $Al(C_2H_5)_3$. Used to polymerise ethene into high-density polyethylene.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-055",
+    "_id": "ea228c79-2643-4d7d-94ae-570ce0bc00f5",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Catalysts, Interstitial Compounds & Alloys",
+      "order": 8
+    },
+    "question": "Name the catalyst in the Wacker process.",
+    "answer": "$PdCl_2$. It catalyses the oxidation of ethene to ethanal (acetaldehyde).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-056",
+    "_id": "1675231a-3dcf-427e-8bc7-09ca6c7c4f56",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Catalysts, Interstitial Compounds & Alloys",
+      "order": 8
+    },
+    "question": "Explain the mechanism by which $Fe^{3+}$ catalyses the reaction $2I^- + S_2O_8^{2-} \\to I_2 + 2SO_4^{2-}$.",
+    "answer": "$Fe^{3+}$ oxidises $I^-$ to $I_2$ and becomes $Fe^{2+}$. The $Fe^{2+}$ then reduces $S_2O_8^{2-}$ to $SO_4^{2-}$, regenerating $Fe^{3+}$. Variable oxidation states enable the cycle.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-057",
+    "_id": "2af839b7-5191-4681-a213-9f0726fddf36",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Catalysts, Interstitial Compounds & Alloys",
+      "order": 8
+    },
+    "question": "What are interstitial compounds? Give two examples.",
+    "answer": "Non-stoichiometric compounds formed when small atoms (H, C, N, B) occupy interstitial sites in a transition-metal lattice. Examples: $TiC$, $Mn_4N$, $Fe_3H$, $VH_{0.56}$.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-058",
+    "_id": "48719fa9-56e5-4d2c-a3e5-5b27388b2517",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Catalysts, Interstitial Compounds & Alloys",
+      "order": 8
+    },
+    "question": "State four characteristic properties of interstitial compounds.",
+    "answer": "(i) Higher melting points than the pure metal; (ii) very hard (some approach diamond); (iii) retain metallic conductivity; (iv) chemically inert.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-059",
+    "_id": "86bbc401-5244-46fb-b37f-152e3d2a9c7a",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Catalysts, Interstitial Compounds & Alloys",
+      "order": 8
+    },
+    "question": "Why do transition metals form alloys readily?",
+    "answer": "Their atomic radii differ by less than ~15%, so one metal atom can substitute for another in the lattice giving a homogeneous solid solution. Examples: brass (Cu–Zn), bronze (Cu–Sn), stainless steel (Fe–Cr–Ni).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-060",
+    "_id": "5787d9d8-f318-4dd2-8f8d-42edb1471cc2",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxides & Oxoanions",
+      "order": 9
+    },
+    "question": "How does the acidic/basic nature of a transition-metal oxide change with oxidation state?",
+    "answer": "As oxidation state rises, ionic character decreases and covalent character grows: lower OS → basic (e.g. MnO); intermediate → amphoteric (e.g. $Mn_2O_3$, $MnO_2$); higher OS → acidic (e.g. $Mn_2O_7$).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-061",
+    "_id": "4409c75a-b990-4a3b-a63f-1afe34aa67b3",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxides & Oxoanions",
+      "order": 9
+    },
+    "question": "Arrange Mn oxides MnO, $Mn_2O_3$, $MnO_2$, $Mn_2O_7$ in order of increasing acidic character.",
+    "answer": "MnO (basic) < $Mn_2O_3$ (basic/weakly amphoteric) < $MnO_2$ (amphoteric) < $MnO_3$ (acidic) < $Mn_2O_7$ (strongly acidic, covalent green oil).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-062",
+    "_id": "bab992ff-274a-46df-b570-695f1e748f4b",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxides & Oxoanions",
+      "order": 9
+    },
+    "question": "Describe the acid–base character of $V_2O_3$, $V_2O_4$ and $V_2O_5$.",
+    "answer": "$V_2O_3$ basic; $V_2O_4$ amphoteric; $V_2O_5$ amphoteric but mainly acidic (gives $VO_4^{3-}$ in alkali and $VO_2^+$ in acid).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-063",
+    "_id": "fdeba81d-00f3-4be5-8959-963ce3ca2f88",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxides & Oxoanions",
+      "order": 9
+    },
+    "question": "What is the physical nature of $Mn_2O_7$?",
+    "answer": "A covalent, dark green oil that is unstable and explosive. Its high covalent character follows from Mn being in its highest OS (+7) and the Mn–O–Mn bridging structure.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-064",
+    "_id": "13efb2d3-37b3-4938-b1eb-ee2809c50f88",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxides & Oxoanions",
+      "order": 9
+    },
+    "question": "Which is the only oxide formed by scandium, and what is its nature?",
+    "answer": "$Sc_2O_3$, a basic oxide (Sc exhibits only +3).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-065",
+    "_id": "aa53b9a7-b0ea-4b95-b039-9e6f582e14c3",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Oxides & Oxoanions",
+      "order": 9
+    },
+    "question": "Describe the Cr oxide series from low to high OS: CrO, $Cr_2O_3$, $CrO_3$.",
+    "answer": "CrO: basic (ionic). $Cr_2O_3$: amphoteric (most common and stable oxide). $CrO_3$: acidic (forms chromic acid $H_2CrO_4$ with water).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-066",
+    "_id": "43b9c14e-11fa-4b75-8e4d-a8a3e44ae946",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Dichromate",
+      "order": 10
+    },
+    "question": "Describe the full preparation of $K_2Cr_2O_7$ starting from chromite ore.",
+    "answer": "(1) $4FeCr_2O_4 + 8Na_2CO_3 + 7O_2 \\to 8Na_2CrO_4 + 2Fe_2O_3 + 8CO_2$. (2) $2Na_2CrO_4 + 2H^+ \\to Na_2Cr_2O_7 + Na^+ + H_2O$. (3) $Na_2Cr_2O_7 + 2KCl \\to K_2Cr_2O_7 + 2NaCl$ (K salt is less soluble, crystallises out).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-067",
+    "_id": "a1535a56-d00b-43c6-8c07-e8d67b3516ba",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Dichromate",
+      "order": 10
+    },
+    "question": "Why is $K_2Cr_2O_7$ (not $Na_2Cr_2O_7$) used as a primary standard in volumetric analysis?",
+    "answer": "$Na_2Cr_2O_7$ is hygroscopic (absorbs moisture from air), making accurate weighing impossible. $K_2Cr_2O_7$ is not hygroscopic, so it can be weighed exactly.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-068",
+    "_id": "9ec14349-5520-435b-9b42-9ae8ad15a28a",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Dichromate",
+      "order": 10
+    },
+    "question": "Write the equilibrium between chromate and dichromate ions and explain the colour change.",
+    "answer": "$2CrO_4^{2-} + 2H^+ \\rightleftharpoons Cr_2O_7^{2-} + H_2O$. Acid shifts right: yellow $\\to$ orange. Alkali shifts left: orange $\\to$ yellow. Oxidation state of Cr remains +6 in both.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-069",
+    "_id": "b79e497f-7893-436e-a181-59a2a3aceabb",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Dichromate",
+      "order": 10
+    },
+    "question": "What is the oxidation state of Cr in $CrO_4^{2-}$ and $Cr_2O_7^{2-}$?",
+    "answer": "+6 in both. Only the condensation (dimerisation via a bridging O) changes; the Cr oxidation state is unchanged.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-070",
+    "_id": "c5544be2-6c45-469f-a0a9-b43c04a8a202",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Dichromate",
+      "order": 10
+    },
+    "question": "Describe the structure of the $Cr_2O_7^{2-}$ ion.",
+    "answer": "Two $CrO_4$ tetrahedra sharing one bridging oxygen. Cr–O–Cr angle = 126°. Terminal Cr–O bonds ≈ 163 pm (shorter, partial double-bond character); bridging Cr–O ≈ 179 pm.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-071",
+    "_id": "3b51c47d-96d9-4b06-8c77-658ae07b26b4",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Dichromate",
+      "order": 10
+    },
+    "question": "Write the half-reaction and $E^\\circ$ for $Cr_2O_7^{2-}$ reduction in acidic medium.",
+    "answer": "$Cr_2O_7^{2-} + 14H^+ + 6e^- \\to 2Cr^{3+} + 7H_2O$, with $E^\\circ = +1.33$ V.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-072",
+    "_id": "9c444094-e8fb-4c42-82ba-b3a159dc595d",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Dichromate",
+      "order": 10
+    },
+    "question": "Give the products when acidified dichromate oxidises: (i) $Fe^{2+}$, (ii) $I^-$, (iii) $Sn^{2+}$, (iv) $H_2S$.",
+    "answer": "(i) $Fe^{3+}$; (ii) $I_2$; (iii) $Sn^{4+}$; (iv) S. In all cases $Cr_2O_7^{2-}$ is reduced to $Cr^{3+}$ (green).",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-073",
+    "_id": "84604432-e76e-4e93-913b-9bcb1a9cf127",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Dichromate",
+      "order": 10
+    },
+    "question": "Name two major industrial uses of $K_2Cr_2O_7$.",
+    "answer": "(i) Tanning in the leather industry. (ii) Oxidising agent in preparation of many organic compounds and in volumetric analysis.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-074",
+    "_id": "1a862e36-c5a0-4de3-8f0b-6feeabd45671",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Permanganate",
+      "order": 11
+    },
+    "question": "Describe the commercial preparation of $KMnO_4$ from $MnO_2$.",
+    "answer": "Two-step: (1) $2MnO_2 + 4KOH + O_2 \\to 2K_2MnO_4 + 2H_2O$ (alkaline oxidative fusion, green manganate). (2) Electrolytic oxidation of $K_2MnO_4$ in alkaline solution gives $KMnO_4$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-075",
+    "_id": "dddd2d04-81f4-471a-84d7-6504a0608622",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Permanganate",
+      "order": 11
+    },
+    "question": "How is $KMnO_4$ prepared in the laboratory from a $Mn^{2+}$ salt?",
+    "answer": "Oxidise $Mn^{2+}$ with peroxodisulphate in the presence of $Ag^+$ as catalyst: $2Mn^{2+} + 5S_2O_8^{2-} + 8H_2O \\to 2MnO_4^- + 10SO_4^{2-} + 16H^+$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-076",
+    "_id": "9afdf260-c58c-40a0-bc08-b9244d2bd29f",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Permanganate",
+      "order": 11
+    },
+    "question": "Describe the shape and bonding in $MnO_4^-$ and $MnO_4^{2-}$, and state their colour and magnetism.",
+    "answer": "Both are tetrahedral (Mn $sp^3$). $\\pi$-bonding arises from O p-orbitals overlapping with Mn d-orbitals. $MnO_4^-$: purple, $d^0$, diamagnetic. $MnO_4^{2-}$: green, $d^1$, paramagnetic.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "ncert",
+        "needs_image"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-077",
+    "_id": "5f4d83e4-d841-4b63-a983-0954f555421f",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Permanganate",
+      "order": 11
+    },
+    "question": "What happens when $KMnO_4$ is heated at 513 K?",
+    "answer": "It decomposes: $2KMnO_4 \\xrightarrow{513\\,K} K_2MnO_4 + MnO_2 + O_2$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-078",
+    "_id": "7469517d-6203-45b3-81e9-2b723097da50",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Permanganate",
+      "order": 11
+    },
+    "question": "Write the disproportionation of manganate in acidic/neutral medium.",
+    "answer": "$3MnO_4^{2-} + 4H^+ \\to 2MnO_4^- + MnO_2 + 2H_2O$. Green manganate disproportionates to purple permanganate and $MnO_2$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-079",
+    "_id": "b0611dfe-50d1-4de1-a6e7-f831ababa2f7",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Permanganate",
+      "order": 11
+    },
+    "question": "Why can HCl not be used to acidify $KMnO_4$ in titrations?",
+    "answer": "$KMnO_4$ is a strong enough oxidiser to oxidise $Cl^-$ to $Cl_2$ ($E^\\circ = 1.36$ V vs Mn reduction 1.52 V). This consumes $KMnO_4$ and gives wrong titre. Dilute $H_2SO_4$ is used instead.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-080",
+    "_id": "839562e5-aa42-46e1-955b-8cbcd98299d7",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Permanganate",
+      "order": 11
+    },
+    "question": "Give the products when acidified $KMnO_4$ oxidises: (i) $Fe^{2+}$, (ii) $I^-$, (iii) oxalate $C_2O_4^{2-}$, (iv) $H_2S$, (v) $NO_2^-$.",
+    "answer": "(i) $Fe^{3+}$; (ii) $I_2$; (iii) $CO_2$; (iv) S; (v) $NO_3^-$. In acid, $MnO_4^-$ is reduced to colourless $Mn^{2+}$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-081",
+    "_id": "2522b8fc-6cc1-4ece-ba16-bf1658e7fbaf",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Permanganate",
+      "order": 11
+    },
+    "question": "Give the products when $KMnO_4$ reacts with: (i) $I^-$ in neutral medium, (ii) $S_2O_3^{2-}$ in neutral/alkaline medium.",
+    "answer": "(i) $I^-$ is oxidised to iodate $IO_3^-$. (ii) Thiosulphate is oxidised almost quantitatively to sulphate $SO_4^{2-}$. In both cases Mn goes to $MnO_2$.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-082",
+    "_id": "1bd0f954-db85-4c9b-bf30-1818fb78acc8",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Permanganate",
+      "order": 11
+    },
+    "question": "Write the three half-reactions (with $E^\\circ$) showing the reduction of $MnO_4^-$ in acidic medium.",
+    "answer": "$MnO_4^- + e^- \\to MnO_4^{2-}$, $E^\\circ = +0.56$ V; $MnO_4^- + 4H^+ + 3e^- \\to MnO_2 + 2H_2O$, $+1.69$ V; $MnO_4^- + 8H^+ + 5e^- \\to Mn^{2+} + 4H_2O$, $+1.52$ V.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-083",
+    "_id": "f24ab407-c578-40c4-8557-501a405310e2",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Potassium Permanganate",
+      "order": 11
+    },
+    "question": "State three main uses of $KMnO_4$.",
+    "answer": "(i) Oxidising agent in analytical and preparative chemistry; (ii) bleaching of wool, cotton, silk and other textile fibres; (iii) decolorisation of oils.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-084",
+    "_id": "a43bd133-40a2-4f72-900f-87432672098c",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Copper, Silver & Gold",
+      "order": 12
+    },
+    "question": "Give the most stable oxidation state of Cu, Ag and Au.",
+    "answer": "Cu: +2. Ag: +1. Au: +3. (Cu(I) disproportionates in aqueous solution; Au(I) also disproportionates.)",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-085",
+    "_id": "1ca34867-d9fa-4499-a96e-ca1b6a9728cd",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Copper, Silver & Gold",
+      "order": 12
+    },
+    "question": "Explain why $Cu^+$ is unstable in aqueous solution.",
+    "answer": "It disproportionates: $2Cu^+ \\to Cu^{2+} + Cu$, with $K_{eq} \\approx 1.6 \\times 10^6$. The large negative hydration enthalpy of $Cu^{2+}$ drives the equilibrium toward disproportionation.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-086",
+    "_id": "59ffc876-c108-4c89-8b22-bf5e68ccdbd1",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Copper, Silver & Gold",
+      "order": 12
+    },
+    "question": "Why is $Cu^{2+}$ more stable than $Cu^+$ in aqueous solution despite $Cu^+$ having $3d^{10}$?",
+    "answer": "Although removing the 2nd electron needs high energy, $Cu^{2+}$ has a much more negative hydration enthalpy than $Cu^+$, which more than compensates for the 2nd IE.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-087",
+    "_id": "635a8a05-29ff-4cdc-be16-80eca42e0cd7",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Copper, Silver & Gold",
+      "order": 12
+    },
+    "question": "What is \"matte\" in the extraction of copper?",
+    "answer": "A molten mixture of $Cu_2S$ and FeS (with silica slag removed) obtained during smelting of chalcopyrite ($CuFeS_2$).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-088",
+    "_id": "4440a647-5f51-4e14-8deb-67731dc8527f",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Copper, Silver & Gold",
+      "order": 12
+    },
+    "question": "Write the self-reduction reaction that gives blister copper.",
+    "answer": "$2Cu_2O + Cu_2S \\to 6Cu + SO_2$. No external reducing agent is used — the sulphide itself reduces the oxide.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-089",
+    "_id": "f566e9cb-512c-40da-bd27-da6fb40e294d",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Copper, Silver & Gold",
+      "order": 12
+    },
+    "question": "Why are the metallic radii of Ag (144 pm) and Au (144 pm) almost identical?",
+    "answer": "Lanthanoid contraction (filling of 4f before 5d) cancels the expected size increase from 4d to 5d. Ag (4d) and Au (5d) therefore end up with the same radius.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-090",
+    "_id": "dcefd436-ac99-466a-8d1f-c351f1a8700f",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Copper, Silver & Gold",
+      "order": 12
+    },
+    "question": "What happens when $AgNO_3$ is heated (i) just above its melting point, (ii) more strongly?",
+    "answer": "(i) $2AgNO_3 \\to 2AgNO_2 + O_2$ (silver nitrite). (ii) On stronger heating: $2AgNO_3 \\to 2Ag + 2NO_2 + O_2$.",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-091",
+    "_id": "b723cb50-51a0-4922-8beb-02d265b2617f",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Zinc & Mercury",
+      "order": 13
+    },
+    "question": "Why is zinc soft and why does it have a low melting point?",
+    "answer": "Zn has a fully-filled $3d^{10}$ subshell; d-electrons do not contribute to metallic bonding. Only the two 4s electrons bind the lattice, giving weak metallic bonding and a low melting point.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-092",
+    "_id": "c0abf8ed-b728-40ad-8dcf-5b8bc6960cd6",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Zinc & Mercury",
+      "order": 13
+    },
+    "question": "Why is Hg the only metal that is liquid at room temperature?",
+    "answer": "$[Xe]\\,4f^{14}\\,5d^{10}\\,6s^2$ — d-electrons are buried and unavailable for bonding. Relativistic contraction of the 6s orbital further weakens Hg–Hg bonding, producing very weak metallic interaction.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-093",
+    "_id": "a8b6d186-8908-444c-8695-8375b868e778",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Zinc & Mercury",
+      "order": 13
+    },
+    "question": "What is \"philosopher's wool\"?",
+    "answer": "ZnO, obtained as a fluffy white solid when Zn is burned in air.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-094",
+    "_id": "8040bb00-bb5a-4ae8-9086-859dae92d962",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Zinc & Mercury",
+      "order": 13
+    },
+    "question": "What is the structure of the mercury(I) ion? Why is mercury(I) diamagnetic?",
+    "answer": "Hg(I) exists as the dimeric $[Hg\\text{–}Hg]^{2+}$ ion ($Hg_2^{2+}$). The Hg–Hg bond pairs the two unpaired electrons, so $Hg_2^{2+}$ is diamagnetic.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-095",
+    "_id": "8a1edc4c-9230-4fa1-8d27-979f0ca6a006",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Zinc & Mercury",
+      "order": 13
+    },
+    "question": "What is \"corrosive sublimate\"? Describe its molecular shape in the solid state.",
+    "answer": "$HgCl_2$. Solid $HgCl_2$ contains discrete linear Cl–Hg–Cl molecules (Hg uses $sp$ hybrid orbitals), which explains its high volatility.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-096",
+    "_id": "ace0d80e-e3e8-4621-92c5-c27fc78a35f8",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Zinc & Mercury",
+      "order": 13
+    },
+    "question": "What is white vitriol, and with which common salt is it isomorphous?",
+    "answer": "White vitriol is $ZnSO_4 \\cdot 7H_2O$. It is isomorphous with Epsom salt ($MgSO_4 \\cdot 7H_2O$) — both crystallise in the same lattice with $M^{2+}$ of similar ionic radii.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-097",
+    "_id": "fb96f554-fbe2-43d1-8075-4939f3096b40",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Lanthanoids (4f Series)",
+      "order": 14
+    },
+    "question": "Give the general electronic configuration of lanthanoids.",
+    "answer": "$[Xe]\\,4f^{1-14}\\,5d^{0-1}\\,6s^2$. Ln³⁺ ions have config $[Xe]\\,4f^{0-14}$.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-098",
+    "_id": "964fbba7-62fe-4b00-afc2-897c6165876d",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Lanthanoids (4f Series)",
+      "order": 14
+    },
+    "question": "Why are lanthanoids extremely difficult to separate from each other?",
+    "answer": "Lanthanoid contraction makes their ionic radii and chemical properties almost identical. Fractional crystallisation is impractical; modern separation uses ion-exchange chromatography.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-099",
+    "_id": "48c77791-180c-4d19-b3b9-9c76cfb6f616",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Lanthanoids (4f Series)",
+      "order": 14
+    },
+    "question": "How does the basic character of $Ln(OH)_3$ change from $La(OH)_3$ to $Lu(OH)_3$?",
+    "answer": "It decreases steadily. Due to lanthanoid contraction, cation size falls and covalent character of the M–OH bond rises, so the hydroxide becomes progressively less basic.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-100",
+    "_id": "dd804a3d-536f-4f69-8d10-2c5c235115b5",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Lanthanoids (4f Series)",
+      "order": 14
+    },
+    "question": "Which two trivalent lanthanoid ions are diamagnetic?",
+    "answer": "$La^{3+}$ ($4f^0$) and $Lu^{3+}$ ($4f^{14}$). Both have no unpaired f-electrons.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-101",
+    "_id": "2646cc46-c0d9-4a32-8d20-5c94c72a4a23",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Lanthanoids (4f Series)",
+      "order": 14
+    },
+    "question": "Which lanthanoid has a stable +4 oxidation state and why?",
+    "answer": "Cerium. $Ce^{4+}$ has a stable $[Xe]$ noble-gas configuration ($4f^0$). $E^\\circ(Ce^{4+}/Ce^{3+}) = +1.74$ V, so $Ce^{4+}$ is a strong oxidising agent but still useful as an analytical reagent.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-102",
+    "_id": "ae8771f4-ccee-40ce-bc37-f6bcd8dbc2cc",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Lanthanoids (4f Series)",
+      "order": 14
+    },
+    "question": "Why is $Eu^{2+}$ a strong reducing agent?",
+    "answer": "$Eu^{2+}$ has the stable half-filled $4f^7$ configuration and is relatively easy to form, but it reverts spontaneously to the characteristic $Eu^{3+}$, supplying one electron in the process.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-103",
+    "_id": "7e5edfd1-f3b7-4990-a5b2-0a2793833344",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Lanthanoids (4f Series)",
+      "order": 14
+    },
+    "question": "What is \"Mischmetall\" and what is it used for?",
+    "answer": "An alloy containing ~95% lanthanoid metal (mainly Ce, La, Nd), ~5% Fe, and traces of S, C, Ca and Al. Uses: flints of cigarette lighters, bullet casings, Mg-alloys for jet engines.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-104",
+    "_id": "2f43d9f3-2665-49c3-8dd8-c6ec802c4f3e",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Lanthanoids (4f Series)",
+      "order": 14
+    },
+    "question": "Give the chemical products when a lanthanoid (Ln) reacts with (i) $O_2$, (ii) $H_2O$, (iii) $N_2$, (iv) a halogen $X_2$.",
+    "answer": "(i) $Ln_2O_3$; (ii) $Ln(OH)_3 + H_2$ (slow cold, fast hot); (iii) LnN (at high temperature); (iv) $LnX_3$.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-105",
+    "_id": "5ff99ef7-843d-4d11-82b0-86f165f5144e",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Lanthanoids (4f Series)",
+      "order": 14
+    },
+    "question": "State two applications of lanthanoid oxides/compounds.",
+    "answer": "(i) Catalysts in petroleum cracking (mixed $Ln$-zeolites). (ii) Phosphors in colour TVs and fluorescent screens; also in lasers (e.g. Nd-YAG).",
+    "metadata": {
+      "difficulty": "hard",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-106",
+    "_id": "63fb0cc8-7d43-4cb5-9a82-2e9f49db4c75",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Lanthanoids (4f Series)",
+      "order": 14
+    },
+    "question": "Why does lanthanum not strictly have a 4f electron in its ground state?",
+    "answer": "La: $[Xe]\\,5d^1\\,6s^2$ — its ground-state configuration has no 4f electron. 4f filling begins only at Ce ($4f^1\\,5d^1\\,6s^2$). La is grouped with the lanthanoids for chemical similarity.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-107",
+    "_id": "9c792ed2-1f8c-4b7c-892a-c0eb665a9376",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Actinoids (5f Series)",
+      "order": 15
+    },
+    "question": "Give the general electronic configuration of the actinoids.",
+    "answer": "$[Rn]\\,5f^{0-14}\\,6d^{0-2}\\,7s^2$. All 14 elements from Th (Z=90) to Lr (Z=103) are radioactive.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-108",
+    "_id": "b8a7a526-a50c-426e-889e-cef9ee6667b1",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Actinoids (5f Series)",
+      "order": 15
+    },
+    "question": "Why is actinoid contraction greater than lanthanoid contraction?",
+    "answer": "5f orbitals are more diffuse than 4f and shield the nuclear charge even less effectively. The net increase in effective nuclear charge down the series is larger, contracting the ions more strongly.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-109",
+    "_id": "73388479-8233-482f-a049-b60d05671946",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Actinoids (5f Series)",
+      "order": 15
+    },
+    "question": "Why do actinoids show a much wider range of oxidation states than lanthanoids?",
+    "answer": "The 5f, 6d and 7s subshells are very close in energy, so electrons can be lost from all three. In lanthanoids, 4f electrons are buried deep and rarely participate beyond +3.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-110",
+    "_id": "25bd3850-a993-4066-8afb-7cca144034cb",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Actinoids (5f Series)",
+      "order": 15
+    },
+    "question": "Which actinoids show the maximum oxidation state of +7?",
+    "answer": "Neptunium (Np, Z=93) and Plutonium (Pu, Z=94).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-111",
+    "_id": "9176b60b-2742-4a44-96fd-3f61b62be05d",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Actinoids (5f Series)",
+      "order": 15
+    },
+    "question": "Why are the ionisation enthalpies of early actinoids lower than those of the corresponding lanthanoids?",
+    "answer": "5f orbitals are more extended and penetrate less into the core than 4f. The outer electrons are therefore less tightly held, making them easier to remove.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-112",
+    "_id": "bb4bd9c4-a81f-4d63-998b-5b793f1fd576",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Actinoids (5f Series)",
+      "order": 15
+    },
+    "question": "How does 5f availability for bonding differ from 4f, and what consequence does this have?",
+    "answer": "5f orbitals extend farther from the nucleus and are available for covalent bonding, while 4f are buried and inert. Consequently actinoids form more complexes and more covalent compounds than lanthanoids.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-113",
+    "_id": "2e4d0694-381b-4cc9-895d-fe6a4361b5bf",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Actinoids (5f Series)",
+      "order": 15
+    },
+    "question": "Which actinoid has no 5f electrons in its ground state?",
+    "answer": "Thorium (Th, Z=90): $[Rn]\\,6d^2\\,7s^2$. Its 5f subshell is empty.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-114",
+    "_id": "f0e1eb07-e5f6-43d7-8cce-c61f9269bb00",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Actinoids (5f Series)",
+      "order": 15
+    },
+    "question": "What happens when an actinoid reacts with boiling water?",
+    "answer": "It forms a mixture of the oxide and the hydride. $HNO_3$ only slightly attacks actinoids (protective oxide layer forms), while HCl attacks them vigorously.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-115",
+    "_id": "dfdd30e8-bc29-4b92-88ba-4f6670ff9bf8",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "The Actinoids (5f Series)",
+      "order": 15
+    },
+    "question": "Name the last actinoid, state its atomic number and its stable oxidation state.",
+    "answer": "Lawrencium (Lr), $Z = 103$. Stable oxidation state: +3. Configuration: $[Rn]\\,5f^{14}\\,6d^1\\,7s^2$.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-116",
+    "_id": "ea22ab56-4f3e-4a24-8fb2-868e4bd9d41e",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications of d- and f-block Elements",
+      "order": 16
+    },
+    "question": "Give the catalyst and the reaction for: (i) Contact process, (ii) Haber process, (iii) Wacker process, (iv) Ziegler-Natta polymerisation.",
+    "answer": "(i) $V_2O_5$: $SO_2 \\to SO_3$. (ii) Fe (with Mo promoter): $N_2 + 3H_2 \\to 2NH_3$. (iii) $PdCl_2$: $CH_2{=}CH_2 \\to CH_3CHO$. (iv) $TiCl_4$ + $Al(C_2H_5)_3$: ethene $\\to$ polyethylene.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-117",
+    "_id": "ce706cbc-5a12-4a1d-8403-6f693afec23c",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications of d- and f-block Elements",
+      "order": 16
+    },
+    "question": "State two pigments or colouring materials derived from d-block metals.",
+    "answer": "TiO₂ — brilliant white pigment in paints, paper and cosmetics. Fe₂O₃ — red pigment. Also $MnO_2$ is widely used in dry cells (Leclanché cell).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-118",
+    "_id": "0ab738b0-05ea-4af6-baca-451ae96ccbc1",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications of d- and f-block Elements",
+      "order": 16
+    },
+    "question": "Why is AgBr (and not AgCl or AgI) the principal sensitizer used in photographic films?",
+    "answer": "AgBr has the ideal balance of light-sensitivity and grain-size control. On exposure it decomposes to deposit metallic Ag at the grain site, forming the latent image which is then developed chemically.",
+    "metadata": {
+      "difficulty": "medium",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-119",
+    "_id": "715174b5-89dc-4f69-a7e5-7a179bc26af0",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications of d- and f-block Elements",
+      "order": 16
+    },
+    "question": "Name three ferrous alloying metals used to produce special steels and state one use.",
+    "answer": "Chromium (stainless steel, corrosion resistance), Manganese (hard-wearing rail tracks), Nickel (Invar, low thermal expansion). W, Mo and V are used in high-speed tool steels.",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  },
+  {
+    "flashcard_id": "DFB-120",
+    "_id": "fd30b253-bf7d-4e06-8324-563a055ad1f8",
+    "chapter": {
+      "id": "ch12_dblock",
+      "name": "D & F Block",
+      "category": "Inorganic Chemistry"
+    },
+    "topic": {
+      "name": "Applications of d- and f-block Elements",
+      "order": 16
+    },
+    "question": "Give two uses of zinc in industry.",
+    "answer": "Galvanisation of iron (corrosion protection) and construction of dry-cell anodes. It is also used in the preparation of alloys such as brass (Cu–Zn).",
+    "metadata": {
+      "difficulty": "easy",
+      "tags": [
+        "bitsat",
+        "ncert"
+      ],
+      "source": "NCERT Class 12 Ch 8",
+      "class_num": 12,
+      "created_at": "2026-04-18T12:48:21.067Z",
+      "updated_at": "2026-04-18T12:48:21.067Z"
+    },
+    "deleted_at": null
+  }
+]

@@ -16,6 +16,7 @@ export interface FlashcardItem {
   question: string;
   answer: string;
   topicName: string;
+  topicOrder: number;
 }
 
 // Cache for ISR (Incremental Static Regeneration)
@@ -38,7 +39,7 @@ export async function fetchFlashcards(): Promise<FlashcardItem[]> {
     await connectToDatabase();
 
     const flashcards = await Flashcard.find({ deleted_at: null })
-      .sort({ 'metadata.created_at': -1 })
+      .sort({ 'topic.order': 1, 'metadata.created_at': 1 })
       .lean<IFlashcard[]>();
 
     // Transform MongoDB documents to FlashcardItem interface
@@ -50,6 +51,7 @@ export async function fetchFlashcards(): Promise<FlashcardItem[]> {
       question: card.question,
       answer: card.answer,
       topicName: card.topic.name,
+      topicOrder: card.topic.order ?? 0,
     }));
 
     // Update cache
@@ -179,6 +181,7 @@ export async function getFlashcardById(id: string): Promise<FlashcardItem | null
       question: flashcard.question,
       answer: flashcard.answer,
       topicName: flashcard.topic.name,
+      topicOrder: flashcard.topic.order ?? 0,
     };
   } catch (error) {
     console.error('Error fetching flashcard by ID:', error);

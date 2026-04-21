@@ -686,8 +686,58 @@ export default function PeriodicTableClient() {
             }
         ];
 
-        // Use slides for d-block and p-block, otherwise just content
-        const slides = block === 'd' ? dBlockSlides : block === 'p' ? pBlockSlides : [{ type: 'content' as const, sections: info.sections }];
+        // Define slides for s-block with hand-drawn notes images
+        const sBlockSlides = [
+            {
+                type: 'content' as const,
+                sections: info.sections
+            },
+            {
+                type: 'image' as const,
+                title: 's-Block Handwritten Notes — Page 1',
+                imageUrl: 'https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/svg/S1.webp',
+                caption: 's-Block handwritten notes'
+            },
+            {
+                type: 'image' as const,
+                title: 's-Block Handwritten Notes — Page 2',
+                imageUrl: 'https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/svg/S2.webp',
+                caption: 's-Block handwritten notes'
+            },
+            {
+                type: 'image' as const,
+                title: 's-Block Handwritten Notes — Page 3',
+                imageUrl: 'https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/svg/S3.webp',
+                caption: 's-Block handwritten notes'
+            },
+            {
+                type: 'image' as const,
+                title: 's-Block Handwritten Notes — Page 4',
+                imageUrl: 'https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/svg/S4.webp',
+                caption: 's-Block handwritten notes'
+            },
+            {
+                type: 'image' as const,
+                title: 's-Block Handwritten Notes — Page 5',
+                imageUrl: 'https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/svg/S5.webp',
+                caption: 's-Block handwritten notes'
+            },
+            {
+                type: 'image' as const,
+                title: 's-Block Handwritten Notes — Page 6',
+                imageUrl: 'https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/svg/S6.webp',
+                caption: 's-Block handwritten notes'
+            },
+            {
+                type: 'image' as const,
+                title: 's-Block Handwritten Notes — Page 7',
+                imageUrl: 'https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/svg/S7.webp',
+                caption: 's-Block handwritten notes'
+            }
+        ];
+
+        // Use slides for s-block, d-block and p-block, otherwise just content
+        const slides = block === 's' ? sBlockSlides : block === 'd' ? dBlockSlides : block === 'p' ? pBlockSlides : [{ type: 'content' as const, sections: info.sections }];
         const totalSlides = slides.length;
 
         const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
@@ -731,17 +781,17 @@ export default function PeriodicTableClient() {
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Header - Fixed with Navigation */}
-                    <div className="flex items-start justify-between p-6 md:p-10 pb-6 border-b-2" style={{ borderColor: `${info.color}40` }}>
-                        <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-3">
-                                <div className="p-3 rounded-xl" style={{ backgroundColor: `${info.color}20`, border: `2px solid ${info.color}40` }}>
-                                    <Layers size={28} style={{ color: info.color }} />
-                                </div>
-                                <h2 className="text-3xl md:text-4xl font-bold" style={{ color: info.color }}>
+                    <div className="flex items-center justify-between p-3 md:p-4 border-b-2" style={{ borderColor: `${info.color}40` }}>
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
+                            <div className="p-2 rounded-lg flex-shrink-0" style={{ backgroundColor: `${info.color}20`, border: `1px solid ${info.color}40` }}>
+                                <Layers size={20} style={{ color: info.color }} />
+                            </div>
+                            <div className="min-w-0">
+                                <h2 className="text-xl md:text-2xl font-bold leading-tight" style={{ color: info.color }}>
                                     {info.name}
                                 </h2>
+                                <p className="text-gray-400 text-sm font-medium truncate">{info.description}</p>
                             </div>
-                            <p className="text-gray-300 text-lg md:text-xl font-medium">{info.description}</p>
                         </div>
                         
                         {/* Navigation Controls in Header */}
@@ -798,7 +848,7 @@ export default function PeriodicTableClient() {
                             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                         >
                             {slides.map((slide, idx) => (
-                                <div key={idx} className="w-full flex-shrink-0 p-6 md:p-10 pt-8 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 200px)' }}>
+                                <div key={idx} className="w-full flex-shrink-0 p-4 md:p-8 pt-4 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 110px)' }}>
                                     {slide.type === 'content' ? (
                                         <div className="space-y-8">
                                             {slide.sections.map((section, sIdx) => (
@@ -1125,6 +1175,9 @@ export default function PeriodicTableClient() {
                 {/* Nature of Oxides/Hydroxides Reference */}
                 <OxidesReferenceSection />
 
+                {/* 25 Must-Know Facts */}
+                <PeriodicFactsSection />
+
                 {/* Knowledge Check MCQ Quiz */}
                 <div className="mt-12 mb-8">
                     <PeriodicTableMCQQuiz />
@@ -1134,6 +1187,92 @@ export default function PeriodicTableClient() {
         </div >
     );
 }
+
+// --- 25 Must-Know Periodic Table Facts ---
+const PeriodicFactsSection = () => {
+    const categories = {
+        physical:   { label: 'Physical',       color: '#60a5fa' },
+        reactivity: { label: 'Reactivity',     color: '#f97316' },
+        electro:    { label: 'Electrochemical', color: '#a78bfa' },
+        abundance:  { label: 'Abundance',      color: '#34d399' },
+        special:    { label: 'Special',        color: '#fbbf24' },
+    } as const;
+    type Cat = keyof typeof categories;
+
+    const facts: { label: string; value: string; note: string; cat: Cat }[] = [
+        { label: 'Lightest metal',                    value: 'Lithium (Li)',      note: '0.534 g/cm³ — floats on oil',                cat: 'physical'   },
+        { label: 'Densest / heaviest element',        value: 'Osmium (Os)',       note: '22.59 g/cm³',                                cat: 'physical'   },
+        { label: 'Highest melting point',             value: 'Tungsten (W)',      note: '3422 °C — used in bulb filaments',            cat: 'physical'   },
+        { label: 'Only liquid metal at room temp',    value: 'Mercury (Hg)',      note: 'mp = −38.8 °C',                              cat: 'physical'   },
+        { label: 'Only liquid non-metal at room temp',value: 'Bromine (Br₂)',     note: 'Reddish-brown fuming liquid, bp 58.8 °C',    cat: 'physical'   },
+        { label: 'Hardest natural substance',         value: 'Diamond (C)',       note: 'Mohs hardness 10',                           cat: 'physical'   },
+        { label: 'Most ductile metal',                value: 'Gold (Au)',         note: '1 g → ~3 km of wire',                        cat: 'physical'   },
+        { label: 'Most reactive metal',               value: 'Caesium (Cs)',      note: 'Explodes violently on contact with water',   cat: 'reactivity' },
+        { label: 'Least reactive / most noble metal', value: 'Gold (Au)',         note: 'Dissolves only in aqua regia',               cat: 'reactivity' },
+        { label: 'Strongest oxidizing agent',         value: 'Fluorine (F₂)',     note: 'Oxidizes even water and glass',              cat: 'reactivity' },
+        { label: 'Strongest reducing agent (aq.)',    value: 'Lithium (Li)',      note: 'Highest hydration energy of Li⁺ ion',        cat: 'reactivity' },
+        { label: 'Most electronegative element',      value: 'Fluorine (F)',      note: 'EN = 4.0 on Pauling scale',                  cat: 'electro'    },
+        { label: 'Most electropositive element',      value: 'Caesium (Cs)',      note: 'EN = 0.79',                                  cat: 'electro'    },
+        { label: 'Highest 1st ionization energy',     value: 'Helium (He)',       note: 'IE₁ = 2372 kJ/mol',                         cat: 'electro'    },
+        { label: 'Lowest 1st ionization energy',      value: 'Caesium (Cs)',      note: 'IE₁ = 376 kJ/mol',                          cat: 'electro'    },
+        { label: 'Highest electron affinity',         value: 'Chlorine (Cl)',     note: '−349 kJ/mol — NOT F (compact 2p repulsion)', cat: 'electro'    },
+        { label: 'Largest atomic radius',             value: 'Caesium (Cs)',      note: '~265 pm',                                    cat: 'electro'    },
+        { label: 'Smallest atomic radius (reactive)', value: 'Fluorine (F)',      note: '~64 pm',                                     cat: 'electro'    },
+        { label: 'Most abundant element in universe', value: 'Hydrogen (H)',      note: '~75% by mass',                               cat: 'abundance'  },
+        { label: 'Most abundant in Earth\'s crust',   value: 'Oxygen (O)',        note: '~46% by mass',                               cat: 'abundance'  },
+        { label: 'Most abundant metal in crust',      value: 'Aluminium (Al)',    note: '~8% by mass',                                cat: 'abundance'  },
+        { label: 'Most abundant gas in atmosphere',   value: 'Nitrogen (N₂)',     note: '~78% by volume',                             cat: 'abundance'  },
+        { label: 'Best electrical conductor',         value: 'Silver (Ag)',       note: 'Higher conductivity than copper at 25 °C',   cat: 'special'    },
+        { label: 'Element with most stable isotopes', value: 'Tin (Sn)',          note: '10 stable isotopes',                         cat: 'special'    },
+        { label: 'Noble gas with highest boiling pt', value: 'Radon (Rn)',        note: 'bp = −61.7 °C',                              cat: 'special'    },
+    ];
+
+    return (
+        <section className="mt-12 mb-4">
+            {/* Header */}
+            <div className="flex items-center gap-3 mb-5">
+                <div className="w-1 h-8 rounded-full bg-gradient-to-b from-amber-400 to-orange-500 shrink-0" />
+                <div>
+                    <h2 className="text-xl md:text-2xl font-bold text-white">25 Must-Know Facts</h2>
+                    <p className="text-gray-500 text-sm">Key extremes &amp; properties — asked directly in JEE &amp; NEET</p>
+                </div>
+            </div>
+
+            {/* Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
+                {facts.map((fact, i) => (
+                    <div
+                        key={i}
+                        className="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-[#0F1623] border border-white/5 hover:border-white/10 hover:bg-[#141c2e] transition-colors group"
+                    >
+                        <span className="text-[11px] font-mono text-gray-700 w-5 shrink-0 text-right select-none">
+                            {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <span
+                            className="w-1.5 h-1.5 rounded-full shrink-0"
+                            style={{ backgroundColor: categories[fact.cat].color }}
+                        />
+                        <span className="text-gray-400 text-sm flex-1 min-w-0">{fact.label}</span>
+                        <div className="text-right shrink-0 ml-2">
+                            <span className="text-white font-semibold text-sm">{fact.value}</span>
+                            <span className="block text-gray-600 text-[11px] leading-tight">{fact.note}</span>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Legend */}
+            <div className="flex flex-wrap gap-x-5 gap-y-1.5 mt-4 justify-end">
+                {(Object.entries(categories) as [Cat, typeof categories[Cat]][]).map(([key, cat]) => (
+                    <div key={key} className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full" style={{ backgroundColor: cat.color }} />
+                        <span className="text-xs text-gray-600">{cat.label}</span>
+                    </div>
+                ))}
+            </div>
+        </section>
+    );
+};
 
 // --- YouTube Video Lectures Section ---
 const YouTubeLecturesSection = () => {

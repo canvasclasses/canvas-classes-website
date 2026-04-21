@@ -1,5 +1,11 @@
 {
     "framework": "nextjs",
     "buildCommand": "npm run build",
-    "outputDirectory": ".next"
+    "outputDirectory": ".next",
+    "crons": [
+        {
+            "path": "/api/blog/cron/publish",
+            "schedule": "*/15 * * * *"
+        }
+    ]
 }

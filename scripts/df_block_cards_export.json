@@ -1,0 +1,415 @@
+{
+  "total": 65,
+  "byTopic": {
+    "Physical Properties": [
+      {
+        "id": "FLASH-INORG-0001",
+        "difficulty": "medium",
+        "q": "Why are Zn, Cd, and Hg not considered transition elements?.",
+        "a": "They have completely filled  $$d^{10}$$   configurations in their ground state and in their common oxidation states1."
+      },
+      {
+        "id": "FLASH-INORG-0002",
+        "difficulty": "medium",
+        "q": "In the 3d series, which element has the lowest enthalpy of atomization and why?.",
+        "a": "Zinc (Zn). It has no unpaired electrons (configuration  $$3d^{10}4s^2$$  ), resulting in the weakest interatomic metallic bonding."
+      },
+      {
+        "id": "FLASH-INORG-0003",
+        "difficulty": "medium",
+        "q": "Why is the melting point of Manganese (Mn) anomalously low compared to its neighbors?.",
+        "a": "While generally  $$d^5$$   implies strong bonding, Mn shows a dip due to its stable half-filled configuration forming a complex lattice with weaker metallic bonding."
+      },
+      {
+        "id": "FLASH-INORG-0004",
+        "difficulty": "medium",
+        "q": "Why do the atomic radii of the second (4d) and third (5d) transition series exhibit very similar values (e.g., Zr ≈ Hf)?.",
+        "a": "Due to Lanthanoid Contraction. The filling of 4f orbitals before 5d results in poor shielding, pulling 5d electrons in and cancelling the size increase."
+      },
+      {
+        "id": "FLASH-INORG-0055",
+        "difficulty": "medium",
+        "q": "Why is the separation of Zirconium (4d) and Hafnium (5d) extremely difficult?",
+        "a": "Due to Lanthanoid Contraction, they have almost identical atomic radii and consequently very similar chemical properties."
+      }
+    ],
+    "Ionisation Enthalpy & Oxidation States": [
+      {
+        "id": "FLASH-INORG-0005",
+        "difficulty": "medium",
+        "q": "Why is the first Ionisation Enthalpy (IE) of Zn higher than expected, while Cr is lower?.",
+        "a": "Zn has a stable filled  $$4s^2$$  subshell. Cr has $$3d^5 4s^1$$  ; removing the 4s electron leaves the stable half-filled  $$d^5$$   intact."
+      },
+      {
+        "id": "FLASH-INORG-0006",
+        "difficulty": "medium",
+        "q": "Why is the second Ionisation Enthalpy of Cu unusually high?.",
+        "a": "Removal of the second electron disrupts the stable completely filled d-shell ( $$3d^{10}$$ for $$Cu^+$$  ), causing loss of exchange energy."
+      },
+      {
+        "id": "FLASH-INORG-0007",
+        "difficulty": "medium",
+        "q": "Identify the transition element in the 3d series that does not exhibit variable oxidation states.",
+        "a": "Scandium (Sc). It only exhibits +3 because losing all valence electrons ( $$3d^1 4s^2$$  ) yields a stable noble gas configuration."
+      },
+      {
+        "id": "FLASH-INORG-0008",
+        "difficulty": "medium",
+        "q": "In Group 6, why is Cr(VI) a strong oxidizing agent while Mo(VI) and W(VI) are stable?.",
+        "a": "Heavier d-block members favor higher oxidation states. Thus, Mo(VI) and W(VI) are stable, while Cr(VI) is unstable and reduces easily."
+      },
+      {
+        "id": "FLASH-INORG-0009",
+        "difficulty": "medium",
+        "q": "Why is the highest oxidation state of a transition metal usually exhibited in its oxides or fluorides?.",
+        "a": "Due to the small size and high electronegativity of O and F. Oxygen stabilizes high states via multiple bonds ( $$p\\pi-d\\pi$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0010",
+        "difficulty": "medium",
+        "q": "Which 3d metal fluoride exhibits the +7 oxidation state? (Trick Question).",
+        "a": "None. The highest fluoride is  $$MnF_4$$  . The +7 state is only achieved in oxides ( $$Mn_2O_7$$  ) or oxofluorides."
+      },
+      {
+        "id": "FLASH-INORG-0051",
+        "difficulty": "medium",
+        "q": "Why is $$Cu^{2+}(aq) $$more stable than$$  Cu^+(aq) $$despite$$  Cu^+ $$having a stable$$  3d^{10}$$configuration?",
+        "a": "The high negative Hydration Enthalpy of $$Cu^{2+}$$   compensates for the energy required to remove the second electron (2nd IE)."
+      },
+      {
+        "id": "FLASH-INORG-0052",
+        "difficulty": "medium",
+        "q": "Why is the highest oxidation state of Mn +7 in oxides ( $$Mn_2O_7$$  ) but only +4 in fluorides ( $$MnF_4$$  )?",
+        "a": "Oxygen can form multiple bonds ( $$p\\pi-d\\pi$$  ) with the metal, stabilizing high oxidation states, whereas fluorine can only form single bonds."
+      },
+      {
+        "id": "FLASH-INORG-0054",
+        "difficulty": "medium",
+        "q": "In Group 6, why is  $$Cr(VI)$$a strong oxidant (e.g., Dichromate) while$$Mo(VI)$$and$$W(VI)$$   are stable?",
+        "a": "In transition groups, the stability of higher oxidation states increases down the group (heavier elements are more stable in high OS)."
+      }
+    ],
+    "Standard Electrode Potentials (E°)": [
+      {
+        "id": "FLASH-INORG-0011",
+        "difficulty": "medium",
+        "q": "Why is the  $$E^\\circ (M^{2+}/M)$$   value for Copper positive (+0.34 V)?.",
+        "a": "The high energy required to sublime and ionize Cu is not balanced by its hydration enthalpy, making it noble."
+      },
+      {
+        "id": "FLASH-INORG-0012",
+        "difficulty": "medium",
+        "q": "Why are  $$E^\\circ$$   values for Mn, Ni, and Zn more negative than the trend suggests?.",
+        "a": "Mn & Zn: Stability of half-filled ( $$d^5$$  ) and filled ( $$d^{10}$$  ) subshells. Ni: Exceptionally high negative hydration enthalpy."
+      },
+      {
+        "id": "FLASH-INORG-0013",
+        "difficulty": "medium",
+        "q": "Why is  $$Cr^{2+}$$a reducing agent while$$Mn^{3+}$$is an oxidizing agent (both are$$d^4$$  )?.",
+        "a": "$$Cr^{2+}$$ reduces to stable $$d^3$$  ( $$t_{2g}^3$$  ). $$Mn^{3+}$$ oxidizes to stable half-filled $$d^5$$."
+      },
+      {
+        "id": "FLASH-INORG-0014",
+        "difficulty": "medium",
+        "q": "Why is $$Co^{3+}$$a strong oxidizing agent in aqueous solution?.",
+        "a": "It accepts an electron to form stable $$Co^{2+}$$  . However, with strong ligands,  $$Co^{3+}$$   stabilizes due to crystal field splitting."
+      },
+      {
+        "id": "FLASH-INORG-0015",
+        "difficulty": "medium",
+        "q": "Why is the $$E^\\circ (M^{3+}/M^{2+})$$value for Scandium very low?.",
+        "a": "$$Sc^{3+}$$ has a stable noble gas configuration. $$Sc^{2+}$$   would instantly lose an electron to reach this state."
+      },
+      {
+        "id": "FLASH-INORG-0058",
+        "difficulty": "medium",
+        "q": "Why does Copper not replace Hydrogen from acids ( $$E^\\circ_{Cu^{2+}/Cu} = +0.34V$$  )?",
+        "a": "The energy required to sublime and ionize Cu (high  $$\\Delta_a H$$   and IE) is not balanced by its hydration enthalpy."
+      }
+    ],
+    "Magnetic Properties & Colour": [
+      {
+        "id": "FLASH-INORG-0016",
+        "difficulty": "medium",
+        "q": "Calculate the 'spin-only' magnetic moment for a divalent ion ( $$Z=25$$  ).",
+        "a": "5.92 BM.  $$Mn^{2+}$$is$$3d^5$$  (5 unpaired e-). $$\\mu = \\sqrt{5(5+2)} = \\sqrt{35} \\approx 5.92$$."
+      },
+      {
+        "id": "FLASH-INORG-0017",
+        "difficulty": "medium",
+        "q": "Why is $$Ti^{4+} $$colourless while$$  Ti^{3+}$$is purple?.",
+        "a": "$$Ti^{4+}$$ is $$3d^0$$  (no d-d transition possible). $$Ti^{3+}$$ is $$3d^1$$   (absorbs visible light for d-d transition)."
+      },
+      {
+        "id": "FLASH-INORG-0018",
+        "difficulty": "medium",
+        "q": "Why does the magnetic moment of  $$Co^{2+}$$   differ from the spin-only value?.",
+        "a": "The spin-only formula ignores orbital angular momentum, which is not fully quenched in some ions."
+      },
+      {
+        "id": "FLASH-INORG-0057",
+        "difficulty": "medium",
+        "q": "$$Cr^{3+} $$and$$  Co^{2+} $$both have 3 unpaired electrons. Why is the magnetic moment of$$  Co^{2+}$$higher?",
+        "a": "$$Co^{2+}$$ has a significant contribution from **orbital angular momentum**, whereas it is quenched in $$Cr^{3+}$$  ."
+      },
+      {
+        "id": "FLASH-INORG-0064",
+        "difficulty": "medium",
+        "q": "Which of these is colourless:  $$TiCl_3$$  or $$TiCl_4$$  ? Why?",
+        "a": "$$TiCl_4$$   is colourless because  $$Ti^{4+}$$   has a  $$d^0$$   configuration (no unpaired electrons for d-d transition)."
+      }
+    ],
+    "Complexes, Catalysts & Alloys": [
+      {
+        "id": "FLASH-INORG-0019",
+        "difficulty": "medium",
+        "q": "Why is $$[Ni(CN)_4]^{2-} $$diamagnetic while$$  [NiCl_4]^{2-}$$is paramagnetic?.",
+        "a": "$$CN^-$$   is a strong field ligand (pairing e-, $$dsp^2$$  ).  $$Cl^-$$   is weak field (unpaired e-,  $$sp^3$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0020",
+        "difficulty": "medium",
+        "q": "Why do transition metals form many complexes?.",
+        "a": "1. Small metal ion size. 2. High ionic charge. 3. Availability of d-orbitals for bonding."
+      },
+      {
+        "id": "FLASH-INORG-0021",
+        "difficulty": "medium",
+        "q": "How do transition metals act as catalysts?.",
+        "a": "1. Surface Adsorption: 3d/4s electrons bond with reactants, lowering activation energy. 2. Variable Oxidation States: Forming unstable intermediates."
+      },
+      {
+        "id": "FLASH-INORG-0022",
+        "difficulty": "medium",
+        "q": "What physical property do interstitial compounds (like  $$TiC$$  ) retain from the metal?.",
+        "a": "They retain metallic conductivity."
+      },
+      {
+        "id": "FLASH-INORG-0023",
+        "difficulty": "medium",
+        "q": "Why are interstitial compounds chemically inert and hard?.",
+        "a": "Small atoms (H, C, N) trapped in the lattice form bonds that rigidify the structure."
+      },
+      {
+        "id": "FLASH-INORG-0024",
+        "difficulty": "medium",
+        "q": "Why are transition metal alloys readily formed?.",
+        "a": "Transition metals have very similar atomic radii (within ~15%), allowing easy atom exchange in the lattice."
+      },
+      {
+        "id": "FLASH-INORG-0061",
+        "difficulty": "medium",
+        "q": "How does the chemical reactivity and conductivity of interstitial compounds compare to the parent metal?",
+        "a": "They are chemically inert (less reactive) but retain the metallic conductivity of the parent metal."
+      },
+      {
+        "id": "FLASH-INORG-0063",
+        "difficulty": "medium",
+        "q": "In the reaction between Iodide and Persulphate catalysed by Fe(III), what role does Fe(II) play?",
+        "a": "Fe(III) oxidises Iodide and becomes Fe(II). Fe(II) then reduces Persulphate and regenerates Fe(III)."
+      }
+    ],
+    "Potassium Dichromate": [
+      {
+        "id": "FLASH-INORG-0025",
+        "difficulty": "medium",
+        "q": "What is the starting material for  $$K_2Cr_2O_7$$  prep?.",
+        "a": "Chromite ore ( $$FeCr_2O_4$$  ). Fused with $$Na_2CO_3$$  + air to form $$Na_2CrO_4$$."
+      },
+      {
+        "id": "FLASH-INORG-0026",
+        "difficulty": "medium",
+        "q": "Why is  $$Na_2Cr_2O_7$$  NOT used as a primary standard?.",
+        "a": "It is hygroscopic (absorbs moisture). $$K_2Cr_2O_7$$   is not."
+      },
+      {
+        "id": "FLASH-INORG-0027",
+        "difficulty": "medium",
+        "q": "What happens to pH and color if alkali is added to Dichromate?.",
+        "a": "Solution turns Orange ( $$Cr_2O_7^{2-}$$  ) to Yellow ( $$CrO_4^{2-}$$  ). pH increases."
+      },
+      {
+        "id": "FLASH-INORG-0028",
+        "difficulty": "medium",
+        "q": "Write the ionic equation for $$Fe^{2+}$$oxidation by dichromate.",
+        "a": "$$Cr_2O_7^{2-} + 14H^+ + 6Fe^{2+} \\rightarrow 2Cr^{3+} + 6Fe^{3+} + 7H_2O$$."
+      },
+      {
+        "id": "FLASH-INORG-0029",
+        "difficulty": "medium",
+        "q": "What is the Cr-O-Cr bond angle in  $$Cr_2O_7^{2-}$$  ?.",
+        "a": "126°. The structure is two tetrahedra sharing one oxygen."
+      },
+      {
+        "id": "FLASH-INORG-0059",
+        "difficulty": "medium",
+        "q": "Explain the colour change when an acidic solution of Dichromate (Orange) is made alkaline.",
+        "a": "It turns Yellow due to the formation of Chromate ions ( $$CrO_4^{2-}$$  ).  $$Cr_2O_7^{2-} \\xrightarrow{OH^-} CrO_4^{2-}$$  ."
+      }
+    ],
+    "Potassium Permanganate": [
+      {
+        "id": "FLASH-INORG-0030",
+        "difficulty": "medium",
+        "q": "Why is  $$KMnO_4$$  coloured despite $$Mn(VII)$$having$$d^0$$  ?.",
+        "a": "Due to Charge Transfer spectra (ligand-to-metal), not d-d transitions."
+      },
+      {
+        "id": "FLASH-INORG-0031",
+        "difficulty": "medium",
+        "q": "How is green manganate converted to permanganate in the lab?.",
+        "a": "Disproportionation in acidic/neutral medium:  $$3MnO_4^{2-} + 4H^+ \\rightarrow 2MnO_4^- + MnO_2 + 2H_2O$$."
+      },
+      {
+        "id": "FLASH-INORG-0032",
+        "difficulty": "medium",
+        "q": "What happens when  $$KMnO_4$$  is heated at 513 K?.",
+        "a": "Decomposes: $$2KMnO_4 \\rightarrow K_2MnO_4 \\text{ (Manganate)} + MnO_2 + O_2$$."
+      },
+      {
+        "id": "FLASH-INORG-0033",
+        "difficulty": "medium",
+        "q": "Why avoid HCl in permanganate titrations?.",
+        "a": "$$KMnO_4$$   oxidises HCl to Chlorine gas ( $$Cl_2$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0034",
+        "difficulty": "medium",
+        "q": "Reaction of Permanganate with Thiosulphate (neutral/alkaline)?.",
+        "a": "Oxidises  $$S_2O_3^{2-}$$   to Sulphate ( $$SO_4^{2-}$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0035",
+        "difficulty": "medium",
+        "q": "Reaction of Permanganate with Iodide (Acidic vs Neutral)?.",
+        "a": "Acidic: Forms  $$I_2$$  . Neutral: Forms Iodate ( $$IO_3^-$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0053",
+        "difficulty": "medium",
+        "q": "Why is HCl not used to acidify  $$KMnO_4$$  solutions in titrations?",
+        "a": "$$KMnO_4$$   is a strong oxidizing agent and oxidises HCl to chlorine gas ( $$Cl_2$$  ), which interferes with the titration."
+      },
+      {
+        "id": "FLASH-INORG-0065",
+        "difficulty": "medium",
+        "q": "What happens when green Manganate ion ( $$MnO_4^{2-}$$  ) is placed in an acidic or neutral solution?",
+        "a": "It disproportionates into Permanganate ( $$MnO_4^-$$  ) and Manganese Dioxide ( $$MnO_2$$  )."
+      }
+    ],
+    "The Lanthanoids (4f Series)": [
+      {
+        "id": "FLASH-INORG-0036",
+        "difficulty": "medium",
+        "q": "Why is separation of Lanthanoids difficult?.",
+        "a": "Lanthanoid Contraction makes their ionic radii and chemical properties almost identical."
+      },
+      {
+        "id": "FLASH-INORG-0037",
+        "difficulty": "medium",
+        "q": "Which Lanthanoid exhibits stable +4 state and why?.",
+        "a": "Cerium (Ce). Losing 4 electrons ( $$4f^1 5d^1 6s^2$$  ) gives a stable noble gas config."
+      },
+      {
+        "id": "FLASH-INORG-0038",
+        "difficulty": "medium",
+        "q": "Why is $$Eu^{2+}$$a strong reducing agent?.",
+        "a": "It has stable half-filled $$f^7$$  , but reverts to the common +3 state characteristic of the series."
+      },
+      {
+        "id": "FLASH-INORG-0039",
+        "difficulty": "medium",
+        "q": "Which trivalent Lanthanoid ions are diamagnetic?.",
+        "a": "$$La^{3+}$$   ( $$4f^0$$  ) and  $$Lu^{3+}$$   ( $$4f^{14}$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0040",
+        "difficulty": "medium",
+        "q": "What is \"Mischmetall\" composed of?.",
+        "a": "~95% Lanthanoid metal (Ce, La, Nd), ~5% Iron, traces of S, C, Ca, Al."
+      },
+      {
+        "id": "FLASH-INORG-0041",
+        "difficulty": "medium",
+        "q": "Product of Lanthanoids + Nitrogen?.",
+        "a": "Nitrides ( $$LnN$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0062",
+        "difficulty": "medium",
+        "q": "What is the trend in the basic character of Lanthanoid hydroxides ( $$La(OH)_3$$  to $$Lu(OH)_3$$  ) and why?",
+        "a": "Basic character decreases. Due to Lanthanoid contraction, cation size decreases, increasing the covalent character of the M-OH bond."
+      }
+    ],
+    "The Actinoids (5f Series)": [
+      {
+        "id": "FLASH-INORG-0042",
+        "difficulty": "medium",
+        "q": "Why is Actinoid Contraction greater than Lanthanoid?.",
+        "a": "5f electrons provide poorer shielding of nuclear charge than 4f electrons."
+      },
+      {
+        "id": "FLASH-INORG-0043",
+        "difficulty": "medium",
+        "q": "Why do Actinoids show a wide range of oxidation states?.",
+        "a": "The energies of 5f, 6d, and 7s subshells are comparable (very small gaps)."
+      },
+      {
+        "id": "FLASH-INORG-0044",
+        "difficulty": "medium",
+        "q": "Which Actinoids show max oxidation state +7?.",
+        "a": "Neptunium (Np) and Plutonium (Pu)."
+      },
+      {
+        "id": "FLASH-INORG-0045",
+        "difficulty": "medium",
+        "q": "Why are IE of early Actinoids lower than Lanthanoids?.",
+        "a": "5f orbitals penetrate less into the core, so electrons are less shielded and held loosely."
+      },
+      {
+        "id": "FLASH-INORG-0046",
+        "difficulty": "medium",
+        "q": "Why is Actinoid chemistry complex?.",
+        "a": "1. Radioactivity. 2. Wide range of OS. 3. Tendency to hydrolyze/form complexes."
+      },
+      {
+        "id": "FLASH-INORG-0047",
+        "difficulty": "medium",
+        "q": "General electronic configuration of Actinoids?.",
+        "a": "$$[Rn] 5f^{0-14} 6d^{0-2} 7s^2$$."
+      },
+      {
+        "id": "FLASH-INORG-0048",
+        "difficulty": "medium",
+        "q": "Name the last Actinoid and its stable OS.",
+        "a": "Lawrencium (Lr, Z=103). Stable OS is +3."
+      },
+      {
+        "id": "FLASH-INORG-0049",
+        "difficulty": "medium",
+        "q": "Reaction of Actinoids with boiling water?.",
+        "a": "Forms a mixture of Oxide and Hydride."
+      },
+      {
+        "id": "FLASH-INORG-0050",
+        "difficulty": "medium",
+        "q": "Which actinoid formally has no 5f electrons in ground state?.",
+        "a": "Thorium (Th, Z=90) ( $$6d^2 7s^2$$  )."
+      },
+      {
+        "id": "FLASH-INORG-0060",
+        "difficulty": "medium",
+        "q": "Why do Actinoids form complexes more readily and use f-orbitals in bonding compared to Lanthanoids?",
+        "a": "5f orbitals extend farther from the nucleus and are available for bonding, whereas 4f orbitals are deeply buried and shielded."
+      }
+    ],
+    "Chemical Properties of Transition Metals": [
+      {
+        "id": "FLASH-INORG-0056",
+        "difficulty": "medium",
+        "q": "What happens when $$Cu^{2+}$$is treated with Iodide ions ( $$I^-$$  )? (Write the observation).",
+        "a": "A white precipitate of $$Cu_2I_2$$  is formed, and Iodine ( $$I_2$$  ) is liberated ( $$Cu^{2+}$$   oxidises $$I^-$$  )."
+      }
+    ]
+  }
+}

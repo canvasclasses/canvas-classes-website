@@ -34,6 +34,7 @@ export function defaultBlock(type: BlockType, order: number): ContentBlock {
     case 'simulation':       return { ...base, type, simulation_id: 'fractional-distillation' };
     case 'section':          return { ...base, type, layout: '50-50', columns: [[], []] };
     case 'reasoning_prompt':  return { ...base, type, reasoning_type: 'logical', prompt: '', reveal: '', difficulty_level: 2 };
+    case 'curiosity_prompt':  return { ...base, type, prompt: '' };
     case 'classify_exercise': return { ...base, type, question: 'Which of these are…?', rows: [{ substance: '', is_solution: true, explanation: '' }] };
   }
 }
@@ -86,6 +87,21 @@ export default function BookWorkspace() {
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [loadingPage, setLoadingPage] = useState(false);
+
+  // Hinglish preview toggle — persists to the same localStorage key as the student reader
+  // so the admin's last-used preference is remembered across sessions.
+  const HINGLISH_PREF_KEY = 'canvas_hinglish_mode';
+  const [previewHinglish, setPreviewHinglish] = useState(false);
+  useEffect(() => {
+    try { setPreviewHinglish(localStorage.getItem(HINGLISH_PREF_KEY) === '1'); } catch { /* ignore */ }
+  }, []);
+  const togglePreviewHinglish = useCallback(() => {
+    setPreviewHinglish(prev => {
+      const next = !prev;
+      try { localStorage.setItem(HINGLISH_PREF_KEY, next ? '1' : '0'); } catch { /* ignore */ }
+      return next;
+    });
+  }, []);
 
   // Resizable split — editor width as a percentage of the main content area
   const [splitPos, setSplitPos] = useState(45);
@@ -490,13 +506,52 @@ export default function BookWorkspace() {
                 >
                   {viewMode === 'split' && (
                     <div className="sticky top-0 z-10 px-4 py-1.5 bg-[#0B0F15] border-b border-white/8
-                      flex items-center gap-1.5">
-                      <Eye size={11} className="text-orange-400" />
-                      <span className="text-[11px] text-white/40 font-medium uppercase tracking-wide">Live Preview</span>
+                      flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-1.5">
+                        <Eye size={11} className="text-orange-400" />
+                        <span className="text-[11px] text-white/40 font-medium uppercase tracking-wide">Live Preview</span>
+                      </div>
+                      {/* EN / HI toggle — only shown when this page has Hinglish content */}
+                      {currentPage.hinglish_blocks && currentPage.hinglish_blocks.length > 0 && (
+                        <div className="flex items-center rounded-md overflow-hidden
+                          border border-white/10 text-[10px] font-bold tracking-wider">
+                          <button
+                            onClick={() => previewHinglish && togglePreviewHinglish()}
+                            className={`px-2.5 py-1 transition-colors ${
+                              !previewHinglish
+                                ? 'bg-orange-500 text-black'
+                                : 'bg-transparent text-white/40 hover:text-white/70'
+                            }`}
+                          >
+                            EN
+                          </button>
+                          <button
+                            onClick={() => !previewHinglish && togglePreviewHinglish()}
+                            className={`px-2.5 py-1 transition-colors ${
+                              previewHinglish
+                                ? 'bg-orange-500 text-black'
+                                : 'bg-transparent text-white/40 hover:text-white/70'
+                            }`}
+                          >
+                            HI
+                          </button>
+                        </div>
+                      )}
                     </div>
                   )}
                   <PageRenderer
-                    page={{ title: pageTitle, subtitle: pageSubtitle || undefined, blocks, reading_time_min: currentPage.reading_time_min }}
+                    page={{
+                      title: pageTitle,
+                      subtitle: pageSubtitle || undefined,
+                      blocks,
+                      reading_time_min: currentPage.reading_time_min,
+                      hinglish_blocks: currentPage.hinglish_blocks,
+                    }}
+                    hinglishOverride={
+                      currentPage.hinglish_blocks && currentPage.hinglish_blocks.length > 0
+                        ? previewHinglish
+                        : undefined
+                    }
                   />
                 </div>
               )}

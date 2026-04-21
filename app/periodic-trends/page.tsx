@@ -34,6 +34,10 @@ const YouTubeLecturesSection = () => {
         { id: '9A-5gd9Q8os', title: 'All structures', subtitle: 'from p-block', thumbnail: 'mqdefault' },
         { id: 'MtgYnKCJehk', title: 'Revise hydrogen', subtitle: 'in 15 minutes', thumbnail: 'mqdefault' },
         { id: 'uRPfNa5_RPk', title: 'Coordination compounds', subtitle: 'NCERT revision', thumbnail: 'mqdefault' },
+        { id: 'agvzhBBhsLY', title: 'P-Block: Group 13 & 14', subtitle: '30-min revision', thumbnail: 'mqdefault' },
+        { id: 'ZHUxlvSJLtY', title: 'Noble Gases complete', subtitle: 'in 6 minutes', thumbnail: 'mqdefault' },
+        { id: '2XWd2XsZMyo', title: 'Revise metallurgy', subtitle: 'in 20 minutes', thumbnail: 'mqdefault' },
+        { id: 't7pZwh03LKQ', title: 'D & F-Block one shot', subtitle: 'NCERT revision', thumbnail: 'mqdefault' },
     ];
 
     return (

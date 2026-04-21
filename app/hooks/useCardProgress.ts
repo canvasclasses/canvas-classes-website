@@ -8,7 +8,10 @@ import {
     calculateNextReview,
     isCardDue,
     getMasteryLevel,
-    MasteryLevel
+    MasteryLevel,
+    daysOverdue,
+    NEW_CARDS_PER_DAY,
+    REVIEW_CARDS_PER_DAY
 } from '../lib/spacedRepetition';
 import { syncProgressWithCloud, saveProgressItemToCloud } from '../utils/progressSync';
 import { createClient } from '../utils/supabase/client';
@@ -169,6 +172,76 @@ export function useCardProgress() {
     }, [progressMap]);
 
     /**
+     * Today's recommended queue, capped by daily limits.
+     * New cards: up to NEW_CARDS_PER_DAY. Reviews (due previously-studied cards): up to REVIEW_CARDS_PER_DAY.
+     * Overdue reviews come first, then learning/reviewing, then new.
+     */
+    const getTodaysQueue = useCallback((cardIds: string[]): string[] => {
+        const newIds: string[] = [];
+        const reviewIds: { id: string; overdue: number }[] = [];
+
+        cardIds.forEach(id => {
+            const progress = progressMap[id];
+            if (!progress || progress.repetitions === 0) {
+                newIds.push(id);
+            } else if (isCardDue(progress)) {
+                reviewIds.push({ id, overdue: daysOverdue(progress) });
+            }
+        });
+
+        reviewIds.sort((a, b) => b.overdue - a.overdue);
+        const reviewSlice = reviewIds.slice(0, REVIEW_CARDS_PER_DAY).map(r => r.id);
+        const newSlice = newIds.slice(0, NEW_CARDS_PER_DAY);
+
+        return [...reviewSlice, ...newSlice];
+    }, [progressMap]);
+
+    /**
+     * All-time accuracy for a set of cards (quality >= 4 / totalReviews).
+     * Returns null when no reviews have been recorded.
+     */
+    const getAccuracy = useCallback((cardIds: string[]): number | null => {
+        let total = 0;
+        let correct = 0;
+        cardIds.forEach(id => {
+            const progress = progressMap[id];
+            if (progress?.totalReviews) {
+                total += progress.totalReviews;
+                correct += progress.correctReviews ?? 0;
+            }
+        });
+        if (total === 0) return null;
+        return correct / total;
+    }, [progressMap]);
+
+    /**
+     * Most recent review date (ISO yyyy-mm-dd) across cards, or null if none.
+     */
+    const getLastReviewDate = useCallback((cardIds: string[]): string | null => {
+        let latest = '';
+        cardIds.forEach(id => {
+            const d = progressMap[id]?.lastReviewDate;
+            if (d && d > latest) latest = d;
+        });
+        return latest || null;
+    }, [progressMap]);
+
+    /**
+     * Largest days-overdue value across due cards. Used for pill urgency.
+     */
+    const getMaxOverdue = useCallback((cardIds: string[]): number => {
+        let max = 0;
+        cardIds.forEach(id => {
+            const progress = progressMap[id];
+            if (progress && isCardDue(progress)) {
+                const overdue = daysOverdue(progress);
+                if (overdue > max) max = overdue;
+            }
+        });
+        return max;
+    }, [progressMap]);
+
+    /**
      * Reset progress for all cards (for testing/debugging)
      */
     const resetAllProgress = useCallback(() => {
@@ -190,6 +263,10 @@ export function useCardProgress() {
         getDueCards,
         sortByPriority,
         getStatistics,
+        getTodaysQueue,
+        getAccuracy,
+        getLastReviewDate,
+        getMaxOverdue,
         resetAllProgress,
         hasAnyProgress,
         isSyncing

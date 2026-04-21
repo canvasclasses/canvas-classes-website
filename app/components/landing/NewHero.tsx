@@ -1,9 +1,13 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Search } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+    Search, Atom, FlaskConical, BookOpen, GraduationCap,
+    FileText, Layers, Zap, ChevronRight,
+} from 'lucide-react';
 
 // Cycling words shown on line 1 of the headline — each pairs with "under one Canvas."
 const HEADLINE_WORDS = [
@@ -15,7 +19,7 @@ const HEADLINE_WORDS = [
     'Growth',
 ] as const;
 
-// Placeholder topics in the search bar — broader than chemistry now
+// Placeholder topics in the search bar
 const PLACEHOLDER_TOPICS = [
     'Mole Concept',
     "Newton's Laws",
@@ -25,7 +29,7 @@ const PLACEHOLDER_TOPICS = [
     'Life Skills',
 ] as const;
 
-// Quick-access chips — traffic-ranked, all direct links (not search openers)
+// Quick-access chips — traffic-ranked, all direct links
 const QUICK_LINKS = [
     { label: 'Handwritten Notes', href: '/handwritten-notes' },
     { label: 'Periodic Table', href: '/interactive-periodic-table' },
@@ -33,6 +37,125 @@ const QUICK_LINKS = [
     { label: 'NCERT Solutions', href: '/ncert-solutions' },
     { label: 'Salt Analysis', href: '/salt-analysis' },
 ] as const;
+
+// ── Popular searches shown when the bar is focused but empty ─────────────────
+
+type PopularItem = {
+    id: string;
+    Icon: React.ElementType;
+    iconColor: string;
+    title: string;
+    subtitle: string;
+    url: string;
+    badge: string;
+    badgeColor: string;
+};
+
+const POPULAR_SEARCHES: PopularItem[] = [
+    {
+        id: 'pop-pt',
+        Icon: Atom,
+        iconColor: 'text-cyan-400',
+        title: 'Interactive Periodic Table',
+        subtitle: 'Elements, trends & properties',
+        url: '/interactive-periodic-table',
+        badge: 'Tool',
+        badgeColor: 'text-cyan-400 bg-cyan-500/10',
+    },
+    {
+        id: 'pop-cruc',
+        Icon: FlaskConical,
+        iconColor: 'text-orange-400',
+        title: 'The Crucible',
+        subtitle: 'JEE & NEET question practice',
+        url: '/the-crucible',
+        badge: 'Practice',
+        badgeColor: 'text-orange-400 bg-orange-500/10',
+    },
+    {
+        id: 'pop-ch11',
+        Icon: BookOpen,
+        iconColor: 'text-amber-400',
+        title: 'Class 11 Chemistry',
+        subtitle: 'NCERT Simplified — all chapters',
+        url: '/class-11/chemistry',
+        badge: 'Book',
+        badgeColor: 'text-amber-400 bg-amber-500/10',
+    },
+    {
+        id: 'pop-cards',
+        Icon: Layers,
+        iconColor: 'text-violet-400',
+        title: 'Chemistry Flashcards',
+        subtitle: 'Spaced repetition revision',
+        url: '/chemistry-flashcards',
+        badge: 'Flashcards',
+        badgeColor: 'text-violet-400 bg-violet-500/10',
+    },
+    {
+        id: 'pop-salt',
+        Icon: FlaskConical,
+        iconColor: 'text-purple-400',
+        title: 'Salt Analysis Simulator',
+        subtitle: 'Virtual cation & anion tests',
+        url: '/salt-analysis',
+        badge: 'Simulator',
+        badgeColor: 'text-purple-400 bg-purple-500/10',
+    },
+    {
+        id: 'pop-notes',
+        Icon: FileText,
+        iconColor: 'text-emerald-400',
+        title: 'Handwritten Notes',
+        subtitle: 'Chapter-wise PDF downloads',
+        url: '/handwritten-notes',
+        badge: 'Notes',
+        badgeColor: 'text-emerald-400 bg-emerald-500/10',
+    },
+    {
+        id: 'pop-organic',
+        Icon: Zap,
+        iconColor: 'text-green-400',
+        title: 'Organic Name Reactions',
+        subtitle: 'Mechanisms & worked examples',
+        url: '/organic-name-reactions',
+        badge: 'Content',
+        badgeColor: 'text-green-400 bg-green-500/10',
+    },
+    {
+        id: 'pop-lec',
+        Icon: GraduationCap,
+        iconColor: 'text-red-400',
+        title: 'Detailed Lectures',
+        subtitle: 'Full chapter video series',
+        url: '/detailed-lectures',
+        badge: 'Lectures',
+        badgeColor: 'text-red-400 bg-red-500/10',
+    },
+];
+
+// ── Badge style for dynamic search results ───────────────────────────────────
+function getBadge(category: string): { label: string; cls: string } {
+    switch (category) {
+        case 'Tools':     return { label: 'Tool',     cls: 'text-cyan-400 bg-cyan-500/10'     };
+        case 'Reactions': return { label: 'Reaction', cls: 'text-green-400 bg-green-500/10'   };
+        case 'Concepts':  return { label: 'Concept',  cls: 'text-amber-400 bg-amber-500/10'   };
+        case 'Videos':    return { label: 'Video',    cls: 'text-red-400 bg-red-500/10'       };
+        case 'Chapters':  return { label: 'Chapter',  cls: 'text-indigo-400 bg-indigo-500/10' };
+        case 'Lectures':  return { label: 'Lecture',  cls: 'text-teal-400 bg-teal-500/10'    };
+        default:          return { label: 'Page',     cls: 'text-slate-400 bg-white/[0.06]'   };
+    }
+}
+
+// ── Search result type ───────────────────────────────────────────────────────
+type SearchItem = {
+    id: string;
+    title: string;
+    subtitle: string;
+    category: string;
+    url: string;
+    keywords?: string[];
+};
 
 // =====================================================================
 // Typewriter hook — starts empty, types in first word, cycles through list
@@ -122,267 +245,117 @@ function usePlaceholderTypewriter(topics: readonly string[]) {
 }
 
 // =====================================================================
-// Hero Split Background — Vedic (amber, left) ↔ Modern Science (blue, right)
-// Icons arranged in two clean horizontal rows across full width
+// Hero Fusion Sigil — Vedic × Western learning, single centered composite
+// Bohr orbitals (cyan, CW) + Shatkona/outer ring (amber, CCW)
+// + lotus & flower-of-life (CW) + static ॐ nucleus. Breathes subtly.
 // =====================================================================
 
-const Va = (o: number) => `rgba(251,191,36,${o})`;  // Vedic amber
-const Mb = (o: number) => `rgba(96,165,250,${o})`;  // Modern blue
-
-function HeroSplitBackground() {
-    const { scrollY } = useScroll();
-    const yMove  = useTransform(scrollY, [0, 500], [0, -50]);
-    const opFade = useTransform(scrollY, [0, 400], [1,  0]);
-
-    // Vedic icons at x = 75, 210, 345, 480, 610 (left half)
-    // Modern icons at x = 835, 970, 1105, 1245, 1375 (right half)
-    // All icons centred at y = 340
+function HeroFusionSigil() {
+    // Electron dot positions on the three tilted Bohr orbitals (rx=240, ry=85)
+    // Angles chosen so they don't visually cluster during rotation.
+    const electrons = [
+        { orbit: 0,   t:  20, r: 4.0, op: 0.32 },
+        { orbit: 0,   t: 200, r: 3.2, op: 0.20 },
+        { orbit: 60,  t:  95, r: 3.6, op: 0.28 },
+        { orbit: 60,  t: 275, r: 3.0, op: 0.18 },
+        { orbit: 120, t: 150, r: 3.6, op: 0.28 },
+        { orbit: 120, t: 330, r: 3.0, op: 0.18 },
+    ];
 
     return (
-        <div className="w-full h-full flex items-end justify-center pointer-events-none overflow-visible select-none">
-            <motion.div
+        <div className="w-full h-full flex items-center justify-center pointer-events-none select-none">
+            <div
+                className="relative w-[min(860px,96vw)] aspect-square newhero-sigil-breathe"
                 style={{
-                    y: yMove,
-                    opacity: opFade,
-                    maskImage: 'linear-gradient(to top, black 45%, transparent 100%)',
-                    WebkitMaskImage: 'linear-gradient(to top, black 45%, transparent 100%)',
+                    maskImage: 'radial-gradient(closest-side, black 60%, transparent 100%)',
+                    WebkitMaskImage: 'radial-gradient(closest-side, black 60%, transparent 100%)',
                 }}
-                className="w-full"
             >
-                <svg viewBox="0 0 1440 460" preserveAspectRatio="xMidYMax meet" className="w-full" aria-hidden="true">
-                    <defs>
-                        {/* Soft glow for nucleus / lotus centre */}
-                        <filter id="hg-a" x="-80%" y="-80%" width="260%" height="260%">
-                            <feGaussianBlur stdDeviation="5" result="b" />
-                            <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-                        </filter>
-                        {/* Subtle glow for atom nucleus */}
-                        <filter id="hg-b" x="-60%" y="-60%" width="220%" height="220%">
-                            <feGaussianBlur stdDeviation="3" result="b" />
-                            <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-                        </filter>
-                        <linearGradient id="hg-div" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%"   stopColor="transparent" />
-                            <stop offset="55%"  stopColor="rgba(255,255,255,0.03)" />
-                            <stop offset="100%" stopColor="transparent" />
-                        </linearGradient>
-                    </defs>
+                {/* Layer 1 — Bohr orbitals + electrons (cyan), rotates CW */}
+                <div className="newhero-sigil-layer newhero-sigil-cw-slow">
+                    <svg viewBox="0 0 600 600" className="w-full h-full" aria-hidden="true">
+                        <g transform="translate(300,300)" fill="none"
+                           stroke="rgba(255,255,255,0.10)" strokeWidth="0.75">
+                            <ellipse rx="240" ry="85" />
+                            <ellipse rx="240" ry="85" transform="rotate(60)" />
+                            <ellipse rx="240" ry="85" transform="rotate(120)" />
+                        </g>
+                        <g transform="translate(300,300)" stroke="none">
+                            {electrons.map((e, i) => {
+                                const rad = (e.t * Math.PI) / 180;
+                                const px = 240 * Math.cos(rad);
+                                const py =  85 * Math.sin(rad);
+                                const rot = `rotate(${e.orbit} 0 0)`;
+                                return (
+                                    <circle
+                                        key={i}
+                                        cx={px} cy={py} r={e.r}
+                                        fill={`rgba(255,255,255,${e.op})`}
+                                        transform={rot}
+                                    />
+                                );
+                            })}
+                        </g>
+                    </svg>
+                </div>
 
-                    {/* ── Background: faint OM watermark ── */}
-                    <text x="170" y="310" fontSize="110"
-                        fontFamily="'Noto Sans Devanagari','Mangal',Georgia,serif"
-                        fill={Va(0.018)} textAnchor="middle">ॐ</text>
+                {/* Layer 2 — Shatkona + outer ring + inner hexagon (amber), rotates CCW */}
+                <div className="newhero-sigil-layer newhero-sigil-ccw-slow">
+                    <svg viewBox="0 0 600 600" className="w-full h-full" aria-hidden="true">
+                        <g transform="translate(300,300)" fill="none">
+                            <circle r="200" stroke="rgba(255,255,255,0.06)" strokeWidth="0.55" />
+                            <circle r="220" stroke="rgba(255,255,255,0.03)" strokeWidth="0.4" />
+                            <path d="M 0 -170 L 147.2 85 L -147.2 85 Z"
+                                  stroke="rgba(255,255,255,0.10)" strokeWidth="0.7" />
+                            <path d="M 0 170 L 147.2 -85 L -147.2 -85 Z"
+                                  stroke="rgba(255,255,255,0.10)" strokeWidth="0.7" />
+                            <path d="M 85 -49 L 85 49 L 0 98 L -85 49 L -85 -49 L 0 -98 Z"
+                                  stroke="rgba(255,255,255,0.07)" strokeWidth="0.45" />
+                        </g>
+                    </svg>
+                </div>
 
-                    {/* ════════════════════════════════════════
-                        LEFT — VEDIC LEARNING SYSTEM (amber)
-                        5 icons in a single horizontal row
-                    ════════════════════════════════════════ */}
+                {/* Layer 3 — Lotus petals + flower-of-life seed (warm/cool mix), rotates CW */}
+                <div className="newhero-sigil-layer newhero-sigil-cw-med">
+                    <svg viewBox="0 0 600 600" className="w-full h-full" aria-hidden="true">
+                        <g transform="translate(300,300)">
+                            {[0,45,90,135,180,225,270,315].map(a => (
+                                <ellipse
+                                    key={a} cx="0" cy="-72" rx="15" ry="40"
+                                    transform={`rotate(${a})`}
+                                    fill="rgba(255,255,255,0.01)"
+                                    stroke="rgba(255,255,255,0.08)" strokeWidth="0.4"
+                                />
+                            ))}
+                            <circle r="32" fill="none"
+                                    stroke="rgba(255,255,255,0.07)" strokeWidth="0.4" />
+                            {[0,60,120,180,240,300].map(a => {
+                                const rad = (a * Math.PI) / 180;
+                                const cx  = 32 * Math.cos(rad);
+                                const cy  = 32 * Math.sin(rad);
+                                return (
+                                    <circle key={a} cx={cx} cy={cy} r="32" fill="none"
+                                            stroke="rgba(255,255,255,0.05)" strokeWidth="0.35" />
+                                );
+                            })}
+                        </g>
+                    </svg>
+                </div>
 
-                    {/* 1 — PRANAVA (OM) ─── x=75 */}
-                    <g transform="translate(75,340)">
-                        {/* Outer decorative ring */}
-                        <circle cx="0" cy="0" r="32" fill="none" stroke={Va(0.12)} strokeWidth="0.5" />
-                        {/* Crescent arc at top */}
-                        <path d="M -14 -24 A 16 16 0 0 1 14 -24" fill="none" stroke={Va(0.14)} strokeWidth="0.6" />
-                        <circle cx="0" cy="-28" r="2.5" fill={Va(0.18)} stroke="none" />
-                        {/* OM glyph */}
-                        <text x="0" y="13" fontSize="34"
-                            fontFamily="'Noto Sans Devanagari','Mangal',Georgia,serif"
-                            fill={Va(0.32)} textAnchor="middle">ॐ</text>
-                    </g>
-                    <text x="75" y="390" fontSize="6.5" fill={Va(0.14)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">PRANAVA</text>
-
-                    {/* 2 — SHATKONA (Star of David / Sri Yantra fragment) ─── x=210 */}
-                    <g transform="translate(210,340)" stroke={Va(0.17)} strokeWidth="0.72" fill="none">
-                        <circle cx="0" cy="0" r="34" stroke={Va(0.11)} strokeWidth="0.5" />
-                        {/* Upward triangle (inscribed, r=27) */}
-                        <path d="M 0 -27 L 23.4 13.5 L -23.4 13.5 Z" />
-                        {/* Downward triangle */}
-                        <path d="M 0 27 L 23.4 -13.5 L -23.4 -13.5 Z" />
-                        {/* Inner hexagon trace */}
-                        <circle cx="0" cy="0" r="10" stroke={Va(0.11)} strokeWidth="0.5" />
-                        {/* Bindu */}
-                        <circle cx="0" cy="0" r="3.5" fill={Va(0.28)} stroke="none" filter="url(#hg-a)" />
-                    </g>
-                    <text x="210" y="390" fontSize="6.5" fill={Va(0.14)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">SHATKONA</text>
-
-                    {/* 3 — PADMA (8-petal lotus) ─── x=345 */}
-                    <g transform="translate(345,340)">
-                        {/* 8 petals: each ellipse offset 20px from centre, rotated around origin */}
-                        {[0,1,2,3,4,5,6,7].map(i => (
-                            <ellipse key={i}
-                                cx="0" cy="-21" rx="7" ry="18"
-                                transform={`rotate(${i * 45})`}
-                                fill={Va(0.03)} stroke={Va(0.15)} strokeWidth="0.6"
-                            />
-                        ))}
-                        {/* Inner ring */}
-                        <circle cx="0" cy="0" r="9"  fill="none" stroke={Va(0.16)} strokeWidth="0.65" />
-                        {/* Luminous centre */}
-                        <circle cx="0" cy="0" r="3.5" fill={Va(0.30)} stroke="none" filter="url(#hg-a)" />
-                    </g>
-                    <text x="345" y="390" fontSize="6.5" fill={Va(0.14)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">PADMA</text>
-
-                    {/* 4 — DHARMA CHAKRA (8-spoke wheel) ─── x=480 */}
-                    <g transform="translate(480,340)" fill="none">
-                        {/* Outer rim */}
-                        <circle cx="0" cy="0" r="30" stroke={Va(0.15)} strokeWidth="0.65" />
-                        {/* Mid ring */}
-                        <circle cx="0" cy="0" r="20" stroke={Va(0.08)} strokeWidth="0.45" />
-                        {/* Hub */}
-                        <circle cx="0" cy="0" r="7"  stroke={Va(0.17)} strokeWidth="0.7" />
-                        {/* 8 spokes */}
-                        {[0,1,2,3,4,5,6,7].map(i => {
-                            const a = (i * 45) * Math.PI / 180;
-                            return <line key={i}
-                                x1={8 * Math.cos(a)} y1={8 * Math.sin(a)}
-                                x2={30 * Math.cos(a)} y2={30 * Math.sin(a)}
-                                stroke={Va(0.15)} strokeWidth="0.6" />;
-                        })}
-                        {/* 8 petal beads between spokes at r=21 */}
-                        {[0,1,2,3,4,5,6,7].map(i => {
-                            const a = ((i * 45) + 22.5) * Math.PI / 180;
-                            return <circle key={i}
-                                cx={21 * Math.cos(a)} cy={21 * Math.sin(a)} r={2.8}
-                                fill={Va(0.05)} stroke={Va(0.12)} strokeWidth="0.5" />;
-                        })}
-                        <circle cx="0" cy="0" r="3" fill={Va(0.28)} stroke="none" />
-                    </g>
-                    <text x="480" y="390" fontSize="6.5" fill={Va(0.14)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">CHAKRA</text>
-
-                    {/* 5 — TRISHUL ─── x=610 */}
-                    <g transform="translate(610,334)" stroke={Va(0.18)} strokeWidth="0.8" fill="none">
-                        {/* Handle */}
-                        <line x1="0" y1="44" x2="0" y2="-8" />
-                        {/* Cross-guard */}
-                        <line x1="-19" y1="-2" x2="19" y2="-2" />
-                        {/* Centre prong (tallest) */}
-                        <line x1="0" y1="-2"  x2="0"   y2="-48" />
-                        {/* Left prong */}
-                        <path d="M -19 -2 C -27 -8, -28 -20, -22 -36" />
-                        {/* Right prong */}
-                        <path d="M  19 -2 C  27 -8,  28 -20,  22 -36" />
-                        {/* Prong tips */}
-                        <circle cx="0"   cy="-48" r="2.2" fill={Va(0.22)} stroke="none" />
-                        <circle cx="-22" cy="-36" r="2"   fill={Va(0.19)} stroke="none" />
-                        <circle cx=" 22" cy="-36" r="2"   fill={Va(0.19)} stroke="none" />
-                        {/* Handle ornament (diamond) */}
-                        <path d="M 0 14 L 6 20 L 0 26 L -6 20 Z" stroke={Va(0.12)} strokeWidth="0.5" />
-                    </g>
-                    <text x="610" y="390" fontSize="6.5" fill={Va(0.14)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">TRISHUL</text>
-
-                    {/* ── Centre divider ── */}
-                    <line x1="720" y1="165" x2="720" y2="435"
-                        stroke="url(#hg-div)" strokeWidth="0.6" />
-
-                    {/* ════════════════════════════════════════
-                        RIGHT — MODERN SCIENCE (blue)
-                        5 icons in a single horizontal row
-                    ════════════════════════════════════════ */}
-
-                    {/* 6 — BOHR ATOM (Physics) ─── x=835 */}
-                    <g transform="translate(835,338)" fill="none">
-                        {/* Nucleus */}
-                        <circle cx="0" cy="0" r="9" fill={Mb(0.14)} stroke={Mb(0.28)} strokeWidth="0.8" filter="url(#hg-b)" />
-                        {/* 3 orbital ellipses */}
-                        <ellipse cx="0" cy="0" rx="44" ry="15" stroke={Mb(0.17)} strokeWidth="0.7" />
-                        <ellipse cx="0" cy="0" rx="44" ry="15" stroke={Mb(0.17)} strokeWidth="0.7" transform="rotate(60)" />
-                        <ellipse cx="0" cy="0" rx="44" ry="15" stroke={Mb(0.17)} strokeWidth="0.7" transform="rotate(120)" />
-                        {/* Electrons */}
-                        <circle cx=" 44" cy="0"  r="3" fill={Mb(0.26)} stroke="none" />
-                        <circle cx=" 22" cy="-23" r="3" fill={Mb(0.22)} stroke="none" />
-                        <circle cx="-22" cy="-23" r="3" fill={Mb(0.22)} stroke="none" />
-                    </g>
-                    <text x="835" y="397" fontSize="6.5" fill={Mb(0.15)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">PHYSICS</text>
-
-                    {/* 7 — BENZENE RING (Chemistry) ─── x=970 */}
-                    <g transform="translate(970,346)" stroke={Mb(0.17)} strokeWidth="0.75" fill="none">
-                        {/* Flat-top hexagon r=28 (vertices at 30°,90°,150°,210°,270°,330°) */}
-                        <path d="M 24 -14 L 24 14 L 0 28 L -24 14 L -24 -14 L 0 -28 Z" />
-                        {/* Aromatic inner circle */}
-                        <circle cx="0" cy="0" r="18" stroke={Mb(0.10)} />
-                        {/* Centre dot */}
-                        <circle cx="0" cy="0" r="3.5" fill={Mb(0.18)} stroke="none" />
-                    </g>
-                    <text x="970" y="390" fontSize="6.5" fill={Mb(0.15)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">CHEMISTRY</text>
-
-                    {/* 8 — DNA DOUBLE HELIX (Biology) ─── x=1105 */}
-                    <g transform="translate(1105,0)" stroke={Mb(0.15)} strokeWidth="0.75" fill="none">
-                        {/* Strand 1 — sweeps right then left */}
-                        <path d="M 0 302 C 28 312,28 326, 0 336 C -28 346,-28 360, 0 370 C 28 380,28 394, 0 404" />
-                        {/* Strand 2 — mirror */}
-                        <path d="M 0 302 C -28 312,-28 326, 0 336 C 28 346,28 360, 0 370 C -28 380,-28 394, 0 404" />
-                        {/* Rungs + base-pair dots */}
-                        {[319, 353, 387].map(ry => (
-                            <g key={ry}>
-                                <line x1="-26" y1={ry} x2="26" y2={ry} stroke={Mb(0.09)} />
-                                <circle cx="-20" cy={ry} r={2} fill={Mb(0.22)} stroke="none" />
-                                <circle cx=" 20" cy={ry} r={2} fill={Mb(0.22)} stroke="none" />
-                            </g>
-                        ))}
-                    </g>
-                    <text x="1105" y="420" fontSize="6.5" fill={Mb(0.15)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">BIOLOGY</text>
-
-                    {/* 9 — NEURAL NETWORK (AI) ─── x=1245 */}
-                    <g transform="translate(1245,340)">
-                        {/* 2-3-2 architecture */}
-                        {/* Connections: input → hidden */}
-                        {([[-20,-16],[-20,16]] as [number,number][]).flatMap(([ix,iy]) =>
-                            ([[-1,-28],[-1,0],[-1,28]] as [number,number][]).map(([hx,hy]) => (
-                                <line key={`${iy}${hy}`} x1={ix} y1={iy} x2={hx} y2={hy}
-                                    stroke={Mb(0.07)} strokeWidth="0.45" fill="none" />
-                            ))
-                        )}
-                        {/* Connections: hidden → output */}
-                        {([[-1,-28],[-1,0],[-1,28]] as [number,number][]).flatMap(([hx,hy]) =>
-                            ([[20,-16],[20,16]] as [number,number][]).map(([ox,oy]) => (
-                                <line key={`${hy}${oy}`} x1={hx} y1={hy} x2={ox} y2={oy}
-                                    stroke={Mb(0.07)} strokeWidth="0.45" fill="none" />
-                            ))
-                        )}
-                        {/* Input nodes */}
-                        {([[-20,-16],[-20,16]] as [number,number][]).map(([cx,cy],i)=>(
-                            <circle key={i} cx={cx} cy={cy} r={4.5}
-                                fill={Mb(0.07)} stroke={Mb(0.26)} strokeWidth="0.7" />
-                        ))}
-                        {/* Hidden nodes */}
-                        {([[-1,-28],[-1,0],[-1,28]] as [number,number][]).map(([cx,cy],i)=>(
-                            <circle key={i} cx={cx} cy={cy} r={4.5}
-                                fill={Mb(0.05)} stroke={Mb(0.19)} strokeWidth="0.7" />
-                        ))}
-                        {/* Output nodes */}
-                        {([[20,-16],[20,16]] as [number,number][]).map(([cx,cy],i)=>(
-                            <circle key={i} cx={cx} cy={cy} r={4.5}
-                                fill={Mb(0.07)} stroke={Mb(0.26)} strokeWidth="0.7" />
-                        ))}
-                    </g>
-                    <text x="1245" y="390" fontSize="6.5" fill={Mb(0.15)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">AI</text>
-
-                    {/* 10 — SATURN (Space) ─── x=1375 */}
-                    <g transform="translate(1375,340)" fill="none">
-                        {/* Planet */}
-                        <circle cx="0" cy="0" r="22" fill={Mb(0.04)} stroke={Mb(0.17)} strokeWidth="0.75" />
-                        {/* Ring ellipse */}
-                        <ellipse cx="0" cy="0" rx="40" ry="10" stroke={Mb(0.18)} strokeWidth="0.75" />
-                        {/* Stars */}
-                        {([[-42,-42],[-28,-56],[22,-50],[44,-25],[-46,-14],[42,18],[-38,20]] as [number,number][]).map(([sx,sy],i)=>(
-                            <circle key={i} cx={sx} cy={sy} r={1.4} fill={Mb(0.24)} stroke="none" />
-                        ))}
-                    </g>
-                    <text x="1375" y="390" fontSize="6.5" fill={Mb(0.15)} fontFamily="monospace"
-                        textAnchor="middle" letterSpacing="1.5">SPACE</text>
-
-                </svg>
-            </motion.div>
+                {/* Layer 4 — Static nucleus glow */}
+                <div className="newhero-sigil-layer">
+                    <svg viewBox="0 0 600 600" className="w-full h-full" aria-hidden="true">
+                        <defs>
+                            <radialGradient id="sigilNucleus" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%"   stopColor="rgba(255,255,255,0.10)" />
+                                <stop offset="55%"  stopColor="rgba(255,255,255,0.04)" />
+                                <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+                            </radialGradient>
+                        </defs>
+                        <circle cx="300" cy="300" r="62" fill="url(#sigilNucleus)" />
+                    </svg>
+                </div>
+            </div>
         </div>
     );
 }
@@ -391,12 +364,45 @@ function HeroSplitBackground() {
 // Main Hero
 // =====================================================================
 export default function NewHero() {
-    const headlineText      = useTypewriter(HEADLINE_WORDS);
-    const placeholderText   = usePlaceholderTypewriter(PLACEHOLDER_TOPICS);
-    const searchInputRef    = useRef<HTMLInputElement>(null);
-    const [searchValue, setSearchValue] = useState('');
+    const router             = useRouter();
+    const headlineText       = useTypewriter(HEADLINE_WORDS);
+    const placeholderText    = usePlaceholderTypewriter(PLACEHOLDER_TOPICS);
+    const searchInputRef     = useRef<HTMLInputElement>(null);
+    const searchContainerRef = useRef<HTMLDivElement>(null);
 
-    // Global ⌘K shortcut
+    const [searchValue,   setSearchValue]   = useState('');
+    const [searchOpen,    setSearchOpen]    = useState(false);
+    const [searchLoading, setSearchLoading] = useState(false);
+    const [searchItems,   setSearchItems]   = useState<SearchItem[]>([]);
+    const [activeIndex,   setActiveIndex]   = useState(-1);
+
+    // ── Fetch search index lazily on first focus ──────────────────────
+    const fetchItems = useCallback(async () => {
+        if (searchItems.length > 0 || searchLoading) return;
+        setSearchLoading(true);
+        try {
+            const res = await fetch('/api/search');
+            if (res.ok) setSearchItems(await res.json());
+        } catch { /* silent */ }
+        finally { setSearchLoading(false); }
+    }, [searchItems.length, searchLoading]);
+
+    // ── Close dropdown on outside click ──────────────────────────────
+    useEffect(() => {
+        const handler = (e: MouseEvent) => {
+            if (
+                searchContainerRef.current &&
+                !searchContainerRef.current.contains(e.target as Node)
+            ) {
+                setSearchOpen(false);
+                setActiveIndex(-1);
+            }
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, []);
+
+    // ── Global ⌘K — keeps command palette for power users ────────────
     useEffect(() => {
         const handler = (e: KeyboardEvent) => {
             if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -408,20 +414,72 @@ export default function NewHero() {
         return () => document.removeEventListener('keydown', handler);
     }, []);
 
-    const handleSearchClick = useCallback(() => {
-        window.dispatchEvent(new Event('openCommandPalette'));
-    }, []);
+    // ── Filter + score results as user types ─────────────────────────
+    const filteredResults = useMemo<SearchItem[]>(() => {
+        const q = searchValue.toLowerCase().trim();
+        if (!q || !searchItems.length) return [];
+        return searchItems
+            .map(item => {
+                const t = item.title.toLowerCase();
+                const score =
+                    t.startsWith(q)                                       ? 4 :
+                    t.includes(q)                                         ? 3 :
+                    item.subtitle.toLowerCase().includes(q)               ? 2 :
+                    item.keywords?.some(k => k.toLowerCase().includes(q)) ? 1 : -1;
+                return { item, score };
+            })
+            .filter(x => x.score >= 0)
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 8)
+            .map(x => x.item);
+    }, [searchValue, searchItems]);
+
+    // ── Keyboard navigation ───────────────────────────────────────────
+    const listLength = searchValue.trim() ? filteredResults.length : POPULAR_SEARCHES.length;
+
+    const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (!searchOpen) return;
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            setActiveIndex(i => Math.min(i + 1, listLength - 1));
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            setActiveIndex(i => Math.max(i - 1, 0));
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            const list = searchValue.trim() ? filteredResults : POPULAR_SEARCHES;
+            const active = list[activeIndex];
+            if (active) {
+                router.push(active.url);
+                setSearchOpen(false);
+                setSearchValue('');
+            }
+        } else if (e.key === 'Escape') {
+            setSearchOpen(false);
+            setActiveIndex(-1);
+            searchInputRef.current?.blur();
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchOpen, activeIndex, listLength, filteredResults, searchValue, router]);
+
+    // ── Navigate on result select ─────────────────────────────────────
+    const navigate = useCallback((url: string) => {
+        router.push(url);
+        setSearchOpen(false);
+        setSearchValue('');
+        setActiveIndex(-1);
+    }, [router]);
 
     return (
         <section className="relative min-h-screen w-full flex flex-col items-center text-[#fafafa] newhero-bg">
 
-            {/* Background glow + split SVG */}
-            <div className="absolute inset-0 pointer-events-none">
+            {/* Background — bottom blue wash + ambient glows + centered fusion sigil */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
                 <div className="absolute bottom-0 left-0 right-0 h-[70%] bg-gradient-to-t from-blue-900/30 via-blue-950/15 to-transparent" />
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/15 rounded-full blur-[140px]" />
                 <div className="absolute bottom-20 right-1/4 w-[400px] h-[300px] bg-blue-700/10 rounded-full blur-[100px]" />
-                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                    <HeroSplitBackground />
+                <div className="absolute inset-0 z-0">
+                    <HeroFusionSigil />
                 </div>
             </div>
 
@@ -429,7 +487,7 @@ export default function NewHero() {
             <main className="flex-1 flex flex-col items-center justify-center pt-32 pb-20 px-6 relative z-10">
                 <div className="w-full max-w-2xl flex flex-col items-center text-center space-y-8">
 
-                    {/* ── Sanskrit Shloka — epigraph ────────────────────────── */}
+                    {/* ── Sanskrit Shloka ───────────────────────────────────── */}
                     <div className="flex flex-col items-center gap-2 newhero-fade-up" style={{ animationDelay: '0ms' }}>
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-px bg-gradient-to-r from-transparent to-amber-600/35" />
@@ -449,12 +507,7 @@ export default function NewHero() {
                         </p>
                     </div>
 
-                    {/* ── Headline ─────────────────────────────────────────────
-                        Line 1: gradient cycling word (typewriter)
-                        Line 2: static anchor "— under one Canvas."
-                        The cursor sits after the cycling word, so it animates
-                        with the text as it types / deletes.
-                    ──────────────────────────────────────────────────────────── */}
+                    {/* ── Headline ──────────────────────────────────────────── */}
                     <h1
                         className="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.15] newhero-fade-up"
                         style={{ animationDelay: '150ms' }}
@@ -471,20 +524,26 @@ export default function NewHero() {
                         className="text-base md:text-lg text-slate-400 font-light leading-relaxed max-w-xl mx-auto newhero-fade-up"
                         style={{ animationDelay: '230ms' }}
                     >
-                        The textbook tells you what. We show you why — and what it means for the world you are about to inherit.
-                        <span className="block mt-2 text-zinc-500 font-normal text-sm md:text-base tracking-wide">
-                            Class 9 through JEE / NEET, built by Paaras Sir.
-                        </span>
+                        The textbook tells you what. We show you why.
                     </p>
 
-                    {/* Search bar — opens command palette */}
-                    <div className="w-full max-w-xl newhero-fade-up" style={{ animationDelay: '310ms' }}>
-                        <div
-                            className="relative group newhero-search-ring rounded-xl bg-white/[0.04] border border-white/[0.08] backdrop-blur-sm cursor-pointer"
-                            onClick={handleSearchClick}
-                        >
-                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
-                                <Search size={18} />
+                    {/* ── Search bar — inline dropdown ─────────────────────── */}
+                    <div
+                        ref={searchContainerRef}
+                        className="w-full max-w-xl newhero-fade-up relative z-20"
+                        style={{ animationDelay: '310ms' }}
+                    >
+                        {/* Input */}
+                        <div className={`relative newhero-search-ring backdrop-blur-sm transition-all duration-200 ${
+                            searchOpen
+                                ? 'bg-white/[0.06] border border-white/[0.14] rounded-t-xl rounded-b-none'
+                                : 'bg-white/[0.04] border border-white/[0.08] rounded-xl'
+                        }`}>
+                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none">
+                                {searchLoading
+                                    ? <div className="w-[18px] h-[18px] rounded-full border-2 border-slate-600 border-t-slate-400 animate-spin" />
+                                    : <Search size={18} />
+                                }
                             </div>
                             <input
                                 ref={searchInputRef}
@@ -492,26 +551,16 @@ export default function NewHero() {
                                 value={searchValue}
                                 onChange={(e) => {
                                     setSearchValue(e.target.value);
-                                    if (e.target.value.trim().length > 0) {
-                                        window.dispatchEvent(
-                                            new CustomEvent('openCommandPalette', {
-                                                detail: { search: e.target.value },
-                                            })
-                                        );
-                                        e.target.blur();
-                                    }
+                                    setActiveIndex(-1);
                                 }}
-                                onFocus={(e) => {
-                                    window.dispatchEvent(
-                                        new CustomEvent('openCommandPalette', {
-                                            detail: { search: e.target.value },
-                                        })
-                                    );
-                                    e.target.blur();
+                                onFocus={() => {
+                                    setSearchOpen(true);
+                                    fetchItems();
                                 }}
-                                placeholder={placeholderText}
+                                onKeyDown={handleKeyDown}
+                                placeholder={searchOpen ? 'Search pages, topics, or tools…' : placeholderText}
                                 autoComplete="off"
-                                className="w-full bg-transparent py-4 pl-12 pr-12 text-base text-white placeholder:text-slate-500 focus:outline-none cursor-pointer"
+                                className="w-full bg-transparent py-4 pl-12 pr-14 text-base text-white placeholder:text-slate-500 focus:outline-none"
                             />
                             <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
                                 <kbd className="hidden sm:inline-block px-2 py-1 rounded text-xs font-mono text-slate-500 bg-white/[0.04] border border-white/[0.08]">
@@ -519,9 +568,114 @@ export default function NewHero() {
                                 </kbd>
                             </div>
                         </div>
+
+                        {/* Dropdown */}
+                        <AnimatePresence>
+                            {searchOpen && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -6 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -6 }}
+                                    transition={{ duration: 0.13 }}
+                                    className="absolute left-0 right-0 bg-[#0a0a0a]/96 backdrop-blur-xl border border-t-0 border-white/[0.14] rounded-b-2xl shadow-2xl shadow-black/70 overflow-hidden"
+                                >
+
+                                    {/* ── Empty query: Popular ── */}
+                                    {!searchValue.trim() && (
+                                        <>
+                                            <div className="px-4 pt-3 pb-1.5">
+                                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">
+                                                    Popular
+                                                </span>
+                                            </div>
+                                            {POPULAR_SEARCHES.map((item, i) => (
+                                                <button
+                                                    key={item.id}
+                                                    onClick={() => navigate(item.url)}
+                                                    onMouseEnter={() => setActiveIndex(i)}
+                                                    className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors ${
+                                                        activeIndex === i ? 'bg-white/[0.06]' : 'hover:bg-white/[0.04]'
+                                                    }`}
+                                                >
+                                                    <div className="w-7 h-7 rounded-lg bg-white/[0.05] border border-white/[0.07] flex items-center justify-center shrink-0">
+                                                        <item.Icon size={13} className={item.iconColor} />
+                                                    </div>
+                                                    <div className="flex-1 min-w-0 text-left">
+                                                        <p className="text-[13px] text-white/85 font-medium truncate leading-snug">{item.title}</p>
+                                                        <p className="text-[11px] text-slate-600 truncate leading-snug">{item.subtitle}</p>
+                                                    </div>
+                                                    <span className={`shrink-0 text-[10px] font-semibold px-2 py-0.5 rounded-full ${item.badgeColor}`}>
+                                                        {item.badge}
+                                                    </span>
+                                                    <ChevronRight size={12} className="shrink-0 text-white/15" />
+                                                </button>
+                                            ))}
+                                            <div className="px-4 py-2.5 border-t border-white/[0.05]">
+                                                <p className="text-[11px] text-slate-700">
+                                                    Start typing to search 100+ topics, tools &amp; lectures
+                                                </p>
+                                            </div>
+                                        </>
+                                    )}
+
+                                    {/* ── Has query: filtered results ── */}
+                                    {searchValue.trim() && filteredResults.length > 0 && (
+                                        <>
+                                            <div className="px-4 pt-3 pb-1.5">
+                                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">
+                                                    Results
+                                                </span>
+                                            </div>
+                                            {filteredResults.map((item, i) => {
+                                                const badge = getBadge(item.category);
+                                                return (
+                                                    <button
+                                                        key={item.id}
+                                                        onClick={() => navigate(item.url)}
+                                                        onMouseEnter={() => setActiveIndex(i)}
+                                                        className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors ${
+                                                            activeIndex === i ? 'bg-white/[0.06]' : 'hover:bg-white/[0.04]'
+                                                        }`}
+                                                    >
+                                                        <div className="flex-1 min-w-0">
+                                                            <p className="text-[13px] text-white/85 font-medium truncate leading-snug">{item.title}</p>
+                                                            <p className="text-[11px] text-slate-600 truncate leading-snug">{item.subtitle}</p>
+                                                        </div>
+                                                        <span className={`shrink-0 text-[10px] font-semibold px-2 py-0.5 rounded-full ${badge.cls}`}>
+                                                            {badge.label}
+                                                        </span>
+                                                        <ChevronRight size={12} className="shrink-0 text-white/15" />
+                                                    </button>
+                                                );
+                                            })}
+                                        </>
+                                    )}
+
+                                    {/* ── Has query but no results ── */}
+                                    {searchValue.trim() && !searchLoading && filteredResults.length === 0 && (
+                                        <div className="py-8 px-4 text-center">
+                                            <p className="text-sm text-slate-500">
+                                                No results for &ldquo;{searchValue}&rdquo;
+                                            </p>
+                                            <p className="text-xs text-slate-700 mt-1">
+                                                Try &ldquo;mole concept&rdquo;, &ldquo;equilibrium&rdquo;, or &ldquo;organic reactions&rdquo;
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {/* ── Loading ── */}
+                                    {searchValue.trim() && searchLoading && (
+                                        <div className="py-6 text-center">
+                                            <p className="text-xs text-slate-600">Loading…</p>
+                                        </div>
+                                    )}
+
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
 
-                    {/* Quick-access chips — direct links, traffic-ranked */}
+                    {/* Quick-access chips */}
                     <div
                         className="flex flex-wrap justify-center gap-2 newhero-fade-up"
                         style={{ animationDelay: '390ms' }}

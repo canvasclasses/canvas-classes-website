@@ -6,8 +6,9 @@ import connectToDatabase from '@/lib/mongodb';
 import { Asset } from '@/lib/models/Asset';
 import { AuditLog } from '@/lib/models/AuditLog';
 import { uploadToR2, getExtensionFromMimeType, type AssetType } from '@/lib/r2Storage';
-import { createClient } from '@/app/utils/supabase/server';
 import { getUserPermissions } from '@/lib/rbac';
+import { getAuthenticatedUser, isAdmin } from '@/lib/auth';
+import { isLocalhostDev } from '@/lib/bookAuth';
 import { fileTypeFromBuffer } from 'file-type';
 
 // Configure route to handle large file uploads (videos up to 100MB)
@@ -35,27 +36,43 @@ export async function POST(request: NextRequest) {
   try {
     await connectToDatabase();
     
-    // Auth: accept either a valid Supabase session OR the ADMIN_SECRET header
-    const adminSecret = request.headers.get('x-admin-secret');
-    const envSecret = process.env.ADMIN_SECRET;
-    const hasAdminHeader = envSecret && adminSecret === envSecret;
-
-    let isAuthorized = hasAdminHeader; // header-based auth (local admin tool)
+    // Auth order:
+    //   1. Safe localhost dev bypass (hostname + NODE_ENV + non-Vercel).
+    //   2. x-admin-secret header (CLI scripts).
+    //   3. Supabase session — allow if email is in ADMIN_EMAILS OR RBAC grants
+    //      canEditQuestions.
+    let isAuthorized = await isLocalhostDev();
 
     if (!isAuthorized) {
-      // Try Supabase session-based auth
-      const supabase = await createClient();
-      if (supabase) {
-        const { data: { user }, error: authError } = await supabase.auth.getUser();
-        if (!authError && user) {
-          const permissions = await getUserPermissions(user.email!);
-          isAuthorized = permissions.canEditQuestions;
-          if (!isAuthorized) {
-            return NextResponse.json(
-              { success: false, error: 'Forbidden - Insufficient permissions to upload assets' },
-              { status: 403 }
-            );
+      const adminSecret = request.headers.get('x-admin-secret');
+      const envSecret = process.env.ADMIN_SECRET;
+      if (envSecret && adminSecret === envSecret) {
+        isAuthorized = true;
+      }
+    }
+
+    if (!isAuthorized) {
+      const user = await getAuthenticatedUser(request);
+      if (user?.email) {
+        if (isAdmin(user.email)) {
+          isAuthorized = true;
+        } else {
+          // Fall back to RBAC (UserRole collection) for non-ADMIN_EMAILS editors.
+          try {
+            const permissions = await getUserPermissions(user.email);
+            if (permissions.canEditQuestions) {
+              isAuthorized = true;
+            }
+          } catch (rbacErr) {
+            console.error('RBAC lookup failed during asset upload auth:', rbacErr);
           }
+        }
+
+        if (!isAuthorized) {
+          return NextResponse.json(
+            { success: false, error: 'Forbidden - Insufficient permissions to upload assets' },
+            { status: 403 }
+          );
         }
       }
     }

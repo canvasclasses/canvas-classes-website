@@ -1,0 +1,1149 @@
+{
+  "total": 183,
+  "byTopic": {
+    "Minerals": [
+      {
+        "id": "FLASH-INORG-0553",
+        "difficulty": "medium",
+        "q": "Formula of Agate",
+        "a": "$$SiO_2$$"
+      },
+      {
+        "id": "FLASH-INORG-0564",
+        "difficulty": "medium",
+        "q": "Chemical name of Barytes",
+        "a": "Barium Sulphate ($$BaSO_4$$​)"
+      },
+      {
+        "id": "FLASH-INORG-0568",
+        "difficulty": "medium",
+        "q": "Main constituent of Bone Ash",
+        "a": "Calcium Phosphate $$Ca_3(PO_4)_2$$"
+      },
+      {
+        "id": "FLASH-INORG-0578",
+        "difficulty": "medium",
+        "q": "Chemical name of Chile Saltpeter",
+        "a": "Sodium Nitrate ($$NaNO_3$$​)"
+      },
+      {
+        "id": "FLASH-INORG-0582",
+        "difficulty": "medium",
+        "q": "Formula of Carborundum",
+        "a": "$$SiC$$ (Silicon Carbide)"
+      },
+      {
+        "id": "FLASH-INORG-0593",
+        "difficulty": "medium",
+        "q": "Formula of Fluorspar",
+        "a": "$$CaF_2$$"
+      },
+      {
+        "id": "FLASH-INORG-0608",
+        "difficulty": "medium",
+        "q": "Common name for Rock Salt (NaCl)",
+        "a": "Halite"
+      },
+      {
+        "id": "FLASH-INORG-0639",
+        "difficulty": "medium",
+        "q": "Chemical name of Quartz",
+        "a": "Silicon Dioxide ($$SiO_2$$)"
+      },
+      {
+        "id": "FLASH-INORG-0641",
+        "difficulty": "medium",
+        "q": "Formula of Realgar",
+        "a": "$$As_2S_3$$ (also listed as $$As_4S_4$$)"
+      },
+      {
+        "id": "FLASH-INORG-0643",
+        "difficulty": "medium",
+        "q": "Chemical name of Limestone",
+        "a": "Calcium Carbonate ($$CaCO_3$$)"
+      },
+      {
+        "id": "FLASH-INORG-0652",
+        "difficulty": "medium",
+        "q": "Composition of Lapis Lazuli",
+        "a": "Sodium Alumino Silicate"
+      },
+      {
+        "id": "FLASH-INORG-0653",
+        "difficulty": "medium",
+        "q": "Chemical name of Milk of Magnesia",
+        "a": "Magnesium Hydroxide ($$Mg(OH)_2$$)"
+      },
+      {
+        "id": "FLASH-INORG-0659",
+        "difficulty": "medium",
+        "q": "Formula of Mica",
+        "a": "$$KH_2Al_3(SiO_3)_4$$"
+      },
+      {
+        "id": "FLASH-INORG-0660",
+        "difficulty": "medium",
+        "q": "Formula of Magnesia",
+        "a": "$$MgO$$"
+      },
+      {
+        "id": "FLASH-INORG-0664",
+        "difficulty": "medium",
+        "q": "Formula of Rock Salt",
+        "a": "$$NaCl$$"
+      },
+      {
+        "id": "FLASH-INORG-0665",
+        "difficulty": "medium",
+        "q": "Formula of Ruby (or Sapphire/Emery)",
+        "a": "$$Al_2O_3$$"
+      },
+      {
+        "id": "FLASH-INORG-0667",
+        "difficulty": "medium",
+        "q": "Formula of Sand",
+        "a": "$$SiO_2$$"
+      },
+      {
+        "id": "FLASH-INORG-0678",
+        "difficulty": "medium",
+        "q": "Formula of Sylvine",
+        "a": "$$KCl$$"
+      },
+      {
+        "id": "FLASH-INORG-0687",
+        "difficulty": "medium",
+        "q": "Formula of Washing Soda",
+        "a": "$$Na_2CO_3$$"
+      }
+    ],
+    "Explosives": [
+      {
+        "id": "FLASH-INORG-0554",
+        "difficulty": "medium",
+        "q": "Composition and use of Ammonal",
+        "a": "Mixture of  $$NH_4NO_3$$  and $$Al$$   powder. Used as an explosive"
+      },
+      {
+        "id": "FLASH-INORG-0606",
+        "difficulty": "medium",
+        "q": "Composition of Gun Powder",
+        "a": "Mixture of Sulphur, Charcoal, and Nitre "
+      },
+      {
+        "id": "FLASH-INORG-0632",
+        "difficulty": "medium",
+        "q": "Chemical name of Picric Acid",
+        "a": "2,4,6-Trinitrophenol "
+      },
+      {
+        "id": "FLASH-INORG-0679",
+        "difficulty": "medium",
+        "q": "What does TNT stand for?",
+        "a": "Trinitrotoluene"
+      }
+    ],
+    "Salts": [
+      {
+        "id": "FLASH-INORG-0555",
+        "difficulty": "medium",
+        "q": "Formula of Alum (Ammonium)",
+        "a": "$$(NH_4)_2SO_4 \\cdot Al_2(SO_4)_3 \\cdot 24H_2O$$"
+      },
+      {
+        "id": "FLASH-INORG-0556",
+        "difficulty": "medium",
+        "q": "Formula of Potash Alum",
+        "a": "$$K_2SO_4 \\cdot Al_2(SO_4)_3 \\cdot 24H_2O$$"
+      },
+      {
+        "id": "FLASH-INORG-0557",
+        "difficulty": "medium",
+        "q": "Usage of Alum",
+        "a": "Used as a mordant by dyers of clothes"
+      },
+      {
+        "id": "FLASH-INORG-0589",
+        "difficulty": "medium",
+        "q": "Formula of Dead Burnt Plaster",
+        "a": "Anhydrous $$CaSO_4$$"
+      },
+      {
+        "id": "FLASH-INORG-0591",
+        "difficulty": "medium",
+        "q": "Chemical name of Epsom Salt",
+        "a": "Magnesium Sulphate ($$MgSO_4 \\cdot 7H_2O$$)"
+      },
+      {
+        "id": "FLASH-INORG-0595",
+        "difficulty": "medium",
+        "q": "Chemical name of Fremy's Salt",
+        "a": "Potassium Hydrogen Fluoride ($$KHF_2$$)"
+      },
+      {
+        "id": "FLASH-INORG-0601",
+        "difficulty": "medium",
+        "q": "Chemical name of Glauber's Salt",
+        "a": "Sodium Sulphate ($$Na_2SO_4 \\cdot 10H_2O$$)"
+      },
+      {
+        "id": "FLASH-INORG-0602",
+        "difficulty": "medium",
+        "q": "Formula of Gypsum",
+        "a": "$$CaSO_4 \\cdot 2H_2O$$"
+      },
+      {
+        "id": "FLASH-INORG-0610",
+        "difficulty": "medium",
+        "q": "Formula of Hair Salt",
+        "a": "$$Al_2(SO_4)_3 \\cdot 18H_2O$$"
+      },
+      {
+        "id": "FLASH-INORG-0614",
+        "difficulty": "medium",
+        "q": "Formula of Mohr's Salt",
+        "a": "$$FeSO_4 \\cdot (NH_4)_2SO_4 \\cdot 6H_2O$$"
+      },
+      {
+        "id": "FLASH-INORG-0619",
+        "difficulty": "medium",
+        "q": "Formula of Nitre Cake",
+        "a": "$$NaHSO_4$$"
+      },
+      {
+        "id": "FLASH-INORG-0628",
+        "difficulty": "medium",
+        "q": "Chemical name of Plaster of Paris",
+        "a": "Calcium Sulphate Hemihydrate"
+      },
+      {
+        "id": "FLASH-INORG-0629",
+        "difficulty": "medium",
+        "q": "Formula of Plaster of Paris",
+        "a": "$$CaSO_4 \\cdot \\frac{1}{2}H_2O$$"
+      },
+      {
+        "id": "FLASH-INORG-0635",
+        "difficulty": "medium",
+        "q": "Formula of Pearl Ash",
+        "a": "$$K_2CO_3$$"
+      },
+      {
+        "id": "FLASH-INORG-0648",
+        "difficulty": "medium",
+        "q": "Formula of Red Liquor",
+        "a": "Aluminium Acetate ($$(CH_3COO)_3Al$$)"
+      },
+      {
+        "id": "FLASH-INORG-0649",
+        "difficulty": "medium",
+        "q": "Chemical name of Rochelle Salt",
+        "a": "Sodium Potassium Tartrate"
+      },
+      {
+        "id": "FLASH-INORG-0650",
+        "difficulty": "medium",
+        "q": "Formula of Rochelle Salt",
+        "a": "$$NaKC_4H_4O_6$$"
+      },
+      {
+        "id": "FLASH-INORG-0658",
+        "difficulty": "medium",
+        "q": "Formula of Microcosmic Salt",
+        "a": "$$Na(NH_4)HPO_4 \\cdot 4H_2O$$"
+      },
+      {
+        "id": "FLASH-INORG-0666",
+        "difficulty": "medium",
+        "q": "Chemical name of Salt Cake",
+        "a": "Sodium Sulphate ( $$Na_2SO_4$$  )"
+      },
+      {
+        "id": "FLASH-INORG-0670",
+        "difficulty": "medium",
+        "q": "Formula of Smelling Salt",
+        "a": "$$(NH_4)_2CO_3$$"
+      },
+      {
+        "id": "FLASH-INORG-0672",
+        "difficulty": "medium",
+        "q": "Chemical name of Soda Ash",
+        "a": "Sodium Carbonate ( $$Na_2CO_3$$  )"
+      },
+      {
+        "id": "FLASH-INORG-0676",
+        "difficulty": "medium",
+        "q": "Chemical name of Sugar of Lead",
+        "a": "Lead Acetate ( $$(CH_3COO)_2Pb$$  )"
+      },
+      {
+        "id": "FLASH-INORG-0688",
+        "difficulty": "medium",
+        "q": "Chemical name of Water Glass",
+        "a": "Sodium Silicate ( $$Na_2SiO_3$$  )"
+      },
+      {
+        "id": "FLASH-INORG-0696",
+        "difficulty": "medium",
+        "q": "Name of  $$FeSO_4 \\cdot (NH_4)_2SO_4 \\cdot 6H_2O$$",
+        "a": "Mohr's Salt"
+      }
+    ],
+    "Acids": [
+      {
+        "id": "FLASH-INORG-0558",
+        "difficulty": "medium",
+        "q": "Common name for Nitric Acid (HNO3​)",
+        "a": "Aqua fortis"
+      },
+      {
+        "id": "FLASH-INORG-0571",
+        "difficulty": "medium",
+        "q": "Is B(OH)3​ an acid or base?",
+        "a": "It is an acid"
+      },
+      {
+        "id": "FLASH-INORG-0580",
+        "difficulty": "medium",
+        "q": "Formula of Carbonic Acid",
+        "a": "$$H_2CO_3$$"
+      },
+      {
+        "id": "FLASH-INORG-0612",
+        "difficulty": "medium",
+        "q": "Which acid is the King of Chemicals?",
+        "a": "$$H_2SO_4$$ (Sulphuric Acid)"
+      },
+      {
+        "id": "FLASH-INORG-0615",
+        "difficulty": "medium",
+        "q": "Common name for Hydrochloric Acid (HCl)",
+        "a": "Muriatic acid"
+      },
+      {
+        "id": "FLASH-INORG-0623",
+        "difficulty": "medium",
+        "q": "Formula of Oil of Vitriol",
+        "a": "$$H_2SO_4$$"
+      },
+      {
+        "id": "FLASH-INORG-0624",
+        "difficulty": "medium",
+        "q": "Composition of Oleum",
+        "a": "Conc. $$H_2SO_4 + SO_3$$"
+      },
+      {
+        "id": "FLASH-INORG-0625",
+        "difficulty": "medium",
+        "q": "Alternate name for Oleum",
+        "a": "Fuming sulphuric acid"
+      },
+      {
+        "id": "FLASH-INORG-0637",
+        "difficulty": "medium",
+        "q": "Formula of Prussic Acid",
+        "a": "$$HCN$$"
+      },
+      {
+        "id": "FLASH-INORG-0654",
+        "difficulty": "medium",
+        "q": "Chemical name of Marshall's Acid",
+        "a": "Persulphuric Acid ($$H_2S_2O_8$$)"
+      },
+      {
+        "id": "FLASH-INORG-0675",
+        "difficulty": "medium",
+        "q": "Common name for Spirit of Salt",
+        "a": "$$HCl$$"
+      },
+      {
+        "id": "FLASH-INORG-0712",
+        "difficulty": "medium",
+        "q": "Name of  $$H_2S_2O_7$$",
+        "a": "Oleum"
+      }
+    ],
+    "Reagents": [
+      {
+        "id": "FLASH-INORG-0559",
+        "difficulty": "medium",
+        "q": "Chemical name for Antichlor",
+        "a": "Sodium Thiosulphate ($$Na_2S_2O_3 \\cdot 5H_2O$$)"
+      },
+      {
+        "id": "FLASH-INORG-0560",
+        "difficulty": "medium",
+        "q": "Alternate common name for Antichlor",
+        "a": "Hypo"
+      },
+      {
+        "id": "FLASH-INORG-0588",
+        "difficulty": "medium",
+        "q": "Formula of Chromyl Chloride",
+        "a": "$$CrO_2Cl_2$$"
+      },
+      {
+        "id": "FLASH-INORG-0616",
+        "difficulty": "medium",
+        "q": "Formula of Nessler's Reagent",
+        "a": "$$K_2HgI_4$$"
+      },
+      {
+        "id": "FLASH-INORG-0617",
+        "difficulty": "medium",
+        "q": "Components of Nessler's Reagent",
+        "a": "$$HgCl_2$$, $$KI$$, and $$NaOH$$"
+      },
+      {
+        "id": "FLASH-INORG-0618",
+        "difficulty": "medium",
+        "q": "Active ion in Nessler's Reagent",
+        "a": "$$[HgI_4]^{2-}$$"
+      },
+      {
+        "id": "FLASH-INORG-0644",
+        "difficulty": "medium",
+        "q": "Chemical name of Lunar Caustic",
+        "a": "Silver Nitrate ($$AgNO_3$$)"
+      },
+      {
+        "id": "FLASH-INORG-0671",
+        "difficulty": "medium",
+        "q": "Composition of Soda Lime",
+        "a": "Mixture of  $$NaOH$$  and $$CaO$$"
+      },
+      {
+        "id": "FLASH-INORG-0694",
+        "difficulty": "medium",
+        "q": "Formula of Yellow Ammonium Sulphide",
+        "a": "$$(NH_4)_2S_{x+1}$$"
+      },
+      {
+        "id": "FLASH-INORG-0734",
+        "difficulty": "medium",
+        "q": "Name of  $$K_2HgI_4$$",
+        "a": "Nessler's Reagent"
+      }
+    ],
+    "Mixtures": [
+      {
+        "id": "FLASH-INORG-0561",
+        "difficulty": "medium",
+        "q": "Composition of Aqua Regia",
+        "a": "Conc.  $$HNO_3$$  and Conc. $$HCl$$   in 1:3 ratio"
+      },
+      {
+        "id": "FLASH-INORG-0562",
+        "difficulty": "medium",
+        "q": "Alternate name for Aqua Regia",
+        "a": "Kingly water"
+      },
+      {
+        "id": "FLASH-INORG-0592",
+        "difficulty": "medium",
+        "q": "Composition of Energy (Mixture)",
+        "a": "Mixture of $$Al_2O_3$$ and $$Fe_2O_3$$"
+      },
+      {
+        "id": "FLASH-INORG-0599",
+        "difficulty": "medium",
+        "q": "Composition of Fusion Mixture",
+        "a": "$$Na_2CO_3 + K_2CO_3$$"
+      },
+      {
+        "id": "FLASH-INORG-0683",
+        "difficulty": "medium",
+        "q": "Composition of Tincture of Iodine",
+        "a": "$$I_2$$  and $$KI$$   solution in Alcohol"
+      },
+      {
+        "id": "FLASH-INORG-0684",
+        "difficulty": "medium",
+        "q": "Composition of Thermite",
+        "a": "Mixture of Iron Oxide ( $$Fe_3O_4$$  ) and  $$Al$$   powder"
+      }
+    ],
+    "Common Names": [
+      {
+        "id": "FLASH-INORG-0563",
+        "difficulty": "medium",
+        "q": "Chemical name of Baking Soda",
+        "a": "Sodium Bicarbonate ($$NaHCO_3$$​)"
+      },
+      {
+        "id": "FLASH-INORG-0590",
+        "difficulty": "medium",
+        "q": "What is Dry Ice?",
+        "a": "Solid Carbon Dioxide ($$CO_2$$)"
+      },
+      {
+        "id": "FLASH-INORG-0611",
+        "difficulty": "medium",
+        "q": "Formula of Hypo",
+        "a": "$$Na_2S_2O_3 \\cdot 5H_2O$$"
+      },
+      {
+        "id": "FLASH-INORG-0613",
+        "difficulty": "medium",
+        "q": "What does the German word Kali refer to?",
+        "a": "Potash"
+      },
+      {
+        "id": "FLASH-INORG-0622",
+        "difficulty": "medium",
+        "q": "Chemical name of Oxone",
+        "a": "Sodium Peroxide ($$Na_2O_2$$)"
+      },
+      {
+        "id": "FLASH-INORG-0630",
+        "difficulty": "medium",
+        "q": "Chemical name of Philosopher's Wool",
+        "a": "Zinc Oxide ($$ZnO$$)"
+      },
+      {
+        "id": "FLASH-INORG-0640",
+        "difficulty": "medium",
+        "q": "Common name for Mercury (Hg)",
+        "a": "Quick Silver"
+      },
+      {
+        "id": "FLASH-INORG-0686",
+        "difficulty": "medium",
+        "q": "Composition of Vinegar",
+        "a": "Dilute Acetic Acid ( $$CH_3COOH$$  )"
+      },
+      {
+        "id": "FLASH-INORG-0697",
+        "difficulty": "medium",
+        "q": "Name of  $$Na_2S_2O_3 \\cdot 5H_2O$$",
+        "a": "Hypo or Antichlor"
+      },
+      {
+        "id": "FLASH-INORG-0698",
+        "difficulty": "medium",
+        "q": "Name of  $$Na_2B_4O_7 \\cdot 10H_2O$$",
+        "a": "Borax or Tincal"
+      },
+      {
+        "id": "FLASH-INORG-0699",
+        "difficulty": "medium",
+        "q": "Name of  $$Cu_2O$$",
+        "a": "Cuprite"
+      },
+      {
+        "id": "FLASH-INORG-0700",
+        "difficulty": "medium",
+        "q": "Name of  $$Hg_2Cl_2$$",
+        "a": "Calomel"
+      },
+      {
+        "id": "FLASH-INORG-0701",
+        "difficulty": "medium",
+        "q": "Name of  $$NaNO_3$$",
+        "a": "Chile Saltpeter"
+      },
+      {
+        "id": "FLASH-INORG-0702",
+        "difficulty": "medium",
+        "q": "Name of  $$Cu_2S$$",
+        "a": "Copper Glance"
+      },
+      {
+        "id": "FLASH-INORG-0703",
+        "difficulty": "medium",
+        "q": "Name of  $$C_2N_2$$",
+        "a": "Cyanogen"
+      },
+      {
+        "id": "FLASH-INORG-0704",
+        "difficulty": "medium",
+        "q": "Name of  $$SiC$$",
+        "a": "Carborundum"
+      },
+      {
+        "id": "FLASH-INORG-0705",
+        "difficulty": "medium",
+        "q": "Name of  $$BaSO_4$$",
+        "a": "Barytes"
+      },
+      {
+        "id": "FLASH-INORG-0706",
+        "difficulty": "medium",
+        "q": "Name of  $$Na_2SiO_3$$",
+        "a": "Water Glass"
+      },
+      {
+        "id": "FLASH-INORG-0707",
+        "difficulty": "medium",
+        "q": "Name of  $$Pb(OH)_2 \\cdot 2PbCO_3$$",
+        "a": "White Lead"
+      },
+      {
+        "id": "FLASH-INORG-0708",
+        "difficulty": "medium",
+        "q": "Name of  $$(CH_3COO)_2Pb$$",
+        "a": "Sugar of Lead"
+      },
+      {
+        "id": "FLASH-INORG-0709",
+        "difficulty": "medium",
+        "q": "Name of  $$SnO_2$$",
+        "a": "Tinstone or Cassiterite"
+      },
+      {
+        "id": "FLASH-INORG-0710",
+        "difficulty": "medium",
+        "q": "Name of  $$Na_2O_2$$",
+        "a": "Oxone"
+      },
+      {
+        "id": "FLASH-INORG-0711",
+        "difficulty": "medium",
+        "q": "Name of  $$H_2S_2O_8$$",
+        "a": "Marshall's Acid"
+      },
+      {
+        "id": "FLASH-INORG-0714",
+        "difficulty": "medium",
+        "q": "Name of  $$C_6H_5NO_2$$",
+        "a": "Oil of Mirbane"
+      },
+      {
+        "id": "FLASH-INORG-0715",
+        "difficulty": "medium",
+        "q": "Name of  $$CH_3OH$$",
+        "a": "Wood Spirit"
+      },
+      {
+        "id": "FLASH-INORG-0716",
+        "difficulty": "medium",
+        "q": "Name of  $$BiOCl$$",
+        "a": "Pearl White"
+      },
+      {
+        "id": "FLASH-INORG-0717",
+        "difficulty": "medium",
+        "q": "Name of  $$ZnO$$   (Wool)",
+        "a": "Philosopher's Wool"
+      },
+      {
+        "id": "FLASH-INORG-0718",
+        "difficulty": "medium",
+        "q": "Name of  $$ZnO$$   (Ore)",
+        "a": "Zincite"
+      },
+      {
+        "id": "FLASH-INORG-0719",
+        "difficulty": "medium",
+        "q": "Name of  $$As_2S_3/As_4S_4$$",
+        "a": "Realgar"
+      },
+      {
+        "id": "FLASH-INORG-0720",
+        "difficulty": "medium",
+        "q": "Name of  $$Pb_3O_4$$",
+        "a": "Red Lead or Minium"
+      },
+      {
+        "id": "FLASH-INORG-0721",
+        "difficulty": "medium",
+        "q": "Name of  $$NaKC_4H_4O_6$$",
+        "a": "Rochelle Salt"
+      },
+      {
+        "id": "FLASH-INORG-0722",
+        "difficulty": "medium",
+        "q": "Name of  $$SnS_2$$",
+        "a": "Mosaic Gold"
+      },
+      {
+        "id": "FLASH-INORG-0723",
+        "difficulty": "medium",
+        "q": "Name of  $$K_3[Co(NO_2)_6]$$",
+        "a": "Fischer's Salt"
+      },
+      {
+        "id": "FLASH-INORG-0724",
+        "difficulty": "medium",
+        "q": "Name of  $$KHF_2$$",
+        "a": "Fremy's Salt"
+      },
+      {
+        "id": "FLASH-INORG-0725",
+        "difficulty": "medium",
+        "q": "Name of  $$CaH_2$$",
+        "a": "Hydrolith"
+      },
+      {
+        "id": "FLASH-INORG-0726",
+        "difficulty": "medium",
+        "q": "Name of  $$AgCl$$",
+        "a": "Horn Silver"
+      },
+      {
+        "id": "FLASH-INORG-0731",
+        "difficulty": "medium",
+        "q": "Name of  $$C_6H_6Cl_6$$",
+        "a": "Gammexane or BHC"
+      },
+      {
+        "id": "FLASH-INORG-0733",
+        "difficulty": "medium",
+        "q": "Name of  $$Pb(C_2H_5)_4$$",
+        "a": "TEL"
+      },
+      {
+        "id": "FLASH-INORG-0735",
+        "difficulty": "medium",
+        "q": "Name of  $$(CH_3COO)_3Al$$",
+        "a": "Red Liquor"
+      }
+    ],
+    "Solutions": [
+      {
+        "id": "FLASH-INORG-0565",
+        "difficulty": "medium",
+        "q": "What is Brine?",
+        "a": "Sodium Chloride ($$NaCl$$) solution"
+      },
+      {
+        "id": "FLASH-INORG-0594",
+        "difficulty": "medium",
+        "q": "What is Formalin?",
+        "a": "40% Formaldehyde ($$HCHO$$)"
+      },
+      {
+        "id": "FLASH-INORG-0598",
+        "difficulty": "medium",
+        "q": "Formula of Fowler's Solution",
+        "a": "$$NaAsO_2$$ solution"
+      },
+      {
+        "id": "FLASH-INORG-0636",
+        "difficulty": "medium",
+        "q": "What is Perhydrol?",
+        "a": "30% $$H_2O_2$$"
+      },
+      {
+        "id": "FLASH-INORG-0642",
+        "difficulty": "medium",
+        "q": "Composition of Rectified Spirit",
+        "a": "95% Ethyl Alcohol ($$C_2H_5OH$$)"
+      },
+      {
+        "id": "FLASH-INORG-0651",
+        "difficulty": "medium",
+        "q": "Composition of Lithia Water",
+        "a": "Aqueous solution of Lithium Bicarbonate ($$LiHCO_3$$)"
+      },
+      {
+        "id": "FLASH-INORG-0690",
+        "difficulty": "medium",
+        "q": "Composition of Wackenroder's Liquid",
+        "a": "$$H_2SO_4 + H_2S$$"
+      }
+    ],
+    "Vitriols": [
+      {
+        "id": "FLASH-INORG-0566",
+        "difficulty": "medium",
+        "q": "Formula of Blue Vitriol",
+        "a": "$$CuSO_4 \\cdot 5H_2O$$"
+      },
+      {
+        "id": "FLASH-INORG-0567",
+        "difficulty": "medium",
+        "q": "Chemical name of Blue Vitriol",
+        "a": "Copper Sulphate"
+      },
+      {
+        "id": "FLASH-INORG-0603",
+        "difficulty": "medium",
+        "q": "Chemical name of Green Vitriol",
+        "a": "Ferrous Sulphate ($$FeSO_4 \\cdot 7H_2O$$)"
+      },
+      {
+        "id": "FLASH-INORG-0691",
+        "difficulty": "medium",
+        "q": "Chemical name of White Vitriol",
+        "a": "Zinc Sulphate ( $$ZnSO_4 \\cdot 7H_2O$$  )"
+      },
+      {
+        "id": "FLASH-INORG-0727",
+        "difficulty": "medium",
+        "q": "Name of  $$ZnSO_4 \\cdot 7H_2O$$",
+        "a": "White Vitriol"
+      },
+      {
+        "id": "FLASH-INORG-0728",
+        "difficulty": "medium",
+        "q": "Name of  $$FeSO_4 \\cdot 7H_2O$$",
+        "a": "Green Vitriol"
+      },
+      {
+        "id": "FLASH-INORG-0729",
+        "difficulty": "medium",
+        "q": "Name of  $$CuSO_4 \\cdot 5H_2O$$",
+        "a": "Blue Vitriol"
+      },
+      {
+        "id": "FLASH-INORG-0730",
+        "difficulty": "medium",
+        "q": "Name of  $$H_2SO_4$$",
+        "a": "Oil of Vitriol"
+      }
+    ],
+    "Borates": [
+      {
+        "id": "FLASH-INORG-0569",
+        "difficulty": "medium",
+        "q": "Formula of Borax",
+        "a": "$$Na_2B_4O_7 \\cdot 10H_2O$$"
+      },
+      {
+        "id": "FLASH-INORG-0570",
+        "difficulty": "medium",
+        "q": "Alternate name for Borax (Na2​B4​O7​)",
+        "a": "Tincal"
+      }
+    ],
+    "Coordination": [
+      {
+        "id": "FLASH-INORG-0572",
+        "difficulty": "medium",
+        "q": "Formula of the Brown Ring complex",
+        "a": "$$FeSO_4 \\cdot NO$$"
+      },
+      {
+        "id": "FLASH-INORG-0597",
+        "difficulty": "medium",
+        "q": "Formula of Fischer's Salt",
+        "a": "$$K_3[Co(NO_2)_6]$$, Potassium Cobaltinitrite"
+      },
+      {
+        "id": "FLASH-INORG-0634",
+        "difficulty": "medium",
+        "q": "Formula of Prussian Blue",
+        "a": "$$Fe_4[Fe(CN)_6]_3$$"
+      }
+    ],
+    "Chlorides": [
+      {
+        "id": "FLASH-INORG-0573",
+        "difficulty": "medium",
+        "q": "Formula of Butter of Tin",
+        "a": "$$SnCl_4 \\cdot 5H_2O$$"
+      },
+      {
+        "id": "FLASH-INORG-0575",
+        "difficulty": "medium",
+        "q": "Formula of Calomel",
+        "a": "$$Hg_2Cl_2$$"
+      },
+      {
+        "id": "FLASH-INORG-0586",
+        "difficulty": "medium",
+        "q": "Chemical name of Corrosive Sublimate",
+        "a": "Mercuric Chloride ($$HgCl_2$$​)"
+      }
+    ],
+    "Ores": [
+      {
+        "id": "FLASH-INORG-0574",
+        "difficulty": "medium",
+        "q": "Formula of Cuprite",
+        "a": "$$Cu_2O$$"
+      },
+      {
+        "id": "FLASH-INORG-0579",
+        "difficulty": "medium",
+        "q": "Formula of Cinnabar",
+        "a": "$$HgS$$"
+      },
+      {
+        "id": "FLASH-INORG-0583",
+        "difficulty": "medium",
+        "q": "Formula of Copper Glance",
+        "a": "$$Cu_2S$$"
+      },
+      {
+        "id": "FLASH-INORG-0587",
+        "difficulty": "medium",
+        "q": "Chemical name of Corundum",
+        "a": "Aluminium Oxide ($$Al_2O_3$$​)"
+      },
+      {
+        "id": "FLASH-INORG-0609",
+        "difficulty": "medium",
+        "q": "Formula of Horn Silver",
+        "a": "AgCl"
+      },
+      {
+        "id": "FLASH-INORG-0657",
+        "difficulty": "medium",
+        "q": "Formula of Magnesite",
+        "a": "$$MgCO_3$$"
+      },
+      {
+        "id": "FLASH-INORG-0685",
+        "difficulty": "medium",
+        "q": "Formula of Tinstone (Cassiterite)",
+        "a": "$$SnO_2$$"
+      },
+      {
+        "id": "FLASH-INORG-0695",
+        "difficulty": "medium",
+        "q": "Formula of Zincite",
+        "a": "$$ZnO$$"
+      }
+    ],
+    "Bases": [
+      {
+        "id": "FLASH-INORG-0576",
+        "difficulty": "medium",
+        "q": "Formula of Caustic Potash",
+        "a": "$$KOH$$"
+      },
+      {
+        "id": "FLASH-INORG-0577",
+        "difficulty": "medium",
+        "q": "Chemical name of Caustic Soda",
+        "a": "Sodium Hydroxide ($$NaOH$$)"
+      }
+    ],
+    "Organic": [
+      {
+        "id": "FLASH-INORG-0581",
+        "difficulty": "medium",
+        "q": "Common name for Phenol (C6​H5​OH)",
+        "a": "Carbolic acid"
+      },
+      {
+        "id": "FLASH-INORG-0626",
+        "difficulty": "medium",
+        "q": "Formula of Oil of Mirbane",
+        "a": "$$C_6H_5NO_2$$"
+      },
+      {
+        "id": "FLASH-INORG-0627",
+        "difficulty": "medium",
+        "q": "Chemical name of Oil of Wintergreen",
+        "a": "Methyl Salicylate"
+      },
+      {
+        "id": "FLASH-INORG-0681",
+        "difficulty": "medium",
+        "q": "What does TEL stand for?",
+        "a": "Tetra Ethyl Lead, $$Pb(C_2H_5)_4$$"
+      }
+    ],
+    "Medical": [
+      {
+        "id": "FLASH-INORG-0584",
+        "difficulty": "medium",
+        "q": "Composition of Carbogen",
+        "a": "Mixture of  $$O_2$$  and 1% $$CO_2$$"
+      },
+      {
+        "id": "FLASH-INORG-0585",
+        "difficulty": "medium",
+        "q": "Use of Carbogen",
+        "a": "Antidote for CO poisoning"
+      },
+      {
+        "id": "FLASH-INORG-0669",
+        "difficulty": "medium",
+        "q": "Main component of Seidlitz Powder",
+        "a": "$$NaHCO_3$$"
+      }
+    ],
+    "Gases": [
+      {
+        "id": "FLASH-INORG-0596",
+        "difficulty": "medium",
+        "q": "Alternate name for Nitrogen (N2​)",
+        "a": "Foul air or Azote"
+      },
+      {
+        "id": "FLASH-INORG-0631",
+        "difficulty": "medium",
+        "q": "Chemical name of Phosgene",
+        "a": "Carbonyl Chloride ($$COCl_2$$)"
+      },
+      {
+        "id": "FLASH-INORG-0645",
+        "difficulty": "medium",
+        "q": "Chemical name of Laughing Gas",
+        "a": "Nitrous Oxide ($$N_2O$$)"
+      },
+      {
+        "id": "FLASH-INORG-0662",
+        "difficulty": "medium",
+        "q": "Formula of Marsh Gas",
+        "a": "$$CH_4$$"
+      },
+      {
+        "id": "FLASH-INORG-0663",
+        "difficulty": "medium",
+        "q": "Alternate name for Marsh Gas",
+        "a": "Fire Damp"
+      },
+      {
+        "id": "FLASH-INORG-0680",
+        "difficulty": "medium",
+        "q": "Chemical name of Tear Gas",
+        "a": "Chloropicrin ( $$CCl_3NO_2$$  )"
+      },
+      {
+        "id": "FLASH-INORG-0713",
+        "difficulty": "medium",
+        "q": "Name of  $$COCl_2$$",
+        "a": "Phosgene"
+      },
+      {
+        "id": "FLASH-INORG-0732",
+        "difficulty": "medium",
+        "q": "Name of  $$CCl_3NO_2$$",
+        "a": "Tear Gas or Chloropicrin"
+      }
+    ],
+    "Alcohols": [
+      {
+        "id": "FLASH-INORG-0600",
+        "difficulty": "medium",
+        "q": "Common name for Ethyl Alcohol (C2​H5​OH)",
+        "a": "Grain alcohol"
+      },
+      {
+        "id": "FLASH-INORG-0674",
+        "difficulty": "medium",
+        "q": "Formula of Spirit of Wine",
+        "a": "$$C_2H_5OH$$"
+      },
+      {
+        "id": "FLASH-INORG-0692",
+        "difficulty": "medium",
+        "q": "Formula of Wood Spirit",
+        "a": "$$CH_3OH$$"
+      }
+    ],
+    "Pesticides": [
+      {
+        "id": "FLASH-INORG-0604",
+        "difficulty": "medium",
+        "q": "Chemical name of Gammexane",
+        "a": "Benzene Hexachloride (BHC)"
+      },
+      {
+        "id": "FLASH-INORG-0605",
+        "difficulty": "medium",
+        "q": "Formula of Gammexane",
+        "a": "$$C_6H_6Cl_6$$"
+      }
+    ],
+    "Compounds": [
+      {
+        "id": "FLASH-INORG-0607",
+        "difficulty": "medium",
+        "q": "Formula of Graham's Salt",
+        "a": "$$(NaPO_3)_3$$"
+      },
+      {
+        "id": "FLASH-INORG-0661",
+        "difficulty": "medium",
+        "q": "Formula of Mosaic Gold",
+        "a": "$$SnS_2$$"
+      },
+      {
+        "id": "FLASH-INORG-0668",
+        "difficulty": "medium",
+        "q": "Formula of Scheele's Green",
+        "a": "$$CuHAsO_3$$"
+      },
+      {
+        "id": "FLASH-INORG-0673",
+        "difficulty": "medium",
+        "q": "Formula of Sodamide",
+        "a": "$$NaNH_2$$"
+      }
+    ],
+    "Fertilizers": [
+      {
+        "id": "FLASH-INORG-0620",
+        "difficulty": "medium",
+        "q": "Composition of Nitrolim",
+        "a": "$$CaCN_2 + C$$ (graphite)"
+      },
+      {
+        "id": "FLASH-INORG-0621",
+        "difficulty": "medium",
+        "q": "Chemical name of Norwegian Saltpetre",
+        "a": "Basic Calcium Nitrate ($$Ca(NO_3)_2$$)"
+      },
+      {
+        "id": "FLASH-INORG-0677",
+        "difficulty": "medium",
+        "q": "Components of Super Phosphate of Lime",
+        "a": "$$Ca(H_2PO_4)_2$$  and $$CaSO_4$$"
+      },
+      {
+        "id": "FLASH-INORG-0682",
+        "difficulty": "medium",
+        "q": "Chemical name of Thomas Slag",
+        "a": "Calcium Phosphate  $$Ca_3(PO_4)_2$$"
+      }
+    ],
+    "Pigments": [
+      {
+        "id": "FLASH-INORG-0633",
+        "difficulty": "medium",
+        "q": "Composition of Paris Green",
+        "a": "Double salt of Copper acetate and Copper arsenate"
+      },
+      {
+        "id": "FLASH-INORG-0646",
+        "difficulty": "medium",
+        "q": "Chemical name of Red Lead",
+        "a": "Lead Tetroxide ($$Pb_3O_4$$)"
+      },
+      {
+        "id": "FLASH-INORG-0647",
+        "difficulty": "medium",
+        "q": "Alternate name for Red Lead",
+        "a": "Minium"
+      },
+      {
+        "id": "FLASH-INORG-0689",
+        "difficulty": "medium",
+        "q": "Formula of White Lead",
+        "a": "$$Pb(OH)_2 \\cdot 2PbCO_3$$"
+      },
+      {
+        "id": "FLASH-INORG-0693",
+        "difficulty": "medium",
+        "q": "Composition of Verdigris",
+        "a": "Basic Copper Acetate"
+      }
+    ],
+    "Lime": [
+      {
+        "id": "FLASH-INORG-0638",
+        "difficulty": "medium",
+        "q": "Chemical name of Quick Lime",
+        "a": "Calcium Oxide ($$CaO$$)"
+      },
+      {
+        "id": "FLASH-INORG-0655",
+        "difficulty": "medium",
+        "q": "Chemical name of Milk of Lime",
+        "a": "Calcium Hydroxide ($$Ca(OH)_2$$)"
+      },
+      {
+        "id": "FLASH-INORG-0656",
+        "difficulty": "medium",
+        "q": "Alternate name for Milk of Lime",
+        "a": "Slaked Lime"
+      }
+    ]
+  }
+}

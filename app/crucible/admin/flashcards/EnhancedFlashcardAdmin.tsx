@@ -4,13 +4,16 @@ import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search, Plus, Trash2, Save, X, FolderPlus, Loader2,
-  Eye, List, CheckCircle, AlertCircle, Tag, RefreshCw, Hash
+  Eye, List, CheckCircle, AlertCircle, Tag, RefreshCw, Hash,
+  ChevronLeft, ChevronRight, ArrowDownAZ, ArrowUpAZ,
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import SVGDropZone from '../components/SVGDropZone';
+import FlashcardImageScaleControls from '../components/FlashcardImageScaleControls';
+import { flashcardMarkdownComponents } from '@/app/lib/flashcardMarkdown';
 import { getCategoryNames, getFlashcardChaptersByCategory } from '@/lib/flashcardTaxonomy';
 
 interface Flashcard {
@@ -50,6 +53,10 @@ export default function EnhancedFlashcardAdmin() {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [showTopicManager, setShowTopicManager] = useState(false);
   const [newTopicName, setNewTopicName] = useState('');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(50);
+  const [jumpValue, setJumpValue] = useState('');
 
   const [formData, setFormData] = useState({
     flashcard_id: '',
@@ -102,7 +109,23 @@ export default function EnhancedFlashcardAdmin() {
     return Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0]));
   }, [flashcards, selectedCategory, selectedChapter]);
 
-  // Filtered list for sidebar
+  // Natural comparator: sort by topic.order first, then by numeric suffix of flashcard_id,
+  // then lexicographically. Produces DFB-001, DFB-002, ... DFB-120 order per-topic.
+  const cardComparator = (a: Flashcard, b: Flashcard) => {
+    const ta = a.topic?.order ?? 9999;
+    const tb = b.topic?.order ?? 9999;
+    if (ta !== tb) return ta - tb;
+    const parse = (id: string) => {
+      const m = id.match(/(\d+)\s*$/);
+      return m ? parseInt(m[1], 10) : Number.MAX_SAFE_INTEGER;
+    };
+    const na = parse(a.flashcard_id);
+    const nb = parse(b.flashcard_id);
+    if (na !== nb) return na - nb;
+    return a.flashcard_id.localeCompare(b.flashcard_id);
+  };
+
+  // Filtered + sorted list for sidebar
   const filteredFlashcards = useMemo(() => {
     let out = flashcards;
     if (selectedCategory !== 'All') out = out.filter(f => f.chapter.category === selectedCategory);
@@ -118,8 +141,57 @@ export default function EnhancedFlashcardAdmin() {
         f.flashcard_id.toLowerCase().includes(q)
       );
     }
-    return out;
-  }, [flashcards, selectedCategory, selectedChapter, selectedTopic, searchQuery]);
+    const sorted = [...out].sort(cardComparator);
+    return sortOrder === 'desc' ? sorted.reverse() : sorted;
+  }, [flashcards, selectedCategory, selectedChapter, selectedTopic, searchQuery, sortOrder]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredFlashcards.length / pageSize));
+  const safePage = Math.min(page, totalPages);
+  const pageStart = (safePage - 1) * pageSize;
+  const pageEnd = Math.min(pageStart + pageSize, filteredFlashcards.length);
+  const paginatedFlashcards = useMemo(
+    () => filteredFlashcards.slice(pageStart, pageEnd),
+    [filteredFlashcards, pageStart, pageEnd],
+  );
+
+  // Reset to page 1 whenever filters or sort change
+  useEffect(() => { setPage(1); }, [selectedCategory, selectedChapter, selectedTopic, searchQuery, sortOrder, pageSize]);
+
+  // Jump to card by ID, number, or index — finds it in the filtered list and opens it
+  const handleJump = () => {
+    const raw = jumpValue.trim();
+    if (!raw) return;
+    const lower = raw.toLowerCase();
+
+    // Try match by flashcard_id (case-insensitive, partial)
+    let idx = filteredFlashcards.findIndex(f => f.flashcard_id.toLowerCase() === lower);
+    if (idx < 0) idx = filteredFlashcards.findIndex(f => f.flashcard_id.toLowerCase().includes(lower));
+
+    // Try as 1-based index into the filtered list
+    if (idx < 0) {
+      const n = parseInt(raw, 10);
+      if (!Number.isNaN(n) && n >= 1 && n <= filteredFlashcards.length) idx = n - 1;
+    }
+
+    // Try as numeric suffix of a flashcard_id in the filtered list (e.g. "100" → DFB-100)
+    if (idx < 0) {
+      const n = parseInt(raw, 10);
+      if (!Number.isNaN(n)) {
+        idx = filteredFlashcards.findIndex(f => {
+          const m = f.flashcard_id.match(/(\d+)\s*$/);
+          return m ? parseInt(m[1], 10) === n : false;
+        });
+      }
+    }
+
+    if (idx < 0) {
+      showMessage('error', `No card matches "${raw}" in current filter`);
+      return;
+    }
+    setPage(Math.floor(idx / pageSize) + 1);
+    handleEdit(filteredFlashcards[idx]);
+    setJumpValue('');
+  };
 
   const showMessage = (type: 'success' | 'error', text: string) => {
     setMessage({ type, text });
@@ -169,19 +241,35 @@ export default function EnhancedFlashcardAdmin() {
     }
     setSaving(true);
     try {
+      // Preserve existing chapter.id and topic.order when editing — otherwise
+      // the slug-mangled id breaks chapter lookups, and the hardcoded order=0
+      // reorders the card to the top of the list.
+      const existingChapterId = isEditing ? selectedFlashcard?.chapter.id : undefined;
+      const existingTopicOrder = isEditing ? selectedFlashcard?.topic.order : undefined;
+      const existingTags = isEditing ? selectedFlashcard?.metadata.tags : undefined;
+      const chapterId = existingChapterId
+        || formData.chapter_name.toLowerCase().replace(/[^a-z0-9]+/g, '_');
+      const topicOrder = typeof existingTopicOrder === 'number' ? existingTopicOrder : 0;
+      // Keep prior tags (e.g. needs_image) and ensure topic+chapter are present.
+      const mergedTags = Array.from(new Set([
+        ...(existingTags ?? []),
+        formData.topic_name,
+        formData.chapter_name,
+      ].filter(Boolean)));
+
       const payload = {
         flashcard_id: formData.flashcard_id,
         chapter: {
-          id: formData.chapter_name.toLowerCase().replace(/[^a-z0-9]+/g, '_'),
+          id: chapterId,
           name: formData.chapter_name,
           category: formData.category,
         },
-        topic: { name: formData.topic_name, order: 0 },
+        topic: { name: formData.topic_name, order: topicOrder },
         question: formData.question,
         answer: formData.answer,
         metadata: {
           difficulty: formData.difficulty,
-          tags: [formData.topic_name, formData.chapter_name].filter(Boolean),
+          tags: mergedTags,
           source: formData.source,
           class_num: formData.class_num,
           flashcard_type: formData.flashcard_type,
@@ -361,6 +449,34 @@ export default function EnhancedFlashcardAdmin() {
             </button>
           </div>
 
+          {/* Sort + Jump toolbar */}
+          {!loading && filteredFlashcards.length > 0 && (
+            <div className="px-4 py-2 border-b border-white/10 flex items-center gap-2 bg-slate-900/30">
+              <button
+                onClick={() => setSortOrder(s => s === 'asc' ? 'desc' : 'asc')}
+                className="flex items-center gap-1 px-2 py-1 bg-slate-800 border border-white/10 rounded-md text-[10px] text-slate-300 hover:border-purple-500/50 transition-colors shrink-0"
+                title={`Sort ${sortOrder === 'asc' ? 'ascending' : 'descending'} by topic order and ID`}
+              >
+                {sortOrder === 'asc' ? <ArrowDownAZ className="w-3 h-3" /> : <ArrowUpAZ className="w-3 h-3" />}
+                {sortOrder === 'asc' ? 'A→Z' : 'Z→A'}
+              </button>
+              <input
+                type="text"
+                value={jumpValue}
+                onChange={e => setJumpValue(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleJump()}
+                placeholder="Jump to ID or # (e.g. 100)"
+                className="flex-1 min-w-0 px-2 py-1 bg-slate-800 border border-white/10 rounded-md text-[10px] text-white placeholder-slate-500 focus:outline-none focus:border-purple-500"
+              />
+              <button
+                onClick={handleJump}
+                className="px-2 py-1 bg-purple-500/20 border border-purple-500/40 rounded-md text-[10px] text-purple-300 hover:bg-purple-500/30 transition-colors shrink-0"
+              >
+                Go
+              </button>
+            </div>
+          )}
+
           {/* Card List */}
           <div className="flex-1 overflow-y-auto p-3 space-y-1.5">
             {loading ? (
@@ -373,7 +489,7 @@ export default function EnhancedFlashcardAdmin() {
                 No flashcards match these filters
               </div>
             ) : (
-              filteredFlashcards.map(flashcard => (
+              paginatedFlashcards.map(flashcard => (
                 <motion.div
                   key={flashcard._id}
                   initial={{ opacity: 0 }}
@@ -386,7 +502,7 @@ export default function EnhancedFlashcardAdmin() {
                   onClick={() => handleEdit(flashcard)}
                 >
                   <div className="flex items-start justify-between gap-2 mb-1.5">
-                    <span className="px-1.5 py-0.5 bg-slate-700 text-slate-300 rounded text-[10px] font-mono shrink-0">
+                    <span className="px-2 py-0.5 bg-purple-500/25 text-purple-300 border border-purple-500/40 rounded text-[11px] font-mono font-semibold shrink-0 tracking-wide">
                       {flashcard.flashcard_id}
                     </span>
                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
@@ -416,6 +532,56 @@ export default function EnhancedFlashcardAdmin() {
               ))
             )}
           </div>
+
+          {/* Pagination footer */}
+          {!loading && filteredFlashcards.length > pageSize && (
+            <div className="border-t border-white/10 px-3 py-2 bg-slate-900/50 flex items-center justify-between gap-2 shrink-0">
+              <button
+                onClick={() => setPage(p => Math.max(1, p - 1))}
+                disabled={safePage <= 1}
+                className="p-1.5 rounded-md bg-slate-800 border border-white/10 text-slate-300 hover:border-purple-500/50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                title="Previous page"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+              </button>
+
+              <div className="flex-1 flex items-center justify-center gap-1.5 text-[10px] text-slate-400">
+                <span>
+                  <span className="text-white font-semibold">{pageStart + 1}</span>
+                  –<span className="text-white font-semibold">{pageEnd}</span>
+                  <span className="text-slate-500"> of {filteredFlashcards.length}</span>
+                </span>
+                <span className="text-slate-600">·</span>
+                <select
+                  value={safePage}
+                  onChange={e => setPage(parseInt(e.target.value, 10))}
+                  className="bg-slate-800 border border-white/10 rounded px-1.5 py-0.5 text-[10px] text-white focus:outline-none focus:border-purple-500"
+                  title="Jump to page"
+                >
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+                    <option key={p} value={p}>Page {p}/{totalPages}</option>
+                  ))}
+                </select>
+                <select
+                  value={pageSize}
+                  onChange={e => setPageSize(parseInt(e.target.value, 10))}
+                  className="bg-slate-800 border border-white/10 rounded px-1.5 py-0.5 text-[10px] text-white focus:outline-none focus:border-purple-500"
+                  title="Cards per page"
+                >
+                  {[25, 50, 100, 200].map(n => <option key={n} value={n}>{n}/page</option>)}
+                </select>
+              </div>
+
+              <button
+                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                disabled={safePage >= totalPages}
+                className="p-1.5 rounded-md bg-slate-800 border border-white/10 text-slate-300 hover:border-purple-500/50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                title="Next page"
+              >
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* ── RIGHT PANEL: Editor & Preview ──────────────────────────── */}
@@ -587,6 +753,10 @@ export default function EnhancedFlashcardAdmin() {
                       rows={5}
                       className="w-full px-3 py-2 bg-slate-800 border border-white/10 rounded-lg text-white text-xs focus:outline-none focus:border-purple-500 font-mono mt-2 resize-y"
                     />
+                    <FlashcardImageScaleControls
+                      value={formData.question}
+                      onChange={next => setFormData({ ...formData, question: next })}
+                    />
                   </div>
 
                   {/* Answer */}
@@ -618,6 +788,10 @@ export default function EnhancedFlashcardAdmin() {
                           rows={7}
                           className="w-full px-3 py-2 bg-slate-800 border border-white/10 rounded-lg text-white text-xs focus:outline-none focus:border-purple-500 font-mono mt-2 resize-y"
                         />
+                        <FlashcardImageScaleControls
+                          value={formData.answer}
+                          onChange={next => setFormData({ ...formData, answer: next })}
+                        />
                       </>
                     )}
                   </div>
@@ -645,7 +819,11 @@ export default function EnhancedFlashcardAdmin() {
                     <div className="bg-slate-800/50 border border-white/10 rounded-xl p-4">
                       <div className="text-[10px] font-bold text-purple-400 mb-2 uppercase tracking-widest">Question</div>
                       <div className="prose prose-invert max-w-none prose-sm">
-                        <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+                        <ReactMarkdown
+                          remarkPlugins={[remarkMath]}
+                          rehypePlugins={[rehypeKatex]}
+                          components={flashcardMarkdownComponents}
+                        >
                           {formData.question || '*No question yet*'}
                         </ReactMarkdown>
                       </div>
@@ -655,7 +833,11 @@ export default function EnhancedFlashcardAdmin() {
                     <div className="bg-slate-800/50 border border-white/10 rounded-xl p-4">
                       <div className="text-[10px] font-bold text-emerald-400 mb-2 uppercase tracking-widest">Answer</div>
                       <div className="prose prose-invert max-w-none prose-sm">
-                        <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+                        <ReactMarkdown
+                          remarkPlugins={[remarkMath]}
+                          rehypePlugins={[rehypeKatex]}
+                          components={flashcardMarkdownComponents}
+                        >
                           {formData.answer || '*No answer yet*'}
                         </ReactMarkdown>
                       </div>
