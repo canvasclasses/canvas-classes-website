@@ -53,7 +53,7 @@ const faqSchema = {
             name: 'Is 30 days enough to prepare Chemistry for BITSAT 2026 Session 2?',
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Yes — if you follow a phased plan. Days 1–7 lock in the deleted-syllabus marks, Days 8–17 build calculation stamina for Physical Chemistry, Days 18–25 cover Organic mechanisms and niche Inorganic, and Days 26–30 are pure mock simulation with the BITSAT UI quirks.',
+                text: 'Yes — if you follow a phased plan. Days 1–7 lock in the deleted-syllabus marks (Day 5 covers Periodicity + Chemical Bonding). Days 8–17 build calculation stamina with Redox + Electrochemistry on Day 15. Days 18–25 cover GOC through full Organic. Days 26–30 handle Practical Chemistry and mock simulation.',
             },
         },
         {

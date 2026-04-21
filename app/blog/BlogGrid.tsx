@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Calendar, Tag, ArrowRight, BookOpen } from 'lucide-react';
 import Link from 'next/link';
-import { Post } from '../lib/blog';
+import type { PublicPost as Post } from '../lib/blogDb';
 
 // Client Component for Search & Grid
 export default function BlogGrid({ initialPosts }: { initialPosts: Post[] }) {

@@ -222,6 +222,12 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
               onMouseLeave={() => setActiveDropdown(null)}
             />
           ))}
+          <Link
+            href="/college-predictor"
+            className="px-3.5 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap text-orange-400 hover:text-orange-300 hover:bg-orange-500/[0.06]"
+          >
+            College Predictor
+          </Link>
           <NavLink
             href="/blog"
             label="Blog"
@@ -260,6 +266,13 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
                   onLinkClick={() => setMobileMenuOpen(false)}
                 />
               ))}
+              <Link
+                href="/college-predictor"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-4 py-3 text-sm font-medium text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-xl transition-colors"
+              >
+                College Predictor
+              </Link>
               <Link
                 href="/blog"
                 onClick={() => setMobileMenuOpen(false)}

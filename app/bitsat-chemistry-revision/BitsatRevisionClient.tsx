@@ -223,7 +223,8 @@ type Phase = {
     items: Day[];
 };
 
-// Helper to build embed URLs
+const TOTAL_DAYS = 30;
+
 const yt = (id: string, start?: number): string =>
     `https://www.youtube.com/embed/${id}${start ? `?start=${start}` : ''}`;
 const pdf = (driveId: string): string =>
@@ -264,29 +265,43 @@ const PHASES: Phase[] = [
             },
             {
                 day: 3,
-                title: 'Polymers — Classification & PDI',
-                focus: 'Addition vs condensation, monomers of Nylon-6, Nylon-6,6, Bakelite, Neoprene. Polydispersity Index calculation.',
-                tip: 'BITSAT 2024 + 2026 both asked PDI numericals.',
+                title: 'Polymers + Chemistry in Everyday Life',
+                focus: 'Addition vs condensation, monomers of Nylon-6, Nylon-6,6, Bakelite, PDI calculation — then drug classification: antihistamines, antacids, sweeteners (Aspartame vs Saccharin), antiseptics vs disinfectants.',
+                tip: 'BITSAT asked PDI numericals in 2024. Both chapters are short and high-yield — clean them in one session.',
                 resources: [
                     { label: 'Polymers One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('uOHeVhjFg2M') },
                     { label: 'Polymers Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1ik9tKOvOObojUyD-t4e8RpvNY7j7lZT2') },
+                    { label: 'Everyday Life One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('CiHMGlxPPoM') },
+                    { label: 'Detailed Lecture', href: 'https://youtu.be/iQsHsZihMX0', kind: 'crash-course', embedUrl: yt('iQsHsZihMX0') },
+                    { label: 'Everyday Life Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1mCmQeRceffKaLWELnSmlT2bpg2qQzaKd') },
                 ],
             },
             {
                 day: 4,
-                title: 'Chemistry in Everyday Life',
-                focus: 'Drug classification — antihistamines, antacids, sweeteners (Aspartame vs Saccharin), antiseptics vs disinfectants.',
+                title: 'Environmental Chemistry + Periodicity',
+                focus: 'Ozone depletion (UV-B), greenhouse gases ranking, BOD/COD, photochemical smog vs classical smog — then periodic trends: atomic radius, IE, EA, electronegativity.',
                 resources: [
-                    { label: 'Everyday Life One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('CiHMGlxPPoM') },
-                    { label: 'Polymers & Everyday Life Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1ik9tKOvOObojUyD-t4e8RpvNY7j7lZT2') },
+                    { label: 'Environmental One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('GKUEh6FIGUY') },
+                    { label: 'Detailed Lecture', href: 'https://youtu.be/uMpBuEUEHY8', kind: 'crash-course', embedUrl: yt('uMpBuEUEHY8') },
+                    { label: 'Environmental Chemistry Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1QqRBpk9oZY0mrcC36gQ6N2ChYZWTPof1') },
+                    { label: 'Periodicity One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('p-NdkOfm0tQ', 1) },
+                    { label: 'Periodic Properties Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1XiM6xCyB7k8Ot6_6uJXGibtoHXClSRkO') },
+                    { label: 'Interactive Periodic Table', href: '/interactive-periodic-table', kind: 'periodic' },
+                    { label: 'Periodic Trends', href: '/periodic-trends', kind: 'trends' },
+                    { label: 'Inorganic Trends Flashcards', href: '/chemistry-flashcards/most-important-inorganic-trends', kind: 'flashcards' },
                 ],
             },
             {
                 day: 5,
-                title: 'Environmental Chemistry',
-                focus: 'Ozone depletion (UV-B), greenhouse gases ranking, BOD/COD, photochemical smog vs classical smog.',
+                title: 'Chemical Bonding',
+                focus: 'VBT vs MOT for O₂ and F₂, VSEPR geometry, hybridisation shortcuts, formal charge, resonance structures.',
+                tip: 'Bond order from MOT: O₂ = 2, N₂ = 3, F₂ = 1 — BITSAT asks this directly.',
                 resources: [
-                    { label: 'Environmental One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('GKUEh6FIGUY') },
+                    { label: 'Chemical Bonding One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('YYRoWfl3O8s') },
+                    { label: 'Chemical Bonding Lecture', href: '/one-shot-lectures', kind: 'crash-course', embedUrl: yt('yMpD6PEFjmw', 3092) },
+                    { label: 'Chemical Bonding Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1S_tc52Ia108IEWTiRojPDLiZu0EJIjfi') },
+                    { label: 'Bonding Quick Recap', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1WBTKroyODuB9i6W2R6loBAfMUF9YJxZb') },
+                    { label: 'Chemical Bonding Flashcards', href: '/chemistry-flashcards/most-important-inorganic-trends', kind: 'flashcards' },
                 ],
             },
             {
@@ -393,12 +408,13 @@ const PHASES: Phase[] = [
             },
             {
                 day: 15,
-                title: 'Electrochemistry — Cells',
-                focus: 'EMF, Nernst at non-standard log values, Kohlrausch law, electrolysis quantitative problems.',
-                tip: 'Practise log 2 = 0.30, log 3 = 0.48 by heart.',
+                title: 'Redox + Electrochemistry — Cells',
+                focus: 'Oxidation number rules, balancing in acidic/basic medium (ion-electron method), disproportionation — then EMF, Nernst at non-standard log values, Kohlrausch law, electrolysis quantitative problems.',
+                tip: 'Assign oxidation numbers first — every Redox and Electrochemistry question in BITSAT starts here. Memorise log 2 = 0.30, log 3 = 0.48.',
                 resources: [
                     { label: 'Electrochemistry One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('rewf5tsVEAU') },
                     { label: 'Electrochemistry Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1hHYRF_B5mZLnZKy_GEy0Cb4RYBmDjnfj') },
+                    { label: 'Top 50 Concepts', href: '/top-50-concepts', kind: 'top50' },
                     { label: 'Electrochemistry Flashcards', href: '/chemistry-flashcards/electrochemistry', kind: 'flashcards' },
                 ],
             },
@@ -417,6 +433,8 @@ const PHASES: Phase[] = [
                 title: 'Surface Chemistry',
                 focus: 'Adsorption isotherms (Freundlich, Langmuir), colloids classification, Hardy-Schulze, emulsions.',
                 resources: [
+                    { label: 'Complete Chapter', href: 'https://www.youtube.com/watch?v=RPm8j0lMUQQ&list=PL12uTDKbp7xV-1dMuUYRfm-MQgBi3zPlC', kind: 'crash-course', embedUrl: 'https://www.youtube.com/embed/RPm8j0lMUQQ?list=PL12uTDKbp7xV-1dMuUYRfm-MQgBi3zPlC' },
+                    { label: 'Practice 45 MCQ', href: 'https://youtu.be/S1eZfIb5dWw', kind: 'oneshot', embedUrl: yt('S1eZfIb5dWw') },
                     { label: 'Surface Chemistry Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1A-BcI6wcUqadh3ki3xrQdS5XS5jXIkgL') },
                     { label: 'Surface Chemistry Flashcards', href: '/chemistry-flashcards/surface-chemistry', kind: 'flashcards' },
                 ],
@@ -524,7 +542,7 @@ const PHASES: Phase[] = [
         id: 'phase4',
         label: 'Phase 4 · The Chaos Simulation',
         days: 'Days 26–30',
-        goal: 'Speed, UI adaptation, full revision.',
+        goal: 'Speed drills, practical chemistry sprint, full revision.',
         accent: 'text-amber-400',
         gradient: 'from-amber-500/20 via-yellow-500/10 to-transparent',
         icon: Flame,
@@ -540,12 +558,17 @@ const PHASES: Phase[] = [
             },
             {
                 day: 27,
-                title: 'Deleted-Syllabus Sprint',
-                focus: 'Re-flip Polymers, Solid State, Everyday Chemistry, Environmental, s-Block flashcards. 1 hour total.',
+                title: 'Deleted-Syllabus + Practical Chemistry Sprint',
+                focus: 'Re-flip Polymers, Solid State, Everyday Chemistry, Environmental, s-Block flashcards (1 hour). Then: functional group tests, Lassaigne\'s test, salt analysis — Group I–VI cations and common anions.',
+                tip: 'Salt analysis in BITSAT is always systematic. Learn the group reagents cold.',
                 resources: [
-                    { label: 'BITSAT Mock Test', href: '#', kind: 'comingsoon' },
                     { label: 'Chemistry Flashcards', href: '/chemistry-flashcards', kind: 'flashcards' },
                     { label: 'Handwritten Notes', href: '/handwritten-notes', kind: 'notes' },
+                    { label: 'Practical Chemistry Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1RE4rn9q9GG6aUErhYNa5hn5Ap64oWIQl') },
+                    { label: 'POC PYQs', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1Xn9MuZaujfZ7WvLjACA75s5uKDPE1SgR') },
+                    { label: 'Salt Analysis Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('13C3ZHftBbn6zuskkHa8WJrKLWtM5k74b') },
+                    { label: 'Salt Analysis Simulator', href: '/salt-analysis', kind: 'salt' },
+                    { label: 'Salt Analysis Flashcards', href: '/chemistry-flashcards/salt-analysis', kind: 'flashcards' },
                 ],
             },
             {
@@ -749,7 +772,6 @@ function ResourceDrawer({ drawer, onClose }: { drawer: DrawerState; onClose: () 
         <AnimatePresence>
             {drawer && (
                 <>
-                    {/* Backdrop */}
                     <motion.div
                         key="backdrop"
                         initial={{ opacity: 0 }}
@@ -759,7 +781,6 @@ function ResourceDrawer({ drawer, onClose }: { drawer: DrawerState; onClose: () 
                         className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
                         onClick={onClose}
                     />
-                    {/* Panel */}
                     <motion.div
                         key="panel"
                         initial={{ x: '100%' }}
@@ -768,7 +789,6 @@ function ResourceDrawer({ drawer, onClose }: { drawer: DrawerState; onClose: () 
                         transition={{ duration: 0.28, ease: [0.25, 0.46, 0.45, 0.94] }}
                         className="fixed top-0 right-0 h-full w-full md:w-[56%] lg:w-[50%] bg-[#0B0F15] border-l border-white/[0.08] z-50 flex flex-col shadow-2xl"
                     >
-                        {/* Header */}
                         <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-white/[0.08] shrink-0">
                             <p className="text-sm font-semibold text-white truncate">{drawer.title}</p>
                             <button
@@ -779,7 +799,6 @@ function ResourceDrawer({ drawer, onClose }: { drawer: DrawerState; onClose: () 
                                 <X size={16} />
                             </button>
                         </div>
-                        {/* iframe */}
                         <div className="flex-1 overflow-hidden">
                             <iframe
                                 key={drawer.url}
@@ -988,7 +1007,7 @@ const FAQS = [
     },
     {
         q: 'Is 30 days enough for BITSAT Chemistry?',
-        a: 'Yes if you follow the phased plan. Days 1–7 lock in the deleted syllabus, Days 8–17 build calculation stamina, Days 18–25 cover Organic mechanisms, and Days 26–30 are pure mock simulation.',
+        a: 'Yes. Days 1–7 lock in the deleted syllabus — Day 5 adds Periodicity + Chemical Bonding. Days 8–17 build calculation stamina (Redox alongside Electrochemistry on Day 15). Days 18–25 cover GOC through full Organic. Days 26–30 handle Practical Chemistry and mock simulation.',
     },
     {
         q: 'How do I practise without a calculator the way BITSAT demands?',
@@ -1000,7 +1019,7 @@ const FAQS = [
     },
     {
         q: 'Is this BITSAT Chemistry plan free?',
-        a: 'Yes — the entire 30-day plan and every linked resource (flashcards, interactive periodic table, one-shot lectures, handwritten notes) is completely free on Canvas Classes.',
+        a: 'Yes — the entire 33-day plan and every linked resource (flashcards, interactive periodic table, one-shot lectures, handwritten notes) is completely free on Canvas Classes.',
     },
 ];
 
@@ -1078,7 +1097,7 @@ export default function BitsatRevisionClient() {
     const closeDrawer = () => setDrawer(null);
 
     const totalDone = completed.size;
-    const overallPct = Math.round((totalDone / 30) * 100);
+    const overallPct = Math.round((totalDone / TOTAL_DAYS) * 100);
 
     const allTopics = useMemo(() => CHEM_DISTRIBUTION, []);
 
@@ -1147,7 +1166,7 @@ export default function BitsatRevisionClient() {
                         >
                             <div className="flex items-center justify-between text-xs text-zinc-400 mb-2">
                                 <span className="font-semibold text-zinc-300">Your Progress</span>
-                                <span className="tabular-nums">{totalDone} / 30 days · {overallPct}%</span>
+                                <span className="tabular-nums">{totalDone} / {TOTAL_DAYS} days · {overallPct}%</span>
                             </div>
                             <div className="h-2 bg-white/[0.05] rounded-full overflow-hidden">
                                 <div
@@ -1177,7 +1196,6 @@ export default function BitsatRevisionClient() {
                         </p>
                     </div>
 
-                    {/* Stat Cards */}
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-12">
                         {SESSION1_STATS.map((stat, i) => {
                             const Icon = stat.icon;
@@ -1202,7 +1220,6 @@ export default function BitsatRevisionClient() {
                         })}
                     </div>
 
-                    {/* Charts row */}
                     <div className="grid lg:grid-cols-2 gap-4 md:gap-6 mb-12">
                         <div className="p-6 md:p-8 rounded-2xl bg-[#0B0F15] border border-white/[0.06]">
                             <div className="flex items-center gap-2 mb-1">
@@ -1226,7 +1243,6 @@ export default function BitsatRevisionClient() {
                         </div>
                     </div>
 
-                    {/* Traps */}
                     <h3 className="text-xl md:text-2xl font-bold text-white mb-5 flex items-center gap-2">
                         <Target size={20} className="text-orange-400" />
                         The 5 Traps That Cost Students Their Rank

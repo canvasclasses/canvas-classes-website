@@ -99,7 +99,10 @@ export const metadata: Metadata = {
     creator: "@canvasclasses",
   },
   verification: {
-    // google: "your-google-verification-code", // Replace with actual code
+    // Set GOOGLE_SITE_VERIFICATION in .env.local (the long code from
+    // https://search.google.com/search-console — "HTML tag" method).
+    // We read it from env so the real code never lands in git.
+    google: process.env.GOOGLE_SITE_VERIFICATION,
   },
   category: "Education",
   icons: {
@@ -171,6 +174,7 @@ const jsonLd = {
 
 import { AuthButton } from "./components/AuthButton";
 import { ConditionalFooter } from "./components/ConditionalFooter";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 
 // ... existing imports ...
 
@@ -195,6 +199,7 @@ export default function RootLayout({
         {children}
         <ConditionalFooter />
         <Analytics />
+        <GoogleAnalytics />
       </body>
     </html>
   );

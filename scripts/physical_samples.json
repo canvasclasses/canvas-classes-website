@@ -1,0 +1,1114 @@
+{
+  "samples": {
+    "ch12_solutions": {
+      "Raoult's Law": [
+        {
+          "id": "FLASH-PHY-0022",
+          "q": "Under what condition does Raoult's Law become a special case of Henry's Law?.",
+          "a": "When the volatile component behaves ideally such that its KH (Henry's constant) becomes equal to p^0 (pure vapour pressure)."
+        },
+        {
+          "id": "FLASH-PHY-0045",
+          "q": "What type of deviation from Raoult's Law corresponds to a Minimum Boiling Azeotrope?.",
+          "a": "Positive deviation."
+        }
+      ],
+      "Van't Hoff Factor": [
+        {
+          "id": "FLASH-PHY-0039",
+          "q": "Why is the molecular mass of ethanoic acid calculated in benzene approx 120 g/mol instead of 60 g/mol?.",
+          "a": "Because ethanoic acid undergoes association (dimerization) in benzene due to hydrogen bonding."
+        },
+        {
+          "id": "FLASH-PHY-0037",
+          "q": "What is the value of Van't Hoff factor (i) for a solute that does not dissociate or associate?.",
+          "a": "i = 1 "
+        }
+      ],
+      "Classification of Solutions": [
+        {
+          "id": "FLASH-PHY-0060",
+          "q": "Name a solution where liquid is solute and solid is solvent.",
+          "a": "Amalgam of Mercury with Sodium."
+        },
+        {
+          "id": "FLASH-PHY-0002",
+          "q": "What defines a 'Solid Solution'?.",
+          "a": "A solution where the solvent is in the solid phase (e.g., Alloys)."
+        }
+      ],
+      "Concentration Terms": [
+        {
+          "id": "FLASH-PHY-0011",
+          "q": "How much water is present in a 20% $$w/v$$ solution of NaCl?",
+          "a": "20% $$w/v$$ solution of NaCl means 20g NaCl is present in 100 ml solution. Since mass and volume are not additive, we can't say that water will be 80g or 80ml."
+        },
+        {
+          "id": "FLASH-PHY-0013",
+          "q": "Why does Molarity change with temperature while Molality does not?.",
+          "a": "Molarity involves volume, which changes with temperature due to expansion/contraction. Molality involves mass, which is temperature-independent."
+        }
+      ],
+      "Henry's Law": [
+        {
+          "id": "FLASH-PHY-0018",
+          "q": "Why are soft drink bottles sealed under high pressure?.",
+          "a": "To increase the solubility of CO2 in the liquid, based on Henry's Law."
+        },
+        {
+          "id": "FLASH-PHY-0016",
+          "q": "How does the value of Henry's Law constant (K_H) change with temperature, and what does this imply for the solubility of a gas?.",
+          "a": "The value of K_H increases as temperature rises. Since a higher K_H value corresponds to lower solubility at a given pressure, this explains the physical observation that gases become less soluble in liquids as the liquid becomes hotter."
+        }
+      ],
+      "Elevation in BP and Depression in FP": [
+        {
+          "id": "FLASH-PHY-0031",
+          "q": "What happens to the freezing point of water when ethylene glycol is added to it?.",
+          "a": "It decreases (Depression of Freezing Point) because addition of a non-volatile solute causes depression in freezing point and an elevation in boiling point. Thus, ethylene glycol acts as an antifreeze."
+        },
+        {
+          "id": "FLASH-PHY-0032",
+          "q": "Write the relationship between Elevation in Boiling Point $$\\Delta T_b$$ and Molality (m).",
+          "a": "$$\\Delta T_b = i \\cdot K_b \\cdot m$$ (Kb is ebullioscopic constant)."
+        }
+      ],
+      "Osmosis & Osmotic Pressure": [
+        {
+          "id": "FLASH-PHY-0056",
+          "q": "Why do IV injections need to be isotonic with blood plasma?.",
+          "a": "To prevent blood cells from shrinking (plasmolysis) or bursting (hemolysis) due to osmosis."
+        },
+        {
+          "id": "FLASH-PHY-0065",
+          "q": "Why is Osmotic Pressure (π) preferred over other colligative properties for determining the molecular mass of proteins and polymers?.",
+          "a": "Magnitude & Temperature Stability. For heavy molecules (polymers), the number of moles is tiny. ΔTb and $\\Delta ΔTf values are too small to measure accurately. Osmotic pressure, however, gives a significant, measurable value (in mmHg or atm) even at room temperature, preventing the denaturation of proteins that might occur at boiling points."
+        }
+      ],
+      "Vapour Pressure": [
+        {
+          "id": "FLASH-PHY-0069",
+          "q": "What is the equation governing the variation of Vapour Pressure with Temperature?",
+          "a": "The Clausius-Clapeyron Equation:     $$\\ln \\left( \\frac{P_2}{P_1} \\right) = \\frac{\\Delta H_{vap}}{R} \\left( \\frac{1}{T_1} - \\frac{1}{T_2} \\right)$$      Where  $$P_1, P_2$$  are vapour pressures at temperatures $$T_1, T_2$$  (in Kelvin), and $$\\Delta H_{vap}$$ is the Enthalpy of Vaporization."
+        },
+        {
+          "id": "FLASH-PHY-0066",
+          "q": "What is Vapour Pressure and how is it different from the Partial Pressure of a gas?",
+          "a": "Vapour Pressure (VP) is the pressure exerted by a vapour in dynamic equilibrium with its liquid (or solid) phase at a specific temperature.    Difference: Partial pressure depends on the amount of gas and volume ( $$PV=nRT$$  ) and can take any value up to the saturation point. Vapour Pressure is a fixed characteristic property (saturation pressure) dependent only on Temperature for a given substance."
+        }
+      ]
+    },
+    "ch12_electrochemistry": {
+      "Nernst Equation": [
+        {
+          "id": "FLASH-PHY-0085",
+          "q": "For the reaction $$M^{n+} + ne^- \\to M(s)$$, how does the electrode potential ($$E$$) change if the concentration of metal ions is increased?.",
+          "a": "The electrode potential increases (becomes more positive), as per $$E = E^\\circ - \\frac{RT}{nF} \\ln \\frac{1}{[M^{n+}]}$$."
+        },
+        {
+          "id": "FLASH-PHY-0087",
+          "q": "How does the pH of the solution affect the reduction potential of a Hydrogen electrode?.",
+          "a": "The potential decreases as pH increases. $$E = -0.059 \\times \\text{pH}$$."
+        }
+      ],
+      "Variation of Conductivity": [
+        {
+          "id": "FLASH-PHY-0098",
+          "q": "Why does Molar Conductivity ($$\\Lambda_m$$) increase upon dilution?.",
+          "a": "Molar conductance depends on two factors - the number of ions (Major) and the mobility of ions (Minor). With dilution, the degree of dissociation increases for weak electrolytes, adding more ions to the solution and mobility also increases (for both weak and strong electrolytes). This ensures that even if number of ions remain same (strong electrolyte), better mobility will help increase Molar/Equivalent conductance."
+        },
+        {
+          "id": "FLASH-PHY-0149",
+          "q": "Why does the molar conductivity ($$\\Lambda_m$$) of a strong electrolyte like $$CH_3COONa$$ increase only gradually upon dilution?",
+          "a": "In strong electrolytes, the increase is small because it is due only to a decrease in interionic attractions as the ions move further apart."
+        }
+      ],
+      "Electrolysis & Faraday's Laws": [
+        {
+          "id": "FLASH-PHY-0108",
+          "q": "In the electrolysis of aqueous $$H_2SO_4$$, what product is formed at the anode at high current density? (Contrast this with the product at low current density)",
+          "a": "Peroxodisulphate ($$S_2O_8^{2-}$$), instead of $$O_2$$. At low current density (dilute acid), Water is oxidized to give $$O_2$$ gas, $$2H_2O(l) \\rightarrow O_2(g) + 4H^+(aq) + 4e^-$$. JEE Pro-Tip: This reaction is the first step in the industrial manufacture of $$H_2O_2$$(Hydrogen Peroxide). The$$S_2O_8^{2-}$$is hydrolyzed to give$$H_2O_2$$"
+        },
+        {
+          "id": "FLASH-PHY-0103",
+          "q": "According to Faraday's First Law, what determines the mass of substance deposited?.",
+          "a": "The quantity of electricity (charge) passed through the electrolyte ($$w = Z \\times Q$$)."
+        }
+      ],
+      "Batteries": [
+        {
+          "id": "FLASH-PHY-0113",
+          "q": "Why does a Mercury Cell provide a constant voltage (1.35 V) throughout its life?.",
+          "a": "Because the overall cell reaction does not involve any ions in solution whose concentration changes during operation."
+        },
+        {
+          "id": "FLASH-PHY-0143",
+          "q": "Why does a mercury cell maintain a constant cell potential throughout its entire useful life?",
+          "a": "The overall cell reaction does not involve any ions in the solution whose concentration might change during the life of the cell."
+        }
+      ],
+      "SRP and Cell Potential": [
+        {
+          "id": "FLASH-PHY-0138",
+          "q": "Under what condition does an electrochemical cell reverse its behavior and act as an electrolytic cell?",
+          "a": "This occurs when an external opposing potential ($$E_{ext}$$) is applied that is greater than the cell potential ($$E_{cell}$$)."
+        },
+        {
+          "id": "FLASH-PHY-0146",
+          "q": "According to standard electrode potentials ($$E^\\circ$$), how do you identify the strongest reducing agent in a series?",
+          "a": "The strongest reducing agent is the species with the lowest (most negative) standard electrode potential value."
+        }
+      ],
+      "Galvanic Cells": [
+        {
+          "id": "FLASH-PHY-0082",
+          "q": "In the electrochemical series, if $$E^\\circ$$ is highly negative, what does it indicate about the reducing power of the metal?.",
+          "a": "It indicates that the metal is a strong reducing agent (easily oxidised). A positive value of $$E^\\circ$$ (SRP) indicates that it has oxidising power."
+        },
+        {
+          "id": "FLASH-PHY-0079",
+          "q": "Why is the Standard Hydrogen Electrode (SHE) potential taken as zero?.",
+          "a": "It is an arbitrary convention chosen as a reference to measure relative electrode potentials of other half-cells. Do not think that the absolute half cell ppotential of SHE is actually zero."
+        }
+      ],
+      "Conductance of Solutions": [
+        {
+          "id": "FLASH-PHY-0095",
+          "q": "While Calculating $$\\Lambda_m$$  if  $$\\kappa$$  is in $$S \\cdot cm^{-1}$$  Where does the 1000 go?",
+          "a": "$$\\Lambda_m = \\frac{\\kappa \\times 1000}{M}$$    Unit:  $$S \\cdot cm^2 \\cdot mol^{-1}$$ Reason: $$1 L = 1000 cm^3$$  . We multiply by 1000 to convert the volume to  $$cm^3$$  to match the Kappa unit.   Trick: Centimeter starts with C $$\\rightarrow$$   Ceiling (Numerator)."
+        },
+        {
+          "id": "FLASH-PHY-0141",
+          "q": "Why does the specific conductivity ($$\\kappa$$) of an electrolytic solution decrease when it is diluted?",
+          "a": "Conductivity is defined per unit volume; upon dilution, the number of ions per unit volume decreases, leading to a drop in conductivity."
+        }
+      ],
+      "Corrosion": [
+        {
+          "id": "FLASH-PHY-0124",
+          "q": "How does Galvanization protect iron from rusting?.",
+          "a": "By coating iron with Zinc. Zinc has a lower reduction potential than Iron, so it oxidises preferentially (Sacrificial Protection)."
+        },
+        {
+          "id": "FLASH-PHY-0122",
+          "q": "In the electrochemical theory of rusting, what acts as the anode?.",
+          "a": "The Iron ($$Fe$$) surface where oxidation takes place ($$Fe \\to Fe^{2+} + 2e^-$$)."
+        }
+      ],
+      "Fuel Cells": [
+        {
+          "id": "FLASH-PHY-0119",
+          "q": "What is the thermodynamic efficiency ($$\\eta$$) formula for a fuel cell?.",
+          "a": "$$\\eta = \\frac{\\Delta G}{\\Delta H} \\times 100$$."
+        },
+        {
+          "id": "FLASH-PHY-0121",
+          "q": "What catalysts are used in the electrodes of a $$H_2-O_2$$ fuel cell?.",
+          "a": "Finely divided Platinum or Palladium incorporated into porous carbon."
+        }
+      ]
+    },
+    "ch12_kinetics": {
+      "Rate of Chemical Reaction": [
+        {
+          "id": "FLASH-PHY-0152",
+          "q": "For the reaction  $$2HI(g) \\rightarrow H_2(g) + I_2(g)$$  , express the rate of reaction in terms of the disappearance of HI.",
+          "a": "$$\\text{Rate} = -\\frac{1}{2}\\frac{\\Delta[HI]}{\\Delta t}$$   (Stoichiometric coefficient divides the rate of change)."
+        },
+        {
+          "id": "FLASH-PHY-0154",
+          "q": "How does the rate of disappearance of a reactant relate to the rate of appearance of a product in  $$5 Br^{-} + BrO_3^{-} + 6 H^{+} \\rightarrow 3 Br_2 + 3 H_2O$$  ?.",
+          "a": "$$-\\frac{1}{5}\\frac{d[Br^{-}]}{dt} = -\\frac{d[BrO_3^{-}]}{dt} = -\\frac{1}{6}\\frac{d[H^{+}]}{dt} = \\frac{1}{3}\\frac{d[Br_2]}{dt} = \\frac{1}{3}\\frac{d[H_2O]}{dt}$$."
+        }
+      ],
+      "Rate Law & Order of Reaction": [
+        {
+          "id": "FLASH-PHY-0166",
+          "q": "Can the Rate Law be predicted from the balanced chemical equation?.",
+          "a": "No. Rate law is experimental and depends on the mechanism, not just stoichiometry (unless it's an elementary reaction)."
+        },
+        {
+          "id": "FLASH-PHY-0168",
+          "q": "What is the difference between Order and Molecularity regarding values they can take?.",
+          "a": "Order: Can be 0, fraction, or integer. Molecularity: Must be a positive integer (1, 2, 3), never zero or fractional."
+        }
+      ],
+      "Factors Influencing Rate": [
+        {
+          "id": "FLASH-PHY-0164",
+          "q": "Oxygen is available in plenty in air yet fuels do not burn by themselves at room temperature. Explain.",
+          "a": "Fuels require a certain minimum amount of energy called Activation Energy to start burning. At room temperature, the fuel molecules do not possess sufficient energy to overcome this barrier."
+        },
+        {
+          "id": "FLASH-PHY-0159",
+          "q": "Name four key factors that influence the rate of a chemical reaction.",
+          "a": "1. Concentration of reactants (or pressure). 2. Temperature. 3. Catalyst. 4. Nature of reactants."
+        }
+      ],
+      "Collision Theory": [
+        {
+          "id": "FLASH-PHY-0207",
+          "q": "Why is molecularity applicable only for elementary reactions and order for both?",
+          "a": "Molecularity is defined by the mechanism of a single step (collision count). Complex reactions occur in multiple steps, so a single \"collision number\" for the whole process is meaningless. Order is an experimental quantity derived from the overall rate law, applicable to any reaction sequence."
+        },
+        {
+          "id": "FLASH-PHY-0206",
+          "q": "Why can't molecularity of any reaction be equal to zero?",
+          "a": "Molecularity represents the number of reacting species colliding. If molecularity were zero, it would imply no reactants are involved, meaning no chemical reaction can take place."
+        }
+      ],
+      "Zero Order Kinetics": [
+        {
+          "id": "FLASH-PHY-0179",
+          "q": "How does half-life depend on initial concentration for Zero Order reactions?.",
+          "a": "$$t_{1/2}$$ is **directly proportional** to initial concentration $$[R]_0$$."
+        },
+        {
+          "id": "FLASH-PHY-0177",
+          "q": "Describe the plot of  $$[R]$$vs$$t$$  for a Zero Order reaction.",
+          "a": "A straight line with slope $$= -k $$ and intercept $$  = [R]_0$$."
+        }
+      ],
+      "Arrhenius Equation": [
+        {
+          "id": "FLASH-PHY-0197",
+          "q": "What is Activation Energy ( $$E_a$$  )?.",
+          "a": "The energy difference between the activated complex (intermediate) and the reactant molecules."
+        },
+        {
+          "id": "FLASH-PHY-0193",
+          "q": "Why does the rate of a reaction increase with rise in temperature?",
+          "a": "Increasing temperature increases the kinetic energy of molecules. This leads to a significant increase in the fraction of molecules possessing energy equal to or greater than the threshold energy (or activation energy), resulting in more effective collisions."
+        }
+      ],
+      "First Order Kinetics": [
+        {
+          "id": "FLASH-PHY-0185",
+          "q": "Describe the plot of  $$\\log([R]_0/[R])$$vs$$t$$.",
+          "a": "A straight line passing through origin with slope  $$= \\frac{k}{2.303}$$."
+        },
+        {
+          "id": "FLASH-PHY-0187",
+          "q": "Does the half-life of a First Order reaction depend on initial concentration?.",
+          "a": "No. It is independent of  $$[R]_0$$."
+        }
+      ]
+    },
+    "ch11_atom": {
+      "Sub-atomic Particles": [
+        {
+          "id": "FLASH-PHY-0333",
+          "q": "How do cathode rays behave in the absence of electrical or magnetic fields?",
+          "a": "They travel in straight lines"
+        },
+        {
+          "id": "FLASH-PHY-0334",
+          "q": "Does the nature of cathode rays depend on the gas present in the tube?",
+          "a": "No, they are independent of the material of electrodes and the nature of the gas"
+        }
+      ],
+      "Hydrogen Spectrum": [
+        {
+          "id": "FLASH-PHY-0351",
+          "q": "What are the values of  $$n_1$$  and $$n_2$$  for the Paschen series?",
+          "a": "$$n_1 = 3$$  ,  $$n_2 = 4, 5...$$ "
+        },
+        {
+          "id": "FLASH-PHY-0349",
+          "q": "Which series of the hydrogen spectrum appears in the visible region?",
+          "a": "Balmer series"
+        }
+      ],
+      "Quantum Numbers": [
+        {
+          "id": "FLASH-PHY-0364",
+          "q": "What information does the Principal Quantum Number ( $$n$$  ) provide?",
+          "a": "The shell, the size of the orbital, and largely the energy"
+        },
+        {
+          "id": "FLASH-PHY-0366",
+          "q": "For a given value of  $$n$$  , what are the possible values of  $$l$$  ?",
+          "a": "$$0$$  to $$n-1$$ "
+        }
+      ],
+      "Atomic Models": [
+        {
+          "id": "FLASH-PHY-0336",
+          "q": "What was the main conclusion of Rutherford's  $$\\alpha$$  -particle scattering experiment regarding the atom's structure?",
+          "a": "Most of the space in the atom is empty, and the positive charge is concentrated in a tiny nucleus"
+        },
+        {
+          "id": "FLASH-PHY-0337",
+          "q": "What is the approximate relationship between the radius of the atom and the radius of the nucleus?",
+          "a": "Radius of atom ( $$10^{-10}$$ m) is about $$10^5$$   times larger than radius of nucleus ( $$10^{-15}$$   m)"
+        }
+      ],
+      "Bohr's Model": [
+        {
+          "id": "FLASH-PHY-0356",
+          "q": "What is the energy expression for hydrogen-like ions (He$$^+ $$, Li$$  ^{2+}$$)?",
+          "a": "$$E_n = -2.18 \\times 10^{-18} (\\frac{Z^2}{n^2}) \\text{ J}$$ "
+        },
+        {
+          "id": "FLASH-PHY-0358",
+          "q": "What are two major limitations of Bohr's model?",
+          "a": "It cannot explain spectra of multi-electron atoms and fails to explain Zeeman/Stark effects"
+        }
+      ],
+      "Atomic Terms": [
+        {
+          "id": "FLASH-PHY-0338",
+          "q": "Define Isotopes.",
+          "a": "Atoms with the same atomic number but different mass numbers (same protons, different neutrons)"
+        },
+        {
+          "id": "FLASH-PHY-0340",
+          "q": "If an ion has mass number 56, 3 units of positive charge, and 30.4% more neutrons than electrons, what is the symbol?",
+          "a": "$${}^{56}_{26}Fe^{3+}$$ "
+        }
+      ],
+      "Photoelectric Effect": [
+        {
+          "id": "FLASH-PHY-0344",
+          "q": "What is the threshold frequency ( $$\\nu_0$$  )?",
+          "a": "The characteristic minimum frequency required to eject an electron from a metal surface"
+        },
+        {
+          "id": "FLASH-PHY-0345",
+          "q": "Write Einstein's photoelectric equation relating kinetic energy of ejected electron to incident frequency.",
+          "a": "$$K.E. [cite_start]= h\\nu - h\\nu_0$$  or $$h\\nu = h\\nu_0 + \\frac{1}{2}m_e v^2$$ "
+        }
+      ],
+      "Uncertainty Principle": [
+        {
+          "id": "FLASH-PHY-0361",
+          "q": "State the mathematical expression for Heisenberg's Uncertainty Principle.",
+          "a": "$$\\Delta x \\times \\Delta p_x \\ge \\frac{h}{4\\pi}$$ "
+        },
+        {
+          "id": "FLASH-PHY-0362",
+          "q": "What does Heisenberg's principle imply about the \"trajectory\" of an electron?",
+          "a": "Precise trajectories (definite paths) cannot exist because position and velocity cannot be determined simultaneously"
+        }
+      ],
+      "Quantum Mechanical Model": [
+        {
+          "id": "FLASH-PHY-0363",
+          "q": "\"In the Quantum Mechanical model, what does the square of the wave function ( $$|\\psi|^2$$ ) represent?\"",
+          "a": "It is Probability density, i.e. probability of finding the electron in a unit volume outside nucleus."
+        }
+      ],
+      "EM Radiation": [
+        {
+          "id": "FLASH-PHY-0343",
+          "q": "According to Planck, energy ( $$E$$  ) of a quantum of radiation is given by which formula?",
+          "a": "$$E = h\\nu$$ "
+        },
+        {
+          "id": "FLASH-PHY-0342",
+          "q": "What is the value of Planck's constant ( $$h$$  )?",
+          "a": "$$6.626 \\times 10^{-34} \\text{ J s}$$ "
+        }
+      ],
+      "Dual Nature": [
+        {
+          "id": "FLASH-PHY-0360",
+          "q": "Why is the wave nature of macroscopic objects not observable?",
+          "a": "Because their large mass makes the wavelength ( $$\\lambda$$  ) extremely small and undetectable"
+        },
+        {
+          "id": "FLASH-PHY-0359",
+          "q": "Write the de Broglie equation relating wavelength and momentum.",
+          "a": "$$\\lambda = \\frac{h}{mv} = \\frac{h}{p}$$ "
+        }
+      ],
+      "Atomic Spectra": [
+        {
+          "id": "FLASH-PHY-0347",
+          "q": "What type of spectrum is observed when white light is passed through an absorbing sample?",
+          "a": "Absorption spectrum (Dark lines in a continuous spectrum)"
+        }
+      ],
+      "Electronic Configuration": [
+        {
+          "id": "FLASH-PHY-0379",
+          "q": "Which rule determines the energy order of orbitals in multi-electron atoms?",
+          "a": "The  $$(n+l)$$ rule; lower $$(n+l)$$   means lower energy "
+        },
+        {
+          "id": "FLASH-PHY-0381",
+          "q": "Why is the electronic configuration of Chromium (Cr)  $$3d^5 4s^1$$  instead of $$3d^4 4s^2$$  ?",
+          "a": "Half-filled  $$d$$  -subshell ( $$d^5$$  ) provides extra stability due to symmetry and exchange energy"
+        }
+      ],
+      "Shapes of Orbitals": [
+        {
+          "id": "FLASH-PHY-0373",
+          "q": "What is the shape of an  $$s$$  -orbital?",
+          "a": "Spherically symmetric"
+        },
+        {
+          "id": "FLASH-PHY-0375",
+          "q": "Which  $$d$$  -orbital has a shape different from the other four (doughnut shape)?",
+          "a": "$$d_{z^2}$$ "
+        }
+      ],
+      "Effects": [
+        {
+          "id": "FLASH-PHY-0387",
+          "q": "What is the splitting of spectral lines in a magnetic field called?",
+          "a": "Zeeman Effect"
+        },
+        {
+          "id": "FLASH-PHY-0388",
+          "q": "What is the splitting of spectral lines in an electric field called?",
+          "a": "Stark Effect"
+        }
+      ],
+      "Orbitals": [
+        {
+          "id": "FLASH-PHY-0371",
+          "q": "How many nodes (radial nodes) does an orbital have in general?",
+          "a": "$$n - l - 1$$  (Total nodes = $$n-1$$  )"
+        },
+        {
+          "id": "FLASH-PHY-0372",
+          "q": "How many angular nodes does a  $$p$$  orbital have?",
+          "a": "1 (Equal to the value of $$l$$  )"
+        }
+      ],
+      "General": [
+        {
+          "id": "FLASH-PHY-0389",
+          "q": "What are the \"core electrons\"?",
+          "a": "Electrons in the completely filled inner shells"
+        }
+      ]
+    },
+    "ch12_surface": {
+      "Adsorption Isotherms": [
+        {
+          "id": "FLASH-PHY-0286",
+          "q": "In the Freundlich isotherm plot, what does the intercept on the y-axis represent?",
+          "a": "$$\\log k$$  ."
+        },
+        {
+          "id": "FLASH-PHY-0285",
+          "q": "In the plot of  $$\\log(x/m)$$vs$$\\log P$$   for Freundlich isotherm, what does the slope represent?",
+          "a": "The slope represents  $$1/n$$  ."
+        }
+      ],
+      "Colloids ": [
+        {
+          "id": "FLASH-PHY-0301",
+          "q": "What is a colloidal system of a Solid dispersed in a Liquid called?",
+          "a": "Sol."
+        },
+        {
+          "id": "FLASH-PHY-0302",
+          "q": "What is a colloidal system of a Liquid dispersed in a Solid called?",
+          "a": "Gel."
+        }
+      ],
+      "Catalysis": [
+        {
+          "id": "FLASH-PHY-0289",
+          "q": "Define Homogeneous Catalysis.",
+          "a": "A catalytic process where reactants and the catalyst are in the same phase (e.g., liquid or gas)."
+        },
+        {
+          "id": "FLASH-PHY-0297",
+          "q": "What are Enzymes?",
+          "a": "Complex nitrogenous organic compounds (globular proteins) that act as biological catalysts."
+        }
+      ],
+      "Coagulation": [
+        {
+          "id": "FLASH-PHY-0321",
+          "q": "What is Coagulation or Flocculation?",
+          "a": "The process of settling of colloidal particles (precipitation of the sol)."
+        },
+        {
+          "id": "FLASH-PHY-0323",
+          "q": "Arrange the following ions in increasing order of coagulating power for a negative sol:  $$Na^+$$  ,  $$Al^{3+}$$  ,  $$Ba^{2+}$$  .",
+          "a": "$$Na^+ < Ba^{2+} < Al^{3+}$$ "
+        }
+      ],
+      "Adsorption": [
+        {
+          "id": "FLASH-PHY-0270",
+          "q": "What is the term for the accumulation of molecular species at the surface rather than in the bulk of a solid or liquid?",
+          "a": "Adsorption"
+        },
+        {
+          "id": "FLASH-PHY-0282",
+          "q": "Which type of adsorption forms multimolecular layers?",
+          "a": "Physisorption. Chemisorption forms unimolecular layers."
+        }
+      ],
+      "Preparation of Colloids": [
+        {
+          "id": "FLASH-PHY-0311",
+          "q": "Which method is used to prepare sols of metals like Gold, Silver, and Platinum?",
+          "a": "Bredig’s Arc method (Electrical disintegration)."
+        },
+        {
+          "id": "FLASH-PHY-0310",
+          "q": "What is Peptization?",
+          "a": "The process of converting a precipitate into a colloidal sol by shaking it with the dispersion medium in the presence of a small amount of electrolyte."
+        }
+      ],
+      "Properties of Colloids": [
+        {
+          "id": "FLASH-PHY-0319",
+          "q": "What is Zeta Potential (Electrokinetic Potential)?",
+          "a": "The potential difference between the fixed layer and the diffused layer of charges around a colloidal particle."
+        },
+        {
+          "id": "FLASH-PHY-0317",
+          "q": "Give an example of a Positively charged sol.",
+          "a": "Hydrated metallic oxides ( $$Al_2O_3 \\cdot xH_2O$$  ,  $$Fe_2O_3 \\cdot xH_2O$$  ), Haemoglobin."
+        }
+      ],
+      "Emulsions": [
+        {
+          "id": "FLASH-PHY-0328",
+          "q": "Give examples of emulsifying agents for W/O emulsions.",
+          "a": "Heavy metal salts of fatty acids, long chain alcohols, lampblack."
+        },
+        {
+          "id": "FLASH-PHY-0327",
+          "q": "Give examples of emulsifying agents for O/W emulsions.",
+          "a": "Proteins, gums, natural and synthetic soaps."
+        }
+      ],
+      "Thermodynamics": [
+        {
+          "id": "FLASH-PHY-0274",
+          "q": "What are the signs of  $$\\Delta H$$  and$$\\Delta S$$during adsorption?",
+          "a": "Both are negative ( $$\\Delta H < 0$$  , $$\\Delta S < 0$$  ). Adsorption is exothermic and entropy decreases."
+        },
+        {
+          "id": "FLASH-PHY-0275",
+          "q": "For adsorption to be spontaneous, what must be the sign of  $$\\Delta G$$  ?",
+          "a": "Negative. At equilibrium,  $$\\Delta G = 0$$  (where $$\\Delta H = T\\Delta S$$)."
+        }
+      ],
+      "Purification of Colloids": [
+        {
+          "id": "FLASH-PHY-0312",
+          "q": "What is Dialysis?",
+          "a": "The process of removing dissolved substances (crystalloids) from a colloidal solution by diffusion through a semi-permeable membrane."
+        }
+      ]
+    },
+    "ch12_solid_state": {
+      "Classification of Solids": [
+        {
+          "id": "FLASH-PHY-0212",
+          "q": "Define Anisotropy in crystalline solids.",
+          "a": "The property where physical values (like refractive index) are different when measured along different directions in the same crystal."
+        },
+        {
+          "id": "FLASH-PHY-0213",
+          "q": "Are amorphous solids isotropic or anisotropic?",
+          "a": "Isotropic (properties are the same in all directions due to irregular arrangement)."
+        }
+      ],
+      "Types of Crystals": [
+        {
+          "id": "FLASH-PHY-0217",
+          "q": "Why do Ionic Solids conduct electricity in molten state but not in solid state?",
+          "a": "In solid state, ions are fixed; in molten state, ions are free to move."
+        },
+        {
+          "id": "FLASH-PHY-0214",
+          "q": "What are the constituent particles of Molecular Solids?",
+          "a": "Molecules."
+        }
+      ],
+      "Unit Cells & Lattices": [
+        {
+          "id": "FLASH-PHY-0221",
+          "q": "What are the parameters that characterize a unit cell?",
+          "a": "Three edge lengths ( $$a, b, c$$  ) and three inter-axial angles ( $$\\alpha, \\beta, \\gamma$$  )."
+        },
+        {
+          "id": "FLASH-PHY-0223",
+          "q": "What are the unit cell parameters for a Cubic crystal system?",
+          "a": "$$a=b=c$$  and $$\\alpha=\\beta=\\gamma=90^{\\circ}$$."
+        }
+      ],
+      "Packing Efficiency": [
+        {
+          "id": "FLASH-PHY-0231",
+          "q": "What is the coordination number in Two-Dimensional Hexagonal close packing?",
+          "a": "6"
+        },
+        {
+          "id": "FLASH-PHY-0238",
+          "q": "What is the Packing Efficiency of a Simple Cubic lattice?",
+          "a": "52.4%."
+        }
+      ],
+      "Calculation": [
+        {
+          "id": "FLASH-PHY-0245",
+          "q": "Write the formula to calculate the density ( $$d$$  ) of a unit cell.",
+          "a": "$$d = \\frac{zM}{a^3 N_A}$$"
+        }
+      ],
+      "Defects": [
+        {
+          "id": "FLASH-PHY-0247",
+          "q": "What is a Schottky Defect?",
+          "a": "A vacancy defect where equal numbers of cations and anions are missing to maintain neutrality."
+        },
+        {
+          "id": "FLASH-PHY-0252",
+          "q": "Which compound shows both Frenkel and Schottky defects?",
+          "a": "Silver Bromide ( $$AgBr$$  )."
+        }
+      ],
+      "Voids": [
+        {
+          "id": "FLASH-PHY-0242",
+          "q": "If there are  $$N$$  close packed spheres, how many Tetrahedral voids are generated?",
+          "a": "$$2N$$  ."
+        },
+        {
+          "id": "FLASH-PHY-0243",
+          "q": "Where are the Octahedral voids located in an fcc unit cell?",
+          "a": "One at the body centre and one at the centre of each of the 12 edges."
+        }
+      ],
+      "Electrical Properties": [
+        {
+          "id": "FLASH-PHY-0260",
+          "q": "What creates the charge carriers in p-type semiconductors?",
+          "a": "Electron holes (vacancies created by missing 4th valence electron)."
+        },
+        {
+          "id": "FLASH-PHY-0259",
+          "q": "What is a p-type semiconductor?",
+          "a": "A semiconductor doped with electron-deficit impurities (Group 13 elements like B, Al)."
+        }
+      ],
+      "Magnetic Properties": [
+        {
+          "id": "FLASH-PHY-0264",
+          "q": "Give examples of Ferromagnetic substances.",
+          "a": "$$Fe, Co, Ni, Gd, CrO_2$$  ."
+        },
+        {
+          "id": "FLASH-PHY-0262",
+          "q": "Define Diamagnetism.",
+          "a": "Weak repulsion by a magnetic field shown by substances with all paired electrons."
+        }
+      ]
+    }
+  },
+  "latexIssues": {
+    "ch12_solutions": [
+      "FLASH-PHY-0022",
+      "FLASH-PHY-0039",
+      "FLASH-PHY-0045",
+      "FLASH-PHY-0060",
+      "FLASH-PHY-0011",
+      "FLASH-PHY-0018",
+      "FLASH-PHY-0021",
+      "FLASH-PHY-0027",
+      "FLASH-PHY-0037",
+      "FLASH-PHY-0002",
+      "FLASH-PHY-0003",
+      "FLASH-PHY-0013",
+      "FLASH-PHY-0031",
+      "FLASH-PHY-0032",
+      "FLASH-PHY-0056",
+      "FLASH-PHY-0069",
+      "FLASH-PHY-0016",
+      "FLASH-PHY-0025",
+      "FLASH-PHY-0033",
+      "FLASH-PHY-0065",
+      "FLASH-PHY-0004",
+      "FLASH-PHY-0008",
+      "FLASH-PHY-0028",
+      "FLASH-PHY-0054",
+      "FLASH-PHY-0058",
+      "FLASH-PHY-0005",
+      "FLASH-PHY-0006",
+      "FLASH-PHY-0040",
+      "FLASH-PHY-0009",
+      "FLASH-PHY-0055",
+      "FLASH-PHY-0066",
+      "FLASH-PHY-0007",
+      "FLASH-PHY-0034",
+      "FLASH-PHY-0035",
+      "FLASH-PHY-0038",
+      "FLASH-PHY-0049",
+      "FLASH-PHY-0059",
+      "FLASH-PHY-0061",
+      "FLASH-PHY-0062",
+      "FLASH-PHY-0063",
+      "FLASH-PHY-0068",
+      "FLASH-PHY-0014",
+      "FLASH-PHY-0051",
+      "FLASH-PHY-0026",
+      "FLASH-PHY-0041",
+      "FLASH-PHY-0067",
+      "FLASH-PHY-0070",
+      "FLASH-PHY-0010",
+      "FLASH-PHY-0012",
+      "FLASH-PHY-0019",
+      "FLASH-PHY-0030",
+      "FLASH-PHY-0036",
+      "FLASH-PHY-0046",
+      "FLASH-PHY-0053",
+      "FLASH-PHY-0057",
+      "FLASH-PHY-0017",
+      "FLASH-PHY-0042",
+      "FLASH-PHY-0044",
+      "FLASH-PHY-0050",
+      "FLASH-PHY-0064",
+      "FLASH-PHY-0001",
+      "FLASH-PHY-0015",
+      "FLASH-PHY-0023",
+      "FLASH-PHY-0029",
+      "FLASH-PHY-0048",
+      "FLASH-PHY-0052",
+      "FLASH-PHY-0020",
+      "FLASH-PHY-0024",
+      "FLASH-PHY-0043",
+      "FLASH-PHY-0047",
+      "FLASH-PHY-0071",
+      "FLASH-PHY-0075",
+      "FLASH-PHY-0076",
+      "FLASH-PHY-0073",
+      "FLASH-PHY-0072",
+      "FLASH-PHY-0074"
+    ],
+    "ch12_electrochemistry": [
+      "FLASH-PHY-0085",
+      "FLASH-PHY-0098",
+      "FLASH-PHY-0108",
+      "FLASH-PHY-0113",
+      "FLASH-PHY-0138",
+      "FLASH-PHY-0143",
+      "FLASH-PHY-0082",
+      "FLASH-PHY-0095",
+      "FLASH-PHY-0103",
+      "FLASH-PHY-0124",
+      "FLASH-PHY-0079",
+      "FLASH-PHY-0087",
+      "FLASH-PHY-0090",
+      "FLASH-PHY-0141",
+      "FLASH-PHY-0146",
+      "FLASH-PHY-0147",
+      "FLASH-PHY-0092",
+      "FLASH-PHY-0135",
+      "FLASH-PHY-0083",
+      "FLASH-PHY-0094",
+      "FLASH-PHY-0148",
+      "FLASH-PHY-0089",
+      "FLASH-PHY-0093",
+      "FLASH-PHY-0109",
+      "FLASH-PHY-0112",
+      "FLASH-PHY-0115",
+      "FLASH-PHY-0122",
+      "FLASH-PHY-0129",
+      "FLASH-PHY-0149",
+      "FLASH-PHY-0099",
+      "FLASH-PHY-0107",
+      "FLASH-PHY-0119",
+      "FLASH-PHY-0105",
+      "FLASH-PHY-0114",
+      "FLASH-PHY-0121",
+      "FLASH-PHY-0125",
+      "FLASH-PHY-0139",
+      "FLASH-PHY-0145",
+      "FLASH-PHY-0086",
+      "FLASH-PHY-0088",
+      "FLASH-PHY-0097",
+      "FLASH-PHY-0120",
+      "FLASH-PHY-0131",
+      "FLASH-PHY-0136",
+      "FLASH-PHY-0137",
+      "FLASH-PHY-0140",
+      "FLASH-PHY-0081",
+      "FLASH-PHY-0084",
+      "FLASH-PHY-0117",
+      "FLASH-PHY-0118",
+      "FLASH-PHY-0127",
+      "FLASH-PHY-0133",
+      "FLASH-PHY-0144",
+      "FLASH-PHY-0077",
+      "FLASH-PHY-0106",
+      "FLASH-PHY-0134",
+      "FLASH-PHY-0111",
+      "FLASH-PHY-0116",
+      "FLASH-PHY-0126",
+      "FLASH-PHY-0142",
+      "FLASH-PHY-0096",
+      "FLASH-PHY-0100",
+      "FLASH-PHY-0110",
+      "FLASH-PHY-0123",
+      "FLASH-PHY-0130",
+      "FLASH-PHY-0132",
+      "FLASH-PHY-0078",
+      "FLASH-PHY-0080",
+      "FLASH-PHY-0091",
+      "FLASH-PHY-0101",
+      "FLASH-PHY-0104",
+      "FLASH-PHY-0128",
+      "FLASH-PHY-0102"
+    ],
+    "ch12_kinetics": [
+      "FLASH-PHY-0152",
+      "FLASH-PHY-0154",
+      "FLASH-PHY-0155",
+      "FLASH-PHY-0166",
+      "FLASH-PHY-0150",
+      "FLASH-PHY-0151",
+      "FLASH-PHY-0157",
+      "FLASH-PHY-0164",
+      "FLASH-PHY-0168",
+      "FLASH-PHY-0158",
+      "FLASH-PHY-0159",
+      "FLASH-PHY-0165",
+      "FLASH-PHY-0160",
+      "FLASH-PHY-0162",
+      "FLASH-PHY-0163",
+      "FLASH-PHY-0169",
+      "FLASH-PHY-0161",
+      "FLASH-PHY-0167",
+      "FLASH-PHY-0156",
+      "FLASH-PHY-0153",
+      "FLASH-PHY-0207",
+      "FLASH-PHY-0179",
+      "FLASH-PHY-0197",
+      "FLASH-PHY-0206",
+      "FLASH-PHY-0193",
+      "FLASH-PHY-0177",
+      "FLASH-PHY-0185",
+      "FLASH-PHY-0187",
+      "FLASH-PHY-0188",
+      "FLASH-PHY-0189",
+      "FLASH-PHY-0191",
+      "FLASH-PHY-0196",
+      "FLASH-PHY-0198",
+      "FLASH-PHY-0181",
+      "FLASH-PHY-0171",
+      "FLASH-PHY-0176",
+      "FLASH-PHY-0202",
+      "FLASH-PHY-0203",
+      "FLASH-PHY-0208",
+      "FLASH-PHY-0175",
+      "FLASH-PHY-0209",
+      "FLASH-PHY-0182",
+      "FLASH-PHY-0172",
+      "FLASH-PHY-0186",
+      "FLASH-PHY-0192",
+      "FLASH-PHY-0199",
+      "FLASH-PHY-0200",
+      "FLASH-PHY-0205",
+      "FLASH-PHY-0194",
+      "FLASH-PHY-0195",
+      "FLASH-PHY-0170",
+      "FLASH-PHY-0180",
+      "FLASH-PHY-0183",
+      "FLASH-PHY-0184",
+      "FLASH-PHY-0201",
+      "FLASH-PHY-0173",
+      "FLASH-PHY-0174",
+      "FLASH-PHY-0178",
+      "FLASH-PHY-0190",
+      "FLASH-PHY-0204"
+    ],
+    "ch11_atom": [
+      "FLASH-PHY-0333",
+      "FLASH-PHY-0334",
+      "FLASH-PHY-0351",
+      "FLASH-PHY-0364",
+      "FLASH-PHY-0349",
+      "FLASH-PHY-0336",
+      "FLASH-PHY-0356",
+      "FLASH-PHY-0338",
+      "FLASH-PHY-0340",
+      "FLASH-PHY-0344",
+      "FLASH-PHY-0358",
+      "FLASH-PHY-0361",
+      "FLASH-PHY-0362",
+      "FLASH-PHY-0331",
+      "FLASH-PHY-0339",
+      "FLASH-PHY-0355",
+      "FLASH-PHY-0363",
+      "FLASH-PHY-0335",
+      "FLASH-PHY-0357",
+      "FLASH-PHY-0337",
+      "FLASH-PHY-0330",
+      "FLASH-PHY-0343",
+      "FLASH-PHY-0348",
+      "FLASH-PHY-0352",
+      "FLASH-PHY-0354",
+      "FLASH-PHY-0360",
+      "FLASH-PHY-0345",
+      "FLASH-PHY-0346",
+      "FLASH-PHY-0347",
+      "FLASH-PHY-0350",
+      "FLASH-PHY-0332",
+      "FLASH-PHY-0359",
+      "FLASH-PHY-0342",
+      "FLASH-PHY-0353",
+      "FLASH-PHY-0341",
+      "FLASH-PHY-0379",
+      "FLASH-PHY-0381",
+      "FLASH-PHY-0373",
+      "FLASH-PHY-0386",
+      "FLASH-PHY-0382",
+      "FLASH-PHY-0366",
+      "FLASH-PHY-0377",
+      "FLASH-PHY-0365",
+      "FLASH-PHY-0367",
+      "FLASH-PHY-0387",
+      "FLASH-PHY-0388",
+      "FLASH-PHY-0371",
+      "FLASH-PHY-0384",
+      "FLASH-PHY-0370",
+      "FLASH-PHY-0375",
+      "FLASH-PHY-0385",
+      "FLASH-PHY-0372",
+      "FLASH-PHY-0376",
+      "FLASH-PHY-0383",
+      "FLASH-PHY-0368",
+      "FLASH-PHY-0369",
+      "FLASH-PHY-0374",
+      "FLASH-PHY-0380",
+      "FLASH-PHY-0378",
+      "FLASH-PHY-0389"
+    ],
+    "ch12_surface": [
+      "FLASH-PHY-0286",
+      "FLASH-PHY-0301",
+      "FLASH-PHY-0289",
+      "FLASH-PHY-0297",
+      "FLASH-PHY-0298",
+      "FLASH-PHY-0302",
+      "FLASH-PHY-0303",
+      "FLASH-PHY-0307",
+      "FLASH-PHY-0321",
+      "FLASH-PHY-0270",
+      "FLASH-PHY-0282",
+      "FLASH-PHY-0299",
+      "FLASH-PHY-0311",
+      "FLASH-PHY-0319",
+      "FLASH-PHY-0323",
+      "FLASH-PHY-0325",
+      "FLASH-PHY-0328",
+      "FLASH-PHY-0273",
+      "FLASH-PHY-0295",
+      "FLASH-PHY-0304",
+      "FLASH-PHY-0276",
+      "FLASH-PHY-0285",
+      "FLASH-PHY-0310",
+      "FLASH-PHY-0324",
+      "FLASH-PHY-0271",
+      "FLASH-PHY-0279",
+      "FLASH-PHY-0290",
+      "FLASH-PHY-0291",
+      "FLASH-PHY-0306",
+      "FLASH-PHY-0317",
+      "FLASH-PHY-0329",
+      "FLASH-PHY-0283",
+      "FLASH-PHY-0305",
+      "FLASH-PHY-0288",
+      "FLASH-PHY-0313",
+      "FLASH-PHY-0314",
+      "FLASH-PHY-0318",
+      "FLASH-PHY-0274",
+      "FLASH-PHY-0281",
+      "FLASH-PHY-0315",
+      "FLASH-PHY-0327",
+      "FLASH-PHY-0272",
+      "FLASH-PHY-0278",
+      "FLASH-PHY-0287",
+      "FLASH-PHY-0309",
+      "FLASH-PHY-0322",
+      "FLASH-PHY-0277",
+      "FLASH-PHY-0284",
+      "FLASH-PHY-0293",
+      "FLASH-PHY-0294",
+      "FLASH-PHY-0312",
+      "FLASH-PHY-0320",
+      "FLASH-PHY-0296",
+      "FLASH-PHY-0300",
+      "FLASH-PHY-0308",
+      "FLASH-PHY-0316",
+      "FLASH-PHY-0275",
+      "FLASH-PHY-0280",
+      "FLASH-PHY-0292",
+      "FLASH-PHY-0326"
+    ],
+    "ch12_solid_state": [
+      "FLASH-PHY-0212",
+      "FLASH-PHY-0217",
+      "FLASH-PHY-0221",
+      "FLASH-PHY-0231",
+      "FLASH-PHY-0238",
+      "FLASH-PHY-0245",
+      "FLASH-PHY-0247",
+      "FLASH-PHY-0242",
+      "FLASH-PHY-0214",
+      "FLASH-PHY-0216",
+      "FLASH-PHY-0219",
+      "FLASH-PHY-0223",
+      "FLASH-PHY-0226",
+      "FLASH-PHY-0236",
+      "FLASH-PHY-0243",
+      "FLASH-PHY-0213",
+      "FLASH-PHY-0224",
+      "FLASH-PHY-0225",
+      "FLASH-PHY-0252",
+      "FLASH-PHY-0260",
+      "FLASH-PHY-0264",
+      "FLASH-PHY-0215",
+      "FLASH-PHY-0251",
+      "FLASH-PHY-0259",
+      "FLASH-PHY-0262",
+      "FLASH-PHY-0227",
+      "FLASH-PHY-0230",
+      "FLASH-PHY-0250",
+      "FLASH-PHY-0256",
+      "FLASH-PHY-0211",
+      "FLASH-PHY-0218",
+      "FLASH-PHY-0234",
+      "FLASH-PHY-0263",
+      "FLASH-PHY-0220",
+      "FLASH-PHY-0228",
+      "FLASH-PHY-0254",
+      "FLASH-PHY-0255",
+      "FLASH-PHY-0229",
+      "FLASH-PHY-0237",
+      "FLASH-PHY-0239",
+      "FLASH-PHY-0241",
+      "FLASH-PHY-0246",
+      "FLASH-PHY-0253",
+      "FLASH-PHY-0222",
+      "FLASH-PHY-0235",
+      "FLASH-PHY-0257",
+      "FLASH-PHY-0261",
+      "FLASH-PHY-0232",
+      "FLASH-PHY-0233",
+      "FLASH-PHY-0244",
+      "FLASH-PHY-0249",
+      "FLASH-PHY-0240",
+      "FLASH-PHY-0248",
+      "FLASH-PHY-0210",
+      "FLASH-PHY-0258",
+      "FLASH-PHY-0268",
+      "FLASH-PHY-0265",
+      "FLASH-PHY-0269",
+      "FLASH-PHY-0266",
+      "FLASH-PHY-0267"
+    ]
+  }
+}

@@ -1,52 +1,42 @@
 import React from 'react';
-import { getPostBySlug, getPostSlugs } from '../../lib/blog';
 import { notFound } from 'next/navigation';
 import Navbar from '../../components/Navbar';
-import ReactMarkdown from 'react-markdown';
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
-import rehypeRaw from 'rehype-raw';
 import 'katex/dist/katex.min.css';
-import { ArrowLeft, Calendar, User, Tag, ZoomIn, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Calendar, User } from 'lucide-react';
 import Link from 'next/link';
-
-export async function generateStaticParams() {
-    const slugs = getPostSlugs();
-    return slugs.map((slug) => ({
-        slug: slug.replace(/\.mdx$/, ''),
-    }));
-}
-
-// Client Component wrapper for the interactive Markdown parts (like image lightbox) if needed
-// But for now, we'll keep it simple. If we need state for lightbox, we might need a client component.
-// Let's reuse the logic from ChapterPage but adapt it for Server Component rendering where possible,
-// or make this a Client Component if state is strictly required. 
-// Given the lightbox requirement, let's make the content renderer a Client Component.
-
 import BlogPostContent from './BlogPostContent';
 import { Metadata } from 'next';
+import { getPublishedPostBySlug, getPublishedSlugs } from '../../lib/blogDb';
+
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+    const slugs = await getPublishedSlugs();
+    return slugs.map((slug) => ({ slug }));
+}
 
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const params = await props.params;
     const { slug } = params;
-    const post = getPostBySlug(slug);
+    const post = await getPublishedPostBySlug(slug);
 
     if (!post) {
-        return {
-            title: 'Post Not Found',
-        };
+        return { title: 'Post Not Found' };
     }
 
     const ogImage = post.image
-        ? `https://www.canvasclasses.in${post.image}`
-        : 'https://www.canvasclasses.in/og-image.png'; // Fallback image if you have one
+        ? (post.image.startsWith('http') ? post.image : `https://www.canvasclasses.in${post.image}`)
+        : 'https://www.canvasclasses.in/og-image.png';
+
+    const metaTitle = post.seo?.title || post.title;
+    const metaDesc = post.seo?.description || post.excerpt;
 
     return {
-        title: post.title,
-        description: post.excerpt,
+        title: metaTitle,
+        description: metaDesc,
         openGraph: {
-            title: post.title,
-            description: post.excerpt,
+            title: metaTitle,
+            description: metaDesc,
             url: `https://www.canvasclasses.in/blog/${slug}`,
             siteName: 'Canvas Classes',
             locale: 'en_US',
@@ -56,18 +46,13 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
             section: 'Education',
             tags: post.tags,
             images: [
-                {
-                    url: ogImage,
-                    width: 1200,
-                    height: 630,
-                    alt: post.title,
-                },
+                { url: ogImage, width: 1200, height: 630, alt: post.title },
             ],
         },
         twitter: {
             card: 'summary_large_image',
-            title: post.title,
-            description: post.excerpt,
+            title: metaTitle,
+            description: metaDesc,
             images: [ogImage],
             creator: '@canvasclasses',
         },
@@ -78,10 +63,10 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 }
 
 export default async function PostPage(props: { params: Promise<{ slug: string }> }) {
-    const params = await props.params; // await the params promise
+    const params = await props.params;
     const { slug } = params;
 
-    const post = getPostBySlug(slug);
+    const post = await getPublishedPostBySlug(slug);
 
     if (!post) {
         notFound();
@@ -98,9 +83,8 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
                 </Link>
 
                 <article>
-                    {/* Header */}
                     <div className="mb-12 text-center">
-                        <div className="flex items-center justify-center gap-2 mb-6">
+                        <div className="flex items-center justify-center gap-2 mb-6 flex-wrap">
                             {post.tags.map(tag => (
                                 <span key={tag} className="px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-bold uppercase tracking-wider border border-purple-500/20">
                                     {tag}
@@ -124,9 +108,9 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
                         </div>
                     </div>
 
-                    {/* Featured Image */}
                     {post.image && (
                         <div className="mb-12 rounded-3xl overflow-hidden shadow-2xl border border-gray-800 aspect-video relative">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                                 src={post.image}
                                 alt={post.title}
@@ -136,9 +120,7 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
                         </div>
                     )}
 
-                    {/* Content */}
                     <BlogPostContent content={post.content} />
-
                 </article>
             </main>
         </div>
