@@ -47,6 +47,16 @@ async function connectToDatabase(): Promise<Mongoose | null> {
         return null;
     }
 
+    // Invalidate the cached connection if the underlying socket dropped
+    // (common after Next.js dev hot-reloads or Atlas idle disconnects).
+    // With bufferCommands: false, a stale readyState would make every
+    // subsequent query throw "Cannot call X.find() before initial connection
+    // is complete" even though `cached.conn` looks present.
+    if (cached!.conn && mongoose.connection.readyState !== 1) {
+        cached!.conn = null;
+        cached!.promise = null;
+    }
+
     if (cached!.conn) {
         return cached!.conn;
     }
@@ -92,7 +102,7 @@ async function connectToDatabase(): Promise<Mongoose | null> {
                 });
                 cached!.conn = await cached!.promise;
                 console.log('✅ MongoDB connected on retry', attempt);
-                return cached!.conn;
+                break;
             } catch (retryErr) {
                 cached!.promise = null;
                 if (attempt === MAX_CONNECT_RETRIES) {
@@ -102,7 +112,22 @@ async function connectToDatabase(): Promise<Mongoose | null> {
             }
         }
 
-        throw e;
+        if (!cached!.conn) throw e;
+    }
+
+    // Hard guarantee before returning: the default connection's readyState
+    // must be 1. Without this, with bufferCommands: false, the very next
+    // `Model.find()` can throw "Cannot call X.find() before initial
+    // connection is complete" if Mongoose's state machine hasn't finished
+    // flipping (happens across Next.js dev HMR boundaries). asPromise()
+    // resolves on the next 'open' event, or immediately if already open.
+    if (mongoose.connection.readyState !== 1) {
+        try {
+            await mongoose.connection.asPromise();
+        } catch (waitErr) {
+            console.error('❌ MongoDB open wait failed:', waitErr);
+            throw waitErr;
+        }
     }
 
     return cached!.conn;
