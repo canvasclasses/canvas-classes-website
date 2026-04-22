@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search, Plus, Trash2, Save, X, FolderPlus, Loader2,
@@ -39,13 +39,26 @@ const DIFFICULTY_COLORS = {
   hard: 'bg-red-500/20 text-red-400',
 };
 
+// Read initial query-param value in a way that's safe during SSR
+// (returns the default on the server; hydrates on client).
+function readParam(key: string, fallback: string): string {
+  if (typeof window === 'undefined') return fallback;
+  return new URLSearchParams(window.location.search).get(key) ?? fallback;
+}
+function readParamInt(key: string, fallback: number): number {
+  if (typeof window === 'undefined') return fallback;
+  const raw = new URLSearchParams(window.location.search).get(key);
+  const n = raw == null ? NaN : parseInt(raw, 10);
+  return Number.isFinite(n) ? n : fallback;
+}
+
 export default function EnhancedFlashcardAdmin() {
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [selectedChapter, setSelectedChapter] = useState<string>('All');
-  const [selectedTopic, setSelectedTopic] = useState<string>('All');
+  const [searchQuery, setSearchQuery] = useState(() => readParam('q', ''));
+  const [selectedCategory, setSelectedCategory] = useState<string>(() => readParam('category', 'All'));
+  const [selectedChapter, setSelectedChapter] = useState<string>(() => readParam('chapter', 'All'));
+  const [selectedTopic, setSelectedTopic] = useState<string>(() => readParam('topic', 'All'));
   const [selectedFlashcard, setSelectedFlashcard] = useState<Flashcard | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
@@ -53,10 +66,14 @@ export default function EnhancedFlashcardAdmin() {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [showTopicManager, setShowTopicManager] = useState(false);
   const [newTopicName, setNewTopicName] = useState('');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(50);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>(() => (readParam('sort', 'asc') === 'desc' ? 'desc' : 'asc'));
+  const [page, setPage] = useState(() => readParamInt('page', 1));
+  const [pageSize, setPageSize] = useState(() => readParamInt('ps', 50));
   const [jumpValue, setJumpValue] = useState('');
+
+  // Card ID to auto-open once flashcards finish loading. Captured on first
+  // render only — after that, selectedFlashcard drives the URL.
+  const pendingCardIdRef = useRef<string | null>(readParam('card', '') || null);
 
   const [formData, setFormData] = useState({
     flashcard_id: '',
@@ -73,8 +90,57 @@ export default function EnhancedFlashcardAdmin() {
 
   useEffect(() => { fetchFlashcards(); }, []);
 
-  // Reset topic filter whenever chapter changes
-  useEffect(() => { setSelectedTopic('All'); }, [selectedChapter, selectedCategory]);
+  // Reset topic filter whenever chapter changes — but not on first render,
+  // so URL-hydrated values survive the initial mount.
+  const skipTopicResetRef = useRef(true);
+  useEffect(() => {
+    if (skipTopicResetRef.current) { skipTopicResetRef.current = false; return; }
+    setSelectedTopic('All');
+  }, [selectedChapter, selectedCategory]);
+
+  // Open the card referenced in the URL as soon as the list loads.
+  useEffect(() => {
+    const id = pendingCardIdRef.current;
+    if (!id || flashcards.length === 0) return;
+    const card = flashcards.find(f => f.flashcard_id === id);
+    pendingCardIdRef.current = null; // consume regardless of hit/miss
+    if (card) {
+      setSelectedFlashcard(card);
+      setFormData({
+        flashcard_id: card.flashcard_id,
+        chapter_name: card.chapter.name,
+        category: card.chapter.category,
+        topic_name: card.topic.name,
+        question: card.question,
+        answer: card.answer,
+        difficulty: card.metadata.difficulty || 'medium',
+        source: card.metadata.source || 'NCERT',
+        class_num: card.metadata.class_num || 12,
+        flashcard_type: card.metadata.flashcard_type || 'standard',
+      });
+      setIsEditing(true);
+      setIsCreating(false);
+    }
+  }, [flashcards]);
+
+  // Keep the URL in sync with filter/sort/pagination/selection state so that
+  // a page refresh lands the user back exactly where they were.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams();
+    if (selectedCategory !== 'All') params.set('category', selectedCategory);
+    if (selectedChapter !== 'All') params.set('chapter', selectedChapter);
+    if (selectedTopic !== 'All') params.set('topic', selectedTopic);
+    if (searchQuery) params.set('q', searchQuery);
+    if (sortOrder !== 'asc') params.set('sort', sortOrder);
+    if (page !== 1) params.set('page', String(page));
+    if (pageSize !== 50) params.set('ps', String(pageSize));
+    if (selectedFlashcard) params.set('card', selectedFlashcard.flashcard_id);
+    const qs = params.toString();
+    const url = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
+    // replaceState avoids cluttering history and never triggers a re-render.
+    window.history.replaceState(null, '', url);
+  }, [selectedCategory, selectedChapter, selectedTopic, searchQuery, sortOrder, page, pageSize, selectedFlashcard]);
 
   const fetchFlashcards = async () => {
     try {
@@ -154,8 +220,13 @@ export default function EnhancedFlashcardAdmin() {
     [filteredFlashcards, pageStart, pageEnd],
   );
 
-  // Reset to page 1 whenever filters or sort change
-  useEffect(() => { setPage(1); }, [selectedCategory, selectedChapter, selectedTopic, searchQuery, sortOrder, pageSize]);
+  // Reset to page 1 whenever filters or sort change — but skip first render
+  // so URL-hydrated page number survives the initial mount.
+  const skipPageResetRef = useRef(true);
+  useEffect(() => {
+    if (skipPageResetRef.current) { skipPageResetRef.current = false; return; }
+    setPage(1);
+  }, [selectedCategory, selectedChapter, selectedTopic, searchQuery, sortOrder, pageSize]);
 
   // Jump to card by ID, number, or index — finds it in the filtered list and opens it
   const handleJump = () => {
@@ -278,6 +349,7 @@ export default function EnhancedFlashcardAdmin() {
 
       const url = isEditing ? `/api/v2/flashcards/${selectedFlashcard?.flashcard_id}` : '/api/v2/flashcards';
       const method = isEditing ? 'PATCH' : 'POST';
+      const wasEditing = isEditing;
       const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
 
       if (!res.ok) {
@@ -285,11 +357,37 @@ export default function EnhancedFlashcardAdmin() {
         throw new Error(err.error || 'Failed to save flashcard');
       }
 
-      showMessage('success', isEditing ? 'Flashcard updated!' : 'Flashcard created!');
-      setIsEditing(false);
-      setIsCreating(false);
-      setSelectedFlashcard(null);
-      fetchFlashcards();
+      const data = await res.json();
+      const saved: Flashcard | undefined = data.flashcard;
+
+      showMessage('success', wasEditing ? 'Flashcard updated!' : 'Flashcard created!');
+
+      if (saved) {
+        // Merge the saved card into local state — no need to refetch the full
+        // 5000-card list. Replace the existing entry if it's already there,
+        // otherwise prepend the new one.
+        setFlashcards(prev => {
+          const idx = prev.findIndex(f => f.flashcard_id === saved.flashcard_id);
+          if (idx >= 0) {
+            const next = prev.slice();
+            next[idx] = saved;
+            return next;
+          }
+          return [saved, ...prev];
+        });
+
+        // Keep the editor open on the saved card so the user can continue
+        // iterating (adding SVGs, tweaking copy) without re-navigating.
+        setSelectedFlashcard(saved);
+        setIsEditing(true);
+        setIsCreating(false);
+      } else {
+        // Fallback: server didn't return the card — refetch just in case.
+        setIsEditing(false);
+        setIsCreating(false);
+        setSelectedFlashcard(null);
+        fetchFlashcards();
+      }
     } catch (error: unknown) {
       showMessage('error', error instanceof Error ? error.message : 'Unknown error');
     } finally {
@@ -307,7 +405,8 @@ export default function EnhancedFlashcardAdmin() {
         setSelectedFlashcard(null);
         setIsEditing(false);
       }
-      fetchFlashcards();
+      // Remove from local state — no full refetch needed.
+      setFlashcards(prev => prev.filter(f => f._id !== flashcard._id));
     } catch {
       showMessage('error', 'Failed to delete flashcard');
     }

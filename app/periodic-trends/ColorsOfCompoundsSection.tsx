@@ -53,26 +53,27 @@ const formatFormula = (formula: string): React.ReactNode[] => {
 const colorData = {
     aquatedIons: [
         { color: 'Colourless', strip: 'bg-slate-400', swatch: '#94a3b8', ions: ['Sc³⁺', 'Ti⁴⁺', 'Zn²⁺', 'Cu⁺', 'La³⁺', 'Lu³⁺'], note: 'd⁰ or d¹⁰' },
-        { color: 'Violet', strip: 'bg-violet-600', swatch: '#8b5cf6', ions: ['V²⁺', 'Cr³⁺', 'Mn³⁺'], note: 'd³ config' },
-        { color: 'Blue', strip: 'bg-blue-600', swatch: '#3b82f6', ions: ['V⁴⁺', 'Cr²⁺', 'Cu²⁺'], note: 'd¹, d⁴' },
+        { color: 'Violet', strip: 'bg-violet-600', swatch: '#8b5cf6', ions: ['Ti³⁺', 'V²⁺', 'Cr³⁺', 'Mn³⁺'], note: 'd¹, d³, d⁴' },
+        { color: 'Blue', strip: 'bg-blue-600', swatch: '#3b82f6', ions: ['V⁴⁺', 'Cr²⁺', 'Co³⁺', 'Cu²⁺'], note: 'd¹, d⁴, d⁶, d⁹' },
         { color: 'Green', strip: 'bg-emerald-600', swatch: '#10b981', ions: ['Ni²⁺', 'Fe²⁺', 'V³⁺'], note: 'd², d⁶, d⁸' },
-        { color: 'Pink', strip: 'bg-pink-600', swatch: '#ec4899', ions: ['Mn²⁺', 'Co³⁺', 'Co²⁺'], note: 'd⁵, d⁷' },
+        { color: 'Pink', strip: 'bg-pink-600', swatch: '#ec4899', ions: ['Mn²⁺', 'Co²⁺'], note: 'd⁵, d⁷' },
         { color: 'Yellow', strip: 'bg-amber-600', swatch: '#f59e0b', ions: ['Fe³⁺'], note: 'd⁵ high spin' },
     ],
     compounds: [
         { color: 'Black', strip: 'bg-slate-800', swatch: '#475569', compounds: ['FeS', 'CoS', 'NiS', 'CuS', 'Ag₂S', 'PbS'] },
         { color: 'White', strip: 'bg-slate-300', swatch: '#e2e8f0', compounds: ['ZnS', 'AgCl', 'BaSO₄', 'CaC₂O₄', 'PbSO₄', 'Mn(OH)₂'] },
-        { color: 'Purple', strip: 'bg-purple-600', swatch: '#a855f7', compounds: ['KMnO₄', 'K₂Cr₂O₇(dil)', 'Ti³⁺'] },
+        { color: 'Purple', strip: 'bg-purple-600', swatch: '#a855f7', compounds: ['KMnO₄'] },
         { color: 'Brown', strip: 'bg-orange-700', swatch: '#c2410c', compounds: ['Fe(OH)₃', 'Fe₂O₃', 'CdO'] },
         { color: 'Green', strip: 'bg-emerald-600', swatch: '#22c55e', compounds: ['Cr(OH)₃', 'Fe(OH)₂', 'Ni(OH)₂', 'Cr₂O₃'] },
-        { color: 'Orange', strip: 'bg-orange-500', swatch: '#f97316', compounds: ['Cr₂O₇²⁻', 'CrO₃', 'K₂Cr₂O₇(conc)'] },
-        { color: 'Peach', strip: 'bg-[#c98a6e]', swatch: '#e8a88a', compounds: ['MnS', 'FeS(ppt)'] },
-        { color: 'Blue', strip: 'bg-blue-600', swatch: '#60a5fa', compounds: ['CuSO₄·5H₂O', '[Cu(NH₃)₄]²⁺'] },
+        { color: 'Orange', strip: 'bg-orange-500', swatch: '#f97316', compounds: ['Cr₂O₇²⁻', 'CrO₃', 'K₂Cr₂O₇'] },
+        { color: 'Peach', strip: 'bg-[#c98a6e]', swatch: '#e8a88a', compounds: ['MnS'] },
+        { color: 'Sky Blue', strip: 'bg-sky-400', swatch: '#38bdf8', compounds: ['CuSO₄·5H₂O'] },
+        { color: 'Deep Blue', strip: 'bg-blue-800', swatch: '#1e40af', compounds: ['[Cu(NH₃)₄]²⁺'] },
     ],
     yellowFamily: {
         precipitates: ['PbCrO₄', 'BaCrO₄', 'As₂S₃', 'PbI₂', 'AgI', 'SnS₂', 'CdS', 'K₂CrO₄'],
         special: [
-            { formula: '(NH₄)₃[As(Mo₃O₁₀)₄]', name: 'Amm. arsinomolybdate' },
+            { formula: '(NH₄)₃[As(Mo₃O₁₀)₄]', name: 'Amm. arsenomolybdate' },
             { formula: 'ZnO', name: 'hot = yellow' },
             { formula: 'Br₂(vap)', name: 'turns starch yellow' },
         ]

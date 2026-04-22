@@ -7,10 +7,10 @@ export default function SaltAnalysisGuide() {
     const [activeTab, setActiveTab] = useState<'anions' | 'cations'>('anions');
 
     return (
-        <div className="w-full max-w-6xl mx-auto mt-16 mb-8">
-            <div className="bg-gray-800/30 rounded-2xl border border-gray-700/50 overflow-hidden">
+        <div className="w-full max-w-6xl mx-auto mt-8 sm:mt-16 mb-8 px-3 sm:px-0">
+            <div className="bg-gray-800/30 rounded-xl sm:rounded-2xl border border-gray-700/50 overflow-hidden">
                 {/* Header */}
-                <div className="p-6 border-b border-gray-800 bg-gray-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="p-3 sm:p-6 border-b border-gray-800 bg-gray-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
                     <div className="flex items-center gap-3">
                         <div className="bg-purple-500/20 p-2 rounded-lg">
                             <BookOpen className="text-purple-400" size={24} />
@@ -62,7 +62,7 @@ export default function SaltAnalysisGuide() {
                             transition={{ duration: 0.3 }}
                             className="bg-gray-900/50 overflow-hidden"
                         >
-                            <div className="p-6">
+                            <div className="p-3 sm:p-6">
                                 {activeTab === 'anions' ? (
                                     <div className="space-y-8">
                                         {/* Group A */}

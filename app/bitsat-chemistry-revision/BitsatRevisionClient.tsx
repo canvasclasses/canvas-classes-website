@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { createClient } from '@/app/utils/supabase/client';
 import {
     AlertTriangle,
     Atom,
@@ -195,6 +196,7 @@ type ResourceKind =
     | 'name-rxns'
     | 'wizard'
     | 'salt'
+    | 'practice'
     | 'comingsoon';
 
 type Resource = {
@@ -302,6 +304,7 @@ const PHASES: Phase[] = [
                     { label: 'Chemical Bonding Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1S_tc52Ia108IEWTiRojPDLiZu0EJIjfi') },
                     { label: 'Bonding Quick Recap', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1WBTKroyODuB9i6W2R6loBAfMUF9YJxZb') },
                     { label: 'Chemical Bonding Flashcards', href: '/chemistry-flashcards/most-important-inorganic-trends', kind: 'flashcards' },
+                    { label: 'Practice on Crucible', href: '/the-crucible/ch11_bonding?mode=browse&examBoard=JEE', kind: 'practice' },
                 ],
             },
             {
@@ -373,7 +376,7 @@ const PHASES: Phase[] = [
                 title: 'Thermodynamics — Laws & Processes',
                 focus: 'Reversible vs irreversible work, Carnot cycle efficiency, Hess law shortcuts.',
                 resources: [
-                    { label: 'Thermodynamics One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('GLBB7iwpJMw') },
+                    { label: 'Thermodynamics One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('437RxJzwOhk') },
                     { label: 'Top 50 Concepts', href: '/top-50-concepts', kind: 'top50' },
                 ],
             },
@@ -382,7 +385,7 @@ const PHASES: Phase[] = [
                 title: 'Thermodynamics — Spontaneity',
                 focus: '∆G, ∆S of universe, Gibbs–Helmholtz, coupling reactions.',
                 resources: [
-                    { label: 'Thermodynamics One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('GLBB7iwpJMw') },
+                    { label: 'Thermodynamics One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('437RxJzwOhk') },
                     { label: 'Top 50 Concepts', href: '/top-50-concepts', kind: 'top50' },
                 ],
             },
@@ -621,6 +624,7 @@ const RESOURCE_META: Record<ResourceKind, { icon: React.ComponentType<{ classNam
     'name-rxns': { icon: BookOpen, tone: 'text-purple-400' },
     wizard: { icon: Lightbulb, tone: 'text-purple-400' },
     salt: { icon: FlaskConical, tone: 'text-orange-400' },
+    practice: { icon: Target, tone: 'text-amber-400' },
     comingsoon: { icon: Lock, tone: 'text-zinc-500' },
 };
 
@@ -1059,30 +1063,119 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 // =====================================================================
 
 const STORAGE_KEY = 'bitsat-chem-plan-v1';
+const SYNC_DEBOUNCE_MS = 400;
+
+function readLocalDays(): number[] {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return [];
+        const arr = JSON.parse(raw);
+        if (!Array.isArray(arr)) return [];
+        return arr.filter((n) => Number.isInteger(n) && n >= 1 && n <= TOTAL_DAYS);
+    } catch {
+        return [];
+    }
+}
+
+function writeLocalDays(days: number[]) {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(days));
+    } catch {}
+}
 
 export default function BitsatRevisionClient() {
     const [openPhase, setOpenPhase] = useState<string>('phase1');
     const [completed, setCompleted] = useState<Set<number>>(new Set());
     const [hydrated, setHydrated] = useState(false);
     const [drawer, setDrawer] = useState<DrawerState>(null);
+    const [isAuthed, setIsAuthed] = useState(false);
 
-    useEffect(() => {
+    const accessTokenRef = useRef<string | null>(null);
+    const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const latestDaysRef = useRef<Set<number>>(new Set());
+
+    // Push current completed set to the server (debounced caller drives this).
+    const pushToServer = useCallback(async (days: number[]) => {
+        const token = accessTokenRef.current;
+        if (!token) return;
         try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            if (raw) {
-                const arr = JSON.parse(raw);
-                if (Array.isArray(arr)) setCompleted(new Set(arr));
-            }
+            await fetch('/api/bitsat-plan/progress', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ completed_days: days }),
+            });
         } catch {}
-        setHydrated(true);
     }, []);
 
+    // Initial load: hydrate from localStorage, then if logged in, merge with server state (union).
+    useEffect(() => {
+        let cancelled = false;
+
+        const local = readLocalDays();
+        setCompleted(new Set(local));
+        latestDaysRef.current = new Set(local);
+        setHydrated(true);
+
+        const supabase = createClient();
+        if (!supabase) return;
+
+        (async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (cancelled) return;
+            if (!session?.access_token) return;
+
+            accessTokenRef.current = session.access_token;
+            setIsAuthed(true);
+
+            try {
+                const res = await fetch('/api/bitsat-plan/progress', {
+                    headers: { Authorization: `Bearer ${session.access_token}` },
+                });
+                if (!res.ok) return;
+                const data = await res.json();
+                const serverDays: number[] = Array.isArray(data?.completed_days) ? data.completed_days : [];
+
+                const merged = new Set<number>([...local, ...serverDays]);
+                if (cancelled) return;
+                setCompleted(merged);
+                latestDaysRef.current = merged;
+                writeLocalDays(Array.from(merged).sort((a, b) => a - b));
+
+                // If the union differs from the server's view, persist back so
+                // any local-only progress (from before login) is preserved.
+                if (merged.size !== serverDays.length || local.some((d) => !serverDays.includes(d))) {
+                    pushToServer(Array.from(merged).sort((a, b) => a - b));
+                }
+            } catch {}
+        })();
+
+        const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+            accessTokenRef.current = session?.access_token ?? null;
+            setIsAuthed(!!session?.access_token);
+        });
+
+        return () => {
+            cancelled = true;
+            sub.subscription.unsubscribe();
+        };
+    }, [pushToServer]);
+
+    // Persist to localStorage immediately + schedule debounced server sync.
     useEffect(() => {
         if (!hydrated) return;
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(completed)));
-        } catch {}
-    }, [completed, hydrated]);
+        const days = Array.from(completed).sort((a, b) => a - b);
+        writeLocalDays(days);
+        latestDaysRef.current = completed;
+
+        if (!isAuthed) return;
+        if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+        syncTimerRef.current = setTimeout(() => {
+            pushToServer(Array.from(latestDaysRef.current).sort((a, b) => a - b));
+        }, SYNC_DEBOUNCE_MS);
+    }, [completed, hydrated, isAuthed, pushToServer]);
 
     const toggleDay = (day: number) => {
         setCompleted((prev) => {
@@ -1174,6 +1267,15 @@ export default function BitsatRevisionClient() {
                                     style={{ width: `${overallPct}%` }}
                                 />
                             </div>
+                            {!isAuthed && (
+                                <Link
+                                    href="/login"
+                                    className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-orange-300 hover:text-orange-200 transition-colors"
+                                >
+                                    <Lock size={11} />
+                                    Sign in to save your progress across devices
+                                </Link>
+                            )}
                         </motion.div>
                     )}
                 </div>
