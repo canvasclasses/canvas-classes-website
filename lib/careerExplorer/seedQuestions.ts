@@ -141,6 +141,31 @@ const aptitude: SeedQuestion[] = [
     ],
     is_active: true,
   },
+  {
+    _id: 'cq_apt_009',
+    dimension: 'aptitude',
+    sub_facet: 'school_subjects',
+    order: 9,
+    prompt: 'Forget marks for a second. Which school subjects do you actually enjoy doing homework in?',
+    help_text: 'Pick the one that pulls you in most. We use this to suggest careers where your strongest subjects matter daily.',
+    format: 'single_select',
+    mode: 'contribution',
+    options: [
+      { id: 'math', label: 'Mathematics — I like the puzzle of getting it exactly right.', contributes: { numerical: 3, logical: 2 } },
+      { id: 'physics', label: 'Physics — how the physical world actually works.', contributes: { logical: 3, spatial: 2, numerical: 1 } },
+      { id: 'chemistry', label: 'Chemistry — reactions, molecules, the unseen layer.', contributes: { logical: 2, numerical: 2 } },
+      { id: 'biology', label: 'Biology — living systems, from cells to ecosystems.', contributes: { naturalistic: 3, logical: 1 } },
+      { id: 'cs', label: 'Computer Science / coding — making the machine do something new.', contributes: { logical: 3, numerical: 1, spatial: 1 } },
+      { id: 'english', label: 'English / literature — language, arguments, ideas.', contributes: { verbal: 3, intrapersonal: 1 } },
+      { id: 'history', label: 'History or Political Science — how societies move over time.', contributes: { verbal: 2, interpersonal: 2 } },
+      { id: 'economics', label: 'Economics / Accountancy / Business Studies — money, markets, trade-offs.', contributes: { numerical: 2, logical: 2, interpersonal: 1 } },
+      { id: 'art', label: 'Fine Arts, Music, or Design — making things beautiful.', contributes: { musical: 1, spatial: 2, kinesthetic: 1 } },
+      { id: 'geography', label: 'Geography / Environmental Science — places and the planet.', contributes: { naturalistic: 2, spatial: 2 } },
+      { id: 'psychology', label: 'Psychology / Sociology — what makes people tick.', contributes: { interpersonal: 3, intrapersonal: 2 } },
+      { id: 'none', label: 'None of these really. School feels like something I endure.', contributes: {} },
+    ],
+    is_active: true,
+  },
 ];
 
 // ── Dimension B · Interests (RIASEC) — 10 questions ──────────────────────────

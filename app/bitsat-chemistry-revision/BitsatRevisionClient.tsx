@@ -272,6 +272,7 @@ const PHASES: Phase[] = [
                 tip: 'BITSAT asked PDI numericals in 2024. Both chapters are short and high-yield — clean them in one session.',
                 resources: [
                     { label: 'Polymers One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('uOHeVhjFg2M') },
+                    { label: 'Most Important Polymers', href: '/one-shot-lectures', kind: 'crash-course', embedUrl: yt('PL2Uw55NMmU', 32) },
                     { label: 'Polymers Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1ik9tKOvOObojUyD-t4e8RpvNY7j7lZT2') },
                     { label: 'Everyday Life One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('CiHMGlxPPoM') },
                     { label: 'Detailed Lecture', href: 'https://youtu.be/iQsHsZihMX0', kind: 'crash-course', embedUrl: yt('iQsHsZihMX0') },

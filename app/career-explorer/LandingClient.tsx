@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Compass, Clock, ShieldCheck, Sparkles } from 'lucide-react';
+import { Compass, Clock, ShieldCheck, Sparkles, Library } from 'lucide-react';
 
 const DIMENSIONS = [
   { title: 'Your situation', hint: 'Finances, stream, geography, time horizon — the real constraints.' },
@@ -61,11 +62,18 @@ export default function LandingClient() {
             <Compass className="h-5 w-5" />
             {starting ? 'Starting…' : 'Start the Explorer'}
           </button>
+          <Link
+            href="/career-explorer/browse"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-white/80 transition hover:bg-white/10"
+          >
+            <Library className="h-5 w-5" />
+            Browse all careers
+          </Link>
           <a
             href="#what-you-get"
-            className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-white/80 transition hover:bg-white/10"
+            className="inline-flex items-center justify-center rounded-xl border border-white/5 px-6 py-3 text-white/60 transition hover:text-white/90"
           >
-            What you'll get
+            What you&apos;ll get
           </a>
         </div>
         {error && <div className="mt-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-300">{error}</div>}
