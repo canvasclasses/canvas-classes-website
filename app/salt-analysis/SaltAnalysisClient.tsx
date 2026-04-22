@@ -785,16 +785,16 @@ export default function SaltAnalysisClient() {
                                     </div>
 
                                     {/* Test Sections */}
-                                    <div className="bg-gradient-to-br from-gray-800/80 to-purple-900/30 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30 shadow-lg shadow-purple-500/10">
-                                        <h3 className="text-xl font-bold text-white mb-4">Perform Tests</h3>
+                                    <div className="bg-gradient-to-br from-gray-800/80 to-purple-900/30 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-6 border border-purple-500/30 shadow-lg shadow-purple-500/10">
+                                        <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Perform Tests</h3>
 
                                         {/* Stage Tabs */}
-                                        <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+                                        <div className="grid grid-cols-4 gap-1.5 sm:flex sm:gap-2 mb-4 sm:overflow-x-auto pb-2">
                                             {['preliminary', 'anion', 'cation', 'confirmatory'].map((s) => (
                                                 <button
                                                     key={s}
                                                     onClick={() => setStage(s as AnalysisStage)}
-                                                    className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${stage === s
+                                                    className={`px-1.5 py-2 sm:px-4 rounded-lg text-[11px] sm:text-sm font-medium whitespace-nowrap transition-colors ${stage === s
                                                         ? 'bg-cyan-500 text-white'
                                                         : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
                                                         }`}

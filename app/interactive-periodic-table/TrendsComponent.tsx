@@ -113,9 +113,9 @@ export default function TrendsComponent() {
     return (
         <section id="trends-section" className="scroll-mt-28">
 
-            <div className="bg-gray-900/60 rounded-2xl border border-gray-700/50 p-5 backdrop-blur-sm">
+            <div className="bg-gray-900/60 rounded-xl sm:rounded-2xl border border-gray-700/50 p-3 sm:p-5 backdrop-blur-sm">
                 {/* Header with Block Buttons */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-5">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-5">
                     <div className="flex items-center gap-3">
                         <div className={`p-2.5 rounded-xl ${colors.bg}`}>
                             <TrendingUp size={22} className={colors.accent} />
@@ -160,7 +160,7 @@ export default function TrendsComponent() {
                 </div>
 
                 {/* Main Grid: Property List | Graph | Notes */}
-                <div className="grid lg:grid-cols-12 gap-5">
+                <div className="grid lg:grid-cols-12 gap-3 sm:gap-5">
                     {currentTable?.isTextOnly || plotableRows.length === 0 ? (
                         <div className="lg:col-span-8 overflow-hidden rounded-xl border border-gray-700/40 bg-gray-900/40">
                             <div className="overflow-x-auto">

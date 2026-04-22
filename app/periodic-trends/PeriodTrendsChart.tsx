@@ -532,9 +532,9 @@ export default function PeriodTrendsChart() {
   }, [selectedProperty]);
 
   return (
-    <div className="bg-gray-900/60 rounded-2xl border border-gray-700/50 p-5 backdrop-blur-sm">
+    <div className="bg-gray-900/60 rounded-xl sm:rounded-2xl border border-gray-700/50 p-3 sm:p-5 backdrop-blur-sm">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-5">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-5">
         <div className="flex items-center gap-3">
           <div className="p-2.5 rounded-xl bg-violet-500/10">
             <TrendingUp size={22} className="text-violet-300" />
@@ -575,16 +575,25 @@ export default function PeriodTrendsChart() {
 
         {/* Chart + period + d-block controls */}
         <div className="flex-1 min-w-0 flex flex-col gap-3">
+          {/* Mobile property selector — own row to prevent overflow */}
+          <select
+            value={selectedProperty.key}
+            onChange={e => setSelectedProperty(PROPERTIES.find(p => p.key === e.target.value)!)}
+            className="md:hidden w-full appearance-none bg-gray-800/50 text-white border border-gray-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+          >
+            {PROPERTIES.map(p => <option key={p.key} value={p.key}>{p.label}</option>)}
+          </select>
+
           {/* Period pills + d-block toggle */}
-          <div className="flex items-center gap-2">
-            <div className="flex gap-2 bg-gray-800/60 rounded-xl p-1.5">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex gap-1 sm:gap-2 bg-gray-800/60 rounded-xl p-1 sm:p-1.5">
               {PERIOD_CONFIG.map(cfg => {
                 const active = selectedPeriod === cfg.period;
                 return (
                   <button
                     key={cfg.period}
                     onClick={() => setSelectedPeriod(cfg.period)}
-                    className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+                    className={`px-3 sm:px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
                       active ? 'text-white shadow-lg' : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
                     }`}
                     style={active ? { background: cfg.color } : {}}
@@ -606,14 +615,6 @@ export default function PeriodTrendsChart() {
                 {showDBlock ? '✓ d-block' : '+ d-block'}
               </button>
             )}
-            {/* Mobile property selector */}
-            <select
-              value={selectedProperty.key}
-              onChange={e => setSelectedProperty(PROPERTIES.find(p => p.key === e.target.value)!)}
-              className="md:hidden ml-auto appearance-none bg-gray-800/50 text-white border border-gray-700 rounded-xl px-3 py-1.5 text-sm focus:outline-none"
-            >
-              {PROPERTIES.map(p => <option key={p.key} value={p.key}>{p.label}</option>)}
-            </select>
           </div>
 
           {/* Chart */}

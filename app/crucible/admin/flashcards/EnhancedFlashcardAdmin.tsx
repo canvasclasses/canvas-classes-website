@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search, Plus, Trash2, Save, X, FolderPlus, Loader2,
@@ -39,13 +39,26 @@ const DIFFICULTY_COLORS = {
   hard: 'bg-red-500/20 text-red-400',
 };
 
+// Read initial query-param value in a way that's safe during SSR
+// (returns the default on the server; hydrates on client).
+function readParam(key: string, fallback: string): string {
+  if (typeof window === 'undefined') return fallback;
+  return new URLSearchParams(window.location.search).get(key) ?? fallback;
+}
+function readParamInt(key: string, fallback: number): number {
+  if (typeof window === 'undefined') return fallback;
+  const raw = new URLSearchParams(window.location.search).get(key);
+  const n = raw == null ? NaN : parseInt(raw, 10);
+  return Number.isFinite(n) ? n : fallback;
+}
+
 export default function EnhancedFlashcardAdmin() {
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [selectedChapter, setSelectedChapter] = useState<string>('All');
-  const [selectedTopic, setSelectedTopic] = useState<string>('All');
+  const [searchQuery, setSearchQuery] = useState(() => readParam('q', ''));
+  const [selectedCategory, setSelectedCategory] = useState<string>(() => readParam('category', 'All'));
+  const [selectedChapter, setSelectedChapter] = useState<string>(() => readParam('chapter', 'All'));
+  const [selectedTopic, setSelectedTopic] = useState<string>(() => readParam('topic', 'All'));
   const [selectedFlashcard, setSelectedFlashcard] = useState<Flashcard | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
@@ -53,10 +66,25 @@ export default function EnhancedFlashcardAdmin() {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [showTopicManager, setShowTopicManager] = useState(false);
   const [newTopicName, setNewTopicName] = useState('');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(50);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>(() => (readParam('sort', 'asc') === 'desc' ? 'desc' : 'asc'));
+  const [page, setPage] = useState(() => readParamInt('page', 1));
+  const [pageSize, setPageSize] = useState(() => readParamInt('ps', 50));
   const [jumpValue, setJumpValue] = useState('');
+
+  // Card ID to auto-open once flashcards finish loading. Captured on first
+  // render only — after that, selectedFlashcard drives the URL.
+  const pendingCardIdRef = useRef<string | null>(readParam('card', '') || null);
+
+  // ── Auto-save plumbing ──────────────────────────────────────────────────
+  // `autoSaveStatus` drives the small indicator next to the Save button.
+  // `lastSavedAt` is shown when status is 'saved'.
+  // `autoSaveTimerRef` holds the debounce handle so we can cancel/flush it.
+  // `saveInFlightRef` blocks overlapping saves (auto + manual clicks).
+  type AutoSaveStatus = 'idle' | 'dirty' | 'saving' | 'saved' | 'error';
+  const [autoSaveStatus, setAutoSaveStatus] = useState<AutoSaveStatus>('idle');
+  const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
+  const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const saveInFlightRef = useRef(false);
 
   const [formData, setFormData] = useState({
     flashcard_id: '',
@@ -73,8 +101,57 @@ export default function EnhancedFlashcardAdmin() {
 
   useEffect(() => { fetchFlashcards(); }, []);
 
-  // Reset topic filter whenever chapter changes
-  useEffect(() => { setSelectedTopic('All'); }, [selectedChapter, selectedCategory]);
+  // Reset topic filter whenever chapter changes — but not on first render,
+  // so URL-hydrated values survive the initial mount.
+  const skipTopicResetRef = useRef(true);
+  useEffect(() => {
+    if (skipTopicResetRef.current) { skipTopicResetRef.current = false; return; }
+    setSelectedTopic('All');
+  }, [selectedChapter, selectedCategory]);
+
+  // Open the card referenced in the URL as soon as the list loads.
+  useEffect(() => {
+    const id = pendingCardIdRef.current;
+    if (!id || flashcards.length === 0) return;
+    const card = flashcards.find(f => f.flashcard_id === id);
+    pendingCardIdRef.current = null; // consume regardless of hit/miss
+    if (card) {
+      setSelectedFlashcard(card);
+      setFormData({
+        flashcard_id: card.flashcard_id,
+        chapter_name: card.chapter.name,
+        category: card.chapter.category,
+        topic_name: card.topic.name,
+        question: card.question,
+        answer: card.answer,
+        difficulty: card.metadata.difficulty || 'medium',
+        source: card.metadata.source || 'NCERT',
+        class_num: card.metadata.class_num || 12,
+        flashcard_type: card.metadata.flashcard_type || 'standard',
+      });
+      setIsEditing(true);
+      setIsCreating(false);
+    }
+  }, [flashcards]);
+
+  // Keep the URL in sync with filter/sort/pagination/selection state so that
+  // a page refresh lands the user back exactly where they were.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams();
+    if (selectedCategory !== 'All') params.set('category', selectedCategory);
+    if (selectedChapter !== 'All') params.set('chapter', selectedChapter);
+    if (selectedTopic !== 'All') params.set('topic', selectedTopic);
+    if (searchQuery) params.set('q', searchQuery);
+    if (sortOrder !== 'asc') params.set('sort', sortOrder);
+    if (page !== 1) params.set('page', String(page));
+    if (pageSize !== 50) params.set('ps', String(pageSize));
+    if (selectedFlashcard) params.set('card', selectedFlashcard.flashcard_id);
+    const qs = params.toString();
+    const url = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
+    // replaceState avoids cluttering history and never triggers a re-render.
+    window.history.replaceState(null, '', url);
+  }, [selectedCategory, selectedChapter, selectedTopic, searchQuery, sortOrder, page, pageSize, selectedFlashcard]);
 
   const fetchFlashcards = async () => {
     try {
@@ -88,6 +165,26 @@ export default function EnhancedFlashcardAdmin() {
       setLoading(false);
     }
   };
+
+  // Derived: is the form different from the last-saved source of truth?
+  // Used by auto-save to decide whether there's anything worth writing.
+  // For a brand-new (creating) card we consider it dirty so the user sees
+  // the "Unsaved changes" hint, but auto-save still won't fire on creates.
+  const isDirty = useMemo(() => {
+    if (isCreating) return true;
+    if (!selectedFlashcard) return false;
+    return (
+      formData.chapter_name !== selectedFlashcard.chapter.name ||
+      formData.category     !== selectedFlashcard.chapter.category ||
+      formData.topic_name   !== selectedFlashcard.topic.name ||
+      formData.question     !== selectedFlashcard.question ||
+      formData.answer       !== selectedFlashcard.answer ||
+      formData.difficulty   !== (selectedFlashcard.metadata.difficulty   || 'medium') ||
+      formData.source       !== (selectedFlashcard.metadata.source       || 'NCERT') ||
+      formData.class_num    !== (selectedFlashcard.metadata.class_num    || 12) ||
+      formData.flashcard_type !== (selectedFlashcard.metadata.flashcard_type || 'standard')
+    );
+  }, [formData, selectedFlashcard, isCreating]);
 
   // Derived: unique chapter names from loaded data
   const allChapters = useMemo(
@@ -154,8 +251,13 @@ export default function EnhancedFlashcardAdmin() {
     [filteredFlashcards, pageStart, pageEnd],
   );
 
-  // Reset to page 1 whenever filters or sort change
-  useEffect(() => { setPage(1); }, [selectedCategory, selectedChapter, selectedTopic, searchQuery, sortOrder, pageSize]);
+  // Reset to page 1 whenever filters or sort change — but skip first render
+  // so URL-hydrated page number survives the initial mount.
+  const skipPageResetRef = useRef(true);
+  useEffect(() => {
+    if (skipPageResetRef.current) { skipPageResetRef.current = false; return; }
+    setPage(1);
+  }, [selectedCategory, selectedChapter, selectedTopic, searchQuery, sortOrder, pageSize]);
 
   // Jump to card by ID, number, or index — finds it in the filtered list and opens it
   const handleJump = () => {
@@ -198,7 +300,23 @@ export default function EnhancedFlashcardAdmin() {
     setTimeout(() => setMessage(null), 4000);
   };
 
+  // If there's a pending auto-save timer for the card we're leaving, cancel
+  // it and fire the save synchronously (fire-and-forget). The save targets
+  // the *old* flashcard_id via closure, and `performSave` guards against
+  // stomping the editor state for the newly-selected card.
+  const flushPendingAutoSave = () => {
+    if (autoSaveTimerRef.current) {
+      clearTimeout(autoSaveTimerRef.current);
+      autoSaveTimerRef.current = null;
+    }
+    if (isEditing && !isCreating && isDirty && validateForm()) {
+      // Don't await — let navigation happen immediately.
+      performSave({ silent: true });
+    }
+  };
+
   const handleEdit = (flashcard: Flashcard) => {
+    flushPendingAutoSave();
     setSelectedFlashcard(flashcard);
     setFormData({
       flashcard_id: flashcard.flashcard_id,
@@ -214,9 +332,11 @@ export default function EnhancedFlashcardAdmin() {
     });
     setIsEditing(true);
     setIsCreating(false);
+    setAutoSaveStatus('idle');
   };
 
   const handleCreate = () => {
+    flushPendingAutoSave();
     setFormData({
       flashcard_id: `FLASH-${Date.now()}`,
       chapter_name: selectedChapter !== 'All' ? selectedChapter : '',
@@ -232,70 +352,168 @@ export default function EnhancedFlashcardAdmin() {
     setSelectedFlashcard(null);
     setIsCreating(true);
     setIsEditing(false);
+    setAutoSaveStatus('idle');
   };
 
-  const handleSave = async () => {
-    if (!formData.flashcard_id || !formData.question || !formData.answer || !formData.chapter_name || !formData.topic_name) {
-      showMessage('error', 'Please fill in all required fields (ID, Chapter, Topic, Question, Answer)');
+  const validateForm = () => !!(
+    formData.flashcard_id &&
+    formData.question &&
+    formData.answer &&
+    formData.chapter_name &&
+    formData.topic_name
+  );
+
+  // Build the request body from current formData. Preserves existing
+  // chapter.id/topic.order/tags when editing so auto-save doesn't re-slug
+  // identifiers or move the card to the top of the list on every write.
+  const buildPayload = () => {
+    const existingChapterId  = isEditing ? selectedFlashcard?.chapter.id    : undefined;
+    const existingTopicOrder = isEditing ? selectedFlashcard?.topic.order   : undefined;
+    const existingTags       = isEditing ? selectedFlashcard?.metadata.tags : undefined;
+    const chapterId = existingChapterId
+      || formData.chapter_name.toLowerCase().replace(/[^a-z0-9]+/g, '_');
+    const topicOrder = typeof existingTopicOrder === 'number' ? existingTopicOrder : 0;
+    const mergedTags = Array.from(new Set([
+      ...(existingTags ?? []),
+      formData.topic_name,
+      formData.chapter_name,
+    ].filter(Boolean)));
+    return {
+      flashcard_id: formData.flashcard_id,
+      chapter: { id: chapterId, name: formData.chapter_name, category: formData.category },
+      topic:   { name: formData.topic_name, order: topicOrder },
+      question: formData.question,
+      answer:   formData.answer,
+      metadata: {
+        difficulty: formData.difficulty,
+        tags: mergedTags,
+        source: formData.source,
+        class_num: formData.class_num,
+        flashcard_type: formData.flashcard_type,
+      },
+    };
+  };
+
+  // Shared save core. Called by:
+  //   - handleSave   (explicit Save button)           → silent=false, toast on result
+  //   - auto-save    (debounced, on formData change)  → silent=true,  status chip only
+  // Targets the card that was selected *when this function was invoked* via
+  // the captured `targetId` — so a stale in-flight save never stomps a card
+  // the user has since navigated away from.
+  const performSave = async (opts: { silent?: boolean } = {}) => {
+    if (saveInFlightRef.current) return;
+    if (!validateForm()) {
+      if (!opts.silent) showMessage('error', 'Please fill in all required fields (ID, Chapter, Topic, Question, Answer)');
       return;
     }
+
+    saveInFlightRef.current = true;
     setSaving(true);
+    if (opts.silent) setAutoSaveStatus('saving');
+
+    const wasEditing = isEditing;
+    const targetId = wasEditing ? selectedFlashcard?.flashcard_id : undefined;
+
     try {
-      // Preserve existing chapter.id and topic.order when editing — otherwise
-      // the slug-mangled id breaks chapter lookups, and the hardcoded order=0
-      // reorders the card to the top of the list.
-      const existingChapterId = isEditing ? selectedFlashcard?.chapter.id : undefined;
-      const existingTopicOrder = isEditing ? selectedFlashcard?.topic.order : undefined;
-      const existingTags = isEditing ? selectedFlashcard?.metadata.tags : undefined;
-      const chapterId = existingChapterId
-        || formData.chapter_name.toLowerCase().replace(/[^a-z0-9]+/g, '_');
-      const topicOrder = typeof existingTopicOrder === 'number' ? existingTopicOrder : 0;
-      // Keep prior tags (e.g. needs_image) and ensure topic+chapter are present.
-      const mergedTags = Array.from(new Set([
-        ...(existingTags ?? []),
-        formData.topic_name,
-        formData.chapter_name,
-      ].filter(Boolean)));
-
-      const payload = {
-        flashcard_id: formData.flashcard_id,
-        chapter: {
-          id: chapterId,
-          name: formData.chapter_name,
-          category: formData.category,
-        },
-        topic: { name: formData.topic_name, order: topicOrder },
-        question: formData.question,
-        answer: formData.answer,
-        metadata: {
-          difficulty: formData.difficulty,
-          tags: mergedTags,
-          source: formData.source,
-          class_num: formData.class_num,
-          flashcard_type: formData.flashcard_type,
-        },
-      };
-
-      const url = isEditing ? `/api/v2/flashcards/${selectedFlashcard?.flashcard_id}` : '/api/v2/flashcards';
-      const method = isEditing ? 'PATCH' : 'POST';
-      const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const payload = buildPayload();
+      const url    = wasEditing ? `/api/v2/flashcards/${targetId}` : '/api/v2/flashcards';
+      const method = wasEditing ? 'PATCH' : 'POST';
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
 
       if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || 'Failed to save flashcard');
+        // Read as text first so non-JSON error bodies (e.g. "Internal Server
+        // Error" from a crashed handler) don't explode the JSON parser and
+        // swallow the real status code.
+        const raw = await res.text();
+        let message = raw;
+        try { message = (JSON.parse(raw)?.error as string) || raw; } catch {}
+        throw new Error(message || `Save failed (HTTP ${res.status})`);
       }
 
-      showMessage('success', isEditing ? 'Flashcard updated!' : 'Flashcard created!');
-      setIsEditing(false);
-      setIsCreating(false);
-      setSelectedFlashcard(null);
-      fetchFlashcards();
+      const data = await res.json();
+      const saved: Flashcard | undefined = data.flashcard;
+
+      if (saved) {
+        // Always merge into the list — safe regardless of what the user has
+        // since selected, since we key by flashcard_id.
+        setFlashcards(prev => {
+          const idx = prev.findIndex(f => f.flashcard_id === saved.flashcard_id);
+          if (idx >= 0) {
+            const next = prev.slice();
+            next[idx] = saved;
+            return next;
+          }
+          return [saved, ...prev];
+        });
+
+        // Only touch editor focus if the user is still on this same card
+        // (or we just created a new one and there's nothing to conflict with).
+        const stillOnSameCard = !wasEditing || selectedFlashcard?.flashcard_id === targetId;
+        if (stillOnSameCard) {
+          setSelectedFlashcard(saved);
+          setIsEditing(true);
+          setIsCreating(false);
+        }
+      } else if (!opts.silent) {
+        // Fallback: server didn't return the card — refetch just in case.
+        setIsEditing(false);
+        setIsCreating(false);
+        setSelectedFlashcard(null);
+        fetchFlashcards();
+      }
+
+      if (opts.silent) {
+        setAutoSaveStatus('saved');
+        setLastSavedAt(new Date());
+      } else {
+        showMessage('success', wasEditing ? 'Flashcard updated!' : 'Flashcard created!');
+      }
     } catch (error: unknown) {
-      showMessage('error', error instanceof Error ? error.message : 'Unknown error');
+      if (opts.silent) {
+        setAutoSaveStatus('error');
+      } else {
+        showMessage('error', error instanceof Error ? error.message : 'Unknown error');
+      }
     } finally {
       setSaving(false);
+      saveInFlightRef.current = false;
     }
   };
+
+  const handleSave = () => performSave({ silent: false });
+
+  // Debounced auto-save. Fires 1.2 s after the user stops editing, provided:
+  //   - we're editing an existing card (creates still require an explicit click)
+  //   - there are actual changes vs. the last-saved version
+  //   - all required fields are filled
+  // Any new change cancels the pending timer and restarts the window.
+  useEffect(() => {
+    if (!isEditing || isCreating) return;
+    if (!isDirty) return;
+    if (!validateForm()) return;
+
+    setAutoSaveStatus('dirty');
+    if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+    autoSaveTimerRef.current = setTimeout(() => {
+      performSave({ silent: true });
+    }, 1200);
+
+    return () => {
+      if (autoSaveTimerRef.current) {
+        clearTimeout(autoSaveTimerRef.current);
+        autoSaveTimerRef.current = null;
+      }
+    };
+    // We intentionally omit performSave/validateForm from deps — they close
+    // over the latest formData via the setTimeout callback, which is what
+    // we want. Re-registering the effect on every render would cause a
+    // cancel→re-arm loop that never fires.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData, isEditing, isCreating, isDirty]);
 
   const handleDelete = async (flashcard: Flashcard) => {
     if (!confirm(`Delete ${flashcard.flashcard_id}? This cannot be undone.`)) return;
@@ -307,7 +525,8 @@ export default function EnhancedFlashcardAdmin() {
         setSelectedFlashcard(null);
         setIsEditing(false);
       }
-      fetchFlashcards();
+      // Remove from local state — no full refetch needed.
+      setFlashcards(prev => prev.filter(f => f._id !== flashcard._id));
     } catch {
       showMessage('error', 'Failed to delete flashcard');
     }
@@ -598,7 +817,34 @@ export default function EnhancedFlashcardAdmin() {
                     <p className="text-slate-500 text-xs mt-0.5 font-mono">{selectedFlashcard?.flashcard_id}</p>
                   )}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex items-center gap-3">
+                  {/* Auto-save status chip. Only meaningful in edit mode —
+                      creates rely on the Save button until first persistence. */}
+                  {isEditing && (
+                    <div className="flex items-center gap-1.5 text-xs font-medium min-w-[120px] justify-end">
+                      {autoSaveStatus === 'saving' && (
+                        <span className="flex items-center gap-1.5 text-amber-300">
+                          <Loader2 className="w-3 h-3 animate-spin" /> Saving…
+                        </span>
+                      )}
+                      {autoSaveStatus === 'saved' && (
+                        <span className="flex items-center gap-1.5 text-emerald-400">
+                          <CheckCircle className="w-3 h-3" />
+                          Saved{lastSavedAt ? ` · ${lastSavedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}` : ''}
+                        </span>
+                      )}
+                      {autoSaveStatus === 'dirty' && (
+                        <span className="flex items-center gap-1.5 text-slate-400">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400" /> Unsaved changes
+                        </span>
+                      )}
+                      {autoSaveStatus === 'error' && (
+                        <span className="flex items-center gap-1.5 text-red-400">
+                          <AlertCircle className="w-3 h-3" /> Save failed — click Save to retry
+                        </span>
+                      )}
+                    </div>
+                  )}
                   <button
                     onClick={handleSave}
                     disabled={saving}
@@ -608,7 +854,13 @@ export default function EnhancedFlashcardAdmin() {
                     {saving ? 'Saving...' : 'Save'}
                   </button>
                   <button
-                    onClick={() => { setIsEditing(false); setIsCreating(false); setSelectedFlashcard(null); }}
+                    onClick={() => {
+                      flushPendingAutoSave();
+                      setIsEditing(false);
+                      setIsCreating(false);
+                      setSelectedFlashcard(null);
+                      setAutoSaveStatus('idle');
+                    }}
                     className="px-4 py-2 border border-white/10 text-slate-400 rounded-lg hover:bg-white/5 transition-colors text-sm"
                   >
                     <X className="w-4 h-4" />

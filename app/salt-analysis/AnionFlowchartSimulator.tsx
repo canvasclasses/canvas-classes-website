@@ -408,22 +408,36 @@ export default function AnionFlowchartSimulator() {
 
                                     {/* Gas Evolution Animation - positioned over the tube */}
                                     <AnimatePresence>
-                                        {(isAnimating || gasEvolved) && selectedAnion.gasEvolved && (
+                                        {isAnimating && !gasEvolved && selectedAnion.gasEvolved && selectedAnion.group === currentStage.id && (
                                             <motion.div
-                                                initial={{ opacity: 0, y: 20 }}
-                                                animate={{ opacity: 1, y: -60 }}
-                                                exit={{ opacity: 0, y: -120 }}
-                                                transition={{ duration: 2, repeat: gasEvolved ? 0 : Infinity, repeatType: 'loop' }}
+                                                initial={{ opacity: 0, y: 0 }}
+                                                animate={{ opacity: [0, 1, 0], y: -60 }}
+                                                exit={{ opacity: 0 }}
+                                                transition={{ duration: 1.6, repeat: Infinity, repeatType: 'loop' }}
                                                 className="absolute top-1/4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
                                             >
                                                 {[...Array(5)].map((_, i) => (
                                                     <motion.div
                                                         key={i}
-                                                        initial={{ scale: 0.5, opacity: 0 }}
-                                                        animate={{ scale: 1 + i * 0.2, opacity: 0.7 - i * 0.1 }}
-                                                        transition={{ delay: i * 0.15, duration: 0.5 }}
                                                         className={`w-4 h-4 rounded-full ${selectedAnion.gasColor}`}
-                                                        style={{ filter: 'blur(2px)' }}
+                                                        style={{ filter: 'blur(2px)', opacity: 0.7 - i * 0.1, transform: `scale(${1 + i * 0.2})` }}
+                                                    />
+                                                ))}
+                                            </motion.div>
+                                        )}
+                                        {gasEvolved && selectedAnion.gasEvolved && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: -20 }}
+                                                animate={{ opacity: 1, y: -50 }}
+                                                exit={{ opacity: 0 }}
+                                                transition={{ duration: 0.5 }}
+                                                className="absolute top-1/4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5"
+                                            >
+                                                {[...Array(4)].map((_, i) => (
+                                                    <div
+                                                        key={i}
+                                                        className={`w-4 h-4 rounded-full ${selectedAnion.gasColor}`}
+                                                        style={{ filter: 'blur(2px)', opacity: 0.7 - i * 0.12, transform: `scale(${1 + i * 0.2})` }}
                                                     />
                                                 ))}
                                             </motion.div>

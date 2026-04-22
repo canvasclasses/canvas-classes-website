@@ -83,6 +83,10 @@ export interface ICareerPath {
   certifications?: string[];
   min_qualification?: string;
   alternative_paths?: string[];
+  /** School subjects that feed into this career — lets students browse by strength. */
+  school_subjects?: string[];
+  /** Evergreen human-need sector (Food, Shelter, Health Care, etc.) used for reassurance framing. */
+  evergreen_sector?: string;
 
   // Layer 8 — Lifestyle
   job_stability: 1 | 2 | 3 | 4 | 5;
@@ -170,6 +174,8 @@ const CareerPathSchema = new Schema<ICareerPath>(
     certifications: [String],
     min_qualification: String,
     alternative_paths: [String],
+    school_subjects: [String],
+    evergreen_sector: String,
 
     job_stability: { type: Number, required: true, min: 1, max: 5 },
     work_life_balance: { type: Number, required: true, min: 1, max: 5 },
@@ -196,6 +202,8 @@ CareerPathSchema.index({ family: 1 });
 CareerPathSchema.index({ hidden_gem: 1 });
 CareerPathSchema.index({ riasec_primary: 1 });
 CareerPathSchema.index({ required_stream: 1 });
+CareerPathSchema.index({ school_subjects: 1 });
+CareerPathSchema.index({ evergreen_sector: 1 });
 
 CareerPathSchema.pre('save', async function () {
   (this as ICareerPath).updated_at = new Date();

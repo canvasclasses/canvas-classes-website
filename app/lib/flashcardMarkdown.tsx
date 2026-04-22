@@ -67,8 +67,8 @@ export function findImages(text: string): FoundImage[] {
 function FlashcardImg({ alt, ...rest }: ComponentPropsWithoutRef<'img'>) {
   const parsed = parseAltWithWidth(alt);
   const style = parsed.width
-    ? { width: parsed.width, maxWidth: '100%', height: 'auto' as const }
-    : { maxWidth: '100%', height: 'auto' as const };
+    ? { display: 'block', marginTop: '1rem', width: parsed.width, maxWidth: '100%', height: 'auto' as const }
+    : { display: 'block', marginTop: '1rem', maxWidth: '100%', height: 'auto' as const };
   // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
   return <img {...rest} alt={parsed.alt} style={style} />;
 }

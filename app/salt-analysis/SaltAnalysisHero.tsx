@@ -265,12 +265,12 @@ export default function SaltAnalysisHero() {
     };
 
     return (
-        <div className="relative w-full min-h-[500px] md:min-h-[600px] overflow-hidden flex flex-col">
+        <div className="relative w-full min-h-[auto] md:min-h-[600px] overflow-hidden flex flex-col">
             {/* Background Image */}
             <div className="absolute inset-0">
                 <Image
                     src="/salt-analysis-hero.webp"
-                    alt="Salt Analysis Hero Background"
+                    alt=""
                     fill
                     className="object-cover"
                     priority
@@ -280,7 +280,7 @@ export default function SaltAnalysisHero() {
                 <div className="absolute inset-0 z-0 opacity-30 mix-blend-soft-light">
                     <Image
                         src="/molecular_bg.webp"
-                        alt="Molecular Pattern"
+                        alt=""
                         fill
                         className="object-cover animate-pulse-slow"
                     />
@@ -292,47 +292,52 @@ export default function SaltAnalysisHero() {
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent" />
 
             {/* Content - Using relative to permit auto-growth with content */}
-            <div className="relative z-10 max-w-7xl mx-auto px-4 flex flex-col items-center justify-center pt-16 pb-12 md:pt-20 md:pb-16 h-full text-center">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 flex flex-col items-center pt-28 pb-10 md:pt-24 md:pb-16 text-center">
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     transition={{ duration: 0.8 }}
                     className="max-w-4xl flex flex-col items-center"
                 >
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-6 backdrop-blur-md">
-                        <GraduationCap size={20} className="text-cyan-400" />
-                        <span className="text-cyan-300 font-medium">Revise for CBSE/JEE/NEET</span>
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-4 sm:py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-5 sm:mb-5 backdrop-blur-md">
+                        <GraduationCap size={12} className="text-cyan-400 sm:hidden" />
+                        <GraduationCap size={20} className="text-cyan-400 hidden sm:block" />
+                        <span className="text-[10px] sm:text-base text-cyan-300 font-medium tracking-wide uppercase sm:normal-case sm:tracking-normal">Revise for CBSE/JEE/NEET</span>
                     </div>
 
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-                        Master <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Salt Analysis</span> Like a Pro
+                    <h1 className="text-[38px] sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-5 sm:mb-5 leading-[1.05] sm:leading-[1.1] tracking-tight">
+                        <span className="bg-gradient-to-r from-white via-white to-cyan-300 bg-clip-text text-transparent">
+                            Master Salt Analysis Like a Pro
+                        </span>
                     </h1>
 
-                    <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed max-w-2xl mx-auto">
-                        Your 24/7 Virtual Lab with colourful simulators, revision guides, and NCERT-aligned procedures. Practice systematic analysis of Cations and Anions with instant feedback and viva questions.
+                    <p className="text-sm sm:text-lg md:text-xl text-gray-400 sm:text-gray-300 mb-8 sm:mb-7 leading-relaxed max-w-[18rem] sm:max-w-2xl mx-auto">
+                        <span className="sm:hidden">Virtual lab with simulators &amp; viva prep for NCERT.</span>
+                        <span className="hidden sm:inline">Your 24/7 Virtual Lab with colourful simulators, revision guides, and NCERT-aligned procedures. Practice systematic analysis of Cations and Anions with instant feedback and viva questions.</span>
                     </p>
 
-                    <div className="flex flex-wrap justify-center gap-4 mb-12">
+                    {/* Feature badges — desktop only for a cleaner mobile hero */}
+                    <div className="hidden sm:flex flex-wrap justify-center gap-2 sm:gap-3 mb-5 sm:mb-10">
                         <FeatureBadge icon={Target} text="Step-by-Step Guide" />
                         <FeatureBadge icon={Video} text="Real Lab Simulation" />
                         <FeatureBadge icon={GraduationCap} text="Viva Preparation" />
                     </div>
 
-                    <div className="flex flex-wrap justify-center gap-4">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-3">
                         <button
                             onClick={scrollToModes}
-                            className="group flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold rounded-xl shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all transform hover:-translate-y-1 active:scale-95"
+                            className="group inline-flex items-center justify-center gap-2 px-7 sm:px-6 py-3 sm:py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold rounded-full sm:rounded-xl shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all transform hover:-translate-y-1 active:scale-95"
                         >
-                            <span className="text-base md:text-lg">Start Practicing</span>
-                            <ChevronDown className="group-hover:translate-y-1 transition-transform stroke-[2.5px]" size={18} />
+                            <span className="text-sm sm:text-base md:text-lg">Start Practicing</span>
+                            <ChevronDown className="group-hover:translate-y-1 transition-transform stroke-[2.5px]" size={16} />
                         </button>
 
                         <button
                             onClick={() => setShowVideo(true)}
-                            className="group flex items-center justify-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-xl border border-white/10 backdrop-blur-md transition-all transform hover:-translate-y-1 active:scale-95"
+                            className="group flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-3 cursor-pointer text-gray-400 hover:text-white sm:text-white sm:bg-white/5 sm:hover:bg-white/10 sm:font-semibold sm:rounded-xl sm:border sm:border-white/10 sm:backdrop-blur-md transition-all sm:transform sm:hover:-translate-y-1 sm:active:scale-95"
                         >
-                            <Play size={18} className="fill-current text-gray-300 group-hover:text-white transition-colors" />
-                            <span className="text-base md:text-lg">How it Works</span>
+                            <Play size={11} className="fill-current text-gray-500 sm:text-gray-300 group-hover:text-white transition-colors sm:w-4 sm:h-4" />
+                            <span className="text-xs sm:text-base md:text-lg">How it Works</span>
                         </button>
                     </div>
                 </motion.div>

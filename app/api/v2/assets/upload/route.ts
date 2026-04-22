@@ -202,13 +202,17 @@ export async function POST(request: NextRequest) {
     // Check if file already exists (deduplication)
     const existingAsset = await Asset.findOne({ 'file.checksum': checksum });
     if (existingAsset && questionId) {
-      // File already exists, just add reference to this question
-      const questions = Array.isArray(existingAsset.used_in.questions) ? existingAsset.used_in.questions : [];
-      if (!questions.includes(questionId)) {
-        questions.push(questionId);
-        await existingAsset.save();
-      }
-      
+      // File already exists — add a reference to this question.
+      // Use an atomic $addToSet update instead of load-mutate-save(). This
+      // avoids running Mongoose's full-document validation against the old
+      // asset record (which may have been written under an earlier schema
+      // and would now fail a `required` check, producing a 500 here when
+      // the same image is reused across multiple flashcards).
+      await Asset.updateOne(
+        { _id: existingAsset._id },
+        { $addToSet: { 'used_in.questions': questionId } }
+      );
+
       return NextResponse.json({
         success: true,
         data: existingAsset,

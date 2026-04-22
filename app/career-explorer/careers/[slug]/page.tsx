@@ -52,9 +52,30 @@ export default async function CareerDeepDivePage({
               Hidden Gem
             </span>
           )}
+          {career.evergreen_sector && (
+            <span
+              title="Evergreen sectors meet basic human needs — people will pay for these no matter the decade."
+              className="rounded-full border border-teal-500/30 bg-teal-500/10 px-3 py-1 text-xs uppercase tracking-widest text-teal-300"
+            >
+              Evergreen · {career.evergreen_sector}
+            </span>
+          )}
         </div>
         <div className="mt-1 text-sm text-white/50">{career.family}</div>
         <p className="mt-4 text-lg text-white/80">{career.one_liner}</p>
+
+        {career.school_subjects && career.school_subjects.length > 0 && (
+          <div className="mt-5 rounded-lg border border-white/10 bg-[#0B0F15] px-4 py-3">
+            <div className="text-xs uppercase tracking-widest text-white/50">School subjects that feed this</div>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {career.school_subjects.map((s: string) => (
+                <span key={s} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         <Stats
           items={[

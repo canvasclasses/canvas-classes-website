@@ -41,7 +41,7 @@ const YouTubeLecturesSection = () => {
     ];
 
     return (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pb-16">
             {/* Video Modal */}
             <AnimatePresence>
                 {activeVideo && (
@@ -137,70 +137,93 @@ export default function PeriodicTrendsPage() {
     return (
         <main className="min-h-screen bg-[#0d1117] text-white">
             {/* Hero Header */}
-            <section className="relative pt-12 pb-6 md:pt-24 md:pb-10 overflow-hidden">
+            <section className="relative pt-20 pb-6 md:pt-24 md:pb-10 overflow-hidden">
                 {/* Background gradient */}
                 <div className="absolute inset-0 bg-gradient-to-b from-violet-900/20 via-transparent to-transparent" />
                 <div className="absolute top-20 left-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl" />
                 <div className="absolute top-40 right-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl" />
 
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 text-center">
                     {/* Badge */}
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/40 bg-cyan-500/10 mb-6">
-                        <Sparkles size={16} className="text-cyan-400" />
-                        <span className="text-sm font-medium text-cyan-400">NCERT Data Visualizations</span>
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full border border-cyan-500/40 bg-cyan-500/10 mb-4 sm:mb-5">
+                        <Sparkles size={11} className="text-cyan-400 sm:hidden" />
+                        <Sparkles size={16} className="text-cyan-400 hidden sm:block" />
+                        <span className="text-[10px] sm:text-sm font-medium text-cyan-400 tracking-wide uppercase sm:normal-case sm:tracking-normal">NCERT Data Visualizations</span>
                     </div>
 
                     {/* Main Title with Gradient */}
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
+                    <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-3 md:mb-4 leading-[1.15] tracking-tight">
                         <span className="bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
-                            Periodic Trends & Exceptions
+                            Periodic Trends<br className="sm:hidden" /> <span className="sm:inline">&amp; Exceptions</span>
                         </span>
                     </h1>
 
-                    {/* Subtitle */}
-                    <p className="text-gray-400 text-base md:text-xl max-w-3xl mx-auto mb-6 md:mb-8">
-                        Interactive graphs for s, p, d, and f block elements with all properties and
-                        exceptions from NCERT Class 11 & 12 Chemistry
+                    {/* Subtitle — condensed on mobile */}
+                    <p className="text-gray-400 text-[13px] sm:text-base md:text-xl max-w-3xl mx-auto mb-6 sm:mb-6 md:mb-8 px-2 sm:px-0">
+                        <span className="sm:hidden">Interactive graphs with NCERT exceptions</span>
+                        <span className="hidden sm:inline">Interactive graphs for s, p, d, and f block elements with all properties and
+                        exceptions from NCERT Class 11 &amp; 12 Chemistry</span>
                     </p>
 
                     {/* CTA Pills */}
-                    <div className="flex flex-wrap justify-center gap-3">
-                        <Link href="#trends-section" className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full text-white font-medium hover:from-violet-500 hover:to-fuchsia-500 transition-all shadow-lg shadow-violet-500/25">
-                            <TrendingUp size={18} />
+                    <div className="flex items-center justify-center gap-3 sm:gap-3">
+                        <Link href="#trends-section" className="inline-flex items-center gap-1.5 sm:gap-2 px-5 sm:px-5 py-2.5 sm:py-2.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full text-white text-sm sm:text-base font-medium hover:from-violet-500 hover:to-fuchsia-500 transition-all shadow-lg shadow-violet-500/25">
+                            <TrendingUp size={16} />
                             Explore Trends
                         </Link>
-                        <Link href="/interactive-periodic-table" className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-800/80 border border-gray-700 rounded-full text-gray-300 font-medium hover:bg-gray-700 hover:text-white transition-all">
+                        <Link href="/interactive-periodic-table" className="hidden sm:inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-gray-800/80 border border-gray-700 rounded-full text-gray-300 text-sm sm:text-base font-medium hover:bg-gray-700 hover:text-white transition-all">
                             Periodic Table
-                            <ArrowRight size={18} />
+                            <ArrowRight size={16} />
+                        </Link>
+                        <Link href="/interactive-periodic-table" className="sm:hidden inline-flex items-center gap-1 text-xs text-gray-400 underline underline-offset-4 decoration-gray-700 hover:text-white transition-colors">
+                            Periodic Table
+                            <ArrowRight size={12} />
                         </Link>
                     </div>
                 </div>
             </section>
 
-            {/* Quick Stats - 3 Cards */}
-            <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 mb-8 md:mb-12">
-                <div className="grid grid-cols-3 gap-4">
+            {/* Quick Stats — inline strip on mobile, cards on desktop */}
+            <section className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 mt-1 sm:-mt-4 mb-5 sm:mb-8 md:mb-12">
+                {/* Mobile: compact inline strip */}
+                <div className="sm:hidden flex items-center justify-center gap-4 text-center text-gray-400 text-xs border-y border-white/5 py-3">
+                    {[
+                        { value: '200+', label: 'Data Points' },
+                        { value: '15', label: 'Properties' },
+                        { value: '100+', label: 'Exceptions' },
+                    ].map((stat, idx, arr) => (
+                        <div key={idx} className="flex items-center gap-4">
+                            <div className="flex items-baseline gap-1.5">
+                                <span className="text-sm font-bold text-white">{stat.value}</span>
+                                <span className="text-[11px]">{stat.label}</span>
+                            </div>
+                            {idx < arr.length - 1 && <span className="text-gray-700">·</span>}
+                        </div>
+                    ))}
+                </div>
+                {/* Desktop: original 3 stat cards */}
+                <div className="hidden sm:grid grid-cols-3 gap-2 sm:gap-4">
                     {[
                         { value: '200+', label: 'Data Points', sub: 'From NCERT visualized' },
                         { value: '15', label: 'Properties', sub: 'From atomic radius to E°' },
                         { value: '100+', label: 'Exceptions', sub: 'With examiner logic' },
                     ].map((stat, idx) => (
-                        <div key={idx} className="bg-gray-900/60 rounded-xl border border-gray-700/50 p-4 md:p-5 text-center backdrop-blur-sm hover:border-violet-500/30 transition-colors">
-                            <div className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.value}</div>
-                            <div className="text-sm font-medium text-gray-300">{stat.label}</div>
-                            <div className="text-xs text-gray-500 mt-1">{stat.sub}</div>
+                        <div key={idx} className="bg-gray-900/60 rounded-lg sm:rounded-xl border border-gray-700/50 p-2.5 sm:p-4 md:p-5 text-center backdrop-blur-sm hover:border-violet-500/30 transition-colors">
+                            <div className="text-lg sm:text-2xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">{stat.value}</div>
+                            <div className="text-xs sm:text-sm font-medium text-gray-300 leading-tight">{stat.label}</div>
+                            <div className="hidden sm:block text-xs text-gray-500 mt-1">{stat.sub}</div>
                         </div>
                     ))}
                 </div>
             </section>
 
             {/* Trends Component — group-wise (down a group) */}
-            <section id="trends-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+            <section id="trends-section" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pb-10">
                 <TrendsComponent />
             </section>
 
             {/* Period Trends Chart — across a period */}
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+            <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pb-16">
                 <div className="flex items-center gap-3 mb-5">
                     <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent" />
                     <span className="text-xs text-gray-600 uppercase tracking-widest px-3">Across a Period</span>
@@ -219,7 +242,7 @@ export default function PeriodicTrendsPage() {
             <TopInorganicTrends />
 
             {/* SEO Content Section */}
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+            <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pb-16">
                 <div className="bg-gray-900/40 rounded-2xl border border-gray-700/50 p-6 md:p-8">
                     <h2 className="text-2xl font-bold text-white mb-4">Understanding Periodic Trends</h2>
                     <div className="grid md:grid-cols-2 gap-8 text-gray-400 text-base leading-relaxed">
@@ -259,7 +282,7 @@ export default function PeriodicTrendsPage() {
             </section>
 
             {/* FAQ Section */}
-            <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+            <section className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 pb-24">
                 <div className="text-center mb-10">
                     <h2 className="text-3xl font-bold bg-gradient-to-r from-violet-200 to-white bg-clip-text text-transparent mb-3">
                         Frequently Asked Questions

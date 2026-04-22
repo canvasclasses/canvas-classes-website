@@ -72,6 +72,9 @@
     "uuid": "^13.0.0",
     "zod": "^4.3.6"
   },
+  "overrides": {
+    "@exodus/bytes": "1.14.0"
+  },
   "devDependencies": {
     "@types/canvas-confetti": "^1.9.0",
     "@types/mixpanel-browser": "^2.60.0",

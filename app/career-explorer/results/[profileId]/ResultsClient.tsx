@@ -102,7 +102,23 @@ export default function ResultsClient({ profileId }: { profileId: string }) {
           empty="No stretch suggestions at this time."
         />
 
-        <div className="mt-14 rounded-xl border border-white/10 bg-[#0B0F15] p-6">
+        <div className="mt-14 rounded-xl border border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-amber-500/5 p-6 sm:flex sm:items-center sm:justify-between sm:gap-6">
+          <div>
+            <div className="text-xs uppercase tracking-widest text-orange-300">Next step</div>
+            <div className="mt-1 text-lg font-semibold">Turn your results into a one-page vision</div>
+            <div className="mt-1 text-sm text-white/70">
+              We&apos;ll pre-fill a plan — the work, the place, the people, the learning. You edit it, save it, print it.
+            </div>
+          </div>
+          <Link
+            href={`/career-explorer/vision/${profileId}`}
+            className="mt-4 inline-flex shrink-0 items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-2.5 text-sm font-bold text-black shadow-lg shadow-orange-500/20 transition hover:brightness-110 sm:mt-0"
+          >
+            Create my Vision <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        <div className="mt-6 rounded-xl border border-white/10 bg-[#0B0F15] p-6">
           <div className="text-sm text-white/60">Want to go deeper?</div>
           <div className="mt-1 text-lg">Share this with a parent, teacher, or mentor. The best career decisions happen with someone who knows you in the room.</div>
         </div>
