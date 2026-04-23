@@ -8,11 +8,27 @@ const nextConfig: NextConfig = {
   // so they never write to the primary .next directory and corrupt the main dev server.
   distDir: process.env.NEXT_DIST_DIR ?? '.next',
 
+  // Skip ESLint during next build — single error rule in eslint.config.mjs
+  // (@typescript-eslint/no-explicit-any). Lint locally or in CI instead.
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
   // SECURITY FIX: Request body size limits to prevent DoS
   experimental: {
     serverActions: {
       bodySizeLimit: '2mb',
     },
+    // Rewrites barrel imports (e.g. `import { X, Y } from 'lucide-react'`) to
+    // deep paths so tree-shaking actually works. Mongoose is intentionally
+    // excluded — it uses default-export patterns (mongoose.connect / .model)
+    // that the optimizer can mishandle.
+    optimizePackageImports: [
+      'lucide-react',
+      'framer-motion',
+      '@supabase/ssr',
+      '@supabase/supabase-js',
+    ],
   },
   // Redirects and other config...
   async headers() {
@@ -216,8 +232,11 @@ export default withSentryConfig(nextConfig, {
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 
-  // Upload a larger set of source maps for prettier stack traces (increases build time)
-  widenClientFileUpload: true,
+  // Narrow source-map upload to default scope. Widening uploads maps for every
+  // client asset on every build — a known 2–3× Sentry slowdown. Stack traces
+  // still resolve for files that actually throw (captureException lives in
+  // app/global-error.tsx and the admin debug route only).
+  widenClientFileUpload: false,
 
   // Uncomment to route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
   // This can increase your server load as well as your hosting bill.
@@ -229,11 +248,10 @@ export default withSentryConfig(nextConfig, {
   disableLogger: true,
 
   webpack: {
-    // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
-    // See the following for more information:
-    // https://docs.sentry.io/product/crons/
-    // https://vercel.com/docs/cron-jobs
-    automaticVercelMonitors: true,
+    // Vercel cron auto-instrumentation adds per-route webpack work at build
+    // time. The one cron we have (/api/blog/cron/publish, every 15 min) still
+    // runs — we just lose Sentry auto-monitor creation for it.
+    automaticVercelMonitors: false,
 
     // Tree-shaking options for reducing bundle size
     treeshake: {

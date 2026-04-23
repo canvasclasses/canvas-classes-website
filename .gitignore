@@ -33,6 +33,14 @@
 # Backup / temp files
 *.bak
 *.bak.*
+*.backup
+
+# Local-only data dumps and migration artifacts — not shipped to prod
+/backups/
+/_migration/
+
+# College-predictor raw CSVs (source data for seed scripts, not runtime)
+/scripts/college-predictor/data/raw/
 
 # debug
 npm-debug.log*
