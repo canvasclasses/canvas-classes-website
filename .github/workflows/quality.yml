@@ -1,0 +1,52 @@
+name: Quality Checks
+
+# Runs on every PR targeting main/stage/ui and on direct pushes to those
+# branches. Vercel no longer runs ESLint during `next build` (for speed),
+# so this workflow is the gate that prevents lint/type errors from reaching
+# production. TypeScript is still enforced by Vercel's build itself; we also
+# run it here for earlier feedback on PR review.
+
+on:
+  pull_request:
+    branches: [main, stage, ui]
+  push:
+    branches: [main, stage, ui]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+  typecheck:
+    name: TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npx tsc --noEmit

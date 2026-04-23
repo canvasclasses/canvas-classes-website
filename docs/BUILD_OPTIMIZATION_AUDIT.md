@@ -126,7 +126,11 @@ eslint: {
 },
 ```
 
-`eslint.config.mjs` currently has **only one rule at error level**: `@typescript-eslint/no-explicit-any`. **Caveat:** there is no CI lint gate (`.github/workflows/` only has backup jobs) and no pre-commit hook. Running `npm run lint` locally before commit covers this; if you want a hard gate, add a GitHub Actions job. **Est. savings: 1–1.5 min.**
+`eslint.config.mjs` currently has **only one rule at error level**: `@typescript-eslint/no-explicit-any`.
+
+**Safety net:** `.github/workflows/quality.yml` runs `npm run lint` and `npx tsc --noEmit` as separate parallel jobs on every PR to `main`/`stage`/`ui` and every push to those branches. Broken code cannot be merged once branch protection is turned on (GitHub → Settings → Branches → add rule: require `ESLint` and `TypeScript` checks to pass before merging). TypeScript is still enforced directly by Vercel during `next build` regardless — skipping ESLint during `next build` does **not** skip type-checking.
+
+**Est. savings on Vercel build: 1–1.5 min.** CI lint+typecheck runs in parallel in ~2 min on each PR.
 
 ### 4.3 Enable package-import optimization (REVISED — 4 packages, not 5)
 
