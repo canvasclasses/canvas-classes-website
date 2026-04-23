@@ -31,6 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { path: '/solubility-product-ksp-calculator', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/the-crucible', priority: 1.0, changeFrequency: 'daily' as const },
         { path: '/bitsat-chemistry-revision', priority: 0.9, changeFrequency: 'weekly' as const },
+        { path: '/bitsat-chemistry-revision/plan', priority: 0.85, changeFrequency: 'weekly' as const },
         { path: '/college-predictor', priority: 1.0, changeFrequency: 'daily' as const },
         // Live Books landing pages (grade hubs)
         { path: '/class-9', priority: 1.0, changeFrequency: 'daily' as const },

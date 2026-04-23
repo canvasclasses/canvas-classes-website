@@ -564,6 +564,56 @@ body {
   }
 }
 
+/* Custom thin scrollbar matching the dark theme. Applied to scroll
+   containers inside the BITSAT plan shell and other dark-themed study
+   pages. Firefox honours scrollbar-width/color on the container; Chromium
+   uses ::-webkit-scrollbar. */
+.plan-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.14) transparent;
+}
+
+.plan-scroll ::-webkit-scrollbar,
+.plan-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.plan-scroll ::-webkit-scrollbar-track,
+.plan-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.plan-scroll ::-webkit-scrollbar-thumb,
+.plan-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.plan-scroll ::-webkit-scrollbar-thumb:hover,
+.plan-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(96, 165, 250, 0.35);
+  background-clip: padding-box;
+}
+
+.plan-scroll ::-webkit-scrollbar-corner,
+.plan-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Keyframes used by the BITSAT plan mobile curriculum drawer. */
+@keyframes planFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes planSlideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
 /* Markdown Table Global Styles */
 .markdown-table-wrapper table {
   width: 100%;

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import BitsatRevisionClient from './BitsatRevisionClient';
+import BitsatLandingClient from './BitsatLandingClient';
 
 export const metadata: Metadata = {
     title: 'BITSAT 2026 Chemistry Revision: 30-Day Session 2 Master Plan | Canvas Classes',
@@ -90,7 +90,7 @@ export default function BitsatRevisionPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
             />
-            <BitsatRevisionClient />
+            <BitsatLandingClient />
         </>
     );
 }
