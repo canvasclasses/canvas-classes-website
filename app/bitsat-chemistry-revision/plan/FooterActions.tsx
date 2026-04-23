@@ -1,0 +1,79 @@
+'use client';
+
+import Link from 'next/link';
+import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
+import { ALL_DAYS } from './planData';
+import { Day } from '../planTypes';
+
+type Props = {
+    currentDay: number;
+    dayCompletedCount: number;
+    dayTotalCount: number;
+    leftCollapsed: boolean;
+    rightCollapsed: boolean;
+};
+
+export function FooterActions({
+    currentDay,
+    dayCompletedCount,
+    dayTotalCount,
+    leftCollapsed,
+    rightCollapsed,
+}: Props) {
+    const prev = ALL_DAYS.find((d: Day) => d.day === currentDay - 1);
+    const next = ALL_DAYS.find((d: Day) => d.day === currentDay + 1);
+
+    const leftOffset = leftCollapsed ? '56px' : '272px';
+    const rightOffset = rightCollapsed ? '0px' : '320px';
+
+    const allDone = dayTotalCount > 0 && dayCompletedCount >= dayTotalCount;
+
+    return (
+        <footer
+            className="fixed bottom-0 flex items-center justify-between gap-4 px-12 py-3 bg-[#050505]/95 backdrop-blur-md border-t border-white/[0.06] z-30 transition-[left,right] duration-[240ms]"
+            style={{ left: leftOffset, right: rightOffset }}
+        >
+            {prev ? (
+                <Link
+                    href={`/bitsat-chemistry-revision/plan/day/${prev.day}`}
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-zinc-400 hover:bg-white/[0.04] hover:text-white text-sm transition-colors no-underline min-w-0"
+                >
+                    <ChevronLeft size={14} />
+                    <span className="font-mono text-[11px] text-zinc-500">Day {String(prev.day).padStart(2, '0')}</span>
+                    <span className="truncate max-w-[160px]">{prev.title}</span>
+                </Link>
+            ) : (
+                <span />
+            )}
+
+            {dayTotalCount > 0 ? (
+                <div
+                    className={[
+                        'flex items-center gap-2 px-4 py-1.5 rounded-full border text-[12px] font-medium tabular-nums',
+                        allDone
+                            ? 'bg-emerald-500/10 border-emerald-500/25 text-emerald-300'
+                            : 'bg-white/[0.04] border-white/[0.08] text-zinc-300',
+                    ].join(' ')}
+                >
+                    {allDone && <Check size={13} strokeWidth={2.5} />}
+                    {allDone ? `Day ${String(currentDay).padStart(2, '0')} complete` : `${dayCompletedCount} / ${dayTotalCount} modules`}
+                </div>
+            ) : (
+                <span />
+            )}
+
+            {next ? (
+                <Link
+                    href={`/bitsat-chemistry-revision/plan/day/${next.day}`}
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-zinc-400 hover:bg-white/[0.04] hover:text-white text-sm transition-colors no-underline min-w-0 justify-end"
+                >
+                    <span className="truncate max-w-[160px]">{next.title}</span>
+                    <span className="font-mono text-[11px] text-zinc-500">Day {String(next.day).padStart(2, '0')}</span>
+                    <ChevronRight size={14} />
+                </Link>
+            ) : (
+                <span />
+            )}
+        </footer>
+    );
+}

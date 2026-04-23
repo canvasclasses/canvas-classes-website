@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import { PHASES, TOTAL_DAYS } from './planData';
+import { Day, Phase } from '../planTypes';
 
 type Props = {
     currentDay: number;
@@ -30,7 +31,7 @@ export function CurriculumRail({ currentDay, completed, collapsed, onToggleColla
     const totalDone = completed.size;
     const overallPct = Math.round((totalDone / TOTAL_DAYS) * 100);
 
-    const currentPhaseId = PHASES.find((p) => p.items.some((d) => d.day === currentDay))?.id;
+    const currentPhaseId = PHASES.find((p: Phase) => p.items.some((d: Day) => d.day === currentDay))?.id;
     const [openPhases, setOpenPhases] = useState<Set<string>>(
         () => new Set(currentPhaseId ? [currentPhaseId] : [])
     );
@@ -82,9 +83,9 @@ export function CurriculumRail({ currentDay, completed, collapsed, onToggleColla
                 </div>
             )}
 
-            {PHASES.map((phase, pi) => {
-                const phaseDays = phase.items.map((d) => d.day);
-                const phaseDone = phaseDays.filter((d) => completed.has(d)).length;
+            {PHASES.map((phase: Phase, pi: number) => {
+                const phaseDays = phase.items.map((d: Day) => d.day);
+                const phaseDone = phaseDays.filter((d: number) => completed.has(d)).length;
                 const isOpen = openPhases.has(phase.id);
                 const stripe = PHASE_STRIPE[phase.id] ?? 'bg-white/20';
 
@@ -98,7 +99,7 @@ export function CurriculumRail({ currentDay, completed, collapsed, onToggleColla
                                     title={phase.label}
                                 />
                             </div>
-                            {phase.items.map((d) => {
+                            {phase.items.map((d: Day) => {
                                 const isDone = completed.has(d.day);
                                 const isActive = d.day === currentDay;
                                 return (
@@ -168,7 +169,7 @@ export function CurriculumRail({ currentDay, completed, collapsed, onToggleColla
 
                         {isOpen && (
                             <div className="mt-1 pl-3 border-l border-white/[0.05] ml-2.5">
-                                {phase.items.map((d) => {
+                                {phase.items.map((d: Day) => {
                                     const isDone = completed.has(d.day);
                                     const isActive = d.day === currentDay;
                                     return (

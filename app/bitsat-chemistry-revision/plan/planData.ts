@@ -1,4 +1,4 @@
-import { Phase, Resource, GROUP_ORDER, KIND_GROUP } from '../planTypes';
+import { Phase, Day, Resource, GROUP_ORDER, KIND_GROUP } from '../planTypes';
 
 export const TOTAL_DAYS = 30;
 
@@ -533,14 +533,14 @@ export const PHASES: Phase[] = [
     },
 ];
 
-export const ALL_DAYS = PHASES.flatMap((p) => p.items);
+export const ALL_DAYS: Day[] = PHASES.flatMap((p: Phase) => p.items);
 
 export function phaseForDay(dayNum: number): Phase | undefined {
-    return PHASES.find((p) => p.items.some((d) => d.day === dayNum));
+    return PHASES.find((p: Phase) => p.items.some((d: Day) => d.day === dayNum));
 }
 
-export function dayByNumber(dayNum: number) {
-    return ALL_DAYS.find((d) => d.day === dayNum);
+export function dayByNumber(dayNum: number): Day | undefined {
+    return ALL_DAYS.find((d: Day) => d.day === dayNum);
 }
 
 // --- Module-level progress helpers -------------------------------------

@@ -116,7 +116,7 @@ const jeeNeetMenu: MegaMenuDef = {
 const studyLabMenu: MegaMenuDef = {
   id: 'study-lab',
   label: 'Study Lab',
-  anchor: 'right',
+  anchor: 'center',
   width: 'w-[860px]',
   featured: {
     label: 'BITSAT 2026 Master Plan',
@@ -186,6 +186,7 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
 
   if (pathname?.startsWith('/the-crucible')) return null;
   if (pathname?.startsWith('/books')) return null;
+  if (pathname?.startsWith('/bitsat-chemistry-revision/plan')) return null;
 
   // Hide navbar inside book reader pages (class-X/bookSlug/pageSlug)
   // but NOT on the grade landing pages themselves (class-X/)

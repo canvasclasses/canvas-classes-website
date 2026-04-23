@@ -5,6 +5,8 @@ import BitsatPlanProgress from '@/lib/models/BitsatPlanProgress';
 
 const PLAN_VERSION = 'v1';
 const TOTAL_DAYS = 30;
+const MAX_MODULES = 500;
+const MODULE_ID_RE = /^([1-9]|[12][0-9]|30)-(\d{1,2})$/;
 
 async function getUserId(req: NextRequest): Promise<string | null> {
     const authHeader = req.headers.get('Authorization');
@@ -29,14 +31,32 @@ function sanitizeDays(input: unknown): number[] {
     return Array.from(set).sort((a, b) => a - b);
 }
 
+function sanitizeModules(input: unknown): string[] {
+    if (!Array.isArray(input)) return [];
+    const set = new Set<string>();
+    for (const m of input) {
+        if (typeof m !== 'string') continue;
+        if (!MODULE_ID_RE.test(m)) continue;
+        set.add(m);
+        if (set.size >= MAX_MODULES) break;
+    }
+    return Array.from(set).sort();
+}
+
 export async function GET(req: NextRequest) {
     try {
         const userId = await getUserId(req);
         if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         await connectToDatabase();
-        const doc = await BitsatPlanProgress.findById(userId).lean<{ completed_days?: number[] } | null>();
-        return NextResponse.json({ completed_days: doc?.completed_days ?? [] });
+        const doc = await BitsatPlanProgress.findById(userId).lean<{
+            completed_days?: number[];
+            completed_modules?: string[];
+        } | null>();
+        return NextResponse.json({
+            completed_days: doc?.completed_days ?? [],
+            completed_modules: doc?.completed_modules ?? [],
+        });
     } catch (err) {
         console.error('[GET /api/bitsat-plan/progress]', err);
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
@@ -53,6 +73,9 @@ export async function PUT(req: NextRequest) {
             return NextResponse.json({ error: 'Invalid body' }, { status: 400 });
         }
         const completed_days = sanitizeDays((body as { completed_days?: unknown }).completed_days);
+        const completed_modules = sanitizeModules(
+            (body as { completed_modules?: unknown }).completed_modules
+        );
 
         await connectToDatabase();
 
@@ -64,10 +87,12 @@ export async function PUT(req: NextRequest) {
                     doc = new BitsatPlanProgress({
                         _id: userId,
                         completed_days,
+                        completed_modules,
                         plan_version: PLAN_VERSION,
                     });
                 } else {
                     doc.completed_days = completed_days;
+                    doc.completed_modules = completed_modules;
                     doc.plan_version = PLAN_VERSION;
                 }
                 await doc.save();
@@ -80,7 +105,7 @@ export async function PUT(req: NextRequest) {
             }
         }
 
-        return NextResponse.json({ success: true, completed_days });
+        return NextResponse.json({ success: true, completed_days, completed_modules });
     } catch (err) {
         console.error('[PUT /api/bitsat-plan/progress]', err);
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
