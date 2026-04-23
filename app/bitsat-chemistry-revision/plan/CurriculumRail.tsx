@@ -11,6 +11,9 @@ type Props = {
     completed: Set<number>;
     collapsed: boolean;
     onToggleCollapse: () => void;
+    // 'rail' = desktop sidebar (default), 'drawer' = mobile overlay
+    // (no collapse toggle, no border, taller padding)
+    variant?: 'rail' | 'drawer';
 };
 
 const PHASE_STRIPE: Record<string, string> = {
@@ -27,7 +30,8 @@ const PHASE_ACCENT_TEXT: Record<string, string> = {
     phase4: 'text-amber-300',
 };
 
-export function CurriculumRail({ currentDay, completed, collapsed, onToggleCollapse }: Props) {
+export function CurriculumRail({ currentDay, completed, collapsed, onToggleCollapse, variant = 'rail' }: Props) {
+    const isDrawer = variant === 'drawer';
     const totalDone = completed.size;
     const overallPct = Math.round((totalDone / TOTAL_DAYS) * 100);
 
@@ -46,23 +50,32 @@ export function CurriculumRail({ currentDay, completed, collapsed, onToggleColla
     };
 
     return (
-        <aside className="bg-[#050505] border-r border-white/[0.05] overflow-hidden relative overflow-y-auto">
-            <div className="flex items-center justify-between px-5 pt-5 pb-2.5">
-                {!collapsed && (
-                    <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">
-                        Curriculum
-                    </span>
-                )}
-                <button
-                    type="button"
-                    onClick={onToggleCollapse}
-                    className="w-6 h-6 grid place-items-center text-zinc-500 hover:text-white hover:bg-white/[0.05] rounded transition-colors"
-                    aria-label={collapsed ? 'Expand curriculum' : 'Collapse curriculum'}
-                    style={{ marginLeft: collapsed ? 'auto' : undefined, marginRight: collapsed ? 'auto' : undefined }}
-                >
-                    <ChevronLeft size={14} className={collapsed ? 'rotate-180 transition-transform' : 'transition-transform'} />
-                </button>
-            </div>
+        <aside
+            className={
+                isDrawer
+                    ? 'bg-[#050505] relative'
+                    : 'bg-[#050505] border-r border-white/[0.05] overflow-hidden relative overflow-y-auto'
+            }
+        >
+            {!isDrawer && (
+                <div className="flex items-center justify-between px-5 pt-5 pb-2.5">
+                    {!collapsed && (
+                        <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">
+                            Curriculum
+                        </span>
+                    )}
+                    <button
+                        type="button"
+                        onClick={onToggleCollapse}
+                        className="w-6 h-6 grid place-items-center text-zinc-500 hover:text-white hover:bg-white/[0.05] rounded transition-colors"
+                        aria-label={collapsed ? 'Expand curriculum' : 'Collapse curriculum'}
+                        style={{ marginLeft: collapsed ? 'auto' : undefined, marginRight: collapsed ? 'auto' : undefined }}
+                    >
+                        <ChevronLeft size={14} className={collapsed ? 'rotate-180 transition-transform' : 'transition-transform'} />
+                    </button>
+                </div>
+            )}
+            {isDrawer && <div className="h-4" />}
 
             {collapsed ? (
                 <CollapsedProgressDial totalDone={totalDone} overallPct={overallPct} />

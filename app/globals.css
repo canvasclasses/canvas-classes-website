@@ -603,6 +603,17 @@ body {
   background: transparent;
 }
 
+/* Keyframes used by the BITSAT plan mobile curriculum drawer. */
+@keyframes planFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes planSlideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
 /* Markdown Table Global Styles */
 .markdown-table-wrapper table {
   width: 100%;

@@ -59,6 +59,9 @@ type Props = {
     onToggleModule: (index: number) => void;
     collapsed: boolean;
     onToggleCollapse: () => void;
+    // 'rail' = desktop sidebar (default, collapsible, own scroll, left border)
+    // 'inline' = mobile inline section below day content (no border, no collapse)
+    variant?: 'rail' | 'inline';
 };
 
 export function ResourcePanel({
@@ -71,7 +74,9 @@ export function ResourcePanel({
     onToggleModule,
     collapsed,
     onToggleCollapse,
+    variant = 'rail',
 }: Props) {
+    const isInline = variant === 'inline';
     const [tab, setTab] = useState<Tab>('resources');
     const [checked, setChecked] = useState<Set<number>>(new Set());
 
@@ -89,7 +94,7 @@ export function ResourcePanel({
         });
     };
 
-    if (collapsed) return null;
+    if (!isInline && collapsed) return null;
 
     const grouped: { group: ResourceGroup; items: { resource: Resource; index: number }[] }[] =
         GROUP_ORDER.map((group) => ({
@@ -99,20 +104,38 @@ export function ResourcePanel({
                 .filter(({ resource }) => KIND_GROUP[resource.kind] === group),
         })).filter((g) => g.items.length > 0);
 
-    return (
-        <aside className="bg-[#050505] border-l border-white/[0.05] overflow-y-auto">
-            <div className="flex items-center justify-between px-3 pt-3.5 pb-2">
-                <button
-                    type="button"
-                    onClick={onToggleCollapse}
-                    className="w-6 h-6 grid place-items-center text-zinc-500 hover:text-white hover:bg-white/[0.05] rounded transition-colors"
-                    aria-label="Hide panel"
-                >
-                    <ChevronRight size={14} />
-                </button>
-            </div>
+    const hasChecklist = !!(checklist && checklist.length > 0);
 
-            <div className="px-4 mb-3">
+    return (
+        <aside
+            className={
+                isInline
+                    ? 'bg-[#050505]'
+                    : 'bg-[#050505] border-l border-white/[0.05] overflow-y-auto'
+            }
+        >
+            {!isInline && (
+                <div className="flex items-center justify-between px-3 pt-3.5 pb-2">
+                    <button
+                        type="button"
+                        onClick={onToggleCollapse}
+                        className="w-6 h-6 grid place-items-center text-zinc-500 hover:text-white hover:bg-white/[0.05] rounded transition-colors"
+                        aria-label="Hide panel"
+                    >
+                        <ChevronRight size={14} />
+                    </button>
+                </div>
+            )}
+
+            {isInline && (
+                <div className="px-5 pt-4 pb-3 border-t border-white/[0.05]">
+                    <h2 className="font-[var(--font-outfit)] text-[11px] font-semibold text-zinc-500 uppercase tracking-wider m-0">
+                        Today&apos;s Modules
+                    </h2>
+                </div>
+            )}
+
+            <div className={isInline ? 'px-5 mb-4' : 'px-4 mb-3'}>
                 <div role="tablist" className="grid grid-cols-2 p-1 rounded-lg bg-white/[0.04] border border-white/[0.06]">
                     <button
                         type="button"
@@ -142,7 +165,7 @@ export function ResourcePanel({
             </div>
 
             {tab === 'resources' ? (
-                <div className="px-4 pb-24">
+                <div className={isInline ? 'px-5 pb-8' : 'px-4 pb-24'}>
                     {grouped.map(({ group, items }) => (
                         <section key={group} className="mb-5">
                             <div className="flex items-baseline justify-between mb-2">
@@ -170,8 +193,8 @@ export function ResourcePanel({
                     ))}
                 </div>
             ) : (
-                <div className="px-4 pb-24">
-                    {checklist && checklist.length > 0 ? (
+                <div className={isInline ? 'px-5 pb-8' : 'px-4 pb-24'}>
+                    {hasChecklist && checklist ? (
                         <>
                             <h3 className="font-[var(--font-outfit)] text-[13px] font-semibold text-white m-0 mb-1 tracking-tight">
                                 Lock this in
@@ -314,16 +337,16 @@ function ResourceRow({
                 aria-pressed={isDone}
                 aria-label={isDone ? `Mark ${resource.label} as not done` : `Mark ${resource.label} as done`}
                 className={[
-                    'absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full grid place-items-center border transition-all z-10',
+                    'absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 md:w-5 md:h-5 rounded-full grid place-items-center border transition-all z-10',
                     isDone
                         ? 'bg-emerald-500 border-emerald-500 hover:bg-emerald-400'
-                        : 'border-white/20 hover:border-emerald-400 hover:bg-emerald-400/10 opacity-50 group-hover:opacity-100',
+                        : 'border-white/25 hover:border-emerald-400 hover:bg-emerald-400/10 md:opacity-50 md:group-hover:opacity-100',
                 ].join(' ')}
             >
                 <Check
-                    size={11}
+                    size={12}
                     strokeWidth={3.5}
-                    className={isDone ? 'text-black' : 'text-transparent group-hover:text-emerald-400/70 transition-colors'}
+                    className={isDone ? 'text-black' : 'text-white/30 md:text-transparent md:group-hover:text-emerald-400/70 transition-colors'}
                 />
             </button>
         </div>
