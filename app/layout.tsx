@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Kalam, Outfit } from "next/font/google";
+import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { MixpanelProvider } from '@/components/providers/MixpanelProvider';
 import { ClarityScript } from '@/components/analytics/ClarityScript';
@@ -179,8 +180,6 @@ import { AuthButton } from "./components/AuthButton";
 import { ConditionalFooter } from "./components/ConditionalFooter";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 
-// ... existing imports ...
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -198,6 +197,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${kalam.variable} ${outfit.variable} antialiased`}
         suppressHydrationWarning
       >
+        <GoogleAnalytics />
         <ClarityScript />
         <MixpanelProvider>
           <CommandPalette itemsPromise={getSearchItems()} />
@@ -206,6 +206,7 @@ export default function RootLayout({
           <ConditionalFooter />
         </MixpanelProvider>
         <ConsentGate />
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>
