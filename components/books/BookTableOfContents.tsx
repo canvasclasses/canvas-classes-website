@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import {
-  ChevronRight, Play, CheckCircle2, Search, Bookmark,
+  ChevronRight, Play, CheckCircle2, Search, Bookmark, PlayCircle,
   FlaskConical, Video, Brain, ClipboardCheck, Gamepad2, Clock,
   Flame, ArrowRight, X, Sparkles, Languages, Zap,
 } from 'lucide-react';
@@ -22,6 +22,7 @@ export interface ToCPage {
   page_number: number;
   reading_time_min?: number | null;
   content_types?: BlockType[] | null;
+  video_title?: string | null;
 }
 
 export interface ToCChapter {
@@ -353,11 +354,6 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                     <p className="text-sm md:text-base text-white font-semibold truncate">
                       {continueReading.title}
                     </p>
-                    {continueReading.reading_time_min && (
-                      <p className="text-xs text-zinc-400 truncate">
-                        {continueReading.reading_time_min} min read
-                      </p>
-                    )}
                   </div>
                   <div className={`w-9 h-9 rounded-lg ${theme.bg} flex items-center justify-center shrink-0
                     group-hover:scale-110 transition-transform`}>
@@ -752,16 +748,22 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                               )}
                             </div>
 
-                            {/* Title + content chips */}
+                            {/* Title + video preview + content chips */}
                             <div className="flex-1 min-w-0">
                               <span className={`text-sm md:text-[15px] leading-snug transition-colors block ${
                                 done ? 'text-zinc-400' : 'text-white/90 group-hover:text-white'
                               }`}>
                                 {pg.title}
                               </span>
-                              {contentIcons.length > 0 && (
+                              {pg.video_title && (
+                                <span className="flex items-center gap-1 mt-1">
+                                  <PlayCircle size={11} className="text-rose-400 shrink-0" />
+                                  <span className="text-[11px] text-rose-400/80 truncate">{pg.video_title}</span>
+                                </span>
+                              )}
+                              {contentIcons.filter(ci => ci!.label !== 'Video').length > 0 && (
                                 <div className="flex items-center gap-2 mt-1">
-                                  {contentIcons.map((ci, idx) => {
+                                  {contentIcons.filter(ci => ci!.label !== 'Video').map((ci, idx) => {
                                     const Ic = ci!.icon;
                                     return (
                                       <span
@@ -800,11 +802,6 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                               <Bookmark size={13} className={isBookmarked ? 'fill-amber-400' : ''} />
                             </button>
 
-                            {pg.reading_time_min && (
-                              <span className="text-xs text-zinc-500 shrink-0 tabular-nums">
-                                {pg.reading_time_min} min
-                              </span>
-                            )}
 
                             <ChevronRight
                               size={14}

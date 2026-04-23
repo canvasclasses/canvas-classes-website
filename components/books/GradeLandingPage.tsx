@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import {
-  ChevronRight, ChevronDown, Play, CheckCircle2, Search,
+  ChevronRight, ChevronDown, Play, CheckCircle2, Search, PlayCircle,
   FlaskConical, Video, Brain, ClipboardCheck, Gamepad2, Clock,
   ArrowRight, X, Sparkles, Bookmark, Languages, Zap,
 } from 'lucide-react';
@@ -24,6 +24,7 @@ export interface GradePage {
   page_number: number;
   reading_time_min?: number | null;
   content_types?: BlockType[] | null;
+  video_title?: string | null;
 }
 
 export interface GradeChapter {
@@ -186,9 +187,6 @@ function ProgressBand({ books, pages, basePath }: { books: GradeBook[]; pages: G
                 </p>
                 <p className="text-xs text-zinc-400 truncate">
                   {continueReading.book.title}
-                  {continueReading.page.reading_time_min
-                    ? ` · ${continueReading.page.reading_time_min} min read`
-                    : ''}
                 </p>
               </div>
               <div className={`w-9 h-9 rounded-lg ${theme.bg} flex items-center justify-center shrink-0
@@ -250,9 +248,15 @@ function PageRow({
         }`}>
           {page.title}
         </span>
-        {contentIcons.length > 0 && (
+        {page.video_title && (
+          <span className="flex items-center gap-1 mt-1">
+            <PlayCircle size={11} className="text-rose-400 shrink-0" />
+            <span className="text-[11px] text-rose-400/80 truncate">{page.video_title}</span>
+          </span>
+        )}
+        {contentIcons.filter(ci => ci!.label !== 'Video').length > 0 && (
           <div className="flex items-center gap-2 mt-1">
-            {contentIcons.map((ci, idx) => {
+            {contentIcons.filter(ci => ci!.label !== 'Video').map((ci, idx) => {
               const Icon = ci!.icon;
               return (
                 <span key={idx} className={`flex items-center gap-0.5 text-[10px] ${ci!.color} opacity-70`}>
@@ -286,12 +290,6 @@ function PageRow({
       >
         <Bookmark size={13} className={isBookmarked ? 'fill-amber-400' : ''} />
       </button>
-
-      {page.reading_time_min && (
-        <span className="text-xs text-zinc-500 shrink-0 tabular-nums">
-          {page.reading_time_min} min
-        </span>
-      )}
 
       <ChevronRight size={14} className={`shrink-0 transition-colors ${
         done ? 'text-emerald-500/40' : `text-zinc-600 group-hover:text-white`
@@ -425,7 +423,7 @@ function ChapterRow({
       {/* Expanded page list — flat rows, indented under the title column */}
       {isOpen && total > 0 && (
         <div className="px-5 md:px-8 pb-4 md:pb-5">
-          <div className="pl-[57px] md:pl-[61px] flex flex-col">
+          <div className="pl-0 md:pl-[61px] flex flex-col">
             {chapterPages.map((pg, i) => {
               const done         = completedSlugs.has(pg.slug);
               const isBookmarked = bookmarkedSlugs.has(pg.slug);
@@ -836,10 +834,10 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
       <header className="relative border-b border-white/[0.06] shrink-0 overflow-hidden">
         {/* Decorative hero backdrop */}
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-24 -left-24 w-[520px] h-[520px] rounded-full
-            bg-orange-500/[0.08] blur-[100px]" />
-          <div className="absolute top-0 right-0 w-[420px] h-[420px] rounded-full
-            bg-amber-500/[0.05] blur-[100px]" />
+          <div className="absolute -top-16 -left-16 w-[260px] h-[260px] md:w-[520px] md:h-[520px] rounded-full
+            bg-orange-500/[0.07] md:bg-orange-500/[0.08] blur-[80px] md:blur-[100px]" />
+          <div className="absolute top-0 right-0 w-[200px] h-[200px] md:w-[420px] md:h-[420px] rounded-full
+            bg-amber-500/[0.04] md:bg-amber-500/[0.05] blur-[70px] md:blur-[100px]" />
           <div
             className="absolute inset-0 opacity-[0.35]"
             style={{
@@ -852,7 +850,7 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
           />
         </div>
 
-        <div className="relative max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-10 flex flex-col md:flex-row md:items-end gap-6">
+        <div className="relative max-w-6xl mx-auto px-4 md:px-8 py-5 md:py-10 flex flex-col md:flex-row md:items-end gap-5 md:gap-6">
           <div className="flex-1 min-w-0">
             {/* Eyebrow pill */}
             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
@@ -870,12 +868,12 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
             <div className="flex items-center gap-4 md:gap-5">
               <div className="relative shrink-0">
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500
-                  blur-2xl opacity-50" />
-                <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl
+                  blur-xl opacity-30 md:blur-2xl md:opacity-50" />
+                <div className="relative w-14 h-14 md:w-20 md:h-20 rounded-2xl
                   bg-gradient-to-br from-orange-500 to-amber-500
-                  flex items-center justify-center shadow-xl shadow-orange-500/30
-                  ring-1 ring-orange-300/40">
-                  <LiveBooksLogo size={38} className="text-black md:hidden" />
+                  flex items-center justify-center shadow-lg shadow-orange-500/20
+                  ring-1 ring-orange-300/30">
+                  <LiveBooksLogo size={34} className="text-black md:hidden" />
                   <LiveBooksLogo size={46} className="text-black hidden md:block" />
                 </div>
               </div>
@@ -919,10 +917,10 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
           {startHref && (
             <Link
               href={startHref}
-              className="group relative flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 rounded-xl
+              className="group relative flex items-center justify-center gap-2 px-5 md:px-6 py-2.5 md:py-3 rounded-xl
                 bg-gradient-to-r from-orange-500 to-amber-500 text-black font-bold text-sm
-                hover:scale-[1.03] transition-transform shrink-0 shadow-xl shadow-orange-500/30
-                ring-1 ring-orange-300/40 self-start md:self-end"
+                hover:scale-[1.03] transition-transform shrink-0 shadow-md shadow-orange-500/15 md:shadow-lg md:shadow-orange-500/25
+                ring-1 ring-orange-300/30 self-stretch md:self-end"
             >
               <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-400 to-amber-400
                 opacity-0 group-hover:opacity-100 blur-md transition-opacity -z-10" />

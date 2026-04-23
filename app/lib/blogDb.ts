@@ -18,6 +18,18 @@ export type PublicPost = {
   };
 };
 
+// Pulls the first markdown image URL out of a post body, e.g. `![alt](url)`.
+// Used as a thumbnail fallback when cover_image wasn't set at save time.
+function extractFirstMarkdownImage(content: string): string | undefined {
+  if (!content) return undefined;
+  const match = content.match(/!\[[^\]]*\]\((\S+?)(?:\s+"[^"]*")?\)/);
+  const url = match?.[1];
+  if (!url) return undefined;
+  // Only trust http(s) or site-relative paths — ignore data:, javascript:, etc.
+  if (/^(https?:\/\/|\/)/i.test(url)) return url;
+  return undefined;
+}
+
 function toPublic(p: IBlogPost | Record<string, unknown>): PublicPost {
   const rec = p as unknown as {
     _id: string;
@@ -41,7 +53,7 @@ function toPublic(p: IBlogPost | Record<string, unknown>): PublicPost {
     excerpt: rec.excerpt || '',
     author: rec.author || 'Canvas Classes',
     tags: rec.tags || [],
-    image: rec.cover_image?.url,
+    image: rec.cover_image?.url || extractFirstMarkdownImage(rec.content || ''),
     content: rec.content || '',
     seo: rec.seo,
   };

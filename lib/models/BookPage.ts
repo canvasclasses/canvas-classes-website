@@ -24,6 +24,7 @@ const BookPageSchema = new Schema<IBookPage>(
     published: { type: Boolean, default: false },
     reading_time_min: Number,
     content_types: { type: [String], default: [] },
+    video_title: { type: String, default: null },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },

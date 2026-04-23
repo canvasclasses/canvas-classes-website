@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation';
 import connectToDatabase from '@/lib/mongodb';
 import BookModel from '@/lib/models/Book';
 import BookPageModel from '@/lib/models/BookPage';
@@ -7,6 +6,7 @@ import BookTableOfContents, {
   type ToCChapter,
   type ToCPage,
 } from '@/components/books/BookTableOfContents';
+import LiveBooksComingSoon from '@/components/books/LiveBooksComingSoon';
 
 export const revalidate = 60;
 
@@ -23,8 +23,9 @@ export default async function Class12ChemistryPage() {
   await connectToDatabase();
 
   const book = await BookModel.findOne({ slug: BOOK_SLUG }).lean();
-  if (!book) notFound();
-  if (!book.is_published) notFound();
+  if (!book || !book.is_published) {
+    return <LiveBooksComingSoon grade={12} expectedSubjects={['Chemistry']} />;
+  }
 
   const publishedChapters = book.chapters
     .filter((c) => c.is_published)
@@ -40,7 +41,7 @@ export default async function Class12ChemistryPage() {
           chapter_number: { $in: publishedChapterNumbers },
           published: true,
         })
-          .select('slug title chapter_number page_number reading_time_min content_types')
+          .select('slug title chapter_number page_number reading_time_min content_types video_title')
           .sort({ chapter_number: 1, page_number: 1 })
           .lean();
 
@@ -51,6 +52,7 @@ export default async function Class12ChemistryPage() {
     page_number: p.page_number,
     reading_time_min: p.reading_time_min ?? null,
     content_types: (p as Record<string, unknown>).content_types as ToCPage['content_types'] ?? null,
+    video_title: (p as Record<string, unknown>).video_title as string ?? null,
   }));
 
   const firstPage = pages[0];

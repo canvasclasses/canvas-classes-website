@@ -58,3 +58,19 @@ export function computeContentTypes(blocks: ContentBlock[]): BlockType[] {
   }
   return [...found].sort();
 }
+
+/**
+ * Returns the title of the first video block on a page, or null if none exists.
+ * Stored on BookPage.video_title so listing queries don't need to load full blocks.
+ */
+export function extractVideoTitle(blocks: ContentBlock[]): string | null {
+  const flat = flattenBlocks(blocks);
+  for (const b of flat) {
+    if (b.type === 'video') {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const v = b as any;
+      return v.title ?? v.caption ?? null;
+    }
+  }
+  return null;
+}

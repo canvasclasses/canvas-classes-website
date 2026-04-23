@@ -87,7 +87,46 @@ BlogPostSchema.index({ status: 1, scheduled_for: 1 });
 BlogPostSchema.index({ status: 1, published_at: -1 });
 BlogPostSchema.index({ deleted_at: 1, status: 1 });
 
+// Normalizes markdown content so the renderer (react-markdown + rehypeRaw)
+// can't hit malformed-HAST or empty-string edge cases.
+// Returns the cleaned string, or throws if the result is empty.
+function normalizeContent(raw: string): string {
+  let s = raw.replace(/\r\n/g, '\n');         // CRLF → LF
+  s = s.replace(/\u0000/g, '');                // strip null bytes
+  s = s.replace(/[\u200B-\u200D\uFEFF]/g, ''); // zero-width chars (common LLM artifact)
+  s = s.trim();
+  if (!s) throw new Error('Blog content cannot be empty after normalization');
+  return s;
+}
+
+// Pulls the first markdown image from a body, e.g. ![alt](url). Only
+// accepts http(s) or site-relative paths so we don't accidentally promote
+// data: URIs or javascript: URLs into the cover_image slot.
+function firstMarkdownImage(content: string): { url: string; alt: string } | null {
+  const m = content.match(/!\[([^\]]*)\]\((\S+?)(?:\s+"[^"]*")?\)/);
+  if (!m) return null;
+  const url = m[2];
+  if (!/^(https?:\/\/|\/)/i.test(url)) return null;
+  return { url, alt: m[1] || '' };
+}
+
 BlogPostSchema.pre('save', async function () {
+  if (this.isModified('content')) {
+    if (typeof this.content !== 'string') {
+      throw new Error('Blog content must be a string');
+    }
+    this.content = normalizeContent(this.content);
+  }
+
+  // Auto-fill cover_image from the first inline markdown image when missing,
+  // so blog list cards always have a thumbnail to show.
+  if (!this.cover_image?.url && typeof this.content === 'string') {
+    const found = firstMarkdownImage(this.content);
+    if (found) {
+      this.cover_image = { url: found.url, alt: found.alt || this.title || '' };
+    }
+  }
+
   this.updated_at = new Date();
 });
 

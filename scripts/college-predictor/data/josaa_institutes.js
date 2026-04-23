@@ -25,7 +25,7 @@
  *   - 5  INI IIITs                              ✓
  *   - 23 PPP-model IIITs                        ✓
  *   - 3  deemed / state IIITs in JoSAA          ✓
- *   - 36 GFTIs (the ones that appear in 2022–2024 JoSAA data) ✓
+ *   - 43 GFTIs (the ones that appear in 2022–2025 JoSAA data) ✓
  *
  * Institutes outside JoSAA (e.g. IIIT Hyderabad, IIIT Bangalore, IIIT Delhi,
  * BITS Pilani) are intentionally excluded — they admit through their own
@@ -138,6 +138,18 @@ const INSTITUTES = [
   { _id: 'gfti-spa-vijayawada',     name: 'School of Planning and Architecture, Vijayawada',                                               short_name: 'SPA Vijayawada',       type: 'GFTI', state: 'Andhra Pradesh',   city: 'Vijayawada',     region: 'South',     established: 2008 },
   { _id: 'gfti-tezpur-university',  name: 'Tezpur University',                                                                             short_name: 'Tezpur University',    type: 'GFTI', state: 'Assam',            city: 'Tezpur',         region: 'Northeast', established: 1994 },
   { _id: 'gfti-uoh',                name: 'University of Hyderabad',                                                                       short_name: 'UoH',                  type: 'GFTI', state: 'Telangana',        city: 'Hyderabad',      region: 'South',     established: 1974 },
+
+  // ── GFTIs added for 2025 coverage (7) ──────────────────────────────────────
+  // These first appeared (or were missing) from the 2025 JoSAA dataset. Fields
+  // verified from official sources; `established` left undefined where the
+  // JoSAA participation date is not the same as the founding date.
+  { _id: 'gfti-iust-kashmir',       name: 'Islamic University of Science and Technology, Awantipora',                                      short_name: 'IUST Kashmir',         type: 'GFTI', state: 'Jammu and Kashmir',city: 'Awantipora',     region: 'North',     established: 2005 },
+  { _id: 'gfti-nielit-ajmer',       name: 'National Institute of Electronics and Information Technology, Ajmer',                           short_name: 'NIELIT Ajmer',         type: 'GFTI', state: 'Rajasthan',        city: 'Ajmer',          region: 'North' },
+  { _id: 'gfti-nielit-gorakhpur',   name: 'National Institute of Electronics and Information Technology, Gorakhpur',                       short_name: 'NIELIT Gorakhpur',     type: 'GFTI', state: 'Uttar Pradesh',    city: 'Gorakhpur',      region: 'North' },
+  { _id: 'gfti-nielit-patna',       name: 'National Institute of Electronics and Information Technology, Patna',                           short_name: 'NIELIT Patna',         type: 'GFTI', state: 'Bihar',            city: 'Patna',          region: 'East' },
+  { _id: 'gfti-nielit-ropar',       name: 'National Institute of Electronics and Information Technology, Ropar',                           short_name: 'NIELIT Ropar',         type: 'GFTI', state: 'Punjab',           city: 'Ropar',          region: 'North' },
+  { _id: 'gfti-rgnau-amethi',       name: 'Rajiv Gandhi National Aviation University, Fursatganj, Amethi',                                 short_name: 'RGNAU Amethi',         type: 'GFTI', state: 'Uttar Pradesh',    city: 'Amethi',         region: 'North',     established: 2013 },
+  { _id: 'gfti-sgsits-indore',      name: 'Shri G. S. Institute of Technology and Science, Indore',                                        short_name: 'SGSITS Indore',        type: 'GFTI', state: 'Madhya Pradesh',   city: 'Indore',         region: 'Central',   established: 1952 },
 ];
 
 module.exports = { INSTITUTES };

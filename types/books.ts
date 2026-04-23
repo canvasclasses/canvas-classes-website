@@ -84,6 +84,7 @@ export interface VideoBlock extends BaseBlock {
   src: string;       // Cloudflare Stream ID or R2 direct URL
   provider: 'cloudflare_stream' | 'r2_direct' | 'youtube_nocookie';
   poster?: string;   // R2 URL of thumbnail
+  title?: string;    // Short descriptor shown in page listing cards, e.g. "Crystallisation Explained"
   caption?: string;
   duration_sec: number;
   autoplay?: false;  // Always false — never autoplay educational video
@@ -321,6 +322,8 @@ export interface BookPage {
   reading_time_min?: number;
   /** Deduplicated list of interactive block types on this page (computed on save). */
   content_types?: BlockType[];
+  /** Title of the first video block on this page (computed on save). Shown as a preview in page listing cards. */
+  video_title?: string | null;
 }
 
 export interface BookChapter {

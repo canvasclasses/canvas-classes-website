@@ -124,10 +124,10 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    // Authenticated users: full access
-    if (limit_param) {
-      query = query.limit(parseInt(limit_param));
-    }
+    // Authenticated users: cap at 1000 per request, default 500 if unspecified
+    const requestedLimit = limit_param ? parseInt(limit_param, 10) : 500;
+    const safeLimit = Math.min(Number.isFinite(requestedLimit) ? requestedLimit : 500, 1000);
+    query = query.limit(safeLimit);
 
     const flashcards = await query.lean();
     const total = await Flashcard.countDocuments(filter);

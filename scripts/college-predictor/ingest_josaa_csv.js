@@ -30,6 +30,12 @@ const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
+// Hand-curated JoSAA-institute-name → college-slug map. The legacy per-year
+// ingester (ingest_josaa_2024.js) has always used this; the generic ingester
+// must too, otherwise formal names like "Malaviya National Institute of
+// Technology Jaipur" silently fail to match our short slug `nit-jaipur`.
+const { INSTITUTE_NAME_TO_SLUG } = require('./data/institute_name_map');
+const { canonicalBranch } = require('./data/canonicalBranch');
 
 const args = process.argv.slice(2);
 const APPLY = args.includes('--apply');
@@ -80,69 +86,22 @@ function parseCSV(raw) {
   return rows;
 }
 
-// ── JoSAA program-name heuristic → short branch code ──────────────────────────────
-// JoSAA stores full academic program names like:
-//   "Computer Science and Engineering (4 Years, Bachelor of Technology)"
-// We split into short_name (for UI) and duration/degree (for filters).
+// ── JoSAA program-name → short branch code ─────────────────────────────────────────
+// Delegates to the shared canonicalBranch helper so every ingester produces the
+// same branch short/long names (any drift here quietly corrupts the predictor).
 function splitProgramName(raw) {
-  const paren = raw.match(/\(([^)]+)\)\s*$/);
-  const name = paren ? raw.slice(0, paren.index).trim() : raw.trim();
-  const meta = paren ? paren[1] : '';
-
-  const yearMatch = meta.match(/(\d+)\s*Years?/i);
-  const duration = yearMatch ? parseInt(yearMatch[1], 10) : 4;
-
-  const degreeHints = [
-    { rx: /Bachelor of Technology/i, degree: 'B.Tech' },
-    { rx: /Bachelor of Architecture/i, degree: 'B.Arch' },
-    { rx: /Bachelor of Planning/i, degree: 'B.Plan' },
-    { rx: /Dual Degree/i, degree: 'Dual Degree' },
-    { rx: /Integrated M\.?Tech/i, degree: 'Int. M.Tech' },
-    { rx: /Integrated M\.?Sc/i, degree: 'Int. M.Sc.' },
-    { rx: /B\.?Tech\s*\+\s*M\.?Tech/i, degree: 'B.Tech + M.Tech' },
-  ];
-  const degreeHit = degreeHints.find((h) => h.rx.test(meta));
-  const degree = degreeHit ? degreeHit.degree : 'B.Tech';
-
-  // Short name: strip " Engineering" suffix + common abbreviations.
-  const abbrev = {
-    'Computer Science and Engineering': 'CSE',
-    'Electronics and Communication Engineering': 'ECE',
-    'Electrical Engineering': 'EE',
-    'Electrical and Electronics Engineering': 'EEE',
-    'Mechanical Engineering': 'ME',
-    'Civil Engineering': 'CE',
-    'Chemical Engineering': 'CHE',
-    'Metallurgical and Materials Engineering': 'MME',
-    'Aerospace Engineering': 'AE',
-    'Biotechnology': 'BT',
-    'Production and Industrial Engineering': 'PIE',
-    'Information Technology': 'IT',
-    'Artificial Intelligence': 'AI',
-    'Artificial Intelligence and Machine Learning': 'AI & ML',
-    'Data Science and Engineering': 'DSE',
-  };
-  const short = abbrev[name] || name
-    .replace(/\s+Engineering\b/, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-
-  return { name, short_name: short, duration, degree };
+  const { short_name, clean_name, degree, duration } = canonicalBranch(raw);
+  return { name: clean_name, short_name, duration, degree };
 }
 
-// ── Institute name → college slug ──────────────────────────────────────────────────
-// The authoritative mapping lives in the `colleges` collection. We slugify as a
-// best-guess; unmatched institutes get reported at the end.
-function slugify(s) {
-  return s
-    .toLowerCase()
-    .replace(/[,.'()]/g, '')
-    .replace(/national institute of technology/g, 'nit')
-    .replace(/indian institute of information technology/g, 'iiit')
-    .replace(/indian institute of technology/g, 'iit')
-    .replace(/&/g, 'and')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+// JoSAA publishes preparatory ranks with a trailing "P" (e.g. "238P"). The
+// predictor doesn't use prep pools — we drop them. Some upstream dumps also
+// produce "1224.0"-style floats from a pandas pipeline; Number() handles both.
+function parseRank(raw) {
+  const s = String(raw ?? '').trim();
+  if (!s || s.endsWith('P')) return null;
+  const n = Number(s);
+  return Number.isFinite(n) ? Math.round(n) : null;
 }
 
 (async function main() {
@@ -208,27 +167,46 @@ function slugify(s) {
   }
 
   const docs = [];
-  const unmatchedInstitutes = new Set();
-  let skipped = 0;
+  const notInMap = new Set();          // CSV name not in INSTITUTE_NAME_TO_SLUG
+  const slugNotSeeded = new Set();     // mapped, but college not yet in DB
+  let skippedIIT = 0;
+  let skippedPrep = 0;
+  let skippedBadYearRound = 0;
 
   for (const r of rows) {
     const institute = r.institute || '';
-    const slug = slugify(institute);
+
+    // IITs are out of scope for the JEE-Main predictor. Skip silently.
+    // We match on "Indian Institute of Technology" but NOT on "Information"
+    // (which is the IIIT prefix).
+    if (/Indian Institute of Technology/i.test(institute) && !/Information/i.test(institute)) {
+      skippedIIT++;
+      continue;
+    }
+
+    const slug = INSTITUTE_NAME_TO_SLUG[institute];
+    if (!slug) {
+      notInMap.add(institute);
+      continue;
+    }
     const college = bySlug.get(slug);
     if (!college) {
-      unmatchedInstitutes.add(institute);
-      skipped++;
+      slugNotSeeded.add(`${institute} → ${slug}`);
       continue;
     }
 
     const { name: branchName, short_name: branchShort } = splitProgramName(r.academic_program_name || '');
     const year = parseInt(r.year, 10);
     const round = parseInt(r.round, 10);
-    const opening = parseInt(String(r.opening_rank).replace(/[^\d]/g, ''), 10);
-    const closing = parseInt(String(r.closing_rank).replace(/[^\d]/g, ''), 10);
+    const opening = parseRank(r.opening_rank);
+    const closing = parseRank(r.closing_rank);
 
-    if (!Number.isFinite(year) || !Number.isFinite(round) || !Number.isFinite(opening) || !Number.isFinite(closing)) {
-      skipped++;
+    if (!Number.isFinite(year) || !Number.isFinite(round)) {
+      skippedBadYearRound++;
+      continue;
+    }
+    if (opening === null || closing === null) {
+      skippedPrep++;
       continue;
     }
 
@@ -250,11 +228,20 @@ function slugify(s) {
     });
   }
 
-  console.log(`Prepared ${docs.length} cutoff documents (${skipped} skipped).`);
-  if (unmatchedInstitutes.size > 0) {
-    console.log(`\n⚠ Unmatched institutes (seed these first): ${unmatchedInstitutes.size}`);
-    [...unmatchedInstitutes].slice(0, 20).forEach((i) => console.log(`  - ${i}`));
-    if (unmatchedInstitutes.size > 20) console.log(`  ... and ${unmatchedInstitutes.size - 20} more`);
+  console.log(`\nPrepared ${docs.length} cutoff documents.`);
+  console.log(`  Skipped IIT rows (out of scope):         ${skippedIIT}`);
+  console.log(`  Skipped preparatory / invalid ranks:     ${skippedPrep}`);
+  console.log(`  Skipped bad year/round:                  ${skippedBadYearRound}`);
+  console.log(`  Institutes not in INSTITUTE_NAME_TO_SLUG: ${notInMap.size}`);
+  console.log(`  Slug mapped but not in colleges DB:       ${slugNotSeeded.size}`);
+
+  if (notInMap.size > 0) {
+    console.log('\n⚠ Institutes NOT in INSTITUTE_NAME_TO_SLUG (add to map if in scope):');
+    [...notInMap].sort().forEach((n) => console.log(`  - ${n}`));
+  }
+  if (slugNotSeeded.size > 0) {
+    console.log('\n⚠ Slug in map but not in colleges DB (seed first):');
+    [...slugNotSeeded].sort().forEach((n) => console.log(`  - ${n}`));
   }
 
   console.log('\nFirst 3 prepared documents:');
@@ -266,26 +253,37 @@ function slugify(s) {
     return;
   }
 
-  console.log('\nUpserting...');
+  // Batched upserts — sequential updateOne was ~11/sec against Atlas which
+  // meant 2025 (53k rows) took over an hour. bulkWrite with 1000-op batches
+  // brings the same workload under 2 minutes. Filter must match the unique
+  // index on (college_id, branch_short_name, year, round, category, gender,
+  // quota) so we replace-not-duplicate on re-ingest.
+  console.log('\nUpserting (batched)...');
+  const BATCH = 1000;
   let upserted = 0;
-  for (const d of docs) {
-    const filter = {
-      college_id: d.college_id,
-      branch_short_name: d.branch_short_name,
-      year: d.year,
-      round: d.round,
-      category: d.category,
-      gender: d.gender,
-      quota: d.quota,
-    };
-    const { _id, ...rest } = d;
-    await Cutoff.updateOne(
-      filter,
-      { $set: rest, $setOnInsert: { _id } },
-      { upsert: true },
-    );
-    upserted++;
-    if (upserted % 1000 === 0) console.log(`  ...${upserted}/${docs.length}`);
+  for (let i = 0; i < docs.length; i += BATCH) {
+    const slice = docs.slice(i, i + BATCH);
+    const ops = slice.map((d) => {
+      const { _id, ...rest } = d;
+      return {
+        updateOne: {
+          filter: {
+            college_id: d.college_id,
+            branch_short_name: d.branch_short_name,
+            year: d.year,
+            round: d.round,
+            category: d.category,
+            gender: d.gender,
+            quota: d.quota,
+          },
+          update: { $set: rest, $setOnInsert: { _id } },
+          upsert: true,
+        },
+      };
+    });
+    await Cutoff.bulkWrite(ops, { ordered: false });
+    upserted += slice.length;
+    console.log(`  ...${upserted}/${docs.length}`);
   }
   console.log(`\n✅ Upserted ${upserted} cutoff documents.`);
   await mongoose.disconnect();

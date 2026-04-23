@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Kalam, Outfit } from "next/font/google";
-import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { MixpanelProvider } from '@/components/providers/MixpanelProvider';
 import { ClarityScript } from '@/components/analytics/ClarityScript';
@@ -197,6 +196,7 @@ export default function RootLayout({
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${kalam.variable} ${outfit.variable} antialiased`}
+        suppressHydrationWarning
       >
         <ClarityScript />
         <MixpanelProvider>
@@ -206,7 +206,6 @@ export default function RootLayout({
           <ConditionalFooter />
         </MixpanelProvider>
         <ConsentGate />
-        <Analytics />
         <SpeedInsights />
       </body>
     </html>

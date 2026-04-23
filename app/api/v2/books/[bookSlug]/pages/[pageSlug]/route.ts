@@ -6,7 +6,7 @@ import BookPageModel from '@/lib/models/BookPage';
 import { requireAdmin, isAdminRequest } from '@/lib/bookAuth';
 import { ContentBlock } from '@/types/books';
 import { validateBlocks } from '@/lib/schemas/blocks';
-import { computeReadingTime, computeContentTypes } from '@/lib/utils/books';
+import { computeReadingTime, computeContentTypes, extractVideoTitle } from '@/lib/utils/books';
 
 const VALID_CALLOUT_VARIANTS = new Set([
   'remember', 'note', 'warning', 'exam_tip', 'fun_fact',
@@ -184,6 +184,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
       updateFields.blocks = blocks;
       updateFields.reading_time_min = computeReadingTime(blocks);
       updateFields.content_types = computeContentTypes(blocks);
+      updateFields.video_title = extractVideoTitle(blocks);
     } else {
       delete updateFields.blocks;
       delete updateFields.reading_time_min;

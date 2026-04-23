@@ -346,8 +346,10 @@ export async function GET(request: NextRequest) {
     const query: Record<string, unknown> = { deleted_at: null };
     if (questionId) query['used_in.questions'] = questionId;
     if (type) query.type = type;
-    
-    const assets = await Asset.find(query).sort({ created_at: -1 }).lean();
+
+    const limit = Math.min(parseInt(searchParams.get('limit') || '200', 10) || 200, 500);
+    const skip = parseInt(searchParams.get('skip') || '0', 10) || 0;
+    const assets = await Asset.find(query).sort({ created_at: -1 }).skip(skip).limit(limit).lean();
     
     return NextResponse.json({
       success: true,

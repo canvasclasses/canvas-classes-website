@@ -97,7 +97,7 @@ export default async function Class9Page() {
           chapter_number: { $in: publishedChapterNums },
           published: true,
         })
-          .select('book_id slug title chapter_number page_number reading_time_min content_types')
+          .select('book_id slug title chapter_number page_number reading_time_min content_types video_title')
           .sort({ chapter_number: 1, page_number: 1 })
           .lean();
 
@@ -110,6 +110,7 @@ export default async function Class9Page() {
     reading_time_min: p.reading_time_min ?? null,
     content_types:
       (p as Record<string, unknown>).content_types as GradePage['content_types'] ?? null,
+    video_title: (p as Record<string, unknown>).video_title as string ?? null,
   }));
 
   // ── Structured data ────────────────────────────────────────────────

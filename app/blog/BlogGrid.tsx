@@ -96,7 +96,7 @@ export default function BlogGrid({ initialPosts }: { initialPosts: Post[] }) {
                                     <div className="flex items-center gap-4 text-xs text-gray-500 mb-4 font-medium">
                                         <div className="flex items-center gap-1">
                                             <Calendar size={14} />
-                                            {new Date(post.date).toLocaleDateString()}
+                                            {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                                         </div>
                                         {post.tags.length > 0 && (
                                             <div className="flex items-center gap-1 text-purple-400">

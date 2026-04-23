@@ -1,5 +1,6 @@
 'use server';
 
+import { unstable_cache } from 'next/cache';
 import { Question as QuestionPageType, TaxonomyNode, Chapter } from './components/types';
 import connectToDatabase from '@/lib/mongodb';
 import { Chapter as ChapterModel } from '@/lib/models/Chapter';
@@ -124,18 +125,16 @@ export async function getAdjacentQuestions(
     await connectToDatabase();
     const { QuestionV2 } = await import('@/lib/models/Question.v2');
 
-    const allInChapter = await QuestionV2.find(
-      { 'metadata.chapter_id': chapterId, deleted_at: null, status: 'published' },
-      { _id: 1, display_id: 1 }
-    )
-      .sort({ display_id: 1 })
-      .lean();
-
-    const idx = allInChapter.findIndex((q: AdjacentQuestionRef) => q.display_id === currentDisplayId);
-    if (idx === -1) return { prev: null, next: null };
-
-    const prevDoc = allInChapter[idx - 1] as AdjacentQuestionRef | undefined;
-    const nextDoc = allInChapter[idx + 1] as AdjacentQuestionRef | undefined;
+    // Two indexed range queries — O(log n) each — instead of loading the whole chapter.
+    const base = { 'metadata.chapter_id': chapterId, deleted_at: null, status: 'published' };
+    const [prevDoc, nextDoc] = await Promise.all([
+      QuestionV2.findOne({ ...base, display_id: { $lt: currentDisplayId } }, { _id: 1, display_id: 1 })
+        .sort({ display_id: -1 })
+        .lean<AdjacentQuestionRef>(),
+      QuestionV2.findOne({ ...base, display_id: { $gt: currentDisplayId } }, { _id: 1, display_id: 1 })
+        .sort({ display_id: 1 })
+        .lean<AdjacentQuestionRef>(),
+    ]);
 
     return {
       prev: prevDoc ? { id: toString(prevDoc._id), display_id: prevDoc.display_id } : null,
@@ -307,8 +306,11 @@ export async function deleteTaxonomyNode(nodeId: string): Promise<{ success: boo
     return { success: false, message: 'Use admin panel for chapter management' };
 }
 
-export async function getChapterQuestionCounts(): Promise<Record<string, number>> {
-    try {
+// Aggregations over questions_v2 are expensive and the result only changes when
+// questions are added/edited/deleted. Cache for 1 hour — staleness is acceptable
+// because chapter totals are informational, not transactional.
+const _getChapterQuestionCounts = unstable_cache(
+    async (): Promise<Record<string, number>> => {
         await connectToDatabase();
         const { QuestionV2 } = await import('@/lib/models/Question.v2');
         const agg = await QuestionV2.aggregate([
@@ -316,10 +318,32 @@ export async function getChapterQuestionCounts(): Promise<Record<string, number>
             { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
         ]);
         const result: Record<string, number> = {};
-        for (const row of agg) {
-            if (row._id) result[row._id] = row.count;
-        }
+        for (const row of agg) if (row._id) result[row._id] = row.count;
         return result;
+    },
+    ['chapter-question-counts'],
+    { revalidate: 3600, tags: ['questions'] }
+);
+
+const _getChapterStarCounts = unstable_cache(
+    async (): Promise<Record<string, number>> => {
+        await connectToDatabase();
+        const { QuestionV2 } = await import('@/lib/models/Question.v2');
+        const agg = await QuestionV2.aggregate([
+            { $match: { 'metadata.is_top_pyq': true, deleted_at: null } },
+            { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
+        ]);
+        const result: Record<string, number> = {};
+        for (const row of agg) if (row._id) result[row._id] = row.count;
+        return result;
+    },
+    ['chapter-star-counts'],
+    { revalidate: 3600, tags: ['questions'] }
+);
+
+export async function getChapterQuestionCounts(): Promise<Record<string, number>> {
+    try {
+        return await _getChapterQuestionCounts();
     } catch (error) {
         console.error('Failed to get chapter question counts:', error);
         return {};
@@ -328,17 +352,7 @@ export async function getChapterQuestionCounts(): Promise<Record<string, number>
 
 export async function getChapterStarCounts(): Promise<Record<string, number>> {
     try {
-        await connectToDatabase();
-        const { QuestionV2 } = await import('@/lib/models/Question.v2');
-        const agg = await QuestionV2.aggregate([
-            { $match: { 'metadata.is_top_pyq': true, deleted_at: null } },
-            { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
-        ]);
-        const result: Record<string, number> = {};
-        for (const row of agg) {
-            if (row._id) result[row._id] = row.count;
-        }
-        return result;
+        return await _getChapterStarCounts();
     } catch (error) {
         console.error('Failed to get chapter star counts:', error);
         return {};

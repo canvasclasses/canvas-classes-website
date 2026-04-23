@@ -444,13 +444,8 @@ export async function POST(request: NextRequest) {
 
   } catch (error: unknown) {
     console.error('Error creating question:', error);
-    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      {
-        success: false,
-        error: 'Failed to create question',
-        ...(process.env.NODE_ENV === 'development' && { detail: errorMessage })
-      },
+      { success: false, error: 'Failed to create question' },
       { status: 500 }
     );
   }

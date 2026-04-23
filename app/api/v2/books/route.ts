@@ -14,7 +14,7 @@ export async function GET() {
     await connectToDatabase();
     const isAdmin = await isAdminRequest();
     const filter = isAdmin ? {} : { is_published: true };
-    const books = await BookModel.find(filter).sort({ created_at: -1 }).lean();
+    const books = await BookModel.find(filter).sort({ created_at: -1 }).limit(500).lean();
     return NextResponse.json({ success: true, data: books, total: books.length });
   } catch (error) {
     console.error('GET /api/v2/books error:', error);

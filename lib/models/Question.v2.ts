@@ -360,11 +360,15 @@ const QuestionSchema = new Schema<IQuestion>({
 });
 
 // Indexes for performance
+// Compound indexes follow the ESR rule (Equality, Sort, Range) and include
+// deleted_at so the ubiquitous `deleted_at: null` filter is covered by the index.
 QuestionSchema.index({ display_id: 1 }, { unique: true });
-QuestionSchema.index({ 'metadata.chapter_id': 1, status: 1 });
+QuestionSchema.index({ 'metadata.chapter_id': 1, status: 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.chapter_id': 1, 'metadata.is_top_pyq': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.chapter_id': 1, display_id: 1, deleted_at: 1 }); // getAdjacentQuestions range scan
 QuestionSchema.index({ 'metadata.tags.tag_id': 1 });
 QuestionSchema.index({ status: 1, created_at: -1 });
-QuestionSchema.index({ deleted_at: 1 }); // For soft deletes
+QuestionSchema.index({ deleted_at: 1 });
 QuestionSchema.index({ 'metadata.exam_source.year': 1, 'metadata.exam_source.exam': 1 });
 
 // Pre-save middleware to update timestamps

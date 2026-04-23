@@ -40,7 +40,7 @@ export default async function Class11ChemistryPage() {
           chapter_number: { $in: publishedChapterNumbers },
           published: true,
         })
-          .select('slug title chapter_number page_number reading_time_min content_types')
+          .select('slug title chapter_number page_number reading_time_min content_types video_title')
           .sort({ chapter_number: 1, page_number: 1 })
           .lean();
 
@@ -51,6 +51,7 @@ export default async function Class11ChemistryPage() {
     page_number: p.page_number,
     reading_time_min: p.reading_time_min ?? null,
     content_types: (p as Record<string, unknown>).content_types as ToCPage['content_types'] ?? null,
+    video_title: (p as Record<string, unknown>).video_title as string ?? null,
   }));
 
   const firstPage = pages[0];

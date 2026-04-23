@@ -10,12 +10,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function BlogPostContent({ content }: { content: string }) {
     const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+    const safeContent = typeof content === 'string' ? content.trim() : '';
 
     // Custom Rehype Plugin to group consecutive images into a single paragraph
     interface HastNode {
         tagName?: string;
         type: string;
         value?: string;
+        properties?: Record<string, unknown>;
         children?: HastNode[];
     }
 
@@ -23,31 +25,38 @@ export default function BlogPostContent({ content }: { content: string }) {
         children: HastNode[];
     }
 
+    // HAST element nodes MUST carry a `properties` object — react-markdown calls
+    // Object.hasOwn(properties, key) during rendering, which throws "Cannot convert
+    // undefined or null to object" if properties is missing.
+    const makeImageParagraph = (images: HastNode[]): HastNode => ({
+        type: 'element',
+        tagName: 'p',
+        properties: {},
+        children: images,
+    });
+
     const rehypeImageGrouper = () => {
         return (tree: HastTree) => {
+            if (!tree || !Array.isArray(tree.children)) return;
             const newChildren: HastNode[] = [];
             let bufferedImages: HastNode[] = [];
 
-            const isImageNode = (node: HastNode) => node.tagName === 'img';
-            const isWhitespace = (node: HastNode) => node.type === 'text' && !node.value?.trim();
+            const isImageNode = (node: HastNode) => node?.tagName === 'img';
+            const isWhitespace = (node: HastNode) => node?.type === 'text' && !node.value?.trim();
             const isImageParagraph = (node: HastNode) => {
-                if (node.tagName !== 'p') return false;
+                if (!node || node.tagName !== 'p') return false;
                 if (!node.children) return false;
-                const meaningfulChildren = node.children.filter((child: HastNode) => !isWhitespace(child));
+                const meaningfulChildren = node.children.filter((child) => !isWhitespace(child));
                 return meaningfulChildren.length > 0 && meaningfulChildren.every(isImageNode);
             };
 
-            tree.children.forEach((child: HastNode) => {
+            tree.children.forEach((child) => {
                 if (isImageParagraph(child)) {
                     const images = child.children?.filter(isImageNode) ?? [];
                     bufferedImages.push(...images);
                 } else {
                     if (bufferedImages.length > 0) {
-                        newChildren.push({
-                            type: 'element',
-                            tagName: 'p',
-                            children: [...bufferedImages]
-                        } as HastNode);
+                        newChildren.push(makeImageParagraph([...bufferedImages]));
                         bufferedImages = [];
                     }
                     newChildren.push(child);
@@ -55,11 +64,7 @@ export default function BlogPostContent({ content }: { content: string }) {
             });
 
             if (bufferedImages.length > 0) {
-                newChildren.push({
-                    type: 'element',
-                    tagName: 'p',
-                    children: [...bufferedImages]
-                } as HastNode);
+                newChildren.push(makeImageParagraph([...bufferedImages]));
             }
             tree.children = newChildren;
         };
@@ -161,13 +166,17 @@ export default function BlogPostContent({ content }: { content: string }) {
     return (
         <>
             <div className="prose prose-invert max-w-none text-gray-400">
-                <ReactMarkdown
-                    remarkPlugins={[remarkMath]}
-                    rehypePlugins={[rehypeKatex, rehypeRaw, rehypeImageGrouper]}
-                    components={markdownComponents}
-                >
-                    {content}
-                </ReactMarkdown>
+                {safeContent ? (
+                    <ReactMarkdown
+                        remarkPlugins={[remarkMath]}
+                        rehypePlugins={[rehypeKatex, rehypeRaw, rehypeImageGrouper]}
+                        components={markdownComponents}
+                    >
+                        {safeContent}
+                    </ReactMarkdown>
+                ) : (
+                    <p className="text-gray-500 italic">This post has no content yet.</p>
+                )}
             </div>
 
             <AnimatePresence>

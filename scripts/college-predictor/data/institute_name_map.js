@@ -122,6 +122,18 @@ const INSTITUTE_NAME_TO_SLUG = {
   'School of Studies of Engineering and Technology, Guru Ghasidas Vishwavidyalaya, Bilaspur': 'gfti-ggv-bilaspur',
   'Shri Mata Vaishno Devi University, Katra, Jammu & Kashmir': 'gfti-smvdu-katra',
   'University of Hyderabad': 'gfti-uoh',
+
+  // ── GFTIs first appearing / missed in 2025 data ────────────────────────────
+  // CSV names copied verbatim from scripts/college-predictor/data/josaa_2025.csv.
+  // Do NOT normalise punctuation here — ingest_josaa_csv.js matches by exact
+  // string, and the JoSAA CSV is the canonical source.
+  'Islamic University of Science and Technology Kashmir': 'gfti-iust-kashmir',
+  'National Institute of Electronics and Information Technology, Ajmer (Rajasthan)': 'gfti-nielit-ajmer',
+  'National Institute of Electronics and Information Technology, Gorakhpur (UP)': 'gfti-nielit-gorakhpur',
+  'National Institute of Electronics and Information Technology, Patna (Bihar)': 'gfti-nielit-patna',
+  'National Institute of Electronics and Information Technology, Ropar (Punjab)': 'gfti-nielit-ropar',
+  'Rajiv Gandhi National Aviation University, Fursatganj, Amethi (UP)': 'gfti-rgnau-amethi',
+  'Shri G. S. Institute of Technology and Science Indore': 'gfti-sgsits-indore',
 };
 
 module.exports = { INSTITUTE_NAME_TO_SLUG };

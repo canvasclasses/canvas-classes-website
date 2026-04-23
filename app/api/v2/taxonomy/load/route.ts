@@ -53,7 +53,10 @@ export async function GET() {
       nodes.push(node);
     }
 
-    return NextResponse.json({ success: true, nodes });
+    return NextResponse.json(
+      { success: true, nodes },
+      { headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' } }
+    );
   } catch (error: unknown) {
     console.error('Taxonomy load error:', error);
     const errorMessage = error instanceof Error ? error.message : String(error);
