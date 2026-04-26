@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { loadCollegeDeepDive, loadAllCollegeSlugs } from '@/lib/collegePredictor/deepDive';
+import { loadCollegeDeepDive } from '@/lib/collegePredictor/deepDive';
 import CutoffTrendChart from './CutoffTrendChart';
 
 // Canonical host — matches the sibling /[slug]/page.tsx + /college-predictor/page.tsx
@@ -13,9 +13,10 @@ const SITE_ORIGIN = 'https://canvasclasses.com';
 // ISR — cutoffs change at most once a year. 24h cache is plenty.
 export const revalidate = 86400;
 
+// No pages pre-built at deploy time — generated on first request and cached via ISR.
+// With revalidate = 86400, each college page is built once per day on first visit.
 export async function generateStaticParams() {
-  const slugs = await loadAllCollegeSlugs();
-  return slugs.map((slug) => ({ slug }));
+  return [];
 }
 
 export async function generateMetadata({
