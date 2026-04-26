@@ -521,7 +521,15 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
         }
       })
       .catch(err => {
-        if ((err as Error)?.name !== 'AbortError') setLoading(false);
+        // Always clear loading — even on AbortError. Otherwise a back-nav while
+        // the auto-fetch is in flight leaves `loading=true` permanently, which
+        // makes handleBrowseLaunch (and every other click guard checking loading)
+        // silently no-op forever. That manifested as "Free Browse button does
+        // nothing on mobile" when the user navigated back from BrowseView.
+        if ((err as Error)?.name !== 'AbortError') {
+          notify('Failed to load questions. Please try again.');
+        }
+        setLoading(false);
       });
 
     return () => controller.abort();

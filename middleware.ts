@@ -13,16 +13,20 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(dest, 301);
     }
 
-    // Routes that require authentication
+    // Routes that require authentication (admin Crucible only)
     const isCrucibleRoute = pathname.startsWith('/crucible');
-    // Books are publicly accessible (metered gate handled client-side in BookReader).
-    // We still refresh the Supabase session if the user happens to be logged in.
+    // Routes that are publicly viewable but where we still want to refresh the
+    // Supabase session cookie so SSR can read the user. Without this refresh,
+    // a freshly signed-in user lands on /the-crucible and the SSR `auth.getUser()`
+    // call may not see the new cookie, causing the page to render as logged-out
+    // and (in some cases) appear stuck/blank while client-side hydration races.
     const isBooksRoute = pathname.startsWith('/books')
         || pathname.startsWith('/class-9')
         || pathname.startsWith('/class-11');
+    const isStudentCrucibleRoute = pathname.startsWith('/the-crucible');
 
-    // If neither a gated nor a books route, skip entirely.
-    if (!isCrucibleRoute && !isBooksRoute) {
+    // If none of the routes that need session handling, skip entirely.
+    if (!isCrucibleRoute && !isBooksRoute && !isStudentCrucibleRoute) {
         return NextResponse.next({ request });
     }
 
@@ -38,10 +42,10 @@ export async function middleware(request: NextRequest) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    // If Supabase not configured, block gated routes in production
-    // but allow books through (they work without auth).
+    // If Supabase not configured, block gated /crucible (admin) in production
+    // but allow books and /the-crucible (student) through — they work without auth.
     if (!supabaseUrl || !supabaseAnonKey) {
-        if (isBooksRoute) return NextResponse.next({ request });
+        if (isBooksRoute || isStudentCrucibleRoute) return NextResponse.next({ request });
         if (process.env.NODE_ENV === 'production') {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
@@ -78,7 +82,14 @@ export async function middleware(request: NextRequest) {
         return supabaseResponse;
     }
 
-    // Crucible: hard auth gate — not logged in → redirect to /login
+    // /the-crucible (student-facing): no auth gate — page allows non-logged-in
+    // users (gated CTAs trigger an in-page auth dialog). We *only* ran middleware
+    // here to keep the Supabase session cookie fresh so SSR sees the right user.
+    if (isStudentCrucibleRoute) {
+        return supabaseResponse;
+    }
+
+    // /crucible (admin): hard auth gate — not logged in → redirect to /login
     if (!user) {
         const loginUrl = request.nextUrl.clone();
         loginUrl.pathname = '/login';
