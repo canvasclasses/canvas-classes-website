@@ -4,7 +4,6 @@ import {
   getQuestionBySlug,
   getAdjacentQuestions,
   getRelatedCrucibleQuestions,
-  getAllPublishedPYQSlugs,
   getTaxonomy,
 } from '../../actions';
 import QuestionDetailPage from './QuestionDetailPage';
@@ -12,10 +11,11 @@ import QuestionDetailPage from './QuestionDetailPage';
 // ISR: revalidate daily — solutions updated infrequently
 export const revalidate = 86400;
 
-// Pre-build all published PYQ pages at build time (UUID slugs only)
+// No pages pre-built at deploy time — generated on first request and cached via ISR.
+// With revalidate = 86400, each page is built once per day on first visit.
+// This keeps deploy times fast regardless of how many questions exist.
 export async function generateStaticParams() {
-  const slugs = await getAllPublishedPYQSlugs();
-  return slugs.map((q) => ({ slug: q.id }));
+  return [];
 }
 
 export async function generateMetadata({
