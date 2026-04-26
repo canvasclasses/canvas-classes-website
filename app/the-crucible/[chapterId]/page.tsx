@@ -58,8 +58,8 @@ export default async function Page({
     const rawBoard = resolvedSearch['examBoard'];
     const examBoard = rawBoard === 'NEET' ? 'NEET' : rawBoard === 'JEE' ? 'JEE' : undefined;
 
-    // Any direct chapter URL implies browse intent — the [chapterId] route only exists for browse deep-links
-    const mode: 'browse' = 'browse';
+    // Any direct chapter URL implies browse intent — the [chapterId] route only exists for browse deep-links.
+    // initialMode is hardcoded to 'browse' below.
 
     const supabase = await createClient();
     const { data: { user } } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
@@ -85,7 +85,7 @@ export default async function Page({
             chapters={chaptersWithCounts}
             isLoggedIn={isLoggedIn}
             initialChapterId={chapterId}
-            initialMode={mode}
+            initialMode="browse"
             initialExam={examBoard}
         />
     );
