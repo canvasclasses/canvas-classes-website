@@ -374,7 +374,10 @@ export async function getChapterQuestions(chapterId: string, examBoard?: 'JEE' |
             'metadata.chapter_id': chapterId,
             deleted_at: null,
         };
-        if (examBoard) filter['metadata.examBoard'] = examBoard;
+        // Match against the multi-valued applicableExams array, not the single-valued
+        // legacy examBoard field. A question tagged for both JEE and NEET should appear
+        // when filtering by either exam — examBoard only stores the first one.
+        if (examBoard) filter['metadata.applicableExams'] = examBoard;
         const docs = await QuestionV2.find(filter)
             .sort({ display_id: 1 })
             .lean();

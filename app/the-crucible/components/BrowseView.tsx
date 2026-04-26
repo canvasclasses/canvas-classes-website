@@ -24,6 +24,40 @@ const DIFF_COLOR = (d: number | string) => {
   const strMap: Record<string, string> = { Easy: '#34d399', Medium: '#fbbf24', Hard: '#f87171', Challenging: '#c084fc' };
   return strMap[d] ?? '#fbbf24';
 };
+
+// Student-facing difficulty label. Internal scale is L1-L5 (kept for admin
+// selection logic and question filtering), but the badge collapses these into
+// four buckets that anchor to a real meaning instead of an arbitrary number:
+//   L1, L2 → Easy   |   L3 → Medium   |   L4 → Tough   |   L5 → Advanced
+// Legacy string difficulties ("Hard", "Challenging") are normalized too so old
+// questions stay consistent with the new vocabulary.
+const DIFF_LABEL = (d: number | string): string => {
+  if (typeof d === 'number') {
+    if (d <= 2) return 'Easy';
+    if (d === 3) return 'Medium';
+    if (d === 4) return 'Tough';
+    return 'Advanced'; // L5+
+  }
+  const lower = d.toLowerCase();
+  if (lower === 'easy') return 'Easy';
+  if (lower === 'medium') return 'Medium';
+  if (lower === 'hard') return 'Tough';
+  if (lower === 'challenging') return 'Advanced';
+  return d;
+};
+
+// Human-readable labels for question type codes — surfaced to students who don't
+// know what "SCQ" / "MCQ" mean in admin shorthand.
+const TYPE_LABEL: Record<string, string> = {
+  SCQ: 'Single Correct',
+  MCQ: 'Multiple Correct',
+  NVT: 'Integer',
+  AR: 'Assertion-Reason',
+  MST: 'Multi-Statement',
+  MTC: 'Match Columns',
+  SUBJ: 'Subjective',
+  WKEX: 'Worked Example',
+};
 const PAGE_SIZE = 15;
 
 const isShortOptions = (opts: { id: string; text: string; is_correct: boolean }[], isMobile: boolean): boolean => {
@@ -39,7 +73,7 @@ const isShortOptions = (opts: { id: string; text: string; is_correct: boolean }[
 
 const hasImageMarkdown = (markdown: string): boolean => /!\[[^\]]*\]\([^)]+\)/.test(markdown);
 
-export default function BrowseView({ questions, chapters, onBack, chapterId, guidedMode, onQuestionAnswered, examBoard }: {
+export default function BrowseView({ questions, chapters, onBack, chapterId, guidedMode, onQuestionAnswered, examBoard, onLoadSolutionsForPage }: {
   questions: Question[];
   chapters: Chapter[];
   onBack: () => void;
@@ -47,10 +81,19 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
   guidedMode?: boolean;
   onQuestionAnswered?: (isCorrect: boolean) => void;
   examBoard?: 'JEE' | 'NEET';
+  // Called whenever the visible 15-question page changes; parent uses this to
+  // lazy-load solutions for the visible questions only (saves ~60% payload on
+  // initial fetch since solutions are fetched on demand).
+  onLoadSolutionsForPage?: (questionIds: string[]) => void;
 }) {
   const [page, setPage] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [starred, setStarred] = useState<Set<string>>(new Set());
+  // Persisted attempt history for this chapter — drives the rail dot colors so
+  // students can see at a glance which questions they've already solved (green)
+  // vs. attempted-but-wrong (red) vs. untouched (grey). Loaded once on mount;
+  // session-local browseAttempts overlay this for instant feedback.
+  const [persistedAttempts, setPersistedAttempts] = useState<Map<string, 'correct' | 'wrong'>>(new Map());
   const [cardExpanded, setCardExpanded] = useState<Record<number, boolean>>({});
   const [cardSol, setCardSol] = useState<Record<number, boolean>>({});
   const [cardOpt, setCardOpt] = useState<Record<number, string | string[] | null>>({});
@@ -128,6 +171,12 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
     return (a.display_id || '').localeCompare(b.display_id || '', undefined, { numeric: true, sensitivity: 'base' });
   };
 
+  // Resolved chapter object for the current browse session
+  const currentChapter = useMemo(() => {
+    if (!chapterId || !chapters.length) return null;
+    return chapters.find(c => c.id === chapterId) ?? null;
+  }, [chapterId, chapters]);
+
   // Concept tags available for the current chapter (from taxonomy)
   const availableConceptTags = useMemo(() => {
     if (!chapterId) return [];
@@ -184,6 +233,19 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
   const totalPages = Math.ceil(filteredQuestions.length / PAGE_SIZE);
   const pageQuestions = filteredQuestions.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
+  // Lazy solution loader — fires whenever the visible 15-question page changes
+  // (page nav, filter change, or new questions arriving via streaming). Parent
+  // de-dupes already-loaded IDs so this is safe to call eagerly.
+  useEffect(() => {
+    if (!onLoadSolutionsForPage) return;
+    const visibleIds = pageQuestions.map(q => q.id).filter(Boolean);
+    if (visibleIds.length === 0) return;
+    onLoadSolutionsForPage(visibleIds);
+    // pageQuestions itself is recomputed every render so we use the underlying
+    // primitives that actually change as deps.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, examFilter, yearFilter, conceptTagFilter, showStarredOnly, questions.length, onLoadSolutionsForPage]);
+
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -203,6 +265,18 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
         const data = await res.json();
         if (data.starred_ids?.length) {
           setStarred(new Set<string>(data.starred_ids));
+        }
+        if (data.attempted_ids?.length) {
+          // times_attempted > 0 with times_correct > 0 → correct; else wrong.
+          // (User has tried at least once and the most recent attempt was correct counts as correct.)
+          interface AttemptedRow { question_id: string; times_attempted?: number; times_correct?: number }
+          const map = new Map<string, 'correct' | 'wrong'>();
+          for (const a of data.attempted_ids as AttemptedRow[]) {
+            if ((a.times_attempted ?? 0) > 0) {
+              map.set(a.question_id, (a.times_correct ?? 0) > 0 ? 'correct' : 'wrong');
+            }
+          }
+          setPersistedAttempts(map);
         }
       } catch { /* not logged in or network error — local state only */ }
     })();
@@ -291,7 +365,13 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
   const scrollSolutionIntoView = useCallback((solDivId: string) => {
     setTimeout(() => {
       const el = document.getElementById(solDivId);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const container = scrollAreaRef.current;
+      if (el && container) {
+        const containerRect = container.getBoundingClientRect();
+        const elRect = el.getBoundingClientRect();
+        const targetTop = container.scrollTop + (elRect.top - containerRect.top) - 16;
+        container.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+      }
     }, 120);
   }, []);
 
@@ -685,6 +765,12 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
             
             {qq.solution?.text_markdown ? (
               <MathRenderer markdown={qq.solution.text_markdown} className="text-sm leading-relaxed" fontSize={16} imageScale={qq.svg_scales?.solution ?? 100} />
+            ) : qq.solution_pending ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'rgba(165,180,252,0.6)', fontStyle: 'italic' }}>
+                <span style={{ display: 'inline-block', width: 12, height: 12, borderRadius: '50%', border: '1.5px solid rgba(99,102,241,0.3)', borderTopColor: '#818cf8', animation: 'spin 0.8s linear infinite' }} />
+                Loading solution…
+                <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+              </div>
             ) : (
               <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>Solution not available for this question.</div>
             )}
@@ -748,17 +834,62 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
   );
 
   const header = (
-    <header style={{ background: 'rgba(8,10,15,0.97)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.07)', flexShrink: 0 }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '8px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
-        <button onClick={handleExit} style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '5px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.07)', border: 'none', color: '#fff', cursor: 'pointer', fontSize: 12, flexShrink: 0 }}>
-          <ChevronLeft style={{ width: 14, height: 14 }} /> Back
+    <header style={{
+      background: 'rgba(7,9,14,0.98)',
+      backdropFilter: 'blur(20px)',
+      borderBottom: '1px solid rgba(255,255,255,0.07)',
+      flexShrink: 0,
+    }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: isMobile ? '9px 14px' : '10px 20px', display: 'flex', alignItems: 'center', gap: 0 }}>
+
+        {/* Back button — bordered, not just a ghost */}
+        <button
+          onClick={handleExit}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 5,
+            padding: '6px 12px', borderRadius: 8,
+            background: 'transparent',
+            border: '1px solid rgba(255,255,255,0.13)',
+            color: 'rgba(255,255,255,0.6)', cursor: 'pointer',
+            fontSize: 12, fontWeight: 600, flexShrink: 0,
+            transition: 'border-color 0.15s, color 0.15s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.28)'; e.currentTarget.style.color = '#fff'; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.13)'; e.currentTarget.style.color = 'rgba(255,255,255,0.6)'; }}
+        >
+          <ChevronLeft style={{ width: 13, height: 13 }} /> Back
         </button>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <span style={{ fontSize: 13, fontWeight: 700, color: '#fafafa' }}>Browse</span>
-          <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', marginLeft: 6 }}>{filteredQuestions.length} of {questions.length} Qs</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 9px', background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.25)', borderRadius: 99, fontSize: 11, color: '#34d399', fontWeight: 700, flexShrink: 0 }}>
-          {String.fromCodePoint(0x1F525)} 0
+
+        {/* Vertical divider */}
+        <div style={{ width: 1, height: 24, background: 'rgba(255,255,255,0.09)', margin: '0 16px', flexShrink: 0 }} />
+
+        {/* Title block — single line, no height increase on mobile */}
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 8, overflow: 'hidden' }}>
+          {/* Orange "BROWSE" accent pill */}
+          <span style={{
+            fontSize: 9, fontWeight: 800, letterSpacing: '0.1em',
+            textTransform: 'uppercase', color: '#fb923c',
+            background: 'rgba(251,146,60,0.12)', border: '1px solid rgba(251,146,60,0.22)',
+            padding: '2px 8px', borderRadius: 5, flexShrink: 0,
+          }}>Browse</span>
+          {/* Question count — inline, right after the pill */}
+          <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', flexShrink: 0 }}>
+            {filteredQuestions.length === questions.length
+              ? `${questions.length} Qs`
+              : `${filteredQuestions.length} of ${questions.length} Qs`}
+          </span>
+          {/* Chapter name — desktop only, pushed to the right, subtle gray */}
+          {!isMobile && currentChapter && (
+            <span style={{
+              marginLeft: 'auto',
+              fontSize: 12, fontWeight: 500,
+              color: 'rgba(255,255,255,0.32)',
+              whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+              flexShrink: 1,
+            }}>
+              {currentChapter.name}
+            </span>
+          )}
         </div>
       </div>
     </header>
@@ -782,29 +913,30 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
   const sourceAccent = examFilter === 'mains' ? '#38bdf8' : examFilter === 'advanced' ? '#a78bfa' : '#34d399';
 
   const filterBar = (
-    <div style={{ background: 'rgba(8,10,15,0.95)', borderBottom: '1px solid rgba(255,255,255,0.05)', flexShrink: 0 }}>
+    <div style={{ background: 'rgba(6,8,13,0.96)', borderBottom: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
       {/* Compact single-row filter bar */}
-      <div style={{ padding: isMobile ? '5px 8px' : '6px 16px', display: 'flex', alignItems: 'center', gap: isMobile ? 4 : 6, overflowX: 'auto', flexWrap: isMobile ? 'nowrap' : 'wrap' }}>
+      <div style={{ padding: isMobile ? '6px 10px' : '7px 20px', display: 'flex', alignItems: 'center', gap: isMobile ? 5 : 6, overflowX: 'auto', flexWrap: isMobile ? 'nowrap' : 'wrap' }}>
         {/* Source pills */}
         {EXAM_FILTERS.map(({ id, label, shortLabel }) => {
           const active = examFilter === id;
-          const accentColor = id === 'mains' ? '#38bdf8' : id === 'advanced' ? '#a78bfa' : id === 'non-pyq' ? '#34d399' : 'rgba(255,255,255,0.6)';
+          const accentColor = id === 'mains' ? '#38bdf8' : id === 'advanced' ? '#a78bfa' : id === 'non-pyq' ? '#34d399' : '#fb923c';
           return (
             <button
               key={id}
               onClick={() => { setExamFilter(id); setYearFilter('all'); setPage(0); setCardExpanded({}); setCardSol({}); setCardOpt({}); }}
               style={{
-                padding: isMobile ? '4px 9px' : '5px 12px', 
-                borderRadius: 99, 
-                border: `1px solid ${active ? accentColor + '66' : 'rgba(255,255,255,0.1)'}`,
-                background: active ? accentColor + '1a' : 'transparent',
-                color: active ? accentColor : 'rgba(255,255,255,0.4)', 
-                fontSize: isMobile ? 10 : 11, 
+                padding: isMobile ? '4px 10px' : '5px 13px',
+                borderRadius: 99,
+                border: `1px solid ${active ? accentColor + '55' : 'rgba(255,255,255,0.09)'}`,
+                background: active ? accentColor + '18' : 'rgba(255,255,255,0.03)',
+                color: active ? accentColor : 'rgba(255,255,255,0.45)',
+                fontSize: isMobile ? 10 : 11,
                 fontWeight: active ? 700 : 500,
-                cursor: 'pointer', 
-                whiteSpace: 'nowrap', 
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
                 transition: 'all 0.15s',
                 flexShrink: 0,
+                boxShadow: active ? `0 0 10px ${accentColor}22` : 'none',
               }}
             >
               {isMobile ? shortLabel : label}
@@ -843,13 +975,14 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
           title={showStarredOnly ? 'Show all questions' : 'Show bookmarked questions only'}
           style={{
             display: 'flex', alignItems: 'center', gap: 4,
-            padding: isMobile ? '3px 8px' : '3px 10px', borderRadius: 99,
-            border: `1px solid ${showStarredOnly ? 'rgba(251,191,36,0.5)' : 'rgba(255,255,255,0.1)'}`,
-            background: showStarredOnly ? 'rgba(251,191,36,0.12)' : 'rgba(255,255,255,0.04)',
-            color: showStarredOnly ? '#fbbf24' : 'rgba(255,255,255,0.4)',
-            fontSize: 10, fontWeight: showStarredOnly ? 700 : 500,
+            padding: isMobile ? '4px 10px' : '5px 13px', borderRadius: 99,
+            border: `1px solid ${showStarredOnly ? 'rgba(251,191,36,0.55)' : 'rgba(255,255,255,0.09)'}`,
+            background: showStarredOnly ? 'rgba(251,191,36,0.13)' : 'rgba(255,255,255,0.03)',
+            color: showStarredOnly ? '#fbbf24' : 'rgba(255,255,255,0.45)',
+            fontSize: isMobile ? 10 : 11, fontWeight: showStarredOnly ? 700 : 500,
             cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0,
             transition: 'all 0.15s',
+            boxShadow: showStarredOnly ? '0 0 10px rgba(251,191,36,0.15)' : 'none',
           }}
         >
           <Star style={{ width: 10, height: 10, fill: showStarredOnly ? '#fbbf24' : 'none', flexShrink: 0 }} />
@@ -859,11 +992,6 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
           )}
         </button>
 
-        {!isMobile && (
-          <span style={{ marginLeft: 'auto', fontSize: 10, color: 'rgba(255,255,255,0.25)', whiteSpace: 'nowrap' }}>
-            {filteredQuestions.length} questions
-          </span>
-        )}
       </div>
       
       {/* Topic pills — separate row only if chapter has concept tags */}
@@ -965,25 +1093,26 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
           overflow: 'hidden',
         }}
       >
-        {/* Header row: badges + star */}
+        {/* Header row: badges — bookmark (after type) — flag (right) */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: isMobile ? '10px 8px 8px 0' : '12px 18px 10px', borderBottom: isMobile ? 'none' : '1px solid rgba(255,255,255,0.05)', flexWrap: 'wrap' }}>
           <span style={{ minWidth: 30, height: 22, borderRadius: 6, background: 'rgba(255,255,255,0.08)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, padding: '0 6px', color: 'rgba(255,255,255,0.5)' }}>
             Q{globalIdx + 1}
           </span>
-          <span style={{ fontSize: 10, fontWeight: 700, color: diffColor, background: diffColor + '18', padding: '2px 8px', borderRadius: 99 }}>L{qq.metadata.difficultyLevel}</span>
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.06)', padding: '2px 8px', borderRadius: 99 }}>{qq.type}</span>
+          <span style={{ fontSize: 10, fontWeight: 700, color: diffColor, background: diffColor + '18', padding: '2px 8px', borderRadius: 99 }}>{DIFF_LABEL(qq.metadata.difficultyLevel)}</span>
+          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.06)', padding: '2px 8px', borderRadius: 99 }}>{TYPE_LABEL[qq.type] ?? qq.type}</span>
+          {/* Star / bookmark — sits next to type badge, on the left side */}
+          <button onClick={() => toggleStar(qq.id, qq)} style={{ width: 28, height: 28, borderRadius: 7, background: isStarred ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.05)', border: `1px solid ${isStarred ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.08)'}`, color: isStarred ? '#fbbf24' : 'rgba(255,255,255,0.35)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }} title="Bookmark this question">
+            <Star style={{ width: 13, height: 13, fill: isStarred ? '#fbbf24' : 'none' }} />
+          </button>
           {examLabel && (
             <span style={{ fontSize: 10, color: examLabelColor, background: examLabelBg, border: `1px solid ${examLabelBorder}`, padding: '2px 8px', borderRadius: 99 }}>{examLabel}</span>
           )}
-          {/* Star / bookmark */}
-          <button onClick={() => toggleStar(qq.id, qq)} style={{ marginLeft: 'auto', width: 28, height: 28, borderRadius: 7, background: isStarred ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.05)', border: `1px solid ${isStarred ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.08)'}`, color: isStarred ? '#fbbf24' : 'rgba(255,255,255,0.35)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }} title="Bookmark this question">
-            <Star style={{ width: 13, height: 13, fill: isStarred ? '#fbbf24' : 'none' }} />
-          </button>
-          {/* Flag / report inaccuracy */}
+          {/* Flag / report inaccuracy — pushed to the far right */}
           <button
             onClick={() => openFlagModal(qq.id, qq.display_id)}
             title="Report an issue with this question"
             style={{
+              marginLeft: 'auto',
               width: 28, height: 28, borderRadius: 7,
               background: flaggedIds.has(qq.id) ? 'rgba(239,68,68,0.1)' : 'rgba(255,255,255,0.05)',
               border: `1px solid ${flaggedIds.has(qq.id) ? 'rgba(239,68,68,0.35)' : 'rgba(255,255,255,0.08)'}`,
@@ -1005,7 +1134,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
           />
         </div>
 
-        {/* CTA footer */}
+        {/* CTA footer — single primary action; solution unlocks inside the expanded state */}
         {!expanded ? (
           <div style={{ padding: isMobile ? '10px 8px 0' : '10px 20px 14px', borderTop: isMobile ? 'none' : '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
             <button
@@ -1013,21 +1142,6 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
               style={{ padding: '9px 20px', borderRadius: 10, border: 'none', background: 'linear-gradient(135deg, #7c3aed, #4f46e5)', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
               Solve it <ChevronRight style={{ width: 13, height: 13 }} />
             </button>
-            <button
-              onClick={() => {
-                expandCard(localIdx, qq);
-                setTimeout(() => {
-                  setCardSol(s => ({ ...s, [localIdx]: true }));
-                }, 60);
-              }}
-              style={{ padding: '9px 16px', borderRadius: 10, border: '1px solid rgba(124,58,237,0.35)', background: 'transparent', color: '#a78bfa', fontSize: 13, fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
-              View Solution
-            </button>
-            {qq.options && qq.options.length > 0 && (
-              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', marginLeft: 4 }}>
-                {qq.options.length} options
-              </span>
-            )}
           </div>
         ) : (
           <div style={{ padding: isMobile ? '4px 8px 0' : '4px 20px 16px', borderTop: isMobile ? 'none' : '1px solid rgba(255,255,255,0.05)' }}>
@@ -1138,13 +1252,30 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
             {pageQuestions.map((qq, i) => {
               const globalIdx = page * PAGE_SIZE + i;
               const isActive = activeNavIdx === i;
-              const diffColor = DIFF_COLOR(qq.metadata.difficultyLevel);
+              // Rail dot color = attempt progress (not difficulty — difficulty is
+              // already shown on each card via the L# badge + colored left border).
+              // Session-local attempts take priority so the dot updates instantly
+              // when the user submits an answer.
+              const localAttempt = browseAttempts.find(a => a.qq.id === qq.id);
+              const status: 'correct' | 'wrong' | null = localAttempt
+                ? (localAttempt.is_correct ? 'correct' : 'wrong')
+                : (persistedAttempts.get(qq.id) ?? null);
+              const dotColor =
+                status === 'correct' ? '#34d399'
+                : status === 'wrong' ? '#f87171'
+                : 'rgba(255,255,255,0.3)';
               return (
                 <button
                   key={qq.id}
                   onClick={() => {
                     const el = cardRefs.current[i];
-                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    const container = scrollAreaRef.current;
+                    if (el && container) {
+                      const containerRect = container.getBoundingClientRect();
+                      const elRect = el.getBoundingClientRect();
+                      const targetTop = container.scrollTop + (elRect.top - containerRect.top) - 24;
+                      container.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+                    }
                   }}
                   style={{
                     width: '100%', padding: '7px 10px', borderRadius: 8, border: 'none',
@@ -1153,7 +1284,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
                     transition: 'background 0.15s',
                   }}
                 >
-                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: diffColor, flexShrink: 0, opacity: isActive ? 1 : 0.5 }} />
+                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: dotColor, flexShrink: 0, opacity: isActive ? 1 : 0.5 }} />
                   <span style={{ fontSize: 12, fontWeight: isActive ? 700 : 500, color: isActive ? '#fff' : 'rgba(255,255,255,0.45)' }}>
                     Q{globalIdx + 1}
                   </span>

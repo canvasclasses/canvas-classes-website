@@ -63,9 +63,14 @@ export interface IQuestionMetadata {
   // ── Multi-dimensional tagging ──
   microConcept?: string;           // e.g. 'Hyperconjugation', 'Carbocation Stability'
   isMultiConcept?: boolean;        // default false
-  questionNature?: 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis';  // Question cognitive nature
+  // Drives solution depth/structure during ingestion. See _agents/workflows/solution-ingestion-workflow.md.
+  questionNature?: 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis';
   
   // ── NEW: 3-Tier Exam Taxonomy (for multi-exam support: JEE, NEET, etc.) ──
+  // applicableExams: which exams this question is *useful for* (multi-valued).
+  // examBoard: legacy single-valued field, kept in sync as applicableExams[0]
+  // during the transition. New code should read/write applicableExams.
+  applicableExams?: Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'>;
   examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
   sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
   examDetails?: {
@@ -209,10 +214,15 @@ const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
   isMultiConcept: { type: Boolean, default: false },
   questionNature: {
     type: String,
-    enum: ['Recall', 'Rule_Application', 'Mechanistic', 'Synthesis'],
+    enum: ['Recall', 'Rule_Application', 'Numerical', 'Comparative', 'Graphical', 'Conceptual', 'Mechanistic', 'Synthesis'],
     required: false,
   },
   // NEW: 3-Tier Exam Taxonomy
+  applicableExams: {
+    type: [String],
+    enum: ['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD'],
+    default: undefined,
+  },
   examBoard: {
     type: String,
     enum: ['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD'],
@@ -370,6 +380,21 @@ QuestionSchema.index({ 'metadata.tags.tag_id': 1 });
 QuestionSchema.index({ status: 1, created_at: -1 });
 QuestionSchema.index({ deleted_at: 1 });
 QuestionSchema.index({ 'metadata.exam_source.year': 1, 'metadata.exam_source.exam': 1 });
+
+// 3-Tier exam taxonomy indexes (examBoard / sourceType / examDetails.year)
+// These cover the student landing aggregations and the admin filter dropdowns.
+QuestionSchema.index({ 'metadata.examBoard': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.examBoard': 1, 'metadata.is_top_pyq': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.examBoard': 1, 'metadata.chapter_id': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.sourceType': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.examDetails.year': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.examDetails.exam': 1, deleted_at: 1 });
+
+// Multikey indexes mirroring examBoard — used by the new applicableExams query path.
+// MongoDB matches `applicableExams: 'JEE'` as an array-element equality and uses these.
+QuestionSchema.index({ 'metadata.applicableExams': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.applicableExams': 1, 'metadata.is_top_pyq': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.applicableExams': 1, 'metadata.chapter_id': 1, deleted_at: 1 });
 
 // Pre-save middleware to update timestamps
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
+import { unstable_cache, revalidateTag } from 'next/cache';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
 import { AuditLog } from '@/lib/models/AuditLog';
@@ -9,6 +10,72 @@ import { z } from 'zod';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { getUserPermissions, getQuestionFilter, canEditQuestion } from '@/lib/rbac';
 import { isLocalhostDev } from '@/lib/bookAuth';
+
+// Mongo projection: when excludeSolutions=true, skip the heavy solution fields.
+// solution.text_markdown alone is often 1.5–3 KB per question; on a 500-Q chapter
+// this saves ~1MB of payload per fetch. video_url + asset_ids are also dropped —
+// they're only needed when the user actually expands the solution card.
+const PROJECTION_NO_SOLUTIONS = {
+  'solution.text_markdown': 0,
+  'solution.markdown': 0,
+  'solution.video_url': 0,
+  'solution.asset_ids': 0,
+  'solution.video_timestamp_start': 0,
+};
+
+// Cached chapter-question fetcher. Public student traffic (which is the only path
+// that hits this) is deterministic by these params, so identical chapters served
+// to multiple users come from Next.js's data cache instead of MongoDB.
+//
+// Cache is invalidated by `revalidateTag('questions')` when admins create/edit/
+// delete questions. 1-hour fallback ensures eventual consistency if a tag bust
+// is ever missed.
+const getCachedChapterQuestions = unstable_cache(
+  async (
+    chapterId: string,
+    examBoard: string | null,
+    isTopPYQ: boolean,
+    excludeSolutions: boolean,
+    skip: number,
+    limit: number,
+  ) => {
+    await connectToDatabase();
+    const filter: Record<string, unknown> = {
+      'metadata.chapter_id': chapterId,
+      deleted_at: null,
+    };
+    if (examBoard) filter['metadata.applicableExams'] = examBoard;
+    if (isTopPYQ) filter['metadata.is_top_pyq'] = true;
+
+    const projection = excludeSolutions ? PROJECTION_NO_SOLUTIONS : {};
+
+    const [total, docs] = await Promise.all([
+      QuestionV2.countDocuments(filter),
+      QuestionV2.find(filter, projection)
+        .sort({ display_id: 1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+    ]);
+
+    return { total, docs };
+  },
+  ['v2-chapter-questions-cached'],
+  { revalidate: 3600, tags: ['questions'] }
+);
+
+// Cached batch-by-ID fetcher for lazy solution loading. Same cache invalidation
+// rules. Up to 50 IDs per call.
+const getCachedQuestionsByIds = unstable_cache(
+  async (idsKey: string) => {
+    await connectToDatabase();
+    const ids = idsKey.split(',').filter(Boolean);
+    const docs = await QuestionV2.find({ _id: { $in: ids }, deleted_at: null }).lean();
+    return docs;
+  },
+  ['v2-questions-by-ids'],
+  { revalidate: 3600, tags: ['questions'] }
+);
 
 // Canonical chapter_id → display_id prefix map (single source of truth: taxonomyData_from_csv.ts)
 const CHAPTER_PREFIX_MAP: Record<string, string> = {
@@ -145,6 +212,22 @@ const QuestionSchema = z.object({
       shift: z.string().optional(),
       question_number: z.string().optional()
     }).optional(),
+    // 3-tier exam taxonomy
+    applicableExams: z
+      .array(z.enum(['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD']))
+      .min(1)
+      .optional(),
+    examBoard: z.enum(['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD']).optional(),
+    sourceType: z.enum(['PYQ', 'NCERT_Textbook', 'NCERT_Exemplar', 'Practice', 'Mock']).optional(),
+    examDetails: z.object({
+      exam: z.enum(['JEE_Main', 'JEE_Advanced', 'NEET_UG', 'NEET_PG']).optional(),
+      year: z.number().optional(),
+      month: z.string().optional(),
+      phase: z.string().optional(),
+      shift: z.string().optional(),
+      paper: z.string().optional(),
+      question_number: z.string().optional(),
+    }).optional(),
     is_pyq: z.boolean(),
     is_top_pyq: z.boolean()
   }),
@@ -171,8 +254,6 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    await connectToDatabase();
-
     const { searchParams } = new URL(request.url);
     const chapter_ids = searchParams.getAll('chapter_id');
     const subject = searchParams.get('subject');
@@ -190,11 +271,65 @@ export async function GET(request: NextRequest) {
     const examBoard = searchParams.get('examBoard');
     const sourceType = searchParams.get('sourceType');
     const exam = searchParams.get('exam');
+    // Field projection + batch-by-ID lookup (for lazy solution loading)
+    const excludeSolutions = searchParams.get('excludeSolutions') === 'true';
+    const idsParam = searchParams.get('ids');
 
     // Authenticated users (admin dashboard) get full list (unless counting); public gets max 50
     const requestedLimit = parseInt(searchParams.get('limit') || (isAuthenticated ? '5000' : '50'));
     const limit = isAuthenticated && !isCountOnly ? requestedLimit : Math.min(requestedLimit, 50); // cap public at 50
     const skip = parseInt(searchParams.get('skip') || '0');
+
+    // ── Fast path A: batch fetch by IDs (used for lazy solution loading) ───────
+    // Cache hit on these is huge: every page navigation in Browse mode that asks
+    // for the same 15 solutions skips Mongo entirely.
+    if (idsParam) {
+      const ids = idsParam.split(',').map(s => s.trim()).filter(Boolean).slice(0, 50);
+      if (ids.length === 0) {
+        return NextResponse.json({ success: true, data: [], pagination: { total: 0, limit: 0, skip: 0, hasMore: false } });
+      }
+      const docs = await getCachedQuestionsByIds(ids.sort().join(','));
+      return NextResponse.json({
+        success: true,
+        data: docs,
+        pagination: { total: docs.length, limit: docs.length, skip: 0, hasMore: false },
+      });
+    }
+
+    // ── Fast path B: simple chapter fetch (cached) ────────────────────────────
+    // Only takes the cached path for unauthenticated student traffic on a single
+    // chapter without admin-style filters. Admin and search go through the
+    // direct query below for fresh, RBAC-respecting results.
+    const isSimpleChapterFetch =
+      !isAuthenticated &&
+      chapter_ids.length === 1 &&
+      !subject && !status && !type && !difficulty &&
+      !is_pyq && !exam_level && !year && !tag_id && !searchTerm &&
+      !sourceType && !exam && !isCountOnly;
+
+    if (isSimpleChapterFetch) {
+      const { total, docs } = await getCachedChapterQuestions(
+        chapter_ids[0],
+        examBoard,
+        is_top_pyq === 'true',
+        excludeSolutions,
+        skip,
+        limit,
+      );
+      return NextResponse.json({
+        success: true,
+        data: docs,
+        pagination: {
+          total,
+          limit,
+          skip,
+          hasMore: skip + docs.length < total,
+        },
+      });
+    }
+
+    // ── Slow path: dynamic query for admin / search / multi-chapter / counts ──
+    await connectToDatabase();
 
     // Build query with RBAC filtering
     let query: Record<string, unknown> = { deleted_at: null };
@@ -220,8 +355,11 @@ export async function GET(request: NextRequest) {
       const diffMap: Record<string, number> = { 'Easy': 2, 'Medium': 3, 'Hard': 4 };
       query['metadata.difficultyLevel'] = diffMap[difficulty] || Number(difficulty) || 3;
     }
-    // NEW: Exam taxonomy filters (preferred)
-    if (examBoard) query['metadata.examBoard'] = examBoard;
+    // NEW: Exam taxonomy filters (preferred).
+    // The `examBoard=X` URL param is preserved for backward compatibility but
+    // now matches against the multi-valued `applicableExams` array, so a single
+    // question tagged for both JEE and NEET shows up in either filter.
+    if (examBoard) query['metadata.applicableExams'] = examBoard;
     if (sourceType) query['metadata.sourceType'] = sourceType;
     if (exam) query['metadata.examDetails.exam'] = exam;
     if (year && (sourceType === 'PYQ' || examBoard)) {
@@ -250,8 +388,9 @@ export async function GET(request: NextRequest) {
 
     let questions: unknown[] = [];
     if (!isCountOnly) {
-      questions = await QuestionV2.find(query)
-        .sort({ created_at: 1 })
+      const projection = excludeSolutions ? PROJECTION_NO_SOLUTIONS : {};
+      questions = await QuestionV2.find(query, projection)
+        .sort({ display_id: 1 })
         .limit(limit)
         .skip(skip)
         .lean();
@@ -301,6 +440,16 @@ export async function POST(request: NextRequest) {
     }
 
     const data = validation.data;
+
+    // Sync applicableExams ↔ examBoard. Callers may send either; keep both
+    // populated so legacy readers and the new multikey index both work.
+    {
+      const m = data.metadata as Record<string, unknown>;
+      const arr = m.applicableExams as string[] | undefined;
+      const board = m.examBoard as string | undefined;
+      if (arr && arr.length && !board) m.examBoard = arr[0];
+      else if (board && (!arr || !arr.length)) m.applicableExams = [board];
+    }
 
     // Check RBAC: Can user create questions in this chapter?
     if (user && !isLocalDev) {
@@ -376,8 +525,8 @@ export async function POST(request: NextRequest) {
       quality_score: 50,
       needs_review: false,
       version: 1,
-      created_by: 'admin',
-      updated_by: 'admin',
+      created_by: user?.email ?? 'local-dev',
+      updated_by: user?.email ?? 'local-dev',
       created_at: new Date(),
       updated_at: new Date(),
       deleted_at: null,
@@ -421,8 +570,8 @@ export async function POST(request: NextRequest) {
           old_value: null,
           new_value: 'Created new question'
         }],
-        user_id: 'admin',
-        user_email: 'admin@canvasclasses.com',
+        user_id: user?.id ?? 'local-dev',
+        user_email: user?.email ?? 'local-dev',
         timestamp: new Date(),
         can_rollback: false
       } as unknown as Record<string, unknown>);
@@ -435,6 +584,9 @@ export async function POST(request: NextRequest) {
       entity: 'question',
       entity_id: questionDoc._id,
     });
+
+    // Bust the questions cache so students see the new content on next fetch
+    revalidateTag('questions');
 
     return NextResponse.json({
       success: true,

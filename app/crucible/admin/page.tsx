@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, Calendar, MonitorPlay, Tag, Scale, AlertTriangle, BookOpen, Mic, Eye, Sparkles, CheckSquare, Square, BarChart3, TrendingUp, Zap, ZoomIn, ZoomOut, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2, Library, Info, Volume2, ChevronDown, ChevronUp, Shield } from 'lucide-react';
+import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, MonitorPlay, AlertTriangle, BookOpen, Eye, Sparkles, CheckSquare, Square, BarChart3, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2, Library, Info, Volume2, ChevronDown, ChevronUp, Shield } from 'lucide-react';
 // uuid removed — display_id is now generated inline
 import AnalyticsDashboard from './AnalyticsDashboard';
 import ExportDashboard from './components/ExportDashboard';
@@ -74,8 +74,9 @@ interface Question {
         source_id?: string;
         microConcept?: string;
         isMultiConcept?: boolean;
-        questionNature?: 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis';
+        questionNature?: 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis';
         // NEW: 3-Tier Exam Taxonomy
+        applicableExams?: Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'>;
         examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
         sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
         examDetails?: {
@@ -384,8 +385,11 @@ function AdminPageContent() {
     const loadData = async () => {
         setLoading(true);
         try {
+            // Scope the initial count by the active filters (URL-driven on mount).
+            // A chapter-scoped count uses the metadata.chapter_id index and returns
+            // in milliseconds; an unscoped count is a full-collection scan.
             const [qRes, cRes] = await Promise.all([
-                fetch(`/api/v2/questions?countOnly=true`, { cache: 'no-store' }),
+                fetch(`/api/v2/questions?${buildQueryParams(0, true)}`, { cache: 'no-store' }),
                 fetch('/api/v2/chapters', { cache: 'no-store' })
             ]);
 
@@ -402,11 +406,6 @@ function AdminPageContent() {
                 setTotalCount(qData.pagination?.total ?? 0);
             }
             if (cData.success) setChapters(cData.data);
-
-            // If there's an active filter or search, load questions immediately
-            if (selectedChapterFilter !== 'all' || searchQuery) {
-                await loadQuestions(0);
-            }
         } catch (error) {
             console.error('Error loading initial data:', error);
         } finally {
@@ -435,7 +434,8 @@ function AdminPageContent() {
             const data = await res.json();
 
             if (data.success) {
-                setQuestions(data.data.sort((a: Question, b: Question) => a.display_id.localeCompare(b.display_id)));
+                // API already sorts by display_id ascending — no need to re-sort client-side.
+                setQuestions(data.data);
                 setTotalCount(data.pagination?.total ?? data.data.length);
                 setCurrentPage(page);
             }
@@ -1301,19 +1301,44 @@ function AdminPageContent() {
                                     const isPYQ = selectedQuestion.metadata.sourceType === 'PYQ';
                                     return (
                                         <div className="flex items-end gap-1.5 pr-3 mr-2 border-r border-gray-700/60">
-                                            {/* Exam Board */}
-                                            <div className="flex flex-col">
-                                                <span className="text-[10px] text-gray-500 mb-0.5">Board</span>
-                                                <select value={(selectedQuestion.metadata.examBoard ?? '') as string}
-                                                    onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, examBoard: (e.target.value || undefined) as 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD' | undefined } })}
-                                                    className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-blue-500 outline-none w-20">
-                                                    <option value="">—</option>
-                                                    <option value="JEE">JEE</option>
-                                                    <option value="NEET">NEET</option>
-                                                    <option value="CBSE">CBSE</option>
-                                                    <option value="BITSAT">BITSAT</option>
-                                                </select>
-                                            </div>
+                                            {/* Applicable Exams (multi-select) */}
+                                            {(() => {
+                                                const BOARD_OPTIONS = ['JEE', 'NEET', 'BITSAT', 'CBSE'] as const;
+                                                type Board = typeof BOARD_OPTIONS[number];
+                                                const current = (selectedQuestion.metadata.applicableExams
+                                                    ?? (selectedQuestion.metadata.examBoard ? [selectedQuestion.metadata.examBoard] : [])
+                                                ) as Board[];
+                                                const toggle = (b: Board) => {
+                                                    const next = current.includes(b)
+                                                        ? current.filter(x => x !== b)
+                                                        : [...current, b];
+                                                    handleUpdate(selectedQuestion._id, {
+                                                        metadata: { ...selectedQuestion.metadata, applicableExams: next.length ? next : undefined },
+                                                    });
+                                                };
+                                                return (
+                                                    <div className="flex flex-col">
+                                                        <span className="text-[10px] text-gray-500 mb-0.5">Boards</span>
+                                                        <div className="flex items-center gap-1">
+                                                            {BOARD_OPTIONS.map(b => {
+                                                                const on = current.includes(b);
+                                                                return (
+                                                                    <button
+                                                                        key={b}
+                                                                        type="button"
+                                                                        onClick={() => toggle(b)}
+                                                                        className={`px-2 py-1 text-[11px] rounded border ${on
+                                                                            ? 'bg-orange-500/20 border-orange-500/60 text-orange-300'
+                                                                            : 'bg-gray-800/50 border-gray-700/50 text-gray-400 hover:bg-gray-700/50'}`}
+                                                                    >
+                                                                        {b}
+                                                                    </button>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })()}
                                             {/* Source Type */}
                                             <div className="flex flex-col">
                                                 <span className="text-[10px] text-gray-500 mb-0.5">Source</span>
@@ -1546,13 +1571,17 @@ function AdminPageContent() {
                                     <select
                                         value={selectedQuestion.metadata.questionNature ?? ''}
                                         onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                            metadata: { ...selectedQuestion.metadata, questionNature: (e.target.value || undefined) as 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis' | undefined }
+                                            metadata: { ...selectedQuestion.metadata, questionNature: (e.target.value || undefined) as 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis' | undefined }
                                         })}
                                         className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1.5 text-xs text-purple-300 focus:border-purple-500 outline-none"
                                     >
                                         <option value="">— select nature —</option>
                                         <option value="Recall">Recall</option>
                                         <option value="Rule_Application">Rule Application</option>
+                                        <option value="Numerical">Numerical</option>
+                                        <option value="Comparative">Comparative</option>
+                                        <option value="Graphical">Graphical</option>
+                                        <option value="Conceptual">Conceptual</option>
                                         <option value="Mechanistic">Mechanistic</option>
                                         <option value="Synthesis">Synthesis</option>
                                     </select>
@@ -1561,9 +1590,13 @@ function AdminPageContent() {
                                 {/* Nature Description */}
                                 <div className="text-[10px] text-gray-500 shrink-0 w-[140px]">
                                     {selectedQuestion.metadata.questionNature === 'Recall' && 'Fact/definition recall'}
-                                    {selectedQuestion.metadata.questionNature === 'Rule_Application' && 'Apply rules/formulas'}
+                                    {selectedQuestion.metadata.questionNature === 'Rule_Application' && 'Apply one rule once'}
+                                    {selectedQuestion.metadata.questionNature === 'Numerical' && 'Multi-step calculation'}
+                                    {selectedQuestion.metadata.questionNature === 'Comparative' && 'Order/rank items'}
+                                    {selectedQuestion.metadata.questionNature === 'Graphical' && 'Plot/figure interpretation'}
+                                    {selectedQuestion.metadata.questionNature === 'Conceptual' && 'Multi-statement reasoning'}
                                     {selectedQuestion.metadata.questionNature === 'Mechanistic' && 'Reaction mechanisms'}
-                                    {selectedQuestion.metadata.questionNature === 'Synthesis' && 'Multi-step solving'}
+                                    {selectedQuestion.metadata.questionNature === 'Synthesis' && 'Retrosynthesis chain'}
                                     {!selectedQuestion.metadata.questionNature && 'Cognitive approach'}
                                 </div>
                             </div>

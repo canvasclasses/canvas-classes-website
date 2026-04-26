@@ -14,7 +14,7 @@ interface Question {
   metadata: { 
     difficultyLevel: 1 | 2 | 3 | 4 | 5; 
     chapter_id: string;
-    questionNature?: 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis';
+    questionNature?: 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis';
     examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
     sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
     examDetails?: {

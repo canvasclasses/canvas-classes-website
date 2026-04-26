@@ -31,7 +31,7 @@ ch12_electrochem EC    tag_electrochem_1..7
 ch12_kinetics CK       tag_kinetics_1..8
 ch12_pblock   PB12     tag_pblock12_1..9
 ch12_dblock   DNF      tag_dblock_1..8
-ch12_coord    CORD     tag_coord_1..9
+ch12_coord    CORD     tag_coord_1..10
 ch12_haloalkanes HALO  tag_haloalkanes_1..9
 ch12_alcohols ALCO     tag_alcohols_1..6, tag_ch12_alcohols_1771659358099
 ch12_carbonyl ALDO     tag_aldehydes_1..7, tag_ch12_aldehydes_1771659373017, tag_carboxylic_1..4, tag_ch12_carboxylic_1771659384907
@@ -59,6 +59,47 @@ TAGS:        tag_{chapter_id}      (e.g., tag_ma_complex)
 - Match List-I with List-II → `MTC`
 
 **Difficulty:** `E → 1` | `EM → 2` | `M → 3` | `MH → 4` | `H → 5` | no marking → `3`
+
+**Question Nature (REQUIRED — drives solution depth):**
+```
+Pick exactly ONE based on what the SOLUTION will look like, not the topic.
+
+Recall            → Single-fact retrieval. "Which catalyst is used in...?" "State the law."
+                    Answer is a memorized fact, color, name, or one-line definition.
+
+Rule_Application  → One rule, plugged once. Sig fig counting, oxidation-state
+                    assignment, electron config, periodic-trend lookup.
+
+Numerical         → Multi-step formula-driven calculation. Mole math, gravimetric
+                    analysis, thermodynamics, equilibrium, kinetics, mass-%, molarity.
+                    DEFAULT for most physical-chemistry numerics.
+
+Comparative       → Rank/order 3+ items. "Order of acidity", "Increasing BP",
+                    "Arrange in decreasing stability", "Which is largest?".
+
+Graphical         → Plot/figure interpretation. PV diagrams, rate-vs-time, titration
+                    curves, energy profiles. Question requires reading a chart.
+
+Conceptual        → Multi-statement reasoning. Assertion-Reason, "Which of the
+                    following is correct?", Statement I/II, identify-the-flaw.
+                    No single calc — student must evaluate each option's claim.
+
+Mechanistic       → Organic arrow-pushing, intermediate stability, reaction-step
+                    explanation. Almost always organic chemistry.
+
+Synthesis         → Multi-step retrosynthesis or precursor → target chains.
+                    Almost always organic chemistry.
+```
+
+Decision tree (top-down, take the first match):
+1. Does the question ask to identify/draw a mechanism or intermediate? → `Mechanistic`
+2. Multi-step organic precursor→product chain? → `Synthesis`
+3. References a graph/plot/figure (other than a structural diagram)? → `Graphical`
+4. "Order of", "increasing/decreasing", "arrange", "largest/smallest" with 3+ items? → `Comparative`
+5. "Which of the following is correct?", Assertion-Reason, Statement I/II? → `Conceptual`
+6. Has a multi-step calculation with a numeric final answer? → `Numerical`
+7. One rule applied once for a deterministic answer? → `Rule_Application`
+8. Pure fact recall? → `Recall`
 
 **Exam Taxonomy (NEW - 3-tier system):**
 ```
@@ -136,7 +177,7 @@ Output a raw JavaScript array (not wrapped in a script). Each object:
   answer: { correct_option: 'b' },
   solution: null,   // null if TEXT-ONLY mode; populated string if solutions requested
   tag_id: 'tag_alcohols_4',
-  questionNature: 'Recall',  // 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis'
+  questionNature: 'Recall',  // see Question Nature decision tree above (8 values)
   examBoard: 'JEE',           // 'JEE' | 'NEET' | 'CBSE' | 'BITSAT' | null
   sourceType: 'PYQ',          // 'PYQ' | 'Practice' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Mock'
   examDetails: {              // null if not PYQ
@@ -225,7 +266,7 @@ function mk(display_id, difficultyLevel, type, markdown, options, answer, soluti
       examDetails: examDetails ?? null,    // { exam, year, shift, phase, paper, month }
       
       // NEW: Question Nature tagging
-      questionNature: questionNature,     // 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis'
+      questionNature: questionNature,     // 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis'
       
       // Multi-dimensional tagging
       microConcept: null,
@@ -394,10 +435,10 @@ Verified in DB: [N]/[N]
 6. ❌ NEVER invent display_id prefixes — use QUICK REFERENCE table at top
 7. ❌ NEVER use old 'Easy'/'Medium'/'Hard' — use difficultyLevel 1-5
 8. ❌ NEVER use old exam_source only — always include new examBoard, sourceType, examDetails
-9. ❌ NEVER skip questionNature tagging — always specify: 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis'
+9. ❌ NEVER skip questionNature tagging — always specify one of the 8 values per the decision tree in QUICK REFERENCE
 10. ❌ NEVER omit subject field — must be 'chemistry' | 'physics' | 'maths' | 'biology'
 11. ✅ ALWAYS query DB for current max display_id before assigning new IDs
 
 ---
 
-**Document Version:** 3.0 | **Last Updated:** 2026-03-01
+**Document Version:** 3.1 | **Last Updated:** 2026-04-25 (added 4 questionNature values: Numerical, Comparative, Graphical, Conceptual)

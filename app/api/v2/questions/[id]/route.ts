@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
+import { revalidateTag } from 'next/cache';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
 import { Chapter } from '@/lib/models/Chapter';
@@ -106,9 +107,9 @@ export async function PATCH(
     // Update fields
     const updates: Record<string, unknown> = {
       updated_at: new Date(),
-      updated_by: 'admin'
+      updated_by: user?.email ?? 'local-dev'
     };
-    
+
     if (body.type && body.type !== existing.type) {
       changes.push({
         field: 'type',
@@ -170,10 +171,22 @@ export async function PATCH(
         old_value: JSON.stringify(existing.metadata),
         new_value: JSON.stringify(body.metadata)
       });
-      updates.metadata = {
+      const merged = {
         ...existing.metadata,
         ...body.metadata
-      };
+      } as Record<string, unknown>;
+
+      // Sync applicableExams ↔ examBoard. If the caller updated one, derive the
+      // other so legacy readers and the new multikey index stay in agreement.
+      if ('applicableExams' in body.metadata) {
+        const arr = merged.applicableExams as string[] | undefined;
+        merged.examBoard = arr && arr.length ? arr[0] : undefined;
+      } else if ('examBoard' in body.metadata) {
+        const board = merged.examBoard as string | undefined;
+        merged.applicableExams = board ? [board] : undefined;
+      }
+
+      updates.metadata = merged;
     }
     
     if (body.svg_scales !== undefined) {
@@ -265,8 +278,8 @@ export async function PATCH(
         entity_id: id,
         action: 'update',
         changes,
-        user_id: 'admin',
-        user_email: 'admin@canvasclasses.com',
+        user_id: user?.id ?? 'local-dev',
+        user_email: user?.email ?? 'local-dev',
         timestamp: new Date(),
         can_rollback: true,
         rollback_data: existingQuestion.toObject()
@@ -280,6 +293,9 @@ export async function PATCH(
       entity: 'question',
       entity_id: id,
     });
+
+    // Bust the questions cache so the edit is visible to students immediately
+    revalidateTag('questions');
 
     return NextResponse.json({
       success: true,
@@ -340,7 +356,7 @@ export async function DELETE(
     const deletedAt = new Date();
     await QuestionV2.updateOne(
       { _id: id },
-      { $set: { deleted_at: deletedAt, deleted_by: 'admin', updated_at: deletedAt } }
+      { $set: { deleted_at: deletedAt, deleted_by: user?.email ?? 'local-dev', updated_at: deletedAt } }
     );
 
     // Update chapter stats (optional - don't fail delete if chapter doesn't exist in MongoDB)
@@ -361,8 +377,8 @@ export async function DELETE(
         entity_id: id,
         action: 'delete',
         changes: [{ field: 'deleted_at', old_value: null, new_value: deletedAt }],
-        user_id: 'admin',
-        user_email: 'admin@canvasclasses.com',
+        user_id: user?.id ?? 'local-dev',
+        user_email: user?.email ?? 'local-dev',
         timestamp: deletedAt,
         can_rollback: true,
         rollback_data: question.toObject()
@@ -377,6 +393,9 @@ export async function DELETE(
       entity: 'question',
       entity_id: id,
     });
+
+    // Bust the questions cache so the deletion is visible to students immediately
+    revalidateTag('questions');
 
     return NextResponse.json({
       success: true,

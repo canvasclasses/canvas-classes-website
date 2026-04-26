@@ -13,8 +13,6 @@ const eslintConfig = [
   {
     ignores: [
       ".next/**",
-      "_migration/**",
-      "server/**",
     ],
   },
   ...compat.extends("next/core-web-vitals", "next/typescript"),

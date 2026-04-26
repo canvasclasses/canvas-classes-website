@@ -1,9 +1,44 @@
-import { getTaxonomy, getChapterQuestionCounts } from './actions';
+import { getTaxonomy } from './actions';
 import CrucibleWizard from './components/CrucibleWizard';
 import { Metadata } from 'next';
 import { createClient } from '../utils/supabase/server';
+import { isLocalhostDev } from '@/lib/bookAuth';
+import { unstable_cache } from 'next/cache';
 
 export const revalidate = 3600; // Revalidate every hour — question counts don't change per-request
+
+// Cache the 4 expensive aggregations (JEE/NEET × all/star) for 1 hour.
+// Invalidate via tag 'questions' when questions are added/edited.
+const getExamBoardChapterCounts = unstable_cache(
+    async () => {
+        const connectDB = (await import('@/lib/mongodb')).default;
+        const { QuestionV2 } = await import('@/lib/models/Question.v2');
+        await connectDB();
+
+        const [jeeStarCounts, jeeAllCounts, neetStarCounts, neetAllCounts] = await Promise.all([
+            QuestionV2.aggregate([
+                { $match: { 'metadata.applicableExams': 'JEE', 'metadata.is_top_pyq': true, deleted_at: null } },
+                { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
+            ]),
+            QuestionV2.aggregate([
+                { $match: { 'metadata.applicableExams': 'JEE', deleted_at: null } },
+                { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
+            ]),
+            QuestionV2.aggregate([
+                { $match: { 'metadata.applicableExams': 'NEET', 'metadata.is_top_pyq': true, deleted_at: null } },
+                { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
+            ]),
+            QuestionV2.aggregate([
+                { $match: { 'metadata.applicableExams': 'NEET', deleted_at: null } },
+                { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
+            ]),
+        ]);
+
+        return { jeeStarCounts, jeeAllCounts, neetStarCounts, neetAllCounts };
+    },
+    ['the-crucible-applicable-exams-chapter-counts-v2'],
+    { revalidate: 3600, tags: ['questions'] }
+);
 
 export const metadata: Metadata = {
     title: 'The Crucible | Forge Your Rank - Master Chemistry',
@@ -26,44 +61,22 @@ export default async function Page() {
     const supabase = await createClient();
     const { data: { user } } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
 
-    // Always bypass auth in development mode (localhost)
-    const isLoggedIn = process.env.NODE_ENV === 'development' || !!user;
+    // Localhost dev bypass — never trips on Vercel previews (where NODE_ENV is also 'development').
+    const isLoggedIn = (await isLocalhostDev()) || !!user;
 
     // Fetch chapters with star counts directly from database
     let chaptersWithCounts = [];
     try {
         const { TAXONOMY_FROM_CSV } = await import('@/app/crucible/admin/taxonomy/taxonomyData_from_csv');
-        const connectDB = (await import('@/lib/mongodb')).default;
-        const { QuestionV2 } = await import('@/lib/models/Question.v2');
-        
-        await connectDB();
-        
+
         // Get base chapters from taxonomy - only chemistry chapters (ch11_* and ch12_*)
         const baseChapters = TAXONOMY_FROM_CSV.filter(
-            (node) => node.type === 'chapter' && 
-            node.id !== 'ch_unsorted' && 
+            (node) => node.type === 'chapter' &&
+            node.id !== 'ch_unsorted' &&
             (node.id.startsWith('ch11_') || node.id.startsWith('ch12_'))
         );
-        
-        // Run 4 aggregations in parallel — separate counts for JEE and NEET
-        const [jeeStarCounts, jeeAllCounts, neetStarCounts, neetAllCounts] = await Promise.all([
-            QuestionV2.aggregate([
-                { $match: { 'metadata.examBoard': 'JEE', 'metadata.is_top_pyq': true, deleted_at: null } },
-                { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
-            ]),
-            QuestionV2.aggregate([
-                { $match: { 'metadata.examBoard': 'JEE', deleted_at: null } },
-                { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
-            ]),
-            QuestionV2.aggregate([
-                { $match: { 'metadata.examBoard': 'NEET', 'metadata.is_top_pyq': true, deleted_at: null } },
-                { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
-            ]),
-            QuestionV2.aggregate([
-                { $match: { 'metadata.examBoard': 'NEET', deleted_at: null } },
-                { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
-            ]),
-        ]);
+
+        const { jeeStarCounts, jeeAllCounts, neetStarCounts, neetAllCounts } = await getExamBoardChapterCounts();
 
         const jeeStarMap  = new Map(jeeStarCounts.map( (item: { _id: string; count: number }) => [item._id, item.count]));
         const jeeCountMap = new Map(jeeAllCounts.map(  (item: { _id: string; count: number }) => [item._id, item.count]));

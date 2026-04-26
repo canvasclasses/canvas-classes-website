@@ -7,10 +7,18 @@
 
 ## 1. What You Are Building
 
-A **BookPage** is a focused, self-contained lesson page inside a digital textbook.  
-Each page = one section of NCERT content, transformed from dry textbook prose into an engaging, JEE/NEET-ready learning unit.
+A **BookPage** is a focused, self-contained lesson page inside a digital textbook.
 
-**Target reader:** Class 11–12 student preparing for JEE/NEET. Smart, busy, and slightly intimidated. They need clarity first, then depth.
+**This workflow governs two distinct tracks:**
+
+| Track | Classes | Philosophy | Template |
+|---|---|---|---|
+| **NCERT "Exploration" — Vedic Fusion** | 9 & 10 | Science begins with questions. Indian Vedic knowledge and modern scientific inquiry meet as equal traditions. Students build moral values alongside conceptual understanding. | §4B + §4C |
+| **JEE/NEET Prep** | 11 & 12 | Clarity first, then depth. Exam-ready. | §4A |
+
+**Class 9 & 10 target reader:** A North Indian student in an English-medium school who is encountering secondary science for the first time. Smart, curious, but easily lost in academic English. They need wonder first, definitions second, and a sense that science is connected to who they are — not just a subject to pass.
+
+**Class 11–12 target reader:** Student preparing for JEE/NEET. Smart, busy, and slightly intimidated. They need clarity first, then depth.
 
 ---
 
@@ -157,13 +165,38 @@ The §3.4.1 quality bar applies equally to inline prompts. Never write vague pro
 Variants and when to use them:
 | Variant | Purpose | Placement |
 |---|---|---|
-| `fun_fact` | Real-life hook to open the page | Block 0 (first block) |
-| `exam_tip` | JEE/NEET facts, tricky distinctions, what exams actually ask | Near end, before quiz |
+| `fun_fact` | Real-life hook to open the page | Block 0 for 11–12; Block 1 for Class 9 |
+| `exam_tip` | JEE/NEET facts, tricky distinctions, what exams actually ask | Near end, before quiz (11–12 only) |
 | `remember` | Critical definitions or rules the student must not get wrong | After relevant explanation |
 | `note` | Additional context, not examinable | Optional |
 | `warning` | Common mistakes / misconceptions | Optional |
 
-**`exam_tip` format:**
+**Class 9 NCERT "Exploration" callout variants** — each maps to a named feature of the textbook:
+
+| Variant | NCERT Feature | Purpose | Placement |
+|---|---|---|---|
+| `threads_of_curiosity` | Threads of Curiosity | Enriching tangents, fascinating side-facts, observations that deepen wonder | Mid-page, after the concept is established |
+| `bridging_science` | Bridging Science and Society | How this specific science has solved a real human problem — health, environment, technology | Near end, after core content |
+| `india_science` | India's Scientific Contributions | Indian scientists, institutions, or inventions directly connected to the concept — ancient to present | Woven in naturally near the relevant concept |
+| `what_if` | What if… | Open-ended hypothetical or ethical scenario — encourages creative and morally aware thinking | Near end, before quiz |
+| `quest_continues` | The Quest Continues | An unanswered question where science is still actively working — frames science as ongoing, not closed | Near end, before quiz |
+| `ready_to_go_beyond` | Ready to Go Beyond | Advanced extension — applies the concept to a deeper context or higher-grade content | Optional, near end |
+
+**Writing rules for each Class 9 variant:**
+
+`threads_of_curiosity` — Start with an observation or fact that seems strange or surprising given what the student just learned. Do not explain it fully — let it dangle. End with a question or incomplete thought that invites the student to keep wondering.
+
+`bridging_science` — Name a specific, concrete problem science solved (not "science helps us" vagueness). One problem, one solution, one human impact. Keep under 4 sentences.
+
+`india_science` — Name one specific Indian scientist, institution, or traditional knowledge system. One contribution, one impact. Never generic ("Indians contributed to science"). Never forced — if no natural Indian connection exists for this concept, skip this variant.
+
+`what_if` — Present a single hypothetical scenario or ethical dilemma in 2–3 sentences. It must be genuinely open-ended — there is no single correct answer. Avoid scenarios that collapse into a factual question.
+
+`quest_continues` — Name the specific unanswered question, not a vague "much is still unknown." Ground it in what scientists are actively doing now. End with a line that makes the student feel science is a live process, not a completed archive.
+
+`ready_to_go_beyond` — Only use when there is a genuine extension. Name the higher-grade concept explicitly (e.g. "In Class 10, you will study..."). Never use this as a dumping ground for content that should be in the main text.
+
+**`exam_tip` format (Class 11–12 only):**
 ```
 **Key term or question:** Explanation.
 
@@ -192,7 +225,60 @@ Variants and when to use them:
 - The renderer shows the generation prompt as a copyable placeholder when `src` is empty
 - When `src` is filled with an R2 URL later, the image renders normally
 
-### 3.4.1 Writing a good `generation_prompt`
+### 3.4.1 Hero Banner — Block 0 on Every Page
+
+Every page opens with a **hero banner image** as its very first block (order: 0). This is a wide, cinematic image that sets the stage visually before any text is read. It is not a diagram — it is an evocative visual that communicates the emotional and intellectual theme of the page.
+
+```json
+{
+  "id": "uuid",
+  "type": "image",
+  "order": 0,
+  "src": "",
+  "alt": "Descriptive alt text",
+  "caption": "",
+  "width": "full",
+  "aspect_ratio": "16:5",
+  "generation_prompt": "Ultra-wide cinematic banner (16:5 ratio). ..."
+}
+```
+
+**Key rules:**
+- `aspect_ratio: "16:5"` — always set this on the hero banner. This is wider than 16:9; think of it as a cinematic letterbox crop that spans the full page width without consuming vertical space.
+- `caption: ""` — hero banners have no caption. They speak visually.
+- `src: ""` — leave empty until uploaded. The renderer shows the generation prompt as a copyable placeholder.
+- The image does **not** need labels or annotations. No text overlay. No arrows.
+- If you have a genuinely strong idea for the image, write a full prompt. If you are uncertain, write a partial prompt or leave `generation_prompt: "PENDING"` — the author will fill it in.
+
+**Hero banner generation prompt structure:**
+```
+Ultra-wide cinematic banner (16:5 ratio). [Scene description — what is depicted, spatial layout, 
+subject in foreground, background context]. [What the image conveys emotionally or intellectually 
+— the theme of the page]. [Lighting and atmosphere]. [Style: painterly illustration / 
+photorealistic / epic Indian art / etc.]. Dark background. No text.
+```
+
+**Style by class:**
+| Class | Preferred style |
+|---|---|
+| 9 & 10 | Painterly illustration, cinematic Indian art, atmospheric and evocative — not a diagram |
+| 11 & 12 | Clean technical illustration or photorealistic — the visual supports the concept directly |
+
+**What makes a good hero banner idea:**
+- It captures the *intellectual or emotional essence* of the page — not just the topic
+- It can be understood without reading anything — a first-time viewer should feel something
+- It creates a question in the viewer's mind that the page answers
+- It is wide and sparse — not crowded with elements
+
+**What not to do:**
+- ❌ Don't depict a diagram (use a regular image block later in the page for that)
+- ❌ Don't add text, labels, or callout arrows in the image
+- ❌ Don't use a generic "students studying" or "laboratory equipment" stock image aesthetic
+- ❌ Don't use 16:9 for hero banners — it takes too much vertical space. Always 16:5.
+
+---
+
+### 3.4.2 Writing a good `generation_prompt`
 
 A generation prompt should be **specific, visual, and technical**. It tells an AI image generator exactly what to draw.
 
@@ -331,7 +417,45 @@ accent labels, clean technical illustration style.
 - `latex` field: raw LaTeX without `$` delimiters
 - JSON escaping: `\\frac`, `\\times` (double backslash in JSON = single `\` in LaTeX)
 
-### 3.11 `curiosity_prompt`
+### 3.11 `meet_a_scientist`
+
+Brief biography of a scientist directly connected to the concept on this page. Maps to the NCERT "Meet a Scientist" feature.
+
+```json
+{
+  "id": "uuid",
+  "type": "meet_a_scientist",
+  "order": 8,
+  "name": "C.V. Raman",
+  "years": "1888–1970",
+  "nationality": "Indian",
+  "portrait_prompt": "Portrait illustration of C.V. Raman, Indian physicist, Nobel laureate. Formal attire, confident expression, neutral dark background. Clean editorial illustration style, orange accent.",
+  "portrait_src": "",
+  "contribution": "Discovered the **Raman Effect** in 1928 — when light passes through a transparent material, a small fraction scatters at a different wavelength. This scattering reveals the molecular structure of the material.",
+  "connection": "Every time you see a solution scatter a beam of light in this chapter's experiment, you are observing the same phenomenon Raman studied.",
+  "fun_detail": "Raman made his discovery using sunlight and simple prisms — not expensive lab equipment. He won the Nobel Prize in Physics in 1930, the first Asian scientist to do so.",
+  "learn_more": "Raman Research Institute, Bangalore (founded by C.V. Raman) continues this work today."
+}
+```
+
+**Field rules:**
+- `name` — full name as commonly known
+- `years` — birth–death or birth–present
+- `nationality` — one word; for Indians always `"Indian"`
+- `portrait_src` — empty string until uploaded; renderer shows `portrait_prompt` as placeholder
+- `contribution` — 2–3 sentences: what they discovered/invented and why it matters. Bold the key term.
+- `connection` — 1 sentence bridging their work to the exact concept on *this page*. This is mandatory — never include a scientist whose work has no direct connection.
+- `fun_detail` — 1–2 sentences of humanising detail: the instrument used, a surprising fact, the context of discovery. Not awards — unless the award has a good story.
+- `learn_more` — Optional. One institution, journal, or resource the student can actually look up.
+
+**When to use:**
+- Use when a specific scientist's story is directly relevant to the concept being taught — not just tangentially related to the field.
+- Prefer Indian scientists where genuinely relevant. Never force an Indian scientist if the direct contribution came from elsewhere.
+- Maximum one `meet_a_scientist` block per page.
+
+---
+
+### 3.12 `curiosity_prompt`
 
 Open-ended curiosity hook. **Block 0 on Class 9 pages.** Primes the student's thinking before the concept is introduced — zero prior knowledge required. There is no "correct answer", no MCQ, no grading. It sets a scene and asks the student to wonder.
 
@@ -362,9 +486,10 @@ Open-ended curiosity hook. **Block 0 on Class 9 pages.** Primes the student's th
 Every page should follow this flow. Adjust as needed but don't skip the hook or the exam tip.
 
 ```
-Block 0:  callout[fun_fact]   ← Real-life hook. Opens curiosity.
-Block 1:  text                ← Core concept: what it is, why it matters
-Block 2:  heading[2]          ← Sub-section: first major part
+Block 0:  image[hero banner]  ← Wide 16:5 hero image — sets the visual stage (aspect_ratio: "16:5", caption: "")
+Block 1:  callout[fun_fact]   ← Real-life hook. Opens curiosity.
+Block 2:  text                ← Core concept: what it is, why it matters
+Block 3:  heading[2]          ← Sub-section: first major part
 Block 3:  text                ← Explanation with steps / mechanism
 Block 4:  image               ← Diagram — ALWAYS include; src="" + generation_prompt if not yet uploaded
 Block 5:  heading[2]          ← Sub-section: second major part (if exists)
@@ -384,28 +509,74 @@ Block 11: inline_quiz         ← 2–4 questions, always last
 
 ---
 
-### 4B. Class 9 — Reasoning-Embedded Template
+### 4B. Class 9 — NCERT "Exploration" Template
 
-Class 9 pages embed reasoning development into the content itself — but reasoning tasks must be placed where the student has the tools to actually reason, not dropped on them cold.
+#### Philosophy First
 
-**Two reasoning block types, two different jobs:**
-- `curiosity_prompt` (Block 0) — open-ended wonder. No MCQ, no prior knowledge required. Primes curiosity.
-- `reasoning_prompt` (mid-page) — Application-level MCQ. Placed **after** the concept is introduced, so the student has definitions and mechanisms to apply.
+This template is built around the NCF-SE 2023 vision: **science begins with questions, not definitions.** Every page should feel like it is unfolding something — not delivering a package.
+
+Three mindset shifts from the 11–12 template:
+- **Questions before answers.** Lead with wonder. Establish concepts. Then deepen.
+- **India is woven in, not tacked on.** Indian scientists, contexts, and examples belong naturally near the relevant concept, not in a standalone box that reads as an afterthought.
+- **Science is ongoing.** Every page has at least one beat acknowledging what we do not know yet. The textbook is not the last word.
+
+#### Mandatory Features (every Class 9 & 10 page must have all four)
+
+| Block | Type | NCERT Equivalent |
+|---|---|---|
+| Block 0 | `image` hero banner (16:5, no caption) | Visual stage-setter |
+| Block 1 | `curiosity_prompt` | Think It Over |
+| Mid-page (after concept) | `reasoning_prompt` | Pause and Ponder |
+| Last block | `inline_quiz` | Revise, Reflect, Refine |
+
+#### Required Minimum — at least one per page
+
+Every page must include at least one of the following. Choose what fits the concept most naturally — never force:
+
+| Type | NCERT Equivalent | Pick when |
+|---|---|---|
+| `callout[threads_of_curiosity]` | Threads of Curiosity | A genuinely interesting side-fact or strange observation exists |
+| `callout[india_science]` | India's Scientific Contributions | A specific Indian scientist, institution, or traditional knowledge is directly relevant |
+| `callout[bridging_science]` | Bridging Science and Society | The concept has solved or is solving a concrete human problem |
+| `callout[quest_continues]` | The Quest Continues | A real unanswered question exists in this topic area |
+| `callout[what_if]` | What if… | The concept opens a genuine ethical or hypothetical angle |
+
+If multiple fit, include the one that is most content-rich. Two is fine if both genuinely strengthen the page. Three or more on a single page will feel crowded — cut to the strongest.
+
+#### Optional (use when natural, never force)
+
+| Type | NCERT Equivalent | Notes |
+|---|---|---|
+| `meet_a_scientist` | Meet a Scientist | Only when a specific scientist's story directly illustrates the concept |
+| `callout[ready_to_go_beyond]` | Ready to Go Beyond | Only when there is a real Class 10+ extension — not a dumping ground |
+| `simulation` | Think as a Scientist | Where a meaningful prediction challenge exists |
+| `worked_example` | Solved examples | For pages with numerical content |
+
+#### Standard Block Order
 
 ```
-Block 0:  curiosity_prompt    ← Open-ended hook (no MCQ, no wrong answer) — primes curiosity
-Block 1:  callout[fun_fact]   ← Real-life anchor
-Block 2:  text                ← Core concept introduction (definitions, what it IS)
-Block 3:  heading[2]          ← Sub-section: first major part
-Block 4:  text                ← Explanation / mechanism
-Block 5:  reasoning_prompt    ← Application-level MCQ — student now has tools to reason with
-Block 6:  image               ← Diagram (mandatory; src="" + generation_prompt)
-Block 7:  simulation          ← With prediction challenge (where meaningful)
-Block 8:  text                ← Deeper explanation / what the sim reveals
-Block 9:  worked_example      ← NCERT solved example (if exists)
-Block 10: callout[exam_tip]   ← Board exam insight (CBSE Class 9 — NOT JEE/NEET)
-Block 11: inline_quiz         ← 3 questions: 1 recall + 1 application + 1 reasoning (always last)
+Block 0:  image (hero banner, 16:5)       ← Wide cinematic image — sets the visual and emotional stage
+Block 1:  curiosity_prompt                ← "Think It Over" — open-ended, zero prior knowledge required
+Block 2:  callout[fun_fact]               ← Vedic verse (Gita / Upanishads / Vedas) — three-part format
+Block 3:  text                            ← Core concept: definitions, what it IS
+Block 3:  heading[2]                      ← First sub-concept
+Block 4:  text                            ← Explanation / mechanism
+Block 5:  reasoning_prompt                ← "Pause and Ponder" — student now has vocabulary to reason with
+Block 6:  image                           ← Diagram (mandatory — src="" + generation_prompt if not uploaded)
+Block 7:  callout[threads_of_curiosity]   ← OR india_science / bridging_science (one required, place after concept)
+Block 8:  heading[2]                      ← Second sub-concept (if exists)
+Block 9:  text                            ← Explanation
+Block 10: image                           ← Second diagram (if the second sub-concept warrants one)
+Block 11: simulation                      ← "Think as a Scientist" — with prediction challenge (where applicable)
+Block 12: meet_a_scientist                ← "Meet a Scientist" (where applicable)
+Block 13: worked_example                  ← NCERT solved example (if source contains one)
+Block 14: callout[quest_continues]        ← "The Quest Continues" — what is still unknown (required unless already in Block 7)
+Block 15: callout[what_if]               ← Hypothetical / ethical scenario (optional)
+Block 16: callout[ready_to_go_beyond]    ← Advanced extension (optional)
+Block 17: inline_quiz                     ← "Revise, Reflect, Refine" — 3 questions, always last
 ```
+
+Not every position will be occupied. The non-negotiables are Block 0, at least one `reasoning_prompt`, and `inline_quiz` as the last block. Everything else appears only when warranted by the content.
 
 #### curiosity_prompt — Block 0 rules
 
@@ -493,6 +664,42 @@ Do NOT add prediction to exploratory simulations (e.g., sliders that just visual
   }
 }
 ```
+
+---
+
+## 4C. Class 9 — Per-Page Consistency Checklist
+
+Before submitting any Class 9 page, verify every item. This checklist enforces the NCERT "Exploration" vision across every author and every page.
+
+### Structure checks
+- [ ] Block 0 is `curiosity_prompt` — answerable with zero prior knowledge, no options array
+- [ ] At least one `reasoning_prompt` appears **after** the text blocks that establish the concept it tests
+- [ ] `inline_quiz` is the last block with exactly 3 questions (recall → application → reasoning)
+- [ ] At least one of: `threads_of_curiosity`, `india_science`, `bridging_science`, `quest_continues`, `what_if`
+- [ ] Every `heading[2]` that starts a sub-section has at least one `text` block below it
+
+### Content checks
+- [ ] No page starts with a definition — the `curiosity_prompt` leads
+- [ ] `india_science` callout (if used) names a **specific** scientist or institution, not "Indians contributed"
+- [ ] `quest_continues` names the **specific** unanswered question — not "much is still being explored"
+- [ ] `what_if` scenario is genuinely open-ended — no single correct answer collapses it into a factual question
+- [ ] `meet_a_scientist` (if used) has a `connection` field that ties directly to **this page's concept**
+- [ ] Images have `generation_prompt` — never left empty when `src: ""`
+
+### Tone checks
+- [ ] Second person throughout (`you`, `your`) — not `students` or `learners`
+- [ ] No sentence begins with "In this section, we will learn..."
+- [ ] No passive constructions: "it is observed" → "you observe"
+- [ ] At least one analogy from everyday life appears in the first two `text` blocks
+- [ ] The page does not feel like an exam-prep page — it feels like exploring something
+
+### Cross-subject integration (where natural)
+The "Exploration" textbook explicitly integrates biology, chemistry, physics, earth science, and social sciences. When a concept connects naturally to another subject, name it:
+- A chemistry concept that explains a biology process → one sentence in a `text` block
+- A physics principle underlying a chemistry reaction → mention in the `threads_of_curiosity` or `bridging_science` callout
+- A mathematical pattern in a scientific observation → a `reasoning_prompt` of type `quantitative`
+
+Do not force cross-subject links. One natural connection is better than three strained ones.
 
 ---
 
@@ -801,3 +1008,92 @@ Before committing a Hinglish block, check every item:
 ### 12.10 Reference Implementation
 
 The authoritative example is page 1 of Chapter 0 of NCERT Class 9 Science — `what-is-science`. Both text blocks (`0e4f59ae-…` and `22fd127d-…`) are the proof-of-concept. When in doubt, open that page and read the Hinglish alongside the English to calibrate.
+
+---
+
+## 13. Vedic Fusion — Class 9 & 10 Only
+
+Every Class 9 and 10 page is a **fusion of two traditions**: NCERT modern science and Indian Vedic wisdom. These are not in opposition — they are complementary. Indian thinkers asked the same deep questions about nature centuries before Western science codified the answers. Our pages make that lineage visible.
+
+The goal is not patriotism. The goal is to make a student from Dehradun or Shimla feel that science is not a foreign subject — it is an extension of a tradition of inquiry they already belong to.
+
+### 13.1 The Opening — Vedic Verse as Block 1
+
+Every Class 9 and 10 page opens with a `callout[fun_fact]` at Block 1 that contains a Vedic verse. This is the page's spiritual and philosophical anchor.
+
+**Sources (in order of preference):**
+1. **Bhagavad Gita** — for verses on action, knowledge, observation, duty, impermanence
+2. **Upanishads** — for verses on the nature of matter, reality, consciousness, the cosmos
+3. **Vedas** (Rigveda, Atharvaveda) — for verses on nature, elements, the sky, the earth
+4. **Yoga Sutras of Patanjali** — for verses on mind, focus, discipline, perception
+5. **Arthashastra** (Kautilya) — for verses on observation, strategy, empirical thinking
+6. **Aryabhatiya** (Aryabhata) or other Indian scientific texts — when the chapter directly connects to math, astronomy, or measurement
+
+**How to pick the right verse:** The verse must connect to the *intellectual virtue* the page is teaching, not just the scientific topic. A page on mixtures is not just about chemistry — it is about discernment (*viveka*). A page on motion is about cause and effect (*karma*). A page on cells is about the interconnectedness of all living things.
+
+**Three-part format (mandatory):**
+```
+*Sanskrit verse in Devanagari script, italic*
+
+Hindi rendering — simpler, conversational words. Not literary Sanskrit-inflected Hindi.
+If the Sanskrit word has an everyday Hindi equivalent, use it. Written for a 9th grader.
+
+English translation — 1–2 tight sentences focused on the idea, not word-for-word.
+```
+
+This block is identical in English and Hinglish mode. Callouts do not get Hinglish versions.
+
+**Bad Hindi (too literary):**
+> *"Yogasthaḥ kuru karmāṇi — yoga mein sthit hokar samatā-bhāv se karma karo."*
+
+**Good Hindi (everyday words):**
+> *"Kaam mann laga ke karo, par result ki chinta chhod do — yahi yoga hai."*
+
+### 13.2 Weaving Vedic Thought into the Body
+
+The verse at Block 1 sets a theme. That theme should echo once or twice in the body text — not as a lecture, but as a quiet reappearance.
+
+**Pattern: Open with the modern observation → draw the ancient parallel → return to the science.**
+
+Example (a page on observation in science):
+> "Before Newton named gravity, before Galileo timed falling objects, there was a tradition that watched the world with equal intensity. The Rigveda asks: *ṛtaṁ ca satyaṁ cābhīddhāt* — from truth and cosmic order, the universe was kindled. The question of why things fall, why seasons return, why fire rises — these were never just scientific questions. They were questions about the order underneath everything. Newton and the Vedic seer were asking the same thing in different languages."
+
+This does not need to appear in every text block. Once per page — in the most natural location — is enough. Do not force it.
+
+### 13.3 Indian Scientists in the Body
+
+The `india_science` callout ensures Indian contributions are visible. But Indian scientists should also appear naturally in the body text when they directly contributed to the concept:
+
+- **Aryabhata** — astronomy, zero, place-value system, planetary motion
+- **Brahmagupta** — mathematics, gravity (described objects falling toward Earth's centre)
+- **Charaka / Sushruta** — biology, medicine, anatomy
+- **C.V. Raman** — light scattering, molecular structure
+- **Homi Bhabha / Vikram Sarabhai** — atomic energy, space science
+- **S. Ramanujan** — mathematics, number theory
+- **Meghnad Saha** — stellar physics, ionisation
+- **Jagadish Chandra Bose** — plant response, radio waves
+
+Do not manufacture contributions. Only cite an Indian scientist when their work directly connects to the concept on the page.
+
+### 13.4 Moral Values — Emergent, Not Instructional
+
+The Vedic fusion is not a moral education insert. Do not write: "This teaches us that honesty is important in science." The moral value must emerge from the story of science itself.
+
+**Values that emerge naturally from scientific inquiry:**
+- **Intellectual humility** — a scientist who admits uncertainty. A wrong hypothesis that led to the right discovery.
+- **Patience and persistence** — Marie Curie's years of isolation, Raman's work with simple instruments.
+- **Non-attachment to results** (*nishkama karma*) — the scientist who publishes findings that contradict their own earlier work.
+- **Respect for the natural world** — chemistry that describes the very matter students and all living things are made of.
+- **Curiosity as duty** — the `quest_continues` callout carries this naturally.
+
+The `what_if` callout is the best place for an ethical dimension when the science itself raises one.
+
+### 13.5 Vedic Fusion Checklist — Run Before Saving
+
+- [ ] Block 1 has a `callout[fun_fact]` with a Vedic verse in the three-part format (Sanskrit → Hindi → English)
+- [ ] The verse connects to the *intellectual virtue* of the page, not just the topic
+- [ ] The Hindi rendering uses everyday words, not literary Sanskrit-inflected Hindi
+- [ ] The Vedic theme echoes once in the body (not forced — only where natural)
+- [ ] If an Indian scientist directly contributed, they appear in the body text or `india_science` callout
+- [ ] No moral value is stated explicitly — it emerges from the story
+- [ ] The page does not feel like a religion class — it feels like science with roots

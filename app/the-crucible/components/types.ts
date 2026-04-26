@@ -38,6 +38,10 @@ export interface Question {
     };
     latex_validated?: boolean;
   };
+  // True when the question was fetched with excludeSolutions=true and
+  // the solution still needs to be lazy-loaded. Set on Browse-mode streamed
+  // batches; cleared once the solution is fetched and merged in.
+  solution_pending?: boolean;
   metadata: {
     difficultyLevel: 1 | 2 | 3 | 4 | 5;
     chapter_id: string;
@@ -46,7 +50,7 @@ export interface Question {
     // Multi-dimensional tagging
     microConcept?: string;
     isMultiConcept?: boolean;
-    questionNature?: 'Recall' | 'Rule_Application' | 'Mechanistic' | 'Synthesis';
+    questionNature?: 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis';
     // NEW: 3-Tier Exam Taxonomy
     examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
     sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';

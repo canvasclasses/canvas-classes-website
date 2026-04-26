@@ -108,13 +108,15 @@ export default async function LandingPage({ params }: { params: Promise<{ slug: 
           ) : (
             <div className="grid gap-3">
               {colleges.map((c) => (
-                <div
+                <Link
                   key={c._id}
-                  className="p-4 md:p-5 rounded-xl bg-[#0B0F15] border border-white/5 hover:border-white/10 transition-colors flex flex-wrap items-center gap-4"
+                  href={`/college-predictor/college/${c._id}`}
+                  prefetch={false}
+                  className="p-4 md:p-5 rounded-xl bg-[#0B0F15] border border-white/5 hover:border-orange-500/30 hover:bg-[#0f1420] transition-colors flex flex-wrap items-center gap-4 group"
                 >
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <div className="text-base font-semibold text-white truncate">{c.short_name}</div>
+                      <div className="text-base font-semibold text-white truncate group-hover:text-orange-300 transition-colors">{c.short_name}</div>
                       <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-white/5 text-zinc-400">
                         {c.type}
                       </span>
@@ -130,7 +132,10 @@ export default async function LandingPage({ params }: { params: Promise<{ slug: 
                       {c.established && <> · Established {c.established}</>}
                     </div>
                   </div>
-                </div>
+                  <div className="text-xs text-orange-400/80 group-hover:text-orange-300 transition-colors shrink-0">
+                    View cutoffs →
+                  </div>
+                </Link>
               ))}
             </div>
           )}

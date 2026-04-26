@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import PptxGenJS from 'pptxgenjs';
+import { getAuthenticatedUser } from '@/lib/auth';
+import { getUserPermissions } from '@/lib/rbac';
+import { isLocalhostDev } from '@/lib/bookAuth';
 
 export const runtime = 'nodejs';
 
@@ -65,6 +68,18 @@ function sanitizeFileName(name: string): string {
 
 export async function POST(request: NextRequest) {
   try {
+    // Only super admins may export — subject_admins are explicitly excluded
+    if (!(await isLocalhostDev())) {
+      const user = await getAuthenticatedUser(request);
+      if (!user) {
+        return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+      }
+      const permissions = await getUserPermissions(user.email!);
+      if (!permissions.canExportData) {
+        return NextResponse.json({ success: false, error: 'Forbidden: export requires super admin access' }, { status: 403 });
+      }
+    }
+
     const body = (await request.json()) as PptExportRequest;
     const title = sanitizeFileName(body?.title || 'Practice Sheet');
     const slides = Array.isArray(body?.slides) ? body.slides : [];

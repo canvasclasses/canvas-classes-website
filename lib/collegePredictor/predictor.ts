@@ -28,7 +28,16 @@ export type Bucket = 'safe' | 'target' | 'reach' | 'unlikely';
 export type Confidence = 'high' | 'medium' | 'low';
 
 export interface PredictorInput {
-  rank: number;                   // CRL rank (convert from percentile first)
+  // Rank as published on the **same list** as the JoSAA cutoff for the user's
+  // category:
+  //   · category === 'OPEN'         → CRL (Common Rank List)
+  //   · category !== 'OPEN' (e.g.   → Category Rank (CR)
+  //     OBC-NCL / SC / ST / EWS)
+  // Reserved-category cutoffs in JoSAA are stored as category rank, not CRL,
+  // so a CRL passed here for a reserved category will produce wildly under-
+  // estimated reach (every reserved seat will look out of range).
+  // Callers using percentileToRank() get the right unit automatically.
+  rank: number;
   category: CutoffCategory;
   gender: CutoffGender;
   home_state: string;             // exact state name, matched against College.state
@@ -165,10 +174,30 @@ function project(historical: { year: number; closing_rank: number }[]): Projecti
 }
 
 // ── Bucket classification ──────────────────────────────────────────────────────
-function classify(userRank: number, projected: number, sigma: number): {
-  bucket: Bucket;
-  probability: number;
-} {
+function classify(
+  userRank: number,
+  projected: number,
+  sigma: number,
+  historicalRanks?: number[],
+): { bucket: Bucket; probability: number } {
+  // Hard "Safe" override: if the user's rank is at or below the minimum
+  // historical closing rank, they would have been admitted in every year
+  // for which we have data. We need this override because the z-score model
+  // breaks down on very volatile cutoffs — when sigma is large relative to
+  // the projected rank (e.g. NIT Calicut EP SC, where closes ranged 23k,
+  // 9k, 5k, 5k), even rank=1 fails z>1 and gets bucketed Target. That's
+  // not actually a real prediction concern: if rank 1 closed every past
+  // year at OS rank 4777 or worse, rank 1 is going to close it again.
+  //
+  // The validation suite's IN-10 ("rank 1 in any category → every result
+  // Safe") flagged this exact failure mode.
+  if (historicalRanks && historicalRanks.length > 0) {
+    const minHistorical = Math.min(...historicalRanks);
+    if (userRank <= minHistorical) {
+      return { bucket: 'safe', probability: 99 };
+    }
+  }
+
   // Admission: lower rank is better. The student gets in if their rank ≤ closing rank.
   // z = how many σ below (or above) the projected closing the user's rank sits.
   const z = (projected - userRank) / sigma;
@@ -192,100 +221,121 @@ function normalCDF(z: number): number {
   return z > 0 ? 1 - p : p;
 }
 
-// ── Main entry ─────────────────────────────────────────────────────────────────
-export async function predictColleges(
-  input: PredictorInput,
-  options: { limit?: number } = {},
-): Promise<PredictorResult[]> {
+// ── Dataset loader (DB-aware) ──────────────────────────────────────────────────
+// Pulls every cutoff row for a single (category, gender, year-window) so callers
+// can run many predictions against one dataset without re-querying. The web
+// route loads once per request; batch tools (validation, precompute) load once
+// per (category, gender, year) and run hundreds of personas in memory.
+
+interface GroupedRow { year: number; closing_rank: number; branch_name: string }
+type GroupedByQuota = Map<CutoffQuota, GroupedRow[]>;
+type GroupedByBranch = Map<string, GroupedByQuota>;
+type GroupedByCollege = Map<string, GroupedByBranch>;
+
+interface CollegeLite {
+  _id: string;
+  short_name: string;
+  type: 'NIT' | 'IIIT' | 'GFTI' | 'IIT';
+  state: string;
+  region: string;
+  nirf_rank_engineering?: number;
+  is_active: boolean;
+}
+
+export interface PredictorDataset {
+  category: CutoffCategory;
+  gender: CutoffGender;
+  targetYear: number;
+  finalByCollege: GroupedByCollege;
+  r1ByCollege: GroupedByCollege;
+  r3ByCollege: GroupedByCollege;
+  colleges: CollegeLite[];
+}
+
+function groupCutoffs(rows: { college_id: string; branch_short_name: string; quota: string; year: number; closing_rank: number; branch_name: string }[]): GroupedByCollege {
+  const out: GroupedByCollege = new Map();
+  for (const c of rows) {
+    if (!out.has(c.college_id)) out.set(c.college_id, new Map());
+    const byBranch = out.get(c.college_id)!;
+    if (!byBranch.has(c.branch_short_name)) byBranch.set(c.branch_short_name, new Map());
+    const byQuota = byBranch.get(c.branch_short_name)!;
+    if (!byQuota.has(c.quota as CutoffQuota)) byQuota.set(c.quota as CutoffQuota, []);
+    byQuota.get(c.quota as CutoffQuota)!.push({
+      year: c.year,
+      closing_rank: c.closing_rank,
+      branch_name: c.branch_name,
+    });
+  }
+  return out;
+}
+
+export async function loadPredictorDataset(
+  category: CutoffCategory,
+  gender: CutoffGender,
+  year?: number,
+): Promise<PredictorDataset> {
   await connectDB();
 
-  const targetYear = input.year ?? new Date().getFullYear();
+  const targetYear = year ?? new Date().getFullYear();
   const minYear = targetYear - 5;
 
-  const [cutoffs, r1Cutoffs, r3Cutoffs, colleges] = await Promise.all([
+  const [finalRows, r1Rows, r3Rows, colleges] = await Promise.all([
     CollegeCutoff.find({
-      category: input.category,
-      gender: input.gender,
+      category,
+      gender,
       is_final_round: true,
       year: { $gte: minYear, $lt: targetYear },
     }).lean(),
     CollegeCutoff.find({
-      category: input.category,
-      gender: input.gender,
+      category,
+      gender,
       round: 1,
       year: { $gte: minYear, $lt: targetYear },
     }).lean(),
     CollegeCutoff.find({
-      category: input.category,
-      gender: input.gender,
+      category,
+      gender,
       round: 3,
       year: { $gte: minYear, $lt: targetYear },
     }).lean(),
     College.find({ is_active: true }).lean(),
   ]);
 
-  if (cutoffs.length === 0) {
-    return [];
-  }
+  return {
+    category,
+    gender,
+    targetYear,
+    finalByCollege: groupCutoffs(finalRows),
+    r1ByCollege: groupCutoffs(r1Rows),
+    r3ByCollege: groupCutoffs(r3Rows),
+    colleges: colleges as unknown as CollegeLite[],
+  };
+}
 
-  // Group: college_id → branch_short_name → quota → rows[]
-  type Row = { year: number; closing_rank: number; branch_name: string };
-  const byCollege = new Map<string, Map<string, Map<CutoffQuota, Row[]>>>();
-  for (const c of cutoffs) {
-    if (!byCollege.has(c.college_id)) byCollege.set(c.college_id, new Map());
-    const byBranch = byCollege.get(c.college_id)!;
-    if (!byBranch.has(c.branch_short_name)) byBranch.set(c.branch_short_name, new Map());
-    const byQuota = byBranch.get(c.branch_short_name)!;
-    if (!byQuota.has(c.quota as CutoffQuota)) byQuota.set(c.quota as CutoffQuota, []);
-    byQuota.get(c.quota as CutoffQuota)!.push({
-      year: c.year,
-      closing_rank: c.closing_rank,
-      branch_name: c.branch_name,
-    });
-  }
-
-  // Same grouping for R1 rows (supplementary signal, not used for bucketing).
-  const r1ByCollege = new Map<string, Map<string, Map<CutoffQuota, Row[]>>>();
-  for (const c of r1Cutoffs) {
-    if (!r1ByCollege.has(c.college_id)) r1ByCollege.set(c.college_id, new Map());
-    const byBranch = r1ByCollege.get(c.college_id)!;
-    if (!byBranch.has(c.branch_short_name)) byBranch.set(c.branch_short_name, new Map());
-    const byQuota = byBranch.get(c.branch_short_name)!;
-    if (!byQuota.has(c.quota as CutoffQuota)) byQuota.set(c.quota as CutoffQuota, []);
-    byQuota.get(c.quota as CutoffQuota)!.push({
-      year: c.year,
-      closing_rank: c.closing_rank,
-      branch_name: c.branch_name,
-    });
-  }
-
-  // And for R3.
-  const r3ByCollege = new Map<string, Map<string, Map<CutoffQuota, Row[]>>>();
-  for (const c of r3Cutoffs) {
-    if (!r3ByCollege.has(c.college_id)) r3ByCollege.set(c.college_id, new Map());
-    const byBranch = r3ByCollege.get(c.college_id)!;
-    if (!byBranch.has(c.branch_short_name)) byBranch.set(c.branch_short_name, new Map());
-    const byQuota = byBranch.get(c.branch_short_name)!;
-    if (!byQuota.has(c.quota as CutoffQuota)) byQuota.set(c.quota as CutoffQuota, []);
-    byQuota.get(c.quota as CutoffQuota)!.push({
-      year: c.year,
-      closing_rank: c.closing_rank,
-      branch_name: c.branch_name,
-    });
-  }
+// ── Pure scoring (no DB) ───────────────────────────────────────────────────────
+// Same logic that used to live inline in predictColleges, now operating on a
+// preloaded dataset. The (category, gender, year) on `input` must match the
+// dataset; we don't re-check at runtime to avoid a hot-path branch.
+export function predictFromDataset(
+  input: PredictorInput,
+  dataset: PredictorDataset,
+  options: { limit?: number } = {},
+): PredictorResult[] {
+  const { finalByCollege, r1ByCollege, r3ByCollege, colleges } = dataset;
+  if (finalByCollege.size === 0) return [];
 
   const results: PredictorResult[] = [];
   const includeUnlikely = input.include_unlikely === true;
 
   for (const college of colleges) {
-    const branches = byCollege.get(college._id);
+    const branches = finalByCollege.get(college._id);
     if (!branches) continue;
 
     const quotas = relevantQuotas(college._id, college.type, college.state, input.home_state);
 
     for (const [branchShort, byQuota] of branches) {
       // Pick the first matching quota that has data.
-      let rows: Row[] | undefined;
+      let rows: GroupedRow[] | undefined;
       let matchedQuota: CutoffQuota | undefined;
       for (const q of quotas) {
         if (byQuota.has(q) && byQuota.get(q)!.length > 0) {
@@ -297,7 +347,12 @@ export async function predictColleges(
       if (!rows || !matchedQuota) continue;
 
       const proj = project(rows.map((r) => ({ year: r.year, closing_rank: r.closing_rank })));
-      const cls = classify(input.rank, proj.projected, proj.sigma);
+      const cls = classify(
+        input.rank,
+        proj.projected,
+        proj.sigma,
+        rows.map((r) => r.closing_rank),
+      );
       if (cls.bucket === 'unlikely' && !includeUnlikely) continue;
 
       // Look up same (college, branch, matched-quota) in R1 data.
@@ -374,4 +429,16 @@ export async function predictColleges(
   });
 
   return options.limit ? results.slice(0, options.limit) : results;
+}
+
+// ── Convenience wrapper (DB-aware) ─────────────────────────────────────────────
+// Keeps the original one-shot ergonomics for the API route. Internally just
+// loads the dataset for the input's (category, gender, year) then scores once.
+// Behavior-equivalent to the prior monolithic implementation.
+export async function predictColleges(
+  input: PredictorInput,
+  options: { limit?: number } = {},
+): Promise<PredictorResult[]> {
+  const dataset = await loadPredictorDataset(input.category, input.gender, input.year);
+  return predictFromDataset(input, dataset, options);
 }

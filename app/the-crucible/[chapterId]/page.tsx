@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { getTaxonomy, getChapterQuestions, getChapterQuestionCounts, getChapterStarCounts } from '../actions';
-import ChapterPracticePage from './ChapterPracticePage';
+import { getTaxonomy, getChapterQuestionCounts, getChapterStarCounts } from '../actions';
+import CrucibleWizard from '../components/CrucibleWizard';
+import { createClient } from '@/app/utils/supabase/server';
+import { isLocalhostDev } from '@/lib/bookAuth';
 
 // ISR: revalidate every 10 minutes — question content changes infrequently
 export const revalidate = 600;
@@ -53,13 +55,18 @@ export default async function Page({
     const resolvedSearch = await searchParams;
 
     // Read examBoard from URL (?examBoard=NEET or ?examBoard=JEE)
-    // This is set by CrucibleWizard when the user navigates from a NEET session.
     const rawBoard = resolvedSearch['examBoard'];
     const examBoard = rawBoard === 'NEET' ? 'NEET' : rawBoard === 'JEE' ? 'JEE' : undefined;
 
-    const [chapters, questions, questionCounts, starCounts] = await Promise.all([
+    // Any direct chapter URL implies browse intent — the [chapterId] route only exists for browse deep-links
+    const mode: 'browse' = 'browse';
+
+    const supabase = await createClient();
+    const { data: { user } } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
+    const isLoggedIn = (await isLocalhostDev()) || !!user;
+
+    const [chapters, questionCounts, starCounts] = await Promise.all([
         getTaxonomy(),
-        getChapterQuestions(chapterId, examBoard),
         getChapterQuestionCounts(),
         getChapterStarCounts(),
     ]);
@@ -74,15 +81,12 @@ export default async function Page({
     }));
 
     return (
-        <ChapterPracticePage
-            chapter={{
-                ...chapter,
-                question_count: questionCounts[chapterId] ?? 0,
-                star_question_count: starCounts[chapterId] ?? 0,
-            }}
-            questions={questions}
-            allChapters={chaptersWithCounts}
-            examBoard={examBoard}
+        <CrucibleWizard
+            chapters={chaptersWithCounts}
+            isLoggedIn={isLoggedIn}
+            initialChapterId={chapterId}
+            initialMode={mode}
+            initialExam={examBoard}
         />
     );
 }

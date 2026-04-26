@@ -47,6 +47,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.85,
     }));
 
+    // College Predictor deep-dive pages — one per seeded college
+    // (`/college-predictor/college/[slug]`). These are our SEO target for
+    // "<college> cutoff <year>" queries. Priority set slightly below the
+    // predictor root + regional landings because they are leaf pages.
+    let collegeDeepDiveEntries: MetadataRoute.Sitemap = [];
+    try {
+        const { loadAllCollegeSlugs } = await import('@/lib/collegePredictor/deepDive');
+        const slugs = await loadAllCollegeSlugs();
+        collegeDeepDiveEntries = slugs.map((slug) => ({
+            url: `${BASE_URL}/college-predictor/college/${slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.75,
+        }));
+    } catch (error) {
+        console.error('Error fetching college slugs for sitemap:', error);
+    }
+
     const staticEntries = staticPages.map((page) => ({
         url: `${BASE_URL}${page.path}`,
         lastModified: new Date(),
@@ -218,6 +236,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return [
         ...staticEntries,
         ...collegePredictorLandingEntries,
+        ...collegeDeepDiveEntries,
         ...flashcardChapterEntries,
         ...crucibleChapterEntries,
         ...questionEntries,

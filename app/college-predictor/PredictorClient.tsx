@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -587,13 +588,19 @@ export default function PredictorClient() {
                 : 'bg-white/5 text-zinc-400 hover:bg-white/10'
             }`}
           >
-            CRL Rank
+            {category === 'OPEN' ? 'CRL Rank' : 'Category Rank'}
           </button>
         </div>
 
         <div className="grid md:grid-cols-2 gap-4">
           {mode === 'percentile' ? (
-            <Field label="JEE Main Percentile">
+            <Field
+              label={
+                category === 'OPEN'
+                  ? 'JEE Main Percentile'
+                  : `JEE Main ${category} Category Percentile`
+              }
+            >
               <input
                 type="number"
                 step="0.0001"
@@ -606,11 +613,19 @@ export default function PredictorClient() {
                 className="input"
               />
               <p className="mt-1.5 text-[11px] text-zinc-500">
-                We approximate your CRL rank from percentile. Once your CRL is released, switch to rank mode for a tighter prediction.
+                {category === 'OPEN'
+                  ? 'We approximate your CRL rank from percentile. Once your CRL is released, switch to rank mode for a tighter prediction.'
+                  : `Use the ${category} category percentile from your JEE Main scorecard, not the total percentile. Reserved-category cutoffs are published as category ranks, so we need the matching input.`}
               </p>
             </Field>
           ) : (
-            <Field label="Common Rank List (CRL) Rank">
+            <Field
+              label={
+                category === 'OPEN'
+                  ? 'Common Rank List (CRL) Rank'
+                  : `${category} Category Rank`
+              }
+            >
               <input
                 type="number"
                 min="1"
@@ -620,6 +635,11 @@ export default function PredictorClient() {
                 placeholder="e.g. 12500"
                 className="input"
               />
+              {category !== 'OPEN' && (
+                <p className="mt-1.5 text-[11px] text-zinc-500">
+                  Use the {category} category rank from your JEE Main scorecard, not your CRL. Reserved-category cutoffs are published as category ranks.
+                </p>
+              )}
             </Field>
           )}
 
@@ -1096,9 +1116,22 @@ function CollegeCard({
               <span className="text-[10px] font-bold text-zinc-500 tabular-nums w-5">
                 #{rank}
               </span>
-              <div className="text-base md:text-lg font-semibold text-white truncate">
-                {group.college_short_name}
-              </div>
+              {/* College name links to the deep-dive page. IITs aren't in
+                  our deep-dive dataset (JEE Main predictor scope only), so
+                  we only link when we actually have a page for it. */}
+              {group.college_type === 'IIT' ? (
+                <div className="text-base md:text-lg font-semibold text-white truncate">
+                  {group.college_short_name}
+                </div>
+              ) : (
+                <Link
+                  href={`/college-predictor/college/${group.college_id}`}
+                  prefetch={false}
+                  className="text-base md:text-lg font-semibold text-white truncate hover:text-orange-300 transition-colors"
+                >
+                  {group.college_short_name}
+                </Link>
+              )}
               <span className={`text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded border ${headlineMeta.badge}`}>
                 {headlineMeta.label}
               </span>
@@ -1111,8 +1144,17 @@ function CollegeCard({
                 </span>
               )}
             </div>
-            <div className="text-xs text-zinc-500 mt-1">
-              {group.college_state} · {group.college_region} · {branchCount} matching {branchCount === 1 ? 'branch' : 'branches'}
+            <div className="text-xs text-zinc-500 mt-1 flex flex-wrap items-center gap-x-1.5">
+              <span>{group.college_state} · {group.college_region} · {branchCount} matching {branchCount === 1 ? 'branch' : 'branches'}</span>
+              {group.college_type !== 'IIT' && (
+                <Link
+                  href={`/college-predictor/college/${group.college_id}`}
+                  prefetch={false}
+                  className="text-orange-400/80 hover:text-orange-300 transition-colors"
+                >
+                  · View details →
+                </Link>
+              )}
             </div>
           </div>
 

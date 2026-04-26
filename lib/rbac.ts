@@ -106,7 +106,7 @@ export async function getUserPermissions(email: string): Promise<UserPermissions
     canDeleteQuestions: isSuperAdmin, // Only super admin can delete
     canManageRoles: isSuperAdmin,
     canAccessAnalytics: true, // All authenticated users can view analytics
-    canExportData: isSuperAdmin || isSubjectAdmin,
+    canExportData: isSuperAdmin,
   };
 }
 

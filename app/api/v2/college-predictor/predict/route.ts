@@ -361,8 +361,14 @@ export async function POST(request: NextRequest) {
     const input = parsed.data;
 
     const targetYear = input.year ?? new Date().getFullYear();
+    // Reserved categories: input.percentile is the category percentile, and
+    // we need to convert it to a category rank that matches how JoSAA stores
+    // closing ranks for that category. percentileToRank handles the routing
+    // by category. For input.rank, we trust the caller to pass the right
+    // unit — the form is responsible for asking "Category Rank" when the
+    // selected category is non-OPEN.
     const effectiveRank =
-      input.rank ?? percentileToRank(input.percentile as number, targetYear);
+      input.rank ?? percentileToRank(input.percentile as number, targetYear, input.category);
 
     const allResults = await predictColleges(
       {

@@ -99,3 +99,45 @@ After `--apply`:
 
 If any of these fail, don't ship. Wrong cutoff data destroys trust faster than
 a missing feature.
+
+---
+
+## Yearly calibration refresh — `percentileToRank.ts`
+
+The percentile→rank conversion in `lib/collegePredictor/percentileToRank.ts`
+depends on two NTA-published numbers that change every year:
+
+1. **Total unique candidates across both sessions** → `TOTAL_CANDIDATES_BY_YEAR`
+2. **Per-category appearance counts (Session 1)** → `CATEGORY_CANDIDATE_SHARE_BY_YEAR`
+
+NTA's release pattern is stable: Session 1 results in mid-February, Session 2
+in late April. The Session 1 press release contains the per-category appearance
+breakdown; the Session 2 release contains the unique-across-sessions total.
+
+### When to refresh
+
+| Date | Action |
+|---|---|
+| **Mid-Feb** (after Session 1 results) | Add this year's per-category shares to `CATEGORY_CANDIDATE_SHARE_BY_YEAR` |
+| **Late April** (after Session 2 results) | Update this year's `TOTAL_CANDIDATES_BY_YEAR` and bump `LATEST_SHARE_YEAR` |
+
+### How to refresh
+
+1. Pull the NTA Session 1 press release PDF from `jeemain.nta.nic.in` or read
+   the press coverage (PW Live, Careers360, Shiksha all publish the table).
+2. Compute share = `appeared[category] / total_appeared` for OBC-NCL, SC, ST, EWS.
+   OPEN stays at 1.00 (CRL pool is everyone).
+3. Add a new entry to `CATEGORY_CANDIDATE_SHARE_BY_YEAR[YYYY]` mirroring the
+   2026 entry's structure.
+4. After Session 2: update `TOTAL_CANDIDATES_BY_YEAR[YYYY]` with the unique
+   total and bump `LATEST_SHARE_YEAR`.
+5. Re-run `npx tsx scripts/college-predictor/validate_predictor.ts` — IN-9
+   should still pass and the rank conversions in the percentile sweep should
+   shift slightly to reflect the new pool sizes.
+
+### Validation harness
+
+`validate_predictor.ts` is the source of truth for whether the predictor's
+behavior matches its contract. Run it after any change to the predictor or
+calibration tables. 10 invariants are tracked (IN-1 through IN-10);
+`PREDICTOR_VALIDATION_REPORT.md` is regenerated on every run.
