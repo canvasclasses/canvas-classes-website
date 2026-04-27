@@ -9,6 +9,7 @@ import WatermarkOverlay from '@/components/WatermarkOverlay';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 import { difficultyColor } from '@/lib/difficultyUtils';
+import { getTopicSortKey, hasNcertOrder, NCERT_TOPIC_ORDER } from '@/app/the-crucible/lib/ncertTopicOrder';
 
 async function fetchOptionStats(questionId: string): Promise<Record<string, number>> {
   try {
@@ -171,18 +172,72 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
     return (a.display_id || '').localeCompare(b.display_id || '', undefined, { numeric: true, sensitivity: 'base' });
   };
 
+  // PYQ detection — handles both v2 (sourceType) and legacy (is_pyq) fields,
+  // since the schema is mid-migration. A question is a PYQ if either source
+  // says so.
+  const isPYQ = (q: Question): boolean =>
+    q.metadata.sourceType === 'PYQ' || q.metadata.is_pyq === true;
+
+  // Year extraction with fallback. Prefer v2 examDetails.year, fall back to
+  // legacy exam_source.year. Returns -1 when neither is set so missing-year
+  // PYQs sort to the bottom of the PYQ block (rather than floating to the top
+  // as Infinity would).
+  const getQuestionYear = (q: Question): number =>
+    q.metadata.examDetails?.year ?? q.metadata.exam_source?.year ?? -1;
+
+  // Full within-topic sort, applied after grouping by NCERT topic position:
+  //   1. PYQ first, Non-PYQ second
+  //   2. Within PYQ: year DESC (newest first; missing-year sinks to bottom)
+  //   3. Final stable tiebreaker: display_id ASC
+  // This matches how Allen / Aakash / Unacademy sequence chapter-wise practice:
+  // the most recent exam questions surface first, practice questions follow.
+  const sortByNcertThenExamRelevance = (a: Question, b: Question) => {
+    // Step 1: NCERT topic group
+    const aTopic = getTopicSortKey(chapterId ?? '', a.metadata.tags);
+    const bTopic = getTopicSortKey(chapterId ?? '', b.metadata.tags);
+    if (aTopic !== bTopic) return aTopic - bTopic;
+
+    // Step 2: PYQ before Non-PYQ
+    const aPYQ = isPYQ(a);
+    const bPYQ = isPYQ(b);
+    if (aPYQ !== bPYQ) return aPYQ ? -1 : 1;
+
+    // Step 3: Within PYQ block, year DESC (newer first)
+    if (aPYQ && bPYQ) {
+      const aYear = getQuestionYear(a);
+      const bYear = getQuestionYear(b);
+      if (aYear !== bYear) return bYear - aYear;
+    }
+
+    // Step 4: Stable tiebreaker
+    return sortQuestions(a, b);
+  };
+  const useNcertSort = !!chapterId && hasNcertOrder(chapterId);
+
   // Resolved chapter object for the current browse session
   const currentChapter = useMemo(() => {
     if (!chapterId || !chapters.length) return null;
     return chapters.find(c => c.id === chapterId) ?? null;
   }, [chapterId, chapters]);
 
-  // Concept tags available for the current chapter (from taxonomy)
+  // Concept tags available for the current chapter (from taxonomy), reordered
+  // to follow NCERT topic flow when defined for this chapter so the chip order
+  // matches the question sort order. Tags absent from the NCERT order array
+  // fall to the end (preserves visibility for un-ordered tags).
   const availableConceptTags = useMemo(() => {
     if (!chapterId) return [];
-    return (TAXONOMY_FROM_CSV as Array<{ type?: string; parent_id?: string; id?: string; name?: string }>)
+    const tags = (TAXONOMY_FROM_CSV as Array<{ type?: string; parent_id?: string; id?: string; name?: string }>)
       .filter((node) => node.type === 'topic' && node.parent_id === chapterId)
       .map((node) => ({ id: node.id || '', name: node.name || '' }));
+    const order = NCERT_TOPIC_ORDER[chapterId];
+    if (!order) return tags;
+    return [...tags].sort((a, b) => {
+      const ai = order.indexOf(a.id);
+      const bi = order.indexOf(b.id);
+      const aIdx = ai === -1 ? Infinity : ai;
+      const bIdx = bi === -1 ? Infinity : bi;
+      return aIdx - bIdx;
+    });
   }, [chapterId]);
 
   // Distinct years available for the selected PYQ source
@@ -218,7 +273,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
       }
       return true;
     })
-    .sort(sortQuestions);
+    .sort(useNcertSort ? sortByNcertThenExamRelevance : sortQuestions);
 
   // Local browse-session attempt buffer — flushed to API only if user confirms on exit
   type BrowseAttempt = {
@@ -1076,14 +1131,11 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
         id={`card-${page}-${localIdx}`}
         data-index={localIdx}
         style={isMobile ? {
-          background: 'transparent',
-          borderBottom: '1px solid rgba(255,255,255,0.08)',
-          borderLeft: `2px solid ${diffColor}`,
-          paddingLeft: 8,
-          paddingBottom: 20,
-          marginBottom: 20,
-          marginLeft: 3,
-    
+          background: `${diffColor}0F`,
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          paddingLeft: 2,
+          paddingBottom: 10,
+          marginBottom: 8,
         } : {
           background: 'rgba(255,255,255,0.025)',
           border: '1px solid rgba(255,255,255,0.07)',
@@ -1094,38 +1146,35 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
         }}
       >
         {/* Header row: badges — bookmark (after type) — flag (right) */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: isMobile ? '10px 8px 8px 0' : '12px 18px 10px', borderBottom: isMobile ? 'none' : '1px solid rgba(255,255,255,0.05)', flexWrap: 'wrap' }}>
-          <span style={{ minWidth: 30, height: 22, borderRadius: 6, background: 'rgba(255,255,255,0.08)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, padding: '0 6px', color: 'rgba(255,255,255,0.5)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 6 : 8, padding: isMobile ? '6px 6px 5px 0' : '12px 18px 10px', borderBottom: isMobile ? 'none' : '1px solid rgba(255,255,255,0.05)', flexWrap: 'wrap' }}>
+          <span style={{ minWidth: 28, height: isMobile ? 20 : 22, borderRadius: 6, background: 'rgba(255,255,255,0.08)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: isMobile ? 10 : 11, fontWeight: 800, padding: '0 6px', color: 'rgba(255,255,255,0.5)' }}>
             Q{globalIdx + 1}
           </span>
-          <span style={{ fontSize: 10, fontWeight: 700, color: diffColor, background: diffColor + '18', padding: '2px 8px', borderRadius: 99 }}>{DIFF_LABEL(qq.metadata.difficultyLevel)}</span>
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.06)', padding: '2px 8px', borderRadius: 99 }}>{TYPE_LABEL[qq.type] ?? qq.type}</span>
+          <span style={{ fontSize: 10, fontWeight: 700, color: diffColor, background: diffColor + '18', padding: isMobile ? '1px 7px' : '2px 8px', borderRadius: 99 }}>{DIFF_LABEL(qq.metadata.difficultyLevel)}</span>
+          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.06)', padding: isMobile ? '1px 7px' : '2px 8px', borderRadius: 99 }}>{TYPE_LABEL[qq.type] ?? qq.type}</span>
           {/* Star / bookmark — sits next to type badge, on the left side */}
-          <button onClick={() => toggleStar(qq.id, qq)} style={{ width: 28, height: 28, borderRadius: 7, background: isStarred ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.05)', border: `1px solid ${isStarred ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.08)'}`, color: isStarred ? '#fbbf24' : 'rgba(255,255,255,0.35)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }} title="Bookmark this question">
-            <Star style={{ width: 13, height: 13, fill: isStarred ? '#fbbf24' : 'none' }} />
+          <button onClick={() => toggleStar(qq.id, qq)} style={{ width: isMobile ? 24 : 28, height: isMobile ? 24 : 28, borderRadius: 6, background: isStarred ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.05)', border: `1px solid ${isStarred ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.08)'}`, color: isStarred ? '#fbbf24' : 'rgba(255,255,255,0.35)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }} title="Bookmark this question">
+            <Star style={{ width: 12, height: 12, fill: isStarred ? '#fbbf24' : 'none' }} />
           </button>
-          {examLabel && (
-            <span style={{ fontSize: 10, color: examLabelColor, background: examLabelBg, border: `1px solid ${examLabelBorder}`, padding: '2px 8px', borderRadius: 99 }}>{examLabel}</span>
-          )}
           {/* Flag / report inaccuracy — pushed to the far right */}
           <button
             onClick={() => openFlagModal(qq.id, qq.display_id)}
             title="Report an issue with this question"
             style={{
               marginLeft: 'auto',
-              width: 28, height: 28, borderRadius: 7,
+              width: isMobile ? 24 : 28, height: isMobile ? 24 : 28, borderRadius: 6,
               background: flaggedIds.has(qq.id) ? 'rgba(239,68,68,0.1)' : 'rgba(255,255,255,0.05)',
               border: `1px solid ${flaggedIds.has(qq.id) ? 'rgba(239,68,68,0.35)' : 'rgba(255,255,255,0.08)'}`,
               color: flaggedIds.has(qq.id) ? '#f87171' : 'rgba(255,255,255,0.3)',
               cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
             }}
           >
-            <Flag style={{ width: 12, height: 12, fill: flaggedIds.has(qq.id) ? '#f87171' : 'none' }} />
+            <Flag style={{ width: 11, height: 11, fill: flaggedIds.has(qq.id) ? '#f87171' : 'none' }} />
           </button>
         </div>
 
         {/* Full question text (always visible) */}
-        <div style={{ padding: isMobile ? '12px 8px' : '16px 20px' }}>
+        <div style={{ padding: isMobile ? '8px 6px' : '16px 20px' }}>
           <MathRenderer
             markdown={qq.question_text.markdown}
             className="text-sm leading-relaxed"
@@ -1136,12 +1185,15 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
 
         {/* CTA footer — single primary action; solution unlocks inside the expanded state */}
         {!expanded ? (
-          <div style={{ padding: isMobile ? '10px 8px 0' : '10px 20px 14px', borderTop: isMobile ? 'none' : '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+          <div style={{ padding: isMobile ? '6px 4px 2px' : '10px 20px 14px', borderTop: isMobile ? 'none' : '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: 8 }}>
             <button
               onClick={() => expandCard(localIdx, qq)}
-              style={{ padding: '9px 20px', borderRadius: 10, border: 'none', background: 'linear-gradient(135deg, #7c3aed, #4f46e5)', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
-              Solve it <ChevronRight style={{ width: 13, height: 13 }} />
+              style={{ padding: isMobile ? '6px 12px' : '7px 16px', borderRadius: 8, border: '1px solid rgba(139,92,246,0.3)', background: 'rgba(109,40,217,0.18)', color: '#c4b5fd', fontSize: 12, fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0 }}>
+              Solve it <ChevronRight style={{ width: 12, height: 12 }} />
             </button>
+            {examLabel && (
+              <span style={{ marginLeft: 'auto', fontSize: 10, color: examLabelColor, background: examLabelBg, border: `1px solid ${examLabelBorder}`, padding: '2px 8px', borderRadius: 99, whiteSpace: 'nowrap', flexShrink: 1, overflow: 'hidden', textOverflow: 'ellipsis' }}>{examLabel}</span>
+            )}
           </div>
         ) : (
           <div style={{ padding: isMobile ? '4px 8px 0' : '4px 20px 16px', borderTop: isMobile ? 'none' : '1px solid rgba(255,255,255,0.05)' }}>
@@ -1219,7 +1271,7 @@ export default function BrowseView({ questions, chapters, onBack, chapterId, gui
           <WatermarkOverlay />
           {header}
           {filterBar}
-          <div ref={scrollAreaRef} style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: '16px 14px' } as React.CSSProperties}>
+          <div ref={scrollAreaRef} style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: '10px 12px' } as React.CSSProperties}>
             {showStarredOnly && filteredQuestions.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '48px 16px', color: 'rgba(255,255,255,0.3)' }}>
                 <Star style={{ width: 32, height: 32, margin: '0 auto 12px', opacity: 0.3 }} />

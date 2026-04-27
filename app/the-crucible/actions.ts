@@ -272,8 +272,8 @@ const MOCK_CHAPTERS: Chapter[] = [
     // Class 11 — 12 chapters
     { id: 'ch11_mole', name: 'Some Basic Concepts of Chemistry (Mole Concept)', class_level: 11, display_order: 1, category: 'Physical' },
     { id: 'ch11_atom', name: 'Structure of Atom', class_level: 11, display_order: 2, category: 'Physical' },
-    { id: 'ch11_periodic', name: 'Classification of Elements and Periodicity', class_level: 11, display_order: 3, category: 'Physical' },
-    { id: 'ch11_bonding', name: 'Chemical Bonding', class_level: 11, display_order: 4, category: 'Physical' },
+    { id: 'ch11_periodic', name: 'Classification of Elements and Periodicity', class_level: 11, display_order: 3, category: 'Inorganic' },
+    { id: 'ch11_bonding', name: 'Chemical Bonding', class_level: 11, display_order: 4, category: 'Inorganic' },
     { id: 'ch11_thermo', name: 'Thermodynamics', class_level: 11, display_order: 5, category: 'Physical' },
     { id: 'ch11_chem_eq', name: 'Chemical Equilibrium', class_level: 11, display_order: 6, category: 'Physical' },
     { id: 'ch11_ionic_eq', name: 'Ionic Equilibrium', class_level: 11, display_order: 7, category: 'Physical' },

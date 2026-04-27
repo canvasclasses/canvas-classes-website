@@ -157,7 +157,7 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'micro_atom_10_4', name: 'Graph Interpretation', parent_id: 'tag_atom_10', type: 'micro_topic' },
     { id: 'micro_atom_10_5', name: 'Application-Based Problems', parent_id: 'tag_atom_10', type: 'micro_topic' },
 
-    { id: 'ch11_periodic', name: 'Classification of Elements and Periodicity', parent_id: null, type: 'chapter', sequence_order: 3, class_level: 11, chapterType: 'physical' },
+    { id: 'ch11_periodic', name: 'Classification of Elements and Periodicity', parent_id: null, type: 'chapter', sequence_order: 3, class_level: 11, chapterType: 'inorganic' },
     { id: 'tag_periodic_1', name: 'Modern Periodic Law & IUPAC Nomenclature (Z > 100)', parent_id: 'ch11_periodic', type: 'topic' },
     { id: 'micro_periodic_1_1', name: 'Modern Periodic Law & Mendeleev\'s Law', parent_id: 'tag_periodic_1', type: 'micro_topic' },
     { id: 'micro_periodic_1_2', name: 'Periodic Table Structure', parent_id: 'tag_periodic_1', type: 'micro_topic' },
@@ -199,7 +199,7 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'micro_periodic_7_3', name: 'Exceptional Configurations', parent_id: 'tag_periodic_7', type: 'micro_topic' },
     { id: 'micro_periodic_7_4', name: 'Half-filled & Fully-filled Stability', parent_id: 'tag_periodic_7', type: 'micro_topic' },
 
-    { id: 'ch11_bonding', name: 'Chemical Bonding', parent_id: null, type: 'chapter', sequence_order: 4, class_level: 11, chapterType: 'physical' },
+    { id: 'ch11_bonding', name: 'Chemical Bonding', parent_id: null, type: 'chapter', sequence_order: 4, class_level: 11, chapterType: 'inorganic' },
     { id: 'tag_bonding_1', name: 'lonic Bonding & Lattice Energy', parent_id: 'ch11_bonding', type: 'topic' },
     { id: 'micro_tag_bonding_1_1773724485180', name: 'Conditions for Ionic Bond Formation', parent_id: 'tag_bonding_1', type: 'micro_topic' },
     { id: 'micro_tag_bonding_1_1773725050899', name: 'Lattice Energy Factors', parent_id: 'tag_bonding_1', type: 'micro_topic' },

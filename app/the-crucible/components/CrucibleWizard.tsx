@@ -514,7 +514,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
             setQuestions(prev => [...prev, ...batch]);
             setStreamProgress(prev => prev ? { ...prev, loaded: prev.loaded + batch.length } : null);
           };
-          streamRemainingBatches(initialChapterId, exam, firstBatch.length, total, onBatch, controller.signal)
+          streamRemainingBatches(initialChapterId, exam, firstBatch.length, total, onBatch, controller.signal, 50)
             .finally(() => setStreamProgress(null));
         } else {
           setStreamProgress(null);
@@ -888,7 +888,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
         // Reuse the existing controller (still valid) for continuation
         const controller = streamAbortRef.current ?? new AbortController();
         if (!streamAbortRef.current) streamAbortRef.current = controller;
-        streamRemainingBatches(chapterId, examBoard, startSkip, total, appendStreamedBatch, controller.signal)
+        streamRemainingBatches(chapterId, examBoard, startSkip, total, appendStreamedBatch, controller.signal, 50)
           .finally(() => setStreamProgress(null));
       } else {
         setStreamProgress(null);
@@ -909,7 +909,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
         setStreamProgress({ loaded: questions.length, total });
         // Continue streaming the rest in the background
         if (total > questions.length) {
-          streamRemainingBatches(chapterId, examBoard, questions.length, total, appendStreamedBatch, controller.signal)
+          streamRemainingBatches(chapterId, examBoard, questions.length, total, appendStreamedBatch, controller.signal, 50)
             .finally(() => setStreamProgress(null));
         } else {
           setStreamProgress(null);
@@ -1373,7 +1373,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 300px', gap: 24, alignItems: 'start' }}>
 
             {/* LEFT: search + class filter + chapter rows */}
-            <div>
+            <div style={{ minWidth: 0 }}>
               {/* Search + class filter row */}
               <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
                 <div style={{ flex: 1, position: 'relative' }}>
@@ -1410,13 +1410,13 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
                   const totalQs = list.reduce((s, c) => s + ((selectedExam === 'NEET' ? c.neet_question_count : c.question_count) ?? 0), 0);
                   const accent = CAT_COLOR[cat];
                   return (
-                    <div key={cat}>
+                    <div key={cat} style={{ minWidth: 0 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, padding: '0 2px' }}>
                         <div style={{ width: 6, height: 6, borderRadius: '50%', background: accent }} />
                         <span style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: accent }}>{cat}</span>
                         <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', marginLeft: 'auto' }}>{totalQs.toLocaleString()} Qs</span>
                       </div>
-                      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 3 }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 3, minWidth: 0 }}>
                         {list.map(ch => {
                           const qCount = (selectedExam === 'NEET' ? ch.neet_question_count : ch.question_count) ?? 0;
                           const isSelected = ch.id === selectedChapterId;
@@ -1424,7 +1424,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
                             <button
                               key={ch.id}
                               onClick={() => handleChapterSelect(ch.id)}
-                              style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 10, border: `1px solid ${isSelected ? 'rgba(99,102,241,0.3)' : 'transparent'}`, background: isSelected ? 'rgba(99,102,241,0.08)' : 'rgba(255,255,255,0.02)', cursor: 'pointer', textAlign: 'left', transition: 'all 0.15s', WebkitTapHighlightColor: 'transparent' }}
+                              style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 10, border: `1px solid ${isSelected ? 'rgba(99,102,241,0.3)' : 'transparent'}`, background: isSelected ? 'rgba(99,102,241,0.08)' : 'rgba(255,255,255,0.02)', cursor: 'pointer', textAlign: 'left', transition: 'all 0.15s', WebkitTapHighlightColor: 'transparent', minWidth: 0, width: '100%' }}
                               onMouseEnter={e => { if (!isSelected) { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; } }}
                               onMouseLeave={e => { if (!isSelected) { e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; e.currentTarget.style.borderColor = 'transparent'; } }}
                             >

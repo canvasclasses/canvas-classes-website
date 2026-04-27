@@ -1,0 +1,15 @@
+{
+  "name": "canvas-question-ingestion",
+  "version": "1.0.0",
+  "description": "Standalone bundle for inserting questions into questions_v2. Copy this folder anywhere with a .env.local containing MONGODB_URI.",
+  "private": true,
+  "scripts": {
+    "validate": "node validate-question.js",
+    "refresh-snapshot": "node refresh-taxonomy-snapshot.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.0.0",
+    "mongodb": "^6.0.0",
+    "uuid": "^9.0.0"
+  }
+}

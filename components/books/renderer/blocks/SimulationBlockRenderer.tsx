@@ -203,6 +203,27 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/EquationsOfMotionSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
+  // ── Class 9 Mathematics — Chapter 1: Coordinate Geometry ─────────────────
+  'cartesian-plotter': dynamic(
+    () => import('./simulations/CartesianPlotterSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'grid-city-locator': dynamic(
+    () => import('./simulations/GridCityLocatorSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'brahmagupta-zero-line': dynamic(
+    () => import('./simulations/BrahmaguptaZeroLineSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'tactile-room-builder': dynamic(
+    () => import('./simulations/TactileRoomBuilderSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'floor-plan-measurer': dynamic(
+    () => import('./simulations/FloorPlanMeasurerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
 };
 
 function SimulationSkeleton() {
