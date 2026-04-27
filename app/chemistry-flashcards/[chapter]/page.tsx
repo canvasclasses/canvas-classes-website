@@ -1,89 +1,65 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { fetchFlashcards, getFlashcardChapters, getChapterFromSlug, generateChapterSlug } from '../../lib/flashcardsData';
+import { getChapterSummaries } from '../../lib/flashcardsData';
 import FlashcardsChapterClient from './FlashcardsChapterClient';
+
+export const revalidate = 86400;
 
 interface Props {
     params: Promise<{ chapter: string }>;
 }
 
-// Generate static params for all chapters at build time
 export async function generateStaticParams() {
-    const chapters = await getFlashcardChapters();
-    return chapters.map((chapter) => ({
-        chapter: chapter.slug,
-    }));
+    const summaries = await getChapterSummaries();
+    return summaries.map((s) => ({ chapter: s.slug }));
 }
 
-// Generate dynamic metadata for each chapter
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { chapter: chapterSlug } = await params;
-    const chapters = await getFlashcardChapters();
-    const chapterNames = chapters.map(c => c.name);
-    const chapterName = getChapterFromSlug(chapterSlug, chapterNames);
+    const summaries = await getChapterSummaries();
+    const summary = summaries.find((s) => s.slug === chapterSlug);
 
-    if (!chapterName) {
-        return {
-            title: 'Chapter Not Found',
-        };
+    if (!summary) {
+        return { title: 'Chapter Not Found' };
     }
 
-    const chapterData = chapters.find(c => c.slug === chapterSlug);
-    const cardCount = chapterData?.cardCount || 0;
+    const cardCount = summary.topics.reduce((sum, t) => sum + t.cardIds.length, 0);
 
     return {
-        title: `${chapterName} Flashcards - Class 12 Chemistry`,
-        description: `Practice ${cardCount} flashcards for ${chapterName} - Class 12 CBSE Chemistry. Master key concepts with spaced repetition for JEE, NEET & Board exams.`,
+        title: `${summary.name} Flashcards - Class 12 Chemistry`,
+        description: `Practice ${cardCount} flashcards for ${summary.name} - Class 12 CBSE Chemistry. Master key concepts with spaced repetition for JEE, NEET & Board exams.`,
         keywords: [
-            `${chapterName} flashcards`,
-            `${chapterName} chemistry`,
+            `${summary.name} flashcards`,
+            `${summary.name} chemistry`,
             'Class 12 Chemistry',
             'CBSE flashcards',
             'JEE chemistry revision',
             'NEET chemistry practice',
         ],
         openGraph: {
-            title: `${chapterName} Flashcards | Canvas Classes`,
-            description: `Practice ${cardCount} flashcards for ${chapterName} chemistry with spaced repetition.`,
+            title: `${summary.name} Flashcards | Canvas Classes`,
+            description: `Practice ${cardCount} flashcards for ${summary.name} chemistry with spaced repetition.`,
         },
     };
 }
 
 export default async function FlashcardsChapterPage({ params }: Props) {
     const { chapter: chapterSlug } = await params;
-    const chapters = await getFlashcardChapters();
-    const chapterNames = chapters.map(c => c.name);
-    const chapterName = getChapterFromSlug(chapterSlug, chapterNames);
 
-    if (!chapterName) {
+    const summaries = await getChapterSummaries();
+    const summary = summaries.find((s) => s.slug === chapterSlug);
+
+    if (!summary) {
         notFound();
     }
 
-    // Fetch flashcards for this chapter
-    const allFlashcards = await fetchFlashcards();
-    const chapterFlashcards = allFlashcards.filter(
-        card => generateChapterSlug(card.chapterName) === chapterSlug
-    );
-
-    // Get unique topics sorted by topicOrder
-    const topicMap = new Map<string, number>();
-    chapterFlashcards.forEach(card => {
-      if (card.topicName && !topicMap.has(card.topicName)) {
-        topicMap.set(card.topicName, card.topicOrder);
-      }
-    });
-    const topics = [...topicMap.entries()]
-      .sort((a, b) => a[1] - b[1])
-      .map(([name]) => name)
-      .filter(Boolean);
-
+    // Topics + per-topic card IDs come from the summary. Question/answer content
+    // loads via /api/flashcards/cards/[slug] when the user starts practice.
     return (
         <FlashcardsChapterClient
-            chapterName={chapterName}
+            chapterName={summary.name}
             chapterSlug={chapterSlug}
-            initialFlashcards={chapterFlashcards}
-            topics={topics}
-            totalChapters={chapters.length}
+            topics={summary.topics}
         />
     );
 }

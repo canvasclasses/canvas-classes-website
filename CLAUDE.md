@@ -110,6 +110,21 @@ Spacing rules:
 
 ---
 
+## 4.5 CANONICAL FIELD NAMES — DO NOT USE LEGACY ALIASES
+
+When updating questions in `questions_v2`, write to the **canonical** schema fields defined in `lib/models/Question.v2.ts`. Do NOT write to legacy aliases — both the student UI (`app/the-crucible/actions.ts`) and the admin UI (`app/crucible/admin/page.tsx`) read from the canonical fields only.
+
+| Canonical (read by UI) | Legacy alias (do not use) |
+|---|---|
+| `solution.text_markdown` | ~~`solution_markdown.text_markdown`~~ |
+| `solution.latex_validated` | ~~`solution_markdown.latex_validated`~~ |
+| `question_text.markdown` | ~~`question_markdown`~~ |
+| `options[i].id` | (required — use `'a'`, `'b'`, `'c'`, `'d'`) |
+
+If you read a doc and see a legacy field present alongside the canonical one, that's a migration artifact — write to canonical and `$unset` the legacy field in the same operation. Audit scripts must read the canonical field.
+
+---
+
 ## 5. DEVELOPMENT COMMANDS
 
 ```bash

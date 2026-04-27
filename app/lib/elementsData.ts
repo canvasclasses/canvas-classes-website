@@ -1596,10 +1596,6 @@ export const ELEMENTS: Element[] = [
             { ion: 'Fe³⁺', config: '3d⁵', color: 'yellow', hexColor: '#F1C40F' },
             { ion: 'Fe²⁺', config: '3d⁶', color: 'green', hexColor: '#27AE60' }
         ],
-        compoundsInfo: [
-            { formula: 'FeSO₄·7H₂O', color: 'Green (soln)', hexColor: '#27AE60', nature: 'neutral' },
-            { formula: 'Fe₂(SO₄)₃', color: 'Yellow (soln)', hexColor: '#F1C40F', nature: 'neutral' }
-        ],
         oxides: ['FeO', 'Fe₂O₃', 'Fe₃O₄'],
         halides: ['FeX₂', 'FeF₃', 'FeCl₃', 'FeBr₃'],
         oxideNature: 'basic',
@@ -1627,12 +1623,33 @@ export const ELEMENTS: Element[] = [
                 note: 'Fe²⁺ acts as reducing agent'
             },
             {
-                equation: 'Fe³⁺ + 3SCN⁻ → Fe(SCN)₃',
-                conditions: 'Blood red complex',
-                note: 'Confirmatory test for Fe³⁺'
+                equation: 'Fe³⁺ + SCN⁻ → [Fe(SCN)]²⁺',
+                conditions: 'Dilute HNO₃ medium',
+                note: 'Blood red complex — confirmatory test for Fe³⁺ in salt analysis'
+            },
+            {
+                equation: 'Fe³⁺ + K₄[Fe(CN)₆] → Fe₄[Fe(CN)₆]₃↓',
+                conditions: 'Prussian blue test',
+                note: 'Dark blue precipitate — confirmatory test for Fe³⁺; K₄[Fe(CN)₆] = potassium hexacyanoferrate(II)'
+            },
+            {
+                equation: 'Fe²⁺ + K₃[Fe(CN)₆] → KFe[Fe(CN)₆]↓',
+                conditions: 'Turnbull\'s blue test',
+                note: 'Dark blue precipitate — confirmatory test for Fe²⁺; K₃[Fe(CN)₆] = potassium hexacyanoferrate(III)'
+            },
+            {
+                equation: 'Fe²⁺ + 2OH⁻ → Fe(OH)₂↓',
+                conditions: 'White/dirty green ppt, turns rust brown in air',
+                note: 'Fe(OH)₂ oxidises in air → Fe(OH)₃ (rust brown) — indicates Fe²⁺ → Fe³⁺'
             }
         ],
-        trendPosition: 'Common oxidation states +2 and +3 — Fe³⁺ more stable (d⁵ half-filled)',
+        compoundsInfo: [
+            { formula: 'K₄[Fe(CN)₆]', color: 'Yellow (soln)', hexColor: '#F0E68C', nature: 'neutral' },
+            { formula: 'K₃[Fe(CN)₆]', color: 'Orange-red (soln)', hexColor: '#FF6347', nature: 'neutral' },
+            { formula: 'Fe₄[Fe(CN)₆]₃', color: 'Prussian Blue (ppt)', hexColor: '#003153', nature: 'neutral' },
+            { formula: 'FeSO₄·7H₂O', color: 'Green (crystals)', hexColor: '#27AE60', nature: 'neutral' }
+        ],
+        trendPosition: 'Common oxidation states +2 and +3 — Fe³⁺ more stable (d⁵); Prussian blue/Turnbull\'s blue salt analysis tests',
         hasRichData: true,
         row: 4,
         col: 8
@@ -1670,21 +1687,39 @@ export const ELEMENTS: Element[] = [
         ],
         anomalousBehavior: {
             facts: [
-                'Co³⁺ is very strong oxidising agent in aqueous solution',
-                'While Cobalt(II) is stable in aqueous solution, it is easily oxidized in presence of complexing reagents',
-                'Highest stable fluoride is CoF₃, which is stabilized by high lattice energy',
-                'Co³⁺ is blue and Co²⁺ is pink in aqueous solution'
+                'Co³⁺ is very strong oxidising agent in aqueous solution — yet Co(III) complexes are the most stable and substitution-inert in coordination chemistry',
+                'Co(II) is the stable oxidation state in simple salts; Co(III) is stabilised by strong-field ligands like NH₃, en, CN⁻ which cause spin pairing',
+                'Werner\'s coordination theory was developed primarily from cobalt(III) complexes: CoCl₃·6NH₃ = [Co(NH₃)₆]Cl₃, CoCl₃·5NH₃ = [Co(NH₃)₅Cl]Cl₂, CoCl₃·4NH₃ = [Co(NH₃)₄Cl₂]Cl',
+                'CoCl₂ is used as a humidity indicator — anhydrous CoCl₂ is blue (4-coordinate, tetrahedral [CoCl₄]²⁻); hydrated CoCl₂·6H₂O is pink (6-coordinate, octahedral [Co(H₂O)₆]²⁺)',
+                '[Co(en)₃]³⁺ (tris(ethylenediamine)cobalt(III)) is the classic NCERT example of optical isomerism — exists as non-superimposable mirror images (Δ and Λ forms)',
+                '[CoCl₂(en)₂]⁺ shows both geometric isomerism (cis and trans) and optical isomerism (cis form is chiral)'
             ],
-            jeeRelevance: 'medium'
+            jeeRelevance: 'high'
         },
         keyReactions: [
             {
-                equation: 'Co²⁺ + 2OH⁻ → Co(OH)₂',
-                conditions: 'Blue precipitate',
-                note: 'Co(OH)₂ turns brown in air (oxidation to Co³⁺)'
+                equation: 'Co²⁺ + 2OH⁻ → Co(OH)₂↓',
+                conditions: 'Blue precipitate in salt analysis',
+                note: 'Blue Co(OH)₂ precipitate; turns brown Co(OH)₃ on standing in air (Co²⁺ → Co³⁺ oxidation)'
+            },
+            {
+                equation: 'CoCl₂ + 6NH₃ → [Co(NH₃)₆]Cl₂ → oxidise → [Co(NH₃)₆]Cl₃',
+                conditions: 'Werner\'s complex',
+                note: '[Co(NH₃)₆]³⁺ is orange-yellow, octahedral, inner orbital (d²sp³), diamagnetic'
+            },
+            {
+                equation: 'Co²⁺ + 4SCN⁻ + Hg²⁺ → Hg[Co(SCN)₄]↓',
+                conditions: 'Blue precipitate (cobalt thiocyanate test)',
+                note: 'Confirmatory test for Co²⁺ — blue thiocyanate precipitate soluble in amyl alcohol'
             }
         ],
-        trendPosition: 'Co²⁺ pink, Co³⁺ blue — Co³⁺ strong oxidizing agent in aqueous solution',
+        compoundsInfo: [
+            { formula: 'CoCl₂·6H₂O', color: 'Pink', hexColor: '#FFB6C1', nature: 'neutral' },
+            { formula: 'CoCl₂ (anhydrous)', color: 'Blue', hexColor: '#3498DB', nature: 'neutral' },
+            { formula: '[Co(NH₃)₆]Cl₃', color: 'Orange-yellow', hexColor: '#FFA500', nature: 'neutral' },
+            { formula: 'Co(OH)₂', color: 'Blue (ppt)', hexColor: '#4169E1', nature: 'basic' }
+        ],
+        trendPosition: 'Central element in NCERT coordination chemistry — Co²⁺ pink/blue (humidity indicator), [Co(en)₃]³⁺ optical isomers',
         hasRichData: true,
         row: 4,
         col: 9
@@ -1720,25 +1755,32 @@ export const ELEMENTS: Element[] = [
         anomalousBehavior: {
             facts: [
                 'E°(M²⁺/M) value is more negative than general trend suggests; attributed to nickel having highest negative enthalpy of hydration',
-                'Nickel can exhibit oxidation state of zero when bonded to ligands with π-acceptor character, such as in Ni(CO)₄',
-                'Used as catalyst for hydrogenation of fats and polymerization of alkynes',
-                'Ni²⁺ is green in aqueous solution'
+                'Nickel can exhibit oxidation state of zero when bonded to π-acceptor ligands: Ni(CO)₄ is tetrahedral (sp³, Ni(0))',
+                '[Ni(CN)₄]²⁻ is square planar (dsp², Ni(II)) because CN⁻ is a strong-field ligand that forces pairing of 3d electrons — the classic NCERT example of how ligand field strength determines geometry',
+                '[NiCl₄]²⁻ is tetrahedral (sp³, Ni(II)) because Cl⁻ is a weak-field ligand — no d-electron pairing, retains 4s–4p–4p–4p hybridisation',
+                'Used as heterogeneous catalyst for hydrogenation of vegetable oils (Sabatier–Senderens, uses H₂ over Ni at 200°C)',
+                'Ni²⁺ is green in aqueous solution ([Ni(H₂O)₆]²⁺)'
             ],
             jeeRelevance: 'high'
         },
         keyReactions: [
             {
                 equation: 'Ni + 4CO → Ni(CO)₄',
-                conditions: '50-60°C',
-                note: 'Mond process for Ni purification - volatile Ni(CO)₄'
+                conditions: '50–60°C (Mond process)',
+                note: 'Volatile tetracarbonylnickel(0) — decomposes at 180°C to give pure Ni; tetrahedral, sp³, Ni(0)'
             },
             {
-                equation: 'Ni²⁺ + 2DMG → Ni(DMG)₂↓',
-                conditions: 'Dimethylglyoxime test',
-                note: 'Bright red precipitate - confirmatory test for Ni²⁺'
+                equation: 'Ni²⁺ + 4CN⁻ → [Ni(CN)₄]²⁻',
+                conditions: 'Excess KCN',
+                note: 'Square planar (dsp²) — strong-field CN⁻ forces spin pairing; NCERT geometry example'
+            },
+            {
+                equation: 'Ni²⁺ + 2DMG → [Ni(DMG)₂]↓',
+                conditions: 'Dimethylglyoxime (DMG) test, NH₃ medium',
+                note: 'Bright red square planar precipitate — confirmatory test for Ni²⁺'
             }
         ],
-        trendPosition: 'Predominantly +2 oxidation state — green Ni²⁺, forms Ni(CO)₄',
+        trendPosition: 'NCERT geometry example — [Ni(CN)₄]²⁻ square planar (dsp²) vs [NiCl₄]²⁻ tetrahedral (sp³)',
         hasRichData: true,
         row: 4,
         col: 10
@@ -2044,22 +2086,1123 @@ export const ELEMENTS: Element[] = [
 
     // Period 5 - d-block (4d series)
     { atomicNumber: 39, symbol: 'Y', name: 'Yttrium', atomicMass: 88.906, category: 'Transition Metal', block: 'd', group: 3, period: 5, electronConfig: '[Kr]4d¹5s²', atomicRadius: 212, ionizationEnergy: 600, electronegativity: 1.22, density: 4.47, meltingPoint: 1799, boilingPoint: 3609, row: 5, col: 3 },
-    { atomicNumber: 40, symbol: 'Zr', name: 'Zirconium', atomicMass: 91.224, category: 'Transition Metal', block: 'd', group: 4, period: 5, electronConfig: '[Kr]4d²5s²', atomicRadius: 206, ionizationEnergy: 640, electronegativity: 1.33, density: 6.51, meltingPoint: 2128, boilingPoint: 4682, row: 5, col: 4 },
+    {
+        atomicNumber: 40,
+        symbol: 'Zr',
+        name: 'Zirconium',
+        atomicMass: 91.224,
+        category: 'Transition Metal',
+        block: 'd',
+        group: 4,
+        period: 5,
+        electronConfig: '[Kr]4d²5s²',
+        atomicRadius: 206,
+        ionizationEnergy: 640,
+        electronegativity: 1.33,
+        density: 6.51,
+        meltingPoint: 2128,
+        boilingPoint: 4682,
+        oxidationStates: [4, 3, 2],
+        oxidationStateCompounds: [
+            { state: 4, compounds: ['ZrO₂', 'ZrCl₄'] }
+        ],
+        isException: true,
+        exceptionType: 'Lanthanide Contraction Effect',
+        exceptionExplanation: 'Zr (period 5, Z=40) and Hf (period 6, Z=72) have almost identical atomic radii (~206 pm vs 208 pm) and chemical properties due to lanthanide contraction — making them the hardest pair of elements to separate in nature',
+        anomalousBehavior: {
+            facts: [
+                'Zirconium and hafnium are a unique pair in the periodic table: despite being in the same group but different periods (5 and 6), they have almost identical atomic radii (Zr = 206 pm, Hf = 208 pm) and nearly the same chemical behaviour',
+                'This is a direct consequence of lanthanide contraction — the 14 f electrons added across the lanthanide series poorly shield nuclear charge, so Hf is pulled inward to match Zr in size',
+                'Zr and Hf always occur together in nature and are extremely difficult to separate — the only practical method is fractional distillation of ZrCl₄ and HfCl₄',
+                'ZrO₂ (zirconia) is a refractory material with a very high melting point (~2988 K) used in high-temperature furnace linings and as a white pigment',
+                'Zr is highly resistant to corrosion and is used as cladding for nuclear reactor fuel rods (Hf, by contrast, absorbs neutrons strongly and must be removed from reactor-grade Zr)'
+            ],
+            jeeRelevance: 'high'
+        },
+        trendPosition: 'Lanthanide contraction — Zr and Hf have same atomic radius (~206 pm); inseparable in nature',
+        hasRichData: true,
+        row: 5,
+        col: 4
+    },
     { atomicNumber: 41, symbol: 'Nb', name: 'Niobium', atomicMass: 92.906, category: 'Transition Metal', block: 'd', group: 5, period: 5, electronConfig: '[Kr]4d⁴5s¹', atomicRadius: 198, ionizationEnergy: 652, electronegativity: 1.60, density: 8.57, meltingPoint: 2750, boilingPoint: 5017, isException: true, exceptionType: 'Electron Configuration', exceptionExplanation: 'Nb has 4d⁴5s¹ instead of 4d³5s² for extra stability', row: 5, col: 5 },
-    { atomicNumber: 42, symbol: 'Mo', name: 'Molybdenum', atomicMass: 95.95, category: 'Transition Metal', block: 'd', group: 6, period: 5, electronConfig: '[Kr]4d⁵5s¹', atomicRadius: 190, ionizationEnergy: 684, electronegativity: 2.16, density: 10.28, meltingPoint: 2896, boilingPoint: 4912, compoundsInfo: [{ formula: '(NH₄)₃[As(Mo₃O₁₀)₄]', color: 'Canary Yellow', hexColor: '#FFEF00', nature: 'neutral' }, { formula: '(NH₄)₃[P(Mo₃O₁₀)₄]', color: 'Canary Yellow', hexColor: '#FFEF00', nature: 'neutral' }], isException: true, exceptionType: 'Electron Configuration', exceptionExplanation: 'Mo has 4d⁵5s¹ (like Cr) for half-filled d-orbital stability', row: 5, col: 6 },
+    {
+        atomicNumber: 42,
+        symbol: 'Mo',
+        name: 'Molybdenum',
+        atomicMass: 95.95,
+        category: 'Transition Metal',
+        block: 'd',
+        group: 6,
+        period: 5,
+        electronConfig: '[Kr]4d⁵5s¹',
+        atomicRadius: 190,
+        ionizationEnergy: 684,
+        electronegativity: 2.16,
+        density: 10.28,
+        meltingPoint: 2896,
+        boilingPoint: 4912,
+        isException: true,
+        exceptionType: 'Electron Configuration',
+        exceptionExplanation: 'Mo has 4d⁵5s¹ (like Cr) for half-filled d-orbital stability — expected 4d⁴5s²',
+        oxidationStates: [6, 4, 2, 3],
+        oxidationStateCompounds: [
+            { state: 6, compounds: ['MoO₃', 'MoS₂', 'MoO₄²⁻', '(NH₄)₂MoO₄'] },
+            { state: 4, compounds: ['MoO₂', 'MoS₂'] }
+        ],
+        compoundsInfo: [
+            { formula: '(NH₄)₃[P(Mo₃O₁₀)₄]', color: 'Canary Yellow (ppt)', hexColor: '#FFEF00', nature: 'neutral' },
+            { formula: '(NH₄)₃[As(Mo₃O₁₀)₄]', color: 'Canary Yellow (ppt)', hexColor: '#FFEF00', nature: 'neutral' },
+            { formula: 'MoS₂', color: 'Black (solid)', hexColor: '#1A1A1A', nature: 'neutral' }
+        ],
+        anomalousBehavior: {
+            facts: [
+                'MoS₂ (molybdenite) is used as a solid lubricant — it has a layered structure similar to graphite where layers slide easily over each other, ideal for high-temperature and high-vacuum lubrication where oil-based lubricants fail',
+                'Molybdenum is an essential trace element in biology: the Mo–Fe protein (nitrogenase enzyme) in nitrogen-fixing bacteria (e.g. Rhizobium) catalyses N₂ → NH₃ at room temperature — the biological equivalent of the Haber process',
+                'Ammonium phosphomolybdate (NH₄)₃[P(Mo₃O₁₀)₄] — canary yellow precipitate formed when H₃PO₄ or phosphate ions react with ammonium molybdate in HNO₃ — NCERT test for phosphate radicals in salt analysis',
+                'Maximum oxidation state +6 in MoO₃ and MoO₄²⁻ (matches group number 6), similar to CrO₃ and CrO₄²⁻'
+            ],
+            jeeRelevance: 'high'
+        },
+        keyReactions: [
+            {
+                equation: 'PO₄³⁻ + 12MoO₄²⁻ + 24H⁺ + 3NH₄⁺ → (NH₄)₃[P(Mo₃O₁₀)₄]↓ + 12H₂O',
+                conditions: 'Excess ammonium molybdate in HNO₃',
+                note: 'Canary yellow precipitate — confirmatory test for phosphate radical in salt analysis'
+            }
+        ],
+        trendPosition: 'MoS₂ lubricant (layered like graphite); canary yellow phosphomolybdate test; biological N₂ fixation',
+        hasRichData: true,
+        row: 5,
+        col: 6
+    },
     { atomicNumber: 43, symbol: 'Tc', name: 'Technetium', atomicMass: 98, category: 'Transition Metal', block: 'd', group: 7, period: 5, electronConfig: '[Kr]4d⁵5s²', atomicRadius: 183, ionizationEnergy: 702, electronegativity: 1.90, density: 11.50, meltingPoint: 2430, boilingPoint: 4538, row: 5, col: 7 },
     { atomicNumber: 44, symbol: 'Ru', name: 'Ruthenium', atomicMass: 101.07, category: 'Transition Metal', block: 'd', group: 8, period: 5, electronConfig: '[Kr]4d⁷5s¹', atomicRadius: 178, ionizationEnergy: 710, electronegativity: 2.20, density: 12.37, meltingPoint: 2607, boilingPoint: 4423, isException: true, exceptionType: 'Electron Configuration', exceptionExplanation: 'Expected [Kr]4d⁶5s². Actual [Kr]4d⁷5s¹ due to very small 4d-5s energy gap and e⁻-e⁻ repulsion in 5s.', row: 5, col: 8 },
-    { atomicNumber: 45, symbol: 'Rh', name: 'Rhodium', atomicMass: 102.91, category: 'Transition Metal', block: 'd', group: 9, period: 5, electronConfig: '[Kr]4d⁸5s¹', atomicRadius: 173, ionizationEnergy: 720, electronegativity: 2.28, density: 12.41, meltingPoint: 2237, boilingPoint: 3968, isException: true, exceptionType: 'Electron Configuration', exceptionExplanation: 'Expected [Kr]4d⁷5s². Actual [Kr]4d⁸5s¹ as 4d orbital drops below 5s in energy, favoring d-electron population.', row: 5, col: 9 },
+    {
+        atomicNumber: 45,
+        symbol: 'Rh',
+        name: 'Rhodium',
+        atomicMass: 102.91,
+        category: 'Transition Metal',
+        block: 'd',
+        group: 9,
+        period: 5,
+        electronConfig: '[Kr]4d⁸5s¹',
+        atomicRadius: 173,
+        ionizationEnergy: 720,
+        electronegativity: 2.28,
+        density: 12.41,
+        meltingPoint: 2237,
+        boilingPoint: 3968,
+        isException: true,
+        exceptionType: 'Electron Configuration',
+        exceptionExplanation: 'Expected [Kr]4d⁷5s². Actual [Kr]4d⁸5s¹ — 4d orbital drops below 5s in energy across the 4d series, favouring d-electron population',
+        oxidationStates: [3, 1, 0],
+        oxidationStateCompounds: [
+            { state: 3, compounds: ['RhCl₃', 'Rh₂O₃'] },
+            { state: 1, compounds: ['[RhCl(PPh₃)₃]'] }
+        ],
+        anomalousBehavior: {
+            facts: [
+                'Wilkinson\'s catalyst — [RhCl(PPh₃)₃] (chlorotris(triphenylphosphine)rhodium(I)) — is specifically named in NCERT as a homogeneous catalyst for hydrogenation of alkenes at room temperature and atmospheric pressure of H₂',
+                'Unlike heterogeneous Ni/Pt/Pd catalysts, Wilkinson\'s catalyst works in solution and shows high selectivity — hydrogenates only one double bond at a time in polyunsaturated substrates',
+                'Rh is one of the platinum group metals (PGMs) — Pt, Pd, Rh, Ru, Os, Ir — which are collectively critical in catalytic converters in automobiles to reduce CO, NOₓ, and hydrocarbons',
+                'Oxidation state +1 is unusually stable for a 4d metal due to strong π-back bonding with PPh₃ ligands'
+            ],
+            jeeRelevance: 'high'
+        },
+        keyReactions: [
+            {
+                equation: 'RCH=CH₂ + H₂ → [RhCl(PPh₃)₃] → RCH₂CH₃',
+                conditions: 'Room temperature, 1 atm H₂, Wilkinson\'s catalyst',
+                note: 'Homogeneous hydrogenation — Rh(I) oxidatively adds H₂, then alkene inserts, then reductive elimination gives alkane'
+            }
+        ],
+        trendPosition: 'Wilkinson\'s catalyst [RhCl(PPh₃)₃] — NCERT-named homogeneous hydrogenation catalyst',
+        hasRichData: true,
+        row: 5,
+        col: 9
+    },
     { atomicNumber: 46, symbol: 'Pd', name: 'Palladium', atomicMass: 106.42, category: 'Transition Metal', block: 'd', group: 10, period: 5, electronConfig: '[Kr]4d¹⁰', atomicRadius: 169, ionizationEnergy: 804, electronegativity: 2.20, density: 12.02, meltingPoint: 1828, boilingPoint: 3236, isException: true, exceptionType: 'Electron Configuration', exceptionExplanation: 'Pd has 4d¹⁰5s⁰ - unique case with no s electrons for complete d-orbital stability', anomalousBehavior: { facts: ['PdCl₂ is important catalyst used in Wacker process for oxidation of ethyne to ethanal', 'Unique electronic configuration with no 5s electrons'], jeeRelevance: 'high' }, row: 5, col: 10 },
-    { atomicNumber: 47, symbol: 'Ag', name: 'Silver', atomicMass: 107.87, category: 'Transition Metal', block: 'd', group: 11, period: 5, electronConfig: '[Kr]4d¹⁰5s¹', atomicRadius: 165, ionizationEnergy: 731, electronegativity: 1.93, density: 10.49, meltingPoint: 1235, boilingPoint: 2435, standardReductionPotential: 0.80, compoundsInfo: [{ formula: 'AgI', color: 'Yellow (ppt)', hexColor: '#FFFF00', nature: 'neutral' }, { formula: 'Ag₂S', color: 'Black', hexColor: '#1A1A1A', nature: 'neutral' }, { formula: 'AgCl', color: 'White', hexColor: '#FFFFFF', nature: 'neutral' }, { formula: 'AgBr', color: 'Pale Yellow', hexColor: '#FFFACD', nature: 'neutral' }], isException: true, exceptionType: 'Electron Configuration', exceptionExplanation: 'Ag has 4d¹⁰5s¹ (like Cu) for fully-filled d-orbital stability', anomalousBehavior: { facts: ['Silver is considered a transition element because, while it has 4d¹⁰ ground state, it exhibits incompletely filled d-orbitals in its +2 oxidation state', 'Silver bromide (AgBr) is crucial for its light-sensitive properties in photographic industry'], jeeRelevance: 'high' }, row: 5, col: 11 },
+    {
+        atomicNumber: 47,
+        symbol: 'Ag',
+        name: 'Silver',
+        atomicMass: 107.87,
+        category: 'Transition Metal',
+        block: 'd',
+        group: 11,
+        period: 5,
+        electronConfig: '[Kr]4d¹⁰5s¹',
+        atomicRadius: 165,
+        ionicRadius: 115,
+        ionizationEnergy: 731,
+        electronegativity: 1.93,
+        density: 10.49,
+        meltingPoint: 1235,
+        boilingPoint: 2435,
+        standardReductionPotential: 0.80,
+        isException: true,
+        exceptionType: 'Electron Configuration',
+        exceptionExplanation: 'Ag has 4d¹⁰5s¹ (like Cu) for fully-filled d-orbital stability — expected 4d⁹5s²',
+        oxidationStates: [1, 2],
+        oxidationStateCompounds: [
+            { state: 1, compounds: ['AgCl', 'AgBr', 'AgI', 'AgNO₃', 'Ag₂O'] },
+            { state: 2, compounds: ['AgF₂'] }
+        ],
+        compoundsInfo: [
+            { formula: 'AgCl', color: 'White (ppt)', hexColor: '#FFFFFF', nature: 'neutral' },
+            { formula: 'AgBr', color: 'Pale Yellow (ppt)', hexColor: '#FFFACD', nature: 'neutral' },
+            { formula: 'AgI', color: 'Yellow (ppt)', hexColor: '#FFFF00', nature: 'neutral' },
+            { formula: 'Ag₂S', color: 'Black (ppt)', hexColor: '#1A1A1A', nature: 'neutral' },
+            { formula: '[Ag(NH₃)₂]⁺', color: 'Colourless (soln)', hexColor: 'transparent', nature: 'neutral' }
+        ],
+        anomalousBehavior: {
+            facts: [
+                'Silver is considered a transition element because it exhibits incompletely filled d-orbitals in its +2 oxidation state (Ag²⁺ = 4d⁹)',
+                'Solubility of AgX halides: AgF is soluble; AgCl is white ppt (Ksp = 1.8×10⁻¹⁰); AgBr is pale yellow ppt (light-sensitive, photographic films); AgI is yellow ppt — most insoluble (Ksp = 8.5×10⁻¹⁷). Solubility decreases F > Cl > Br > I',
+                '[Ag(NH₃)₂]⁺ (diamminesilver(I), linear, sp): Tollens\' reagent — AgNO₃ + excess NH₃; used for silver mirror test for aldehydes (RCHO reduces Ag⁺ → Ag mirror)',
+                '[Ag(CN)₂]⁻ (dicyanoargentate(I), linear, sp): used in MacArthur–Forrest cyanide process for extracting silver and gold from low-grade ores — 4Ag + 8CN⁻ + O₂ + 2H₂O → 4[Ag(CN)₂]⁻ + 4OH⁻',
+                '[Ag(S₂O₃)₂]³⁻: formed when AgBr dissolves in sodium thiosulfate (hypo) — the basis of photographic fixing: AgBr (unexposed) + 2Na₂S₂O₃ → Na₃[Ag(S₂O₃)₂] + NaBr',
+                'AgCl dissolves in excess NH₃ → [Ag(NH₃)₂]⁺; AgBr dissolves only in concentrated NH₃; AgI is insoluble in NH₃ — key distinction in salt analysis Group I'
+            ],
+            jeeRelevance: 'high'
+        },
+        keyReactions: [
+            {
+                equation: 'AgCl↓ + 2NH₃ → [Ag(NH₃)₂]⁺ + Cl⁻',
+                conditions: 'Excess aqueous NH₃',
+                note: 'White AgCl dissolves in NH₃ to form Tollens\' complex (linear, sp hybridised)'
+            },
+            {
+                equation: '4Ag + 8CN⁻ + O₂ + 2H₂O → 4[Ag(CN)₂]⁻ + 4OH⁻',
+                conditions: 'Cyanide process for Ag/Au extraction',
+                note: '[Ag(CN)₂]⁻ is linear; Ag recovered by Zn displacement: 2[Ag(CN)₂]⁻ + Zn → [Zn(CN)₄]²⁻ + 2Ag'
+            },
+            {
+                equation: 'AgBr + 2Na₂S₂O₃ → Na₃[Ag(S₂O₃)₂] + NaBr',
+                conditions: 'Photographic fixing (hypo solution)',
+                note: 'Removes unexposed AgBr from developed film — [Ag(S₂O₃)₂]³⁻ is soluble'
+            }
+        ],
+        trendPosition: 'AgCl/AgBr/AgI solubility trend; Tollens\' [Ag(NH₃)₂]⁺; [Ag(CN)₂]⁻ cyanide extraction',
+        hasRichData: true,
+        row: 5,
+        col: 11
+    },
     { atomicNumber: 48, symbol: 'Cd', name: 'Cadmium', atomicMass: 112.41, category: 'Transition Metal', block: 'd', group: 12, period: 5, electronConfig: '[Kr]4d¹⁰5s²', atomicRadius: 161, ionizationEnergy: 868, electronegativity: 1.69, density: 8.65, meltingPoint: 594, boilingPoint: 1040, standardReductionPotential: -0.40, compoundsInfo: [{ formula: 'CdS', color: 'Yellow (ppt)', hexColor: '#FFFF00', nature: 'neutral' }], row: 5, col: 12 },
 
-    // Period 6 - d-block (5d series) - key elements
-    { atomicNumber: 72, symbol: 'Hf', name: 'Hafnium', atomicMass: 178.49, category: 'Transition Metal', block: 'd', group: 4, period: 6, electronConfig: '[Xe]4f¹⁴5d²6s²', atomicRadius: 208, ionizationEnergy: 659, electronegativity: 1.30, density: 13.31, meltingPoint: 2506, boilingPoint: 4876, row: 6, col: 4 },
-    { atomicNumber: 74, symbol: 'W', name: 'Tungsten', atomicMass: 183.84, category: 'Transition Metal', block: 'd', group: 6, period: 6, electronConfig: '[Xe]4f¹⁴5d⁴6s²', atomicRadius: 193, ionizationEnergy: 770, electronegativity: 2.36, density: 19.25, meltingPoint: 3695, boilingPoint: 5828, row: 6, col: 6 },
-    { atomicNumber: 78, symbol: 'Pt', name: 'Platinum', atomicMass: 195.08, category: 'Transition Metal', block: 'd', group: 10, period: 6, electronConfig: '[Xe]4f¹⁴5d⁹6s¹', atomicRadius: 177, ionizationEnergy: 870, electronegativity: 2.28, density: 21.45, meltingPoint: 2041, boilingPoint: 4098, standardReductionPotential: 1.18, isException: true, exceptionType: 'Electron Configuration', exceptionExplanation: 'Pt has 5d⁹6s¹ instead of 5d⁸6s² for better orbital stability', row: 6, col: 10 },
-    { atomicNumber: 79, symbol: 'Au', name: 'Gold', atomicMass: 196.97, category: 'Transition Metal', block: 'd', group: 11, period: 6, electronConfig: '[Xe]4f¹⁴5d¹⁰6s¹', atomicRadius: 174, ionizationEnergy: 890, electronegativity: 2.54, density: 19.30, meltingPoint: 1337, boilingPoint: 3129, standardReductionPotential: 1.69, isException: true, exceptionType: 'Electron Configuration', exceptionExplanation: 'Au has 5d¹⁰6s¹ (like Cu, Ag) for fully-filled d-orbital stability', row: 6, col: 11 },
-    { atomicNumber: 80, symbol: 'Hg', name: 'Mercury', atomicMass: 200.59, category: 'Transition Metal', block: 'd', group: 12, period: 6, electronConfig: '[Xe]4f¹⁴5d¹⁰6s²', atomicRadius: 171, ionizationEnergy: 1007, electronegativity: 2.00, density: 13.55, meltingPoint: 234, boilingPoint: 630, standardReductionPotential: 0.85, isException: true, exceptionType: 'Physical Property', exceptionExplanation: 'Hg is liquid at room temperature - only liquid metal due to relativistic effects', row: 6, col: 12 },
+    // Period 5 - p-block
+    {
+        atomicNumber: 49,
+        symbol: 'In',
+        name: 'Indium',
+        atomicMass: 114.82,
+        category: 'Post-Transition Metal',
+        block: 'p',
+        group: 13,
+        period: 5,
+        electronConfig: '[Kr]4d¹⁰5s²5p¹',
+        atomicRadius: 167,
+        ionicRadius: 80,
+        ionizationEnergy: 558,
+        electronegativity: 1.78,
+        density: 7.31,
+        meltingPoint: 430,
+        boilingPoint: 2345,
+        oxides: ['In₂O₃'],
+        oxideNature: 'amphoteric',
+        oxidationStates: [1, 3],
+        oxidationStateCompounds: [
+            { state: 1, compounds: ['InCl'] },
+            { state: 3, compounds: ['In₂O₃', 'InCl₃'] }
+        ],
+        isException: true,
+        exceptionType: 'Inert Pair Effect',
+        exceptionExplanation: 'In shows +1 state (alongside +3) due to inert pair effect — the 5s² electrons resist ionization',
+        anomalousBehavior: {
+            facts: [
+                'Indium exhibits the inert pair effect: the 5s² pair resists ionization, stabilizing the +1 oxidation state',
+                'In group 13, moving down from Al → Ga → In → Tl, the lower oxidation state (+1) becomes increasingly stable due to the inert pair effect',
+                'In³⁺ is the common ion in most compounds; In⁺ exists in InCl and In₂O'
+            ],
+            jeeRelevance: 'medium'
+        },
+        keyReactions: [
+            {
+                equation: '4In + 3O₂ → 2In₂O₃',
+                conditions: 'Heat',
+                note: 'Forms amphoteric oxide'
+            }
+        ],
+        trendPosition: 'Inert pair effect — +1 state alongside +3; amphoteric In₂O₃',
+        row: 5,
+        col: 13
+    },
+    {
+        atomicNumber: 50,
+        symbol: 'Sn',
+        name: 'Tin',
+        atomicMass: 118.71,
+        category: 'Post-Transition Metal',
+        block: 'p',
+        group: 14,
+        period: 5,
+        electronConfig: '[Kr]4d¹⁰5s²5p²',
+        atomicRadius: 140,
+        ionicRadius: 118,
+        ionizationEnergy: 709,
+        electronegativity: 1.96,
+        density: 7.28,
+        meltingPoint: 505,
+        boilingPoint: 2875,
+        oxides: ['SnO', 'SnO₂'],
+        oxideNature: 'amphoteric',
+        oxidationStates: [2, 4],
+        oxidationStateCompounds: [
+            { state: 2, compounds: ['SnO', 'SnCl₂', 'SnSO₄'] },
+            { state: 4, compounds: ['SnO₂', 'SnCl₄'] }
+        ],
+        isException: true,
+        exceptionType: 'Inert Pair Effect',
+        exceptionExplanation: 'Sn shows stable +2 state (inert pair effect) alongside +4; Sn²⁺ is a good reducing agent',
+        anomalousBehavior: {
+            facts: [
+                'Tin exhibits inert pair effect: the 5s² electrons resist participation in bonding, stabilizing +2 state',
+                'SnCl₂ is a common reducing agent in qualitative analysis — reduces Hg²⁺ to Hg₂²⁺ and then to Hg (white → grey precipitate)',
+                'Tin shows allotropy: white tin (β-Sn, metallic, stable above 13.2°C) converts to grey tin (α-Sn, brittle, non-metallic) below 13.2°C — called "tin disease" or "tin pest"',
+                'Bronze is an alloy of copper and tin (Cu + Sn); solder is an alloy of tin and lead (Sn + Pb)'
+            ],
+            jeeRelevance: 'high'
+        },
+        keyReactions: [
+            {
+                equation: 'Sn + 2HCl → SnCl₂ + H₂',
+                conditions: 'Dilute HCl',
+                note: 'Tin dissolves in dilute acid forming Sn²⁺'
+            },
+            {
+                equation: 'SnCl₂ + 2HgCl₂ → SnCl₄ + Hg₂Cl₂↓',
+                conditions: 'Analytical test',
+                note: 'White precipitate of Hg₂Cl₂; excess SnCl₂ gives grey Hg'
+            }
+        ],
+        trendPosition: 'Inert pair effect — +2 (reducing) and +4 states; amphoteric SnO and SnO₂',
+        row: 5,
+        col: 14
+    },
+    {
+        atomicNumber: 51,
+        symbol: 'Sb',
+        name: 'Antimony',
+        atomicMass: 121.76,
+        category: 'Metalloid',
+        block: 'p',
+        group: 15,
+        period: 5,
+        electronConfig: '[Kr]4d¹⁰5s²5p³',
+        atomicRadius: 140,
+        ionicRadius: 76,
+        ionizationEnergy: 834,
+        electronegativity: 2.05,
+        density: 6.70,
+        meltingPoint: 904,
+        boilingPoint: 1908,
+        oxides: ['Sb₂O₃', 'Sb₂O₅'],
+        oxideNature: 'amphoteric',
+        oxidationStates: [-3, 3, 5],
+        oxidationStateCompounds: [
+            { state: -3, compounds: ['SbH₃'] },
+            { state: 3, compounds: ['Sb₂O₃', 'SbCl₃', 'Sb₂S₃'] },
+            { state: 5, compounds: ['Sb₂O₅', 'SbCl₅'] }
+        ],
+        isException: true,
+        exceptionType: 'Inert Pair Effect',
+        exceptionExplanation: 'Sb shows +3 as increasingly stable state (inert pair effect) vs +5; Sb₂O₃ is amphoteric while Sb₂O₅ is acidic',
+        anomalousBehavior: {
+            facts: [
+                'Antimony shows inert pair effect — +3 state is more stable than +5 going down group 15',
+                'Sb₂O₃ is amphoteric (dissolves in both acid and alkali), whereas Sb₂O₅ is predominantly acidic',
+                'SbH₃ (stibine) is less stable than NH₃, PH₃, and AsH₃ — hydride stability decreases down the group',
+                'Antimony is a metalloid used in flame-retardants and semiconducting materials'
+            ],
+            jeeRelevance: 'medium'
+        },
+        keyReactions: [
+            {
+                equation: '2Sb + 3Cl₂ → 2SbCl₃',
+                conditions: 'Limited Cl₂',
+                note: 'Excess Cl₂ gives SbCl₅'
+            }
+        ],
+        trendPosition: 'Metalloid in Group 15, Period 5 — inert pair effect, +3 more stable than +5',
+        row: 5,
+        col: 15
+    },
+    {
+        atomicNumber: 52,
+        symbol: 'Te',
+        name: 'Tellurium',
+        atomicMass: 127.60,
+        category: 'Metalloid',
+        block: 'p',
+        group: 16,
+        period: 5,
+        electronConfig: '[Kr]4d¹⁰5s²5p⁴',
+        atomicRadius: 137,
+        ionicRadius: 221,
+        ionizationEnergy: 869,
+        electronegativity: 2.1,
+        density: 6.24,
+        meltingPoint: 723,
+        boilingPoint: 1261,
+        oxides: ['TeO₂', 'TeO₃'],
+        oxideNature: 'amphoteric',
+        oxidationStates: [-2, 4, 6],
+        oxidationStateCompounds: [
+            { state: -2, compounds: ['H₂Te', 'Na₂Te'] },
+            { state: 4, compounds: ['TeO₂', 'TeCl₄'] },
+            { state: 6, compounds: ['TeO₃', 'H₂TeO₄'] }
+        ],
+        isException: true,
+        exceptionType: 'Atomic Mass Anomaly',
+        exceptionExplanation: 'Te (Z=52, mass=127.60) has higher atomic mass than I (Z=53, mass=126.90) — a classic exception to Mendeleev\'s mass-based ordering',
+        anomalousBehavior: {
+            facts: [
+                'Te–I pair is one of the classic anomalies of Mendeleev\'s periodic table: Te has higher atomic mass (127.60) than I (126.90), yet Te has lower atomic number (52) — Mendeleev placed them by properties, not mass',
+                'Modern periodic law arranges by atomic number (Moseley), resolving this anomaly',
+                'TeO₂ is amphoteric (dissolves in both acid and base), unlike SO₂ and SeO₂ which are purely acidic',
+                'H₂Te is the most acidic hydride in group 16 (acidity: H₂O < H₂S < H₂Se < H₂Te)'
+            ],
+            jeeRelevance: 'high'
+        },
+        keyReactions: [
+            {
+                equation: 'Te + O₂ → TeO₂',
+                conditions: 'Combustion',
+                note: 'Forms amphoteric TeO₂'
+            }
+        ],
+        trendPosition: 'Metalloid in Group 16 — atomic mass > I (Mendeleev anomaly); amphoteric TeO₂',
+        row: 5,
+        col: 16
+    },
+    {
+        atomicNumber: 53,
+        symbol: 'I',
+        name: 'Iodine',
+        atomicMass: 126.90,
+        category: 'Reactive Nonmetal',
+        block: 'p',
+        group: 17,
+        period: 5,
+        electronConfig: '[Kr]4d¹⁰5s²5p⁵',
+        atomicRadius: 133,
+        ionicRadius: 220,
+        ionizationEnergy: 1008,
+        electronegativity: 2.66,
+        electronAffinity: -295,
+        density: 4.93,
+        meltingPoint: 387,
+        boilingPoint: 457,
+        standardReductionPotential: 0.54,
+        gasColor: { formula: 'I₂', color: 'violet', hexColor: '#7F00FF' },
+        oxideNature: 'acidic',
+        oxidationStates: [-1, 1, 3, 5, 7],
+        oxidationStateCompounds: [
+            { state: -1, compounds: ['HI', 'NaI', 'KI'] },
+            { state: 1, compounds: ['HIO', 'ICl'] },
+            { state: 5, compounds: ['HIO₃', 'IO₃⁻'] },
+            { state: 7, compounds: ['HIO₄', 'IO₄⁻'] }
+        ],
+        isException: true,
+        exceptionType: 'Physical State + Atomic Mass Anomaly',
+        exceptionExplanation: 'I₂ is the only halogen that is solid at room temperature; also has lower atomic mass than Te despite higher atomic number',
+        anomalousBehavior: {
+            facts: [
+                'Iodine is the only halogen that is solid at room temperature (sublimes directly to violet vapour) — van der Waals forces are large enough due to high electron count',
+                'I₂ dissolves in non-polar solvents (CCl₄, CHCl₃) giving violet solution; in polar solvents (H₂O, alcohol) gives brown/yellow — due to charge transfer complex formation',
+                'Iodine gives characteristic blue-black colour with starch solution — used as confirmatory test for I₂ (and for starch)',
+                'I₂ + KI → KI₃ (potassium triiodide) — increases solubility of I₂ in water',
+                'I has the lowest electron affinity among halogens (F > Cl > Br > I) — I⁻ is the weakest oxidizer; HI is the strongest reducing acid among hydrohalic acids',
+                'Atomic mass of I (126.90) < Te (127.60) — classic Mendeleev periodic table anomaly (Te–I pair)'
+            ],
+            jeeRelevance: 'high'
+        },
+        keyReactions: [
+            {
+                equation: 'I₂ + 2Na₂S₂O₃ → 2NaI + Na₂S₄O₆',
+                conditions: 'Iodometric titration',
+                note: 'Hypo (sodium thiosulfate) reduces I₂ — end-point detected by starch'
+            },
+            {
+                equation: 'I₂ + H₂O ⇌ HI + HOI',
+                conditions: 'Disproportionation (less than Cl₂, Br₂)',
+                note: 'Iodine dissolves less in water than other halogens'
+            },
+            {
+                equation: 'Cl₂ + 2I⁻ → 2Cl⁻ + I₂',
+                conditions: 'Displacement (oxidising power: F > Cl > Br > I)',
+                note: 'Cl₂ and Br₂ can displace I⁻; I₂ cannot displace Cl⁻ or Br⁻'
+            }
+        ],
+        trendPosition: 'Only solid halogen — violet vapour, starch test, atomic mass < Te (anomaly)',
+        row: 5,
+        col: 17
+    },
+    {
+        atomicNumber: 54,
+        symbol: 'Xe',
+        name: 'Xenon',
+        atomicMass: 131.29,
+        category: 'Noble Gas',
+        block: 'p',
+        group: 18,
+        period: 5,
+        electronConfig: '[Kr]4d¹⁰5s²5p⁶',
+        atomicRadius: 216,
+        ionizationEnergy: 1170,
+        density: 0.005887,
+        meltingPoint: 161,
+        boilingPoint: 165,
+        isException: true,
+        exceptionType: 'Noble Gas Compound Formation',
+        exceptionExplanation: 'Xe forms stable compounds XeF₂, XeF₄, XeF₆ — proving noble gases are not completely inert (NCERT Chapter 7)',
+        anomalousBehavior: {
+            facts: [
+                'Xenon forms the largest number of noble gas compounds among all noble gases — XeF₂, XeF₄, XeF₆, XeO₃, XeOF₂, XeOF₄',
+                'XeF₂: sp³d hybridization, linear shape, 3 lone pairs on Xe — formed by mixing Xe and F₂ in 2:1 ratio at 400°C or UV light',
+                'XeF₄: sp³d² hybridization, square planar shape, 2 lone pairs on Xe — formed by 1:5 ratio of Xe:F₂',
+                'XeF₆: sp³d³ hybridization, distorted octahedral, 1 lone pair on Xe — formed by 1:20 ratio of Xe:F₂',
+                'First noble gas compound ever prepared was XeF₂ by Bartlett and colleagues (1962), after Bartlett synthesized O₂⁺PtF₆⁻',
+                'XeF₂ is a mild and selective fluorinating agent used in organic synthesis'
+            ],
+            jeeRelevance: 'high'
+        },
+        keyReactions: [
+            {
+                equation: 'Xe + F₂ → XeF₂',
+                conditions: '400°C, sealed nickel vessel, Xe:F₂ = 2:1',
+                note: 'Linear molecule, sp³d, 3 lone pairs'
+            },
+            {
+                equation: 'Xe + 2F₂ → XeF₄',
+                conditions: '400°C, Xe:F₂ = 1:5',
+                note: 'Square planar, sp³d², 2 lone pairs'
+            },
+            {
+                equation: 'Xe + 3F₂ → XeF₆',
+                conditions: '300°C, 50 atm, Xe:F₂ = 1:20',
+                note: 'Distorted octahedral, sp³d³, 1 lone pair'
+            },
+            {
+                equation: '2XeF₂ + 2H₂O → 2Xe + 4HF + O₂',
+                conditions: 'Hydrolysis',
+                note: 'XeF₂ hydrolyzes slowly; XeF₆ hydrolysis is vigorous'
+            }
+        ],
+        trendPosition: 'Noble gas that forms compounds (XeF₂/XeF₄/XeF₆) — most chemistry-active noble gas',
+        row: 5,
+        col: 18
+    },
+
+    // Period 6 - d-block (5d series)
+    {
+        atomicNumber: 72,
+        symbol: 'Hf',
+        name: 'Hafnium',
+        atomicMass: 178.49,
+        category: 'Transition Metal',
+        block: 'd',
+        group: 4,
+        period: 6,
+        electronConfig: '[Xe]4f¹⁴5d²6s²',
+        atomicRadius: 208,
+        ionizationEnergy: 659,
+        electronegativity: 1.30,
+        density: 13.31,
+        meltingPoint: 2506,
+        boilingPoint: 4876,
+        oxidationStates: [4, 3, 2],
+        oxidationStateCompounds: [
+            { state: 4, compounds: ['HfO₂', 'HfCl₄'] }
+        ],
+        isException: true,
+        exceptionType: 'Lanthanide Contraction Effect',
+        exceptionExplanation: 'Hf (period 6, Z=72) has almost the same atomic radius (208 pm) as Zr (period 5, Z=40, 206 pm) — caused by lanthanide contraction. Despite being one period below, Hf is not larger than Zr.',
+        anomalousBehavior: {
+            facts: [
+                'Lanthanide contraction: the 14 lanthanide elements (Ce to Lu, Z=58–71) interpose between La and Hf. Each added proton pulls electrons inward, but the poorly shielding f electrons do not compensate — so Hf ends up almost the same size as Zr (208 pm vs 206 pm)',
+                'This is the primary example of lanthanide contraction cited in NCERT: Hf and Zr have nearly identical radii, densities, and chemical properties despite being in the same group but different periods',
+                'Consequence: Hf and Zr always co-occur in ores and are extremely difficult to separate — the only economical separation is liquid–liquid extraction or fractional distillation of their volatile chlorides',
+                'HfO₂ (hafnia) has a very high melting point and dielectric constant — used in modern CMOS transistor gate oxides to replace SiO₂',
+                'Unlike Zr, Hf strongly absorbs thermal neutrons — Zr used in nuclear reactor fuel rod cladding (Hf must be removed), while Hf is used in control rods'
+            ],
+            jeeRelevance: 'high'
+        },
+        trendPosition: 'Lanthanide contraction — Hf radius (208 pm) ≈ Zr radius (206 pm); same group, different periods, nearly identical chemistry',
+        hasRichData: true,
+        row: 6,
+        col: 4
+    },
+    { atomicNumber: 73, symbol: 'Ta', name: 'Tantalum', atomicMass: 180.95, category: 'Transition Metal', block: 'd', group: 5, period: 6, electronConfig: '[Xe]4f¹⁴5d³6s²', atomicRadius: 200, ionizationEnergy: 761, electronegativity: 1.50, density: 16.65, meltingPoint: 3290, boilingPoint: 5731, oxidationStates: [5, 3, 4], trendPosition: 'Max oxidation state +5 (group 5) — highly corrosion-resistant metal used in capacitors', row: 6, col: 5 },
+    { atomicNumber: 74, symbol: 'W', name: 'Tungsten', atomicMass: 183.84, category: 'Transition Metal', block: 'd', group: 6, period: 6, electronConfig: '[Xe]4f¹⁴5d⁴6s²', atomicRadius: 193, ionizationEnergy: 770, electronegativity: 2.36, density: 19.25, meltingPoint: 3695, boilingPoint: 5828, isException: true, exceptionType: 'Physical Property', exceptionExplanation: 'W has the highest melting point (3695 K) and boiling point (5828 K) of all elements — used in light bulb filaments', oxidationStates: [6, 4, 2], trendPosition: 'Highest melting point element — used in filaments; max ox state +6', row: 6, col: 6 },
+    {
+        atomicNumber: 75,
+        symbol: 'Re',
+        name: 'Rhenium',
+        atomicMass: 186.21,
+        category: 'Transition Metal',
+        block: 'd',
+        group: 7,
+        period: 6,
+        electronConfig: '[Xe]4f¹⁴5d⁵6s²',
+        atomicRadius: 188,
+        ionizationEnergy: 760,
+        electronegativity: 1.90,
+        density: 21.02,
+        meltingPoint: 3459,
+        boilingPoint: 5869,
+        oxidationStates: [7, 4, 6, 2],
+        oxidationStateCompounds: [
+            { state: 7, compounds: ['Re₂O₇', 'HReO₄'] },
+            { state: 4, compounds: ['ReO₂', 'ReCl₄'] }
+        ],
+        anomalousBehavior: {
+            facts: [
+                'Rhenium has one of the highest boiling points of all elements (5869 K)',
+                'Re₂O₇ is acidic — dissolves in water to form perrhenic acid (HReO₄), analogous to Mn₂O₇ forming HMnO₄',
+                'Maximum oxidation state of +7 matches group number — oxoanion is ReO₄⁻ (perrhenate)'
+            ],
+            jeeRelevance: 'low'
+        },
+        trendPosition: 'Max oxidation state +7 (group 7) — one of densest and highest boiling elements',
+        row: 6,
+        col: 7
+    },
+    {
+        atomicNumber: 76,
+        symbol: 'Os',
+        name: 'Osmium',
+        atomicMass: 190.23,
+        category: 'Transition Metal',
+        block: 'd',
+        group: 8,
+        period: 6,
+        electronConfig: '[Xe]4f¹⁴5d⁶6s²',
+        atomicRadius: 185,
+        ionizationEnergy: 840,
+        electronegativity: 2.20,
+        density: 22.59,
+        meltingPoint: 3306,
+        boilingPoint: 5285,
+        oxidationStates: [8, 4, 3, 2],
+        oxidationStateCompounds: [
+            { state: 8, compounds: ['OsO₄'] },
+            { state: 4, compounds: ['OsO₂', 'OsCl₄'] }
+        ],
+        isException: true,
+        exceptionType: 'Physical Property',
+        exceptionExplanation: 'Osmium has the highest density of all elements (22.59 g/cm³) — denser than even Ir, Pt, Au, Pb',
+        anomalousBehavior: {
+            facts: [
+                'Osmium is the densest naturally occurring element (22.59 g/cm³) — exceeds iridium (22.56) and all other elements',
+                'OsO₄ (osmium tetroxide) is a volatile, highly toxic yellow solid — Os reaches its maximum +8 oxidation state, the highest possible for any transition metal',
+                '+8 oxidation state is unique to Os and Ru in group 8 — all other transition metals max out at lower states',
+                'OsO₄ is used as a staining agent in electron microscopy'
+            ],
+            jeeRelevance: 'medium'
+        },
+        trendPosition: 'Densest element (22.59 g/cm³) — max ox state +8 in OsO₄, highest of any element',
+        row: 6,
+        col: 8
+    },
+    {
+        atomicNumber: 77,
+        symbol: 'Ir',
+        name: 'Iridium',
+        atomicMass: 192.22,
+        category: 'Transition Metal',
+        block: 'd',
+        group: 9,
+        period: 6,
+        electronConfig: '[Xe]4f¹⁴5d⁷6s²',
+        atomicRadius: 180,
+        ionizationEnergy: 880,
+        electronegativity: 2.20,
+        density: 22.56,
+        meltingPoint: 2739,
+        boilingPoint: 4701,
+        oxidationStates: [3, 4, 1],
+        oxidationStateCompounds: [
+            { state: 3, compounds: ['IrCl₃', 'Ir₂O₃'] },
+            { state: 4, compounds: ['IrO₂', 'IrF₄'] }
+        ],
+        anomalousBehavior: {
+            facts: [
+                'Iridium is the second densest element (22.56 g/cm³) after osmium',
+                'Iridium is the most corrosion-resistant metal — resists attack by almost all acids including aqua regia',
+                'The Ir/Os alloy is used in the tip of fountain pens and in early international standard metre bars',
+                'High abundance of Ir in the K–Pg boundary clay layer is evidence for the asteroid impact theory for dinosaur extinction'
+            ],
+            jeeRelevance: 'low'
+        },
+        trendPosition: 'Second densest element — most corrosion-resistant metal; +3 most common state',
+        row: 6,
+        col: 9
+    },
+    {
+        atomicNumber: 78,
+        symbol: 'Pt',
+        name: 'Platinum',
+        atomicMass: 195.08,
+        category: 'Transition Metal',
+        block: 'd',
+        group: 10,
+        period: 6,
+        electronConfig: '[Xe]4f¹⁴5d⁹6s¹',
+        atomicRadius: 177,
+        ionizationEnergy: 870,
+        electronegativity: 2.28,
+        density: 21.45,
+        meltingPoint: 2041,
+        boilingPoint: 4098,
+        standardReductionPotential: 1.18,
+        isException: true,
+        exceptionType: 'Electron Configuration',
+        exceptionExplanation: 'Pt has 5d⁹6s¹ instead of expected 5d⁸6s² — the 5d orbital drops well below 6s in energy across the 5d series',
+        oxidationStates: [2, 4, 0],
+        oxidationStateCompounds: [
+            { state: 2, compounds: ['[PtCl₄]²⁻', 'PtCl₂', '[PtCl₂(NH₃)₂]'] },
+            { state: 4, compounds: ['[PtCl₆]²⁻', 'PtCl₄', 'H₂[PtCl₆]'] }
+        ],
+        compoundsInfo: [
+            { formula: 'cis-[PtCl₂(NH₃)₂]', color: 'Yellow (solid)', hexColor: '#FFD700', nature: 'neutral' },
+            { formula: 'trans-[PtCl₂(NH₃)₂]', color: 'Pale yellow', hexColor: '#FFFACD', nature: 'neutral' },
+            { formula: 'H₂[PtCl₆]', color: 'Orange-red', hexColor: '#FF6347', nature: 'acidic' }
+        ],
+        anomalousBehavior: {
+            facts: [
+                'Werner\'s coordination compounds: [PtCl₄]²⁻ (tetrachloroplatinate(II), square planar, dsp²) and [Pt(NH₃)₄]²⁺ (tetraammineplatinum(II), square planar) are NCERT examples for ionisation isomerism: [Pt(NH₃)₄][PtCl₄] (Magnus\'s green salt)',
+                'cis-[PtCl₂(NH₃)₂] (cisplatin) and trans-[PtCl₂(NH₃)₂] are the textbook NCERT example of geometric isomerism in square planar complexes',
+                'Cisplatin (cis-[PtCl₂(NH₃)₂]) is explicitly named in NCERT as an anticancer drug — it cross-links DNA strands in cancer cells; trans-isomer has no anticancer activity',
+                '[PtCl₆]²⁻ (hexachloroplatinate(IV), octahedral) and [Pt(NH₃)₄Cl₂]²⁺ (tetraammineplatinum(IV)) are coordination sphere isomers',
+                'Pt dissolves in aqua regia (conc. HCl + conc. HNO₃, 3:1) to form H₂[PtCl₆] (chloroplatinic acid) — one of the few metals attacked by aqua regia',
+                'Pt (and Pd, Rh) are the active metals in catalytic converters — convert CO → CO₂, NOₓ → N₂, and unburnt hydrocarbons → CO₂ + H₂O'
+            ],
+            jeeRelevance: 'high'
+        },
+        keyReactions: [
+            {
+                equation: 'Pt + 4HCl + HNO₃ → H₂[PtCl₄] + NO + 2H₂O',
+                conditions: 'Aqua regia (3HCl : 1HNO₃)',
+                note: 'Pt dissolves in aqua regia — HNO₃ oxidises Pt, HCl provides Cl⁻ for complex formation'
+            },
+            {
+                equation: 'cis-[PtCl₂(NH₃)₂] → anticancer drug (cisplatin)',
+                conditions: 'Binds to N-7 of guanine in DNA',
+                note: 'Cross-links adjacent guanines on same DNA strand → prevents replication; trans-isomer is inactive'
+            },
+            {
+                equation: '[PtCl₄]²⁻ + 2NH₃ → [PtCl₂(NH₃)₂] (cis first, by trans effect)',
+                conditions: 'Sequential substitution',
+                note: 'Trans effect of Cl⁻ > NH₃ directs incoming NH₃ to cis position relative to Cl⁻'
+            }
+        ],
+        trendPosition: 'Cisplatin ([PtCl₂(NH₃)₂]) — NCERT geometric isomers and anticancer drug; Magnus\'s green salt ionisation isomers',
+        hasRichData: true,
+        row: 6,
+        col: 10
+    },
+    {
+        atomicNumber: 79,
+        symbol: 'Au',
+        name: 'Gold',
+        atomicMass: 196.97,
+        category: 'Transition Metal',
+        block: 'd',
+        group: 11,
+        period: 6,
+        electronConfig: '[Xe]4f¹⁴5d¹⁰6s¹',
+        atomicRadius: 174,
+        ionizationEnergy: 890,
+        electronegativity: 2.54,
+        density: 19.30,
+        meltingPoint: 1337,
+        boilingPoint: 3129,
+        standardReductionPotential: 1.69,
+        isException: true,
+        exceptionType: 'Electron Configuration',
+        exceptionExplanation: 'Au has 5d¹⁰6s¹ (like Cu, Ag) for fully-filled d-orbital stability — expected 5d⁹6s²',
+        oxidationStates: [1, 3],
+        oxidationStateCompounds: [
+            { state: 1, compounds: ['[Au(CN)₂]⁻', 'AuCl'] },
+            { state: 3, compounds: ['[AuCl₄]⁻', 'AuCl₃', 'HAuCl₄'] }
+        ],
+        compoundsInfo: [
+            { formula: 'HAuCl₄·3H₂O', color: 'Yellow (crystals)', hexColor: '#FFD700', nature: 'acidic' },
+            { formula: '[AuCl₄]⁻', color: 'Yellow (soln)', hexColor: '#FFD700', nature: 'neutral' }
+        ],
+        anomalousBehavior: {
+            facts: [
+                'Gold does not react with individual acids — it dissolves only in aqua regia (3HCl : 1HNO₃): Au + HNO₃ + 4HCl → H[AuCl₄] + NO + 2H₂O. The NO₃⁻ oxidises Au to Au³⁺ while Cl⁻ stabilises it as [AuCl₄]⁻',
+                'MacArthur–Forrest cyanide process for gold extraction: 4Au + 8CN⁻ + O₂ + 2H₂O → 4[Au(CN)₂]⁻ + 4OH⁻; gold recovered by zinc displacement: 2[Au(CN)₂]⁻ + Zn → [Zn(CN)₄]²⁻ + 2Au',
+                '[Au(CN)₂]⁻ (dicyanoaurate(I)) is linear (sp hybridisation, Au(I)) — identical geometry to [Ag(CN)₂]⁻ and [Cu(CN)₂]⁻; cyanide stabilises +1 state through strong σ-donation and π-back bonding',
+                'Gold shows relativistic contraction of the 6s orbital (relativistic effects) — makes Au–Au bonding (aurophilic interaction) unusually strong and contributes to gold\'s distinctive yellow colour',
+                'Au(I) is the stable oxidation state in complexes with soft ligands (CN⁻, S₂O₃²⁻); Au(III) is stable with hard halide ligands (Cl⁻) in [AuCl₄]⁻'
+            ],
+            jeeRelevance: 'high'
+        },
+        keyReactions: [
+            {
+                equation: 'Au + HNO₃ + 4HCl → H[AuCl₄] + NO↑ + 2H₂O',
+                conditions: 'Aqua regia (conc. 3HCl : 1HNO₃)',
+                note: 'Only acid mixture that dissolves gold — HNO₃ oxidises, HCl provides Cl⁻ to form stable [AuCl₄]⁻'
+            },
+            {
+                equation: '4Au + 8NaCN + O₂ + 2H₂O → 4Na[Au(CN)₂] + 4NaOH',
+                conditions: 'Cyanide leaching of gold ore',
+                note: '[Au(CN)₂]⁻ linear complex; Au recovered by Zn: 2[Au(CN)₂]⁻ + Zn → [Zn(CN)₄]²⁻ + 2Au'
+            }
+        ],
+        trendPosition: 'Noble metal — aqua regia only solvent; [Au(CN)₂]⁻ cyanide extraction; [AuCl₄]⁻ in Au(III)',
+        hasRichData: true,
+        row: 6,
+        col: 11
+    },
+    {
+        atomicNumber: 80,
+        symbol: 'Hg',
+        name: 'Mercury',
+        atomicMass: 200.59,
+        category: 'Transition Metal',
+        block: 'd',
+        group: 12,
+        period: 6,
+        electronConfig: '[Xe]4f¹⁴5d¹⁰6s²',
+        atomicRadius: 171,
+        ionizationEnergy: 1007,
+        electronegativity: 2.00,
+        density: 13.55,
+        meltingPoint: 234,
+        boilingPoint: 630,
+        standardReductionPotential: 0.85,
+        isException: true,
+        exceptionType: 'Physical Property',
+        exceptionExplanation: 'Hg is liquid at room temperature — only liquid metal; relativistic contraction of 6s² makes the orbital spherically dense and poor at metallic bonding, so the melting point collapses to 234 K',
+        oxidationStates: [1, 2],
+        oxidationStateCompounds: [
+            { state: 1, compounds: ['Hg₂Cl₂', 'Hg₂(NO₃)₂', 'Hg₂SO₄'] },
+            { state: 2, compounds: ['HgCl₂', 'HgO', 'HgS', 'K₂[HgI₄]'] }
+        ],
+        compoundsInfo: [
+            { formula: 'Hg₂Cl₂', color: 'White (ppt)', hexColor: '#FFFFFF', nature: 'neutral' },
+            { formula: 'HgI₂', color: 'Red (ppt)', hexColor: '#FF0000', nature: 'neutral' },
+            { formula: 'K₂[HgI₄]', color: 'Colourless (soln)', hexColor: 'transparent', nature: 'neutral' },
+            { formula: 'HgS', color: 'Black (ppt)', hexColor: '#1A1A1A', nature: 'neutral' }
+        ],
+        anomalousBehavior: {
+            facts: [
+                'Mercury exists in two oxidation states: Hg⁺ (mercurous, always as Hg₂²⁺ dimer) and Hg²⁺ (mercuric). Hg₂Cl₂ = calomel (mercurous chloride, white ppt); HgCl₂ = corrosive sublimate (mercuric chloride, soluble, highly toxic)',
+                'Calomel (Hg₂Cl₂) test with SnCl₂: Hg²⁺ + SnCl₂ → Hg₂Cl₂↓ (white silky ppt) + SnCl₄; excess SnCl₂ reduces further to Hg₂Cl₂ → 2Hg (grey metallic mercury). Both steps are confirmatory for Hg²⁺ in salt analysis',
+                'Nessler\'s reagent: K₂[HgI₄] in KOH (alkaline potassium tetraiodomercurate(II)); reacts with NH₄⁺/NH₃ to give orange-brown precipitate HgO·Hg(NH₂)I — test for ammonium ion',
+                'Hg²⁺ + 2KI → HgI₂↓ (red ppt); excess KI → K₂[HgI₄] (colourless soluble complex) — used to prepare Nessler\'s reagent',
+                'Hg₂²⁺ disproportionates in presence of NH₃: Hg₂Cl₂ + 2NH₃ → Hg + HgNH₂Cl↓ (white) + NH₄Cl — black Hg metal appears alongside white precipitate',
+                'Hg is not a transition metal by strict IUPAC definition — both Hg and Hg²⁺ have completely filled d¹⁰ configuration'
+            ],
+            jeeRelevance: 'high'
+        },
+        keyReactions: [
+            {
+                equation: 'Hg²⁺ + SnCl₂ (few drops) → Hg₂Cl₂↓ (white) + SnCl₄',
+                conditions: 'Salt analysis confirmatory test for Hg²⁺',
+                note: 'Excess SnCl₂: Hg₂Cl₂ + SnCl₂ → 2Hg↓ (grey metallic) + SnCl₄'
+            },
+            {
+                equation: 'Hg²⁺ + 2KI → HgI₂↓ (red) ; HgI₂ + 2KI → K₂[HgI₄] (colourless)',
+                conditions: 'Excess KI dissolves red precipitate',
+                note: 'K₂[HgI₄] + KOH = Nessler\'s reagent — tests for NH₃/NH₄⁺'
+            },
+            {
+                equation: 'Hg₂Cl₂ + 2NH₃ → Hg↓ + HgNH₂Cl↓ + NH₄Cl',
+                conditions: 'Aqueous NH₃ (distinguishes Hg₂²⁺ from Hg²⁺)',
+                note: 'Black Hg metal + white precipitate mixture — calomel turns grey-black with NH₃'
+            }
+        ],
+        trendPosition: 'Hg₂Cl₂ (calomel) vs HgCl₂ (corrosive sublimate); SnCl₂ test; Nessler\'s reagent K₂[HgI₄]',
+        hasRichData: true,
+        row: 6,
+        col: 12
+    },
+
+    // Period 6 - p-block
+    {
+        atomicNumber: 81,
+        symbol: 'Tl',
+        name: 'Thallium',
+        atomicMass: 204.38,
+        category: 'Post-Transition Metal',
+        block: 'p',
+        group: 13,
+        period: 6,
+        electronConfig: '[Xe]4f¹⁴5d¹⁰6s²6p¹',
+        atomicRadius: 170,
+        ionicRadius: 150,
+        ionizationEnergy: 589,
+        electronegativity: 1.62,
+        density: 11.85,
+        meltingPoint: 577,
+        boilingPoint: 1746,
+        oxides: ['Tl₂O', 'Tl₂O₃'],
+        oxideNature: 'basic',
+        oxidationStates: [1, 3],
+        oxidationStateCompounds: [
+            { state: 1, compounds: ['TlCl', 'Tl₂O', 'TlOH'] },
+            { state: 3, compounds: ['TlCl₃', 'Tl₂O₃'] }
+        ],
+        isException: true,
+        exceptionType: 'Inert Pair Effect',
+        exceptionExplanation: 'Tl shows +1 as the dominant stable state — strongest inert pair effect in group 13 (Tl⁺ > In⁺ > Ga⁺)',
+        anomalousBehavior: {
+            facts: [
+                'Thallium shows the strongest inert pair effect in group 13: +1 state is more stable than +3 (reverse of Al, Ga)',
+                'Tl⁺ ion has a similar ionic radius to K⁺ and Rb⁺ — it mimics alkali metal behavior, precipitates as TlCl (sparingly soluble like AgCl)',
+                'Tl₂O is a basic oxide (unlike Al₂O₃ which is amphoteric) — increasing metallic character down group 13',
+                'Tl³⁺/Tl⁺ has E° = +1.25 V, making Tl³⁺ a moderately strong oxidizing agent'
+            ],
+            jeeRelevance: 'medium'
+        },
+        keyReactions: [
+            {
+                equation: 'Tl³⁺ + 2e⁻ → Tl⁺',
+                conditions: 'E° = +1.25 V',
+                note: 'Tl³⁺ is a moderately strong oxidizer; Tl⁺ is the stable final product'
+            }
+        ],
+        trendPosition: 'Strongest inert pair effect in group 13 — +1 dominant state; Tl⁺ mimics K⁺/Rb⁺',
+        row: 6,
+        col: 13
+    },
+    {
+        atomicNumber: 82,
+        symbol: 'Pb',
+        name: 'Lead',
+        atomicMass: 207.2,
+        category: 'Post-Transition Metal',
+        block: 'p',
+        group: 14,
+        period: 6,
+        electronConfig: '[Xe]4f¹⁴5d¹⁰6s²6p²',
+        atomicRadius: 175,
+        ionicRadius: 119,
+        ionizationEnergy: 716,
+        electronegativity: 2.33,
+        density: 11.35,
+        meltingPoint: 601,
+        boilingPoint: 2022,
+        standardReductionPotential: -0.13,
+        compoundsInfo: [
+            { formula: 'PbSO₄', color: 'White (ppt)', hexColor: '#FFFFFF', nature: 'neutral' },
+            { formula: 'PbS', color: 'Black (ppt)', hexColor: '#1A1A1A', nature: 'neutral' },
+            { formula: 'PbI₂', color: 'Yellow (ppt)', hexColor: '#FFFF00', nature: 'neutral' },
+            { formula: 'PbCrO₄', color: 'Yellow (ppt)', hexColor: '#FFD700', nature: 'neutral' }
+        ],
+        oxides: ['PbO', 'PbO₂', 'Pb₃O₄'],
+        oxideNature: 'amphoteric',
+        oxidationStates: [2, 4],
+        oxidationStateCompounds: [
+            { state: 2, compounds: ['PbO', 'PbSO₄', 'PbCl₂', 'PbS'] },
+            { state: 4, compounds: ['PbO₂', 'PbCl₄'] }
+        ],
+        isException: true,
+        exceptionType: 'Inert Pair Effect',
+        exceptionExplanation: 'Pb shows +2 as the dominant stable state; PbO₂ (+4) is a strong oxidizing agent that reverts to +2',
+        anomalousBehavior: {
+            facts: [
+                'Lead storage battery (lead accumulator): anode = Pb, cathode = PbO₂, electrolyte = dil. H₂SO₄ (38%); EMF ≈ 2V per cell, 12V for 6-cell battery used in cars',
+                'PbO₂ is a strong oxidizing agent — reduction from +4 → +2 (Pb²⁺); used as cathode in lead-acid battery',
+                'Inert pair effect: Pb²⁺ is more stable than Pb⁴⁺; PbO₂ can oxidize Mn²⁺ → MnO₄⁻ (used in analytical chemistry)',
+                'Red lead (Pb₃O₄ = minium) is a mixed oxide containing Pb²⁺ and Pb⁴⁺ — used as anti-rust paint',
+                'PbSO₄ and PbS are both insoluble precipitates — key in qualitative analysis (Group II)',
+                'Pb(CH₃COO)₂ (lead acetate) is used as a test for H₂S gas — gives black PbS precipitate'
+            ],
+            jeeRelevance: 'high'
+        },
+        keyReactions: [
+            {
+                equation: 'Pb + PbO₂ + 2H₂SO₄ → 2PbSO₄ + 2H₂O',
+                conditions: 'Discharge in lead storage battery',
+                note: 'Both electrodes become PbSO₄ on discharge; process reverses on charging'
+            },
+            {
+                equation: 'PbO₂ + 4HCl → PbCl₂ + Cl₂ + 2H₂O',
+                conditions: 'Concentrated HCl',
+                note: 'PbO₂ oxidizes Cl⁻ to Cl₂'
+            }
+        ],
+        trendPosition: 'Inert pair effect — +2 dominant; PbO₂ is strong oxidizer; lead storage battery',
+        row: 6,
+        col: 14
+    },
+    {
+        atomicNumber: 83,
+        symbol: 'Bi',
+        name: 'Bismuth',
+        atomicMass: 208.98,
+        category: 'Post-Transition Metal',
+        block: 'p',
+        group: 15,
+        period: 6,
+        electronConfig: '[Xe]4f¹⁴5d¹⁰6s²6p³',
+        atomicRadius: 160,
+        ionicRadius: 103,
+        ionizationEnergy: 703,
+        electronegativity: 2.02,
+        density: 9.79,
+        meltingPoint: 545,
+        boilingPoint: 1837,
+        oxides: ['Bi₂O₃', 'Bi₂O₅'],
+        oxideNature: 'basic',
+        oxidationStates: [3, 5],
+        oxidationStateCompounds: [
+            { state: 3, compounds: ['Bi₂O₃', 'BiCl₃', 'Bi₂S₃'] },
+            { state: 5, compounds: ['Bi₂O₅', 'NaBiO₃'] }
+        ],
+        isException: true,
+        exceptionType: 'Inert Pair Effect',
+        exceptionExplanation: 'Bi shows strongest inert pair effect in group 15 — +3 dominates; +5 (NaBiO₃) is an extremely strong oxidizing agent',
+        anomalousBehavior: {
+            facts: [
+                'Bismuth has the strongest inert pair effect in group 15: +3 is overwhelmingly stable; +5 state in NaBiO₃ is a very powerful oxidizing agent',
+                'Bi₂O₃ is a basic oxide (unlike N₂O₃ and P₂O₃ which are acidic) — metallic character increases down group 15',
+                'Bismuth is the heaviest stable (non-radioactive) element — all elements above Bi (Z > 83) are radioactive',
+                'NaBiO₃ (sodium bismuthate) oxidizes Mn²⁺ → MnO₄⁻ (purple) even in cold dilute HNO₃ — used as confirmatory test for manganese',
+                'BiCl₃ hydrolyzes readily to give BiOCl (bismuth oxychloride — white precipitate), used in cosmetics'
+            ],
+            jeeRelevance: 'high'
+        },
+        keyReactions: [
+            {
+                equation: '2Mn²⁺ + 5NaBiO₃ + 14H⁺ → 2MnO₄⁻ + 5Bi³⁺ + 5Na⁺ + 7H₂O',
+                conditions: 'Cold dil. HNO₃',
+                note: 'Confirmatory test for Mn²⁺ — pink/purple MnO₄⁻ formed'
+            },
+            {
+                equation: 'BiCl₃ + H₂O → BiOCl↓ + 2HCl',
+                conditions: 'Hydrolysis',
+                note: 'White precipitate of bismuth oxychloride'
+            }
+        ],
+        trendPosition: 'Heaviest stable element — strongest inert pair effect in group 15; Bi₂O₃ basic; NaBiO₃ strong oxidizer',
+        row: 6,
+        col: 15
+    },
+    {
+        atomicNumber: 84,
+        symbol: 'Po',
+        name: 'Polonium',
+        atomicMass: 209,
+        category: 'Post-Transition Metal',
+        block: 'p',
+        group: 16,
+        period: 6,
+        electronConfig: '[Xe]4f¹⁴5d¹⁰6s²6p⁴',
+        atomicRadius: 167,
+        ionizationEnergy: 812,
+        electronegativity: 2.0,
+        density: 9.20,
+        meltingPoint: 527,
+        boilingPoint: 1235,
+        oxidationStates: [-2, 2, 4, 6],
+        oxidationStateCompounds: [
+            { state: -2, compounds: ['H₂Po'] },
+            { state: 4, compounds: ['PoO₂', 'PoCl₄'] }
+        ],
+        isException: true,
+        exceptionType: 'Radioactivity',
+        exceptionExplanation: 'Po is the only group 16 element that is radioactive with no stable isotopes; discovered by Marie Curie in 1898',
+        anomalousBehavior: {
+            facts: [
+                'Polonium was discovered by Marie Curie in 1898 — named after her homeland Poland',
+                'Po is radioactive with no stable isotopes; ²¹⁰Po has a half-life of only 138.4 days',
+                'Po is the only element that crystallizes in a simple cubic structure under normal conditions',
+                'Po shows more metallic character than Te or Se — PoO₂ is amphoteric tending toward basic',
+                'H₂Po is the most unstable and reducing hydride in group 16 — thermal stability of hydrides decreases down the group'
+            ],
+            jeeRelevance: 'medium'
+        },
+        trendPosition: 'Radioactive group 16 element — only simple cubic crystal; discovered by Marie Curie',
+        row: 6,
+        col: 16
+    },
+    {
+        atomicNumber: 85,
+        symbol: 'At',
+        name: 'Astatine',
+        atomicMass: 210,
+        category: 'Metalloid',
+        block: 'p',
+        group: 17,
+        period: 6,
+        electronConfig: '[Xe]4f¹⁴5d¹⁰6s²6p⁵',
+        atomicRadius: 150,
+        ionizationEnergy: 930,
+        electronegativity: 2.20,
+        density: 7.0,
+        oxidationStates: [-1, 1, 3, 5, 7],
+        oxidationStateCompounds: [
+            { state: -1, compounds: ['HAt', 'NaAt'] },
+            { state: 5, compounds: ['AtO₃⁻'] }
+        ],
+        isException: true,
+        exceptionType: 'Radioactivity + Metallic Character',
+        exceptionExplanation: 'At is the rarest naturally occurring element (radioactive) and is expected to show metallic character — least reactive halogen, unlike the others',
+        anomalousBehavior: {
+            facts: [
+                'Astatine is the rarest naturally occurring element — only ~30 g exists in Earth\'s crust at any time',
+                'At is radioactive with no stable isotopes; longest-lived isotope ²¹⁰At has a half-life of only 8.1 hours',
+                'Oxidising power of halogens decreases down the group: F > Cl > Br > I > At — At is the weakest oxidizing halogen',
+                'Astatine is expected to be a dark-colored solid (like I₂) and to show some metallic properties, making it a metalloid',
+                'Electron affinity and electronegativity are lowest among halogens for At — it is least reactive',
+                'Bond dissociation energy of At–At is expected to be lowest among halogens, following the trend F–F < Cl–Cl > Br–Br > I–I > At–At'
+            ],
+            jeeRelevance: 'medium'
+        },
+        trendPosition: 'Rarest element — radioactive halogen; weakest oxidizing power in group 17; metalloid character',
+        row: 6,
+        col: 17
+    },
+    {
+        atomicNumber: 86,
+        symbol: 'Rn',
+        name: 'Radon',
+        atomicMass: 222,
+        category: 'Noble Gas',
+        block: 'p',
+        group: 18,
+        period: 6,
+        electronConfig: '[Xe]4f¹⁴5d¹⁰6s²6p⁶',
+        atomicRadius: 220,
+        ionizationEnergy: 1037,
+        density: 0.00973,
+        meltingPoint: 202,
+        boilingPoint: 211,
+        isException: true,
+        exceptionType: 'Radioactivity',
+        exceptionExplanation: 'Rn is a radioactive noble gas — the heaviest and densest noble gas; lowest ionization energy among noble gases, making compound formation more feasible',
+        anomalousBehavior: {
+            facts: [
+                'Radon is a radioactive noble gas — all isotopes are radioactive; most stable is ²²²Rn with half-life of 3.8 days',
+                'Rn has the lowest ionization energy among all noble gases (1037 kJ/mol) — theoretically most likely to form compounds after Xe, though no Rn compounds have been isolated at room temperature',
+                'Ionization energy of noble gases decreases down the group: He > Ne > Ar > Kr > Xe > Rn',
+                'Radon is a natural decay product of uranium and radium — it is a significant source of background radiation in homes',
+                'Rn is the densest noble gas and among the densest gases at standard conditions'
+            ],
+            jeeRelevance: 'medium'
+        },
+        trendPosition: 'Heaviest natural noble gas — radioactive; lowest IE among noble gases; densest noble gas',
+        row: 6,
+        col: 18
+    },
 
     // Lanthanides (f-block) - Row 8 - NCERT values with exam-focused data
     { atomicNumber: 57, symbol: 'La', name: 'Lanthanum', atomicMass: 138.91, category: 'Lanthanide', block: 'f', group: 3, period: 6, electronConfig: '[Xe]5d¹6s²', atomicRadius: 187, ionConfigs: { M2plus: '5d¹', M3plus: '4f⁰' }, ionicRadii: { M3plus: 106 }, oxidationStates: [3], stableOxidationState: 3, fSubshellInfo: 'Empty 4f (4f⁰ in La³⁺)', row: 8, col: 3 },
@@ -2096,6 +3239,25 @@ export const ELEMENTS: Element[] = [
     // Period 7 - s block
     { atomicNumber: 87, symbol: 'Fr', name: 'Francium', atomicMass: 223, category: 'Alkali Metal', block: 's', group: 1, period: 7, electronConfig: '[Rn]7s¹', atomicRadius: 348, ionizationEnergy: 380, electronegativity: 0.70, density: 1.87, meltingPoint: 300, boilingPoint: 950, row: 7, col: 1 },
     { atomicNumber: 88, symbol: 'Ra', name: 'Radium', atomicMass: 226, category: 'Alkaline Earth Metal', block: 's', group: 2, period: 7, electronConfig: '[Rn]7s²', atomicRadius: 283, ionizationEnergy: 509, electronegativity: 0.90, density: 5.50, meltingPoint: 973, boilingPoint: 2010, row: 7, col: 2 },
+
+    // Period 7 - d block (6d series / transactinides) — structure only, no card detail
+    { atomicNumber: 104, symbol: 'Rf', name: 'Rutherfordium', atomicMass: 267, category: 'Transition Metal', block: 'd', group: 4, period: 7, electronConfig: '[Rn]5f¹⁴6d²7s²', row: 7, col: 4 },
+    { atomicNumber: 105, symbol: 'Db', name: 'Dubnium', atomicMass: 268, category: 'Transition Metal', block: 'd', group: 5, period: 7, electronConfig: '[Rn]5f¹⁴6d³7s²', row: 7, col: 5 },
+    { atomicNumber: 106, symbol: 'Sg', name: 'Seaborgium', atomicMass: 269, category: 'Transition Metal', block: 'd', group: 6, period: 7, electronConfig: '[Rn]5f¹⁴6d⁴7s²', row: 7, col: 6 },
+    { atomicNumber: 107, symbol: 'Bh', name: 'Bohrium', atomicMass: 270, category: 'Transition Metal', block: 'd', group: 7, period: 7, electronConfig: '[Rn]5f¹⁴6d⁵7s²', row: 7, col: 7 },
+    { atomicNumber: 108, symbol: 'Hs', name: 'Hassium', atomicMass: 277, category: 'Transition Metal', block: 'd', group: 8, period: 7, electronConfig: '[Rn]5f¹⁴6d⁶7s²', row: 7, col: 8 },
+    { atomicNumber: 109, symbol: 'Mt', name: 'Meitnerium', atomicMass: 278, category: 'Transition Metal', block: 'd', group: 9, period: 7, electronConfig: '[Rn]5f¹⁴6d⁷7s²', row: 7, col: 9 },
+    { atomicNumber: 110, symbol: 'Ds', name: 'Darmstadtium', atomicMass: 281, category: 'Transition Metal', block: 'd', group: 10, period: 7, electronConfig: '[Rn]5f¹⁴6d⁸7s²', row: 7, col: 10 },
+    { atomicNumber: 111, symbol: 'Rg', name: 'Roentgenium', atomicMass: 282, category: 'Transition Metal', block: 'd', group: 11, period: 7, electronConfig: '[Rn]5f¹⁴6d¹⁰7s¹', row: 7, col: 11 },
+    { atomicNumber: 112, symbol: 'Cn', name: 'Copernicium', atomicMass: 285, category: 'Transition Metal', block: 'd', group: 12, period: 7, electronConfig: '[Rn]5f¹⁴6d¹⁰7s²', row: 7, col: 12 },
+
+    // Period 7 - p block (structure only)
+    { atomicNumber: 113, symbol: 'Nh', name: 'Nihonium', atomicMass: 286, category: 'Post-Transition Metal', block: 'p', group: 13, period: 7, electronConfig: '[Rn]5f¹⁴6d¹⁰7s²7p¹', row: 7, col: 13 },
+    { atomicNumber: 114, symbol: 'Fl', name: 'Flerovium', atomicMass: 289, category: 'Post-Transition Metal', block: 'p', group: 14, period: 7, electronConfig: '[Rn]5f¹⁴6d¹⁰7s²7p²', row: 7, col: 14 },
+    { atomicNumber: 115, symbol: 'Mc', name: 'Moscovium', atomicMass: 290, category: 'Post-Transition Metal', block: 'p', group: 15, period: 7, electronConfig: '[Rn]5f¹⁴6d¹⁰7s²7p³', row: 7, col: 15 },
+    { atomicNumber: 116, symbol: 'Lv', name: 'Livermorium', atomicMass: 293, category: 'Post-Transition Metal', block: 'p', group: 16, period: 7, electronConfig: '[Rn]5f¹⁴6d¹⁰7s²7p⁴', row: 7, col: 16 },
+    { atomicNumber: 117, symbol: 'Ts', name: 'Tennessine', atomicMass: 294, category: 'Metalloid', block: 'p', group: 17, period: 7, electronConfig: '[Rn]5f¹⁴6d¹⁰7s²7p⁵', row: 7, col: 17 },
+    { atomicNumber: 118, symbol: 'Og', name: 'Oganesson', atomicMass: 294, category: 'Noble Gas', block: 'p', group: 18, period: 7, electronConfig: '[Rn]5f¹⁴6d¹⁰7s²7p⁶', row: 7, col: 18 },
 ];
 
 // Helper functions for property-based coloring

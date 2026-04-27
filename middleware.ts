@@ -97,16 +97,39 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(loginUrl);
     }
 
-    // /crucible/admin: verify user is in ADMIN_EMAILS before granting access.
-    // This is a server-side gate — the client-side usePermissions hook provides
-    // granular RBAC, but it must not be the only layer of defence.
+    // /crucible/admin: verify user has admin access before granting access.
+    // ADMIN_EMAILS is the fast path for super-admins (env-based, no DB call).
+    // Subject admins are stored in the UserRole MongoDB collection — we verify
+    // them by calling the permissions API (Edge middleware can't query Mongo directly).
+    // The client-side usePermissions hook provides granular RBAC inside the panel,
+    // but this server-side gate must also exist as a defence-in-depth layer.
     if (pathname.startsWith('/crucible/admin')) {
         const adminEmails = (process.env.ADMIN_EMAILS || '')
             .split(',')
             .map((e) => e.trim().toLowerCase())
             .filter(Boolean);
-        if (!user.email || !adminEmails.includes(user.email.toLowerCase())) {
-            return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+
+        const isSuperAdmin = !!user.email && adminEmails.includes(user.email.toLowerCase());
+
+        if (!isSuperAdmin) {
+            // Check if user has a non-viewer role in the UserRole collection
+            let hasRole = false;
+            try {
+                const permUrl = new URL('/api/v2/admin/permissions', request.url);
+                const permRes = await fetch(permUrl.toString(), {
+                    headers: { cookie: request.headers.get('cookie') || '' },
+                });
+                if (permRes.ok) {
+                    const permData = await permRes.json() as { role?: string };
+                    hasRole = !!permData.role && permData.role !== 'viewer';
+                }
+            } catch {
+                // Permissions check failed — deny access
+            }
+
+            if (!hasRole) {
+                return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+            }
         }
     }
 

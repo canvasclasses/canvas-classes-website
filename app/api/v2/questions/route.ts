@@ -334,11 +334,17 @@ export async function GET(request: NextRequest) {
     // Build query with RBAC filtering
     let query: Record<string, unknown> = { deleted_at: null };
 
-    // Apply subject-level access control for authenticated users
+    // Apply subject-level access control for admin users only.
+    // Regular students (role='viewer' or no UserRole row) must NOT be filtered here —
+    // they should see the same questions as unauthenticated users do via the fast path.
+    // RBAC chapter restrictions are an admin-panel concept; applying them to students
+    // returns { _id: { $exists: false } } for anyone without a UserRole record.
     if (isAuthenticated && user) {
-      const rbacFilter = await getQuestionFilter(user.email!);
-      // Merge RBAC filter with base query
-      query = { ...query, ...rbacFilter };
+      const permissions = await getUserPermissions(user.email!);
+      if (permissions.role !== 'viewer') {
+        const rbacFilter = await getQuestionFilter(user.email!);
+        query = { ...query, ...rbacFilter };
+      }
     }
 
     if (chapter_ids.length === 1) query['metadata.chapter_id'] = chapter_ids[0];

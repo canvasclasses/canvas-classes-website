@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import FlashcardsClient from './FlashcardsClient';
-import { fetchFlashcards } from '../lib/flashcardsData';
+import { getChapterSummaries } from '../lib/flashcardsData';
 
 export const revalidate = 86400;
 
@@ -84,14 +84,14 @@ const faqSchema = {
 
 // Server-side data fetching for SEO (ensures Google sees content on first render)
 export default async function FlashcardsPage() {
-    const flashcards = await fetchFlashcards();
+    const chapterSummaries = await getChapterSummaries();
     return (
         <>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
             />
-            <FlashcardsClient initialFlashcards={flashcards} />
+            <FlashcardsClient chapterSummaries={chapterSummaries} />
         </>
     );
 }

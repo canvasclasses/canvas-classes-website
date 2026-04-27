@@ -17,7 +17,7 @@ import {
     Trophy,
     RefreshCw
 } from 'lucide-react';
-import { FlashcardItem } from '../../lib/flashcardsData';
+import { FlashcardItem, ChapterTopic } from '../../lib/flashcardsData';
 import { useCardProgress } from '../../hooks/useCardProgress';
 import { QualityRating } from '../../lib/spacedRepetition';
 import ReactMarkdown from 'react-markdown';
@@ -29,9 +29,7 @@ import 'katex/dist/katex.min.css';
 interface Props {
     chapterName: string;
     chapterSlug: string;
-    initialFlashcards: FlashcardItem[];
-    topics: string[];
-    totalChapters: number;
+    topics: ChapterTopic[];
 }
 
 type PracticeMode = 'due' | 'all';
@@ -39,9 +37,7 @@ type PracticeMode = 'due' | 'all';
 export default function FlashcardsChapterClient({
     chapterName,
     chapterSlug,
-    initialFlashcards,
     topics,
-    totalChapters
 }: Props) {
     const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
     const [practiceQueue, setPracticeQueue] = useState<FlashcardItem[]>([]);
@@ -51,37 +47,95 @@ export default function FlashcardsChapterClient({
     const [practiceType, setPracticeType] = useState<PracticeMode>('due');
     const [sessionStats, setSessionStats] = useState({ correct: 0, needsReview: 0 });
 
+    // Cards (question + answer text) lazy-loaded after mount.
+    const [cards, setCards] = useState<FlashcardItem[] | null>(null);
+    const [cardsLoading, setCardsLoading] = useState(false);
+    const [cardsError, setCardsError] = useState(false);
+
     const practiceContainerRef = useRef<HTMLDivElement>(null);
+
+    const allCardIds = useMemo(() => topics.flatMap((t) => t.cardIds), [topics]);
 
     const {
         isLoaded: progressLoaded,
-        getProgress,
         updateProgress,
         getDueCards,
         sortByPriority,
         getStatistics,
     } = useCardProgress();
 
-    const allCardIds = useMemo(() => initialFlashcards.map(c => c.id), [initialFlashcards]);
+    // Background prefetch of cards as soon as the page mounts. By the time the
+    // user finishes picking topics and clicks "Start Practice", cards are usually
+    // already loaded. Falls back to on-demand fetch if prefetch fails.
+    useEffect(() => {
+        let cancelled = false;
+        setCardsLoading(true);
+        setCardsError(false);
+        fetch(`/api/flashcards/cards/${chapterSlug}`)
+            .then((res) => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.json() as Promise<{ cards: FlashcardItem[] }>;
+            })
+            .then((data) => {
+                if (!cancelled) setCards(data.cards);
+            })
+            .catch((err) => {
+                console.error('Failed to load chapter cards:', err);
+                if (!cancelled) setCardsError(true);
+            })
+            .finally(() => {
+                if (!cancelled) setCardsLoading(false);
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, [chapterSlug]);
 
     const chapterStats = useMemo(() => {
         if (!progressLoaded || allCardIds.length === 0) return null;
         return getStatistics(allCardIds);
     }, [progressLoaded, allCardIds, getStatistics]);
 
-    const startPractice = (mode: PracticeMode) => {
-        let candidates = selectedTopics.length > 0
-            ? initialFlashcards.filter(c => selectedTopics.includes(c.topicName))
-            : initialFlashcards;
+    const startPractice = async (mode: PracticeMode) => {
+        // If cards haven't loaded yet, retry-fetch synchronously here.
+        let availableCards = cards;
+        if (!availableCards) {
+            setCardsLoading(true);
+            try {
+                const res = await fetch(`/api/flashcards/cards/${chapterSlug}`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = (await res.json()) as { cards: FlashcardItem[] };
+                availableCards = data.cards;
+                setCards(availableCards);
+                setCardsError(false);
+            } catch (err) {
+                console.error('Failed to load chapter cards:', err);
+                setCardsError(true);
+                setCardsLoading(false);
+                return;
+            }
+            setCardsLoading(false);
+        }
+
+        const cardById = new Map(availableCards.map((c) => [c.id, c]));
+
+        const candidateIds =
+            selectedTopics.length > 0
+                ? topics.filter((t) => selectedTopics.includes(t.name)).flatMap((t) => t.cardIds)
+                : allCardIds;
 
         let queue: FlashcardItem[];
-
         if (mode === 'due') {
-            const dueCardIds = getDueCards(candidates.map(c => c.id));
-            const sortedIds = sortByPriority(dueCardIds);
-            queue = sortedIds.map(id => candidates.find(c => c.id === id)!).filter(Boolean);
+            const dueIds = getDueCards(candidateIds);
+            const sortedIds = sortByPriority(dueIds);
+            queue = sortedIds
+                .map((id) => cardById.get(id))
+                .filter((c): c is FlashcardItem => !!c);
         } else {
-            queue = [...candidates].sort(() => Math.random() - 0.5);
+            queue = candidateIds
+                .map((id) => cardById.get(id))
+                .filter((c): c is FlashcardItem => !!c)
+                .sort(() => Math.random() - 0.5);
         }
 
         setPracticeType(mode);
@@ -130,10 +184,10 @@ export default function FlashcardsChapterClient({
     };
 
     const getDueCountForSelection = () => {
-        const candidates = selectedTopics.length > 0
-            ? initialFlashcards.filter(c => selectedTopics.includes(c.topicName))
-            : initialFlashcards;
-        return getDueCards(candidates.map(c => c.id)).length;
+        const candidateIds = selectedTopics.length > 0
+            ? topics.filter((t) => selectedTopics.includes(t.name)).flatMap((t) => t.cardIds)
+            : allCardIds;
+        return getDueCards(candidateIds).length;
     };
 
     const currentCard = practiceQueue[currentIndex];
@@ -146,7 +200,6 @@ export default function FlashcardsChapterClient({
                 <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl" />
 
                 <div className="relative container mx-auto px-4">
-                    {/* Back link */}
                     <Link
                         href="/chemistry-flashcards"
                         className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition-colors"
@@ -174,15 +227,14 @@ export default function FlashcardsChapterClient({
                         </h1>
 
                         <p className="text-slate-400 text-lg max-w-2xl mx-auto mb-8">
-                            Master {chapterName} with {initialFlashcards.length} flashcards using spaced repetition.
+                            Master {chapterName} with {allCardIds.length} flashcards using spaced repetition.
                         </p>
 
-                        {/* Stats */}
                         {chapterStats && progressLoaded && (
                             <div className="flex flex-wrap justify-center gap-3 mb-4">
                                 <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg border border-white/10">
                                     <Layers className="w-4 h-4 text-purple-400" />
-                                    <span className="text-white font-medium">{initialFlashcards.length} Cards</span>
+                                    <span className="text-white font-medium">{allCardIds.length} Cards</span>
                                 </div>
                                 <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg border border-white/10">
                                     <Sparkles className="w-4 h-4 text-blue-400" />
@@ -214,7 +266,6 @@ export default function FlashcardsChapterClient({
                             <div className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
                         </div>
                     ) : !isPracticeMode ? (
-                        /* Topic Selection */
                         <div className="max-w-3xl mx-auto">
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
@@ -224,7 +275,6 @@ export default function FlashcardsChapterClient({
                                     <h2 className="text-xl font-bold text-white mb-2">Select Topics to Practice</h2>
                                     <p className="text-slate-400 mb-6">Choose specific topics or practice all cards</p>
 
-                                    {/* Chapter Stats */}
                                     {chapterStats && (
                                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
                                             <div className="p-3 bg-slate-900/50 rounded-xl text-center">
@@ -246,32 +296,27 @@ export default function FlashcardsChapterClient({
                                         </div>
                                     )}
 
-                                    {/* Topic Grid */}
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-                                        {topics.map(topic => {
-                                            const count = initialFlashcards.filter(c => c.topicName === topic).length;
-                                            const isSelected = selectedTopics.includes(topic);
-                                            const topicCardIds = initialFlashcards
-                                                .filter(c => c.topicName === topic)
-                                                .map(c => c.id);
-                                            const topicDue = getDueCards(topicCardIds).length;
+                                        {topics.map((topic) => {
+                                            const isSelected = selectedTopics.includes(topic.name);
+                                            const topicDue = getDueCards(topic.cardIds).length;
 
                                             return (
                                                 <button
-                                                    key={topic}
-                                                    onClick={() => toggleTopic(topic)}
+                                                    key={topic.name}
+                                                    onClick={() => toggleTopic(topic.name)}
                                                     className={`p-4 rounded-xl border text-left transition-all ${isSelected
                                                         ? 'bg-purple-500/20 border-purple-500/50 text-white'
                                                         : 'bg-slate-900/50 border-white/5 text-slate-300 hover:border-white/20'
                                                         }`}
                                                 >
                                                     <div className="flex items-center justify-between">
-                                                        <span className="font-medium">{topic}</span>
+                                                        <span className="font-medium">{topic.name}</span>
                                                         <div className="flex items-center gap-2">
                                                             {topicDue > 0 && (
                                                                 <span className="text-xs text-amber-400">{topicDue} due</span>
                                                             )}
-                                                            <span className="text-sm text-slate-500">{count} cards</span>
+                                                            <span className="text-sm text-slate-500">{topic.cardIds.length} cards</span>
                                                         </div>
                                                     </div>
                                                 </button>
@@ -279,30 +324,47 @@ export default function FlashcardsChapterClient({
                                         })}
                                     </div>
 
-                                    {/* Action Buttons */}
+                                    {cardsError && (
+                                        <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+                                            Couldn&apos;t load cards. Click a Practice button to retry.
+                                        </div>
+                                    )}
+
                                     <div className="flex flex-wrap gap-3">
                                         {getDueCountForSelection() > 0 && (
                                             <button
                                                 onClick={() => startPractice('due')}
-                                                className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity"
+                                                disabled={cardsLoading}
+                                                className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60"
                                             >
-                                                <Clock className="w-5 h-5" />
+                                                {cardsLoading ? (
+                                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                                ) : (
+                                                    <Clock className="w-5 h-5" />
+                                                )}
                                                 Review Due Cards ({getDueCountForSelection()})
                                             </button>
                                         )}
 
                                         <button
                                             onClick={() => startPractice('all')}
-                                            className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity"
+                                            disabled={cardsLoading}
+                                            className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60"
                                         >
-                                            <Shuffle className="w-5 h-5" />
+                                            {cardsLoading ? (
+                                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                            ) : (
+                                                <Shuffle className="w-5 h-5" />
+                                            )}
                                             Practice All ({selectedTopics.length > 0
-                                                ? initialFlashcards.filter(c => selectedTopics.includes(c.topicName)).length
-                                                : initialFlashcards.length} cards)
+                                                ? topics
+                                                    .filter((t) => selectedTopics.includes(t.name))
+                                                    .reduce((sum, t) => sum + t.cardIds.length, 0)
+                                                : allCardIds.length} cards)
                                         </button>
 
                                         <button
-                                            onClick={() => setSelectedTopics(topics)}
+                                            onClick={() => setSelectedTopics(topics.map((t) => t.name))}
                                             className="px-4 py-3 border border-white/10 rounded-xl text-slate-400 hover:text-white hover:border-white/20 transition-all"
                                         >
                                             Select All Topics
@@ -320,7 +382,6 @@ export default function FlashcardsChapterClient({
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                 >
-                                    {/* Progress Bar */}
                                     <div className="mb-6">
                                         <div className="flex items-center justify-between text-sm text-slate-400 mb-2">
                                             <span>Card {currentIndex + 1} of {practiceQueue.length}</span>
@@ -337,7 +398,6 @@ export default function FlashcardsChapterClient({
                                         </div>
                                     </div>
 
-                                    {/* Flashcard */}
                                     <div
                                         onClick={() => setIsFlipped(!isFlipped)}
                                         className="relative cursor-pointer perspective-1000"
@@ -375,14 +435,12 @@ export default function FlashcardsChapterClient({
                                         </AnimatePresence>
                                     </div>
 
-                                    {/* Topic Badge */}
                                     <div className="text-center mt-4">
                                         <span className="px-3 py-1 bg-slate-800 rounded-full text-slate-400 text-sm">
                                             {currentCard.topicName}
                                         </span>
                                     </div>
 
-                                    {/* Response Buttons */}
                                     {isFlipped && (
                                         <motion.div
                                             initial={{ opacity: 0, y: 20 }}
@@ -423,7 +481,6 @@ export default function FlashcardsChapterClient({
                                         </motion.div>
                                     )}
 
-                                    {/* Exit Button */}
                                     <div className="text-center mt-8">
                                         <button
                                             onClick={() => setIsPracticeMode(false)}
@@ -434,7 +491,6 @@ export default function FlashcardsChapterClient({
                                     </div>
                                 </motion.div>
                             ) : practiceQueue.length === 0 ? (
-                                /* No Due Cards */
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
@@ -455,7 +511,7 @@ export default function FlashcardsChapterClient({
                                             Practice All Cards Anyway
                                         </button>
                                         <Link
-                                            href="/flashcards"
+                                            href="/chemistry-flashcards"
                                             className="px-6 py-3 border border-white/10 rounded-xl text-slate-400 hover:text-white transition-colors"
                                         >
                                             Choose Different Chapter
@@ -463,7 +519,6 @@ export default function FlashcardsChapterClient({
                                     </div>
                                 </motion.div>
                             ) : (
-                                /* Session Complete */
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
@@ -496,7 +551,7 @@ export default function FlashcardsChapterClient({
                                             Practice Again
                                         </button>
                                         <Link
-                                            href="/flashcards"
+                                            href="/chemistry-flashcards"
                                             className="px-6 py-3 border border-white/10 rounded-xl text-slate-400 hover:text-white transition-colors"
                                         >
                                             Choose Different Chapter

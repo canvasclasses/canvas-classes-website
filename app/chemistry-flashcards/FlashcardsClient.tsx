@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Layers,
@@ -29,10 +29,10 @@ import {
     History,
     ArrowUpDown
 } from 'lucide-react';
-import { FlashcardItem } from '../lib/flashcardsData';
+import { FlashcardItem, ChapterSummary, ChapterTopic } from '../lib/flashcardsData';
 import { useCardProgress } from '../hooks/useCardProgress';
 import { useFlashcardMeta } from '../hooks/useFlashcardMeta';
-import { getMasteryLevel, getMasteryColor, daysUntilReview, QualityRating } from '../lib/spacedRepetition';
+import { QualityRating } from '../lib/spacedRepetition';
 import ReactMarkdown from 'react-markdown';
 import { flashcardMarkdownComponents } from '@/app/lib/flashcardMarkdown';
 import remarkMath from 'remark-math';
@@ -41,9 +41,11 @@ import 'katex/dist/katex.min.css';
 
 interface ChapterGroup {
     chapterName: string;
-    cards: FlashcardItem[];
-    topics: string[];
+    slug: string;
     category: string;
+    cardIds: string[];
+    topics: ChapterTopic[];
+    cardCount: number;
 }
 
 type PracticeMode = 'due' | 'all';
@@ -63,13 +65,33 @@ function formatLastReviewed(isoDate: string | null): string {
 }
 
 interface FlashcardsClientProps {
-    initialFlashcards: FlashcardItem[];
+    chapterSummaries: ChapterSummary[];
 }
 
-// Data is now fetched on the server and passed as props for SEO
-export default function FlashcardsClient({ initialFlashcards }: FlashcardsClientProps) {
-    const [allFlashcards] = useState<FlashcardItem[]>(initialFlashcards);
-    const [chapterGroups, setChapterGroups] = useState<ChapterGroup[]>([]);
+export default function FlashcardsClient({ chapterSummaries }: FlashcardsClientProps) {
+    // Chapter groups derived from server-provided summaries (lightweight: IDs only, no card content).
+    const chapterGroups: ChapterGroup[] = useMemo(
+        () =>
+            chapterSummaries.map((s) => {
+                const cardIds = s.topics.flatMap((t) => t.cardIds);
+                return {
+                    chapterName: s.name,
+                    slug: s.slug,
+                    category: s.category,
+                    cardIds,
+                    topics: s.topics,
+                    cardCount: cardIds.length,
+                };
+            }),
+        [chapterSummaries]
+    );
+
+    // Cards (question + answer text) lazy-loaded per chapter when user actually
+    // wants to practice. Map keyed by chapter slug.
+    const [loadedCardsByChapter, setLoadedCardsByChapter] = useState<Map<string, FlashcardItem[]>>(
+        new Map()
+    );
+    const [loadingPractice, setLoadingPractice] = useState(false);
 
     // Practice state
     const [selectedChapter, setSelectedChapter] = useState<string | null>(null);
@@ -80,24 +102,19 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
     const [isFlipped, setIsFlipped] = useState(false);
     const [isPracticeMode, setIsPracticeMode] = useState(false);
     const [practiceType, setPracticeType] = useState<PracticeMode>('due');
-
-    // Session stats (temporary, for current session display)
     const [sessionStats, setSessionStats] = useState({ correct: 0, needsReview: 0 });
 
     // Chapter grid controls
     const [searchQuery, setSearchQuery] = useState('');
     const [sortBy, setSortBy] = useState<SortMode>('mostDue');
 
-    // True when practice session was started from the global "today" CTA rather than a specific chapter
     const [isGlobalReview, setIsGlobalReview] = useState(false);
 
-    // Ref for scrolling to flashcard view
     const practiceContainerRef = useRef<HTMLDivElement>(null);
 
-    // Spaced repetition hook
+    // Spaced repetition hook (operates on card IDs only — no content needed)
     const {
         isLoaded: progressLoaded,
-        getProgress,
         updateProgress,
         getDueCards,
         sortByPriority,
@@ -106,119 +123,174 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
         getAccuracy,
         getLastReviewDate,
         getMaxOverdue,
-        resetAllProgress,
         hasAnyProgress
     } = useCardProgress();
 
     const {
         currentStreak,
-        longestStreak,
         recordStudyToday,
         lastChapter,
         setLastChapter
     } = useFlashcardMeta();
 
-    // Group flashcards by chapter on initial load
-    useEffect(() => {
-        const groups: { [key: string]: ChapterGroup } = {};
-        initialFlashcards.forEach(card => {
-            if (!groups[card.chapterName]) {
-                groups[card.chapterName] = {
-                    chapterName: card.chapterName,
-                    cards: [],
-                    topics: [],
-                    category: card.category || 'Physical Chemistry'
-                };
-            }
-            groups[card.chapterName].cards.push(card);
-            if (!groups[card.chapterName].topics.includes(card.topicName)) {
-                groups[card.chapterName].topics.push(card.topicName);
-            }
-        });
-        setChapterGroups(Object.values(groups));
-    }, [initialFlashcards]);
+    // Idempotent chapter card loader — fetches once, caches, returns cached on subsequent calls.
+    const loadChapterCards = useCallback(
+        async (slug: string): Promise<FlashcardItem[]> => {
+            const cached = loadedCardsByChapter.get(slug);
+            if (cached) return cached;
 
-    // Get all card IDs
-    const allCardIds = useMemo(() => allFlashcards.map(c => c.id), [allFlashcards]);
+            const res = await fetch(`/api/flashcards/cards/${slug}`);
+            if (!res.ok) throw new Error(`Failed to load chapter ${slug}: ${res.status}`);
+            const data = (await res.json()) as { cards: FlashcardItem[] };
 
-    // Global statistics
+            setLoadedCardsByChapter((prev) => {
+                if (prev.has(slug)) return prev;
+                const next = new Map(prev);
+                next.set(slug, data.cards);
+                return next;
+            });
+
+            return data.cards;
+        },
+        [loadedCardsByChapter]
+    );
+
+    // All card IDs across all chapters (no content). Used for global stats.
+    const allCardIds = useMemo(
+        () => chapterGroups.flatMap((g) => g.cardIds),
+        [chapterGroups]
+    );
+
     const globalStats = useMemo(() => {
         if (!progressLoaded || allCardIds.length === 0) return null;
         return getStatistics(allCardIds);
     }, [progressLoaded, allCardIds, getStatistics]);
 
-    // Start practice session
-    const startPractice = (mode: PracticeMode) => {
-        if (!selectedChapter) return;
+    const selectedChapterData = chapterGroups.find((g) => g.chapterName === selectedChapter);
 
-        const chapterCards = allFlashcards.filter(c => c.chapterName === selectedChapter);
-        let candidates = selectedTopics.length > 0
-            ? chapterCards.filter(c => selectedTopics.includes(c.topicName))
-            : chapterCards;
+    // When user clicks a chapter card, kick off a background fetch immediately
+    // so cards are usually ready by the time they pick topics and click Practice.
+    const handleSelectChapter = useCallback(
+        (chapterName: string) => {
+            const group = chapterGroups.find((g) => g.chapterName === chapterName);
+            setSelectedChapter(chapterName);
+            setSelectedTopics([]);
+            if (group) {
+                loadChapterCards(group.slug).catch((err) => {
+                    console.error('Prefetch failed:', err);
+                });
+            }
+        },
+        [chapterGroups, loadChapterCards]
+    );
 
-        let queue: FlashcardItem[];
+    // Start practice for the currently selected chapter.
+    const startPractice = async (mode: PracticeMode) => {
+        if (!selectedChapterData) return;
 
-        if (mode === 'due') {
-            // Get due cards and sort by priority
-            const dueCardIds = getDueCards(candidates.map(c => c.id));
-            const sortedIds = sortByPriority(dueCardIds);
-            queue = sortedIds.map(id => candidates.find(c => c.id === id)!).filter(Boolean);
-        } else {
-            // All cards, shuffled
-            queue = [...candidates].sort(() => Math.random() - 0.5);
+        setLoadingPractice(true);
+        try {
+            const cards = await loadChapterCards(selectedChapterData.slug);
+            const cardById = new Map(cards.map((c) => [c.id, c]));
+
+            const candidateIds =
+                selectedTopics.length > 0
+                    ? selectedChapterData.topics
+                          .filter((t) => selectedTopics.includes(t.name))
+                          .flatMap((t) => t.cardIds)
+                    : selectedChapterData.cardIds;
+
+            let queue: FlashcardItem[];
+            if (mode === 'due') {
+                const dueIds = getDueCards(candidateIds);
+                const sortedIds = sortByPriority(dueIds);
+                queue = sortedIds
+                    .map((id) => cardById.get(id))
+                    .filter((c): c is FlashcardItem => !!c);
+            } else {
+                queue = candidateIds
+                    .map((id) => cardById.get(id))
+                    .filter((c): c is FlashcardItem => !!c)
+                    .sort(() => Math.random() - 0.5);
+            }
+
+            setLastChapter(selectedChapter);
+            setIsGlobalReview(false);
+            setPracticeType(mode);
+            setPracticeQueue(queue);
+            setCurrentIndex(0);
+            setIsFlipped(false);
+            setSessionStats({ correct: 0, needsReview: 0 });
+            setIsPracticeMode(true);
+
+            setTimeout(() => {
+                practiceContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        } catch (err) {
+            console.error('Failed to start practice:', err);
+        } finally {
+            setLoadingPractice(false);
         }
-
-        setLastChapter(selectedChapter);
-        setIsGlobalReview(false);
-        setPracticeType(mode);
-        setPracticeQueue(queue);
-        setCurrentIndex(0);
-        setIsFlipped(false);
-        setSessionStats({ correct: 0, needsReview: 0 });
-        setIsPracticeMode(true);
-
-        // Scroll to flashcard view on mobile
-        setTimeout(() => {
-            practiceContainerRef.current?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-        }, 100);
     };
 
-    // Start a mixed review across every chapter, capped to the daily target
-    const startGlobalReview = () => {
-        const todayIds = getTodaysQueue(allFlashcards.map(c => c.id));
+    // Mixed review across all chapters, capped to the daily target.
+    // Only fetches the chapters that actually have cards in today's queue.
+    const startGlobalReview = async () => {
+        const todayIds = getTodaysQueue(allCardIds);
         if (todayIds.length === 0) return;
-        const cardById = new Map(allFlashcards.map(c => [c.id, c]));
-        const queue = todayIds.map(id => cardById.get(id)!).filter(Boolean);
 
-        setIsGlobalReview(true);
-        setSelectedChapter(null);
-        setSelectedTopics([]);
-        setPracticeType('due');
-        setPracticeQueue(queue);
-        setCurrentIndex(0);
-        setIsFlipped(false);
-        setSessionStats({ correct: 0, needsReview: 0 });
-        setIsPracticeMode(true);
+        const idToSlug = new Map<string, string>();
+        chapterGroups.forEach((g) => {
+            g.cardIds.forEach((id) => idToSlug.set(id, g.slug));
+        });
 
-        setTimeout(() => {
-            practiceContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
+        const neededSlugs = [
+            ...new Set(
+                todayIds
+                    .map((id) => idToSlug.get(id))
+                    .filter((s): s is string => !!s)
+            ),
+        ];
+
+        setLoadingPractice(true);
+        try {
+            const fetched = await Promise.all(neededSlugs.map((slug) => loadChapterCards(slug)));
+            const cardById = new Map<string, FlashcardItem>();
+            fetched.flat().forEach((c) => cardById.set(c.id, c));
+
+            const queue = todayIds
+                .map((id) => cardById.get(id))
+                .filter((c): c is FlashcardItem => !!c);
+
+            setIsGlobalReview(true);
+            setSelectedChapter(null);
+            setSelectedTopics([]);
+            setPracticeType('due');
+            setPracticeQueue(queue);
+            setCurrentIndex(0);
+            setIsFlipped(false);
+            setSessionStats({ correct: 0, needsReview: 0 });
+            setIsPracticeMode(true);
+
+            setTimeout(() => {
+                practiceContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        } catch (err) {
+            console.error('Failed to start global review:', err);
+        } finally {
+            setLoadingPractice(false);
+        }
     };
 
-    // Handle card responses with SM-2 quality ratings
     const handleResponse = (quality: QualityRating) => {
         const card = practiceQueue[currentIndex];
         if (card) {
             updateProgress(card.id, quality);
             recordStudyToday();
-
             if (quality >= 3) {
-                setSessionStats(prev => ({ ...prev, correct: prev.correct + 1 }));
+                setSessionStats((prev) => ({ ...prev, correct: prev.correct + 1 }));
             } else {
-                setSessionStats(prev => ({ ...prev, needsReview: prev.needsReview + 1 }));
+                setSessionStats((prev) => ({ ...prev, needsReview: prev.needsReview + 1 }));
             }
         }
         nextCard();
@@ -227,57 +299,50 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
     const nextCard = () => {
         setIsFlipped(false);
         if (currentIndex < practiceQueue.length - 1) {
-            setTimeout(() => setCurrentIndex(prev => prev + 1), 200);
+            setTimeout(() => setCurrentIndex((prev) => prev + 1), 200);
         } else {
-            // End of deck
             setIsPracticeMode(false);
         }
     };
 
     const toggleTopic = (topic: string) => {
-        setSelectedTopics(prev =>
-            prev.includes(topic)
-                ? prev.filter(t => t !== topic)
-                : [...prev, topic]
+        setSelectedTopics((prev) =>
+            prev.includes(topic) ? prev.filter((t) => t !== topic) : [...prev, topic]
         );
     };
 
     const currentCard = practiceQueue[currentIndex];
-    const selectedChapterData = chapterGroups.find(g => g.chapterName === selectedChapter);
 
-    // Get chapter-specific stats
     const chapterStats = useMemo(() => {
         if (!selectedChapterData || !progressLoaded) return null;
-        const chapterCardIds = selectedChapterData.cards.map(c => c.id);
-        return getStatistics(chapterCardIds);
+        return getStatistics(selectedChapterData.cardIds);
     }, [selectedChapterData, progressLoaded, getStatistics]);
 
-    // Size of today's recommended mixed queue (capped by daily limits)
     const todaysQueueSize = useMemo(() => {
         if (!progressLoaded) return 0;
         return getTodaysQueue(allCardIds).length;
     }, [progressLoaded, allCardIds, getTodaysQueue]);
 
-    // Filter + sort chapters for the grid
     const visibleChapterGroups = useMemo(() => {
         if (!progressLoaded) return [];
         const q = searchQuery.trim().toLowerCase();
-        let list = chapterGroups.filter(g =>
-            (selectedCategory === 'All' || g.category === selectedCategory)
-            && (q === '' || g.chapterName.toLowerCase().includes(q))
+        const list = chapterGroups.filter(
+            (g) =>
+                (selectedCategory === 'All' || g.category === selectedCategory) &&
+                (q === '' || g.chapterName.toLowerCase().includes(q))
         );
 
         const sorted = [...list];
         if (sortBy === 'mostDue') {
             sorted.sort((a, b) => {
-                const da = getStatistics(a.cards.map(c => c.id)).dueToday;
-                const db = getStatistics(b.cards.map(c => c.id)).dueToday;
+                const da = getStatistics(a.cardIds).dueToday;
+                const db = getStatistics(b.cardIds).dueToday;
                 return db - da;
             });
         } else if (sortBy === 'recentlyStudied') {
             sorted.sort((a, b) => {
-                const la = getLastReviewDate(a.cards.map(c => c.id)) || '';
-                const lb = getLastReviewDate(b.cards.map(c => c.id)) || '';
+                const la = getLastReviewDate(a.cardIds) || '';
+                const lb = getLastReviewDate(b.cardIds) || '';
                 return lb.localeCompare(la);
             });
         } else {
@@ -288,16 +353,18 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
 
     const lastChapterGroup = useMemo(() => {
         if (!lastChapter) return null;
-        return chapterGroups.find(g => g.chapterName === lastChapter) || null;
+        return chapterGroups.find((g) => g.chapterName === lastChapter) || null;
     }, [lastChapter, chapterGroups]);
 
-    // Get due count for topic selection
     const getDueCountForSelection = () => {
         if (!selectedChapterData) return 0;
-        const candidates = selectedTopics.length > 0
-            ? selectedChapterData.cards.filter(c => selectedTopics.includes(c.topicName))
-            : selectedChapterData.cards;
-        return getDueCards(candidates.map(c => c.id)).length;
+        const candidateIds =
+            selectedTopics.length > 0
+                ? selectedChapterData.topics
+                      .filter((t) => selectedTopics.includes(t.name))
+                      .flatMap((t) => t.cardIds)
+                : selectedChapterData.cardIds;
+        return getDueCards(candidateIds).length;
     };
 
     return (
@@ -330,12 +397,11 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                             Master chemistry concepts with spaced repetition. The algorithm remembers what you know and shows you what you need to review.
                         </p>
 
-                        {/* Global Stats */}
                         {globalStats && progressLoaded && (
                             <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-4">
                                 <div className="flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/5 rounded-lg border border-white/10">
                                     <Layers className="w-3.5 h-3.5 md:w-4 md:h-4 text-purple-400" />
-                                    <span className="text-white font-medium text-xs md:text-sm">{allFlashcards.length} Cards</span>
+                                    <span className="text-white font-medium text-xs md:text-sm">{allCardIds.length} Cards</span>
                                 </div>
                                 <div className="flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/5 rounded-lg border border-white/10">
                                     <BookOpen className="w-3.5 h-3.5 md:w-4 md:h-4 text-blue-400" />
@@ -344,7 +410,7 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                 <div className="flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-amber-500/10 rounded-lg border border-amber-500/20">
                                     <Target className="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-400" />
                                     <span className="text-amber-400 font-medium text-xs md:text-sm">
-                                        Today's Goal: {todaysQueueSize}
+                                        Today&apos;s Goal: {todaysQueueSize}
                                     </span>
                                 </div>
                                 {currentStreak > 0 && (
@@ -375,28 +441,32 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                             <div className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
                         </div>
                     ) : !isPracticeMode ? (
-                        /* Chapter Selection View */
                         <div className="max-w-5xl mx-auto">
                             {!selectedChapter ? (
-                                /* Chapter Grid with Category Tabs */
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                 >
-                                    {/* Primary CTA row: today's mixed review + continue where you left off */}
                                     {progressLoaded && (todaysQueueSize > 0 || lastChapterGroup) && (
                                         <div className="mb-6 md:mb-8 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-3">
                                             {todaysQueueSize > 0 ? (
                                                 <button
                                                     onClick={startGlobalReview}
-                                                    className="group flex items-center justify-between gap-4 p-5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold shadow-lg hover:opacity-95 transition-opacity text-left"
+                                                    disabled={loadingPractice}
+                                                    className="group flex items-center justify-between gap-4 p-5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold shadow-lg hover:opacity-95 transition-opacity text-left disabled:opacity-60"
                                                 >
                                                     <div className="flex items-center gap-4">
                                                         <div className="w-12 h-12 rounded-xl bg-slate-950/15 flex items-center justify-center shrink-0">
-                                                            <PlayCircle className="w-6 h-6" />
+                                                            {loadingPractice ? (
+                                                                <div className="w-5 h-5 border-2 border-slate-950/30 border-t-slate-950 rounded-full animate-spin" />
+                                                            ) : (
+                                                                <PlayCircle className="w-6 h-6" />
+                                                            )}
                                                         </div>
                                                         <div>
-                                                            <p className="text-base md:text-lg">Start Today's Review</p>
+                                                            <p className="text-base md:text-lg">
+                                                                {loadingPractice ? 'Loading cards…' : "Start Today's Review"}
+                                                            </p>
                                                             <p className="text-sm font-medium text-slate-950/80">
                                                                 {todaysQueueSize} card{todaysQueueSize === 1 ? '' : 's'} across all chapters · mixed for best recall
                                                             </p>
@@ -418,10 +488,7 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
 
                                             {lastChapterGroup && (
                                                 <button
-                                                    onClick={() => {
-                                                        setSelectedChapter(lastChapterGroup.chapterName);
-                                                        setSelectedTopics([]);
-                                                    }}
+                                                    onClick={() => handleSelectChapter(lastChapterGroup.chapterName)}
                                                     className="group flex items-center gap-3 p-5 rounded-2xl bg-slate-900/60 border border-white/10 hover:border-white/20 hover:bg-slate-900 text-left transition-colors"
                                                 >
                                                     <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
@@ -443,7 +510,6 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
 
                                     {/* Category Tabs */}
                                     <div className="flex flex-col gap-3 mb-8">
-                                        {/* Row 1: All and JEE PYQ */}
                                         <div className="flex gap-2">
                                             {[
                                                 { id: 'All', label: 'All Chapters', icon: Layers, color: 'from-purple-500 to-pink-500' },
@@ -473,7 +539,6 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                             })}
                                         </div>
 
-                                        {/* Row 2: Subject Sections */}
                                         <div className="flex gap-2">
                                             {[
                                                 { id: 'Physical Chemistry', label: 'Physical', icon: FlaskConical, color: 'from-green-500 to-emerald-500' },
@@ -502,7 +567,6 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                         </div>
                                     </div>
 
-                                    {/* Search + Sort controls */}
                                     <div className="flex flex-col sm:flex-row gap-2 mb-4">
                                         <div className="relative flex-1">
                                             <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -528,7 +592,6 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                         </div>
                                     </div>
 
-                                    {/* Filtered Chapters Grid */}
                                     {visibleChapterGroups.length === 0 ? (
                                         <div className="text-center py-12 text-slate-500 text-sm">
                                             No chapters match that search.
@@ -536,15 +599,13 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                     ) : (
                                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                                             {visibleChapterGroups.map((group, idx) => {
-                                                const chapterCardIds = group.cards.map(c => c.id);
-                                                const stats = getStatistics(chapterCardIds);
+                                                const stats = getStatistics(group.cardIds);
                                                 const dueCount = stats.dueToday;
-                                                const maxOverdue = getMaxOverdue(chapterCardIds);
-                                                const accuracy = getAccuracy(chapterCardIds);
-                                                const lastReviewed = getLastReviewDate(chapterCardIds);
+                                                const maxOverdue = getMaxOverdue(group.cardIds);
+                                                const accuracy = getAccuracy(group.cardIds);
+                                                const lastReviewed = getLastReviewDate(group.cardIds);
                                                 const hasAnyReview = stats.total !== stats.new;
 
-                                                // Category styling (left-border accent)
                                                 const catStyles: Record<string, { color: string; iconColor: string; borderHex: string }> = {
                                                     'Physical Chemistry': { color: 'text-emerald-400', iconColor: 'text-emerald-500', borderHex: '#10b981' },
                                                     'JEE PYQ': { color: 'text-amber-400', iconColor: 'text-amber-500', borderHex: '#f59e0b' },
@@ -553,7 +614,6 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                                 };
                                                 const styles = catStyles[group.category] || catStyles['Physical Chemistry'];
 
-                                                // Urgency pill — drives colour off how overdue the most overdue card is
                                                 let pillLabel: string | null = null;
                                                 let pillClass = '';
                                                 if (dueCount === 0) {
@@ -575,15 +635,11 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                                         initial={{ opacity: 0, y: 20 }}
                                                         animate={{ opacity: 1, y: 0 }}
                                                         transition={{ delay: idx * 0.02 }}
-                                                        onClick={() => {
-                                                            setSelectedChapter(group.chapterName);
-                                                            setSelectedTopics([]);
-                                                        }}
+                                                        onClick={() => handleSelectChapter(group.chapterName)}
                                                         className={`group relative p-4 md:p-5 bg-slate-900/40 hover:bg-slate-900/80 border-y border-r border-white/5 hover:border-white/10 border-l-4 rounded-xl text-left transition-all overflow-hidden`}
                                                         style={{ borderLeftColor: styles.borderHex }}
                                                     >
                                                         <div className="flex flex-col h-full">
-                                                            {/* Header: Title & urgency pill */}
                                                             <div className="flex items-start justify-between mb-3 gap-4">
                                                                 <h3 className="text-lg font-bold text-white group-hover:text-white/90 leading-tight">
                                                                     {group.chapterName}
@@ -595,15 +651,13 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                                                 )}
                                                             </div>
 
-                                                            {/* Meta row 1: category + total cards */}
                                                             <div className="flex items-center gap-3 text-xs text-slate-500 mb-1.5">
                                                                 <Layers className={`w-3.5 h-3.5 ${styles.iconColor} opacity-80`} />
                                                                 <span>{group.category.replace(' Chemistry', '')}</span>
                                                                 <span className="w-1 h-1 rounded-full bg-slate-700" />
-                                                                <span>{group.cards.length} cards</span>
+                                                                <span>{group.cardCount} cards</span>
                                                             </div>
 
-                                                            {/* Meta row 2: last reviewed + accuracy (when applicable) */}
                                                             <div className="flex items-center gap-3 text-xs text-slate-400 mb-4 mt-auto">
                                                                 <span className="flex items-center gap-1.5">
                                                                     <Clock className="w-3.5 h-3.5 text-slate-500" />
@@ -620,7 +674,6 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                                                 )}
                                                             </div>
 
-                                                            {/* Progress Bar */}
                                                             <div className="h-1 bg-slate-800 rounded-full overflow-hidden w-full flex">
                                                                 {stats.mastered > 0 && (
                                                                     <div className="h-full bg-emerald-500/60" style={{ width: `${(stats.mastered / stats.total) * 100}%` }} />
@@ -657,7 +710,6 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                         <h2 className="text-2xl font-bold text-white mb-2">{selectedChapter}</h2>
                                         <p className="text-slate-400 mb-6">Select topics to practice or start with all cards</p>
 
-                                        {/* Chapter Stats */}
                                         {chapterStats && (
                                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
                                                 <div className="p-3 bg-slate-900/50 rounded-xl text-center">
@@ -682,30 +734,26 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                         {selectedChapterData && (
                                             <>
                                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-                                                    {selectedChapterData.topics.map(topic => {
-                                                        const count = selectedChapterData.cards.filter(c => c.topicName === topic).length;
-                                                        const isSelected = selectedTopics.includes(topic);
-                                                        const topicCardIds = selectedChapterData.cards
-                                                            .filter(c => c.topicName === topic)
-                                                            .map(c => c.id);
-                                                        const topicDue = getDueCards(topicCardIds).length;
+                                                    {selectedChapterData.topics.map((topic) => {
+                                                        const isSelected = selectedTopics.includes(topic.name);
+                                                        const topicDue = getDueCards(topic.cardIds).length;
 
                                                         return (
                                                             <button
-                                                                key={topic}
-                                                                onClick={() => toggleTopic(topic)}
+                                                                key={topic.name}
+                                                                onClick={() => toggleTopic(topic.name)}
                                                                 className={`p-4 rounded-xl border text-left transition-all ${isSelected
                                                                     ? 'bg-purple-500/20 border-purple-500/50 text-white'
                                                                     : 'bg-slate-900/50 border-white/5 text-slate-300 hover:border-white/20'
                                                                     }`}
                                                             >
                                                                 <div className="flex items-center justify-between">
-                                                                    <span className="font-medium">{topic}</span>
+                                                                    <span className="font-medium">{topic.name}</span>
                                                                     <div className="flex items-center gap-2">
                                                                         {topicDue > 0 && (
                                                                             <span className="text-xs text-amber-400">{topicDue} due</span>
                                                                         )}
-                                                                        <span className="text-sm text-slate-500">{count} cards</span>
+                                                                        <span className="text-sm text-slate-500">{topic.cardIds.length} cards</span>
                                                                     </div>
                                                                 </div>
                                                             </button>
@@ -714,31 +762,41 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                                 </div>
 
                                                 <div className="flex flex-wrap gap-3">
-                                                    {/* Due Cards Button */}
                                                     {getDueCountForSelection() > 0 && (
                                                         <button
                                                             onClick={() => startPractice('due')}
-                                                            className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity"
+                                                            disabled={loadingPractice}
+                                                            className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60"
                                                         >
-                                                            <Clock className="w-5 h-5" />
+                                                            {loadingPractice ? (
+                                                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                                            ) : (
+                                                                <Clock className="w-5 h-5" />
+                                                            )}
                                                             Review Due Cards ({getDueCountForSelection()})
                                                         </button>
                                                     )}
 
-                                                    {/* All Cards Button */}
                                                     <button
                                                         onClick={() => startPractice('all')}
-                                                        className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity"
+                                                        disabled={loadingPractice}
+                                                        className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60"
                                                     >
-                                                        <Shuffle className="w-5 h-5" />
+                                                        {loadingPractice ? (
+                                                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                                        ) : (
+                                                            <Shuffle className="w-5 h-5" />
+                                                        )}
                                                         Practice All ({selectedTopics.length > 0
-                                                            ? selectedChapterData.cards.filter(c => selectedTopics.includes(c.topicName)).length
-                                                            : selectedChapterData.cards.length} cards)
+                                                            ? selectedChapterData.topics
+                                                                .filter((t) => selectedTopics.includes(t.name))
+                                                                .reduce((sum, t) => sum + t.cardIds.length, 0)
+                                                            : selectedChapterData.cardCount} cards)
                                                     </button>
 
                                                     <button
                                                         onClick={() => {
-                                                            setSelectedTopics(selectedChapterData.topics);
+                                                            setSelectedTopics(selectedChapterData.topics.map((t) => t.name));
                                                         }}
                                                         className="px-4 py-3 border border-white/10 rounded-xl text-slate-400 hover:text-white hover:border-white/20 transition-all"
                                                     >
@@ -760,7 +818,6 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                 >
-                                    {/* Progress Bar */}
                                     <div className="mb-6">
                                         <div className="flex items-center justify-between text-sm text-slate-400 mb-2">
                                             <span>Card {currentIndex + 1} of {practiceQueue.length}</span>
@@ -777,7 +834,6 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                         </div>
                                     </div>
 
-                                    {/* Flashcard */}
                                     <div
                                         onClick={() => setIsFlipped(!isFlipped)}
                                         className="relative cursor-pointer perspective-1000"
@@ -804,8 +860,8 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                                             rehypePlugins={[rehypeKatex]}
                                                             components={{
                                                                 ...flashcardMarkdownComponents,
-                                                                strong: ({ node, ...props }) => <span className="text-amber-300 font-bold" {...props} />,
-                                                                p: ({ node, ...props }) => <p className="mb-4 last:mb-0" {...props} />
+                                                                strong: ({ ...props }) => <span className="text-amber-300 font-bold" {...props} />,
+                                                                p: ({ ...props }) => <p className="mb-4 last:mb-0" {...props} />
                                                             }}
                                                         >
                                                             {isFlipped ? currentCard.answer : currentCard.question}
@@ -819,7 +875,6 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                         </AnimatePresence>
                                     </div>
 
-                                    {/* Topic / Chapter Badge */}
                                     <div className="text-center mt-4 flex items-center justify-center gap-2 flex-wrap">
                                         {isGlobalReview && (
                                             <span className="px-3 py-1 bg-purple-500/15 border border-purple-500/20 rounded-full text-purple-300 text-sm">
@@ -831,7 +886,6 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                         </span>
                                     </div>
 
-                                    {/* Action Buttons - Spaced Repetition */}
                                     {isFlipped && (
                                         <motion.div
                                             initial={{ opacity: 0, y: 20 }}
@@ -872,7 +926,6 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                         </motion.div>
                                     )}
 
-                                    {/* Exit Button */}
                                     <div className="text-center mt-8">
                                         <button
                                             onClick={() => {
@@ -886,7 +939,6 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                     </div>
                                 </motion.div>
                             ) : practiceQueue.length === 0 ? (
-                                /* No Due Cards */
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
@@ -921,7 +973,6 @@ export default function FlashcardsClient({ initialFlashcards }: FlashcardsClient
                                     </div>
                                 </motion.div>
                             ) : (
-                                /* Session Complete */
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
