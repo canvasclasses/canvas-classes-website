@@ -10,9 +10,10 @@ import PhysicalPropertiesLab from './PhysicalPropertiesLab';
 import {
   Search, ChevronDown, ChevronUp, Play, FlaskConical, AlertTriangle,
   Lightbulb, ShieldAlert, Zap, Compass, Filter, Sparkles, BookOpen, Droplet, Hash,
-  BarChart3, Dna
+  BarChart3, Dna, Atom
 } from 'lucide-react';
 import BiomoleculesSimulator from './BiomoleculesSimulator';
+import SN1SN2Simulator from './SN1SN2Simulator';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -545,7 +546,7 @@ function InorganicTrendsCTA() {
 }
 
 export default function OrganicMasterPage() {
-  const [section, setSection] = useState<'named' | 'lab' | 'phys' | 'ref' | 'bio'>('lab');
+  const [section, setSection] = useState<'named' | 'lab' | 'phys' | 'ref' | 'bio' | 'stereo'>('lab');
   const [selectedReactionId, setSelectedReactionId] = useState<string | null>(null);
 
   const handleSelectReaction = (id: string) => {
@@ -626,6 +627,17 @@ export default function OrganicMasterPage() {
             <span className="text-[11px] font-mono bg-black/30 px-2 py-0.5 rounded text-white/50">Sim</span>
           </button>
 
+          <button
+            onClick={() => { setSection('stereo'); setSelectedReactionId(null); }}
+            className={`flex items-center justify-between w-full p-3 rounded-xl text-[14.5px] font-semibold transition-all duration-200 group ${section === 'stereo' ? 'bg-rose-500/15 text-rose-400 shadow-[inset_3px_0_0_rgba(var(--tw-colors-rose-500))]' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+          >
+            <div className="flex items-center gap-3">
+              <Atom size={18} className={section === 'stereo' ? 'text-rose-400' : 'text-gray-500 group-hover:text-rose-400'} />
+              SN1 vs SN2
+            </div>
+            <span className="text-[11px] font-mono bg-black/30 px-2 py-0.5 rounded text-white/50">Sim</span>
+          </button>
+
           {/* Conditional Sidebar Expansion for Name Reactions */}
           {section === 'named' && (
             <motion.div
@@ -683,6 +695,7 @@ export default function OrganicMasterPage() {
               {section === 'phys' && <div className="animate-in fade-in slide-in-from-bottom-4 duration-500"><PhysicalPropertiesLab /></div>}
               {section === 'ref' && <QuickReferenceTab />}
               {section === 'bio' && <div className="animate-in fade-in slide-in-from-bottom-4 duration-500"><BiomoleculesSimulator /></div>}
+              {section === 'stereo' && <div className="animate-in fade-in slide-in-from-bottom-4 duration-500"><SN1SN2Simulator /></div>}
             </div>
           </div>
         </main>
@@ -724,6 +737,13 @@ export default function OrganicMasterPage() {
         >
           <Dna size={20} />
           <span className="text-[10px] font-semibold">Bio</span>
+        </button>
+        <button
+          onClick={() => { setSection('stereo'); setSelectedReactionId(null); }}
+          className={`flex flex-col items-center justify-center w-full h-full gap-1 ${section === 'stereo' ? 'text-rose-400' : 'text-gray-500 hover:text-gray-300'}`}
+        >
+          <Atom size={20} />
+          <span className="text-[10px] font-semibold">Stereo</span>
         </button>
       </nav>
 
