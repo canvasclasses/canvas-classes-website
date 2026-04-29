@@ -58,11 +58,64 @@ export function getChapterIdsForSubject(subject: Subject): string[] {
     .map((node: TaxonomyNode) => node.id);
 }
 
+// ── Per-process permissions cache ──────────────────────────────────────────────
+// Each call to getUserPermissions previously hit MongoDB. The slow-path admin
+// query path triggers up to three calls per request (direct, plus indirectly via
+// getQuestionFilter → getAccessibleChapters → getUserPermissions). Caching for
+// 60 s removes those round-trips without sacrificing safety:
+//   • TTL is short, so role changes propagate within a minute on every instance
+//   • A serverless instance restart clears the cache
+//   • Writes to /api/v2/admin/roles SHOULD call invalidatePermissionsCache(email)
+//     for instant propagation (see invalidate helper below).
+// CAUTION: Do NOT cache `UserPermissions` objects that contain bound closures
+// over a stale `userRole` document — we re-construct the public surface each
+// call so `userRole.subjects` mutations elsewhere can't leak in.
+type CachedPermissions = { permissions: UserPermissions; expiresAt: number };
+const permissionsCache = new Map<string, CachedPermissions>();
+const PERMISSIONS_TTL_MS = 60_000;
+const PERMISSIONS_CACHE_MAX = 5_000; // cap to avoid memory growth on unique emails
+
+/** Invalidate cached permissions for one user (call from role-management writes). */
+export function invalidatePermissionsCache(email: string): void {
+  permissionsCache.delete(email.toLowerCase());
+}
+
+/** Drop the entire permissions cache (call after a bulk role migration). */
+export function clearPermissionsCache(): void {
+  permissionsCache.clear();
+}
+
 /**
  * Fetch user permissions from database
  * CRITICAL: This is the single source of truth for permissions
+ *
+ * Results are cached in-process for {@link PERMISSIONS_TTL_MS}. Use
+ * {@link invalidatePermissionsCache} after role changes for instant propagation.
  */
 export async function getUserPermissions(email: string): Promise<UserPermissions> {
+  const key = email.toLowerCase();
+  const now = Date.now();
+  const hit = permissionsCache.get(key);
+  if (hit && hit.expiresAt > now) {
+    return hit.permissions;
+  }
+
+  // Periodic eviction so the map can't grow unbounded under unique-email load.
+  if (permissionsCache.size >= PERMISSIONS_CACHE_MAX) {
+    for (const [k, v] of permissionsCache) {
+      if (v.expiresAt <= now) permissionsCache.delete(k);
+    }
+    // Hard cap fallback: if still full, clear half (oldest entries).
+    if (permissionsCache.size >= PERMISSIONS_CACHE_MAX) {
+      const drop = Math.floor(PERMISSIONS_CACHE_MAX / 2);
+      let i = 0;
+      for (const k of permissionsCache.keys()) {
+        if (i++ >= drop) break;
+        permissionsCache.delete(k);
+      }
+    }
+  }
+
   await connectToDatabase();
 
   // Check if user has a role in database
@@ -70,7 +123,7 @@ export async function getUserPermissions(email: string): Promise<UserPermissions
 
   // Default: no access (fail-safe)
   if (!userRole) {
-    return {
+    const noAccess: UserPermissions = {
       email,
       role: 'viewer',
       subjects: [],
@@ -81,6 +134,8 @@ export async function getUserPermissions(email: string): Promise<UserPermissions
       canAccessAnalytics: false,
       canExportData: false,
     };
+    permissionsCache.set(key, { permissions: noAccess, expiresAt: now + PERMISSIONS_TTL_MS });
+    return noAccess;
   }
 
   // Update last accessed timestamp (fire and forget)
@@ -93,14 +148,19 @@ export async function getUserPermissions(email: string): Promise<UserPermissions
 
   const isSuperAdmin = userRole.role === 'super_admin';
   const isSubjectAdmin = userRole.role === 'subject_admin';
+  // Snapshot subjects array at fetch time so the cached canAccessSubject
+  // closure can't be affected by any mutation to userRole.subjects later.
+  const subjectsSnapshot: Subject[] = isSuperAdmin
+    ? ['chemistry', 'physics', 'mathematics']
+    : [...userRole.subjects];
 
-  return {
+  const permissions: UserPermissions = {
     email,
     role: userRole.role,
-    subjects: isSuperAdmin ? ['chemistry', 'physics', 'mathematics'] : userRole.subjects,
+    subjects: subjectsSnapshot,
     canAccessSubject: (subject: Subject) => {
       if (isSuperAdmin) return true;
-      return userRole.subjects.includes(subject);
+      return subjectsSnapshot.includes(subject);
     },
     canEditQuestions: isSuperAdmin || isSubjectAdmin,
     canDeleteQuestions: isSuperAdmin, // Only super admin can delete
@@ -108,6 +168,8 @@ export async function getUserPermissions(email: string): Promise<UserPermissions
     canAccessAnalytics: true, // All authenticated users can view analytics
     canExportData: isSuperAdmin,
   };
+  permissionsCache.set(key, { permissions, expiresAt: now + PERMISSIONS_TTL_MS });
+  return permissions;
 }
 
 /**

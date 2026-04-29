@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
+import { revalidateTag } from 'next/cache';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
 import { Chapter } from '@/lib/models/Chapter';
@@ -171,6 +172,10 @@ export async function POST(
       timestamp: new Date(),
       can_rollback: true,
     }).save();
+
+    // Bust the questions cache: both old and new chapter caches must refresh
+    // since this question moves between chapter buckets.
+    revalidateTag('questions');
 
     return NextResponse.json({
       success: true,

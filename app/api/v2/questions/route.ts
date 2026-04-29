@@ -8,7 +8,7 @@ import { trackServer } from '@/lib/analytics/mixpanel.server';
 import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
 import { z } from 'zod';
 import { getAuthenticatedUser } from '@/lib/auth';
-import { getUserPermissions, getQuestionFilter, canEditQuestion } from '@/lib/rbac';
+import { getUserPermissions, getQuestionFilter, canEditQuestion, getSubjectFromChapterId } from '@/lib/rbac';
 import { isLocalhostDev } from '@/lib/bookAuth';
 
 // Mongo projection: when excludeSolutions=true, skip the heavy solution fields.
@@ -297,17 +297,41 @@ export async function GET(request: NextRequest) {
     }
 
     // ── Fast path B: simple chapter fetch (cached) ────────────────────────────
-    // Only takes the cached path for unauthenticated student traffic on a single
-    // chapter without admin-style filters. Admin and search go through the
-    // direct query below for fresh, RBAC-respecting results.
+    // Single-chapter reads with no cross-cutting filters go through unstable_cache
+    // (1-hour TTL, busted by `revalidateTag('questions')` on every write path —
+    // POST/PATCH/DELETE in this file plus reclassify and flag/unflag routes).
+    //
+    // SECURITY: the cache key does NOT include the user's email — it would
+    // explode cardinality and defeat the cache. RBAC is therefore enforced
+    // *before* serving cached data: admins restricted to certain subjects get
+    // an empty result for chapters they can't access. This matches the slow
+    // path's behavior (which AND's `chapter_id IN [accessible]` into the query)
+    // without leaking an existence signal.
     const isSimpleChapterFetch =
-      !isAuthenticated &&
       chapter_ids.length === 1 &&
       !subject && !status && !type && !difficulty &&
       !is_pyq && !exam_level && !year && !tag_id && !searchTerm &&
       !sourceType && !exam && !isCountOnly;
 
     if (isSimpleChapterFetch) {
+      // Admin/subject-admin RBAC gate. Viewers (no role row) and unauthenticated
+      // users skip this — they're treated like public student traffic, which is
+      // the same behavior the slow path provides via the
+      // `if (permissions.role !== 'viewer')` guard below.
+      if (isAuthenticated && user) {
+        const permissions = await getUserPermissions(user.email!);
+        if (permissions.role !== 'viewer') {
+          const subj = getSubjectFromChapterId(chapter_ids[0]);
+          if (!subj || !permissions.canAccessSubject(subj)) {
+            return NextResponse.json({
+              success: true,
+              data: [],
+              pagination: { total: 0, limit, skip, hasMore: false },
+            });
+          }
+        }
+      }
+
       const { total, docs } = await getCachedChapterQuestions(
         chapter_ids[0],
         examBoard,
@@ -390,17 +414,20 @@ export async function GET(request: NextRequest) {
       ];
     }
 
-    const total = await QuestionV2.countDocuments(query);
-
-    let questions: unknown[] = [];
-    if (!isCountOnly) {
-      const projection = excludeSolutions ? PROJECTION_NO_SOLUTIONS : {};
-      questions = await QuestionV2.find(query, projection)
-        .sort({ display_id: 1 })
-        .limit(limit)
-        .skip(skip)
-        .lean();
-    }
+    // Run count + find in parallel — Mongo will execute them concurrently and
+    // we save one round-trip's worth of latency per cold request. The cached
+    // fast path above already does this; parity matters more in the slow path.
+    const projection = excludeSolutions ? PROJECTION_NO_SOLUTIONS : {};
+    const [total, questions] = await Promise.all([
+      QuestionV2.countDocuments(query),
+      isCountOnly
+        ? Promise.resolve([] as unknown[])
+        : QuestionV2.find(query, projection)
+            .sort({ display_id: 1 })
+            .limit(limit)
+            .skip(skip)
+            .lean(),
+    ]);
 
     return NextResponse.json({
       success: true,

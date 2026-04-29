@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
 import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
@@ -40,6 +41,9 @@ export async function PATCH(
       { _id: id },
       { $set: { [updatePath]: true, [updatePathDate]: new Date() } }
     );
+
+    // Bust the questions cache so the resolved-flag state propagates to admin list view
+    revalidateTag('questions');
 
     return NextResponse.json({ success: true });
   } catch (err) {

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { getAuthenticatedUser } from '@/lib/auth';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
@@ -104,6 +105,9 @@ export async function POST(
       question_id: id,
       reason: type,
     });
+
+    // Bust the questions cache so the flag badge appears in admin list view immediately
+    revalidateTag('questions');
 
     return NextResponse.json({
       success: true,

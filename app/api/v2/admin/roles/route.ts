@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import { UserRole } from '@/lib/models/UserRole';
 import { RoleAuditLog } from '@/lib/models/RoleAuditLog';
-import { getUserPermissions } from '@/lib/rbac';
+import { getUserPermissions, invalidatePermissionsCache } from '@/lib/rbac';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { isLocalhostDev } from '@/lib/bookAuth';
 import { z } from 'zod';
@@ -99,6 +99,10 @@ export async function POST(request: NextRequest) {
       existingRole.granted_at = new Date();
       await existingRole.save();
 
+      // Invalidate permissions cache so the role change takes effect immediately
+      // (without this, the in-process cache would serve stale permissions for up to 60s)
+      invalidatePermissionsCache(validated.email);
+
       // Audit log
       await RoleAuditLog.create({
         action: 'role_updated',
@@ -126,6 +130,9 @@ export async function POST(request: NextRequest) {
         granted_by: userEmail,
         notes: validated.notes,
       });
+
+      // Invalidate any cached "no role" entry for this email
+      invalidatePermissionsCache(validated.email);
 
       // Audit log
       await RoleAuditLog.create({
@@ -197,6 +204,9 @@ export async function DELETE(request: NextRequest) {
     // Soft delete
     role.is_active = false;
     await role.save();
+
+    // Invalidate the cached permissions so the user loses access immediately
+    invalidatePermissionsCache(targetEmail);
 
     // Audit log
     await RoleAuditLog.create({
