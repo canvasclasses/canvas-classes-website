@@ -785,7 +785,8 @@ function AdminPageContent() {
             {/* TOP BAR — two rows */}
             <header className="shrink-0 bg-gray-950/95 backdrop-blur-sm border-b border-gray-800/50 shadow-xl">
                 {/* Row 1: title + actions + search + Prev/Next + selector + chapter/type filters */}
-                <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-800/40">
+                {/* flex-wrap so content reflows to additional lines on narrow viewports — accessible without horizontal scroll on any laptop/OS */}
+                <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-800/40 flex-wrap">
                     <h1 className="text-sm font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 bg-clip-text text-transparent shrink-0">
                         Crucible Admin
                     </h1>
@@ -1085,7 +1086,8 @@ function AdminPageContent() {
                 </div>
 
                 {/* Row 2: All filters consolidated in one row — practice bank only */}
-                {adminSection === 'practice' && <div className="flex items-center gap-2 px-3 py-1.5 overflow-x-auto border-t border-gray-800/50" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}>
+                {/* flex-wrap so filters + per-question editors reflow on narrow viewports — accessible without horizontal scroll on any laptop/OS */}
+                {adminSection === 'practice' && <div className="flex items-center gap-2 px-3 py-1.5 border-t border-gray-800/50 flex-wrap">
                     <Filter size={11} className="text-purple-400 shrink-0" />
 
                     {/* Difficulty */}
