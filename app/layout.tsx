@@ -7,6 +7,7 @@ import { ClarityScript } from '@/components/analytics/ClarityScript';
 import { ConsentGate } from '@/components/legal/ConsentGate';
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import BitsatBanner from "./components/BitsatBanner";
 import Footer from "./components/Footer";
 import { CommandPalette } from "./components/CommandPalette";
 import { getSearchItems } from "./lib/searchIndices";
@@ -202,6 +203,7 @@ export default function RootLayout({
         <MixpanelProvider>
           <CommandPalette itemsPromise={getSearchItems()} />
           <Navbar authButton={<AuthButton />} />
+          <BitsatBanner />
           {children}
           <ConditionalFooter />
         </MixpanelProvider>
