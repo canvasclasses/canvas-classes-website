@@ -240,13 +240,6 @@ export default function OxidesReferenceSection() {
                         {renderSection('amphoteric')}
                     </div>
                 </div>
-
-                {/* Footer */}
-                <div className="px-5 py-3 border-t border-gray-700 bg-gray-700/20">
-                    <p className="text-center text-gray-500 text-xs">
-                        Based on NCERT Chemistry • Acidic oxides react with bases, Basic oxides react with acids, Amphoteric oxides react with both
-                    </p>
-                </div>
             </div>
         </div>
     );

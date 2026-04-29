@@ -289,6 +289,21 @@ export const FLASHCARD_CATEGORIES: FlashcardCategory[] = [
           'Class 11',
           'Class 12'
         ]
+      },
+      {
+        id: 'fc_polymers',
+        name: 'Polymers',
+        displayName: 'Polymers',
+        category: 'Organic Chemistry',
+        topicCount: 5,
+        cardCount: 60,
+        topics: [
+          'Classification of Polymers',
+          'Types of Addition Polymers',
+          'Types of Condensation Polymers',
+          'Molecular Mass & Polymerisation Mechanisms',
+          'Rubber & Special Polymers'
+        ]
       }
     ]
   },

@@ -49,7 +49,7 @@ const BLOCK_INFO = {
                 title: 'General Configuration',
                 points: [
                     'Valence electrons in s-orbital: ns¹ (Group 1) or ns² (Group 2)',
-                    'Form the bridge between noble gases and p-block elements',
+                    'Show only fixed oxidation states (+1 for Group 1, +2 for Group 2) — never variable valency unlike transition metals',
                     'Largest atomic radii in their respective periods'
                 ]
             },
@@ -384,7 +384,7 @@ export default function PeriodicTableClient() {
     };
 
     // Render a single element cell
-    const ElementCell = ({ element }: { element: Element }) => {
+    const ElementCell = ({ element, gridRowOverride }: { element: Element; gridRowOverride?: number }) => {
         // const isHovered = hoveredElement?.atomicNumber === element.atomicNumber; // Unused
         const isSelected = selectedElement?.atomicNumber === element.atomicNumber;
         const isComparing = compareElements.some(e => e.atomicNumber === element.atomicNumber);
@@ -406,7 +406,7 @@ export default function PeriodicTableClient() {
                 style={{
                     backgroundColor: bgColor,
                     gridColumn: element.col,
-                    gridRow: element.row,
+                    gridRow: gridRowOverride ?? element.row,
                 }}
                 whileHover={{ scale: 1.15, zIndex: 10 }}
                 onMouseEnter={() => {
@@ -957,9 +957,8 @@ export default function PeriodicTableClient() {
                             Interactive Periodic Table
                         </span>
                     </h1>
-                    <p className="text-gray-400 text-base md:text-lg max-w-3xl mx-auto mb-6 leading-relaxed">
-                        <span className="text-white font-semibold">Every periodic trend. One page.</span><br />
-                        Stop hunting through NCERT. All the data, exceptions, and trends from s, p, d, and f blocks — organized, visual, and searchable.
+                    <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto mb-6 leading-relaxed">
+                        Configurations, exceptions, key reactions, and JEE/NEET trends — every element, every fact NCERT tests.
                     </p>
                 </div>
             </section>
@@ -1045,35 +1044,38 @@ export default function PeriodicTableClient() {
                     </div>
                 )}
 
-                {/* Block Information Buttons */}
-                <div className="flex flex-wrap justify-center gap-3 mb-4">
+                {/* Block info chips — secondary action, visually distinct from view-mode buttons above */}
+                <div className="flex items-center justify-center gap-2 mb-4 flex-wrap">
+                    <span className="text-[11px] uppercase tracking-wider text-gray-500 font-medium mr-1">
+                        Learn the blocks
+                    </span>
                     <button
                         onClick={() => setShowBlockInfo('s')}
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 border border-blue-500/30"
+                        className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition-all border border-blue-500/40 text-blue-400 hover:bg-blue-500/10"
                     >
-                        <Layers size={16} />
-                        s-Block Info
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                        s-Block
                     </button>
                     <button
                         onClick={() => setShowBlockInfo('p')}
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30"
+                        className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition-all border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/10"
                     >
-                        <Layers size={16} />
-                        p-Block Info
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                        p-Block
                     </button>
                     <button
                         onClick={() => setShowBlockInfo('d')}
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 border border-amber-500/30"
+                        className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition-all border border-amber-500/40 text-amber-400 hover:bg-amber-500/10"
                     >
-                        <Layers size={16} />
-                        d-Block Info
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                        d-Block
                     </button>
                     <button
                         onClick={() => setShowBlockInfo('f')}
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 border border-purple-500/30"
+                        className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition-all border border-purple-500/40 text-purple-400 hover:bg-purple-500/10"
                     >
-                        <Layers size={16} />
-                        f-Block Info
+                        <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                        f-Block
                     </button>
                 </div>
 
@@ -1082,12 +1084,11 @@ export default function PeriodicTableClient() {
                     {/* Table */}
                     <div className="overflow-x-auto pb-4">
 
-
                         <div
                             className="grid gap-0.5 sm:gap-1 min-w-[700px] mx-auto max-w-7xl"
                             style={{
                                 gridTemplateColumns: 'repeat(18, minmax(32px, 1fr))',
-                                gridTemplateRows: 'repeat(10, minmax(40px, auto))',
+                                gridTemplateRows: 'repeat(7, minmax(40px, auto)) 20px repeat(3, minmax(40px, auto))',
                             }}
                         >
                             {/* Group numbers */}
@@ -1105,23 +1106,27 @@ export default function PeriodicTableClient() {
                             <div className="text-[10px] text-gray-500 flex items-center justify-center" style={{ gridColumn: 3, gridRow: 6 }}>57-71</div>
                             <div className="text-[10px] text-gray-500 flex items-center justify-center" style={{ gridColumn: 3, gridRow: 7 }}>89-103</div>
 
-                            {/* Render all elements */}
+                            {/* Render all elements — f-block rows shift +1 to create gap after d-block */}
                             {ELEMENTS.map(element => (
-                                <ElementCell key={element.atomicNumber} element={element} />
+                                <ElementCell
+                                    key={element.atomicNumber}
+                                    element={element}
+                                    gridRowOverride={element.row >= 8 ? element.row + 1 : element.row}
+                                />
                             ))}
 
-                            {/* Lanthanide/Actinide labels - now clickable */}
+                            {/* Lanthanide/Actinide labels — shifted +1 to match f-block gap offset */}
                             <button
                                 onClick={() => setShowBlockInfo('f')}
                                 className="text-xs text-pink-400 flex items-center hover:text-pink-300 transition-colors cursor-pointer"
-                                style={{ gridColumn: 1, gridRow: 8 }}
+                                style={{ gridColumn: 1, gridRow: 9 }}
                             >
                                 Lanthanides*
                             </button>
                             <button
                                 onClick={() => setShowBlockInfo('f')}
                                 className="text-xs text-purple-400 flex items-center hover:text-purple-300 transition-colors cursor-pointer"
-                                style={{ gridColumn: 1, gridRow: 9 }}
+                                style={{ gridColumn: 1, gridRow: 10 }}
                             >
                                 Actinides*
                             </button>
@@ -1129,6 +1134,15 @@ export default function PeriodicTableClient() {
 
                         {/* Legend */}
                         <div className="mt-4">
+                            {viewMode !== 'exceptions' && (
+                                <div className="flex items-center justify-center gap-2 mb-2 text-[11px] text-gray-400">
+                                    <span className="relative inline-flex w-2.5 h-2.5">
+                                        <span className="absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75 animate-ping" />
+                                        <span className="relative inline-flex w-2.5 h-2.5 rounded-full bg-yellow-400 border border-gray-900" />
+                                    </span>
+                                    <span>Yellow dot marks elements with exceptional behavior — click for details</span>
+                                </div>
+                            )}
                             {viewMode === 'category' && <CategoryLegend />}
                             {viewMode === 'property' && <PropertyLegend />}
                             {viewMode === 'exceptions' && (
@@ -1143,11 +1157,26 @@ export default function PeriodicTableClient() {
                 {/* Comparison panel */}
                 <ComparisonPanel />
 
-                {/* YouTube Video Lectures Section */}
-                <YouTubeLecturesSection />
+                {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+                {/* QUICK REFERENCE — cross-element data, surfaces directly under the table */}
+                {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+                <SectionHeader
+                    eyebrow="Quick Reference"
+                    title="Cross-element data at a glance"
+                    description="Group-wise oxide nature, JEE/NEET extremes, and the deep-dive trends explorer — everything that needs comparison across elements."
+                    barFrom="from-cyan-400"
+                    barTo="to-blue-500"
+                    icon={<Compass size={14} />}
+                />
 
-                {/* Link to NCERT Trends Page */}
-                <div id="trends-section" className="mt-8 px-2 sm:px-0">
+                {/* Nature of Oxides & Hydroxides */}
+                <OxidesReferenceSection />
+
+                {/* Element Records — formerly "25 Must-Know Facts" */}
+                <ElementRecordsSection />
+
+                {/* Periodic Trends explorer link */}
+                <div id="trends-section" className="mt-6 px-2 sm:px-0">
                     <a href="/periodic-trends" className="block bg-gradient-to-r from-violet-900/40 to-fuchsia-900/40 rounded-xl border border-violet-500/30 p-4 sm:p-5 hover:border-violet-500/60 transition-all group">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
@@ -1155,8 +1184,8 @@ export default function PeriodicTableClient() {
                                     <TrendingUp size={20} className="text-violet-400" />
                                 </div>
                                 <div>
-                                    <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-violet-300 transition-colors">Periodic Trends & Exceptions</h3>
-                                    <p className="text-gray-400 text-xs">Master all NCERT data with interactive graphs</p>
+                                    <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-violet-300 transition-colors">Periodic Trends &amp; Exceptions</h3>
+                                    <p className="text-gray-400 text-xs">Atomic radius, IE, EN, and electron affinity — interactive graphs across all NCERT data</p>
                                 </div>
                             </div>
                             <div className="hidden sm:flex items-center gap-2 text-violet-400 group-hover:translate-x-1 transition-transform">
@@ -1167,20 +1196,45 @@ export default function PeriodicTableClient() {
                     </a>
                 </div>
 
-                {/* Memory Practice Quiz Section */}
-                <div className="mt-8">
+                {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+                {/* LEARN — concept videos and chapter walkthroughs */}
+                {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+                <SectionHeader
+                    eyebrow="Learn"
+                    title="Watch the chapter, build the basics"
+                    description="Short summaries and full lecture series — start here if you want a guided walkthrough before diving into the table."
+                    barFrom="from-rose-400"
+                    barTo="to-red-500"
+                    icon={<BookOpen size={14} />}
+                />
+
+                <YouTubeLecturesSection />
+
+                {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+                {/* PRACTICE — three peer ways to test yourself */}
+                {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+                <SectionHeader
+                    eyebrow="Practice"
+                    title="Test what you actually remember"
+                    description="Three ways to check yourself — drag elements onto the grid, take an MCQ checkpoint, or solve real JEE/NEET past papers."
+                    barFrom="from-emerald-400"
+                    barTo="to-teal-500"
+                    icon={<Trophy size={14} />}
+                />
+
+                {/* Memory Practice */}
+                <div>
                     <PeriodicTableQuiz />
                 </div>
 
-                {/* Nature of Oxides/Hydroxides Reference */}
-                <OxidesReferenceSection />
-
-                {/* 25 Must-Know Facts */}
-                <PeriodicFactsSection />
-
-                {/* Knowledge Check MCQ Quiz */}
-                <div className="mt-12 mb-8">
+                {/* Knowledge Check MCQ */}
+                <div className="mt-8">
                     <PeriodicTableMCQQuiz />
+                </div>
+
+                {/* JEE/NEET PYQ link card */}
+                <div className="mt-6 mb-8">
+                    <PYQPracticeCard />
                 </div>
 
             </div>
@@ -1188,89 +1242,148 @@ export default function PeriodicTableClient() {
     );
 }
 
-// --- 25 Must-Know Periodic Table Facts ---
-const PeriodicFactsSection = () => {
-    const categories = {
-        physical:   { label: 'Physical',       color: '#60a5fa' },
-        reactivity: { label: 'Reactivity',     color: '#f97316' },
-        electro:    { label: 'Electrochemical', color: '#a78bfa' },
-        abundance:  { label: 'Abundance',      color: '#34d399' },
-        special:    { label: 'Special',        color: '#fbbf24' },
-    } as const;
-    type Cat = keyof typeof categories;
+// --- Section header — used to group page sections (Quick Reference / Learn / Practice) ---
+const SectionHeader = ({
+    eyebrow,
+    title,
+    description,
+    barFrom,
+    barTo,
+    icon,
+}: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    barFrom: string;
+    barTo: string;
+    icon: React.ReactNode;
+}) => (
+    <div className="flex items-start gap-3 mt-12 mb-5 px-2 sm:px-0">
+        <div className={`w-1 self-stretch rounded-full bg-gradient-to-b ${barFrom} ${barTo} shrink-0 min-h-[3rem]`} />
+        <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1">
+                <span className={`bg-gradient-to-br ${barFrom} ${barTo} bg-clip-text text-transparent`}>{icon}</span>
+                <span className={`text-[11px] uppercase tracking-[0.18em] font-semibold bg-gradient-to-r ${barFrom} ${barTo} bg-clip-text text-transparent`}>
+                    {eyebrow}
+                </span>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-white leading-tight">{title}</h2>
+            <p className="text-gray-400 text-sm mt-1.5 leading-relaxed">{description}</p>
+        </div>
+    </div>
+);
 
-    const facts: { label: string; value: string; note: string; cat: Cat }[] = [
-        { label: 'Lightest metal',                    value: 'Lithium (Li)',      note: '0.534 g/cm³ — floats on oil',                cat: 'physical'   },
-        { label: 'Densest / heaviest element',        value: 'Osmium (Os)',       note: '22.59 g/cm³',                                cat: 'physical'   },
-        { label: 'Highest melting point',             value: 'Tungsten (W)',      note: '3422 °C — used in bulb filaments',            cat: 'physical'   },
-        { label: 'Only liquid metal at room temp',    value: 'Mercury (Hg)',      note: 'mp = −38.8 °C',                              cat: 'physical'   },
-        { label: 'Only liquid non-metal at room temp',value: 'Bromine (Br₂)',     note: 'Reddish-brown fuming liquid, bp 58.8 °C',    cat: 'physical'   },
-        { label: 'Hardest natural substance',         value: 'Diamond (C)',       note: 'Mohs hardness 10',                           cat: 'physical'   },
-        { label: 'Most ductile metal',                value: 'Gold (Au)',         note: '1 g → ~3 km of wire',                        cat: 'physical'   },
-        { label: 'Most reactive metal',               value: 'Caesium (Cs)',      note: 'Explodes violently on contact with water',   cat: 'reactivity' },
-        { label: 'Least reactive / most noble metal', value: 'Gold (Au)',         note: 'Dissolves only in aqua regia',               cat: 'reactivity' },
-        { label: 'Strongest oxidizing agent',         value: 'Fluorine (F₂)',     note: 'Oxidizes even water and glass',              cat: 'reactivity' },
-        { label: 'Strongest reducing agent (aq.)',    value: 'Lithium (Li)',      note: 'Highest hydration energy of Li⁺ ion',        cat: 'reactivity' },
-        { label: 'Most electronegative element',      value: 'Fluorine (F)',      note: 'EN = 4.0 on Pauling scale',                  cat: 'electro'    },
-        { label: 'Most electropositive element',      value: 'Caesium (Cs)',      note: 'EN = 0.79',                                  cat: 'electro'    },
-        { label: 'Highest 1st ionization energy',     value: 'Helium (He)',       note: 'IE₁ = 2372 kJ/mol',                         cat: 'electro'    },
-        { label: 'Lowest 1st ionization energy',      value: 'Caesium (Cs)',      note: 'IE₁ = 376 kJ/mol',                          cat: 'electro'    },
-        { label: 'Highest electron affinity',         value: 'Chlorine (Cl)',     note: '−349 kJ/mol — NOT F (compact 2p repulsion)', cat: 'electro'    },
-        { label: 'Largest atomic radius',             value: 'Caesium (Cs)',      note: '~265 pm',                                    cat: 'electro'    },
-        { label: 'Smallest atomic radius (reactive)', value: 'Fluorine (F)',      note: '~64 pm',                                     cat: 'electro'    },
-        { label: 'Most abundant element in universe', value: 'Hydrogen (H)',      note: '~75% by mass',                               cat: 'abundance'  },
-        { label: 'Most abundant in Earth\'s crust',   value: 'Oxygen (O)',        note: '~46% by mass',                               cat: 'abundance'  },
-        { label: 'Most abundant metal in crust',      value: 'Aluminium (Al)',    note: '~8% by mass',                                cat: 'abundance'  },
-        { label: 'Most abundant gas in atmosphere',   value: 'Nitrogen (N₂)',     note: '~78% by volume',                             cat: 'abundance'  },
-        { label: 'Best electrical conductor',         value: 'Silver (Ag)',       note: 'Higher conductivity than copper at 25 °C',   cat: 'special'    },
-        { label: 'Element with most stable isotopes', value: 'Tin (Sn)',          note: '10 stable isotopes',                         cat: 'special'    },
-        { label: 'Noble gas with highest boiling pt', value: 'Radon (Rn)',        note: 'bp = −61.7 °C',                              cat: 'special'    },
-    ];
+// --- Element Records — JEE/NEET extremes grouped by axis ---
+const ElementRecordsSection = () => {
+    type RecCat = 'physical' | 'reactivity' | 'atomic';
+    type RecItem = { symbol: string; label: string; value: string; note?: string; category: CategoryType };
+
+    const groups: Record<RecCat, { title: string; barFrom: string; barTo: string; records: RecItem[] }> = {
+        physical: {
+            title: 'Physical Extremes',
+            barFrom: 'from-cyan-400',
+            barTo: 'to-blue-500',
+            records: [
+                { symbol: 'Li', label: 'Lightest metal',          value: '0.534 g/cm³', note: 'floats on oil',     category: 'Alkali Metal'      },
+                { symbol: 'Os', label: 'Densest element',         value: '22.59 g/cm³',                            category: 'Transition Metal'  },
+                { symbol: 'W',  label: 'Highest melting point',   value: '3422 °C',     note: 'bulb filaments',    category: 'Transition Metal'  },
+                { symbol: 'Hg', label: 'Only liquid metal',       value: 'mp −38.8 °C',                            category: 'Transition Metal'  },
+                { symbol: 'Br', label: 'Only liquid non-metal',   value: 'bp 58.8 °C',                             category: 'Reactive Nonmetal' },
+                { symbol: 'C',  label: 'Hardest natural substance', value: 'Mohs 10',  note: 'diamond',            category: 'Reactive Nonmetal' },
+                { symbol: 'Au', label: 'Most ductile metal',      value: '1g → ~3 km wire',                        category: 'Transition Metal'  },
+                { symbol: 'Ag', label: 'Best electrical conductor', value: 'beats Cu at 25 °C',                    category: 'Transition Metal'  },
+            ],
+        },
+        reactivity: {
+            title: 'Reactivity Extremes',
+            barFrom: 'from-orange-400',
+            barTo: 'to-red-500',
+            records: [
+                { symbol: 'Cs', label: 'Most reactive metal',     value: 'explodes in water',                      category: 'Alkali Metal'      },
+                { symbol: 'Au', label: 'Most noble metal',        value: 'aqua regia only',                        category: 'Transition Metal'  },
+                { symbol: 'F',  label: 'Strongest oxidizer',      value: 'oxidizes water & glass',                 category: 'Reactive Nonmetal' },
+                { symbol: 'Li', label: 'Strongest reducer (aq)',  value: 'highest hydration energy',               category: 'Alkali Metal'      },
+            ],
+        },
+        atomic: {
+            title: 'Atomic Properties',
+            barFrom: 'from-violet-400',
+            barTo: 'to-fuchsia-500',
+            records: [
+                { symbol: 'F',  label: 'Most electronegative',    value: 'EN = 4.0',                               category: 'Reactive Nonmetal' },
+                { symbol: 'Cs', label: 'Most electropositive',    value: 'EN = 0.79',                              category: 'Alkali Metal'      },
+                { symbol: 'He', label: 'Highest IE₁',             value: '2372 kJ/mol',                            category: 'Noble Gas'         },
+                { symbol: 'Cs', label: 'Lowest IE₁',              value: '376 kJ/mol',                             category: 'Alkali Metal'      },
+                { symbol: 'Cl', label: 'Highest electron affinity', value: '−349 kJ/mol', note: 'NOT F',           category: 'Reactive Nonmetal' },
+                { symbol: 'Cs', label: 'Largest atomic radius',   value: '~265 pm',                                category: 'Alkali Metal'      },
+                { symbol: 'F',  label: 'Smallest atomic radius',  value: '~64 pm',                                 category: 'Reactive Nonmetal' },
+            ],
+        },
+    };
 
     return (
-        <section className="mt-12 mb-4">
-            {/* Header */}
-            <div className="flex items-center gap-3 mb-5">
-                <div className="w-1 h-8 rounded-full bg-gradient-to-b from-amber-400 to-orange-500 shrink-0" />
-                <div>
-                    <h2 className="text-xl md:text-2xl font-bold text-white">25 Must-Know Facts</h2>
-                    <p className="text-gray-500 text-sm">Key extremes &amp; properties — asked directly in JEE &amp; NEET</p>
+        <div className="mt-6 px-2 sm:px-0">
+            <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 overflow-hidden">
+                {/* Sub-header */}
+                <div className="px-5 py-4 border-b border-gray-700 bg-gray-700/30">
+                    <h3 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
+                        <span className="text-2xl">⚡</span>
+                        Element Records
+                    </h3>
+                    <p className="text-gray-400 text-sm mt-1">
+                        Quick-reference extremes — facts that get asked directly in JEE & NEET
+                    </p>
+                </div>
+
+                {/* 3-column groups */}
+                <div className="p-4 md:p-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-5">
+                        {(Object.entries(groups) as [RecCat, typeof groups[RecCat]][]).map(([key, group]) => (
+                            <div key={key} className="bg-gray-900/40 rounded-xl border border-gray-700/40 overflow-hidden">
+                                {/* Group title with gradient bar */}
+                                <div className="px-4 py-3 border-b border-gray-700/40 bg-gray-900/50">
+                                    <div className="flex items-center gap-2.5">
+                                        <span className={`w-1 h-5 rounded-full bg-gradient-to-b ${group.barFrom} ${group.barTo}`} />
+                                        <h4 className="text-[13px] font-bold text-white uppercase tracking-wider">
+                                            {group.title}
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                {/* Records */}
+                                <div className="divide-y divide-gray-800/60">
+                                    {group.records.map((rec, i) => (
+                                        <div
+                                            key={i}
+                                            className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-700/15 transition-colors"
+                                        >
+                                            {/* Element symbol chip — colored by PT category, ties to the table above */}
+                                            <div
+                                                className="w-9 h-9 rounded-md flex items-center justify-center font-extrabold text-sm shrink-0 shadow-sm border border-black/10"
+                                                style={{
+                                                    backgroundColor: CATEGORY_COLORS[rec.category],
+                                                    color: '#1a1a1a',
+                                                }}
+                                            >
+                                                {rec.symbol}
+                                            </div>
+                                            {/* Fact */}
+                                            <div className="flex-1 min-w-0">
+                                                <div className="text-sm text-gray-100 font-medium leading-tight">{rec.label}</div>
+                                                <div className="text-[11px] text-gray-500 leading-tight mt-0.5 truncate">
+                                                    {rec.value}
+                                                    {rec.note && <span className="text-gray-600"> · {rec.note}</span>}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-
-            {/* Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
-                {facts.map((fact, i) => (
-                    <div
-                        key={i}
-                        className="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-[#0F1623] border border-white/5 hover:border-white/10 hover:bg-[#141c2e] transition-colors group"
-                    >
-                        <span className="text-[11px] font-mono text-gray-700 w-5 shrink-0 text-right select-none">
-                            {String(i + 1).padStart(2, '0')}
-                        </span>
-                        <span
-                            className="w-1.5 h-1.5 rounded-full shrink-0"
-                            style={{ backgroundColor: categories[fact.cat].color }}
-                        />
-                        <span className="text-gray-400 text-sm flex-1 min-w-0">{fact.label}</span>
-                        <div className="text-right shrink-0 ml-2">
-                            <span className="text-white font-semibold text-sm">{fact.value}</span>
-                            <span className="block text-gray-600 text-[11px] leading-tight">{fact.note}</span>
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            {/* Legend */}
-            <div className="flex flex-wrap gap-x-5 gap-y-1.5 mt-4 justify-end">
-                {(Object.entries(categories) as [Cat, typeof categories[Cat]][]).map(([key, cat]) => (
-                    <div key={key} className="flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full" style={{ backgroundColor: cat.color }} />
-                        <span className="text-xs text-gray-600">{cat.label}</span>
-                    </div>
-                ))}
-            </div>
-        </section>
+        </div>
     );
 };
 
@@ -1335,10 +1448,9 @@ const YouTubeLecturesSection = () => {
                 )}
             </AnimatePresence>
 
-            {/* Section Header - Compact */}
-            <section className="mt-8 mb-4 px-2 sm:px-0">
-                {/* Single Row of 4 Beautiful Buttons */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            {/* Video / lecture cards — 3-column row under the Learn section header */}
+            <section className="mb-4 px-2 sm:px-0">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     
                     {/* Video 1 */}
                     <button
@@ -1435,39 +1547,46 @@ const YouTubeLecturesSection = () => {
                         </div>
                     </a>
 
-                    {/* Practice PYQs */}
-                    <a
-                        href="https://www.canvasclasses.in/the-crucible/ch11_periodic?mode=browse"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group flex items-center gap-3 p-3 rounded-xl bg-gradient-to-br from-amber-900/40 via-orange-900/20 to-transparent border border-amber-700/40 hover:border-amber-500/60 transition-all"
-                    >
-                        {/* Creative Star Badge Icon */}
-                        <div className="relative w-11 h-11 flex-shrink-0">
-                            {/* Shadow */}
-                            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-amber-700 to-orange-900 translate-y-1.5 rotate-2" />
-                            {/* Background burst */}
-                            <div className="absolute inset-0.5 rounded-xl bg-gradient-to-br from-amber-300 via-amber-400 to-orange-500 border border-amber-200/60 shadow-[inset_0_2px_0_rgba(255,255,255,0.4),0_4px_10px_rgba(245,158,11,0.5)] flex items-center justify-center overflow-hidden">
-                                {/* Star */}
-                                <svg className="w-6 h-6 text-white drop-shadow-md" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                </svg>
-                                {/* Sparkle accents */}
-                                <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full" />
-                                <div className="absolute bottom-1 left-1 w-1 h-1 bg-amber-100 rounded-full" />
-                            </div>
-                            {/* Shine */}
-                            <div className="absolute top-0.5 left-2 right-2 h-2 rounded-full bg-gradient-to-b from-white/45 to-transparent" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                            <h4 className="text-sm font-semibold text-gray-200 group-hover:text-white leading-snug">Practise JEE Main and Advanced PYQ</h4>
-                        </div>
-                    </a>
                 </div>
             </section>
         </>
     );
 };
+
+// --- JEE/NEET PYQ link card — peer of Memory Practice and Knowledge Check in the Practice section ---
+const PYQPracticeCard = () => (
+    <a
+        href="https://www.canvasclasses.in/the-crucible/ch11_periodic?mode=browse"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group block px-2 sm:px-0"
+    >
+        <div className="rounded-2xl border border-amber-700/40 bg-gradient-to-br from-amber-900/30 via-orange-900/15 to-transparent hover:border-amber-500/60 transition-all p-5 md:p-6">
+            <div className="flex items-center gap-4">
+                {/* Star badge icon */}
+                <div className="relative w-12 h-12 flex-shrink-0">
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-amber-700 to-orange-900 translate-y-1.5 rotate-2" />
+                    <div className="absolute inset-0.5 rounded-xl bg-gradient-to-br from-amber-300 via-amber-400 to-orange-500 border border-amber-200/60 shadow-[inset_0_2px_0_rgba(255,255,255,0.4),0_4px_10px_rgba(245,158,11,0.5)] flex items-center justify-center overflow-hidden">
+                        <svg className="w-6 h-6 text-white drop-shadow-md" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full" />
+                        <div className="absolute bottom-1 left-1 w-1 h-1 bg-amber-100 rounded-full" />
+                    </div>
+                    <div className="absolute top-0.5 left-2 right-2 h-2 rounded-full bg-gradient-to-b from-white/45 to-transparent" />
+                </div>
+                <div className="flex-1 min-w-0">
+                    <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-amber-200 transition-colors">JEE Main &amp; Advanced PYQs</h3>
+                    <p className="text-gray-400 text-xs sm:text-sm mt-0.5">Real exam questions on Periodicity — solved and explained on Crucible</p>
+                </div>
+                <div className="hidden sm:flex items-center gap-1 text-amber-400 group-hover:translate-x-1 transition-transform">
+                    <span className="text-sm font-medium">Practise</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                </div>
+            </div>
+        </div>
+    </a>
+);
 
 // --- Extracted Components ---
 
@@ -1834,7 +1953,6 @@ const DataGridSection = ({ element }: { element: Element }) => {
                     className="pt-4"
                 >
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        <DetailItem label="Electron Config" value={element.electronConfig} />
                         <DetailItem label="Ionic Radius" value={element.ionicRadius ? `${element.ionicRadius} pm` : '-'} />
                         <DetailItem label="Electron Affinity" value={element.electronAffinity !== undefined ? `${element.electronAffinity} kJ/mol` : '-'} />
                         <DetailItem label="Density" value={element.density ? `${element.density} g/cm³` : '-'} />
@@ -1906,8 +2024,16 @@ const ElementModalContent = ({
                                 <div className={`text-3xl md:text-5xl font-bold mb-0.5 md:mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                                     {element.symbol}
                                 </div>
-                                <div className={`text-base md:text-xl font-medium ${isDark ? 'text-white/90' : 'text-gray-900/90'}`}>
-                                    {element.name}
+                                <div className={`flex items-baseline gap-3 flex-wrap text-base md:text-xl font-medium ${isDark ? 'text-white/90' : 'text-gray-900/90'}`}>
+                                    <span>{element.name}</span>
+                                    {element.electronConfig && (
+                                        <span className="font-mono tracking-tight">
+                                            {element.electronConfig}
+                                            {element.isException && element.exceptionType === 'Electron Configuration' && (
+                                                <span className="ml-2 text-xs font-sans font-semibold opacity-70">(exception)</span>
+                                            )}
+                                        </span>
+                                    )}
                                 </div>
                                 <div className={`text-xs md:text-sm font-medium opacity-80 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                                     {element.category}
