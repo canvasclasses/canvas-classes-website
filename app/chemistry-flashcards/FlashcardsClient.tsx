@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Layers,
@@ -69,6 +71,8 @@ interface FlashcardsClientProps {
 }
 
 export default function FlashcardsClient({ chapterSummaries }: FlashcardsClientProps) {
+    const router = useRouter();
+
     // Chapter groups derived from server-provided summaries (lightweight: IDs only, no card content).
     const chapterGroups: ChapterGroup[] = useMemo(
         () =>
@@ -168,20 +172,16 @@ export default function FlashcardsClient({ chapterSummaries }: FlashcardsClientP
 
     const selectedChapterData = chapterGroups.find((g) => g.chapterName === selectedChapter);
 
-    // When user clicks a chapter card, kick off a background fetch immediately
-    // so cards are usually ready by the time they pick topics and click Practice.
+    // Navigate to the chapter's own URL — gives each chapter a unique,
+    // crawlable page and lets generateMetadata run on the server.
     const handleSelectChapter = useCallback(
         (chapterName: string) => {
             const group = chapterGroups.find((g) => g.chapterName === chapterName);
-            setSelectedChapter(chapterName);
-            setSelectedTopics([]);
             if (group) {
-                loadChapterCards(group.slug).catch((err) => {
-                    console.error('Prefetch failed:', err);
-                });
+                router.push(`/chemistry-flashcards/${group.slug}`);
             }
         },
-        [chapterGroups, loadChapterCards]
+        [chapterGroups, router]
     );
 
     // Start practice for the currently selected chapter.
@@ -487,8 +487,8 @@ export default function FlashcardsClient({ chapterSummaries }: FlashcardsClientP
                                             )}
 
                                             {lastChapterGroup && (
-                                                <button
-                                                    onClick={() => handleSelectChapter(lastChapterGroup.chapterName)}
+                                                <Link
+                                                    href={`/chemistry-flashcards/${lastChapterGroup.slug}`}
                                                     className="group flex items-center gap-3 p-5 rounded-2xl bg-slate-900/60 border border-white/10 hover:border-white/20 hover:bg-slate-900 text-left transition-colors"
                                                 >
                                                     <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
@@ -499,7 +499,7 @@ export default function FlashcardsClient({ chapterSummaries }: FlashcardsClientP
                                                         <p className="text-white font-semibold truncate">{lastChapterGroup.chapterName}</p>
                                                     </div>
                                                     <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
-                                                </button>
+                                                </Link>
                                             )}
                                         </div>
                                     )}
@@ -630,13 +630,15 @@ export default function FlashcardsClient({ chapterSummaries }: FlashcardsClientP
                                                 }
 
                                                 return (
-                                                    <motion.button
+                                                    <Link
                                                         key={group.chapterName}
+                                                        href={`/chemistry-flashcards/${group.slug}`}
+                                                    >
+                                                    <motion.div
                                                         initial={{ opacity: 0, y: 20 }}
                                                         animate={{ opacity: 1, y: 0 }}
                                                         transition={{ delay: idx * 0.02 }}
-                                                        onClick={() => handleSelectChapter(group.chapterName)}
-                                                        className={`group relative p-4 md:p-5 bg-slate-900/40 hover:bg-slate-900/80 border-y border-r border-white/5 hover:border-white/10 border-l-4 rounded-xl text-left transition-all overflow-hidden`}
+                                                        className={`group relative p-4 md:p-5 bg-slate-900/40 hover:bg-slate-900/80 border-y border-r border-white/5 hover:border-white/10 border-l-4 rounded-xl text-left transition-all overflow-hidden cursor-pointer`}
                                                         style={{ borderLeftColor: styles.borderHex }}
                                                     >
                                                         <div className="flex flex-col h-full">
@@ -686,7 +688,8 @@ export default function FlashcardsClient({ chapterSummaries }: FlashcardsClientP
                                                                 )}
                                                             </div>
                                                         </div>
-                                                    </motion.button>
+                                                    </motion.div>
+                                                    </Link>
                                                 );
                                             })}
                                         </div>
