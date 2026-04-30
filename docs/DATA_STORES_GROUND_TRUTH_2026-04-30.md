@@ -358,7 +358,24 @@ The cleanup plan in §7 is **safe to execute as written**:
 
 ---
 
-## 12. PR A — EXECUTED 2026-04-30
+## 12. Cleanup PRs shipped 2026-04-30 (branch `seo`)
+
+| PR | Commit | Files changed | Summary |
+|---|---|---|---|
+| A | `93e5cd6` | 14 (-2612/+1218) | Dead code + unimported data dumps + audit docs |
+| B | `597c63c` | 10 (-2479) | One-shot ingestion scripts (`peri_solrev_batch{1..6}`, `insert_*`, etc.) |
+| C | `1b97afc` | 12 (mixed) | `.backup` files + accidentally captured runtime/scratch files |
+| C-fix | `547755e` | 5 (-8/+5) | Gitignored Claude/superpowers runtime state |
+| D | `42702c2` | 11 (-2172) | Old landing-page components (Hero, teasers, PathFinder, etc.) |
+| E | `0f8de4e` | 14 (-N) | Stale `/docs/` status checklists (PHASE_*, WEEK1_*, *_COMPLETE) |
+| F | `c2e0a95` | 5 (-1296) | Stale root markdown (QUICK_START, PRE_DEPLOYMENT, etc.) |
+| G | `941f239` | 1 (-9) | Duplicate `public/robots.txt` shadowing `app/robots.ts` (also fixed Google sitemap pointer) |
+
+**Total impact:** ~70 files deleted, ~10,000 lines removed, two production-impacting fixes (R2 misroute via robots.txt; bundle weight via dropping `googleapis`).
+
+**Verification per PR:** grep across `app/`, `lib/`, `components/`, `hooks/` for any importer; lint between deletions; for PR D additionally verified `app/landing/page.tsx` imports a different set of components (`app/components/landing/*`).
+
+### 12a. PR A — original detail (preserved for reference)
 
 ### Files deleted (9)
 
@@ -392,9 +409,9 @@ After committing the changes, run `npm run dev` and verify these routes load:
 - `/the-crucible` — depends on MongoDB
 - `/detailed-lectures`, `/handwritten-notes`, `/ncert-solutions`, `/top-50-concepts` — depend on Google Sheets CSVs
 
-### Still pending (future PRs, in order)
+### Still pending (require user input or DB access)
 
-**PR B** — Verified data-file deletions per §6 (requires running mongosh checks against the `crucible` DB before each batch):
+**PR H** — `/data/chapters/*.json` and friends (requires running mongosh checks against the `crucible` DB before each batch):
 - `data/chapters/*.json` (30 files) — verify with `db.questions_v2.countDocuments({"metadata.chapter_id": <id>})` per chapter
 - `data/questions/*.OLD_ARCHIVED` (21 files) — verify with `db.questions_v2.countDocuments({"metadata.chapter_id":/^chapter_/})` (expect 0)
 - `data/peri_q*.json` and `data/peri_batch1.json` (13 files) — verify with `db.questions_v2.countDocuments({display_id:/^PERI-/})`
@@ -403,10 +420,33 @@ After committing the changes, run `npm run dev` and verify these routes load:
 - `data/manual_solutions_mole_batch{2,3}.json` (2 files) — verify
 - `data/questions_batch_001.json` (1 file) — verify
 
-**PR C** — MongoDB collection drops (after PR A merges):
+**PR I** — MongoDB collection drops (after PR A merges to main):
 - `db.student_profiles.drop()` (model deleted in PR A)
 - `db.college_branches.drop()` (model deleted in PR A)
 - `db.questions.drop()` (V1 legacy collection per CLAUDE.md, if it still exists)
+
+**PR J** — Active worktree decision (manual, destructive):
+- `.claude/worktrees/jovial-ramanujan/` is registered as a git worktree on
+  branch `claude/jovial-ramanujan`. `git worktree list` shows it as active.
+  Skipped during autonomous cleanup since removing an active worktree affects
+  shared state. If the branch is abandoned: `git worktree remove
+  .claude/worktrees/jovial-ramanujan`.
+
+**PR K** — `/backups/` directory (manual, destructive):
+- Two MongoDB dumps from 2026-02-16 (10+ weeks old). Doc says safe since
+  `npm run backup:r2` writes to R2 already, but skipped during autonomous
+  cleanup — user should verify R2 backups exist for that date range first.
+
+**PR L** — `/PYQ/` directory (manual judgment):
+- Contains `guided-practice-agent-prompt.md` (planning doc, 296 lines) and
+  `organic-master (3).html` (reference dump). Not consumed by live code.
+  Could move to `/docs/archive/` or delete.
+
+**PR M** — CLAUDE.md inconsistency (requires user decision):
+- CLAUDE.md references `.agent/workflows/QUESTION_INGESTION_WORKFLOW.md`
+  and `.agent/rules/{latex_formatting,question_management,security_protocol}.md`.
+  Those files do NOT exist on disk. Either restore from git history, or
+  edit CLAUDE.md to point at where the rules actually live now.
 
 **Recommended new work (separate from cleanup):**
 - `scripts/backup-sheets.ts` — daily backup of the 12 published Google Sheets to R2 under `backups/sheets/<date>/`
