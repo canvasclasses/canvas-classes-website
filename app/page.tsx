@@ -1,11 +1,4 @@
 import { Metadata } from "next";
-import Hero from "./components/Hero";
-import PeriodicTablePreview from "./components/PeriodicTablePreview";
-import PeriodicTrendsTeaser from "./components/PeriodicTrendsTeaser";
-import PathfinderQuiz from "./components/PathfinderQuiz";
-import MyNotesSection from "./components/MyNotesSection";
-import NCERTBoardsSection from "./components/NCERTBoardsSection";
-import SaltAnalysisTeaser from "./components/SaltAnalysisTeaser";
 import LandingPage from "./components/landing/LandingPage";
 
 export const metadata: Metadata = {
@@ -25,13 +18,6 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black">
       <LandingPage />
-      {/* <Hero />
-      <PeriodicTablePreview />
-      <PeriodicTrendsTeaser />
-      <PathfinderQuiz />
-      <NCERTBoardsSection />
-      <SaltAnalysisTeaser /> */}
     </main>
   );
 }
-
