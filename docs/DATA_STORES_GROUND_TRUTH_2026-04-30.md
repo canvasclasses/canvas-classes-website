@@ -370,6 +370,8 @@ The cleanup plan in §7 is **safe to execute as written**:
 | E | `0f8de4e` | 14 (-N) | Stale `/docs/` status checklists (PHASE_*, WEEK1_*, *_COMPLETE) |
 | F | `c2e0a95` | 5 (-1296) | Stale root markdown (QUICK_START, PRE_DEPLOYMENT, etc.) |
 | G | `941f239` | 1 (-9) | Duplicate `public/robots.txt` shadowing `app/robots.ts` (also fixed Google sitemap pointer) |
+| docs | `b778fcc` | 1 | Doc update: PR table + remaining work H–M |
+| H | `9a3ddfd` | 81 (+verify script) | Verified-redundant `/data/*.json` files: 30 chapter stubs, 22 V1 archives, 6 mole solutions, 13 peri batches, 8 mole-batch debris, 1 questions_batch_001 |
 
 **Total impact:** ~70 files deleted, ~10,000 lines removed, two production-impacting fixes (R2 misroute via robots.txt; bundle weight via dropping `googleapis`).
 
@@ -411,7 +413,9 @@ After committing the changes, run `npm run dev` and verify these routes load:
 
 ### Still pending (require user input or DB access)
 
-**PR H** — `/data/chapters/*.json` and friends (requires running mongosh checks against the `crucible` DB before each batch):
+**PR H — DONE** (commit `9a3ddfd`). Verified via live MongoDB query in `scripts/verify_data_cleanup.js`. Original safety table preserved below for reference.
+
+Original PR H plan (now executed):
 - `data/chapters/*.json` (30 files) — verify with `db.questions_v2.countDocuments({"metadata.chapter_id": <id>})` per chapter
 - `data/questions/*.OLD_ARCHIVED` (21 files) — verify with `db.questions_v2.countDocuments({"metadata.chapter_id":/^chapter_/})` (expect 0)
 - `data/peri_q*.json` and `data/peri_batch1.json` (13 files) — verify with `db.questions_v2.countDocuments({display_id:/^PERI-/})`
@@ -420,10 +424,48 @@ After committing the changes, run `npm run dev` and verify these routes load:
 - `data/manual_solutions_mole_batch{2,3}.json` (2 files) — verify
 - `data/questions_batch_001.json` (1 file) — verify
 
-**PR I** — MongoDB collection drops (after PR A merges to main):
-- `db.student_profiles.drop()` (model deleted in PR A)
-- `db.college_branches.drop()` (model deleted in PR A)
-- `db.questions.drop()` (V1 legacy collection per CLAUDE.md, if it still exists)
+**PR I** — MongoDB collection drops (manual, requires user decision):
+
+> **Update after live MongoDB verification 2026-05-01** via `scripts/verify_data_cleanup.js`:
+>
+> The collections `student_profiles` and `college_branches` **do not exist** in
+> the live `crucible` database — already clean. Mongoose never auto-created
+> them because the models were never imported.
+>
+> However, the verification surfaced **other** collections worth dropping:
+
+| Collection | Docs | Status | Recommendation |
+|---|---|---|---|
+| `questions` | 919 | V1 legacy. Sample `_id: CARBOXYLIC-001` (V1 string-ID format). | Confirm none of those questions are needed in V2 (they're not — V2 uses different prefixes per `display_id` aggregation), then drop. |
+| `taxonomy` | 251 | V1 legacy taxonomy. CLAUDE.md says taxonomy lives in `taxonomyData_from_csv.ts`. | Drop. |
+| `taxonomies` | 0 | Empty Mongoose-default-pluralized variant of the above. | Drop. |
+| `user_mastery` | 19 | V1 legacy. CLAUDE.md says `UserMastery` was removed from `lib/models.ts`. | Spot-check 1-2 docs to be sure they're truly stale, then drop. |
+| `auditlogs` | 1066 | Mongoose-default plural of `AuditLog`. The current model writes to `audit_logs` (30989 docs) via explicit `collection: 'audit_logs'`. | Some old code path wrote here. Spot-check, then drop. |
+
+`student_profiles`, `college_branches` — **already do not exist; nothing to drop.**
+
+### PR I-bug — Mongoose pluralization bug (separate, code change)
+
+The verification revealed a real code bug:
+
+| Schema declares | Mongoose actually uses | Live docs |
+|---|---|---|
+| `bitsat_plan_progress` | `bitsatplanprogresses` | 582 |
+| `test_results` | `testresults` | 0 |
+
+Some models declare an explicit `collection: '<name>'` in schema options
+but Mongoose still auto-pluralizes. This means user data is landing in
+collections your code didn't intend. The 582 BITSAT plan-progress
+documents in `bitsatplanprogresses` are real user data.
+
+**Fix:** add `collection: 'bitsat_plan_progress'` (and `'test_results'`)
+to the schemas if missing, OR adjust the audit/code expectations to
+accept the pluralized names. Either way, write a one-shot migration
+script that copies docs from `bitsatplanprogresses` → `bitsat_plan_progress`
+(or just renames the collection) before changing the code, otherwise
+existing users lose progress.
+
+This is **not part of the cleanup**; logged here so it doesn't get lost.
 
 **PR J** — Active worktree decision (manual, destructive):
 - `.claude/worktrees/jovial-ramanujan/` is registered as a git worktree on
