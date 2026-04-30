@@ -36,7 +36,6 @@
     "dotenv": "^17.3.1",
     "file-type": "^22.0.0",
     "framer-motion": "^12.23.26",
-    "googleapis": "^169.0.0",
     "gray-matter": "^4.0.3",
     "html2canvas": "^1.4.1",
     "isomorphic-dompurify": "^3.7.1",
