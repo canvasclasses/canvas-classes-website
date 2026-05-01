@@ -294,6 +294,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Error fetching blog slugs for sitemap:', error);
     }
 
+    // ── NCERT Solutions: per-chapter pages (Class 11 & 12 Chemistry) ─────────
+    // High-intent SEO target — "NCERT solutions class 12 chemistry chapter X".
+    let ncertChapterEntries: MetadataRoute.Sitemap = [];
+    try {
+        const { getChapterGroups } = await import('./lib/ncertData');
+        const chapterGroups = await getChapterGroups();
+        ncertChapterEntries = chapterGroups.map((g) => {
+            const slug = g.chapter
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, '');
+            return {
+                url: `${BASE_URL}/ncert-solutions/class-${g.classNum}/${slug}`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly' as const,
+                priority: 0.9,
+            };
+        });
+    } catch (error) {
+        console.error('Error fetching NCERT chapter groups for sitemap:', error);
+    }
+
     return [
         ...staticEntries,
         ...collegePredictorLandingEntries,
@@ -306,6 +328,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ...detailedLectureEntries,
         ...jeePyqEntries,
         ...blogEntries,
+        ...ncertChapterEntries,
     ];
 }
 
