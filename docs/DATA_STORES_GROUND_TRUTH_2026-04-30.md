@@ -372,6 +372,9 @@ The cleanup plan in §7 is **safe to execute as written**:
 | G | `941f239` | 1 (-9) | Duplicate `public/robots.txt` shadowing `app/robots.ts` (also fixed Google sitemap pointer) |
 | docs | `b778fcc` | 1 | Doc update: PR table + remaining work H–M |
 | H | `9a3ddfd` | 81 (+verify script) | Verified-redundant `/data/*.json` files: 30 chapter stubs, 22 V1 archives, 6 mole solutions, 13 peri batches, 8 mole-batch debris, 1 questions_batch_001 |
+| docs | `05e4199` | 1 | Doc update: PR H result + live MongoDB findings, PR I refinements, PR I-bug |
+| J | (no commit) | 0 | Removed stale `.claude/worktrees/jovial-ramanujan/` worktree via `git worktree remove`. Confirmed `git log main..claude/jovial-ramanujan` returned nothing — branch had zero unique commits, was just a stale checkout. Branch deleted (was at `6d31cac`). Worktree path is gitignored so no commit needed. |
+| K | `a497267` | 4 (-3353) | Stale docs: `docs/MIGRATION_PLAN.md` (V1→V2 migration done), `docs/TEST_MODE_ANALYSIS.md` (analyzes a file that no longer exists), `PYQ/guided-practice-agent-prompt.md` + `PYQ/organic-master (3).html` (working docs not consumed by code) |
 
 **Total impact:** ~70 files deleted, ~10,000 lines removed, two production-impacting fixes (R2 misroute via robots.txt; bundle weight via dropping `googleapis`).
 
@@ -467,24 +470,20 @@ existing users lose progress.
 
 This is **not part of the cleanup**; logged here so it doesn't get lost.
 
-**PR J** — Active worktree decision (manual, destructive):
-- `.claude/worktrees/jovial-ramanujan/` is registered as a git worktree on
-  branch `claude/jovial-ramanujan`. `git worktree list` shows it as active.
-  Skipped during autonomous cleanup since removing an active worktree affects
-  shared state. If the branch is abandoned: `git worktree remove
-  .claude/worktrees/jovial-ramanujan`.
+**PR J — DONE** (no commit needed; worktree path is gitignored). Confirmed
+the branch `claude/jovial-ramanujan` had zero commits unique to it (already
+all merged into main). Worktree removed via `git worktree remove`; branch
+deleted via `git branch -d claude/jovial-ramanujan`.
 
-**PR K** — `/backups/` directory (manual, destructive):
-- Two MongoDB dumps from 2026-02-16 (10+ weeks old). Doc says safe since
-  `npm run backup:r2` writes to R2 already, but skipped during autonomous
-  cleanup — user should verify R2 backups exist for that date range first.
+**PR K — DONE** (commit `a497267`). Removed 4 stale doc files: PYQ
+working directory + `docs/MIGRATION_PLAN.md` + `docs/TEST_MODE_ANALYSIS.md`.
 
-**PR L** — `/PYQ/` directory (manual judgment):
-- Contains `guided-practice-agent-prompt.md` (planning doc, 296 lines) and
-  `organic-master (3).html` (reference dump). Not consumed by live code.
-  Could move to `/docs/archive/` or delete.
+**PR L** — `/backups/` directory (manual, destructive — STILL PENDING):
+- Two MongoDB dumps from 2026-02-16 (10+ weeks old). Skipped per user
+  decision — user wanted to verify R2 has backups for that range first
+  before deleting the local copies.
 
-**PR M** — CLAUDE.md inconsistency (requires user decision):
+**PR M** — CLAUDE.md inconsistency (requires user decision — STILL PENDING):
 - CLAUDE.md references `.agent/workflows/QUESTION_INGESTION_WORKFLOW.md`
   and `.agent/rules/{latex_formatting,question_management,security_protocol}.md`.
   Those files do NOT exist on disk. Either restore from git history, or
