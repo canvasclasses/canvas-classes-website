@@ -16,12 +16,32 @@ function slugify(text: string) {
         .replace(/(^-|-$)/g, '');
 }
 
+// Strict validation — only `class-11` and `class-12` are real NCERT routes.
+// Any other input returns NaN so getChapterData -> notFound() instead of
+// silently rendering a Class 11 page (which would create duplicate-content
+// variants for arbitrary URL inputs).
 function parseClassNum(classNumParam: string): number {
-    return parseInt(classNumParam.replace('class-', ''), 10) || 11;
+    if (classNumParam === 'class-11') return 11;
+    if (classNumParam === 'class-12') return 12;
+    return NaN;
+}
+
+// Serialize JSON for <script type="application/ld+json"> safely.
+// JSON.stringify does NOT escape `<`, `>`, `&`, or `'`. If any user-supplied
+// field (e.g. a Google-Sheet-sourced question text) contained `</script>`,
+// the closing tag would break out of the script element. Escaping these
+// four chars to their \uXXXX form keeps the JSON valid AND parser-safe.
+function safeJsonLd(data: unknown): string {
+    return JSON.stringify(data)
+        .replace(/</g, '\\u003c')
+        .replace(/>/g, '\\u003e')
+        .replace(/&/g, '\\u0026')
+        .replace(/'/g, '\\u0027');
 }
 
 async function getChapterData(classNumParam: string, chapterSlug: string) {
     const classNum = parseClassNum(classNumParam);
+    if (Number.isNaN(classNum)) return null;
     const allQuestions = await fetchNCERTData();
     const questions = allQuestions.filter(
         (q) => q.classNum === classNum && slugify(q.chapter) === chapterSlug
@@ -141,11 +161,11 @@ export default async function ChapterSolutionsPage({ params }: PageProps) {
         <>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+                dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }}
             />
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(qaSchema) }}
+                dangerouslySetInnerHTML={{ __html: safeJsonLd(qaSchema) }}
             />
             <ChapterSolutionsClient
                 chapterName={data.chapterName}
