@@ -40,6 +40,14 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   alternates: {
     canonical: './',
+    // Explicit India targeting — emits <link rel="alternate" hreflang="en-IN" />
+    // and a self-referencing x-default. Pages that override `alternates` will
+    // need to re-declare this if they care; most leaf pages set their own
+    // canonical and Google will inherit hreflang from the cluster.
+    languages: {
+      'en-IN': './',
+      'x-default': './',
+    },
   },
   title: {
     default: "Canvas Classes - Free JEE & NEET Chemistry Preparation",

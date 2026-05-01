@@ -22,6 +22,7 @@ export const metadata: Metadata = {
             "Download free handwritten chemistry notes by Paaras Sir for JEE, NEET & CBSE.",
         type: "website",
     },
+    alternates: { canonical: "https://www.canvasclasses.in/handwritten-notes" },
 };
 
 // Server-side data fetching for SEO (ensures Google sees content on first render)

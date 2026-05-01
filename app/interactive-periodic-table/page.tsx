@@ -10,6 +10,7 @@ export const metadata: Metadata = {
         description: 'Dynamic periodic table with trend visualization and exception highlighting. Trained on NCERT data and a must for JEE, NEET & CBSE exams.',
         type: 'website',
     },
+    alternates: { canonical: 'https://www.canvasclasses.in/interactive-periodic-table' },
 };
 
 export default function PeriodicTablePage() {

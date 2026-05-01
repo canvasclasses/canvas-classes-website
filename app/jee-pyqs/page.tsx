@@ -5,6 +5,7 @@ import { ArrowRight, BookOpen, Star, Trophy, Video } from 'lucide-react';
 export const metadata = {
     title: 'Top 500 JEE Main PYQs | Canvas Classes',
     description: 'Master JEE Main with our curated collection of the Top 500 Previous Year Questions. Chapter-wise best questions with detailed video solutions.',
+    alternates: { canonical: 'https://www.canvasclasses.in/jee-pyqs' },
 };
 
 export default function JeePyqsPage() {
