@@ -56,12 +56,12 @@ ADMIN_EMAILS=...
 
 ### Single Source of Truth
 
-**All question ingestion must follow `.agent/workflows/QUESTION_INGESTION_WORKFLOW.md` exactly.** That document is the canonical, version-controlled ruleset. When it conflicts with anything else (including this file), it wins.
+**All question ingestion must follow `_agents/workflows/QUESTION_INGESTION_WORKFLOW.md` exactly.** That document is the canonical, version-controlled ruleset. When it conflicts with anything else (including this file), it wins.
 
-Supporting rules live in:
-- `.agent/rules/latex_formatting.md` — full LaTeX standards
-- `.agent/rules/question_management.md` — ID generation, PYQ metadata, sync workflow
-- `.agent/rules/security_protocol.md` — secret handling, git hygiene
+LaTeX rules, ID generation, PYQ metadata conventions, and security/secret-handling
+practices are documented inline in this file — see §4 (LaTeX), §4.5 (canonical
+field names), §8 (security rules), and the workflow doc above for ingestion
+specifics.
 
 ### Automation Pipeline
 
@@ -73,7 +73,7 @@ Supporting rules live in:
 
 ### Display ID Prefixes
 
-Display ID prefixes (e.g. `ATOM`, `MOLE`, `SALT`) are defined in `.agent/workflows/QUESTION_INGESTION_WORKFLOW.md` — that file is the single source of truth and must not be duplicated here.
+Display ID prefixes (e.g. `ATOM`, `MOLE`, `SALT`) are defined in `_agents/workflows/QUESTION_INGESTION_WORKFLOW.md` — that file is the single source of truth and must not be duplicated here.
 
 ### Canonical Batch Script Pattern
 
@@ -90,8 +90,6 @@ Never use `node -e "..."` for scripts containing LaTeX — shell escaping corrup
 ---
 
 ## 4. LATEX RULES — QUICK REFERENCE
-
-Full rules: `.agent/rules/latex_formatting.md`
 
 | Rule | Correct | Wrong |
 |---|---|---|
