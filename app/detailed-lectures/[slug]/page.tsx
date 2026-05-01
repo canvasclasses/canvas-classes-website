@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { fetchLecturesData, getChapterBySlug } from '@/app/lib/lecturesData';
 import ChapterPageClient from './ChapterPageClient';
 import { notFound } from 'next/navigation';
+import BreadcrumbSchema from '@/app/components/BreadcrumbSchema';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 
@@ -78,7 +79,20 @@ export default async function ChapterPage({ params }: PageProps) {
         notFound();
     }
 
-    return <ChapterPageClient chapter={chapter} />;
+    const url = `${BASE_URL}/detailed-lectures/${slug}`;
+
+    return (
+        <>
+            <BreadcrumbSchema
+                items={[
+                    { name: 'Home', url: BASE_URL },
+                    { name: 'Video Lectures', url: `${BASE_URL}/detailed-lectures` },
+                    { name: `Class ${chapter.class} — ${chapter.name}`, url },
+                ]}
+            />
+            <ChapterPageClient chapter={chapter} />
+        </>
+    );
 }
 
 // Enable ISR

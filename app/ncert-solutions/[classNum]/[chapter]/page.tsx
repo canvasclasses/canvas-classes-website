@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { fetchNCERTData } from '@/app/lib/ncertData';
+import BreadcrumbSchema from '@/app/components/BreadcrumbSchema';
 import ChapterSolutionsClient from './ChapterSolutionsClient';
 
 const BASE_URL = 'https://www.canvasclasses.in';
@@ -134,16 +135,6 @@ export default async function ChapterSolutionsPage({ params }: PageProps) {
 
     const url = `${BASE_URL}/ncert-solutions/class-${data.classNum}/${chapterSlug}`;
 
-    const breadcrumbSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
-            { '@type': 'ListItem', position: 2, name: 'NCERT Solutions', item: `${BASE_URL}/ncert-solutions` },
-            { '@type': 'ListItem', position: 3, name: `Class ${data.classNum} Chemistry — ${data.chapterName}`, item: url },
-        ],
-    };
-
     const qaSchema = {
         '@context': 'https://schema.org',
         '@type': 'QAPage',
@@ -159,9 +150,12 @@ export default async function ChapterSolutionsPage({ params }: PageProps) {
 
     return (
         <>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }}
+            <BreadcrumbSchema
+                items={[
+                    { name: 'Home', url: BASE_URL },
+                    { name: 'NCERT Solutions', url: `${BASE_URL}/ncert-solutions` },
+                    { name: `Class ${data.classNum} — ${data.chapterName}`, url },
+                ]}
             />
             <script
                 type="application/ld+json"

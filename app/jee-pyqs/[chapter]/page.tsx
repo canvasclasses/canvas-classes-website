@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getQuestionsByChapter, getAllChapters } from '../../lib/jee-pyqs/data';
 import JeeTestClient from '../JeeTestClient';
+import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 
@@ -82,11 +83,21 @@ export default async function ChapterTestPage(props: { params: Promise<{ chapter
     }
 
     const questions = getQuestionsByChapter(params.chapter);
+    const url = `${BASE_URL}/jee-pyqs/${params.chapter}`;
 
     return (
-        <JeeTestClient
-            chapterName={chapterData.name}
-            questions={questions}
-        />
+        <>
+            <BreadcrumbSchema
+                items={[
+                    { name: 'Home', url: BASE_URL },
+                    { name: 'JEE PYQs', url: `${BASE_URL}/jee-pyqs` },
+                    { name: `${chapterData.name} (${chapterData.category})`, url },
+                ]}
+            />
+            <JeeTestClient
+                chapterName={chapterData.name}
+                questions={questions}
+            />
+        </>
     );
 }

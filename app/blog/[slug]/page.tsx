@@ -5,8 +5,22 @@ import 'katex/dist/katex.min.css';
 import { ArrowLeft, Calendar, User } from 'lucide-react';
 import Link from 'next/link';
 import BlogPostContent from './BlogPostContent';
+import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import { Metadata } from 'next';
 import { getPublishedPostBySlug, getPublishedSlugs } from '../../lib/blogDb';
+
+const BASE_URL = 'https://www.canvasclasses.in';
+
+// Defense-in-depth — escape `<`, `>`, `&`, `'` so user-supplied fields
+// (post.title, post.excerpt, post.content) can never break out of the
+// <script type="application/ld+json"> tag.
+function safeJsonLd(data: unknown): string {
+    return JSON.stringify(data)
+        .replace(/</g, '\\u003c')
+        .replace(/>/g, '\\u003e')
+        .replace(/&/g, '\\u0026')
+        .replace(/'/g, '\\u0027');
+}
 
 export const revalidate = 60;
 
@@ -72,8 +86,54 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
         notFound();
     }
 
+    const url = `${BASE_URL}/blog/${slug}`;
+    const ogImage = post.image
+        ? (post.image.startsWith('http') ? post.image : `${BASE_URL}${post.image}`)
+        : `${BASE_URL}/og-image.png`;
+
+    const blogPostingSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: post.title,
+        description: post.excerpt,
+        image: [ogImage],
+        datePublished: post.date,
+        dateModified: post.date,
+        author: {
+            '@type': 'Person',
+            name: post.author,
+            url: `${BASE_URL}/about`,
+        },
+        publisher: {
+            '@type': 'EducationalOrganization',
+            name: 'Canvas Classes',
+            logo: {
+                '@type': 'ImageObject',
+                url: `${BASE_URL}/logo.png`,
+            },
+        },
+        mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': url,
+        },
+        keywords: post.tags?.join(', '),
+        articleSection: 'Education',
+        inLanguage: 'en-IN',
+    };
+
     return (
         <div className="min-h-screen bg-gray-900 text-gray-200 font-sans selection:bg-purple-500/30">
+            <BreadcrumbSchema
+                items={[
+                    { name: 'Home', url: BASE_URL },
+                    { name: 'Blog', url: `${BASE_URL}/blog` },
+                    { name: post.title, url },
+                ]}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: safeJsonLd(blogPostingSchema) }}
+            />
             <Navbar authButton={<div />} />
 
             <main className="pt-28 pb-20 px-4 md:px-6 max-w-4xl mx-auto">
