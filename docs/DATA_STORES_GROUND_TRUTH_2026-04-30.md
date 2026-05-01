@@ -375,6 +375,8 @@ The cleanup plan in §7 is **safe to execute as written**:
 | docs | `05e4199` | 1 | Doc update: PR H result + live MongoDB findings, PR I refinements, PR I-bug |
 | J | (no commit) | 0 | Removed stale `.claude/worktrees/jovial-ramanujan/` worktree via `git worktree remove`. Confirmed `git log main..claude/jovial-ramanujan` returned nothing — branch had zero unique commits, was just a stale checkout. Branch deleted (was at `6d31cac`). Worktree path is gitignored so no commit needed. |
 | K | `a497267` | 4 (-3353) | Stale docs: `docs/MIGRATION_PLAN.md` (V1→V2 migration done), `docs/TEST_MODE_ANALYSIS.md` (analyzes a file that no longer exists), `PYQ/guided-practice-agent-prompt.md` + `PYQ/organic-master (3).html` (working docs not consumed by code) |
+| docs | `334f183` | 1 | Doc update: log PR J + PR K |
+| L | `eff2452` | 41 | `/backups/` directory (40 files: two 2026-02-16 MongoDB dumps) + CLAUDE.md path fixes (`.agent/` → `_agents/`, removed dead `.agent/rules/*.md` references — those rules are inline in CLAUDE.md §4, §4.5, §8) |
 
 **Total impact:** ~70 files deleted, ~10,000 lines removed, two production-impacting fixes (R2 misroute via robots.txt; bundle weight via dropping `googleapis`).
 
@@ -478,16 +480,13 @@ deleted via `git branch -d claude/jovial-ramanujan`.
 **PR K — DONE** (commit `a497267`). Removed 4 stale doc files: PYQ
 working directory + `docs/MIGRATION_PLAN.md` + `docs/TEST_MODE_ANALYSIS.md`.
 
-**PR L** — `/backups/` directory (manual, destructive — STILL PENDING):
-- Two MongoDB dumps from 2026-02-16 (10+ weeks old). Skipped per user
-  decision — user wanted to verify R2 has backups for that range first
-  before deleting the local copies.
+**PR L — DONE** (commit `eff2452`). Combined two leftover items:
+- `/backups/` directory removed (two 2026-02-16 MongoDB dumps).
+- CLAUDE.md fixed: paths corrected from `.agent/` → `_agents/` for the
+  workflow doc that actually exists; deleted-file references removed
+  (the rules are inline in CLAUDE.md §4, §4.5, §8 — not in separate files).
 
-**PR M** — CLAUDE.md inconsistency (requires user decision — STILL PENDING):
-- CLAUDE.md references `.agent/workflows/QUESTION_INGESTION_WORKFLOW.md`
-  and `.agent/rules/{latex_formatting,question_management,security_protocol}.md`.
-  Those files do NOT exist on disk. Either restore from git history, or
-  edit CLAUDE.md to point at where the rules actually live now.
+### All cleanup complete on `seo` branch.
 
 **Recommended new work (separate from cleanup):**
 - `scripts/backup-sheets.ts` — daily backup of the 12 published Google Sheets to R2 under `backups/sheets/<date>/`
