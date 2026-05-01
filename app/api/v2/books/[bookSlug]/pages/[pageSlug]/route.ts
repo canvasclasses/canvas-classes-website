@@ -10,6 +10,8 @@ import { computeReadingTime, computeContentTypes, extractVideoTitle } from '@/li
 
 const VALID_CALLOUT_VARIANTS = new Set([
   'remember', 'note', 'warning', 'exam_tip', 'fun_fact',
+  'threads_of_curiosity', 'bridging_science', 'india_science',
+  'what_if', 'quest_continues', 'ready_to_go_beyond',
 ]);
 
 /**

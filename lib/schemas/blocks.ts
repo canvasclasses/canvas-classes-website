@@ -76,7 +76,7 @@ const ImageBlockSchema = BaseBlockSchema.extend({
   align: z.enum(['center', 'left', 'right']).optional(),
   side_text: z.string().optional(),
   generation_prompt: z.string().optional(),
-  aspect_ratio: z.enum(['16:9', '4:3', '3:2', '1:1', '21:9']).optional(),
+  aspect_ratio: z.enum(['16:9', '16:5', '4:3', '3:2', '1:1', '21:9']).optional(),
 });
 
 const InteractiveImageBlockSchema = BaseBlockSchema.extend({
@@ -138,7 +138,11 @@ const PracticeLinkBlockSchema = BaseBlockSchema.extend({
 
 const CalloutBlockSchema = BaseBlockSchema.extend({
   type: z.literal('callout'),
-  variant: z.enum(['remember', 'note', 'warning', 'exam_tip', 'fun_fact']),
+  variant: z.enum([
+    'remember', 'note', 'warning', 'exam_tip', 'fun_fact',
+    'threads_of_curiosity', 'bridging_science', 'india_science',
+    'what_if', 'quest_continues', 'ready_to_go_beyond',
+  ]),
   title: z.string().optional(),
   markdown: z.string(),
   image_src: z.string().optional(),    // thumbnail — empty string = not yet uploaded

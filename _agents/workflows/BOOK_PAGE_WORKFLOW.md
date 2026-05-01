@@ -369,6 +369,16 @@ accent labels, clean technical illustration style.
 - Only use if a simulation component exists at `components/books/renderer/blocks/simulations/`
 - `simulation_id` must match an existing component registered in `SimulationBlockRenderer.tsx`
 
+#### 3.7.1 Biology — use `interactive_image` instead of `simulation`
+
+For **biology pages (Class 9 & 10 Science chapters on living systems)**, simulations are generally avoided. The reasons:
+- Biological processes resist faithful animation — every simplification risks introducing wrong mental models (cells don't actually look like neat hexagons; mitosis isn't a clean four-step process; a neuron firing doesn't look like a glowing wire).
+- Anatomical accuracy demands real reference imagery, not procedurally generated visuals.
+
+Instead, biology uses the **`interactive_image`** block — a multi-image display that lets students explore the same concept through several views, click to zoom, or step through a timeline. See §3.13.
+
+Use `simulation` in biology only when the topic is genuinely physics-flavoured (e.g., osmosis as a thermodynamic process, transpiration pull as a fluid mechanics problem). For all anatomy, histology, organ-system, and developmental biology pages, default to `interactive_image`.
+
 ### 3.8 `table`
 ```json
 {
@@ -476,6 +486,91 @@ Open-ended curiosity hook. **Block 0 on Class 9 pages.** Primes the student's th
 - `reveal` is optional. Use it only when a short reflection genuinely adds something; otherwise the act of wondering is the whole point.
 - **Only ever used at Block 0.** Never place a `curiosity_prompt` mid-page.
 - Class 11–12 pages do not use `curiosity_prompt` — they open with a `callout[fun_fact]` directly.
+
+---
+
+### 3.13 `interactive_image` — Biology's Primary Visual Block
+
+For biology pages (anatomy, histology, organ systems, developmental biology), animation almost always introduces inaccuracy. The `interactive_image` block lets a student **click on labelled regions of a single high-quality diagram** to reveal detail — a perfect fit for histology cross-sections, neuron anatomy, joint diagrams, and organ overviews where every part deserves its own micro-explanation.
+
+```json
+{
+  "id": "uuid",
+  "type": "interactive_image",
+  "order": 5,
+  "src": "",
+  "alt": "Cross-section of a sunflower stem showing all tissue types",
+  "caption": "📸 Tap each dot to explore the tissues",
+  "hotspots": [
+    {
+      "id": "uuid",
+      "x": 0.18,
+      "y": 0.22,
+      "label": "Epidermis",
+      "detail": "The outermost protective layer. A single layer of tightly packed flat cells covered with **cuticle** — a waxy coating that prevents water loss.",
+      "icon": "circle"
+    },
+    {
+      "id": "uuid",
+      "x": 0.34,
+      "y": 0.55,
+      "label": "Xylem",
+      "detail": "Conducts water and minerals from roots upward. Most of its cells are **dead** at maturity — the empty tubes are what carries water.",
+      "icon": "circle"
+    }
+  ],
+  "generation_prompt": "Cross-sectional botanical illustration of a sunflower (Helianthus annuus) stem showing all tissue types ... [§3.4.2 prompt rules, §3.14 biology style]"
+}
+```
+
+**Field rules:**
+- `src` — empty string until uploaded; the renderer shows the `generation_prompt` as a placeholder
+- `hotspots` — minimum 2, maximum 10. Each is a clickable dot at relative coordinates (`x`, `y` ∈ [0,1]) with a label and a detail popup
+- `detail` supports inline markdown (bold, italic, inline math)
+- `icon` — `"circle"`, `"pin"`, or `"plus"` (default circle)
+- `generation_prompt` — required when `src` is empty; follows §3.4.2 + §3.14 (biology image-style standards)
+
+**When to use `interactive_image`:**
+- Densely labelled histology / anatomy diagrams (sunflower T.S., neuron structure, components of blood, types of joints on a skeleton)
+- Any place a Class 9 biology page would otherwise need a long list of "Label A is X. Label B is Y. Label C is Z."
+- One per page is the norm; never more than two
+
+**When NOT to use `interactive_image`:**
+- For a **comparison** of distinct types side-by-side (parenchyma vs. collenchyma vs. sclerenchyma) — use a `comparison_card` plus a single `image` block showing all three panels.
+- For a **process** that progresses through stages (Steward's carrot experiment) — use a `timeline` block (§3.8).
+
+### 3.13.1 Biology page — block-type decision tree
+
+| The concept is… | Use this block |
+|---|---|
+| A single rich anatomical diagram with many labelled parts | `interactive_image` |
+| 2–4 distinct types being compared | `comparison_card` + one `image` block with side-by-side panels |
+| A multi-stage process or experiment | `timeline` (text-based) OR `timeline` + a separate `image` block |
+| A single concept with one diagram and ≤ 3 labels | regular `image` block |
+| A self-experience activity (like Activity 3.3 in the chapter) | `table` block |
+
+**Rule:** Every biology page on Class 9 should have at least one of `interactive_image`, `comparison_card`, or `timeline` — these are the equivalents of "simulation" for the biology track.
+
+---
+
+### 3.14 Biology Image-Style Standards (Class 9 Tissues, Reproduction, Diversity, Earth as a System)
+
+All biology image prompts — whether in `image` blocks, inline images, or `interactive_image` items — follow a single house style:
+
+**The standard prompt scaffold:**
+> *"Scientific textbook illustration of [subject]. Flat 2D educational diagram on a dark background (#0a0a0a or near-black). Clean white outlines, biologically accurate proportions, labels in white text with thin white leader lines. Soft natural colours appropriate to the tissue type — greens for living plant tissue, pinks/magentas for phloem and animal soft tissue, browns/tan for woody and dead lignified tissue, ivory for bone, deep red for blood. No photorealism, no artistic shading, no decorative elements, no stylised characters. Match standard biology textbook illustration conventions."*
+
+**Hard rules every biology image prompt must enforce:**
+1. **Dark background** — `#0a0a0a` or near-black, never white. Matches reader theme.
+2. **White (or near-white) labels and leader lines** — never orange or coloured text on biology diagrams; orange is reserved for chemistry/physics. Exception: small subtle orange accents on a single highlighted region are fine.
+3. **Anatomical accuracy first** — cell shapes, layer counts, organ proportions must match real biology.
+4. **No stylisation** — no anime, no cartoon mascots, no smiling cells, no anthropomorphism.
+5. **Functional colour palette** — green = living photosynthetic, pink/magenta = phloem/animal soft tissue, brown/tan = xylem/dead lignified, blue = water, red = blood, ivory = bone.
+6. **Composition serves comprehension** — central subject large, no busy backgrounds, leader lines never cross, scale bars where relevant.
+7. **For comparison panels** (e.g. parenchyma vs. collenchyma vs. sclerenchyma), specify side-by-side layouts with **identical scale and viewing angle** so the student can actually compare.
+8. **For process diagrams**, arrows are labelled with the action happening at each step, not just decorative.
+
+**Hero banner — biology variant.** For Class 9 biology pages, hero banners stay painterly and atmospheric (per §3.4.1) — but use **dark, naturalistic settings**: a microscope lab in evening light, a forest canopy at dusk, a cross-section of bark catching low light. Never bright white or sterile.
 
 ---
 
