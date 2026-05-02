@@ -979,6 +979,7 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'micro_dblock_8_4', name: 'Oxidation States of Lanthanoids', parent_id: 'tag_dblock_8', type: 'micro_topic' },
     { id: 'micro_dblock_8_5', name: 'Oxidation States of Actinoids', parent_id: 'tag_dblock_8', type: 'micro_topic' },
     { id: 'micro_dblock_8_6', name: 'Magnetic and Colour Properties', parent_id: 'tag_dblock_8', type: 'micro_topic' },
+    { id: 'micro_tag_dblock_8_1777549460491', name: 'Atomic & ionic radii ', parent_id: 'tag_dblock_8', type: 'micro_topic' },
 
     { id: 'ch12_coord', name: 'Coordination Compounds', parent_id: null, type: 'chapter', sequence_order: 20, class_level: 12, chapterType: 'inorganic' },
     { id: 'tag_coord_1', name: 'Basic Definitions & Ligands', parent_id: 'ch12_coord', type: 'topic' },
@@ -1624,5 +1625,5 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
 // Summary Statistics
 // Total Chapters: 93
 // Total Tags: 401
-// Total Micro Topics: 1013
-// Last saved: 2026-04-27T08:16:39.158Z
+// Total Micro Topics: 1014
+// Last saved: 2026-04-30T11:44:21.760Z

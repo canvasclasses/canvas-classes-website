@@ -58,7 +58,7 @@ export interface ImageBlock extends BaseBlock {
   generation_prompt?: string;  // AI image generation prompt — shown as placeholder until src is filled
   // Optional display crop. undefined = natural proportions (no crop, full height).
   // When set, the container is locked to that ratio and the image covers it (object-cover).
-  aspect_ratio?: '16:9' | '4:3' | '3:2' | '1:1' | '21:9';
+  aspect_ratio?: '16:9' | '16:5' | '4:3' | '3:2' | '1:1' | '21:9';
 }
 
 // 4. INTERACTIVE IMAGE — SVG/PNG with tappable hotspot annotations
@@ -135,7 +135,10 @@ export interface PracticeLinkBlock extends BaseBlock {
 }
 
 // 11. CALLOUT — highlighted note/warning/tip box
-export type CalloutVariant = 'remember' | 'note' | 'warning' | 'exam_tip' | 'fun_fact';
+export type CalloutVariant =
+  | 'remember' | 'note' | 'warning' | 'exam_tip' | 'fun_fact'
+  | 'threads_of_curiosity' | 'bridging_science' | 'india_science'
+  | 'what_if' | 'quest_continues' | 'ready_to_go_beyond';
 export interface CalloutBlock extends BaseBlock {
   type: 'callout';
   variant: CalloutVariant;

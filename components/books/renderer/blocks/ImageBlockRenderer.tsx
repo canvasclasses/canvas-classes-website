@@ -24,6 +24,7 @@ const fullRowWidthClass: Record<NonNullable<ImageBlock['width']>, string> = {
 // undefined / absent → natural proportions (no container height constraint)
 const ASPECT_RATIO_CLASS: Record<NonNullable<ImageBlock['aspect_ratio']>, string> = {
   '16:9': 'aspect-video',
+  '16:5': 'aspect-[16/5]',
   '4:3':  'aspect-[4/3]',
   '3:2':  'aspect-[3/2]',
   '1:1':  'aspect-square',
