@@ -118,10 +118,20 @@ export const metadata: Metadata = {
     google: process.env.GOOGLE_SITE_VERIFICATION,
   },
   category: "Education",
+  // Favicons:
+  // - The browser picks the SVG variant matching the user's OS / browser
+  //   color scheme (dark UA -> white logo on dark tabs, light UA -> black
+  //   logo on light tabs). Modern browsers honour the `media` attribute
+  //   on `<link rel="icon">`.
+  // - `app/favicon.ico` is auto-emitted by Next.js as a final fallback for
+  //   browsers that don't support SVG favicons (vanishingly rare in 2026).
+  // - `apple-icon.png` (square PNG in /public) is used for iOS home-screen.
   icons: {
-    icon: '/icon.png',
-    shortcut: '/icon.png',
-    apple: '/icon.png',
+    icon: [
+      { url: '/icon-light.svg', type: 'image/svg+xml', media: '(prefers-color-scheme: light)' },
+      { url: '/icon-dark.svg',  type: 'image/svg+xml', media: '(prefers-color-scheme: dark)' },
+    ],
+    apple: '/apple-icon.png',
   },
 };
 
