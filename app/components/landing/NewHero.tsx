@@ -507,8 +507,8 @@ export default function NewHero() {
                         </p>
                     </div>
 
-                    {/* ── Headline ──────────────────────────────────────────── */}
-                    <h1
+                    {/* ── Headline (H2 — the canonical H1 lives in app/page.tsx for SEO) ── */}
+                    <h2
                         className="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.15] newhero-fade-up"
                         style={{ animationDelay: '150ms' }}
                     >
@@ -517,7 +517,7 @@ export default function NewHero() {
                             <span className="newhero-cursor" />
                         </span>
                         <span className="text-white">Under one Canvas.</span>
-                    </h1>
+                    </h2>
 
                     {/* Subheadline */}
                     <p

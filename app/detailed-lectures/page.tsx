@@ -22,6 +22,7 @@ export const metadata: Metadata = {
         description: 'Free Chemistry video lectures covering complete Class 11 & 12 for JEE & NEET preparation.',
         type: 'website',
     },
+    alternates: { canonical: 'https://www.canvasclasses.in/detailed-lectures' },
 };
 
 // Server-side data fetching for SEO (ensures Google sees content on first render)

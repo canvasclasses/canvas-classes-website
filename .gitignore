@@ -29,6 +29,11 @@
 .claude/projects/
 .claude/commands/
 .claude/settings.local.json
+.claude/settings.json
+.claude/scheduled_tasks.lock
+
+# Superpowers — local brainstorm scratch / runtime state
+.superpowers/
 
 # Backup / temp files
 *.bak

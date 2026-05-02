@@ -21,7 +21,7 @@ export const metadata: Metadata = {
         type: 'website',
     },
     alternates: {
-        canonical: '/ncert-solutions',
+        canonical: 'https://www.canvasclasses.in/ncert-solutions',
     },
 };
 

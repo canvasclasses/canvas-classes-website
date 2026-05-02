@@ -5,6 +5,7 @@ import { Layers, ChevronRight } from 'lucide-react';
 export const metadata = {
     title: 'Chemistry Questions & Answers for Class 12, JEE, NEET | Canvas Classes',
     description: 'Browse thousands of chemistry questions and answers for Class 12, JEE Main, and NEET preparation. Topic-wise solutions for Physical, Organic, and Inorganic Chemistry.',
+    alternates: { canonical: 'https://www.canvasclasses.in/chemistry-questions' },
 };
 
 export const dynamic = 'force-dynamic';

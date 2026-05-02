@@ -270,7 +270,7 @@ export default function SaltAnalysisHero() {
             <div className="absolute inset-0">
                 <Image
                     src="/salt-analysis-hero.webp"
-                    alt=""
+                    alt="Qualitative salt analysis — anion and cation tests with flame, dry, and wet reagents"
                     fill
                     className="object-cover"
                     priority

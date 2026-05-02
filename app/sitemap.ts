@@ -10,6 +10,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Static pages
     const staticPages = [
         { path: '', priority: 1.0, changeFrequency: 'daily' as const },
+        { path: '/about', priority: 0.7, changeFrequency: 'monthly' as const },
+        { path: '/blog', priority: 0.9, changeFrequency: 'daily' as const },
         { path: '/detailed-lectures', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/cbse-12-ncert-revision', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/cbse-class-10', priority: 0.8, changeFrequency: 'monthly' as const },
@@ -33,9 +35,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { path: '/bitsat-chemistry-revision', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/bitsat-chemistry-revision/plan', priority: 0.85, changeFrequency: 'weekly' as const },
         { path: '/college-predictor', priority: 1.0, changeFrequency: 'daily' as const },
+        { path: '/jee-pyqs', priority: 0.9, changeFrequency: 'weekly' as const },
+        // Subject hubs
+        { path: '/organic-chemistry-hub', priority: 0.85, changeFrequency: 'weekly' as const },
+        { path: '/inorganic-chemistry-hub', priority: 0.85, changeFrequency: 'weekly' as const },
+        { path: '/physical-chemistry-hub', priority: 0.85, changeFrequency: 'weekly' as const },
+        { path: '/inorganic-chemistry-hub/vsepr', priority: 0.7, changeFrequency: 'monthly' as const },
+        { path: '/inorganic-chemistry-hub/bond-angles', priority: 0.7, changeFrequency: 'monthly' as const },
+        { path: '/chemihex', priority: 0.75, changeFrequency: 'monthly' as const },
         // Live Books landing pages (grade hubs)
         { path: '/class-9', priority: 1.0, changeFrequency: 'daily' as const },
         { path: '/class-11', priority: 0.9, changeFrequency: 'weekly' as const },
+        { path: '/class-12', priority: 0.9, changeFrequency: 'weekly' as const },
+        { path: '/class-12/chemistry', priority: 0.9, changeFrequency: 'weekly' as const },
+        { path: '/class-11/chemistry', priority: 0.9, changeFrequency: 'weekly' as const },
     ];
 
     // College Predictor programmatic landing pages (regional + type)
@@ -233,6 +246,76 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Error fetching book pages for sitemap:', error);
     }
 
+    // ── Detailed lectures: every chapter video page ──────────────────────────
+    // Reads from the published Google Sheet that powers /detailed-lectures.
+    let detailedLectureEntries: MetadataRoute.Sitemap = [];
+    try {
+        const { fetchLecturesData } = await import('./lib/lecturesData');
+        const chapters = await fetchLecturesData();
+        detailedLectureEntries = chapters
+            .filter((ch) => Boolean(ch.slug))
+            .map((ch) => ({
+                url: `${BASE_URL}/detailed-lectures/${ch.slug}`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly' as const,
+                priority: 0.85,
+            }));
+    } catch (error) {
+        console.error('Error fetching lecture chapters for sitemap:', error);
+    }
+
+    // ── JEE PYQs: per-chapter pages (Top-25 PYQs each) ───────────────────────
+    let jeePyqEntries: MetadataRoute.Sitemap = [];
+    try {
+        const { getAllChapters } = await import('./lib/jee-pyqs/data');
+        const chapters = getAllChapters();
+        jeePyqEntries = chapters.map((c) => ({
+            url: `${BASE_URL}/jee-pyqs/${c.id}`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.8,
+        }));
+    } catch (error) {
+        console.error('Error fetching JEE PYQ chapters for sitemap:', error);
+    }
+
+    // ── Blog posts ───────────────────────────────────────────────────────────
+    let blogEntries: MetadataRoute.Sitemap = [];
+    try {
+        const { getPublishedSlugs } = await import('./lib/blogDb');
+        const slugs = await getPublishedSlugs();
+        blogEntries = slugs.map((slug) => ({
+            url: `${BASE_URL}/blog/${slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.7,
+        }));
+    } catch (error) {
+        console.error('Error fetching blog slugs for sitemap:', error);
+    }
+
+    // ── NCERT Solutions: per-chapter pages (Class 11 & 12 Chemistry) ─────────
+    // High-intent SEO target — "NCERT solutions class 12 chemistry chapter X".
+    let ncertChapterEntries: MetadataRoute.Sitemap = [];
+    try {
+        const { getChapterGroups } = await import('./lib/ncertData');
+        const chapterGroups = await getChapterGroups();
+        ncertChapterEntries = chapterGroups.map((g) => {
+            const slug = g.chapter
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, '');
+            return {
+                url: `${BASE_URL}/ncert-solutions/class-${g.classNum}/${slug}`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly' as const,
+                priority: 0.9,
+            };
+        });
+    } catch (error) {
+        console.error('Error fetching NCERT chapter groups for sitemap:', error);
+    }
+
     return [
         ...staticEntries,
         ...collegePredictorLandingEntries,
@@ -242,6 +325,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ...questionEntries,
         ...crucibleQuestionEntries,
         ...bookPageEntries,
+        ...detailedLectureEntries,
+        ...jeePyqEntries,
+        ...blogEntries,
+        ...ncertChapterEntries,
     ];
 }
 

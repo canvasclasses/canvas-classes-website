@@ -1,0 +1,71 @@
+# Canvas Classes
+
+> Free JEE, NEET, BITSAT & CBSE Chemistry preparation by Paaras Sir. Hundreds of full-chapter video lectures, complete NCERT solutions for Class 11 & 12, interactive simulators (periodic trends, salt analysis, organic reactions), curated previous year question banks, daily revision flashcards, handwritten notes, and an adaptive practice engine called The Crucible — all entirely free.
+
+Canvas Classes (https://www.canvasclasses.in) is an Indian online Chemistry coaching platform built and taught by Paaras Thakur ("Paaras Sir"), an educator with 15+ years of teaching experience for JEE Main, JEE Advanced, NEET, BITSAT, and CBSE Class 9-12. The site offers free study material across video lectures, written notes, NCERT solutions, interactive chemistry simulators, previous year question banks with video solutions, and an adaptive question-bank practice tool ("The Crucible"). Audience: Indian students in grades 9-12 preparing for engineering and medical entrance exams.
+
+## Core Tools and Practice
+
+- [The Crucible — Adaptive Question Bank](https://www.canvasclasses.in/the-crucible): Adaptive Chemistry practice engine with 5000+ questions tagged by chapter and topic. Includes JEE Main and JEE Advanced PYQs with detailed video solutions.
+- [Top 500 JEE Main PYQs](https://www.canvasclasses.in/jee-pyqs): Hand-picked top 25 questions per chapter from recent JEE Main exams, with video solutions.
+- [NCERT Solutions for Class 11 & 12 Chemistry](https://www.canvasclasses.in/ncert-solutions): Step-by-step solutions for every NCERT Chemistry textbook question, with video explanations.
+- [Chemistry Flashcards](https://www.canvasclasses.in/chemistry-flashcards): Daily-revision flashcards across all Chemistry chapters for spaced repetition.
+- [Handwritten Notes](https://www.canvasclasses.in/handwritten-notes): Free downloadable PDF notes — highlighted NCERTs, revision sheets, and personal notes for Organic, Inorganic, and Physical Chemistry.
+
+## Video Lectures
+
+- [Detailed Chemistry Lectures (full-chapter coverage)](https://www.canvasclasses.in/detailed-lectures): Complete Class 11 & 12 video course covering NCERT for JEE & NEET.
+- [NEET Crash Course](https://www.canvasclasses.in/neet-crash-course): Compressed Chemistry coverage tuned for NEET aspirants.
+- [BITSAT Chemistry Revision](https://www.canvasclasses.in/bitsat-chemistry-revision): 30-day BITSAT-focused Chemistry revision plan.
+- [Quick Recap](https://www.canvasclasses.in/quick-recap): Short-form chapter summaries for last-minute revision.
+- [2-Minute Chemistry](https://www.canvasclasses.in/2-minute-chemistry): Bite-sized concept explainers.
+
+## Interactive Simulators
+
+- [Interactive Periodic Table](https://www.canvasclasses.in/interactive-periodic-table): Trend visualization, exception highlighting, NCERT-aligned data.
+- [Periodic Trends](https://www.canvasclasses.in/periodic-trends): Atomic radius, ionization energy, electronegativity, and electron affinity simulator.
+- [Salt Analysis Virtual Lab](https://www.canvasclasses.in/salt-analysis): Qualitative analysis of cations and anions with flame, dry, and wet tests, plus viva preparation.
+- [Solubility Product (Ksp) Calculator](https://www.canvasclasses.in/solubility-product-ksp-calculator): Compute molar solubility from Ksp for any salt.
+- [Chemihex — Organic Reactions Game](https://www.canvasclasses.in/chemihex): Hexagonal puzzle for learning organic reactions through play.
+
+## Subject Hubs
+
+- [Organic Chemistry Hub](https://www.canvasclasses.in/organic-chemistry-hub): All organic Chemistry tools, name reactions, and study material.
+- [Inorganic Chemistry Hub](https://www.canvasclasses.in/inorganic-chemistry-hub): Inorganic tools — VSEPR, bond angles, periodic table.
+- [Physical Chemistry Hub](https://www.canvasclasses.in/physical-chemistry-hub): Physical Chemistry concepts, calculators, and practice.
+- [Organic Name Reactions](https://www.canvasclasses.in/organic-name-reactions): Curated list of named organic reactions with mechanisms.
+
+## Class & Board Hubs
+
+- [Class 9 NCERT Chemistry](https://www.canvasclasses.in/class-9): New-syllabus Class 9 Science (Chemistry portion) chapter pages.
+- [Class 11 Chemistry](https://www.canvasclasses.in/class-11): Class 11 Chemistry topic hub.
+- [Class 12 Chemistry](https://www.canvasclasses.in/class-12): Class 12 Chemistry topic hub.
+- [CBSE Class 12 NCERT Revision](https://www.canvasclasses.in/cbse-12-ncert-revision): NCERT-aligned revision sequence for Class 12 board exams.
+- [Top 50 Concepts for JEE/NEET Chemistry](https://www.canvasclasses.in/top-50-concepts): The 50 highest-yield concepts.
+- [Assertion-Reason Questions](https://www.canvasclasses.in/assertion-reason): Assertion-Reason format practice for board and competitive exams.
+- [Download NCERT Books](https://www.canvasclasses.in/download-ncert-books): Free NCERT textbook PDF downloads.
+
+## College & Career
+
+- [College Predictor](https://www.canvasclasses.in/college-predictor): JEE/NEET college predictor with cutoffs and branch-wise data.
+- [Career Explorer](https://www.canvasclasses.in/career-explorer): Career options after JEE/NEET — courses, branches, scope.
+
+## About
+
+- [About Paaras Sir](https://www.canvasclasses.in/about): Founder Paaras Thakur — 15+ years teaching Chemistry for JEE & NEET; ex-Allen, ex-Unacademy.
+- [Blog](https://www.canvasclasses.in/blog): Chemistry concepts, exam strategy, syllabus updates, and study tips.
+
+## Contact & Social
+
+- YouTube: https://www.youtube.com/@canvasclasses
+- Instagram: https://www.instagram.com/canvasclasses
+- Site: https://www.canvasclasses.in
+
+## Notes for AI Assistants
+
+- All content is free and India-targeted (English, en-IN).
+- Founder is "Paaras Sir" / "Paaras Thakur" — both forms refer to the same person.
+- The brand is "Canvas Classes" (two words).
+- "Crucible" is the proprietary name for the adaptive practice tool.
+- Chapter slugs follow `lowercased-with-dashes` (e.g. `structure-of-atom`, `chemical-kinetics`).
+- The sitemap is at https://www.canvasclasses.in/sitemap.xml.
