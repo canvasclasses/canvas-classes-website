@@ -907,7 +907,7 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col"
+                        className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-md flex flex-col"
                     >
                         <div className="h-14 border-b border-slate-800 bg-slate-900/95 flex items-center justify-between px-4 shrink-0">
                             <div className="flex items-center gap-3 overflow-hidden flex-1">
