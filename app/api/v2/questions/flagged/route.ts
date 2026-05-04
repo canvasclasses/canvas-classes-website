@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
 import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
+import { isLocalhostDev } from '@/lib/bookAuth';
 
 // GET /api/v2/questions/flagged
 // Returns all questions that have at least one student flag (unresolved by default).
@@ -14,7 +15,8 @@ export async function GET(request: NextRequest) {
   try {
     const scriptAuth = hasScriptSecret(request);
     const user = scriptAuth ? null : await getAuthenticatedUser(request);
-    if (!scriptAuth && !isAdmin(user?.email)) {
+    const localDev = await isLocalhostDev();
+    if (!scriptAuth && !localDev && !isAdmin(user?.email)) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 403 });
     }
 

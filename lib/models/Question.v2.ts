@@ -35,6 +35,15 @@ export interface IQuestionSolution {
   };
   video_url?: string;
   video_timestamp_start?: number;
+  // Per-question depth links — used by the recommendation engine and the
+  // post-submit "Stuck? Read this section / Watch this lecture" CTA.
+  // Authoring is optional; the engine falls back to topic-tag-level
+  // ResourceLink rows when these are unset. See lib/recommendationEngine.ts
+  // and lib/models/ResourceLink.ts for the bridge.
+  learn_more?: {
+    book_page_ids?: string[];   // slugs/ids in the livebooks namespace
+    lecture_ids?: string[];     // YouTube/internal lecture ids
+  };
 }
 
 // Removed: CognitiveType, CalcLoad, EntryPoint — AI will infer from solution content
@@ -174,7 +183,12 @@ const QuestionSolutionSchema = new Schema<IQuestionSolution>({
     audio: [{ type: String }]
   },
   video_url: { type: String },
-  video_timestamp_start: { type: Number }
+  video_timestamp_start: { type: Number },
+  // See IQuestionSolution.learn_more — recommendation-engine depth links.
+  learn_more: {
+    book_page_ids: [{ type: String }],
+    lecture_ids: [{ type: String }],
+  },
 }, { _id: false });
 
 const QuestionMetadataSchema = new Schema<IQuestionMetadata>({

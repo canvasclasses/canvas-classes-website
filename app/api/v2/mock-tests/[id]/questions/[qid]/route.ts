@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import { MockTestSet } from '@/lib/models/MockTestSet';
 import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
+import { isLocalhostDev } from '@/lib/bookAuth';
 
 // ── PATCH /api/v2/mock-tests/[id]/questions/[qid] — update a question ────────
 
@@ -12,8 +13,9 @@ export async function PATCH(
   try {
     const scriptAuth = hasScriptSecret(request);
     const user = scriptAuth ? null : await getAuthenticatedUser(request);
-    const authorEmail = scriptAuth ? 'script' : user?.email;
-    if (!scriptAuth && !isAdmin(user?.email)) {
+    const localDev = await isLocalhostDev();
+    const authorEmail = scriptAuth ? 'script' : (user?.email ?? (localDev ? 'dev@localhost' : undefined));
+    if (!scriptAuth && !localDev && !isAdmin(user?.email)) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 403 });
     }
 
@@ -68,8 +70,9 @@ export async function DELETE(
   try {
     const scriptAuth = hasScriptSecret(request);
     const user = scriptAuth ? null : await getAuthenticatedUser(request);
-    const authorEmail = scriptAuth ? 'script' : user?.email;
-    if (!scriptAuth && !isAdmin(user?.email)) {
+    const localDev = await isLocalhostDev();
+    const authorEmail = scriptAuth ? 'script' : (user?.email ?? (localDev ? 'dev@localhost' : undefined));
+    if (!scriptAuth && !localDev && !isAdmin(user?.email)) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 403 });
     }
 

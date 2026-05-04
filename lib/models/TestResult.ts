@@ -3,9 +3,11 @@ import mongoose, { Schema, Document, Model } from 'mongoose';
 export interface IQuestionResult {
     question_id: string;
     display_id: string;
-    difficulty: 'Easy' | 'Medium' | 'Hard';
+    // Numeric scale 1-5 (matches Question.v2 `difficultyLevel`). Older
+    // documents may carry the legacy 'Easy'|'Medium'|'Hard' string form.
+    difficulty: number | 'Easy' | 'Medium' | 'Hard';
     is_correct: boolean;
-    selected_option: string | number | boolean | null;
+    selected_option: string | string[] | number | boolean | null;
     time_spent_seconds: number;
     marked_for_review: boolean;
 }
@@ -15,7 +17,9 @@ export interface ITestResult extends Document {
     chapter_id: string;
     test_config: {
         count: number;
-        difficulty_mix: 'balanced' | 'easy' | 'hard' | 'pyq';
+        // 'custom' added when TestConfigModal's Custom difficulty pill is
+        // selected (drives generator.scoreQuestion's per-tier weighting).
+        difficulty_mix: 'balanced' | 'easy' | 'hard' | 'pyq' | 'custom';
         question_sort: 'random' | 'difficulty' | 'topic';
     };
     questions: IQuestionResult[];
@@ -37,7 +41,10 @@ export interface ITestResult extends Document {
 const QuestionResultSchema = new Schema({
     question_id: { type: String, required: true },
     display_id: { type: String, required: true },
-    difficulty: { type: String, enum: ['Easy', 'Medium', 'Hard'], required: true },
+    // Mixed (number 1-5 or string label) — same change as
+    // QuestionAttemptSchema in UserProgress.ts. Previously a string-only enum
+    // that silently rejected the numeric `difficultyLevel` writers send.
+    difficulty: { type: Schema.Types.Mixed, required: true },
     is_correct: { type: Boolean, required: true },
     selected_option: { type: Schema.Types.Mixed },
     time_spent_seconds: { type: Number, default: 0 },
@@ -45,12 +52,12 @@ const QuestionResultSchema = new Schema({
 }, { _id: false });
 
 const TestResultSchema = new Schema({
-    _id: { type: String, required: true }, // user_id (same as UserProgress)
+    _id: { type: String, required: true }, // unique per test result (nanoid)
     user_id: { type: String, required: true, index: true },
     chapter_id: { type: String, required: true, index: true },
     test_config: {
         count: { type: Number, required: true },
-        difficulty_mix: { type: String, enum: ['balanced', 'easy', 'hard', 'pyq'], required: true },
+        difficulty_mix: { type: String, enum: ['balanced', 'easy', 'hard', 'pyq', 'custom'], required: true },
         question_sort: { type: String, enum: ['random', 'difficulty', 'topic'], default: 'random' },
     },
     questions: [QuestionResultSchema],

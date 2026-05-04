@@ -130,6 +130,22 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/PositionTimeGraphSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
+  'stopping-distance-lab': dynamic(
+    () => import('./simulations/StoppingDistanceLabSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'marble-in-ring': dynamic(
+    () => import('./simulations/MarbleInRingSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'match-the-motion': dynamic(
+    () => import('./simulations/MatchTheMotionSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'triple-graph-scrubber': dynamic(
+    () => import('./simulations/TripleGraphScrubberSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
   // ── Class 9 Physics — Chapter 4: Work and Energy ─────────────────────────
   'work-done': dynamic(
     () => import('./simulations/WorkDoneSim'),

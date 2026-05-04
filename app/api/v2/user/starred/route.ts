@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getUserIdFromRequest } from '@/lib/auth';
 import connectToDatabase from '@/lib/mongodb';
 import { UserProgress } from '@/lib/models/UserProgress';
 import { QuestionV2 } from '@/lib/models/Question.v2';
@@ -10,26 +10,12 @@ interface StarredEntry {
     starred_at: Date;
 }
 
-async function getUserId(req: NextRequest): Promise<string | null> {
-    const authHeader = req.headers.get('Authorization');
-    if (!authHeader?.startsWith('Bearer ')) return null;
-    const token = authHeader.slice(7);
-    // SECURITY FIX: Use anon key instead of service role key
-    const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
-    const { data: { user }, error } = await supabase.auth.getUser(token);
-    if (error || !user) return null;
-    return user.id;
-}
-
 // ─── GET /api/v2/user/starred ─────────────────────────────────────────────────
 // Returns full question documents for all starred questions.
 // Optional query param: ?chapterId=ch11_atom  to filter by chapter
 export async function GET(req: NextRequest) {
     try {
-        const userId = await getUserId(req);
+        const userId = await getUserIdFromRequest(req);
         if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         await connectToDatabase();
@@ -84,7 +70,7 @@ export async function GET(req: NextRequest) {
 // Body: { question_id, chapter_id, action: 'star' | 'unstar' }
 export async function POST(req: NextRequest) {
     try {
-        const userId = await getUserId(req);
+        const userId = await getUserIdFromRequest(req);
         if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         const { question_id, chapter_id, action } = await req.json();

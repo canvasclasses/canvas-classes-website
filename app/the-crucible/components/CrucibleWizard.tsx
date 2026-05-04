@@ -41,8 +41,9 @@ import BrowseView from './BrowseView';
 import TestView from './TestView';
 import AuthRequiredDialog from './AuthRequiredDialog';
 import GuidedPracticeWizard from './GuidedPracticeWizard';
-import TestConfigModal, { DifficultyMix, QuestionSort } from './TestConfigModal';
+import TestConfigModal, { DifficultyMix, QuestionSort, TestStartConfig } from './TestConfigModal';
 import { buildSmartTest, AttemptedEntry } from './testGenerator';
+import CrucibleHero from './CrucibleHero';
 
 type ActiveView = 'wizard' | 'shloka' | 'browse' | 'guided' | 'test';
 type GuidedDifficulty = 'Easy' | 'Medium' | 'Hard' | 'Mixed';
@@ -390,15 +391,6 @@ function StepCard({
           {children}
         </div>
       </div>
-    </div>
-  );
-}
-
-// ── Chapter list bar ─────────────────────────────────────────────────────────
-function ChapterBar({ value, color }: { value: number; color: string }) {
-  return (
-    <div style={{ height: 2, borderRadius: 99, background: 'rgba(255,255,255,0.08)', overflow: 'hidden', width: '100%' }}>
-      <div style={{ height: '100%', borderRadius: 99, background: color, width: `${Math.max(value > 0 ? 2 : 0, value)}%`, transition: 'width 0.4s ease' }} />
     </div>
   );
 }
@@ -951,37 +943,32 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
       });
   };
 
-  // Launch Timed Test - show config modal
-  const handleTestLaunch = () => {
+  // Pre-fetched chapter questions for the test-config modal. Populated by
+  // handleTestLaunch BEFORE the modal opens so TestConfigModal renders in
+  // rich mode (Pool strip + Topics aside + per-chapter accent), not the
+  // legacy fallback. Cleared when the modal closes.
+  const [testConfigQuestions, setTestConfigQuestions] = useState<Question[] | null>(null);
+  const [testConfigLoading, setTestConfigLoading] = useState(false);
+
+  // Launch Timed Test — fetch the chapter's questions first, then show the
+  // config modal. Until this resolves, the "Start Test" button shows a
+  // loading state. The fetched array is reused by `startTest` so we don't
+  // re-fetch when the user clicks Start in the modal.
+  const handleTestLaunch = async () => {
     if (!selectedChapterId) return;
     if (!isLoggedIn) { setShowAuthDialog(true); return; }
-    setShowTestConfig(true);
-  };
+    if (testConfigLoading) return;
 
-  // Start test after configuration
-  const startTest = useCallback(async (count: number, mix: DifficultyMix, sort: QuestionSort = 'random', useStarOnly?: boolean) => {
-    if (!selectedChapterId) return;
-    
-    // Set shloka view first to avoid flash of wizard
-    setShlokaExited(false);
-    setActiveView('shloka');
-    setIsBuilding(true);
-    setLoading(true);
-    
-    // Close modal after view transition
-    setTimeout(() => setShowTestConfig(false), 0);
-
+    setTestConfigLoading(true);
     try {
-      // Step 1: Fetch questions for the selected chapter, scoped by exam board
       const params = new URLSearchParams();
       params.set('chapter_id', selectedChapterId);
       params.set('limit', '500');
-      if (useStarOnly) params.set('is_top_pyq', 'true');
       if (selectedExam) params.set('examBoard', selectedExam);
 
-      const questionsRes = await fetch(`/api/v2/questions?${params.toString()}`);
-      const questionsJson = await questionsRes.json();
-      const fetchedQuestions: Question[] = (questionsJson.data || []).map((q: ApiQuestion): Question => ({
+      const res = await fetch(`/api/v2/questions?${params.toString()}`);
+      const json = await res.json();
+      const fetched: Question[] = (json.data || []).map((q: ApiQuestion): Question => ({
         id: q._id,
         display_id: q.display_id || q._id?.slice(0, 8)?.toUpperCase() || 'Q',
         question_text: { markdown: q.question_text?.markdown || '' },
@@ -1001,19 +988,60 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
           tags: ((q.metadata?.tags as Array<{ tag_id: string; weight: number }>) || []),
           is_pyq: q.metadata?.is_pyq || false,
           is_top_pyq: q.metadata?.is_top_pyq || false,
-          exam_source: (q.metadata?.exam_source as Record<string, unknown> | undefined),
+          exam_source: (q.metadata?.exam_source as { exam?: string; year?: number; month?: string; shift?: string } | undefined),
         },
         svg_scales: q.svg_scales || {},
       }));
 
-      if (fetchedQuestions.length === 0) {
+      if (fetched.length === 0) {
         notify('No questions found for this chapter.');
-        setIsBuilding(false);
-        setLoading(false);
         return;
       }
 
-      // Step 2: Fetch user progress for smart scoring
+      setTestConfigQuestions(fetched);
+      setShowTestConfig(true);
+    } catch {
+      notify('Failed to load questions. Please try again.');
+    } finally {
+      setTestConfigLoading(false);
+    }
+  };
+
+  // Start test after configuration. Receives the canonical TestStartConfig
+  // shape; the wizard only consumes count/mix/sort/useStarOnly because it
+  // fetches questions on-demand AFTER configuration (so the modal's rich-mode
+  // pool/topic filters wouldn't have anything to bind to here).
+  const startTest = useCallback(async (config: TestStartConfig) => {
+    const { count, mix, customMix, sort, useStarOnly, eligibleQuestionIds } = config;
+    if (!selectedChapterId) return;
+
+    // Reuse the prefetched questions from handleTestLaunch — they were already
+    // loaded so the modal could render Pool counts + Topics. Re-fetching here
+    // would just be a wasted round-trip.
+    const fetchedQuestions = testConfigQuestions ?? [];
+    if (fetchedQuestions.length === 0) {
+      notify('No questions loaded — please reopen the test config.');
+      return;
+    }
+
+    // Set shloka view first to avoid flash of wizard
+    setShlokaExited(false);
+    setActiveView('shloka');
+    setIsBuilding(true);
+    setLoading(true);
+
+    // Close modal after view transition
+    setTimeout(() => setShowTestConfig(false), 0);
+
+    try {
+      // Apply the modal's pre-computed eligibility filter (pool + topic
+      // selections). Empty array means "all" → use the full prefetched pool.
+      const eligible = new Set(eligibleQuestionIds);
+      const filteredPool = eligible.size > 0
+        ? fetchedQuestions.filter(q => eligible.has(q.id))
+        : fetchedQuestions;
+
+      // Fetch user progress for smart scoring
       let attempted: AttemptedEntry[] = [];
       let starredIds = new Set<string>();
       let last3Sessions: string[][] = [];
@@ -1038,11 +1066,18 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
         }
       }
 
-      // Step 3: Build the smart test
+      // "Star-marked only" is a HARD filter, not a soft scoring preference.
+      // Mirrors the behaviour in ChapterPracticePage.
+      const finalPool = useStarOnly && starredIds.size > 0
+        ? filteredPool.filter(q => starredIds.has(q.id))
+        : filteredPool;
+
+      // Build the smart test — generator honours customMix when mix='custom'.
       const picked = buildSmartTest({
-        questions: fetchedQuestions,
+        questions: finalPool,
         count,
         mix,
+        customMix,
         sort,
         starredIds,
         attempted,
@@ -1070,7 +1105,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
       setIsBuilding(false);
       setLoading(false);
     }
-  }, [selectedChapterId, notify]);
+  }, [selectedChapterId, testConfigQuestions, notify]);
 
   const handleBackToWizard = () => {
     // Abort any in-flight streaming so we don't keep paying for batches the user no longer needs
@@ -1157,6 +1192,11 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
         @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .crucible-chap-row { transition: border-color 140ms, background 140ms, transform 140ms; }
+        .crucible-chap-row:hover { border-color: rgba(255,255,255,0.16) !important; background: rgba(255,255,255,0.05) !important; transform: translateY(-1px); }
+        .crucible-chap-accent { transition: width 200ms ease, opacity 200ms ease; }
+        .crucible-chap-row:hover .crucible-chap-accent { width: 80px; opacity: 1; }
+        .crucible-chap-row:hover .crucible-chap-arrow { color: rgba(255,255,255,0.55) !important; }
       `}</style>
 
       <div style={{ minHeight: '100vh', background: '#07080f', color: '#fafafa', position: 'relative', overflow: 'hidden' }}>
@@ -1316,6 +1356,8 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
         {/* ── Main content: wide two-column layout ── */}
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: isMobile ? '16px 16px 64px' : '20px 40px 72px', position: 'relative', zIndex: 1 }}>
 
+          <CrucibleHero isMobile={isMobile} />
+
           {/* Top bar: exam selector + subject selector */}
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px 20px', marginBottom: 20, animation: 'fadeUp 0.4s ease-out' }}>
 
@@ -1370,7 +1412,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
           </div>
 
           {/* Two-column layout */}
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 300px', gap: 24, alignItems: 'start' }}>
+          <div id="crucible-chapters" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 300px', gap: 24, alignItems: 'start', scrollMarginTop: 80 }}>
 
             {/* LEFT: search + class filter + chapter rows */}
             <div style={{ minWidth: 0 }}>
@@ -1410,13 +1452,15 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
                   const totalQs = list.reduce((s, c) => s + ((selectedExam === 'NEET' ? c.neet_question_count : c.question_count) ?? 0), 0);
                   const accent = CAT_COLOR[cat];
                   return (
-                    <div key={cat} style={{ minWidth: 0 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, padding: '0 2px' }}>
-                        <div style={{ width: 6, height: 6, borderRadius: '50%', background: accent }} />
-                        <span style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: accent }}>{cat}</span>
-                        <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', marginLeft: 'auto' }}>{totalQs.toLocaleString()} Qs</span>
+                    <div key={cat} style={{ minWidth: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2px' }}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                          <span style={{ width: 7, height: 7, borderRadius: '50%', background: accent, boxShadow: `0 0 8px ${accent}` }} />
+                          <span style={{ fontFamily: 'ui-monospace, "JetBrains Mono", monospace', fontSize: 11, fontWeight: 600, letterSpacing: '0.18em', color: accent, textTransform: 'uppercase' }}>{cat}</span>
+                        </div>
+                        <span style={{ fontFamily: 'ui-monospace, "JetBrains Mono", monospace', fontSize: 11, color: 'rgba(255,255,255,0.42)' }}>{totalQs.toLocaleString()} Qs</span>
                       </div>
-                      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 3, minWidth: 0 }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 8, minWidth: 0 }}>
                         {list.map(ch => {
                           const qCount = (selectedExam === 'NEET' ? ch.neet_question_count : ch.question_count) ?? 0;
                           const isSelected = ch.id === selectedChapterId;
@@ -1424,19 +1468,44 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
                             <button
                               key={ch.id}
                               onClick={() => handleChapterSelect(ch.id)}
-                              style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 10, border: `1px solid ${isSelected ? 'rgba(99,102,241,0.3)' : 'transparent'}`, background: isSelected ? 'rgba(99,102,241,0.08)' : 'rgba(255,255,255,0.02)', cursor: 'pointer', textAlign: 'left', transition: 'all 0.15s', WebkitTapHighlightColor: 'transparent', minWidth: 0, width: '100%' }}
-                              onMouseEnter={e => { if (!isSelected) { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; } }}
-                              onMouseLeave={e => { if (!isSelected) { e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; e.currentTarget.style.borderColor = 'transparent'; } }}
+                              className="crucible-chap-row"
+                              style={{
+                                position: 'relative',
+                                display: 'grid',
+                                gridTemplateColumns: '24px 1fr auto 12px',
+                                alignItems: 'center',
+                                gap: 12,
+                                padding: '12px 14px',
+                                borderRadius: 10,
+                                border: `1px solid ${isSelected ? 'rgba(99,102,241,0.3)' : 'rgba(255,255,255,0.06)'}`,
+                                background: isSelected ? 'rgba(99,102,241,0.08)' : 'rgba(255,255,255,0.025)',
+                                cursor: 'pointer',
+                                textAlign: 'left',
+                                WebkitTapHighlightColor: 'transparent',
+                                minWidth: 0,
+                                width: '100%',
+                                overflow: 'hidden',
+                                fontFamily: 'inherit',
+                                color: 'rgba(245,244,242,0.86)',
+                              }}
                             >
-                              <div style={{ flex: 1, minWidth: 0 }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', flexShrink: 0, fontVariantNumeric: 'tabular-nums' }}>{ch.class_level}</span>
-                                  <span style={{ fontSize: 14, fontWeight: 500, color: '#fafafa', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>{ch.name}</span>
-                                  <span style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.4)', flexShrink: 0, fontVariantNumeric: 'tabular-nums' }}>{qCount > 0 ? qCount : '—'}</span>
-                                </div>
-                                <ChapterBar value={qCount > 0 ? Math.min(100, Math.round((qCount / 400) * 100)) : 0} color={accent} />
-                              </div>
-                              <ChevronRight style={{ width: 14, height: 14, color: isSelected ? '#818cf8' : 'rgba(255,255,255,0.18)', flexShrink: 0 }} />
+                              <span style={{ fontFamily: 'ui-monospace, "JetBrains Mono", monospace', fontSize: 11, color: 'rgba(255,255,255,0.26)', fontWeight: 500, fontVariantNumeric: 'tabular-nums' }}>{ch.class_level}</span>
+                              <span style={{ fontSize: 14, fontWeight: 500, color: '#fafafa', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>{ch.name}</span>
+                              <span style={{ fontFamily: 'ui-monospace, "JetBrains Mono", monospace', fontSize: 12, color: 'rgba(255,255,255,0.42)', fontVariantNumeric: 'tabular-nums' }}>{qCount > 0 ? qCount : '—'}</span>
+                              <ChevronRight className="crucible-chap-arrow" style={{ width: 12, height: 12, color: isSelected ? '#818cf8' : 'rgba(255,255,255,0.42)' }} />
+                              <span
+                                className="crucible-chap-accent"
+                                style={{
+                                  position: 'absolute',
+                                  left: 14,
+                                  bottom: 6,
+                                  height: 1,
+                                  width: 38,
+                                  background: accent,
+                                  opacity: 0.7,
+                                  pointerEvents: 'none',
+                                }}
+                              />
                             </button>
                           );
                         })}
@@ -1510,7 +1579,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
                   <ChevronRight style={{ width: 14, height: 14, color: 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
                 </button>
 
-                <div style={{ padding: 16, borderRadius: 12, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                <div id="crucible-howto" style={{ padding: 16, borderRadius: 12, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', scrollMarginTop: 80 }}>
                   <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', marginBottom: 12 }}>HOW IT WORKS</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                     {[
@@ -1578,7 +1647,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
                 <button onClick={handleBrowseLaunch} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 14, padding: '14px 4px', borderRadius: 0, border: 'none', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'transparent', cursor: 'pointer', transition: 'background 0.15s', textAlign: 'left', WebkitTapHighlightColor: 'transparent' }} onMouseEnter={e => { e.currentTarget.style.background = 'rgba(56,189,248,0.04)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}>
                   <div style={{ width: 3, height: 36, borderRadius: 2, background: '#38bdf8', flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 15, fontWeight: 600, color: '#fafafa', marginBottom: 3 }}>Free Browse</div>
+                    <div style={{ fontSize: 15, fontWeight: 600, color: '#fafafa', marginBottom: 3 }}>Topic-wise Problems</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                       {chapterStats === null ? (
                         <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.3)' }}>Loading…</span>
@@ -1600,19 +1669,21 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
                   <button onClick={handleQuickRevisionLaunch} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 14, padding: '14px 4px', borderRadius: 0, border: 'none', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'transparent', cursor: 'pointer', transition: 'background 0.15s', textAlign: 'left', WebkitTapHighlightColor: 'transparent' }} onMouseEnter={e => { e.currentTarget.style.background = 'rgba(251,191,36,0.04)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}>
                     <div style={{ width: 3, height: 36, borderRadius: 2, background: '#fbbf24', flexShrink: 0 }} />
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: 15, fontWeight: 600, color: '#fafafa', marginBottom: 3 }}>Quick Revision</div>
-                      <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>{chapterStarCount} hand-picked must-solve questions</div>
+                      <div style={{ fontSize: 15, fontWeight: 600, color: '#fafafa', marginBottom: 3 }}>Top Questions</div>
+                      <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>{chapterStarCount} hand-picked · for revision &amp; backlogs</div>
                     </div>
                     <ChevronRight style={{ width: 15, height: 15, color: 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
                   </button>
                 )}
 
-                {/* C. Timed Test */}
-                <button onClick={handleTestLaunch} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 14, padding: '14px 4px', borderRadius: 0, border: 'none', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'transparent', cursor: 'pointer', transition: 'background 0.15s', textAlign: 'left', WebkitTapHighlightColor: 'transparent' }} onMouseEnter={e => { e.currentTarget.style.background = 'rgba(249,115,22,0.04)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}>
+                {/* C. Timed Test — pre-fetches questions then opens the rich modal */}
+                <button onClick={handleTestLaunch} disabled={testConfigLoading} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 14, padding: '14px 4px', borderRadius: 0, border: 'none', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'transparent', cursor: testConfigLoading ? 'wait' : 'pointer', transition: 'background 0.15s', textAlign: 'left', WebkitTapHighlightColor: 'transparent', opacity: testConfigLoading ? 0.6 : 1 }} onMouseEnter={e => { if (!testConfigLoading) e.currentTarget.style.background = 'rgba(249,115,22,0.04)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}>
                   <div style={{ width: 3, height: 36, borderRadius: 2, background: '#f97316', flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 15, fontWeight: 600, color: '#fafafa', marginBottom: 3 }}>Timed Test</div>
-                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>Simulate exam conditions · speed &amp; accuracy</div>
+                    <div style={{ fontSize: 15, fontWeight: 600, color: '#fafafa', marginBottom: 3 }}>Chapter Test</div>
+                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>
+                      {testConfigLoading ? 'Loading questions…' : 'Timed · scored · simulates exam conditions'}
+                    </div>
                   </div>
                   <ChevronRight style={{ width: 15, height: 15, color: 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
                 </button>
@@ -1683,13 +1754,16 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
         {/* Auth Required Dialog */}
         {showAuthDialog && <AuthRequiredDialog onClose={() => setShowAuthDialog(false)} />}
 
-        {/* Test Config Modal */}
-        {showTestConfig && (
+        {/* Test Config Modal — opened only after handleTestLaunch has
+            prefetched the chapter's questions, so the modal renders in rich
+            mode (Pool strip + Topics aside + per-chapter accent). */}
+        {showTestConfig && selectedChapter && testConfigQuestions && (
           <TestConfigModal
-            maxQ={chapterQCount}
+            chapter={selectedChapter}
+            questions={testConfigQuestions}
             starQuestionCount={chapterStarCount}
             onStart={startTest}
-            onClose={() => setShowTestConfig(false)}
+            onClose={() => { setShowTestConfig(false); setTestConfigQuestions(null); }}
           />
         )}
 

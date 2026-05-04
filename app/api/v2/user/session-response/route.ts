@@ -1,31 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getUserIdFromRequest } from '@/lib/auth';
 import connectToDatabase from '@/lib/mongodb';
 import { StudentResponse } from '@/lib/models/StudentResponse';
 import { StudentChapterProfile, IStudentChapterProfile } from '@/lib/models/StudentChapterProfile';
 import { updateProfileFromResponse, createEmptyProfile } from '@/lib/profileEngine';
-
-async function getUserId(req: NextRequest): Promise<string | null> {
-  const authHeader = req.headers.get('Authorization');
-  if (!authHeader?.startsWith('Bearer ')) return null;
-  const token = authHeader.substring(7);
-
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!supabaseUrl || !supabaseAnonKey) return null;
-
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
-  const { data: { user }, error } = await supabase.auth.getUser(token);
-  if (error || !user) return null;
-  return user.id;
-}
 
 // ─── POST /api/v2/user/session-response ──────────────────────────────────────
 // Records a single question attempt during a guided practice session.
 // Called immediately after the student provides micro-feedback (and optionally stuckPoint).
 export async function POST(req: NextRequest) {
   try {
-    const userId = await getUserId(req);
+    const userId = await getUserIdFromRequest(req);
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }

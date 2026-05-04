@@ -13,6 +13,7 @@ export type ResourceKind =
     | 'name-rxns'
     | 'wizard'
     | 'salt'
+    | 'crucible'
     | 'comingsoon';
 
 export type Resource = {
@@ -58,6 +59,7 @@ export const KIND_GROUP: Record<ResourceKind, ResourceGroup> = {
     'name-rxns':     'Tools',
     'wizard':        'Tools',
     'salt':          'Tools',
+    'crucible':      'Tools',
     'top50':         'Tools',
     'comingsoon':    'Coming Soon',
 };

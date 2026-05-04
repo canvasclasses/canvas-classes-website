@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import connectToDatabase from '@/lib/mongodb';
 import { MockTestSet } from '@/lib/models/MockTestSet';
 import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
+import { isLocalhostDev } from '@/lib/bookAuth';
 
 // ── GET /api/v2/mock-tests/[id] — fetch single set with all questions ─────────
 
@@ -16,7 +17,7 @@ export async function GET(
 
     const scriptAuth = hasScriptSecret(request);
     const user = scriptAuth ? null : await getAuthenticatedUser(request);
-    const admin = scriptAuth || isAdmin(user?.email);
+    const admin = scriptAuth || (await isLocalhostDev()) || isAdmin(user?.email);
 
     const set = await MockTestSet.findOne({ _id: id, deleted_at: { $in: [null, undefined] } }).lean();
     if (!set) return NextResponse.json({ success: false, error: 'Not found' }, { status: 404 });
@@ -45,8 +46,9 @@ export async function PATCH(
   try {
     const scriptAuth = hasScriptSecret(request);
     const user = scriptAuth ? null : await getAuthenticatedUser(request);
-    const authorEmail = scriptAuth ? 'script' : user?.email;
-    if (!scriptAuth && !isAdmin(user?.email)) {
+    const localDev = await isLocalhostDev();
+    const authorEmail = scriptAuth ? 'script' : (user?.email ?? (localDev ? 'dev@localhost' : undefined));
+    if (!scriptAuth && !localDev && !isAdmin(user?.email)) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 403 });
     }
 
@@ -94,8 +96,9 @@ export async function DELETE(
   try {
     const scriptAuth = hasScriptSecret(request);
     const user = scriptAuth ? null : await getAuthenticatedUser(request);
-    const authorEmail = scriptAuth ? 'script' : user?.email;
-    if (!scriptAuth && !isAdmin(user?.email)) {
+    const localDev = await isLocalhostDev();
+    const authorEmail = scriptAuth ? 'script' : (user?.email ?? (localDev ? 'dev@localhost' : undefined));
+    if (!scriptAuth && !localDev && !isAdmin(user?.email)) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 403 });
     }
 

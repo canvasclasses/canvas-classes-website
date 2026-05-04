@@ -34,7 +34,11 @@ import {
 import { FlashcardItem, ChapterSummary, ChapterTopic } from '../lib/flashcardsData';
 import { useCardProgress } from '../hooks/useCardProgress';
 import { useFlashcardMeta } from '../hooks/useFlashcardMeta';
+import { flushPendingWrites } from '../utils/progressSync';
 import { QualityRating } from '../lib/spacedRepetition';
+import SyncStatusBanner from './SyncStatusBanner';
+import RegisterServiceWorker from './RegisterServiceWorker';
+import StudyHeatmap from './StudyHeatmap';
 import ReactMarkdown from 'react-markdown';
 import { flashcardMarkdownComponents } from '@/app/lib/flashcardMarkdown';
 import remarkMath from 'remark-math';
@@ -55,10 +59,11 @@ type SortMode = 'mostDue' | 'recentlyStudied' | 'alphabetical';
 
 function formatLastReviewed(isoDate: string | null): string {
     if (!isoDate) return 'Not started';
-    const reviewMs = new Date(isoDate).getTime();
+    const [y, m, d] = isoDate.split('-').map(Number);
+    const reviewDate = new Date(y, m - 1, d);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const diff = Math.round((today.getTime() - reviewMs) / (1000 * 60 * 60 * 24));
+    const diff = Math.round((today.getTime() - reviewDate.getTime()) / (1000 * 60 * 60 * 24));
     if (diff <= 0) return 'Today';
     if (diff === 1) return 'Yesterday';
     if (diff < 7) return `${diff}d ago`;
@@ -120,14 +125,17 @@ export default function FlashcardsClient({ chapterSummaries }: FlashcardsClientP
     const {
         isLoaded: progressLoaded,
         updateProgress,
+        undoLastReview,
+        canUndo,
         getDueCards,
-        sortByPriority,
         getStatistics,
         getTodaysQueue,
         getAccuracy,
         getLastReviewDate,
         getMaxOverdue,
-        hasAnyProgress
+        hasAnyProgress,
+        syncStatus,
+        pendingWrites
     } = useCardProgress();
 
     const {
@@ -202,9 +210,9 @@ export default function FlashcardsClient({ chapterSummaries }: FlashcardsClientP
 
             let queue: FlashcardItem[];
             if (mode === 'due') {
-                const dueIds = getDueCards(candidateIds);
-                const sortedIds = sortByPriority(dueIds);
-                queue = sortedIds
+                // Daily-capped: today's reviews (overdue first) + up to NEW_CARDS_PER_DAY new cards.
+                const queueIds = getTodaysQueue(candidateIds);
+                queue = queueIds
                     .map((id) => cardById.get(id))
                     .filter((c): c is FlashcardItem => !!c);
             } else {
@@ -282,6 +290,9 @@ export default function FlashcardsClient({ chapterSummaries }: FlashcardsClientP
         }
     };
 
+    // Distance to push a failed card back into the session queue.
+    const FAIL_REQUEUE_DISTANCE = 5;
+
     const handleResponse = (quality: QualityRating) => {
         const card = practiceQueue[currentIndex];
         if (card) {
@@ -291,9 +302,47 @@ export default function FlashcardsClient({ chapterSummaries }: FlashcardsClientP
                 setSessionStats((prev) => ({ ...prev, correct: prev.correct + 1 }));
             } else {
                 setSessionStats((prev) => ({ ...prev, needsReview: prev.needsReview + 1 }));
+                setPracticeQueue(prev => {
+                    const next = [...prev];
+                    const insertAt = Math.min(currentIndex + 1 + FAIL_REQUEUE_DISTANCE, next.length);
+                    next.splice(insertAt, 0, card);
+                    return next;
+                });
             }
         }
         nextCard();
+    };
+
+    const handleUndo = () => {
+        if (!canUndo) return;
+        const revertedQuality = undoLastReview();
+        if (revertedQuality === null) return;
+
+        setSessionStats(prev => {
+            if (revertedQuality >= 3) {
+                return { ...prev, correct: Math.max(0, prev.correct - 1) };
+            }
+            return { ...prev, needsReview: Math.max(0, prev.needsReview - 1) };
+        });
+
+        if (revertedQuality < 3) {
+            // Drop the most recent requeued copy of the previous card.
+            setPracticeQueue(prev => {
+                const card = prev[currentIndex - 1] || prev[currentIndex];
+                if (!card) return prev;
+                const copy = [...prev];
+                for (let i = copy.length - 1; i > currentIndex; i--) {
+                    if (copy[i].id === card.id) {
+                        copy.splice(i, 1);
+                        break;
+                    }
+                }
+                return copy;
+            });
+        }
+
+        setIsFlipped(true);
+        setCurrentIndex(prev => Math.max(0, prev - 1));
     };
 
     const nextCard = () => {
@@ -442,6 +491,11 @@ export default function FlashcardsClient({ chapterSummaries }: FlashcardsClientP
                         </div>
                     ) : !isPracticeMode ? (
                         <div className="max-w-5xl mx-auto">
+                            {!selectedChapter && hasAnyProgress() && (
+                                <div className="mb-6 md:mb-8">
+                                    <StudyHeatmap />
+                                </div>
+                            )}
                             {!selectedChapter ? (
                                 <motion.div
                                     initial={{ opacity: 0 }}
@@ -929,7 +983,16 @@ export default function FlashcardsClient({ chapterSummaries }: FlashcardsClientP
                                         </motion.div>
                                     )}
 
-                                    <div className="text-center mt-8">
+                                    <div className="flex justify-center items-center gap-6 mt-8">
+                                        <button
+                                            onClick={handleUndo}
+                                            disabled={!canUndo}
+                                            className="text-slate-500 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors text-sm inline-flex items-center gap-1"
+                                            title="Undo last rating"
+                                        >
+                                            <RotateCcw className="w-4 h-4" />
+                                            Undo
+                                        </button>
                                         <button
                                             onClick={() => {
                                                 setIsPracticeMode(false);
@@ -1097,6 +1160,14 @@ export default function FlashcardsClient({ chapterSummaries }: FlashcardsClientP
                     </motion.div>
                 </div>
             </section>
+            <SyncStatusBanner
+                status={syncStatus}
+                pendingWrites={pendingWrites}
+                onRetry={() => {
+                    flushPendingWrites().catch(err => console.error('Manual flush failed:', err));
+                }}
+            />
+            <RegisterServiceWorker />
         </main>
     );
 }

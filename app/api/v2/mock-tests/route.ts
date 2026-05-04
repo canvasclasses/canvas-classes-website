@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import connectToDatabase from '@/lib/mongodb';
 import { MockTestSet } from '@/lib/models/MockTestSet';
 import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
+import { isLocalhostDev } from '@/lib/bookAuth';
 
 // ── GET /api/v2/mock-tests — list all sets (admin: all; public: published only) ──
 
@@ -10,7 +11,7 @@ export async function GET(request: NextRequest) {
   try {
     await connectToDatabase();
 
-    const admin = hasScriptSecret(request) || isAdmin((await getAuthenticatedUser(request))?.email);
+    const admin = hasScriptSecret(request) || (await isLocalhostDev()) || isAdmin((await getAuthenticatedUser(request))?.email);
 
     const { searchParams } = new URL(request.url);
     const exam = searchParams.get('exam');         // 'JEE' | 'NEET'
@@ -58,9 +59,10 @@ export async function POST(request: NextRequest) {
   try {
     const scriptAuth = hasScriptSecret(request);
     const user = scriptAuth ? null : await getAuthenticatedUser(request);
-    const authorEmail = scriptAuth ? 'script' : user?.email;
+    const localDev = await isLocalhostDev();
+    const authorEmail = scriptAuth ? 'script' : (user?.email ?? (localDev ? 'dev@localhost' : undefined));
 
-    if (!scriptAuth && !isAdmin(user?.email)) {
+    if (!scriptAuth && !localDev && !isAdmin(user?.email)) {
       return NextResponse.json({ success: false, error: `Unauthorized — logged in as: ${user?.email ?? 'not logged in'}` }, { status: 403 });
     }
 

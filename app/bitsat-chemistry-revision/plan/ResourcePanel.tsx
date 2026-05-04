@@ -43,6 +43,7 @@ const GLYPH: Record<ResourceKind, { Icon: typeof Play; label: string }> = {
     'name-rxns':    { Icon: Lightbulb,  label: 'Reference tool' },
     'wizard':       { Icon: Lightbulb,  label: 'Interactive tool' },
     'salt':         { Icon: Lightbulb,  label: 'Simulator' },
+    'crucible':     { Icon: Lightbulb,  label: 'Crucible practice' },
     'top50':        { Icon: FileText,   label: 'Reference' },
     'comingsoon':   { Icon: Lock,       label: 'Coming soon' },
 };

@@ -6,9 +6,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { Chapter, Question } from '../components/types';
 import BrowseView from '../components/BrowseView';
-import TestConfigModal from '../components/TestConfigModal';
+import TestConfigModal, { TestStartConfig } from '../components/TestConfigModal';
 import TestView from '../components/TestView';
-import { buildSmartTest, DifficultyMix, QuestionSort, AttemptedEntry } from '../components/testGenerator';
+import { buildSmartTest, DifficultyMix, QuestionSort, AttemptedEntry, CustomDifficultyMix } from '../components/testGenerator';
 
 interface Props {
     chapter: Chapter;
@@ -78,18 +78,35 @@ export default function ChapterPracticePage({ chapter, questions, allChapters, e
     // Helper to update mode and URL together — preserves examBoard param
     const updateMode = useCallback((newMode: Mode) => {
         setMode(newMode);
+        // Funnel event — top of practice funnel within a chapter. Lets us see
+        // which CTA students gravitate to per chapter (browse vs test).
+        if (newMode !== 'choose') {
+            track('mode_selected', {
+                chapter_id: chapter.id,
+                chapter_name: chapter.name,
+                mode: newMode,
+                exam_board: examBoard,
+            });
+        }
         const url = newMode === 'choose'
             ? chapterUrl(chapter.id)
             : chapterUrl(chapter.id, `mode=${newMode}`);
         router.push(url, { scroll: false });
-    }, [chapter.id, router, examBoard]);
+    }, [chapter.id, chapter.name, router, examBoard]);
 
-    const startTest = useCallback(async (count: number, mix: DifficultyMix, sort: QuestionSort = 'random') => {
-        setShowTestConfig(false);
+    // Internal builder — runs the generator against an arbitrary question
+    // subset. Centralised so both the modal flow and the URL-param auto-build
+    // flow funnel through one path.
+    const buildAndLaunch = useCallback(async (
+        questionPool: Question[],
+        count: number,
+        mix: DifficultyMix,
+        sort: QuestionSort,
+        useStarOnly: boolean,
+        customMix?: CustomDifficultyMix,
+    ) => {
         setIsBuilding(true);
-
         try {
-            // Fetch user progress for smart scoring (best-effort — if not logged in, falls back to simple random)
             let attempted: AttemptedEntry[] = [];
             let starredIds = new Set<string>();
             let last3Sessions: string[][] = [];
@@ -106,11 +123,18 @@ export default function ChapterPracticePage({ chapter, questions, allChapters, e
                 }
             }
 
-            // Build the smart test
+            // If "star-marked only" is on, narrow the pool to starred questions
+            // before scoring. Generator's `starredIds` is a soft preference; this
+            // is a hard filter.
+            const finalPool = useStarOnly && starredIds.size > 0
+                ? questionPool.filter(q => starredIds.has(q.id))
+                : questionPool;
+
             const picked = buildSmartTest({
-                questions,
+                questions: finalPool,
                 count,
                 mix,
+                customMix,
                 sort,
                 starredIds,
                 attempted,
@@ -118,14 +142,30 @@ export default function ChapterPracticePage({ chapter, questions, allChapters, e
             });
 
             setTestQuestions(picked);
-
-            // Note: Test session is now recorded only when user saves progress (not at start)
-            
             updateMode('test');
         } finally {
             setIsBuilding(false);
         }
-    }, [questions, chapter.id, updateMode]);
+    }, [chapter.id, updateMode]);
+
+    // Modal Start handler — receives the full TestStartConfig shape and
+    // pre-filters the question pool by topic/pool selections before kicking
+    // the generator.
+    const startTestFromConfig = useCallback(async (config: TestStartConfig) => {
+        setShowTestConfig(false);
+        const eligible = new Set(config.eligibleQuestionIds);
+        const pool = eligible.size > 0
+            ? questions.filter(q => eligible.has(q.id))
+            : questions;
+        await buildAndLaunch(pool, config.count, config.mix, config.sort, config.useStarOnly, config.customMix);
+    }, [questions, buildAndLaunch]);
+
+    // URL-param auto-build path — preserves the legacy entry point used by
+    // direct links and the auto-launch on `?mode=test`. No topic/pool filters
+    // here; uses the full chapter pool.
+    const startTestSimple = useCallback(async (count: number, mix: DifficultyMix, sort: QuestionSort = 'random') => {
+        await buildAndLaunch(questions, count, mix, sort, false);
+    }, [questions, buildAndLaunch]);
 
     // Auto-build test if mode=test in URL on mount
     useEffect(() => {
@@ -139,9 +179,9 @@ export default function ChapterPracticePage({ chapter, questions, allChapters, e
             const mix = mixParam && ['balanced', 'easy', 'hard', 'pyq'].includes(mixParam) ? mixParam : 'balanced';
             const sort = sortParam && ['random', 'difficulty', 'topic'].includes(sortParam) ? sortParam : 'random';
             
-            startTest(count, mix, sort);
+            startTestSimple(count, mix, sort);
         }
-    }, [mode, testQuestions.length, isBuilding, questions.length, startTest, searchParams]);
+    }, [mode, testQuestions.length, isBuilding, questions.length, startTestSimple, searchParams]);
 
     if (mode === 'browse') {
         const isTopPYQFilter = searchParams.get('is_top_pyq') === 'true';
@@ -233,7 +273,7 @@ export default function ChapterPracticePage({ chapter, questions, allChapters, e
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                             <button onClick={() => updateMode('browse')}
                                 style={{ padding: '18px', borderRadius: 14, border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.06)', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-                                📖 Browse All Questions
+                                📖 Topic-wise Problems
                                 <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 400 }}>Solutions visible</span>
                             </button>
                             
@@ -241,14 +281,14 @@ export default function ChapterPracticePage({ chapter, questions, allChapters, e
                             {(chapter.star_question_count ?? 0) >= 20 && (
                                 <button onClick={() => router.push(chapterUrl(chapter.id, 'mode=browse&is_top_pyq=true'))}
                                     style={{ padding: '18px', borderRadius: 14, border: '1px solid rgba(251,191,36,0.3)', background: 'rgba(251,191,36,0.1)', color: '#fbbf24', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-                                    ⭐ Quick Revision
-                                    <span style={{ fontSize: 12, color: 'rgba(251,191,36,0.6)', fontWeight: 400 }}>{chapter.star_question_count} hand-picked questions</span>
+                                    ⭐ Top Questions
+                                    <span style={{ fontSize: 12, color: 'rgba(251,191,36,0.6)', fontWeight: 400 }}>{chapter.star_question_count} hand-picked · for revision &amp; backlogs</span>
                                 </button>
                             )}
                             
                             <button onClick={() => setShowTestConfig(true)} disabled={isBuilding}
                                 style={{ padding: '18px', borderRadius: 14, border: 'none', background: isBuilding ? 'rgba(124,58,237,0.4)' : 'linear-gradient(135deg,#7c3aed,#5b21b6)', color: '#fff', fontSize: 15, fontWeight: 800, cursor: isBuilding ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, boxShadow: '0 4px 20px rgba(124,58,237,0.4)' }}>
-                                {isBuilding ? '⏳ Building test…' : '⏱ Take Timed Test'}
+                                {isBuilding ? '⏳ Building test…' : '⏱ Chapter Test'}
                                 {!isBuilding && <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', fontWeight: 400 }}>Smart · topic-balanced</span>}
                             </button>
                         </div>
@@ -273,11 +313,12 @@ export default function ChapterPracticePage({ chapter, questions, allChapters, e
             </div>
 
             {showTestConfig && (
-                <TestConfigModal 
-                    maxQ={qCount} 
+                <TestConfigModal
+                    chapter={chapter}
+                    questions={questions}
                     starQuestionCount={chapter.star_question_count ?? 0}
-                    onStart={startTest} 
-                    onClose={() => setShowTestConfig(false)} 
+                    onStart={startTestFromConfig}
+                    onClose={() => setShowTestConfig(false)}
                 />
             )}
         </div>

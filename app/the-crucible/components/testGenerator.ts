@@ -10,8 +10,16 @@
 
 import { Question } from './types';
 
-export type DifficultyMix = 'balanced' | 'easy' | 'hard' | 'pyq';
+export type DifficultyMix = 'balanced' | 'easy' | 'hard' | 'pyq' | 'custom';
 export type QuestionSort = 'random' | 'difficulty' | 'topic';
+
+/** User-defined difficulty weighting — only honoured when mix === 'custom'.
+ *  Values are raw (need not sum to 100); the scorer normalises by total. */
+export interface CustomDifficultyMix {
+    easy: number;
+    medium: number;
+    hard: number;
+}
 
 /** Lightweight mirror of IAttemptedIdEntry (returned by the progress API) */
 export interface AttemptedEntry {
@@ -25,6 +33,7 @@ export interface TestGeneratorInput {
     questions: Question[];
     count: number;
     mix: DifficultyMix;
+    customMix?: CustomDifficultyMix;
     sort?: QuestionSort;
     starredIds?: Set<string>;
     attempted?: AttemptedEntry[];
@@ -57,6 +66,7 @@ function scoreQuestion(
     attemptedMap: Map<string, AttemptedEntry>,
     starredIds: Set<string>,
     recentSessionIds: Set<string>,
+    customMix?: CustomDifficultyMix,
 ): number {
     let score = 100; // base
 
@@ -87,6 +97,18 @@ function scoreQuestion(
         score *= diffLevel <= 2 ? 1.8 : diffLevel === 3 ? 1.2 : 0.3;
     } else if (mix === 'hard') {
         score *= diffLevel >= 4 ? 1.8 : diffLevel === 3 ? 1.2 : 0.3;
+    } else if (mix === 'custom' && customMix) {
+        // User-defined per-tier weighting. Each tier's multiplier is its share
+        // of the total weight × 3 (so a uniform 33/33/33 lands at 1× — same
+        // as 'balanced' base) — values floor at 0.05 to avoid hard zeros that
+        // would erase the tier from the topic-allocation pass entirely.
+        const total = (customMix.easy + customMix.medium + customMix.hard) || 1;
+        const tierShare = diffLevel <= 2
+            ? customMix.easy / total
+            : diffLevel === 3
+                ? customMix.medium / total
+                : customMix.hard / total;
+        score *= Math.max(0.05, tierShare * 3);
     } else {
         score *= diffLevel === 3 ? 1.3 : 1.0;
     }
@@ -102,6 +124,7 @@ export function buildSmartTest({
     questions,
     count,
     mix,
+    customMix,
     sort = 'random',
     starredIds = new Set(),
     attempted = [],
@@ -121,7 +144,7 @@ export function buildSmartTest({
     // ── Score every question ──────────────────────────────────────────────────
     const scored = validQuestions.map(q => ({
         q,
-        score: scoreQuestion(q, mix, attemptedMap, starredIds, recentSessionIds),
+        score: scoreQuestion(q, mix, attemptedMap, starredIds, recentSessionIds, customMix),
     }));
 
     // ── Group by primary topic tag ────────────────────────────────────────────

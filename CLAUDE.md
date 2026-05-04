@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> **Before changing anything inside `app/the-crucible/`, `app/crucible/admin/`, `app/api/v2/`, `lib/models/UserProgress.ts`, `lib/models/StudentChapterProfile.ts`, `lib/recommendationEngine.ts`, or `lib/models/ResourceLink.ts` — read [`_agents/CRUCIBLE_ARCHITECTURE.md`](_agents/CRUCIBLE_ARCHITECTURE.md).** It is the canonical reference for Crucible's structure, the persona pipeline, the recommendation bridge, and the invariants that must not be broken. If anything in this file or in code comments contradicts it, that document wins; the fix is to update the doc, never to silently diverge.
+
 ---
 
 ## 1. PROJECT OVERVIEW

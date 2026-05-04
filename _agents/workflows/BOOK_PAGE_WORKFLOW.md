@@ -282,6 +282,19 @@ photorealistic / epic Indian art / etc.]. Dark background. No text.
 
 A generation prompt should be **specific, visual, and technical**. It tells an AI image generator exactly what to draw.
 
+**🔒 PLATFORM-WIDE STYLE LOCK — DARK BACKGROUNDS, ALL SUBJECTS, NO EXCEPTIONS.**
+
+Every `generation_prompt` on every page — chemistry, physics, biology, hero banners, scientist portraits, scene illustrations, apparatus diagrams — **must specify a dark background**. The Canvas reader uses a dark theme. Light/cream/white backgrounds break visual consistency across the platform. This rule overrides any temptation to mimic the printed-book aesthetic.
+
+- Physics/chemistry/biology technical illustrations: end with `Dark background (#0a0a0a or near-black), orange accent labels and arrows, clean technical illustration style.`
+- Class 9 hero banners (painterly): use `Dark cinematic background, atmospheric Indian-illustration style, no text overlay.` — never bright daylight or sterile white.
+- Class 9 scene illustrations (athlete on a track, car on a highway, marble in a ring): keep characters in colour, but set them against a **dark, twilight, or near-black backdrop** with subtle orange/warm rim lighting — never a bright blue sky or daylight setting.
+- Image-generation engine: write prompts for **ChatGPT image 2.0** style — it handles integrated labels, leader lines, and consistent illustration style well.
+
+**Prompts written for light/white backgrounds will be rejected on review.**
+
+
+
 Structure: `[Name] + [Spatial layout of components] + [Process arrows] + [Label list] + [Inset if useful] + [Style]`
 
 **Template:**

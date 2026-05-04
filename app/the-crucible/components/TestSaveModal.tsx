@@ -1,91 +1,73 @@
 'use client';
 
-import { X } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 
 interface TestSaveModalProps {
   score: number;
   total: number;
   timeSpent: string;
-  onSave: () => void;
-  onDiscard: () => void;
+  /** Single CTA — close the modal and proceed to the review screen.
+   *  Test data is already persisted by TestView before this modal opens; the
+   *  old onSave/onDiscard pair was an UX trap (Discard nuked the test). */
+  onContinue: () => void;
 }
 
-export default function TestSaveModal({ score, total, timeSpent, onSave, onDiscard }: TestSaveModalProps) {
-  const percentage = Math.round((score / total) * 100);
+export default function TestSaveModal({ score, total, timeSpent, onContinue }: TestSaveModalProps) {
+  const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
   const isPassing = percentage >= 60;
 
   return (
-    <div 
-      className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div 
-        className="bg-[#12141f] border border-white/12 rounded-2xl p-6 max-w-md w-full shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-white">Test Complete!</h2>
+    <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-[#13151E] border border-white/10 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+        <div className="flex items-center justify-between mb-5">
+          <div>
+            <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-400 mb-1 inline-flex items-center gap-1.5">
+              <Check className="w-3 h-3" strokeWidth={3} />
+              Test saved
+            </div>
+            <h2 className="text-[20px] font-bold text-white tracking-tight">Test complete</h2>
+          </div>
           <button
-            onClick={onDiscard}
+            onClick={onContinue}
             className="p-1 hover:bg-white/5 rounded-lg transition-colors"
+            aria-label="Close"
           >
             <X className="w-5 h-5 text-white/40" />
           </button>
         </div>
 
-        {/* Score Display */}
-        <div className="mb-6">
-          <div className="text-center mb-4">
-            <div className={`text-5xl font-black mb-2 ${isPassing ? 'text-green-400' : 'text-amber-400'}`}>
-              {score}/{total}
-            </div>
-            <div className={`text-2xl font-bold ${isPassing ? 'text-green-400/80' : 'text-amber-400/80'}`}>
-              {percentage}%
-            </div>
+        {/* Score */}
+        <div className="text-center mb-5">
+          <div className={`text-[48px] font-black leading-none mb-1 ${isPassing ? 'text-emerald-400' : 'text-amber-400'}`}>
+            {score}<span className="text-white/30">/{total}</span>
           </div>
-
-          <div className="flex items-center justify-center gap-4 text-sm text-white/60">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-400" />
-              <span>{score} Correct</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-red-400" />
-              <span>{total - score} Wrong</span>
-            </div>
-          </div>
-
-          <div className="mt-4 text-center text-sm text-white/50">
-            Time: {timeSpent}
+          <div className={`text-[18px] font-bold ${isPassing ? 'text-emerald-300' : 'text-amber-300'}`}>
+            {percentage}%
           </div>
         </div>
 
-        {/* Info Box */}
-        <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-4 mb-6">
-          <p className="text-sm text-white/70 leading-relaxed">
-            <strong className="text-white">Save this test to your progress?</strong>
-            <br />
-            Saving will update your mastery levels and help personalize future tests. 
-            Discard if this was just casual practice.
-          </p>
+        {/* Stats row */}
+        <div className="grid grid-cols-3 gap-2 mb-5">
+          <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/25 p-3 text-center">
+            <div className="font-mono text-[16px] text-emerald-300 tabular-nums leading-none">{score}</div>
+            <div className="text-[9.5px] uppercase tracking-wide text-emerald-400/70 font-bold mt-1">Correct</div>
+          </div>
+          <div className="rounded-xl bg-red-500/10 border border-red-500/25 p-3 text-center">
+            <div className="font-mono text-[16px] text-red-300 tabular-nums leading-none">{total - score}</div>
+            <div className="text-[9.5px] uppercase tracking-wide text-red-400/70 font-bold mt-1">Wrong</div>
+          </div>
+          <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] p-3 text-center">
+            <div className="font-mono text-[16px] text-white tabular-nums leading-none">{timeSpent}</div>
+            <div className="text-[9.5px] uppercase tracking-wide text-white/45 font-bold mt-1">Time</div>
+          </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex gap-3">
-          <button
-            onClick={onDiscard}
-            className="flex-1 px-4 py-3 rounded-xl border border-white/10 text-white/70 hover:bg-white/5 transition-colors font-medium"
-          >
-            Discard
-          </button>
-          <button
-            onClick={onSave}
-            className="flex-1 px-4 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:from-indigo-600 hover:to-purple-600 transition-all font-bold shadow-lg shadow-indigo-500/20"
-          >
-            Save Progress
-          </button>
-        </div>
+        <button
+          onClick={onContinue}
+          className="w-full py-3 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-black font-bold text-[14px] hover:shadow-lg hover:shadow-orange-500/25 transition-all"
+        >
+          Review answers
+        </button>
       </div>
     </div>
   );

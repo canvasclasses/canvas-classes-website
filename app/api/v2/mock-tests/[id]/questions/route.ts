@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import connectToDatabase from '@/lib/mongodb';
 import { MockTestSet } from '@/lib/models/MockTestSet';
 import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
+import { isLocalhostDev } from '@/lib/bookAuth';
 
 // ── POST /api/v2/mock-tests/[id]/questions — add a new question to a set ─────
 
@@ -13,8 +14,9 @@ export async function POST(
   try {
     const scriptAuth = hasScriptSecret(request);
     const user = scriptAuth ? null : await getAuthenticatedUser(request);
-    const authorEmail = scriptAuth ? 'script' : user?.email;
-    if (!scriptAuth && !isAdmin(user?.email)) {
+    const localDev = await isLocalhostDev();
+    const authorEmail = scriptAuth ? 'script' : (user?.email ?? (localDev ? 'dev@localhost' : undefined));
+    if (!scriptAuth && !localDev && !isAdmin(user?.email)) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 403 });
     }
 

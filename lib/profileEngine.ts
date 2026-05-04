@@ -199,6 +199,73 @@ export function updateProfileFromResponse(
   return updated;
 }
 
+// ── Lite update — for browse/test attempts (no microFeedback or stuckPoint) ──
+//
+// Browse and test modes only know whether the answer was correct + the
+// micro-concept the question was tagged with — they don't have the rich
+// guided-practice signals (microFeedback, stuckPoint). This update path
+// is the "persona unification" entry point for those modes — see
+// CRUCIBLE_ARCHITECTURE.md §4.3.
+//
+// Tiered-signal contract (§3.2): mastery-grade fields only move on HIGH
+// confidence. MEDIUM (browse default) and LOW (casual-tagged) attempts are
+// no-ops here — exposure tracking lives in UserProgress.concept_mastery.
+export interface ILiteAttempt {
+  questionId: string;
+  microConcept: string;          // from question.metadata.microConcept ?? '_untagged'
+  answeredCorrectly: boolean;
+  timestamp: Date;
+  // 'high' | 'medium' | 'low' — see CRUCIBLE_ARCHITECTURE.md §3.2
+  confidence?: 'high' | 'medium' | 'low';
+}
+
+export function updateProfileFromAttempt(
+  profile: IStudentChapterProfile,
+  attempt: ILiteAttempt,
+): IStudentChapterProfile {
+  // Tier gate — only HIGH-confidence attempts move the persona. Browse-medium
+  // and casual-low are skipped to preserve mastery signal quality.
+  if (attempt.confidence && attempt.confidence !== 'high') return profile;
+
+  const updated = structuredClone(profile) as IStudentChapterProfile;
+  const mc = attempt.microConcept || '_untagged';
+
+  let mcpIdx = updated.microConceptProfiles.findIndex(p => p.microConcept === mc);
+  if (mcpIdx === -1) {
+    updated.microConceptProfiles.push(createEmptyMicroConceptProfile(mc));
+    mcpIdx = updated.microConceptProfiles.length - 1;
+  }
+  const mcp = updated.microConceptProfiles[mcpIdx];
+
+  mcp.attempts += 1;
+  if (attempt.answeredCorrectly) mcp.correctCount += 1;
+  mcp.accuracyRate = mcp.attempts > 0 ? mcp.correctCount / mcp.attempts : 0;
+  mcp.lastPracticed = new Date(attempt.timestamp);
+
+  // Recompute proficiency from attempts + accuracy. Stuck-point dimension
+  // stays as-is (only guided practice supplies it) — recommendation engine
+  // can still rank by accuracy/recency without it.
+  mcp.proficiencyLevel = computeProficiencyLevel(mcp.attempts, mcp.accuracyRate, mcp.dominantWeakness);
+  updated.microConceptProfiles[mcpIdx] = mcp;
+
+  // Chapter aggregates
+  updated.totalAttempts += 1;
+  if (attempt.answeredCorrectly) updated.totalCorrect += 1;
+  updated.overallAccuracy = updated.totalAttempts > 0 ? updated.totalCorrect / updated.totalAttempts : 0;
+  updated.overallProficiency = computeChapterProficiency(updated.microConceptProfiles);
+
+  // Track recent question to avoid re-showing in guided sessions later
+  if (attempt.questionId && !updated.recentQuestionIds.includes(attempt.questionId)) {
+    updated.recentQuestionIds.push(attempt.questionId);
+    if (updated.recentQuestionIds.length > 150) {
+      updated.recentQuestionIds = updated.recentQuestionIds.slice(-150);
+    }
+  }
+
+  updated.updatedAt = new Date();
+  return updated;
+}
+
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 export function createEmptyMicroConceptProfile(microConcept: string): IMicroConceptProfile {

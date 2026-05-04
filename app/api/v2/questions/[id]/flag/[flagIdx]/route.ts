@@ -3,6 +3,7 @@ import { revalidateTag } from 'next/cache';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
 import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
+import { isLocalhostDev } from '@/lib/bookAuth';
 
 // PATCH /api/v2/questions/[id]/flag/[flagIdx]/resolve
 // Marks a specific flag as resolved (admin only)
@@ -13,7 +14,8 @@ export async function PATCH(
   try {
     const scriptAuth = hasScriptSecret(request);
     const user = scriptAuth ? null : await getAuthenticatedUser(request);
-    if (!scriptAuth && !isAdmin(user?.email)) {
+    const localDev = await isLocalhostDev();
+    if (!scriptAuth && !localDev && !isAdmin(user?.email)) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 403 });
     }
 

@@ -1,34 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/app/utils/supabase/server';
 import connectToDatabase from '@/lib/mongodb';
 import { UserProgress } from '@/lib/models/UserProgress';
-
-async function getUserId(req: NextRequest): Promise<string | null> {
-    const authHeader = req.headers.get('Authorization');
-    if (!authHeader?.startsWith('Bearer ')) return null;
-    const token = authHeader.slice(7);
-    const supabase = await createClient();
-    if (!supabase) return null;
-    const { data: { user }, error } = await supabase.auth.getUser(token);
-    if (error || !user) return null;
-    return user.id;
-}
+import { getUserIdFromRequest } from '@/lib/auth';
 
 export async function GET(req: NextRequest) {
     try {
-        const isDevelopment = process.env.NODE_ENV === 'development';
-
-        const userId = isDevelopment ? 'local-dev' : await getUserId(req);
+        // NOTE: removed the `NODE_ENV === 'development'` placeholder bypass —
+        // it was a CLAUDE.md §8.3 violation (Vercel previews also set NODE_ENV
+        // to 'development', so it would have leaked the placeholder dataset to
+        // every preview deployment). If you need a previewable dashboard for
+        // local dev, hit it as a logged-in user with seeded data.
+        const userId = await getUserIdFromRequest(req);
         if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-        // For local dev, return placeholder data so dashboard UI is previewable
-        if (isDevelopment) {
-            return NextResponse.json({
-                stats: { total_questions_attempted: 247, total_correct: 182, overall_accuracy: 74, streak_days: 5 },
-                mastered_chapters: 3,
-                active_days: [0, 1, 2, 4, 5],
-            });
-        }
         await connectToDatabase();
 
         // Lean query: we only need the stats and maybe a few top-level fields

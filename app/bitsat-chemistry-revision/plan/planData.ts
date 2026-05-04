@@ -86,6 +86,7 @@ export const PHASES: Phase[] = [
                     { label: 'Interactive Periodic Table', href: '/interactive-periodic-table', kind: 'periodic' },
                     { label: 'Periodic Trends', href: '/periodic-trends', kind: 'trends' },
                     { label: 'Inorganic Trends Flashcards', href: '/chemistry-flashcards/most-important-inorganic-trends', kind: 'flashcards' },
+                    { label: 'Crucible Practice', href: 'https://www.canvasclasses.in/the-crucible/ch11_periodic?mode=browse&examBoard=JEE', kind: 'crucible' },
                 ],
             },
             {
@@ -182,21 +183,6 @@ export const PHASES: Phase[] = [
             },
             {
                 day: 10,
-                title: 'Kinetics — Arrhenius & Mechanisms',
-                focus: 'Activation energy two-temperature problems, catalyst effect, molecularity vs order.',
-                checklist: [
-                    'Arrhenius two-temperature problem.',
-                    'Catalyst effect on Ea.',
-                    'Molecularity vs order — know the difference.',
-                ],
-                resources: [
-                    { label: 'Kinetics One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('ns2zwlXgwCw') },
-                    { label: 'Kinetics Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('10S4kxF-cRE0dUKEzu2VNQERf4R68pn6Z') },
-                    { label: 'Kinetics Flashcards', href: '/chemistry-flashcards/chemical-kinetics', kind: 'flashcards' },
-                ],
-            },
-            {
-                day: 11,
                 title: 'Thermodynamics — Laws & Processes',
                 focus: 'Reversible vs irreversible work, Carnot cycle efficiency, Hess law shortcuts.',
                 checklist: [
@@ -210,7 +196,7 @@ export const PHASES: Phase[] = [
                 ],
             },
             {
-                day: 12,
+                day: 11,
                 title: 'Thermodynamics — Spontaneity',
                 focus: '∆G, ∆S of universe, Gibbs–Helmholtz, coupling reactions.',
                 checklist: [
@@ -224,7 +210,7 @@ export const PHASES: Phase[] = [
                 ],
             },
             {
-                day: 13,
+                day: 12,
                 title: 'Solutions — Colligative Properties',
                 focus: 'van\'t Hoff factor, abnormal molar mass, Raoult deviations, osmotic pressure numericals.',
                 checklist: [
@@ -240,16 +226,37 @@ export const PHASES: Phase[] = [
                 ],
             },
             {
-                day: 14,
-                title: 'Equilibrium — Ionic & Chemical',
-                focus: 'Kc/Kp, Le Chatelier shifts, buffer pH (Henderson), Ksp common-ion effect.',
+                day: 13,
+                title: 'Equilibrium I — Chemical Equilibrium',
+                focus: 'Physical vs chemical equilibrium, Kc/Kp relation, characteristics of K, homogeneous vs heterogeneous equilibria, reaction quotient Q, degree of dissociation, Gibbs energy and equilibrium, Le Chatelier shifts.',
+                tip: 'For Le Chatelier "shift direction" MCQs, count gas moles on both sides first — that one move solves most BITSAT questions.',
                 checklist: [
-                    'Kc vs Kp — when they differ.',
-                    'Henderson buffer pH formula.',
-                    'Ksp with common-ion effect.',
+                    'Kc vs Kp — relation, units, when they differ.',
+                    'Reaction quotient Q vs K — predicting direction.',
+                    'Le Chatelier shifts for ∆n, T, P, inert gas.',
                 ],
                 resources: [
-                    { label: 'Solutions Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1qyIOR1Y5aMQP12a_n6iYwJIsxZjJUWp7') },
+                    { label: 'Equilibrium - 1', href: '/neet-crash-course/equilibrium', kind: 'crash-course', embedUrl: yt('DcvA2eeGRrg') },
+                    { label: 'Equilibrium - 2', href: '/neet-crash-course/equilibrium', kind: 'crash-course', embedUrl: yt('QCJdA5fZi1E') },
+                    { label: 'DPP Solution 1', href: '/neet-crash-course/equilibrium', kind: 'crash-course', embedUrl: yt('SwQ7dYC_y7U') },
+                    { label: 'DPP Solution 2', href: '/neet-crash-course/equilibrium', kind: 'crash-course', embedUrl: yt('_govrOzlSD8') },
+                    { label: 'Equilibrium DPP PDF', href: '/neet-crash-course/equilibrium', kind: 'notes', embedUrl: pdf('1Z6ynl-ErqwuqQX0dHd2R7pxP9aY6hdKf') },
+                ],
+            },
+            {
+                day: 14,
+                title: 'Equilibrium II — Ionic Equilibrium',
+                focus: 'Acid-base concepts, types of electrolytes, Ostwald\'s dilution law, ionization of polyprotic acids, ionic product of water, pH, hydrolysis of salts, buffer solutions (Henderson), Ksp of sparingly soluble salts, indicators, acid-base titration curves.',
+                tip: 'Henderson buffer: pH = pKa + log([salt]/[acid]). Memorise pKa for acetic (4.74), ammonium (9.25) — most BITSAT buffer Qs use these.',
+                checklist: [
+                    'Ostwald\'s dilution law — α from Ka and C.',
+                    'Henderson equation — buffer pH numerical.',
+                    'Ksp + common-ion effect — solubility drop.',
+                ],
+                resources: [
+                    { label: 'Equilibrium - 3', href: '/neet-crash-course/equilibrium', kind: 'crash-course', embedUrl: yt('d7uPtssUbMY') },
+                    { label: 'Equilibrium - 4', href: '/neet-crash-course/equilibrium', kind: 'crash-course', embedUrl: yt('2Ij12NAORXA') },
+                    { label: 'DPP Solution 3', href: '/neet-crash-course/equilibrium', kind: 'crash-course', embedUrl: yt('5pofIYSB4ps') },
                     { label: 'Ksp Calculator', href: '/solubility-product-ksp-calculator', kind: 'physical' },
                 ],
             },
@@ -265,6 +272,7 @@ export const PHASES: Phase[] = [
                 ],
                 resources: [
                     { label: 'Electrochemistry One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('rewf5tsVEAU') },
+                    { label: 'Redox MCQ Practice', href: 'https://youtu.be/ZUmRqtSDdzk', kind: 'oneshot', embedUrl: yt('ZUmRqtSDdzk') },
                     { label: 'Electrochemistry Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1hHYRF_B5mZLnZKy_GEy0Cb4RYBmDjnfj') },
                     { label: 'Top 50 Concepts', href: '/top-50-concepts', kind: 'top50' },
                     { label: 'Electrochemistry Flashcards', href: '/chemistry-flashcards/electrochemistry', kind: 'flashcards' },
@@ -296,8 +304,9 @@ export const PHASES: Phase[] = [
                 ],
                 resources: [
                     { label: 'Complete Chapter', href: 'https://www.youtube.com/watch?v=RPm8j0lMUQQ&list=PL12uTDKbp7xV-1dMuUYRfm-MQgBi3zPlC', kind: 'crash-course', embedUrl: 'https://www.youtube.com/embed/RPm8j0lMUQQ?list=PL12uTDKbp7xV-1dMuUYRfm-MQgBi3zPlC' },
+                    { label: 'Practice 25 MCQ', href: 'https://www.youtube.com/watch?v=_MUKUwxJ5EU', kind: 'oneshot', embedUrl: yt('_MUKUwxJ5EU') },
                     { label: 'Practice 45 MCQ', href: 'https://youtu.be/S1eZfIb5dWw', kind: 'oneshot', embedUrl: yt('S1eZfIb5dWw') },
-                    { label: 'Surface Chemistry Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1A-BcI6wcUqadh3ki3xrQdS5XS5jXIkgL') },
+                    { label: 'Surface Chemistry Notes', href: 'https://drive.google.com/file/d/1mHT8skp9opz-idhha6eboLkgNa4o_8W6/view', kind: 'notes', embedUrl: pdf('1mHT8skp9opz-idhha6eboLkgNa4o_8W6') },
                     { label: 'Surface Chemistry Flashcards', href: '/chemistry-flashcards/surface-chemistry', kind: 'flashcards' },
                 ],
             },
@@ -306,8 +315,8 @@ export const PHASES: Phase[] = [
     {
         id: 'phase3',
         label: 'Phase 3 · The Mechanistic Deep-Dive',
-        days: 'Days 18–25',
-        goal: 'Multi-step Organic + niche Inorganic trivia.',
+        days: 'Days 18–26',
+        goal: 'Multi-step Organic + niche Inorganic trivia, plus a Practical Organic Chemistry sprint.',
         accent: 'text-purple-400',
         gradient: 'from-purple-500/20 via-fuchsia-500/10 to-transparent',
         icon: 'Microscope',
@@ -325,6 +334,7 @@ export const PHASES: Phase[] = [
                     { label: 'GOC One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('yg_xIkyGtxg') },
                     { label: 'GOC Handwritten Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('11vnQB7wHZeQAdKp4d27NzLAicgsnM1QO') },
                     { label: 'GOC & POC Flashcards', href: '/chemistry-flashcards/goc-and-poc', kind: 'flashcards' },
+                    { label: 'Crucible Practice', href: 'https://www.canvasclasses.in/the-crucible/ch11_goc?mode=browse&examBoard=JEE', kind: 'crucible' },
                 ],
             },
             {
@@ -338,7 +348,9 @@ export const PHASES: Phase[] = [
                 ],
                 resources: [
                     { label: 'Stereo Top 20 MCQ', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('Ilcx5-TDIsA') },
+                    { label: 'Stereochemistry Lecture', href: 'https://youtu.be/2LHb-9K8xRA', kind: 'oneshot', embedUrl: yt('2LHb-9K8xRA') },
                     { label: 'Stereochemistry Flashcards', href: '/chemistry-flashcards/stereochemistry', kind: 'flashcards' },
+                    { label: 'Crucible Practice (GOC + Stereo)', href: 'https://www.canvasclasses.in/the-crucible/ch11_goc?mode=browse&examBoard=JEE', kind: 'crucible' },
                 ],
             },
             {
@@ -351,9 +363,11 @@ export const PHASES: Phase[] = [
                     'E1 vs E2 — conditions and products.',
                 ],
                 resources: [
+                    { label: 'Haloalkanes - 1', href: '/neet-crash-course/haloalkanes', kind: 'crash-course', embedUrl: yt('Bthi8Nd8tVo') },
+                    { label: 'Haloalkanes - 2', href: '/neet-crash-course/haloalkanes', kind: 'crash-course', embedUrl: yt('rkcHlAiQrto') },
+                    { label: 'Haloalkanes - DPP Solution', href: '/neet-crash-course/haloalkanes', kind: 'crash-course', embedUrl: yt('SJ5z5tRpYjk') },
                     { label: 'Haloalkanes Flashcards', href: '/chemistry-flashcards/haloalkanes', kind: 'flashcards' },
-                    { label: 'Name Reactions', href: '/organic-name-reactions', kind: 'name-rxns' },
-                    { label: 'Organic Wizard', href: '/organic-wizard', kind: 'wizard' },
+                    { label: 'Crucible Practice', href: 'https://www.canvasclasses.in/the-crucible/ch11_hydrocarbon?mode=browse&examBoard=JEE', kind: 'crucible' },
                 ],
             },
             {
@@ -366,6 +380,9 @@ export const PHASES: Phase[] = [
                     'Reimer-Tiemann & Kolbe — reagents and products.',
                 ],
                 resources: [
+                    { label: 'Alcohols & Ethers', href: '/neet-crash-course/alcohols-ethers', kind: 'crash-course', embedUrl: yt('r3imBPmwkRg') },
+                    { label: 'Alcohols & Ethers - DPP Solution 1', href: '/neet-crash-course/alcohols-ethers', kind: 'crash-course', embedUrl: yt('nxReu4UAu7o') },
+                    { label: 'Alcohols & Ethers - DPP Solution 2', href: '/neet-crash-course/alcohols-ethers', kind: 'crash-course', embedUrl: yt('dX9lxSQxYqQ') },
                     { label: 'Alcohols Flashcards', href: '/chemistry-flashcards/alcohols-phenols-ethers', kind: 'flashcards' },
                     { label: 'Name Reactions', href: '/organic-name-reactions', kind: 'name-rxns' },
                     { label: '2-Min Chemistry', href: '/2-minute-chemistry', kind: 'twomin' },
@@ -381,9 +398,12 @@ export const PHASES: Phase[] = [
                     'Clemmensen vs Wolff-Kishner — conditions.',
                 ],
                 resources: [
+                    { label: 'Carbonyl Compounds - 1', href: '/neet-crash-course/carbonyl-compounds', kind: 'crash-course', embedUrl: yt('Ax25w-Agz0Q') },
+                    { label: 'Carbonyl Compounds - 2', href: '/neet-crash-course/carbonyl-compounds', kind: 'crash-course', embedUrl: yt('Wr6LpwALVn0') },
+                    { label: 'Carbonyl Compounds - 3', href: '/neet-crash-course/carbonyl-compounds', kind: 'crash-course', embedUrl: yt('C6k9yzdE1OI') },
+                    { label: 'Carbonyl Compounds - DPP Solution', href: '/neet-crash-course/carbonyl-compounds', kind: 'crash-course', embedUrl: yt('YznKqKpMXSc') },
                     { label: 'Aldehydes Flashcards', href: '/chemistry-flashcards/aldehydes-ketones-acids', kind: 'flashcards' },
                     { label: 'Name Reactions', href: '/organic-name-reactions', kind: 'name-rxns' },
-                    { label: 'Organic Wizard', href: '/organic-wizard', kind: 'wizard' },
                 ],
             },
             {
@@ -398,7 +418,11 @@ export const PHASES: Phase[] = [
                 ],
                 resources: [
                     { label: 'Amines One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('bLhQJYmZDos') },
+                    { label: 'Amines - DPP Solution', href: '/neet-crash-course/amines', kind: 'crash-course', embedUrl: yt('ZFNTHb4EwYo') },
                     { label: 'Biomolecules One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('PnwNgp7HUeg') },
+                    { label: 'Biomolecules - DPP Solution 1', href: '/neet-crash-course/biomolecules', kind: 'crash-course', embedUrl: yt('WIj-n74wdQs') },
+                    { label: 'Biomolecules - DPP Solution 2', href: '/neet-crash-course/biomolecules', kind: 'crash-course', embedUrl: yt('LFFyGmurIog') },
+                    { label: 'Amines Quick Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1FjamUxwaq9S3or2Twh6_kKUgm9Gr0OhS') },
                     { label: 'Biomolecules Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1mAWd4AAKevz8CeNQUwIZ3_dIXa0UwpxI') },
                     { label: 'Amines Flashcards', href: '/chemistry-flashcards/amines', kind: 'flashcards' },
                     { label: 'Biomolecules Flashcards', href: '/chemistry-flashcards/biomolecules', kind: 'flashcards' },
@@ -438,19 +462,36 @@ export const PHASES: Phase[] = [
                     { label: 'Periodic Trends', href: '/periodic-trends', kind: 'trends' },
                 ],
             },
+            {
+                day: 26,
+                title: 'Practical Organic Chemistry',
+                focus: 'Detection of elements (Lassaigne\'s test for N, S, halogens), purification techniques (distillation, crystallisation, sublimation, chromatography, differential extraction), and quantitative analysis (Kjeldahl for N, Carius for halogens/S, Dumas for N, Liebig for C/H).',
+                tip: 'Kjeldahl numericals are a BITSAT favourite — lock the % N = (1.4 × N × V) / W formula and the Carius % halogen formula cold.',
+                checklist: [
+                    'Lassaigne\'s test — colour outcomes for N, S, Cl, Br, I.',
+                    'Purification matrix — pick the right method for the right mixture.',
+                    'Kjeldahl, Carius, Dumas, Liebig — formulas and one practice numerical each.',
+                ],
+                resources: [
+                    { label: 'Practical Chemistry Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1RE4rn9q9GG6aUErhYNa5hn5Ap64oWIQl') },
+                    { label: 'POC PYQs', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1Xn9MuZaujfZ7WvLjACA75s5uKDPE1SgR') },
+                    { label: 'GOC & POC Flashcards', href: '/chemistry-flashcards/goc-and-poc', kind: 'flashcards' },
+                    { label: 'Crucible Practice', href: 'https://www.canvasclasses.in/the-crucible/ch11_prac_org?mode=browse&examBoard=JEE', kind: 'crucible' },
+                ],
+            },
         ],
     },
     {
         id: 'phase4',
         label: 'Phase 4 · The Chaos Simulation',
-        days: 'Days 26–30',
+        days: 'Days 27–30',
         goal: 'Speed drills, practical chemistry sprint, full revision.',
         accent: 'text-amber-400',
         gradient: 'from-amber-500/20 via-yellow-500/10 to-transparent',
         icon: 'Flame',
         items: [
             {
-                day: 26,
+                day: 27,
                 title: 'Mock 1 + Speed Drill',
                 focus: 'Solve 30 Chemistry questions in 25 minutes. Practise WITHOUT the "Mark for Review" mindset — track doubts on paper.',
                 checklist: [
@@ -464,7 +505,7 @@ export const PHASES: Phase[] = [
                 ],
             },
             {
-                day: 27,
+                day: 28,
                 title: 'Deleted-Syllabus + Practical Chemistry Sprint',
                 focus: 'Re-flip Polymers, Solid State, Everyday Chemistry, Environmental, s-Block flashcards (1 hour). Then: functional group tests, Lassaigne\'s test, salt analysis — Group I–VI cations and common anions.',
                 tip: 'Salt analysis in BITSAT is always systematic. Learn the group reagents cold.',
@@ -484,7 +525,7 @@ export const PHASES: Phase[] = [
                 ],
             },
             {
-                day: 28,
+                day: 29,
                 title: 'Mock 2 + Inorganic Trivia Sprint',
                 focus: 'Full Chemistry section. Then 1 hour on Periodic Trends + Inorganic Hub for "anomaly" questions.',
                 checklist: [
@@ -496,21 +537,6 @@ export const PHASES: Phase[] = [
                     { label: 'BITSAT Mock Test', href: '#', kind: 'comingsoon' },
                     { label: 'Periodic Trends', href: '/periodic-trends', kind: 'trends' },
                     { label: 'Interactive Periodic Table', href: '/interactive-periodic-table', kind: 'periodic' },
-                ],
-            },
-            {
-                day: 29,
-                title: 'Organic Mechanism Sprint',
-                focus: 'Re-run all Name Reactions + Organic Wizard. Focus on multi-step conversions.',
-                checklist: [
-                    'Re-run every Name Reaction — under 10 min.',
-                    'Multi-step conversion drill — 5 pairs.',
-                    'Flag any mechanism you still need to memorise.',
-                ],
-                resources: [
-                    { label: 'BITSAT Speed Drill', href: '#', kind: 'comingsoon' },
-                    { label: 'Name Reactions', href: '/organic-name-reactions', kind: 'name-rxns' },
-                    { label: 'Organic Wizard', href: '/organic-wizard', kind: 'wizard' },
                 ],
             },
             {

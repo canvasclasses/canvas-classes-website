@@ -1,31 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getUserIdFromRequest } from '@/lib/auth';
 import connectToDatabase from '@/lib/mongodb';
 import { StudentChapterProfile, IStudentChapterProfile } from '@/lib/models/StudentChapterProfile';
 import { StudentResponse } from '@/lib/models/StudentResponse';
 import { updateProfileFromResponse, createEmptyProfile } from '@/lib/profileEngine';
-
-async function getUserId(req: NextRequest): Promise<string | null> {
-  const authHeader = req.headers.get('Authorization');
-  if (!authHeader?.startsWith('Bearer ')) return null;
-  const token = authHeader.substring(7);
-
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!supabaseUrl || !supabaseAnonKey) return null;
-
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
-  const { data: { user }, error } = await supabase.auth.getUser(token);
-  if (error || !user) return null;
-  return user.id;
-}
 
 // ─── GET /api/v2/user/chapter-profile?chapterId=xxx ──────────────────────────
 // Returns the student's multi-dimensional profile for a chapter.
 // If none exists, returns a fresh empty profile.
 export async function GET(req: NextRequest) {
   try {
-    const userId = await getUserId(req);
+    const userId = await getUserIdFromRequest(req);
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const chapterId = req.nextUrl.searchParams.get('chapterId');
@@ -53,7 +38,7 @@ export async function GET(req: NextRequest) {
 // Called by the session-response API or by AdaptiveSession after writing a response.
 export async function POST(req: NextRequest) {
   try {
-    const userId = await getUserId(req);
+    const userId = await getUserIdFromRequest(req);
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const body = await req.json();

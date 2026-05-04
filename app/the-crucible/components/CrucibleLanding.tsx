@@ -31,7 +31,7 @@ interface ApiQuestion {
 }
 import BrowseView from './BrowseView';
 import TestView from './TestView';
-import TestConfigModal, { DifficultyMix } from './TestConfigModal';
+import TestConfigModal, { DifficultyMix, TestStartConfig } from './TestConfigModal';
 import AuthRequiredDialog from './AuthRequiredDialog';
 
 interface CrucibleLandingProps { chapters: Chapter[]; isLoggedIn: boolean; }
@@ -692,7 +692,8 @@ export default function CrucibleLanding({ chapters, isLoggedIn }: CrucibleLandin
     setShowTestConfig(true);
   };
 
-  const startTest = (count: number, mix: DifficultyMix) => {
+  const startTest = (config: TestStartConfig) => {
+    const { count, mix } = config;
     setShowTestConfig(false);
     if (loading) return;
     const ids = Array.from(selectedChapters);
@@ -942,7 +943,7 @@ export default function CrucibleLanding({ chapters, isLoggedIn }: CrucibleLandin
         {openSheet === 12 && <ChapterSheet classLevel={12} chapters={class12} selected={selectedChapters} onToggle={toggle} onClose={() => setOpenSheet(null)} onSelectAll={() => selectAll(12)} onClearClass={() => clearCls(12)} />}
 
         {/* TEST CONFIG MODAL */}
-        {showTestConfig && <TestConfigModal maxQ={selQ} onStart={startTest} onClose={() => setShowTestConfig(false)} />}
+        {showTestConfig && <TestConfigModal maxQ={selQ} onStart={startTest} onClose={() => setShowTestConfig(false)} />}{/* Multi-chapter mode: chapter+questions intentionally unset → modal renders the stripped-down count/mix/sort/star layout. */}
 
         {/* AUTH REQUIRED DIALOG */}
         {showAuthDialog && <AuthRequiredDialog onClose={() => setShowAuthDialog(false)} />}

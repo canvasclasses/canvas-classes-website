@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Star, Check, Timer, X, MonitorPlay, Volume2, ChevronUp, ChevronDown } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { ChevronLeft, ChevronRight, Bookmark, Check, Timer, X, MonitorPlay, Volume2, ChevronUp, ChevronDown, Pause, Play, Home } from 'lucide-react';
 import { Question } from './types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
-import WatermarkOverlay from '@/components/WatermarkOverlay';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
+import { getTagName, getChapterCategory } from '@/lib/taxonomyLookup';
+import { track } from '@/lib/analytics/mixpanel';
 import TestSaveModal from './TestSaveModal';
+import WaveformAudioPlayer from '@/components/WaveformAudioPlayer';
 
 async function fetchOptionStats(questionId: string): Promise<Record<string, number>> {
   try {
@@ -17,15 +19,51 @@ async function fetchOptionStats(questionId: string): Promise<Record<string, numb
   } catch { return {}; }
 }
 
-const DIFF_COLOR = (d: number | string) => {
+// Difficulty colour + label helpers — match BrowseView's DIFF_COLOR / DIFF_LABEL
+// scale (L1-L2 Easy, L3 Medium, L4 Tough, L5 Advanced) so the two surfaces
+// agree when displaying the same question.
+const DIFF_COLOR = (d: number | string): string => {
   if (typeof d === 'number') {
-    return d <= 2 ? '#34d399' : d === 3 ? '#fbbf24' : '#f87171';
+    if (d <= 2) return '#34d399';
+    if (d === 3) return '#fbbf24';
+    if (d === 4) return '#f87171';
+    return '#c084fc'; // L5 Advanced
   }
   return d === 'Easy' ? '#34d399' : d === 'Medium' ? '#fbbf24' : '#f87171';
 };
+const DIFF_LABEL = (d: number | string): string => {
+  if (typeof d === 'number') {
+    if (d <= 2) return 'Easy';
+    if (d === 3) return 'Medium';
+    if (d === 4) return 'Tough';
+    return 'Advanced';
+  }
+  return String(d);
+};
+const TYPE_LABEL: Record<string, string> = {
+  SCQ: 'Single Correct',
+  MCQ: 'Multiple Correct',
+  NVT: 'Integer',
+  AR: 'Assertion-Reason',
+  MST: 'Multi-Statement',
+  MTC: 'Match Columns',
+};
+
+// Chapter-category accent — mirrors BrowseView. Keep in sync.
+const CAT_COLOR: Record<string, string> = {
+  Physical: '#38bdf8',
+  Organic: '#c084fc',
+  Inorganic: '#34d399',
+  Practical: '#fbbf24',
+  Physics: '#38bdf8',
+  Biology: '#34d399',
+  Maths: '#a78bfa',
+};
+const catAccent = (cat?: string | null): string => CAT_COLOR[cat ?? ''] ?? '#fb923c';
+
+const pad2 = (n: number): string => n.toString().padStart(2, '0');
 
 // Returns true when all 4 options are short enough for a 2×2 grid.
-// Threshold is 28 chars (accounts for 20px font in half-width column ~220px).
 const isShortOptions = (opts: Array<{ text?: string }>): boolean => {
   if (!opts || opts.length !== 4) return false;
   return opts.every(o => {
@@ -145,60 +183,55 @@ export default function TestView({ questions, onBack }: { questions: Question[];
     fetchOptionStats(rq.id).then(setRevStats);
   }, [reviewing, revIdx, questions]);
 
-  // Save progress to database (called when user clicks "Save Progress")
-  const saveProgressToDatabase = async () => {
+  // Persist the test on submit. Was previously gated behind a "Save" button in
+  // the post-submit modal — meaning a single tap on "Discard" silently nuked
+  // the test results and per-question attempts. Now it runs unconditionally
+  // the moment the test is submitted; the modal is purely a celebratory recap.
+  // Resilient to partial failures: each upstream call goes through allSettled
+  // so a slow test-session POST can't lose the per-question batch (or v.v.).
+  const persistedRef = useRef(false);
+  const persistTestNow = useCallback(async () => {
+    if (persistedRef.current) return;       // idempotent — fire-once
+    persistedRef.current = true;
     try {
       const supabase = createSupabaseClient();
       if (!supabase) return;
       const { data: { session } } = await supabase.auth.getSession();
       if (!session?.access_token) return;
-      
+
       const chapterId = questions[0]?.metadata?.chapter_id;
       if (!chapterId) return;
-      
-      // Prepare batch attempts data
+
+      const auth = { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` };
+
+      // Per-question batch attempts (concept_mastery + recent_attempts).
       const attempts = questions
         .filter(qq => !!(answers[qq.id] || (nvtInputs[qq.id] && nvtInputs[qq.id].trim())))
-        .map(qq => {
-          const isCorrect = isQuestionCorrect(qq);
-          const selectedOption = qq.type === 'NVT'
-            ? nvtInputs[qq.id] ?? null
-            : (answers[qq.id] ?? null);
+        .map(qq => ({
+          question_id: qq.id,
+          display_id: qq.display_id,
+          chapter_id: qq.metadata.chapter_id,
+          difficulty: qq.metadata.difficultyLevel,
+          concept_tags: qq.metadata.tags?.map((t: { tag_id: string }) => t.tag_id) ?? [],
+          // Persona unification — feeds StudentChapterProfile.microConcept
+          // dimension via the batch route (audit #5).
+          micro_concept: qq.metadata.microConcept ?? null,
+          is_correct: isQuestionCorrect(qq),
+          selected_option: qq.type === 'NVT' ? nvtInputs[qq.id] ?? null : (answers[qq.id] ?? null),
+          source: 'test',
+          // Tests are intentional, focused work — see CRUCIBLE_ARCHITECTURE.md
+          // §3.2. HIGH confidence: drives mastery counters and the
+          // recommendation engine.
+          confidence: 'high' as const,
+          time_spent_seconds: questionTimings[qq.id] || 0,
+        }));
 
-          return {
-            question_id: qq.id,
-            display_id: qq.display_id,
-            chapter_id: qq.metadata.chapter_id,
-            difficulty: qq.metadata.difficultyLevel,
-            concept_tags: qq.metadata.tags?.map((t: { tag_id: string }) => t.tag_id) ?? [],
-            is_correct: isCorrect,
-            selected_option: selectedOption,
-            source: 'test',
-            time_spent_seconds: questionTimings[qq.id] || 0
-          };
-        });
-      
-      // Batch save all attempts (single API call)
-      if (attempts.length > 0) {
-        await fetch('/api/v2/user/progress/batch', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
-          body: JSON.stringify({ attempts }),
-        });
-      }
-      
-      // Save complete test result for dashboard
+      // Composite test result document for the dashboard.
       const score = questions.filter(qq => isQuestionCorrect(qq)).length;
-      const timeSpentMs = Date.now() - testStartTime;
-      const totalSeconds = Math.floor(timeSpentMs / 1000);
-      
+      const totalSeconds = Math.floor((Date.now() - testStartTime) / 1000);
       const testResultData = {
         chapter_id: chapterId,
-        test_config: {
-          count: questions.length,
-          difficulty_mix: 'balanced', // TODO: Get from actual config
-          question_sort: 'random', // TODO: Get from actual config
-        },
+        test_config: { count: questions.length, difficulty_mix: 'balanced', question_sort: 'random' },
         questions: questions.map(qq => {
           const hasAnswer = !!(answers[qq.id] || (nvtInputs[qq.id] && nvtInputs[qq.id].trim()));
           return {
@@ -211,47 +244,42 @@ export default function TestView({ questions, onBack }: { questions: Question[];
             marked_for_review: marked[qq.id] || false,
           };
         }),
-        score: {
-          correct: score,
-          total: questions.length,
-          percentage: Math.round((score / questions.length) * 100),
-        },
-        timing: {
-          started_at: new Date(testStartTime),
-          completed_at: new Date(),
-          total_seconds: totalSeconds,
-        },
+        score: { correct: score, total: questions.length, percentage: Math.round((score / questions.length) * 100) },
+        timing: { started_at: new Date(testStartTime), completed_at: new Date(), total_seconds: totalSeconds },
         saved_to_progress: true,
       };
-      
-      await fetch('/api/v2/test-results', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
-        body: JSON.stringify(testResultData),
-      });
-      
-      // Record test session completion
-      await fetch('/api/v2/user/test-session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
-        body: JSON.stringify({
-          chapter_id: chapterId,
-          question_ids: questions.map(q => q.id),
-          config: { count: questions.length, mix: 'balanced' },
-        }),
-      });
+
+      // Fire all three calls in parallel. Each is resilient — a transient
+      // failure on one does not block the others. `keepalive: true` lets the
+      // requests complete even if the user navigates away mid-flush.
+      await Promise.allSettled([
+        attempts.length > 0
+          ? fetch('/api/v2/user/progress/batch', { method: 'POST', headers: auth, body: JSON.stringify({ attempts }), keepalive: true })
+          : Promise.resolve(),
+        fetch('/api/v2/test-results', { method: 'POST', headers: auth, body: JSON.stringify(testResultData), keepalive: true }),
+        fetch('/api/v2/user/test-session', { method: 'POST', headers: auth, body: JSON.stringify({ chapter_id: chapterId, question_ids: questions.map(q => q.id), config: { count: questions.length, mix: 'balanced' } }), keepalive: true }),
+      ]);
     } catch (err) {
-      console.error('Failed to save progress:', err);
+      // Persistence failed irrecoverably — clear the lock so a manual retry
+      // (e.g. the modal CTA) can attempt again instead of silently no-op'ing.
+      persistedRef.current = false;
+      console.error('[TestView] Failed to save test:', err);
     }
-  };
-  
-  const handleSaveProgress = async () => {
-    await saveProgressToDatabase();
-    setShowSaveModal(false);
-    setReviewing(true);
-  };
-  
-  const handleDiscardProgress = () => {
+    // isQuestionCorrect is intentionally omitted — it's a stable per-render
+    // helper closed over the same `questions` reference and re-listing it
+    // would defeat the useCallback identity.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questions, answers, nvtInputs, marked, questionTimings, testStartTime]);
+
+  // Auto-persist the moment the test is marked submitted — covers all entry
+  // points (manual submit, timer expiry, finish modal). The previous gated
+  // approach (waiting for a Save modal click) lost data on Discard.
+  useEffect(() => {
+    if (submitted) persistTestNow();
+  }, [submitted, persistTestNow]);
+
+  // Modal CTA — data is already persisted; this just dismisses + reviews.
+  const handleContinueToReview = () => {
     setShowSaveModal(false);
     setReviewing(true);
   };
@@ -259,33 +287,47 @@ export default function TestView({ questions, onBack }: { questions: Question[];
   const fmt = (s: number) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
   const q = questions[idx];
 
+  // Chapter context — derived from the first question's chapter_id since
+  // TestView's prop interface predates the per-chapter accent system.
+  const chapterId = questions[0]?.metadata?.chapter_id ?? '';
+  const chapterName = chapterId ? getTagName(chapterId) : 'Test';
+  const chapterCategory = chapterId ? getChapterCategory(chapterId) : null;
+  const accent = catAccent(chapterCategory);
+
   if (!questions || questions.length === 0 || !q) {
     return (
-      <div style={{ minHeight: '100vh', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
-        <WatermarkOverlay />
-        <header style={{ height: 48, borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(10,12,20,0.98)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', flexShrink: 0, gap: 8 }}>
-          <button onClick={onBack} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-            <X style={{ width: 16, height: 16 }} />
+      <div className="min-h-screen flex flex-col" style={{ background: '#0F1117', color: '#fff' }}>
+        <header className="h-14 flex items-center justify-between px-4 border-b" style={{ borderColor: 'rgba(255,255,255,0.06)', background: 'rgba(10,11,18,0.95)' }}>
+          <button onClick={onBack} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium text-white/55 hover:text-white border border-white/10 hover:border-white/25 transition-colors">
+            <ChevronLeft className="w-3.5 h-3.5" />
+            Back
           </button>
-          <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>Loading test…</span>
-          <span />
+          <span className="text-[13px] font-medium text-white/70">Preparing test…</span>
+          <span className="w-16" />
         </header>
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-            <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
-            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)' }}>Preparing your questions…</div>
+        <div className="flex-1 flex items-center justify-center">
+          <div className="flex flex-col items-center gap-3">
+            <div
+              className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
+              style={{ borderColor: accent, borderTopColor: 'transparent' }}
+            />
+            <div className="text-[13px] text-white/55">Loading questions…</div>
           </div>
         </div>
       </div>
     );
   }
 
+  // Status colours for the question palette — aligned with BrowseView's
+  // sidebar-dot conventions (emerald = correct/answered, amber = saved/marked,
+  // accent = current). Skipped is implicit (visited but unanswered) — we don't
+  // surface it as a separate state to keep the grid scannable.
   const palStatus = (i: number) => {
     const qq = questions[i];
-    if (i === idx) return { bg: '#3b82f6', color: '#fff', border: '#60a5fa' };
-    if (marked[qq.id]) return { bg: '#7c3aed', color: '#fff', border: '#8b5cf6' };
-    if (answers[qq.id] || nvtInputs[qq.id]) return { bg: '#059669', color: '#fff', border: '#34d399' };
-    return { bg: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.45)', border: 'rgba(255,255,255,0.12)' };
+    if (i === idx) return { bg: `${accent}26`, color: '#fff', border: accent, ring: true };
+    if (marked[qq.id]) return { bg: 'rgba(251,191,36,0.18)', color: '#fbbf24', border: 'rgba(251,191,36,0.55)', ring: false };
+    if (answers[qq.id] || nvtInputs[qq.id]) return { bg: 'rgba(52,211,153,0.18)', color: '#34d399', border: 'rgba(52,211,153,0.55)', ring: false };
+    return { bg: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.45)', border: 'rgba(255,255,255,0.08)', ring: false };
   };
 
   const answeredCount = questions.filter(qq => answers[qq.id] || (nvtInputs[qq.id] && nvtInputs[qq.id].trim())).length;
@@ -325,59 +367,128 @@ export default function TestView({ questions, onBack }: { questions: Question[];
       const userAns = answers[rq.id] || nvtInputs[rq.id];
       const isCorrect = isQuestionCorrect(rq);
       const userSelArr: string[] = rq.type === 'MCQ' ? (Array.isArray(answers[rq.id]) ? answers[rq.id] as string[] : []) : (typeof answers[rq.id] === 'string' ? [answers[rq.id] as string] : []);
+      const rqDiffColor = DIFF_COLOR(rq.metadata.difficultyLevel);
 
       return (
-        <div style={{ minHeight: '100vh', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column' }}>
-          <WatermarkOverlay />
-          <header style={{ height: 48, borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(10,12,20,0.98)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <div style={{ width: '100%', maxWidth: isMobile ? '100%' : 900, padding: '0 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <button onClick={() => setReviewing(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}>
-                <ChevronLeft style={{ width: 14, height: 14 }} /> Back to Results
+        <div className="fixed inset-0 z-50 flex flex-col overflow-hidden text-white" style={{ background: '#0F1117' }}>
+          {/* Ambient accent wash */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background: `
+                radial-gradient(900px 500px at 85% -10%, ${accent}1A, transparent 60%),
+                radial-gradient(700px 600px at -10% 100%, ${accent}10, transparent 65%)
+              `,
+            }}
+          />
+          <header className="relative z-10 h-14 flex items-center px-4 lg:px-6 border-b" style={{ borderColor: 'rgba(255,255,255,0.06)', background: 'rgba(10,11,18,0.95)' }}>
+            <div className="w-full max-w-[960px] mx-auto flex items-center justify-between gap-3">
+              <button
+                onClick={() => setReviewing(false)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium text-white/55 hover:text-white border border-white/10 hover:border-white/25 transition-colors"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+                Back to results
               </button>
-              <span style={{ fontSize: 13, fontWeight: 600 }}>Review Solutions</span>
-              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>{revIdx + 1}/{questions.length}</span>
-                <button onClick={onBack} style={{ padding: '4px 10px', borderRadius: 7, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: 'rgba(255,255,255,0.5)', fontSize: 11, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>🏠 Home</button>
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full" style={{ background: accent, boxShadow: `0 0 8px ${accent}` }} />
+                <span className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-white/55">
+                  Review · {chapterName}
+                </span>
+                <span className="text-[11.5px] font-mono tabular-nums text-white/40 ml-1">{revIdx + 1}/{questions.length}</span>
               </div>
+              <button
+                onClick={onBack}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium text-white/55 hover:text-white border border-white/10 hover:border-white/25 transition-colors"
+              >
+                <Home className="w-3.5 h-3.5" />
+                Home
+              </button>
             </div>
           </header>
-          <div style={{ flex: 1, overflowY: 'auto', padding: isMobile ? '12px 10px 60px' : '24px 32px 80px' }}>
-            <div style={{ maxWidth: isMobile ? 680 : 900, margin: '0 auto' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-                <span style={{ fontSize: isMobile ? 18 : 24, fontWeight: 800 }}>Q{revIdx + 1}</span>
-                <span style={{ fontSize: isMobile ? 11 : 13, color: DIFF_COLOR(rq.metadata.difficultyLevel), background: DIFF_COLOR(rq.metadata.difficultyLevel) + '18', padding: '2px 8px', borderRadius: 99, fontWeight: 700 }}>L{rq.metadata.difficultyLevel}</span>
-                {userAns ? (
-                  <span style={{ fontSize: isMobile ? 11 : 13, padding: '2px 10px', borderRadius: 99, background: isCorrect ? 'rgba(52,211,153,0.15)' : 'rgba(248,113,113,0.15)', color: isCorrect ? '#34d399' : '#f87171', fontWeight: 700 }}>{isCorrect ? 'Correct' : 'Wrong'}</span>
-                ) : (
-                  <span style={{ fontSize: isMobile ? 11 : 13, padding: '2px 10px', borderRadius: 99, background: 'rgba(251,191,36,0.15)', color: '#fbbf24', fontWeight: 700 }}>Skipped</span>
-                )}
-              </div>
-              <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: isMobile ? '12px 14px' : '18px 22px', marginBottom: 24 }}>
-                <MathRenderer markdown={rq.question_text.markdown} className="text-base leading-relaxed" fontSize={isMobile ? 14 : 19} imageScale={rq.svg_scales?.question || 100} />
-              </div>
+
+          <main className="relative z-0 flex-1 overflow-y-auto">
+            <div className="max-w-[860px] mx-auto px-4 lg:px-8 py-6 lg:py-8">
+              {/* Question card metadata row + body — same shape as BrowseView */}
+              <article
+                className="relative rounded-2xl overflow-hidden mb-5"
+                style={{
+                  background: 'linear-gradient(160deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 50%, rgba(0,0,0,0.15) 100%)',
+                  border: '1px solid rgba(255,255,255,0.07)',
+                }}
+              >
+                <div
+                  className="absolute left-0 top-0 bottom-0 w-[3px] pointer-events-none"
+                  style={{ background: `linear-gradient(180deg, ${rqDiffColor}, ${rqDiffColor}33)` }}
+                />
+                <div className="flex items-center gap-2.5 px-5 py-3 border-b border-white/[0.05] flex-wrap">
+                  <span
+                    className="font-mono text-[14px] font-bold tabular-nums tracking-tight select-none"
+                    style={{ color: accent }}
+                  >
+                    {pad2(revIdx + 1)}
+                  </span>
+                  <span
+                    className="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-md"
+                    style={{ color: rqDiffColor, background: `${rqDiffColor}1A`, border: `1px solid ${rqDiffColor}33` }}
+                  >
+                    {DIFF_LABEL(rq.metadata.difficultyLevel)}
+                  </span>
+                  <span className="text-[10.5px] text-white/40 px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.06]">
+                    {TYPE_LABEL[rq.type] ?? rq.type}
+                  </span>
+                  {userAns ? (
+                    <span
+                      className={`text-[10.5px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-md ml-auto ${isCorrect ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30' : 'bg-red-500/15 text-red-300 border border-red-500/30'}`}
+                    >
+                      {isCorrect ? '✓ Correct' : '✗ Wrong'}
+                    </span>
+                  ) : (
+                    <span className="text-[10.5px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-md bg-amber-400/15 text-amber-300 border border-amber-400/30 ml-auto">
+                      Skipped
+                    </span>
+                  )}
+                </div>
+                <div className="px-5 pt-5 pb-4">
+                  <div className="text-white/95 text-[17px] leading-[1.55] tracking-[-0.005em]">
+                    <MathRenderer markdown={rq.question_text.markdown} fontSize={isMobile ? 15 : 17} imageScale={rq.svg_scales?.question || 100} />
+                  </div>
+                </div>
+              </article>
               {rq.options && rq.options.length > 0 && (() => {
                 const useGrid = isShortOptions(rq.options);
                 return (
-                  <div style={{ display: useGrid ? 'grid' : 'flex', gridTemplateColumns: useGrid ? '1fr 1fr' : undefined, flexDirection: useGrid ? undefined : 'column', gap: 8, marginBottom: 24 }}>
-                    {rq.options.map((opt: { id: string; text: string; is_correct: boolean }) => {
+                  <div className={useGrid ? 'grid grid-cols-2 gap-2.5 mb-5' : 'flex flex-col gap-2.5 mb-5'}>
+                    {rq.options.map((opt: { id: string; text: string; is_correct: boolean }, i: number) => {
                       const sel = userSelArr.includes(opt.id);
                       const correct = opt.is_correct;
-                      let borderC = 'rgba(255,255,255,0.1)', bgC = 'rgba(255,255,255,0.03)';
-                      if (correct) { borderC = '#34d399'; bgC = 'rgba(52,211,153,0.1)'; }
-                      else if (sel && !correct) { borderC = '#f87171'; bgC = 'rgba(248,113,113,0.08)'; }
                       const pct = revStats[opt.id] ?? 0;
+                      const letter = String.fromCharCode(65 + i);
+                      let border = 'border-white/8';
+                      let bg = 'bg-white/[0.02]';
+                      let labelColor = 'text-white/30';
+                      if (correct) { border = 'border-emerald-500/70'; bg = 'bg-emerald-500/10'; labelColor = 'text-emerald-400'; }
+                      else if (sel) { border = 'border-red-500/70'; bg = 'bg-red-500/10'; labelColor = 'text-red-400'; }
                       return (
-                        <div key={opt.id} style={{ padding: useGrid ? (isMobile ? '10px 10px' : '14px 14px') : (isMobile ? '12px 14px' : '16px 18px'), borderRadius: 12, border: `1.5px solid ${borderC}`, background: bgC, display: 'flex', flexDirection: 'column', gap: 6 }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <span style={{ width: 24, height: 24, borderRadius: 7, border: `1.5px solid ${borderC}`, background: correct ? '#34d399' : (sel ? '#f87171' : 'transparent'), display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: (correct || sel) ? '#fff' : 'rgba(255,255,255,0.5)', flexShrink: 0 }}>
-                              {correct ? <Check style={{ width: 12, height: 12 }} /> : opt.id.toUpperCase()}
+                        <div key={opt.id} className={`relative overflow-hidden rounded-xl border ${border} ${bg} px-4 py-3 flex items-start gap-3`}>
+                          {pct > 0 && (
+                            <div
+                              className="absolute inset-y-0 left-0 pointer-events-none transition-all"
+                              style={{ width: `${pct}%`, background: correct ? 'rgba(52,211,153,0.10)' : sel ? 'rgba(248,113,113,0.10)' : 'rgba(255,255,255,0.04)' }}
+                            />
+                          )}
+                          <div className={`relative shrink-0 w-7 h-7 rounded-md flex items-center justify-center text-[12px] font-bold ${labelColor} bg-white/5 border border-white/8`}>
+                            {correct ? <Check className="w-3.5 h-3.5" strokeWidth={3} /> : letter}
+                          </div>
+                          <div className="relative flex-1 min-w-0 text-[15px] text-white/90 pt-0.5">
+                            <MathRenderer markdown={opt.text || ''} fontSize={isMobile ? 14 : 15} imageScale={rq.svg_scales?.options || 100} />
+                          </div>
+                          {pct > 0 && (
+                            <span className="relative shrink-0 text-[11px] font-mono tabular-nums text-white/45 self-center">
+                              {pct}%
                             </span>
-                            <span style={{ flex: 1, color: '#fff', fontSize: isMobile ? 14 : 17 }}><MathRenderer markdown={opt.text || ''} className="text-sm" fontSize={isMobile ? 14 : 17} imageScale={rq.svg_scales?.options || 100} /></span>
-                            <span style={{ fontSize: isMobile ? 12 : 14, fontWeight: 700, color: correct ? '#34d399' : '#f87171', flexShrink: 0, minWidth: 36, textAlign: 'right' }}>{pct}%</span>
-                          </div>
-                          <div style={{ width: '100%', height: 6, borderRadius: 3, background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
-                            <div style={{ height: '100%', width: `${pct}%`, borderRadius: 3, background: correct ? '#34d399' : '#f87171', transition: 'width 0.5s ease' }} />
-                          </div>
+                          )}
                         </div>
                       );
                     })}
@@ -385,70 +496,84 @@ export default function TestView({ questions, onBack }: { questions: Question[];
                 );
               })()}
               {rq.type === 'NVT' && (
-                <div style={{ marginBottom: 24, padding: '14px 16px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)' }}>
-                  <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>Your answer: <strong style={{ color: nvtInputs[rq.id] ? '#fff' : '#fbbf24' }}>{nvtInputs[rq.id] || 'Not attempted'}</strong></div>
-                  <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>Correct answer: <strong style={{ color: '#34d399' }}>{rq.answer?.integer_value ?? '—'}</strong></div>
+                <div className="mb-5 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03]">
+                  <div className="text-[12px] text-white/55 mb-1">Your answer: <strong className={nvtInputs[rq.id] ? 'text-white' : 'text-amber-300'}>{nvtInputs[rq.id] || 'Not attempted'}</strong></div>
+                  <div className="text-[12px] text-white/55">Correct answer: <strong className="text-emerald-300">{rq.answer?.integer_value ?? '—'}</strong></div>
                 </div>
               )}
               {(rq.solution.text_markdown || rq.solution.video_url || (rq.solution.asset_ids?.audio && rq.solution.asset_ids.audio.length > 0)) && (
-                <div style={{ padding: isMobile ? '12px 14px' : '18px 22px', borderRadius: 14, background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.2)', marginBottom: 24 }}>
-                  <div style={{ fontSize: isMobile ? 11 : 13, fontWeight: 700, color: '#a78bfa', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Solution</div>
+                <div
+                  className="rounded-2xl px-5 py-4 mb-5"
+                  style={{ background: 'rgba(0,0,0,0.25)', border: `1px solid ${accent}33` }}
+                >
+                  <div
+                    className="text-[10px] font-bold uppercase tracking-[0.14em] mb-3"
+                    style={{ color: accent }}
+                  >
+                    Solution
+                  </div>
 
-                  {/* Media Controls Row - Video & Audio buttons */}
+                  {/* Media explanations — pinned just under the SOLUTION
+                      header. Same prominent treatment as BrowseView so both
+                      surfaces feel consistent and the buttons don't get lost
+                      under long solution text. */}
                   {(rq.solution?.video_url || (rq.solution?.asset_ids?.audio && rq.solution.asset_ids.audio.length > 0)) && (
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 12 }}>
-                      {/* Watch Video Solution Button */}
+                    <div className="flex flex-wrap gap-2.5 mb-4">
                       {rq.solution?.video_url && (
                         <button
                           onClick={() => setVideoExpanded(prev => ({ ...prev, [revIdx]: !prev[revIdx] }))}
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 6,
-                            padding: '8px 14px',
-                            background: 'linear-gradient(135deg, #3b82f6 0%, #6366f1 100%)',
-                            border: 'none',
-                            borderRadius: 8,
-                            color: '#fff',
-                            fontSize: 12,
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            boxShadow: '0 4px 12px rgba(59,130,246,0.3)',
-                            transition: 'all 0.2s',
+                          className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all"
+                          style={videoExpanded[revIdx] ? {
+                            background: 'rgba(59,130,246,0.10)',
+                            color: '#93c5fd',
+                            border: '1px solid rgba(59,130,246,0.30)',
+                          } : {
+                            background: 'rgba(59,130,246,0.18)',
+                            color: '#bfdbfe',
+                            border: '1px solid rgba(59,130,246,0.50)',
+                            boxShadow: '0 0 20px -6px rgba(59,130,246,0.45)',
                           }}
                         >
-                          <MonitorPlay style={{ width: 14, height: 14 }} />
-                          <span>{videoExpanded[revIdx] ? 'Hide' : 'Watch'} Video</span>
-                          {videoExpanded[revIdx] ? <ChevronUp style={{ width: 12, height: 12 }} /> : <ChevronDown style={{ width: 12, height: 12 }} />}
+                          <span
+                            className="flex items-center justify-center w-7 h-7 rounded-lg shrink-0"
+                            style={{ background: videoExpanded[revIdx] ? 'rgba(59,130,246,0.20)' : 'rgba(59,130,246,0.40)' }}
+                          >
+                            <MonitorPlay className="w-3.5 h-3.5" />
+                          </span>
+                          <span>{videoExpanded[revIdx] ? 'Hide video' : 'Watch video explanation'}</span>
+                          {videoExpanded[revIdx] ? <ChevronUp className="w-3.5 h-3.5 opacity-70" /> : <ChevronDown className="w-3.5 h-3.5 opacity-70" />}
                         </button>
                       )}
-                      
-                      {/* Audio Note Button */}
                       {rq.solution?.asset_ids?.audio && rq.solution.asset_ids.audio.length > 0 && (
                         rq.solution.asset_ids.audio.map((url, idx) => (
                           url ? (
                             <button
                               key={idx}
                               onClick={() => setAudioExpanded(prev => ({ ...prev, [`${revIdx}-${idx}`]: !prev[`${revIdx}-${idx}`] }))}
-                              style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: 6,
-                                padding: '8px 14px',
-                                background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
-                                border: 'none',
-                                borderRadius: 8,
-                                color: '#fff',
-                                fontSize: 12,
-                                fontWeight: 600,
-                                cursor: 'pointer',
-                                boxShadow: '0 4px 12px rgba(168,85,247,0.3)',
-                                transition: 'all 0.2s',
+                              className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-[13px] font-bold transition-all"
+                              style={audioExpanded[`${revIdx}-${idx}`] ? {
+                                background: 'rgba(168,85,247,0.10)',
+                                color: '#d8b4fe',
+                                border: '1px solid rgba(168,85,247,0.30)',
+                              } : {
+                                background: 'rgba(168,85,247,0.18)',
+                                color: '#e9d5ff',
+                                border: '1px solid rgba(168,85,247,0.50)',
+                                boxShadow: '0 0 20px -6px rgba(168,85,247,0.45)',
                               }}
                             >
-                              <Volume2 style={{ width: 14, height: 14 }} />
-                              <span>{audioExpanded[`${revIdx}-${idx}`] ? 'Hide' : 'Play'} Audio{rq.solution.asset_ids!.audio!.length > 1 ? ` ${idx + 1}` : ''}</span>
-                              {audioExpanded[`${revIdx}-${idx}`] ? <ChevronUp style={{ width: 12, height: 12 }} /> : <ChevronDown style={{ width: 12, height: 12 }} />}
+                              <span
+                                className="flex items-center justify-center w-7 h-7 rounded-lg shrink-0"
+                                style={{ background: audioExpanded[`${revIdx}-${idx}`] ? 'rgba(168,85,247,0.20)' : 'rgba(168,85,247,0.40)' }}
+                              >
+                                <Volume2 className="w-3.5 h-3.5" />
+                              </span>
+                              <span>
+                                {audioExpanded[`${revIdx}-${idx}`]
+                                  ? `Hide audio${rq.solution!.asset_ids!.audio!.length > 1 ? ` ${idx + 1}` : ''}`
+                                  : `Listen to audio note${rq.solution!.asset_ids!.audio!.length > 1 ? ` ${idx + 1}` : ''}`}
+                              </span>
+                              {audioExpanded[`${revIdx}-${idx}`] ? <ChevronUp className="w-3.5 h-3.5 opacity-70" /> : <ChevronDown className="w-3.5 h-3.5 opacity-70" />}
                             </button>
                           ) : null
                         ))
@@ -497,207 +622,483 @@ export default function TestView({ questions, onBack }: { questions: Question[];
 
                   {/* Collapsible Audio Players */}
                   {rq.solution?.asset_ids?.audio && rq.solution.asset_ids.audio.length > 0 && (
-                    <div style={{ marginBottom: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    <div className="flex flex-col gap-2 mb-3">
                       {rq.solution.asset_ids.audio.map((url, idx) => (
                         url && audioExpanded[`${revIdx}-${idx}`] ? (
-                          <audio key={idx} controls style={{ width: '100%', height: 40, borderRadius: 8, transition: 'all 0.3s ease-in-out' }}>
-                            <source src={url} type="audio/webm" />
-                            <source src={url} type="audio/mpeg" />
-                            Your browser does not support the audio element.
-                          </audio>
+                          <WaveformAudioPlayer key={idx} src={url} accent="#a855f7" />
                         ) : null
                       ))}
                     </div>
                   )}
 
                   {rq.solution.text_markdown && (
-                    <MathRenderer markdown={rq.solution.text_markdown} className="text-sm leading-relaxed" fontSize={isMobile ? 14 : 17} imageScale={rq.svg_scales?.solution || 100} />
+                    <div className="text-white/85 leading-relaxed">
+                      <MathRenderer markdown={rq.solution.text_markdown} fontSize={isMobile ? 14 : 16} imageScale={rq.svg_scales?.solution || 100} />
+                    </div>
                   )}
                 </div>
               )}
-              <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
-                {revIdx > 0 && <button onClick={() => { setRevIdx(i => i - 1); }} style={{ padding: '10px 18px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.6)', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}><ChevronLeft style={{ width: 14, height: 14 }} /> Prev</button>}
-                {revIdx < questions.length - 1 && <button onClick={() => { setRevIdx(i => i + 1); }} style={{ flex: 1, padding: '10px 18px', borderRadius: 10, border: 'none', background: '#3b82f6', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>Next <ChevronRight style={{ width: 14, height: 14 }} /></button>}
+              <div className="flex gap-2 mt-4">
+                {revIdx > 0 && (
+                  <button
+                    onClick={() => setRevIdx(i => i - 1)}
+                    className="px-4 py-2.5 rounded-xl text-[13px] font-semibold border border-white/10 bg-white/[0.04] text-white/65 hover:bg-white/[0.08] hover:text-white/90 transition-colors flex items-center gap-1.5"
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5" /> Prev
+                  </button>
+                )}
+                {revIdx < questions.length - 1 && (
+                  <button
+                    onClick={() => setRevIdx(i => i + 1)}
+                    className="flex-1 px-5 py-2.5 rounded-xl text-[13px] font-bold transition-all flex items-center justify-center gap-1.5"
+                    style={{
+                      background: `linear-gradient(135deg, ${accent}, ${accent}dd)`,
+                      color: '#0A0B12',
+                      boxShadow: `0 0 18px -4px ${accent}88`,
+                    }}
+                  >
+                    Next <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
             </div>
-          </div>
+          </main>
         </div>
       );
     }
 
+    const pct = questions.length > 0 ? Math.round((score / questions.length) * 100) : 0;
     return (
-      <div style={{ minHeight: '100vh', background: '#080a0f', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-        <WatermarkOverlay />
-        <div style={{ fontSize: 48, marginBottom: 16 }}>{String.fromCodePoint(0x1F3AF)}</div>
-        <div style={{ fontSize: 28, fontWeight: 800, marginBottom: 8 }}>Test Complete!</div>
-        <div style={{ fontSize: 16, color: 'rgba(255,255,255,0.6)', marginBottom: 32 }}>You scored <span style={{ color: '#34d399', fontWeight: 700 }}>{score}</span> out of <span style={{ fontWeight: 700 }}>{questions.length}</span></div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 32 }}>
-          {([['Correct', score, '#34d399'], ['Wrong', wrong, '#f87171'], ['Skipped', skipped, '#fbbf24']] as [string, number, string][]).map(([l, v, c]) => (
-            <div key={l} style={{ textAlign: 'center', padding: '16px 20px', background: 'rgba(255,255,255,0.04)', borderRadius: 14, border: '1px solid rgba(255,255,255,0.08)' }}>
-              <div style={{ fontSize: 28, fontWeight: 800, color: c, fontFamily: 'monospace' }}>{v}</div>
-              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 4 }}>{l}</div>
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center text-white p-6" style={{ background: '#0F1117' }}>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(900px 500px at 85% -10%, ${accent}1F, transparent 60%),
+              radial-gradient(700px 600px at -10% 100%, ${accent}12, transparent 65%)
+            `,
+          }}
+        />
+        <div className="relative z-10 max-w-md w-full">
+          <div className="text-[10px] font-bold uppercase tracking-[0.14em] mb-2 inline-flex items-center gap-1.5" style={{ color: accent }}>
+            <span className="w-1.5 h-1.5 rounded-full" style={{ background: accent, boxShadow: `0 0 8px ${accent}` }} />
+            {chapterName} · Test complete
+          </div>
+          <div className="text-[28px] font-bold tracking-tight mb-1">Test complete</div>
+          <div className="text-[13px] text-white/55 mb-6">
+            You scored <span className="font-mono tabular-nums text-white/90 font-semibold">{score}</span> out of <span className="font-mono tabular-nums text-white/90 font-semibold">{questions.length}</span>
+            <span className="mx-1.5 text-white/20">·</span>
+            <span className={pct >= 60 ? 'text-emerald-300 font-semibold' : 'text-amber-300 font-semibold'}>{pct}%</span>
+          </div>
+          <div className="grid grid-cols-3 gap-2 mb-6">
+            <div className="rounded-xl border border-emerald-500/25 bg-emerald-500/10 p-3 text-center">
+              <div className="font-mono text-[20px] font-bold text-emerald-300 tabular-nums leading-none">{score}</div>
+              <div className="text-[10px] uppercase tracking-wide text-emerald-400/70 font-bold mt-1.5">Correct</div>
             </div>
-          ))}
-        </div>
-        <div style={{ display: 'flex', gap: 12 }}>
-          <button onClick={() => { setReviewing(true); setRevIdx(0); }} style={{ padding: '13px 28px', borderRadius: 14, border: '1px solid rgba(124,58,237,0.4)', background: 'rgba(124,58,237,0.1)', color: '#a78bfa', fontSize: 15, fontWeight: 700, cursor: 'pointer' }}>Review Solutions</button>
-          <button onClick={onBack} style={{ padding: '13px 32px', borderRadius: 14, border: 'none', background: 'linear-gradient(135deg,#7c3aed,#5b21b6)', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer' }}>Back to Home</button>
+            <div className="rounded-xl border border-red-500/25 bg-red-500/10 p-3 text-center">
+              <div className="font-mono text-[20px] font-bold text-red-300 tabular-nums leading-none">{wrong}</div>
+              <div className="text-[10px] uppercase tracking-wide text-red-400/70 font-bold mt-1.5">Wrong</div>
+            </div>
+            <div className="rounded-xl border border-amber-400/25 bg-amber-400/10 p-3 text-center">
+              <div className="font-mono text-[20px] font-bold text-amber-300 tabular-nums leading-none">{skipped}</div>
+              <div className="text-[10px] uppercase tracking-wide text-amber-400/70 font-bold mt-1.5">Skipped</div>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2.5">
+            <button
+              onClick={() => { setReviewing(true); setRevIdx(0); }}
+              className="w-full py-3 rounded-xl text-[13.5px] font-bold transition-all"
+              style={{
+                background: `linear-gradient(135deg, ${accent}, ${accent}dd)`,
+                color: '#0A0B12',
+                boxShadow: `0 0 22px -4px ${accent}AA`,
+              }}
+            >
+              Review solutions
+            </button>
+            <button
+              onClick={onBack}
+              className="w-full py-2.5 rounded-xl text-[13px] font-semibold border border-white/10 bg-white/[0.04] text-white/65 hover:bg-white/[0.08] hover:text-white/90 transition-colors"
+            >
+              Back to chapter
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
+  const triggerSubmit = () => {
+    if (confirm('Submit test? You cannot change answers after submission.')) {
+      track('test_finish_clicked', {
+        chapter_id: chapterId,
+        question_count: questions.length,
+        answered_count: answeredCount,
+        seconds_remaining: seconds,
+        // Whether the user submitted with skipped questions outstanding
+        had_skipped: questions.length - answeredCount > 0,
+      });
+      setSubmitted(true);
+      setShowSaveModal(true);
+    }
+  };
+
   const palettePanel = (
-    <div style={{ padding: '16px 14px' }}>
-      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: 10 }}>Overview</div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 16 }}>
-        {([
-          [String(answeredCount), 'Answered', '#34d399'],
-          [String(notVisitedCount), 'Not Visited', 'rgba(255,255,255,0.5)'],
-          [String(markedCount), 'Marked', '#7c3aed'],
-          ['0', 'Skipped', '#fbbf24'],
-        ] as [string, string, string][]).map(([v, l, c]) => (
-          <div key={l} style={{ textAlign: 'center', padding: '12px 6px', background: 'rgba(255,255,255,0.04)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.07)' }}>
-            <div style={{ fontSize: 24, fontWeight: 800, color: c, fontFamily: 'monospace' }}>{v}</div>
-            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 3, textTransform: 'uppercase' }}>{l}</div>
-          </div>
-        ))}
+    <div className="px-4 py-5">
+      {/* OVERVIEW chips — matches BrowseView's stat-chip style */}
+      <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/45 mb-2.5">Overview</div>
+      <div className="grid grid-cols-3 gap-2 mb-5">
+        <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/10 p-2.5 text-center">
+          <div className="font-mono text-[16px] font-bold text-emerald-300 tabular-nums leading-none">{answeredCount}</div>
+          <div className="text-[9px] uppercase tracking-wide text-emerald-400/70 font-bold mt-1">Answered</div>
+        </div>
+        <div className="rounded-lg border border-amber-400/25 bg-amber-400/10 p-2.5 text-center">
+          <div className="font-mono text-[16px] font-bold text-amber-300 tabular-nums leading-none">{markedCount}</div>
+          <div className="text-[9px] uppercase tracking-wide text-amber-400/70 font-bold mt-1">Marked</div>
+        </div>
+        <div className="rounded-lg border border-white/[0.06] bg-white/[0.04] p-2.5 text-center">
+          <div className="font-mono text-[16px] font-bold text-white/70 tabular-nums leading-none">{notVisitedCount}</div>
+          <div className="text-[9px] uppercase tracking-wide text-white/45 font-bold mt-1">Not visited</div>
+        </div>
       </div>
-      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: 8 }}>Question Palette</div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 6 }}>
+
+      {/* QUESTION PALETTE — accent-coloured current, emerald answered, amber marked */}
+      <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/45 mb-2.5">Question Palette</div>
+      <div className="grid grid-cols-5 gap-1.5">
         {questions.map((_, i) => {
           const s = palStatus(i);
-          return <button key={i} onClick={() => { setIdx(i); setShowPalette(false); }} style={{ width: '100%', aspectRatio: '1', borderRadius: 8, border: `1.5px solid ${s.border}`, background: s.bg, color: s.color, fontSize: 12, fontWeight: 700, cursor: 'pointer', transition: 'all 0.1s' }}>{i + 1}</button>;
+          return (
+            <button
+              key={i}
+              onClick={() => { setIdx(i); setShowPalette(false); }}
+              className="aspect-square rounded-lg font-mono text-[12px] font-bold tabular-nums transition-all"
+              style={{
+                background: s.bg,
+                color: s.color,
+                border: `1px solid ${s.border}`,
+                boxShadow: s.ring ? `0 0 14px -4px ${accent}AA` : 'none',
+              }}
+            >
+              {i + 1}
+            </button>
+          );
         })}
       </div>
-      <button onClick={() => { if (confirm('Submit test? You cannot change answers after submission.')) { setSubmitted(true); setShowSaveModal(true); } }}
-        style={{ width: '100%', marginTop: 18, padding: '13px', borderRadius: 12, border: 'none', background: '#dc2626', color: '#fff', fontSize: 13, fontWeight: 800, cursor: 'pointer' }}>
-        SUBMIT TEST
+
+      {/* SUBMIT TEST — refined danger style, single source of truth (header has no duplicate) */}
+      <button
+        onClick={triggerSubmit}
+        className="w-full mt-5 py-3 rounded-xl text-[13px] font-bold tracking-tight transition-all"
+        style={{
+          background: 'rgba(239,68,68,0.12)',
+          color: '#fca5a5',
+          border: '1px solid rgba(239,68,68,0.45)',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.background = 'rgba(239,68,68,0.22)';
+          e.currentTarget.style.color = '#fecaca';
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.background = 'rgba(239,68,68,0.12)';
+          e.currentTarget.style.color = '#fca5a5';
+        }}
+      >
+        Submit test
       </button>
-      <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', textAlign: 'center', marginTop: 6 }}>Once submitted, you cannot edit responses.</div>
+      <div className="text-[10.5px] text-white/30 text-center mt-2">
+        Once submitted, you can&rsquo;t edit responses.
+      </div>
     </div>
   );
+
+  const qDiffColor = DIFF_COLOR(q.metadata.difficultyLevel);
+  const isCurrentMCQ = q.type === 'MCQ';
+  const currentSelArr: string[] = isCurrentMCQ
+    ? (Array.isArray(answers[q.id]) ? (answers[q.id] as string[]) : [])
+    : (typeof answers[q.id] === 'string' ? [answers[q.id] as string] : []);
 
   const questionBody = (
-    <div style={{ maxWidth: isMobile ? 700 : 860, margin: '0 auto', padding: isMobile ? '12px 10px 120px' : '28px 32px 100px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
-        <span style={{ fontSize: isMobile ? 17 : 20, fontWeight: 800 }}>Q{idx + 1}</span>
-        <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>/{questions.length}</span>
-        <span style={{ fontSize: 11, color: DIFF_COLOR(q.metadata.difficultyLevel), background: DIFF_COLOR(q.metadata.difficultyLevel) + '18', padding: '2px 8px', borderRadius: 99, fontWeight: 700 }}>L{q.metadata.difficultyLevel}</span>
-        <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 99, background: 'rgba(52,211,153,0.12)', color: '#34d399' }}>+4</span>
-        <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 99, background: 'rgba(248,113,113,0.12)', color: '#f87171' }}>-1</span>
-        <button onClick={() => toggleStar(q.id)} style={{ marginLeft: 'auto', width: 30, height: 30, borderRadius: 8, background: starred.has(q.id) ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.06)', border: `1px solid ${starred.has(q.id) ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.1)'}`, color: starred.has(q.id) ? '#fbbf24' : 'rgba(255,255,255,0.4)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Star style={{ width: 13, height: 13, fill: starred.has(q.id) ? '#fbbf24' : 'none' }} />
-        </button>
-      </div>
-      <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: isMobile ? '12px 12px' : '18px 22px', marginBottom: 16 }}>
-        <MathRenderer markdown={q.question_text.markdown} className="leading-relaxed" fontSize={isMobile ? undefined : 20} imageScale={q.svg_scales?.question || 100} />
-      </div>
-      {q.options && q.options.length > 0 && (() => {
-        const useGrid = isShortOptions(q.options);
-        return (
-          <div style={{ display: useGrid ? 'grid' : 'flex', gridTemplateColumns: useGrid ? '1fr 1fr' : undefined, flexDirection: useGrid ? undefined : 'column', gap: 8, marginBottom: 16 }}>
-            {q.options.map((opt: { id: string; text: string; is_correct: boolean }) => {
-              const isMCQ = q.type === 'MCQ';
-              const userSelArr: string[] = isMCQ ? (Array.isArray(answers[q.id]) ? answers[q.id] as string[] : []) : (typeof answers[q.id] === 'string' ? [answers[q.id] as string] : []);
-              const sel = userSelArr.includes(opt.id);
-              return (
-                <button key={opt.id} onClick={() => {
-                  if (isMCQ) {
-                    const curArr = Array.isArray(answers[q.id]) ? (answers[q.id] as string[]) : [];
-                    const newArr = sel ? curArr.filter(id => id !== opt.id) : [...curArr, opt.id];
-                    setAnswers(a => ({ ...a, [q.id]: newArr }));
-                  } else {
-                    setAnswers(a => ({ ...a, [q.id]: opt.id }));
-                  }
-                }}
-                  style={{ padding: useGrid ? '12px 12px' : (isMobile ? '10px 11px' : '13px 16px'), borderRadius: 12, border: `1.5px solid ${sel ? '#3b82f6' : 'rgba(255,255,255,0.1)'}`, background: sel ? 'rgba(59,130,246,0.1)' : 'rgba(255,255,255,0.03)', color: '#fff', fontSize: isMobile ? 13 : 17, textAlign: 'left', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, width: '100%' }}>
-                  <span style={{ width: 24, height: 24, borderRadius: 7, border: `1.5px solid ${sel ? '#3b82f6' : 'rgba(255,255,255,0.2)'}`, background: sel ? '#3b82f6' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, flexShrink: 0 }}>{opt.id.toUpperCase()}</span>
-                  <span style={{ flex: 1 }}><MathRenderer markdown={opt.text || ''} fontSize={isMobile ? undefined : 20} imageScale={q.svg_scales?.options || 100} /></span>
-                </button>
-              );
-            })}
-          </div>
-        );
-      })()}
-      {q.type === 'NVT' && (
-        <input type="text" value={nvtInputs[q.id] || ''} onChange={e => setNvtInputs(n => ({ ...n, [q.id]: e.target.value }))}
-          placeholder="Enter integer answer"
-          style={{ width: '100%', padding: '13px 16px', borderRadius: 12, border: '1.5px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.05)', color: '#fff', fontSize: 15, outline: 'none', marginBottom: 16, boxSizing: 'border-box' }}
+    <div className={`max-w-[860px] mx-auto px-4 lg:px-8 ${isMobile ? 'pb-32 pt-4' : 'py-8'}`}>
+      <article
+        className="relative rounded-2xl overflow-hidden"
+        style={{
+          background: 'linear-gradient(160deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 50%, rgba(0,0,0,0.15) 100%)',
+          border: '1px solid rgba(255,255,255,0.07)',
+        }}
+      >
+        {/* Difficulty stripe — same as BrowseView */}
+        <div
+          className="absolute left-0 top-0 bottom-0 w-[3px] pointer-events-none"
+          style={{ background: `linear-gradient(180deg, ${qDiffColor}, ${qDiffColor}33)` }}
         />
-      )}
-      <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
-        <button onClick={() => { const n = { ...answers }; delete n[q.id]; setAnswers(n); const m = { ...nvtInputs }; delete m[q.id]; setNvtInputs(m); }}
-          style={{ padding: '10px 14px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.5)', fontSize: 12, cursor: 'pointer' }}>Clear</button>
-        <button onClick={() => { setMarked(m => ({ ...m, [q.id]: true })); if (idx < questions.length - 1) setIdx(i => i + 1); }}
-          style={{ padding: '10px 14px', borderRadius: 10, border: '1px solid rgba(124,58,237,0.4)', background: 'rgba(124,58,237,0.1)', color: '#a78bfa', fontSize: 12, cursor: 'pointer', fontWeight: 600, whiteSpace: 'nowrap' }}>Mark & Next</button>
-        {idx < questions.length - 1 ? (
-          <button onClick={() => setIdx(i => i + 1)}
-            style={{ flex: 1, padding: '10px 14px', borderRadius: 10, border: 'none', background: '#3b82f6', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
-            Save & Next <ChevronRight style={{ width: 13, height: 13 }} />
+
+        {/* Top metadata row */}
+        <div className="flex items-center gap-2.5 px-5 py-3 border-b border-white/[0.05] flex-wrap">
+          <span
+            className="font-mono text-[14px] font-bold tabular-nums tracking-tight select-none"
+            style={{ color: accent }}
+          >
+            {pad2(idx + 1)}
+          </span>
+          <span className="text-[11px] text-white/35 font-mono">of {questions.length}</span>
+          <span
+            className="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-md"
+            style={{ color: qDiffColor, background: `${qDiffColor}1A`, border: `1px solid ${qDiffColor}33` }}
+          >
+            {DIFF_LABEL(q.metadata.difficultyLevel)}
+          </span>
+          <span className="text-[10.5px] text-white/40 px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.06]">
+            {TYPE_LABEL[q.type] ?? q.type}
+          </span>
+          <div className="flex items-center gap-1 ml-1">
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded text-emerald-300 bg-emerald-500/10">+4</span>
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded text-red-300 bg-red-500/10">−1</span>
+          </div>
+          <button
+            onClick={() => toggleStar(q.id)}
+            title="Bookmark"
+            className={`ml-auto w-8 h-8 rounded-md flex items-center justify-center transition-colors ${
+              starred.has(q.id) ? 'bg-amber-400/15 text-amber-300' : 'text-white/35 hover:text-white/70 hover:bg-white/5'
+            }`}
+          >
+            <Bookmark className="w-4 h-4" fill={starred.has(q.id) ? '#fbbf24' : 'none'} />
           </button>
-        ) : (
-          // Last question — open summary modal instead of silently doing nothing
-          <button onClick={() => setShowFinishModal(true)}
-            style={{ flex: 1, padding: '10px 14px', borderRadius: 10, border: 'none', background: '#059669', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
-            Finish Test ✓
-          </button>
+        </div>
+
+        {/* Question text */}
+        <div className="px-5 pt-5 pb-4">
+          <div className="text-white/95 text-[17px] leading-[1.55] tracking-[-0.005em]">
+            <MathRenderer markdown={q.question_text.markdown} fontSize={isMobile ? 15 : 17} imageScale={q.svg_scales?.question || 100} />
+          </div>
+        </div>
+
+        {/* MCQ helper hint */}
+        {isCurrentMCQ && (
+          <div className="mx-5 mb-3 px-3 py-1.5 rounded-md text-[11px] font-medium text-amber-300 bg-amber-400/10 border border-amber-400/20 inline-flex items-center w-fit">
+            Multiple correct — select all that apply
+          </div>
         )}
-      </div>
+
+        {/* Options / NVT */}
+        <div className="px-5 pb-4">
+          {q.options && q.options.length > 0 && (() => {
+            const useGrid = isShortOptions(q.options);
+            return (
+              <div className={useGrid ? 'grid grid-cols-2 gap-2.5' : 'flex flex-col gap-2.5'}>
+                {q.options.map((opt: { id: string; text: string; is_correct: boolean }, i: number) => {
+                  const sel = currentSelArr.includes(opt.id);
+                  const letter = String.fromCharCode(65 + i);
+                  return (
+                    <button
+                      key={opt.id}
+                      onClick={() => {
+                        if (isCurrentMCQ) {
+                          const newArr = sel ? currentSelArr.filter(id => id !== opt.id) : [...currentSelArr, opt.id];
+                          setAnswers(a => ({ ...a, [q.id]: newArr }));
+                        } else {
+                          setAnswers(a => ({ ...a, [q.id]: opt.id }));
+                        }
+                      }}
+                      className="relative overflow-hidden flex items-start gap-3 text-left rounded-xl border px-4 py-3 transition-all cursor-pointer"
+                      style={sel ? {
+                        borderColor: accent,
+                        background: `${accent}14`,
+                      } : {
+                        borderColor: 'rgba(255,255,255,0.10)',
+                        background: 'rgba(255,255,255,0.03)',
+                      }}
+                    >
+                      <div
+                        className="relative shrink-0 w-7 h-7 rounded-md flex items-center justify-center text-[12px] font-bold border bg-white/5"
+                        style={sel ? { color: accent, borderColor: `${accent}66` } : { color: 'rgba(255,255,255,0.45)', borderColor: 'rgba(255,255,255,0.08)' }}
+                      >
+                        {letter}
+                      </div>
+                      <div className="relative flex-1 min-w-0 text-[15px] text-white/90 pt-0.5">
+                        <MathRenderer markdown={opt.text || ''} fontSize={isMobile ? 14 : 15} imageScale={q.svg_scales?.options || 100} />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          })()}
+          {q.type === 'NVT' && (
+            <input
+              type="text"
+              inputMode="decimal"
+              value={nvtInputs[q.id] || ''}
+              onChange={e => setNvtInputs(n => ({ ...n, [q.id]: e.target.value }))}
+              placeholder="Enter integer answer"
+              className="w-full px-4 py-3 rounded-xl text-white text-[16px] outline-none transition-colors"
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: `1px solid ${nvtInputs[q.id] ? accent : 'rgba(255,255,255,0.12)'}`,
+              }}
+            />
+          )}
+        </div>
+
+        {/* Action row */}
+        <div className="flex flex-wrap items-center gap-2 px-5 pb-5">
+          <button
+            onClick={() => {
+              const n = { ...answers }; delete n[q.id]; setAnswers(n);
+              const m = { ...nvtInputs }; delete m[q.id]; setNvtInputs(m);
+            }}
+            className="px-3.5 py-2 rounded-xl text-[12px] font-semibold border border-white/10 bg-transparent text-white/55 hover:text-white/85 hover:bg-white/[0.04] transition-colors"
+          >
+            Clear
+          </button>
+          <button
+            onClick={() => { setMarked(m => ({ ...m, [q.id]: true })); if (idx < questions.length - 1) setIdx(i => i + 1); }}
+            className="px-3.5 py-2 rounded-xl text-[12px] font-semibold transition-colors"
+            style={{
+              background: 'rgba(251,191,36,0.10)',
+              color: '#fcd34d',
+              border: '1px solid rgba(251,191,36,0.30)',
+            }}
+          >
+            Mark & Next
+          </button>
+          {idx < questions.length - 1 ? (
+            <button
+              onClick={() => setIdx(i => i + 1)}
+              className="flex-1 min-w-[140px] px-5 py-2 rounded-xl text-[13px] font-bold transition-all flex items-center justify-center gap-1.5"
+              style={{
+                background: `linear-gradient(135deg, ${accent}, ${accent}dd)`,
+                color: '#0A0B12',
+                boxShadow: `0 0 18px -4px ${accent}88`,
+              }}
+            >
+              Save & Next <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+          ) : (
+            <button
+              onClick={() => setShowFinishModal(true)}
+              className="flex-1 min-w-[140px] px-5 py-2 rounded-xl text-[13px] font-bold transition-all flex items-center justify-center gap-1.5 bg-emerald-500/15 border border-emerald-500/45 text-emerald-200 hover:bg-emerald-500/25"
+            >
+              Finish Test <Check className="w-3.5 h-3.5" strokeWidth={3} />
+            </button>
+          )}
+        </div>
+      </article>
     </div>
   );
 
+  // Timer urgency colour — pales as time runs low
+  const timerColor = seconds < 60 ? '#f87171' : seconds < 300 ? '#fbbf24' : 'rgba(255,255,255,0.85)';
+  const timerBg = seconds < 60 ? 'rgba(248,113,113,0.12)' : seconds < 300 ? 'rgba(251,191,36,0.10)' : 'rgba(255,255,255,0.04)';
+  const timerBorder = seconds < 60 ? 'rgba(248,113,113,0.40)' : seconds < 300 ? 'rgba(251,191,36,0.35)' : 'rgba(255,255,255,0.08)';
+
   return (
-    <div style={{ height: '100vh', overflow: 'hidden', background: '#0a0c14', color: '#fff', display: 'flex', flexDirection: 'column' }}>
-      <WatermarkOverlay />
-      <header style={{ height: 48, borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(10,12,20,0.98)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', flexShrink: 0, gap: 8 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
-          <button onClick={onBack} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-            <X style={{ width: 16, height: 16 }} />
+    <div className="fixed inset-0 z-50 flex flex-col overflow-hidden text-white" style={{ background: '#0F1117' }}>
+      {/* Ambient accent wash */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background: `
+            radial-gradient(900px 500px at 85% -10%, ${accent}1A, transparent 60%),
+            radial-gradient(700px 600px at -10% 100%, ${accent}10, transparent 65%)
+          `,
+        }}
+      />
+
+      {/* HEADER — single Submit Test lives in the sidebar; header is just back + chapter chip + timer + (mobile palette) */}
+      <header
+        className="relative z-10 h-14 flex items-center justify-between gap-3 px-4 lg:px-5 border-b flex-shrink-0"
+        style={{ borderColor: 'rgba(255,255,255,0.06)', background: 'rgba(10,11,18,0.95)' }}
+      >
+        <div className="flex items-center gap-3 min-w-0">
+          <button
+            onClick={onBack}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium text-white/55 hover:text-white border border-white/10 hover:border-white/25 transition-colors"
+          >
+            <ChevronLeft className="w-3.5 h-3.5" />
+            Back
           </button>
-          {!isMobile && <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.7)', whiteSpace: 'nowrap' }}>Section 1: Chemistry</span>}
-          {!isMobile && <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 99, background: 'rgba(52,211,153,0.15)', color: '#34d399', border: '1px solid rgba(52,211,153,0.3)', fontWeight: 700, whiteSpace: 'nowrap' }}>SINGLE CORRECT</span>}
+          {!isMobile && (
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: accent, boxShadow: `0 0 8px ${accent}` }} />
+              <span className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-white/55 truncate">
+                {chapterCategory ? `${chapterCategory} · ` : ''}{chapterName}
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded text-emerald-300 bg-emerald-500/10 border border-emerald-500/25 shrink-0">
+                {TYPE_LABEL[q.type] ?? q.type}
+              </span>
+            </div>
+          )}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+
+        {/* Timer cluster — center on desktop, right on mobile */}
+        <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={() => setIsPaused(p => !p)}
-            style={{ padding: '4px 8px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.15)', background: isPaused ? 'rgba(251,191,36,0.15)' : 'transparent', color: isPaused ? '#fbbf24' : 'rgba(255,255,255,0.6)', fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
-            {isPaused ? '▶' : '⏸'}
+            title={isPaused ? 'Resume' : 'Pause'}
+            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
+            style={isPaused ? {
+              background: 'rgba(251,191,36,0.15)',
+              color: '#fbbf24',
+              border: '1px solid rgba(251,191,36,0.40)',
+            } : {
+              background: 'rgba(255,255,255,0.04)',
+              color: 'rgba(255,255,255,0.55)',
+              border: '1px solid rgba(255,255,255,0.08)',
+            }}
+          >
+            {isPaused ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
           </button>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: seconds < 300 ? '#f87171' : 'rgba(255,255,255,0.85)', fontSize: 15, fontWeight: 700, fontFamily: 'monospace' }}>
-            <Timer style={{ width: 13, height: 13 }} /> {fmt(seconds)}
+          <div
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-mono text-[15px] font-bold tabular-nums"
+            style={{ background: timerBg, color: timerColor, border: `1px solid ${timerBorder}` }}
+          >
+            <Timer className="w-3.5 h-3.5" />
+            {fmt(seconds)}
           </div>
         </div>
-        <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
+
+        <div className="flex items-center gap-2 shrink-0">
           {isMobile && (
-            <button onClick={() => setShowPalette(v => !v)}
-              style={{ padding: '6px 12px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.15)', background: showPalette ? 'rgba(255,255,255,0.1)' : 'transparent', color: '#fff', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
+            <button
+              onClick={() => setShowPalette(v => !v)}
+              className="px-3 py-1.5 rounded-lg text-[12px] font-bold border border-white/10 text-white/75"
+              style={{ background: showPalette ? 'rgba(255,255,255,0.08)' : 'transparent' }}
+            >
               {answeredCount}/{questions.length}
             </button>
           )}
-          <button onClick={() => { if (confirm('Submit test? You cannot change answers after submission.')) { setSubmitted(true); setShowSaveModal(true); } }}
-            style={{ padding: '6px 14px', borderRadius: 8, border: 'none', background: '#dc2626', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
-            {isMobile ? 'Submit' : 'SUBMIT TEST'}
-          </button>
         </div>
       </header>
 
-      <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative' }}>
-        <div style={{ flex: 1, overflowY: 'auto' }}>
+      <div className="relative z-0 flex-1 flex overflow-hidden">
+        <main className="flex-1 overflow-y-auto">
           {questionBody}
-        </div>
+        </main>
         {!isMobile && (
-          <div style={{ width: 390, borderLeft: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)', overflowY: 'auto', flexShrink: 0 }}>
+          <aside
+            className="w-[320px] flex-shrink-0 border-l overflow-y-auto"
+            style={{ borderColor: 'rgba(255,255,255,0.06)', background: 'rgba(10,11,18,0.45)' }}
+          >
             {palettePanel}
-          </div>
+          </aside>
         )}
         {isMobile && showPalette && (
           <>
-            <div onClick={() => setShowPalette(false)} style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 40 }} />
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 50, background: '#12141f', borderTop: '1px solid rgba(255,255,255,0.12)', borderRadius: '16px 16px 0 0', maxHeight: '75vh', overflowY: 'auto' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px 0' }}>
-                <span style={{ fontSize: 13, fontWeight: 700 }}>Overview & Palette</span>
-                <button onClick={() => setShowPalette(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', padding: 4 }}><X style={{ width: 16, height: 16 }} /></button>
+            <div
+              onClick={() => setShowPalette(false)}
+              className="absolute inset-0 z-40 bg-black/60 backdrop-blur-sm"
+            />
+            <div
+              className="absolute bottom-0 left-0 right-0 z-50 rounded-t-2xl max-h-[80vh] overflow-y-auto"
+              style={{ background: '#13151E', borderTop: '1px solid rgba(255,255,255,0.10)' }}
+            >
+              <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.05]">
+                <span className="text-[13px] font-bold text-white">Overview & Palette</span>
+                <button onClick={() => setShowPalette(false)} className="w-7 h-7 rounded-md text-white/55 hover:text-white hover:bg-white/5 flex items-center justify-center">
+                  <X className="w-4 h-4" />
+                </button>
               </div>
               {palettePanel}
             </div>
@@ -709,32 +1110,52 @@ export default function TestView({ questions, onBack }: { questions: Question[];
         const skippedCount = questions.length - answeredCount;
         return (
           <>
-            <div onClick={() => setShowFinishModal(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 300, backdropFilter: 'blur(4px)' }} />
-            <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 301, background: '#12141f', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 18, padding: '28px 28px 22px', width: 'min(380px, 90vw)', boxShadow: '0 24px 64px rgba(0,0,0,0.6)' }}>
-              <div style={{ fontSize: 32, textAlign: 'center', marginBottom: 8 }}>{skippedCount === 0 ? '✅' : '⚠️'}</div>
-              <h3 style={{ color: '#fff', fontSize: 18, fontWeight: 800, textAlign: 'center', margin: '0 0 8px' }}>
-                {skippedCount === 0 ? 'All Questions Answered!' : `${skippedCount} Question${skippedCount > 1 ? 's' : ''} Skipped`}
+            <div
+              onClick={() => setShowFinishModal(false)}
+              className="fixed inset-0 z-[300] bg-black/72 backdrop-blur-md"
+            />
+            <div
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[301] w-[90%] max-w-[400px] rounded-3xl p-7 shadow-2xl"
+              style={{ background: '#13151E', border: '1px solid rgba(255,255,255,0.10)' }}
+            >
+              <div
+                className="text-[10px] font-bold uppercase tracking-[0.14em] mb-2"
+                style={{ color: skippedCount === 0 ? '#34d399' : '#fbbf24' }}
+              >
+                {skippedCount === 0 ? '✓ All answered' : '⚠ Skipped questions'}
+              </div>
+              <h3 className="text-[20px] font-bold text-white tracking-tight mb-2">
+                {skippedCount === 0 ? 'Ready to submit?' : `${skippedCount} unanswered`}
               </h3>
-              <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13, textAlign: 'center', margin: '0 0 20px', lineHeight: 1.6 }}>
+              <p className="text-[13px] text-white/55 leading-relaxed mb-5">
                 {skippedCount === 0
-                  ? `You answered all ${questions.length} questions. Ready to submit?`
-                  : `You answered ${answeredCount} of ${questions.length} questions. ${skippedCount} ${skippedCount > 1 ? 'are' : 'is'} still unanswered.`}
+                  ? `You answered all ${questions.length} questions.`
+                  : `You answered ${answeredCount} of ${questions.length}. The remaining ${skippedCount} will be marked wrong.`}
               </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div className="flex flex-col gap-2">
                 <button
                   onClick={() => { setShowFinishModal(false); setSubmitted(true); setShowSaveModal(true); }}
-                  style={{ width: '100%', padding: '12px', borderRadius: 12, border: 'none', background: '#dc2626', color: '#fff', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
-                  Submit Test Now
+                  className="w-full py-3 rounded-xl text-[13.5px] font-bold transition-all"
+                  style={{
+                    background: 'rgba(239,68,68,0.18)',
+                    color: '#fca5a5',
+                    border: '1px solid rgba(239,68,68,0.50)',
+                  }}
+                >
+                  Submit test now
                 </button>
                 {skippedCount > 0 && (
                   <button
                     onClick={() => { setShowFinishModal(false); setShowPalette(true); }}
-                    style={{ width: '100%', padding: '12px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.15)', background: 'transparent', color: 'rgba(255,255,255,0.7)', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
-                    Review Unanswered ({skippedCount})
+                    className="w-full py-2.5 rounded-xl text-[13px] font-semibold border border-white/10 bg-white/[0.04] text-white/70 hover:bg-white/[0.08] hover:text-white/90 transition-colors"
+                  >
+                    Review {skippedCount} unanswered
                   </button>
                 )}
-                <button onClick={() => setShowFinishModal(false)}
-                  style={{ width: '100%', padding: '10px', borderRadius: 12, border: 'none', background: 'transparent', color: 'rgba(255,255,255,0.3)', fontSize: 13, cursor: 'pointer' }}>
+                <button
+                  onClick={() => setShowFinishModal(false)}
+                  className="w-full py-2 rounded-xl text-[12.5px] font-semibold text-white/45 hover:text-white/70 transition-colors"
+                >
                   Cancel
                 </button>
               </div>
@@ -745,23 +1166,29 @@ export default function TestView({ questions, onBack }: { questions: Question[];
 
       {/* Timer Warning Notifications */}
       {showWarning && (
-        <div style={{ position: 'fixed', top: 80, right: 20, zIndex: 200, background: showWarning === '1min' ? 'rgba(248,113,113,0.95)' : 'rgba(251,191,36,0.95)', border: `2px solid ${showWarning === '1min' ? '#f87171' : '#fbbf24'}`, borderRadius: 12, padding: '12px 16px', boxShadow: '0 8px 32px rgba(0,0,0,0.4)', animation: 'slideIn 0.3s ease-out' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{ fontSize: 20 }}>{showWarning === '1min' ? '⚠️' : '⏰'}</div>
-            <div>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#000', marginBottom: 2 }}>
-                {showWarning === '1min' ? '1 Minute Remaining!' : '5 Minutes Remaining'}
-              </div>
-              <div style={{ fontSize: 11, color: 'rgba(0,0,0,0.7)' }}>
-                {showWarning === '1min' ? 'Test will auto-submit soon' : 'Time is running out'}
-              </div>
+        <div
+          className="fixed top-20 right-5 z-[200] rounded-xl px-4 py-3 shadow-2xl flex items-center gap-3"
+          style={{
+            background: showWarning === '1min' ? 'rgba(248,113,113,0.18)' : 'rgba(251,191,36,0.16)',
+            border: `1px solid ${showWarning === '1min' ? 'rgba(248,113,113,0.55)' : 'rgba(251,191,36,0.50)'}`,
+            backdropFilter: 'blur(12px)',
+          }}
+        >
+          <Timer className="w-4 h-4" style={{ color: showWarning === '1min' ? '#fca5a5' : '#fcd34d' }} />
+          <div>
+            <div className="text-[13px] font-bold" style={{ color: showWarning === '1min' ? '#fecaca' : '#fde68a' }}>
+              {showWarning === '1min' ? '1 minute remaining' : '5 minutes remaining'}
             </div>
-            <button
-              onClick={() => setShowWarning(null)}
-              style={{ background: 'rgba(0,0,0,0.2)', border: 'none', borderRadius: 6, padding: '4px 8px', color: '#000', fontSize: 12, fontWeight: 700, cursor: 'pointer', marginLeft: 8 }}>
-              OK
-            </button>
+            <div className="text-[11px] text-white/55 mt-0.5">
+              {showWarning === '1min' ? 'Test will auto-submit at 0:00' : 'Time is running out'}
+            </div>
           </div>
+          <button
+            onClick={() => setShowWarning(null)}
+            className="ml-2 px-2.5 py-1 rounded-md text-[11px] font-bold text-white/65 hover:text-white border border-white/15 hover:border-white/30 transition-colors"
+          >
+            OK
+          </button>
         </div>
       )}
 
@@ -778,8 +1205,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
             score={score}
             total={questions.length}
             timeSpent={timeSpent}
-            onSave={handleSaveProgress}
-            onDiscard={handleDiscardProgress}
+            onContinue={handleContinueToReview}
           />
         );
       })()}

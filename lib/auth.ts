@@ -7,22 +7,38 @@
  */
 
 import { NextRequest } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 import { createServerClient } from '@supabase/ssr';
 import type { User } from '@supabase/supabase-js';
 
 /**
- * Extract the Supabase user from the request cookies.
- * Returns null if unauthenticated or Supabase is not configured.
+ * Extract the Supabase user from a request. Tries an `Authorization: Bearer`
+ * header first (used by client-side `fetch` calls that pass the access token
+ * explicitly), then falls back to session cookies (used by SSR-style requests).
+ *
+ * Returns null if unauthenticated or Supabase is not configured. Anon key only —
+ * never the service-role key.
  */
 export async function getAuthenticatedUser(request: NextRequest): Promise<User | null> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!supabaseUrl || !supabaseAnonKey) return null;
 
+  // 1) Bearer token (client-side fetches pass `Authorization: Bearer <access_token>`)
+  const authHeader = request.headers.get('authorization') ?? request.headers.get('Authorization');
+  if (authHeader?.startsWith('Bearer ')) {
+    const token = authHeader.slice(7).trim();
+    if (token) {
+      const supabase = createClient(supabaseUrl, supabaseAnonKey);
+      const { data: { user } } = await supabase.auth.getUser(token);
+      if (user) return user;
+    }
+  }
+
+  // 2) Cookie session (SSR / server-rendered fetches)
   const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
     cookies: { getAll: () => request.cookies.getAll(), setAll: () => {} },
   });
-
   const { data: { user } } = await supabase.auth.getUser();
   return user;
 }
@@ -33,7 +49,8 @@ export async function getAuthenticatedUser(request: NextRequest): Promise<User |
  * equivalent of getUserId() in lib/bookAuth.ts (which is for Server Components).
  *
  * Use this inside /api/** route handlers that need to identify the user for
- * per-user data (progress, bookmarks, saved notes).
+ * per-user data (progress, bookmarks, saved notes). Supports both Bearer and
+ * cookie auth — see getAuthenticatedUser.
  */
 export async function getUserIdFromRequest(request: NextRequest): Promise<string | null> {
   const user = await getAuthenticatedUser(request);

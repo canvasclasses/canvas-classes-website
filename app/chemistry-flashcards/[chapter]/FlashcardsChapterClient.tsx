@@ -19,7 +19,14 @@ import {
 } from 'lucide-react';
 import { FlashcardItem, ChapterTopic } from '../../lib/flashcardsData';
 import { useCardProgress } from '../../hooks/useCardProgress';
-import { QualityRating } from '../../lib/spacedRepetition';
+import { useFlashcardMeta } from '../../hooks/useFlashcardMeta';
+import { useCardMetadata } from '../../hooks/useCardMetadata';
+import { useFlashcardSettings } from '../../hooks/useFlashcardSettings';
+import { flushPendingWrites } from '../../utils/progressSync';
+import { QualityRating, isLeech, localDateString } from '../../lib/spacedRepetition';
+import SyncStatusBanner from '../SyncStatusBanner';
+import RegisterServiceWorker from '../RegisterServiceWorker';
+import { Star, EyeOff, Clock as ClockIcon, AlertOctagon } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { flashcardMarkdownComponents } from '@/app/lib/flashcardMarkdown';
 import remarkMath from 'remark-math';
@@ -59,10 +66,19 @@ export default function FlashcardsChapterClient({
     const {
         isLoaded: progressLoaded,
         updateProgress,
+        undoLastReview,
+        canUndo,
+        getProgress,
         getDueCards,
-        sortByPriority,
         getStatistics,
+        getTodaysQueue,
+        syncStatus,
+        pendingWrites,
     } = useCardProgress();
+
+    const { recordStudyToday } = useFlashcardMeta();
+    const cardMeta = useCardMetadata();
+    const flashcardSettings = useFlashcardSettings();
 
     // Background prefetch of cards as soon as the page mounts. By the time the
     // user finishes picking topics and clicks "Start Practice", cards are usually
@@ -119,16 +135,21 @@ export default function FlashcardsChapterClient({
 
         const cardById = new Map(availableCards.map((c) => [c.id, c]));
 
-        const candidateIds =
+        const today = localDateString();
+        const rawCandidates =
             selectedTopics.length > 0
                 ? topics.filter((t) => selectedTopics.includes(t.name)).flatMap((t) => t.cardIds)
                 : allCardIds;
+        const candidateIds = cardMeta.filterPlayable(rawCandidates, today);
 
         let queue: FlashcardItem[];
         if (mode === 'due') {
-            const dueIds = getDueCards(candidateIds);
-            const sortedIds = sortByPriority(dueIds);
-            queue = sortedIds
+            // Use per-deck caps if configured, else fall back to global defaults.
+            const queueIds = getTodaysQueue(candidateIds, {
+                newCap: flashcardSettings.getNewCap(chapterSlug),
+                reviewCap: flashcardSettings.getReviewCap(chapterSlug)
+            });
+            queue = queueIds
                 .map((id) => cardById.get(id))
                 .filter((c): c is FlashcardItem => !!c);
         } else {
@@ -153,17 +174,67 @@ export default function FlashcardsChapterClient({
         }, 100);
     };
 
+    // Distance to push a failed card back into the queue. Anki defaults vary,
+    // but 5–10 cards out is the conventional spacing.
+    const FAIL_REQUEUE_DISTANCE = 5;
+
     const handleResponse = (quality: QualityRating) => {
         const card = practiceQueue[currentIndex];
         if (card) {
             updateProgress(card.id, quality);
+            recordStudyToday();
             if (quality >= 3) {
                 setSessionStats(prev => ({ ...prev, correct: prev.correct + 1 }));
             } else {
                 setSessionStats(prev => ({ ...prev, needsReview: prev.needsReview + 1 }));
+                // Re-insert this failed card a few positions ahead so the user
+                // re-tests it before the session ends.
+                setPracticeQueue(prev => {
+                    const next = [...prev];
+                    const insertAt = Math.min(currentIndex + 1 + FAIL_REQUEUE_DISTANCE, next.length);
+                    next.splice(insertAt, 0, card);
+                    return next;
+                });
             }
         }
         nextCard();
+    };
+
+    const handleUndo = () => {
+        if (!canUndo) return;
+        const revertedQuality = undoLastReview();
+        if (revertedQuality === null) return;
+
+        // Roll back the matching session counter and step the cursor back so
+        // the user can re-rate the previous card.
+        setSessionStats(prev => {
+            if (revertedQuality >= 3) {
+                return { ...prev, correct: Math.max(0, prev.correct - 1) };
+            }
+            return { ...prev, needsReview: Math.max(0, prev.needsReview - 1) };
+        });
+
+        // If the failed card was requeued, remove that requeued copy too so
+        // we don't end up with a stale duplicate later in the session.
+        if (revertedQuality < 3) {
+            setPracticeQueue(prev => {
+                const card = prev[currentIndex - 1] || prev[currentIndex];
+                if (!card) return prev;
+                const copy = [...prev];
+                // Find the most recent requeued occurrence after the current
+                // cursor and remove it.
+                for (let i = copy.length - 1; i > currentIndex; i--) {
+                    if (copy[i].id === card.id) {
+                        copy.splice(i, 1);
+                        break;
+                    }
+                }
+                return copy;
+            });
+        }
+
+        setIsFlipped(true);
+        setCurrentIndex(prev => Math.max(0, prev - 1));
     };
 
     const nextCard = () => {
@@ -295,6 +366,40 @@ export default function FlashcardsChapterClient({
                                             </div>
                                         </div>
                                     )}
+
+                                    <details className="mb-6 rounded-xl border border-white/5 bg-slate-900/40 p-4 text-sm text-slate-300">
+                                        <summary className="cursor-pointer text-slate-400 hover:text-white">Daily limits for this chapter</summary>
+                                        <div className="mt-3 grid grid-cols-2 gap-4">
+                                            <label className="flex flex-col gap-1">
+                                                <span className="text-xs text-slate-500">New cards / day</span>
+                                                <input
+                                                    type="number"
+                                                    min={0}
+                                                    max={500}
+                                                    value={flashcardSettings.getNewCap(chapterSlug)}
+                                                    onChange={(e) => {
+                                                        const v = Number(e.target.value);
+                                                        if (Number.isFinite(v)) flashcardSettings.updatePerDeck(chapterSlug, { newCardsPerDay: Math.max(0, Math.floor(v)) });
+                                                    }}
+                                                    className="bg-slate-950 border border-white/10 rounded px-2 py-1 text-white"
+                                                />
+                                            </label>
+                                            <label className="flex flex-col gap-1">
+                                                <span className="text-xs text-slate-500">Reviews / day</span>
+                                                <input
+                                                    type="number"
+                                                    min={0}
+                                                    max={5000}
+                                                    value={flashcardSettings.getReviewCap(chapterSlug)}
+                                                    onChange={(e) => {
+                                                        const v = Number(e.target.value);
+                                                        if (Number.isFinite(v)) flashcardSettings.updatePerDeck(chapterSlug, { reviewCardsPerDay: Math.max(0, Math.floor(v)) });
+                                                    }}
+                                                    className="bg-slate-950 border border-white/10 rounded px-2 py-1 text-white"
+                                                />
+                                            </label>
+                                        </div>
+                                    </details>
 
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
                                         {topics.map((topic) => {
@@ -435,10 +540,75 @@ export default function FlashcardsChapterClient({
                                         </AnimatePresence>
                                     </div>
 
-                                    <div className="text-center mt-4">
+                                    <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
                                         <span className="px-3 py-1 bg-slate-800 rounded-full text-slate-400 text-sm">
                                             {currentCard.topicName}
                                         </span>
+                                        {(() => {
+                                            const meta = cardMeta.get(currentCard.id);
+                                            const progress = progressLoaded ? getProgress(currentCard.id) : null;
+                                            const leech = progress ? isLeech(progress) : false;
+                                            return (
+                                                <>
+                                                    {leech && (
+                                                        <span
+                                                            className="inline-flex items-center gap-1 px-2 py-1 bg-red-500/15 text-red-300 text-xs rounded-full border border-red-500/30"
+                                                            title="You've forgotten this card several times — consider rewriting it or burying for a while"
+                                                        >
+                                                            <AlertOctagon className="w-3 h-3" />
+                                                            Leech
+                                                        </span>
+                                                    )}
+                                                    <button
+                                                        onClick={() => cardMeta.toggleStar(currentCard.id)}
+                                                        className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs border transition-colors ${
+                                                            meta?.starred
+                                                                ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                                                                : 'bg-slate-800 text-slate-400 border-transparent hover:bg-slate-700'
+                                                        }`}
+                                                        title={meta?.starred ? 'Unstar card' : 'Star card'}
+                                                    >
+                                                        <Star className="w-3 h-3" />
+                                                        Star
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            const tomorrow = new Date();
+                                                            tomorrow.setDate(tomorrow.getDate() + 1);
+                                                            cardMeta.buryUntil(currentCard.id, localDateString(tomorrow));
+                                                            // Drop from current session.
+                                                            setPracticeQueue(prev => prev.filter((c, i) => i !== currentIndex));
+                                                            if (currentIndex >= practiceQueue.length - 1) {
+                                                                setIsPracticeMode(false);
+                                                            }
+                                                        }}
+                                                        className="inline-flex items-center gap-1 px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-400 text-xs rounded-full transition-colors"
+                                                        title="Bury this card until tomorrow"
+                                                    >
+                                                        <ClockIcon className="w-3 h-3" />
+                                                        Bury
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            cardMeta.toggleSuspend(currentCard.id);
+                                                            setPracticeQueue(prev => prev.filter((c, i) => i !== currentIndex));
+                                                            if (currentIndex >= practiceQueue.length - 1) {
+                                                                setIsPracticeMode(false);
+                                                            }
+                                                        }}
+                                                        className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs border transition-colors ${
+                                                            meta?.suspended
+                                                                ? 'bg-slate-700 text-slate-300 border-slate-600'
+                                                                : 'bg-slate-800 text-slate-400 border-transparent hover:bg-slate-700'
+                                                        }`}
+                                                        title={meta?.suspended ? 'Unsuspend card' : 'Suspend card from all queues'}
+                                                    >
+                                                        <EyeOff className="w-3 h-3" />
+                                                        Suspend
+                                                    </button>
+                                                </>
+                                            );
+                                        })()}
                                     </div>
 
                                     {isFlipped && (
@@ -481,7 +651,16 @@ export default function FlashcardsChapterClient({
                                         </motion.div>
                                     )}
 
-                                    <div className="text-center mt-8">
+                                    <div className="flex justify-center items-center gap-6 mt-8">
+                                        <button
+                                            onClick={handleUndo}
+                                            disabled={!canUndo}
+                                            className="text-slate-500 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors text-sm inline-flex items-center gap-1"
+                                            title="Undo last rating"
+                                        >
+                                            <RotateCcw className="w-4 h-4" />
+                                            Undo
+                                        </button>
                                         <button
                                             onClick={() => setIsPracticeMode(false)}
                                             className="text-slate-500 hover:text-white transition-colors"
@@ -563,6 +742,14 @@ export default function FlashcardsChapterClient({
                     )}
                 </div>
             </section>
+            <SyncStatusBanner
+                status={syncStatus}
+                pendingWrites={pendingWrites}
+                onRetry={() => {
+                    flushPendingWrites().catch(err => console.error('Manual flush failed:', err));
+                }}
+            />
+            <RegisterServiceWorker />
         </main>
     );
 }

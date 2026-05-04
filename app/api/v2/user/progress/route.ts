@@ -1,29 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import connectToDatabase from '@/lib/mongodb';
 import { UserProgress, IQuestionAttempt } from '@/lib/models/UserProgress';
-
-async function getUserId(req: NextRequest): Promise<string | null> {
-    const authHeader = req.headers.get('Authorization');
-    if (!authHeader?.startsWith('Bearer ')) return null;
-    const token = authHeader.slice(7);
-    // SECURITY FIX: Use anon key instead of service role key
-    // Service role key bypasses RLS and should NEVER be used in client-accessible routes
-    const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
-    const { data: { user }, error } = await supabase.auth.getUser(token);
-    if (error || !user) return null;
-    return user.id;
-}
+import { StudentChapterProfile, IStudentChapterProfile } from '@/lib/models/StudentChapterProfile';
+import { updateProfileFromAttempt, createEmptyProfile } from '@/lib/profileEngine';
+import { getUserIdFromRequest } from '@/lib/auth';
 
 // ─── GET /api/v2/user/progress?chapterId=xxx ──────────────────────────────────
 // Returns: starred_ids for this chapter, all_attempted_ids for this chapter,
 //          last 3 test session question sets for this chapter (for overlap check)
 export async function GET(req: NextRequest) {
     try {
-        const userId = await getUserId(req);
+        const userId = await getUserIdFromRequest(req);
         if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         const chapterId = req.nextUrl.searchParams.get('chapterId');
@@ -97,7 +84,7 @@ export async function GET(req: NextRequest) {
 // Records a question attempt; upserts the UserProgress document.
 export async function POST(req: NextRequest) {
     try {
-        const userId = await getUserId(req);
+        const userId = await getUserIdFromRequest(req);
         if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         const body = await req.json();
@@ -105,11 +92,24 @@ export async function POST(req: NextRequest) {
             question_id, display_id, chapter_id, difficulty,
             concept_tags = [], is_correct, time_spent_seconds = 0,
             selected_option = null, source = 'browse',
+            confidence, session_id,
+            // Persona unification — required to feed StudentChapterProfile.
+            // Falls back to '_untagged' if the question has no microConcept.
+            micro_concept,
         } = body;
 
         if (!question_id || !chapter_id || is_correct === undefined) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
+
+        // Tiered signal — see CRUCIBLE_ARCHITECTURE.md §3.2.
+        // Default by source: test/guided → high, browse → medium.
+        // Client may override (e.g. casual-tagged retroactively → low).
+        const ALLOWED_CONFIDENCE = ['high', 'medium', 'low'] as const;
+        const confidenceTier =
+            ALLOWED_CONFIDENCE.includes(confidence)
+                ? (confidence as 'high' | 'medium' | 'low')
+                : (source === 'test' || source === 'guided' ? 'high' : 'medium');
 
         await connectToDatabase();
 
@@ -124,6 +124,8 @@ export async function POST(req: NextRequest) {
             concept_tags,
             source,
             selected_option,
+            confidence: confidenceTier,
+            session_id: typeof session_id === 'string' ? session_id : undefined,
         };
 
         // Retry loop: optimistic concurrency on UserProgress means a
@@ -156,6 +158,46 @@ export async function POST(req: NextRequest) {
                     continue; // re-read and retry
                 }
                 throw concurrencyErr;
+            }
+        }
+
+        // ── Persona unification (audit #5). Mirror the attempt into
+        // StudentChapterProfile so the multi-dimensional persona reflects
+        // browse/test signal too — not just guided practice. Tier-gated
+        // inside updateProfileFromAttempt: only HIGH-confidence attempts
+        // move the profile. Failure here is non-fatal — primary write
+        // (UserProgress) already succeeded.
+        if (confidenceTier === 'high') {
+            try {
+                for (let p = 0; p <= MAX_RETRIES; p++) {
+                    try {
+                        let profile = await StudentChapterProfile.findOne({
+                            studentId: userId,
+                            chapterId: chapter_id,
+                        }) as (IStudentChapterProfile & { save: () => Promise<unknown> }) | null;
+                        if (!profile) {
+                            profile = new StudentChapterProfile(createEmptyProfile(userId, chapter_id)) as unknown as typeof profile;
+                        }
+                        const updated = updateProfileFromAttempt(profile as unknown as IStudentChapterProfile, {
+                            questionId: question_id,
+                            microConcept: typeof micro_concept === 'string' && micro_concept ? micro_concept : '_untagged',
+                            answeredCorrectly: !!is_correct,
+                            timestamp: attempt.attempted_at,
+                            confidence: confidenceTier,
+                        });
+                        await StudentChapterProfile.findOneAndUpdate(
+                            { studentId: userId, chapterId: chapter_id },
+                            { $set: updated },
+                            { upsert: true, new: true, setDefaultsOnInsert: true },
+                        );
+                        break;
+                    } catch (e: unknown) {
+                        if (e instanceof Error && e.name === 'VersionError' && p < MAX_RETRIES) continue;
+                        throw e;
+                    }
+                }
+            } catch (profileErr) {
+                console.error('[POST /api/v2/user/progress] persona update failed (non-fatal)', profileErr);
             }
         }
 

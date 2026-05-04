@@ -1,22 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getUserIdFromRequest } from '@/lib/auth';
 import connectToDatabase from '@/lib/mongodb';
 import { UserProgress } from '@/lib/models/UserProgress';
 import { trackServer } from '@/lib/analytics/mixpanel.server';
-
-async function getUserId(req: NextRequest): Promise<string | null> {
-    const authHeader = req.headers.get('Authorization');
-    if (!authHeader?.startsWith('Bearer ')) return null;
-    const token = authHeader.slice(7);
-    // SECURITY FIX: Use anon key instead of service role key
-    const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
-    const { data: { user }, error } = await supabase.auth.getUser(token);
-    if (error || !user) return null;
-    return user.id;
-}
 
 // ─── POST /api/v2/user/test-session ──────────────────────────────────────────
 // Body: { chapter_id, question_ids: string[], config: { count, mix } }
@@ -24,7 +10,7 @@ async function getUserId(req: NextRequest): Promise<string | null> {
 // measure overlap and avoid repeating the same question set.
 export async function POST(req: NextRequest) {
     try {
-        const userId = await getUserId(req);
+        const userId = await getUserIdFromRequest(req);
         if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         const { chapter_id, question_ids, config } = await req.json();

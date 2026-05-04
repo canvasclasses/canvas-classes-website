@@ -59,7 +59,7 @@ export default function StepModeSelect({ onSelectMode, onTopPYQ, onQuickRevision
           </div>
           <div className="flex-1 min-w-0">
             <div className="text-base font-semibold text-zinc-50 mb-0.5 tracking-tight">
-              Browse Mode
+              Topic-wise Problems
             </div>
             <div className="text-xs text-slate-400/80 leading-snug font-normal">
               Practice at your own pace with instant solutions
@@ -93,10 +93,10 @@ export default function StepModeSelect({ onSelectMode, onTopPYQ, onQuickRevision
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-base font-semibold text-zinc-50 mb-0.5 tracking-tight">
-                Quick Revision
+                Top Questions
               </div>
               <div className="text-xs text-slate-400/80 leading-snug font-normal">
-                {starQuestionCount} hand-picked questions for final prep
+                {starQuestionCount} hand-picked · for revision &amp; backlogs
               </div>
             </div>
             <ChevronRight className={`w-[18px] h-[18px] flex-shrink-0 transition-all duration-200 ${
@@ -127,10 +127,10 @@ export default function StepModeSelect({ onSelectMode, onTopPYQ, onQuickRevision
           </div>
           <div className="flex-1 min-w-0">
             <div className="text-base font-semibold text-zinc-50 mb-0.5 tracking-tight">
-              Timed Test
+              Chapter Test
             </div>
             <div className="text-xs text-slate-400/80 leading-snug font-normal">
-              Simulate exam conditions with timer and analytics
+              Timed · scored · simulates exam conditions
             </div>
           </div>
           <ChevronRight className={`w-[18px] h-[18px] flex-shrink-0 transition-all duration-200 ${

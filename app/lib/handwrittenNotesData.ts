@@ -94,6 +94,13 @@ const CHAPTER_RULES: Array<{ keywords: RegExp; chapter: string }> = [
     { keywords: /practical|chromatography|preparation of organic/i, chapter: 'Practical Chemistry' },
     { keywords: /free radical|haloalkane|alkyl halide|hydrocarbon/i, chapter: 'Hydrocarbons & Halides' },
     { keywords: /surface chemistry/i, chapter: 'Surface Chemistry' },
+    { keywords: /electrochemistry|electrolysis|faraday|nernst|galvanic|kohlrausch/i, chapter: 'Electrochemistry' },
+    { keywords: /\bsolutions\b|colligative|raoult|osmotic|van.?t hoff/i, chapter: 'Solutions' },
+    { keywords: /chemical kinetics|kinetics|rate law|half.?life|arrhenius/i, chapter: 'Chemical Kinetics' },
+    { keywords: /metallurgy|ores?|smelting|refining|ellingham/i, chapter: 'Metallurgy' },
+    { keywords: /environmental chemistry|pollution|smog|ozone depletion/i, chapter: 'Environmental Chemistry' },
+    { keywords: /states? of matter|kinetic theory|gas law|ideal gas|van der waals/i, chapter: 'States of Matter' },
+    { keywords: /aromatic|benzene|electrophilic substitution|\bEAS\b/i, chapter: 'Aromatic Compounds' },
     { keywords: /solubility|ionic equilib|equilibrium/i, chapter: 'Ionic Equilibrium' },
     { keywords: /11th physical|12th physical|physical chemistry revision/i, chapter: 'Physical Chemistry Revision' },
     { keywords: /colour|color/i, chapter: 'Inorganic Trivia' },
@@ -109,6 +116,101 @@ function classifyChapter(title: string): string {
     return 'Other';
 }
 
+// ── Static notes — added directly in code, not via the Google Sheet ──────────
+// Use addedOrder 99999 so they sort to the top under "Newest".
+const STATIC_NOTES: HandwrittenNote[] = [
+    {
+        id: 'static-surface-chemistry-short',
+        title: 'Surface Chemistry — Short Revision Notes',
+        notesUrl: 'https://drive.google.com/file/d/1mHT8skp9opz-idhha6eboLkgNa4o_8W6/view',
+        category: 'Physical Chemistry',
+        chapter: 'Surface Chemistry',
+        thumbnailUrl: 'https://drive.google.com/thumbnail?id=1mHT8skp9opz-idhha6eboLkgNa4o_8W6&sz=w480',
+        addedOrder: 99999,
+    },
+    {
+        id: 'static-everyday-life-notes',
+        title: 'Chemistry in Everyday Life Notes',
+        notesUrl: 'https://drive.google.com/file/d/1mCmQeRceffKaLWELnSmlT2bpg2qQzaKd/view',
+        category: 'Organic Chemistry',
+        chapter: 'Biomolecules & Polymers',
+        thumbnailUrl: 'https://drive.google.com/thumbnail?id=1mCmQeRceffKaLWELnSmlT2bpg2qQzaKd&sz=w480',
+        addedOrder: 99998,
+    },
+    {
+        id: 'static-electrochemistry-notes',
+        title: 'Electrochemistry Notes',
+        notesUrl: 'https://drive.google.com/file/d/1hHYRF_B5mZLnZKy_GEy0Cb4RYBmDjnfj/view',
+        category: 'Physical Chemistry',
+        chapter: 'Electrochemistry',
+        thumbnailUrl: 'https://drive.google.com/thumbnail?id=1hHYRF_B5mZLnZKy_GEy0Cb4RYBmDjnfj&sz=w480',
+        addedOrder: 99997,
+    },
+    {
+        id: 'static-solutions-notes',
+        title: 'Solutions Notes',
+        notesUrl: 'https://drive.google.com/file/d/1qyIOR1Y5aMQP12a_n6iYwJIsxZjJUWp7/view',
+        category: 'Physical Chemistry',
+        chapter: 'Solutions',
+        thumbnailUrl: 'https://drive.google.com/thumbnail?id=1qyIOR1Y5aMQP12a_n6iYwJIsxZjJUWp7&sz=w480',
+        addedOrder: 99996,
+    },
+    {
+        id: 'static-kinetics-notes',
+        title: 'Chemical Kinetics Notes',
+        notesUrl: 'https://drive.google.com/file/d/10S4kxF-cRE0dUKEzu2VNQERf4R68pn6Z/view',
+        category: 'Physical Chemistry',
+        chapter: 'Chemical Kinetics',
+        thumbnailUrl: 'https://drive.google.com/thumbnail?id=10S4kxF-cRE0dUKEzu2VNQERf4R68pn6Z&sz=w480',
+        addedOrder: 99995,
+    },
+    {
+        id: 'static-metallurgy-notes',
+        title: 'Metallurgy Notes',
+        notesUrl: 'https://drive.google.com/file/d/18QSAqxCor5xibarUu1askEeVfThudu3e/view',
+        category: 'Inorganic Chemistry',
+        chapter: 'Metallurgy',
+        thumbnailUrl: 'https://drive.google.com/thumbnail?id=18QSAqxCor5xibarUu1askEeVfThudu3e&sz=w480',
+        addedOrder: 99994,
+    },
+    {
+        id: 'static-environmental-chemistry-notes',
+        title: 'Environmental Chemistry Notes',
+        notesUrl: 'https://drive.google.com/file/d/1QqRBpk9oZY0mrcC36gQ6N2ChYZWTPof1/view',
+        category: 'Inorganic Chemistry',
+        chapter: 'Environmental Chemistry',
+        thumbnailUrl: 'https://drive.google.com/thumbnail?id=1QqRBpk9oZY0mrcC36gQ6N2ChYZWTPof1&sz=w480',
+        addedOrder: 99993,
+    },
+    {
+        id: 'static-amines-quick-notes',
+        title: 'Amines Quick Notes',
+        notesUrl: 'https://drive.google.com/file/d/1FjamUxwaq9S3or2Twh6_kKUgm9Gr0OhS/view',
+        category: 'Organic Chemistry',
+        chapter: 'Amines',
+        thumbnailUrl: 'https://drive.google.com/thumbnail?id=1FjamUxwaq9S3or2Twh6_kKUgm9Gr0OhS&sz=w480',
+        addedOrder: 99990,
+    },
+    {
+        id: 'static-aromatic-compounds-notes',
+        title: 'Aromatic Compounds Notes',
+        notesUrl: 'https://drive.google.com/file/d/1D3vi4xDTEbHmTR1cq16mYM4Ropu1n7AR/view',
+        category: 'Organic Chemistry',
+        chapter: 'Aromatic Compounds',
+        thumbnailUrl: 'https://drive.google.com/thumbnail?id=1D3vi4xDTEbHmTR1cq16mYM4Ropu1n7AR&sz=w480',
+        addedOrder: 99991,
+    },
+    {
+        id: 'static-states-of-matter-notes',
+        title: 'States of Matter Notes',
+        notesUrl: 'https://drive.google.com/file/d/1izBYnungBmwEZndprnLpYMdyY2YTclUO/view',
+        category: 'Physical Chemistry',
+        chapter: 'States of Matter',
+        thumbnailUrl: 'https://drive.google.com/thumbnail?id=1izBYnungBmwEZndprnLpYMdyY2YTclUO&sz=w480',
+        addedOrder: 99992,
+    },
+];
+
 export async function fetchHandwrittenNotes(): Promise<HandwrittenNote[]> {
     try {
         const response = await fetch(CSV_URL, { next: { revalidate: 86400 } }); // 24 hours
@@ -121,7 +223,7 @@ export async function fetchHandwrittenNotes(): Promise<HandwrittenNote[]> {
         const dataRows = rows.slice(1);
         const total = dataRows.length;
 
-        return dataRows.map((row, index) => {
+        const sheetNotes = dataRows.map((row, index) => {
             const title = row[0] || '';
             const notesUrl = row[1] || '';
             const category = row[2] || 'General chemistry';
@@ -137,9 +239,13 @@ export async function fetchHandwrittenNotes(): Promise<HandwrittenNote[]> {
                 addedOrder: total - index,
             };
         }).filter(note => note.title && note.notesUrl); // Filter out empty entries
+
+        // Merge static notes first so they appear at the top under "Newest"
+        return [...STATIC_NOTES, ...sheetNotes];
     } catch (error) {
         console.error('Error fetching handwritten notes:', error);
-        return [];
+        // Return static notes as fallback if the sheet is unreachable
+        return STATIC_NOTES;
     }
 }
 
