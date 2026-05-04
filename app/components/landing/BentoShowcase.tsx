@@ -1237,7 +1237,7 @@ export default function BentoShowcase() {
         <BentoCard
           title="Physics Simulations"
           tagline="Conservation of energy, motion, forces"
-          href="/class-9-10/physics"
+          href="/physics"
           topAccent="bg-white/15"
           className="h-[340px]"
         >
@@ -1269,7 +1269,7 @@ export default function BentoShowcase() {
         <BentoCard
           title="Live Books"
           tagline="Read it. Hear it. See it. Do it."
-          href="/books"
+          href="/live-books"
           topAccent="bg-gradient-to-r from-indigo-500 to-violet-500"
           titleColor="text-indigo-400"
           className="md:col-span-1 lg:col-span-2 h-[300px]"

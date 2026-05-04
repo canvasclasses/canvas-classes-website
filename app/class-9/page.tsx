@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import connectToDatabase from '@/lib/mongodb';
 import BookModel from '@/lib/models/Book';
@@ -7,6 +6,9 @@ import GradeLandingPage, {
   type GradeBook,
   type GradePage,
 } from '@/components/books/GradeLandingPage';
+import LiveBooksComingSoon from '@/components/books/LiveBooksComingSoon';
+
+const EXPECTED_SUBJECTS = ['Science', 'Mathematics', 'Social Science'];
 
 export const revalidate = 60;
 
@@ -66,7 +68,11 @@ export default async function Class9Page() {
     .sort({ subject: 1, title: 1 })
     .lean();
 
-  if (rawBooks.length === 0) notFound();
+  // No published Class 9 books yet — render the coming soon page
+  // (mirrors the Class 10 fallback pattern).
+  if (rawBooks.length === 0) {
+    return <LiveBooksComingSoon grade={9} expectedSubjects={EXPECTED_SUBJECTS} />;
+  }
 
   // Only published chapters per book
   const books: GradeBook[] = rawBooks.map((b) => ({

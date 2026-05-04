@@ -1,5 +1,6 @@
 import { createClient } from '@/app/utils/supabase/server';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 import UserDashboard from '../components/UserDashboard';
 
 // ============================================
@@ -41,12 +42,12 @@ export default async function DashboardPage() {
             </div>
             <div className="flex items-center gap-4">
               <span className="text-sm text-slate-400">{user.email}</span>
-              <a 
-                href="/crucible"
+              <Link
+                href="/the-crucible"
                 className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg transition-colors"
               >
                 Practice
-              </a>
+              </Link>
             </div>
           </div>
         </div>

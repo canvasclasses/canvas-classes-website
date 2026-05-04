@@ -82,8 +82,8 @@ export default function UserDashboard({ userId, userEmail }: UserDashboardProps)
           <BookOpen className="w-16 h-16 text-slate-500 mx-auto mb-4" />
           <h2 className="text-xl font-semibold text-white mb-2">No Progress Yet</h2>
           <p className="text-slate-400 mb-6">Start practicing questions to see your progress here!</p>
-          <Link 
-            href="/crucible"
+          <Link
+            href="/the-crucible"
             className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors"
           >
             Start Practicing

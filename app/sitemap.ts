@@ -45,7 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { path: '/chemihex', priority: 0.75, changeFrequency: 'monthly' as const },
         // Live Books landing pages (grade hubs)
         { path: '/class-9', priority: 1.0, changeFrequency: 'daily' as const },
-        { path: '/class-11', priority: 0.9, changeFrequency: 'weekly' as const },
+        // /class-11 has no grade-hub page; chemistry book lives at /class-11/chemistry.
         { path: '/class-12', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/class-12/chemistry', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/class-11/chemistry', priority: 0.9, changeFrequency: 'weekly' as const },
@@ -200,17 +200,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             });
         }
 
-        // Per-book landing (grade-hub route) — only for grades we actively route
-        const gradeBases = new Map<number, string>([[9, '/class-9'], [11, '/class-11']]);
+        // URL builders per grade. Class 11 chemistry uses a hardcoded
+        // `/class-11/chemistry/[pageSlug]` route (no [bookSlug] segment),
+        // so we drop the book slug for grade 11. Class 9 uses the dynamic
+        // `/class-9/[bookSlug]/[pageSlug]` pattern. Anything else falls
+        // back to the generic `/books/[bookSlug]/[pageSlug]` route.
+        const buildPageUrl = (grade: number, bookSlug: string, pageSlug: string): string => {
+            if (grade === 11) return `/class-11/chemistry/${pageSlug}`;
+            if (grade === 9) return `/class-9/${bookSlug}/${pageSlug}`;
+            return `/books/${bookSlug}/${pageSlug}`;
+        };
 
-        // Add per-book chapter-hub landings (one per published book)
+        // Add per-book chapter-hub landings only for the generic /books/[bookSlug]
+        // pattern. /class-9/[bookSlug] redirects to /class-9 — skip. /class-11
+        // doesn't expose a per-book hub at all (chemistry book is rendered via
+        // its showcase at /class-11/chemistry, already in staticPages).
         for (const [, meta] of bookMeta) {
-            const base = gradeBases.get(meta.grade) ?? '/books';
-            // /class-9/[bookSlug] redirects to /class-9 — skip to avoid duplicate.
-            // /books/[bookSlug] renders a book ToC — include it.
-            if (base === '/books') {
+            if (meta.grade !== 9 && meta.grade !== 11) {
                 bookPageEntries.push({
-                    url: `${BASE_URL}${base}/${meta.slug}`,
+                    url: `${BASE_URL}/books/${meta.slug}`,
                     lastModified: meta.updatedAt,
                     changeFrequency: 'weekly' as const,
                     priority: 0.8,
@@ -232,10 +240,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             const meta = bookMeta.get(String(p.book_id));
             if (!meta) continue;
             if (!meta.chapters.has(p.chapter_number)) continue; // chapter not published
-            const base = gradeBases.get(meta.grade) ?? '/books';
             const lastMod = p.updated_at instanceof Date ? p.updated_at : new Date(p.updated_at);
             bookPageEntries.push({
-                url: `${BASE_URL}${base}/${meta.slug}/${p.slug}`,
+                url: `${BASE_URL}${buildPageUrl(meta.grade, meta.slug, p.slug)}`,
                 lastModified: lastMod,
                 // Class 9 NCERT pages are the hot target right now — bias priority up.
                 changeFrequency: meta.grade === 9 ? 'weekly' as const : 'monthly' as const,

@@ -5,7 +5,7 @@ import { ArrowLeft, Bell, Sparkles, Gamepad2, ClipboardCheck, Languages, Zap } f
 import { LiveBooksLogo } from './bookDesign';
 
 interface Props {
-  grade: number;
+  grade?: number;
   expectedSubjects?: string[];
 }
 
@@ -58,15 +58,16 @@ export default function LiveBooksComingSoon({ grade, expectedSubjects = [] }: Pr
 
           {/* Heading */}
           <h1 className="text-3xl md:text-4xl font-black text-white mb-3 leading-tight">
-            Class {grade}{' '}
+            {grade ? <>Class {grade}{' '}</> : null}
             <span className="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">
               Live Books
             </span>
           </h1>
 
           <p className="text-zinc-400 text-sm md:text-base leading-relaxed mb-8 max-w-sm mx-auto">
-            We&apos;re building interactive NCERT Class {grade} books with simulations, worked
-            examples, and Hinglish mode.{' '}
+            {grade
+              ? `We're building interactive NCERT Class ${grade} books with simulations, worked examples, and Hinglish mode.`
+              : `We're building interactive NCERT live books with simulations, worked examples, and Hinglish mode — for every grade.`}{' '}
             {expectedSubjects.length > 0
               ? `${expectedSubjects.join(', ')} — coming up next.`
               : 'Check back soon.'}
