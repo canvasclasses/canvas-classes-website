@@ -84,6 +84,7 @@ export default function Footer() {
                         <ul className="space-y-2.5 sm:space-y-3.5">
                             <li><Link href="/detailed-lectures" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">JEE / NEET Prep</Link></li>
                             <li><Link href="/ncert-solutions" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">NCERT Solutions</Link></li>
+                            <li><Link href="/download-ncert-books" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">NCERT PDFs</Link></li>
                             <li><Link href="/handwritten-notes" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">Notes</Link></li>
                             <li><Link href="/one-shot-lectures" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">One Shots</Link></li>
                             <li><Link href="/chemistry-questions" className="text-sm text-zinc-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-300">Question Bank</Link></li>

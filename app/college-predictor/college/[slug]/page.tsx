@@ -13,6 +13,10 @@ const SITE_ORIGIN = 'https://canvasclasses.com';
 // ISR — cutoffs change at most once a year. 24h cache is plenty.
 export const revalidate = 86400;
 
+// Give the serverless function enough time for a cold-start MongoDB connection
+// plus the DB queries. Vercel Pro allows up to 300s; Hobby caps at 10s regardless.
+export const maxDuration = 30;
+
 // No pages pre-built at deploy time — generated on first request and cached via ISR.
 // With revalidate = 86400, each college page is built once per day on first visit.
 export async function generateStaticParams() {
@@ -25,7 +29,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const data = await loadCollegeDeepDive(slug);
+  const data = await loadCollegeDeepDive(slug).catch(() => null);
   if (!data) return { title: 'College not found · Canvas Classes' };
 
   const { college, latest_year, branches } = data;
@@ -73,7 +77,7 @@ export default async function CollegeDeepDivePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const data = await loadCollegeDeepDive(slug);
+  const data = await loadCollegeDeepDive(slug).catch(() => null);
   if (!data) notFound();
 
   const {

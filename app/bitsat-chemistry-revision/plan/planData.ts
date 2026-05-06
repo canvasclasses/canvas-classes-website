@@ -192,6 +192,7 @@ export const PHASES: Phase[] = [
                 ],
                 resources: [
                     { label: 'Thermodynamics One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('GLBB7iwpJMw') },
+                    { label: 'Thermodynamics Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('19m9zgH2zxXo_3Ahu3lD3fHUj1ANjner3') },
                     { label: 'Top 50 Concepts', href: '/top-50-concepts', kind: 'top50' },
                 ],
             },
@@ -206,6 +207,7 @@ export const PHASES: Phase[] = [
                 ],
                 resources: [
                     { label: 'Thermodynamics One-Shot', href: '/one-shot-lectures', kind: 'oneshot', embedUrl: yt('GLBB7iwpJMw') },
+                    { label: 'Thermodynamics Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('19m9zgH2zxXo_3Ahu3lD3fHUj1ANjner3') },
                     { label: 'Top 50 Concepts', href: '/top-50-concepts', kind: 'top50' },
                 ],
             },
@@ -241,6 +243,8 @@ export const PHASES: Phase[] = [
                     { label: 'DPP Solution 1', href: '/neet-crash-course/equilibrium', kind: 'crash-course', embedUrl: yt('SwQ7dYC_y7U') },
                     { label: 'DPP Solution 2', href: '/neet-crash-course/equilibrium', kind: 'crash-course', embedUrl: yt('_govrOzlSD8') },
                     { label: 'Equilibrium DPP PDF', href: '/neet-crash-course/equilibrium', kind: 'notes', embedUrl: pdf('1Z6ynl-ErqwuqQX0dHd2R7pxP9aY6hdKf') },
+                    { label: 'Equilibrium Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1rnNGZnqMkCca_ZbXMpA1MPtYll8Ce9Ze') },
+                    { label: 'Crucible Practice', href: 'https://www.canvasclasses.in/the-crucible/ch11_chem_eq?mode=browse&examBoard=JEE', kind: 'crucible' },
                 ],
             },
             {
@@ -257,7 +261,9 @@ export const PHASES: Phase[] = [
                     { label: 'Equilibrium - 3', href: '/neet-crash-course/equilibrium', kind: 'crash-course', embedUrl: yt('d7uPtssUbMY') },
                     { label: 'Equilibrium - 4', href: '/neet-crash-course/equilibrium', kind: 'crash-course', embedUrl: yt('2Ij12NAORXA') },
                     { label: 'DPP Solution 3', href: '/neet-crash-course/equilibrium', kind: 'crash-course', embedUrl: yt('5pofIYSB4ps') },
+                    { label: 'Equilibrium Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1rnNGZnqMkCca_ZbXMpA1MPtYll8Ce9Ze') },
                     { label: 'Ksp Calculator', href: '/solubility-product-ksp-calculator', kind: 'physical' },
+                    { label: 'Crucible Practice', href: 'https://www.canvasclasses.in/the-crucible/ch11_ionic_eq?mode=browse&examBoard=JEE', kind: 'crucible' },
                 ],
             },
             {
@@ -276,6 +282,7 @@ export const PHASES: Phase[] = [
                     { label: 'Electrochemistry Notes', href: '/handwritten-notes', kind: 'notes', embedUrl: pdf('1hHYRF_B5mZLnZKy_GEy0Cb4RYBmDjnfj') },
                     { label: 'Top 50 Concepts', href: '/top-50-concepts', kind: 'top50' },
                     { label: 'Electrochemistry Flashcards', href: '/chemistry-flashcards/electrochemistry', kind: 'flashcards' },
+                    { label: 'Crucible Practice', href: 'https://www.canvasclasses.in/the-crucible/ch11_redox?mode=browse&examBoard=JEE', kind: 'crucible' },
                 ],
             },
             {

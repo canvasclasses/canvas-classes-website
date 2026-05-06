@@ -46,13 +46,14 @@ const class9to10Menu: MegaMenuDef = {
   id: 'class-9-10',
   label: 'Class 9–10',
   anchor: 'left',
-  width: 'w-44',
+  width: 'w-52',
   columns: [
     {
       heading: '',
       links: [
         { label: 'Class 9', href: '/class-9' },
         { label: 'Class 10', href: '/class-10' },
+        { label: 'NCERT Book PDFs', href: '/download-ncert-books' },
       ],
     },
   ],
