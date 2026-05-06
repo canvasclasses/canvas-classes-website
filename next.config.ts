@@ -90,6 +90,45 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        // Same-origin proxy for handwritten-notes PDFs (see app/api/handwritten-notes).
+        // The site-wide policy of X-Frame-Options: DENY + CSP frame-ancestors 'none'
+        // would block the chapter-page <iframe> from rendering its own PDFs — exact
+        // same problem we already solved for /simulators above. Override here so the
+        // browser's PDF viewer is allowed to render these in a same-origin frame.
+        source: '/api/handwritten-notes/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "object-src 'self'",
+              "frame-ancestors 'self'",
+            ].join('; ')
+          },
+        ],
+      },
+      {
+        // Allow Crucible chapter pages to be framed by the same origin so the
+        // handwritten-notes "Practice while reading" split-view can embed
+        // /the-crucible/{chapterId}?mode=browse alongside the PDF.
+        // Default site policy denies all framing — same problem the PDF proxy hit.
+        source: '/the-crucible/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          // We don't override the full CSP here — the Crucible page needs the
+          // site-wide CSP (Supabase, Mixpanel, Sentry, fonts, etc.) to function.
+          // Instead we patch only the frame-ancestors directive that's blocking us.
+          // Browsers honour the most-restrictive policy across multiple CSP headers,
+          // so we set frame-ancestors 'self' here and the site-wide CSP from /(.*)
+          // applies its other directives unchanged.
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-ancestors 'self'",
+          },
+        ],
+      },
     ];
   },
   images: {
@@ -116,6 +155,23 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev',
+        pathname: '/**',
+      },
+      // Google Drive thumbnail endpoint — used by handwritten-notes chapter
+      // cards. We point next/image at these so the optimizer proxies through
+      // the same origin (canvasclasses.in/_next/image?…), bypassing browser
+      // ad-blockers that otherwise blocklist drive.google.com requests.
+      {
+        protocol: 'https',
+        hostname: 'drive.google.com',
+        pathname: '/thumbnail',
+      },
+      // Drive's CDN — what the /thumbnail endpoint redirects to. Next's image
+      // optimizer follows the redirect and fetches the image from this host
+      // server-side, so this entry has to be allowlisted too.
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
         pathname: '/**',
       },
     ],
