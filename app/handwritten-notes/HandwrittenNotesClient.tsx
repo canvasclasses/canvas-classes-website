@@ -1,14 +1,15 @@
 'use client';
 
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HandwrittenNote, getUniqueCategories, getNotesStats } from '../lib/handwrittenNotesData';
+import { HandwrittenNote, getUniqueCategories, getNotesStats, toInlineViewerUrl } from '../lib/handwrittenNotesData';
+import { getChapterMetaByName } from './chapterMetadata';
 import {
     Search, Download, FileText, BookOpen, FlaskConical, Atom, Sparkles,
     X, ChevronRight, Zap, Target, TrendingUp, Wand2, Layers,
-    ArrowRight, Bookmark, BookmarkCheck, ChevronDown, Flame,
+    ArrowRight, Bookmark, BookmarkCheck, Flame,
     SortAsc, Clock, ExternalLink,
 } from 'lucide-react';
 
@@ -317,6 +318,257 @@ function SearchBox({ value, onChange }: { value: string; onChange: (v: string) =
 }
 
 // =============================================================================
+// CHAPTER CARD — links to the dedicated /handwritten-notes/[chapter] hub page
+// =============================================================================
+
+const SUBJECT_PILL: Record<string, string> = {
+    Physical: 'bg-sky-500/15 text-sky-300 border-sky-500/30',
+    Organic: 'bg-violet-500/15 text-violet-300 border-violet-500/30',
+    Inorganic: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+    Practical: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+};
+
+// Renders the chapter card thumbnail with a graceful fallback. The image is
+// served via next/image so it's proxied through the same-origin optimizer
+// (canvasclasses.in/_next/image?url=…), which sidesteps the cross-origin
+// blocking that broke direct Drive thumbnail loads in privacy-strict browsers
+// and ad-blocker setups. If the optimizer still fails (e.g. Drive returns 4xx),
+// onError swaps to a styled placeholder.
+function ChapterThumbnail({ src, alt }: { src: string | null; alt: string }) {
+    const [errored, setErrored] = useState(false);
+    if (!src || errored) {
+        return (
+            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent text-amber-400/60">
+                <FileText size={22} />
+            </div>
+        );
+    }
+    return (
+        <Image
+            src={src}
+            alt={alt}
+            width={96}
+            height={128}
+            sizes="96px"
+            className="h-full w-full object-cover"
+            onError={() => setErrored(true)}
+        />
+    );
+}
+
+function ChapterCard({
+    chapter,
+    notes,
+}: {
+    chapter: string;
+    notes: HandwrittenNote[];
+}) {
+    const meta = getChapterMetaByName(chapter);
+    if (!meta) return null;
+
+    const pillClass = SUBJECT_PILL[meta.subject] ?? SUBJECT_PILL['Physical'];
+    const isMainNcertChapter = Number.isInteger(meta.ncertChapterNumber);
+    const thumbUrl = notes.find((n) => n.thumbnailUrl)?.thumbnailUrl ?? null;
+
+    return (
+        <Link
+            href={`/handwritten-notes/${meta.slug}`}
+            className="group relative flex gap-4 rounded-2xl border border-white/[0.07] bg-slate-900/40 p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-amber-500/40 hover:bg-slate-900/60 hover:shadow-lg hover:shadow-amber-500/5"
+        >
+            {/* Cover thumbnail — left column, fixed aspect */}
+            <div className="aspect-[3/4] w-20 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-black md:w-24">
+                <ChapterThumbnail src={thumbUrl} alt={`${meta.chapterName} cover`} />
+            </div>
+
+            {/* Content — right column */}
+            <div className="flex min-w-0 flex-1 flex-col">
+                {/* Top row: subject + chapter number + count */}
+                <div className="flex items-start justify-between gap-2 mb-2">
+                    <div className="flex flex-wrap items-center gap-1.5 min-w-0">
+                        <span className={`shrink-0 inline-block px-2 py-0.5 rounded-full border text-[10px] font-bold uppercase tracking-widest ${pillClass}`}>
+                            {meta.subject}
+                        </span>
+                        {isMainNcertChapter ? (
+                            <span className="shrink-0 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
+                                Ch {meta.ncertChapterNumber}
+                            </span>
+                        ) : (
+                            <span className="shrink-0 text-[10px] font-semibold uppercase tracking-widest text-slate-600">
+                                Bonus
+                            </span>
+                        )}
+                    </div>
+                    <span className="shrink-0 text-[11px] text-slate-500 tabular-nums">
+                        {notes.length} {notes.length === 1 ? 'note' : 'notes'}
+                    </span>
+                </div>
+
+                <h3 className="text-base font-bold text-white group-hover:text-amber-300 transition-colors leading-snug mb-1.5 line-clamp-2">
+                    {meta.chapterName}
+                </h3>
+
+                <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2 flex-1 mb-3">
+                    {meta.overview[0]}
+                </p>
+
+                {/* CTA */}
+                <div className="flex items-center justify-between gap-2">
+                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-400 group-hover:text-amber-300 transition-colors">
+                        View notes
+                        <ArrowRight size={10} className="transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                    {meta.crucibleChapterId && (
+                        <span className="text-[9px] text-slate-600 group-hover:text-slate-500">
+                            + Practice
+                        </span>
+                    )}
+                </div>
+            </div>
+        </Link>
+    );
+}
+
+// =============================================================================
+// CHAPTER GRID — NCERT-ordered (Class 11 then Class 12)
+// =============================================================================
+
+type SortKeyType = 'chapter' | 'newest' | 'title';
+
+function ChapterGridByClass({
+    chapterGroups,
+    setSortKey,
+}: {
+    chapterGroups: Array<[string, HandwrittenNote[]]>;
+    setSortKey: (k: SortKeyType) => void;
+}) {
+    // Split into Class 11 and Class 12 buckets, plus a fallback for chapters
+    // not yet in chapterMetadata (catch-alls like "Other" / "Strategy & Index").
+    const class11: Array<[string, HandwrittenNote[]]> = [];
+    const class12: Array<[string, HandwrittenNote[]]> = [];
+    const orphan: Array<[string, HandwrittenNote[]]> = [];
+
+    for (const entry of chapterGroups) {
+        const [chapter] = entry;
+        const meta = getChapterMetaByName(chapter);
+        if (!meta) {
+            orphan.push(entry);
+            continue;
+        }
+        if (meta.classLevel === 11) class11.push(entry);
+        else class12.push(entry);
+    }
+
+    // Sort within each class by NCERT chapter number (ascending).
+    const ncertSort = (a: [string, HandwrittenNote[]], b: [string, HandwrittenNote[]]) => {
+        const am = getChapterMetaByName(a[0])?.ncertChapterNumber ?? 999;
+        const bm = getChapterMetaByName(b[0])?.ncertChapterNumber ?? 999;
+        return am - bm;
+    };
+    class11.sort(ncertSort);
+    class12.sort(ncertSort);
+
+    return (
+        <div className="space-y-12">
+            <ChapterClassSection
+                classNumber="11"
+                title="Class 11 Chemistry"
+                tagline="NCERT chapters 1–14 — JEE & NEET foundation"
+                badgeAccent="from-sky-500/25 to-cyan-500/10 border-sky-500/50 text-sky-300"
+                barAccent="from-sky-500/60 via-sky-500/15 to-transparent"
+                groups={class11}
+            />
+            <ChapterClassSection
+                classNumber="12"
+                title="Class 12 Chemistry"
+                tagline="NCERT chapters 15–30 — JEE & NEET final-year syllabus"
+                badgeAccent="from-violet-500/25 to-fuchsia-500/10 border-violet-500/50 text-violet-300"
+                barAccent="from-violet-500/60 via-violet-500/15 to-transparent"
+                groups={class12}
+            />
+            {/* Footnote — explain where notes from generic / catch-all chapters went */}
+            {orphan.length > 0 && (
+                <p className="text-center text-[11px] text-slate-600">
+                    {orphan.reduce((acc, [, n]) => acc + n.length, 0)} additional notes
+                    aren&apos;t mapped to a chapter yet. Use the search bar above or switch sort to{' '}
+                    <button
+                        onClick={() => setSortKey('newest')}
+                        className="text-amber-500 hover:text-amber-400 font-medium underline-offset-2 hover:underline"
+                    >
+                        Newest
+                    </button>{' '}
+                    /{' '}
+                    <button
+                        onClick={() => setSortKey('title')}
+                        className="text-amber-500 hover:text-amber-400 font-medium underline-offset-2 hover:underline"
+                    >
+                        A–Z
+                    </button>{' '}
+                    to see every note in a flat list.
+                </p>
+            )}
+        </div>
+    );
+}
+
+function ChapterClassSection({
+    classNumber,
+    title,
+    tagline,
+    badgeAccent,
+    barAccent,
+    groups,
+}: {
+    classNumber: string;
+    title: string;
+    tagline: string;
+    badgeAccent: string;
+    barAccent: string;
+    groups: Array<[string, HandwrittenNote[]]>;
+}) {
+    const totalNotes = groups.reduce((acc, [, n]) => acc + n.length, 0);
+    if (groups.length === 0) return null;
+
+    return (
+        <section>
+            <div className="mb-6">
+                <div className="flex items-center gap-4">
+                    {/* Big class-number badge — instant visual anchor */}
+                    <div
+                        className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border bg-gradient-to-br text-2xl font-black md:h-16 md:w-16 md:text-3xl ${badgeAccent}`}
+                    >
+                        {classNumber}
+                    </div>
+
+                    {/* Title + meta + tagline */}
+                    <div className="min-w-0 flex-1">
+                        <h2 className="text-xl font-bold leading-tight text-white md:text-2xl">
+                            {title}
+                        </h2>
+                        <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs md:text-sm">
+                            <span className="text-slate-400">{tagline}</span>
+                            <span className="text-slate-600">·</span>
+                            <span className="text-slate-500 tabular-nums">
+                                {groups.length}{' '}
+                                {groups.length === 1 ? 'chapter' : 'chapters'} ·{' '}
+                                {totalNotes} {totalNotes === 1 ? 'note' : 'notes'}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Accent gradient bar — visual section anchor below the header */}
+                <div className={`mt-5 h-px bg-gradient-to-r ${barAccent}`} />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {groups.map(([chapter, notes]) => (
+                    <ChapterCard key={chapter} chapter={chapter} notes={notes} />
+                ))}
+            </div>
+        </section>
+    );
+}
+
+// =============================================================================
 // NOTE CARD
 // =============================================================================
 
@@ -374,356 +626,6 @@ function NoteCard({
 }
 
 // =============================================================================
-// CHAPTER ACCORDION
-// =============================================================================
-
-function ChapterAccordion({
-    chapter,
-    notes,
-    open,
-    onToggle,
-    bookmarks,
-    onToggleBookmark,
-    onOpenNote,
-}: {
-    chapter: string;
-    notes: HandwrittenNote[];
-    open: boolean;
-    onToggle: () => void;
-    bookmarks: Set<string>;
-    onToggleBookmark: (id: string) => void;
-    onOpenNote: (n: HandwrittenNote) => void;
-}) {
-    const rec = getChapterRecommendation(chapter);
-
-    return (
-        <div className="rounded-2xl bg-slate-900/30 border border-white/[0.06] overflow-hidden">
-            <button
-                onClick={onToggle}
-                className="w-full flex items-center gap-3 p-4 md:p-5 text-left hover:bg-white/[0.02] transition-colors"
-            >
-                <ChevronDown
-                    size={18}
-                    className={`text-slate-500 shrink-0 transition-transform duration-200 ${open ? 'rotate-0' : '-rotate-90'}`}
-                />
-                <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                        <h3 className="text-base md:text-lg font-bold text-white">{chapter}</h3>
-                        <span className="text-[11px] text-slate-500 tabular-nums">
-                            {notes.length} {notes.length === 1 ? 'note' : 'notes'}
-                        </span>
-                    </div>
-                </div>
-                {rec && (
-                    <Link
-                        href={rec.href}
-                        onClick={e => e.stopPropagation()}
-                        className="hidden sm:flex items-center gap-1.5 text-[11px] text-slate-500 hover:text-amber-400 transition-colors"
-                    >
-                        <span>Pair with {rec.name}</span>
-                        <ExternalLink size={11} />
-                    </Link>
-                )}
-            </button>
-
-            <AnimatePresence initial={false}>
-                {open && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.22 }}
-                        className="overflow-hidden"
-                    >
-                        <div className="px-3 md:px-4 pb-4 md:pb-5 space-y-2 border-t border-white/[0.05]">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-3">
-                                {notes.map(n => (
-                                    <NoteCard
-                                        key={n.id}
-                                        note={n}
-                                        onOpen={() => onOpenNote(n)}
-                                        bookmarked={bookmarks.has(n.id)}
-                                        onToggleBookmark={() => onToggleBookmark(n.id)}
-                                    />
-                                ))}
-                            </div>
-                            {rec && (
-                                <Link
-                                    href={rec.href}
-                                    className="sm:hidden flex items-center justify-center gap-1.5 text-xs text-slate-400 hover:text-amber-400 mt-3 py-2 rounded-lg border border-white/5 transition-colors"
-                                >
-                                    <span>Pair with {rec.name}</span>
-                                    <ExternalLink size={11} />
-                                </Link>
-                            )}
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </div>
-    );
-}
-
-// =============================================================================
-// INTERACTIVE BENTO — "try before you scroll" teaser row
-// =============================================================================
-
-const FLASHCARDS = [
-    { front: 'Aufbau exception — Cr config?', back: '[Ar] 3d⁵ 4s¹', hint: 'Half-filled d subshell = extra stability' },
-    { front: 'Shape around an sp² carbon?', back: 'Trigonal planar, 120°', hint: 'Think ethene, benzene' },
-    { front: 'Markovnikov rule — H adds to…', back: 'C already bearing more H atoms', hint: 'Via the more stable carbocation' },
-    { front: 'Why does size shrink across a period?', back: 'Zeff rises, same shell', hint: 'Nuclear pull > shielding change' },
-];
-
-function BentoFlashcard() {
-    const [idx, setIdx] = useState(0);
-    const [flipped, setFlipped] = useState(false);
-    const card = FLASHCARDS[idx];
-    const next = () => {
-        setFlipped(false);
-        setTimeout(() => setIdx(i => (i + 1) % FLASHCARDS.length), 180);
-    };
-    return (
-        <div className="relative rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/8 via-slate-900/90 to-slate-900/90 p-4 flex flex-col min-h-[240px] overflow-hidden">
-            <div className="flex items-center justify-between mb-1">
-                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-emerald-400">
-                    <Zap size={12} /> Flashcard
-                </span>
-                <span className="text-[11px] text-slate-500 tabular-nums">{idx + 1}/{FLASHCARDS.length}</span>
-            </div>
-            <p className="text-[12px] text-emerald-200/80 font-medium mb-2.5 leading-snug">
-                2,000+ flashcards for daily practice
-            </p>
-
-            <button
-                onClick={() => setFlipped(f => !f)}
-                className="relative flex-1 w-full text-left group"
-                style={{ perspective: 1000 }}
-                aria-label="Flip flashcard"
-            >
-                <motion.div
-                    animate={{ rotateY: flipped ? 180 : 0 }}
-                    transition={{ duration: 0.5, ease: 'easeInOut' }}
-                    className="relative w-full h-full min-h-[120px]"
-                    style={{ transformStyle: 'preserve-3d' }}
-                >
-                    <div
-                        className="absolute inset-0 flex flex-col justify-center p-3 rounded-xl bg-slate-800/60 border border-white/5 group-hover:border-emerald-500/30 transition-colors"
-                        style={{ backfaceVisibility: 'hidden' }}
-                    >
-                        <p className="text-[11px] uppercase tracking-widest text-slate-500 mb-1.5">Question</p>
-                        <p className="text-white text-[15px] font-semibold leading-snug">{card.front}</p>
-                        <p className="text-[12px] text-slate-500 mt-auto pt-2">Tap card to reveal →</p>
-                    </div>
-                    <div
-                        className="absolute inset-0 flex flex-col justify-center p-3 rounded-xl bg-emerald-500/12 border border-emerald-500/30"
-                        style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
-                    >
-                        <p className="text-[11px] uppercase tracking-widest text-emerald-400 mb-1.5">Answer</p>
-                        <p className="text-white text-[15px] font-semibold leading-snug mb-1.5">{card.back}</p>
-                        <p className="text-[12px] text-emerald-300/80 italic">{card.hint}</p>
-                    </div>
-                </motion.div>
-            </button>
-
-            <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/5">
-                <button
-                    onClick={next}
-                    className="text-[13px] text-slate-400 hover:text-emerald-400 font-medium transition-colors"
-                >
-                    Next card →
-                </button>
-                <Link
-                    href="/chemistry-flashcards"
-                    className="text-[13px] text-emerald-400 hover:text-emerald-300 font-semibold transition-colors inline-flex items-center gap-1"
-                >
-                    Full deck (2,000+) <ArrowRight size={12} />
-                </Link>
-            </div>
-        </div>
-    );
-}
-
-const MCQ_OPTIONS = [
-    { key: 'A', label: 'Mg' },
-    { key: 'B', label: 'Al' },
-    { key: 'C', label: 'P' },
-    { key: 'D', label: 'S' },
-];
-const MCQ_CORRECT = 'C';
-
-function BentoMCQ() {
-    const [picked, setPicked] = useState<string | null>(null);
-    const isCorrect = picked === MCQ_CORRECT;
-
-    return (
-        <div className="md:col-span-2 relative rounded-2xl border border-orange-500/25 bg-gradient-to-br from-orange-500/10 via-slate-900/90 to-slate-900/90 p-4 flex flex-col min-h-[240px] overflow-hidden">
-            <div className="flex items-center justify-between mb-1">
-                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-orange-400">
-                    <Target size={12} /> Live JEE question
-                </span>
-                <span className="text-[11px] text-slate-500">Single correct</span>
-            </div>
-            <p className="text-[12px] text-orange-200/80 font-medium mb-2.5 leading-snug">
-                Practice 4,000+ questions on The Crucible
-            </p>
-
-            <p className="text-white text-[15px] md:text-base font-semibold leading-snug mb-3">
-                Which element has the <span className="text-orange-400">maximum</span> first ionization enthalpy?
-            </p>
-
-            <div className="grid grid-cols-2 gap-2 mb-3">
-                {MCQ_OPTIONS.map(opt => {
-                    const selected = picked === opt.key;
-                    const thisIsCorrect = opt.key === MCQ_CORRECT;
-                    let styleClass = 'border-slate-800 bg-slate-900/60 hover:border-orange-500/40 hover:bg-slate-900 text-slate-200 cursor-pointer';
-                    if (picked) {
-                        if (thisIsCorrect) {
-                            styleClass = 'border-emerald-500/60 bg-emerald-500/15 text-emerald-100';
-                        } else if (selected) {
-                            styleClass = 'border-red-500/60 bg-red-500/15 text-red-100';
-                        } else {
-                            styleClass = 'border-slate-800 bg-slate-900/40 text-slate-500 opacity-60';
-                        }
-                    }
-                    return (
-                        <button
-                            key={opt.key}
-                            onClick={() => !picked && setPicked(opt.key)}
-                            disabled={!!picked}
-                            className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg border text-[15px] font-semibold transition-all text-left ${styleClass}`}
-                        >
-                            <span className="text-[11px] font-bold opacity-60 tabular-nums w-4">{opt.key}</span>
-                            <span>{opt.label}</span>
-                        </button>
-                    );
-                })}
-            </div>
-
-            {picked ? (
-                <div className="mt-auto flex flex-col sm:flex-row sm:items-center gap-3 pt-3 border-t border-white/5">
-                    <p className={`flex-1 text-[13px] leading-snug ${isCorrect ? 'text-emerald-300' : 'text-red-200'}`}>
-                        <span className="font-bold">{isCorrect ? '✓ Correct.' : '✗ Not quite.'}</span>{' '}
-                        P (3p³ half-filled) beats S — that extra-stable sub-shell spikes its IE₁.
-                    </p>
-                    <Link
-                        href="/the-crucible"
-                        className="shrink-0 inline-flex items-center gap-1.5 text-[13px] font-bold text-black bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-300 hover:to-amber-300 px-3.5 py-2 rounded-lg transition-all shadow-lg shadow-orange-500/20"
-                    >
-                        Practice 4,000+ on Crucible <ArrowRight size={13} />
-                    </Link>
-                </div>
-            ) : (
-                <p className="mt-auto text-[12px] text-slate-500 italic pt-2">
-                    Tap an option to check — no sign-in needed.
-                </p>
-            )}
-        </div>
-    );
-}
-
-const PERIODIC_ROW = [
-    { sym: 'Li', name: 'Lithium', en: 0.98 },
-    { sym: 'Be', name: 'Beryllium', en: 1.57 },
-    { sym: 'B', name: 'Boron', en: 2.04 },
-    { sym: 'C', name: 'Carbon', en: 2.55 },
-    { sym: 'N', name: 'Nitrogen', en: 3.04 },
-    { sym: 'O', name: 'Oxygen', en: 3.44 },
-    { sym: 'F', name: 'Fluorine', en: 3.98 },
-];
-
-function BentoPeriodicStrip() {
-    const [hovered, setHovered] = useState<number | null>(null);
-    const activeIdx = hovered ?? 6;
-    const el = PERIODIC_ROW[activeIdx];
-
-    return (
-        <div className="relative rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-500/8 via-slate-900/90 to-slate-900/90 p-4 flex flex-col min-h-[240px] overflow-hidden">
-            <div className="flex items-center justify-between mb-1">
-                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-purple-300">
-                    <TrendingUp size={12} /> Periodic trend
-                </span>
-                <span className="text-[11px] text-slate-500">Period 2</span>
-            </div>
-            <p className="text-[12px] text-purple-200/80 font-medium mb-2.5 leading-snug">
-                All periodic trends on one page
-            </p>
-
-            <p className="text-white text-[13px] font-semibold mb-2 leading-snug">
-                Electronegativity across a period
-            </p>
-
-            <div className="flex items-stretch gap-1 mb-2">
-                {PERIODIC_ROW.map((e, i) => {
-                    const intensity = 0.12 + (e.en / 3.98) * 0.55;
-                    const isActive = activeIdx === i;
-                    return (
-                        <button
-                            key={e.sym}
-                            onMouseEnter={() => setHovered(i)}
-                            onMouseLeave={() => setHovered(null)}
-                            onFocus={() => setHovered(i)}
-                            onBlur={() => setHovered(null)}
-                            className={`flex-1 flex items-center justify-center py-2.5 rounded-md border text-[12px] font-bold transition-all ${
-                                isActive
-                                    ? 'border-purple-400 text-white scale-110 shadow-md shadow-purple-500/30 z-10'
-                                    : 'border-white/10 text-slate-200 hover:border-purple-400/60'
-                            }`}
-                            style={{ backgroundColor: `rgba(168, 85, 247, ${intensity})` }}
-                            aria-label={`${e.name}, electronegativity ${e.en}`}
-                        >
-                            {e.sym}
-                        </button>
-                    );
-                })}
-            </div>
-
-            <div className="relative flex items-center gap-2 mb-3">
-                <div className="flex-1 h-[2px] bg-gradient-to-r from-purple-500/10 via-purple-400/60 to-purple-300" />
-                <span className="text-[11px] text-purple-300 font-bold whitespace-nowrap">EN ↑</span>
-            </div>
-
-            <div className="bg-slate-800/60 border border-white/5 rounded-lg p-2.5 mt-auto">
-                <div className="flex items-baseline justify-between">
-                    <div>
-                        <p className="text-white text-[15px] font-bold leading-tight">{el.name}</p>
-                        <p className="text-[11px] text-slate-500">Pauling scale</p>
-                    </div>
-                    <p className="text-purple-300 text-2xl font-black tabular-nums">{el.en.toFixed(2)}</p>
-                </div>
-            </div>
-
-            <Link
-                href="/periodic-trends"
-                className="mt-3 pt-3 border-t border-white/5 text-[13px] text-purple-300 hover:text-purple-200 font-semibold transition-colors inline-flex items-center gap-1"
-            >
-                Every trend on one page <ArrowRight size={12} />
-            </Link>
-        </div>
-    );
-}
-
-function InteractiveBentoRow() {
-    return (
-        <section className="px-4 pb-8">
-            <div className="max-w-6xl mx-auto">
-                <div className="flex items-baseline justify-between mb-3">
-                    <p className="text-[12px] font-semibold uppercase tracking-widest text-slate-500">
-                        Try before you scroll
-                    </p>
-                    <p className="text-[12px] text-slate-600 hidden sm:block">3 tools · 30 seconds</p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-                    <BentoFlashcard />
-                    <BentoMCQ />
-                    <BentoPeriodicStrip />
-                </div>
-            </div>
-        </section>
-    );
-}
-
-// =============================================================================
 // MAIN
 // =============================================================================
 
@@ -745,8 +647,6 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
     const [bookmarks, setBookmarks] = useState<Set<string>>(new Set());
     const [opened, setOpened] = useState<Set<string>>(new Set());
     const [hydrated, setHydrated] = useState(false);
-    const [openChapters, setOpenChapters] = useState<Set<string>>(new Set());
-    const initialOpenSet = useRef(false);
 
     // Load persisted state
     useEffect(() => {
@@ -831,14 +731,6 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
         });
     }, [filteredNotes]);
 
-    // Open all chapters by default (first hydration only)
-    useEffect(() => {
-        if (initialOpenSet.current) return;
-        if (chapterGroups.length === 0) return;
-        setOpenChapters(new Set(chapterGroups.map(([c]) => c)));
-        initialOpenSet.current = true;
-    }, [chapterGroups]);
-
     // Flat sorted list (when sortKey !== 'chapter')
     const flatSorted = useMemo(() => {
         const arr = [...filteredNotes];
@@ -857,15 +749,6 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
         () => getRelevantTools(activeTab === 'all' ? null : activeTab),
         [activeTab]
     );
-
-    const toggleChapter = (chapter: string) => {
-        setOpenChapters(prev => {
-            const next = new Set(prev);
-            if (next.has(chapter)) next.delete(chapter);
-            else next.add(chapter);
-            return next;
-        });
-    };
 
     const totalBookmarked = bookmarks.size;
     const totalOpened = opened.size;
@@ -963,9 +846,7 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
                         </div>
                         <div className="flex-1 bg-slate-900">
                             <iframe
-                                src={viewingNote.notesUrl.includes('drive.google.com')
-                                    ? viewingNote.notesUrl.replace('/view', '/preview')
-                                    : viewingNote.notesUrl}
+                                src={toInlineViewerUrl(viewingNote.notesUrl) + '#view=FitH&toolbar=1'}
                                 className="w-full h-full border-0"
                                 title={viewingNote.title}
                             />
@@ -1038,9 +919,6 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
                     </div>
                 </div>
             </section>
-
-            {/* ── INTERACTIVE BENTO — try-before-you-scroll ─────────── */}
-            <InteractiveBentoRow />
 
             {/* ── SEARCH + CATEGORY + SORT + BOOKMARK FILTER ────────── */}
             <section className="px-4 pb-6">
@@ -1146,20 +1024,7 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
                         </button>
                     </div>
                 ) : sortKey === 'chapter' && !searchQuery && !showBookmarkedOnly ? (
-                    <div className="space-y-3">
-                        {chapterGroups.map(([chapter, notes]) => (
-                            <ChapterAccordion
-                                key={chapter}
-                                chapter={chapter}
-                                notes={notes}
-                                open={openChapters.has(chapter)}
-                                onToggle={() => toggleChapter(chapter)}
-                                bookmarks={bookmarks}
-                                onToggleBookmark={toggleBookmark}
-                                onOpenNote={handleOpenNote}
-                            />
-                        ))}
-                    </div>
+                    <ChapterGridByClass chapterGroups={chapterGroups} setSortKey={setSortKey} />
                 ) : (
                     <div>
                         <div className="flex items-center justify-between mb-3">
@@ -1232,7 +1097,68 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
                     </div>
                 </div>
             </section>
+
+            {/* ── FAQ (GEO / search crawlability — always in DOM) ── */}
+            <NotesVivaFAQ />
+
             </div>
         </div>
+    );
+}
+
+const NOTES_FAQS = [
+    {
+        q: 'Are these handwritten chemistry notes free to download?',
+        a: 'Yes. All notes by Paaras Sir on Canvas Classes are completely free — no login or payment required. Open any chapter to read online or tap "Open PDF" to download.',
+    },
+    {
+        q: 'Which chapters are covered in these handwritten chemistry notes?',
+        a: 'All major Class 11 & 12 chapters: Organic Chemistry (Amines, Aldehydes & Ketones, Aromatic Compounds, Organic Name Reactions), Physical Chemistry (Thermodynamics, Chemical Kinetics, Electrochemistry, Solutions, States of Matter, Surface Chemistry), and Inorganic Chemistry (Chemical Bonding, Coordination Compounds, Metallurgy, Environmental Chemistry).',
+    },
+    {
+        q: 'Are these chemistry notes useful for JEE Main and JEE Advanced?',
+        a: 'Yes — the notes are written with JEE patterns in mind. High-yield concepts, mechanisms, and shortcuts are highlighted throughout. Pair them with the Crucible question bank for active recall practice.',
+    },
+    {
+        q: 'Are these notes good for NEET Chemistry preparation?',
+        a: 'Absolutely. NEET tests Organic, Inorganic, and Physical Chemistry — all three are covered. The notes follow NCERT closely and highlight topics that appear frequently in NEET previous-year questions.',
+    },
+    {
+        q: 'Are these notes aligned with the NCERT Class 11 & 12 syllabus?',
+        a: 'Yes. Every note follows the CBSE-prescribed NCERT syllabus for Class 11 and Class 12 Chemistry, making them equally useful for board exams and entrance tests.',
+    },
+    {
+        q: 'Who created these handwritten chemistry notes?',
+        a: 'Paaras Sir, a chemistry educator at Canvas Classes. The notes reflect his classroom teaching style — concise, visual, and exam-focused for JEE and NEET aspirants.',
+    },
+];
+
+function NotesVivaFAQ() {
+    return (
+        <section className="px-4 pb-20 pt-2">
+            <div className="max-w-3xl mx-auto">
+                <h2 className="text-base font-bold text-white mb-3">
+                    Frequently Asked Questions
+                </h2>
+                <div className="space-y-1.5">
+                    {NOTES_FAQS.map((faq, i) => (
+                        <details
+                            key={i}
+                            className="group rounded-xl border border-white/[0.07] bg-white/[0.02] open:bg-white/[0.04] transition-colors"
+                        >
+                            <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3.5 text-sm font-medium text-zinc-300 marker:hidden">
+                                {faq.q}
+                                <span className="shrink-0 text-lg leading-none text-zinc-500 transition-transform group-open:rotate-45">
+                                    +
+                                </span>
+                            </summary>
+                            <p className="px-4 pb-4 text-sm leading-relaxed text-zinc-400">
+                                {faq.a}
+                            </p>
+                        </details>
+                    ))}
+                </div>
+            </div>
+        </section>
     );
 }

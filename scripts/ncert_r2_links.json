@@ -1,0 +1,2066 @@
+[
+  {
+    "cls": "8",
+    "subject": "Science",
+    "book": "Science",
+    "code": "hesc1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "CROP PRODUCTION AND MANAGEMENT",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/science/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "MICROORGANISMS : FRIEND AND FOE",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/science/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "COAL AND PETROLEUM",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/science/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "COMBUSTION AND FLAME",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/science/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "CONSERVATION OF PLANTS AND ANIMALS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/science/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "REPRODUCTION IN ANIMALS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/science/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "REACHING THE AGE OF ADOLESCENCE",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/science/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "FORCE AND PRESSURE",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/science/ch08.pdf"
+      },
+      {
+        "num": 9,
+        "chStr": "09",
+        "title": "FRICTION",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/science/ch09.pdf"
+      },
+      {
+        "num": 10,
+        "chStr": "10",
+        "title": "ow do you come to know that a",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/science/ch10.pdf"
+      },
+      {
+        "num": 11,
+        "chStr": "11",
+        "title": "CHEMICAL EFFECTS OF",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/science/ch11.pdf"
+      },
+      {
+        "num": 12,
+        "chStr": "12",
+        "title": "SOME NATURAL PHENOMENA",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/science/ch12.pdf"
+      },
+      {
+        "num": 13,
+        "chStr": "13",
+        "title": "he world is largely known through",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/science/ch13.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "8",
+    "subject": "Mathematics",
+    "book": "Mathematics",
+    "code": "hemh1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "RATIONAL NUMBERS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/math/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "Introduction",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/math/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "UNDERSTANDING QUADRILATERALS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/math/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "Looking for Information",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/math/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "Introduction",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/math/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "Introduction",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/math/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "Recalling Ratios and Percentages",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/math/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "ALGEBRAIC EXPRESSIONS AND IDENTITIES",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/math/ch08.pdf"
+      },
+      {
+        "num": 9,
+        "chStr": "09",
+        "title": "MENSURATION",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/math/ch09.pdf"
+      },
+      {
+        "num": 10,
+        "chStr": "10",
+        "title": "Introduction",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/math/ch10.pdf"
+      },
+      {
+        "num": 11,
+        "chStr": "11",
+        "title": "Introduction",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/math/ch11.pdf"
+      },
+      {
+        "num": 12,
+        "chStr": "12",
+        "title": "FACTORISATION",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/math/ch12.pdf"
+      },
+      {
+        "num": 13,
+        "chStr": "13",
+        "title": "INTRODUCTION TO GRAPHS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/math/ch13.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "8",
+    "subject": "English",
+    "book": "Honeydew",
+    "code": "heih1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "1 How the Camel got his hump",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-honeydew/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "2 Children at work",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-honeydew/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "3 The Selfish Giant",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-honeydew/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "4 The treasure within",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-honeydew/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "5 Princess September",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-honeydew/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "6 The fight",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-honeydew/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "7 Jalebis",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-honeydew/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "8 Ancient Education System of India",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-honeydew/ch08.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "8",
+    "subject": "English",
+    "book": "It So Happened",
+    "code": "hees1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Concerned social scientists are clear on what we need to do: we",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-itsohappened/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-itsohappened/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-itsohappened/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-itsohappened/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-itsohappened/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-itsohappened/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/english-itsohappened/ch07.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "8",
+    "subject": "Social Science",
+    "book": "History",
+    "code": "hehd1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "General",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-history/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "Before you read",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-history/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "Before you read",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-history/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "UNITS 4-7",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-history/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "Before you read",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-history/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "Before you read",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-history/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "Before you read",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-history/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "A Short Monsoon Diary",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-history/ch08.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "8",
+    "subject": "Social Science",
+    "book": "Civics",
+    "code": "hekb1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Part 1",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-civics/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "Project 2",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-civics/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "Part 2",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-civics/ch03.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "Part 3",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-civics/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "Project 1:",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-civics/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "Planning",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-civics/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "Annexure 1",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-civics/ch08.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "8",
+    "subject": "Social Science",
+    "book": "Geography",
+    "code": "hess2",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Introduction:",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-geography/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "From Trade to Territory",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-geography/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "Ruling the Countryside",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-geography/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "Tribals, Dikus and the",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-geography/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "When People Revolt",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-geography/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "Civilising the “Native”,",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class8/ss-geography/ch06.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "9",
+    "subject": "Social Science",
+    "book": "History",
+    "code": "iehp1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Evolution of Physical",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/ss-history/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "Science and Sports",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/ss-history/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "Olympism",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/ss-history/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "Sports for All",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/ss-history/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "Sports",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/ss-history/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "Yoga for Holistic Health",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/ss-history/ch06.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "10",
+    "subject": "Science",
+    "book": "Science",
+    "code": "jesc1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "“Facts are not science — as the dictionary is not literature.”",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/science/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/science/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/science/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/science/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/science/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/science/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/science/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/science/ch08.pdf"
+      },
+      {
+        "num": 9,
+        "chStr": "09",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/science/ch09.pdf"
+      },
+      {
+        "num": 10,
+        "chStr": "10",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/science/ch10.pdf"
+      },
+      {
+        "num": 11,
+        "chStr": "11",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/science/ch11.pdf"
+      },
+      {
+        "num": 12,
+        "chStr": "12",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/science/ch12.pdf"
+      },
+      {
+        "num": 13,
+        "chStr": "13",
+        "title": "CHAPTER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/science/ch13.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "10",
+    "subject": "Mathematics",
+    "book": "Mathematics",
+    "code": "jemh1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "REAL NUMBERS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/math/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/math/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/math/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/math/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "ARITHMETIC PROGRESSIONS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/math/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "TRIANGLES",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/math/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "COORDINATE GEOMETRY",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/math/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "INTRODUCTION TO TRIGONOMETRY",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/math/ch08.pdf"
+      },
+      {
+        "num": 9,
+        "chStr": "09",
+        "title": "SOME APPLICATIONS OF TRIGONOMETRY",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/math/ch09.pdf"
+      },
+      {
+        "num": 10,
+        "chStr": "10",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/math/ch10.pdf"
+      },
+      {
+        "num": 11,
+        "chStr": "11",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/math/ch11.pdf"
+      },
+      {
+        "num": 12,
+        "chStr": "12",
+        "title": "SURFACE AREAS AND VOLUMES",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/math/ch12.pdf"
+      },
+      {
+        "num": 13,
+        "chStr": "13",
+        "title": "STATISTICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/math/ch13.pdf"
+      },
+      {
+        "num": 14,
+        "chStr": "14",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/math/ch14.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "10",
+    "subject": "English",
+    "book": "First Flight",
+    "code": "jeff1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "BEFORE YOU READ",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-firstflight/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "BEFORE YOU READ",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-firstflight/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "BEFORE YOU READ",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-firstflight/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "BEFORE YOU READ",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-firstflight/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "BEFORE YOU READ",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-firstflight/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "BEFORE YOU READ",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-firstflight/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "BEFORE YOU READ",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-firstflight/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "BEFORE YOU READ",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-firstflight/ch08.pdf"
+      },
+      {
+        "num": 9,
+        "chStr": "09",
+        "title": "BEFORE YOU READ",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-firstflight/ch09.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "10",
+    "subject": "English",
+    "book": "Footprints",
+    "code": "jefp1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "A Triumph of Surgery",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-footprints/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "The Thief's Story",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-footprints/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "The Midnight Visitor",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-footprints/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "A Question of Trust",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-footprints/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "Footprints without Feet",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-footprints/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "The Making of a Scientist",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-footprints/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "The Necklace",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-footprints/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "F r o m h er v e r y c h i ldh o o d B h o li w a s",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-footprints/ch08.pdf"
+      },
+      {
+        "num": 9,
+        "chStr": "09",
+        "title": "The Book That Saved the Earth",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/english-footprints/ch09.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "10",
+    "subject": "Social Science",
+    "book": "History",
+    "code": "jess1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Can you identify and name the various items",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-history/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "Flora and Fauna in India",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-history/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "You already know that three-fourth of the",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-history/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "India is an agriculturally important country.",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-history/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "Haban comes to Guwahati with his father",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-history/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "On the occassion of Diwali, Harish went to",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-history/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "We use different materials and services in our",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-history/ch07.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "10",
+    "subject": "Social Science",
+    "book": "Geography",
+    "code": "jess2",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "TEACHER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-geography/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "NOTES FOR THE TEACHER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-geography/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "NOTES FOR THE TEACHER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-geography/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "NOTES FOR THE TEACHER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-geography/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "NOTES FOR THE TEACHER",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-geography/ch05.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "10",
+    "subject": "Social Science",
+    "book": "Civics",
+    "code": "jess3",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "SECTION I",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-civics/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "Chapter II",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-civics/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "SECTION II",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-civics/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "Chapter IV",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-civics/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "SECTION III",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-civics/ch05.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "10",
+    "subject": "Social Science",
+    "book": "Economics",
+    "code": "jess4",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Overview",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-economics/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "Overview",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-economics/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "The existence of social diversity does not threaten democracy. Political",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-economics/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "Political Parties",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-economics/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "Outcomes of",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class10/ss-economics/ch05.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "11",
+    "subject": "Physics",
+    "book": "Part 1",
+    "code": "keph1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "CHAPTER ONE",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/physics-p1/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "CHAPTER TWO",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/physics-p1/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "CHAPTER THREE",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/physics-p1/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "CHAPTER FOUR",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/physics-p1/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "CHAPTER FIVE",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/physics-p1/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "CHAPTER SIX",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/physics-p1/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "CHAPTER SEVEN",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/physics-p1/ch07.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "11",
+    "subject": "Physics",
+    "book": "Part 2",
+    "code": "keph2",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "CHAPTER EIGHT",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/physics-p2/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "CHAPTER NINE",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/physics-p2/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "CHAPTER TEN",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/physics-p2/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "CHAPTER ELEVEN",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/physics-p2/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "CHAPTER TWELVE",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/physics-p2/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "CHAPTER THIRTEEN",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/physics-p2/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "CHAPTER FOURTEEN",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/physics-p2/ch07.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "11",
+    "subject": "Biology",
+    "book": "Biology",
+    "code": "kebo1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "DIVERSITY IN THE LIVING WORLD",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "BIOLOGY",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "PLANT KINGDOM",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "ANIMAL KINGDOM",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "STRUCTURAL ORGANISATION",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "ANATOMY OF FLOWERING PLANTS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "STRUCTURAL ORGANISATION IN ANIMALS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "CELL: STRUCTURE AND FUNCTIONS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch08.pdf"
+      },
+      {
+        "num": 9,
+        "chStr": "09",
+        "title": "BIOLOGY",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch09.pdf"
+      },
+      {
+        "num": 10,
+        "chStr": "10",
+        "title": "BIOLOGY",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch10.pdf"
+      },
+      {
+        "num": 11,
+        "chStr": "11",
+        "title": "PLANT PHYSIOLOGY",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch11.pdf"
+      },
+      {
+        "num": 12,
+        "chStr": "12",
+        "title": "RESPIRATION IN PLANTS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch12.pdf"
+      },
+      {
+        "num": 13,
+        "chStr": "13",
+        "title": "BIOLOGY",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch13.pdf"
+      },
+      {
+        "num": 14,
+        "chStr": "14",
+        "title": "HUMAN PHYSIOLOGY",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch14.pdf"
+      },
+      {
+        "num": 15,
+        "chStr": "15",
+        "title": "BODY FLUIDS AND CIRCULATION",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch15.pdf"
+      },
+      {
+        "num": 16,
+        "chStr": "16",
+        "title": "EXCRETORY PRODUCTS AND THEIR ELIMINATION",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch16.pdf"
+      },
+      {
+        "num": 17,
+        "chStr": "17",
+        "title": "LOCOMOTION AND MOVEMENT",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch17.pdf"
+      },
+      {
+        "num": 18,
+        "chStr": "18",
+        "title": "BIOLOGY",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch18.pdf"
+      },
+      {
+        "num": 19,
+        "chStr": "19",
+        "title": "CHEMICAL COORDINATION AND INTEGRATION",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/biology/ch19.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "11",
+    "subject": "English",
+    "book": "Hornbill",
+    "code": "kehb1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "The Portrait of a Lady",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/english-hornbill/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "if We Can All Be Together”",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/english-hornbill/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "3. Discovering Tut: the Saga Continues",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/english-hornbill/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "4. The Ailing Planet: the Green",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/english-hornbill/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "5. The Adventure",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/english-hornbill/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "6 Silk Road",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/english-hornbill/ch06.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "11",
+    "subject": "English",
+    "book": "Snapshots",
+    "code": "kesp1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "The Summer of the",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/english-snapshots/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "The Address",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/english-snapshots/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "Mother’s Day",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/english-snapshots/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "A.J. Cronin",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/english-snapshots/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "The Tale of Melon City",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/english-snapshots/ch05.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "12",
+    "subject": "Physics",
+    "book": "Part 1",
+    "code": "leph1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Chapter One",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/physics-p1/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "Chapter Two",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/physics-p1/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "Chapter Three",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/physics-p1/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "Chapter Four",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/physics-p1/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "Physics",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/physics-p1/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "Physics",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/physics-p1/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "Chapter Seven",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/physics-p1/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "Chapter Eight",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/physics-p1/ch08.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "12",
+    "subject": "Physics",
+    "book": "Part 2",
+    "code": "leph2",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Chapter Nine",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/physics-p2/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "Wave Optics",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/physics-p2/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "Physics",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/physics-p2/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "Physics",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/physics-p2/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "Physics",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/physics-p2/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "Chapter Fourteen",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/physics-p2/ch06.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "12",
+    "subject": "Mathematics",
+    "book": "Part 1",
+    "code": "lemh1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Chapter",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/math-p1/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/math-p1/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/math-p1/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/math-p1/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/math-p1/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "Chapter",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/math-p1/ch06.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "12",
+    "subject": "Mathematics",
+    "book": "Part 2",
+    "code": "lemh2",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "INTEGRALS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/math-p2/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/math-p2/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/math-p2/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/math-p2/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "THREE DIMENSIONAL GEOMETRY",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/math-p2/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/math-p2/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/math-p2/ch07.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "12",
+    "subject": "Biology",
+    "book": "Biology",
+    "code": "lebo1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Sexual Reproduction in",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/biology/ch01.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "REPRODUCTIVE HEALTH",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/biology/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "Principles of Inheritance",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/biology/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "MOLECULAR BASIS OF",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/biology/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "BIOLOGY",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/biology/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "Human Health and Disease",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/biology/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "MICROBES IN HUMAN WELFARE",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/biology/ch08.pdf"
+      },
+      {
+        "num": 9,
+        "chStr": "09",
+        "title": "Biotechnology : Principles and",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/biology/ch09.pdf"
+      },
+      {
+        "num": 10,
+        "chStr": "10",
+        "title": "BIOTECHNOLOGY AND ITS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/biology/ch10.pdf"
+      },
+      {
+        "num": 11,
+        "chStr": "11",
+        "title": "Organisms and Populations",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/biology/ch11.pdf"
+      },
+      {
+        "num": 12,
+        "chStr": "12",
+        "title": "ECOSYSTEM",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/biology/ch12.pdf"
+      },
+      {
+        "num": 13,
+        "chStr": "13",
+        "title": "BIODIVERSITY AND",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/biology/ch13.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "12",
+    "subject": "English",
+    "book": "Flamingo",
+    "code": "lefl1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "The Last Lesson",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-flamingo/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "2 Lost Spring",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-flamingo/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "3 Deep Water",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-flamingo/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "4 The Rattrap",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-flamingo/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "5 Indigo",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-flamingo/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "6 Poets and Pancakes",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-flamingo/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "7 The Interview",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-flamingo/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "8 Going Places",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-flamingo/ch08.pdf"
+      },
+      {
+        "num": 11,
+        "chStr": "11",
+        "title": "My Mother at Sixty-six",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-flamingo/ch11.pdf"
+      },
+      {
+        "num": 12,
+        "chStr": "12",
+        "title": "2 Keeping Quiet",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-flamingo/ch12.pdf"
+      },
+      {
+        "num": 13,
+        "chStr": "13",
+        "title": "3 A Thing of Beauty",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-flamingo/ch13.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "12",
+    "subject": "English",
+    "book": "Vistas",
+    "code": "levt1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "The Third Level",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-vistas/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "The Tiger King",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-vistas/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "Journey to the end of the Earth",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-vistas/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "The Enemy",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-vistas/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "On The Face Of It",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-vistas/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "Memories of Childhood",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/english-vistas/ch06.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "11",
+    "subject": "Mathematics",
+    "book": "Mathematics",
+    "code": "kemh1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Mathematics - Chapter 1",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/math/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "Mathematics - Chapter 2",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/math/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "Mathematics - Chapter 3",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/math/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "Mathematics - Chapter 4",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/math/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "Mathematics - Chapter 5",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/math/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "Mathematics - Chapter 6",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/math/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "Mathematics - Chapter 7",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/math/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "Mathematics - Chapter 8",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/math/ch08.pdf"
+      },
+      {
+        "num": 9,
+        "chStr": "09",
+        "title": "Mathematics - Chapter 9",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/math/ch09.pdf"
+      },
+      {
+        "num": 10,
+        "chStr": "10",
+        "title": "MATHEMATICS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/math/ch10.pdf"
+      },
+      {
+        "num": 11,
+        "chStr": "11",
+        "title": "Mathematics - Chapter 11",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/math/ch11.pdf"
+      },
+      {
+        "num": 12,
+        "chStr": "12",
+        "title": "Mathematics - Chapter 12",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/math/ch12.pdf"
+      },
+      {
+        "num": 13,
+        "chStr": "13",
+        "title": "Mathematics - Chapter 13",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/math/ch13.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "9",
+    "subject": "Science",
+    "book": "Science",
+    "code": "iesc1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Exploration: Entering",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/science/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "Chapter",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/science/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "Chapter",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/science/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "Chapter",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/science/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "Chapter",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/science/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "Chapter",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/science/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "Chapter",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/science/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "Chapter",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/science/ch08.pdf"
+      },
+      {
+        "num": 9,
+        "chStr": "09",
+        "title": "Chapter",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/science/ch09.pdf"
+      },
+      {
+        "num": 10,
+        "chStr": "10",
+        "title": "Chapter",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/science/ch10.pdf"
+      },
+      {
+        "num": 11,
+        "chStr": "11",
+        "title": "Chapter",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/science/ch11.pdf"
+      },
+      {
+        "num": 12,
+        "chStr": "12",
+        "title": "Chapter",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/science/ch12.pdf"
+      },
+      {
+        "num": 13,
+        "chStr": "13",
+        "title": "Chapter",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/science/ch13.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "9",
+    "subject": "Mathematics",
+    "book": "Mathematics",
+    "code": "iemh1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Orienting Yourself: The Use of",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/math/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "Introduction to",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/math/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "The World of Numbers",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/math/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "Exploring Algebraic",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/math/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "I’m Up and Down, and",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/math/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "Measuring Space:",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/math/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "The Mathematics of Maybe:",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/math/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "Predicting What Comes Next:",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/math/ch08.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "9",
+    "subject": "English",
+    "book": "Beehive",
+    "code": "iebe1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "How I Taught My",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/english-beehive/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "The Pot Maker",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/english-beehive/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "Winds of",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/english-beehive/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "Vitamin-M",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/english-beehive/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "The World of",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/english-beehive/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "Twin Melodies",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/english-beehive/ch06.pdf"
+      },
+      {
+        "num": 7,
+        "chStr": "07",
+        "title": "Carrier of Words",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/english-beehive/ch07.pdf"
+      },
+      {
+        "num": 8,
+        "chStr": "08",
+        "title": "Follow",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class9/english-beehive/ch08.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "11",
+    "subject": "Chemistry",
+    "book": "Chemistry Part 1",
+    "code": "kech1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "SOME BASIC CONCEPTS OF CHEMISTRY",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/chemistry-p1/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "structure of atom",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/chemistry-p1/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "Classification of Elements and",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/chemistry-p1/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "CHEMICAL BONDING AND",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/chemistry-p1/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "Thermodynamics",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/chemistry-p1/ch05.pdf"
+      },
+      {
+        "num": 6,
+        "chStr": "06",
+        "title": "Equilibrium",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/chemistry-p1/ch06.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "11",
+    "subject": "Chemistry",
+    "book": "Chemistry Part 2",
+    "code": "kech2",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "REDOX REACTIONS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/chemistry-p2/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "chemistry",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/chemistry-p2/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "HYDROCARBONS",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class11/chemistry-p2/ch03.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "12",
+    "subject": "Chemistry",
+    "book": "Chemistry Part 1",
+    "code": "lech1",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Objectives",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/chemistry-p1/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "Objectives",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/chemistry-p1/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "Objectives",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/chemistry-p1/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "Objectives",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/chemistry-p1/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "Objectives",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/chemistry-p1/ch05.pdf"
+      }
+    ]
+  },
+  {
+    "cls": "12",
+    "subject": "Chemistry",
+    "book": "Chemistry Part 2",
+    "code": "lech2",
+    "chapters": [
+      {
+        "num": 1,
+        "chStr": "01",
+        "title": "Objectives",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/chemistry-p2/ch01.pdf"
+      },
+      {
+        "num": 2,
+        "chStr": "02",
+        "title": "Objectives",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/chemistry-p2/ch02.pdf"
+      },
+      {
+        "num": 3,
+        "chStr": "03",
+        "title": "Objectives",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/chemistry-p2/ch03.pdf"
+      },
+      {
+        "num": 4,
+        "chStr": "04",
+        "title": "A mines",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/chemistry-p2/ch04.pdf"
+      },
+      {
+        "num": 5,
+        "chStr": "05",
+        "title": "Biomolecules",
+        "url": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/ncert-books/class12/chemistry-p2/ch05.pdf"
+      }
+    ]
+  }
+]

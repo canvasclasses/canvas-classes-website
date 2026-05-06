@@ -32,6 +32,8 @@ import {
 } from 'lucide-react';
 import SaltAnalysisHero from './SaltAnalysisHero';
 import FloatingNav from './FloatingNav';
+import SaltAnalysisIntro from './SaltAnalysisIntro';
+import SaltAnalysisVivaFAQ from './SaltAnalysisVivaFAQ';
 import {
     ANIONS,
     CATIONS,
@@ -500,6 +502,9 @@ export default function SaltAnalysisClient() {
 
             {/* Floating Navigation for Mobile */}
             <FloatingNav />
+
+            {/* SEO content: What is salt analysis + procedure + viva questions */}
+            <SaltAnalysisIntro />
 
             <div className="container mx-auto px-4 pt-0 pb-8 relative z-20 mt-8">
                 <AnimatePresence mode="popLayout">
@@ -1394,6 +1399,9 @@ export default function SaltAnalysisClient() {
                     </div>
                 </div>
             </section>
+
+            {/* SEO content: Viva questions + practice CTA (placed at bottom of page) */}
+            <SaltAnalysisVivaFAQ />
         </div>
     );
 }

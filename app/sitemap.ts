@@ -323,6 +323,43 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Error fetching NCERT chapter groups for sitemap:', error);
     }
 
+    // ── NCERT PDF download per-chapter pages (Class 11 & 12 Chemistry) ───────
+    // High-intent SEO target — "class 11 chemistry ncert pdf chapter X".
+    let ncertPdfChapterEntries: MetadataRoute.Sitemap = [];
+    try {
+        const { getAllChapterGroups } = await import('./lib/ncertBooksData');
+        const groups = await getAllChapterGroups();
+        ncertPdfChapterEntries = groups.map((g) => ({
+            url: `${BASE_URL}/download-ncert-books/class-${g.classNum}/${g.slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.8,
+        }));
+    } catch (error) {
+        console.error('Error fetching NCERT PDF chapter groups for sitemap:', error);
+    }
+
+    // ── Handwritten Notes per-chapter pages ──────────────────────────────────
+    // Only include chapters that actually have notes available, so we never
+    // submit empty pages to Google.
+    let handwrittenChapterEntries: MetadataRoute.Sitemap = [];
+    try {
+        const { fetchHandwrittenNotes } = await import('./lib/handwrittenNotesData');
+        const { CHAPTER_META_LIST } = await import('./handwritten-notes/chapterMetadata');
+        const notes = await fetchHandwrittenNotes();
+        const chaptersWithNotes = new Set(notes.map((n) => n.chapter));
+        handwrittenChapterEntries = CHAPTER_META_LIST
+            .filter((c) => chaptersWithNotes.has(c.chapterName))
+            .map((c) => ({
+                url: `${BASE_URL}/handwritten-notes/${c.slug}`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly' as const,
+                priority: 0.85,
+            }));
+    } catch (error) {
+        console.error('Error fetching handwritten-notes chapters for sitemap:', error);
+    }
+
     return [
         ...staticEntries,
         ...collegePredictorLandingEntries,
@@ -336,6 +373,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ...jeePyqEntries,
         ...blogEntries,
         ...ncertChapterEntries,
+        ...ncertPdfChapterEntries,
+        ...handwrittenChapterEntries,
     ];
 }
 

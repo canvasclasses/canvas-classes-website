@@ -19,6 +19,7 @@ import {
     HelpCircle
 } from 'lucide-react';
 import Image from 'next/image';
+import AnimatedLabBackground from './AnimatedLabBackground';
 
 // --- Custom Visual Components ---
 
@@ -265,31 +266,21 @@ export default function SaltAnalysisHero() {
     };
 
     return (
-        <div className="relative w-full min-h-[auto] md:min-h-[600px] overflow-hidden flex flex-col">
-            {/* Background Image */}
-            <div className="absolute inset-0">
+        <div className="relative w-full min-h-[auto] md:min-h-[640px] overflow-hidden flex flex-col bg-gradient-to-b from-slate-950 via-gray-950 to-slate-900">
+            {/* Subtle molecular texture (kept as base layer) */}
+            <div className="absolute inset-0 opacity-[0.18] mix-blend-soft-light">
                 <Image
-                    src="/salt-analysis-hero.webp"
-                    alt="Qualitative salt analysis — anion and cation tests with flame, dry, and wet reagents"
+                    src="/molecular_bg.webp"
+                    alt=""
                     fill
                     className="object-cover"
-                    priority
                     sizes="100vw"
+                    priority
                 />
-                {/* Molecular Overlay pattern */}
-                <div className="absolute inset-0 z-0 opacity-30 mix-blend-soft-light">
-                    <Image
-                        src="/molecular_bg.webp"
-                        alt=""
-                        fill
-                        className="object-cover animate-pulse-slow"
-                    />
-                </div>
             </div>
 
-            {/* Gradient Overlays */}
-            <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/90 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent" />
+            {/* Animated chemistry-lab background — test tubes, ion chips, flame glow */}
+            <AnimatedLabBackground />
 
             {/* Content - Using relative to permit auto-growth with content */}
             <div className="relative z-10 max-w-7xl mx-auto px-4 flex flex-col items-center pt-28 pb-10 md:pt-24 md:pb-16 text-center">

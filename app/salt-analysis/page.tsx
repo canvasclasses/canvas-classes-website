@@ -5,24 +5,26 @@ import Script from 'next/script';
 const BASE_URL = 'https://www.canvasclasses.in';
 
 export const metadata: Metadata = {
-    title: 'Salt Analysis Simulator | Qualitative Analysis for CBSE Class 12 | Canvas Classes',
-    description: 'Master Salt Analysis with our interactive simulator for CBSE Class 12 Chemistry practical. Learn cation (Group I-VI) and anion identification, flame tests, dry tests, and systematic qualitative analysis based on NCERT Lab Manual. Practice for board exams and JEE/NEET.',
+    title: 'Salt Analysis: Procedure, Cation & Anion Tests + Free Virtual Lab | Class 12',
+    description: 'Free interactive salt analysis lab with step-by-step cation analysis (Groups I–VI), anion tests, flame tests, and the brown ring test. Complete procedure, reactions, and viva questions for CBSE Class 12 practical, JEE & NEET.',
     keywords: [
         'salt analysis',
-        'qualitative analysis of salt',
+        'salt analysis procedure',
         'salt analysis class 12',
+        'salt analysis viva questions',
         'salt analysis practical',
+        'salt analysis virtual lab',
+        'salt analysis simulator',
+        'qualitative analysis of salt',
         'cation analysis',
         'anion analysis',
-        'NCERT chemistry practical',
-        'CBSE practical chemistry',
-        'group reagents',
+        'group reagents in salt analysis',
         'flame test',
         'brown ring test',
         'borax bead test',
-        'chemistry lab practical',
+        'NCERT chemistry practical',
+        'CBSE practical chemistry',
         'class 12 chemistry practical',
-        'salt analysis experiment',
         'qualitative inorganic analysis',
         'JEE chemistry practical',
         'NEET chemistry'
@@ -49,8 +51,8 @@ export const metadata: Metadata = {
         locale: 'en_IN',
         url: `${BASE_URL}/salt-analysis`,
         siteName: 'Canvas Classes',
-        title: 'Salt Analysis Simulator - NCERT Chemistry Lab Practical',
-        description: 'Interactive Salt Analysis Simulator for CBSE Class 12. Practice qualitative analysis of salts with step-by-step experiments for cation and anion identification.',
+        title: 'Salt Analysis: Procedure, Tests & Free Virtual Lab — Class 12',
+        description: 'Step-by-step salt analysis procedure with free virtual lab. Cation analysis (Groups I–VI), anion tests, flame tests, brown ring test, and viva questions for CBSE Class 12 practical.',
         images: [
             {
                 url: `${BASE_URL}/og-salt-analysis.jpg`,
@@ -62,8 +64,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Salt Analysis Simulator | CBSE Class 12 Chemistry Practical',
-        description: 'Master qualitative analysis with our interactive salt analysis simulator based on NCERT.',
+        title: 'Salt Analysis: Procedure + Free Virtual Lab | Class 12',
+        description: 'Free interactive salt analysis lab. Step-by-step cation/anion tests, flame tests, brown ring test, and viva questions for CBSE Class 12.',
         images: [`${BASE_URL}/og-salt-analysis.jpg`],
     },
     category: 'Education',
@@ -131,10 +133,98 @@ const structuredData = {
             "mainEntity": [
                 {
                     "@type": "Question",
+                    "name": "What is salt analysis in chemistry?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Salt analysis, also called qualitative inorganic analysis, is the systematic procedure used to identify the cation (basic radical) and the anion (acidic radical) present in an unknown inorganic salt. It is a core CBSE Class 12 Chemistry practical and an important foundation topic for JEE and NEET inorganic chemistry."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What are the steps of salt analysis?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Salt analysis is done in five stages: (1) Preliminary examination — note the colour, smell, and solubility of the salt. (2) Dry tests — heat the salt, perform flame test and borax bead test. (3) Anion analysis — use dilute H₂SO₄ for one set of anions and concentrated H₂SO₄ for the other set, then confirm with specific tests. (4) Cation analysis — prepare original solution and test through Groups 0, I, II, III, IV, V, VI in order. (5) Confirmatory tests for the identified cation and anion."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is the original solution in salt analysis?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The original solution (O.S.) is a solution of the salt prepared in a suitable solvent — usually water, dilute HCl, dilute HNO₃, or aqua regia, depending on the solubility of the salt. The original solution is used for systematic cation analysis through Groups 0 to VI. Choosing the right solvent is the first step before group separation."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Why is dilute HCl used as the Group I reagent?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Dilute HCl is used as the Group I reagent because it precipitates only the cations whose chlorides are insoluble — Pb²⁺, Ag⁺, and Hg₂²⁺. The dilute concentration provides a controlled chloride ion concentration so that chlorides of Group II–VI cations (which are soluble) remain in solution and can be analysed in subsequent groups."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How do you identify the cation in a salt?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Cations are identified by passing the original solution through Groups 0 to VI in fixed order. Group 0 (NH₄⁺) is tested first using NaOH. Group I uses dilute HCl. Group II uses H₂S in acidic medium. Group III uses NH₄Cl + NH₄OH. Group IV uses H₂S in alkaline medium. Group V uses (NH₄)₂CO₃. Group VI tests for Mg²⁺. Once the cation is precipitated in a group, a confirmatory test is done to identify the exact ion."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How do you identify the anion in a salt?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Anions are identified in two stages. The dilute H₂SO₄ test detects carbonate, sulphide, sulphite, nitrite, and acetate by gas evolution. The concentrated H₂SO₄ test detects chloride, bromide, iodide, nitrate, and oxalate. The anion is then confirmed using specific tests — silver nitrate test for halides, brown ring test for nitrate, BaCl₂ test for sulphate, and ammonium molybdate test for phosphate."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is the dry test in salt analysis?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Dry tests are done on the solid salt before it is dissolved. They include: (a) noting colour and smell, (b) heating the salt in a dry test tube to observe colour changes and any gas evolved, (c) flame test using a clean platinum wire dipped in concentrated HCl, and (d) borax bead test for transition metal cations. Dry tests give early hints about the cation and anion present."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Why is H₂S not passed in Group I?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "H₂S is not passed in Group I because the goal of Group I is to precipitate only Pb²⁺, Ag⁺, and Hg₂²⁺ as their insoluble chlorides using dilute HCl. If H₂S were passed first, sulphides of Group II cations would also precipitate together, making it impossible to separate Group I from Group II cleanly. Each group reagent is chosen to precipitate only its own cations."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is the principle of qualitative inorganic analysis?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The principle is selective precipitation based on the Solubility Product (Ksp) of insoluble salts. By controlling the concentration of the precipitating ion (Cl⁻, S²⁻, OH⁻, CO₃²⁻) and the pH of the medium, we ensure that only the cations of one group exceed their Ksp and precipitate, while cations of later groups stay in solution. The Common Ion Effect is used to fine-tune ion concentrations during the procedure."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What apparatus is needed for salt analysis practical?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The basic apparatus includes test tubes and a test tube stand, a test tube holder, a Bunsen burner, a platinum or nichrome wire (for flame test), a watch glass, a glass rod, dropper bottles for reagents (dil HCl, dil H₂SO₄, conc H₂SO₄, NaOH, NH₄OH, NH₄Cl, H₂S source, BaCl₂, AgNO₃, FeSO₄, (NH₄)₂CO₃), a centrifuge or filter paper for separating precipitates, and a wash bottle."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What precautions should be taken during salt analysis?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Important precautions: (1) Always test for NH₄⁺ in the original solution before adding any ammonium reagent. (2) Use dilute HCl for Group I and ensure the solution is cold to fully precipitate PbCl₂. (3) Pass H₂S only in a fume hood — it is toxic. (4) Keep the medium acidic for Group II and alkaline for Group IV. (5) Always centrifuge or filter completely before moving to the next group. (6) Confirm each cation and anion with at least one specific confirmatory test."
+                    }
+                },
+                {
+                    "@type": "Question",
                     "name": "Why does Lead (Pb²⁺) partially precipitate in Group I and then reappear in Group II analysis?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Lead chloride (PbCl₂) is slightly soluble in cold water. When dilute HCl is added, PbCl₂ forms as a white precipitate, but some Pb²⁺ ions escape into the filtrate. These remaining ions form black PbS precipitate in Group II when H₂S is passed in acidic medium. This is why Lead appears in both Group I and Group II."
+                        "text": "Lead chloride (PbCl₂) is slightly soluble in cold water. When dilute HCl is added, PbCl₂ forms as a white precipitate, but some Pb²⁺ ions escape into the filtrate. These remaining ions form black PbS precipitate in Group II when H₂S is passed in acidic medium. This is why Lead can appear in both Group I and Group II."
                     }
                 },
                 {
@@ -150,7 +240,7 @@ const structuredData = {
                     "name": "Why is H₂S passed in acidic medium for Group II but alkaline medium for Group IV?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "This is based on Solubility Product (Ksp) principle. Group II sulphides have very low Ksp, so even low S²⁻ concentration (suppressed by HCl) is sufficient. Group IV sulphides have high Ksp, requiring high S²⁻ concentration (boosted by NH₄OH alkaline medium) for precipitation."
+                        "text": "This is based on the Solubility Product (Ksp) principle. Group II sulphides have very low Ksp, so even a low S²⁻ concentration (suppressed by HCl) is sufficient to exceed Ksp and precipitate them. Group IV sulphides have higher Ksp, requiring a much higher S²⁻ concentration — achieved by NH₄OH which boosts the dissociation of H₂S in alkaline medium."
                     }
                 },
                 {
@@ -158,7 +248,7 @@ const structuredData = {
                     "name": "What is the role of NH₄Cl when adding NH₄OH during Group III Analysis?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "NH₄Cl suppresses the ionization of NH₄OH through Common Ion Effect. This keeps OH⁻ concentration low enough to precipitate only Group III hydroxides (Fe, Al, Cr) while preventing precipitation of Mg(OH)₂ and Group IV hydroxides which have higher Ksp values."
+                        "text": "NH₄Cl suppresses the ionization of NH₄OH through the Common Ion Effect. This keeps the OH⁻ concentration low enough to precipitate only Group III hydroxides — Fe(OH)₃, Al(OH)₃, and Cr(OH)₃ — while preventing the premature precipitation of Mg(OH)₂ and Group IV hydroxides which have higher Ksp values."
                     }
                 },
                 {
@@ -166,7 +256,7 @@ const structuredData = {
                     "name": "Why must Ammonium (NH₄⁺) be analyzed in the original solution?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Ammonium salts like NH₄Cl and NH₄OH are added as reagents during Groups I-V analysis. Testing for NH₄⁺ after this would give false positives. Therefore, NH₄⁺ must be tested in the original solution before adding any reagents. This is why it's called 'Zero Group'."
+                        "text": "Ammonium salts like NH₄Cl and NH₄OH are added as reagents during Groups III, IV, and V analysis. Testing for NH₄⁺ after this stage would give false positives because of the added ammonium. Therefore NH₄⁺ must be tested in the original solution before any reagent is added — this is why it is grouped under 'Zero Group'."
                     }
                 },
                 {
@@ -174,15 +264,15 @@ const structuredData = {
                     "name": "What is the brown ring test used for?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "The brown ring test is used to confirm the presence of Nitrate (NO₃⁻) ions. When freshly prepared FeSO₄ solution is added to the salt solution and concentrated H₂SO₄ is poured carefully along the sides, a brown ring forms at the junction due to formation of [Fe(H₂O)₅NO]²⁺ complex."
+                        "text": "The brown ring test confirms the presence of nitrate (NO₃⁻) ions. Freshly prepared FeSO₄ solution is added to the salt solution, and concentrated H₂SO₄ is then poured carefully along the side of the test tube. A brown ring forms at the junction of the two layers due to the formation of the [Fe(H₂O)₅NO]²⁺ complex, confirming nitrate."
                     }
                 },
                 {
                     "@type": "Question",
-                    "name": "What colours do different cations impart in flame test?",
+                    "name": "What colours do different cations impart in the flame test?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Sodium (Na⁺) gives golden yellow flame, Potassium (K⁺) gives lilac/violet flame, Calcium (Ca²⁺) gives brick red flame, Strontium (Sr²⁺) gives crimson red flame, Barium (Ba²⁺) gives apple green flame, and Copper (Cu²⁺) gives blue-green flame."
+                        "text": "Sodium (Na⁺) gives a golden yellow flame, Potassium (K⁺) gives a lilac or violet flame, Calcium (Ca²⁺) gives a brick red flame, Strontium (Sr²⁺) gives a crimson red flame, Barium (Ba²⁺) gives an apple green flame, and Copper (Cu²⁺) gives a blue-green flame. Lead and lithium give characteristic colours too — pale blue and crimson respectively."
                     }
                 }
             ]
