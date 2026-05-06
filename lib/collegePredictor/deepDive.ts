@@ -12,6 +12,7 @@
  * — no year/rank fabrication. If the DB has no 2025 data for a branch, the
  * page will silently omit that branch from the "2025 closing rank" column.
  */
+import { cache } from 'react';
 import connectDB from '@/lib/mongodb';
 import { College, type ICollege } from '@/lib/models/College';
 import { CollegeCutoff, type ICollegeCutoff } from '@/lib/models/CollegeCutoff';
@@ -100,7 +101,7 @@ export interface CollegeDeepDive {
   filter: { category: CategoryFilter; gender: GenderFilter };
 }
 
-export async function loadCollegeDeepDive(
+export const loadCollegeDeepDive = cache(async function loadCollegeDeepDive(
   slug: string,
   opts: { category?: CategoryFilter; gender?: GenderFilter } = {},
 ): Promise<CollegeDeepDive | null> {
@@ -293,7 +294,7 @@ export async function loadCollegeDeepDive(
     quota_compare: quotaCompare,
     filter: { category, gender },
   };
-}
+});
 
 /**
  * List all college slugs — used by generateStaticParams for ISR.
