@@ -198,6 +198,7 @@ const jsonLd = {
 import { AuthButton } from "./components/AuthButton";
 import { ConditionalFooter } from "./components/ConditionalFooter";
 import GoogleAnalytics from "./components/GoogleAnalytics";
+import CloudflareAnalytics from "./components/CloudflareAnalytics";
 
 export default function RootLayout({
   children,
@@ -217,6 +218,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <GoogleAnalytics />
+        <CloudflareAnalytics />
         <ClarityScript />
         <MixpanelProvider>
           <CommandPalette itemsPromise={getSearchItems()} />

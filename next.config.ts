@@ -35,11 +35,11 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self'",
               // cdnjs & cdn.tailwindcss needed by the self-hosted VSEPR/simulator HTML files
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.tailwindcss.com https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://va.vercel-scripts.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.tailwindcss.com https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://va.vercel-scripts.com https://static.cloudflareinsights.com",
               "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net",
-              "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://api.mixpanel.com https://*.clarity.ms https://*.clarity.microsoft.com https://*.vercel-insights.com https://va.vercel-scripts.com",
+              "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://api.mixpanel.com https://*.clarity.ms https://*.clarity.microsoft.com https://*.vercel-insights.com https://va.vercel-scripts.com https://cloudflareinsights.com",
               "media-src 'self' https: blob:",
               "object-src 'none'",
               "frame-src 'self' https://www.youtube.com https://youtube.com https://www.youtube-nocookie.com https://customer-stream.cloudflarestream.com https://drive.google.com https://docs.google.com https://phet.colorado.edu",
