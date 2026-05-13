@@ -119,6 +119,18 @@ export const inorganicTrendsData: TrendSection[] = [
                 title: "Lewis Acidity of Group 13 Trihalides",
                 trend: "$BX_3 > AlX_3 > GaX_3 > InX_3$",
                 logic: "All Group 13 trihalides ($AlX_3$, $GaX_3$, $InX_3$) have **empty d-orbitals** which can accept electron pairs, making them Lewis acids. However, $BX_3$ is the strongest Lewis acid because Boron is the smallest and most electron-deficient. $BF_3$ appears less acidic among boron halides due to very good $p\\pi - p\\pi$ back bonding with Fluorine filling its electron deficiency."
+            },
+            {
+                id: 56,
+                title: "Basicity of Group 13 Hydroxides",
+                trend: "$B(OH)_3 < Al(OH)_3 < Ga(OH)_3 < In(OH)_3 < Tl(OH)_3$",
+                logic: "$B(OH)_3$ is actually **acidic** — boric acid donates a proton to water because the small B atom polarises the O–H bond. As cation size grows down the group, the M–O bond becomes more ionic and $OH^-$ is released more easily. $Al(OH)_3$ is **amphoteric** (reacts with both acids and bases). $Ga(OH)_3$, $In(OH)_3$ and $Tl(OH)_3$ are progressively more basic, with $Tl(OH)_3$ behaving like a typical alkali."
+            },
+            {
+                id: 66,
+                title: "Standard Reduction Potentials of Group 13",
+                trend: "$M^{3+}/M$: $Al(-1.66), Ga(-0.56), In(-0.34), Tl(+1.26)$ V",
+                logic: "$M^{3+}/M$ becomes progressively less negative down Group 13, meaning reducing power of the metal *decreases* down the group ($Al > Ga > In > Tl$ as reductants). $Tl^{3+}/Tl$ is uniquely *positive* ($+1.26$ V) — so $Tl^{3+}$ is actually an oxidising agent that readily accepts electrons to become $Tl$. The transition from very negative (Al) to positive (Tl) is the **inert pair effect quantified**: the 6s² electrons in Tl resist removal, making $Tl^+$ the stable oxidation state and $Tl^{3+}$ unstable. The $M^+/M$ couple for Tl ($-0.34$ V) confirms $Tl^+$ is favoured."
             }
         ]
     },
@@ -184,6 +196,48 @@ export const inorganicTrendsData: TrendSection[] = [
                 title: "Oxidation State Stability (+4 State)",
                 trend: "$C^{4+} > Si^{4+} > Ge^{4+} > Sn^{4+} > Pb^{4+}$",
                 logic: "Due to the **Inert Pair Effect**, stability of +4 state decreases down the group. $Pb^{4+}$ is a strong **oxidizing agent** (wants to become $Pb^{2+}$). $Pb^{2+}$ is more stable than $Pb^{4+}$ because of the reluctance of 6s² electrons to participate in bonding."
+            },
+            {
+                id: 57,
+                title: "Density (Group 14)",
+                trend: "$Si < C < Ge < Sn < Pb$ (densities: $2.34, 3.51, 5.32, 7.26, 11.34$ g/cm³)",
+                logic: "Generally density rises down a group as mass grows faster than volume — but **silicon is *less* dense than carbon (diamond)**. Diamond's tetrahedral lattice has very short C–C bonds (~$1.54$ Å) and packs atoms tightly ($3.51$ g/cm³). Silicon has the same lattice but with much longer Si–Si bonds (~$2.35$ Å), giving a far less compact arrangement ($2.34$ g/cm³). From Ge onward, mass dominates and density rises smoothly to Pb."
+            },
+            {
+                id: 58,
+                title: "Bond Angle of Phosphorus Trihalides",
+                trend: "$PF_3 (98°) < PCl_3 (100°) < PBr_3 (101°) < PI_3$",
+                logic: "**Opposite trend** to Group 15 hydrides ($NH_3 > PH_3 > AsH_3$). For $PX_3$ where the *halogen* changes (central P fixed), the X–P–X angle widens as halogen size grows. Two effects open the angle: (i) larger halogens crowd each other sterically, and (ii) decreasing electronegativity ($F > Cl > Br > I$) means bond pairs sit closer to P, raising bp–bp repulsion. In $PF_3$, highly electronegative F pulls bond pairs away from P, weakening repulsion and giving the smallest angle."
+            },
+            {
+                id: 59,
+                title: "Stability of Nitrogen Trihalides",
+                trend: "$NF_3$ stable; $NCl_3$, $NBr_3$, $NI_3$ all explosive/unstable",
+                logic: "$NF_3$ is the only stable nitrogen trihalide at room temperature (a colourless gas, used as a semiconductor etchant). $NCl_3$ is an explosive yellow oil. $NBr_3$ and $NI_3$ are far worse — $NI_3 \\cdot NH_3$ famously detonates from the lightest contact. The reason: N is small, and as halogen size grows, steric strain around N rises sharply while N–X bond strength falls. F is small and highly electronegative, giving a strong, short, well-fitting N–F bond that $NF_3$ alone enjoys."
+            },
+            {
+                id: 60,
+                title: "Lewis Basicity of Nitrogen Trihalides",
+                trend: "$NF_3 < NCl_3 < NBr_3 < NI_3$",
+                logic: "Lewis basicity depends on N's lone-pair availability. In $NF_3$, highly electronegative F atoms pull electron density away from N, leaving the lone pair impoverished — $NF_3$ is a *very* poor Lewis base. As halogen electronegativity drops ($F > Cl > Br > I$), more density stays on N and the lone pair becomes increasingly available. $NI_3$ is the best donor in the series (although it's far too unstable to actually use). Same logic explains why $NH_3$ has a much larger dipole moment than $NF_3$."
+            },
+            {
+                id: 61,
+                title: "Acidic Character of Group 15 Oxides",
+                trend: "$N_2O_3 > P_2O_3 > As_2O_3 > Sb_2O_3 > Bi_2O_3$ (acidic → amphoteric → basic)",
+                logic: "Down Group 15, oxides shift from acidic to basic. $N_2O_3$ and $P_2O_3$ are **acidic** — they react with water to give oxoacids ($HNO_2$ and $H_3PO_3$). $As_2O_3$ and $Sb_2O_3$ are **amphoteric** — react with both acids and bases. $Bi_2O_3$ is **basic** — reacts only with acids. The pattern is the textbook 'metallic character increases down a group' reflected in oxide behaviour."
+            },
+            {
+                id: 64,
+                title: "Acidic Character of Nitrogen Oxides",
+                trend: "$N_2O < NO < N_2O_3 < N_2O_4 < N_2O_5$",
+                logic: "Acidic character of $NO_x$ rises with the oxidation state of nitrogen. $N_2O$ ($+1$) and $NO$ ($+2$) are essentially **neutral** oxides — they don't react with water to give acids. $N_2O_3$ ($+3$) is the anhydride of $HNO_2$. $N_2O_4$ ($+4$, the dimer of $NO_2$) disproportionates in water to give $HNO_2 + HNO_3$. $N_2O_5$ ($+5$) is the anhydride of $HNO_3$ and is strongly acidic. Higher oxidation state on N → more delocalisation in the conjugate base → stronger acid."
+            },
+            {
+                id: 65,
+                title: "Ionization Enthalpy Pattern in Group 15",
+                trend: "$IE_1$ ↓ smoothly down the group; but $IE_2$ and $IE_3$ ↓ only up to Sb, then ↑ for Bi",
+                logic: "$IE_1$ falls monotonically $N > P > As > Sb > Bi$ as size grows. But $IE_2$ and $IE_3$ are different: they fall up to Sb, then **rise** for Bi. The reason is the **lanthanoid contraction** — between Sb (period 5) and Bi (period 6) sit the 14 lanthanoids, and the 4f electrons shield very poorly. So Bi feels a higher effective nuclear charge on its 6p electrons, making it harder to remove the second and third electrons from $Bi^+$ and $Bi^{2+}$. Same fingerprint as $Pb > Sn$ in Group 14 IE and $Tl$\'s anomalously high IE in Group 13."
             }
         ]
     },
@@ -266,6 +320,18 @@ export const inorganicTrendsData: TrendSection[] = [
                 title: "Acidic Strength of Oxoacids (Different Oxidation States)",
                 trend: "$HClO < HClO_2 < HClO_3 < HClO_4$",
                 logic: "As the oxidation state of the central atom increases (+1 to +7), the negative charge on the conjugate base is more delocalized (**resonance stabilization**), making the acid stronger."
+            },
+            {
+                id: 62,
+                title: "Melting Point of Hydrogen Halides",
+                trend: "$HCl < HBr < HF < HI$ (MPs: $-114°C, -86°C, -83.6°C, -50°C$)",
+                logic: "MP order is **different** from BP order. In MP, $HI$ wins because Van der Waals forces (size/mass) dominate the solid lattice, and HI is the heaviest. $HF$ comes second due to H-bonding. $HBr$ and $HCl$ are lower (lighter, no H-bonding). Compare with BP: $HF > HI > HBr > HCl$ — in the liquid state, H-bonding overrides Van der Waals, lifting HF above HI. Both anomalies are JEE/NEET favourites."
+            },
+            {
+                id: 63,
+                title: "Oxidising Power of Halogen Oxoacids",
+                trend: "$HClO > HClO_2 > HClO_3 > HClO_4$",
+                logic: "**Inverse of acidity!** $HClO$ has Cl in +1 oxidation state with a single, easily-released O — kinetically reactive, generates nascent oxygen and hypochlorite readily. $HClO_4$ has Cl in +7 OS but is so resonance-stabilised that it's kinetically reluctant to oxidise. So while $HClO_4 > HClO_3 > HClO_2 > HClO$ in *acid strength*, oxidising power follows the reverse. This switch is a classic JEE/NEET trap — students who memorise only acid order get the oxidiser question wrong."
             }
         ]
     },

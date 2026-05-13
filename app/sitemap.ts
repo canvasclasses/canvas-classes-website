@@ -13,7 +13,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { path: '/about', priority: 0.7, changeFrequency: 'monthly' as const },
         { path: '/blog', priority: 0.9, changeFrequency: 'daily' as const },
         { path: '/detailed-lectures', priority: 0.9, changeFrequency: 'weekly' as const },
-        { path: '/cbse-12-ncert-revision', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/cbse-class-10', priority: 0.8, changeFrequency: 'monthly' as const },
         { path: '/cbse-class-11', priority: 0.8, changeFrequency: 'monthly' as const },
         { path: '/cbse-class-12', priority: 0.8, changeFrequency: 'monthly' as const },
@@ -301,6 +300,78 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Error fetching blog slugs for sitemap:', error);
     }
 
+    // ── JEE Main PYQ pages — /jee-main-pyqs/... ──────────────────────────────
+    // Public SEO route mirroring the Crucible JEE Main chemistry PYQs. Static
+    // pages, no auth, slug-based URLs. The export script regenerates the
+    // underlying JSON; this block emits the URLs for whatever's in that data.
+    let jeeMainPyqEntries: MetadataRoute.Sitemap = [];
+    try {
+        const { getManifest } = await import('./lib/jee-main-pyqs/data');
+        const manifest = getManifest();
+        // Hub
+        jeeMainPyqEntries.push({
+            url: `${BASE_URL}/jee-main-pyqs`,
+            lastModified: new Date(manifest.generatedAt),
+            changeFrequency: 'weekly' as const,
+            priority: 0.9,
+        });
+        // Subject hub
+        jeeMainPyqEntries.push({
+            url: `${BASE_URL}/jee-main-pyqs/chemistry`,
+            lastModified: new Date(manifest.generatedAt),
+            changeFrequency: 'weekly' as const,
+            priority: 0.9,
+        });
+        for (const ch of manifest.chapters) {
+            if (ch.questionCount === 0) continue;
+            // Chapter index
+            jeeMainPyqEntries.push({
+                url: `${BASE_URL}/jee-main-pyqs/chemistry/${ch.slug}`,
+                lastModified: new Date(manifest.generatedAt),
+                changeFrequency: 'weekly' as const,
+                priority: 0.85,
+            });
+            // Individual questions
+            for (const slug of ch.questionSlugs) {
+                jeeMainPyqEntries.push({
+                    url: `${BASE_URL}/jee-main-pyqs/chemistry/${ch.slug}/${slug}`,
+                    lastModified: new Date(manifest.generatedAt),
+                    changeFrequency: 'monthly' as const,
+                    priority: 0.7,
+                });
+            }
+        }
+    } catch (error) {
+        console.error('Error loading JEE Main PYQ manifest for sitemap:', error);
+    }
+
+    // ── Chemistry Quiz pages — /quiz/chemistry/[slug] ─────────────────────────
+    // Phase 2 GEO target: AI-engine prompts like "create a quiz on inorganic
+    // exceptions". Each slug is a static curated quiz module under
+    // app/lib/quizzes/. Adding a new quiz means dropping a new entry into
+    // CHEMISTRY_QUIZZES — the sitemap picks it up automatically.
+    let chemistryQuizEntries: MetadataRoute.Sitemap = [];
+    try {
+        const { CHEMISTRY_QUIZZES_ORDERED } = await import('./lib/quizzes');
+        // Hub page first, then individual quizzes.
+        chemistryQuizEntries.push({
+            url: `${BASE_URL}/quiz/chemistry`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.9,
+        });
+        for (const q of CHEMISTRY_QUIZZES_ORDERED) {
+            chemistryQuizEntries.push({
+                url: `${BASE_URL}/quiz/chemistry/${q.slug}`,
+                lastModified: new Date(q.dateModified),
+                changeFrequency: 'monthly' as const,
+                priority: 0.85,
+            });
+        }
+    } catch (error) {
+        console.error('Error loading chemistry quizzes for sitemap:', error);
+    }
+
     // ── NCERT Solutions: per-chapter pages (Class 11 & 12 Chemistry) ─────────
     // High-intent SEO target — "NCERT solutions class 12 chemistry chapter X".
     let ncertChapterEntries: MetadataRoute.Sitemap = [];
@@ -336,6 +407,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ...jeePyqEntries,
         ...blogEntries,
         ...ncertChapterEntries,
+        ...chemistryQuizEntries,
+        ...jeeMainPyqEntries,
     ];
 }
 

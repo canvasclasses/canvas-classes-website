@@ -42,11 +42,19 @@ export default function QuestionnaireClient({ profileId }: { profileId: string }
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch('/api/v2/career-explorer/questions');
-        const data = await res.json();
+        // Parallel fetch: question list + this profile's existing responses.
+        // Hydrating answers from the server is what lets a student refresh
+        // the page mid-quiz (or come back later) without their progress
+        // appearing to vanish.
+        const [qRes, pRes] = await Promise.all([
+          fetch('/api/v2/career-explorer/questions'),
+          fetch(`/api/v2/career-explorer/profiles/${profileId}`),
+        ]);
+        const qData = await qRes.json();
+        const pData = pRes.ok ? await pRes.json() : null;
         if (cancelled) return;
-        const items: Question[] = data.items ?? [];
-        // Order by dimension order then by question order
+
+        const items: Question[] = qData.items ?? [];
         const dimIdx = new Map(DIMENSION_ORDER.map((d, i) => [d, i]));
         items.sort((a, b) => {
           const da = dimIdx.get(a.dimension) ?? 99;
@@ -55,12 +63,27 @@ export default function QuestionnaireClient({ profileId }: { profileId: string }
           return a.order - b.order;
         });
         setQuestions(items);
+
+        // Hydrate previous answers, if any.
+        type SavedResponse = { question_id: string; option_id?: string };
+        const saved: SavedResponse[] = pData?.profile?.responses ?? [];
+        if (saved.length > 0) {
+          const restored: Record<string, string> = {};
+          for (const r of saved) {
+            if (r.option_id) restored[r.question_id] = r.option_id;
+          }
+          setAnswers(restored);
+          // Resume at the first unanswered question, or stay at the end if
+          // everything is already answered.
+          const firstUnansweredIdx = items.findIndex((q) => !restored[q._id]);
+          setIdx(firstUnansweredIdx === -1 ? items.length - 1 : firstUnansweredIdx);
+        }
       } finally {
         if (!cancelled) setLoading(false);
       }
     })();
     return () => { cancelled = true; };
-  }, []);
+  }, [profileId]);
 
   const total = questions.length;
   const current = questions[idx];
@@ -131,7 +154,13 @@ export default function QuestionnaireClient({ profileId }: { profileId: string }
   }
 
   const onLast = idx === total - 1;
-  const allAnswered = questions.every((q) => answers[q._id]);
+  const answeredCount = Object.keys(answers).length;
+  // Submit is enabled if every question has a local answer, OR if the user
+  // has answered "almost all" of them — the matcher will still produce
+  // useful results, and we don't want a single forgotten or transient-failed
+  // save to trap a student on the last screen.
+  const allAnswered = answeredCount >= total;
+  const allowSubmit = allAnswered || (total > 0 && answeredCount / total >= 0.9);
 
   return (
     <main className="min-h-screen bg-[#050505] text-white">
@@ -191,7 +220,8 @@ export default function QuestionnaireClient({ profileId }: { profileId: string }
           {onLast ? (
             <button
               onClick={submit}
-              disabled={!allAnswered || submitting}
+              disabled={!allowSubmit || submitting}
+              title={!allowSubmit ? `Answered ${answeredCount} of ${total} — answer the rest first` : undefined}
               className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-2 font-bold text-black transition hover:brightness-110 disabled:opacity-50"
             >
               {submitting ? (<><Loader2 className="h-4 w-4 animate-spin" /> Matching…</>) : (<>See my matches <ArrowRight className="h-4 w-4" /></>)}

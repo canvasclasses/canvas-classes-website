@@ -134,15 +134,8 @@ export default function ComingSoonTemplate({
                         <p className="text-slate-500 mb-4">Meanwhile, explore our Class 12 resources:</p>
                         <div className="flex flex-wrap justify-center gap-4">
                             <Link
-                                href="/cbse-12-ncert-revision"
-                                className={`inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r ${gradientFrom} ${gradientTo} text-white font-semibold rounded-xl hover:opacity-90 transition-opacity`}
-                            >
-                                <BookOpen className="w-5 h-5" />
-                                Class 12 Revision
-                            </Link>
-                            <Link
                                 href="/chemistry-flashcards"
-                                className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/5 transition-colors"
+                                className={`inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r ${gradientFrom} ${gradientTo} text-white font-semibold rounded-xl hover:opacity-90 transition-opacity`}
                             >
                                 <Sparkles className="w-5 h-5" />
                                 Flashcards

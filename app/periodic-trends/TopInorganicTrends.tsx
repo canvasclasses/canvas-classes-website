@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { inorganicTrendsData } from '@/app/lib/inorganicTrendsData';
-import { BookOpen, Trophy, Sparkles, Lightbulb, ChevronDown, Hash, X } from 'lucide-react';
+import { BookOpen, Trophy, Sparkles, Lightbulb, ChevronDown, Hash, X, Target, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
@@ -460,6 +461,19 @@ export default function TopInorganicTrends() {
                     <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-lg">
                         Directly from the notes of toppers. Master these trends to secure easy marks in JEE, NEET & BITSAT.
                     </p>
+
+                    {/* Small CTA — quiz first, then come back to read the text */}
+                    <div className="mt-5 flex justify-center">
+                        <a
+                            href="#inorganic-exceptions-quiz-cta"
+                            className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-300 text-xs md:text-sm font-medium hover:bg-orange-500/20 hover:border-orange-500/50 transition-colors"
+                        >
+                            <Target size={13} className="md:w-3.5 md:h-3.5" />
+                            <span>Want to practice first?</span>
+                            <span className="text-orange-400 underline underline-offset-2 group-hover:no-underline">Take the 30-question quiz</span>
+                            <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+                        </a>
+                    </div>
                 </div>
 
                 {/* Coach's Corner */}
@@ -546,6 +560,54 @@ export default function TopInorganicTrends() {
                             </div>
                         );
                     })}
+                </div>
+
+                {/* ── Inorganic Exceptions Quiz CTA — anchored from the top pill ── */}
+                <div id="inorganic-exceptions-quiz-cta" className="mt-12 md:mt-16 scroll-mt-24">
+                    <Link
+                        href="/quiz/chemistry/inorganic-exceptions"
+                        className="group block relative overflow-hidden rounded-2xl border border-orange-500/30 bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-transparent p-6 md:p-10 hover:border-orange-500/60 hover:from-orange-500/15 transition-all"
+                    >
+                        {/* Decorative blur */}
+                        <div className="absolute -top-20 -right-20 w-72 h-72 bg-orange-500/10 rounded-full blur-3xl group-hover:bg-orange-500/20 transition-colors pointer-events-none" />
+                        <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+
+                        <div className="relative flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
+                            <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/30">
+                                <Target className="w-7 h-7 md:w-8 md:h-8 text-black" strokeWidth={2.5} />
+                            </div>
+
+                            <div className="flex-1 min-w-0">
+                                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-300 text-[10px] md:text-xs font-semibold uppercase tracking-wider mb-2">
+                                    <Sparkles size={11} />
+                                    Test Yourself
+                                </div>
+                                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 leading-tight">
+                                    Inorganic Exceptions Quiz —{' '}
+                                    <span className="bg-gradient-to-r from-orange-300 to-amber-300 bg-clip-text text-transparent">
+                                        30 JEE/NEET questions
+                                    </span>
+                                </h3>
+                                <p className="text-sm md:text-base text-gray-400 leading-relaxed mb-4 max-w-2xl">
+                                    Every question is built from the trends above — periodic anomalies, inert pair effect, back bonding, lanthanoid contraction. Each one comes with the correct answer and a full examiner-style explanation. Free, no login, takes ~15 minutes.
+                                </p>
+
+                                <div className="flex flex-wrap items-center gap-3">
+                                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 text-black text-sm md:text-base font-bold shadow-lg shadow-orange-500/20 group-hover:shadow-orange-500/40 group-hover:scale-[1.02] transition-all">
+                                        Start the quiz
+                                        <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+                                    </span>
+                                    <div className="flex items-center gap-3 text-xs text-gray-500">
+                                        <span>30 MCQs</span>
+                                        <span className="text-gray-700">·</span>
+                                        <span>4 options each</span>
+                                        <span className="text-gray-700">·</span>
+                                        <span>Class 11 + 12</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
                 </div>
             </div>
         </section>

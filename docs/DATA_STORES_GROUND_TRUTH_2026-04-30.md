@@ -120,9 +120,11 @@ Supabase data **cannot be lost via code/JSON deletion** — it lives in Supabase
 | `/top-50-concepts` | `app/lib/top50Data.ts` | `2PACX-1vROr0CSkT819WUG7aHXg6d4b3Z3ssffDfY2dI…` |
 | `/organic-name-reactions` | `app/lib/organicReactionsData.ts` | `2PACX-1vQt0C9TmgzGjxeHEgSt7BKKmGO32NObfCE0M8…` |
 | `/assertion-reason` | `app/lib/assertionReasonData.ts` | `2PACX-1vRtx7-9Pe9s9lo3ZMfSRma3h-Rzredg0tbMUx…` |
-| `/cbse-12-ncert-revision` | `app/lib/revisionData.ts` (3 sheets: chapters, topics, flashcards) | `2PACX-1vRPlWVZDTRtknmy6zXFuwzrm…` + 2 more |
+| `/chemistry-flashcards` (sitemap + `/chemistry-questions`) | `app/lib/revisionData.ts` (flashcards sheet only) | `2PACX-1vToP-1ka1fN88OCt814c56-7Etbpg9lAjMdkn…` |
 
-That's **at least 12 distinct sheets** powering ~10 indexable routes. Plus `app/lib/flashcardsData.ts` and `app/lib/samplePapersData.ts` (not yet inspected) likely use the same pattern.
+> The `/cbse-12-ncert-revision` page that previously consumed two additional sheets (chapters, topics) was removed; only the flashcards sheet is still in use.
+
+That's **at least 11 distinct sheets** powering ~10 indexable routes. Plus `app/lib/flashcardsData.ts` and `app/lib/samplePapersData.ts` (not yet inspected) likely use the same pattern.
 
 ### What this means for risk
 
