@@ -18,7 +18,6 @@ import { getToolCardForSlug } from './toolCardConfig';
 import ChapterHero from './ChapterHero';
 import CrucibleHeroRail from './CrucibleHeroRail';
 import ChapterTopicTOC from './ChapterTopicTOC';
-import TeacherCard from './TeacherCard';
 import NextChapterCard from './NextChapterCard';
 import { getChapterCrucibleStats, getTopicQuestionCounts } from './chapterStats.server';
 
@@ -306,27 +305,27 @@ export default async function ChapterNotesPage({
                         );
                     })()}
 
-                    {/* What's inside · N topics — TOC sourced from the canonical
-                        taxonomy with live PYQ counts per topic. */}
+                    {/* Crucible coverage by primary concept — counts come from
+                        the Crucible question bank (questions_v2), grouped by the
+                        primary tag of each question. Heading is explicit about the
+                        data source so students know this isn't a notes-coverage
+                        index — it's the bank they'll practice from. */}
                     {meta.crucibleChapterId && (
                         <section className="mb-12">
-                            <h2 className="mb-4 font-mono text-[13px] font-semibold uppercase tracking-[0.12em] text-zinc-400">
-                                What&apos;s inside
-                            </h2>
+                            <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
+                                <h2 className="font-mono text-[13px] font-semibold uppercase tracking-[0.12em] text-zinc-400">
+                                    Crucible Question Bank · By Concept
+                                </h2>
+                                <span className="hidden sm:inline text-[11px] text-zinc-600">
+                                    Total questions · PYQs tagged to each primary concept
+                                </span>
+                            </div>
                             <ChapterTopicTOC
                                 crucibleChapterId={meta.crucibleChapterId}
                                 topicCounts={topicCounts}
                             />
                         </section>
                     )}
-
-                    {/* Written by — single author for now (Paaras Sir). */}
-                    <section className="mb-12">
-                        <h2 className="mb-4 font-mono text-[13px] font-semibold uppercase tracking-[0.12em] text-zinc-400">
-                            Written by
-                        </h2>
-                        <TeacherCard />
-                    </section>
 
                     {/* Read alongside NCERT — chapter-specific deep links into
                         the textbook PDF and the solutions hub. Only renders when
