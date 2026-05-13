@@ -154,7 +154,7 @@ export default function CrucibleQuestionCarousel({
                         marginBottom: 12,
                     }}
                 >
-                    <MathRenderer markdown={truncate(q.body, 220)} fontSize={14} />
+                    <MathRenderer markdown={truncate(q.body, 160)} fontSize={14} />
                 </div>
                 <div style={{ display: 'grid', gap: 6 }}>
                     {q.options.slice(0, 4).map((opt, i) => {

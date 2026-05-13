@@ -173,23 +173,38 @@ export async function getTopicQuestionCounts(chapterId: string): Promise<TopicQu
     }
 }
 
+// Source-length threshold above which a question body is unlikely to render
+// compactly in the 380px-fixed carousel card. Used as a soft filter — we
+// prefer candidates under this threshold, but fall back to the full pool if
+// not enough qualify.
+const MAX_BODY_CHARS_FOR_CAROUSEL = 200;
+
+function bodyOf(doc: Record<string, unknown>): string {
+    return (doc.question_text as { markdown?: string })?.markdown ?? '';
+}
+
 // Approximate rendered height (in arbitrary "units") for a question doc, so
-// we can compare relative sizes. Captures the three main height contributors:
-//   1. Question body length (after the carousel's 220-char truncation cap)
-//   2. Number of options (each renders ~40px tall)
-//   3. Total length of option text (multi-line wraps add 16-18px each)
+// we can compare relative sizes. Captures four main height contributors:
+//   1. Question body length (capped at MAX_BODY_CHARS_FOR_CAROUSEL)
+//   2. Equation density (\ce{}, →, \frac{}) — each render taller than plain
+//      text of the same source length
+//   3. Number of options (each renders ~40px tall)
+//   4. Total length of option text (multi-line wraps add 16-18px each)
 // Calibration is rough but consistent — only relative comparison matters.
 function approxHeight(doc: Record<string, unknown>): number {
-    const body = ((doc.question_text as { markdown?: string })?.markdown ?? '');
-    const truncatedBodyLen = Math.min(body.length, 220);
+    const body = bodyOf(doc);
+    const truncatedBodyLen = Math.min(body.length, MAX_BODY_CHARS_FOR_CAROUSEL);
+    // Each chemistry-formula / arrow / fraction in source markdown renders as
+    // a math block that's notably taller than the same number of plain chars.
+    const eqCount = (body.match(/\\ce\{|->|\\rightarrow|\\frac/g) ?? []).length;
     const options = Array.isArray(doc.options) ? doc.options : [];
     const optChars = options.reduce(
         (s, o) => s + String((o as { text?: string })?.text ?? '').length,
         0
     );
-    // Coefficients: body ≈ 1 unit per 6 chars, opt ≈ 1 unit per 4 chars,
-    // each option ≈ 12 units base.
-    return Math.round(truncatedBodyLen / 6 + optChars / 4 + options.length * 12);
+    return Math.round(
+        truncatedBodyLen / 6 + eqCount * 6 + optChars / 4 + options.length * 12
+    );
 }
 
 // From the over-fetched candidate pool, pick `size` questions whose heights
@@ -208,7 +223,17 @@ function pickSimilarHeights<T extends Record<string, unknown>>(
 ): T[] {
     if (pool.length <= size) return pool;
 
-    const annotated = pool.map((doc, rank) => ({ doc, rank, h: approxHeight(doc) }));
+    // First narrow to short-bodied candidates. Bodies above
+    // MAX_BODY_CHARS_FOR_CAROUSEL chars tend to overflow the 380px card even
+    // when truncated — especially when they open with a chemistry-equation
+    // block (renders as a multi-line math fragment). Fall back to the full
+    // pool only when too few short-bodied candidates exist to pick `size`.
+    const shortBodied = pool.filter(
+        (doc) => bodyOf(doc).length <= MAX_BODY_CHARS_FOR_CAROUSEL
+    );
+    const effectivePool = shortBodied.length >= size ? shortBodied : pool;
+
+    const annotated = effectivePool.map((doc, rank) => ({ doc, rank, h: approxHeight(doc) }));
     const byHeight = [...annotated].sort((a, b) => a.h - b.h);
 
     let bestStart = 0;
