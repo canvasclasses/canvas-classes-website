@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight, Check } from 'lucide-react';
-import QuestionMarkdown from '../../lib/jee-main-pyqs/QuestionMarkdown';
+import MathRenderer from '../../crucible/admin/components/MathRenderer';
 import type { ChapterCrucibleStats } from './chapterStats.server';
 
 // Sticky right-rail Crucible CTA in the chapter hero. Replaces the old
@@ -95,12 +95,15 @@ export default function CrucibleHeroRail({ chapterId, chapterName, stats }: Prop
                         )}
                         <span className="ml-auto">Sample · {sampleDemo.display_id}</span>
                     </div>
-                    <div className="mb-2 text-[12px] leading-snug text-zinc-100 [&_p]:my-0">
-                        <QuestionMarkdown>
-                            {sampleDemo.questionMarkdown.length > 220
-                                ? sampleDemo.questionMarkdown.slice(0, 220) + '…'
-                                : sampleDemo.questionMarkdown}
-                        </QuestionMarkdown>
+                    <div className="mb-2 text-zinc-100" style={{ fontSize: 13, lineHeight: 1.55 }}>
+                        <MathRenderer
+                            markdown={
+                                sampleDemo.questionMarkdown.length > 220
+                                    ? sampleDemo.questionMarkdown.slice(0, 220) + '…'
+                                    : sampleDemo.questionMarkdown
+                            }
+                            fontSize={13}
+                        />
                     </div>
                     {sampleDemo.options.length > 0 && (
                         <div className="grid gap-1">
@@ -122,10 +125,8 @@ export default function CrucibleHeroRail({ chapterId, chapterName, stats }: Prop
                                         >
                                             {opt.id}
                                         </span>
-                                        <span className="flex-1">
-                                            <span className="[&_p]:my-0">
-                                                <QuestionMarkdown>{opt.text}</QuestionMarkdown>
-                                            </span>
+                                        <span className="flex-1" style={{ fontSize: 12.5, lineHeight: 1.5 }}>
+                                            <MathRenderer markdown={opt.text} fontSize={12.5} />
                                         </span>
                                         {isCorrect && (
                                             <Check size={11} className="mt-0.5 shrink-0 text-teal-300" />

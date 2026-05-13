@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Check, CheckCircle2, ExternalLink, Lightbulb, Loader2, X, XCircle } from 'lucide-react';
-import QuestionMarkdown from '../../lib/jee-main-pyqs/QuestionMarkdown';
+import MathRenderer from '../../crucible/admin/components/MathRenderer';
 
 // Shape returned by /api/v2/notes-quicktest/[chapterId]. Mirrors the route's
 // QuickTestQuestion type. Kept in sync manually — both are small.
@@ -221,15 +221,20 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
                 </div>
             </div>
 
-            {/* Body — scrollable */}
-            <div className="flex-1 overflow-y-auto px-4 py-4">
-                <div className="text-[13.5px] leading-relaxed text-zinc-100">
-                    <QuestionMarkdown>{current.question_text.markdown}</QuestionMarkdown>
+            {/* Body — scrollable. Typography mirrors the canonical Crucible
+                question card (AdaptiveQuestionCard) so the demo feels indistinguishable
+                from the paid product: 17px question / 15px options with 1.7 line-height
+                and the same MathRenderer that handles \ce{} chemistry macros. */}
+            <div className="flex-1 overflow-y-auto px-5 py-5">
+                <div className="mb-5 text-white" style={{ fontSize: 17, lineHeight: 1.7 }}>
+                    <MathRenderer markdown={current.question_text.markdown} fontSize={17} />
                 </div>
 
-                {/* Options (SCQ/MCQ/AR). NVT-only render in future if needed. */}
+                {/* Options (SCQ/MCQ/AR). NVT-only render in future if needed.
+                    Sizing/colors mirror Crucible's AdaptiveQuestionCard: 14×18 padding,
+                    12px radius, 15px option text, 24×24 badge with 6px radius. */}
                 {current.options.length > 0 && (
-                    <ul className="mt-4 space-y-2">
+                    <ul className="flex flex-col gap-2.5">
                         {current.options.map((opt) => {
                             const isSel = selected.has(opt.id);
                             const isCorrect = opt.is_correct;
@@ -240,14 +245,19 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
                             //   not selected + correct (missed) → green outline (hint)
                             //   not selected + wrong → muted
                             let cls = 'border-white/10 bg-white/[0.02] hover:border-orange-500/40 hover:bg-orange-500/[0.04]';
+                            let badgeCls = 'bg-white/10 text-zinc-300';
                             if (showState && isSel && isCorrect) {
                                 cls = 'border-emerald-500/50 bg-emerald-500/10';
+                                badgeCls = 'bg-emerald-500 text-emerald-950';
                             } else if (showState && isSel && !isCorrect) {
                                 cls = 'border-rose-500/50 bg-rose-500/10';
+                                badgeCls = 'bg-rose-500 text-rose-950';
                             } else if (showState && !isSel && isCorrect) {
-                                cls = 'border-emerald-500/30 bg-emerald-500/[0.04]';
+                                cls = 'border-emerald-500/40 bg-emerald-500/[0.06]';
+                                badgeCls = 'bg-emerald-500/30 text-emerald-200';
                             } else if (isSel) {
                                 cls = 'border-orange-500/50 bg-orange-500/[0.08]';
+                                badgeCls = 'bg-orange-500 text-orange-950';
                             }
                             return (
                                 <li key={opt.id}>
@@ -255,20 +265,26 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
                                         type="button"
                                         onClick={() => toggleOption(opt.id)}
                                         disabled={submitted}
-                                        className={`flex w-full items-start gap-3 rounded-lg border px-3 py-2.5 text-left text-[13px] leading-relaxed text-zinc-200 transition-all ${cls} ${submitted ? 'cursor-default' : 'cursor-pointer'}`}
+                                        className={`flex w-full items-center gap-3 rounded-xl border text-left text-white transition-all ${cls} ${submitted ? 'cursor-default' : 'cursor-pointer'}`}
+                                        style={{ padding: '14px 18px' }}
                                     >
-                                        <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white/15 text-[10px] font-bold uppercase">
-                                            {opt.id}
+                                        <span
+                                            className={`inline-flex shrink-0 items-center justify-center rounded-md font-bold uppercase ${badgeCls}`}
+                                            style={{ width: 24, height: 24, fontSize: 11 }}
+                                        >
+                                            {showState && isSel && isCorrect ? <Check size={12} /> :
+                                             showState && isSel && !isCorrect ? <X size={12} /> :
+                                             opt.id.toUpperCase()}
                                         </span>
-                                        <span className="flex-1">
-                                            <QuestionMarkdown>{opt.text}</QuestionMarkdown>
+                                        <span
+                                            className="flex-1"
+                                            style={{
+                                                fontSize: 15,
+                                                color: showState && !isSel && !isCorrect ? 'rgba(255,255,255,0.4)' : '#fff',
+                                            }}
+                                        >
+                                            <MathRenderer markdown={opt.text} fontSize={15} />
                                         </span>
-                                        {showState && isSel && isCorrect && (
-                                            <Check size={14} className="mt-0.5 text-emerald-400" />
-                                        )}
-                                        {showState && isSel && !isCorrect && (
-                                            <X size={14} className="mt-0.5 text-rose-400" />
-                                        )}
                                     </button>
                                 </li>
                             );
@@ -308,12 +324,12 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
 
                 {/* Solution (revealed on submit) */}
                 {showSolution && current.solution.text_markdown && (
-                    <div className="mt-4 rounded-lg border border-orange-500/20 bg-orange-500/[0.04] p-3">
-                        <div className="mb-2 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-orange-300">
+                    <div className="mt-5 rounded-xl border border-orange-500/20 bg-orange-500/[0.04] p-4">
+                        <div className="mb-2.5 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-orange-300">
                             <Lightbulb size={12} /> Solution
                         </div>
-                        <div className="text-[13px] leading-relaxed text-zinc-200">
-                            <QuestionMarkdown>{current.solution.text_markdown}</QuestionMarkdown>
+                        <div className="text-zinc-100" style={{ fontSize: 15, lineHeight: 1.7 }}>
+                            <MathRenderer markdown={current.solution.text_markdown} fontSize={15} />
                         </div>
                     </div>
                 )}
