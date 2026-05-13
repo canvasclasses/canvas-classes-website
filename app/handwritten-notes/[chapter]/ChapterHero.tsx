@@ -83,13 +83,10 @@ export default function ChapterHero({ meta, notes, crucibleStats }: Props) {
                     {meta.leadParagraph}
                 </p>
 
-                {/* Stats strip — 4 real data tiles */}
-                <ChapterStatsStrip notes={notes} stats={crucibleStats} />
-
                 {/* Soft non-numeric trust strip. The design's version had
                     fabricated "42,108 students" + "4.92 stars" counts — replaced
                     with honest signals that don't claim specific numbers. */}
-                <div className="mb-2 mt-4 flex flex-wrap items-center justify-between gap-3 rounded-full border border-white/[0.07] bg-white/[0.02] px-5 py-2.5 text-[12.5px] text-zinc-400">
+                <div className="mb-2 mt-2 flex flex-wrap items-center justify-between gap-3 rounded-full border border-white/[0.07] bg-white/[0.02] px-5 py-2.5 text-[12.5px] text-zinc-400">
                     <div className="flex items-center gap-2.5">
                         <span className="inline-flex">
                             <span className="-ml-0 inline-block h-5 w-5 rounded-full border-2 border-gray-950 bg-violet-400" />
@@ -125,59 +122,3 @@ export default function ChapterHero({ meta, notes, crucibleStats }: Props) {
     );
 }
 
-// ── Stats strip ──────────────────────────────────────────────────────────
-// 4 tiles, all data-driven (no fabricated counts):
-//   PDFs              — count of handwritten note PDFs
-//   PYQs Tagged       — count of PYQ-source questions in the chapter
-//   Weightage         — approximate % of JEE Main PYQs (chapter share within class)
-//   Difficulty        — Easy / Medium / Hard from mean difficultyLevel
-function ChapterStatsStrip({
-    notes,
-    stats,
-}: {
-    notes: HandwrittenNote[];
-    stats: ChapterCrucibleStats;
-}) {
-    type Tile = { label: string; value: string; hint: string };
-    const tiles: Tile[] = [];
-    tiles.push({ label: 'PDFs', value: String(notes.length), hint: notes.length === 1 ? 'in this chapter' : 'PDFs in chapter' });
-    if (stats.totalPublished > 0) {
-        tiles.push({ label: 'PYQs Tagged', value: String(stats.pyqCount), hint: 'JEE + NEET' });
-    }
-    if (stats.weightagePct !== null) {
-        tiles.push({ label: 'Weightage', value: String(stats.weightagePct), hint: '% in JEE' });
-    }
-    if (stats.difficultyLabel) {
-        const initial = stats.difficultyLabel[0];
-        tiles.push({ label: 'Difficulty', value: initial, hint: stats.difficultyLabel.slice(1).toLowerCase() });
-    }
-
-    if (tiles.length === 0) return null;
-
-    // Use 4 columns when we have 4 tiles, otherwise scale down. Mobile stays 2 cols.
-    const colsCls = tiles.length >= 4 ? 'sm:grid-cols-2 md:grid-cols-4' : tiles.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2';
-
-    return (
-        <div className={`mb-2 grid grid-cols-2 overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.015] ${colsCls}`}>
-            {tiles.map((tile, i) => (
-                <div
-                    key={tile.label}
-                    className={`px-5 py-4 ${
-                        // Border logic: separators between tiles, never on the right of the last column.
-                        i > 0 ? 'border-t border-white/[0.07] sm:border-l sm:border-t-0' : ''
-                    }`}
-                >
-                    <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-500">
-                        {tile.label}
-                    </div>
-                    <div className="mt-1 flex items-baseline gap-1.5">
-                        <span className="text-[22px] font-semibold tracking-tight text-white">
-                            {tile.value}
-                        </span>
-                        <span className="text-[12px] text-zinc-500">{tile.hint}</span>
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
-}
