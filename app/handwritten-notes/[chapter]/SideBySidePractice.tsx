@@ -41,6 +41,32 @@ function difficultyLabel(level: number): { label: string; cls: string } {
     return { label: 'Hard', cls: 'bg-rose-500/15 text-rose-300 border-rose-500/30' };
 }
 
+// NVT correctness — matches the canonical check in AdaptiveQuestionCard.
+//   - integer_value: exact equality
+//   - decimal_value: within `tolerance` (defaults to 0.01)
+function isNvtCorrect(q: QuickTestQuestion, inputStr: string): boolean {
+    if (!q.answer) return false;
+    const v = parseFloat(inputStr);
+    if (Number.isNaN(v)) return false;
+    if (typeof q.answer.integer_value === 'number') {
+        return v === q.answer.integer_value;
+    }
+    if (typeof q.answer.decimal_value === 'number') {
+        const tol = q.answer.tolerance ?? 0.01;
+        return Math.abs(v - q.answer.decimal_value) <= tol;
+    }
+    return false;
+}
+
+// Stringified canonical answer for the "Correct: 9.8" hint after a wrong NVT submit.
+function nvtCorrectAnswerLabel(q: QuickTestQuestion): string | null {
+    if (!q.answer) return null;
+    const unit = q.answer.unit ? ` ${q.answer.unit}` : '';
+    if (typeof q.answer.integer_value === 'number') return `${q.answer.integer_value}${unit}`;
+    if (typeof q.answer.decimal_value === 'number') return `${q.answer.decimal_value}${unit}`;
+    return null;
+}
+
 export default function SideBySidePractice({ chapterId, chapterName }: Props) {
     const [data, setData] = useState<QuickTestQuestion[] | null>(null);
     const [loading, setLoading] = useState(true);
@@ -53,6 +79,8 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
     const [selectedByIdx, setSelectedByIdx] = useState<Record<number, Set<string>>>({});
     const [submittedByIdx, setSubmittedByIdx] = useState<Record<number, boolean>>({});
     const [showSolutionByIdx, setShowSolutionByIdx] = useState<Record<number, boolean>>({});
+    // NVT numerical inputs — separate from selectedByIdx since they're free-form text.
+    const [nvtInputByIdx, setNvtInputByIdx] = useState<Record<number, string>>({});
 
     useEffect(() => {
         let cancelled = false;
@@ -88,6 +116,8 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
     const selected = selectedByIdx[idx] ?? new Set<string>();
     const submitted = !!submittedByIdx[idx];
     const showSolution = !!showSolutionByIdx[idx];
+    const nvtInput = nvtInputByIdx[idx] ?? '';
+    const isNvt = current?.type === 'NVT';
 
     const answeredCount = useMemo(
         () => Object.keys(submittedByIdx).filter((k) => submittedByIdx[Number(k)]).length,
@@ -116,8 +146,12 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
         });
     }
 
+    // True when the student has provided something to submit. NVT requires
+    // a non-empty input; choice questions require ≥1 selected option.
+    const canSubmit = isNvt ? nvtInput.trim().length > 0 : selected.size > 0;
+
     function submitAnswer() {
-        if (selected.size === 0) return;
+        if (!canSubmit) return;
         setSubmittedByIdx((p) => ({ ...p, [idx]: true }));
         setShowSolutionByIdx((p) => ({ ...p, [idx]: true }));
     }
@@ -175,8 +209,12 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
     if (allAnswered && idx === total - 1 && submitted) {
         const correctCount = (data ?? []).reduce((acc, q, qIdx) => {
             if (!submittedByIdx[qIdx]) return acc;
+            if (q.type === 'NVT') {
+                return isNvtCorrect(q, nvtInputByIdx[qIdx] ?? '') ? acc + 1 : acc;
+            }
             const sel = selectedByIdx[qIdx] ?? new Set<string>();
             const correctIds = q.options.filter((o) => o.is_correct).map((o) => o.id);
+            if (correctIds.length === 0) return acc; // safety: ignore questions with no defined correct
             const allRight =
                 sel.size === correctIds.length && correctIds.every((c) => sel.has(c));
             return allRight ? acc + 1 : acc;
@@ -198,8 +236,11 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
     const correctIds = current.options.filter((o) => o.is_correct).map((o) => o.id);
     const isFullyCorrect =
         submitted &&
-        selected.size === correctIds.length &&
-        correctIds.every((c) => selected.has(c));
+        (isNvt
+            ? isNvtCorrect(current, nvtInput)
+            : correctIds.length > 0 &&
+              selected.size === correctIds.length &&
+              correctIds.every((c) => selected.has(c)));
 
     return (
         <div className="flex h-full flex-col bg-slate-950">
@@ -292,17 +333,67 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
                     </ul>
                 )}
 
+                {/* NVT numerical input — only for NVT questions, mirrors Crucible's
+                    AdaptiveQuestionCard pattern. Enter to submit; after submit shows
+                    "Your answer / Correct" row in green or rose. */}
+                {isNvt && !submitted && (
+                    <div className="mt-2 flex items-stretch gap-2.5">
+                        <input
+                            type="text"
+                            inputMode="decimal"
+                            value={nvtInput}
+                            onChange={(e) =>
+                                setNvtInputByIdx((p) => ({ ...p, [idx]: e.target.value }))
+                            }
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') submitAnswer();
+                            }}
+                            placeholder="Enter answer…"
+                            className="flex-1 rounded-xl border border-white/[0.12] bg-white/[0.03] text-white outline-none transition-colors focus:border-orange-500/50"
+                            style={{ padding: '14px 18px', fontSize: 16, fontWeight: 600 }}
+                        />
+                    </div>
+                )}
+                {isNvt && submitted && (
+                    <div
+                        className={`mt-2 flex flex-wrap items-center gap-3 rounded-xl border px-4 py-3 ${
+                            isFullyCorrect
+                                ? 'border-emerald-500/30 bg-emerald-500/[0.08]'
+                                : 'border-rose-500/30 bg-rose-500/[0.08]'
+                        }`}
+                    >
+                        <span className="text-[13px] text-zinc-400">Your answer:</span>
+                        <span
+                            className="text-[16px] font-bold"
+                            style={{ color: isFullyCorrect ? '#34d399' : '#f87171' }}
+                        >
+                            {nvtInput || '—'}
+                        </span>
+                        {!isFullyCorrect && nvtCorrectAnswerLabel(current) && (
+                            <>
+                                <span className="text-[13px] text-zinc-500">Correct:</span>
+                                <span className="text-[16px] font-bold text-emerald-400">
+                                    {nvtCorrectAnswerLabel(current)}
+                                </span>
+                            </>
+                        )}
+                    </div>
+                )}
+
                 {/* Submit / verdict row */}
                 {!submitted ? (
                     <button
                         type="button"
                         onClick={submitAnswer}
-                        disabled={selected.size === 0}
+                        disabled={!canSubmit}
                         className="mt-4 w-full rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-2.5 text-sm font-bold text-black transition-all hover:from-orange-400 hover:to-amber-400 disabled:cursor-not-allowed disabled:from-zinc-700 disabled:to-zinc-700 disabled:text-zinc-500"
                     >
                         Check answer
                     </button>
                 ) : (
+                    // For NVT, the green/rose answer row above already gives the verdict;
+                    // hide the redundant verdict pill in that case.
+                    !isNvt && (
                     <div
                         className={`mt-4 flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-semibold ${
                             isFullyCorrect
@@ -319,7 +410,7 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
                                 <XCircle size={16} /> Not quite — check the solution below
                             </>
                         )}
-                    </div>
+                    </div>)
                 )}
 
                 {/* Solution (revealed on submit) */}
