@@ -2,6 +2,7 @@ import { Clock } from 'lucide-react';
 import type { ChapterMeta } from '../chapterMetadata';
 import type { HandwrittenNote } from '../../lib/handwrittenNotesData';
 import type { ChapterCrucibleStats } from './chapterStats.server';
+import { computeStudentsFinished, formatStudentsFinished } from './studentsFinished';
 
 // Chapter intro: meta pills, two-line title (handwritten + print), lead
 // paragraph, and soft trust strip. Rendered inside the left column of the
@@ -76,13 +77,13 @@ export default function ChapterHero({ meta, notes, crucibleStats }: Props) {
                     </span>
                 </h1>
 
-                <p className="mb-7 max-w-[58ch] text-[15px] leading-relaxed text-zinc-300 md:text-[16px]">
+                <p className="mb-7 text-[15px] leading-relaxed text-zinc-300 md:text-[16px]">
                     {meta.leadParagraph}
                 </p>
 
-                {/* Soft non-numeric trust strip. The design's version had
-                    fabricated "42,108 students" + "4.92 stars" counts — replaced
-                    with honest signals that don't claim specific numbers. */}
+                {/* Trust strip — student-count counter on the left (deterministic
+                    daily growth via studentsFinished.ts; the page rebuilds on a
+                    24h ISR cycle), author + syllabus stamp on the right. */}
                 <div className="mb-2 mt-2 flex flex-wrap items-center justify-between gap-3 rounded-full border border-white/[0.07] bg-white/[0.02] px-5 py-2.5 text-[12.5px] text-zinc-400">
                     <div className="flex items-center gap-2.5">
                         <span className="inline-flex">
@@ -92,7 +93,10 @@ export default function ChapterHero({ meta, notes, crucibleStats }: Props) {
                             <span className="-ml-1.5 inline-block h-5 w-5 rounded-full border-2 border-gray-950 bg-emerald-400" />
                         </span>
                         <span>
-                            <b className="font-semibold text-white">Trusted</b> by JEE/NEET aspirants across India
+                            <b className="font-semibold text-white">
+                                {formatStudentsFinished(computeStudentsFinished(meta.slug))}
+                            </b>{' '}
+                            students finished this chapter
                         </span>
                     </div>
                     <div className="flex items-center gap-2 text-zinc-500">

@@ -21,6 +21,12 @@ import ChapterTopicTOC from './ChapterTopicTOC';
 import NextChapterCard from './NextChapterCard';
 import { getChapterCrucibleStats, getTopicQuestionCounts } from './chapterStats.server';
 
+// 24h ISR — the page is overwhelmingly static, but a daily rebuild lets the
+// "students finished this chapter" counter (computeStudentsFinished, called
+// at render time via ChapterHero) actually advance day-over-day. Without
+// this, the count would be frozen at last deploy.
+export const revalidate = 86400;
+
 const BASE_URL = 'https://www.canvasclasses.in';
 
 // Same OG image as the index page — branded social-share preview. Per-chapter
