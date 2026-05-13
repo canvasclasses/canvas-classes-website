@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
-import { revalidateTag } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import connectToDatabase from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
 import { Chapter } from '@/lib/models/Chapter';
@@ -181,6 +181,28 @@ export async function PATCH(
       // populated on PATCH. Reads fall back to examBoard via the bridge in
       // actions.ts only for older docs. Phase 4 will drop legacy fields.
 
+      // Demo-question quality gate. Flipping is_demo_question to true requires
+      // a real solution: ≥200 chars of solution.text_markdown and
+      // latex_validated=true. This prevents low-quality questions from leaking
+      // into the side-by-side practice panel (which is effectively a Crucible
+      // demo for handwritten-notes readers).
+      const wasDemo = (existing.metadata as Record<string, unknown>)?.is_demo_question === true;
+      const willBeDemo = merged.is_demo_question === true;
+      if (!wasDemo && willBeDemo) {
+        const sol = (existing.solution ?? {}) as { text_markdown?: string; latex_validated?: boolean };
+        const solText = (sol.text_markdown ?? '').trim();
+        if (solText.length < 200 || sol.latex_validated !== true) {
+          return NextResponse.json(
+            {
+              success: false,
+              error: 'Cannot mark as demo: solution must be at least 200 characters and latex-validated.',
+              hint: `Current: ${solText.length} chars, latex_validated=${sol.latex_validated === true}.`,
+            },
+            { status: 400 }
+          );
+        }
+      }
+
       updates.metadata = merged;
     }
     
@@ -291,6 +313,20 @@ export async function PATCH(
 
     // Bust the questions cache so the edit is visible to students immediately
     revalidateTag('questions');
+
+    // If this is (or was) a demo question, also bust the notes-quicktest cache
+    // so the side-by-side practice panel reflects the change. Covers: flag flip
+    // either direction, and edits to question_text / options / solution on a
+    // doc that's currently flagged demo.
+    const wasDemoFinal = (existingQuestion.metadata as Record<string, unknown>)?.is_demo_question === true;
+    const isDemoFinal = (updatedQuestion.metadata as Record<string, unknown>)?.is_demo_question === true;
+    if (wasDemoFinal || isDemoFinal) {
+      const chapterId = (updatedQuestion.metadata as { chapter_id?: string })?.chapter_id;
+      if (chapterId) {
+        revalidatePath(`/api/v2/notes-quicktest/${chapterId}`);
+        revalidateTag(`notes-quicktest:${chapterId}`);
+      }
+    }
 
     return NextResponse.json({
       success: true,

@@ -102,7 +102,13 @@ export interface IQuestionMetadata {
     question_number?: string;
   };
   is_pyq?: boolean;      // DEPRECATED: Use sourceType instead
-  is_top_pyq?: boolean;  // DEPRECATED: Will be replaced by quality_score or tags
+  is_top_pyq?: boolean;  // KEEP — drives "Top Questions" practice mode (admin star-mark)
+  is_demo_question?: boolean;  // KEEP — drives the side-by-side practice panel on the
+                                // handwritten-notes chapter pages. A curated, frozen set
+                                // (~20–30 per chapter) that represents Crucible quality.
+                                // Toggled by admin in the question editor. The
+                                // /api/v2/notes-quicktest/[chapterId] endpoint reads
+                                // this flag with edge caching.
 }
 
 export interface IQuestionFlag {
@@ -262,7 +268,9 @@ const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
   },
   // DEPRECATED fields (kept for backward compatibility)
   is_pyq: { type: Boolean, default: false },
-  is_top_pyq: { type: Boolean, default: false }
+  is_top_pyq: { type: Boolean, default: false },
+  // Curated demo flag — drives the side-by-side practice panel.
+  is_demo_question: { type: Boolean, default: false }
 }, { _id: false });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -389,6 +397,7 @@ const QuestionSchema = new Schema<IQuestion>({
 QuestionSchema.index({ display_id: 1 }, { unique: true });
 QuestionSchema.index({ 'metadata.chapter_id': 1, status: 1, deleted_at: 1 });
 QuestionSchema.index({ 'metadata.chapter_id': 1, 'metadata.is_top_pyq': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.chapter_id': 1, 'metadata.is_demo_question': 1, deleted_at: 1 }); // notes-quicktest endpoint
 QuestionSchema.index({ 'metadata.chapter_id': 1, display_id: 1, deleted_at: 1 }); // getAdjacentQuestions range scan
 QuestionSchema.index({ 'metadata.tags.tag_id': 1 });
 QuestionSchema.index({ status: 1, created_at: -1 });

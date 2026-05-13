@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, MonitorPlay, AlertTriangle, BookOpen, Eye, Sparkles, CheckSquare, Square, BarChart3, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2, Library, Info, Volume2, ChevronDown, ChevronUp, Shield } from 'lucide-react';
+import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, MonitorPlay, AlertTriangle, BookOpen, Eye, Sparkles, CheckSquare, Square, BarChart3, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2, Library, Info, Volume2, ChevronDown, ChevronUp, Shield, Bookmark } from 'lucide-react';
 // uuid removed — display_id is now generated inline
 import AnalyticsDashboard from './AnalyticsDashboard';
 import ExportDashboard from './components/ExportDashboard';
@@ -71,6 +71,7 @@ interface Question {
         };
         is_pyq?: boolean;        // LEGACY — Phase 2 stopped writing this; bridge in actions.ts derives it from sourceType
         is_top_pyq?: boolean;    // KEEP — drives Top Questions feature
+        is_demo_question?: boolean;  // KEEP — drives the side-by-side practice panel on /handwritten-notes/[chapter]
         source_id?: string;
         microConcept?: string;
         isMultiConcept?: boolean;
@@ -1575,7 +1576,7 @@ function AdminPageContent() {
                                     >
                                         <Sparkles size={10} /> {aiAnalyzing ? '…' : 'AI Tags'}
                                     </button>
-                                    {/* Star */}
+                                    {/* Star — Top PYQ */}
                                     <div className="flex flex-col items-center">
                                         <button onClick={() => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, is_top_pyq: !selectedQuestion.metadata.is_top_pyq } })}
                                             className={`p-1.5 rounded transition ${selectedQuestion.metadata.is_top_pyq ? 'bg-amber-500/20 text-amber-400' : 'bg-gray-800/50 text-gray-500 hover:text-amber-400'}`} title="Top PYQ">
@@ -1583,6 +1584,18 @@ function AdminPageContent() {
                                         </button>
                                         <span className="text-[9px] font-mono text-amber-400/70 leading-none">
                                             {questions.filter(q => q.metadata.is_top_pyq && q.metadata.chapter_id === selectedQuestion.metadata.chapter_id).length}
+                                        </span>
+                                    </div>
+                                    {/* Bookmark — Demo Question (drives /handwritten-notes side-by-side practice).
+                                        Quality gate enforced server-side on save: solution must have ≥200 chars
+                                        of text_markdown and latex_validated=true (see /api/v2/questions/[id]/route.ts). */}
+                                    <div className="flex flex-col items-center">
+                                        <button onClick={() => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, is_demo_question: !selectedQuestion.metadata.is_demo_question } })}
+                                            className={`p-1.5 rounded transition ${selectedQuestion.metadata.is_demo_question ? 'bg-orange-500/20 text-orange-400' : 'bg-gray-800/50 text-gray-500 hover:text-orange-400'}`} title="Demo Question (side-by-side practice on /handwritten-notes)">
+                                            <Bookmark size={14} fill={selectedQuestion.metadata.is_demo_question ? "currentColor" : "none"} />
+                                        </button>
+                                        <span className="text-[9px] font-mono text-orange-400/70 leading-none">
+                                            {questions.filter(q => q.metadata.is_demo_question && q.metadata.chapter_id === selectedQuestion.metadata.chapter_id).length}
                                         </span>
                                     </div>
                                     <button onClick={() => setFlagModalOpen(true)}
