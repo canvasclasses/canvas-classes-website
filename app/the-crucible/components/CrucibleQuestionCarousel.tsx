@@ -86,7 +86,7 @@ export default function CrucibleQuestionCarousel({
                 style={{
                     position: 'relative',
                     width: '100%',
-                    minHeight: 380,
+                    minHeight: 340,
                     display: 'flex',
                     flexDirection: 'column',
                     padding: '18px 18px 14px',

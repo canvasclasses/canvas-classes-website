@@ -19,12 +19,17 @@ import ChapterHero from './ChapterHero';
 import CrucibleHeroRail from './CrucibleHeroRail';
 import ChapterTopicTOC from './ChapterTopicTOC';
 import NextChapterCard from './NextChapterCard';
-import { getChapterCrucibleStats, getTopicQuestionCounts } from './chapterStats.server';
+import ViewTracker from './ViewTracker';
+import {
+    getChapterCrucibleStats,
+    getTopicQuestionCounts,
+    getChapterViewCount,
+} from './chapterStats.server';
 
 // 24h ISR — the page is overwhelmingly static, but a daily rebuild lets the
-// "students finished this chapter" counter (computeStudentsFinished, called
-// at render time via ChapterHero) actually advance day-over-day. Without
-// this, the count would be frozen at last deploy.
+// "Read by X JEE/NEET aspirants" counter (real visit count read from the
+// chapter_views collection at render time) actually advance. Without this,
+// the count would be frozen at last deploy.
 export const revalidate = 86400;
 
 const BASE_URL = 'https://www.canvasclasses.in';
@@ -218,13 +223,14 @@ export default async function ChapterNotesPage({
         .map((slug) => getChapterMetaBySlug(slug))
         .filter((c): c is ChapterMeta => Boolean(c));
 
-    // Fetch real Crucible stats (server-side, build-time) so the hero rail,
-    // stats strip, and topic TOC all render with live numbers. Both helpers
-    // tolerate Mongo being unreachable and fall back to empty results — the
-    // hero degrades to the chapter intro alone in that case.
-    const [crucibleStats, topicCounts] = await Promise.all([
+    // Fetch real Crucible stats + topic counts + per-chapter view count in
+    // parallel (server-side, build-time). All three helpers tolerate Mongo
+    // being unreachable and fall back to empty/zero — the hero degrades to
+    // the chapter intro + non-numeric trust line in that case.
+    const [crucibleStats, topicCounts, viewCount] = await Promise.all([
         getChapterCrucibleStats(meta.crucibleChapterId || ''),
         getTopicQuestionCounts(meta.crucibleChapterId || ''),
+        getChapterViewCount(meta.slug),
     ]);
 
     return (
@@ -255,15 +261,22 @@ export default async function ChapterNotesPage({
                         on the right. Eliminates the empty space that appeared
                         between the trust strip and the next section when the rail
                         was taller than the intro alone. */}
-                    <div className="mb-12 grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
+                    <div className="mb-12 grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_460px]">
                         <div className="min-w-0">
                             <header className="mb-10">
                                 <ChapterHero
                                     meta={meta}
                                     notes={chapterNotes}
                                     crucibleStats={crucibleStats}
+                                    viewCount={viewCount}
                                 />
                             </header>
+
+                            {/* Fire-and-forget view increment. Renders nothing —
+                                deduped per session client-side; the count the
+                                hero shows is the SERVER-side aggregate from
+                                this counter. */}
+                            <ViewTracker chapterSlug={meta.slug} />
 
                             {/* Notes available */}
                             <section>

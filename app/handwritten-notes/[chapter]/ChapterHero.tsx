@@ -2,7 +2,6 @@ import { Clock } from 'lucide-react';
 import type { ChapterMeta } from '../chapterMetadata';
 import type { HandwrittenNote } from '../../lib/handwrittenNotesData';
 import type { ChapterCrucibleStats } from './chapterStats.server';
-import { computeStudentsFinished, formatStudentsFinished } from './studentsFinished';
 
 // Chapter intro: meta pills, two-line title (handwritten + print), lead
 // paragraph, and soft trust strip. Rendered inside the left column of the
@@ -20,9 +19,16 @@ interface Props {
     meta: ChapterMeta;
     notes: HandwrittenNote[];
     crucibleStats: ChapterCrucibleStats;
+    /** Real per-chapter visit count from the ChapterView collection. */
+    viewCount: number;
 }
 
-export default function ChapterHero({ meta, notes, crucibleStats }: Props) {
+// Threshold below which we suppress the numeric count and fall back to a
+// non-numeric trust line — keeps brand-new chapters from showing "47 students"
+// before they accumulate real traffic.
+const VIEW_COUNT_FLOOR = 500;
+
+export default function ChapterHero({ meta, notes, crucibleStats, viewCount }: Props) {
     return (
         <div className="min-w-0">
                 {/* Meta pills */}
@@ -92,12 +98,19 @@ export default function ChapterHero({ meta, notes, crucibleStats }: Props) {
                             <span className="-ml-1.5 inline-block h-5 w-5 rounded-full border-2 border-gray-950 bg-amber-400" />
                             <span className="-ml-1.5 inline-block h-5 w-5 rounded-full border-2 border-gray-950 bg-emerald-400" />
                         </span>
-                        <span>
-                            <b className="font-semibold text-white">
-                                {formatStudentsFinished(computeStudentsFinished(meta.slug))}
-                            </b>{' '}
-                            students finished this chapter
-                        </span>
+                        {viewCount >= VIEW_COUNT_FLOOR ? (
+                            <span>
+                                Read by{' '}
+                                <b className="font-semibold text-white">
+                                    {viewCount.toLocaleString('en-US')}
+                                </b>{' '}
+                                JEE/NEET aspirants
+                            </span>
+                        ) : (
+                            <span>
+                                <b className="font-semibold text-white">Trusted</b> by JEE/NEET aspirants across India
+                            </span>
+                        )}
                     </div>
                     <div className="flex items-center gap-2 text-zinc-500">
                         <span className="text-amber-400" style={{ letterSpacing: '-1px' }}>★★★★★</span>

@@ -9,6 +9,7 @@ import 'server-only';
 import connectToDatabase from '@/lib/mongodb';
 import mongoose from 'mongoose';
 import { QuestionV2 } from '@/lib/models/Question.v2';
+import { ChapterView } from '@/lib/models/ChapterView';
 
 // What the chapter hero + rail need server-side.
 export interface ChapterCrucibleStats {
@@ -262,4 +263,23 @@ function formatExam(exam: string, year: number): string {
         .replace(/^NEET[_\s]*PG$/i, 'NEET PG')
         .replace(/_/g, ' ');
     return `${normalised} ${year}`;
+}
+
+// Real per-chapter visit count for the trust strip. Reads the
+// chapter_views collection (incremented by ViewTracker on each unique
+// browser session). Defensive: returns 0 if Mongo is unreachable or the
+// chapter has no rows yet — caller decides what to render at low counts.
+export async function getChapterViewCount(chapterSlug: string): Promise<number> {
+    if (!chapterSlug) return 0;
+    try {
+        await connectToDatabase();
+        const doc = (await ChapterView.findById(chapterSlug)
+            .select({ count: 1 })
+            .lean()
+            .exec()) as unknown as { count?: number } | null;
+        return doc?.count ?? 0;
+    } catch (err) {
+        console.warn(`[chapterStats] view-count lookup failed for ${chapterSlug}:`, err);
+        return 0;
+    }
 }
