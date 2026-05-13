@@ -1,0 +1,142 @@
+[
+  {
+    "_id": "9ef417ca-9695-4ca0-9440-6fc347bfa2eb",
+    "display_id": "CK-143",
+    "chapterId": "ch12_kinetics",
+    "oldTags": [
+      {
+        "tag_id": "tag_ck_2",
+        "weight": 1
+      }
+    ],
+    "newTags": [
+      {
+        "tag_id": "tag_kinetics_2",
+        "weight": 1
+      }
+    ],
+    "renames": [
+      "tag_ck_2 → tag_kinetics_2"
+    ]
+  },
+  {
+    "_id": "b64a3952-035f-4cea-b271-962d82cf2de4",
+    "display_id": "CK-145",
+    "chapterId": "ch12_kinetics",
+    "oldTags": [
+      {
+        "tag_id": "tag_ck_2",
+        "weight": 1
+      }
+    ],
+    "newTags": [
+      {
+        "tag_id": "tag_kinetics_2",
+        "weight": 1
+      }
+    ],
+    "renames": [
+      "tag_ck_2 → tag_kinetics_2"
+    ]
+  },
+  {
+    "_id": "162a5109-3cb9-4b3a-8c17-836153322f87",
+    "display_id": "CK-146",
+    "chapterId": "ch12_kinetics",
+    "oldTags": [
+      {
+        "tag_id": "tag_ck_3",
+        "weight": 1
+      }
+    ],
+    "newTags": [
+      {
+        "tag_id": "tag_kinetics_3",
+        "weight": 1
+      }
+    ],
+    "renames": [
+      "tag_ck_3 → tag_kinetics_3"
+    ]
+  },
+  {
+    "_id": "6b6cde4e-da94-4491-8818-85accce6f285",
+    "display_id": "EC-147",
+    "chapterId": "ch12_electrochem",
+    "oldTags": [
+      {
+        "tag_id": "tag_elec_1",
+        "weight": 1
+      }
+    ],
+    "newTags": [
+      {
+        "tag_id": "tag_electrochem_1",
+        "weight": 1
+      }
+    ],
+    "renames": [
+      "tag_elec_1 → tag_electrochem_1"
+    ]
+  },
+  {
+    "_id": "90bf92f1-8b75-4a15-8d2a-9eab78e05265",
+    "display_id": "EC-146",
+    "chapterId": "ch12_electrochem",
+    "oldTags": [
+      {
+        "tag_id": "tag_elec_3",
+        "weight": 1
+      }
+    ],
+    "newTags": [
+      {
+        "tag_id": "tag_electrochem_3",
+        "weight": 1
+      }
+    ],
+    "renames": [
+      "tag_elec_3 → tag_electrochem_3"
+    ]
+  },
+  {
+    "_id": "9f4ece57-db9d-4695-9626-d12d6d6ccb51",
+    "display_id": "SOL-157",
+    "chapterId": "ch12_solutions",
+    "oldTags": [
+      {
+        "tag_id": "tag_sol_3",
+        "weight": 1
+      }
+    ],
+    "newTags": [
+      {
+        "tag_id": "tag_solutions_3",
+        "weight": 1
+      }
+    ],
+    "renames": [
+      "tag_sol_3 → tag_solutions_3"
+    ]
+  },
+  {
+    "_id": "50b6d525-9d73-4da5-9bfd-882f510428d7",
+    "display_id": "SOL-158",
+    "chapterId": "ch12_solutions",
+    "oldTags": [
+      {
+        "tag_id": "tag_sol_4",
+        "weight": 1
+      }
+    ],
+    "newTags": [
+      {
+        "tag_id": "tag_solutions_4",
+        "weight": 1
+      }
+    ],
+    "renames": [
+      "tag_sol_4 → tag_solutions_4"
+    ]
+  }
+]
