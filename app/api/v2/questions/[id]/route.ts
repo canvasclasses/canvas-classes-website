@@ -192,11 +192,14 @@ export async function PATCH(
         const sol = (existing.solution ?? {}) as { text_markdown?: string; latex_validated?: boolean };
         const solText = (sol.text_markdown ?? '').trim();
         if (solText.length < 200 || sol.latex_validated !== true) {
+          // Generic error — internal state (current char count, validation
+          // flag) intentionally not echoed back per §8.5. The admin UI knows
+          // the constraint and can self-diagnose by looking at the question
+          // editor.
           return NextResponse.json(
             {
               success: false,
               error: 'Cannot mark as demo: solution must be at least 200 characters and latex-validated.',
-              hint: `Current: ${solText.length} chars, latex_validated=${sol.latex_validated === true}.`,
             },
             { status: 400 }
           );

@@ -72,15 +72,18 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Per-question state: selected option ids (Set), and whether the user has
-    // "submitted" their answer (revealing correctness + solution).
-    // Indexed by question position so navigating preserves what the student saw.
+    // Per-question state, keyed by display_id (NOT array position). If the
+    // chapter's demo set is edited in the admin while a student has the
+    // session open and the API revalidates, position-keyed state would
+    // silently attach to whatever question moved into that slot — confusing
+    // at best, wrong-answer-marking at worst. display_id is stable across
+    // re-fetches.
     const [idx, setIdx] = useState(0);
-    const [selectedByIdx, setSelectedByIdx] = useState<Record<number, Set<string>>>({});
-    const [submittedByIdx, setSubmittedByIdx] = useState<Record<number, boolean>>({});
-    const [showSolutionByIdx, setShowSolutionByIdx] = useState<Record<number, boolean>>({});
-    // NVT numerical inputs — separate from selectedByIdx since they're free-form text.
-    const [nvtInputByIdx, setNvtInputByIdx] = useState<Record<number, string>>({});
+    const [selectedById, setSelectedById] = useState<Record<string, Set<string>>>({});
+    const [submittedById, setSubmittedById] = useState<Record<string, boolean>>({});
+    const [showSolutionById, setShowSolutionById] = useState<Record<string, boolean>>({});
+    // NVT numerical inputs — free-form text, separate from option selections.
+    const [nvtInputById, setNvtInputById] = useState<Record<string, string>>({});
 
     useEffect(() => {
         let cancelled = false;
@@ -113,16 +116,20 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
 
     const total = data?.length ?? 0;
     const current = data && data[idx];
-    const selected = selectedByIdx[idx] ?? new Set<string>();
-    const submitted = !!submittedByIdx[idx];
-    const showSolution = !!showSolutionByIdx[idx];
-    const nvtInput = nvtInputByIdx[idx] ?? '';
+    const currentId = current?.display_id ?? '';
+    const selected = selectedById[currentId] ?? new Set<string>();
+    const submitted = !!submittedById[currentId];
+    const showSolution = !!showSolutionById[currentId];
+    const nvtInput = nvtInputById[currentId] ?? '';
     const isNvt = current?.type === 'NVT';
 
-    const answeredCount = useMemo(
-        () => Object.keys(submittedByIdx).filter((k) => submittedByIdx[Number(k)]).length,
-        [submittedByIdx]
-    );
+    // Count submissions where the question still exists in the current data
+    // set — protects against stale state lingering after a re-fetch.
+    const answeredCount = useMemo(() => {
+        if (!data) return 0;
+        const present = new Set(data.map((q) => q.display_id));
+        return Object.keys(submittedById).filter((id) => present.has(id) && submittedById[id]).length;
+    }, [submittedById, data]);
 
     // Show CTA after every CTA_INTERVAL submitted answers (1-indexed thresholds:
     // 5, 10, 15…). Hide once they've answered all the questions — final CTA
@@ -131,18 +138,18 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
         answeredCount > 0 && answeredCount % CTA_INTERVAL === 0 && answeredCount < total;
 
     function toggleOption(optId: string) {
-        if (submitted) return;
-        setSelectedByIdx((prev) => {
-            const cur = new Set(prev[idx] ?? []);
-            if (!current) return prev;
+        if (submitted || !current) return;
+        const key = current.display_id;
+        setSelectedById((prev) => {
+            const cur = new Set(prev[key] ?? []);
             if (current.type === 'SCQ' || current.type === 'AR') {
                 // Single-select: replace
-                return { ...prev, [idx]: new Set([optId]) };
+                return { ...prev, [key]: new Set([optId]) };
             }
             // MCQ multi-select: toggle
             if (cur.has(optId)) cur.delete(optId);
             else cur.add(optId);
-            return { ...prev, [idx]: cur };
+            return { ...prev, [key]: cur };
         });
     }
 
@@ -151,9 +158,9 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
     const canSubmit = isNvt ? nvtInput.trim().length > 0 : selected.size > 0;
 
     function submitAnswer() {
-        if (!canSubmit) return;
-        setSubmittedByIdx((p) => ({ ...p, [idx]: true }));
-        setShowSolutionByIdx((p) => ({ ...p, [idx]: true }));
+        if (!canSubmit || !currentId) return;
+        setSubmittedById((p) => ({ ...p, [currentId]: true }));
+        setShowSolutionById((p) => ({ ...p, [currentId]: true }));
     }
 
     function nextQuestion() {
@@ -207,12 +214,13 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
     // ── Wrap-up screen — after the last question, replace the panel ────────
     const allAnswered = answeredCount >= total;
     if (allAnswered && idx === total - 1 && submitted) {
-        const correctCount = (data ?? []).reduce((acc, q, qIdx) => {
-            if (!submittedByIdx[qIdx]) return acc;
+        const correctCount = (data ?? []).reduce((acc, q) => {
+            const key = q.display_id;
+            if (!submittedById[key]) return acc;
             if (q.type === 'NVT') {
-                return isNvtCorrect(q, nvtInputByIdx[qIdx] ?? '') ? acc + 1 : acc;
+                return isNvtCorrect(q, nvtInputById[key] ?? '') ? acc + 1 : acc;
             }
-            const sel = selectedByIdx[qIdx] ?? new Set<string>();
+            const sel = selectedById[key] ?? new Set<string>();
             const correctIds = q.options.filter((o) => o.is_correct).map((o) => o.id);
             if (correctIds.length === 0) return acc; // safety: ignore questions with no defined correct
             const allRight =
@@ -343,7 +351,7 @@ export default function SideBySidePractice({ chapterId, chapterName }: Props) {
                             inputMode="decimal"
                             value={nvtInput}
                             onChange={(e) =>
-                                setNvtInputByIdx((p) => ({ ...p, [idx]: e.target.value }))
+                                currentId && setNvtInputById((p) => ({ ...p, [currentId]: e.target.value }))
                             }
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') submitAnswer();

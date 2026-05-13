@@ -128,7 +128,20 @@ export async function GET(
 
     const data = await getDemoQuestionsForChapter(chapterId);
 
-    return NextResponse.json({ success: true, ...data });
+    // Explicit CDN cache header — without this, Vercel treats route-handler
+    // responses as no-store regardless of the `revalidate` directive above
+    // (which only governs Next.js's internal data cache). At scale this is
+    // the difference between "0 origin hits per minute" and "every visitor
+    // hits Mongo." stale-while-revalidate=604800 means edge can serve a
+    // 7-day-old copy while quietly refreshing in the background.
+    return NextResponse.json(
+        { success: true, ...data },
+        {
+            headers: {
+                'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=604800',
+            },
+        }
+    );
   } catch (error) {
     console.error('Error fetching notes quicktest:', error);
     return NextResponse.json(
