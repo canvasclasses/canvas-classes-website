@@ -1,0 +1,395 @@
+{
+  "chapterId": "ch11_periodic",
+  "target": 25,
+  "eligible": 252,
+  "proposed": 25,
+  "generatedAt": "2026-05-13T11:35:06.735Z",
+  "questions": [
+    {
+      "_id": "9e0b4c8d-56f5-4234-8895-e2ba7e931b63",
+      "display_id": "PERI-343",
+      "tag_id": "tag_periodic_1",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2025 +30",
+        "sol 1070c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "805c1e34-65a5-4868-9b48-e447834be4de",
+      "display_id": "PERI-029",
+      "tag_id": "tag_periodic_2",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 180,
+      "score_reasons": [
+        "Top PYQ +100",
+        "PYQ +50",
+        "sol 1014c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "7c8bfa44-3fe5-47dc-b265-ad638ed4c41f",
+      "display_id": "PERI-050",
+      "tag_id": "tag_periodic_3",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "MST",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 1194c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "65a9c6e7-035d-47be-82a6-1f5590270383",
+      "display_id": "PERI-040",
+      "tag_id": "tag_periodic_4",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 200,
+      "score_reasons": [
+        "Top PYQ +100",
+        "PYQ +50",
+        "2022 +20",
+        "sol 1133c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "888e0789-3d95-4bb0-a244-c0919906eae4",
+      "display_id": "PERI-072",
+      "tag_id": "tag_periodic_5",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 80,
+      "score_reasons": [
+        "PYQ +50",
+        "sol 1114c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "2583888b-2583-4f7d-be9d-b16891920287",
+      "display_id": "PERI-011",
+      "tag_id": "tag_periodic_6",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 80,
+      "score_reasons": [
+        "PYQ +50",
+        "sol 811c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "4b6eb269-9786-4180-8958-ed1974e8f0bc",
+      "display_id": "PERI-106",
+      "tag_id": "tag_periodic_7",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "Practice",
+      "score": 30,
+      "score_reasons": [
+        "sol 992c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "88fb813f-339a-4e09-86b2-0d0713118e7a",
+      "display_id": "PERI-012",
+      "tag_id": "tag_periodic_1",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 80,
+      "score_reasons": [
+        "PYQ +50",
+        "sol 388c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "49488c78-3e47-4ab6-a60a-e755601a172a",
+      "display_id": "PERI-031",
+      "tag_id": "tag_periodic_2",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 160,
+      "score_reasons": [
+        "Top PYQ +100",
+        "PYQ +50",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "66136ddd-ebea-46d6-90e2-ab86f5354519",
+      "display_id": "PERI-142",
+      "tag_id": "tag_periodic_3",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2025 +30",
+        "sol 1071c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "6612ba6b-05de-460a-af8b-12222864cf23",
+      "display_id": "PERI-120",
+      "tag_id": "tag_periodic_4",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "SCQ",
+      "sourceType": "Practice",
+      "score": 30,
+      "score_reasons": [
+        "sol 914c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "c7d5a2ba-ddda-4087-87c9-e5e97398e493",
+      "display_id": "PERI-207",
+      "tag_id": "tag_periodic_5",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "SCQ",
+      "sourceType": "Practice",
+      "score": 30,
+      "score_reasons": [
+        "sol 613c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "83b18fd3-1c67-41f0-a464-ae8020978347",
+      "display_id": "PERI-041",
+      "tag_id": "tag_periodic_6",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "NVT",
+      "sourceType": "PYQ",
+      "score": 180,
+      "score_reasons": [
+        "Top PYQ +100",
+        "PYQ +50",
+        "2024 +30"
+      ]
+    },
+    {
+      "_id": "da9f62b6-bdce-45fa-a0e5-dac0abe1f6e8",
+      "display_id": "PERI-172",
+      "tag_id": "tag_periodic_7",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "NVT",
+      "sourceType": "PYQ",
+      "score": 70,
+      "score_reasons": [
+        "PYQ +50",
+        "sol 729c +20"
+      ]
+    },
+    {
+      "_id": "a047ce41-1fda-480f-a8ba-06abe084fbc4",
+      "display_id": "PERI-001",
+      "tag_id": "tag_periodic_1",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 200,
+      "score_reasons": [
+        "Top PYQ +100",
+        "PYQ +50",
+        "2023 +20",
+        "sol 749c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "1a66c92a-01d3-4364-a560-7ff2bee2984d",
+      "display_id": "PERI-015",
+      "tag_id": "tag_periodic_2",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "MST",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 462c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "e166b9e1-dada-4abe-8464-3538dc895a1b",
+      "display_id": "PERI-018",
+      "tag_id": "tag_periodic_3",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "MST",
+      "sourceType": "PYQ",
+      "score": 210,
+      "score_reasons": [
+        "Top PYQ +100",
+        "PYQ +50",
+        "2024 +30",
+        "sol 883c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "673307e3-ea12-4eee-8aae-42a96fad111c",
+      "display_id": "PERI-103",
+      "tag_id": "tag_periodic_1",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "SCQ",
+      "sourceType": "Practice",
+      "score": 130,
+      "score_reasons": [
+        "Top PYQ +100",
+        "sol 903c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "bf7449d1-1eb0-4e08-9fe1-e7d3c12a5348",
+      "display_id": "PERI-222",
+      "tag_id": "tag_periodic_2",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "SCQ",
+      "sourceType": "Practice",
+      "score": 30,
+      "score_reasons": [
+        "sol 801c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "aa1999c2-bb15-4c08-8adf-2eeeb4ba73cd",
+      "display_id": "PERI-053",
+      "tag_id": "tag_periodic_3",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 200,
+      "score_reasons": [
+        "Top PYQ +100",
+        "PYQ +50",
+        "2023 +20",
+        "sol 1071c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "ad3204bb-da85-4d8f-9399-06b551abd267",
+      "display_id": "PERI-204",
+      "tag_id": "tag_periodic_1",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "SCQ",
+      "sourceType": "Practice",
+      "score": 30,
+      "score_reasons": [
+        "sol 1167c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "f3593bc9-6a29-4e70-a49c-c45ea0428682",
+      "display_id": "PERI-059",
+      "tag_id": "tag_periodic_3",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 180,
+      "score_reasons": [
+        "Top PYQ +100",
+        "PYQ +50",
+        "2023 +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "aca13efa-0732-404e-80d6-8dd22cfc82e6",
+      "display_id": "PERI-208",
+      "tag_id": "tag_periodic_1",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "SCQ",
+      "sourceType": "Practice",
+      "score": 30,
+      "score_reasons": [
+        "sol 673c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "794bdd08-16d7-4c02-a374-44dbfa8dd5c5",
+      "display_id": "PERI-014",
+      "tag_id": "tag_periodic_3",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "MST",
+      "sourceType": "PYQ",
+      "score": 210,
+      "score_reasons": [
+        "Top PYQ +100",
+        "PYQ +50",
+        "2024 +30",
+        "sol 1093c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "cf2f50be-c84a-4ce0-a99b-6a727fffd56a",
+      "display_id": "PERI-101",
+      "tag_id": "tag_periodic_3",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 200,
+      "score_reasons": [
+        "Top PYQ +100",
+        "PYQ +50",
+        "2022 +20",
+        "sol 300c +20",
+        "4 opts +10"
+      ]
+    }
+  ]
+}

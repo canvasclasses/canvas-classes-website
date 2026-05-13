@@ -1,0 +1,400 @@
+{
+  "chapterId": "ch12_solutions",
+  "target": 25,
+  "eligible": 200,
+  "proposed": 25,
+  "generatedAt": "2026-05-13T11:35:07.365Z",
+  "questions": [
+    {
+      "_id": "165e9a72-43e7-4ef3-bcb9-7bff4117e57e",
+      "display_id": "SOL-105",
+      "tag_id": "tag_solutions_1",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 80,
+      "score_reasons": [
+        "PYQ +50",
+        "sol 718c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "32f61d4a-ec49-49d1-ad37-8a1e85956c36",
+      "display_id": "SOL-088",
+      "tag_id": "tag_solutions_2",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 100,
+      "score_reasons": [
+        "PYQ +50",
+        "2023 +20",
+        "sol 903c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "263884ee-4da9-4765-bec4-44030135d75f",
+      "display_id": "SOL-013",
+      "tag_id": "tag_solutions_3",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 500c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "47dc35c1-6833-40ff-84c6-ee81d7f9d787",
+      "display_id": "SOL-001",
+      "tag_id": "tag_solutions_4",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 727c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "d7205ed9-2c43-464e-a8d6-43f4160f9dd1",
+      "display_id": "SOL-016",
+      "tag_id": "tag_solutions_5",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 520c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "c8857eca-1b25-4bf5-ab8b-a6c36e73027d",
+      "display_id": "SOL-080",
+      "tag_id": "tag_solutions_6",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 830c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "112c6352-2a7b-4b05-9ce6-5ce3fe3f20b5",
+      "display_id": "SOL-136",
+      "tag_id": "tag_solutions_7",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2025 +30",
+        "sol 427c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "22287e43-72e0-465b-85ca-aed6fc8b0ce4",
+      "display_id": "SOL-138",
+      "tag_id": "tag_solutions_1",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2025 +30",
+        "sol 544c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "b89e0b9f-c89b-4976-8849-da607f025161",
+      "display_id": "SOL-139",
+      "tag_id": "tag_solutions_2",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2025 +30",
+        "sol 729c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "b8fb9732-1318-44b4-aed6-a85b37f2a1f8",
+      "display_id": "SOL-055",
+      "tag_id": "tag_solutions_3",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 977c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "fe23ab6f-dade-40ec-ac68-c66229723bf8",
+      "display_id": "SOL-155",
+      "tag_id": "tag_solutions_4",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2025 +30",
+        "sol 664c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "030f05a7-813e-4563-9f67-c83b43d92ce6",
+      "display_id": "SOL-079",
+      "tag_id": "tag_solutions_5",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 460c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "cb7f954f-2721-41f6-a61c-c780c3a5f92f",
+      "display_id": "SOL-040",
+      "tag_id": "tag_solutions_6",
+      "difficulty_stratum": "easy",
+      "difficulty_level": 2,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 80,
+      "score_reasons": [
+        "PYQ +50",
+        "sol 739c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "505cec02-129e-423d-90c9-c9550e847f96",
+      "display_id": "SOL-071",
+      "tag_id": "tag_solutions_1",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "NVT",
+      "sourceType": "PYQ",
+      "score": 100,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 1072c +20"
+      ]
+    },
+    {
+      "_id": "f4bf7446-5b4e-4f36-9623-ff7f02df0faf",
+      "display_id": "SOL-208",
+      "tag_id": "tag_solutions_2",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "SCQ",
+      "sourceType": "Practice",
+      "score": 30,
+      "score_reasons": [
+        "sol 992c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "a2a7b581-aa0f-47c8-9e69-18b08a43161c",
+      "display_id": "SOL-153",
+      "tag_id": "tag_solutions_3",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2025 +30",
+        "sol 700c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "160dd4e0-483c-44fc-8432-767abd34e714",
+      "display_id": "SOL-046",
+      "tag_id": "tag_solutions_4",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "NVT",
+      "sourceType": "PYQ",
+      "score": 100,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 1035c +20"
+      ]
+    },
+    {
+      "_id": "9f487101-d81f-4bea-9cad-e22c35ba912f",
+      "display_id": "SOL-020",
+      "tag_id": "tag_solutions_5",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 100,
+      "score_reasons": [
+        "PYQ +50",
+        "2023 +20",
+        "sol 568c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "4bd5c3c8-03a5-45c2-8b3a-7cfe1018d330",
+      "display_id": "SOL-120",
+      "tag_id": "tag_solutions_6",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 904c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "9f4ece57-db9d-4695-9626-d12d6d6ccb51",
+      "display_id": "SOL-157",
+      "tag_id": "tag_solutions_3",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 210,
+      "score_reasons": [
+        "Top PYQ +100",
+        "PYQ +50",
+        "2025 +30",
+        "sol 1062c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "f24ff5c9-ef73-49c6-a0b7-ba2124c3a869",
+      "display_id": "SOL-076",
+      "tag_id": "tag_solutions_5",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "NVT",
+      "sourceType": "PYQ",
+      "score": 100,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 1004c +20"
+      ]
+    },
+    {
+      "_id": "d1420cb8-be3d-4cff-a530-53261a57cef1",
+      "display_id": "SOL-078",
+      "tag_id": "tag_solutions_6",
+      "difficulty_stratum": "medium",
+      "difficulty_level": 3,
+      "type": "NVT",
+      "sourceType": "PYQ",
+      "score": 100,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 711c +20"
+      ]
+    },
+    {
+      "_id": "4e9e7518-2d53-43c1-ad61-b3b2a3245b8b",
+      "display_id": "SOL-137",
+      "tag_id": "tag_solutions_3",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "SCQ",
+      "sourceType": "PYQ",
+      "score": 110,
+      "score_reasons": [
+        "PYQ +50",
+        "2025 +30",
+        "sol 630c +20",
+        "4 opts +10"
+      ]
+    },
+    {
+      "_id": "5ba7c319-a499-4a12-88f1-b603f65d6ca6",
+      "display_id": "SOL-073",
+      "tag_id": "tag_solutions_6",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "NVT",
+      "sourceType": "PYQ",
+      "score": 100,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 867c +20"
+      ]
+    },
+    {
+      "_id": "33764dca-c122-43d2-8cbd-6d9053725190",
+      "display_id": "SOL-074",
+      "tag_id": "tag_solutions_6",
+      "difficulty_stratum": "hard",
+      "difficulty_level": 4,
+      "type": "NVT",
+      "sourceType": "PYQ",
+      "score": 100,
+      "score_reasons": [
+        "PYQ +50",
+        "2024 +30",
+        "sol 1132c +20"
+      ]
+    }
+  ]
+}
