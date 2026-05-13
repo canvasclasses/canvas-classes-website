@@ -1,13 +1,12 @@
 import { Clock } from 'lucide-react';
-import CrucibleHeroRail from './CrucibleHeroRail';
 import type { ChapterMeta } from '../chapterMetadata';
 import type { HandwrittenNote } from '../../lib/handwrittenNotesData';
 import type { ChapterCrucibleStats } from './chapterStats.server';
 
-// Two-column hero: chapter intro + breadcrumb stats on the left, sticky
-// Crucible rail on the right. Replaces the previous single-column hero —
-// moves the primary conversion CTA above the fold and keeps it visible
-// during scroll.
+// Chapter intro: meta pills, two-line title (handwritten + print), lead
+// paragraph, and soft trust strip. Rendered inside the left column of the
+// page-level 2-col grid (the Crucible rail occupies the right column at
+// the page level — see app/handwritten-notes/[chapter]/page.tsx).
 
 const SUBJECT_PILL: Record<ChapterMeta['subject'], string> = {
     Physical: 'border-sky-500/30 bg-sky-500/10 text-sky-300',
@@ -24,9 +23,7 @@ interface Props {
 
 export default function ChapterHero({ meta, notes, crucibleStats }: Props) {
     return (
-        <section className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
-            {/* LEFT — chapter intro */}
-            <div className="min-w-0">
+        <div className="min-w-0">
                 {/* Meta pills */}
                 <div className="mb-4 flex flex-wrap items-center gap-2">
                     <span
@@ -103,22 +100,7 @@ export default function ChapterHero({ meta, notes, crucibleStats }: Props) {
                         <span>Written by Paaras Sir · 2025-26 syllabus</span>
                     </div>
                 </div>
-            </div>
-
-            {/* RIGHT — Crucible rail (hidden on mobile, sticky on desktop). Only
-                renders when the chapter has a Crucible mapping — chapters without
-                a crucibleChapterId (a few practicals) just leave a single-column
-                hero on desktop. */}
-            {meta.crucibleChapterId && (
-                <div className="hidden lg:block">
-                    <CrucibleHeroRail
-                        chapterId={meta.crucibleChapterId}
-                        chapterName={meta.chapterName}
-                        stats={crucibleStats}
-                    />
-                </div>
-            )}
-        </section>
+        </div>
     );
 }
 

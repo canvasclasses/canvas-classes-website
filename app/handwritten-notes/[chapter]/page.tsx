@@ -16,6 +16,7 @@ import ChapterNotesGrid from './ChapterNotesGrid';
 import ChapterToolCard from './ChapterToolCard';
 import { getToolCardForSlug } from './toolCardConfig';
 import ChapterHero from './ChapterHero';
+import CrucibleHeroRail from './CrucibleHeroRail';
 import ChapterTopicTOC from './ChapterTopicTOC';
 import TeacherCard from './TeacherCard';
 import NextChapterCard from './NextChapterCard';
@@ -243,28 +244,53 @@ export default async function ChapterNotesPage({
                         <span className="text-white">{meta.chapterName}</span>
                     </nav>
 
-                    {/* Hero — two-column on desktop: chapter intro + sticky Crucible rail.
-                        Falls back to single-column on chapters without a Crucible mapping. */}
-                    <header className="mb-12">
-                        <ChapterHero meta={meta} notes={chapterNotes} crucibleStats={crucibleStats} />
-                    </header>
+                    {/* Hero + notes grid — page-level 2-col layout so the notes
+                        section flows directly under the chapter intro on the left
+                        and shares the column height with the sticky Crucible rail
+                        on the right. Eliminates the empty space that appeared
+                        between the trust strip and the next section when the rail
+                        was taller than the intro alone. */}
+                    <div className="mb-12 grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
+                        <div className="min-w-0">
+                            <header className="mb-10">
+                                <ChapterHero
+                                    meta={meta}
+                                    notes={chapterNotes}
+                                    crucibleStats={crucibleStats}
+                                />
+                            </header>
 
-                    {/* Notes available */}
-                    <section className="mb-12">
-                        <div className="mb-4 flex items-baseline justify-between">
-                            <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-400">
-                                Notes available for this chapter
-                            </h2>
-                            <span className="hidden sm:inline text-[11px] text-zinc-600">
-                                Tap any note to read inline →
-                            </span>
+                            {/* Notes available */}
+                            <section>
+                                <div className="mb-4 flex items-baseline justify-between">
+                                    <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-400">
+                                        Notes available for this chapter
+                                    </h2>
+                                    <span className="hidden sm:inline text-[11px] text-zinc-600">
+                                        Tap any note to read inline →
+                                    </span>
+                                </div>
+                                <ChapterNotesGrid
+                                    notes={chapterNotes}
+                                    crucibleChapterId={meta.crucibleChapterId}
+                                    chapterName={meta.chapterName}
+                                />
+                            </section>
                         </div>
-                        <ChapterNotesGrid
-                            notes={chapterNotes}
-                            crucibleChapterId={meta.crucibleChapterId}
-                            chapterName={meta.chapterName}
-                        />
-                    </section>
+
+                        {/* Sticky Crucible rail — desktop only. Lives at the page
+                            level so it can sit alongside both the hero intro AND
+                            the notes section without leaving empty space. */}
+                        {meta.crucibleChapterId && (
+                            <div className="hidden lg:block">
+                                <CrucibleHeroRail
+                                    chapterId={meta.crucibleChapterId}
+                                    chapterName={meta.chapterName}
+                                    stats={crucibleStats}
+                                />
+                            </div>
+                        )}
+                    </div>
 
                     {/* Companion tool card (Flashcards / Periodic Explorer / Salt Sim / …).
                         Crucible practice moved into the hero rail above; this section is
