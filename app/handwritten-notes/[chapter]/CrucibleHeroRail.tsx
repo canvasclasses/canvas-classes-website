@@ -41,46 +41,58 @@ export default function CrucibleHeroRail({ chapterId, chapterName, stats }: Prop
                 }}
             />
 
-            {/* HEAD — brand + headline */}
-            <div className="relative px-[18px] pb-3 pt-4">
-                <div className="mb-2.5 flex items-center gap-2.5">
+            {/* HEAD — brand + headline. Sized up to match the design: 36px logo,
+                13px CRUCIBLE wordmark, 22px headline with "tailored" as the amber
+                accent word. The chapter context lives on the page itself — keeping
+                the headline copy-tight makes it scannable. */}
+            <div className="relative px-5 pb-3.5 pt-5">
+                <div className="mb-4 flex items-center gap-3">
                     <div
-                        className="grid h-7 w-7 shrink-0 place-items-center rounded-lg"
+                        className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px]"
                         style={{
                             background: 'linear-gradient(135deg, #ff6a1a, #ff3d00)',
                             boxShadow:
-                                '0 4px 14px -2px rgba(255,106,26,0.55), inset 0 0 0 1px rgba(255,255,255,0.18)',
+                                '0 6px 18px -3px rgba(255,106,26,0.6), inset 0 0 0 1px rgba(255,255,255,0.18)',
                         }}
                     >
-                        <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4">
+                        <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
                             <circle cx="12" cy="12" r="9" stroke="white" strokeWidth="2" />
                             <circle cx="12" cy="12" r="4.5" stroke="white" strokeWidth="2" />
                             <circle cx="12" cy="12" r="1.5" fill="white" />
                         </svg>
                     </div>
-                    <div>
-                        <div className="font-mono text-[10.5px] font-bold uppercase leading-tight tracking-[0.14em] text-orange-400">
+                    <div className="min-w-0">
+                        <div className="font-mono text-[12px] font-bold uppercase leading-tight tracking-[0.16em] text-orange-400">
                             Crucible
                         </div>
-                        <div className="mt-0.5 text-[11px] text-zinc-500">
-                            Adaptive practice. JEE/NEET PYQ DNA.
+                        <div className="mt-1 text-[12px] leading-snug text-zinc-400">
+                            Practice that adapts to you
                         </div>
                     </div>
                 </div>
 
                 {totalPublished > 0 ? (
-                    <div className="text-[18px] font-semibold leading-snug tracking-tight text-white">
-                        <span className="font-mono">{totalPublished}</span>{' '}
-                        <span className="text-amber-300">{chapterName}</span> questions sharpened on{' '}
-                        <span className="text-amber-300">12 years of PYQs</span>
+                    <div
+                        className="font-semibold text-white"
+                        style={{ fontSize: 22, lineHeight: 1.2, letterSpacing: '-0.015em' }}
+                    >
+                        <span>{totalPublished} questions </span>
+                        <em className="not-italic text-amber-300" style={{ fontStyle: 'italic' }}>
+                            tailored
+                        </em>
+                        <span> to your accuracy</span>
                     </div>
                 ) : (
-                    <div className="text-[18px] font-semibold leading-snug tracking-tight text-white">
+                    <div
+                        className="font-semibold text-white"
+                        style={{ fontSize: 22, lineHeight: 1.2, letterSpacing: '-0.015em' }}
+                    >
                         Practice this chapter with <span className="text-amber-300">Crucible</span>
                     </div>
                 )}
-                <div className="mt-1 text-[12.5px] leading-snug text-zinc-300">
-                    Every wrong answer gets a worked solution from Paaras Sir.
+                <div className="mt-2 text-[13px] leading-snug text-zinc-400">
+                    Sharpened on 12 years of {chapterName} PYQs. Every wrong answer gets a worked
+                    solution from Paaras Sir.
                 </div>
             </div>
 
@@ -144,52 +156,57 @@ export default function CrucibleHeroRail({ chapterId, chapterName, stats }: Prop
                 </div>
             )}
 
-            {/* STATS — Questions / PYQ% / Demo */}
-            <div className="relative grid grid-cols-3 border-y border-dashed border-white/[0.06] px-3.5 py-2.5">
-                <div className="pr-2">
-                    <div className="font-sans text-[16px] font-semibold leading-tight tracking-tight text-white">
+            {/* STATS — Questions / PYQ rate / Free demo. Sized up slightly for
+                proportional balance with the bigger headline + CTA above/below. */}
+            <div className="relative grid grid-cols-3 border-y border-dashed border-white/[0.06] px-5 py-3">
+                <div className="pr-3">
+                    <div className="font-sans text-[19px] font-semibold leading-tight tracking-tight text-white">
                         {totalPublished}
                     </div>
-                    <div className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-zinc-500">
+                    <div className="mt-1 font-mono text-[9.5px] uppercase tracking-[0.1em] text-zinc-500">
                         Questions
                     </div>
                 </div>
-                <div className="border-x border-dashed border-white/[0.06] px-2">
-                    <div className="font-sans text-[16px] font-semibold leading-tight tracking-tight text-white">
+                <div className="border-x border-dashed border-white/[0.06] px-3">
+                    <div className="font-sans text-[19px] font-semibold leading-tight tracking-tight text-white">
                         {pyqPct}
-                        <span className="text-[10.5px] font-normal text-zinc-500">%</span>
+                        <span className="text-[12px] font-normal text-zinc-500">%</span>
                     </div>
-                    <div className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-zinc-500">
+                    <div className="mt-1 font-mono text-[9.5px] uppercase tracking-[0.1em] text-zinc-500">
                         PYQ rate
                     </div>
                 </div>
-                <div className="pl-2">
-                    <div className="font-sans text-[16px] font-semibold leading-tight tracking-tight text-white">
+                <div className="pl-3">
+                    <div className="font-sans text-[19px] font-semibold leading-tight tracking-tight text-white">
                         {demoCount > 0 ? demoCount : '—'}
                     </div>
-                    <div className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-zinc-500">
+                    <div className="mt-1 font-mono text-[9.5px] uppercase tracking-[0.1em] text-zinc-500">
                         Free demo
                     </div>
                 </div>
             </div>
 
-            {/* CTA */}
-            <div className="relative px-3.5 pb-4 pt-3">
+            {/* CTA — sized up to match the design's visual weight: 52px tall,
+                16px text, slightly bolder ring. */}
+            <div className="relative px-5 pb-5 pt-4">
                 <Link
                     href={`/the-crucible/${chapterId}?mode=browse`}
-                    className="flex h-[46px] w-full items-center justify-center gap-2.5 rounded-[10px] text-[14px] font-semibold tracking-tight text-white transition-transform duration-150 hover:-translate-y-px"
+                    className="flex h-[52px] w-full items-center justify-center gap-2.5 rounded-xl font-semibold tracking-tight text-white transition-transform duration-150 hover:-translate-y-px"
                     style={{
                         background: 'linear-gradient(180deg, #ff7a2e, #f04e00)',
                         boxShadow:
-                            '0 1px 0 rgba(255,255,255,0.25) inset, 0 -2px 0 rgba(0,0,0,0.15) inset, 0 14px 30px -10px rgba(255,106,26,0.6)',
+                            '0 1px 0 rgba(255,255,255,0.25) inset, 0 -2px 0 rgba(0,0,0,0.15) inset, 0 18px 36px -10px rgba(255,106,26,0.65)',
+                        fontSize: 16,
                     }}
                 >
                     Start practicing free
-                    <ArrowRight size={16} strokeWidth={2} />
+                    <ArrowRight size={18} strokeWidth={2.25} />
                 </Link>
-                <div className="mt-2 text-center text-[11.5px] text-zinc-500">
-                    <b className="font-medium text-zinc-300">First {Math.min(demoCount || 10, 25)} questions free</b> · No
-                    card · Worked solutions
+                <div className="mt-3 text-center text-[12px] text-zinc-500">
+                    <b className="font-semibold text-zinc-300">
+                        First {Math.min(demoCount || 10, 25)} questions free
+                    </b>{' '}
+                    · No card · Worked solutions
                 </div>
             </div>
         </aside>

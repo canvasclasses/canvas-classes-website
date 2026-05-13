@@ -46,19 +46,66 @@ export default function ChapterHero({ meta, notes, crucibleStats }: Props) {
                     )}
                 </div>
 
+                {/* Two-line title: chapter name in handwritten Kalam amber (the
+                    brand differentiator), followed by "Handwritten Notes" in Geist
+                    white. The canonical meta.h1 is preserved via aria-label so SEO
+                    and screen-reader output match the original semantics. */}
                 <h1
-                    className="mb-4 text-[clamp(34px,4.5vw,52px)] font-semibold leading-[1.04] tracking-[-0.035em] text-white"
+                    className="mb-5 leading-[1.02] tracking-[-0.025em]"
                     style={{ textWrap: 'balance' }}
+                    aria-label={meta.h1}
                 >
-                    {meta.h1}
+                    <span
+                        className="block text-amber-300"
+                        style={{
+                            fontFamily: 'var(--font-kalam), cursive',
+                            fontSize: 'clamp(40px, 5.5vw, 60px)',
+                            fontWeight: 600,
+                            letterSpacing: '-0.01em',
+                            lineHeight: 1.05,
+                        }}
+                    >
+                        {meta.chapterName}
+                    </span>
+                    <span
+                        className="mt-0.5 block font-semibold text-white"
+                        style={{
+                            fontSize: 'clamp(32px, 4.2vw, 48px)',
+                            letterSpacing: '-0.035em',
+                            lineHeight: 1.05,
+                        }}
+                    >
+                        Handwritten Notes
+                    </span>
                 </h1>
 
                 <p className="mb-7 max-w-[58ch] text-[15px] leading-relaxed text-zinc-300 md:text-[16px]">
                     {meta.leadParagraph}
                 </p>
 
-                {/* Stats strip — three real data tiles */}
+                {/* Stats strip — 4 real data tiles */}
                 <ChapterStatsStrip notes={notes} stats={crucibleStats} />
+
+                {/* Soft non-numeric trust strip. The design's version had
+                    fabricated "42,108 students" + "4.92 stars" counts — replaced
+                    with honest signals that don't claim specific numbers. */}
+                <div className="mb-2 mt-4 flex flex-wrap items-center justify-between gap-3 rounded-full border border-white/[0.07] bg-white/[0.02] px-5 py-2.5 text-[12.5px] text-zinc-400">
+                    <div className="flex items-center gap-2.5">
+                        <span className="inline-flex">
+                            <span className="-ml-0 inline-block h-5 w-5 rounded-full border-2 border-gray-950 bg-violet-400" />
+                            <span className="-ml-1.5 inline-block h-5 w-5 rounded-full border-2 border-gray-950 bg-cyan-400" />
+                            <span className="-ml-1.5 inline-block h-5 w-5 rounded-full border-2 border-gray-950 bg-amber-400" />
+                            <span className="-ml-1.5 inline-block h-5 w-5 rounded-full border-2 border-gray-950 bg-emerald-400" />
+                        </span>
+                        <span>
+                            <b className="font-semibold text-white">Trusted</b> by JEE/NEET aspirants across India
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-zinc-500">
+                        <span className="text-amber-400" style={{ letterSpacing: '-1px' }}>★★★★★</span>
+                        <span>Written by Paaras Sir · 2025-26 syllabus</span>
+                    </div>
+                </div>
             </div>
 
             {/* RIGHT — Crucible rail (hidden on mobile, sticky on desktop). Only
@@ -79,9 +126,11 @@ export default function ChapterHero({ meta, notes, crucibleStats }: Props) {
 }
 
 // ── Stats strip ──────────────────────────────────────────────────────────
-// Three tiles with real data: PDFs, PYQs, free-demo questions. Skips
-// fabricated metrics from the design (weightage %, difficulty letter) —
-// we'd rather show fewer real numbers than guess.
+// 4 tiles, all data-driven (no fabricated counts):
+//   PDFs              — count of handwritten note PDFs
+//   PYQs Tagged       — count of PYQ-source questions in the chapter
+//   Weightage         — approximate % of JEE Main PYQs (chapter share within class)
+//   Difficulty        — Easy / Medium / Hard from mean difficultyLevel
 function ChapterStatsStrip({
     notes,
     stats,
@@ -89,24 +138,32 @@ function ChapterStatsStrip({
     notes: HandwrittenNote[];
     stats: ChapterCrucibleStats;
 }) {
-    const tiles = [
-        { label: 'PDFs', value: String(notes.length), hint: 'in this chapter' },
-        stats.totalPublished > 0
-            ? { label: 'JEE / NEET PYQs', value: String(stats.pyqCount), hint: `of ${stats.totalPublished}` }
-            : null,
-        stats.demoCount > 0
-            ? { label: 'Free demo Qs', value: String(stats.demoCount), hint: 'with worked solutions' }
-            : null,
-    ].filter((t): t is { label: string; value: string; hint: string } => t !== null);
+    type Tile = { label: string; value: string; hint: string };
+    const tiles: Tile[] = [];
+    tiles.push({ label: 'PDFs', value: String(notes.length), hint: notes.length === 1 ? 'in this chapter' : 'PDFs in chapter' });
+    if (stats.totalPublished > 0) {
+        tiles.push({ label: 'PYQs Tagged', value: String(stats.pyqCount), hint: 'JEE + NEET' });
+    }
+    if (stats.weightagePct !== null) {
+        tiles.push({ label: 'Weightage', value: String(stats.weightagePct), hint: '% in JEE' });
+    }
+    if (stats.difficultyLabel) {
+        const initial = stats.difficultyLabel[0];
+        tiles.push({ label: 'Difficulty', value: initial, hint: stats.difficultyLabel.slice(1).toLowerCase() });
+    }
 
     if (tiles.length === 0) return null;
 
+    // Use 4 columns when we have 4 tiles, otherwise scale down. Mobile stays 2 cols.
+    const colsCls = tiles.length >= 4 ? 'sm:grid-cols-2 md:grid-cols-4' : tiles.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2';
+
     return (
-        <div className="mb-2 grid grid-cols-1 overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.015] sm:grid-cols-3">
+        <div className={`mb-2 grid grid-cols-2 overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.015] ${colsCls}`}>
             {tiles.map((tile, i) => (
                 <div
                     key={tile.label}
                     className={`px-5 py-4 ${
+                        // Border logic: separators between tiles, never on the right of the last column.
                         i > 0 ? 'border-t border-white/[0.07] sm:border-l sm:border-t-0' : ''
                     }`}
                 >

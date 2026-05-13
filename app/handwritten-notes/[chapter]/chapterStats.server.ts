@@ -16,6 +16,8 @@ export interface ChapterCrucibleStats {
     pyqCount: number;         // questions where sourceType === 'PYQ'
     demoCount: number;        // questions flagged is_demo_question (≤ 25)
     sampleDemo: SampleDemoQuestion | null;
+    weightagePct: number | null;        // approx exam weightage: chapter JEE Main PYQs / class total
+    difficultyLabel: 'Easy' | 'Medium' | 'Hard' | null;  // mean difficultyLevel → letter
 }
 
 export interface SampleDemoQuestion {
@@ -36,6 +38,8 @@ const EMPTY_STATS: ChapterCrucibleStats = {
     pyqCount: 0,
     demoCount: 0,
     sampleDemo: null,
+    weightagePct: null,
+    difficultyLabel: null,
 };
 
 // Returns the headline counts plus one sample demo question. Picks the
@@ -53,10 +57,39 @@ export async function getChapterCrucibleStats(chapterId: string): Promise<Chapte
             deleted_at: null,
         };
 
-        const [totalPublished, pyqCount, demoCount, sampleDoc] = await Promise.all([
+        // Parse class level from chapter id (e.g. 'ch11_mole' → 11) so we can
+        // compute the class-wide JEE Main PYQ total for the weightage tile.
+        const clsMatch = chapterId.match(/^ch(\d+)_/);
+        const classLevel = clsMatch ? clsMatch[1] : null;
+        const classChapterPattern = classLevel ? new RegExp(`^ch${classLevel}_`) : null;
+
+        const [totalPublished, pyqCount, demoCount, jeeMainChapter, jeeMainClass, avgDiff, sampleDoc] = await Promise.all([
             Q.countDocuments(baseFilter).lean().exec(),
             Q.countDocuments({ ...baseFilter, 'metadata.sourceType': 'PYQ' }).lean().exec(),
             Q.countDocuments({ ...baseFilter, 'metadata.is_demo_question': true }).lean().exec(),
+            // JEE Main PYQs in THIS chapter (numerator for weightage)
+            Q.countDocuments({
+                ...baseFilter,
+                'metadata.sourceType': 'PYQ',
+                'metadata.examDetails.exam': 'JEE_Main',
+            }).lean().exec(),
+            // JEE Main PYQs across the whole class (denominator). Null if we
+            // couldn't parse classLevel.
+            classChapterPattern
+                ? Q.countDocuments({
+                      'metadata.chapter_id': { $regex: classChapterPattern },
+                      'metadata.sourceType': 'PYQ',
+                      'metadata.examDetails.exam': 'JEE_Main',
+                      status: 'published',
+                      deleted_at: null,
+                  }).lean().exec()
+                : Promise.resolve(0),
+            // Mean difficultyLevel across chapter questions for the Difficulty tile.
+            Q.aggregate([
+                { $match: baseFilter },
+                { $match: { 'metadata.difficultyLevel': { $type: 'number' } } },
+                { $group: { _id: null, avg: { $avg: '$metadata.difficultyLevel' } } },
+            ]).exec() as unknown as Promise<Array<{ avg: number }>>,
             // Sample: prefer demo + PYQ + recent year. Sort by:
             //   is_top_pyq desc, examDetails.year desc, display_id asc.
             // Limit fields — we only need question text, options, exam.
@@ -110,7 +143,27 @@ export async function getChapterCrucibleStats(chapterId: string): Promise<Chapte
             };
         }
 
-        return { totalPublished, pyqCount, demoCount, sampleDemo };
+        // Weightage: approximate "% of JEE in this chapter" via JEE Main PYQ
+        // share within the class. Clamped to [1, 99] when both numerator and
+        // denominator are non-zero, so we never show 0% or 100%.
+        const weightageRaw =
+            classLevel && (jeeMainClass as number) > 0
+                ? ((jeeMainChapter as number) / (jeeMainClass as number)) * 100
+                : 0;
+        const weightagePct =
+            weightageRaw > 0 ? Math.max(1, Math.min(99, Math.round(weightageRaw))) : null;
+
+        // Difficulty label: mean rounded to nearest stratum boundary.
+        //   ≤ 2.5  → Easy
+        //   ≤ 3.5  → Medium
+        //   >  3.5 → Hard
+        const meanDiff = Array.isArray(avgDiff) && avgDiff[0]?.avg ? avgDiff[0].avg : null;
+        let difficultyLabel: 'Easy' | 'Medium' | 'Hard' | null = null;
+        if (meanDiff !== null) {
+            difficultyLabel = meanDiff <= 2.5 ? 'Easy' : meanDiff <= 3.5 ? 'Medium' : 'Hard';
+        }
+
+        return { totalPublished, pyqCount, demoCount, sampleDemo, weightagePct, difficultyLabel };
     } catch (err) {
         console.warn(`[chapterStats] falling back to empty stats for ${chapterId}:`, err);
         return EMPTY_STATS;

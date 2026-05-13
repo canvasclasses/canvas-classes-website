@@ -27,8 +27,19 @@ export default function MathRenderer({ markdown, className = '', fontSize, image
 
       // Pre-process \ce{} chemistry formulas
       let text = markdown;
+      // Brace-less \ce — defends against ingestion bugs that left the braces
+      // off (e.g. `$\ceCH$`, `$\ce CH2$`). Without this, KaTeX renders \ce as
+      // an unknown command (red glyph) and the rest as italic math letters.
+      // Must run BEFORE the brace-aware substitution so we don't accidentally
+      // re-process correctly-formed input.
+      text = text.replace(/\\ce\s*(?=[A-Z])([A-Za-z][A-Za-z0-9^_+\-]*)/g, (_m: string, formula: string) => {
+        const p = formula
+          .replace(/([A-Z][a-z]?)(\d+)/g, '$1_{$2}')
+          .replace(/\^(\d+)/g, '^{$1}');
+        return `\\mathrm{${p}}`;
+      });
       text = text.replace(/\\ce\{([^}]+)\}/g, (_m: string, formula: string) => {
-        let p = formula
+        const p = formula
           .replace(/([A-Z][a-z]?)(\d+)/g, '$1_{$2}')
           .replace(/->/g, '\\rightarrow')
           .replace(/<->/g, '\\leftrightarrow')
