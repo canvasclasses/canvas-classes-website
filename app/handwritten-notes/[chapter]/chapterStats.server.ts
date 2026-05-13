@@ -41,6 +41,11 @@ const EMPTY_STATS: ChapterCrucibleStats = {
 // How many demo questions to fetch for the rail carousel. Mirrors the count
 // of hardcoded SAMPLE_QUESTIONS on the Crucible landing's QuestionCard.
 const CAROUSEL_SIZE = 4;
+// Wider candidate pool. We over-fetch then pick CAROUSEL_SIZE questions that
+// have similar approximate rendered heights — keeps the cycling card visually
+// uniform, so shorter questions don't leave empty space at the bottom of the
+// fixed-height container.
+const CAROUSEL_CANDIDATE_POOL = 12;
 
 // Returns the headline counts plus one sample demo question. Picks the
 // highest-scored demo question for the sample (Top PYQ first, then most
@@ -61,9 +66,10 @@ export async function getChapterCrucibleStats(chapterId: string): Promise<Chapte
             Q.countDocuments(baseFilter).lean().exec(),
             Q.countDocuments({ ...baseFilter, 'metadata.sourceType': 'PYQ' }).lean().exec(),
             Q.countDocuments({ ...baseFilter, 'metadata.is_demo_question': true }).lean().exec(),
-            // Top CAROUSEL_SIZE demo questions for the rail carousel. Sort by:
+            // Top CAROUSEL_CANDIDATE_POOL demo questions, sorted by:
             //   is_top_pyq desc, examDetails.year desc, display_id asc.
-            // Limit fields — we only need question text, options, exam.
+            // We over-fetch and then pick CAROUSEL_SIZE with similar heights
+            // below (see pickSimilarHeights). Field projection limits payload.
             Q.find(
                 { ...baseFilter, 'metadata.is_demo_question': true },
                 {
@@ -82,12 +88,18 @@ export async function getChapterCrucibleStats(chapterId: string): Promise<Chapte
                     'metadata.examDetails.year': -1,
                     display_id: 1,
                 })
-                .limit(CAROUSEL_SIZE)
+                .limit(CAROUSEL_CANDIDATE_POOL)
                 .lean()
                 .exec() as unknown as Array<Record<string, unknown>>,
         ]);
 
-        const sampleDemos: SampleDemoQuestion[] = (sampleDocs ?? []).map((doc) => {
+        // Narrow the over-fetched pool to CAROUSEL_SIZE questions with the most
+        // similar approximate rendered heights — keeps the cycling card visually
+        // uniform so the eye doesn't track an empty-space-at-the-bottom gap as
+        // questions cycle.
+        const winners = pickSimilarHeights(sampleDocs ?? [], CAROUSEL_SIZE);
+
+        const sampleDemos: SampleDemoQuestion[] = winners.map((doc) => {
             const meta = (doc.metadata ?? {}) as {
                 examDetails?: { exam?: string; year?: number };
                 exam_source?: { exam?: string; year?: number };
@@ -159,6 +171,60 @@ export async function getTopicQuestionCounts(chapterId: string): Promise<TopicQu
         console.warn(`[chapterStats] topic counts failed for ${chapterId}:`, err);
         return {};
     }
+}
+
+// Approximate rendered height (in arbitrary "units") for a question doc, so
+// we can compare relative sizes. Captures the three main height contributors:
+//   1. Question body length (after the carousel's 220-char truncation cap)
+//   2. Number of options (each renders ~40px tall)
+//   3. Total length of option text (multi-line wraps add 16-18px each)
+// Calibration is rough but consistent — only relative comparison matters.
+function approxHeight(doc: Record<string, unknown>): number {
+    const body = ((doc.question_text as { markdown?: string })?.markdown ?? '');
+    const truncatedBodyLen = Math.min(body.length, 220);
+    const options = Array.isArray(doc.options) ? doc.options : [];
+    const optChars = options.reduce(
+        (s, o) => s + String((o as { text?: string })?.text ?? '').length,
+        0
+    );
+    // Coefficients: body ≈ 1 unit per 6 chars, opt ≈ 1 unit per 4 chars,
+    // each option ≈ 12 units base.
+    return Math.round(truncatedBodyLen / 6 + optChars / 4 + options.length * 12);
+}
+
+// From the over-fetched candidate pool, pick `size` questions whose heights
+// cluster most tightly together. Strategy:
+//   1. Annotate each candidate with its approxHeight and its original quality
+//      rank (position in the input array, which was already sorted by Mongo).
+//   2. Sort by height, look for the contiguous window of `size` candidates
+//      with the smallest height variance (= most uniform-looking carousel).
+//   3. Return those `size` candidates re-sorted by their original quality
+//      rank so the cycling sequence still leads with the best questions.
+//
+// If `size` >= pool.length we just return the pool as-is.
+function pickSimilarHeights<T extends Record<string, unknown>>(
+    pool: T[],
+    size: number
+): T[] {
+    if (pool.length <= size) return pool;
+
+    const annotated = pool.map((doc, rank) => ({ doc, rank, h: approxHeight(doc) }));
+    const byHeight = [...annotated].sort((a, b) => a.h - b.h);
+
+    let bestStart = 0;
+    let bestSpread = Infinity;
+    for (let i = 0; i + size <= byHeight.length; i++) {
+        const spread = byHeight[i + size - 1].h - byHeight[i].h;
+        if (spread < bestSpread) {
+            bestSpread = spread;
+            bestStart = i;
+        }
+    }
+
+    const window = byHeight.slice(bestStart, bestStart + size);
+    // Restore the original quality-sort order within the picked window.
+    window.sort((a, b) => a.rank - b.rank);
+    return window.map((w) => w.doc);
 }
 
 // Mirrors the canonical formatter in app/the-crucible/components/examLabel.ts,
