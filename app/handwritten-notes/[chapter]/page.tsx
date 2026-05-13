@@ -13,8 +13,13 @@ import {
     type ChapterMeta,
 } from '../chapterMetadata';
 import ChapterNotesGrid from './ChapterNotesGrid';
-import ChapterToolCard, { CruciblePracticeCard } from './ChapterToolCard';
+import ChapterToolCard from './ChapterToolCard';
 import { getToolCardForSlug } from './toolCardConfig';
+import ChapterHero from './ChapterHero';
+import ChapterTopicTOC from './ChapterTopicTOC';
+import TeacherCard from './TeacherCard';
+import NextChapterCard from './NextChapterCard';
+import { getChapterCrucibleStats, getTopicQuestionCounts } from './chapterStats.server';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 
@@ -41,13 +46,6 @@ const PAARAS_PERSON = {
 };
 
 const DATE_PUBLISHED = '2025-09-01T00:00:00+05:30';
-
-const SUBJECT_ACCENT: Record<ChapterMeta['subject'], string> = {
-    Physical: 'from-sky-500/15 to-cyan-500/5 border-sky-500/30 text-sky-300',
-    Organic: 'from-violet-500/15 to-purple-500/5 border-violet-500/30 text-violet-300',
-    Inorganic: 'from-emerald-500/15 to-teal-500/5 border-emerald-500/30 text-emerald-300',
-    Practical: 'from-amber-500/15 to-orange-500/5 border-amber-500/30 text-amber-300',
-};
 
 interface RouteParams {
     chapter: string;
@@ -209,11 +207,19 @@ export default async function ChapterNotesPage({
     if (chapterNotes.length === 0) notFound();
 
     const structuredData = buildStructuredData(meta, chapterNotes);
-    const accent = SUBJECT_ACCENT[meta.subject];
 
     const related = meta.relatedSlugs
         .map((slug) => getChapterMetaBySlug(slug))
         .filter((c): c is ChapterMeta => Boolean(c));
+
+    // Fetch real Crucible stats (server-side, build-time) so the hero rail,
+    // stats strip, and topic TOC all render with live numbers. Both helpers
+    // tolerate Mongo being unreachable and fall back to empty results — the
+    // hero degrades to the chapter intro alone in that case.
+    const [crucibleStats, topicCounts] = await Promise.all([
+        getChapterCrucibleStats(meta.crucibleChapterId || ''),
+        getTopicQuestionCounts(meta.crucibleChapterId || ''),
+    ]);
 
     return (
         <>
@@ -237,24 +243,10 @@ export default async function ChapterNotesPage({
                         <span className="text-white">{meta.chapterName}</span>
                     </nav>
 
-                    {/* Hero */}
-                    <header className="mb-10">
-                        <div className="mb-3 flex flex-wrap gap-2">
-                            <span
-                                className={`inline-block rounded-full border bg-gradient-to-r px-3 py-1 text-xs font-bold uppercase tracking-widest ${accent}`}
-                            >
-                                Class {meta.classLevel} · {meta.subject}
-                            </span>
-                            <span className="inline-block rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs font-bold uppercase tracking-widest text-zinc-400">
-                                {chapterNotes.length} {chapterNotes.length === 1 ? 'PDF' : 'PDFs'}
-                            </span>
-                        </div>
-                        <h1 className="mb-4 text-3xl font-bold text-white md:text-5xl">
-                            {meta.h1}
-                        </h1>
-                        <p className="max-w-3xl text-base leading-relaxed text-zinc-300 md:text-lg">
-                            {meta.leadParagraph}
-                        </p>
+                    {/* Hero — two-column on desktop: chapter intro + sticky Crucible rail.
+                        Falls back to single-column on chapters without a Crucible mapping. */}
+                    <header className="mb-12">
+                        <ChapterHero meta={meta} notes={chapterNotes} crucibleStats={crucibleStats} />
                     </header>
 
                     {/* Notes available */}
@@ -274,38 +266,41 @@ export default async function ChapterNotesPage({
                         />
                     </section>
 
-                    {/* Practice + Revise — paired cards under the notes reader.
-                        Layout adapts to what's actually available for this chapter:
-                          - Crucible + tool   → 2-column grid
-                          - Crucible only     → full-width Crucible card
-                          - Tool only         → full-width tool card
-                          - Neither           → section is skipped entirely
-                        We resolve the tool config server-side so the layout is
-                        correct on first render — no client-side reflow. */}
+                    {/* Companion tool card (Flashcards / Periodic Explorer / Salt Sim / …).
+                        Crucible practice moved into the hero rail above; this section is
+                        now just the optional chapter-specific tool. Skipped entirely for
+                        chapters without a companion tool. */}
                     {(() => {
                         const toolConfig = getToolCardForSlug(meta.slug);
-                        const hasCrucible = !!meta.crucibleChapterId;
-                        const hasTool = !!toolConfig;
-                        if (!hasCrucible && !hasTool) return null;
-
+                        if (!toolConfig) return null;
                         return (
-                            <section
-                                className={
-                                    hasCrucible && hasTool
-                                        ? 'mb-12 grid gap-4 md:grid-cols-2'
-                                        : 'mb-12'
-                                }
-                            >
-                                {hasCrucible && (
-                                    <CruciblePracticeCard
-                                        chapterId={meta.crucibleChapterId!}
-                                        chapterName={meta.chapterName}
-                                    />
-                                )}
-                                {hasTool && <ChapterToolCard />}
+                            <section className="mb-12">
+                                <ChapterToolCard />
                             </section>
                         );
                     })()}
+
+                    {/* What's inside · N topics — TOC sourced from the canonical
+                        taxonomy with live PYQ counts per topic. */}
+                    {meta.crucibleChapterId && (
+                        <section className="mb-12">
+                            <h2 className="mb-4 font-mono text-[13px] font-semibold uppercase tracking-[0.12em] text-zinc-400">
+                                What&apos;s inside
+                            </h2>
+                            <ChapterTopicTOC
+                                crucibleChapterId={meta.crucibleChapterId}
+                                topicCounts={topicCounts}
+                            />
+                        </section>
+                    )}
+
+                    {/* Written by — single author for now (Paaras Sir). */}
+                    <section className="mb-12">
+                        <h2 className="mb-4 font-mono text-[13px] font-semibold uppercase tracking-[0.12em] text-zinc-400">
+                            Written by
+                        </h2>
+                        <TeacherCard />
+                    </section>
 
                     {/* Read alongside NCERT — chapter-specific deep links into
                         the textbook PDF and the solutions hub. Only renders when
@@ -415,6 +410,12 @@ export default async function ChapterNotesPage({
                                 </details>
                             ))}
                         </div>
+                    </section>
+
+                    {/* Up next · Chapter N — sequential reading flow. Hidden when
+                        no next chapter exists for the class level. */}
+                    <section className="mb-10">
+                        <NextChapterCard current={meta} />
                     </section>
 
                     {/* Back link */}
