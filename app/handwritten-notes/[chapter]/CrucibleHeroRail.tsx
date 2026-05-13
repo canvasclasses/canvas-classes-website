@@ -1,24 +1,58 @@
 import Link from 'next/link';
-import { ArrowRight, Check } from 'lucide-react';
-import MathRenderer from '../../crucible/admin/components/MathRenderer';
-import type { ChapterCrucibleStats } from './chapterStats.server';
+import { ArrowRight } from 'lucide-react';
+import CrucibleBrand from '../../the-crucible/components/CrucibleBrand';
+import CrucibleQuestionCarousel, {
+    type CarouselQuestion,
+} from '../../the-crucible/components/CrucibleQuestionCarousel';
+import type { ChapterCrucibleStats, SampleDemoQuestion } from './chapterStats.server';
+import type { ChapterMeta } from '../chapterMetadata';
 
-// Sticky right-rail Crucible CTA in the chapter hero. Replaces the old
-// CruciblePracticeCard that sat under the notes grid — moves the primary
-// conversion lever above the fold and keeps it visible during scroll.
-// Server-rendered with real stats from questions_v2 and a sample demo
-// question pulled at build time.
+// Sticky right-rail Crucible CTA in the chapter hero. Brand identity
+// (icon + wordmark + tagline) comes from the shared <CrucibleBrand/>
+// component; the cycling question card is the same <CrucibleQuestionCarousel/>
+// the landing's hero uses — visual + animation parity is intentional, the
+// rail IS Crucible's voice on this surface.
+
+// Subject sub-type → accent colour for the carousel pill. Matches the
+// per-subject palette used in ChapterHero's meta pills so a student sees
+// the same colour for the same chapter category across the page.
+const SUBJECT_ACCENT: Record<ChapterMeta['subject'], string> = {
+    Physical: '#38bdf8',
+    Organic: '#a78bfa',
+    Inorganic: '#34d399',
+    Practical: '#fbbf24',
+};
 
 interface Props {
-    chapterId: string;          // crucible chapter_id, e.g. 'ch11_mole'
-    chapterName: string;        // for the CTA copy
+    chapterId: string;                  // crucible chapter_id, e.g. 'ch11_mole'
+    chapterName: string;                // shown in the carousel meta row + headline
+    subject: ChapterMeta['subject'];    // for the carousel subject pill + accent
     stats: ChapterCrucibleStats;
 }
 
-export default function CrucibleHeroRail({ chapterId, chapterName, stats }: Props) {
-    const { totalPublished, pyqCount, sampleDemo } = stats;
+// Map a SampleDemoQuestion (server-fetched shape) → the CarouselQuestion
+// shape the shared client component expects.
+function toCarousel(d: SampleDemoQuestion): CarouselQuestion {
+    const correctIndex = Math.max(
+        0,
+        d.options.findIndex((o) => o.is_correct)
+    );
+    return {
+        exam: d.examLabel ?? '',
+        body: d.questionMarkdown,
+        options: d.options.map((o) => o.text),
+        correctIndex,
+    };
+}
+
+export default function CrucibleHeroRail({ chapterId, chapterName, subject, stats }: Props) {
+    const { totalPublished, pyqCount, sampleDemos } = stats;
     const nonPyqCount = Math.max(0, totalPublished - pyqCount);
-    const correctOption = sampleDemo?.options.find((o) => o.is_correct);
+    const carouselQuestions: CarouselQuestion[] = sampleDemos
+        .filter((d) => d.options.length >= 2 && d.options.some((o) => o.is_correct))
+        .map(toCarousel);
+    const subjectLabel = `${subject} Chemistry`;
+    const subjectAccent = SUBJECT_ACCENT[subject] ?? '#38bdf8';
 
     return (
         <aside
@@ -41,39 +75,16 @@ export default function CrucibleHeroRail({ chapterId, chapterName, stats }: Prop
                 }}
             />
 
-            {/* HEAD — brand + headline. Sized up to match the design: 36px logo,
-                13px CRUCIBLE wordmark, 22px headline with "tailored" as the amber
-                accent word. The chapter context lives on the page itself — keeping
-                the headline copy-tight makes it scannable. */}
+            {/* HEAD — shared Crucible brand (icon + wordmark + tagline) so this
+                rail and the /the-crucible landing always read as the same product.
+                Sized to fit the 380px rail (35px icon, 18px wordmark, 9px tagline)
+                but visually identical to the landing's nav at proportional sizes. */}
             <div className="relative px-5 pb-3.5 pt-5">
-                <div className="mb-4 flex items-center gap-3">
-                    <div
-                        className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px]"
-                        style={{
-                            background: 'linear-gradient(135deg, #ff6a1a, #ff3d00)',
-                            boxShadow:
-                                '0 6px 18px -3px rgba(255,106,26,0.6), inset 0 0 0 1px rgba(255,255,255,0.18)',
-                        }}
-                    >
-                        <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
-                            <circle cx="12" cy="12" r="9" stroke="white" strokeWidth="2" />
-                            <circle cx="12" cy="12" r="4.5" stroke="white" strokeWidth="2" />
-                            <circle cx="12" cy="12" r="1.5" fill="white" />
-                        </svg>
-                    </div>
-                    <div className="min-w-0">
-                        <div className="font-mono text-[12px] font-bold uppercase leading-tight tracking-[0.16em] text-orange-400">
-                            Crucible
-                        </div>
-                        <div className="mt-1 text-[12px] leading-snug text-zinc-400">
-                            Practice that adapts to you
-                        </div>
-                    </div>
-                </div>
+                <CrucibleBrand iconSize={35} wordmarkSize={18} taglineSize={9} idPrefix="rail" />
 
                 {totalPublished > 0 ? (
                     <div
-                        className="font-semibold text-white"
+                        className="mt-4 font-semibold text-white"
                         style={{ fontSize: 22, lineHeight: 1.2, letterSpacing: '-0.015em' }}
                     >
                         <span>{totalPublished} questions </span>
@@ -84,7 +95,7 @@ export default function CrucibleHeroRail({ chapterId, chapterName, stats }: Prop
                     </div>
                 ) : (
                     <div
-                        className="font-semibold text-white"
+                        className="mt-4 font-semibold text-white"
                         style={{ fontSize: 22, lineHeight: 1.2, letterSpacing: '-0.015em' }}
                     >
                         Practice this chapter with <span className="text-amber-300">Crucible</span>
@@ -96,63 +107,17 @@ export default function CrucibleHeroRail({ chapterId, chapterName, stats }: Prop
                 </div>
             </div>
 
-            {/* SAMPLE QUESTION — only when we have a curated demo question */}
-            {sampleDemo && (
-                <div className="relative mx-3.5 mb-3 rounded-xl border border-white/[0.08] bg-white/[0.025] px-3 py-2.5">
-                    <div className="mb-1.5 flex items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.08em] text-zinc-500">
-                        {sampleDemo.examLabel && (
-                            <span className="rounded bg-sky-400/12 px-1.5 py-[1px] font-semibold tracking-[0.06em] text-sky-300">
-                                {sampleDemo.examLabel}
-                            </span>
-                        )}
-                        <span className="ml-auto">Sample · {sampleDemo.display_id}</span>
-                    </div>
-                    <div className="mb-2 text-zinc-100" style={{ fontSize: 13, lineHeight: 1.55 }}>
-                        <MathRenderer
-                            markdown={
-                                sampleDemo.questionMarkdown.length > 220
-                                    ? sampleDemo.questionMarkdown.slice(0, 220) + '…'
-                                    : sampleDemo.questionMarkdown
-                            }
-                            fontSize={13}
-                        />
-                    </div>
-                    {sampleDemo.options.length > 0 && (
-                        <div className="grid gap-1">
-                            {sampleDemo.options.slice(0, 3).map((opt) => {
-                                const isCorrect = opt.is_correct;
-                                return (
-                                    <div
-                                        key={opt.id}
-                                        className={`flex items-start gap-2 rounded-md border px-2 py-1.5 text-[11.5px] leading-snug ${
-                                            isCorrect
-                                                ? 'border-teal-400/40 bg-teal-400/10 text-white'
-                                                : 'border-white/[0.06] bg-black/30 text-zinc-300'
-                                        }`}
-                                    >
-                                        <span
-                                            className={`grid h-4 w-4 shrink-0 place-items-center rounded font-mono text-[9.5px] font-semibold uppercase ${
-                                                isCorrect ? 'bg-teal-400 text-[#001613]' : 'bg-white/10 text-zinc-300'
-                                            }`}
-                                        >
-                                            {opt.id}
-                                        </span>
-                                        <span className="flex-1" style={{ fontSize: 12.5, lineHeight: 1.5 }}>
-                                            <MathRenderer markdown={opt.text} fontSize={12.5} />
-                                        </span>
-                                        {isCorrect && (
-                                            <Check size={11} className="mt-0.5 shrink-0 text-teal-300" />
-                                        )}
-                                    </div>
-                                );
-                            })}
-                            {sampleDemo.options.length > 3 && correctOption && !sampleDemo.options.slice(0, 3).some((o) => o.is_correct) && (
-                                <div className="px-2 pt-0.5 text-[10px] italic text-zinc-500">
-                                    + {sampleDemo.options.length - 3} more options
-                                </div>
-                            )}
-                        </div>
-                    )}
+            {/* CYCLING SAMPLE — same QuestionCard design and timings as the
+                Crucible landing hero, parameterised with this chapter's curated
+                demo questions. Only renders when we have at least one usable demo. */}
+            {carouselQuestions.length > 0 && (
+                <div className="relative mx-3.5 mb-3">
+                    <CrucibleQuestionCarousel
+                        questions={carouselQuestions}
+                        subjectLabel={subjectLabel}
+                        chapterName={chapterName}
+                        subjectAccent={subjectAccent}
+                    />
                 </div>
             )}
 

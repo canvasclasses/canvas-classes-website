@@ -15,7 +15,7 @@ export interface ChapterCrucibleStats {
     totalPublished: number;   // total chapter questions (drives "247 questions" headline)
     pyqCount: number;         // questions where sourceType === 'PYQ'
     demoCount: number;        // questions flagged is_demo_question (≤ 25)
-    sampleDemo: SampleDemoQuestion | null;
+    sampleDemos: SampleDemoQuestion[];  // top-N curated demos for the rail carousel
 }
 
 export interface SampleDemoQuestion {
@@ -35,8 +35,12 @@ const EMPTY_STATS: ChapterCrucibleStats = {
     totalPublished: 0,
     pyqCount: 0,
     demoCount: 0,
-    sampleDemo: null,
+    sampleDemos: [],
 };
+
+// How many demo questions to fetch for the rail carousel. Mirrors the count
+// of hardcoded SAMPLE_QUESTIONS on the Crucible landing's QuestionCard.
+const CAROUSEL_SIZE = 4;
 
 // Returns the headline counts plus one sample demo question. Picks the
 // highest-scored demo question for the sample (Top PYQ first, then most
@@ -53,21 +57,20 @@ export async function getChapterCrucibleStats(chapterId: string): Promise<Chapte
             deleted_at: null,
         };
 
-        const [totalPublished, pyqCount, demoCount, sampleDoc] = await Promise.all([
+        const [totalPublished, pyqCount, demoCount, sampleDocs] = await Promise.all([
             Q.countDocuments(baseFilter).lean().exec(),
             Q.countDocuments({ ...baseFilter, 'metadata.sourceType': 'PYQ' }).lean().exec(),
             Q.countDocuments({ ...baseFilter, 'metadata.is_demo_question': true }).lean().exec(),
-            // Sample: prefer demo + PYQ + recent year. Sort by:
+            // Top CAROUSEL_SIZE demo questions for the rail carousel. Sort by:
             //   is_top_pyq desc, examDetails.year desc, display_id asc.
             // Limit fields — we only need question text, options, exam.
-            Q.findOne(
+            Q.find(
                 { ...baseFilter, 'metadata.is_demo_question': true },
                 {
                     display_id: 1,
                     type: 1,
                     options: 1,
                     'question_text.markdown': 1,
-                    'metadata.tags': 1,
                     'metadata.is_top_pyq': 1,
                     'metadata.sourceType': 1,
                     'metadata.examDetails': 1,
@@ -79,38 +82,39 @@ export async function getChapterCrucibleStats(chapterId: string): Promise<Chapte
                     'metadata.examDetails.year': -1,
                     display_id: 1,
                 })
+                .limit(CAROUSEL_SIZE)
                 .lean()
-                .exec() as unknown as Record<string, unknown> | null,
+                .exec() as unknown as Array<Record<string, unknown>>,
         ]);
 
-        let sampleDemo: SampleDemoQuestion | null = null;
-        if (sampleDoc) {
-            const meta = (sampleDoc.metadata ?? {}) as {
-                tags?: Array<{ tag_id?: string; weight?: number }>;
-                examDetails?: { exam?: string; year?: number; month?: string; shift?: string };
+        const sampleDemos: SampleDemoQuestion[] = (sampleDocs ?? []).map((doc) => {
+            const meta = (doc.metadata ?? {}) as {
+                examDetails?: { exam?: string; year?: number };
                 exam_source?: { exam?: string; year?: number };
             };
             const exam = meta.examDetails?.exam ?? meta.exam_source?.exam ?? null;
             const year = meta.examDetails?.year ?? meta.exam_source?.year ?? null;
             const examLabel = exam && year ? formatExam(exam, year) : null;
 
-            sampleDemo = {
-                display_id: String(sampleDoc.display_id),
-                type: String(sampleDoc.type),
-                questionMarkdown: String((sampleDoc.question_text as { markdown?: string })?.markdown ?? ''),
-                options: Array.isArray(sampleDoc.options)
-                    ? (sampleDoc.options as Array<Record<string, unknown>>).map((o) => ({
+            return {
+                display_id: String(doc.display_id),
+                type: String(doc.type),
+                questionMarkdown: String(
+                    (doc.question_text as { markdown?: string })?.markdown ?? ''
+                ),
+                options: Array.isArray(doc.options)
+                    ? (doc.options as Array<Record<string, unknown>>).map((o) => ({
                           id: String(o.id ?? ''),
                           text: String(o.text ?? ''),
                           is_correct: o.is_correct === true,
                       }))
                     : [],
                 examLabel,
-                primaryTagName: null, // filled by caller if it has the taxonomy lookup
+                primaryTagName: null,
             };
-        }
+        });
 
-        return { totalPublished, pyqCount, demoCount, sampleDemo };
+        return { totalPublished, pyqCount, demoCount, sampleDemos };
     } catch (err) {
         console.warn(`[chapterStats] falling back to empty stats for ${chapterId}:`, err);
         return EMPTY_STATS;

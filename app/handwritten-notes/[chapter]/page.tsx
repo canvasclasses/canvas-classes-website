@@ -291,6 +291,7 @@ export default async function ChapterNotesPage({
                                 <CrucibleHeroRail
                                     chapterId={meta.crucibleChapterId}
                                     chapterName={meta.chapterName}
+                                    subject={meta.subject}
                                     stats={crucibleStats}
                                 />
                             </div>
