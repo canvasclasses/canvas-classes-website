@@ -75,11 +75,20 @@ export default function CrucibleQuestionCarousel({
                 }
                 @keyframes crucibleHeroTimer { from { width: 0; } to { width: 100%; } }
             `}</style>
+            {/* Outer card. minHeight + flex column with `justify-content:
+                space-between` pins the footer (progress bar) to the bottom edge
+                so the card holds a stable height across cycles even when a
+                shorter question would otherwise let it collapse. Without this,
+                every 4.8s when a shorter question comes up, the card shrinks
+                and everything below it (in the rail and on the page) jumps. */}
             <div
                 key={idx}
                 style={{
                     position: 'relative',
                     width: '100%',
+                    minHeight: 380,
+                    display: 'flex',
+                    flexDirection: 'column',
                     padding: '18px 18px 14px',
                     background:
                         'linear-gradient(180deg, rgba(20,20,32,0.88), rgba(14,14,22,0.94))',
@@ -217,12 +226,16 @@ export default function CrucibleQuestionCarousel({
                         );
                     })}
                 </div>
+                {/* Footer pinned to the bottom of the fixed-height card via
+                    marginTop:auto — so shorter questions don't pull the
+                    progress bar up and cause the surrounding layout to dance. */}
                 <div
                     style={{
                         display: 'flex',
                         alignItems: 'center',
                         gap: 12,
-                        marginTop: 10,
+                        marginTop: 'auto',
+                        paddingTop: 10,
                     }}
                 >
                     <div
