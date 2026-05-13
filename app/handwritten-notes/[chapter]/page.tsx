@@ -334,63 +334,6 @@ export default async function ChapterNotesPage({
                         </section>
                     )}
 
-                    {/* Read alongside NCERT — chapter-specific deep links into
-                        the textbook PDF and the solutions hub. Only renders when
-                        the corresponding NCERT page actually exists for this
-                        chapter (slugs verified in chapterMetadata.ts), so we
-                        never link to 404s. Builds internal-link equity between
-                        /handwritten-notes/, /download-ncert-books/, and
-                        /ncert-solutions/. */}
-                    {(meta.ncertBooksSlug || meta.ncertSolutionsSlug) && (
-                        <section className="mb-12">
-                            <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-zinc-400">
-                                Read alongside NCERT
-                            </h2>
-                            <div className="grid gap-3 md:grid-cols-2">
-                                {meta.ncertBooksSlug && (
-                                    <Link
-                                        href={`/download-ncert-books/class-${meta.classLevel}/${meta.ncertBooksSlug}`}
-                                        className="group rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5 transition hover:border-indigo-500/40 hover:bg-indigo-500/[0.04]"
-                                    >
-                                        <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-indigo-300">
-                                            NCERT Textbook
-                                        </p>
-                                        <p className="mb-1 text-base font-semibold text-white group-hover:text-indigo-200">
-                                            {meta.chapterName} — Class {meta.classLevel} PDF
-                                        </p>
-                                        <p className="text-xs text-zinc-500">
-                                            Open the official NCERT textbook chapter — read
-                                            online or download free.
-                                        </p>
-                                        <p className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-indigo-300">
-                                            Open textbook <ChevronRight size={11} />
-                                        </p>
-                                    </Link>
-                                )}
-                                {meta.ncertSolutionsSlug && (
-                                    <Link
-                                        href={`/ncert-solutions/class-${meta.classLevel}/${meta.ncertSolutionsSlug}`}
-                                        className="group rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5 transition hover:border-emerald-500/40 hover:bg-emerald-500/[0.04]"
-                                    >
-                                        <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-emerald-300">
-                                            NCERT Solutions
-                                        </p>
-                                        <p className="mb-1 text-base font-semibold text-white group-hover:text-emerald-200">
-                                            {meta.chapterName} — Step-by-step Solutions
-                                        </p>
-                                        <p className="text-xs text-zinc-500">
-                                            Worked answers for every NCERT exercise question
-                                            in this chapter.
-                                        </p>
-                                        <p className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-emerald-300">
-                                            Open solutions <ChevronRight size={11} />
-                                        </p>
-                                    </Link>
-                                )}
-                            </div>
-                        </section>
-                    )}
-
                     {/* Related chapters */}
                     {related.length > 0 && (
                         <section className="mb-12">
