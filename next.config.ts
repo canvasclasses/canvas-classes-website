@@ -161,10 +161,15 @@ const nextConfig: NextConfig = {
       // cards. We point next/image at these so the optimizer proxies through
       // the same origin (canvasclasses.in/_next/image?…), bypassing browser
       // ad-blockers that otherwise blocklist drive.google.com requests.
+      // Pathname is `/**` (permissive) rather than `/thumbnail` (exact-match)
+      // because Next.js' pathname matcher is strict — even though the
+      // visible path component is `/thumbnail`, edge cases (subpath redirects,
+      // appended segments) were tripping the matcher in dev. Hostname is the
+      // real security boundary here.
       {
         protocol: 'https',
         hostname: 'drive.google.com',
-        pathname: '/thumbnail',
+        pathname: '/**',
       },
       // Drive's CDN — what the /thumbnail endpoint redirects to. Next's image
       // optimizer follows the redirect and fetches the image from this host
