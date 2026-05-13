@@ -270,6 +270,7 @@ export default async function ChapterNotesPage({
                         <ChapterNotesGrid
                             notes={chapterNotes}
                             crucibleChapterId={meta.crucibleChapterId}
+                            chapterName={meta.chapterName}
                         />
                     </section>
 

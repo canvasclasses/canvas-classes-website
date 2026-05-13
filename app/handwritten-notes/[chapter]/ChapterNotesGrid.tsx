@@ -15,6 +15,7 @@ import {
     X,
 } from 'lucide-react';
 import { toInlineViewerUrl, type HandwrittenNote } from '../../lib/handwrittenNotesData';
+import SideBySidePractice from './SideBySidePractice';
 
 // localStorage schema. Single key, two fields, easy to inspect/clear.
 //
@@ -57,13 +58,15 @@ function persistState(state: PersistedState) {
 interface Props {
     notes: HandwrittenNote[];
     crucibleChapterId?: string | null;
+    // Used by SideBySidePractice for the wrap-up screen ("X% on this {chapterName} sampler").
+    chapterName?: string;
 }
 
 // Chapter pages have 1–5 notes. The reader lives inline in the page —
 // tap a card → cards collapse into tabs and a full-width PDF embed
 // renders right below them. No modal, no new tab, no full-viewport
 // takeover. Hero + breadcrumb stay visible; user can scroll up at any time.
-export default function ChapterNotesGrid({ notes, crucibleChapterId }: Props) {
+export default function ChapterNotesGrid({ notes, crucibleChapterId, chapterName }: Props) {
     const params = useParams<{ chapter: string }>();
     const chapterSlug = params?.chapter || '';
 
@@ -283,13 +286,18 @@ export default function ChapterNotesGrid({ notes, crucibleChapterId }: Props) {
                                     className="w-full h-full border-0 md:border-r md:border-slate-800"
                                     title={active.title}
                                 />
-                                {/* `?mode=browse` skips the Choose-mode chooser and lands
-                                    directly on the topic-organised browse view. */}
-                                <iframe
-                                    src={`/the-crucible/${crucibleChapterId}?mode=browse`}
-                                    className="w-full h-full border-0 hidden md:block"
-                                    title={`Crucible practice for ${chapterSlug}`}
-                                />
+                                {/* Right pane — curated demo practice from the Crucible
+                                    question bank (questions flagged is_demo_question).
+                                    Hits /api/v2/notes-quicktest/[chapterId] with 24h ISR,
+                                    so 1,000 concurrent users → 0 Mongo hits. Native
+                                    component instead of an iframe — no double-bundle,
+                                    portable to the future mobile app. */}
+                                <div className="hidden h-full w-full md:block">
+                                    <SideBySidePractice
+                                        chapterId={crucibleChapterId}
+                                        chapterName={chapterName ?? 'this chapter'}
+                                    />
+                                </div>
                             </div>
                         ) : (
                             <iframe
