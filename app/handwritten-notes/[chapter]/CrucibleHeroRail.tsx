@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default function CrucibleHeroRail({ chapterId, chapterName, stats }: Props) {
-    const { totalPublished, pyqCount, demoCount, sampleDemo } = stats;
+    const { totalPublished, pyqCount, sampleDemo } = stats;
     const pyqPct = totalPublished > 0 ? Math.round((pyqCount / totalPublished) * 100) : 0;
     const correctOption = sampleDemo?.options.find((o) => o.is_correct);
 
@@ -156,9 +156,12 @@ export default function CrucibleHeroRail({ chapterId, chapterName, stats }: Prop
                 </div>
             )}
 
-            {/* STATS — Questions / PYQ rate / Free demo. Sized up slightly for
-                proportional balance with the bigger headline + CTA above/below. */}
-            <div className="relative grid grid-cols-3 border-y border-dashed border-white/[0.06] px-5 py-3">
+            {/* STATS — Questions + PYQ rate. The "Free demo" tile was removed
+                per project decision: the rail is just a CTA into Crucible, not a
+                free-trial pitch. Students discover the 25-question demo set
+                organically when they open a note and toggle side-by-side
+                practice — no need to advertise it here. */}
+            <div className="relative grid grid-cols-2 border-y border-dashed border-white/[0.06] px-5 py-3">
                 <div className="pr-3">
                     <div className="font-sans text-[19px] font-semibold leading-tight tracking-tight text-white">
                         {totalPublished}
@@ -167,21 +170,13 @@ export default function CrucibleHeroRail({ chapterId, chapterName, stats }: Prop
                         Questions
                     </div>
                 </div>
-                <div className="border-x border-dashed border-white/[0.06] px-3">
+                <div className="border-l border-dashed border-white/[0.06] pl-3">
                     <div className="font-sans text-[19px] font-semibold leading-tight tracking-tight text-white">
                         {pyqPct}
                         <span className="text-[12px] font-normal text-zinc-500">%</span>
                     </div>
                     <div className="mt-1 font-mono text-[9.5px] uppercase tracking-[0.1em] text-zinc-500">
                         PYQ rate
-                    </div>
-                </div>
-                <div className="pl-3">
-                    <div className="font-sans text-[19px] font-semibold leading-tight tracking-tight text-white">
-                        {demoCount > 0 ? demoCount : '—'}
-                    </div>
-                    <div className="mt-1 font-mono text-[9.5px] uppercase tracking-[0.1em] text-zinc-500">
-                        Free demo
                     </div>
                 </div>
             </div>
@@ -203,10 +198,7 @@ export default function CrucibleHeroRail({ chapterId, chapterName, stats }: Prop
                     <ArrowRight size={18} strokeWidth={2.25} />
                 </Link>
                 <div className="mt-3 text-center text-[12px] text-zinc-500">
-                    <b className="font-semibold text-zinc-300">
-                        First {Math.min(demoCount || 10, 25)} questions free
-                    </b>{' '}
-                    · No card · Worked solutions
+                    Worked solutions · Adaptive practice · 12 years of JEE/NEET PYQs
                 </div>
             </div>
         </aside>
