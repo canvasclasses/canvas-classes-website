@@ -6,6 +6,7 @@ import {
   getRelatedCrucibleQuestions,
   getTaxonomy,
 } from '../../actions';
+import { formatExamLabel } from '../../components/examLabel';
 import QuestionDetailPage from './QuestionDetailPage';
 
 // ISR: revalidate daily — solutions updated infrequently
@@ -42,10 +43,12 @@ export async function generateMetadata({
     .trim()
     .substring(0, 160);
 
-  const examSource = question.metadata.exam_source;
-  const examLabel = examSource?.exam && examSource?.year
-    ? `${examSource.exam} ${examSource.year}${examSource.shift ? ` ${examSource.shift}` : ''}`
-    : 'JEE PYQ';
+  // Exam label uses the shared `formatExamLabel` helper.
+  // See app/the-crucible/components/examLabel.ts.
+  const examLabel = formatExamLabel(
+    question.metadata.examDetails,
+    question.metadata.exam_source
+  ) ?? 'JEE PYQ';
 
   const title = `${question.display_id}: ${rawText.substring(0, 55)}... | ${examLabel} | Canvas Classes`;
   const description = `${examLabel} question on ${chapterName}. ${rawText.substring(0, 120)}. Full solution${question.solution.video_url ? ' with video explanation' : ''} by Paaras Sir.`;

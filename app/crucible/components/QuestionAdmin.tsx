@@ -187,7 +187,7 @@ export default function QuestionAdmin() {
           difficulty: difficulty as 'Easy' | 'Medium' | 'Hard',
           chapter_id: chapterId,
           tags: selectedTags.map(tagId => ({ tag_id: tagId, weight: 1.0 / selectedTags.length })),
-          is_pyq: false,
+          // Phase 2 (2026-05-07): legacy `is_pyq` no longer set on new questions.
           is_top_pyq: false,
         },
       };

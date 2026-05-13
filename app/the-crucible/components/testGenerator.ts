@@ -112,7 +112,9 @@ function scoreQuestion(
     } else {
         score *= diffLevel === 3 ? 1.3 : 1.0;
     }
-    if (mix === 'pyq' && !q.metadata.is_pyq) score -= 200; // heavily deprioritise non-PYQs
+    // Bridge: prefer canonical sourceType, fall back to legacy is_pyq.
+    const isPyqQ = q.metadata.sourceType === 'PYQ' || q.metadata.is_pyq === true;
+    if (mix === 'pyq' && !isPyqQ) score -= 200; // heavily deprioritise non-PYQs
 
     return score;
 }

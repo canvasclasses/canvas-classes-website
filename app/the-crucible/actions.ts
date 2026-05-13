@@ -25,12 +25,13 @@ interface MongoQuestionDoc {
     chapter_id?: string;
     subject?: string;
     tags?: Array<{ tag_id: string; weight: number }>;
-    is_pyq?: boolean;
-    is_top_pyq?: boolean;
-    exam_source?: Record<string, unknown>;
-    examBoard?: string;
+    is_pyq?: boolean;            // LEGACY — bridged via sourceType==='PYQ'
+    is_top_pyq?: boolean;        // KEEP — drives "Top Questions" feature
+    exam_source?: Record<string, unknown>;  // LEGACY — bridged via examDetails
+    examBoard?: string;          // LEGACY — bridged via applicableExams[0]
     sourceType?: string;
     examDetails?: Record<string, unknown>;
+    applicableExams?: string[];  // canonical replacement for examBoard
   };
   svg_scales?: Record<string, number>;
   updated_at?: Date;
@@ -99,9 +100,10 @@ export async function getQuestionBySlug(
         chapter_id: doc.metadata?.chapter_id || '',
         subject: (doc.metadata?.subject || 'chemistry') as 'chemistry' | 'physics' | 'maths' | 'biology',
         tags: doc.metadata?.tags || [],
-        is_pyq: doc.metadata?.is_pyq || false,
-        is_top_pyq: doc.metadata?.is_top_pyq || false,
-        exam_source: doc.metadata?.exam_source,
+        // Modern field is the source of truth; fall back to legacy only if sourceType missing.
+        is_pyq: doc.metadata?.sourceType === 'PYQ' || doc.metadata?.is_pyq || false,
+        is_top_pyq: doc.metadata?.is_top_pyq || false,  // KEEP — Top Questions feature
+        exam_source: doc.metadata?.examDetails || doc.metadata?.exam_source,
       },
       svg_scales: doc.svg_scales || {},
       updated_at: doc.updated_at?.toISOString?.() || new Date().toISOString(),
@@ -167,8 +169,12 @@ export async function getRelatedCrucibleQuestions(
 
     const docs = await QuestionV2.find(
       { 'metadata.chapter_id': chapterId, deleted_at: null, status: 'published', _id: { $ne: excludeId } },
-      { _id: 1, display_id: 1, 'question_text.markdown': 1, 'metadata.difficultyLevel': 1, 'metadata.exam_source': 1 }
+      // Project both modern (examDetails) and legacy (exam_source) so the
+      // bridge below works during the transition. Once legacy field is dropped,
+      // exam_source from the projection can be removed.
+      { _id: 1, display_id: 1, 'question_text.markdown': 1, 'metadata.difficultyLevel': 1, 'metadata.examDetails': 1, 'metadata.exam_source': 1 }
     )
+      // KEEP is_top_pyq sort — drives "Top Questions" feature ordering.
       .sort({ 'metadata.is_top_pyq': -1, display_id: 1 })
       .limit(limit)
       .lean();
@@ -179,7 +185,8 @@ export async function getRelatedCrucibleQuestions(
       question_text: d.question_text?.markdown || '',
       metadata: {
         difficultyLevel: d.metadata?.difficultyLevel || 3,
-        exam_source: d.metadata?.exam_source,
+        // Bridge: modern examDetails first, fall back to legacy exam_source.
+        exam_source: d.metadata?.examDetails || d.metadata?.exam_source,
       },
     }));
   } catch {
@@ -193,8 +200,10 @@ export async function getAllPublishedPYQSlugs(): Promise<Array<{ id: string; dis
     await connectToDatabase();
     const { QuestionV2 } = await import('@/lib/models/Question.v2');
 
+    // PYQ filter migrated from legacy `is_pyq: true` to canonical `sourceType: 'PYQ'`.
+    // The two fields are kept in sync today (only ~2 known drift cases out of 4,750+).
     const docs = await QuestionV2.find(
-      { deleted_at: null, status: 'published', 'metadata.is_pyq': true },
+      { deleted_at: null, status: 'published', 'metadata.sourceType': 'PYQ' },
       { _id: 1, display_id: 1, updated_at: 1 }
     )
       .lean();
@@ -400,11 +409,13 @@ export async function getChapterQuestions(chapterId: string, examBoard?: 'JEE' |
                 chapter_id: q.metadata?.chapter_id || '',
                 subject: (q.metadata?.subject || 'chemistry') as 'chemistry' | 'physics' | 'maths' | 'biology',
                 tags: q.metadata?.tags || [],
-                is_pyq: q.metadata?.is_pyq || false,
-                is_top_pyq: q.metadata?.is_top_pyq || false,
-                exam_source: q.metadata?.exam_source as Record<string, unknown> | undefined,
-                // New exam taxonomy fields — needed for correct filtering in BrowseView
-                examBoard: q.metadata?.examBoard as 'JEE' | 'NEET' | undefined,
+                // Modern field is the source of truth; fall back to legacy only if sourceType missing.
+                is_pyq: q.metadata?.sourceType === 'PYQ' || q.metadata?.is_pyq || false,
+                is_top_pyq: q.metadata?.is_top_pyq || false,  // KEEP — Top Questions feature
+                exam_source: (q.metadata?.examDetails || q.metadata?.exam_source) as Record<string, unknown> | undefined,
+                // examBoard kept in response shape for client-side compat;
+                // sourced from canonical applicableExams[0] with legacy fallback.
+                examBoard: ((q.metadata?.applicableExams?.[0]) || q.metadata?.examBoard) as 'JEE' | 'NEET' | undefined,
                 sourceType: q.metadata?.sourceType as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined,
                 examDetails: q.metadata?.examDetails as Record<string, unknown> | undefined,
             },

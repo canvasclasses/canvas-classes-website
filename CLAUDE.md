@@ -2,6 +2,18 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 0. BEFORE YOU CODE — REQUIRED FOR ALL TASKS
+
+Before writing any code or running any script:
+
+1. **State assumptions explicitly.** If a request could mean two things (e.g., "fix the question UI" — which component?), name both interpretations and ask.
+2. **Name the invariants you'll preserve** when touching Crucible-governed paths (`app/the-crucible/`, `app/api/v2/`, the persona pipeline). Example: "I will not touch `actions.ts` outside the broken function."
+3. **For any script writing to `questions_v2`:** state how many documents will be affected and what the rollback is, before running.
+
+If uncertain about scope, stop and ask. Do not pick silently.
+
+---
+
 > **Before changing anything inside `app/the-crucible/`, `app/crucible/admin/`, `app/api/v2/`, `lib/models/UserProgress.ts`, `lib/models/StudentChapterProfile.ts`, `lib/recommendationEngine.ts`, or `lib/models/ResourceLink.ts` — read [`_agents/CRUCIBLE_ARCHITECTURE.md`](_agents/CRUCIBLE_ARCHITECTURE.md).** It is the canonical reference for Crucible's structure, the persona pipeline, the recommendation bridge, and the invariants that must not be broken. If anything in this file or in code comments contradicts it, that document wins; the fix is to update the doc, never to silently diverge.
 
 ---
@@ -84,7 +96,7 @@ Scripts go in `scripts/`, named `insert_{chapter}_b{N}.js`. Each script:
 2. Queries `questions_v2` to find the current max `display_id` before assigning new ones
 3. Checks for duplicate `display_id` values before inserting
 4. Uses `uuidv4()` for `_id` — never `new ObjectId()`
-5. Sets `deleted_at: null`, `status: 'review'` on all new documents
+5. Sets `deleted_at: null`, `status: 'published'` on all new documents
 6. Disconnects after completion
 
 Never use `node -e "..."` for scripts containing LaTeX — shell escaping corrupts backslashes. Always write a `.js` file and run `node scripts/file.js`.
@@ -122,6 +134,77 @@ When updating questions in `questions_v2`, write to the **canonical** schema fie
 | `options[i].id` | (required — use `'a'`, `'b'`, `'c'`, `'d'`) |
 
 If you read a doc and see a legacy field present alongside the canonical one, that's a migration artifact — write to canonical and `$unset` the legacy field in the same operation. Audit scripts must read the canonical field.
+
+### Status policy (project decision 2026-05-07)
+
+**All new questions MUST be inserted with `status: 'published'`.** There is no review gate. The admin dashboard does not show a separate "review" workflow; questions go live the moment they're created.
+
+If a question has a problem, **flag it via `flags[]`** instead of holding it in `review` status. The flag system is the single canonical mechanism for "needs attention" signalling.
+
+| Path | Required status |
+|---|---|
+| Admin UI manual save | `'published'` |
+| Bulk Import Modal | `'published'` |
+| AI agent batch scripts (insert-template.js) | `'published'` |
+| `POST /api/v2/questions` default | `'published'` |
+
+**Do NOT** set `status: 'review'` or `status: 'draft'` in any new ingestion pathway. The `'review'` and `'draft'` enum values are kept in the schema for compatibility only — they exist for the admin UI's manual override case (rare).
+
+### Exam attribution canonical values (project decision 2026-05-07)
+
+When setting `metadata.examDetails.exam`:
+
+| Use this | Never use this | Notes |
+|---|---|---|
+| `'JEE_Main'` | `'JEE Main'`, `'Mains'`, `'JEE Mains'` | Modern AIEEE-descended exam |
+| `'JEE_Advanced'` | `'IIT JEE'`, `'JEE Adv.'`, `'JEE Advanced'` | Was historically called "IIT JEE" — that legacy term ALWAYS maps to JEE_Advanced, never JEE_Main |
+| `'NEET_UG'` | `'NEET'` | NEET = NEET_UG; the bare `'NEET'` value should not be used in `examDetails.exam` |
+| `'NEET_PG'` | (rare in chem bank) | Postgraduate medical entrance |
+
+When setting `metadata.examDetails.shift`:
+
+| Use this | Never use this |
+|---|---|
+| `'Shift-I'` | `'Morning'`, `'M'`, `'Shift 1'` (with space), `'shift-I'` (lowercase) |
+| `'Shift-II'` | `'Evening'`, `'E'`, `'Shift 2'` (with space), `'shift-II'` |
+| (omit field) | `'null'` (the literal string — should be `null` or absent) |
+
+Morning/Shift-I and Evening/Shift-II are equivalent. Always store the `Shift-I` / `Shift-II` form. **NEET is a single-shift exam** — leave `shift: null` for NEET PYQs.
+
+### Rendering exam attribution — use the shared helper
+
+When rendering "JEE Main 2024 · Jan · S-I" style labels in any UI surface, **always use [`formatExamLabel`](app/the-crucible/components/examLabel.ts)**. Never write inline rendering logic — multiple sites had drifted into incompatible bespoke formatters before the consolidation on 2026-05-07.
+
+```ts
+import { formatExamLabel } from '@/app/the-crucible/components/examLabel';
+
+const label = formatExamLabel(
+  question.metadata.examDetails,    // canonical, modern
+  question.metadata.exam_source     // legacy fallback
+);
+if (label) <span>{label}</span>     // null when no year is available anywhere
+```
+
+Output format (consistent across `BrowseView`, `QuestionDetailPage`, page metadata, `AdaptiveQuestionCard`):
+- `JEE Main 2024 · Jan · S-I` — full data
+- `JEE Main 2024 · Jan` — month only (no shift; e.g. NEET)
+- `JEE Main 2024 · S-I` — shift only (no month)
+- `JEE Main 2024` — neither
+- `null` — no year available; caller hides the badge
+
+The helper handles: exam-name normalization (`JEE_Main` → `JEE Main`, `NEET_UG` → `NEET`, legacy `IIT JEE` → `JEE Adv`), month abbreviation (`January` → `Jan`), shift compression (`Shift-I` → `S-I`, `Session-II` → `S-II`), and field fallback (modern → legacy per-key).
+
+### Legacy field deprecation status
+
+| Field | Status (as of 2026-05-07) | Action |
+|---|---|---|
+| `metadata.difficulty` (Easy/Medium/Hard enum) | **Removed.** $unset on 5,505 chemistry docs. Schema field still defined; safe to remove next Phase 4. | Don't write or read. Use `difficultyLevel` (1-5). |
+| `metadata.is_pyq` (boolean) | **Phase 1+2 complete.** Read paths migrated to `sourceType === 'PYQ'`. **Writes stopped** on new questions (insert template, bulk import, admin UI, API auto-fill all retired). Existing data still has the field; Phase 4 will $unset it. | Don't read or write. Use `sourceType === 'PYQ'`. The shared `isPyq()` helper in `app/the-crucible/components/examLabel.ts` handles the bridge. |
+| `metadata.examBoard` (single-valued) | **Phase 1+2 complete.** Read paths migrated to `applicableExams[0]`. **Writes stopped** — API no longer auto-syncs from applicableExams on POST/PATCH. | Don't read or write. Use `applicableExams[0]`. |
+| `metadata.exam_source` (legacy struct) | **Phase 1+2 complete.** Read paths migrated to `examDetails`. **Writes stopped** on new questions. | Don't read or write. Use `examDetails`. The `formatExamLabel()` helper handles fallback for older docs. |
+| `metadata.is_top_pyq` (boolean) | **KEEP.** Powers "Top Questions" practice mode (admin star-mark). | Default false on new questions. The admin curates via the dashboard. **Never legacy.** |
+
+**Phase 4** ($unset legacy field data + remove from `Question.v2.ts` schema + remove related Mongoose indexes) ships ~2 weeks after Phase 2 is stable. After Phase 4 the bridge fallbacks in helpers and read sites can be deleted (single-canonical-source mode).
 
 ---
 
@@ -193,6 +276,13 @@ The taxonomy file is auto-updated by the dashboard at `/crucible/admin/taxonomy`
 | V2 questions API | `app/api/v2/questions/route.ts` |
 | Admin question editor | `app/crucible/admin/page.tsx` |
 | Student landing | `app/the-crucible/page.tsx` |
+
+### Simplicity Constraint
+
+- Don't add a new Mongoose model unless explicitly requested.
+- Don't add a new API route as a "while I'm here" improvement.
+- Don't create a shared utility function unless it's called from 3+ places.
+- If a solution works in 30 lines, don't write 80.
 
 ### Design System (Dark Theme Only)
 
@@ -267,12 +357,30 @@ These rules are **non-negotiable**. Every agent must follow them when creating o
 - In-memory rate limiters (`Map`-based) must include periodic TTL cleanup and a hard cap on entries (e.g. 5000) to prevent OOM under sustained unique-IP traffic.
 - Add a comment noting that Redis-based rate limiting (e.g. Upstash) should replace in-memory maps at production scale.
 
-### 8.10 Post-Build Security Check
+### 8.10 Pre-Task Plan + Post-Task Verification
 
-After completing any feature that adds or modifies API routes, **always run this checklist before considering the work done**:
+For any task with 3+ steps, state the plan first:
+
+```
+1. [What I'll change] → verify: [how I'll confirm it worked]
+2. [What I'll change] → verify: [how I'll confirm it worked]
+```
+
+For tasks that add or modify API routes, additionally run the security checklist before considering the work done:
 
 1. Does every mutating endpoint have an auth guard?
 2. Is the request body validated with a schema or whitelist?
 3. Do error responses avoid leaking internal details?
 4. Are database queries bounded with `.limit()`?
 5. Are there any new local auth helper functions that should use the shared imports instead?
+
+---
+
+## 9. SURGICAL CHANGES — ONLY TOUCH WHAT THE TASK REQUIRES
+
+- Fix a bug in one function → don't refactor adjacent helpers.
+- Add a field to one API route → don't restructure the whole handler.
+- Update a component → match existing Tailwind patterns; don't introduce new color tokens or class names.
+- Notice unrelated dead code → mention it in your response, but don't delete it.
+
+Every changed line must trace directly to the user's request. If it doesn't, revert it.

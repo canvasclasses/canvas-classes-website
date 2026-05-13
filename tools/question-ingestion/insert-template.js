@@ -128,15 +128,19 @@ function buildDoc(q, displayId) {
             subject: 'chemistry',
             difficultyLevel: m.difficultyLevel,
             tags: m.tags,
+            // Canonical exam taxonomy (project decision 2026-05-07).
+            // Legacy fields `examBoard`, `is_pyq`, `exam_source` are no longer
+            // written on new questions — Phase 4 will drop them from the
+            // schema entirely. is_top_pyq stays — admin star-mark feature.
             applicableExams: m.applicableExams,
             sourceType: m.sourceType,
             examDetails: m.examDetails,
-            examBoard: m.examBoard,
-            is_pyq: m.is_pyq ?? (m.sourceType === 'PYQ'),
-            exam_source: m.exam_source,
             is_top_pyq: m.is_top_pyq ?? false,
         },
-        status: 'review',
+        // Status policy (set by project decision 2026-05-07):
+        // All new questions go directly to 'published'. There is no review
+        // gate. If a question has a problem, flag it via flags[] instead.
+        status: 'published',
         quality_score: 50,
         needs_review: false,
         version: 1,

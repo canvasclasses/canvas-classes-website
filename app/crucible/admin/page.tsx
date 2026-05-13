@@ -69,8 +69,8 @@ interface Question {
             day?: number;
             shift?: string;
         };
-        is_pyq: boolean;
-        is_top_pyq: boolean;
+        is_pyq?: boolean;        // LEGACY — Phase 2 stopped writing this; bridge in actions.ts derives it from sourceType
+        is_top_pyq?: boolean;    // KEEP — drives Top Questions feature
         source_id?: string;
         microConcept?: string;
         isMultiConcept?: boolean;
@@ -465,14 +465,19 @@ function AdminPageContent() {
             ch12_carbonyl: 'ALDO', ch12_coord: 'CORD', ch12_dblock: 'DNF', ch12_electrochem: 'EC',
             ch12_haloalkanes: 'HALO', ch12_kinetics: 'CK', ch12_pblock: 'PB12',
             ch12_salt: 'SALT', ch12_solutions: 'SOL',
-            // Physics
-            ph11_units: 'UNIT', ph11_kinematics1d: 'K1D', ph11_kinematics2d: 'K2D',
+            // Physics — Mathongo / NCERT-aligned (32 chapters)
+            ph11_math_phy: 'MIP', ph11_units: 'UNIT', ph11_kinematics1d: 'K1D', ph11_kinematics2d: 'K2D',
             ph11_nlm: 'NLM', ph11_wep: 'WEP', ph11_com_mom: 'COM', ph11_rotation: 'ROT',
-            ph11_gravitation: 'GRAV', ph11_matter: 'MATT', ph11_thermo_phy: 'PHTH',
+            ph11_gravitation: 'GRAV', ph11_solids: 'SOLD', ph11_fluids: 'FLUI',
             ph11_shm: 'SHM', ph11_waves: 'WAVE',
-            ph12_electrostatics: 'ELST', ph12_current: 'CURR', ph12_magnetism: 'MAG',
-            ph12_emi: 'EMI', ph12_ac: 'ACE', ph12_ray_optics: 'ROPY',
-            ph12_wave_optics: 'WVOP', ph12_modern: 'MOD', ph12_semiconductors: 'SEMI',
+            ph11_thermal_props: 'THPR', ph11_thermo: 'TDYN', ph11_ktg: 'KTG',
+            ph12_electrostatics: 'ELST', ph12_capacitance: 'CAPC', ph12_current: 'CURR',
+            ph12_mag_matter: 'MAGM', ph12_moving_charges: 'MVCH',
+            ph12_emi: 'EMI', ph12_ac: 'ACUR', ph12_ray_optics: 'ROPY',
+            ph12_wave_optics: 'WVOP',
+            ph12_dual_nature: 'DUAL', ph12_atoms: 'ATPH', ph12_nuclei: 'NUCL',
+            ph12_em_waves: 'EMW', ph12_semiconductors: 'SEMI',
+            ph12_communication: 'COMM', ph12_exp_phy: 'EXPP',
             // Maths (Competitive Syllabus — 33 chapters)
             ma_basic_math: 'BOMA', ma_quadratic: 'QUAD', ma_complex: 'CMPL',
             ma_sequence: 'SQSR', ma_pnc: 'PMCM', ma_binomial: 'BNML',
@@ -510,10 +515,13 @@ function AdminPageContent() {
                 difficultyLevel: 3,
                 chapter_id: defaultChapter,
                 tags: [],
-                is_pyq: false,
+                // Phase 2 (2026-05-07): legacy `is_pyq` no longer set on new
+                // questions. The admin can star-mark via is_top_pyq later.
                 is_top_pyq: false
             },
-            status: 'draft'
+            // Status policy (set by project decision 2026-05-07):
+            // All new questions go directly to 'published'. There is no review gate.
+            status: 'published'
         };
 
         try {
@@ -952,8 +960,13 @@ function AdminPageContent() {
                                 const hasChapter = !!q.metadata.chapter_id;
                                 const hasPrimaryTag = isTagValid(q.metadata.tags);
                                 const statusDot = !hasChapter ? '🔴' : !hasPrimaryTag ? '🟡' : '🟢';
+                                // Bridge: prefer modern examDetails, fall back to legacy exam_source.
+                                const det = q.metadata?.examDetails;
                                 const src = q.metadata?.exam_source;
-                                const srcLabel = src ? ` [${src.exam?.replace('JEE ', '') ?? ''} ${src.year ?? ''} ${src.shift ? src.shift[0] : ''}]` : '';
+                                const examName = det?.exam?.replace(/_/g, ' ').replace('JEE ', '') ?? src?.exam?.replace('JEE ', '') ?? '';
+                                const examYear = det?.year ?? src?.year;
+                                const examShift = det?.shift ?? src?.shift;
+                                const srcLabel = (det?.year || src?.year) ? ` [${examName} ${examYear ?? ''} ${examShift ? examShift.replace(/^Shift-/, '') : ''}]` : '';
                                 const isSelected = selectedQuestions.has(q._id);
                                 return (
                                     <label key={q._id} className={`flex items-center gap-2 px-2 py-1 rounded cursor-pointer hover:bg-gray-700/30 ${isSelected ? 'bg-green-900/20' : ''}`}>
@@ -992,8 +1005,13 @@ function AdminPageContent() {
                                 const hasChapter = !!q.metadata.chapter_id;
                                 const hasPrimaryTag = isTagValid(q.metadata.tags);
                                 const statusDot = !hasChapter ? '🔴' : !hasPrimaryTag ? '🟡' : '🟢';
+                                // Bridge: prefer modern examDetails, fall back to legacy exam_source.
+                                const det = q.metadata?.examDetails;
                                 const src = q.metadata?.exam_source;
-                                const srcLabel = src ? ` [${src.exam?.replace('JEE ', '') ?? ''} ${src.year ?? ''} ${src.shift ? src.shift[0] : ''}]` : '';
+                                const examName = det?.exam?.replace(/_/g, ' ').replace('JEE ', '') ?? src?.exam?.replace('JEE ', '') ?? '';
+                                const examYear = det?.year ?? src?.year;
+                                const examShift = det?.shift ?? src?.shift;
+                                const srcLabel = (det?.year || src?.year) ? ` [${examName} ${examYear ?? ''} ${examShift ? examShift.replace(/^Shift-/, '') : ''}]` : '';
                                 return (
                                     <option key={q._id} value={q._id}>
                                         {statusDot} {q.display_id}{srcLabel}: {q.question_text?.markdown?.substring(0, 40) || "No text"}...

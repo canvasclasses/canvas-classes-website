@@ -18,6 +18,11 @@ interface ImportQuestion {
     chapter_id?: string;
     difficulty?: string;
     tags?: Array<{ tag_id: string; weight: number }>;
+    // Modern canonical fields:
+    sourceType?: string;
+    examDetails?: Record<string, unknown>;
+    applicableExams?: string[];
+    // Legacy (still accepted from old payloads, but not written to DB):
     exam_source?: Record<string, unknown>;
     is_pyq?: boolean;
   };
@@ -59,7 +64,14 @@ function normalizeQuestion(raw: ImportQuestion, chapterId: string): Record<strin
     : raw.tag_id
       ? [{ tag_id: raw.tag_id, weight: 1.0 }]
       : [];
-  const examSource = raw.metadata?.exam_source || raw.exam_source || null;
+
+  // Phase 2 (2026-05-07): legacy `is_pyq` / `exam_source` are no longer set on
+  // new imports. If the import payload provides modern fields (`sourceType`,
+  // `examDetails`), they pass through as-is. Old payloads carrying only legacy
+  // fields will need to be remapped at the source.
+  const sourceType = raw.metadata?.sourceType ?? null;
+  const examDetails = raw.metadata?.examDetails ?? null;
+  const applicableExams = raw.metadata?.applicableExams ?? null;
 
   return {
     display_id: raw.display_id || '',
@@ -72,9 +84,12 @@ function normalizeQuestion(raw: ImportQuestion, chapterId: string): Record<strin
       difficulty: raw.difficulty || raw.metadata?.difficulty || 'Medium',
       chapter_id: chId,
       tags,
-      is_pyq: raw.metadata?.is_pyq ?? !!examSource,
+      // Canonical exam taxonomy:
+      sourceType,
+      examDetails,
+      applicableExams,
+      // is_top_pyq is NOT legacy — admin star-mark feature.
       is_top_pyq: false,
-      exam_source: examSource,
       source_reference: {
         type: 'json_import',
         verified_against_source: false,
@@ -82,7 +97,9 @@ function normalizeQuestion(raw: ImportQuestion, chapterId: string): Record<strin
         verified_by: 'admin_import',
       },
     },
-    status: 'review',
+    // Status policy (set by project decision 2026-05-07):
+    // All new questions go directly to 'published'. There is no review gate.
+    status: 'published',
     version: 1,
     quality_score: 80,
     created_by: 'admin_import',
@@ -425,7 +442,7 @@ export default function BulkImportModal({ onClose, onImported, defaultChapterId 
                   ))}
                 </div>
               )}
-              <p className="text-sm text-gray-500">Questions are in <code className="text-gray-300">review</code> status. Open the admin dashboard to review and publish them.</p>
+              <p className="text-sm text-gray-500">Questions are imported with <code className="text-gray-300">published</code> status and are immediately visible to students. Use flags if anything needs attention.</p>
             </div>
           )}
         </div>

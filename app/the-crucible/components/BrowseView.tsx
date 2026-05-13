@@ -10,6 +10,7 @@ import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_fr
 import { difficultyColor } from '@/lib/difficultyUtils';
 import { getTopicSortKey, hasNcertOrder, NCERT_TOPIC_ORDER } from '@/app/the-crucible/lib/ncertTopicOrder';
 import { track } from '@/lib/analytics/mixpanel';
+import { formatExamLabel, isPyq, isJeeAdvancedPyq, isJeeMainPyq } from './examLabel';
 
 // ───────────────────────────── Helpers ─────────────────────────────
 async function fetchOptionStats(qid: string): Promise<Record<string, number>> {
@@ -268,23 +269,20 @@ export default function BrowseView({
     return { perTopic: counts, all: { total: totalAll, solved: solvedAll } };
   }, [topics, questions, persistedAttempts]);
 
-  // Available years for selected exam filter
+  // Available years for selected exam filter — uses canonical helpers from
+  // examLabel.ts which prefer modern fields (sourceType, examDetails) and
+  // fall back to legacy (is_pyq, exam_source) only when modern is missing.
   const availableYears = useMemo(() => {
     if (examFilter !== 'mains' && examFilter !== 'advanced') return [];
     const years = questions
-      .filter(q => {
-        const exam = (q.metadata.exam_source?.exam ?? '').toLowerCase();
-        return examFilter === 'mains'
-          ? q.metadata.is_pyq && /main/i.test(exam)
-          : q.metadata.is_pyq && /adv/i.test(exam);
-      })
-      .map(q => q.metadata.exam_source?.year)
+      .filter(q => examFilter === 'mains' ? isJeeMainPyq(q.metadata) : isJeeAdvancedPyq(q.metadata))
+      .map(q => (q.metadata.examDetails?.year ?? q.metadata.exam_source?.year))
       .filter((y): y is number => typeof y === 'number');
     return [...new Set(years)].sort((a, b) => b - a);
   }, [questions, examFilter]);
 
   // Sort: NCERT topic order if available, then PYQ-first, year DESC, display_id ASC
-  const isPYQ = (q: Question) => q.metadata.sourceType === 'PYQ' || q.metadata.is_pyq === true;
+  const isPYQ = (q: Question) => isPyq(q.metadata);
   const yearOf = (q: Question) => q.metadata.examDetails?.year ?? q.metadata.exam_source?.year ?? -1;
 
   const sortQuestions = (a: Question, b: Question): number => {
@@ -307,19 +305,19 @@ export default function BrowseView({
     const norm = searchQuery.trim().toLowerCase();
     return questions
       .filter(q => {
-        // Exam filter
+        // Exam filter — uses canonical helpers (with legacy fallback).
         if (examFilter === 'starred') {
           if (!starred.has(q.id)) return false;
         } else if (examFilter === 'non-pyq') {
-          if (q.metadata.is_pyq) return false;
+          if (isPyq(q.metadata)) return false;
         } else if (examFilter !== 'all') {
-          const exam = (q.metadata.exam_source?.exam ?? '').toLowerCase();
-          if (examFilter === 'mains' && (!q.metadata.is_pyq || !/main/i.test(exam))) return false;
-          if (examFilter === 'advanced' && (!q.metadata.is_pyq || !/adv/i.test(exam))) return false;
+          if (examFilter === 'mains' && !isJeeMainPyq(q.metadata)) return false;
+          if (examFilter === 'advanced' && !isJeeAdvancedPyq(q.metadata)) return false;
         }
-        // Year
+        // Year — read modern field first, fall back to legacy.
         if (yearFilter !== 'all' && (examFilter === 'mains' || examFilter === 'advanced')) {
-          if (q.metadata.exam_source?.year !== Number(yearFilter)) return false;
+          const qYear = q.metadata.examDetails?.year ?? q.metadata.exam_source?.year;
+          if (qYear !== Number(yearFilter)) return false;
         }
         // Topic
         if (topicFilter !== 'all') {
@@ -517,7 +515,7 @@ export default function BrowseView({
       question_type: qq.type,
       difficulty_level: qq.metadata.difficultyLevel,
       is_correct: correct,
-      is_pyq: !!qq.metadata.is_pyq,
+      is_pyq: isPyq(qq.metadata),
     });
     // Fetch option stats once revealed
     if (!cur.optionStats) {
@@ -844,20 +842,19 @@ export default function BrowseView({
     const diffColor = DIFF_COLOR(qq.metadata.difficultyLevel);
     const isMCQ = qq.type === 'MCQ';
 
-    // Exam badge
+    // Exam badge — uses the shared `formatExamLabel` helper for one
+    // consistent format across all four rendering sites in the Crucible.
+    // See app/the-crucible/components/examLabel.ts.
     const examDet = qq.metadata.examDetails;
     const examSrc = qq.metadata.exam_source;
-    let examLabel: string | null = null;
-    let examAccent = '#60a5fa';
-    if (examDet?.year) {
-      const isNEET = examDet.exam === 'NEET_UG' || examDet.exam === 'NEET_PG';
-      const name = isNEET ? 'NEET' : examDet.exam === 'JEE_Main' ? 'JEE Main' : examDet.exam === 'JEE_Advanced' ? 'JEE Adv' : examDet.exam;
-      const suffix = examDet.phase ? ` · ${examDet.phase}` : examDet.shift ? ` (${examDet.shift.replace('Shift ', 'S').replace('Session ', 'S')})` : '';
-      examLabel = `${name} ${examDet.year}${suffix}`;
-      if (isNEET) examAccent = '#34d399';
-    } else if (examSrc?.year) {
-      examLabel = `${examSrc.exam ?? 'JEE Main'} ${examSrc.year}${examSrc.month ? ` · ${examSrc.month}` : ''}`;
-    }
+    const examLabel = formatExamLabel(examDet, examSrc);
+    const isNEET =
+        examDet?.exam === 'NEET_UG' ||
+        examDet?.exam === 'NEET_PG' ||
+        examSrc?.exam === 'NEET' ||
+        examSrc?.exam === 'NEET_UG' ||
+        examSrc?.exam === 'NEET_PG';
+    const examAccent = isNEET ? '#34d399' : '#60a5fa';
 
     const useGrid = qq.options ? isShortOptions(qq.options, isMobile) : false;
 

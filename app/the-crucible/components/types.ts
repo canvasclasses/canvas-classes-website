@@ -51,9 +51,9 @@ export interface Question {
     microConcept?: string;
     isMultiConcept?: boolean;
     questionNature?: 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis';
-    // NEW: 3-Tier Exam Taxonomy
-    examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
+    // ── Canonical exam taxonomy (read these going forward) ───────────────
     sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
+    applicableExams?: Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'>;
     examDetails?: {
       exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG';
       year?: number;
@@ -63,9 +63,16 @@ export interface Question {
       paper?: string;
       question_number?: string;
     };
-    // DEPRECATED (kept for backward compatibility)
-    is_pyq?: boolean;
+    // KEEP — drives the "Top Questions" practice mode (star-marked questions
+    // appearing under Chapter Practice → Top Questions). Sparsely set; the
+    // admin star-mark UI populates this. Do NOT drop.
     is_top_pyq?: boolean;
+    // ── LEGACY — bridged in actions.ts / CrucibleWizard.tsx ───────────────
+    // These are scheduled for removal in Phase 4 (~2 weeks after Phase 1
+    // ships). Read paths fall back to canonical fields above. Do NOT use
+    // in new code.
+    examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
+    is_pyq?: boolean;
     exam_source?: {
       exam?: string;
       year?: number;

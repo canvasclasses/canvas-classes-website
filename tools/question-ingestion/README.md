@@ -77,17 +77,21 @@ taxonomy data.
 
 ## What changed recently — read this first
 
-The schema for `questions_v2.metadata` is **mid-migration** from a v1 to a v2 taxonomy.
-Old fields are still required (legacy code reads them). New fields must be populated
-on every new question. **Set both, kept in sync.**
+The legacy exam-attribution fields (`examBoard`, `is_pyq`, `exam_source`,
+`difficulty` enum) were removed from the write path on 2026-05-07 (Phase 2 of
+the cleanup). NEW questions must use only the canonical fields below. Read
+paths bridge to legacy for older docs that still carry them; Phase 4 will drop
+the fields from the schema entirely.
 
-### 1. Three-tier exam taxonomy (NEW)
+### 1. Three-tier exam taxonomy (canonical, project decision 2026-05-07)
 
-| New field (set on all new questions) | Replaces | Why |
+| Canonical field (set on every new question) | Replaced legacy field (do NOT write) | Why |
 |---|---|---|
-| `metadata.applicableExams: ('JEE'\|'NEET'\|...)[ ]` | `examBoard: 'JEE' \| 'NEET'` | Array — a question can target JEE *and* NEET simultaneously. Single field forced an artificial choice. |
-| `metadata.sourceType: 'PYQ'\|'NCERT_Textbook'\|'NCERT_Exemplar'\|'Practice'\|'Mock'` | `is_pyq: boolean` | Boolean lumped NCERT examples / practice / mock all under one bucket. |
-| `metadata.examDetails: { exam, year, month, phase, shift, paper }` | `metadata.exam_source` | Enum-constrained `exam` field (`'JEE_Main'\|'JEE_Advanced'\|'NEET_UG'\|'NEET_PG'`) — old field was a free-text string with inconsistent values. |
+| `metadata.applicableExams: ('JEE'\|'NEET'\|...)[ ]` | ~~`examBoard: 'JEE' \| 'NEET'`~~ | Array — a question can target JEE *and* NEET simultaneously. Single field forced an artificial choice. |
+| `metadata.sourceType: 'PYQ'\|'NCERT_Textbook'\|'NCERT_Exemplar'\|'Practice'\|'Mock'` | ~~`is_pyq: boolean`~~ | Boolean lumped NCERT examples / practice / mock all under one bucket. |
+| `metadata.examDetails: { exam, year, month, phase, shift, paper }` | ~~`metadata.exam_source`~~ | Enum-constrained `exam` field (`'JEE_Main'\|'JEE_Advanced'\|'NEET_UG'\|'NEET_PG'`) — old field was a free-text string with inconsistent values. |
+| `metadata.examDetails.shift: 'Shift-I' \| 'Shift-II' \| null` | ~~`'Morning' \| 'Evening' \| 'M' \| 'E' \| 'Shift 1'`~~ | Canonical values only. NEET is single-shift — leave shift `null`. |
+| `metadata.difficultyLevel: 1..5` | ~~`metadata.difficulty: 'Easy'\|'Medium'\|'Hard'`~~ | Numeric scale supports finer ordering and adaptive difficulty selection. |
 
 ### 2. Browse mode now sorts by NCERT topic flow
 
@@ -170,24 +174,30 @@ Fields marked **(both)** must be set on the new field *and* its legacy mirror.
       exam: 'JEE_Main',                   // 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'
       year: 2025,
       month: 'Apr',                       // optional
-      shift: 'Evening',                   // optional
+      shift: 'Shift-II',                  // 'Shift-I' | 'Shift-II' | null (NEET is single-shift)
       paper: 'Paper 1',                   // optional, JEE Adv only
     },
 
-    // ── Legacy mirrors (set on every new question for back-compat) ──
-    examBoard: 'JEE',                     // = applicableExams[0]
-    is_pyq: true,                         // = (sourceType === 'PYQ')
-    exam_source: {                        // = mirror of examDetails (different field names)
-      exam: 'JEE Main',                   // free-text — match the spelling used by old data
-      year: 2025,
-      month: 'Apr',
-      shift: 'Evening',
-    },
+    // ── LEGACY FIELDS REMOVED (2026-05-07 Phase 2) ───────────────────────
+    // Do NOT include `examBoard`, `is_pyq`, or `exam_source` on new
+    // questions. The canonical fields above (applicableExams, sourceType,
+    // examDetails) are the single source of truth. The admin UI, API,
+    // bulk import, and AI-agent ingestion templates have all been updated
+    // to skip these fields. Read paths bridge to legacy only for OLDER
+    // docs that still carry them; new docs render correctly with just
+    // canonical fields. Phase 4 will drop these fields from the schema
+    // entirely. See CLAUDE.md §4.5 for the full deprecation status.
+    // ──────────────────────────────────────────────────────────────────────
 
-    is_top_pyq: false,                    // true for curated "must-do" questions; default false
+    // is_top_pyq is NOT legacy. It powers the "Top Questions" practice mode.
+    // Default false — admin star-marks via the dashboard afterwards.
+    is_top_pyq: false,
   },
 
-  status: 'review',                       // 'draft' | 'review' | 'published' | 'archived'
+  // STATUS POLICY (project decision 2026-05-07): all new questions go directly
+  // to 'published'. There is no review gate. If a question has a problem, flag
+  // it via flags[] instead. See CLAUDE.md §4.5.
+  status: 'published',                    // 'draft' | 'review' | 'published' | 'archived'
   quality_score: 50,
   needs_review: false,
   version: 1,
@@ -231,8 +241,10 @@ If the question genuinely spans multiple topics, pick the topic that appears
 earliest in NCERT (so the student sees it as soon as they reach that section)
 and add the secondary topic as `tags[1]`.
 
-If you're unsure, the question is probably mis-categorized — flag it `status: 'review'`
-and let a human pick the tag.
+If you're unsure, the question is probably mis-categorized — flag it via `flags[]`
+(with `type: 'tag_uncertain'` or similar) and let a human re-pick the tag. **Do
+not set `status: 'review'`** — that workflow has been retired (project decision
+2026-05-07). All new questions must be `status: 'published'`.
 
 ---
 
@@ -241,8 +253,10 @@ and let a human pick the tag.
 1. **Don't use `node -e "..."`** for any script that contains LaTeX. Shell escaping
    corrupts backslashes. Always write a `.js` file.
 2. **Don't set `_id: new ObjectId()`** — must be `uuidv4()`.
-3. **Don't skip the legacy-mirror fields** (`examBoard`, `is_pyq`, `exam_source`) on
-   new questions. Old read paths still depend on them until the migration completes.
+3. **Don't write legacy fields** (`examBoard`, `is_pyq`, `exam_source`, `difficulty`)
+   on new questions. As of 2026-05-07 Phase 2, the canonical fields (`applicableExams`,
+   `sourceType`, `examDetails`, `difficultyLevel`) are the only ones that should be
+   set. Read paths bridge to legacy only for older docs that still carry them.
 4. **Don't put a secondary topic in `tags[0]`** — the primary slot drives the sort,
    so this misplaces the question in browse view.
 5. **Don't generate `display_id` blindly** — query the current max for the prefix

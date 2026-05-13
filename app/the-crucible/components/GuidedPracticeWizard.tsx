@@ -28,6 +28,11 @@ interface ApiQuestion {
     chapter_id?: string;
     subject?: string;
     tags?: unknown[];
+    // Modern canonical fields:
+    sourceType?: string;
+    examDetails?: unknown;
+    applicableExams?: string[];
+    // Legacy fields (read with bridge fallback):
     is_pyq?: boolean;
     is_top_pyq?: boolean;
     microConcept?: string;
@@ -103,7 +108,8 @@ function applyFilters(all: Question[], diff: Difficulty, tags: Set<string>, pyq:
     else if (diff === 'Hard')        pool = pool.filter(q => q.metadata.difficultyLevel === 4);
     else if (diff === 'Challenging') pool = pool.filter(q => q.metadata.difficultyLevel === 5);
   }
-  if (pyq) pool = pool.filter(q => q.metadata.is_pyq);
+  // Bridge: prefer canonical sourceType, fall back to legacy is_pyq.
+  if (pyq) pool = pool.filter(q => q.metadata.sourceType === 'PYQ' || q.metadata.is_pyq === true);
   if (tags.size > 0) pool = pool.filter(q => q.metadata.tags?.some(t => tags.has(t.tag_id)));
   return [...pool].sort(() => Math.random() - 0.5);
 }
@@ -278,9 +284,14 @@ export default function GuidedPracticeWizard({ chapters, onBack, preSelectedChap
           tags: ((q.metadata?.tags as Array<{ tag_id: string; weight: number }>) || []),
           microConcept: q.metadata?.microConcept,
           isMultiConcept: q.metadata?.isMultiConcept ?? false,
-          is_pyq: q.metadata?.is_pyq || false,
+          // Canonical fields — pass through so client-side filters can read modern values directly.
+          sourceType: q.metadata?.sourceType as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined,
+          examDetails: q.metadata?.examDetails as { exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'; year?: number; month?: string; phase?: string; shift?: string; paper?: string; question_number?: string } | undefined,
+          applicableExams: q.metadata?.applicableExams as Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'> | undefined,
+          // Legacy + computed (kept for back-compat).
+          is_pyq: q.metadata?.sourceType === 'PYQ' || q.metadata?.is_pyq || false,
           is_top_pyq: q.metadata?.is_top_pyq || false,
-          exam_source: (q.metadata?.exam_source as Record<string, unknown> | undefined),
+          exam_source: ((q.metadata?.examDetails || q.metadata?.exam_source) as Record<string, unknown> | undefined),
         },
         svg_scales: q.svg_scales || {},
       }));
@@ -308,7 +319,8 @@ export default function GuidedPracticeWizard({ chapters, onBack, preSelectedChap
 
   const selectedChapter = chapters.find(c => c.id === selectedChapterId);
   const matchCount = applyFilters(allQuestions, difficulty, conceptTags, pyqOnly).length;
-  const pyqCount = allQuestions.filter(q => q.metadata.is_pyq).length;
+  // Bridge: prefer canonical sourceType, fall back to legacy is_pyq.
+  const pyqCount = allQuestions.filter(q => q.metadata.sourceType === 'PYQ' || q.metadata.is_pyq === true).length;
 
   const handleChapterSelect = (id: string) => { 
     setSelectedChapterId(id); 

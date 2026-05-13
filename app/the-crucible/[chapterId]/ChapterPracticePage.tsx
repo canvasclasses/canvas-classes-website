@@ -9,6 +9,7 @@ import BrowseView from '../components/BrowseView';
 import TestConfigModal, { TestStartConfig } from '../components/TestConfigModal';
 import TestView from '../components/TestView';
 import { buildSmartTest, DifficultyMix, QuestionSort, AttemptedEntry, CustomDifficultyMix } from '../components/testGenerator';
+import { isPyq, isJeeMainPyq, isJeeAdvancedPyq, isNeetPyq } from '../components/examLabel';
 
 interface Props {
     chapter: Chapter;
@@ -239,7 +240,8 @@ export default function ChapterPracticePage({ chapter, questions, allChapters, e
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 10 }}>
                             {[
                                 [String(qCount), 'Total Qs', color],
-                                [String(questions.filter(q => q.metadata.is_pyq).length), 'PYQs', '#fbbf24'],
+                                // Bridge: prefer canonical sourceType, fall back to legacy is_pyq.
+                                [String(questions.filter(q => isPyq(q.metadata)).length), 'PYQs', '#fbbf24'],
                                 [String(questions.filter(q => q.metadata.difficultyLevel >= 4).length), 'Hard', '#f87171'],
                             ].map(([val, label, c]) => (
                                 <div key={label} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 10px', textAlign: 'center' }}>
@@ -250,16 +252,18 @@ export default function ChapterPracticePage({ chapter, questions, allChapters, e
                         </div>
                         {/* Stats row 2: source breakdown — labels adapt to exam */}
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 28 }}>
+                            {/* Bridge: helpers in examLabel.ts read modern fields first (sourceType, examDetails),
+                                fall back to legacy (is_pyq, exam_source) only when modern is absent. */}
                             {(examBoard === 'NEET'
                                 ? [
-                                    [String(questions.filter(q => q.metadata.is_pyq && (q.metadata.examDetails?.exam === 'NEET_UG' || /neet/i.test(q.metadata.exam_source?.exam ?? ''))).length), 'NEET PYQ', '#34d399'],
-                                    [String(questions.filter(q => !q.metadata.is_pyq).length), 'Non-PYQ', '#a78bfa'],
+                                    [String(questions.filter(q => isNeetPyq(q.metadata)).length), 'NEET PYQ', '#34d399'],
+                                    [String(questions.filter(q => !isPyq(q.metadata)).length), 'Non-PYQ', '#a78bfa'],
                                     [String(questions.filter(q => q.metadata.difficultyLevel >= 4).length), 'Hard', '#f87171'],
                                 ]
                                 : [
-                                    [String(questions.filter(q => q.metadata.is_pyq && /main/i.test(q.metadata.exam_source?.exam ?? '')).length), 'JEE Main', '#38bdf8'],
-                                    [String(questions.filter(q => q.metadata.is_pyq && /adv/i.test(q.metadata.exam_source?.exam ?? '')).length), 'JEE Adv', '#a78bfa'],
-                                    [String(questions.filter(q => !q.metadata.is_pyq).length), 'Non-PYQ', '#34d399'],
+                                    [String(questions.filter(q => isJeeMainPyq(q.metadata)).length), 'JEE Main', '#38bdf8'],
+                                    [String(questions.filter(q => isJeeAdvancedPyq(q.metadata)).length), 'JEE Adv', '#a78bfa'],
+                                    [String(questions.filter(q => !isPyq(q.metadata)).length), 'Non-PYQ', '#34d399'],
                                 ]
                             ).map(([val, label, c]) => (
                                 <div key={label} style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${c}22`, borderRadius: 12, padding: '10px', textAlign: 'center' }}>

@@ -182,7 +182,8 @@ export default function AdaptiveSession({
   // WKEX (worked example) documents are excluded here — they are never answerable questions.
   const basePool = useMemo(() => {
     let pool = allQuestions.filter(q => q.type !== 'WKEX');
-    if (pyqOnly) pool = pool.filter(q => q.metadata.is_pyq);
+    // Bridge: prefer canonical sourceType, fall back to legacy is_pyq.
+    if (pyqOnly) pool = pool.filter(q => q.metadata.sourceType === 'PYQ' || q.metadata.is_pyq === true);
     pool = applyConceptFilter(pool, conceptTagFilter);
     return pool;
   }, [allQuestions, pyqOnly, conceptTagFilter]);

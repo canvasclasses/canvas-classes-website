@@ -9,8 +9,12 @@ interface Question {
         chapter_id: string;
         tags?: Array<{ tag_id: string }>;
         difficultyLevel?: number;
+        // Modern canonical fields (preferred):
+        sourceType?: string;
+        examDetails?: { exam?: string };
+        // Legacy fields (read with bridge fallback):
         is_pyq?: boolean;
-        exam_source?: { exam: string };
+        exam_source?: { exam?: string };
         microConcept?: string;
     };
     type?: string;
@@ -161,10 +165,20 @@ export default function AnalyticsDashboard({ questions, chapters, onClose, selec
     ];
 
     // ── 3. Exam source breakdown ─────────────────────────────────────────────
-    const jeeMainCount = chapterQs.filter(q => q.metadata.is_pyq && q.metadata.exam_source?.exam === 'JEE Main').length;
-    const jeeAdvCount  = chapterQs.filter(q => q.metadata.is_pyq && q.metadata.exam_source?.exam === 'JEE Advanced').length;
-    const otherPyqCount = chapterQs.filter(q => q.metadata.is_pyq && q.metadata.exam_source?.exam !== 'JEE Main' && q.metadata.exam_source?.exam !== 'JEE Advanced').length;
-    const nonPyqCount  = chapterQs.filter(q => !q.metadata.is_pyq).length;
+    // Bridge: read modern canonical fields (sourceType, examDetails) first; fall
+    // back to legacy (is_pyq, exam_source) only when modern is absent.
+    const isQPyq = (q: Question) => q.metadata.sourceType === 'PYQ' || q.metadata.is_pyq === true;
+    const isQJeeMain = (q: Question) =>
+        q.metadata.examDetails?.exam === 'JEE_Main' ||
+        (!q.metadata.examDetails?.exam && q.metadata.exam_source?.exam === 'JEE Main');
+    const isQJeeAdv = (q: Question) =>
+        q.metadata.examDetails?.exam === 'JEE_Advanced' ||
+        (!q.metadata.examDetails?.exam && (q.metadata.exam_source?.exam === 'JEE Advanced' || q.metadata.exam_source?.exam === 'IIT JEE' || q.metadata.exam_source?.exam === 'JEE Adv.'));
+
+    const jeeMainCount = chapterQs.filter(q => isQPyq(q) && isQJeeMain(q)).length;
+    const jeeAdvCount  = chapterQs.filter(q => isQPyq(q) && isQJeeAdv(q)).length;
+    const otherPyqCount = chapterQs.filter(q => isQPyq(q) && !isQJeeMain(q) && !isQJeeAdv(q)).length;
+    const nonPyqCount  = chapterQs.filter(q => !isQPyq(q)).length;
 
     const sourceData = [
         { label: 'JEE Main', value: jeeMainCount, count: jeeMainCount, color: '#3b82f6' },

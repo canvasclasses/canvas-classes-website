@@ -19,6 +19,7 @@ import {
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
 import { QuestionDetail } from '../../actions';
 import { Chapter } from '../../components/types';
+import { formatExamLabel } from '../../components/examLabel';
 
 interface Props {
   question: QuestionDetail;
@@ -69,10 +70,12 @@ export default function QuestionDetailPage({ question, chapter, adjacent, relate
   const [audioExpanded, setAudioExpanded] = useState<Record<number, boolean>>({});
   const [showSolution, setShowSolution] = useState(false);
 
-  const examSource = question.metadata.exam_source;
-  const examLabel = examSource?.exam && examSource?.year
-    ? `${examSource.exam} ${examSource.year}${examSource.shift ? ` · ${examSource.shift}` : ''}`
-    : null;
+  // Exam badge — uses the shared `formatExamLabel` helper.
+  // See app/the-crucible/components/examLabel.ts.
+  const examLabel = formatExamLabel(
+    question.metadata.examDetails,
+    question.metadata.exam_source
+  );
 
   const chapterColor = CAT_COLOR[chapter?.category ?? 'Physical'] ?? '#a78bfa';
   const diffColor = DIFF_COLOR[question.metadata.difficultyLevel] ?? '#fbbf24';
@@ -463,8 +466,10 @@ export default function QuestionDetailPage({ question, chapter, adjacent, relate
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {related.map((rq) => {
-                  const rqExam = rq.metadata.exam_source;
-                  const rqLabel = rqExam?.exam && rqExam?.year ? `${rqExam.exam} ${rqExam.year}` : null;
+                  // exam_source on related is server-side-bridged: it carries examDetails
+                  // data when present, falling back to legacy exam_source. Pass it as both
+                  // arguments to formatExamLabel; the helper normalises and dedupes.
+                  const rqLabel = formatExamLabel(rq.metadata.exam_source, rq.metadata.exam_source);
                   const rqDiff = DIFF_COLOR[rq.metadata.difficultyLevel] ?? '#fbbf24';
                   const snippet = rq.question_text
                     .replace(/!\[.*?\]\(.*?\)/g, '[diagram]')

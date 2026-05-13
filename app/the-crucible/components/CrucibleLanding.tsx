@@ -24,6 +24,11 @@ interface ApiQuestion {
     difficultyLevel?: number;
     chapter_id?: string;
     tags?: unknown[];
+    // Modern canonical fields:
+    sourceType?: string;
+    examDetails?: unknown;
+    applicableExams?: string[];
+    // Legacy fields (read with bridge fallback):
     is_pyq?: boolean;
     is_top_pyq?: boolean;
   };
@@ -330,7 +335,8 @@ function selectTestQuestions(all: Question[], count: number, mix: DifficultyMix)
 
   let pool: Question[];
   if (mix === 'pyq') {
-    pool = all.filter(q => q.metadata.is_pyq);
+    // Bridge: prefer canonical sourceType, fall back to legacy is_pyq.
+    pool = all.filter(q => q.metadata.sourceType === 'PYQ' || q.metadata.is_pyq === true);
     if (pool.length === 0) pool = all; // fallback if no PYQs tagged yet
   } else if (mix === 'easy') {
     const easy = shuffle(all.filter(q => q.metadata.difficultyLevel <= 2));
@@ -389,7 +395,12 @@ async function fetchTopPYQs(examLevel?: 'mains' | 'advanced'): Promise<Question[
       chapter_id: q.metadata?.chapter_id || '',
       subject: 'chemistry',
       tags: ((q.metadata?.tags as Array<{ tag_id: string; weight: number }>) || []),
-      is_pyq: q.metadata?.is_pyq || false,
+      // Canonical fields — pass through so client-side filters can read modern values directly.
+      sourceType: q.metadata?.sourceType as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined,
+      examDetails: q.metadata?.examDetails as { exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'; year?: number; month?: string; phase?: string; shift?: string; paper?: string; question_number?: string } | undefined,
+      applicableExams: q.metadata?.applicableExams as Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'> | undefined,
+      // Legacy + computed (kept for back-compat).
+      is_pyq: q.metadata?.sourceType === 'PYQ' || q.metadata?.is_pyq || false,
       is_top_pyq: q.metadata?.is_top_pyq || false,
     },
     svg_scales: q.svg_scales || {},
@@ -423,7 +434,12 @@ async function fetchQuestions(chapterIds: string[], limit?: number, topPYQOnly?:
       chapter_id: q.metadata?.chapter_id || '',
       subject: 'chemistry',
       tags: ((q.metadata?.tags as Array<{ tag_id: string; weight: number }>) || []),
-      is_pyq: q.metadata?.is_pyq || false,
+      // Canonical fields — pass through so client-side filters can read modern values directly.
+      sourceType: q.metadata?.sourceType as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined,
+      examDetails: q.metadata?.examDetails as { exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'; year?: number; month?: string; phase?: string; shift?: string; paper?: string; question_number?: string } | undefined,
+      applicableExams: q.metadata?.applicableExams as Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'> | undefined,
+      // Legacy + computed (kept for back-compat).
+      is_pyq: q.metadata?.sourceType === 'PYQ' || q.metadata?.is_pyq || false,
       is_top_pyq: q.metadata?.is_top_pyq || false,
     },
     svg_scales: q.svg_scales || {},

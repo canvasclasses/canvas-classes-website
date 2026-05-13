@@ -101,24 +101,41 @@ Decision tree (top-down, take the first match):
 7. One rule applied once for a deterministic answer? → `Rule_Application`
 8. Pure fact recall? → `Recall`
 
-**Exam Taxonomy (NEW - 3-tier system):**
+**Exam Taxonomy — canonical fields (project decision 2026-05-07):**
 ```
-TIER 1: examBoard      → 'JEE' | 'NEET' | 'CBSE' | 'BITSAT'
-TIER 2: sourceType     → 'PYQ' | 'Practice' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Mock'
-TIER 3: examDetails    → { exam, year, month, shift, phase, paper }
+applicableExams  → ('JEE' | 'NEET' | 'CBSE' | 'BITSAT' | …)[]   ← multi-valued, replaces examBoard
+sourceType       → 'PYQ' | 'Practice' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Mock'
+examDetails      → { exam, year, month, shift, phase, paper, question_number }
+                   exam ∈ {'JEE_Main', 'JEE_Advanced', 'NEET_UG', 'NEET_PG'} (enum, no free text)
+                   shift: ALWAYS use 'Shift-I' or 'Shift-II' (never 'Morning'/'M'/'Shift 1' — those are normalised away)
+                   NOTE: NEET is a single-shift exam — leave shift null for NEET PYQs.
+```
 
-Common mappings:
-- JEE Main PYQ 2024 Morning → examBoard: 'JEE', sourceType: 'PYQ', examDetails: { exam: 'JEE_Main', year: 2024, shift: 'Morning' }
-- NEET PYQ 2024 Phase 1 → examBoard: 'NEET', sourceType: 'PYQ', examDetails: { exam: 'NEET_UG', year: 2024, phase: 'Phase 1' }
-- Practice question → examBoard: 'JEE', sourceType: 'Practice', examDetails: null
-- NCERT Exemplar → examBoard: 'CBSE', sourceType: 'NCERT_Exemplar', examDetails: null
-```
+Canonical mappings:
+- JEE Main PYQ 2024 Morning → `applicableExams: ['JEE']`, `sourceType: 'PYQ'`, `examDetails: { exam: 'JEE_Main', year: 2024, month: 'Jan', shift: 'Shift-I' }`
+- JEE Main PYQ 2024 Evening → `applicableExams: ['JEE']`, `sourceType: 'PYQ'`, `examDetails: { exam: 'JEE_Main', year: 2024, month: 'Jan', shift: 'Shift-II' }`
+- JEE Advanced PYQ 2023 → `applicableExams: ['JEE']`, `sourceType: 'PYQ'`, `examDetails: { exam: 'JEE_Advanced', year: 2023, paper: 'Paper 1' }`
+- NEET PYQ 2024 → `applicableExams: ['NEET']`, `sourceType: 'PYQ'`, `examDetails: { exam: 'NEET_UG', year: 2024 }` (no shift; NEET is single-shift)
+- Practice question → `applicableExams: ['JEE']`, `sourceType: 'Practice'`, `examDetails: null` (or omit)
+- NCERT Exemplar → `applicableExams: ['CBSE']`, `sourceType: 'NCERT_Exemplar'`, `examDetails: null`
+
+**Legacy fields (`is_pyq`, `examBoard`, `exam_source`, `difficulty`) — REMOVED:**
+As of Phase 2 of the 2026-05-07 cleanup, NEW questions must NOT include any of
+these fields. The canonical fields above (`applicableExams`, `sourceType`,
+`examDetails`, `difficultyLevel`) are the single source of truth. Read paths
+bridge to legacy only for older docs that still carry them; new docs render
+correctly with just the canonical fields. Phase 4 will drop these fields from
+the schema entirely.
+
+- `is_top_pyq` is **NOT** legacy — it powers the "Top Questions" practice mode and is set via the admin star-mark UI. Default to `false` on new questions; the admin curates afterwards.
 
 ---
 
 ## PHASE 1 — EXTRACTION (image reading only)
 
 **Goal:** Produce a clean JSON array of question objects. No scripts. No DB calls. No solutions if not instructed.
+
+> **Buffer file naming (mandatory):** Write the Phase 1 array to a per-chapter buffer at `scripts/_phase1_buffer_<prefix>.js` (lowercase prefix — e.g. `_phase1_buffer_mole.js` for Mole Concept, `_phase1_buffer_atom.js` for Atomic Structure). The legacy single `_phase1_buffer.js` filename is a **shared scratchpad** and gets clobbered when two sessions ingest different chapters in parallel. Each session must own its own per-chapter buffer. The validator and Phase 2 insert script accept the path as a parameter, so this is a pure naming convention with no toolchain change.
 
 ### Step 1.1 — Image Survey (mandatory, output this block)
 ```
@@ -132,9 +149,7 @@ Starting extraction of Q[first] to Q[last].
 
 **VERBATIM FIRST.** Copy question text character by character from source. Never paraphrase, shorten, or add.
 
-**Diagrams:** Never interpret organic structures. Use placeholder:
-`![](https://canvas-chemistry-assets.r2.dev/questions/{DISPLAY_ID_LOWERCASE}/diagram.svg)`
-e.g. for ALCO-155: `alco-155`
+**Diagrams:** Never interpret organic structures. The user maintains their own list of questions that need diagrams and uploads them via the admin dashboard after insertion — **do not insert any image placeholder, URL stub, or description in the markdown**. Just write the prose surrounding the figure verbatim and stop.
 
 **LaTeX (CRITICAL — renderer will break if wrong):**
 - ALL math inside `$...$` — NEVER `$$...$$`
@@ -178,18 +193,17 @@ Output a raw JavaScript array (not wrapped in a script). Each object:
   solution: null,   // null if TEXT-ONLY mode; populated string if solutions requested
   tag_id: 'tag_alcohols_4',
   questionNature: 'Recall',  // see Question Nature decision tree above (8 values)
-  examBoard: 'JEE',           // 'JEE' | 'NEET' | 'CBSE' | 'BITSAT' | null
+  applicableExams: ['JEE'],   // multi-valued: ['JEE'], ['NEET'], or ['JEE','NEET'] for dual-use
   sourceType: 'PYQ',          // 'PYQ' | 'Practice' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Mock'
   examDetails: {              // null if not PYQ
     exam: 'JEE_Main',         // 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'
     year: 2019,
     month: 'Jan',             // optional
-    shift: 'Morning',         // for JEE Main
+    shift: 'Shift-I',         // canonical: 'Shift-I' | 'Shift-II' (NEVER 'Morning'/'M'/'Shift 1'); leave null for NEET
     phase: null,              // for NEET (Phase 1, Phase 2)
     paper: null               // for JEE Advanced (Paper 1, Paper 2)
   }
-  // Legacy fields (kept for backward compatibility - DO NOT use for new questions):
-  // is_pyq: true, is_top_pyq: false, exam_source: {...}
+  // is_top_pyq: false  ← optional; default false. Admin curates Top PYQs via the dashboard.
 }
 ```
 
@@ -210,190 +224,47 @@ Ready for Phase 2.
 
 ## PHASE 2 — INSERTION (script writing only)
 
-**Goal:** Take the Phase 1 JSON array and wrap it in a runnable insertion script. Do NOT re-read images in this phase.
+**Goal:** Insert the validated Phase 1 buffer into MongoDB. Do NOT re-read images in this phase. Do NOT write per-batch insert scripts.
 
-### Step 2.1 — Pre-flight Check (run first)
+### Step 2.1 — Pre-flight (only when starting a new chapter)
 
-Always query the DB to confirm the next available display_id before writing the script:
+When ingesting the **first batch of a chapter**, query for the current max `display_id` so you know where to start numbering:
 ```javascript
-// scripts/check_next_id.js
 require('dotenv').config({ path: '.env.local' });
 const { MongoClient } = require('mongodb');
-async function main() {
-  const client = new MongoClient(process.env.MONGODB_URI);
-  await client.connect();
-  const col = client.db('crucible').collection('questions_v2');
-  const docs = await col.find({ display_id: /^ALCO-/ })
-    .sort({ display_id: -1 }).limit(1).toArray();
+(async () => {
+  const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
+  const docs = await c.db('crucible').collection('questions_v2')
+    .find({ display_id: /^ALCO-/ }).sort({ display_id: -1 }).limit(1).toArray();
   console.log('Last ID:', docs[0]?.display_id ?? 'none');
-  await client.close();
-}
-main();
+  await c.close();
+})();
 ```
-Replace `ALCO` with the relevant prefix.
+Replace `ALCO` with the relevant prefix. The generic insert script also runs a full collision check at run time, so this pre-flight is purely informational.
 
-### Step 2.2 — Canonical Insertion Script
+### Step 2.2 — Run the Generic Insert Script
 
-```javascript
-// scripts/insert_{chapter}_b{N}.js
-require('dotenv').config({ path: '.env.local' });
-const { MongoClient } = require('mongodb');
-const { v4: uuidv4 } = require('uuid');
-
-// ── CHAPTER CONSTANTS (do NOT change) ─────────────────────────
-const CHAPTER_ID = 'ch12_alcohols';  // ← set once per script
-// ──────────────────────────────────────────────────────────────
-
-const now = new Date();
-
-function mk(display_id, difficultyLevel, type, markdown, options, answer, solution, tag_id, examBoard, sourceType, examDetails, questionNature = 'Rule_Application') {
-  return {
-    _id: uuidv4(), display_id,
-    question_text: { markdown, latex_validated: false },
-    type, options,
-    answer: answer ?? null,
-    solution: solution ? { text_markdown: solution, latex_validated: false } : null,
-    metadata: {
-      difficultyLevel,           // NEW: 1-5 instead of 'Easy'/'Medium'/'Hard'
-      difficulty: null,          // DEPRECATED: kept for backward compatibility
-      chapter_id: CHAPTER_ID,
-      subject: 'chemistry',      // NEW: required field
-      tags: [{ tag_id, weight: 1.0 }],
-      
-      // NEW: 3-Tier Exam Taxonomy
-      examBoard: examBoard ?? null,        // 'JEE' | 'NEET' | 'CBSE' | 'BITSAT'
-      sourceType: sourceType ?? null,      // 'PYQ' | 'Practice' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Mock'
-      examDetails: examDetails ?? null,    // { exam, year, shift, phase, paper, month }
-      
-      // NEW: Question Nature tagging
-      questionNature: questionNature,     // 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis'
-      
-      // Multi-dimensional tagging
-      microConcept: null,
-      isMultiConcept: false,
-      
-      // DEPRECATED: Old fields (kept for backward compatibility)
-      is_pyq: sourceType === 'PYQ',
-      is_top_pyq: false,
-      exam_source: examDetails ? {
-        exam: examDetails.exam === 'JEE_Main' ? 'JEE Main' : 
-              examDetails.exam === 'JEE_Advanced' ? 'JEE Advanced' :
-              examDetails.exam === 'NEET_UG' ? 'NEET' : examDetails.exam,
-        year: examDetails.year,
-        month: examDetails.month ?? null,
-        shift: examDetails.shift ?? null
-      } : null,
-      
-      source_reference: { 
-        type: 'image', 
-        verified_against_source: true,
-        verification_date: now, 
-        verified_by: 'ai_agent' 
-      }
-    },
-    status: 'review', 
-    version: 1, 
-    quality_score: 95,
-    created_by: 'ai_agent', 
-    updated_by: 'ai_agent',
-    created_at: now, 
-    updated_at: now, 
-    deleted_at: null
-  };
-}
-
-// Helper functions with new signature
-function mkSCQ(display_id, difficultyLevel, markdown, opts, correct, tag_id, examBoard, sourceType, examDetails, questionNature) {
-  return mk(display_id, difficultyLevel, 'SCQ', markdown,
-    ['a','b','c','d'].map((id,i) => ({ id, text: opts[i], is_correct: id === correct })),
-    { correct_option: correct }, null, tag_id, examBoard, sourceType, examDetails, questionNature);
-}
-
-function mkMCQ(display_id, difficultyLevel, markdown, opts, correctArr, tag_id, examBoard, sourceType, examDetails, questionNature) {
-  // correctArr = ['a','c'] for example
-  return mk(display_id, difficultyLevel, 'MCQ', markdown,
-    ['a','b','c','d'].map((id,i) => ({ id, text: opts[i], is_correct: correctArr.includes(id) })),
-    { correct_options: correctArr }, null, tag_id, examBoard, sourceType, examDetails, questionNature);
-}
-
-function mkNVT(display_id, difficultyLevel, markdown, answer_val, tag_id, examBoard, sourceType, examDetails, questionNature) {
-  return mk(display_id, difficultyLevel, 'NVT', markdown, [],
-    { integer_value: answer_val }, null, tag_id, examBoard, sourceType, examDetails, questionNature);
-}
-
-// ── QUESTIONS (paste Phase 1 output here, adapt to mkSCQ/mkNVT signatures) ──
-// Usage: mkSCQ(display_id, difficultyLevel, markdown, opts, correct, tag_id, examBoard, sourceType, examDetails, questionNature)
-
-const questions = [
-  // JEE Main PYQ example:
-  // mkSCQ('ALCO-155', 3, 'The major product...', ['opt a','opt b','opt c','opt d'], 'b', 'tag_alcohols_4', 'JEE', 'PYQ', {exam:'JEE_Main', year:2024, shift:'Morning'}, 'Mechanistic'),
-  
-  // NEET PYQ example:
-  // mkSCQ('ALCO-156', 2, 'What is the...', ['opt a','opt b','opt c','opt d'], 'c', 'tag_alcohols_5', 'NEET', 'PYQ', {exam:'NEET_UG', year:2024, phase:'Phase 1'}, 'Recall'),
-  
-  // Practice question example:
-  // mkSCQ('ALCO-157', 4, 'Calculate the...', ['opt a','opt b','opt c','opt d'], 'd', 'tag_alcohols_6', 'JEE', 'Practice', null, 'Rule_Application'),
-];
-
-async function main() {
-  if (questions.length === 0) { console.log('❌ No questions defined'); return; }
-
-  const client = new MongoClient(process.env.MONGODB_URI);
-  await client.connect();
-  const col = client.db('crucible').collection('questions_v2');
-
-  // Duplicate check
-  const ids = questions.map(q => q.display_id);
-  const existing = await col.find({ display_id: { $in: ids } }).toArray();
-  if (existing.length > 0) {
-    console.log('❌ Duplicate IDs found — aborting:', existing.map(e => e.display_id));
-    await client.close(); return;
-  }
-
-  // Validate before insert
-  const errors = [];
-  for (const q of questions) {
-    // Validation: check new fields exist
-    if (!q.metadata?.examBoard && q.metadata?.sourceType !== 'Practice') errors.push(`${q.display_id}: examBoard required (or use 'Practice' sourceType)`);
-    if (!q.metadata?.sourceType) errors.push(`${q.display_id}: sourceType required`);
-    if (!q.metadata?.difficultyLevel || q.metadata.difficultyLevel < 1 || q.metadata.difficultyLevel > 5) errors.push(`${q.display_id}: difficultyLevel must be 1-5`);
-    if (!q.metadata?.questionNature) errors.push(`${q.display_id}: questionNature required`);
-    if (q.metadata?.sourceType === 'PYQ' && !q.metadata?.examDetails) errors.push(`${q.display_id}: examDetails required for PYQ questions`);
-    
-    // Legacy validation (keep for now)
-    if (['SCQ','MCQ','AR','MST','MTC'].includes(q.type) && q.options.length !== 4) errors.push(`${q.display_id}: needs 4 options`);
-    if (q.type === 'SCQ' && q.options.filter(o => o.is_correct).length !== 1) errors.push(`${q.display_id}: SCQ needs exactly 1 correct`);
-    if (!q.question_text?.markdown || q.question_text.markdown.length < 10) errors.push(`${q.display_id}: question text too short`);
-    if (q.metadata.chapter_id !== CHAPTER_ID) errors.push(`${q.display_id}: wrong chapter_id`);
-    if (q.deleted_at !== null) errors.push(`${q.display_id}: deleted_at must be null`);
-  }
-  if (errors.length > 0) { console.log('❌ Validation failed:\n' + errors.join('\n')); await client.close(); return; }
-
-  // Insert
-  let ok = 0, fail = 0;
-  for (const doc of questions) {
-    try { await col.insertOne(doc); console.log(`✅ ${doc.display_id}`); ok++; }
-    catch(e) { console.log(`❌ ${doc.display_id}: ${e.message}`); fail++; }
-  }
-  console.log(`\n📊 ${ok} inserted, ${fail} failed`);
-
-  // Verify
-  const inserted = await col.find({ display_id: { $in: ids } }).toArray();
-  console.log(`✅ Verified in DB: ${inserted.length}/${questions.length}`);
-
-  await client.close();
-}
-main();
+```bash
+node scripts/insert_questions.js scripts/_phase1_buffer_<prefix>.js
 ```
+
+`scripts/insert_questions.js` is the single, generic Phase-2 driver shared across all subjects (chemistry, physics, maths, biology). It:
+
+- Reads the Phase 1 buffer and derives `chapter_id` + `subject` from the prefix in `display_id` (override via optional `module.exports.chapter_id` / `subject` if needed).
+- Runs a full-batch collision check before writing.
+- Inserts everything in one `insertMany`. Atomic and ordered.
+- Sets all canonical metadata: `status: 'published'`, `needs_review: false`, `version: 1`, `deleted_at: null`, `applicableExams`, `sourceType`, `examDetails`, `is_top_pyq: false`. Never writes legacy fields (`is_pyq`, `examBoard`, `exam_source`, `difficulty` enum).
+- Prints inserted/verified counts + chapter total.
+- Never calls the cache-bust endpoint.
+
+The Phase 1 validator (`validate_phase1_output.js`) is the correctness gate — run it first; the insert script does not re-validate.
 
 ### Step 2.3 — Execution Rules
 
-- Batch size: **6–8 questions per script file** — no more
-- File naming: `scripts/insert_{chapter}_b{N}.js` (e.g. `insert_alco_b1.js`)
-- NEVER run inline with `node -e "..."` — shell escaping corrupts LaTeX backslashes
-- ALWAYS run: `node scripts/insert_alco_b1.js`
-- After each batch: confirm inserted count matches expected count before continuing
-- Do NOT proceed to next batch if previous batch had failures
+- **Do NOT** create per-batch insert scripts (`insert_<chapter>_b<N>.js`). The legacy "6–8 questions per file" rule is retired — `insertMany` is atomic and the validator already enforces correctness. One buffer = one insert command.
+- NEVER run inline with `node -e "..."` — shell escaping corrupts LaTeX backslashes.
+- After each batch: confirm `Inserted N of N` and `Verified in DB: N/N` before continuing.
+- Do NOT proceed to next batch if the previous batch had failures.
 
 ### Step 2.4 — Post-Insertion Report
 
@@ -434,7 +305,7 @@ Verified in DB: [N]/[N]
 5. ❌ NEVER omit `deleted_at: null` — questions without it are invisible in the app
 6. ❌ NEVER invent display_id prefixes — use QUICK REFERENCE table at top
 7. ❌ NEVER use old 'Easy'/'Medium'/'Hard' — use difficultyLevel 1-5
-8. ❌ NEVER use old exam_source only — always include new examBoard, sourceType, examDetails
+8. ❌ NEVER write legacy fields (`is_pyq`, `examBoard`, `exam_source`, `difficulty` enum) on new questions — Phase 2 (2026-05-07) removed them. Use canonical `applicableExams`, `sourceType`, `examDetails`, `difficultyLevel` only. Use canonical shift values `'Shift-I'` / `'Shift-II'` (NEET shift = `null`).
 9. ❌ NEVER skip questionNature tagging — always specify one of the 8 values per the decision tree in QUICK REFERENCE
 10. ❌ NEVER omit subject field — must be 'chemistry' | 'physics' | 'maths' | 'biology'
 11. ✅ ALWAYS query DB for current max display_id before assigning new IDs

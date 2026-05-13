@@ -131,14 +131,16 @@ Default during backfill if uncertain: `Rule_Application`. Never invent new enum 
 
 - Set on insertion. Editing later is allowed only with a justification logged in `review_notes` and an `auditlogs` entry.
 - Mapping from source markings: `E→1`, `EM→2`, `M→3`, `MH→4`, `H→5`. Unmarked → `3`.
-- The deprecated string `difficulty` field should be left as `null` on new questions. Do not remove from existing docs.
+- The legacy enum `difficulty` field is **REMOVED** as of Phase 2 (2026-05-07). Do NOT set it on new questions; existing rows had `metadata.difficulty` `$unset` in the cleanup pass.
 
-### 2.7 Exam taxonomy (`examBoard`, `sourceType`, `examDetails`)
+### 2.7 Exam taxonomy (`applicableExams`, `sourceType`, `examDetails`)
 
 See `QUESTION_INGESTION_WORKFLOW.md` §QUICK REFERENCE for canonical mappings. For maintenance work:
 
-- Backfilling from the legacy `exam_source` field: read `exam_source.exam`, normalize ("JEE Main" → `JEE_Main`), populate the new tier-3 fields. Always run this as a dry-run script first.
-- `is_pyq` and `is_top_pyq` are **deprecated**. Do not use them in new logic. Read `sourceType === 'PYQ'` instead. Existing values may be left in place.
+- The legacy fields `is_pyq`, `examBoard`, and `exam_source` are **REMOVED** as of Phase 2 (2026-05-07). New writes (admin UI, bulk import, ingestion scripts) must NOT include them. Read paths bridge to legacy only for older docs that still carry them; Phase 4 will drop them from the schema entirely.
+- Backfilling on legacy docs: derive `applicableExams[0]` from `exam_source.exam` ("JEE Main" → `['JEE']` + `examDetails.exam: 'JEE_Main'`). Always run this as a dry-run script first.
+- `is_top_pyq` is **NOT** legacy — it powers the "Top Questions" practice mode and is set via the admin star-mark UI. Default to `false` on new questions.
+- Shift values are canonicalised to `'Shift-I'` / `'Shift-II'`. Never write `'Morning'`, `'Evening'`, `'M'`, `'E'`, `'Shift 1'`, or `'Shift 2'`. NEET is single-shift — leave shift `null` for NEET PYQs.
 
 ---
 

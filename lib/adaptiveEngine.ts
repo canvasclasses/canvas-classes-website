@@ -263,9 +263,10 @@ function getNextQuestionLegacy(input: AdaptiveEngineInput): NextQuestionDecision
   const byDifficulty = candidates.filter(q => targetLevels.includes(q.metadata.difficultyLevel));
   if (byDifficulty.length > 0) candidates = byDifficulty;
 
-  // Filter by PYQ if in final stretch
+  // Filter by PYQ if in final stretch.
+  // Bridge: prefer canonical sourceType, fall back to legacy is_pyq.
   if (preferPYQ) {
-    const pyqCandidates = candidates.filter(q => q.metadata.is_pyq);
+    const pyqCandidates = candidates.filter(q => q.metadata.sourceType === 'PYQ' || q.metadata.is_pyq === true);
     if (pyqCandidates.length > 0) candidates = pyqCandidates;
   }
 
@@ -395,9 +396,10 @@ function getNextQuestionV2(input: AdaptiveEngineInputV2): NextQuestionDecision |
   const byDiff = candidates.filter(q => targetLevels.includes(q.metadata.difficultyLevel));
   if (byDiff.length > 0) candidates = byDiff;
 
-  // Final 20% → prefer PYQ
+  // Final 20% → prefer PYQ.
+  // Bridge: prefer canonical sourceType, fall back to legacy is_pyq.
   if (sessionFraction >= (1 - SESSION_PYQ_FINAL_PCT)) {
-    const pyqs = candidates.filter(q => q.metadata.is_pyq);
+    const pyqs = candidates.filter(q => q.metadata.sourceType === 'PYQ' || q.metadata.is_pyq === true);
     if (pyqs.length > 0) {
       candidates = pyqs;
       reason = 'Mixing in a PYQ at your current level';

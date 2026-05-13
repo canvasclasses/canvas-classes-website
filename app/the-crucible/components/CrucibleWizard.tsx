@@ -23,16 +23,17 @@ interface ApiQuestion {
     latex_validated?: boolean;
   };
   metadata?: {
-    difficulty?: string;
+    difficulty?: string;          // LEGACY — orphaned (no readers); $unset 2026-05-07
     chapter_id?: string;
     tags?: unknown[];
-    is_pyq?: boolean;
-    is_top_pyq?: boolean;
-    exam_source?: unknown;
+    is_pyq?: boolean;             // LEGACY — bridged via sourceType==='PYQ'
+    is_top_pyq?: boolean;         // KEEP — drives "Top Questions" feature
+    exam_source?: unknown;        // LEGACY — bridged via examDetails
     difficultyLevel?: number;
-    examBoard?: string;
+    examBoard?: string;           // LEGACY — bridged via applicableExams[0]
     sourceType?: string;
     examDetails?: unknown;
+    applicableExams?: string[];   // canonical replacement for examBoard
   };
   svg_scales?: Record<string, number>;
 }
@@ -137,9 +138,15 @@ function mapApiToQuestion(q: ApiQuestion): Question {
       chapter_id: q.metadata?.chapter_id || '',
       subject: 'chemistry',
       tags: ((q.metadata?.tags as Array<{ tag_id: string; weight: number }>) || []),
-      is_pyq: q.metadata?.is_pyq || false,
-      is_top_pyq: q.metadata?.is_top_pyq || false,
-      exam_source: (q.metadata?.exam_source as Record<string, unknown> | undefined),
+      // Canonical fields — pass through so client-side filters (isJeeMainPyq etc.)
+      // can read modern values directly without falling back to legacy regex.
+      sourceType: q.metadata?.sourceType as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined,
+      examDetails: q.metadata?.examDetails as { exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'; year?: number; month?: string; phase?: string; shift?: string; paper?: string; question_number?: string } | undefined,
+      applicableExams: q.metadata?.applicableExams as Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'> | undefined,
+      // Legacy + computed (kept for back-compat — clients reading these still work).
+      is_pyq: q.metadata?.sourceType === 'PYQ' || q.metadata?.is_pyq || false,
+      is_top_pyq: q.metadata?.is_top_pyq || false,  // KEEP — Top Questions feature
+      exam_source: ((q.metadata?.examDetails || q.metadata?.exam_source) as Record<string, unknown> | undefined),
     },
     svg_scales: q.svg_scales || {},
   };
@@ -256,7 +263,8 @@ function selectTestQuestions(all: Question[], count: number, mix: DifficultyMix)
   const shuffle = <T,>(arr: T[]): T[] => [...arr].sort(() => Math.random() - 0.5);
   let pool: Question[];
   if (mix === 'pyq') {
-    pool = all.filter(q => q.metadata.is_pyq);
+    // Bridge: prefer canonical sourceType, fall back to legacy is_pyq.
+    pool = all.filter(q => q.metadata.sourceType === 'PYQ' || q.metadata.is_pyq === true);
     if (pool.length === 0) pool = all;
   } else if (mix === 'easy') {
     pool = [...shuffle(all.filter(q => q.metadata.difficultyLevel <= 2)), ...shuffle(all.filter(q => q.metadata.difficultyLevel === 3))];
@@ -986,9 +994,14 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
           chapter_id: q.metadata?.chapter_id || '',
           subject: 'chemistry',
           tags: ((q.metadata?.tags as Array<{ tag_id: string; weight: number }>) || []),
-          is_pyq: q.metadata?.is_pyq || false,
+          // Canonical fields — pass through so client-side filters can read modern values directly.
+          sourceType: q.metadata?.sourceType as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined,
+          examDetails: q.metadata?.examDetails as { exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'; year?: number; month?: string; phase?: string; shift?: string; paper?: string; question_number?: string } | undefined,
+          applicableExams: q.metadata?.applicableExams as Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'> | undefined,
+          // Legacy + computed (kept for back-compat).
+          is_pyq: q.metadata?.sourceType === 'PYQ' || q.metadata?.is_pyq || false,
           is_top_pyq: q.metadata?.is_top_pyq || false,
-          exam_source: (q.metadata?.exam_source as { exam?: string; year?: number; month?: string; shift?: string } | undefined),
+          exam_source: ((q.metadata?.examDetails || q.metadata?.exam_source) as { exam?: string; year?: number; month?: string; shift?: string } | undefined),
         },
         svg_scales: q.svg_scales || {},
       }));

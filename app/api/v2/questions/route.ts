@@ -88,15 +88,20 @@ const CHAPTER_PREFIX_MAP: Record<string, string> = {
   ch12_carbonyl: 'ALDO', ch12_coord: 'CORD', ch12_dblock: 'DNF', ch12_electrochem: 'EC',
   ch12_haloalkanes: 'HALO', ch12_kinetics: 'CK', ch12_pblock: 'PB12',
   ch12_salt: 'SALT', ch12_solutions: 'SOL',
-  // ── Physics (Class 11) ──
-  ph11_units: 'UNIT', ph11_kinematics1d: 'K1D', ph11_kinematics2d: 'K2D',
+  // ── Physics (Class 11) — Mathongo / NCERT-aligned ──
+  ph11_math_phy: 'MIP', ph11_units: 'UNIT', ph11_kinematics1d: 'K1D', ph11_kinematics2d: 'K2D',
   ph11_nlm: 'NLM', ph11_wep: 'WEP', ph11_com_mom: 'COM', ph11_rotation: 'ROT',
-  ph11_gravitation: 'GRAV', ph11_matter: 'MATT', ph11_thermo_phy: 'PHTH',
+  ph11_gravitation: 'GRAV', ph11_solids: 'SOLD', ph11_fluids: 'FLUI',
   ph11_shm: 'SHM', ph11_waves: 'WAVE',
-  // ── Physics (Class 12) ──
-  ph12_electrostatics: 'ELST', ph12_current: 'CURR', ph12_magnetism: 'MAG',
-  ph12_emi: 'EMI', ph12_ac: 'ACE', ph12_ray_optics: 'ROPY',
-  ph12_wave_optics: 'WVOP', ph12_modern: 'MOD', ph12_semiconductors: 'SEMI',
+  ph11_thermal_props: 'THPR', ph11_thermo: 'TDYN', ph11_ktg: 'KTG',
+  // ── Physics (Class 12) — Mathongo / NCERT-aligned ──
+  ph12_electrostatics: 'ELST', ph12_capacitance: 'CAPC', ph12_current: 'CURR',
+  ph12_mag_matter: 'MAGM', ph12_moving_charges: 'MVCH',
+  ph12_emi: 'EMI', ph12_ac: 'ACUR', ph12_ray_optics: 'ROPY',
+  ph12_wave_optics: 'WVOP',
+  ph12_dual_nature: 'DUAL', ph12_atoms: 'ATPH', ph12_nuclei: 'NUCL',
+  ph12_em_waves: 'EMW', ph12_semiconductors: 'SEMI',
+  ph12_communication: 'COMM', ph12_exp_phy: 'EXPP',
   // ── Mathematics (Competitive Syllabus) ──
   ma_basic_math: 'BOMA', ma_quadratic: 'QUAD', ma_complex: 'CMPL',
   ma_sequence: 'SQSR', ma_pnc: 'PMCM', ma_binomial: 'BNML',
@@ -228,8 +233,11 @@ const QuestionSchema = z.object({
       paper: z.string().optional(),
       question_number: z.string().optional(),
     }).optional(),
-    is_pyq: z.boolean(),
-    is_top_pyq: z.boolean()
+    // Phase 2 (2026-05-07): legacy fields kept in the schema for back-compat
+    // with old clients that may still send them. New ingestion paths omit them
+    // entirely — the API also no longer auto-fills them from canonical fields.
+    is_pyq: z.boolean().optional(),
+    is_top_pyq: z.boolean().optional()
   }),
   status: z.enum(['draft', 'review', 'published', 'archived']).optional()
 });
@@ -396,13 +404,16 @@ export async function GET(request: NextRequest) {
       query['metadata.examDetails.year'] = Number(year);
     }
 
-    // OLD: Legacy filters (backward compatibility)
-    if (is_pyq === 'true') query['metadata.is_pyq'] = true;
-    if (is_pyq === 'false') query['metadata.is_pyq'] = false;
+    // Legacy URL-param translation — accepts old param names for back-compat,
+    // but routes them to the canonical Mongo fields. After Phase 4 of the
+    // 2026-05-07 cleanup, the `metadata.is_pyq` / `metadata.exam_source.*`
+    // filters can be deleted entirely; only sourceType / examDetails remain.
+    if (is_pyq === 'true') query['metadata.sourceType'] = 'PYQ';
+    if (is_pyq === 'false') query['metadata.sourceType'] = { $ne: 'PYQ' };
     if (is_top_pyq === 'true') query['metadata.is_top_pyq'] = true;
-    if (exam_level === 'mains') query['metadata.exam_source.exam'] = { $regex: /main/i };
-    if (exam_level === 'adv') query['metadata.exam_source.exam'] = { $regex: /adv/i };
-    if (year && !sourceType && !examBoard) query['metadata.exam_source.year'] = Number(year);
+    if (exam_level === 'mains') query['metadata.examDetails.exam'] = 'JEE_Main';
+    if (exam_level === 'adv') query['metadata.examDetails.exam'] = 'JEE_Advanced';
+    if (year && !sourceType && !examBoard) query['metadata.examDetails.year'] = Number(year);
     if (tag_id) query['metadata.tags'] = { $elemMatch: { tag_id } };
 
     // SECURITY FIX: Escape regex special characters to prevent MongoDB injection
@@ -474,15 +485,11 @@ export async function POST(request: NextRequest) {
 
     const data = validation.data;
 
-    // Sync applicableExams ↔ examBoard. Callers may send either; keep both
-    // populated so legacy readers and the new multikey index both work.
-    {
-      const m = data.metadata as Record<string, unknown>;
-      const arr = m.applicableExams as string[] | undefined;
-      const board = m.examBoard as string | undefined;
-      if (arr && arr.length && !board) m.examBoard = arr[0];
-      else if (board && (!arr || !arr.length)) m.applicableExams = [board];
-    }
+    // Phase 2 (2026-05-07): the auto-sync between applicableExams ↔ examBoard
+    // has been retired. New writes must use canonical applicableExams; legacy
+    // examBoard is no longer auto-filled from it. The read paths fall back to
+    // examBoard for older docs that still carry it (see actions.ts bridges).
+    // Phase 4 will drop legacy fields entirely.
 
     // Check RBAC: Can user create questions in this chapter?
     if (user && !isLocalDev) {
@@ -554,7 +561,10 @@ export async function POST(request: NextRequest) {
         video_timestamp_start: data.solution.video_timestamp_start
       },
       metadata: data.metadata,
-      status: data.status || 'draft',
+      // Status policy (set by project decision 2026-05-07):
+      // All new questions go directly to 'published'. There is no review gate.
+      // If a question has a problem, flag it via flags[] instead.
+      status: data.status || 'published',
       quality_score: 50,
       needs_review: false,
       version: 1,

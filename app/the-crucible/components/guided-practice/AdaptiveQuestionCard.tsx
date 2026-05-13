@@ -10,6 +10,7 @@ import { useState, useCallback } from 'react';
 import { Check, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { Question } from '@/app/the-crucible/components/types';
 import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
+import { formatExamLabel } from '@/app/the-crucible/components/examLabel';
 
 interface AdaptiveQuestionCardProps {
   question: Question;
@@ -138,11 +139,20 @@ export default function AdaptiveQuestionCard({ question, onAnswered }: AdaptiveQ
           <span style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.05)', padding: '4px 10px', borderRadius: 6 }}>
             {question.type}
           </span>
-          {question.metadata.is_pyq && question.metadata.exam_source && (
-            <span style={{ fontSize: 11, fontWeight: 700, color: '#fbbf24', background: 'rgba(251,191,36,0.1)', padding: '4px 10px', borderRadius: 6 }}>
-              {question.metadata.exam_source.exam} {question.metadata.exam_source.year}
-            </span>
-          )}
+          {(() => {
+            // Exam badge — uses the shared `formatExamLabel` helper.
+            // See app/the-crucible/components/examLabel.ts.
+            const label = formatExamLabel(
+              question.metadata.examDetails,
+              question.metadata.exam_source
+            );
+            if (!label) return null;
+            return (
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#fbbf24', background: 'rgba(251,191,36,0.1)', padding: '4px 10px', borderRadius: 6 }}>
+                {label}
+              </span>
+            );
+          })()}
           {/* Result badge after answering */}
           {answered && (
             <span style={{

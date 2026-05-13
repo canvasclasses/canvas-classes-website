@@ -138,7 +138,7 @@ export function validateLaTeX(text: string): LaTeXValidationResult {
 
     // 10. Canvas-specific: exam metadata embedded in question text
     if (/JEE Main|JEE Advanced|Shift[-\s]?(I|II|1|2)|Morning|Evening/.test(line)) {
-      warnings.push(`Line ${ln}: Exam metadata in question text — remove (belongs in metadata.exam_source only)`);
+      warnings.push(`Line ${ln}: Exam metadata in question text — remove (belongs in metadata.examDetails only)`);
     }
   });
 

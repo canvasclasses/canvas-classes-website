@@ -77,6 +77,9 @@ export async function POST(
       status: string;
       metadata: {
         chapter_id: string;
+        // Modern canonical field (preferred):
+        sourceType?: string;
+        // Legacy field (read with bridge fallback):
         is_pyq?: boolean;
         tags?: Array<{tag_id: string; weight: number}>;
       };
@@ -136,13 +139,16 @@ export async function POST(
       }
     });
 
-    // 6. Update old chapter stats (decrement) — best-effort, chapters collection may be stale
+    // 6. Update old chapter stats (decrement) — best-effort, chapters collection may be stale.
+    // Bridge: prefer canonical sourceType, fall back to legacy is_pyq.
+    const isQuestionPyq =
+      question.metadata?.sourceType === 'PYQ' || question.metadata?.is_pyq === true;
     await Chapter.findByIdAndUpdate(oldChapterId, {
       $inc: {
         'stats.total_questions': -1,
         'stats.published_questions': question.status === 'published' ? -1 : 0,
         'stats.draft_questions': question.status === 'draft' ? -1 : 0,
-        'stats.pyq_count': question.metadata?.is_pyq ? -1 : 0,
+        'stats.pyq_count': isQuestionPyq ? -1 : 0,
       }
     });
 
@@ -152,7 +158,7 @@ export async function POST(
         'stats.total_questions': 1,
         'stats.published_questions': question.status === 'published' ? 1 : 0,
         'stats.draft_questions': question.status === 'draft' ? 1 : 0,
-        'stats.pyq_count': question.metadata?.is_pyq ? 1 : 0,
+        'stats.pyq_count': isQuestionPyq ? 1 : 0,
       }
     });
 

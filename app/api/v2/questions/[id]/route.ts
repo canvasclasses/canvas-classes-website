@@ -176,15 +176,10 @@ export async function PATCH(
         ...body.metadata
       } as Record<string, unknown>;
 
-      // Sync applicableExams ↔ examBoard. If the caller updated one, derive the
-      // other so legacy readers and the new multikey index stay in agreement.
-      if ('applicableExams' in body.metadata) {
-        const arr = merged.applicableExams as string[] | undefined;
-        merged.examBoard = arr && arr.length ? arr[0] : undefined;
-      } else if ('examBoard' in body.metadata) {
-        const board = merged.examBoard as string | undefined;
-        merged.applicableExams = board ? [board] : undefined;
-      }
+      // Phase 2 (2026-05-07): legacy field auto-sync retired. The admin UI now
+      // always sends `applicableExams`; legacy `examBoard` is no longer
+      // populated on PATCH. Reads fall back to examBoard via the bridge in
+      // actions.ts only for older docs. Phase 4 will drop legacy fields.
 
       updates.metadata = merged;
     }
