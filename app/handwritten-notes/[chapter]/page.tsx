@@ -16,6 +16,7 @@ import ChapterNotesGrid from './ChapterNotesGrid';
 import ChapterToolCard from './ChapterToolCard';
 import { getToolCardForSlug } from './toolCardConfig';
 import ChapterHero from './ChapterHero';
+import ChapterReadingShell from './ChapterReadingShell';
 import CrucibleHeroRail from './CrucibleHeroRail';
 import ChapterTopicTOC from './ChapterTopicTOC';
 import NextChapterCard from './NextChapterCard';
@@ -255,61 +256,59 @@ export default async function ChapterNotesPage({
                         <span className="text-white">{meta.chapterName}</span>
                     </nav>
 
-                    {/* Hero + notes grid — page-level 2-col layout so the notes
-                        section flows directly under the chapter intro on the left
-                        and shares the column height with the sticky Crucible rail
-                        on the right. Eliminates the empty space that appeared
-                        between the trust strip and the next section when the rail
-                        was taller than the intro alone. */}
-                    <div className="mb-12 grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_460px]">
-                        <div className="min-w-0">
-                            <header className="mb-10">
-                                <ChapterHero
-                                    meta={meta}
-                                    notes={chapterNotes}
-                                    crucibleStats={crucibleStats}
-                                    viewCount={viewCount}
-                                />
-                            </header>
+                    {/* Hero + notes grid — page-level 2-col layout wrapped in a
+                        ChapterReadingShell (client component) so deep descendants
+                        (the inline PDF reader) can collapse the rail column when
+                        side-by-side practice opens. The grid template flips from
+                        2-col → 1-col and the rail unmounts, giving the PDF +
+                        practice panel the full content width. */}
+                    <ChapterReadingShell
+                        leftColumn={
+                            <>
+                                <header className="mb-10">
+                                    <ChapterHero
+                                        meta={meta}
+                                        notes={chapterNotes}
+                                        crucibleStats={crucibleStats}
+                                        viewCount={viewCount}
+                                    />
+                                </header>
 
-                            {/* Fire-and-forget view increment. Renders nothing —
-                                deduped per session client-side; the count the
-                                hero shows is the SERVER-side aggregate from
-                                this counter. */}
-                            <ViewTracker chapterSlug={meta.slug} />
+                                {/* Fire-and-forget view increment. Renders nothing —
+                                    deduped per session client-side; the count the
+                                    hero shows is the SERVER-side aggregate from
+                                    this counter. */}
+                                <ViewTracker chapterSlug={meta.slug} />
 
-                            {/* Notes available */}
-                            <section>
-                                <div className="mb-4 flex items-baseline justify-between">
-                                    <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-400">
-                                        Notes available for this chapter
-                                    </h2>
-                                    <span className="hidden sm:inline text-[11px] text-zinc-600">
-                                        Tap any note to read inline →
-                                    </span>
-                                </div>
-                                <ChapterNotesGrid
-                                    notes={chapterNotes}
-                                    crucibleChapterId={meta.crucibleChapterId}
-                                    chapterName={meta.chapterName}
-                                />
-                            </section>
-                        </div>
-
-                        {/* Sticky Crucible rail — desktop only. Lives at the page
-                            level so it can sit alongside both the hero intro AND
-                            the notes section without leaving empty space. */}
-                        {meta.crucibleChapterId && (
-                            <div className="hidden lg:block">
+                                {/* Notes available */}
+                                <section>
+                                    <div className="mb-4 flex items-baseline justify-between">
+                                        <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-400">
+                                            Notes available for this chapter
+                                        </h2>
+                                        <span className="hidden sm:inline text-[11px] text-zinc-600">
+                                            Tap any note to read inline →
+                                        </span>
+                                    </div>
+                                    <ChapterNotesGrid
+                                        notes={chapterNotes}
+                                        crucibleChapterId={meta.crucibleChapterId}
+                                        chapterName={meta.chapterName}
+                                    />
+                                </section>
+                            </>
+                        }
+                        rightColumn={
+                            meta.crucibleChapterId ? (
                                 <CrucibleHeroRail
                                     chapterId={meta.crucibleChapterId}
                                     chapterName={meta.chapterName}
                                     subject={meta.subject}
                                     stats={crucibleStats}
                                 />
-                            </div>
-                        )}
-                    </div>
+                            ) : null
+                        }
+                    />
 
                     {/* Companion tool card (Flashcards / Periodic Explorer / Salt Sim / …).
                         Crucible practice moved into the hero rail above; this section is

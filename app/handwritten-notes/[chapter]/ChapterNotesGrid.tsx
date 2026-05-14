@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { toInlineViewerUrl, type HandwrittenNote } from '../../lib/handwrittenNotesData';
 import SideBySidePractice from './SideBySidePractice';
+import { useSplitMode } from './ChapterReadingShell';
 
 // localStorage schema. Single key, two fields, easy to inspect/clear.
 //
@@ -79,6 +80,14 @@ export default function ChapterNotesGrid({ notes, crucibleChapterId, chapterName
     const readerRef = useRef<HTMLDivElement>(null);
 
     const active = activeIdx !== null ? notes[activeIdx] : null;
+
+    // Tell the page-level layout to collapse the Crucible rail when split
+    // mode is on — the PDF + practice panel needs the full content width
+    // to breathe. ChapterReadingShell owns the actual grid template flip.
+    const { setSplitActive } = useSplitMode();
+    useEffect(() => {
+        setSplitActive(splitMode);
+    }, [splitMode, setSplitActive]);
 
     // Hydrate localStorage state on mount.
     useEffect(() => {
