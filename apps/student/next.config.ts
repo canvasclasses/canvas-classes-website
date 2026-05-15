@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR ?? '.next',
 
   // Workspace packages are consumed as TS source; Next must compile them.
-  transpilePackages: ['@canvas/data', '@canvas/persona', '@canvas/ui'],
+  transpilePackages: ['@canvas/core', '@canvas/data', '@canvas/persona', '@canvas/ui'],
 
   // SECURITY FIX: Request body size limits to prevent DoS
   experimental: {

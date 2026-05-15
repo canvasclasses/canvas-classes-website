@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { TAXONOMY_FROM_CSV, type TaxonomyNode } from '@canvas/data/taxonomy/taxonomyData_from_csv';
-import { uploadToR2, UploadResult } from '@/lib/r2Storage';
+import { uploadToR2, UploadResult } from '@canvas/core/r2-storage';
 import { 
   Plus, 
   Upload, 

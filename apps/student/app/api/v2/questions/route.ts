@@ -4,14 +4,14 @@ import { unstable_cache, revalidateTag } from 'next/cache';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { AuditLog } from '@canvas/data/models/AuditLog';
-import { trackServer } from '@/lib/analytics/mixpanel.server';
+import { trackServer } from '@canvas/core/analytics/mixpanel.server';
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { getUserPermissions, getQuestionFilter, canEditQuestion, getSubjectFromChapterId } from '@/lib/rbac';
 import { isLocalhostDev } from '@/lib/bookAuth';
 import { QuestionSchema } from '@canvas/data/schemas/question';
 import { generateDisplayId, regenerateDisplayId } from '@canvas/data/id-generator';
-import { createRateLimiter, getClientIp } from '@/lib/rateLimit';
+import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
 
 // Mongo projection: when excludeSolutions=true, skip the heavy solution fields.
 // solution.text_markdown alone is often 1.5–3 KB per question; on a 500-Q chapter

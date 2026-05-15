@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { Maximize2, RotateCcw, Info } from 'lucide-react';
-import { track } from '@/lib/analytics/mixpanel';
+import { track } from '@canvas/core/analytics/mixpanel';
 
 export default function VSEPRSimulator() {
     const iframeRef = useRef<HTMLIFrameElement>(null);

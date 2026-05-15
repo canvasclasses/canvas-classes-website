@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sanitizeRedirect } from '@/lib/redirectValidation';
+import { sanitizeRedirect } from '@canvas/core/redirect-validation';
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;

@@ -3,7 +3,7 @@ import connectToDatabase from '@canvas/data/db/mongodb';
 import Flashcard from '@canvas/data/models/Flashcard';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { isLocalhostDev } from '@/lib/bookAuth';
-import { createRateLimiter, getClientIp } from '@/lib/rateLimit';
+import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
 
 const UNAUTHENTICATED_LIMIT = 30;
 const AUTHENTICATED_LIMIT = 300;

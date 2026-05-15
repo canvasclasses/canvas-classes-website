@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Beaker, FlaskConical, Wind, CheckCircle2, RefreshCcw, ArrowRight, Flame, Droplets } from 'lucide-react';
-import { track } from '@/lib/analytics/mixpanel';
+import { track } from '@canvas/core/analytics/mixpanel';
 
 // --- ANION DATA FOR SIMULATOR ---
 

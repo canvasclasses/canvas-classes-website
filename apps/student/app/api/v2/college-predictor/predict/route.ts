@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { predictColleges, type PredictorResult, type Bucket } from '@/lib/collegePredictor/predictor';
 import { percentileToRank } from '@/lib/collegePredictor/percentileToRank';
-import { createRateLimiter, getClientIp } from '@/lib/rateLimit';
+import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
 
 const PredictRequestSchema = z.object({
   rank: z.number().int().positive().max(2_000_000).optional(),

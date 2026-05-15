@@ -7,7 +7,7 @@ import MathRenderer from '@canvas/ui/MathRenderer';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { getTagName, getChapterCategory } from '@canvas/data/taxonomy/lookup';
 import { isAnswerCorrect } from '@canvas/persona/scoring';
-import { track } from '@/lib/analytics/mixpanel';
+import { track } from '@canvas/core/analytics/mixpanel';
 import TestSaveModal from './TestSaveModal';
 import WaveformAudioPlayer from '@/components/WaveformAudioPlayer';
 

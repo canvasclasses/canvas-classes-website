@@ -6,7 +6,7 @@ import { Chapter, Question } from './types';
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 import { NCERT_TOPIC_ORDER } from '@/app/the-crucible/lib/ncertTopicOrder';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
-import { track } from '@/lib/analytics/mixpanel';
+import { track } from '@canvas/core/analytics/mixpanel';
 
 // ─────────────────── Types ───────────────────
 export type DifficultyMix = 'balanced' | 'easy' | 'hard' | 'pyq' | 'custom';

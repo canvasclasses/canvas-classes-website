@@ -3,7 +3,7 @@ import { revalidateTag } from 'next/cache';
 import { getAuthenticatedUser } from '@/lib/auth';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { QuestionV2 } from '@canvas/data/models/Question.v2';
-import { trackServer } from '@/lib/analytics/mixpanel.server';
+import { trackServer } from '@canvas/core/analytics/mixpanel.server';
 
 // ── Flag types students can report ─────────────────────────────────────────
 const VALID_FLAG_TYPES = [

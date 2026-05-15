@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createRateLimiter, getClientIp } from '@/lib/rateLimit';
+import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
 
 // SECURITY FIX: Whitelist allowed Supabase auth paths to prevent proxy abuse
 const ALLOWED_PATHS = [

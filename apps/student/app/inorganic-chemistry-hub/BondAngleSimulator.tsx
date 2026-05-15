@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { track } from '@/lib/analytics/mixpanel';
+import { track } from '@canvas/core/analytics/mixpanel';
 import { 
   Atom, 
   ChevronRight, 

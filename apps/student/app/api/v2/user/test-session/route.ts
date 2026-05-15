@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getUserIdFromRequest } from '@/lib/auth';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { UserProgress } from '@canvas/data/models/UserProgress';
-import { trackServer } from '@/lib/analytics/mixpanel.server';
+import { trackServer } from '@canvas/core/analytics/mixpanel.server';
 
 // ─── POST /api/v2/user/test-session ──────────────────────────────────────────
 // Body: { chapter_id, question_ids: string[], config: { count, mix } }

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Flame, TestTube, RotateCcw, Glasses, ChevronDown } from 'lucide-react';
-import { track } from '@/lib/analytics/mixpanel';
+import { track } from '@canvas/core/analytics/mixpanel';
 import AtomicProcessVisualizer from './AtomicProcessVisualizer';
 
 const FLAME_DATA = [

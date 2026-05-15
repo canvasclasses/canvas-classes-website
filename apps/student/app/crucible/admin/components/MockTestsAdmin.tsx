@@ -12,7 +12,7 @@ import SVGScaleControls from './SVGScaleControls';
 import VideoDropZone from './VideoDropZone';
 import AudioRecorder from './AudioRecorder';
 import AudioPlayer from './AudioPlayer';
-import { validateLaTeX, autoFixLatex, type LaTeXValidationResult } from '@/lib/latexValidator';
+import { validateLaTeX, autoFixLatex, type LaTeXValidationResult } from '@canvas/core/latex-validator';
 
 // Supabase session cookie is sent automatically on same-origin requests.
 // No secret header needed — API routes authenticate via the cookie.

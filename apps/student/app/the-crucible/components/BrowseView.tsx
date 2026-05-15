@@ -10,7 +10,7 @@ import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 import { difficultyColor } from '@canvas/data/difficulty';
 import { isAnswerCorrect } from '@canvas/persona/scoring';
 import { getTopicSortKey, hasNcertOrder, NCERT_TOPIC_ORDER } from '@/app/the-crucible/lib/ncertTopicOrder';
-import { track } from '@/lib/analytics/mixpanel';
+import { track } from '@canvas/core/analytics/mixpanel';
 import { formatExamLabel, isPyq, isJeeAdvancedPyq, isJeeMainPyq } from './examLabel';
 
 // ───────────────────────────── Helpers ─────────────────────────────

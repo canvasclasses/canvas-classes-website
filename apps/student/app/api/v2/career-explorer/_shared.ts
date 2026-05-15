@@ -29,7 +29,7 @@ export function errorResponse(message: string, status = 500) {
 
 // Shared in-memory rate limiter for all /api/v2/career-explorer/* routes.
 // One budget across the 3 sibling routes — matches the pre-consolidation behaviour.
-import { createRateLimiter, getClientIp } from '@/lib/rateLimit';
+import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
 
 const careerExplorerLimiter = createRateLimiter({ max: 300, windowMs: 60_000 });
 

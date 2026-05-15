@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from 'react';
-import { track } from '@/lib/analytics/mixpanel';
+import { track } from '@canvas/core/analytics/mixpanel';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { Chapter, Question } from '../components/types';

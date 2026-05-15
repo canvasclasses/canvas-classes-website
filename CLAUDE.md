@@ -280,9 +280,15 @@ The taxonomy file is auto-updated by the dashboard at `/crucible/admin/taxonomy`
 | Math/LaTeX renderer (shared) | `packages/ui/MathRenderer.tsx` |
 | Adaptive engine (Crucible) | `apps/student/app/the-crucible/lib/adaptiveEngine.ts` |
 | Recommendation engine | `apps/student/lib/recommendationEngine.ts` |
-| Persona writer (mutation surface) | `apps/student/lib/personaWriter.ts` |
-| Profile engine | `apps/student/lib/profileEngine.ts` |
-| LaTeX validator utility | `apps/student/lib/latexValidator.ts` |
+| Persona writer (mutation surface) | `packages/persona/writer.ts` |
+| Persona contract (constants + classifiers) | `packages/persona/contract.ts` |
+| Profile engine | `packages/persona/profile-engine.ts` |
+| LaTeX validator utility | `packages/core/latex-validator.ts` |
+| Rate limiter | `packages/core/rate-limit.ts` |
+| Redirect / SSRF validation | `packages/core/redirect-validation.ts` |
+| R2 storage helper | `packages/core/r2-storage.ts` |
+| Analytics (Mixpanel server + client) | `packages/core/analytics/` |
+| `cn()` class-name merger | `packages/core/utils.ts` |
 | V2 questions API | `apps/student/app/api/v2/questions/route.ts` |
 | Admin question editor | `apps/student/app/crucible/admin/page.tsx` |
 | Student server actions | `apps/student/app/the-crucible/actions.ts` |
@@ -341,7 +347,7 @@ These rules are **non-negotiable**. Every agent must follow them when creating o
 
 - **Every POST/PATCH body** must be validated with a Zod schema or explicit field whitelist before reaching the database. Never pass raw `body` to `$set` or any Mongoose update.
 - **File uploads**: Sanitize filenames (strip `..`, `/`, `\`, special chars), enforce size limits, and verify the resolved path stays within the intended directory.
-- **URL parameters**: User-supplied redirect URLs must pass through `sanitizeRedirect()` from `lib/redirectValidation.ts`. Never use `window.location.href = userInput` or `redirect(userInput)` directly.
+- **URL parameters**: User-supplied redirect URLs must pass through `sanitizeRedirect()` from `@canvas/core/redirect-validation`. Never use `window.location.href = userInput` or `redirect(userInput)` directly.
 - **HTML rendering**: Any `innerHTML` assignment must sanitize through `DOMPurify` first. Use the KaTeX MathML allowlist pattern from `MathRenderer.tsx`.
 
 ### 8.5 Error Responses Must Not Leak Internals

@@ -7,7 +7,7 @@ import {
   identify,
   track,
   reset,
-} from '@/lib/analytics/mixpanel';
+} from '@canvas/core/analytics/mixpanel';
 
 export function MixpanelProvider({ children }: { children: React.ReactNode }) {
   const bootedRef = useRef(false);

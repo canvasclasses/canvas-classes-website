@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import { X, Upload, FileJson, CheckCircle, AlertCircle, ChevronRight, Loader2, Eye } from 'lucide-react';
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
-import { validateLaTeX } from '@/lib/latexValidator';
+import { validateLaTeX } from '@canvas/core/latex-validator';
 
 interface ImportQuestion {
   display_id?: string;

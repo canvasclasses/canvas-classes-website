@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { track } from '@/lib/analytics/mixpanel';
+import { track } from '@canvas/core/analytics/mixpanel';
 import { FlaskConical, Beaker, ArrowRight, CheckCircle2, AlertCircle, RefreshCcw, ChevronRight } from 'lucide-react';
 
 // --- DATA STRUCTURES ---

@@ -7,7 +7,7 @@ import { Save, Plus, Filter, MonitorPlay, AlertTriangle, CheckSquare, Square, Ba
 import AnalyticsDashboard from './AnalyticsDashboard';
 import ExportDashboard from './components/ExportDashboard';
 import { TAXONOMY_FROM_CSV, type TaxonomyNode } from '@canvas/data/taxonomy/taxonomyData_from_csv';
-import { validateLaTeX, autoFixLatex, getLatexSuggestions, type LaTeXValidationResult } from '@/lib/latexValidator';
+import { validateLaTeX, autoFixLatex, getLatexSuggestions, type LaTeXValidationResult } from '@canvas/core/latex-validator';
 import BulkImportModal from './components/BulkImportModal';
 import MathRenderer from '@canvas/ui/MathRenderer';
 import AudioRecorder from './components/AudioRecorder';

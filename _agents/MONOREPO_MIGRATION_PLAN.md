@@ -203,8 +203,14 @@ The package starts deliberately small. Future moves (Phase 5 admin split may sur
 
 ---
 
-### Phase 3b — Extract `@canvas/core`  ⏳ PENDING
+### Phase 3b — Extract `@canvas/core`  ✅ DONE
+**Commit:** _(filled in by this commit)_  (2026-05-16)
 **Goal:** Move cross-cutting server-side platform utilities (rate-limit, latex utils, redirect validation, analytics, R2 storage, generic utils) into `packages/core/`.
+
+**Follow-up flagged for separate commit:**
+- `packages/core/r2-storage.ts` is missing `import 'server-only'` and `apps/student/app/crucible/components/QuestionAdmin.tsx` (a `'use client'` component) imports `uploadToR2` from it. Pre-existing bug surfaced by package boundary. Fix requires migrating the admin upload flow to a server route (`POST /api/v2/assets/upload` already exists); not in scope for the rename phase.
+- `packages/core/r2-storage.ts:32` exports a placeholder `r2Client` that looks like dead code; audit + remove in follow-up.
+- `packages/core/r2-storage.ts:153` leaks `error.message` to client — pre-existing §8.5 violation.
 
 **Files to move:**
 - `apps/student/lib/rateLimit.ts` → `packages/core/rate-limit.ts`

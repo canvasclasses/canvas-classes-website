@@ -1,7 +1,7 @@
 'use client';
 
 import { AlertCircle, CheckCircle, AlertTriangle } from 'lucide-react';
-import { type LaTeXValidationResult } from '@/lib/latexValidator';
+import { type LaTeXValidationResult } from '@canvas/core/latex-validator';
 
 interface LaTeXValidatorProps {
   validation: LaTeXValidationResult | null;
