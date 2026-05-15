@@ -152,7 +152,7 @@ Manual one-time action remaining: **Vercel Project Settings → Root Directory =
 - `features/blog/`
 - `features/landing/`
 - `features/account/`
-- `features/public-content/` — [TBD — see legacy hubs decision](#legacy-duplicate-hubs-tbd) — `chemistry-questions/`, `jee-pyqs/`, `quiz/`, etc.
+- `features/public-content/` — `chemistry-questions/`, `jee-pyqs/`, `quiz/`, `top-50-concepts/`, `quick-recap/`, `2-minute-chemistry/` (moved as-is per [legacy hubs decision](#legacy-duplicate-hubs--keep-as-is-during-migration-2026-05-15))
 
 **Each feature folder follows the contract:** `components/`, `lib/` (or `lib.ts`), `types.ts`, `seo.ts`, `__tests__/`, `index.ts`, `README.md` — slots optional, scale to feature size.
 
@@ -188,7 +188,7 @@ Manual one-time action remaining: **Vercel Project Settings → Root Directory =
 **Tasks:**
 - Add `vitest.workspace.ts` at root + per-app/package `vitest.config.ts`
 - Smoke test per package (just `import * as foo from '@canvas/foo'` to verify wiring)
-- CI workflow: `pnpm install && pnpm test && pnpm build` ([TBD — `pnpm` switch or stay on npm?](#package-manager-tbd))
+- CI workflow: `npm ci && npm test && npm run build` (npm workspaces per [package manager decision](#package-manager--npm-2026-05-15))
 - Rewrite `CLAUDE.md` for new paths
 - New `MONOREPO.md` (developer onboarding) at repo root
 - ADR documenting the split
@@ -209,32 +209,12 @@ These shape one or more phases. When answered, move the answer here AND update t
 **Affects:** Phase 5 — which route files move.
 **Alternative:** keep all `/api/v2/*` in student, admin calls them via fetch.
 
-### Legacy duplicate hubs  `[TBD]`
-**Affects:** Phase 4 — `features/public-content/` slice
-**Options:**
-- (a) Keep as `features/public-content/`
-- (b) Delete + 301-redirect to Crucible
-- (c) Consolidate into Crucible routes
-**Routes in question:** `/chemistry-questions/`, `/jee-pyqs/`, `/quiz/`, `/top-50-concepts/`, `/quick-recap/`, `/2-minute-chemistry/`
-
-### Migration cadence  `[TBD]`
-**Working assumption:** each phase shipped to production individually before the next starts.
-**Alternative:** batch Phases 0–3 into one deploy.
-
 ### Concurrent feature work  `[TBD]`
 **Working assumption:** no parallel feature PRs against `main` during migration. If yes, we rebase the refactor branch on `main` between phases.
 
-### Tests framework  `[TBD]`
-**Working assumption:** Vitest.
-**Affects:** Phase 6 setup.
-
 ### Test file convention  `[TBD]`
 **Working assumption:** `__tests__/` folder mirroring source tree, `.test.ts` / `.test.tsx` suffix.
-**Affects:** Phase 6 setup.
-
-### Package manager  `[TBD]`
-**Working assumption:** stay on npm (current — Phase 0 already used npm workspaces).
-**Alternative:** switch to pnpm for faster installs + stricter deps. Would require deleting `package-lock.json` and reinstalling.
+**Affects:** Phase 6 setup. Locked when Phase 6 starts.
 
 ---
 
@@ -252,6 +232,18 @@ These shape one or more phases. When answered, move the answer here AND update t
 
 ### Package count = 4 (2026-05-15)
 Confirmed during architecture review: `data`, `persona`, `ui`, `core`. Earlier proposal of `auth` package dropped because each app owns its own auth.
+
+### Package manager = npm (2026-05-15)
+**Stay on npm workspaces.** Already wired in Phase 0; switching mid-migration adds risk (new lockfile, Vercel build settings, possible Next 15 + pnpm hoisting issues) without proportional benefit at our size (2 apps, 4 packages). pnpm's wins (faster install, stricter dep hygiene) kick in at ~15–20 packages; we have 5. Reassess post-migration if pain emerges; no architectural lock-in.
+
+### Migration cadence = per-phase ship (2026-05-15)
+**Each phase commits + deploys before the next starts.** Smaller blast radius, easier to bisect regressions, plan doc stays in sync with prod. Cost: more deploy cycles — acceptable.
+
+### Tests framework = deferred to Phase 6 (2026-05-15)
+**Don't pick now.** Phases 1–5 are pure code moves with no new test coverage. Vitest remains the working assumption for Phase 6 but is not locked. Decision made when Phase 6 starts.
+
+### Legacy duplicate hubs = keep as-is during migration (2026-05-15)
+**Move `chemistry-questions/`, `jee-pyqs/`, `quiz/`, `top-50-concepts/`, `quick-recap/`, `2-minute-chemistry/` into `apps/student/features/public-content/` unchanged.** Migration ≠ cleanup. SEO + inbound links preserved. Delete-vs-redirect decision is a separate post-migration task.
 
 ---
 
