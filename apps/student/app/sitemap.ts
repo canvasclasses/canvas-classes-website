@@ -51,7 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ];
 
     // College Predictor programmatic landing pages (regional + type)
-    const { LANDING_CONFIGS } = await import('./college-predictor/[slug]/landingConfig');
+    const { LANDING_CONFIGS } = await import('@/features/college-predictor/data/landingConfig');
     const collegePredictorLandingEntries = LANDING_CONFIGS.map((cfg) => ({
         url: `${BASE_URL}/college-predictor/${cfg.slug}`,
         lastModified: new Date(),
@@ -65,7 +65,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // predictor root + regional landings because they are leaf pages.
     let collegeDeepDiveEntries: MetadataRoute.Sitemap = [];
     try {
-        const { loadAllCollegeSlugs } = await import('@/lib/collegePredictor/deepDive');
+        const { loadAllCollegeSlugs } = await import('@/features/college-predictor/lib/deepDive');
         const slugs = await loadAllCollegeSlugs();
         collegeDeepDiveEntries = slugs.map((slug) => ({
             url: `${BASE_URL}/college-predictor/college/${slug}`,

@@ -2,9 +2,9 @@ import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import PredictorClient from './PredictorClient';
-import TopColleges from './TopColleges';
-import { TOP_COLLEGES } from './topCollegesData';
+import PredictorClient from '@/features/college-predictor/components/PredictorClient';
+import TopColleges from '@/features/college-predictor/components/TopColleges';
+import { TOP_COLLEGES } from '@/features/college-predictor/data/topCollegesData';
 
 export const metadata: Metadata = {
   title: 'JEE Main College Predictor 2026 — NIT, IIIT, GFTI Rank Predictor | Canvas Classes',

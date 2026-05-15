@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { loadCollegeDeepDive } from '@/lib/collegePredictor/deepDive';
-import CutoffTrendChart from './CutoffTrendChart';
+import { loadCollegeDeepDive } from '@/features/college-predictor/lib/deepDive';
+import CutoffTrendChart from '@/features/college-predictor/components/CutoffTrendChart';
 
 // Canonical host — matches the sibling /[slug]/page.tsx + /college-predictor/page.tsx
 // convention. The broader site uses canvasclasses.in in robots + sitemap, but

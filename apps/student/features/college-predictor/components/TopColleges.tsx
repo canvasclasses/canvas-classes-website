@@ -5,7 +5,7 @@ import {
   TIER_INTROS,
   TIER_ORDER,
   TOP_COLLEGES_HERO,
-} from './topCollegesData';
+} from '../data/topCollegesData';
 
 export default function TopColleges() {
   return (

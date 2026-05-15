@@ -4,8 +4,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { predictColleges, type PredictorResult, type Bucket } from '@/lib/collegePredictor/predictor';
-import { percentileToRank } from '@/lib/collegePredictor/percentileToRank';
+import { predictColleges, type PredictorResult, type Bucket } from '@/features/college-predictor/lib/predictor';
+import { percentileToRank } from '@/features/college-predictor/lib/percentileToRank';
 import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
 
 const PredictRequestSchema = z.object({

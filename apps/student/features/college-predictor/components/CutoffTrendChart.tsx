@@ -12,7 +12,7 @@
  * stroke colours exactly.
  */
 import { useMemo, useState } from 'react';
-import type { BranchSummary } from '@/lib/collegePredictor/deepDive';
+import type { BranchSummary } from '@/features/college-predictor/lib/deepDive';
 
 const PALETTE = [
   '#f97316', // orange-500  (primary accent)

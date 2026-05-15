@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { LANDING_CONFIGS, findLanding } from './landingConfig';
+import { LANDING_CONFIGS, findLanding } from '@/features/college-predictor/data/landingConfig';
 import connectDB from '@canvas/data/db/mongodb';
 import { College } from '@canvas/data/models/College';
 

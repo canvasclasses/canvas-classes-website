@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import type { Tier, TopCollege } from './topCollegesData';
+import type { Tier, TopCollege } from '../data/topCollegesData';
 
 const TIER_BADGE: Record<Tier, string> = {
   IIT: 'bg-orange-500/10 border-orange-500/30 text-orange-300',
