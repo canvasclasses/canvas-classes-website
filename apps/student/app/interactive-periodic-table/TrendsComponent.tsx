@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { BLOCK_DATA } from '../lib/blockData';
+import { BLOCK_DATA } from '@/features/books/data/blockData';
 import { Info, TrendingUp } from 'lucide-react';
 
 // Vibrant color palette

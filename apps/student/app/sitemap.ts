@@ -376,7 +376,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // High-intent SEO target — "NCERT solutions class 12 chemistry chapter X".
     let ncertChapterEntries: MetadataRoute.Sitemap = [];
     try {
-        const { getChapterGroups } = await import('./lib/ncertData');
+        const { getChapterGroups } = await import('@/features/books/data/ncertData');
         const chapterGroups = await getChapterGroups();
         ncertChapterEntries = chapterGroups.map((g) => {
             const slug = g.chapter
@@ -398,7 +398,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // High-intent SEO target — "class 11 chemistry ncert pdf chapter X".
     let ncertPdfChapterEntries: MetadataRoute.Sitemap = [];
     try {
-        const { getAllChapterGroups } = await import('./lib/ncertBooksData');
+        const { getAllChapterGroups } = await import('@/features/books/data/ncertBooksData');
         const groups = await getAllChapterGroups();
         ncertPdfChapterEntries = groups.map((g) => ({
             url: `${BASE_URL}/download-ncert-books/class-${g.classNum}/${g.slug}`,

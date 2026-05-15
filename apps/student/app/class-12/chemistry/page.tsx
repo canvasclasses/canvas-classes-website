@@ -5,8 +5,8 @@ import BookTableOfContents, {
   type ToCBook,
   type ToCChapter,
   type ToCPage,
-} from '@/components/books/BookTableOfContents';
-import LiveBooksComingSoon from '@/components/books/LiveBooksComingSoon';
+} from '@/features/books/components/BookTableOfContents';
+import LiveBooksComingSoon from '@/features/books/components/LiveBooksComingSoon';
 
 export const revalidate = 60;
 

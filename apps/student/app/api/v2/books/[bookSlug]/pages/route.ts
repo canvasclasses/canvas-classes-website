@@ -6,7 +6,7 @@ import BookPageModel from '@canvas/data/models/BookPage';
 import { requireAdmin, isAdminRequest } from '@/lib/bookAuth';
 import { ContentBlock } from '@canvas/data/types/books';
 import { validateBlocks } from '@/lib/schemas/blocks';
-import { computeReadingTime, computeContentTypes } from '@/lib/utils/books';
+import { computeReadingTime, computeContentTypes } from '@/features/books/lib/utils';
 
 // GET branches on isAdminRequest() — admins see drafts, students see only
 // published. Caching would leak one view into the other. Students load page

@@ -9,9 +9,9 @@ import {
 import Link from 'next/link';
 import PageRenderer from '../renderer/PageRenderer';
 import { Book, BookPage, BlockType, ContentBlock } from '@canvas/data/types/books';
-import { useBookProgress } from '@/hooks/useBookProgress';
-import { useBookBookmarks } from '@/hooks/useBookBookmarks';
-import { useBookUserState } from '@/hooks/useBookUserState';
+import { useBookProgress } from '@/features/books/hooks/useBookProgress';
+import { useBookBookmarks } from '@/features/books/hooks/useBookBookmarks';
+import { useBookUserState } from '@/features/books/hooks/useBookUserState';
 import FreeGate from './FreeGate';
 
 function hasBlockType(blocks: ContentBlock[], type: BlockType): boolean {

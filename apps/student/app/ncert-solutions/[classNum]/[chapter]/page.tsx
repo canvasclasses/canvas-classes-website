@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { fetchNCERTData } from '@/app/lib/ncertData';
+import { fetchNCERTData } from '@/features/books/data/ncertData';
 import BreadcrumbSchema from '@/app/components/BreadcrumbSchema';
 import ChapterSolutionsClient from './ChapterSolutionsClient';
 

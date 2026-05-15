@@ -9,7 +9,7 @@ import {
     getChapterGroupsForClass,
     CHEMISTRY_CLASS_NUMS,
     type ChapterGroup,
-} from '../../../lib/ncertBooksData';
+} from '@/features/books/data/ncertBooksData';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 

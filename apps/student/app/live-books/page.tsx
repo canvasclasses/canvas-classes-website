@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import LiveBooksComingSoon from '@/components/books/LiveBooksComingSoon';
+import LiveBooksComingSoon from '@/features/books/components/LiveBooksComingSoon';
 
 const SITE_URL = 'https://www.canvasclasses.in';
 const CANONICAL = `${SITE_URL}/live-books`;

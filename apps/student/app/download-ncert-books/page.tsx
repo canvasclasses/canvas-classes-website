@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Script from 'next/script';
 import NcertBooksClient from './NcertBooksClient';
-import { getAllNcertBooks } from '../lib/ncertBooksData';
+import { getAllNcertBooks } from '@/features/books/data/ncertBooksData';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 

@@ -6,7 +6,7 @@ import BookTableOfContents, {
   type ToCBook,
   type ToCChapter,
   type ToCPage,
-} from '@/components/books/BookTableOfContents';
+} from '@/features/books/components/BookTableOfContents';
 
 export const revalidate = 60;
 

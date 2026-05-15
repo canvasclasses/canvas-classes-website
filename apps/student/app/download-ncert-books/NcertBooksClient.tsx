@@ -19,7 +19,7 @@ import {
     Layers,
     HelpCircle,
 } from 'lucide-react';
-import { type NcertBook, type NcertClassNum, type NcertBookChapter } from '@/app/lib/ncertBooksData';
+import { type NcertBook, type NcertClassNum, type NcertBookChapter } from '@/features/books/data/ncertBooksData';
 
 interface NcertBooksClientProps {
     books: NcertBook[];

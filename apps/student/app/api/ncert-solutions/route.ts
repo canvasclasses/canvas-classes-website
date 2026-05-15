@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { fetchNCERTData, getChapterGroups, getNCERTStats } from '@/app/lib/ncertData';
+import { fetchNCERTData, getChapterGroups, getNCERTStats } from '@/features/books/data/ncertData';
 
 export async function GET() {
     try {

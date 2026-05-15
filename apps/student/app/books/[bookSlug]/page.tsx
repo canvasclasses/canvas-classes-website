@@ -6,7 +6,7 @@ import BookTableOfContents, {
   type ToCBook,
   type ToCChapter,
   type ToCPage,
-} from '@/components/books/BookTableOfContents';
+} from '@/features/books/components/BookTableOfContents';
 
 // ISR — the ToC changes only when an admin publishes a new chapter / page,
 // so a 60s revalidate window is safe and keeps Mongo off the hot path.

@@ -7,8 +7,8 @@ import {
   FlaskConical, Video, Brain, ClipboardCheck, Gamepad2, Clock,
   ArrowRight, X, Sparkles, Bookmark, Languages, Zap,
 } from 'lucide-react';
-import { useBookProgress, BookProgressRecord } from '@/hooks/useBookProgress';
-import { useBookBookmarks } from '@/hooks/useBookBookmarks';
+import { useBookProgress, BookProgressRecord } from '@/features/books/hooks/useBookProgress';
+import { useBookBookmarks } from '@/features/books/hooks/useBookBookmarks';
 import { BlockType } from '@canvas/data/types/books';
 import {
   type SubjectTheme, getTheme, getDecor, LiveBooksLogo,

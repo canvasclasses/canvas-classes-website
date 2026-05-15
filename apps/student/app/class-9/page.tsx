@@ -5,8 +5,8 @@ import BookPageModel from '@canvas/data/models/BookPage';
 import GradeLandingPage, {
   type GradeBook,
   type GradePage,
-} from '@/components/books/GradeLandingPage';
-import LiveBooksComingSoon from '@/components/books/LiveBooksComingSoon';
+} from '@/features/books/components/GradeLandingPage';
+import LiveBooksComingSoon from '@/features/books/components/LiveBooksComingSoon';
 
 const EXPECTED_SUBJECTS = ['Science', 'Mathematics', 'Social Science'];
 

@@ -15,7 +15,7 @@ import {
     ZoomIn,
     X,
 } from 'lucide-react';
-import type { NCERTQuestion } from '@/app/lib/ncertData';
+import type { NCERTQuestion } from '@/features/books/data/ncertData';
 
 const difficultyColors: Record<string, { bg: string; text: string; border: string; icon: typeof CheckCircle }> = {
     'Easy': { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30', icon: CheckCircle },

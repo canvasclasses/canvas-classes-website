@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import BookModel from '@canvas/data/models/Book';
 import BookPageModel from '@canvas/data/models/BookPage';
-import BookReader from '@/components/books/reader/BookReader';
+import BookReader from '@/features/books/components/reader/BookReader';
 import type { Book, BookPage } from '@canvas/data/types/books';
-import { buildBookPageMetadata, buildBookPageJsonLd } from '@/lib/bookPageSeo';
+import { buildBookPageMetadata, buildBookPageJsonLd } from '@/features/books/lib/bookPageSeo';
 
 // ISR — cache the rendered RSC payload for each (bookSlug, pageSlug) tuple
 // for 60 seconds. Auth is enforced by middleware on every request, so cache

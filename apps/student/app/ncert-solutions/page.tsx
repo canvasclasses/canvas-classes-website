@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import NCERTSolutionsClient from './NCERTSolutionsClient';
-import { getChapterGroups, getNCERTStats } from '../lib/ncertData';
+import { getChapterGroups, getNCERTStats } from '@/features/books/data/ncertData';
 
 export const metadata: Metadata = {
     title: 'NCERT Solutions for Class 11 & 12 Chemistry - Free PDF | Canvas Classes',

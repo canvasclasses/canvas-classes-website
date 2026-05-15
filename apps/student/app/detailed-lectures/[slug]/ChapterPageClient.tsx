@@ -24,7 +24,7 @@ import {
     Info,
     Sparkles,
 } from 'lucide-react';
-import { getNcertChapterNames } from '@/app/lib/ncertMapping';
+import { getNcertChapterNames } from '@/features/books/data/ncertMapping';
 
 interface Lecture {
     lectureNumber: number;

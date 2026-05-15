@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import BookModel from '@canvas/data/models/Book';
 import BookPageModel from '@canvas/data/models/BookPage';
-import BookReader from '@/components/books/reader/BookReader';
+import BookReader from '@/features/books/components/reader/BookReader';
 
 export const revalidate = 60;
 
