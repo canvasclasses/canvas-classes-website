@@ -4,6 +4,7 @@ import { UserProgress, IQuestionAttempt } from '@/lib/models/UserProgress';
 import { StudentChapterProfile, IStudentChapterProfile } from '@/lib/models/StudentChapterProfile';
 import { updateProfileFromAttempt, createEmptyProfile } from '@/lib/profileEngine';
 import { getUserIdFromRequest } from '@/lib/auth';
+import { resolveConfidenceTier } from '@/lib/personaWriter';
 
 // ─── GET /api/v2/user/progress?chapterId=xxx ──────────────────────────────────
 // Returns: starred_ids for this chapter, all_attempted_ids for this chapter,
@@ -105,11 +106,7 @@ export async function POST(req: NextRequest) {
         // Tiered signal — see CRUCIBLE_ARCHITECTURE.md §3.2.
         // Default by source: test/guided → high, browse → medium.
         // Client may override (e.g. casual-tagged retroactively → low).
-        const ALLOWED_CONFIDENCE = ['high', 'medium', 'low'] as const;
-        const confidenceTier =
-            ALLOWED_CONFIDENCE.includes(confidence)
-                ? (confidence as 'high' | 'medium' | 'low')
-                : (source === 'test' || source === 'guided' ? 'high' : 'medium');
+        const confidenceTier = resolveConfidenceTier(confidence, source);
 
         await connectToDatabase();
 

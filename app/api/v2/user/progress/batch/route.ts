@@ -1,15 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
-import { UserProgress } from '@/lib/models/UserProgress';
+import { UserProgress, IQuestionAttempt } from '@/lib/models/UserProgress';
 import { StudentChapterProfile, IStudentChapterProfile } from '@/lib/models/StudentChapterProfile';
 import { updateProfileFromAttempt, createEmptyProfile } from '@/lib/profileEngine';
 import { getUserIdFromRequest } from '@/lib/auth';
-import { getTagName } from '@/lib/taxonomyLookup';
+import { applyAttemptToProgress, resolveConfidenceTier } from '@/lib/personaWriter';
 
 // ─── POST /api/v2/user/progress/batch ────────────────────────────────────────
-// Body: { attempts: Array<{ question_id, display_id, chapter_id, difficulty, 
+// Body: { attempts: Array<{ question_id, display_id, chapter_id, difficulty,
 //                           concept_tags, is_correct, selected_option, source }> }
-// Batch saves multiple question attempts in a single transaction
+//
+// Batch-records test-mode attempts. Each attempt is funnelled through the
+// same `applyAttemptToProgress` helper as the single-attempt route, so the
+// tiered counter contract (CRUCIBLE_ARCHITECTURE.md §3.2) has one home.
+// A single `progress.save()` runs after the whole loop — N attempts ≠ N writes.
 export async function POST(req: NextRequest) {
     try {
         const userId = await getUserIdFromRequest(req);
@@ -29,218 +33,78 @@ export async function POST(req: NextRequest) {
         // modifications. On VersionError we re-read and replay the batch.
         const MAX_RETRIES = 3;
         let totalAttempted = 0;
-        let totalCorrect = 0;
 
         for (let retryNum = 0; retryNum <= MAX_RETRIES; retryNum++) {
 
-        let progress = await UserProgress.findById(userId);
-        if (!progress) {
-            progress = new UserProgress({
-                _id: userId,
-                user_email: '',
-                recent_attempts: [],
-                all_attempted_ids: [],
-                starred_questions: [],
-                test_sessions: [],
-                chapter_progress: new Map(),
-                concept_mastery: new Map(),
-                stats: {},
-                current_session: null,
-            });
-        }
-
-        totalCorrect = 0;
-        totalAttempted = 0;
-
-        // Process each attempt
-        const ALLOWED_CONFIDENCE = ['high', 'medium', 'low'] as const;
-        for (const attempt of attempts) {
-            const {
-                question_id,
-                display_id,
-                chapter_id,
-                difficulty,
-                concept_tags = [],
-                is_correct,
-                selected_option = null,
-                source = 'test',
-                time_spent_seconds = 0,
-                confidence,
-                session_id,
-            } = attempt;
-
-            if (!question_id || !chapter_id || is_correct === undefined) {
-                continue; // Skip invalid attempts
+            let progress = await UserProgress.findById(userId);
+            if (!progress) {
+                progress = new UserProgress({
+                    _id: userId,
+                    user_email: '',
+                    recent_attempts: [],
+                    all_attempted_ids: [],
+                    starred_questions: [],
+                    test_sessions: [],
+                    chapter_progress: new Map(),
+                    concept_mastery: new Map(),
+                    stats: {},
+                    current_session: null,
+                });
             }
 
-            // Tier resolution — see CRUCIBLE_ARCHITECTURE.md §3.2.
-            const tier: 'high' | 'medium' | 'low' =
-                ALLOWED_CONFIDENCE.includes(confidence)
-                    ? confidence
-                    : (source === 'test' || source === 'guided' ? 'high' : 'medium');
-            const countsForMastery = tier === 'high';
-            const countsForExposure = tier !== 'low';
+            totalAttempted = 0;
 
-            // Aggregate counters drive the global stats update below.
-            if (countsForMastery) {
-                totalAttempted++;
-                if (is_correct) totalCorrect++;
-            }
-
-            // Update all_attempted_ids — populated for HIGH-confidence only
-            // (mirrors the rule in recordAttempt). Browse-medium and casual
-            // attempts must not burn a question for the test generator.
-            if (countsForMastery) {
-                interface AttemptedIdEntry {
-                    question_id: string;
-                    chapter_id: string;
-                    difficulty?: string;
-                    times_attempted?: number;
-                    times_correct?: number;
-                    last_correct_at?: Date;
-                }
-                const existingIdx = progress.all_attempted_ids.findIndex(
-                    (e: AttemptedIdEntry) => e.question_id === question_id
-                );
-                if (existingIdx >= 0) {
-                    const entry = progress.all_attempted_ids[existingIdx];
-                    entry.times_attempted = (entry.times_attempted || 0) + 1;
-                    if (is_correct) {
-                        entry.times_correct = (entry.times_correct || 0) + 1;
-                        entry.last_correct_at = now;
-                    }
-                } else {
-                    progress.all_attempted_ids.push({
-                        question_id,
-                        chapter_id,
-                        difficulty,
-                        times_attempted: 1,
-                        times_correct: is_correct ? 1 : 0,
-                        last_correct_at: is_correct ? now : undefined,
-                    });
-                }
-            }
-
-            // recent_attempts always carries the attempt — drives the audit
-            // feed and the reclassifyBrowseSession helper. Capped at 100 here
-            // (recordAttempt caps at 200 elsewhere — keep aligned over time).
-            progress.recent_attempts.unshift({
-                question_id,
-                display_id,
-                chapter_id,
-                difficulty,
-                concept_tags,
-                is_correct,
-                selected_option,
-                attempted_at: now,
-                source,
-                time_spent_seconds,
-                confidence: tier,
-                session_id: typeof session_id === 'string' ? session_id : undefined,
-            });
-            if (progress.recent_attempts.length > 100) {
-                progress.recent_attempts = progress.recent_attempts.slice(0, 100);
-            }
-
-            // concept_mastery — tiered counters. Canonical shape, do not fork.
-            // See IConceptMastery in lib/models/UserProgress.ts.
-            for (const tagId of concept_tags) {
-                if (!tagId) continue;
-                const existing = progress.concept_mastery.get(tagId);
-                if (existing) {
-                    existing.last_attempted_at = now;
-                    if (countsForExposure) existing.exposure_count = (existing.exposure_count ?? 0) + 1;
-                    if (countsForMastery) {
-                        existing.times_attempted = (existing.times_attempted || 0) + 1;
-                        if (is_correct) existing.times_correct = (existing.times_correct || 0) + 1;
-                        existing.accuracy_percentage = existing.times_attempted > 0
-                            ? Math.round((existing.times_correct / existing.times_attempted) * 100)
-                            : 0;
-                    }
-                } else {
-                    progress.concept_mastery.set(tagId, {
-                        tag_id: tagId,
-                        tag_name: getTagName(tagId),
-                        times_attempted: countsForMastery ? 1 : 0,
-                        times_correct: countsForMastery && is_correct ? 1 : 0,
-                        accuracy_percentage: countsForMastery ? (is_correct ? 100 : 0) : 0,
-                        exposure_count: countsForExposure ? 1 : 0,
-                        last_attempted_at: now,
-                    });
-                }
-            }
-
-            // chapter_progress — HIGH-confidence only, mirroring recordAttempt.
-            // Previously OMITTED from the batch route, which meant test-mode
-            // attempts never advanced mastery_level (audit, May 2026). Without
-            // this update the dashboard's "Proficient/Mastered" chips stay
-            // pinned to "Beginner" forever for test-driven users.
-            interface ChapterProgressShape {
-                chapter_id: string;
-                total_attempted: number;
-                correct_count: number;
-                accuracy_percentage: number;
-                last_attempted_at: Date;
-                mastery_level: 'Beginner' | 'Learning' | 'Proficient' | 'Mastered';
-            }
-            if (countsForMastery) {
-                const cp: ChapterProgressShape = progress.chapter_progress.get(chapter_id) ?? {
+            for (const raw of attempts) {
+                const {
+                    question_id,
+                    display_id,
                     chapter_id,
-                    total_attempted: 0,
-                    correct_count: 0,
-                    accuracy_percentage: 0,
-                    last_attempted_at: now,
-                    mastery_level: 'Beginner',
+                    difficulty,
+                    concept_tags = [],
+                    is_correct,
+                    selected_option = null,
+                    source = 'test',
+                    time_spent_seconds = 0,
+                    confidence,
+                    session_id,
+                } = raw;
+
+                if (!question_id || !chapter_id || is_correct === undefined) {
+                    continue; // Skip invalid attempts
+                }
+
+                const tier = resolveConfidenceTier(confidence, source);
+                if (tier === 'high') totalAttempted += 1;
+
+                const personaAttempt: IQuestionAttempt = {
+                    question_id,
+                    display_id: display_id ?? String(question_id).slice(0, 8).toUpperCase(),
+                    chapter_id,
+                    is_correct,
+                    time_spent_seconds,
+                    attempted_at: now,
+                    difficulty: difficulty ?? 'Medium',
+                    concept_tags,
+                    source,
+                    selected_option,
+                    confidence: tier,
+                    session_id: typeof session_id === 'string' ? session_id : undefined,
                 };
-                cp.total_attempted += 1;
-                if (is_correct) cp.correct_count += 1;
-                cp.accuracy_percentage = (cp.correct_count / cp.total_attempted) * 100;
-                cp.last_attempted_at = now;
-                if (cp.total_attempted >= 20 && cp.accuracy_percentage >= 80) cp.mastery_level = 'Mastered';
-                else if (cp.total_attempted >= 10 && cp.accuracy_percentage >= 60) cp.mastery_level = 'Proficient';
-                else if (cp.total_attempted >= 5) cp.mastery_level = 'Learning';
-                progress.chapter_progress.set(chapter_id, cp);
+
+                applyAttemptToProgress(progress, personaAttempt);
             }
-        }
 
-        // Update global stats — only the HIGH-confidence aggregate (totalAttempted
-        // / totalCorrect) is summed here, mirroring recordAttempt's tier rules.
-        if (!progress.stats) progress.stats = {};
-        progress.stats.total_questions_attempted = (progress.stats.total_questions_attempted || 0) + totalAttempted;
-        progress.stats.total_correct = (progress.stats.total_correct || 0) + totalCorrect;
-        progress.stats.overall_accuracy = progress.stats.total_questions_attempted > 0
-            ? Math.round((progress.stats.total_correct / progress.stats.total_questions_attempted) * 100)
-            : 0;
-
-        // Update last_practice_date + streak. Was previously written as a
-        // phantom `last_activity_at` field that doesn't exist in UserStatsSchema,
-        // so the dashboard's streak chip never moved for test-only users.
-        const prevPracticeDate = progress.stats.last_practice_date as Date | undefined;
-        progress.stats.last_practice_date = now;
-        const today = new Date(now); today.setHours(0, 0, 0, 0);
-        if (prevPracticeDate) {
-            const prev = new Date(prevPracticeDate); prev.setHours(0, 0, 0, 0);
-            const daysDiff = Math.round((today.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24));
-            if (daysDiff === 1) progress.stats.streak_days = (progress.stats.streak_days ?? 0) + 1;
-            else if (daysDiff > 1) progress.stats.streak_days = 1;
-            // daysDiff === 0 → same day, no change
-        } else {
-            progress.stats.streak_days = 1;
-        }
-
-        progress.updated_at = now;
-
-        try {
-            await progress.save();
-            break; // success — exit retry loop
-        } catch (saveErr: unknown) {
-            const isVersionError =
-                saveErr instanceof Error && saveErr.name === 'VersionError';
-            if (isVersionError && retryNum < MAX_RETRIES) {
-                continue; // re-read and replay
+            try {
+                await progress.save();
+                break; // success — exit retry loop
+            } catch (saveErr: unknown) {
+                const isVersionError =
+                    saveErr instanceof Error && saveErr.name === 'VersionError';
+                if (isVersionError && retryNum < MAX_RETRIES) {
+                    continue; // re-read and replay
+                }
+                throw saveErr;
             }
-            throw saveErr;
-        }
 
         } // end retry loop
 
@@ -266,10 +130,10 @@ export async function POST(req: NextRequest) {
                 timestamp: Date;
             }>>();
             for (const a of (attempts as ClientAttemptShape[])) {
-                const tier =
-                    (a.confidence === 'high' || a.confidence === 'medium' || a.confidence === 'low')
-                        ? a.confidence
-                        : (a.source === 'test' || a.source === 'guided' ? 'high' : 'medium');
+                const tier = resolveConfidenceTier(
+                    a.confidence,
+                    typeof a.source === 'string' ? a.source : undefined,
+                );
                 if (tier !== 'high') continue;
                 const cid = typeof a.chapter_id === 'string' ? a.chapter_id : '';
                 const qid = typeof a.question_id === 'string' ? a.question_id : '';

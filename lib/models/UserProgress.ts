@@ -1,5 +1,5 @@
-import mongoose, { Schema } from 'mongoose';
-import { getTagName } from '@/lib/taxonomyLookup';
+import mongoose, { Schema, HydratedDocument } from 'mongoose';
+import { applyAttemptToProgress } from '@/lib/personaWriter';
 
 // ============================================
 // USER PROGRESS MODEL - Track practice sessions
@@ -324,153 +324,14 @@ UserProgressSchema.index({ 'test_sessions.chapter_id': 1 });
 // INSTANCE METHODS
 // ============================================
 
+// Mutation logic lives in `lib/personaWriter.applyAttemptToProgress` so the
+// tiered counter contract has exactly one home — see CRUCIBLE_ARCHITECTURE.md
+// §3.2. This method handles the persist; the batch route calls the same helper
+// in a loop and saves once at the end.
 UserProgressSchema.methods.recordAttempt = async function (
   attempt: IQuestionAttempt
 ) {
-  // Add to recent attempts (keep only last 200 — for analytics feed)
-  this.recent_attempts.unshift(attempt);
-  if (this.recent_attempts.length > 200) {
-    this.recent_attempts = this.recent_attempts.slice(0, 200);
-  }
-
-  // Effective tier (default is 'medium' if the writer didn't set one). Drives
-  // every counter decision below — see CRUCIBLE_ARCHITECTURE.md §3.2 and §4.2.
-  const tier: AttemptConfidence = attempt.confidence ?? 'medium';
-  const isHigh = tier === 'high';
-  const isLow = tier === 'low';
-  const counts_for_mastery = isHigh;        // mastery counters: high only
-  const counts_for_exposure = !isLow;       // exposure: high + medium
-
-  // Update lightweight all_attempted_ids index — used by the test generator
-  // to avoid recently-shown questions. Counts test attempts (source: 'test')
-  // for the historic "avoid recently-tested" logic, AND any high-confidence
-  // attempt for cross-mode dedup. Browse-medium and browse-low intentionally
-  // do not populate this — browsing the question bank shouldn't burn a
-  // question for the test generator.
-  if (attempt.source === 'test' || isHigh) {
-    const existingIdx = this.all_attempted_ids.findIndex(
-      (e: IAttemptedIdEntry) => e.question_id === attempt.question_id
-    );
-    if (existingIdx >= 0) {
-      this.all_attempted_ids[existingIdx].times_attempted += 1;
-      this.all_attempted_ids[existingIdx].last_attempted_at = attempt.attempted_at;
-      if (attempt.is_correct) {
-        this.all_attempted_ids[existingIdx].times_correct += 1;
-        this.all_attempted_ids[existingIdx].last_correct_at = attempt.attempted_at;
-      }
-    } else {
-      this.all_attempted_ids.push({
-        question_id: attempt.question_id,
-        chapter_id: attempt.chapter_id,
-        times_attempted: 1,
-        times_correct: attempt.is_correct ? 1 : 0,
-        last_attempted_at: attempt.attempted_at,
-        last_correct_at: attempt.is_correct ? attempt.attempted_at : undefined,
-      });
-    }
-  }
-
-  // Chapter progress — driven by HIGH-confidence only (mastery_level signal).
-  // Browse exposure tracking lives in concept_mastery.exposure_count below.
-  if (counts_for_mastery) {
-    const chapterId = attempt.chapter_id;
-    const chapterProg = this.chapter_progress.get(chapterId) || {
-      chapter_id: chapterId,
-      total_attempted: 0,
-      correct_count: 0,
-      accuracy_percentage: 0,
-      last_attempted_at: new Date(),
-      mastery_level: 'Beginner',
-    };
-    chapterProg.total_attempted += 1;
-    if (attempt.is_correct) chapterProg.correct_count += 1;
-    chapterProg.accuracy_percentage =
-      (chapterProg.correct_count / chapterProg.total_attempted) * 100;
-    chapterProg.last_attempted_at = attempt.attempted_at;
-    if (chapterProg.total_attempted >= 20 && chapterProg.accuracy_percentage >= 80) {
-      chapterProg.mastery_level = 'Mastered';
-    } else if (chapterProg.total_attempted >= 10 && chapterProg.accuracy_percentage >= 60) {
-      chapterProg.mastery_level = 'Proficient';
-    } else if (chapterProg.total_attempted >= 5) {
-      chapterProg.mastery_level = 'Learning';
-    }
-    this.chapter_progress.set(chapterId, chapterProg);
-  }
-
-  // concept_mastery — the persona substrate. Two parallel counter sets:
-  //   - times_* / accuracy_percentage : HIGH only (mastery)
-  //   - exposure_count                : HIGH + MEDIUM
-  //   - last_attempted_at             : updated regardless (last-seen signal)
-  // LOW (casual-tagged browse) only updates last_attempted_at.
-  for (const tagId of attempt.concept_tags ?? []) {
-    if (!tagId) continue;
-    const existing = this.concept_mastery.get(tagId);
-    if (existing) {
-      existing.last_attempted_at = attempt.attempted_at;
-      if (counts_for_exposure) existing.exposure_count = (existing.exposure_count ?? 0) + 1;
-      if (counts_for_mastery) {
-        existing.times_attempted += 1;
-        if (attempt.is_correct) existing.times_correct += 1;
-        existing.accuracy_percentage =
-          existing.times_attempted > 0
-            ? Math.round((existing.times_correct / existing.times_attempted) * 100)
-            : 0;
-      }
-    } else {
-      // First touch on this concept — initialise based on what tier this is.
-      this.concept_mastery.set(tagId, {
-        tag_id: tagId,
-        tag_name: getTagName(tagId),
-        times_attempted: counts_for_mastery ? 1 : 0,
-        times_correct: counts_for_mastery && attempt.is_correct ? 1 : 0,
-        accuracy_percentage: counts_for_mastery ? (attempt.is_correct ? 100 : 0) : 0,
-        exposure_count: counts_for_exposure ? 1 : 0,
-        last_attempted_at: attempt.attempted_at,
-      });
-    }
-  }
-
-  // Overall stats — HIGH only. Browse should not inflate the overall_accuracy
-  // shown on the dashboard, since that number is the student's "official"
-  // mastery percentage.
-  if (counts_for_mastery) {
-    this.stats.total_questions_attempted += 1;
-    if (attempt.is_correct) this.stats.total_correct += 1;
-    this.stats.overall_accuracy =
-      (this.stats.total_correct / this.stats.total_questions_attempted) * 100;
-  }
-  // last_practice_date + streak update for any non-low attempt (drives the
-  // streak chip on the welcome dashboard). Streak math must capture the OLD
-  // last_practice_date BEFORE we overwrite it — previously daysDiff was
-  // always 0 because `lastPractice` aliased the just-updated field, so the
-  // streak counter was permanently stuck at 1 (audit #18).
-  if (!isLow) {
-    const prevPracticeDate = this.stats.last_practice_date;
-    this.stats.last_practice_date = attempt.attempted_at;
-
-    // Day-bucket comparison — round both timestamps to local midnight so
-    // multiple attempts on the same calendar day don't churn the streak.
-    const today = new Date(attempt.attempted_at);
-    today.setHours(0, 0, 0, 0);
-    if (prevPracticeDate) {
-      const prev = new Date(prevPracticeDate);
-      prev.setHours(0, 0, 0, 0);
-      const daysDiff = Math.round((today.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24));
-      if (daysDiff === 0) {
-        // Same day — leave streak unchanged.
-      } else if (daysDiff === 1) {
-        this.stats.streak_days = (this.stats.streak_days ?? 0) + 1;
-      } else {
-        // Missed a day or more — restart at 1.
-        this.stats.streak_days = 1;
-      }
-    } else {
-      // First-ever attempt — bootstrap streak.
-      this.stats.streak_days = 1;
-    }
-  }
-
-  this.updated_at = new Date();
+  applyAttemptToProgress(this as HydratedDocument<IUserProgress>, attempt);
   await this.save();
 };
 

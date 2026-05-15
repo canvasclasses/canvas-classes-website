@@ -3,9 +3,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, Bookmark, Check, Timer, X, MonitorPlay, Volume2, ChevronUp, ChevronDown, Pause, Play, Home } from 'lucide-react';
 import { Question } from './types';
-import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
+import MathRenderer from '@/components/MathRenderer';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { getTagName, getChapterCategory } from '@/lib/taxonomyLookup';
+import { isAnswerCorrect } from '@/lib/questionScoring';
 import { track } from '@/lib/analytics/mixpanel';
 import TestSaveModal from './TestSaveModal';
 import WaveformAudioPlayer from '@/components/WaveformAudioPlayer';
@@ -334,22 +335,17 @@ export default function TestView({ questions, onBack }: { questions: Question[];
   const markedCount = Object.values(marked).filter(Boolean).length;
   const notVisitedCount = questions.length - answeredCount;
 
-  // Helper: check if a question is answered correctly
+  // Helper: extract the student's selection from React state for one question,
+  // then delegate to the shared scoring helper (lib/questionScoring.ts) so the
+  // client and server cannot drift on what "correct" means.
   const isQuestionCorrect = (qq: Question): boolean => {
-    if (qq.type === 'NVT') {
-      const userInput = nvtInputs[qq.id]?.trim();
-      // Require a non-empty answer; undefined===undefined must NOT count as correct
-      if (!userInput) return false;
-      return userInput === qq.answer?.integer_value?.toString();
-    }
-    if (qq.type === 'MCQ') {
-      const userSel = Array.isArray(answers[qq.id]) ? (answers[qq.id] as string[]) : [];
-      const correctIds = (qq.options || []).filter((o: { id: string; text: string; is_correct: boolean }) => o.is_correct).map((o: { id: string; text: string; is_correct: boolean }) => o.id);
-      if (userSel.length !== correctIds.length) return false;
-      return correctIds.every((id: string) => userSel.includes(id));
-    }
-    // SCQ
-    return !!qq.options?.find((o: { id: string; text: string; is_correct: boolean }) => o.id === answers[qq.id] && o.is_correct);
+    const selected =
+      qq.type === 'NVT'
+        ? nvtInputs[qq.id]?.trim() ?? null
+        : qq.type === 'MCQ'
+          ? (Array.isArray(answers[qq.id]) ? (answers[qq.id] as string[]) : [])
+          : (answers[qq.id] ?? null);
+    return isAnswerCorrect(qq, selected);
   };
 
   const score = submitted ? questions.filter(qq => isQuestionCorrect(qq)).length : 0;

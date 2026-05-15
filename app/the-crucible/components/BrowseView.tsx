@@ -4,10 +4,11 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Bookmark, Check, X, Search, Flag, Volume2, MonitorPlay, ChevronDown, ChevronUp, ExternalLink, Menu, AlertCircle } from 'lucide-react';
 import WaveformAudioPlayer from '@/components/WaveformAudioPlayer';
 import { Chapter, Question } from './types';
-import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
+import MathRenderer from '@/components/MathRenderer';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
-import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
 import { difficultyColor } from '@/lib/difficultyUtils';
+import { isAnswerCorrect } from '@/lib/questionScoring';
 import { getTopicSortKey, hasNcertOrder, NCERT_TOPIC_ORDER } from '@/app/the-crucible/lib/ncertTopicOrder';
 import { track } from '@/lib/analytics/mixpanel';
 import { formatExamLabel, isPyq, isJeeAdvancedPyq, isJeeMainPyq } from './examLabel';
@@ -482,29 +483,26 @@ export default function BrowseView({
   const onSubmit = useCallback((qq: Question) => {
     const cur = qStates.get(qq.id) ?? emptyQState;
     if (cur.submitted) return;
-    let correct = false;
+    // Build selPayload first (the persisted selected_option), then delegate the
+    // correctness check to the shared scoring helper so client and server can't
+    // drift on what "correct" means.
     let selPayload: string | string[] | number | null = null;
     if (qq.type === 'MCQ') {
       const sel = Array.isArray(cur.selected) ? cur.selected : [];
       if (sel.length === 0) return;
-      const correctIds = (qq.options ?? []).filter(o => o.is_correct).map(o => o.id);
-      correct = correctIds.length === sel.length && sel.every(id => correctIds.includes(id));
       selPayload = sel;
     } else if (qq.type === 'NVT') {
       const v = (cur.integerInput ?? '').trim();
       if (!v) return;
       const n = Number(v);
-      const expected = qq.answer?.integer_value;
-      correct = typeof expected === 'number' && n === expected;
       selPayload = isFinite(n) ? n : v;
     } else {
       // SCQ / AR / MST / MTC — single selected id
       const sel = typeof cur.selected === 'string' ? cur.selected : null;
       if (!sel) return;
-      const opt = (qq.options ?? []).find(o => o.id === sel);
-      correct = !!opt?.is_correct;
       selPayload = sel;
     }
+    const correct = isAnswerCorrect(qq, selPayload);
     updateQState(qq.id, { submitted: true, isCorrect: correct, showSolution: true });
     persistAttempt(qq, correct, selPayload);
     track('question_attempted', {

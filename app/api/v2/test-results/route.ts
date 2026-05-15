@@ -9,44 +9,12 @@ import {
     peopleSetServer,
     peopleIncrementServer,
 } from '@/lib/analytics/mixpanel.server';
+import { isAnswerCorrect, type ScorableQuestion } from '@/lib/questionScoring';
 
 // Subset of Question shape we need to recompute correctness server-side.
-interface CanonicalQuestion {
-    _id: string;
-    type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ' | 'WKEX';
-    options?: Array<{ id: string; is_correct: boolean }>;
-    answer?: { integer_value?: number; correct_option?: string };
-}
-
-/**
- * Recompute whether a single attempt is correct using the CANONICAL question
- * doc — never the client's `is_correct` claim. This closes the audit-#8
- * mass-assignment hole (a malicious client could previously POST `score:{
- * correct: 50, total: 50 }` for a 5-Q test and the dashboard would show 100%).
- */
-function recomputeCorrect(
-    q: CanonicalQuestion,
-    selected: unknown,
-): boolean {
-    if (selected === null || selected === undefined || selected === '') return false;
-    if (q.type === 'NVT') {
-        const expected = q.answer?.integer_value;
-        if (expected === undefined || expected === null) return false;
-        const userNum = Number(typeof selected === 'string' ? selected.trim() : selected);
-        return Number.isFinite(userNum) && userNum === expected;
-    }
-    if (q.type === 'MCQ') {
-        const userArr: string[] = Array.isArray(selected)
-            ? selected.filter((x): x is string => typeof x === 'string')
-            : [];
-        const correctIds = (q.options ?? []).filter(o => o.is_correct).map(o => o.id);
-        if (userArr.length !== correctIds.length || correctIds.length === 0) return false;
-        return correctIds.every(id => userArr.includes(id));
-    }
-    // SCQ / AR / MST / MTC — single selected option id
-    if (typeof selected !== 'string') return false;
-    return !!q.options?.find(o => o.id === selected && o.is_correct);
-}
+// _id is added on top of the shared ScorableQuestion contract — it's the join
+// key for the Mongo lookup but is not needed by `isAnswerCorrect`.
+type CanonicalQuestion = ScorableQuestion & { _id: string };
 
 // ─── POST /api/v2/test-results ───────────────────────────────────────────────
 // Body: { chapter_id, test_config, questions, timing, saved_to_progress }
@@ -101,7 +69,7 @@ export async function POST(req: NextRequest) {
             const canon = byId.get(qid);
             // If the question has been deleted or the id is unknown, treat as
             // wrong (safer than awarding a point for a non-existent question).
-            const isCorrect = canon ? recomputeCorrect(canon, cq.selected_option) : false;
+            const isCorrect = canon ? isAnswerCorrect(canon, cq.selected_option) : false;
             if (isCorrect) correct += 1;
             return {
                 question_id: qid,
