@@ -16,8 +16,8 @@ import {
     ArrowRight,
     Quote,
 } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import FAQSection from '../components/FAQSection';
+import Navbar from '@/app/components/Navbar';
+import FAQSection from '@/app/components/FAQSection';
 
 
 // Stats data

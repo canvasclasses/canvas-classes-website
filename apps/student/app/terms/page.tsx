@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { LAST_UPDATED, TERMS_VERSION } from '@/lib/legal/versions';
+import { LAST_UPDATED, TERMS_VERSION } from '@/features/legal/lib/versions';
 
 export const metadata: Metadata = {
   title: 'Terms & Conditions',

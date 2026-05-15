@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import AboutPage from './AboutPage';
+import AboutPage from '@/features/legal/components/AboutPage';
 
 export const metadata: Metadata = {
     title: 'About Paaras Sir - Canvas Classes',

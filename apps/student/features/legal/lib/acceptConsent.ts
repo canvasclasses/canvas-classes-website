@@ -5,7 +5,7 @@ import { createClient } from '@/app/utils/supabase/server';
 import {
   PRIVACY_VERSION,
   TERMS_VERSION,
-} from '@/lib/legal/versions';
+} from '@/features/legal/lib/versions';
 
 type Result = { ok: true } | { ok: false; error: string };
 

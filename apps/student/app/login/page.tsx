@@ -8,7 +8,7 @@ import { createClient } from '../utils/supabase/client'
 import { sanitizeRedirect } from '@canvas/core/redirect-validation'
 import Link from 'next/link'
 import DnsBlockedBanner from '../components/DnsBlockedBanner'
-import { PRIVACY_VERSION, TERMS_VERSION } from '@/lib/legal/versions'
+import { PRIVACY_VERSION, TERMS_VERSION } from '@/features/legal/lib/versions'
 
 function LoginContent() {
     const [isLogin, setIsLogin] = useState(true)

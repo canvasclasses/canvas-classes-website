@@ -4,7 +4,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { MixpanelProvider } from '@/components/providers/MixpanelProvider';
 import { ClarityScript } from '@/components/analytics/ClarityScript';
-import { ConsentGate } from '@/components/legal/ConsentGate';
+import { ConsentGate } from '@/features/legal/components/ConsentGate';
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import BitsatBanner from "./components/BitsatBanner";

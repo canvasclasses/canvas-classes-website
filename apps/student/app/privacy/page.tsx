@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { LAST_UPDATED, PRIVACY_VERSION } from '@/lib/legal/versions';
+import { LAST_UPDATED, PRIVACY_VERSION } from '@/features/legal/lib/versions';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',

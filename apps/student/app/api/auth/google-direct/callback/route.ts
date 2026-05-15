@@ -113,7 +113,7 @@ export async function GET(request: NextRequest) {
         }
 
         if (consentFromSignup && data.user) {
-            const { PRIVACY_VERSION, TERMS_VERSION } = await import('@/lib/legal/versions');
+            const { PRIVACY_VERSION, TERMS_VERSION } = await import('@/features/legal/lib/versions');
             const meta = data.user.user_metadata ?? {};
             const needsUpdate =
                 meta.privacy_version !== PRIVACY_VERSION ||

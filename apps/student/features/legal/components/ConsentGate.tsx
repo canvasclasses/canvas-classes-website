@@ -6,7 +6,7 @@ import { createClient } from '@/app/utils/supabase/client';
 import {
   PRIVACY_VERSION,
   TERMS_VERSION,
-} from '@/lib/legal/versions';
+} from '@/features/legal/lib/versions';
 import { ConsentRefreshModal } from './ConsentRefreshModal';
 
 const PUBLIC_PATHS = [

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { acceptConsent } from './acceptConsent';
+import { acceptConsent } from '../lib/acceptConsent';
 
 type Props = {
   onAccepted?: () => void;
