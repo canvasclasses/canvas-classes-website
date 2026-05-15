@@ -233,27 +233,75 @@ The package starts deliberately small. Future moves (Phase 5 admin split may sur
 
 ---
 
-### Phase 4 — Reorganize `apps/student/` into `features/*` slices  ⏳ PENDING
-**Goal:** Group routes by feature inside `apps/student/features/`. Page files become thin re-exports.
+### Phase 4 — Reorganize `apps/student/` into `features/*` slices  ⏳ IN PROGRESS
+**Goal:** Group feature implementation code under `apps/student/features/`. Next.js routing files (`page.tsx`, `layout.tsx`, `route.ts`) MUST stay under `apps/student/app/` per Next.js convention; their imports redirect to `@/features/<feature>/...`. The result: app routes are thin loaders + metadata; features are implementation homes.
 
-**Feature slices to create:**
-- `features/crucible/` — `BrowseView`, `TestView`, `AdaptiveSession`, `actions.ts`
-- `features/notes/` — handwritten-notes + books
-- `features/simulations/` — organic + inorganic + physical hubs, salt-analysis, KSP
-- `features/flashcards/`
-- `features/career-explorer/`
-- `features/college-predictor/`
-- `features/blog/`
-- `features/landing/`
-- `features/account/`
-- `features/public-content/` — `chemistry-questions/`, `jee-pyqs/`, `quiz/`, `top-50-concepts/`, `quick-recap/`, `2-minute-chemistry/` (moved as-is per [legacy hubs decision](#legacy-duplicate-hubs--keep-as-is-during-migration-2026-05-15))
+**Audit (2026-05-16):** 60 top-level app routes, 30 components, 30 lib files. 12 features identified.
 
-**Each feature folder follows the contract:** `components/`, `lib/` (or `lib.ts`), `types.ts`, `seo.ts`, `__tests__/`, `index.ts`, `README.md` — slots optional, scale to feature size.
+**Feature folder contract (slots used as needed, never speculative):**
+```
+features/<feature>/
+├── components/       — React components (client + server)
+├── lib/              — Feature-local utilities, data helpers, business logic
+├── hooks/            — React hooks specific to this feature
+├── data/             — Static data (JSON, constants)
+├── types.ts          — Feature-local TS types
+├── schemas/          — Zod schemas (where applicable)
+├── server-actions/   — Server actions
+├── seo.ts            — Metadata helpers (where applicable)
+├── __tests__/        — Tests (added in Phase 6)
+├── README.md         — Feature documentation
+└── index.ts          — Public surface
+```
 
-**De-dup check (BIG ONE):**
-- Across feature pairs — what do they share? (Notes + Crucible both render question cards; Notes + Simulations both render NCERT chapter structure.)
-- SEO scaffolding — common pattern across `seo.ts` files; extract a builder.
-- Pagination components, filter dropdowns, breadcrumbs — likely 3+ copies.
+**Feature mapping:**
+
+| Feature | App routes |
+|---|---|
+| `legal` | `about/`, `privacy/`, `terms/` |
+| `auth` | `auth/`, `login/`, `account/` |
+| `blog` | `blog/`, `blog/[slug]/` |
+| `flashcards` | `chemistry-flashcards/` |
+| `career-explorer` | `career-explorer/` + sub-routes |
+| `college-predictor` | `college-predictor/` + sub-routes |
+| `notes` | `handwritten-notes/`, `handwritten-notes/[chapter]/` |
+| `books` | `books/`, `live-books/`, `class-9/`, `class-10/`, `class-11/`, `class-12/`, `cbse-class-10/`, `cbse-class-11/`, `cbse-class-12/` |
+| `simulations` | `organic-wizard/`, `salt-analysis/`, `solubility-product-ksp-calculator/`, `chemihex/`, `inorganic-chemistry-hub/`, `organic-chemistry-hub/`, `physical-chemistry-hub/`, `organic-name-reactions/`, `periodic-trends/`, `interactive-periodic-table/`, `physics/` |
+| `public-content` | `2-minute-chemistry/`, `assertion-reason/`, `bitsat-chemistry-revision/`, `chemistry-questions/`, `detailed-lectures/`, `download-ncert-books/`, `jee-main-pyqs/`, `jee-pyqs/`, `ncert-solutions/`, `neet-crash-course/`, `one-shot-lectures/`, `quick-recap/`, `quiz/`, `top-50-concepts/` |
+| `crucible` | `the-crucible/`, `crucible/`, `crucible/admin/` |
+| `landing` | root `page.tsx`, landing-specific components in `app/components/` |
+
+**What stays at `apps/student/` top-level (cross-feature shared):**
+- `lib/auth.ts`, `lib/bookAuth.ts`, `lib/supabase.ts`, `lib/rbac.ts` — auth utilities used by every feature
+- `lib/uploadUtils.ts`, `lib/chemAssets.ts` — cross-feature helpers
+- `lib/schemas/` — generic Zod schemas
+- `components/Navbar.tsx`, `components/Footer.tsx`, `app/components/AuthButton.tsx` — site chrome
+- `app/components/BreadcrumbSchema.tsx`, `CloudflareAnalytics.tsx`, `GoogleAnalytics.tsx` — site-level SEO + analytics
+- `app/sitemap.ts`, `app/robots.ts`, `app/layout.tsx`, `app/globals.css` — site-level Next.js config
+
+**Execution order (each feature = one commit, smallest first to validate the pattern):**
+
+1. Phase 4.1 — `features/legal`
+2. Phase 4.2 — `features/auth`
+3. Phase 4.3 — `features/blog`
+4. Phase 4.4 — `features/flashcards`
+5. Phase 4.5 — `features/career-explorer`
+6. Phase 4.6 — `features/college-predictor`
+7. Phase 4.7 — `features/notes`
+8. Phase 4.8 — `features/books`
+9. Phase 4.9 — `features/simulations`
+10. Phase 4.10 — `features/public-content`
+11. Phase 4.11 — `features/crucible` (largest)
+12. Phase 4.12 — `features/landing` (highest-traffic, saved for last)
+
+After all 12 features land, one comprehensive `code-reviewer` + `security-auditor` skill review over the full Phase 4 diff. Findings addressed in a follow-up commit.
+
+**Per-feature workflow:** scaffold → git mv → codemod imports → tsc + lint + build + dev smoke → commit. Skill review batched at end (cost vs benefit at 12 features).
+
+**De-dup check (after all features land):**
+- Cross-feature shared components — promote to `apps/student/components/` (or `@canvas/ui` if cross-app).
+- SEO `metadata` scaffolding — common pattern; extract a builder if 5+ repeats.
+- Pagination, filter dropdowns, breadcrumbs — likely 3+ copies.
 
 ---
 
