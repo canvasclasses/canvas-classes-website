@@ -10,7 +10,7 @@ import {
   CONCEPT_ROTATION_AFTER,
   SESSION_MAX_QUESTIONS,
 } from '@/constants/adaptivePractice';
-import { Question } from '@/app/the-crucible/components/types';
+import { Question } from '@/features/crucible/components/types';
 import type { IStudentChapterProfile, IMicroConceptProfile, DominantWeakness } from '@canvas/data/models/StudentChapterProfile';
 
 // ── Types ────────────────────────────────────────────────────────────────────

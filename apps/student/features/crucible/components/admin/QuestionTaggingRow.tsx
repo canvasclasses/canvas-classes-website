@@ -1,6 +1,6 @@
 import { AlertCircle, AlertTriangle, Check, Sparkles, Star, Bookmark, Trash2 } from 'lucide-react';
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
-import { type AdminQuestion as Question, type AdminChapter as Chapter, QUESTION_TYPES } from '../types';
+import { type AdminQuestion as Question, type AdminChapter as Chapter, QUESTION_TYPES } from './types';
 import AITagSuggestionsBox from './AITagSuggestionsBox';
 
 const VALID_TOPIC_IDS = new Set(TAXONOMY_FROM_CSV.filter(t => t.type === 'topic').map(t => t.id));

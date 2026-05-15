@@ -4,12 +4,12 @@ import { useState, useCallback, useEffect } from 'react';
 import { track } from '@canvas/core/analytics/mixpanel';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
-import { Chapter, Question } from '../components/types';
-import BrowseView from '../components/BrowseView';
-import TestConfigModal, { TestStartConfig } from '../components/TestConfigModal';
-import TestView from '../components/TestView';
-import { buildSmartTest, DifficultyMix, QuestionSort, AttemptedEntry, CustomDifficultyMix } from '../components/testGenerator';
-import { isPyq, isJeeMainPyq, isJeeAdvancedPyq, isNeetPyq } from '../components/examLabel';
+import { Chapter, Question } from '@/features/crucible/components/types';
+import BrowseView from '@/features/crucible/components/BrowseView';
+import TestConfigModal, { TestStartConfig } from '@/features/crucible/components/TestConfigModal';
+import TestView from '@/features/crucible/components/TestView';
+import { buildSmartTest, DifficultyMix, QuestionSort, AttemptedEntry, CustomDifficultyMix } from '@/features/crucible/components/testGenerator';
+import { isPyq, isJeeMainPyq, isJeeAdvancedPyq, isNeetPyq } from '@/features/crucible/components/examLabel';
 
 interface Props {
     chapter: Chapter;

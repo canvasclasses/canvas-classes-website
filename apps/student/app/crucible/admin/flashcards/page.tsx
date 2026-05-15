@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import EnhancedFlashcardAdmin from './EnhancedFlashcardAdmin';
+import EnhancedFlashcardAdmin from '@/features/crucible/components/admin/EnhancedFlashcardAdmin';
 
 export const metadata: Metadata = {
   title: 'Flashcard Admin | Canvas Classes',

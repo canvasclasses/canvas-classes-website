@@ -1,4 +1,4 @@
-import type { AdminQuestion as Question } from '../types';
+import type { AdminQuestion as Question } from './types';
 
 interface AITagSuggestionsBoxProps {
   isVisible: boolean;

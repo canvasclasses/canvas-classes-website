@@ -1,7 +1,7 @@
 'use client';
 
-import { ChapterStats } from '../utils/calculateAnalytics';
-import { getAccuracyColor, getAccuracyLabel } from '../utils/calculateAnalytics';
+import { ChapterStats } from '../../lib/dashboard/calculateAnalytics';
+import { getAccuracyColor, getAccuracyLabel } from '../../lib/dashboard/calculateAnalytics';
 
 interface ChapterBreakdownProps {
   chapters: ChapterStats[];

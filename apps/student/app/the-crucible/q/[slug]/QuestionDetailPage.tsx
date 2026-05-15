@@ -17,9 +17,9 @@ import {
   ArrowLeft,
 } from 'lucide-react';
 import MathRenderer from '@canvas/ui/MathRenderer';
-import { QuestionDetail } from '../../actions';
-import { Chapter } from '../../components/types';
-import { formatExamLabel } from '../../components/examLabel';
+import { QuestionDetail } from '@/features/crucible/server-actions/the-crucible';
+import { Chapter } from '@/features/crucible/components/types';
+import { formatExamLabel } from '@/features/crucible/components/examLabel';
 
 interface Props {
   question: QuestionDetail;

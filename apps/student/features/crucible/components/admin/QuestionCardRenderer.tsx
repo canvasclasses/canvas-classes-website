@@ -3,7 +3,7 @@
 import { forwardRef } from 'react';
 import type React from 'react';
 import MathRenderer from '@canvas/ui/MathRenderer';
-import type { AdminQuestion as Question } from '../types';
+import type { AdminQuestion as Question } from './types';
 
 interface QuestionCardProps {
   question: Question;

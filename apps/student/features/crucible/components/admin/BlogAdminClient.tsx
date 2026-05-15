@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Plus, FileText, Clock, CheckCircle2, Archive, Lightbulb, Rss, RefreshCw, Eye } from 'lucide-react';
-import BlogEditor from './components/BlogEditor';
-import IdeaForm from './components/IdeaForm';
-import SourcesPanel from './components/SourcesPanel';
+import BlogEditor from './blog/BlogEditor';
+import IdeaForm from './blog/IdeaForm';
+import SourcesPanel from './blog/SourcesPanel';
 
 export type BlogStatus = 'idea' | 'draft' | 'review' | 'scheduled' | 'published' | 'archived';
 

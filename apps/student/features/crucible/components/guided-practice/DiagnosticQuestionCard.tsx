@@ -6,7 +6,7 @@
 // Does not reveal diagnostic status — looks like normal practice to the student.
 
 import { useCallback, useRef } from 'react';
-import { Question, Chapter } from '@/app/the-crucible/components/types';
+import { Question, Chapter } from '@/features/crucible/components/types';
 import AdaptiveQuestionCard from './AdaptiveQuestionCard';
 
 interface DiagnosticQuestionCardProps {

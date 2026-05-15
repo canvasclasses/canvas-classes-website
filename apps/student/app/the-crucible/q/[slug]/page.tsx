@@ -5,8 +5,8 @@ import {
   getAdjacentQuestions,
   getRelatedCrucibleQuestions,
   getTaxonomy,
-} from '../../actions';
-import { formatExamLabel } from '../../components/examLabel';
+} from '@/features/crucible/server-actions/the-crucible';
+import { formatExamLabel } from '@/features/crucible/components/examLabel';
 import QuestionDetailPage from './QuestionDetailPage';
 
 // ISR: revalidate daily — solutions updated infrequently

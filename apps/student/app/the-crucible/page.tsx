@@ -1,9 +1,9 @@
-import { getTaxonomy } from './actions';
-import CrucibleWizard from './components/CrucibleWizard';
+import { getTaxonomy } from '@/features/crucible/server-actions/the-crucible';
+import CrucibleWizard from '@/features/crucible/components/CrucibleWizard';
 import { Metadata } from 'next';
 import { createClient } from '../utils/supabase/server';
 import { isLocalhostDev } from '@/lib/bookAuth';
-import { buildChaptersWithCounts, type ChapterWithCounts } from './lib/chapterCounts';
+import { buildChaptersWithCounts, type ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
 
 export const revalidate = 3600; // Revalidate every hour — question counts don't change per-request
 

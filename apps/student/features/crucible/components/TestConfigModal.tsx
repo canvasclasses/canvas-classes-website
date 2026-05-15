@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { X, Bookmark } from 'lucide-react';
 import { Chapter, Question } from './types';
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
-import { NCERT_TOPIC_ORDER } from '@/app/the-crucible/lib/ncertTopicOrder';
+import { NCERT_TOPIC_ORDER } from '@/features/crucible/lib/ncertTopicOrder';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { track } from '@canvas/core/analytics/mixpanel';
 

@@ -7,8 +7,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronRight, RefreshCw, BookOpen, TrendingUp, AlertCircle } from 'lucide-react';
 import SessionReflection from './SessionReflection';
-import type { MicroFeedback, ConceptLevel, UserConceptProfile } from '@/app/the-crucible/lib/adaptiveEngine';
-import { updateConceptLevel } from '@/app/the-crucible/lib/adaptiveEngine';
+import type { MicroFeedback, ConceptLevel, UserConceptProfile } from '@/features/crucible/lib/adaptiveEngine';
+import { updateConceptLevel } from '@/features/crucible/lib/adaptiveEngine';
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 
 interface ReflectionAnswer {
@@ -45,7 +45,7 @@ interface SessionSummaryProps {
   chapterId: string;
   chapterName: string;
   feedbackHistory: MicroFeedback[];
-  conceptBaseline: import('@/app/the-crucible/lib/adaptiveEngine').ConceptBaseline[];
+  conceptBaseline: import('@/features/crucible/lib/adaptiveEngine').ConceptBaseline[];
   userProfile: UserConceptProfile;
   onContinuePracticing: () => void;
   onReviewMistakes: (wrongQuestionIds: string[]) => void;

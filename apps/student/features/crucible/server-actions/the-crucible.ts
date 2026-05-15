@@ -1,7 +1,7 @@
 'use server';
 
 import { unstable_cache } from 'next/cache';
-import { Question as QuestionPageType, Chapter } from './components/types';
+import { Question as QuestionPageType, Chapter } from '../components/types';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 

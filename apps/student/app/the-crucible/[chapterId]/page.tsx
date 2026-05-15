@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { getTaxonomy } from '../actions';
-import CrucibleWizard from '../components/CrucibleWizard';
+import { getTaxonomy } from '@/features/crucible/server-actions/the-crucible';
+import CrucibleWizard from '@/features/crucible/components/CrucibleWizard';
 import { createClient } from '@/app/utils/supabase/server';
 import { isLocalhostDev } from '@/lib/bookAuth';
-import { buildChaptersWithCounts, type ChapterWithCounts } from '../lib/chapterCounts';
+import { buildChaptersWithCounts, type ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
 
 // Dynamic rendering — the page reads cookies() for auth state, which forces it
 // out of SSG anyway. Pre-rendering all 26 chapters at deploy time was wasteful

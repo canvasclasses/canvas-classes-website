@@ -1,7 +1,7 @@
 import { createClient } from '@/app/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import UserDashboard from '../components/UserDashboard';
+import UserDashboard from '@/features/crucible/components/admin/UserDashboard';
 
 // ============================================
 // USER DASHBOARD PAGE

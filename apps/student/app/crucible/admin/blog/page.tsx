@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { requireAdmin } from '@/lib/bookAuth';
-import BlogAdminClient from './BlogAdminClient';
+import BlogAdminClient from '@/features/crucible/components/admin/BlogAdminClient';
 
 export const dynamic = 'force-dynamic';
 

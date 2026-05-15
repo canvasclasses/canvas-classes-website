@@ -140,7 +140,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Per-chapter Crucible pages — individual URLs for each of the 28 chapters
     let crucibleChapterEntries: MetadataRoute.Sitemap = [];
     try {
-        const { getTaxonomy } = await import('./the-crucible/actions');
+        const { getTaxonomy } = await import('@/features/crucible/server-actions/the-crucible');
         const chapters = await getTaxonomy();
         crucibleChapterEntries = chapters.map(ch => ({
             url: `${BASE_URL}/the-crucible/${ch.id}`,
@@ -155,7 +155,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Crucible individual question pages (UUID-based canonical URLs)
     let crucibleQuestionEntries: MetadataRoute.Sitemap = [];
     try {
-        const { getAllPublishedPYQSlugs } = await import('./the-crucible/actions');
+        const { getAllPublishedPYQSlugs } = await import('@/features/crucible/server-actions/the-crucible');
         const pyqSlugs = await getAllPublishedPYQSlugs();
         crucibleQuestionEntries = pyqSlugs.map(q => ({
             url: `${BASE_URL}/the-crucible/q/${q.id}`,

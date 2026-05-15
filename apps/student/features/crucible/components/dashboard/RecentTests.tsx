@@ -1,7 +1,7 @@
 'use client';
 
 import { ITestResult } from '@canvas/data/models/TestResult';
-import { formatTime, getAccuracyColor } from '../utils/calculateAnalytics';
+import { formatTime, getAccuracyColor } from '../../lib/dashboard/calculateAnalytics';
 
 interface RecentTestsProps {
   tests: ITestResult[];

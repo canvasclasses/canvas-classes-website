@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import CrucibleBrand from '@/app/the-crucible/components/CrucibleBrand';
+import CrucibleBrand from '@/features/crucible/components/CrucibleBrand';
 import CrucibleQuestionCarousel, {
     type CarouselQuestion,
-} from '@/app/the-crucible/components/CrucibleQuestionCarousel';
+} from '@/features/crucible/components/CrucibleQuestionCarousel';
 import type { ChapterCrucibleStats, SampleDemoQuestion } from '../lib/chapterStats.server';
 import type { ChapterMeta } from '../data/chapterMetadata';
 

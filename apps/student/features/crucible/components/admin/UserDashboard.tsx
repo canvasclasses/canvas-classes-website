@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getUserProgressSummary, ProgressSummary, resetUserProgress } from '../actions/progress';
+import { getUserProgressSummary, ProgressSummary, resetUserProgress } from '../../server-actions/progress';
 import { 
   Trophy, 
   Target, 

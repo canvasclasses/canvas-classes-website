@@ -1,6 +1,6 @@
 import { createClient } from '@/app/utils/supabase/server';
 import { redirect } from 'next/navigation';
-import DashboardClient from './DashboardClient';
+import DashboardClient from '@/features/crucible/components/dashboard/DashboardClient';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import TestResult from '@canvas/data/models/TestResult';
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';

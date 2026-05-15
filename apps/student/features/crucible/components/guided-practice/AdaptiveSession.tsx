@@ -6,7 +6,7 @@
 
 import { useState, useCallback, useRef, useMemo, useEffect } from 'react';
 import { X } from 'lucide-react';
-import { Question, Chapter } from '@/app/the-crucible/components/types';
+import { Question, Chapter } from '@/features/crucible/components/types';
 import AdaptiveQuestionCard from './AdaptiveQuestionCard';
 import DiagnosticWarmup from './DiagnosticWarmup';
 import MicroFeedback from './MicroFeedback';
@@ -23,7 +23,7 @@ import {
   type MicroFeedbackResponse,
   type NextQuestionDecision,
   type AdaptiveEngineInputV2,
-} from '@/app/the-crucible/lib/adaptiveEngine';
+} from '@/features/crucible/lib/adaptiveEngine';
 import type { IStudentChapterProfile } from '@canvas/data/models/StudentChapterProfile';
 import {
   SESSION_PHASE_DIAGNOSTIC,

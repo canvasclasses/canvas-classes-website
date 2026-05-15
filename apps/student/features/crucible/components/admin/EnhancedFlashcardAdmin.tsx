@@ -11,8 +11,8 @@ import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
-import SVGDropZone from '../components/SVGDropZone';
-import FlashcardImageScaleControls from '../components/FlashcardImageScaleControls';
+import SVGDropZone from './SVGDropZone';
+import FlashcardImageScaleControls from './FlashcardImageScaleControls';
 import { flashcardMarkdownComponents } from '@/features/flashcards/lib/flashcardMarkdown';
 import { getCategoryNames, getFlashcardChaptersByCategory } from '@/features/flashcards/lib/flashcardTaxonomy';
 

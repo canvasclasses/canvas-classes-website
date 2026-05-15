@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import { X, Download, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
-import type { AdminQuestion as Question } from '../types';
+import type { AdminQuestion as Question } from './types';
 interface ExportDashboardProps {
   questions: Question[];
   initialSelected?: Set<string>;

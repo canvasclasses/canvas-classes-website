@@ -1,10 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import StatsCard from './components/StatsCard';
-import ChapterBreakdown from './components/ChapterBreakdown';
-import RecentTests from './components/RecentTests';
-import { calculateAnalytics } from './utils/calculateAnalytics';
+import StatsCard from './StatsCard';
+import ChapterBreakdown from './ChapterBreakdown';
+import RecentTests from './RecentTests';
+import { calculateAnalytics } from '../../lib/dashboard/calculateAnalytics';
 import { ITestResult } from '@canvas/data/models/TestResult';
 
 interface TestResultDoc {
