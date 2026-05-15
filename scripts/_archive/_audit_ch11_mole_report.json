@@ -1,0 +1,384 @@
+{
+  "chapter": "ch11_mole",
+  "batch": 1,
+  "batch_label": "Stratified sample, 30 questions across all 8 primary tags",
+  "audited_on": "2026-05-14",
+  "summary": {
+    "total_audited": 30,
+    "clean_no_change": 13,
+    "flagged_high_confidence": 5,
+    "flagged_medium_confidence": 7,
+    "flagged_low_confidence": 5
+  },
+  "legend": {
+    "confidence": "HIGH = clear mistag, recommend fix. MEDIUM = better label available, current is defensible. LOW = soft suggestion.",
+    "scope": "Only flags issues. No DB writes performed by this script."
+  },
+  "rows": [
+    {
+      "display_id": "MOLE-001",
+      "primary_tag": "tag_mole_1",
+      "stem_one_line": "Convert pm/μs/mg to SI base units",
+      "current": { "microConcept": "Significant Figures Rules", "difficultyLevel": 2, "questionNature": "Rule_Application", "sourceType": "Practice" },
+      "issues": [
+        {
+          "field": "microConcept",
+          "confidence": "MEDIUM",
+          "note": "Question is SI unit-prefix conversion, not sig-fig counting. No suitable micro exists in tag_mole_1 — closest options are 'Significant Figures Rules' (current) or 'Precision vs Accuracy', neither of which fit. Taxonomy gap: consider adding 'SI Units & Prefix Conversion' under tag_mole_1, or moving this question if a unit-conversion micro is created elsewhere."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-009",
+      "primary_tag": "tag_mole_1",
+      "stem_one_line": "Which option indicates Law of Multiple Proportions",
+      "current": { "microConcept": "Law of Multiple Proportions", "difficultyLevel": 2, "questionNature": "Conceptual", "sourceType": "Practice" },
+      "issues": []
+    },
+    {
+      "display_id": "MOLE-093",
+      "primary_tag": "tag_mole_1",
+      "stem_one_line": "Which numbers have the same number of sig figs",
+      "current": { "microConcept": "Significant Figures Rules", "difficultyLevel": 2, "questionNature": "Rule_Application", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Main", "year": 2023, "month": "Apr", "shift": "Shift-II" } },
+      "issues": []
+    },
+    {
+      "display_id": "MOLE-035",
+      "primary_tag": "tag_mole_2",
+      "stem_one_line": "Molarity of ethanol-water solution from mole fraction 0.04",
+      "current": { "microConcept": "Molarity Calculations", "difficultyLevel": 2, "questionNature": "Numerical", "sourceType": "Practice" },
+      "issues": [
+        {
+          "field": "microConcept",
+          "confidence": "MEDIUM",
+          "proposed": "Interconversion of Concentration Units",
+          "note": "The core skill is converting mole fraction → molarity (multi-step). 'Interconversion of Concentration Units' (micro_mole_2_5) fits more precisely than 'Molarity Calculations'."
+        },
+        {
+          "field": "difficultyLevel",
+          "confidence": "LOW",
+          "proposed": 3,
+          "note": "Three conversion steps + density assumption — sits between DL2 and DL3."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-084",
+      "primary_tag": "tag_mole_2",
+      "stem_one_line": "Molality of 10% (v/v) Br2 in CCl4 with two densities",
+      "current": { "microConcept": "Molality Calculations", "difficultyLevel": 2, "questionNature": "Numerical", "sourceType": "Practice" },
+      "issues": [
+        {
+          "field": "difficultyLevel",
+          "confidence": "LOW",
+          "proposed": 3,
+          "note": "Multi-step v/v with two different densities and a unit gymnastics trap. DL3 fits better than DL2."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-135",
+      "primary_tag": "tag_mole_2",
+      "stem_one_line": "Mix 200g of 25% + 500g of 40% sugar solution, find resulting %",
+      "current": { "microConcept": "Mole Fraction & Mass Percent", "difficultyLevel": 2, "questionNature": "Numerical", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Main", "year": 2023, "month": "Apr", "shift": "Shift-I" } },
+      "issues": []
+    },
+    {
+      "display_id": "MOLE-152",
+      "primary_tag": "tag_mole_2",
+      "stem_one_line": "Molarity of HNO3 from density 1.4 and 63% mass",
+      "current": { "microConcept": "Interconversion of Concentration Units", "difficultyLevel": 2, "questionNature": "Numerical", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Main", "year": 2020, "month": "Jan", "shift": "Shift-I" } },
+      "issues": []
+    },
+    {
+      "display_id": "MOLE-241",
+      "primary_tag": "tag_mole_2",
+      "stem_one_line": "M=m condition, mole fraction 0.1, find M_solute/M_solvent",
+      "current": { "microConcept": "Interconversion of Concentration Units", "difficultyLevel": 4, "questionNature": "Numerical", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Advanced", "year": 2016 } },
+      "issues": []
+    },
+    {
+      "display_id": "MOLE-017",
+      "primary_tag": "tag_mole_3",
+      "stem_one_line": "Mass % of N in C5H9N3 (histamine)",
+      "current": { "microConcept": "Percentage Composition Calculations", "difficultyLevel": 3, "questionNature": "Numerical", "sourceType": "Practice" },
+      "issues": [
+        {
+          "field": "difficultyLevel",
+          "confidence": "LOW",
+          "proposed": 2,
+          "note": "Single-step % composition: molar mass, then divide. DL2 fits better. The only minor trap is close options 37.84 vs 37.80."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-102",
+      "primary_tag": "tag_mole_3",
+      "stem_one_line": "% C by mole in CH4",
+      "current": { "microConcept": "Percentage Composition Calculations", "difficultyLevel": 2, "questionNature": "Numerical", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Main", "year": 2019, "month": "Apr", "shift": "Shift-II" } },
+      "issues": []
+    },
+    {
+      "display_id": "MOLE-177",
+      "primary_tag": "tag_mole_3",
+      "stem_one_line": "Given element masses, how many of 4 compounds match",
+      "current": { "microConcept": "Empirical Formula from % Composition", "difficultyLevel": 4, "questionNature": "Numerical", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Main", "year": 2022, "month": "Jun", "shift": "Shift-II" } },
+      "issues": []
+    },
+    {
+      "display_id": "MOLE-212",
+      "primary_tag": "tag_mole_3",
+      "stem_one_line": "Dumas method, 0.5g sample → 60mL N2; find %N",
+      "current": { "microConcept": "Organic Compound Analysis", "difficultyLevel": 4, "questionNature": "Numerical", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Main", "year": 2025, "month": "Apr", "shift": "Shift-II" } },
+      "issues": [
+        {
+          "field": "difficultyLevel",
+          "confidence": "LOW",
+          "proposed": 3,
+          "note": "Routine Dumas plug-in (subtract aqueous tension, PV=nRT, %N). DL3 fits better than DL4. Defensible at DL4 due to multi-unit handling."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-028",
+      "primary_tag": "tag_mole_4",
+      "stem_one_line": "H2O2 + KMnO4 titration → purity of H2O2",
+      "current": { "microConcept": "Titration Calculations using Normality", "difficultyLevel": 3, "questionNature": "Numerical", "sourceType": "Practice" },
+      "issues": [
+        {
+          "field": "microConcept",
+          "confidence": "LOW",
+          "note": "Solution uses pure mole-ratio (2:5) from balanced redox, not normality. micro 'Titration Calculations using Normality' is acceptable as the operation IS a titration, but technically this is a stoichiometry-by-mole problem. Keep current OR move primary_tag to tag_mole_8 / 'Stoichiometric Calculations'."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-232",
+      "primary_tag": "tag_mole_4",
+      "stem_one_line": "Normality of 0.3 M H3PO3",
+      "current": { "microConcept": "n-factor Determination (Acids, Bases, Salts, Redox)", "difficultyLevel": 4, "questionNature": "Numerical", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Advanced", "year": 1999 } },
+      "issues": [
+        {
+          "field": "questionNature",
+          "confidence": "MEDIUM",
+          "proposed": "Rule_Application",
+          "note": "One-step: recall H3PO3 is dibasic, then N = M × n-factor. The 'work' is recall + rule, not numerical reasoning."
+        },
+        {
+          "field": "difficultyLevel",
+          "confidence": "LOW",
+          "proposed": 3,
+          "note": "Single-step plug-in once you remember the trap. DL3 fits better than DL4 — but defensible at DL4 since the trap costs many students the question."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-024",
+      "primary_tag": "tag_mole_5",
+      "stem_one_line": "1 L CO2 + C → 1.5 L gas; moles of CO at STP",
+      "current": { "microConcept": "Contraction/Expansion in Volume", "difficultyLevel": 2, "questionNature": "Numerical", "sourceType": "Practice" },
+      "issues": []
+    },
+    {
+      "display_id": "MOLE-194",
+      "primary_tag": "tag_mole_5",
+      "stem_one_line": "10mL hydrocarbon + 55mL O2 → 40mL CO2; find formula",
+      "current": { "microConcept": "Combustion of Hydrocarbons", "difficultyLevel": 3, "questionNature": "Conceptual", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Main", "year": 2019, "month": "Apr", "shift": "Shift-I" } },
+      "issues": [
+        {
+          "field": "questionNature",
+          "confidence": "HIGH",
+          "proposed": "Numerical",
+          "note": "This is solving for x and y in CxHy from gas-volume stoichiometry — clearly numerical, not conceptual."
+        },
+        {
+          "field": "microConcept",
+          "confidence": "LOW",
+          "proposed": "Molecular Formula from Eudiometry",
+          "note": "Goal of the question is to determine the molecular formula. micro_mole_5_8 'Molecular Formula from Eudiometry' is a closer fit than 'Combustion of Hydrocarbons' (which is the generic combustion mechanic)."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-031",
+      "primary_tag": "tag_mole_6",
+      "stem_one_line": "AgNO3 + FeCl3 (1:3) → which reactant leftover and how much",
+      "current": { "microConcept": "Identifying Limiting Reagent", "difficultyLevel": 3, "questionNature": "Numerical", "sourceType": "Practice" },
+      "issues": [
+        {
+          "field": "microConcept",
+          "confidence": "MEDIUM",
+          "proposed": "Excess Reagent Calculation",
+          "note": "Question asks for grams of leftover excess reagent — the core skill is excess-reagent mass calc, not just identifying LR. micro_mole_6_3 fits better."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-119",
+      "primary_tag": "tag_mole_6",
+      "stem_one_line": "56L N2 + excess H2 → 20L NH3; find unused N2",
+      "current": { "microConcept": "Percentage Yield", "difficultyLevel": 3, "questionNature": "Numerical", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Main", "year": 2022, "month": "Jul", "shift": "Shift-II" } },
+      "issues": [
+        {
+          "field": "microConcept",
+          "confidence": "HIGH",
+          "proposed": "Excess Reagent Calculation",
+          "note": "Question does NOT compute % yield. It computes leftover N2 from a partial reaction (a classic excess-reagent calc). Current 'Percentage Yield' is wrong."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-193",
+      "primary_tag": "tag_mole_6",
+      "stem_one_line": "Which of 4 mixtures has H2 as limiting reagent",
+      "current": { "microConcept": "Identifying Limiting Reagent", "difficultyLevel": 3, "questionNature": "Numerical", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Main", "year": 2019, "month": "Apr", "shift": "Shift-I" } },
+      "issues": []
+    },
+    {
+      "display_id": "MOLE-014",
+      "primary_tag": "tag_mole_7",
+      "stem_one_line": "If 1/6 of C-mass is amu, mass of 1 mol of substance?",
+      "current": { "microConcept": "Mole Concept Fundamentals", "difficultyLevel": 3, "questionNature": "Conceptual", "sourceType": "Practice" },
+      "issues": []
+    },
+    {
+      "display_id": "MOLE-059",
+      "primary_tag": "tag_mole_7",
+      "stem_one_line": "H:D = 6000:1 in 3 g sample → number of neutrons",
+      "current": { "microConcept": "Mole Conversions (Mass, Volume, Particles)", "difficultyLevel": 3, "questionNature": "Numerical", "sourceType": "Practice" },
+      "issues": []
+    },
+    {
+      "display_id": "MOLE-192",
+      "primary_tag": "tag_mole_7",
+      "stem_one_line": "Fatty acid monolayer height on a watch glass (V/A geometry)",
+      "current": { "microConcept": "Mole Conversions (Mass, Volume, Particles)", "difficultyLevel": 4, "questionNature": "Numerical", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Main", "year": 2019, "month": "Apr", "shift": "Shift-II" } },
+      "issues": [
+        {
+          "field": "microConcept",
+          "confidence": "MEDIUM",
+          "note": "Question is density+geometry (V=m/ρ, then h=V/A). No mole conversion involved. Doesn't fit any micro under tag_mole_7 cleanly — taxonomy gap. Possible options: keep current as best-available, or flag for taxonomy review (this is the classic 'monolayer/Avogadro estimation' question, traditionally taught under mole concept but operationally pure dimensional analysis)."
+        },
+        {
+          "field": "solution_bug",
+          "confidence": "HIGH",
+          "note": "Solution markdown ends with 'Converting to meters (m): 10^-6 m' and boxes '10^{-6} m', but option (a) marked correct is '10^{-4} m' and the cm→m conversion of 10^-4 cm = 10^-6 m IS the correct path. So the option text says 10^-4 m (which is wrong as meters) but it's labeled correct. The 10^-4 in option (a) appears to actually mean 10^-4 cm. Either option (a) text is a unit typo (should be 10^-6 m) or the solution's final unit is wrong. Worth admin review."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-307 [NEET]",
+      "primary_tag": "tag_mole_7",
+      "stem_one_line": "Remove 3.02×10^19 H2SO4 molecules from 98 mg; moles left",
+      "current": { "microConcept": "Mole Conversions (Mass, Volume, Particles)", "difficultyLevel": 3, "questionNature": "Numerical", "sourceType": "Practice", "examDetails": null },
+      "issues": [
+        {
+          "field": "display_id",
+          "confidence": "HIGH",
+          "note": "Value is 'MOLE-307 [NEET]' — contains a space and brackets which violate the schema regex ^[A-Z0-9]{2,10}-\\d{3,}$. This document likely fails admin filter queries that rely on the display_id index. Needs cleanup to 'MOLE-307' (or whatever the next free MOLE-NNN is)."
+        },
+        {
+          "field": "sourceType / examDetails",
+          "confidence": "HIGH",
+          "note": "display_id suffix '[NEET]' suggests this is a NEET PYQ, but sourceType is 'Practice' and examDetails is null. Either it's a misnamed Practice question or the PYQ metadata was never set. Flag for manual PYQ correction."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-019",
+      "primary_tag": "tag_mole_8",
+      "stem_one_line": "Pyrolusite (MnO2) → Mn3O4 on ignition; find %Mn in residue",
+      "current": { "microConcept": "Gravimetric Analysis", "difficultyLevel": 4, "questionNature": "Numerical", "sourceType": "Practice" },
+      "issues": []
+    },
+    {
+      "display_id": "MOLE-068",
+      "primary_tag": "tag_mole_8",
+      "stem_one_line": "Moles of KMnO4 to react with 1 mol SO3^2- in acidic medium",
+      "current": { "microConcept": "Stoichiometric Calculations (Mole, Mass, Volume)", "difficultyLevel": 2, "questionNature": "Numerical", "sourceType": "Practice" },
+      "issues": [
+        {
+          "field": "primary_tag",
+          "confidence": "MEDIUM",
+          "proposed": "tag_mole_4 + micro 'n-factor Determination (Acids, Bases, Salts, Redox)'",
+          "note": "Solution explicitly uses the n-factor cross-rule (5 e- vs 2 e-). The 'work' here is n-factor knowledge; tag_mole_4 is the more precise home. Current tag_mole_8 is defensible since the result IS a stoichiometric mole ratio."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-126",
+      "primary_tag": "tag_mole_8",
+      "stem_one_line": "Zn + HCl → H2 volume at modern STP (22.7 L)",
+      "current": { "microConcept": "Stoichiometric Calculations (Mole, Mass, Volume)", "difficultyLevel": 2, "questionNature": "Numerical", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Main", "year": 2023, "month": "Jan", "shift": "Shift-I" } },
+      "issues": []
+    },
+    {
+      "display_id": "MOLE-181",
+      "primary_tag": "tag_mole_8",
+      "stem_one_line": "Methylation 10g benzene → 9.2g toluene; find % yield",
+      "current": { "microConcept": "Percentage Yield", "difficultyLevel": 3, "questionNature": "Numerical", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Main", "year": 2021, "month": "Jul", "shift": "Shift-I" } },
+      "issues": [
+        {
+          "field": "primary_tag",
+          "confidence": "HIGH",
+          "proposed": "tag_mole_6",
+          "note": "micro 'Percentage Yield' is defined as micro_mole_6_4 under tag_mole_6, NOT under tag_mole_8. The primary tag + micro pair as currently set is inconsistent with the taxonomy. Move primary_tag to tag_mole_6."
+        },
+        {
+          "field": "answer.integer_value",
+          "confidence": "HIGH",
+          "note": "answer.integer_value = 2, but the correct answer (per both solutions and the question phrasing 'Nearest integer') is 78. The integer_value field is corrupted — this question will mark every student wrong on submit. Critical data bug, fix separately from the tag audit."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-217",
+      "primary_tag": "tag_mole_8",
+      "stem_one_line": "150 kg limestone 75% pure → CaO produced",
+      "current": { "microConcept": "Stoichiometric Calculations (Mole, Mass, Volume)", "difficultyLevel": 2, "questionNature": "Numerical", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Main", "year": 2025, "month": "Apr", "shift": "Shift-II" } },
+      "issues": [
+        {
+          "field": "microConcept",
+          "confidence": "LOW",
+          "proposed_alt": "Percentage Purity Calculations (under tag_mole_6)",
+          "note": "Could live under tag_mole_6 / 'Percentage Purity Calculations' since the work is impure-to-pure mass conversion. Current placement is defensible (it IS a stoichiometric calculation)."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-267",
+      "primary_tag": "tag_mole_8",
+      "stem_one_line": "P4 + NaOH → PH3, then PH3 + CuSO4 → Cu3P2; find CuSO4 mass",
+      "current": { "microConcept": "Stoichiometric Calculations (Mole, Mass, Volume)", "difficultyLevel": 4, "questionNature": "Numerical", "sourceType": "PYQ", "examDetails": { "exam": "JEE_Advanced", "year": 2022 } },
+      "issues": [
+        {
+          "field": "microConcept",
+          "confidence": "MEDIUM",
+          "proposed": "Sequential/Consecutive Reactions",
+          "note": "Two-step reaction chain: P4 → PH3 → Cu3P2. micro_mole_8_5 'Sequential/Consecutive Reactions' fits more precisely than the generic 'Stoichiometric Calculations'."
+        }
+      ]
+    },
+    {
+      "display_id": "MOLE-288",
+      "primary_tag": "tag_mole_8",
+      "stem_one_line": "Al-Cu alloy + HCl → H2 at STP; find %Al",
+      "current": { "microConcept": "Stoichiometric Calculations (Mole, Mass, Volume)", "difficultyLevel": 3, "questionNature": "Numerical", "sourceType": "Practice" },
+      "issues": [
+        {
+          "field": "microConcept",
+          "confidence": "LOW",
+          "proposed_alt": "Percentage Purity Calculations (under tag_mole_6)",
+          "note": "Same shape as MOLE-217: alloy/purity by reactive component. Could fit tag_mole_6 / micro_mole_6_8. Current placement defensible."
+        }
+      ]
+    }
+  ],
+  "cross_cutting_observations": [
+    "Taxonomy gap: tag_mole_1 has no 'SI Units / Prefix Conversion' micro, forcing pure unit-conversion questions like MOLE-001 into 'Significant Figures Rules' (wrong fit).",
+    "Taxonomy gap: tag_mole_7 has no home for 'monolayer / Avogadro estimation' style questions (MOLE-192) — operationally density+geometry, conceptually mole-concept-flavoured.",
+    "Cross-tag overlap: tag_mole_6 micro 'Percentage Yield' and 'Percentage Purity Calculations' get applied to questions whose primary_tag is set to tag_mole_8. This creates inconsistent tag↔micro pairs (e.g. MOLE-181). Either: (a) duplicate these micros under tag_mole_8, or (b) enforce that primary_tag matches the micro's parent tag.",
+    "Data integrity: MOLE-307's display_id 'MOLE-307 [NEET]' violates the schema regex and the convention; the [NEET] tag is leaking into the ID instead of into examDetails.",
+    "Data integrity: MOLE-181 has answer.integer_value = 2 but correct answer is 78. Unrelated to tagging but caught during audit."
+  ]
+}
