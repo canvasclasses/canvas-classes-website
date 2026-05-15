@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import LandingPage from "./components/landing/LandingPage";
+import LandingPage from "@/features/landing/components/LandingPage";
 
 const BASE_URL = "https://www.canvasclasses.in";
 

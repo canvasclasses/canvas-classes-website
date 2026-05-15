@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getAllSEOQuestions } from '../lib/seoData';
+import { getAllSEOQuestions } from '@/features/landing/lib/seoData';
 import { Layers, ChevronRight } from 'lucide-react';
 
 export const metadata = {

@@ -17,7 +17,7 @@ import {
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { SearchItem } from '../lib/searchIndices'
+import { SearchItem } from '@/features/landing/lib/searchIndices'
 
 interface CommandPaletteProps {
     itemsPromise?: Promise<SearchItem[]>;

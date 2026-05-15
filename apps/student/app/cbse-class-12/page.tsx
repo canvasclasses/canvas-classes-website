@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import ComingSoonTemplate from '../components/ComingSoonTemplate';
+import ComingSoonTemplate from '@/features/landing/components/ComingSoonTemplate';
 
 export const metadata: Metadata = {
     title: 'CBSE Class 12 Chemistry - Coming Soon',

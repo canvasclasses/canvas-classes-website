@@ -13,7 +13,7 @@ import type {
     JmpQuestion,
 } from './types';
 
-const DATA_DIR = path.join(process.cwd(), 'app', 'lib', 'jee-main-pyqs', 'data');
+const DATA_DIR = path.join(process.cwd(), 'features', 'public-content', 'data', 'jee-main-pyqs', 'data');
 
 let _manifest: JmpManifest | null = null;
 const _chapterCache = new Map<string, JmpChapterData>();

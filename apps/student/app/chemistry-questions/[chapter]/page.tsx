@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getQuestionsByChapterSlug, getAllChapterSlugs } from '../../lib/seoData';
+import { getQuestionsByChapterSlug, getAllChapterSlugs } from '@/features/landing/lib/seoData';
 import { notFound } from 'next/navigation';
 import { ChevronLeft, FileText } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';

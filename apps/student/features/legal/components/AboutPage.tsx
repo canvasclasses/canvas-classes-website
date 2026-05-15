@@ -17,7 +17,7 @@ import {
     Quote,
 } from 'lucide-react';
 import Navbar from '@/app/components/Navbar';
-import FAQSection from '@/app/components/FAQSection';
+import FAQSection from '@/features/landing/components/FAQSection';
 
 
 // Stats data

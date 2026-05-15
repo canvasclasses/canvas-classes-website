@@ -7,10 +7,10 @@ import { ClarityScript } from '@/components/analytics/ClarityScript';
 import { ConsentGate } from '@/features/legal/components/ConsentGate';
 import "./globals.css";
 import Navbar from "./components/Navbar";
-import BitsatBanner from "./components/BitsatBanner";
+import BitsatBanner from "@/features/landing/components/BitsatBanner";
 import Footer from "./components/Footer";
 import { CommandPalette } from "./components/CommandPalette";
-import { getSearchItems } from "./lib/searchIndices";
+import { getSearchItems } from "@/features/landing/lib/searchIndices";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

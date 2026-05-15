@@ -1,13 +1,13 @@
 import { Metadata } from "next";
-import NewHero from "../components/landing/NewHero";
-import FeaturesBento from "../components/landing/FeaturesBento";
-import PainSection from "../components/landing/PainSection";
-import MethodSection from "../components/landing/MethodSection";
-import ComparisonSection from "../components/landing/ComparisonSection";
-import StatsSection from "../components/landing/StatsSection";
-import TestimonialsSection from "../components/landing/TestimonialsSection";
-import PaarasSirSection from "../components/landing/PaarasSirSection";
-import FinalCTASection from "../components/landing/FinalCTASection";
+import NewHero from "@/features/landing/components/NewHero";
+import FeaturesBento from "@/features/landing/components/FeaturesBento";
+import PainSection from "@/features/landing/components/PainSection";
+import MethodSection from "@/features/landing/components/MethodSection";
+import ComparisonSection from "@/features/landing/components/ComparisonSection";
+import StatsSection from "@/features/landing/components/StatsSection";
+import TestimonialsSection from "@/features/landing/components/TestimonialsSection";
+import PaarasSirSection from "@/features/landing/components/PaarasSirSection";
+import FinalCTASection from "@/features/landing/components/FinalCTASection";
 
 export const metadata: Metadata = {
     title: "Join the Revolution in Chemistry Education | Canvas Classes",

@@ -7,7 +7,7 @@ import { Mail, Lock, ArrowRight, Loader2, Sparkles, CheckCircle2, X } from 'luci
 import { createClient } from '../utils/supabase/client'
 import { sanitizeRedirect } from '@canvas/core/redirect-validation'
 import Link from 'next/link'
-import DnsBlockedBanner from '../components/DnsBlockedBanner'
+import DnsBlockedBanner from '@/features/landing/components/DnsBlockedBanner'
 import { PRIVACY_VERSION, TERMS_VERSION } from '@/features/legal/lib/versions'
 
 function LoginContent() {

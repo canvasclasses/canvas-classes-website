@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getSearchItems } from '@/app/lib/searchIndices';
+import { getSearchItems } from '@/features/landing/lib/searchIndices';
 
 // Cache at the HTTP layer — revalidate matches the searchIndices cache (1h)
 export const revalidate = 3600;

@@ -101,7 +101,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Programmatic SEO: Question Pages
     let questionEntries: MetadataRoute.Sitemap = [];
     try {
-        const { getAllSEOQuestions } = await import('./lib/seoData');
+        const { getAllSEOQuestions } = await import('@/features/landing/lib/seoData');
         const questions = await getAllSEOQuestions();
 
         // Add Directory Page

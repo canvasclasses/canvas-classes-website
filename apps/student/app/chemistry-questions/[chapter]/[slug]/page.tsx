@@ -1,6 +1,6 @@
 
 import Link from 'next/link';
-import { getQuestionBySlugs, getAllSEOQuestions, getRelatedQuestions } from '../../../lib/seoData';
+import { getQuestionBySlugs, getAllSEOQuestions, getRelatedQuestions } from '@/features/landing/lib/seoData';
 import { notFound } from 'next/navigation';
 import { ChevronLeft, Brain, Zap, ArrowRight } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
