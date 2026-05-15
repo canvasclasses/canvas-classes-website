@@ -2,7 +2,7 @@
 
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { UserProgress, IQuestionAttempt } from '@canvas/data/models/UserProgress';
-import { applyAttemptToProgress } from '@/lib/personaWriter';
+import { applyAttemptToProgress } from '@canvas/persona/writer';
 import { revalidatePath } from 'next/cache';
 
 // ============================================

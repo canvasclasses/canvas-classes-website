@@ -15,7 +15,7 @@ import { getUserIdFromRequest } from '@/lib/auth';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { UserProgress } from '@canvas/data/models/UserProgress';
 import TestResult from '@canvas/data/models/TestResult';
-import { getRecommendations } from '@/lib/recommendationEngine';
+import { getRecommendations } from '@canvas/persona/recommendation-engine';
 import { getTagName } from '@canvas/data/taxonomy/lookup';
 
 export interface WelcomePayload {

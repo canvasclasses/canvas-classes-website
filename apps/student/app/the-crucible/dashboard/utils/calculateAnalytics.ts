@@ -243,6 +243,12 @@ export function getAccuracyColor(accuracy: number): string {
   return '#f87171'; // Red - Needs Practice
 }
 
+// Quick accuracy-bucket label for the test-results breakdown card. NOT the
+// persisted persona mastery level — that lives on UserProgress.chapter_progress
+// and is written by `@canvas/persona/writer` using thresholds in
+// `@canvas/persona/contract` (which also require a minimum attempt count).
+// Use `computeChapterMasteryLevel` from `@canvas/persona/contract` whenever you
+// need the contract-correct label; this function is for visual grouping only.
 export function getAccuracyLabel(accuracy: number): string {
   if (accuracy >= 90) return 'Mastered';
   if (accuracy >= 70) return 'Proficient';

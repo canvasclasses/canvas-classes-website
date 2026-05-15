@@ -15,7 +15,7 @@ import {
   getRecommendations,
   RecommendationActionType,
   RecommendationItem,
-} from '@/lib/recommendationEngine';
+} from '@canvas/persona/recommendation-engine';
 
 const ALLOWED_TYPES: RecommendationActionType[] = ['practice', 'read', 'watch'];
 

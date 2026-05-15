@@ -8,6 +8,16 @@ import type {
   IUserProgress,
 } from '@canvas/data/models/UserProgress';
 import { getTagName } from '@canvas/data/taxonomy/lookup';
+import {
+  RECENT_ATTEMPTS_CAP,
+  computeChapterMasteryLevel,
+  resolveConfidenceTier,
+} from './contract';
+
+// Re-export `resolveConfidenceTier` so existing callers that imported it from
+// the writer keep working without a second import-statement update. New code
+// should reach for `@canvas/persona/contract` directly.
+export { resolveConfidenceTier };
 
 /**
  * Persona writer — the single mutation surface for the tiered persona pipeline.
@@ -37,29 +47,6 @@ import { getTagName } from '@canvas/data/taxonomy/lookup';
  * See CRUCIBLE_ARCHITECTURE.md §3.2 (modes) and §4.2 (concept_mastery shape).
  */
 
-const ALLOWED_TIERS: readonly AttemptConfidence[] = ['high', 'medium', 'low'];
-
-const RECENT_ATTEMPTS_CAP = 200;
-
-/**
- * Resolve the confidence tier for an incoming attempt.
- *
- *   - If the caller passed an explicit valid tier, honour it.
- *   - Otherwise default by source: test/guided → 'high', anything else → 'medium'.
- *
- * Keep all writers funnelling through this helper so the default policy lives
- * in exactly one place.
- */
-export function resolveConfidenceTier(
-  confidence: unknown,
-  source: string | undefined,
-): AttemptConfidence {
-  if (typeof confidence === 'string' && (ALLOWED_TIERS as readonly string[]).includes(confidence)) {
-    return confidence as AttemptConfidence;
-  }
-  return source === 'test' || source === 'guided' ? 'high' : 'medium';
-}
-
 /**
  * Apply a single attempt to a UserProgress document, mutating it in place.
  * Does NOT call `.save()` — that's the caller's job (single-attempt callers
@@ -67,6 +54,11 @@ export function resolveConfidenceTier(
  *
  * The attempt's `confidence` field is used as-is. Callers must have already
  * resolved the tier via `resolveConfidenceTier` and set it on the attempt.
+ *
+ * **Caller validates input.** This function performs no defensive validation
+ * on `attempt` — it trusts the type. Every route handler in apps/student
+ * (and any future consumer in apps/admin or an AI pipeline) MUST validate
+ * the request body and verify the user owns `progress` before calling.
  */
 export function applyAttemptToProgress(
   progress: HydratedDocument<IUserProgress>,
@@ -131,13 +123,10 @@ export function applyAttemptToProgress(
     chapterProg.accuracy_percentage =
       (chapterProg.correct_count / chapterProg.total_attempted) * 100;
     chapterProg.last_attempted_at = attempt.attempted_at;
-    if (chapterProg.total_attempted >= 20 && chapterProg.accuracy_percentage >= 80) {
-      chapterProg.mastery_level = 'Mastered';
-    } else if (chapterProg.total_attempted >= 10 && chapterProg.accuracy_percentage >= 60) {
-      chapterProg.mastery_level = 'Proficient';
-    } else if (chapterProg.total_attempted >= 5) {
-      chapterProg.mastery_level = 'Learning';
-    }
+    chapterProg.mastery_level = computeChapterMasteryLevel(
+      chapterProg.total_attempted,
+      chapterProg.accuracy_percentage,
+    );
     progress.chapter_progress.set(chapterId, chapterProg);
   }
 

@@ -6,7 +6,7 @@ import { Question } from './types';
 import MathRenderer from '@/components/MathRenderer';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { getTagName, getChapterCategory } from '@canvas/data/taxonomy/lookup';
-import { isAnswerCorrect } from '@/lib/questionScoring';
+import { isAnswerCorrect } from '@canvas/persona/scoring';
 import { track } from '@/lib/analytics/mixpanel';
 import TestSaveModal from './TestSaveModal';
 import WaveformAudioPlayer from '@/components/WaveformAudioPlayer';
@@ -336,7 +336,7 @@ export default function TestView({ questions, onBack }: { questions: Question[];
   const notVisitedCount = questions.length - answeredCount;
 
   // Helper: extract the student's selection from React state for one question,
-  // then delegate to the shared scoring helper (lib/questionScoring.ts) so the
+  // then delegate to the shared scoring helper (@canvas/persona/scoring) so the
   // client and server cannot drift on what "correct" means.
   const isQuestionCorrect = (qq: Question): boolean => {
     const selected =

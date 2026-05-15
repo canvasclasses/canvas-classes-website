@@ -127,19 +127,49 @@ Manual one-time action remaining: **Vercel Project Settings → Root Directory =
 
 ---
 
-### Phase 2 — Extract `@canvas/persona`  ⏳ PENDING
-**Goal:** Move the persona pipeline (writer + profile + recommendation + scoring) into `packages/persona/`.
+### Phase 2 — Extract `@canvas/persona`  ✅ DONE
+**Commit:** _(filled in by this commit)_  (2026-05-15)
+**Goal:** Move the persona pipeline (writer + profile + recommendation + scoring) into `packages/persona/`. Refined intent (2026-05-15): the package is the **canonical home for the persona contract** — tier rules, mastery thresholds, interpretation helpers, recommendation scoring, and the writers that encode them. Admin won't run the writers, but admin dashboards and future AI training pipelines WILL read documents from `@canvas/data` and interpret them using rules from `@canvas/persona`. If admin re-implemented those rules inline, the read-side and write-side would drift silently.
+
+**What landed:**
+- 4 files moved via `git mv` into `packages/persona/` (writer.ts, profile-engine.ts, recommendation-engine.ts, scoring.ts)
+- New `packages/persona/contract.ts` — pure read-side: `ALLOWED_TIERS`, `RECENT_ATTEMPTS_CAP`, `MASTERY_THRESHOLDS`, `PROFICIENCY_ORDER`, plus classifiers `resolveConfidenceTier`, `computeChapterMasteryLevel`, `computeProficiencyLevel`, `shouldDropBack`, `dropOneLevel`, `computeDominantWeakness`
+- `writer.ts` now imports `RECENT_ATTEMPTS_CAP`, `resolveConfidenceTier`, and `computeChapterMasteryLevel` from contract; the inline mastery if-chain is replaced with the classifier (single source of truth)
+- `profile-engine.ts` now imports `PROFICIENCY_ORDER` + the four classifiers from contract; re-exports them for back-compat
+- Codemod across `apps/student/` (~12 sites) from `@/lib/{personaWriter,profileEngine,recommendationEngine,questionScoring}` to `@canvas/persona/{writer,profile-engine,recommendation-engine,scoring}`
+- `apps/student/next.config.ts`: `'@canvas/persona'` added to `transpilePackages`
+- `apps/student/package.json`: `"@canvas/persona": "*"` added
+- `packages/persona/package.json`: declares `@canvas/data` dep + `mongoose` peer; subpath exports map
+- `apps/student/app/the-crucible/dashboard/utils/calculateAnalytics.ts`: clarifying comment on `getAccuracyLabel` distinguishing it from the persona contract (different concept, intentional non-dedup)
+- `packages/persona/README.md` rewritten to describe what landed (was stale)
+- TestView.tsx stale comment fixed to reference new path
+- Unused `StuckPoint` import dropped from profile-engine.ts
+- Writer docblock notes the "caller validates input" contract for future package consumers
 
 **Files to move:**
-- `apps/student/lib/personaWriter.ts` → `packages/persona/lib/persona-writer.ts`
-- `apps/student/lib/profileEngine.ts` → `packages/persona/lib/profile-engine.ts`
-- `apps/student/lib/recommendationEngine.ts` → `packages/persona/lib/recommendation-engine.ts`
-- `apps/student/lib/questionScoring.ts` → `packages/persona/lib/question-scoring.ts`
+- `apps/student/lib/personaWriter.ts` → `packages/persona/writer.ts`
+- `apps/student/lib/profileEngine.ts` → `packages/persona/profile-engine.ts`
+- `apps/student/lib/recommendationEngine.ts` → `packages/persona/recommendation-engine.ts`
+- `apps/student/lib/questionScoring.ts` → `packages/persona/scoring.ts`
+
+**Read/write separation (happens during the move, not a separate phase):**
+- Identify pure-read code inside the four files: tier-threshold constants, mastery-level cutoffs, label maps, "what does counter X mean" helpers, `resolveConfidenceTier`-like classifiers
+- Lift those into `packages/persona/contract.ts` — the file admin dashboards + AI pipelines import
+- Keep `applyAttemptToProgress`, `updateProfileFromAttempt`, etc. (true write functions) in their original files; they import constants from `contract.ts` so there's one source of truth
+- The package's `index.ts` re-exports read-side from `contract.ts` and points consumers at subpaths for the heavier write functions
 
 **De-dup check:**
 - Inline `getUserId` / `isAdmin` in route files (we fixed this once — re-check).
 - Code that re-implements tiered confidence resolution outside `resolveConfidenceTier`.
-- Mastery-level thresholds (`≥20+80% → 'Mastered'`) duplicated outside persona writer.
+- Mastery-level thresholds (`≥20+80% → 'Mastered'`) duplicated outside persona writer — high priority to consolidate, since the audit step is the natural moment.
+
+**Package configuration:**
+- `packages/persona/package.json`: `name: "@canvas/persona"`, `main: "./index.ts"`, depends on `@canvas/data` (peer or workspace dep)
+- `apps/student/next.config.ts`: add `'@canvas/persona'` to `transpilePackages`
+- `apps/student/package.json`: add `"@canvas/persona": "*"` to dependencies
+- No `@/` alias inside the package; relative imports for siblings, `@canvas/data/...` for cross-package
+
+**Cycle prevention:** Phase 1 already broke the data → persona cycle (removed `UserProgress.recordAttempt`). Verify no new cycles introduced during the move: `@canvas/persona` may import `@canvas/data`; `@canvas/data` must NEVER import `@canvas/persona`.
 
 **Note:** No `@canvas/auth` package — admin and student each own their own auth slice per the [admin auth decision](#admin-auth-decision-2026-05-15).
 

@@ -9,90 +9,19 @@ import type {
   IMicroConceptProfile,
   IDimensionBreakdown,
   ProficiencyLevel,
-  DominantWeakness,
 } from '@canvas/data/models/StudentChapterProfile';
-import type { IStudentResponse, StuckPoint } from '@canvas/data/models/StudentResponse';
+import type { IStudentResponse } from '@canvas/data/models/StudentResponse';
+import {
+  PROFICIENCY_ORDER,
+  computeProficiencyLevel,
+  shouldDropBack,
+  dropOneLevel,
+  computeDominantWeakness,
+} from './contract';
 
-// ── Proficiency transition rules ─────────────────────────────────────────────
-
-const PROFICIENCY_ORDER: ProficiencyLevel[] = ['unseen', 'weak', 'developing', 'strong', 'mastered'];
-
-function computeProficiencyLevel(
-  attempts: number,
-  accuracyRate: number,
-  dominantWeakness: DominantWeakness,
-): ProficiencyLevel {
-  if (attempts === 0) return 'unseen';
-
-  // mastered: 8+ attempts, >85% accuracy, no dominant weakness
-  if (attempts >= 8 && accuracyRate > 0.85 && dominantWeakness === null) return 'mastered';
-
-  // strong: 5+ attempts, >70% accuracy, no calc-error/unclear-entry dominance
-  if (
-    attempts >= 5 &&
-    accuracyRate > 0.70 &&
-    dominantWeakness !== 'calc-error' &&
-    dominantWeakness !== 'unclear-entry'
-  ) return 'strong';
-
-  // developing: 3+ attempts, >50% accuracy
-  if (attempts >= 3 && accuracyRate > 0.50) return 'developing';
-
-  // weak: at least 1 attempt
-  return 'weak';
-}
-
-// Check drop-back: if last 3 attempts accuracy falls below threshold
-function shouldDropBack(
-  currentLevel: ProficiencyLevel,
-  recentCorrectCount: number,
-  recentTotal: number,
-): boolean {
-  if (recentTotal < 3) return false;
-  const recentAccuracy = recentCorrectCount / recentTotal;
-
-  switch (currentLevel) {
-    case 'mastered':
-      return recentAccuracy < 0.67; // drop if <2/3 of last 3
-    case 'strong':
-      return recentAccuracy < 0.50;
-    case 'developing':
-      return recentAccuracy < 0.33;
-    default:
-      return false;
-  }
-}
-
-function dropOneLevel(level: ProficiencyLevel): ProficiencyLevel {
-  const idx = PROFICIENCY_ORDER.indexOf(level);
-  return idx > 1 ? PROFICIENCY_ORDER[idx - 1] : 'weak';
-}
-
-// ── Dominant weakness computation ────────────────────────────────────────────
-
-function computeDominantWeakness(stuckPointCounts: IMicroConceptProfile['stuckPointCounts']): DominantWeakness {
-  const entries: [string, number][] = [
-    ['concept-gap', stuckPointCounts['concept-gap']],
-    ['unclear-entry', stuckPointCounts['unclear-entry']],
-    ['calc-error', stuckPointCounts['calc-error']],
-    ['time-pressure', stuckPointCounts['time-pressure']],
-    ['silly-mistake', stuckPointCounts['silly-mistake']],
-  ];
-
-  const total = entries.reduce((sum, [, c]) => sum + c, 0);
-  if (total === 0) return null;
-
-  // Need at least 2 stuck points to declare a dominant weakness
-  const sorted = entries.sort((a, b) => b[1] - a[1]);
-  const [topKey, topCount] = sorted[0];
-
-  // Dominant if it's ≥40% of total stuck points and at least 2 occurrences
-  if (topCount >= 2 && topCount / total >= 0.4) {
-    return topKey as DominantWeakness;
-  }
-
-  return null;
-}
+// Re-export classifiers used by callers of this module — keeps existing
+// import sites working. New code should reach for `@canvas/persona/contract`.
+export { computeProficiencyLevel, shouldDropBack, dropOneLevel, computeDominantWeakness };
 
 // ── Dimension breakdown update ───────────────────────────────────────────────
 

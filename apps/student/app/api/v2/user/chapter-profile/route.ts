@@ -3,7 +3,7 @@ import { getUserIdFromRequest } from '@/lib/auth';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { StudentChapterProfile, IStudentChapterProfile } from '@canvas/data/models/StudentChapterProfile';
 import { StudentResponse } from '@canvas/data/models/StudentResponse';
-import { updateProfileFromResponse, createEmptyProfile } from '@/lib/profileEngine';
+import { updateProfileFromResponse, createEmptyProfile } from '@canvas/persona/profile-engine';
 
 // ─── GET /api/v2/user/chapter-profile?chapterId=xxx ──────────────────────────
 // Returns the student's multi-dimensional profile for a chapter.

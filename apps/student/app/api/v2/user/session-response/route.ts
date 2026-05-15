@@ -3,7 +3,7 @@ import { getUserIdFromRequest } from '@/lib/auth';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { StudentResponse } from '@canvas/data/models/StudentResponse';
 import { StudentChapterProfile, IStudentChapterProfile } from '@canvas/data/models/StudentChapterProfile';
-import { updateProfileFromResponse, createEmptyProfile } from '@/lib/profileEngine';
+import { updateProfileFromResponse, createEmptyProfile } from '@canvas/persona/profile-engine';
 
 // ─── POST /api/v2/user/session-response ──────────────────────────────────────
 // Records a single question attempt during a guided practice session.

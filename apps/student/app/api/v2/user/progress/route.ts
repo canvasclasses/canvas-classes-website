@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { UserProgress, IQuestionAttempt } from '@canvas/data/models/UserProgress';
 import { StudentChapterProfile, IStudentChapterProfile } from '@canvas/data/models/StudentChapterProfile';
-import { updateProfileFromAttempt, createEmptyProfile } from '@/lib/profileEngine';
+import { updateProfileFromAttempt, createEmptyProfile } from '@canvas/persona/profile-engine';
 import { getUserIdFromRequest } from '@/lib/auth';
-import { applyAttemptToProgress, resolveConfidenceTier } from '@/lib/personaWriter';
+import { applyAttemptToProgress, resolveConfidenceTier } from '@canvas/persona/writer';
 
 // ─── GET /api/v2/user/progress?chapterId=xxx ──────────────────────────────────
 // Returns: starred_ids for this chapter, all_attempted_ids for this chapter,

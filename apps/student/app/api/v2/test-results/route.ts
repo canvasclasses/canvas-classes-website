@@ -9,7 +9,7 @@ import {
     peopleSetServer,
     peopleIncrementServer,
 } from '@/lib/analytics/mixpanel.server';
-import { isAnswerCorrect, type ScorableQuestion } from '@/lib/questionScoring';
+import { isAnswerCorrect, type ScorableQuestion } from '@canvas/persona/scoring';
 
 // Subset of Question shape we need to recompute correctness server-side.
 // _id is added on top of the shared ScorableQuestion contract — it's the join
