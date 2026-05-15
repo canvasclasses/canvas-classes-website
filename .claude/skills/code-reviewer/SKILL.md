@@ -73,3 +73,54 @@ Skip any section that has no items.
 - [ ] No helper extracted for a single call site
 - [ ] No error handling for scenarios that can't happen
 - [ ] No backwards-compat shim for code that doesn't exist yet
+
+---
+
+## Monorepo migration review (only when diff touches `apps/*` or `packages/*`)
+
+Fire this section in addition to the main checklist when the change is part of the canvas → monorepo migration tracked in `_agents/MONOREPO_MIGRATION_PLAN.md`.
+
+### Workspace boundaries
+- [ ] `apps/admin/` does not import from `apps/student/` (and vice versa) — search the diff for `from '../../student/'` or `from '@/...'` path aliases that cross apps
+- [ ] No `@/` alias in any package — packages must use relative paths or other `@canvas/*` packages, never an app's `@/` alias
+- [ ] Apps import from packages by package name (`from '@canvas/data'`), never via relative path crossing the workspace (`from '../../../packages/data/...'`)
+
+### Package public surface
+- [ ] Every new file in `packages/*/` is either (a) re-exported from `index.ts`, or (b) explicitly internal (named `_*.ts` or under `packages/X/internal/`)
+- [ ] `index.ts` doesn't re-export internal helpers — only the intended public API
+- [ ] Package `README.md` matches what `index.ts` actually exports (no stale promises)
+- [ ] No `export *` from `index.ts` — be explicit so callers + future agents see the surface
+
+### Dependency hygiene
+- [ ] No package depends on a sibling package via relative path — only via `"@canvas/foo": "*"` in `package.json` `dependencies`
+- [ ] No circular dependency: package A imports B, B imports A → fail
+- [ ] No package imports from `apps/*` — packages must not know which app consumes them
+- [ ] If a package is added/used, it's declared in the consumer's `package.json` (`workspaces` resolves it but the dep must be listed)
+
+### File-move correctness (when a phase relocates code)
+- [ ] `git mv` was used (or the rename is detected by git) — history preserved
+- [ ] No stale imports left at old paths — `grep` the diff for the OLD path; should be zero hits
+- [ ] If a path appears in `CLAUDE.md`, `_agents/`, or docs, the doc was updated in the same commit
+
+### Feature folder hygiene (Phase 4+)
+- [ ] Each `features/*/` slot used is justified (file or folder, not both)
+- [ ] `seo.ts` per feature with metadata + JSON-LD, not scattered across `page.tsx` files
+- [ ] `__tests__/` mirrors the source tree
+- [ ] Public surface goes through `features/X/index.ts`; routes in `app/` are thin re-exports
+
+### Plan doc currency
+- [ ] If the diff completes a phase milestone listed in `_agents/MONOREPO_MIGRATION_PLAN.md`, the doc was updated in the same commit (phase status → DONE, commit hash filled in)
+- [ ] If a previously-`[TBD]` decision was made, it's recorded under "Decision log" in the plan doc
+
+### Common monorepo anti-patterns to flag
+
+| Pattern | Severity |
+|---|---|
+| `apps/admin` importing `apps/student/lib/...` (or vice versa) | Critical |
+| `apps/X/...` importing from `apps/Y/...` via path traversal | Critical |
+| `packages/X` importing from `apps/Y` | Critical |
+| `export *` from a package `index.ts` | Important |
+| Package `README.md` describing features that don't exist in the package yet | Suggestion |
+| Two packages importing each other (cycle) | Critical |
+| `@/` alias used inside a package (not an app) | Important |
+| Phase complete but plan doc not ticked | Important |

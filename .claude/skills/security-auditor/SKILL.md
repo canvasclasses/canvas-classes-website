@@ -81,3 +81,62 @@ You are auditing the Canvas Classes Next.js 15 codebase for security issues.
 | **High** | XSS, missing auth on write route, stack trace in response, SSRF |
 | **Medium** | Missing rate limit, generic error without server-side logging, unbounded query |
 | **Low** | Missing `// PUBLIC:` comment on legitimate public route, minor best-practice gap |
+
+---
+
+## Monorepo migration audit (only when diff touches `apps/*` or `packages/*`)
+
+Fire this section in addition to the main checklist when the change is part of the canvas → monorepo migration tracked in `_agents/MONOREPO_MIGRATION_PLAN.md`.
+
+### Auth gate preservation
+- [ ] After a route moves between apps/packages, the auth guard still runs FIRST in the handler — no path where the move accidentally dropped the `getAuthenticatedUser()` / `requireAdmin()` call
+- [ ] If a route's auth helper was inlined before extraction, it now imports from the shared auth module — no orphaned inline `getUserId` / `isAdmin` left behind
+- [ ] Admin app's mutating routes call admin-auth-specific guard (Phase 5+) — not the student `getAuthenticatedUser()` which only verifies Supabase tokens
+- [ ] Public GET routes that were public BEFORE the move are STILL public after (and still have the `// PUBLIC: no auth required` comment); auth wasn't accidentally added or removed
+
+### Env-var leakage
+- [ ] No server-only env var (`MONGODB_URI`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_JWT_SECRET`, R2 secrets, Sentry DSNs that aren't `NEXT_PUBLIC_*`) appears in any `packages/*` file unless the file is server-only (no `'use client'`, no client-bundle entrypoint)
+- [ ] No `process.env.*` reference appears in client components shipped from `packages/ui/` — packages must not bake env vars into the client bundle
+- [ ] `NEXT_PUBLIC_*` env vars are still scoped to Supabase URL + anon key only — no admin secrets accidentally promoted to `NEXT_PUBLIC_*` to "make them work in admin app"
+
+### Rate-limit wiring
+- [ ] Every public/mutating route in the diff is rate-limited via `@canvas/core/rate-limit` (or the equivalent at the time of the phase)
+- [ ] If a route moved into `apps/admin/`, it has its OWN limiter instance (separate budget from student app's limiter — different `createRateLimiter()` call)
+- [ ] No two routes share the same limiter Map unintentionally — limiters created at module scope are per-route by design
+
+### Cross-app import-direction enforcement
+- [ ] `apps/admin/` does not import from `apps/student/` (any path, any alias)
+- [ ] `apps/student/` does not import from `apps/admin/` (any path, any alias)
+- [ ] If shared code is needed between apps, it lives in `packages/*` — never copied between apps
+
+### Package surface = attack surface
+- [ ] When a function moves from `apps/student/lib/...` into `packages/*`, audit the function as if it's now PUBLIC API — even if only one app calls it today, the package contract makes it broadly reachable
+- [ ] Functions that accept user input (request bodies, query params, raw strings) MUST validate at the package boundary — the package can't assume the caller did it
+- [ ] If the package exports a function that touches the DB, it must enforce its own field whitelist — caller can't be trusted to do mass-assignment prevention
+
+### Admin auth (Phase 5+)
+- [ ] `admin_accounts` records use bcrypt for password hashes (cost factor ≥ 10) — never plain text, never SHA without salt
+- [ ] Admin JWT signing secret is loaded from env (`ADMIN_JWT_SECRET`), never hardcoded
+- [ ] Admin session cookie is `HttpOnly`, `Secure` (production), `SameSite=Lax` or stricter
+- [ ] Login endpoint has rate limiting per IP AND per email (separate budgets) — brute force on a known admin email must be slowed independently
+- [ ] No path resolves to admin routes without a valid admin JWT — verify by curl with no cookie → 401
+
+### Plan doc + decision log
+- [ ] If this diff completes a phase, `_agents/MONOREPO_MIGRATION_PLAN.md` is updated in the same commit (status, commit hash)
+- [ ] If this diff implements a previously-`[TBD]` decision, the answer is recorded under "Decision log" — not left implicit in the code
+
+### Common monorepo security anti-patterns to flag
+
+| Pattern | Severity |
+|---|---|
+| Auth guard removed during route relocation (intentionally or not) | Critical |
+| Server-only env var imported into a `packages/ui/` client component | Critical |
+| `NEXT_PUBLIC_*` env var contains an admin token / service-role key | Critical |
+| Admin route in `apps/admin/` missing admin-auth guard | Critical |
+| Inline `getUserId` reappearing in a moved route | High |
+| Rate-limiter Map shared between admin + student routes (e.g. via package singleton) | High |
+| Cross-app import (`apps/admin → apps/student` or vice versa) | High |
+| Function moved to a package but no input validation at the new boundary | High |
+| Admin password stored without bcrypt | Critical |
+| Admin JWT secret hardcoded | Critical |
+| Admin cookie missing `HttpOnly` or `Secure` flag | High |
