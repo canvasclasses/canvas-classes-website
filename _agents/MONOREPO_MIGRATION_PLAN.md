@@ -233,7 +233,23 @@ The package starts deliberately small. Future moves (Phase 5 admin split may sur
 
 ---
 
-### Phase 4 — Reorganize `apps/student/` into `features/*` slices  ⏳ IN PROGRESS
+### Phase 4 — Reorganize `apps/student/` into `features/*` slices  ✅ DONE
+**Commits:** `03f02af`, `973a47b`, `4785b89`, `af1480c`, `39ae825`, `7bde6af`, `6f32451`, `d77b029`, `8e5356d`, `0f19fda`, `db21fac`, `04c377a`, `675d01b` (2026-05-16, 13 commits)
+
+**Outcome:**
+- 12 feature folders created under `apps/student/features/`: legal, auth, blog, flashcards, career-explorer, college-predictor, notes, books, simulations, public-content, crucible, landing
+- ~500 file renames across 12 feature commits
+- Next.js routing files (page.tsx, layout.tsx, route.ts) kept under `app/` per Next.js convention; imports rewritten to point at `@/features/<feature>/...`
+- Each feature has a `README.md` documenting its routes, slot structure, and cross-feature dependencies
+- Each feature has an `index.ts` declaring its public surface (no `export *`)
+- tsc clean across apps/student + 4 packages; lint baseline preserved; `npm run build` clean; dev smoke confirms 14/15 sampled routes return 200 (`/books` 404 is correct — no top-level page exists, only `[bookSlug]/[pageSlug]`)
+
+**Deferred for follow-up (out of Phase 4 scope):**
+- Inline route-local `.tsx` files (under `app/<route>/<X>.tsx`) for simulators (organic-chemistry-hub, physical-chemistry-hub, salt-analysis, etc.) and public-content routes stay in place. They're conceptually feature-local already; relocating them adds polish but not load-bearing structure. Per-feature READMEs flag this.
+- Two parallel `Question` interfaces inside `features/crucible/` (camelCase shape in `types.ts`, V2 schema shape in `components/types.ts`) — pre-existing situation, consolidation is its own task.
+- Site chrome (`Navbar.tsx`, `Footer.tsx`, `ConditionalFooter.tsx`, `BreadcrumbSchema.tsx`, analytics components) stays at `app/components/` for now. Could be promoted to `apps/student/components/` in a Phase 4.+ commit if desired.
+
+**Code-reviewer + security-auditor skills:** deferred to Phase 4.+ batch review (current Phase 4 commits are pure file moves + import codemod; risk surface is limited to TypeScript correctness and runtime imports which the build verifies). Will run before Phase 5 starts since admin extraction depends on `features/crucible/components/admin/` being in its final shape.
 **Goal:** Group feature implementation code under `apps/student/features/`. Next.js routing files (`page.tsx`, `layout.tsx`, `route.ts`) MUST stay under `apps/student/app/` per Next.js convention; their imports redirect to `@/features/<feature>/...`. The result: app routes are thin loaders + metadata; features are implementation homes.
 
 **Audit (2026-05-16):** 60 top-level app routes, 30 components, 30 lib files. 12 features identified.
