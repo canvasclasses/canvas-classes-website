@@ -4,8 +4,8 @@ import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HandwrittenNote, getUniqueCategories, getNotesStats, toInlineViewerUrl } from '../lib/handwrittenNotesData';
-import { getChapterMetaByName } from './chapterMetadata';
+import { HandwrittenNote, getUniqueCategories, getNotesStats, toInlineViewerUrl } from '../data/handwrittenNotesData';
+import { getChapterMetaByName } from '../data/chapterMetadata';
 import {
     Search, Download, FileText, BookOpen, FlaskConical, Atom, Sparkles,
     X, ChevronRight, Zap, Target, TrendingUp, Wand2, Layers,

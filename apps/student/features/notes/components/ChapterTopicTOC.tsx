@@ -1,5 +1,5 @@
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
-import type { TopicQuestionCounts } from './chapterStats.server';
+import type { TopicQuestionCounts } from '../lib/chapterStats.server';
 
 // "What's inside · N topics" — server-rendered list of every primary tag
 // (topic) under this chapter, with PYQ count badges on the right. Sourced

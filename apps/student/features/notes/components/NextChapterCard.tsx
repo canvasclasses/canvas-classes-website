@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { CHAPTER_META_LIST, type ChapterMeta } from '../chapterMetadata';
+import { CHAPTER_META_LIST, type ChapterMeta } from '../data/chapterMetadata';
 
 // "Up next · Chapter NN" — derived from CHAPTER_META_LIST by sorting on
 // ncertChapterNumber and finding the next chapter after the current one.

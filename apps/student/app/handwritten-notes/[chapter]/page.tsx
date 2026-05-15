@@ -6,26 +6,26 @@ import { ChevronRight, FlaskConical } from 'lucide-react';
 import {
     fetchHandwrittenNotes,
     type HandwrittenNote,
-} from '../../lib/handwrittenNotesData';
+} from '@/features/notes/data/handwrittenNotesData';
 import {
     CHAPTER_META_LIST,
     getChapterMetaBySlug,
     type ChapterMeta,
-} from '../chapterMetadata';
-import ChapterNotesGrid from './ChapterNotesGrid';
-import ChapterToolCard from './ChapterToolCard';
-import { getToolCardForSlug } from './toolCardConfig';
-import ChapterHero from './ChapterHero';
-import ChapterReadingShell from './ChapterReadingShell';
-import CrucibleHeroRail from './CrucibleHeroRail';
-import ChapterTopicTOC from './ChapterTopicTOC';
-import NextChapterCard from './NextChapterCard';
-import ViewTracker from './ViewTracker';
+} from '@/features/notes/data/chapterMetadata';
+import ChapterNotesGrid from '@/features/notes/components/ChapterNotesGrid';
+import ChapterToolCard from '@/features/notes/components/ChapterToolCard';
+import { getToolCardForSlug } from '@/features/notes/data/toolCardConfig';
+import ChapterHero from '@/features/notes/components/ChapterHero';
+import ChapterReadingShell from '@/features/notes/components/ChapterReadingShell';
+import CrucibleHeroRail from '@/features/notes/components/CrucibleHeroRail';
+import ChapterTopicTOC from '@/features/notes/components/ChapterTopicTOC';
+import NextChapterCard from '@/features/notes/components/NextChapterCard';
+import ViewTracker from '@/features/notes/components/ViewTracker';
 import {
     getChapterCrucibleStats,
     getTopicQuestionCounts,
     getChapterViewCount,
-} from './chapterStats.server';
+} from '@/features/notes/lib/chapterStats.server';
 
 // 24h ISR — the page is overwhelmingly static, but a daily rebuild lets the
 // "Read by X JEE/NEET aspirants" counter (real visit count read from the

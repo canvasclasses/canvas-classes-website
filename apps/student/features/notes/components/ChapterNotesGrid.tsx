@@ -14,7 +14,7 @@ import {
     Target,
     X,
 } from 'lucide-react';
-import { toInlineViewerUrl, type HandwrittenNote } from '../../lib/handwrittenNotesData';
+import { toInlineViewerUrl, type HandwrittenNote } from '../data/handwrittenNotesData';
 import SideBySidePractice from './SideBySidePractice';
 import { useSplitMode } from './ChapterReadingShell';
 

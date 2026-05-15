@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Script from "next/script";
-import HandwrittenNotesClient from "./HandwrittenNotesClient";
-import { fetchHandwrittenNotes, type HandwrittenNote } from "../lib/handwrittenNotesData";
+import HandwrittenNotesClient from "@/features/notes/components/HandwrittenNotesClient";
+import { fetchHandwrittenNotes, type HandwrittenNote } from "@/features/notes/data/handwrittenNotesData";
 
 export const revalidate = 86400;
 

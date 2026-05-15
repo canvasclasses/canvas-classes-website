@@ -1,7 +1,7 @@
 import { Clock } from 'lucide-react';
-import type { ChapterMeta } from '../chapterMetadata';
-import type { HandwrittenNote } from '../../lib/handwrittenNotesData';
-import type { ChapterCrucibleStats } from './chapterStats.server';
+import type { ChapterMeta } from '../data/chapterMetadata';
+import type { HandwrittenNote } from '../data/handwrittenNotesData';
+import type { ChapterCrucibleStats } from '../lib/chapterStats.server';
 
 // Chapter intro: meta pills, two-line title (handwritten + print), lead
 // paragraph, and soft trust strip. Rendered inside the left column of the

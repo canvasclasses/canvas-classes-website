@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import CrucibleBrand from '../../the-crucible/components/CrucibleBrand';
+import CrucibleBrand from '@/app/the-crucible/components/CrucibleBrand';
 import CrucibleQuestionCarousel, {
     type CarouselQuestion,
-} from '../../the-crucible/components/CrucibleQuestionCarousel';
-import type { ChapterCrucibleStats, SampleDemoQuestion } from './chapterStats.server';
-import type { ChapterMeta } from '../chapterMetadata';
+} from '@/app/the-crucible/components/CrucibleQuestionCarousel';
+import type { ChapterCrucibleStats, SampleDemoQuestion } from '../lib/chapterStats.server';
+import type { ChapterMeta } from '../data/chapterMetadata';
 
 // Sticky right-rail Crucible CTA in the chapter hero. Brand identity
 // (icon + wordmark + tagline) comes from the shared <CrucibleBrand/>

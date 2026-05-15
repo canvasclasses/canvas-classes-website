@@ -415,8 +415,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // submit empty pages to Google.
     let handwrittenChapterEntries: MetadataRoute.Sitemap = [];
     try {
-        const { fetchHandwrittenNotes } = await import('./lib/handwrittenNotesData');
-        const { CHAPTER_META_LIST } = await import('./handwritten-notes/chapterMetadata');
+        const { fetchHandwrittenNotes } = await import('@/features/notes/data/handwrittenNotesData');
+        const { CHAPTER_META_LIST } = await import('@/features/notes/data/chapterMetadata');
         const notes = await fetchHandwrittenNotes();
         const chaptersWithNotes = new Set(notes.map((n) => n.chapter));
         handwrittenChapterEntries = CHAPTER_META_LIST

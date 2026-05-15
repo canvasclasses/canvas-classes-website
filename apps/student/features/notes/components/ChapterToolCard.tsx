@@ -17,7 +17,7 @@ import {
     TestTube,
     TrendingUp,
 } from 'lucide-react';
-import { getToolCardForSlug, type ToolCardConfig } from './toolCardConfig';
+import { getToolCardForSlug, type ToolCardConfig } from '../data/toolCardConfig';
 
 // ─── Brand-style SVG icons ────────────────────────────────────────────────────
 
