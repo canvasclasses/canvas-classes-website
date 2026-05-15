@@ -176,7 +176,7 @@ Manual one-time action remaining: **Vercel Project Settings → Root Directory =
 ---
 
 ### Phase 3a — Extract `@canvas/ui`  ✅ DONE
-**Commit:** _(filled in by this commit)_  (2026-05-16)
+**Commit:** `00cdc99` (2026-05-16)
 **Goal:** Move shared visual components used by both admin and student into `packages/ui/`. Be conservative — move only components verified by grep to be used cross-cuttingly. Feature-local components stay in `apps/student/components/`.
 
 **Audit results (2026-05-16):**
