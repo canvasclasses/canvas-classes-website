@@ -204,7 +204,7 @@ The package starts deliberately small. Future moves (Phase 5 admin split may sur
 ---
 
 ### Phase 3b — Extract `@canvas/core`  ✅ DONE
-**Commit:** _(filled in by this commit)_  (2026-05-16)
+**Commit:** `f0b510f` (2026-05-16)
 **Goal:** Move cross-cutting server-side platform utilities (rate-limit, latex utils, redirect validation, analytics, R2 storage, generic utils) into `packages/core/`.
 
 **Follow-up flagged for separate commit:**
