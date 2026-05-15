@@ -1,0 +1,8 @@
+{
+  "name": "@canvas/core",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "comment": "Cross-cutting infrastructure: rate-limit, latex/redirect validation, analytics, R2, generic utils. Populated in Phase 3."
+}

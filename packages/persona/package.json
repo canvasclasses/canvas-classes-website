@@ -1,0 +1,8 @@
+{
+  "name": "@canvas/persona",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "comment": "Persona writer, profile engine, recommendation engine, question scoring. Populated in Phase 2."
+}

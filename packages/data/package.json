@@ -1,0 +1,8 @@
+{
+  "name": "@canvas/data",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "comment": "Mongoose models, db connection, Zod schemas, taxonomy data + lookup, display_id generator, difficulty utils. Populated in Phase 1."
+}

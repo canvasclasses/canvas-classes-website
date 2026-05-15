@@ -1,0 +1,7 @@
+{
+  "name": "admin",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {},
+  "comment": "Empty scaffold — will be populated in Phase 5 when admin routes split out."
+}

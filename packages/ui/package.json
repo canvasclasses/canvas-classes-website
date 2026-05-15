@@ -1,0 +1,8 @@
+{
+  "name": "@canvas/ui",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "comment": "Shared UI components, design tokens, Tailwind preset. Populated in Phase 3."
+}

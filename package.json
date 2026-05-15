@@ -1,0 +1,24 @@
+{
+  "name": "canvas-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w student",
+    "build": "npm run build -w student",
+    "start": "npm run start -w student",
+    "lint": "npm run lint -w student",
+    "backup:local": "tsx scripts/mongodb-backup.ts --local",
+    "backup:r2": "tsx scripts/mongodb-backup.ts --r2",
+    "backup:full": "tsx scripts/mongodb-backup.ts --local --r2",
+    "backup:r2-assets": "tsx scripts/r2-backup.ts ./r2-backup",
+    "backup:cleanup": "tsx scripts/backup-retention-cleanup.ts",
+    "restore": "tsx scripts/mongodb-restore.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0"
+  }
+}
