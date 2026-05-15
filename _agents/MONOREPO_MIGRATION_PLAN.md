@@ -128,7 +128,7 @@ Manual one-time action remaining: **Vercel Project Settings → Root Directory =
 ---
 
 ### Phase 2 — Extract `@canvas/persona`  ✅ DONE
-**Commit:** _(filled in by this commit)_  (2026-05-15)
+**Commit:** `f7540a1` (2026-05-15)
 **Goal:** Move the persona pipeline (writer + profile + recommendation + scoring) into `packages/persona/`. Refined intent (2026-05-15): the package is the **canonical home for the persona contract** — tier rules, mastery thresholds, interpretation helpers, recommendation scoring, and the writers that encode them. Admin won't run the writers, but admin dashboards and future AI training pipelines WILL read documents from `@canvas/data` and interpret them using rules from `@canvas/persona`. If admin re-implemented those rules inline, the read-side and write-side would drift silently.
 
 **What landed:**
