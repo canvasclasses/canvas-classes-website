@@ -5,7 +5,7 @@ import {
   Plus, ChevronDown, ChevronRight, FileText, Eye, EyeOff,
   Trash2, BookOpen, ChevronUp, Globe, GlobeLock,
 } from 'lucide-react';
-import { Book, BookChapter } from '@/types/books';
+import { Book, BookChapter } from '@canvas/data/types/books';
 
 interface PageSummary {
   _id: string;

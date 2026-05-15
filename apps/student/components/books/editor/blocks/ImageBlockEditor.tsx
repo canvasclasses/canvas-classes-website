@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { Upload, ImageIcon } from 'lucide-react';
-import { ImageBlock } from '@/types/books';
+import { ImageBlock } from '@canvas/data/types/books';
 import { UploadFn } from '../BookWorkspace';
 
 interface Props { block: ImageBlock; onChange: (p: Partial<ImageBlock>) => void; onUpload: UploadFn; }

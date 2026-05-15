@@ -3,15 +3,15 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { randomUUID } from 'crypto';
-import connectToDatabase from '@/lib/mongodb';
-import { CareerProfile } from '@/lib/models/CareerProfile';
-import { CareerPath } from '@/lib/models/CareerPath';
-import { CareerMatch } from '@/lib/models/CareerMatch';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { CareerProfile } from '@canvas/data/models/CareerProfile';
+import { CareerPath } from '@canvas/data/models/CareerPath';
+import { CareerMatch } from '@canvas/data/models/CareerMatch';
 import { getAuthenticatedUser, isAdmin } from '@/lib/auth';
 import { errorResponse, rateLimit, requestIp } from '../../../_shared';
 import { scoreMatches } from '@/lib/careerExplorer/scoring';
-import type { ICareerProfile } from '@/lib/models/CareerProfile';
-import type { ICareerPath } from '@/lib/models/CareerPath';
+import type { ICareerProfile } from '@canvas/data/models/CareerProfile';
+import type { ICareerPath } from '@canvas/data/models/CareerPath';
 
 export async function POST(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   const { id } = await context.params;

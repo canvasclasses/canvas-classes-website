@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { AudioNoteBlock } from '@/types/books';
+import { AudioNoteBlock } from '@canvas/data/types/books';
 
 // Waveform bar heights (%) — natural audio silhouette
 const WAVE_HEIGHTS = [30, 55, 75, 45, 90, 65, 40, 80, 55, 35, 70, 95, 50, 78, 42, 62, 85, 48, 68, 52];

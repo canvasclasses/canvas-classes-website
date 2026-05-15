@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { LANDING_CONFIGS, findLanding } from './landingConfig';
-import connectDB from '@/lib/mongodb';
-import { College } from '@/lib/models/College';
+import connectDB from '@canvas/data/db/mongodb';
+import { College } from '@canvas/data/models/College';
 
 export async function generateStaticParams() {
   return LANDING_CONFIGS.map((c) => ({ slug: c.slug }));

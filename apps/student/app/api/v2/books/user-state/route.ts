@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import BookProgressModel from '@/lib/models/BookProgress';
-import BookBookmarkModel from '@/lib/models/BookBookmark';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import BookProgressModel from '@canvas/data/models/BookProgress';
+import BookBookmarkModel from '@canvas/data/models/BookBookmark';
 import { getUserIdFromRequest } from '@/lib/auth';
 
 // Combined endpoint that returns BOTH progress and bookmarks in one round-trip.

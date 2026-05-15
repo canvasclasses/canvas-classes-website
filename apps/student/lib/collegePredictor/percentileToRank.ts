@@ -28,7 +28,7 @@
 // Update TOTAL_CANDIDATES yearly after NTA publishes the final count.
 // ============================================
 
-import type { CutoffCategory } from '../models/CollegeCutoff';
+import type { CutoffCategory } from '@canvas/data/models/CollegeCutoff';
 
 // Total JEE Main candidates appearing (both sessions combined, unique).
 // Source: NTA Session 1 + Session 2 press releases.

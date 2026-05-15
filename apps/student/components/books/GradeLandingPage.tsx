@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { useBookProgress, BookProgressRecord } from '@/hooks/useBookProgress';
 import { useBookBookmarks } from '@/hooks/useBookBookmarks';
-import { BlockType } from '@/types/books';
+import { BlockType } from '@canvas/data/types/books';
 import {
   type SubjectTheme, getTheme, getDecor, LiveBooksLogo,
 } from './bookDesign';

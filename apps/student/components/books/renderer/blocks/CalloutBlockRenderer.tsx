@@ -7,7 +7,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
-import { CalloutBlock } from '@/types/books';
+import { CalloutBlock } from '@canvas/data/types/books';
 
 // ─── Shared bottom image ──────────────────────────────────────────────────────
 // Renders below the callout text when image_src or image_prompt is set.

@@ -7,9 +7,9 @@
 //
 // This is deliberately simple; we will tune weights once real students use it.
 
-import type { ICareerPath } from '@/lib/models/CareerPath';
-import type { ICareerProfile } from '@/lib/models/CareerProfile';
-import type { IMatchBreakdown, MatchBucket } from '@/lib/models/CareerMatch';
+import type { ICareerPath } from '@canvas/data/models/CareerPath';
+import type { ICareerProfile } from '@canvas/data/models/CareerProfile';
+import type { IMatchBreakdown, MatchBucket } from '@canvas/data/models/CareerMatch';
 
 const clamp = (n: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, n));
 

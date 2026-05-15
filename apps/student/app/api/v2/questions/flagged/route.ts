@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import { QuestionV2 } from '@/lib/models/Question.v2';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
 import { isLocalhostDev } from '@/lib/bookAuth';
 

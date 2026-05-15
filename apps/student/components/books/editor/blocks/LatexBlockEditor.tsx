@@ -1,6 +1,6 @@
 'use client';
 
-import { LatexBlock } from '@/types/books';
+import { LatexBlock } from '@canvas/data/types/books';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';

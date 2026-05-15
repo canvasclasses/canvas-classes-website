@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { Upload, Mic, Square, Loader2 } from 'lucide-react';
-import { AudioNoteBlock } from '@/types/books';
+import { AudioNoteBlock } from '@canvas/data/types/books';
 import { UploadFn } from '../BookWorkspace';
 
 interface Props { block: AudioNoteBlock; onChange: (p: Partial<AudioNoteBlock>) => void; onUpload: UploadFn; }

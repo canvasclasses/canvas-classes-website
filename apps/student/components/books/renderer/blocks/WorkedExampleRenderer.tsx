@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
-import { WorkedExampleBlock } from '@/types/books';
+import { WorkedExampleBlock } from '@canvas/data/types/books';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface Props {

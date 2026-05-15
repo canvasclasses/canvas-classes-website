@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getUserIdFromRequest } from '@/lib/auth';
-import connectToDatabase from '@/lib/mongodb';
-import { StudentResponse } from '@/lib/models/StudentResponse';
-import { StudentChapterProfile, IStudentChapterProfile } from '@/lib/models/StudentChapterProfile';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { StudentResponse } from '@canvas/data/models/StudentResponse';
+import { StudentChapterProfile, IStudentChapterProfile } from '@canvas/data/models/StudentChapterProfile';
 import { updateProfileFromResponse, createEmptyProfile } from '@/lib/profileEngine';
 
 // ─── POST /api/v2/user/session-response ──────────────────────────────────────

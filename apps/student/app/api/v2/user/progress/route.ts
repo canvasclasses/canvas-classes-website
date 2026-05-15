@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import { UserProgress, IQuestionAttempt } from '@/lib/models/UserProgress';
-import { StudentChapterProfile, IStudentChapterProfile } from '@/lib/models/StudentChapterProfile';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { UserProgress, IQuestionAttempt } from '@canvas/data/models/UserProgress';
+import { StudentChapterProfile, IStudentChapterProfile } from '@canvas/data/models/StudentChapterProfile';
 import { updateProfileFromAttempt, createEmptyProfile } from '@/lib/profileEngine';
 import { getUserIdFromRequest } from '@/lib/auth';
-import { resolveConfidenceTier } from '@/lib/personaWriter';
+import { applyAttemptToProgress, resolveConfidenceTier } from '@/lib/personaWriter';
 
 // ─── GET /api/v2/user/progress?chapterId=xxx ──────────────────────────────────
 // Returns: starred_ids for this chapter, all_attempted_ids for this chapter,
@@ -146,7 +146,8 @@ export async function POST(req: NextRequest) {
                         current_session: null,
                     });
                 }
-                await progress.recordAttempt(attempt);
+                applyAttemptToProgress(progress, attempt);
+                await progress.save();
                 break; // success
             } catch (concurrencyErr: unknown) {
                 const isVersionError =

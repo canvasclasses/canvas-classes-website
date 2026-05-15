@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
-import { BookPage } from '@/types/books';
+import { BookPage } from '../types/books';
 
 // Blocks are stored as schema-less Mixed to support all block types.
 // ContentBlock type safety is enforced at the API layer, not here.

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import connectToDatabase from '@/lib/mongodb';
-import BookModel from '@/lib/models/Book';
-import BookPageModel from '@/lib/models/BookPage';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import BookModel from '@canvas/data/models/Book';
+import BookPageModel from '@canvas/data/models/BookPage';
 import GradeLandingPage, {
   type GradeBook,
   type GradePage,

@@ -1,6 +1,6 @@
 'use client';
 
-import { InlineQuizBlock, InlineQuizQuestion } from '@/types/books';
+import { InlineQuizBlock, InlineQuizQuestion } from '@canvas/data/types/books';
 
 interface Props {
   block: InlineQuizBlock;

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import Flashcard from '@/lib/models/Flashcard';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import Flashcard from '@canvas/data/models/Flashcard';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { isLocalhostDev } from '@/lib/bookAuth';
 import { createRateLimiter, getClientIp } from '@/lib/rateLimit';

@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import connectToDatabase from '@/lib/mongodb';
-import { CareerProfile } from '@/lib/models/CareerProfile';
-import { CareerMatch } from '@/lib/models/CareerMatch';
-import { CareerPath } from '@/lib/models/CareerPath';
-import type { ICareerProfile } from '@/lib/models/CareerProfile';
-import type { ICareerPath } from '@/lib/models/CareerPath';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { CareerProfile } from '@canvas/data/models/CareerProfile';
+import { CareerMatch } from '@canvas/data/models/CareerMatch';
+import { CareerPath } from '@canvas/data/models/CareerPath';
+import type { ICareerProfile } from '@canvas/data/models/CareerProfile';
+import type { ICareerPath } from '@canvas/data/models/CareerPath';
 import VisionClient, { type VisionSeed } from './VisionClient';
 
 export const metadata: Metadata = {

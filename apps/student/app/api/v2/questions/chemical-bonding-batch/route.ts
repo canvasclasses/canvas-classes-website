@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { QuestionV2 } from '@/lib/models/Question.v2';
-import connectToDatabase from '@/lib/mongodb';
-import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
+import { QuestionV2 } from '@canvas/data/models/Question.v2';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 
 /**
  * GET /api/v2/questions/chemical-bonding-batch?batch=1

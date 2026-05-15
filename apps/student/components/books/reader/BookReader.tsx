@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import PageRenderer from '../renderer/PageRenderer';
-import { Book, BookPage, BlockType, ContentBlock } from '@/types/books';
+import { Book, BookPage, BlockType, ContentBlock } from '@canvas/data/types/books';
 import { useBookProgress } from '@/hooks/useBookProgress';
 import { useBookBookmarks } from '@/hooks/useBookBookmarks';
 import { useBookUserState } from '@/hooks/useBookUserState';

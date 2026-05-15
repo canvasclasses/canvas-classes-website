@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { BarChart3, TrendingUp, AlertTriangle, CheckCircle, Tag, BookOpen, Layers, Target, FlaskConical, GraduationCap } from 'lucide-react';
-import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 import type { AdminQuestion as Question, AdminChapter as Chapter } from './types';
 
 interface AnalyticsDashboardProps {

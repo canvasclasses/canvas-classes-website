@@ -1,10 +1,8 @@
-/**
- * Activity Log model — used by /api/v2/questions/[id]/stats for community stats.
- * Other V1 models (Question, UserMastery, Taxonomy) were removed; V2 uses
- * lib/models/Question.v2.ts and the questions_v2 collection.
- */
+// ActivityLog — community stats signal (used by /api/v2/questions/[id]/stats).
+// Was previously the last surviving export of the V1 lib/models.ts wrapper;
+// promoted into the data package as its own file during the monorepo migration.
 
-import { mongoose } from '@/lib/mongodb';
+import { mongoose } from '../db/mongodb';
 
 const { Schema } = mongoose;
 

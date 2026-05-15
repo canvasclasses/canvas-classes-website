@@ -2,10 +2,10 @@
 // this once after submit to render the three curated lists.
 
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import { CareerProfile } from '@/lib/models/CareerProfile';
-import { CareerMatch } from '@/lib/models/CareerMatch';
-import { CareerPath } from '@/lib/models/CareerPath';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { CareerProfile } from '@canvas/data/models/CareerProfile';
+import { CareerMatch } from '@canvas/data/models/CareerMatch';
+import { CareerPath } from '@canvas/data/models/CareerPath';
 import { getAuthenticatedUser, isAdmin } from '@/lib/auth';
 import { errorResponse, rateLimit, requestIp } from '../../../_shared';
 

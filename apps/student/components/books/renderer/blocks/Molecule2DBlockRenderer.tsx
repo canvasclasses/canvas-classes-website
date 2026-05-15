@@ -1,6 +1,6 @@
 'use client';
 
-import { Molecule2DBlock } from '@/types/books';
+import { Molecule2DBlock } from '@canvas/data/types/books';
 import MoleculeViewer from '@/components/organic-wizard/MoleculeViewer';
 
 export default function Molecule2DBlockRenderer({ block }: { block: Molecule2DBlock }) {

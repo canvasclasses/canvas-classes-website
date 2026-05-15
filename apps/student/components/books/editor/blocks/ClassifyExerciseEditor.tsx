@@ -1,7 +1,7 @@
 'use client';
 
 import { Plus, Trash2 } from 'lucide-react';
-import { ClassifyExerciseBlock, ClassifyExerciseRow } from '@/types/books';
+import { ClassifyExerciseBlock, ClassifyExerciseRow } from '@canvas/data/types/books';
 
 interface Props {
   block: ClassifyExerciseBlock;

@@ -14,7 +14,7 @@ If uncertain about scope, stop and ask. Do not pick silently.
 
 ---
 
-> **Before changing anything inside `app/the-crucible/`, `app/crucible/admin/`, `app/api/v2/`, `lib/models/UserProgress.ts`, `lib/models/StudentChapterProfile.ts`, `lib/recommendationEngine.ts`, or `lib/models/ResourceLink.ts` — read [`_agents/CRUCIBLE_ARCHITECTURE.md`](_agents/CRUCIBLE_ARCHITECTURE.md).** It is the canonical reference for Crucible's structure, the persona pipeline, the recommendation bridge, and the invariants that must not be broken. If anything in this file or in code comments contradicts it, that document wins; the fix is to update the doc, never to silently diverge.
+> **Before changing anything inside `apps/student/app/the-crucible/`, `apps/student/app/crucible/admin/`, `apps/student/app/api/v2/`, `packages/data/models/UserProgress.ts`, `packages/data/models/StudentChapterProfile.ts`, `apps/student/lib/recommendationEngine.ts`, or `packages/data/models/ResourceLink.ts` — read [`_agents/CRUCIBLE_ARCHITECTURE.md`](_agents/CRUCIBLE_ARCHITECTURE.md).** It is the canonical reference for Crucible's structure, the persona pipeline, the recommendation bridge, and the invariants that must not be broken. If anything in this file or in code comments contradicts it, that document wins; the fix is to update the doc, never to silently diverge.
 
 ---
 
@@ -35,7 +35,7 @@ There are two versions of the question system. **V2 is the only active system.**
 |---|---|---|
 | Admin panel | `/the-crucible/admin/` | `/crucible/admin/` |
 | API | `/api/questions/` | `/api/v2/` |
-| Mongoose model | `lib/models.ts` | `lib/models/Question.v2.ts` |
+| Mongoose model | (deleted — V1 retired) | `packages/data/models/Question.v2.ts` |
 | Collection | `questions` | `questions_v2` |
 | Question IDs | Auto-increment strings | UUID v4 + `display_id` (e.g. `ATOM-042`) |
 
@@ -124,7 +124,7 @@ Spacing rules:
 
 ## 4.5 CANONICAL FIELD NAMES — DO NOT USE LEGACY ALIASES
 
-When updating questions in `questions_v2`, write to the **canonical** schema fields defined in `lib/models/Question.v2.ts`. Do NOT write to legacy aliases — both the student UI (`app/the-crucible/actions.ts`) and the admin UI (`app/crucible/admin/page.tsx`) read from the canonical fields only.
+When updating questions in `questions_v2`, write to the **canonical** schema fields defined in `packages/data/models/Question.v2.ts`. Do NOT write to legacy aliases — both the student UI (`apps/student/app/the-crucible/actions.ts`) and the admin UI (`apps/student/app/crucible/admin/page.tsx`) read from the canonical fields only.
 
 | Canonical (read by UI) | Legacy alias (do not use) |
 |---|---|
@@ -257,7 +257,7 @@ Two-level hierarchy: **Chapter → Topic Tag**
 
 - Chapter IDs: `ch11_mole`, `ch11_atom`, `ch12_solutions`, etc.
 - Topic tag IDs: `tag_mole_1`, `tag_atom_3`, etc.
-- **Single source of truth**: `lib/taxonomy/taxonomyData_from_csv.ts`
+- **Single source of truth**: `packages/data/taxonomy/taxonomyData_from_csv.ts`
 - `metadata.chapter_id` on every `QuestionV2` document must match a chapter `id` in that file exactly
 
 The taxonomy file is auto-updated by the dashboard at `/crucible/admin/taxonomy` via `POST /api/v2/taxonomy/save`. Do not edit it manually.
@@ -268,23 +268,30 @@ The taxonomy file is auto-updated by the dashboard at `/crucible/admin/taxonomy`
 
 | Purpose | Path |
 |---|---|
-| MongoDB connection | `lib/mongodb.ts` |
-| V2 Question model | `lib/models/Question.v2.ts` |
-| Chapter model | `lib/models/Chapter.ts` |
-| Asset model | `lib/models/Asset.ts` |
-| AuditLog model | `lib/models/AuditLog.ts` |
-| Taxonomy source of truth | `lib/taxonomy/taxonomyData_from_csv.ts` |
-| Math/LaTeX renderer (shared) | `components/MathRenderer.tsx` |
-| Adaptive engine (Crucible) | `app/the-crucible/lib/adaptiveEngine.ts` |
-| Recommendation engine | `lib/recommendationEngine.ts` |
-| Difficulty utils (shared) | `lib/difficultyUtils.ts` |
-| LaTeX validator utility | `lib/latexValidator.ts` |
-| V2 questions API | `app/api/v2/questions/route.ts` |
-| Admin question editor | `app/crucible/admin/page.tsx` |
-| Student server actions | `app/the-crucible/actions.ts` |
-| Student landing | `app/the-crucible/page.tsx` |
+| MongoDB connection | `packages/data/db/mongodb.ts` |
+| V2 Question model | `packages/data/models/Question.v2.ts` |
+| Chapter model | `packages/data/models/Chapter.ts` |
+| Asset model | `packages/data/models/Asset.ts` |
+| AuditLog model | `packages/data/models/AuditLog.ts` |
+| Taxonomy source of truth | `packages/data/taxonomy/taxonomyData_from_csv.ts` |
+| Taxonomy lookup helpers | `packages/data/taxonomy/lookup.ts` |
+| `display_id` generator | `packages/data/id-generator/index.ts` |
+| Difficulty utils (shared) | `packages/data/difficulty.ts` |
+| Math/LaTeX renderer (shared) | `apps/student/components/MathRenderer.tsx` |
+| Adaptive engine (Crucible) | `apps/student/app/the-crucible/lib/adaptiveEngine.ts` |
+| Recommendation engine | `apps/student/lib/recommendationEngine.ts` |
+| Persona writer (mutation surface) | `apps/student/lib/personaWriter.ts` |
+| Profile engine | `apps/student/lib/profileEngine.ts` |
+| LaTeX validator utility | `apps/student/lib/latexValidator.ts` |
+| V2 questions API | `apps/student/app/api/v2/questions/route.ts` |
+| Admin question editor | `apps/student/app/crucible/admin/page.tsx` |
+| Student server actions | `apps/student/app/the-crucible/actions.ts` |
+| Student landing | `apps/student/app/the-crucible/page.tsx` |
 
-> **Import direction rule:** student-facing code (`app/the-crucible/`) and notes pages must never import from `app/crucible/admin/`. Shared modules belong in `lib/`, `lib/taxonomy/`, or `components/`.
+> **Import direction rules** (post-monorepo migration):
+> - Student code (`apps/student/app/the-crucible/`) and notes pages must never import from `apps/student/app/crucible/admin/`. Shared modules belong in `packages/data/`, `apps/student/lib/`, or `apps/student/components/`.
+> - Anything inside `packages/*/` must not use the `@/` alias or import from `apps/*` — packages use relative paths internally and have no knowledge of which app consumes them.
+> - The shared data layer (Mongoose models, db, taxonomy, schemas, id-generator, difficulty utils) lives in `@canvas/data` — import via `from '@canvas/data/models/X'` or `from '@canvas/data/db/mongodb'`, never via `@/lib/...`.
 
 ### Simplicity Constraint
 

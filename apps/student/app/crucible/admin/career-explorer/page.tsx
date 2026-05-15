@@ -1,11 +1,11 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { requireAdmin } from '@/lib/bookAuth';
-import connectToDatabase from '@/lib/mongodb';
-import { CareerPath } from '@/lib/models/CareerPath';
-import { CareerQuestion } from '@/lib/models/CareerQuestion';
-import { CareerProfile } from '@/lib/models/CareerProfile';
-import { CareerMatch } from '@/lib/models/CareerMatch';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { CareerPath } from '@canvas/data/models/CareerPath';
+import { CareerQuestion } from '@canvas/data/models/CareerQuestion';
+import { CareerProfile } from '@canvas/data/models/CareerProfile';
+import { CareerMatch } from '@canvas/data/models/CareerMatch';
 import { BookOpen, ListChecks, Users2, Settings2 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { CheckCircle2, XCircle } from 'lucide-react';
-import { ClassifyExerciseBlock } from '@/types/books';
+import { ClassifyExerciseBlock } from '@canvas/data/types/books';
 
 interface RowState {
   answered: boolean;

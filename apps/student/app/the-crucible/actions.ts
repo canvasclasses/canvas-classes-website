@@ -2,8 +2,8 @@
 
 import { unstable_cache } from 'next/cache';
 import { Question as QuestionPageType, Chapter } from './components/types';
-import connectToDatabase from '@/lib/mongodb';
-import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 
 // MongoDB document types (lean queries return plain objects)
 interface MongoQuestionDoc {
@@ -59,7 +59,7 @@ export async function getQuestionBySlug(
 ): Promise<{ question: QuestionDetail; redirectTo: string | null } | null> {
   try {
     await connectToDatabase();
-    const { QuestionV2 } = await import('@/lib/models/Question.v2');
+    const { QuestionV2 } = await import('@canvas/data/models/Question.v2');
 
     // UUID pattern: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
     const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
@@ -103,7 +103,7 @@ export async function getAdjacentQuestions(
 ): Promise<{ prev: { id: string; display_id: string } | null; next: { id: string; display_id: string } | null }> {
   try {
     await connectToDatabase();
-    const { QuestionV2 } = await import('@/lib/models/Question.v2');
+    const { QuestionV2 } = await import('@canvas/data/models/Question.v2');
 
     // Two indexed range queries — O(log n) each — instead of loading the whole chapter.
     const base = { 'metadata.chapter_id': chapterId, deleted_at: null, status: 'published' };
@@ -143,7 +143,7 @@ export async function getRelatedCrucibleQuestions(
 ): Promise<RelatedQuestion[]> {
   try {
     await connectToDatabase();
-    const { QuestionV2 } = await import('@/lib/models/Question.v2');
+    const { QuestionV2 } = await import('@canvas/data/models/Question.v2');
 
     const docs = await QuestionV2.find(
       { 'metadata.chapter_id': chapterId, deleted_at: null, status: 'published', _id: { $ne: excludeId } },
@@ -176,7 +176,7 @@ export async function getRelatedCrucibleQuestions(
 export async function getAllPublishedPYQSlugs(): Promise<Array<{ id: string; display_id: string; updated_at: string }>> {
   try {
     await connectToDatabase();
-    const { QuestionV2 } = await import('@/lib/models/Question.v2');
+    const { QuestionV2 } = await import('@canvas/data/models/Question.v2');
 
     // PYQ filter migrated from legacy `is_pyq: true` to canonical `sourceType: 'PYQ'`.
     // The two fields are kept in sync today (only ~2 known drift cases out of 4,750+).
@@ -274,7 +274,7 @@ export async function getTaxonomy(): Promise<Chapter[]> {
 const _getChapterQuestionCounts = unstable_cache(
     async (): Promise<Record<string, number>> => {
         await connectToDatabase();
-        const { QuestionV2 } = await import('@/lib/models/Question.v2');
+        const { QuestionV2 } = await import('@canvas/data/models/Question.v2');
         const agg = await QuestionV2.aggregate([
             { $match: { deleted_at: null } },
             { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
@@ -290,7 +290,7 @@ const _getChapterQuestionCounts = unstable_cache(
 const _getChapterStarCounts = unstable_cache(
     async (): Promise<Record<string, number>> => {
         await connectToDatabase();
-        const { QuestionV2 } = await import('@/lib/models/Question.v2');
+        const { QuestionV2 } = await import('@canvas/data/models/Question.v2');
         const agg = await QuestionV2.aggregate([
             { $match: { 'metadata.is_top_pyq': true, deleted_at: null } },
             { $group: { _id: '$metadata.chapter_id', count: { $sum: 1 } } },
@@ -326,7 +326,7 @@ export async function getChapterStarCounts(): Promise<Record<string, number>> {
 export async function getChapterQuestions(chapterId: string, examBoard?: 'JEE' | 'NEET'): Promise<QuestionPageType[]> {
     try {
         await connectToDatabase();
-        const { QuestionV2 } = await import('@/lib/models/Question.v2');
+        const { QuestionV2 } = await import('@canvas/data/models/Question.v2');
         const filter: Record<string, unknown> = {
             'metadata.chapter_id': chapterId,
             deleted_at: null,

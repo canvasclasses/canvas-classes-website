@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import { fileTypeFromBuffer } from 'file-type';
-import connectToDatabase from '@/lib/mongodb';
+import connectToDatabase from '@canvas/data/db/mongodb';
 import { uploadToR2, getExtensionFromMimeType } from '@/lib/r2Storage';
 import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
 import { isLocalhostDev } from '@/lib/bookAuth';

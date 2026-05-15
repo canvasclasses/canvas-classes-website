@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { SimulationBlock } from '@/types/books';
+import { SimulationBlock } from '@canvas/data/types/books';
 import dynamic from 'next/dynamic';
 
 // Lazy-load each simulator — keeps initial page bundle small

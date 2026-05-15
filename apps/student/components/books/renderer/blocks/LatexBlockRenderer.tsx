@@ -7,7 +7,7 @@
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import { useMemo } from 'react';
-import { LatexBlock } from '@/types/books';
+import { LatexBlock } from '@canvas/data/types/books';
 
 // ───────────────────────────────────────────────────────────────────────────
 // Module-level render cache

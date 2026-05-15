@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Trash2, GripVertical, ChevronDown, ChevronUp } from 'lucide-react';
-import { ContentBlock, BlockType } from '@/types/books';
+import { ContentBlock, BlockType } from '@canvas/data/types/books';
 import { UploadFn } from './BookWorkspace';
 import AddBlockMenu from './AddBlockMenu';
 

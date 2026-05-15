@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getUserIdFromRequest } from '@/lib/auth';
-import connectToDatabase from '@/lib/mongodb';
-import TestResult from '@/lib/models/TestResult';
-import { QuestionV2 } from '@/lib/models/Question.v2';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import TestResult from '@canvas/data/models/TestResult';
+import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { nanoid } from 'nanoid';
 import {
     trackServer,

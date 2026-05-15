@@ -2,8 +2,8 @@
 // the predictor form (dropdowns) and the browse/compare views.
 
 import { NextRequest, NextResponse } from 'next/server';
-import connectDB from '@/lib/mongodb';
-import { College } from '@/lib/models/College';
+import connectDB from '@canvas/data/db/mongodb';
+import { College } from '@canvas/data/models/College';
 
 export async function GET(request: NextRequest) {
   try {

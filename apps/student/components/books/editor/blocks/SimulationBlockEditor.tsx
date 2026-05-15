@@ -1,6 +1,6 @@
 'use client';
 
-import { SimulationBlock } from '@/types/books';
+import { SimulationBlock } from '@canvas/data/types/books';
 
 const SIMULATION_IDS = [
   // Class 11 Chemistry

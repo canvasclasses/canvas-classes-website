@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import connectToDatabase from '@/lib/mongodb';
-import BitsatPlanProgress from '@/lib/models/BitsatPlanProgress';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import BitsatPlanProgress from '@canvas/data/models/BitsatPlanProgress';
 
 const PLAN_VERSION = 'v1';
 const TOTAL_DAYS = 30;

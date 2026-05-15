@@ -70,8 +70,21 @@ Manual one-time action remaining: **Vercel Project Settings → Root Directory =
 
 ---
 
-### Phase 1 — Extract `@canvas/data`  ⏳ PENDING
-**Goal:** Move the data layer (models, db connection, schemas, taxonomy, id-generator, difficulty utils) out of `apps/student/lib/` into `packages/data/`, updating ~150+ import statements.
+### Phase 1 — Extract `@canvas/data`  ✅ DONE
+**Commit:** _(filled in by this commit)_  (2026-05-15)
+**Goal:** Move the data layer (models, db connection, schemas, taxonomy, id-generator, difficulty utils, shared types) out of `apps/student/lib/` and `apps/student/types/` into `packages/data/`.
+
+**What landed:**
+- `packages/data/` populated with 30 model files, `db/mongodb.ts`, taxonomy (data + lookup), schemas (Zod question payload), `id-generator/`, `difficulty.ts`, and `types/books.ts`
+- 318 imports rewritten via codemod from `@/lib/...` and `@/types/books` to `@canvas/data/...` subpaths
+- `recordAttempt` instance method removed from `UserProgress.ts`; 2 callers inlined to `applyAttemptToProgress(progress, attempt); await progress.save();` — breaks the future `@canvas/data ↔ @canvas/persona` cycle
+- `apps/student/next.config.ts` gets `transpilePackages: ['@canvas/data']`
+- `apps/student/package.json` adds `"@canvas/data": "*"` dep
+- `CLAUDE.md` Key Files table + import-direction rules updated
+- `_agents/CRUCIBLE_ARCHITECTURE.md` paths updated (taxonomy lookup, models, recommendation engine), `recordAttempt` references replaced with the new caller pattern
+- `packages/data/README.md` documents subpath-first contract
+
+**Audit results (2026-05-15):** 288 imports of these paths from inside `apps/student/`. Zero from `scripts/` (root scripts use raw `mongodb` driver). Cross-imports inside the data set were internal except for three architectural issues that were resolved in this phase.
 
 **Files to move:**
 - `apps/student/lib/models/*` → `packages/data/models/`
@@ -81,18 +94,36 @@ Manual one-time action remaining: **Vercel Project Settings → Root Directory =
 - `apps/student/lib/schemas/question.ts` → `packages/data/schemas/question.ts`
 - `apps/student/lib/questionIdGenerator.ts` → `packages/data/id-generator/index.ts`
 - `apps/student/lib/difficultyUtils.ts` → `packages/data/difficulty.ts`
+- `apps/student/types/books.ts` → `packages/data/types/books.ts` (~30 importers)
 
-**Files to delete:**
-- `apps/student/lib/models.ts` (V1 legacy — verify no live callers first)
+**Sub-tasks before/during file moves:**
 
-**Import codemod:** every `from '@/lib/models/...'` → `from '@canvas/data/models/...'` etc.
+1. **Cycle break (must happen first):** `apps/student/lib/models/UserProgress.ts` calls `applyAttemptToProgress` from `@/lib/personaWriter`. After Phase 2, persona lives in `@canvas/persona`, which depends on `@canvas/data` — creating a cycle. Fix: inline `recordAttempt` at its 2 call sites (`app/crucible/actions/progress.ts:98`, `app/api/v2/user/progress/route.ts:149`), remove the `recordAttempt` method from `UserProgress.ts`. Callers switch to `applyAttemptToProgress(progress, attempt); await progress.save();`.
 
-**De-dup check:**
-- Inline `interface IQuestion` style duplications outside of `packages/data/models/` — should now use the shared model interfaces.
-- Difficulty thresholds (Easy/Medium/Hard cutoffs) hardcoded anywhere outside `difficulty.ts`.
-- Places parsing `display_id` with a regex instead of using `id-generator` helpers.
+2. **Extract `ActivityLog` from wrapper:** `apps/student/lib/models.ts` holds the live `ActivityLog` model (used by `/api/v2/questions/[id]/stats`). Move it to `packages/data/models/ActivityLog.ts`, then delete `lib/models.ts`.
 
-**Open question:** Confirm package name `@canvas/data` vs alternative scoped name.
+3. **Co-locate `types/books.ts` with data:** book types are imported by both data models AND ~30 apps/student/ files. Moving them into the data package keeps the contract in one place; consumers update via codemod.
+
+**Import codemod:**
+- `from '@/lib/models/...'` → `from '@canvas/data/models/...'`
+- `from '@/lib/mongodb'` → `from '@canvas/data/db/mongodb'`
+- `from '@/lib/taxonomy/...'` → `from '@canvas/data/taxonomy/...'`
+- `from '@/lib/taxonomyLookup'` → `from '@canvas/data/taxonomy/lookup'`
+- `from '@/lib/schemas/question'` → `from '@canvas/data/schemas/question'`
+- `from '@/lib/questionIdGenerator'` → `from '@canvas/data/id-generator'`
+- `from '@/lib/difficultyUtils'` → `from '@canvas/data/difficulty'`
+- `from '@/lib/models'` (V1 wrapper) → `from '@canvas/data/models/ActivityLog'`
+- `from '@/types/books'` → `from '@canvas/data/types/books'`
+
+**Package configuration:**
+- `packages/data/package.json`: `name: "@canvas/data"`, `main: "./index.ts"`, `types: "./index.ts"`, no build step (consumed as TS source).
+- `apps/student/next.config.ts`: add `transpilePackages: ['@canvas/data']` so Next compiles the package.
+- `apps/student/package.json`: add `"@canvas/data": "*"` to dependencies.
+
+**De-dup check (Phase 1.5):**
+- Inline `interface IQuestion` style duplications outside `packages/data/models/`.
+- Difficulty thresholds (Easy/Medium/Hard cutoffs) hardcoded outside `difficulty.ts`.
+- Places parsing `display_id` with regex instead of using `id-generator` helpers.
 
 ---
 

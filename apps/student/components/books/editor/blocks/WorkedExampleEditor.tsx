@@ -1,6 +1,6 @@
 'use client';
 
-import { WorkedExampleBlock } from '@/types/books';
+import { WorkedExampleBlock } from '@canvas/data/types/books';
 import { UploadFn } from '../BookWorkspace';
 
 interface Props {

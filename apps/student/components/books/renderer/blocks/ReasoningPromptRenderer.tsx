@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ReasoningPromptBlock, ReasoningType } from '@/types/books';
+import { ReasoningPromptBlock, ReasoningType } from '@canvas/data/types/books';
 
 // ── Type config ───────────────────────────────────────────────────────────────
 

@@ -20,9 +20,9 @@
 // This function is DB-aware (calls connectDB + Mongoose) but otherwise stateless.
 // ============================================
 
-import connectDB from '@/lib/mongodb';
-import { College } from '@/lib/models/College';
-import { CollegeCutoff, type CutoffCategory, type CutoffGender, type CutoffQuota } from '@/lib/models/CollegeCutoff';
+import connectDB from '@canvas/data/db/mongodb';
+import { College } from '@canvas/data/models/College';
+import { CollegeCutoff, type CutoffCategory, type CutoffGender, type CutoffQuota } from '@canvas/data/models/CollegeCutoff';
 
 export type Bucket = 'safe' | 'target' | 'reach' | 'unlikely';
 export type Confidence = 'high' | 'medium' | 'low';

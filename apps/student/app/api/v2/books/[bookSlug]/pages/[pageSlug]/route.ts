@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { randomUUID } from 'crypto';
-import connectToDatabase from '@/lib/mongodb';
-import BookModel from '@/lib/models/Book';
-import BookPageModel from '@/lib/models/BookPage';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import BookModel from '@canvas/data/models/Book';
+import BookPageModel from '@canvas/data/models/BookPage';
 import { requireAdmin, isAdminRequest } from '@/lib/bookAuth';
-import { ContentBlock } from '@/types/books';
+import { ContentBlock } from '@canvas/data/types/books';
 import { validateBlocks } from '@/lib/schemas/blocks';
 import { computeReadingTime, computeContentTypes, extractVideoTitle } from '@/lib/utils/books';
 

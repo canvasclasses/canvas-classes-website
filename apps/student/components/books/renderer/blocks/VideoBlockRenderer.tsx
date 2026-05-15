@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Play, ChevronDown, ChevronUp } from 'lucide-react';
-import { VideoBlock } from '@/types/books';
+import { VideoBlock } from '@canvas/data/types/books';
 
 // YouTube requires the `origin` parameter in the embed URL to identify
 // the embedding site. Without it, the player shows "An error occurred"

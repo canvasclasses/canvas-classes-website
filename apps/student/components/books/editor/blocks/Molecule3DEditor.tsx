@@ -1,6 +1,6 @@
 'use client';
 
-import { Molecule3DBlock } from '@/types/books';
+import { Molecule3DBlock } from '@canvas/data/types/books';
 
 interface Props { block: Molecule3DBlock; onChange: (p: Partial<Molecule3DBlock>) => void; }
 

@@ -1,8 +1,8 @@
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { requireAdmin } from '@/lib/bookAuth';
-import connectToDatabase from '@/lib/mongodb';
-import { CareerPath } from '@/lib/models/CareerPath';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { CareerPath } from '@canvas/data/models/CareerPath';
 import CareerEditorClient from './CareerEditorClient';
 
 export const dynamic = 'force-dynamic';

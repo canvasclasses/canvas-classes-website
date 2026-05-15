@@ -14,9 +14,9 @@
 //                                  endpoint toggles whatever is currently set.
 
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import BookModel from '@/lib/models/Book';
-import BookPageModel from '@/lib/models/BookPage';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import BookModel from '@canvas/data/models/Book';
+import BookPageModel from '@canvas/data/models/BookPage';
 import { requireAdmin } from '@/lib/bookAuth';
 
 type Params = { params: Promise<{ bookSlug: string; chapterNumber: string }> };

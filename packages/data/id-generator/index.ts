@@ -1,4 +1,4 @@
-import { QuestionV2 } from '@/lib/models/Question.v2';
+import { QuestionV2 } from '../models/Question.v2';
 
 const CHAPTER_PREFIX_MAP: Record<string, string> = {
   // ── Chemistry (Class 11) ──

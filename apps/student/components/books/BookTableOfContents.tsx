@@ -10,7 +10,7 @@ import {
 import { useBookProgress, BookProgressRecord } from '@/hooks/useBookProgress';
 import { useBookBookmarks } from '@/hooks/useBookBookmarks';
 import { useBookStats } from '@/hooks/useBookStats';
-import { BlockType } from '@/types/books';
+import { BlockType } from '@canvas/data/types/books';
 import { getTheme, getDecor, LiveBooksLogo } from './bookDesign';
 
 /* ─── Serialisable types (no Mongoose/ObjectId) ─────────────────────────── */

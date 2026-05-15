@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
-import { InlineQuizBlock } from '@/types/books';
+import { InlineQuizBlock } from '@canvas/data/types/books';
 
 interface Props {
   block: InlineQuizBlock;

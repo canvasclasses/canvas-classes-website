@@ -1,6 +1,6 @@
 'use client';
 
-import { ContentBlock, BlockType } from '@/types/books';
+import { ContentBlock, BlockType } from '@canvas/data/types/books';
 import BlockList from './BlockList';
 import AddBlockMenu from './AddBlockMenu';
 import { UploadFn } from './BookWorkspace';

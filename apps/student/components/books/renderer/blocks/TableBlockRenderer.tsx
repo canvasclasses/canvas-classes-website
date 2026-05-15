@@ -5,7 +5,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
-import { TableBlock } from '@/types/books';
+import { TableBlock } from '@canvas/data/types/books';
 
 // Cell content — supports inline markdown + LaTeX
 function CellContent({ text }: { text: string }) {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import { UserProgress } from '@/lib/models/UserProgress';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { UserProgress } from '@canvas/data/models/UserProgress';
 import { getUserIdFromRequest } from '@/lib/auth';
 
 export async function GET(req: NextRequest) {

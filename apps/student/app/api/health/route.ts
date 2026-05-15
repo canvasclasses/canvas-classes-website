@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
+import connectToDatabase from '@canvas/data/db/mongodb';
 import { createClient } from '@supabase/supabase-js';
 
 export const dynamic = 'force-dynamic';

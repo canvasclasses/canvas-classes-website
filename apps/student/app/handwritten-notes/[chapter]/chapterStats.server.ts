@@ -6,10 +6,10 @@
 // the chapter page must always render, so any DB failure falls back to a
 // zero-state result.
 import 'server-only';
-import connectToDatabase from '@/lib/mongodb';
+import connectToDatabase from '@canvas/data/db/mongodb';
 import mongoose from 'mongoose';
-import { QuestionV2 } from '@/lib/models/Question.v2';
-import { ChapterView } from '@/lib/models/ChapterView';
+import { QuestionV2 } from '@canvas/data/models/Question.v2';
+import { ChapterView } from '@canvas/data/models/ChapterView';
 
 // What the chapter hero + rail need server-side.
 export interface ChapterCrucibleStats {

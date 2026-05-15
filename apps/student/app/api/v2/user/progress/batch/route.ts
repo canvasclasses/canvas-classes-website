@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import { UserProgress, IQuestionAttempt } from '@/lib/models/UserProgress';
-import { StudentChapterProfile, IStudentChapterProfile } from '@/lib/models/StudentChapterProfile';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { UserProgress, IQuestionAttempt } from '@canvas/data/models/UserProgress';
+import { StudentChapterProfile, IStudentChapterProfile } from '@canvas/data/models/StudentChapterProfile';
 import { updateProfileFromAttempt, createEmptyProfile } from '@/lib/profileEngine';
 import { getUserIdFromRequest } from '@/lib/auth';
 import { applyAttemptToProgress, resolveConfidenceTier } from '@/lib/personaWriter';

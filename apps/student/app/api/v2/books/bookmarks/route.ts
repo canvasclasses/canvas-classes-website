@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import BookBookmarkModel from '@/lib/models/BookBookmark';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import BookBookmarkModel from '@canvas/data/models/BookBookmark';
 import { getUserIdFromRequest } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';

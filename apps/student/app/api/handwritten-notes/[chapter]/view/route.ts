@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import { ChapterView } from '@/lib/models/ChapterView';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { ChapterView } from '@canvas/data/models/ChapterView';
 
 // PUBLIC: no auth required.
 //

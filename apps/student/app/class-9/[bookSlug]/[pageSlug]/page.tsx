@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import connectToDatabase from '@/lib/mongodb';
-import BookModel from '@/lib/models/Book';
-import BookPageModel from '@/lib/models/BookPage';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import BookModel from '@canvas/data/models/Book';
+import BookPageModel from '@canvas/data/models/BookPage';
 import BookReader from '@/components/books/reader/BookReader';
-import type { Book, BookPage } from '@/types/books';
+import type { Book, BookPage } from '@canvas/data/types/books';
 import { buildBookPageMetadata, buildBookPageJsonLd } from '@/lib/bookPageSeo';
 
 export const revalidate = 60;

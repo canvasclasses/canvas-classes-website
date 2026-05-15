@@ -13,9 +13,9 @@
  * page will silently omit that branch from the "2025 closing rank" column.
  */
 import { cache } from 'react';
-import connectDB from '@/lib/mongodb';
-import { College, type ICollege } from '@/lib/models/College';
-import { CollegeCutoff, type ICollegeCutoff } from '@/lib/models/CollegeCutoff';
+import connectDB from '@canvas/data/db/mongodb';
+import { College, type ICollege } from '@canvas/data/models/College';
+import { CollegeCutoff, type ICollegeCutoff } from '@canvas/data/models/CollegeCutoff';
 
 /**
  * B.Arch and B.Plan admissions run on JEE Main **Paper 2** ranks, which is a

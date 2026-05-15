@@ -7,7 +7,7 @@
 // Adding a new landing page = add an entry here. No route file changes needed.
 // ============================================
 
-import type { CollegeRegion, CollegeType } from '@/lib/models/College';
+import type { CollegeRegion, CollegeType } from '@canvas/data/models/College';
 
 export interface LandingFilter {
   region?: CollegeRegion;

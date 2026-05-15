@@ -1,6 +1,6 @@
 'use client';
 
-import { PracticeLinkBlock } from '@/types/books';
+import { PracticeLinkBlock } from '@canvas/data/types/books';
 
 interface Props { block: PracticeLinkBlock; onChange: (p: Partial<PracticeLinkBlock>) => void; }
 

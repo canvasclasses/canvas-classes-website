@@ -1,6 +1,6 @@
 'use client';
 
-import { ComparisonCardBlock, ComparisonColumn } from '@/types/books';
+import { ComparisonCardBlock, ComparisonColumn } from '@canvas/data/types/books';
 import { Plus, Trash2 } from 'lucide-react';
 
 interface Props { block: ComparisonCardBlock; onChange: (p: Partial<ComparisonCardBlock>) => void; }

@@ -1,4 +1,4 @@
-import { Molecule3DBlock } from '@/types/books';
+import { Molecule3DBlock } from '@canvas/data/types/books';
 
 // 3Dmol.js WebGL integration requires a separate initialisation pass.
 // This placeholder renders the molecule name and SMILES with a "3D view coming soon" notice.

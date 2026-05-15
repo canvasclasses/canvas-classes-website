@@ -1,5 +1,5 @@
-import connectToDatabase from '@/lib/mongodb';
-import { BlogPost, type IBlogPost } from '@/lib/models/BlogPost';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { BlogPost, type IBlogPost } from '@canvas/data/models/BlogPost';
 
 export type PublicPost = {
   _id: string;

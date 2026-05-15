@@ -11,10 +11,10 @@
  */
 
 import { ImageResponse } from 'next/og';
-import connectToDatabase from '@/lib/mongodb';
-import BookModel from '@/lib/models/Book';
-import BookPageModel from '@/lib/models/BookPage';
-import type { Book, BookPage } from '@/types/books';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import BookModel from '@canvas/data/models/Book';
+import BookPageModel from '@canvas/data/models/BookPage';
+import type { Book, BookPage } from '@canvas/data/types/books';
 
 export const runtime = 'nodejs';
 export const revalidate = 60;

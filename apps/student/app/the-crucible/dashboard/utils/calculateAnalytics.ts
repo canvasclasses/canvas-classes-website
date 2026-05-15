@@ -1,4 +1,4 @@
-import { ITestResult } from '@/lib/models/TestResult';
+import { ITestResult } from '@canvas/data/models/TestResult';
 
 export interface ChapterStats {
   chapterId: string;

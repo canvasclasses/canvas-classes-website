@@ -13,7 +13,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { GripVertical, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
-import { SectionBlock, SectionLayout, ContentBlock, BlockType } from '@/types/books';
+import { SectionBlock, SectionLayout, ContentBlock, BlockType } from '@canvas/data/types/books';
 import { UploadFn, defaultBlock } from '../BookWorkspace';
 import AddBlockMenu from '../AddBlockMenu';
 

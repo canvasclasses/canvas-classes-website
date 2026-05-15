@@ -1,6 +1,6 @@
 'use client';
 
-import { SectionBlock, SectionLayout } from '@/types/books';
+import { SectionBlock, SectionLayout } from '@canvas/data/types/books';
 import BlockRenderer from '../BlockRenderer';
 
 const LAYOUT_CLASSES: Record<SectionLayout, string> = {

@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { ImagePlus, Upload, X } from 'lucide-react';
-import { TextBlock } from '@/types/books';
+import { TextBlock } from '@canvas/data/types/books';
 import { UploadFn } from '../BookWorkspace';
 
 interface Props {

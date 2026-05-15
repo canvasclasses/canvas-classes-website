@@ -4,5 +4,18 @@
   "private": true,
   "main": "./index.ts",
   "types": "./index.ts",
-  "comment": "Mongoose models, db connection, Zod schemas, taxonomy data + lookup, display_id generator, difficulty utils. Populated in Phase 1."
+  "exports": {
+    ".": "./index.ts",
+    "./db/*": "./db/*.ts",
+    "./models/*": "./models/*.ts",
+    "./taxonomy/*": "./taxonomy/*.ts",
+    "./schemas/*": "./schemas/*.ts",
+    "./id-generator": "./id-generator/index.ts",
+    "./difficulty": "./difficulty.ts",
+    "./types/*": "./types/*.ts"
+  },
+  "peerDependencies": {
+    "mongoose": "*",
+    "zod": "*"
+  }
 }

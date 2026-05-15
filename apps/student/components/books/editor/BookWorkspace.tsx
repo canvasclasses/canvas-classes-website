@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { Save, BookOpen, PanelLeft, Columns2, Eye } from 'lucide-react';
-import { Book, BookPage, ContentBlock, BlockType } from '@/types/books';
+import { Book, BookPage, ContentBlock, BlockType } from '@canvas/data/types/books';
 import BookSidebar from './BookSidebar';
 import BlockEditor from './BlockEditor';
 import PageRenderer from '../renderer/PageRenderer';

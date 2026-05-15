@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import { ActivityLog } from '@/lib/models';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { ActivityLog } from '@canvas/data/models/ActivityLog';
 
 /**
  * GET /api/v2/questions/[id]/stats

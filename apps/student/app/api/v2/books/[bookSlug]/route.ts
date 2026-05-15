@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import BookModel from '@/lib/models/Book';
-import BookPageModel from '@/lib/models/BookPage';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import BookModel from '@canvas/data/models/Book';
+import BookPageModel from '@canvas/data/models/BookPage';
 import { requireAdmin, isAdminRequest } from '@/lib/bookAuth';
-import { BookChapter } from '@/types/books';
+import { BookChapter } from '@canvas/data/types/books';
 
 // GET branches on isAdminRequest() — admins see unpublished chapters, students
 // don't. Caching would leak one view into the other. Students load book data

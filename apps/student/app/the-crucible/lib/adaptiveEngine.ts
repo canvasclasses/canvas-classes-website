@@ -11,7 +11,7 @@ import {
   SESSION_MAX_QUESTIONS,
 } from '@/constants/adaptivePractice';
 import { Question } from '@/app/the-crucible/components/types';
-import type { IStudentChapterProfile, IMicroConceptProfile, DominantWeakness } from '@/lib/models/StudentChapterProfile';
+import type { IStudentChapterProfile, IMicroConceptProfile, DominantWeakness } from '@canvas/data/models/StudentChapterProfile';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 

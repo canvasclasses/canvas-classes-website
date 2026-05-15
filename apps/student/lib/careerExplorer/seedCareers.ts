@@ -7,7 +7,7 @@
 // Money is in ₹ lakhs per annum unless noted. Ranges are intentionally
 // conservative — we'd rather be slightly pessimistic than oversell.
 
-import type { ICareerPath } from '@/lib/models/CareerPath';
+import type { ICareerPath } from '@canvas/data/models/CareerPath';
 
 type SeedCareer = Omit<ICareerPath, 'created_at' | 'updated_at'>;
 

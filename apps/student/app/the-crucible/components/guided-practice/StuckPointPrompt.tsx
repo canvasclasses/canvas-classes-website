@@ -6,7 +6,7 @@
 // NOT shown after 'got_it' or 'too_easy' responses.
 
 import { useState, useEffect } from 'react';
-import type { StuckPoint } from '@/lib/models/StudentResponse';
+import type { StuckPoint } from '@canvas/data/models/StudentResponse';
 
 interface StuckPointPromptProps {
   onSelect: (stuckPoint: StuckPoint) => void;

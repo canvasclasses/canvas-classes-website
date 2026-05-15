@@ -9,7 +9,7 @@ import {
   verticalListSortingStrategy, useSortable, arrayMove,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { ContentBlock, BlockType } from '@/types/books';
+import { ContentBlock, BlockType } from '@canvas/data/types/books';
 import BlockCard from './BlockCard';
 import { UploadFn } from './BookWorkspace';
 

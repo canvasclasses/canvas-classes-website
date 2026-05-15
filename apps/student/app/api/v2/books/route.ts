@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
-import connectToDatabase from '@/lib/mongodb';
-import BookModel from '@/lib/models/Book';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import BookModel from '@canvas/data/models/Book';
 import { requireAdmin, isAdminRequest } from '@/lib/bookAuth';
 
 // GET branches on isAdminRequest() — admins see drafts, students don't.

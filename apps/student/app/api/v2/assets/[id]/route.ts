@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import { Asset } from '@/lib/models/Asset';
-import { QuestionV2 } from '@/lib/models/Question.v2';
-import { AuditLog } from '@/lib/models/AuditLog';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { Asset } from '@canvas/data/models/Asset';
+import { QuestionV2 } from '@canvas/data/models/Question.v2';
+import { AuditLog } from '@canvas/data/models/AuditLog';
 import { deleteFromR2 } from '@/lib/r2Storage';
 import { v4 as uuidv4 } from 'uuid';
 import { createClient } from '@/app/utils/supabase/server';

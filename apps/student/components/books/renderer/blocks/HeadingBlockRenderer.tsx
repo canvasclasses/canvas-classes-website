@@ -1,4 +1,4 @@
-import { HeadingBlock } from '@/types/books';
+import { HeadingBlock } from '@canvas/data/types/books';
 
 const levelClasses: Record<1 | 2 | 3, string> = {
   1: 'text-2xl font-bold text-sky-300 mt-8 mb-3',

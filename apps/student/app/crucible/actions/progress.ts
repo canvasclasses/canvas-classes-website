@@ -1,7 +1,8 @@
 'use server';
 
-import connectToDatabase from '@/lib/mongodb';
-import { UserProgress, IQuestionAttempt } from '@/lib/models/UserProgress';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { UserProgress, IQuestionAttempt } from '@canvas/data/models/UserProgress';
+import { applyAttemptToProgress } from '@/lib/personaWriter';
 import { revalidatePath } from 'next/cache';
 
 // ============================================
@@ -95,7 +96,8 @@ export async function recordQuestionAttempt(
       attempted_at: new Date(),
     };
 
-    await progress.recordAttempt(questionAttempt);
+    applyAttemptToProgress(progress, questionAttempt);
+    await progress.save();
 
     revalidatePath('/crucible/dashboard');
     return { success: true };

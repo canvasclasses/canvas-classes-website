@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { unstable_cache } from 'next/cache';
-import connectToDatabase from '@/lib/mongodb';
-import { QuestionV2 } from '@/lib/models/Question.v2';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { QuestionV2 } from '@canvas/data/models/Question.v2';
 
 // PUBLIC: no auth required.
 //

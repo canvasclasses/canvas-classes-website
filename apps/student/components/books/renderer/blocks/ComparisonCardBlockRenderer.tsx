@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComparisonCardBlock } from '@/types/books';
+import { ComparisonCardBlock } from '@canvas/data/types/books';
 
 const COLUMN_COLORS: Record<string, { border: string; heading: string; dot: string }> = {
   blue:  { border: 'border-blue-500/30',    heading: 'text-blue-400',    dot: 'bg-blue-500'    },

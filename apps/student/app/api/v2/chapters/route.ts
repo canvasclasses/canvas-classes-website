@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
-import connectDB from '@/lib/mongodb';
-import { QuestionV2 } from '@/lib/models/Question.v2';
+import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
+import connectDB from '@canvas/data/db/mongodb';
+import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { unstable_cache } from 'next/cache';
 
 // Star-count aggregation is expensive and the result rarely changes (only

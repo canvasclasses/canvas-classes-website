@@ -6,17 +6,21 @@ import type {
   IConceptMastery,
   IQuestionAttempt,
   IUserProgress,
-} from '@/lib/models/UserProgress';
-import { getTagName } from '@/lib/taxonomyLookup';
+} from '@canvas/data/models/UserProgress';
+import { getTagName } from '@canvas/data/taxonomy/lookup';
 
 /**
  * Persona writer — the single mutation surface for the tiered persona pipeline.
  *
  * Every code path that records a student question attempt funnels through here:
  *
- *   - UserProgress.recordAttempt  (single-attempt instance method)
  *   - POST /api/v2/user/progress         (browse / single attempt)
  *   - POST /api/v2/user/progress/batch   (test mode, N attempts)
+ *   - recordQuestionAttempt server action (Crucible dashboard)
+ *
+ * Usage pattern at each call site:
+ *   applyAttemptToProgress(progress, attempt);
+ *   await progress.save();
  *
  * Before this module existed, the tiered counter contract (CRUCIBLE_ARCHITECTURE.md
  * §3.2 + §4.2) was re-implemented inline in each writer. That repetition broke

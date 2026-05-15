@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import connectToDatabase from '@/lib/mongodb';
-import { CareerPath } from '@/lib/models/CareerPath';
-import type { ICareerPath } from '@/lib/models/CareerPath';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { CareerPath } from '@canvas/data/models/CareerPath';
+import type { ICareerPath } from '@canvas/data/models/CareerPath';
 
 type CareerDoc = ICareerPath & { is_active?: boolean };
 

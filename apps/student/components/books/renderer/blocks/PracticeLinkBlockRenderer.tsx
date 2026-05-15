@@ -1,4 +1,4 @@
-import { PracticeLinkBlock } from '@/types/books';
+import { PracticeLinkBlock } from '@canvas/data/types/books';
 
 export default function PracticeLinkBlockRenderer({ block }: { block: PracticeLinkBlock }) {
   const href =

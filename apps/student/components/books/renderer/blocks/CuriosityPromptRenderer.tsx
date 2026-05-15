@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { CuriosityPromptBlock } from '@/types/books';
+import { CuriosityPromptBlock } from '@canvas/data/types/books';
 
 export default function CuriosityPromptRenderer({ block }: { block: CuriosityPromptBlock }) {
   const [revealed, setRevealed] = useState(false);

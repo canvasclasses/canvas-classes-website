@@ -9,7 +9,7 @@
  * Source of truth: lib/taxonomy/taxonomyData_from_csv.ts.
  */
 
-import { TAXONOMY_FROM_CSV, TaxonomyNode } from '@/lib/taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV, TaxonomyNode } from './taxonomyData_from_csv';
 
 const idToNode = new Map<string, TaxonomyNode>();
 for (const node of TAXONOMY_FROM_CSV) {

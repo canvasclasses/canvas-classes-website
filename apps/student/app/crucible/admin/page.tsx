@@ -6,7 +6,7 @@ import { Save, Plus, Filter, MonitorPlay, AlertTriangle, CheckSquare, Square, Ba
 // uuid removed — display_id is now generated inline
 import AnalyticsDashboard from './AnalyticsDashboard';
 import ExportDashboard from './components/ExportDashboard';
-import { TAXONOMY_FROM_CSV, type TaxonomyNode } from '@/lib/taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV, type TaxonomyNode } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 import { validateLaTeX, autoFixLatex, getLatexSuggestions, type LaTeXValidationResult } from '@/lib/latexValidator';
 import BulkImportModal from './components/BulkImportModal';
 import MathRenderer from '@/components/MathRenderer';

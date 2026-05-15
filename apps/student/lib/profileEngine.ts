@@ -10,8 +10,8 @@ import type {
   IDimensionBreakdown,
   ProficiencyLevel,
   DominantWeakness,
-} from '@/lib/models/StudentChapterProfile';
-import type { IStudentResponse, StuckPoint } from '@/lib/models/StudentResponse';
+} from '@canvas/data/models/StudentChapterProfile';
+import type { IStudentResponse, StuckPoint } from '@canvas/data/models/StudentResponse';
 
 // ── Proficiency transition rules ─────────────────────────────────────────────
 

@@ -1,5 +1,4 @@
-import mongoose, { Schema, HydratedDocument } from 'mongoose';
-import { applyAttemptToProgress } from '@/lib/personaWriter';
+import mongoose, { Schema } from 'mongoose';
 
 // ============================================
 // USER PROGRESS MODEL - Track practice sessions
@@ -324,16 +323,12 @@ UserProgressSchema.index({ 'test_sessions.chapter_id': 1 });
 // INSTANCE METHODS
 // ============================================
 
-// Mutation logic lives in `lib/personaWriter.applyAttemptToProgress` so the
-// tiered counter contract has exactly one home — see CRUCIBLE_ARCHITECTURE.md
-// §3.2. This method handles the persist; the batch route calls the same helper
-// in a loop and saves once at the end.
-UserProgressSchema.methods.recordAttempt = async function (
-  attempt: IQuestionAttempt
-) {
-  applyAttemptToProgress(this as HydratedDocument<IUserProgress>, attempt);
-  await this.save();
-};
+// Tiered counter mutation lives in `lib/personaWriter.applyAttemptToProgress`
+// (single home — see CRUCIBLE_ARCHITECTURE.md §3.2). Callers do:
+//   applyAttemptToProgress(progress, attempt);
+//   await progress.save();
+// No instance method wrapper here, so the data model doesn't depend on
+// persona code (avoids @canvas/data ↔ @canvas/persona cycle post-Phase-2).
 
 /**
  * Reclassifies every attempt in a browse session to a new confidence tier.

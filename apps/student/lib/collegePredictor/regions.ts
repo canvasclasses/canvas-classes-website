@@ -3,7 +3,7 @@
 // Single source of truth used by ingestion scripts, filters, and landing pages.
 // ============================================
 
-import type { CollegeRegion } from '@/lib/models/College';
+import type { CollegeRegion } from '@canvas/data/models/College';
 
 const REGION_BY_STATE: Record<string, CollegeRegion> = {
   // North

@@ -178,9 +178,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // /class-9/* for the same page.
     let bookPageEntries: MetadataRoute.Sitemap = [];
     try {
-        const connectToDatabase = (await import('@/lib/mongodb')).default;
-        const BookModel = (await import('@/lib/models/Book')).default;
-        const BookPageModel = (await import('@/lib/models/BookPage')).default;
+        const connectToDatabase = (await import('@canvas/data/db/mongodb')).default;
+        const BookModel = (await import('@canvas/data/models/Book')).default;
+        const BookPageModel = (await import('@canvas/data/models/BookPage')).default;
         await connectToDatabase();
 
         const books = await BookModel

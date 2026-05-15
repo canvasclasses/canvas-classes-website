@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { AnimationBlock } from '@/types/books';
+import { AnimationBlock } from '@canvas/data/types/books';
 
 const widthClass: Record<NonNullable<AnimationBlock['width']>, string> = {
   full: 'w-full',

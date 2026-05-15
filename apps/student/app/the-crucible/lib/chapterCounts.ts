@@ -9,8 +9,8 @@ import { unstable_cache } from 'next/cache';
 // are added/edited/deleted via the admin API.
 export const getExamBoardChapterCounts = unstable_cache(
     async () => {
-        const connectDB = (await import('@/lib/mongodb')).default;
-        const { QuestionV2 } = await import('@/lib/models/Question.v2');
+        const connectDB = (await import('@canvas/data/db/mongodb')).default;
+        const { QuestionV2 } = await import('@canvas/data/models/Question.v2');
         await connectDB();
 
         const [jeeStarCounts, jeeAllCounts, neetStarCounts, neetAllCounts] = await Promise.all([
@@ -68,7 +68,7 @@ export interface ChapterWithCounts {
 // /the-crucible/[chapterId]/page.tsx. Centralised so the two pages can never
 // drift out of agreement.
 export async function buildChaptersWithCounts(): Promise<ChapterWithCounts[]> {
-    const { TAXONOMY_FROM_CSV } = await import('@/lib/taxonomy/taxonomyData_from_csv');
+    const { TAXONOMY_FROM_CSV } = await import('@canvas/data/taxonomy/taxonomyData_from_csv');
 
     const baseChapters = TAXONOMY_FROM_CSV.filter(
         (node) => node.type === 'chapter' &&

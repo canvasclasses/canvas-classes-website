@@ -1,4 +1,4 @@
-import { TimelineBlock } from '@/types/books';
+import { TimelineBlock } from '@canvas/data/types/books';
 
 export default function TimelineBlockRenderer({ block }: { block: TimelineBlock }) {
   const isVertical = block.orientation === 'vertical';

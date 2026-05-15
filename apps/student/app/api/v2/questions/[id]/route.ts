@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import { revalidatePath, revalidateTag } from 'next/cache';
-import connectToDatabase from '@/lib/mongodb';
-import { QuestionV2 } from '@/lib/models/Question.v2';
-import { Chapter } from '@/lib/models/Chapter';
-import { AuditLog } from '@/lib/models/AuditLog';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { QuestionV2 } from '@canvas/data/models/Question.v2';
+import { Chapter } from '@canvas/data/models/Chapter';
+import { AuditLog } from '@canvas/data/models/AuditLog';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { canEditQuestion, canDeleteQuestion } from '@/lib/rbac';
 import { isLocalhostDev } from '@/lib/bookAuth';

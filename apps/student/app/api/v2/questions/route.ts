@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import { unstable_cache, revalidateTag } from 'next/cache';
-import connectToDatabase from '@/lib/mongodb';
-import { QuestionV2 } from '@/lib/models/Question.v2';
-import { AuditLog } from '@/lib/models/AuditLog';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { QuestionV2 } from '@canvas/data/models/Question.v2';
+import { AuditLog } from '@canvas/data/models/AuditLog';
 import { trackServer } from '@/lib/analytics/mixpanel.server';
-import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { getUserPermissions, getQuestionFilter, canEditQuestion, getSubjectFromChapterId } from '@/lib/rbac';
 import { isLocalhostDev } from '@/lib/bookAuth';
-import { QuestionSchema } from '@/lib/schemas/question';
-import { generateDisplayId, regenerateDisplayId } from '@/lib/questionIdGenerator';
+import { QuestionSchema } from '@canvas/data/schemas/question';
+import { generateDisplayId, regenerateDisplayId } from '@canvas/data/id-generator';
 import { createRateLimiter, getClientIp } from '@/lib/rateLimit';
 
 // Mongo projection: when excludeSolutions=true, skip the heavy solution fields.

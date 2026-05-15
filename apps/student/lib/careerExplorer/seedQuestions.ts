@@ -7,7 +7,7 @@
 // Import from the seed script (scripts/career-explorer/seed_questions.js) and
 // from the admin UI (reset-to-defaults action).
 
-import type { ICareerQuestion } from '@/lib/models/CareerQuestion';
+import type { ICareerQuestion } from '@canvas/data/models/CareerQuestion';
 
 type SeedQuestion = Omit<ICareerQuestion, 'created_at' | 'updated_at'>;
 

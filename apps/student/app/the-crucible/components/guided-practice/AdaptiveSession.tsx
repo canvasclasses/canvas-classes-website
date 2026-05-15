@@ -24,14 +24,14 @@ import {
   type NextQuestionDecision,
   type AdaptiveEngineInputV2,
 } from '@/app/the-crucible/lib/adaptiveEngine';
-import type { IStudentChapterProfile } from '@/lib/models/StudentChapterProfile';
+import type { IStudentChapterProfile } from '@canvas/data/models/StudentChapterProfile';
 import {
   SESSION_PHASE_DIAGNOSTIC,
   SESSION_PHASE_PRACTICE,
   SESSION_PHASE_COMPLETE,
   SESSION_MAX_QUESTIONS,
 } from '@/constants/adaptivePractice';
-import type { StuckPoint } from '@/lib/models/StudentResponse';
+import type { StuckPoint } from '@canvas/data/models/StudentResponse';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 

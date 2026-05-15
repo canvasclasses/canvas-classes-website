@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import Image from 'next/image';
-import { InteractiveImageBlock, Hotspot } from '@/types/books';
+import { InteractiveImageBlock, Hotspot } from '@canvas/data/types/books';
 import ReactMarkdown from 'react-markdown';
 
 const iconShape: Record<NonNullable<Hotspot['icon']>, string> = {

@@ -1,6 +1,6 @@
 'use client';
 
-import { TimelineBlock, TimelineEvent } from '@/types/books';
+import { TimelineBlock, TimelineEvent } from '@canvas/data/types/books';
 import { Plus, Trash2 } from 'lucide-react';
 
 interface Props { block: TimelineBlock; onChange: (p: Partial<TimelineBlock>) => void; }

@@ -1,4 +1,4 @@
-import type { ICareerPath } from '@/lib/models/CareerPath';
+import type { ICareerPath } from '@canvas/data/models/CareerPath';
 
 /** Minimal career shape used by the browse grid. */
 export interface BrowseCareer {

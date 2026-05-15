@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Plus } from 'lucide-react';
-import { BlockType } from '@/types/books';
+import { BlockType } from '@canvas/data/types/books';
 
 const BLOCK_GROUPS: { label: string; blocks: { type: BlockType; icon: string; label: string }[] }[] = [
   {

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getUserIdFromRequest } from '@/lib/auth';
-import connectToDatabase from '@/lib/mongodb';
-import { UserProgress } from '@/lib/models/UserProgress';
-import { QuestionV2 } from '@/lib/models/Question.v2';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { UserProgress } from '@canvas/data/models/UserProgress';
+import { QuestionV2 } from '@canvas/data/models/Question.v2';
 
 interface StarredEntry {
     question_id: string;

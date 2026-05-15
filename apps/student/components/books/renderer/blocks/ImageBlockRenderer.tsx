@@ -11,7 +11,7 @@ import rehypeRaw from 'rehype-raw';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
 import type { Components } from 'react-markdown';
-import { ImageBlock } from '@/types/books';
+import { ImageBlock } from '@canvas/data/types/books';
 
 // ── Width presets when the block sits on its own row ──
 const fullRowWidthClass: Record<NonNullable<ImageBlock['width']>, string> = {

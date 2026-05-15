@@ -3,8 +3,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import connectToDatabase from '@/lib/mongodb';
-import { CareerPath } from '@/lib/models/CareerPath';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { CareerPath } from '@canvas/data/models/CareerPath';
 import { requireAdminUser, errorResponse, rateLimit, requestIp } from '../_shared';
 
 export async function GET(request: NextRequest) {

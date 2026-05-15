@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import { BlogPost } from '@/lib/models/BlogPost';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { BlogPost } from '@canvas/data/models/BlogPost';
 import { hasScriptSecret } from '@/lib/auth';
 import { isLocalhostDev } from '@/lib/bookAuth';
 

@@ -4,8 +4,8 @@
 // without forcing signup first.
 
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import { CareerProfile } from '@/lib/models/CareerProfile';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { CareerProfile } from '@canvas/data/models/CareerProfile';
 import { getAuthenticatedUser, isAdmin } from '@/lib/auth';
 import { errorResponse } from '../../_shared';
 

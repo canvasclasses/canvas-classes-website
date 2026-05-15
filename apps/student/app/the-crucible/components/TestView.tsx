@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight, Bookmark, Check, Timer, X, MonitorPlay, Volu
 import { Question } from './types';
 import MathRenderer from '@/components/MathRenderer';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
-import { getTagName, getChapterCategory } from '@/lib/taxonomyLookup';
+import { getTagName, getChapterCategory } from '@canvas/data/taxonomy/lookup';
 import { isAnswerCorrect } from '@/lib/questionScoring';
 import { track } from '@/lib/analytics/mixpanel';
 import TestSaveModal from './TestSaveModal';

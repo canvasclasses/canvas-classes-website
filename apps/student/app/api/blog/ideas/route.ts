@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
-import connectToDatabase from '@/lib/mongodb';
-import { BlogIdea, type BlogIdeaStatus } from '@/lib/models/BlogIdea';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { BlogIdea, type BlogIdeaStatus } from '@canvas/data/models/BlogIdea';
 import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
 import { isLocalhostDev } from '@/lib/bookAuth';
 

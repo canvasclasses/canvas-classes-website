@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { Upload, Trash2, Plus } from 'lucide-react';
-import { InteractiveImageBlock, Hotspot } from '@/types/books';
+import { InteractiveImageBlock, Hotspot } from '@canvas/data/types/books';
 import { UploadFn } from '../BookWorkspace';
 
 interface Props {

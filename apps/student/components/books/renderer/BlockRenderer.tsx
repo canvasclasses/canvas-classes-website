@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { ContentBlock } from '@/types/books';
+import { ContentBlock } from '@canvas/data/types/books';
 
 // These three are on virtually every page and cheap to hydrate — keep them
 // in the main bundle so first paint doesn't wait on a chunk fetch.

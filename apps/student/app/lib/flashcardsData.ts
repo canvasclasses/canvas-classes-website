@@ -5,8 +5,8 @@
  * the same interface for backward compatibility with existing UI components.
  */
 
-import connectToDatabase from '@/lib/mongodb';
-import Flashcard, { IFlashcard } from '@/lib/models/Flashcard';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import Flashcard, { IFlashcard } from '@canvas/data/models/Flashcard';
 
 export interface FlashcardItem {
   id: string;

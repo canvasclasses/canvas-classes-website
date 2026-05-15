@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import FlashcardProgress, { IFlashcardMetadata } from '@/lib/models/FlashcardProgress';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import FlashcardProgress, { IFlashcardMetadata } from '@canvas/data/models/FlashcardProgress';
 import { getAuthenticatedUser } from '@/lib/auth';
 
 const MAX_RETRIES = 3;

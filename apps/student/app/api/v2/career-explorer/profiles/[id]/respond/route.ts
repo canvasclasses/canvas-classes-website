@@ -4,13 +4,13 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import connectToDatabase from '@/lib/mongodb';
-import { CareerProfile } from '@/lib/models/CareerProfile';
-import { CareerQuestion } from '@/lib/models/CareerQuestion';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { CareerProfile } from '@canvas/data/models/CareerProfile';
+import { CareerQuestion } from '@canvas/data/models/CareerQuestion';
 import { getAuthenticatedUser, isAdmin } from '@/lib/auth';
 import { errorResponse, rateLimit, requestIp } from '../../../_shared';
 import { applyResponse } from '@/lib/careerExplorer/applyResponse';
-import type { ICareerQuestion } from '@/lib/models/CareerQuestion';
+import type { ICareerQuestion } from '@canvas/data/models/CareerQuestion';
 
 const RespondSchema = z.object({
   question_id: z.string().min(1).max(64),

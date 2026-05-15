@@ -3,8 +3,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import connectToDatabase from '@/lib/mongodb';
-import { CareerMatch } from '@/lib/models/CareerMatch';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { CareerMatch } from '@canvas/data/models/CareerMatch';
 import { requireAdminUser, errorResponse } from '../../../_shared';
 
 const OverrideSchema = z.object({

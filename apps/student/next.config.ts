@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   // so they never write to the primary .next directory and corrupt the main dev server.
   distDir: process.env.NEXT_DIST_DIR ?? '.next',
 
+  // Workspace packages are consumed as TS source; Next must compile them.
+  transpilePackages: ['@canvas/data'],
+
   // SECURITY FIX: Request body size limits to prevent DoS
   experimental: {
     serverActions: {

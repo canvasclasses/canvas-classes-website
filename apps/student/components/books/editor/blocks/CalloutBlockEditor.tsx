@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { Upload } from 'lucide-react';
-import { CalloutBlock, CalloutVariant } from '@/types/books';
+import { CalloutBlock, CalloutVariant } from '@canvas/data/types/books';
 import { UploadFn } from '../BookWorkspace';
 
 const VARIANTS: { value: CalloutVariant; label: string; icon: string }[] = [

@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { Upload } from 'lucide-react';
-import { VideoBlock } from '@/types/books';
+import { VideoBlock } from '@canvas/data/types/books';
 import { UploadFn } from '../BookWorkspace';
 
 interface Props { block: VideoBlock; onChange: (p: Partial<VideoBlock>) => void; onUpload: UploadFn; }

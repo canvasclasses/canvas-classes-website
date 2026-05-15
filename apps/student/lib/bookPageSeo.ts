@@ -20,7 +20,7 @@
  */
 
 import type { Metadata } from 'next';
-import type { Book, BookPage, ContentBlock, TextBlock } from '@/types/books';
+import type { Book, BookPage, ContentBlock, TextBlock } from '@canvas/data/types/books';
 
 export const SITE_URL = 'https://www.canvasclasses.in';
 

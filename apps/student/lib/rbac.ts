@@ -8,9 +8,9 @@
  * 4. Audit trail - log all permission checks
  */
 
-import { UserRole, type Subject, type RoleType, type IUserRole } from './models/UserRole';
-import connectToDatabase from './mongodb';
-import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
+import { UserRole, type Subject, type RoleType, type IUserRole } from '@canvas/data/models/UserRole';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 
 export interface UserPermissions {
   email: string;

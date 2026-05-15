@@ -5,7 +5,7 @@ import StatsCard from './components/StatsCard';
 import ChapterBreakdown from './components/ChapterBreakdown';
 import RecentTests from './components/RecentTests';
 import { calculateAnalytics } from './utils/calculateAnalytics';
-import { ITestResult } from '@/lib/models/TestResult';
+import { ITestResult } from '@canvas/data/models/TestResult';
 
 interface TestResultDoc {
   _id?: string;

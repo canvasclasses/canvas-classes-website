@@ -1,6 +1,6 @@
 'use client';
 
-import { HeadingBlock } from '@/types/books';
+import { HeadingBlock } from '@canvas/data/types/books';
 
 interface Props { block: HeadingBlock; onChange: (p: Partial<HeadingBlock>) => void; }
 

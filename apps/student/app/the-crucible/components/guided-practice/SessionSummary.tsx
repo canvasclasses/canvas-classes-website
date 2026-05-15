@@ -9,7 +9,7 @@ import { ChevronRight, RefreshCw, BookOpen, TrendingUp, AlertCircle } from 'luci
 import SessionReflection from './SessionReflection';
 import type { MicroFeedback, ConceptLevel, UserConceptProfile } from '@/app/the-crucible/lib/adaptiveEngine';
 import { updateConceptLevel } from '@/app/the-crucible/lib/adaptiveEngine';
-import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 
 interface ReflectionAnswer {
   confidence: 'very-confident' | 'somewhat-confident' | 'not-confident' | null;

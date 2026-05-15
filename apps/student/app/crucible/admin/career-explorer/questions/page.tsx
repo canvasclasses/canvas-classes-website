@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { requireAdmin } from '@/lib/bookAuth';
-import connectToDatabase from '@/lib/mongodb';
-import { CareerQuestion } from '@/lib/models/CareerQuestion';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { CareerQuestion } from '@canvas/data/models/CareerQuestion';
 
 export const dynamic = 'force-dynamic';
 

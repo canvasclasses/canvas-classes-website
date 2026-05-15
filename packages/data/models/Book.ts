@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
-import { Book, BookChapter } from '@/types/books';
+import { Book, BookChapter } from '../types/books';
 
 export type IBook = Omit<Document, '_id'> & { _id: string } & Omit<Book, '_id'>;
 

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getUserIdFromRequest } from '@/lib/auth';
-import connectToDatabase from '@/lib/mongodb';
-import { UserProgress } from '@/lib/models/UserProgress';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { UserProgress } from '@canvas/data/models/UserProgress';
 import { trackServer } from '@/lib/analytics/mixpanel.server';
 
 // ─── POST /api/v2/user/test-session ──────────────────────────────────────────

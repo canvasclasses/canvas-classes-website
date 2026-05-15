@@ -4,7 +4,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getUserIdFromRequest } from '@/lib/auth';
-import connectToDatabase from '@/lib/mongodb';
+import connectToDatabase from '@canvas/data/db/mongodb';
 import mongoose from 'mongoose';
 
 export async function POST(req: NextRequest) {

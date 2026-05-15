@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/mongodb';
-import BookProgressModel from '@/lib/models/BookProgress';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import BookProgressModel from '@canvas/data/models/BookProgress';
 import { getUserIdFromRequest } from '@/lib/auth';
 
 // Per-user data — never cache on shared caches (CDN, Next.js data cache).

@@ -1,5 +1,5 @@
 import { AlertCircle, AlertTriangle, Check, Sparkles, Star, Bookmark, Trash2 } from 'lucide-react';
-import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 import { type AdminQuestion as Question, type AdminChapter as Chapter, QUESTION_TYPES } from '../types';
 import AITagSuggestionsBox from './AITagSuggestionsBox';
 

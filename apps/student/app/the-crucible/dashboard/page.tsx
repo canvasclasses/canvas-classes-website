@@ -1,9 +1,9 @@
 import { createClient } from '@/app/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import DashboardClient from './DashboardClient';
-import connectToDatabase from '@/lib/mongodb';
-import TestResult from '@/lib/models/TestResult';
-import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import TestResult from '@canvas/data/models/TestResult';
+import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 
 export const metadata = {
   title: 'Test Dashboard - Canvas Chemistry',

@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, useMemo, useState, useEffect, useCallback } from 'react';
-import { BookPage, ContentBlock, TextBlock } from '@/types/books';
+import { BookPage, ContentBlock, TextBlock } from '@canvas/data/types/books';
 import BlockRenderer from './BlockRenderer';
 
 // Callout variants that float to the margin sidebar on desktop.

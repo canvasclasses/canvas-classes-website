@@ -1,6 +1,6 @@
 'use client';
 
-import { CuriosityPromptBlock } from '@/types/books';
+import { CuriosityPromptBlock } from '@canvas/data/types/books';
 
 interface Props {
   block: CuriosityPromptBlock;

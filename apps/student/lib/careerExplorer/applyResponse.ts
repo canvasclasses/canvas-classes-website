@@ -2,13 +2,13 @@
 // document in-place. Kept pure so both the API route and the seed/test
 // scripts can use it.
 
-import type { ICareerQuestion } from '@/lib/models/CareerQuestion';
+import type { ICareerQuestion } from '@canvas/data/models/CareerQuestion';
 import type {
   ICareerProfile,
   ICareerProfileScores,
   ICareerProfileConstraints,
   IProfileResponse,
-} from '@/lib/models/CareerProfile';
+} from '@canvas/data/models/CareerProfile';
 import { EMPTY_SCORES } from './facets';
 
 type ScoreDim = keyof ICareerProfileScores;

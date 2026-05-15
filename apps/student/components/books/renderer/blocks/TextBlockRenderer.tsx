@@ -8,7 +8,7 @@ import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
-import { TextBlock } from '@/types/books';
+import { TextBlock } from '@canvas/data/types/books';
 import type { Components } from 'react-markdown';
 
 /**

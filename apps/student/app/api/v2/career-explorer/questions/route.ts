@@ -4,8 +4,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import connectToDatabase from '@/lib/mongodb';
-import { CareerQuestion } from '@/lib/models/CareerQuestion';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { CareerQuestion } from '@canvas/data/models/CareerQuestion';
 import { requireAdminUser, errorResponse, rateLimit, requestIp } from '../_shared';
 
 export async function GET(request: NextRequest) {

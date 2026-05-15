@@ -41,7 +41,7 @@
  *     URL, reason). UI never reaches back into the engine for context.
  */
 
-import type { ResourceType } from '@/lib/models/ResourceLink';
+import type { ResourceType } from '@canvas/data/models/ResourceLink';
 
 // ── Public types — these are the API contract the UI depends on. ─────────
 

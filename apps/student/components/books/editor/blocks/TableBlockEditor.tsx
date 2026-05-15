@@ -1,6 +1,6 @@
 'use client';
 
-import { TableBlock } from '@/types/books';
+import { TableBlock } from '@canvas/data/types/books';
 import { Plus, Trash2 } from 'lucide-react';
 
 interface Props { block: TableBlock; onChange: (p: Partial<TableBlock>) => void; }

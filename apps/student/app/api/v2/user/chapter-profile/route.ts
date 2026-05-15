@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getUserIdFromRequest } from '@/lib/auth';
-import connectToDatabase from '@/lib/mongodb';
-import { StudentChapterProfile, IStudentChapterProfile } from '@/lib/models/StudentChapterProfile';
-import { StudentResponse } from '@/lib/models/StudentResponse';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { StudentChapterProfile, IStudentChapterProfile } from '@canvas/data/models/StudentChapterProfile';
+import { StudentResponse } from '@canvas/data/models/StudentResponse';
 import { updateProfileFromResponse, createEmptyProfile } from '@/lib/profileEngine';
 
 // ─── GET /api/v2/user/chapter-profile?chapterId=xxx ──────────────────────────
