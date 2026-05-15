@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { localDateString } from '../lib/spacedRepetition';
-import { createClient } from '../utils/supabase/client';
+import { createClient } from '@/app/utils/supabase/client';
 
 const STREAK_KEY = 'canvas_flashcard_streak';
 const LAST_CHAPTER_KEY = 'canvas_flashcard_last_chapter';

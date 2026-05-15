@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getChapterCards, getChapterSummaries } from '@/app/lib/flashcardsData';
+import { getChapterCards, getChapterSummaries } from '@/features/flashcards/lib/flashcardsData';
 
 // PUBLIC: no auth required — flashcard content is public study material.
 // Lazy-loaded by the client when a user selects a chapter to practice.

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getChapterSummaries } from '../../lib/flashcardsData';
-import FlashcardsChapterClient from './FlashcardsChapterClient';
+import { getChapterSummaries } from '@/features/flashcards/lib/flashcardsData';
+import FlashcardsChapterClient from '@/features/flashcards/components/FlashcardsChapterClient';
 
 export const revalidate = 86400;
 

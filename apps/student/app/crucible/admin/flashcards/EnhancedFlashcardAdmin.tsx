@@ -13,8 +13,8 @@ import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import SVGDropZone from '../components/SVGDropZone';
 import FlashcardImageScaleControls from '../components/FlashcardImageScaleControls';
-import { flashcardMarkdownComponents } from '@/app/lib/flashcardMarkdown';
-import { getCategoryNames, getFlashcardChaptersByCategory } from '@/lib/flashcardTaxonomy';
+import { flashcardMarkdownComponents } from '@/features/flashcards/lib/flashcardMarkdown';
+import { getCategoryNames, getFlashcardChaptersByCategory } from '@/features/flashcards/lib/flashcardTaxonomy';
 
 interface Flashcard {
   _id: string;

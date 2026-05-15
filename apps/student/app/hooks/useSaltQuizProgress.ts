@@ -9,7 +9,7 @@ import {
     isCardDue,
     getMasteryLevel,
     MasteryLevel
-} from '../lib/spacedRepetition';
+} from '@/features/flashcards/lib/spacedRepetition';
 import { syncProgressWithCloud, saveProgressItemToCloud } from '../utils/progressSync';
 
 // Separate storage keys for MCQs and Flashcards

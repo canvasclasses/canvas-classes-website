@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { flushPendingWrites } from '../utils/progressSync';
+import { flushPendingWrites } from '@/app/utils/progressSync';
 
 /**
  * Registers the flashcards service worker once on mount and listens for

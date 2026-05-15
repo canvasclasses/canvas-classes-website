@@ -14,7 +14,7 @@ import 'katex/dist/katex.min.css';
 
 import { AssertionReasonQuestion, groupByChapter, ChapterGroup, shuffleArray } from '../lib/assertionReasonData';
 import { useAssertionProgress } from '../hooks/useAssertionProgress';
-import { QualityRating } from '../lib/spacedRepetition';
+import { QualityRating } from '@/features/flashcards/lib/spacedRepetition';
 
 type Phase = 'assertion' | 'reason' | 'link' | 'result';
 type PracticeMode = 'due' | 'all';

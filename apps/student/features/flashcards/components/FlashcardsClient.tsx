@@ -32,15 +32,15 @@ import {
     ArrowUpDown
 } from 'lucide-react';
 import { FlashcardItem, ChapterSummary, ChapterTopic } from '../lib/flashcardsData';
-import { useCardProgress } from '../hooks/useCardProgress';
+import { useCardProgress } from '@/app/hooks/useCardProgress';
 import { useFlashcardMeta } from '../hooks/useFlashcardMeta';
-import { flushPendingWrites } from '../utils/progressSync';
+import { flushPendingWrites } from '@/app/utils/progressSync';
 import { QualityRating } from '../lib/spacedRepetition';
 import SyncStatusBanner from './SyncStatusBanner';
 import RegisterServiceWorker from './RegisterServiceWorker';
 import StudyHeatmap from './StudyHeatmap';
 import ReactMarkdown from 'react-markdown';
-import { flashcardMarkdownComponents } from '@/app/lib/flashcardMarkdown';
+import { flashcardMarkdownComponents } from '@/features/flashcards/lib/flashcardMarkdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';

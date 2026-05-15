@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { ImageIcon, RotateCcw } from 'lucide-react';
-import { findImages, setImageWidthInText } from '@/app/lib/flashcardMarkdown';
+import { findImages, setImageWidthInText } from '@/features/flashcards/lib/flashcardMarkdown';
 
 interface Props {
   label?: string;

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { createClient } from '../utils/supabase/client';
+import { createClient } from '@/app/utils/supabase/client';
 import { NEW_CARDS_PER_DAY, REVIEW_CARDS_PER_DAY } from '../lib/spacedRepetition';
 
 const STORAGE_KEY = 'canvas_flashcard_settings';
