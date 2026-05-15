@@ -71,7 +71,7 @@ Manual one-time action remaining: **Vercel Project Settings → Root Directory =
 ---
 
 ### Phase 1 — Extract `@canvas/data`  ✅ DONE
-**Commit:** _(filled in by this commit)_  (2026-05-15)
+**Commit:** `107b0ef` (2026-05-15)
 **Goal:** Move the data layer (models, db connection, schemas, taxonomy, id-generator, difficulty utils, shared types) out of `apps/student/lib/` and `apps/student/types/` into `packages/data/`.
 
 **What landed:**
