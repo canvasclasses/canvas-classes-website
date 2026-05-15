@@ -195,7 +195,7 @@ const jsonLd = {
   }
 };
 
-import { AuthButton } from "./components/AuthButton";
+import { AuthButton } from "@/features/auth/components/AuthButton";
 import { ConditionalFooter } from "./components/ConditionalFooter";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import CloudflareAnalytics from "./components/CloudflareAnalytics";
