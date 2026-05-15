@@ -9,7 +9,7 @@ import connectToDatabase from '@canvas/data/db/mongodb';
 import { CareerProfile } from '@canvas/data/models/CareerProfile';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { errorResponse, rateLimit, requestIp } from '../_shared';
-import { EMPTY_SCORES } from '@/lib/careerExplorer/facets';
+import { EMPTY_SCORES } from '@/features/career-explorer/lib/facets';
 
 const CreateSchema = z.object({
   name: z.string().max(80).optional(),

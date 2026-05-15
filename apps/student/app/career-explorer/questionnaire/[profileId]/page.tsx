@@ -1,4 +1,4 @@
-import QuestionnaireClient from './QuestionnaireClient';
+import QuestionnaireClient from '@/features/career-explorer/components/QuestionnaireClient';
 
 export const dynamic = 'force-dynamic';
 

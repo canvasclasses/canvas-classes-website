@@ -9,7 +9,7 @@ import { CareerProfile } from '@canvas/data/models/CareerProfile';
 import { CareerQuestion } from '@canvas/data/models/CareerQuestion';
 import { getAuthenticatedUser, isAdmin } from '@/lib/auth';
 import { errorResponse, rateLimit, requestIp } from '../../../_shared';
-import { applyResponse } from '@/lib/careerExplorer/applyResponse';
+import { applyResponse } from '@/features/career-explorer/lib/applyResponse';
 import type { ICareerQuestion } from '@canvas/data/models/CareerQuestion';
 
 const RespondSchema = z.object({

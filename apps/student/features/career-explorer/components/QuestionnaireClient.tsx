@@ -6,7 +6,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
 import {
   DIMENSION_LABELS,
   DIMENSION_ORDER,
-} from '@/lib/careerExplorer/seedQuestions';
+} from '@/features/career-explorer/lib/seedQuestions';
 
 type Dimension = keyof typeof DIMENSION_LABELS;
 

@@ -6,7 +6,7 @@ import { CareerMatch } from '@canvas/data/models/CareerMatch';
 import { CareerPath } from '@canvas/data/models/CareerPath';
 import type { ICareerProfile } from '@canvas/data/models/CareerProfile';
 import type { ICareerPath } from '@canvas/data/models/CareerPath';
-import VisionClient, { type VisionSeed } from './VisionClient';
+import VisionClient, { type VisionSeed } from '@/features/career-explorer/components/VisionClient';
 
 export const metadata: Metadata = {
   title: 'Your Vision of the Future — Career Explorer | Canvas Classes',

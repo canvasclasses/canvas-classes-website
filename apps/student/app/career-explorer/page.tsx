@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import LandingClient from './LandingClient';
+import LandingClient from '@/features/career-explorer/components/LandingClient';
 
 export const metadata: Metadata = {
   title: 'Career Explorer — Find Careers That Actually Fit You | Canvas Classes',

@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { BookOpen, Layers, Leaf, Sparkles, TrendingUp } from 'lucide-react';
-import type { BrowseCareer } from './types';
+import type { BrowseCareer } from '../types';
 
 type Tab = 'family' | 'subject' | 'sector';
 

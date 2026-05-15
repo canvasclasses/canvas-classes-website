@@ -9,7 +9,7 @@ import { CareerPath } from '@canvas/data/models/CareerPath';
 import { CareerMatch } from '@canvas/data/models/CareerMatch';
 import { getAuthenticatedUser, isAdmin } from '@/lib/auth';
 import { errorResponse, rateLimit, requestIp } from '../../../_shared';
-import { scoreMatches } from '@/lib/careerExplorer/scoring';
+import { scoreMatches } from '@/features/career-explorer/lib/scoring';
 import type { ICareerProfile } from '@canvas/data/models/CareerProfile';
 import type { ICareerPath } from '@canvas/data/models/CareerPath';
 

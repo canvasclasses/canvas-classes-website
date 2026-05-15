@@ -3,8 +3,8 @@ import Link from 'next/link';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { CareerPath } from '@canvas/data/models/CareerPath';
 import type { ICareerPath } from '@canvas/data/models/CareerPath';
-import BrowseClient from './BrowseClient';
-import type { BrowseCareer } from './types';
+import BrowseClient from '@/features/career-explorer/components/BrowseClient';
+import type { BrowseCareer } from '@/features/career-explorer/types';
 
 export const metadata: Metadata = {
   title: 'Browse All Careers — Career Explorer | Canvas Classes',

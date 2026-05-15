@@ -1,4 +1,4 @@
-import ResultsClient from './ResultsClient';
+import ResultsClient from '@/features/career-explorer/components/ResultsClient';
 
 export const dynamic = 'force-dynamic';
 
