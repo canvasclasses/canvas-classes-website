@@ -2,14 +2,14 @@
 
 import { useState, useEffect, useRef, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Save, AlertCircle, Check, Trash2, Plus, Star, Filter, MonitorPlay, AlertTriangle, BookOpen, Eye, Sparkles, CheckSquare, Square, BarChart3, FileDown, Smartphone, Monitor, LayoutGrid, LayoutList, FileJson, Wand2, Library, Info, Volume2, ChevronDown, ChevronUp, Shield, Bookmark } from 'lucide-react';
+import { Save, Plus, Filter, MonitorPlay, AlertTriangle, CheckSquare, Square, BarChart3, FileDown, FileJson, Wand2, Library, Info, Shield } from 'lucide-react';
 // uuid removed — display_id is now generated inline
 import AnalyticsDashboard from './AnalyticsDashboard';
 import ExportDashboard from './components/ExportDashboard';
-import { TAXONOMY_FROM_CSV, type TaxonomyNode } from './taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV, type TaxonomyNode } from '@/lib/taxonomy/taxonomyData_from_csv';
 import { validateLaTeX, autoFixLatex, getLatexSuggestions, type LaTeXValidationResult } from '@/lib/latexValidator';
 import BulkImportModal from './components/BulkImportModal';
-import MathRenderer from './components/MathRenderer';
+import MathRenderer from '@/components/MathRenderer';
 import AudioRecorder from './components/AudioRecorder';
 import AudioPlayer from './components/AudioPlayer';
 import SVGScaleControls from './components/SVGScaleControls';
@@ -18,118 +18,51 @@ import VideoDropZone from './components/VideoDropZone';
 import RoleManagement from './components/RoleManagement';
 import MockTestsAdmin from './components/MockTestsAdmin';
 import FlagsDashboard from './components/FlagsDashboard';
+import FlagModal, { type FlagSubmission } from './components/FlagModal';
+import AdminSectionTabs, { type AdminSection } from './components/AdminSectionTabs';
+import AdminFilterRow from './components/AdminFilterRow';
+import AITagSuggestionsBox from './components/AITagSuggestionsBox';
+import QuestionPreviewPane from './components/QuestionPreviewPane';
+import QuestionTaggingRow from './components/QuestionTaggingRow';
 import { usePermissions } from './hooks/usePermissions';
+import { useAdminKeyNav } from './hooks/useAdminKeyNav';
+import { useAdminFilterUrlSync } from './hooks/useAdminFilterUrlSync';
+import { type AdminQuestion as Question, type AdminChapter as Chapter, QUESTION_TYPES } from './types';
 
 const VALID_TOPIC_IDS = new Set(TAXONOMY_FROM_CSV.filter(t => t.type === 'topic').map(t => t.id));
 const isTagValid = (tags: Array<{ tag_id: string }> | undefined | null): tags is Array<{ tag_id: string }> => {
     return !!(tags && tags.length > 0 && typeof tags[0] === 'object' && !!tags[0].tag_id && VALID_TOPIC_IDS.has(tags[0].tag_id));
 };
 
-// Types
-interface Question {
-    _id: string;
-    display_id: string;
-    question_text: {
-        markdown: string;
-        latex_validated: boolean;
-    };
-    type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ' | 'WKEX';
-    options: Array<{
-        id: string;
-        text: string;
-        is_correct: boolean;
-        asset_ids?: string[];
-    }>;
-    answer?: {
-        integer_value?: number;
-        decimal_value?: number;
-        unit?: string;
-    };
-    solution: {
-        text_markdown: string;
-        latex_validated: boolean;
-        video_url?: string;
-        asset_ids?: {
-            images?: string[];
-            svg?: string[];
-            audio?: string[];
-        };
-    };
-    metadata: {
-        difficultyLevel: 1 | 2 | 3 | 4 | 5;
-        chapter_id: string;
-        tags: Array<{
-            tag_id: string;
-            weight: number;
-        }>;
-        exam_source?: {
-            exam: string;
-            year?: number;
-            month?: string;
-            day?: number;
-            shift?: string;
-        };
-        is_pyq?: boolean;        // LEGACY — Phase 2 stopped writing this; bridge in actions.ts derives it from sourceType
-        is_top_pyq?: boolean;    // KEEP — drives Top Questions feature
-        is_demo_question?: boolean;  // KEEP — drives the side-by-side practice panel on /handwritten-notes/[chapter]
-        source_id?: string;
-        microConcept?: string;
-        isMultiConcept?: boolean;
-        questionNature?: 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis';
-        // NEW: 3-Tier Exam Taxonomy
-        applicableExams?: Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'>;
-        examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
-        sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
-        examDetails?: {
-            exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG';
-            year?: number;
-            month?: string;
-            phase?: string;
-            shift?: string;
-            paper?: string;
-            question_number?: string;
-        };
-    };
-    status: 'draft' | 'review' | 'published' | 'archived';
-    quality_score: number;
-    version: number;
-    created_at: string;
-    updated_at: string;
-    svg_scales?: Record<string, number>;
-    flags?: Array<{
-        type: 'latex_error' | 'table_error' | 'mismatch' | 'solution_incorrect' | 'other';
-        note: string;
-        flagged_at: string;
-        resolved: boolean;
-    }>;
-}
-
-interface Chapter {
-    _id: string;
-    name: string;
-    display_order: number;
-    stats: {
-        total_questions: number;
-    };
-}
-
-const QUESTION_TYPES = [
-    { id: 'SCQ', name: 'Single Correct', color: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' },
-    { id: 'MCQ', name: 'Multi Correct', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30' },
-    { id: 'NVT', name: 'Numerical', color: 'bg-purple-500/20 text-purple-400 border-purple-500/30' },
-    { id: 'AR', name: 'Assertion-Reason', color: 'bg-orange-500/20 text-orange-400 border-orange-500/30' },
-    { id: 'MST', name: 'Multi-Statement', color: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30' },
-    { id: 'MTC', name: 'Match Column', color: 'bg-pink-500/20 text-pink-400 border-pink-500/30' },
-    { id: 'SUBJ', name: 'Subjective / Example', color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' },
-    { id: 'WKEX', name: 'Worked Example', color: 'bg-teal-500/20 text-teal-400 border-teal-500/30' },
-];
-
+// ─────────────────────────────────────────────────────────────────────────────
+// FILE STRUCTURE — grep for `§N` anchors below to jump to each section.
+//
+//   §1 STATE          Centralized useState block (50+ filters / UI states)
+//   §2 EFFECTS        URL sync (useAdminFilterUrlSync), key nav (useAdminKeyNav),
+//                     scale debounce, mount-time data load
+//   §3 LOADERS        loadData, loadQuestions, buildQueryParams
+//   §4 CRUD           handleAddQuestion / Delete / Update / Reclassify /
+//                     BulkTagAssignment / AITagSuggestion / SVGUploaded
+//   §5 TOP_BAR        Section tabs, search, prev/next, chapter/type selectors,
+//                     pagination, filter row
+//   §6 SECTION_BODY   Conditional on adminSection: mock-tests | flags |
+//                     practice (the practice path is the metadata editor +
+//                     side-by-side text editor / live preview)
+//   §7 MODALS         Analytics, BulkImport, Export, RoleManagement, FlagModal
+//
+// Companion files (already extracted):
+//   - ./hooks/useAdminKeyNav.ts          — arrow-key prev/next
+//   - ./hooks/useAdminFilterUrlSync.ts   — filters ↔ URL search params
+//   - ./hooks/usePermissions.ts          — RBAC check
+//   - ./types.ts                         — AdminQuestion, AdminChapter, QUESTION_TYPES
+// ─────────────────────────────────────────────────────────────────────────────
 function AdminPageContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
+    // §1 STATE ───────────────────────────────────────────────────────────────
     // Top-level section: 'practice' | 'mock-tests' | 'flags'
-    const [adminSection, setAdminSection] = useState<'practice' | 'mock-tests' | 'flags'>('practice');
+    const [adminSection, setAdminSection] = useState<AdminSection>('practice');
 
     const [questions, setQuestions] = useState<Question[]>([]);
     const [chapters, setChapters] = useState<Chapter[]>([]);
@@ -199,10 +132,8 @@ function AdminPageContent() {
     // Get chapter-specific tags from taxonomy
     const [availableTags, setAvailableTags] = useState<Array<{ id: string, name: string }>>([]);
 
-    // Flag state
+    // Flag state — only the visibility lives here; the modal owns reason/note.
     const [flagModalOpen, setFlagModalOpen] = useState(false);
-    const [flagReason, setFlagReason] = useState('latex_error');
-    const [flagNote, setFlagNote] = useState('');
 
     // Audio recording state
     const [isRecording, setIsRecording] = useState(false);
@@ -216,6 +147,7 @@ function AdminPageContent() {
         return q?.svg_scales?.[field] ?? 100;
     };
 
+    // §2 EFFECTS ─────────────────────────────────────────────────────────────
     // Save scale to DB and local state (debounced — only PATCHes 600ms after user stops dragging)
     const handleScaleChange = (questionId: string, field: string, scale: number) => {
         setSvgScaleOverrides(prev => ({ ...prev, [field]: scale }));
@@ -253,57 +185,17 @@ function AdminPageContent() {
     // Ref to always hold the latest filteredQuestions without causing hook ordering issues
     const filteredQuestionsRef = useRef<Question[]>([]);
 
-    // Keyboard navigation: ArrowLeft/Up = Prev, ArrowRight/Down = Next
-    const handleKeyNav = useCallback((e: KeyboardEvent) => {
-        const tag = (e.target as HTMLElement)?.tagName;
-        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-            e.preventDefault();
-            setSelectedQuestionId(prev => {
-                const fq = filteredQuestionsRef.current;
-                const idx = fq.findIndex(q => q._id === prev);
-                if (idx > 0) return fq[idx - 1]._id;
-                return prev;
-            });
-        } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-            e.preventDefault();
-            setSelectedQuestionId(prev => {
-                const fq = filteredQuestionsRef.current;
-                const idx = fq.findIndex(q => q._id === prev);
-                if (idx < fq.length - 1) return fq[idx + 1]._id;
-                return prev;
-            });
-        }
-    }, []);
-
-    useEffect(() => {
-        window.addEventListener('keydown', handleKeyNav);
-        return () => window.removeEventListener('keydown', handleKeyNav);
-    }, [handleKeyNav]);
+    useAdminKeyNav({
+        getQuestionIds: () => filteredQuestionsRef.current.map(q => q._id),
+        getCurrentId: () => selectedQuestionId,
+        onSelect: (nextId) => setSelectedQuestionId(nextId),
+    });
 
     useEffect(() => {
         loadData();
     }, []);
 
-    // Sync filter state to URL params
-    useEffect(() => {
-        const params = new URLSearchParams();
-        
-        if (searchQuery) params.set('search', searchQuery);
-        if (selectedSubjectFilter !== 'chemistry') params.set('subject', selectedSubjectFilter);
-        if (selectedChapterFilter !== 'all') params.set('chapter', selectedChapterFilter);
-        if (selectedTypeFilter !== 'all') params.set('type', selectedTypeFilter);
-        if (selectedSourceFilter !== 'all') params.set('source', selectedSourceFilter);
-        if (selectedShiftFilter !== 'all') params.set('shift', selectedShiftFilter);
-        if (selectedTopPYQFilter !== 'all') params.set('topPyq', selectedTopPYQFilter);
-        if (selectedDifficultyFilter !== 'all') params.set('difficulty', selectedDifficultyFilter);
-        if (selectedTagStatusFilter !== 'all') params.set('tagStatus', selectedTagStatusFilter);
-        if (selectedYearFilter !== 'all') params.set('year', selectedYearFilter);
-        if (selectedTagFilter !== 'all') params.set('tag', selectedTagFilter);
-        
-        const newUrl = params.toString() ? `?${params.toString()}` : '/crucible/admin';
-        router.replace(newUrl, { scroll: false });
-    }, [
+    useAdminFilterUrlSync({
         searchQuery,
         selectedSubjectFilter,
         selectedChapterFilter,
@@ -315,8 +207,7 @@ function AdminPageContent() {
         selectedTagStatusFilter,
         selectedYearFilter,
         selectedTagFilter,
-        router
-    ]);
+    }, router);
 
     // Load questions when filters or search change
     useEffect(() => {
@@ -383,6 +274,7 @@ function AdminPageContent() {
         return params.toString();
     };
 
+    // §3 LOADERS ─────────────────────────────────────────────────────────────
     const loadData = async () => {
         setLoading(true);
         try {
@@ -447,6 +339,7 @@ function AdminPageContent() {
         }
     };
 
+    // §4 CRUD ────────────────────────────────────────────────────────────────
     const handleAddQuestion = async () => {
         const defaultChapter = selectedChapterFilter !== 'all' ? selectedChapterFilter : (chapters[0]?._id || '');
 
@@ -455,54 +348,9 @@ function AdminPageContent() {
             return;
         }
 
-        // Generate display_id client-side to avoid relying on MongoDB chapters collection
-        // Find current max sequence for this chapter prefix
-        const CHAPTER_PREFIX_MAP: Record<string, string> = {
-            // Chemistry
-            ch11_atom: 'ATOM', ch11_bonding: 'BOND', ch11_chem_eq: 'CEQ', ch11_goc: 'GOC',
-            ch11_hydrocarbon: 'HC', ch11_ionic_eq: 'IEQ', ch11_mole: 'MOLE', ch11_pblock: 'PB11',
-            ch11_periodic: 'PERI', ch11_prac_org: 'POC', ch11_redox: 'RDX', ch11_thermo: 'THERMO',
-            ch12_alcohols: 'ALCO', ch12_amines: 'AMIN', ch12_biomolecules: 'BIO',
-            ch12_carbonyl: 'ALDO', ch12_coord: 'CORD', ch12_dblock: 'DNF', ch12_electrochem: 'EC',
-            ch12_haloalkanes: 'HALO', ch12_kinetics: 'CK', ch12_pblock: 'PB12',
-            ch12_salt: 'SALT', ch12_solutions: 'SOL',
-            // Physics — Mathongo / NCERT-aligned (32 chapters)
-            ph11_math_phy: 'MIP', ph11_units: 'UNIT', ph11_kinematics1d: 'K1D', ph11_kinematics2d: 'K2D',
-            ph11_nlm: 'NLM', ph11_wep: 'WEP', ph11_com_mom: 'COM', ph11_rotation: 'ROT',
-            ph11_gravitation: 'GRAV', ph11_solids: 'SOLD', ph11_fluids: 'FLUI',
-            ph11_shm: 'SHM', ph11_waves: 'WAVE',
-            ph11_thermal_props: 'THPR', ph11_thermo: 'TDYN', ph11_ktg: 'KTG',
-            ph12_electrostatics: 'ELST', ph12_capacitance: 'CAPC', ph12_current: 'CURR',
-            ph12_mag_matter: 'MAGM', ph12_moving_charges: 'MVCH',
-            ph12_emi: 'EMI', ph12_ac: 'ACUR', ph12_ray_optics: 'ROPY',
-            ph12_wave_optics: 'WVOP',
-            ph12_dual_nature: 'DUAL', ph12_atoms: 'ATPH', ph12_nuclei: 'NUCL',
-            ph12_em_waves: 'EMW', ph12_semiconductors: 'SEMI',
-            ph12_communication: 'COMM', ph12_exp_phy: 'EXPP',
-            // Maths (Competitive Syllabus — 33 chapters)
-            ma_basic_math: 'BOMA', ma_quadratic: 'QUAD', ma_complex: 'CMPL',
-            ma_sequence: 'SQSR', ma_pnc: 'PMCM', ma_binomial: 'BNML',
-            ma_reasoning: 'MRES', ma_statistics: 'STAT', ma_matrices: 'MTRX',
-            ma_determinants: 'DTRM', ma_probability: 'PROB', ma_sets_rel: 'STRL',
-            ma_functions: 'FUNC', ma_limits: 'LIMS', ma_continuity_diff: 'CTDF',
-            ma_differentiation: 'DIFF', ma_aod: 'AODV', ma_indef_int: 'ININ',
-            ma_def_int: 'DFIN', ma_auc: 'AUC', ma_diff_eq: 'DFEQ',
-            ma_straight_lines: 'STLN', ma_circle: 'CRCL', ma_parabola: 'PRBL',
-            ma_ellipse: 'ELPS', ma_hyperbola: 'HYPB', ma_trig_ratios: 'TRRI',
-            ma_trig_eq: 'TREQ', ma_itf: 'ITF', ma_height_dist: 'HTDT',
-            ma_triangle_prop: 'PRTR', ma_vector_algebra: 'VCAL', ma_3d_geom: 'TDGM',
-        };
-        const prefix = CHAPTER_PREFIX_MAP[defaultChapter] || defaultChapter.split('_').pop()?.toUpperCase().substring(0, 4) || 'QUES';
-        // Find current max display_id with this prefix from loaded questions
-        const existingNums = questions
-            .filter(q => q.display_id?.startsWith(prefix + '-'))
-            .map(q => parseInt(q.display_id.split('-')[1], 10))
-            .filter(n => !isNaN(n));
-        const nextSeq = (existingNums.length > 0 ? Math.max(...existingNums) : 0) + 1;
-        const display_id = `${prefix}-${String(nextSeq).padStart(3, '0')}`;
-
+        // display_id is generated by the server (lib/questionIdGenerator.ts) — it sees
+        // the full DB, not the paginated slice loaded in the admin UI.
         const newQuestion: Partial<Question> = {
-            display_id,
             question_text: { markdown: "New Question Text", latex_validated: false },
             type: 'SCQ',
             options: [
@@ -658,17 +506,6 @@ function AdminPageContent() {
         }
     };
 
-    const validateTag = (tagId: string, chapterId: string): { valid: boolean; warning?: string } => {
-        if (!tagId) return { valid: false, warning: 'Tag is required' };
-        if (!tagId.startsWith('tag_')) return { valid: false, warning: 'Tag must start with tag_' };
-        // Check if tag belongs to the selected chapter
-        const isValidTag = TAXONOMY_FROM_CSV.some(node =>
-            node.id === tagId && node.parent_id === chapterId && node.type === 'topic'
-        );
-        if (!isValidTag) return { valid: true, warning: 'Tag may not belong to this chapter' };
-        return { valid: true };
-    };
-
     const handleReclassify = async (questionId: string, newChapterId: string, currentTags: Array<{ tag_id: string; weight: number }>) => {
         if (!newChapterId || reclassifying) return;
         setReclassifying(true);
@@ -761,16 +598,14 @@ function AdminPageContent() {
     const noChapterCount = questions.filter(q => !q.metadata.chapter_id).length;
     const noTagCount = questions.filter(q => q.metadata.chapter_id && !isTagValid(q.metadata.tags)).length;
 
-    const submitFlag = async () => {
+    const submitFlag = async (data: FlagSubmission) => {
         if (!selectedQuestion) return;
         await handleUpdate(selectedQuestion._id, {
-            add_flag: { type: flagReason, note: flagNote }
+            add_flag: { type: data.type, note: data.note }
         } as Partial<Question>);
         setFlagModalOpen(false);
-        setFlagReason('latex_error');
-        setFlagNote('');
 
-        const newFlag = { type: flagReason as 'latex_error' | 'table_error' | 'mismatch' | 'solution_incorrect' | 'other', note: flagNote, flagged_at: new Date().toISOString(), resolved: false };
+        const newFlag = { type: data.type, note: data.note, flagged_at: new Date().toISOString(), resolved: false };
         setQuestions(prev => prev.map(q =>
             q._id === selectedQuestion._id ? { ...q, flags: [...(q.flags || []), newFlag] } : q
         ));
@@ -791,6 +626,7 @@ function AdminPageContent() {
 
     return (
         <div className="fixed inset-0 z-50 flex flex-col h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden">
+            {/* §5 TOP_BAR — section tabs + search + nav + filters (renders for every adminSection) */}
             {/* TOP BAR — two rows */}
             <header className="shrink-0 bg-gray-950/95 backdrop-blur-sm border-b border-gray-800/50 shadow-xl">
                 {/* Row 1: title + actions + search + Prev/Next + selector + chapter/type filters */}
@@ -801,38 +637,7 @@ function AdminPageContent() {
                     </h1>
 
                     {/* Section tabs */}
-                    <div className="flex items-center gap-0.5 bg-gray-800/60 rounded-lg p-0.5 shrink-0">
-                        <button
-                            onClick={() => setAdminSection('practice')}
-                            className={`px-2.5 py-1 rounded-md text-xs font-semibold transition ${
-                                adminSection === 'practice'
-                                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-sm'
-                                    : 'text-gray-400 hover:text-gray-200'
-                            }`}
-                        >
-                            Practice Bank
-                        </button>
-                        <button
-                            onClick={() => setAdminSection('mock-tests')}
-                            className={`px-2.5 py-1 rounded-md text-xs font-semibold transition ${
-                                adminSection === 'mock-tests'
-                                    ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-sm'
-                                    : 'text-gray-400 hover:text-gray-200'
-                            }`}
-                        >
-                            Mock Tests
-                        </button>
-                        <button
-                            onClick={() => setAdminSection('flags')}
-                            className={`px-2.5 py-1 rounded-md text-xs font-semibold transition ${
-                                adminSection === 'flags'
-                                    ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-sm'
-                                    : 'text-gray-400 hover:text-gray-200'
-                            }`}
-                        >
-                            🚩 Reports
-                        </button>
-                    </div>
+                    <AdminSectionTabs section={adminSection} onChange={setAdminSection} />
 
                     {adminSection === 'practice' && (
                         <span className="text-gray-600 text-xs font-mono shrink-0">{questions.length}/{totalCount}</span>
@@ -1109,98 +914,29 @@ function AdminPageContent() {
                 {adminSection === 'practice' && <div className="flex items-center gap-2 px-3 py-1.5 border-t border-gray-800/50 flex-wrap">
                     <Filter size={11} className="text-purple-400 shrink-0" />
 
-                    {/* Difficulty */}
-                    <select
-                        value={selectedDifficultyFilter}
-                        onChange={(e) => setSelectedDifficultyFilter(e.target.value)}
-                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedDifficultyFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
-                    >
-                        <option value="all">All Difficulties</option>
-                        <option value="1">L1 — Easy</option>
-                        <option value="2">L2 — Easy+</option>
-                        <option value="3">L3 — Medium</option>
-                        <option value="4">L4 — Hard</option>
-                        <option value="5">L5 — Challenging</option>
-                    </select>
-
-                    {/* Exam Board */}
-                    <select
-                        value={selectedSourceFilter}
-                        onChange={(e) => { setSelectedSourceFilter(e.target.value); setCurrentPage(0); }}
-                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedSourceFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
-                    >
-                        <option value="all">All Boards</option>
-                        <option value="JEE">JEE</option>
-                        <option value="NEET">NEET</option>
-                        <option value="CBSE">CBSE</option>
-                        <option value="BITSAT">BITSAT</option>
-                    </select>
-
-                    {/* Source Type */}
-                    <select
-                        value={selectedShiftFilter}
-                        onChange={(e) => { setSelectedShiftFilter(e.target.value); setCurrentPage(0); }}
-                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedShiftFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
-                    >
-                        <option value="all">All Sources</option>
-                        <option value="PYQ">PYQ</option>
-                        <option value="Practice">Practice</option>
-                        <option value="NCERT_Textbook">NCERT Text</option>
-                        <option value="NCERT_Exemplar">NCERT Exem</option>
-                        <option value="Mock">Mock</option>
-                    </select>
-
-                    {/* Year — visible when PYQ source or exam board is selected */}
-                    {(selectedShiftFilter === 'PYQ' || selectedSourceFilter === 'JEE' || selectedSourceFilter === 'NEET') && (
-                        <select
-                            value={selectedYearFilter}
-                            onChange={(e) => setSelectedYearFilter(e.target.value)}
-                            className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedYearFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
-                        >
-                            <option value="all">All Years</option>
-                            {[2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015].map(y => (
-                                <option key={y} value={String(y)}>{y}</option>
-                            ))}
-                        </select>
-                    )}
-
-                    {/* Concept / Topic tag — only when a chapter is loaded */}
-                    {selectedChapterFilter !== 'all' && chapterFilterTags.length > 0 && (
-                        <select
-                            value={selectedTagFilter}
-                            onChange={(e) => setSelectedTagFilter(e.target.value)}
-                            className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedTagFilter !== 'all' ? 'border-emerald-500/70 text-emerald-300' : 'border-gray-700/50'}`}
-                        >
-                            <option value="all">All Topics</option>
-                            {chapterFilterTags.map(tag => (
-                                <option key={tag.id} value={tag.id}>{tag.name}</option>
-                            ))}
-                        </select>
-                    )}
-
-                    {/* Top PYQ */}
-                    <select
-                        value={selectedTopPYQFilter}
-                        onChange={(e) => setSelectedTopPYQFilter(e.target.value)}
-                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                    >
-                        <option value="all">All PYQ</option>
-                        <option value="top">⭐ Top</option>
-                        <option value="not-top">Other</option>
-                    </select>
-
-                    {/* Tag / QC status */}
-                    <select
-                        value={selectedTagStatusFilter}
-                        onChange={(e) => setSelectedTagStatusFilter(e.target.value)}
-                        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs outline-none ${selectedTagStatusFilter !== 'all' ? 'border-red-500 text-red-300' : 'border-gray-700/50'}`}
-                    >
-                        <option value="all">Tags ✓</option>
-                        <option value="untagged">⚠ Untagged ({untaggedCount})</option>
-                        <option value="no-chapter">🔴 No Chapter ({noChapterCount})</option>
-                        <option value="no-tag">🟡 No Tag ({noTagCount})</option>
-                        <option value="flagged">🚨 Flagged ({questions.filter(q => q.flags?.some(f => !f.resolved)).length})</option>
-                    </select>
+                    <AdminFilterRow
+                        selectedDifficultyFilter={selectedDifficultyFilter}
+                        setSelectedDifficultyFilter={setSelectedDifficultyFilter}
+                        selectedSourceFilter={selectedSourceFilter}
+                        setSelectedSourceFilter={setSelectedSourceFilter}
+                        selectedShiftFilter={selectedShiftFilter}
+                        setSelectedShiftFilter={setSelectedShiftFilter}
+                        selectedYearFilter={selectedYearFilter}
+                        setSelectedYearFilter={setSelectedYearFilter}
+                        selectedTagFilter={selectedTagFilter}
+                        setSelectedTagFilter={setSelectedTagFilter}
+                        selectedTopPYQFilter={selectedTopPYQFilter}
+                        setSelectedTopPYQFilter={setSelectedTopPYQFilter}
+                        selectedTagStatusFilter={selectedTagStatusFilter}
+                        setSelectedTagStatusFilter={setSelectedTagStatusFilter}
+                        resetPage={() => setCurrentPage(0)}
+                        selectedChapterFilter={selectedChapterFilter}
+                        chapterFilterTags={chapterFilterTags}
+                        untaggedCount={untaggedCount}
+                        noChapterCount={noChapterCount}
+                        noTagCount={noTagCount}
+                        flaggedCount={questions.filter(q => q.flags?.some(f => !f.resolved)).length}
+                    />
 
                     {/* Per-question rarely-changed metadata editors (only when a question is loaded) */}
                     {selectedQuestion && (() => {
@@ -1325,6 +1061,7 @@ function AdminPageContent() {
 
             </header>
 
+            {/* §6 SECTION_BODY — conditional on adminSection: mock-tests | flags | practice */}
             {/* MOCK TESTS section — full content area replacement */}
             {adminSection === 'mock-tests' && (
                 <div className="flex-1 overflow-hidden">
@@ -1353,284 +1090,23 @@ function AdminPageContent() {
                 ) : selectedQuestion ? (
                     <>
                     {/* TOP: Full-width metadata & tagging — 2 compact rows */}
-                    <div className="shrink-0 border-b border-gray-800/50">
-                        <div className="p-3 space-y-2">
-
-                            {/* ── Tagging row: ID → Chapter → Primary Tag → Micro Concept → Type → Nature → Difficulty → Boards │ Actions ── */}
-                            <div className="flex items-end gap-0 flex-wrap">
-
-                                {/* ID */}
-                                <div className="flex items-end gap-1.5 pr-3 mr-2 border-r border-gray-700/60">
-                                    <div className="flex flex-col">
-                                        <span className="text-[10px] text-gray-500 mb-0.5">ID</span>
-                                        <input type="text" value={selectedQuestion.display_id} readOnly
-                                            className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs font-mono outline-none w-24 text-purple-400" />
-                                    </div>
-                                </div>
-
-                                {/* Chapter → Primary Tag → Micro Concept (+ Multi) */}
-                                <div className="flex items-end gap-1.5 flex-1 min-w-0 pr-3 mr-2 border-r border-gray-700/60">
-                                    <div className="flex flex-col flex-1 min-w-0">
-                                        <label className="text-[10px] text-gray-500 mb-0.5 flex items-center gap-1">
-                                            Chapter {reclassifying && <span className="text-purple-400 animate-pulse">● …</span>}
-                                        </label>
-                                        <select
-                                            value={selectedQuestion.metadata.chapter_id}
-                                            disabled={reclassifying}
-                                            onChange={(e) => {
-                                                const newChapterId = e.target.value;
-                                                if (!newChapterId || newChapterId === selectedQuestion.metadata.chapter_id) return;
-                                                handleReclassify(selectedQuestion._id, newChapterId, selectedQuestion.metadata.tags);
-                                            }}
-                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none disabled:opacity-50 disabled:cursor-wait"
-                                        >
-                                            <option value="">Select Chapter</option>
-                                            {chapters.map(ch => <option key={ch._id} value={ch._id}>{ch.name}</option>)}
-                                        </select>
-                                    </div>
-                                    <div className="flex flex-col flex-1 min-w-0">
-                                        <label className="text-[10px] text-gray-500 mb-0.5 flex items-center justify-between">
-                                            <span>Primary Tag</span>
-                                            {selectedQuestion.metadata.tags?.[0]?.tag_id && (() => {
-                                                const validation = validateTag(selectedQuestion.metadata.tags![0].tag_id, selectedQuestion.metadata.chapter_id);
-                                                return validation.warning ? <span className="text-yellow-400 flex items-center gap-0.5"><AlertCircle size={8} />{validation.warning}</span> : null;
-                                            })()}
-                                        </label>
-                                        <select
-                                            value={selectedQuestion.metadata.tags?.[0]?.tag_id || ''}
-                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                                metadata: { ...selectedQuestion.metadata, tags: e.target.value ? [{ tag_id: e.target.value, weight: 1.0 }] : [] }
-                                            })}
-                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs text-purple-300 focus:border-purple-500 outline-none font-mono"
-                                        >
-                                            <option value="">Select Tag</option>
-                                            {TAXONOMY_FROM_CSV
-                                                .filter(node => node.parent_id === selectedQuestion.metadata.chapter_id && node.type === 'topic')
-                                                .map(tag => <option key={tag.id} value={tag.id}>{tag.name}</option>)
-                                            }
-                                        </select>
-                                    </div>
-                                    <div className="flex flex-col flex-1 min-w-0">
-                                        <label className="text-[10px] text-gray-500 mb-0.5">Micro Concept</label>
-                                        <select
-                                            value={selectedQuestion.metadata.microConcept ?? ''}
-                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                                metadata: { ...selectedQuestion.metadata, microConcept: e.target.value }
-                                            })}
-                                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs text-teal-300 focus:border-teal-500 outline-none"
-                                        >
-                                            <option value="">— select micro concept —</option>
-                                            {(() => {
-                                                const primaryTagId = selectedQuestion.metadata.tags?.[0]?.tag_id;
-                                                if (!primaryTagId) return <option value="" disabled>Select a Primary Tag first</option>;
-                                                const microTopics = TAXONOMY_FROM_CSV.filter(node =>
-                                                    node.parent_id === primaryTagId && node.type === 'micro_topic'
-                                                );
-                                                if (microTopics.length === 0) return <option value="" disabled>No micro concepts for this tag</option>;
-                                                return microTopics.map(micro => (
-                                                    <option key={micro.id} value={micro.name}>{micro.name}</option>
-                                                ));
-                                            })()}
-                                        </select>
-                                    </div>
-                                    <label className="flex items-center gap-1 cursor-pointer shrink-0 pb-1">
-                                        <input
-                                            type="checkbox"
-                                            checked={!!selectedQuestion.metadata.isMultiConcept}
-                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                                metadata: { ...selectedQuestion.metadata, isMultiConcept: e.target.checked }
-                                            })}
-                                            className="h-3.5 w-3.5 accent-teal-500"
-                                        />
-                                        <span className="text-xs text-gray-400">Multi</span>
-                                    </label>
-                                </div>
-
-                                {/* Type → Question Nature → Difficulty */}
-                                <div className="flex items-end gap-1.5 pr-3 mr-2 border-r border-gray-700/60">
-                                    <div className="flex flex-col">
-                                        <span className="text-[10px] text-gray-500 mb-0.5">Type</span>
-                                        <select
-                                            value={selectedQuestion.type}
-                                            onChange={(e) => {
-                                                const newType = e.target.value as Question['type'];
-                                                const oldType = selectedQuestion.type;
-                                                if (newType === oldType) return;
-                                                const update: Partial<Question> = { type: newType };
-                                                if (newType === 'NVT' || newType === 'WKEX' || newType === 'SUBJ') {
-                                                    update.options = [] as Question['options'];
-                                                    update.answer = {} as Question['answer'];
-                                                } else if (oldType === 'NVT' || oldType === 'WKEX' || oldType === 'SUBJ' || !selectedQuestion.options || selectedQuestion.options.length === 0) {
-                                                    update.options = [
-                                                        { id: 'a', text: 'Option A', is_correct: newType === 'SCQ' },
-                                                        { id: 'b', text: 'Option B', is_correct: false },
-                                                        { id: 'c', text: 'Option C', is_correct: false },
-                                                        { id: 'd', text: 'Option D', is_correct: false }
-                                                    ] as Question['options'];
-                                                    update.answer = {} as Question['answer'];
-                                                }
-                                                handleUpdate(selectedQuestion._id, update);
-                                            }}
-                                            className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs font-medium"
-                                        >
-                                            {QUESTION_TYPES.map(qt => <option key={qt.id} value={qt.id}>{qt.name}</option>)}
-                                        </select>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-[10px] text-gray-500 mb-0.5">Question Nature</span>
-                                        <select
-                                            value={selectedQuestion.metadata.questionNature ?? ''}
-                                            onChange={(e) => handleUpdate(selectedQuestion._id, {
-                                                metadata: { ...selectedQuestion.metadata, questionNature: (e.target.value || undefined) as 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis' | undefined }
-                                            })}
-                                            className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs text-purple-300 focus:border-purple-500 outline-none"
-                                        >
-                                            <option value="">— select nature —</option>
-                                            <option value="Recall">Recall</option>
-                                            <option value="Rule_Application">Rule Application</option>
-                                            <option value="Numerical">Numerical</option>
-                                            <option value="Comparative">Comparative</option>
-                                            <option value="Graphical">Graphical</option>
-                                            <option value="Conceptual">Conceptual</option>
-                                            <option value="Mechanistic">Mechanistic</option>
-                                            <option value="Synthesis">Synthesis</option>
-                                        </select>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-[10px] text-gray-500 mb-0.5">Difficulty</span>
-                                        <select
-                                            value={selectedQuestion.metadata.difficultyLevel}
-                                            onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, difficultyLevel: Number(e.target.value) as 1 | 2 | 3 | 4 | 5 } })}
-                                            className={`bg-gray-800/50 border rounded px-2 py-1 text-xs font-medium ${
-                                                selectedQuestion.metadata.difficultyLevel >= 4 ? 'border-red-500/50 text-red-400' :
-                                                selectedQuestion.metadata.difficultyLevel === 3 ? 'border-orange-500/50 text-orange-400' :
-                                                'border-emerald-500/50 text-emerald-400'}`}
-                                        >
-                                            <option value="1">Level 1</option>
-                                            <option value="2">Level 2</option>
-                                            <option value="3">Level 3</option>
-                                            <option value="4">Level 4</option>
-                                            <option value="5">Level 5</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                {/* Boards */}
-                                <div className="flex items-end gap-1.5 pr-3 mr-2 border-r border-gray-700/60">
-                                    {(() => {
-                                        const BOARD_OPTIONS = ['JEE', 'NEET', 'BITSAT', 'CBSE'] as const;
-                                        type Board = typeof BOARD_OPTIONS[number];
-                                        const current = (selectedQuestion.metadata.applicableExams
-                                            ?? (selectedQuestion.metadata.examBoard ? [selectedQuestion.metadata.examBoard] : [])
-                                        ) as Board[];
-                                        const toggle = (b: Board) => {
-                                            const next = current.includes(b)
-                                                ? current.filter(x => x !== b)
-                                                : [...current, b];
-                                            handleUpdate(selectedQuestion._id, {
-                                                metadata: { ...selectedQuestion.metadata, applicableExams: next.length ? next : undefined },
-                                            });
-                                        };
-                                        return (
-                                            <div className="flex flex-col">
-                                                <span className="text-[10px] text-gray-500 mb-0.5">Boards</span>
-                                                <div className="flex items-center gap-1">
-                                                    {BOARD_OPTIONS.map(b => {
-                                                        const on = current.includes(b);
-                                                        return (
-                                                            <button
-                                                                key={b}
-                                                                type="button"
-                                                                onClick={() => toggle(b)}
-                                                                className={`px-2 py-1 text-[11px] rounded border ${on
-                                                                    ? 'bg-orange-500/20 border-orange-500/60 text-orange-300'
-                                                                    : 'bg-gray-800/50 border-gray-700/50 text-gray-400 hover:bg-gray-700/50'}`}
-                                                            >
-                                                                {b}
-                                                            </button>
-                                                        );
-                                                    })}
-                                                </div>
-                                            </div>
-                                        );
-                                    })()}
-                                </div>
-
-                                {/* Action cluster: Tag status + AI Suggest + icon actions */}
-                                <div className="flex items-center gap-1.5 ml-auto">
-                                    {/* Tag status badge */}
-                                    <div className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-bold border ${
-                                        !selectedQuestion.metadata.chapter_id ? 'bg-red-900/20 border-red-600/40 text-red-400' :
-                                        !isTagValid(selectedQuestion.metadata.tags) ? 'bg-yellow-900/20 border-yellow-600/40 text-yellow-400' :
-                                        'bg-green-900/20 border-green-600/40 text-green-400'}`}>
-                                        {!selectedQuestion.metadata.chapter_id
-                                            ? <><AlertTriangle size={11} /> No Chapter</>
-                                            : !isTagValid(selectedQuestion.metadata.tags)
-                                            ? <><AlertCircle size={11} /> No Tag</>
-                                            : <><Check size={11} /> Tagged</>}
-                                    </div>
-                                    <button
-                                        onClick={() => handleAITagSuggestion(selectedQuestion._id)}
-                                        disabled={aiAnalyzing}
-                                        className="flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded text-[10px] font-bold transition disabled:opacity-50"
-                                    >
-                                        <Sparkles size={10} /> {aiAnalyzing ? '…' : 'AI Tags'}
-                                    </button>
-                                    {/* Star — Top PYQ */}
-                                    <div className="flex flex-col items-center">
-                                        <button onClick={() => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, is_top_pyq: !selectedQuestion.metadata.is_top_pyq } })}
-                                            className={`p-1.5 rounded transition ${selectedQuestion.metadata.is_top_pyq ? 'bg-amber-500/20 text-amber-400' : 'bg-gray-800/50 text-gray-500 hover:text-amber-400'}`} title="Top PYQ">
-                                            <Star size={14} fill={selectedQuestion.metadata.is_top_pyq ? "currentColor" : "none"} />
-                                        </button>
-                                        <span className="text-[9px] font-mono text-amber-400/70 leading-none">
-                                            {questions.filter(q => q.metadata.is_top_pyq && q.metadata.chapter_id === selectedQuestion.metadata.chapter_id).length}
-                                        </span>
-                                    </div>
-                                    {/* Bookmark — Demo Question (drives /handwritten-notes side-by-side practice).
-                                        Quality gate enforced server-side on save: solution must have ≥200 chars
-                                        of text_markdown and latex_validated=true (see /api/v2/questions/[id]/route.ts). */}
-                                    <div className="flex flex-col items-center">
-                                        <button onClick={() => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, is_demo_question: !selectedQuestion.metadata.is_demo_question } })}
-                                            className={`p-1.5 rounded transition ${selectedQuestion.metadata.is_demo_question ? 'bg-orange-500/20 text-orange-400' : 'bg-gray-800/50 text-gray-500 hover:text-orange-400'}`} title="Demo Question (side-by-side practice on /handwritten-notes)">
-                                            <Bookmark size={14} fill={selectedQuestion.metadata.is_demo_question ? "currentColor" : "none"} />
-                                        </button>
-                                        <span className="text-[9px] font-mono text-orange-400/70 leading-none">
-                                            {questions.filter(q => q.metadata.is_demo_question && q.metadata.chapter_id === selectedQuestion.metadata.chapter_id).length}
-                                        </span>
-                                    </div>
-                                    <button onClick={() => setFlagModalOpen(true)}
-                                        className={`p-1.5 rounded transition ${selectedQuestion.flags?.some(f => !f.resolved) ? 'bg-red-500/20 text-red-500' : 'bg-gray-800/50 text-gray-500 hover:text-red-400'}`} title="Flag">
-                                        <AlertTriangle size={14} />
-                                    </button>
-                                    <button 
-                                        onClick={() => handleDelete(selectedQuestion._id)}
-                                        disabled={!canDelete}
-                                        title={!canDelete ? 'Only super admins can delete questions' : 'Delete question'}
-                                        className={`p-1.5 rounded transition ${deletingId === selectedQuestion._id ? 'bg-red-500 text-white' : 'bg-gray-800/50 text-gray-500 hover:text-red-400'} ${!canDelete ? 'opacity-30 cursor-not-allowed' : ''}`}>
-                                        <Trash2 size={14} />
-                                    </button>
-                                </div>
-                            </div>
-
-                            {/* AI Tag Suggestions (shown inline when active) */}
-                            {showTagSuggestions && tagSuggestions.length > 0 && (
-                                <div className="flex items-center gap-2 p-2 bg-purple-900/20 border border-purple-600/50 rounded">
-                                    <span className="text-[10px] font-bold text-purple-400 shrink-0">AI Suggested:</span>
-                                    <div className="flex flex-wrap gap-1.5 flex-1">
-                                        {tagSuggestions.map(tag => (
-                                            <button key={tag}
-                                                onClick={() => { handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, tags: [{ tag_id: tag, weight: 1.0 }] } }); setShowTagSuggestions(false); }}
-                                                className="px-2 py-0.5 bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded text-[10px] font-mono text-purple-300 transition">
-                                                {tag}
-                                            </button>
-                                        ))}
-                                    </div>
-                                    <button onClick={() => setShowTagSuggestions(false)} className="text-xs text-gray-500 hover:text-gray-300 shrink-0">✕</button>
-                                </div>
-                            )}
-
-                        </div>
-                    </div>
+                    <QuestionTaggingRow
+                        selectedQuestion={selectedQuestion}
+                        questions={questions}
+                        chapters={chapters}
+                        reclassifying={reclassifying}
+                        aiAnalyzing={aiAnalyzing}
+                        canDelete={canDelete}
+                        deletingId={deletingId}
+                        onReclassify={handleReclassify}
+                        onUpdate={handleUpdate}
+                        onDelete={handleDelete}
+                        onAITagSuggestion={handleAITagSuggestion}
+                        onOpenFlagModal={() => setFlagModalOpen(true)}
+                        showTagSuggestions={showTagSuggestions}
+                        setShowTagSuggestions={setShowTagSuggestions}
+                        tagSuggestions={tagSuggestions}
+                    />
 
                     {/* BOTTOM: Side-by-side editor and live preview */}
                     <div className="flex-1 flex overflow-hidden">
@@ -2064,256 +1540,18 @@ function AdminPageContent() {
                         </div>
 
                         {/* RIGHT: Live Preview (50%) */}
-                        <div className="w-1/2 flex flex-col overflow-hidden bg-gray-950/50">
-                    <div className="p-3 border-b border-gray-800/50 bg-gray-900/50 flex items-center justify-between gap-3">
-                        <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                            <Eye size={14} /> Live Preview
-                        </h3>
-                        <div className="flex items-center gap-2">
-                            {/* Options layout toggle */}
-                            {selectedQuestion && selectedQuestion.type !== 'NVT' && selectedQuestion.type !== 'SUBJ' && (
-                                <div className="flex items-center gap-1 bg-gray-800/60 rounded-lg p-0.5">
-                                    <button
-                                        onClick={() => setOptionsLayout('list')}
-                                        title="List layout"
-                                        className={`p-1.5 rounded-md transition ${optionsLayout === 'list' ? 'bg-purple-600 text-white' : 'text-gray-500 hover:text-gray-300'}`}
-                                    ><LayoutList size={13} /></button>
-                                    <button
-                                        onClick={() => setOptionsLayout('auto')}
-                                        title="Auto layout (smart)"
-                                        className={`px-2 py-1 rounded-md text-[10px] font-medium transition ${optionsLayout === 'auto' ? 'bg-purple-600 text-white' : 'text-gray-500 hover:text-gray-300'}`}
-                                    >AUTO</button>
-                                    <button
-                                        onClick={() => setOptionsLayout('grid')}
-                                        title="2×2 grid layout"
-                                        className={`p-1.5 rounded-md transition ${optionsLayout === 'grid' ? 'bg-purple-600 text-white' : 'text-gray-500 hover:text-gray-300'}`}
-                                    ><LayoutGrid size={13} /></button>
-                                </div>
-                            )}
-                            {/* Mobile / Desktop toggle */}
-                            <div className="flex items-center gap-1 bg-gray-800/60 rounded-lg p-0.5">
-                                <button
-                                    onClick={() => setPreviewMode('desktop')}
-                                    title="Desktop preview"
-                                    className={`p-1.5 rounded-md transition ${previewMode === 'desktop' ? 'bg-purple-600 text-white' : 'text-gray-500 hover:text-gray-300'}`}
-                                ><Monitor size={13} /></button>
-                                <button
-                                    onClick={() => setPreviewMode('mobile')}
-                                    title="Mobile preview"
-                                    className={`p-1.5 rounded-md transition ${previewMode === 'mobile' ? 'bg-purple-600 text-white' : 'text-gray-500 hover:text-gray-300'}`}
-                                ><Smartphone size={13} /></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex-1 overflow-y-auto p-4 flex justify-center">
-                        {selectedQuestion ? (
-                            <div className={`space-y-4 transition-all duration-300 ${previewMode === 'mobile'
-                                ? 'w-[420px] border border-gray-700/60 rounded-2xl overflow-y-auto shadow-2xl shadow-black/50 bg-gray-900 max-h-full'
-                                : 'w-full max-w-[860px]'
-                                }`}>
-                                {previewMode === 'mobile' && (
-                                    <div className="flex items-center justify-center gap-1 py-2 bg-gray-950/80 border-b border-gray-800">
-                                        <div className="w-16 h-1 bg-gray-600 rounded-full" />
-                                    </div>
-                                )}
-                                {/* Question Preview */}
-                                <div className={`bg-gray-900/50 rounded-xl border border-gray-800/50 ${previewMode === 'mobile' ? 'p-4 rounded-none border-x-0' : 'p-6'}`}>
-                                    <div className="flex items-center gap-2 mb-4">
-                                        <span className="text-xs font-mono text-purple-400">{selectedQuestion.display_id}</span>
-                                        <span className={`text-xs px-2 py-0.5 rounded ${QUESTION_TYPES.find(t => t.id === selectedQuestion.type)?.color
-                                            }`}>
-                                            {selectedQuestion.type}
-                                        </span>
-                                        <span className={`text-xs px-2 py-0.5 rounded ${selectedQuestion.metadata.difficultyLevel >= 4 ? 'bg-red-500/20 text-red-400' :
-                                            selectedQuestion.metadata.difficultyLevel === 3 ? 'bg-orange-500/20 text-orange-400' :
-                                                'bg-green-500/20 text-green-400'
-                                            }`}>
-                                            Level {selectedQuestion.metadata.difficultyLevel}
-                                        </span>
-                                    </div>
-                                    <MathRenderer
-                                        markdown={selectedQuestion.question_text.markdown}
-                                        className="text-gray-300"
-                                        fontSize={20}
-                                        imageScale={getSvgScale('question')}
-                                    />
-                                    {selectedQuestion.type !== 'NVT' && selectedQuestion.type !== 'SUBJ' && (() => {
-                                        const hasImages = selectedQuestion.options.some(opt =>
-                                            opt.text.includes('![') || opt.text.includes('<img') || opt.text.includes('.svg') || opt.text.includes('.png')
-                                        );
-                                        const maxTextLength = Math.max(...selectedQuestion.options.map(opt => opt.text.length));
-                                        const avgTextLength = selectedQuestion.options.reduce((sum, opt) => sum + opt.text.length, 0) / selectedQuestion.options.length;
-                                        const autoGrid = hasImages || (avgTextLength < 20 && maxTextLength < 25);
-                                        // On mobile preview, grid is only 2 cols for truly short/image options
-                                        const useGrid = optionsLayout === 'grid'
-                                            ? true
-                                            : optionsLayout === 'list'
-                                                ? false
-                                                : (previewMode === 'mobile' ? (hasImages || (avgTextLength < 15 && maxTextLength < 18)) : autoGrid);
-
-                                        return (
-                                            <div className={`mt-4 ${useGrid
-                                                ? 'grid grid-cols-2 gap-3'
-                                                : 'space-y-2'
-                                                }`}>
-                                                {selectedQuestion.options.map(opt => (
-                                                    <div key={opt.id} className="flex items-center gap-3">
-                                                        <div className={`flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center text-sm font-semibold ${opt.is_correct
-                                                            ? 'bg-green-600/30 text-green-300 border border-green-500/60'
-                                                            : 'bg-gray-700/40 text-gray-300 border border-gray-600/60'
-                                                            }`}>
-                                                            {opt.id.toUpperCase()}
-                                                        </div>
-                                                        <div className={`flex-1 p-3 rounded-lg border ${opt.is_correct
-                                                            ? 'bg-green-900/20 border-green-600/50'
-                                                            : 'bg-gray-800/30 border-gray-700/50'
-                                                            }`}>
-                                                            <MathRenderer
-                                                                markdown={opt.text}
-                                                                className="text-gray-300 option-text"
-                                                                fontSize={20}
-                                                                imageScale={getSvgScale(`option_${opt.id}`)}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        );
-                                    })()}
-                                </div>
-
-                                {/* Solution Preview */}
-                                <div className={`bg-gray-900/50 rounded-xl border border-gray-800/50 ${previewMode === 'mobile' ? 'p-4 rounded-none border-x-0' : 'p-6'}`}>
-                                    <h4 className="text-xs font-bold text-gray-500 uppercase mb-3">Solution</h4>
-                                    
-                                    {/* Media Controls Row - Video & Audio buttons at top */}
-                                    {(selectedQuestion.solution?.video_url || (selectedQuestion.solution?.asset_ids?.audio && selectedQuestion.solution.asset_ids.audio.length > 0)) && (
-                                        <div className="flex flex-wrap gap-2 mb-4">
-                                            {/* Watch Video Solution Button with State Indicator */}
-                                            {selectedQuestion.solution?.video_url && (
-                                                <button
-                                                    onClick={() => {
-                                                        setVideoExpanded(prev => ({
-                                                            ...prev,
-                                                            [selectedQuestion._id]: !prev[selectedQuestion._id]
-                                                        }));
-                                                    }}
-                                                    className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-lg font-medium text-sm transition-all duration-200 shadow-lg shadow-blue-900/40 hover:shadow-blue-800/50 active:scale-95"
-                                                >
-                                                    <MonitorPlay size={16} />
-                                                    <span className="hidden sm:inline">
-                                                        {videoExpanded[selectedQuestion._id] ? 'Hide' : 'Watch'} Video Solution
-                                                    </span>
-                                                    <span className="sm:hidden">Video</span>
-                                                    {videoExpanded[selectedQuestion._id] 
-                                                        ? <ChevronUp size={14} className="transition-transform duration-200" />
-                                                        : <ChevronDown size={14} className="transition-transform duration-200" />
-                                                    }
-                                                </button>
-                                            )}
-                                            
-                                            {/* Audio Note Waveform Button with State Indicator */}
-                                            {selectedQuestion.solution?.asset_ids?.audio && selectedQuestion.solution.asset_ids.audio.length > 0 && (
-                                                selectedQuestion.solution.asset_ids.audio.map((url, idx) => {
-                                                    const audioKey = `${selectedQuestion._id}-${idx}`;
-                                                    return url ? (
-                                                        <button
-                                                            key={idx}
-                                                            onClick={() => {
-                                                                setAudioExpanded(prev => ({
-                                                                    ...prev,
-                                                                    [audioKey]: !prev[audioKey]
-                                                                }));
-                                                            }}
-                                                            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-lg font-medium text-sm transition-all duration-200 shadow-lg shadow-purple-900/40 hover:shadow-purple-800/50 active:scale-95"
-                                                        >
-                                                            <Volume2 size={16} />
-                                                            <span className="hidden sm:inline">
-                                                                {audioExpanded[audioKey] ? 'Hide' : 'Play'} Audio Note{selectedQuestion.solution.asset_ids!.audio!.length > 1 ? ` ${idx + 1}` : ''}
-                                                            </span>
-                                                            <span className="sm:hidden">Audio{selectedQuestion.solution.asset_ids!.audio!.length > 1 ? ` ${idx + 1}` : ''}</span>
-                                                            {audioExpanded[audioKey]
-                                                                ? <ChevronUp size={14} className="transition-transform duration-200" />
-                                                                : <ChevronDown size={14} className="transition-transform duration-200" />
-                                                            }
-                                                        </button>
-                                                    ) : null;
-                                                })
-                                            )}
-                                        </div>
-                                    )}
-                                    
-                                    {/* Collapsible Video Player - Square Aspect Ratio (1:1) with Smooth Animation */}
-                                    {selectedQuestion.solution?.video_url && (
-                                        <div 
-                                            className={`mb-4 transition-all duration-300 ease-in-out overflow-hidden ${
-                                                videoExpanded[selectedQuestion._id] 
-                                                    ? 'max-h-[600px] opacity-100' 
-                                                    : 'max-h-0 opacity-0'
-                                            }`}
-                                        >
-                                            <div className={`bg-black rounded-lg overflow-hidden ${previewMode === 'mobile' ? 'w-full' : 'max-w-md mx-auto'}`} style={{ aspectRatio: '1/1' }}>
-                                                <video
-                                                    controls
-                                                    className="w-full h-full object-contain"
-                                                    src={selectedQuestion.solution.video_url}
-                                                    onKeyDown={(e) => {
-                                                        // Keyboard shortcuts
-                                                        if (e.key === ' ') {
-                                                            e.preventDefault();
-                                                            const video = e.currentTarget;
-                                                            video.paused ? video.play() : video.pause();
-                                                        } else if (e.key === 'ArrowRight') {
-                                                            e.preventDefault();
-                                                            e.currentTarget.currentTime += 5;
-                                                        } else if (e.key === 'ArrowLeft') {
-                                                            e.preventDefault();
-                                                            e.currentTarget.currentTime -= 5;
-                                                        }
-                                                    }}
-                                                >
-                                                    Your browser does not support the video tag.
-                                                </video>
-                                            </div>
-                                        </div>
-                                    )}
-                                    
-                                    {/* Collapsible Audio Players with Waveform and Smooth Animation */}
-                                    {selectedQuestion.solution?.asset_ids?.audio && selectedQuestion.solution.asset_ids.audio.length > 0 && (
-                                        <div className="space-y-2 mb-4">
-                                            {selectedQuestion.solution.asset_ids.audio.map((url, idx) => {
-                                                const audioKey = `${selectedQuestion._id}-${idx}`;
-                                                return url ? (
-                                                    <div 
-                                                        key={idx}
-                                                        className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                                                            audioExpanded[audioKey]
-                                                                ? 'max-h-40 opacity-100'
-                                                                : 'max-h-0 opacity-0'
-                                                        }`}
-                                                    >
-                                                        <AudioPlayer src={url} label={`Audio Note${selectedQuestion.solution.asset_ids!.audio!.length > 1 ? ` ${idx + 1}` : ''}`} />
-                                                    </div>
-                                                ) : null;
-                                            })}
-                                        </div>
-                                    )}
-                                    
-                                    <MathRenderer
-                                        markdown={selectedQuestion.solution?.text_markdown || ''}
-                                        className="text-gray-300 solution-text"
-                                        fontSize={20}
-                                        imageScale={getSvgScale('solution')}
-                                    />
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="h-full flex items-center justify-center text-gray-600">
-                                <p className="text-sm">No question selected</p>
-                            </div>
-                        )}
-                    </div>
-                        </div>
+                        <QuestionPreviewPane
+                            selectedQuestion={selectedQuestion}
+                            previewMode={previewMode}
+                            setPreviewMode={setPreviewMode}
+                            optionsLayout={optionsLayout}
+                            setOptionsLayout={setOptionsLayout}
+                            videoExpanded={videoExpanded}
+                            setVideoExpanded={setVideoExpanded}
+                            audioExpanded={audioExpanded}
+                            setAudioExpanded={setAudioExpanded}
+                            getSvgScale={getSvgScale}
+                        />
                     </div>
                     </>
                 ) : (
@@ -2326,6 +1564,7 @@ function AdminPageContent() {
                 )}
             </div>}
 
+            {/* §7 MODALS — Analytics, BulkImport, Export, RoleManagement, FlagModal */}
             {/* Analytics Dashboard Modal */}
             {showAnalytics && (
                 <AnalyticsDashboard
@@ -2377,48 +1616,11 @@ function AdminPageContent() {
                 </div>
             )}
 
-            {/* Flag Modal */}
-            {flagModalOpen && (
-                <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4">
-                    <div className="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl flex flex-col">
-                        <div className="p-4 border-b border-gray-800 flex items-center justify-between bg-gray-900/50">
-                            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                                <AlertTriangle className="text-red-500" size={20} /> Flag Question
-                            </h2>
-                            <button onClick={() => setFlagModalOpen(false)} className="text-gray-500 hover:text-white transition">✕</button>
-                        </div>
-                        <div className="p-6 space-y-4">
-                            <div>
-                                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">Issue Type</label>
-                                <select
-                                    value={flagReason}
-                                    onChange={(e) => setFlagReason(e.target.value)}
-                                    className="w-full bg-gray-950 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none text-white"
-                                >
-                                    <option value="latex_error">LaTeX not rendering properly</option>
-                                    <option value="table_error">Table formatting issue</option>
-                                    <option value="mismatch">Question text/options mismatch</option>
-                                    <option value="solution_incorrect">Solution is incorrect</option>
-                                    <option value="other">Other issue</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">Remarks (Optional)</label>
-                                <textarea
-                                    value={flagNote}
-                                    onChange={(e) => setFlagNote(e.target.value)}
-                                    placeholder="Add specific details for the content team..."
-                                    className="w-full bg-gray-950 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:border-red-500 outline-none text-white resize-y min-h-[100px]"
-                                />
-                            </div>
-                        </div>
-                        <div className="p-4 border-t border-gray-800 bg-gray-900/50 flex justify-end gap-3">
-                            <button onClick={() => setFlagModalOpen(false)} className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition">Cancel</button>
-                            <button onClick={submitFlag} className="px-6 py-2 bg-red-600 hover:bg-red-500 text-white text-sm font-bold rounded-xl transition shadow-lg shadow-red-900/20">Submit Flag</button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <FlagModal
+                isOpen={flagModalOpen}
+                onClose={() => setFlagModalOpen(false)}
+                onSubmit={submitFlag}
+            />
         </div>
     );
 }
