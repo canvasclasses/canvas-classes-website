@@ -4,5 +4,16 @@
   "private": true,
   "main": "./index.ts",
   "types": "./index.ts",
-  "comment": "Shared UI components, design tokens, Tailwind preset. Populated in Phase 3."
+  "exports": {
+    ".": "./index.ts",
+    "./MathRenderer": "./MathRenderer.tsx"
+  },
+  "dependencies": {
+    "isomorphic-dompurify": "^3.7.1",
+    "katex": "^0.16.28"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
 }

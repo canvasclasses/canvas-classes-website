@@ -277,7 +277,7 @@ The taxonomy file is auto-updated by the dashboard at `/crucible/admin/taxonomy`
 | Taxonomy lookup helpers | `packages/data/taxonomy/lookup.ts` |
 | `display_id` generator | `packages/data/id-generator/index.ts` |
 | Difficulty utils (shared) | `packages/data/difficulty.ts` |
-| Math/LaTeX renderer (shared) | `apps/student/components/MathRenderer.tsx` |
+| Math/LaTeX renderer (shared) | `packages/ui/MathRenderer.tsx` |
 | Adaptive engine (Crucible) | `apps/student/app/the-crucible/lib/adaptiveEngine.ts` |
 | Recommendation engine | `apps/student/lib/recommendationEngine.ts` |
 | Persona writer (mutation surface) | `apps/student/lib/personaWriter.ts` |

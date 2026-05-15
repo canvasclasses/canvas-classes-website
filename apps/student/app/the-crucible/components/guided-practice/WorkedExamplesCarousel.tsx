@@ -9,7 +9,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { ChevronLeft, ChevronRight, BookOpen, ArrowRight, Lightbulb } from 'lucide-react';
 import { Question } from '@/app/the-crucible/components/types';
-import MathRenderer from '@/components/MathRenderer';
+import MathRenderer from '@canvas/ui/MathRenderer';
 
 interface WorkedExamplesCarouselProps {
   examples: Question[];                                        // pre-filtered WKEX docs

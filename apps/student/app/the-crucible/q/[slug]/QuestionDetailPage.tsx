@@ -16,7 +16,7 @@ import {
   Tag,
   ArrowLeft,
 } from 'lucide-react';
-import MathRenderer from '@/components/MathRenderer';
+import MathRenderer from '@canvas/ui/MathRenderer';
 import { QuestionDetail } from '../../actions';
 import { Chapter } from '../../components/types';
 import { formatExamLabel } from '../../components/examLabel';

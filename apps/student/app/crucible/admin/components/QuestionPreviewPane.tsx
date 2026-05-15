@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Eye, LayoutList, LayoutGrid, Monitor, Smartphone, MonitorPlay, Volume2, ChevronDown, ChevronUp } from 'lucide-react';
-import MathRenderer from '@/components/MathRenderer';
+import MathRenderer from '@canvas/ui/MathRenderer';
 import AudioPlayer from './AudioPlayer';
 import { type AdminQuestion as Question, QUESTION_TYPES } from '../types';
 

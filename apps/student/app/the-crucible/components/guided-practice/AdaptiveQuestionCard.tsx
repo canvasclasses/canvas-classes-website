@@ -9,7 +9,7 @@
 import { useState, useCallback } from 'react';
 import { Check, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { Question } from '@/app/the-crucible/components/types';
-import MathRenderer from '@/components/MathRenderer';
+import MathRenderer from '@canvas/ui/MathRenderer';
 import { formatExamLabel } from '@/app/the-crucible/components/examLabel';
 
 interface AdaptiveQuestionCardProps {

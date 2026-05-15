@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import MathRenderer from '@/components/MathRenderer';
+import MathRenderer from '@canvas/ui/MathRenderer';
 
 // Animated cycling question card — visual design and timing lifted from
 // the Crucible landing's QuestionCard so the carousel looks identical

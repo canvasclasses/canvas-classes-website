@@ -175,28 +175,55 @@ Manual one-time action remaining: **Vercel Project Settings → Root Directory =
 
 ---
 
-### Phase 3 — Extract `@canvas/ui` + `@canvas/core`  ⏳ PENDING
-**Goal:** Move shared visual components into `packages/ui/` and cross-cutting platform code into `packages/core/`.
+### Phase 3a — Extract `@canvas/ui`  ✅ DONE
+**Commit:** _(filled in by this commit)_  (2026-05-16)
+**Goal:** Move shared visual components used by both admin and student into `packages/ui/`. Be conservative — move only components verified by grep to be used cross-cuttingly. Feature-local components stay in `apps/student/components/`.
 
-**`@canvas/ui`:**
-- `apps/student/components/MathRenderer.tsx` → `packages/ui/components/MathRenderer.tsx`
-- `apps/student/components/WaveformAudioPlayer.tsx` → ...
-- `apps/student/components/WatermarkOverlay.tsx` → ...
-- `apps/student/components/ChemicalStructure.tsx` → ...
-- Tailwind preset extracted to `packages/ui/tailwind-preset.ts`
+**Audit results (2026-05-16):**
+- MathRenderer: 12 importers (7 student, 5 admin) — **moving**
+- WaveformAudioPlayer: 2 importers (both student) — **staying in `apps/student/components/`** (not currently shared)
+- WatermarkOverlay: 0 importers — **dead code, flagging for separate cleanup** (out of scope)
+- ChemicalStructure: 0 importers — **dead code, flagging for separate cleanup** (out of scope)
 
-**`@canvas/core`:**
-- `apps/student/lib/rateLimit.ts` → `packages/core/rate-limit/`
-- `apps/student/lib/latexValidator.ts` → `packages/core/latex-utils/`
-- `apps/student/lib/redirectValidation.ts` → `packages/core/redirect-validation/`
-- `apps/student/lib/analytics/*` → `packages/core/analytics/`
-- `apps/student/lib/r2Storage.ts` → `packages/core/r2-storage/`
-- `apps/student/lib/utils.ts` → `packages/core/utils.ts`
+**Files to move:**
+- `apps/student/components/MathRenderer.tsx` → `packages/ui/MathRenderer.tsx`
+
+The package starts deliberately small. Future moves (Phase 5 admin split may surface more shared primitives) will grow it. CLAUDE.md anti-speculation rule wins over the "have we put enough in here yet" instinct.
+
+**Tailwind theme:** **deferred to Phase 5** per decision 2026-05-16. Tokens stay in `apps/student/app/globals.css`. When admin app is scaffolded in Phase 5, extract shared `theme.css` then.
+
+**Package configuration:**
+- `packages/ui/package.json`: `name: "@canvas/ui"`, `main: "./index.ts"`, peer deps on `react`, `react-dom`
+- `apps/student/next.config.ts`: add `'@canvas/ui'` to `transpilePackages`
+- `apps/student/package.json`: add `"@canvas/ui": "*"`
 
 **De-dup check:**
-- Empty states, loading skeletons, error boundaries — are there 5 copies of "no data" UI in `apps/student/`?
-- "Card" components — should be one in `packages/ui/`.
-- Date formatting / time-ago helpers.
+- Inline LaTeX-rendering hacks outside `MathRenderer` — should now route through the package.
+- Watermark overlay duplication — there were two copies of the watermark logic before; verify only `WatermarkOverlay` survives.
+
+---
+
+### Phase 3b — Extract `@canvas/core`  ⏳ PENDING
+**Goal:** Move cross-cutting server-side platform utilities (rate-limit, latex utils, redirect validation, analytics, R2 storage, generic utils) into `packages/core/`.
+
+**Files to move:**
+- `apps/student/lib/rateLimit.ts` → `packages/core/rate-limit.ts`
+- `apps/student/lib/latexValidator.ts` → `packages/core/latex-validator.ts`
+- `apps/student/lib/redirectValidation.ts` → `packages/core/redirect-validation.ts`
+- `apps/student/lib/analytics/*` → `packages/core/analytics/`
+- `apps/student/lib/r2Storage.ts` → `packages/core/r2-storage.ts`
+- `apps/student/lib/utils.ts` → `packages/core/utils.ts`
+
+**Package configuration:**
+- `packages/core/package.json`: `name: "@canvas/core"`, `main: "./index.ts"`, peer deps as required (e.g. `@aws-sdk/client-s3` for R2)
+- `apps/student/next.config.ts`: add `'@canvas/core'` to `transpilePackages`
+- `apps/student/package.json`: add `"@canvas/core": "*"`
+
+**Cycle prevention:** `@canvas/core` is leaf-status (no other-package deps). `@canvas/data`, `@canvas/persona`, and apps may import from `@canvas/core`. `@canvas/core` must NEVER import from `@canvas/data` or `@canvas/persona`.
+
+**De-dup check:**
+- Date formatting / time-ago helpers — likely duplicated in components.
+- Inline `clsx`-style class-name composition without using `cn()` from `utils.ts`.
 
 ---
 

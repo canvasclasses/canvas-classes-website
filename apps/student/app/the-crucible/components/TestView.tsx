@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, Bookmark, Check, Timer, X, MonitorPlay, Volume2, ChevronUp, ChevronDown, Pause, Play, Home } from 'lucide-react';
 import { Question } from './types';
-import MathRenderer from '@/components/MathRenderer';
+import MathRenderer from '@canvas/ui/MathRenderer';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { getTagName, getChapterCategory } from '@canvas/data/taxonomy/lookup';
 import { isAnswerCorrect } from '@canvas/persona/scoring';

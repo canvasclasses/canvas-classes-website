@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Bookmark, Check, X, Search, Flag, Volume2, MonitorPlay, ChevronDown, ChevronUp, ExternalLink, Menu, AlertCircle } from 'lucide-react';
 import WaveformAudioPlayer from '@/components/WaveformAudioPlayer';
 import { Chapter, Question } from './types';
-import MathRenderer from '@/components/MathRenderer';
+import MathRenderer from '@canvas/ui/MathRenderer';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 import { difficultyColor } from '@canvas/data/difficulty';
