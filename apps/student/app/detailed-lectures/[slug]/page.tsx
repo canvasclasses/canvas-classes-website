@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { fetchLecturesData, getChapterBySlug } from '@/app/lib/lecturesData';
+import { fetchLecturesData, getChapterBySlug } from '@/features/public-content/data/lecturesData';
 import ChapterPageClient from './ChapterPageClient';
 import { notFound } from 'next/navigation';
 import BreadcrumbSchema from '@/app/components/BreadcrumbSchema';

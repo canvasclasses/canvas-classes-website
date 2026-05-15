@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getNeetChapter, fetchNeetCrashCourseData } from '@/app/lib/neetCrashCourseData';
+import { getNeetChapter, fetchNeetCrashCourseData } from '@/features/public-content/data/neetCrashCourseData';
 import NeetChapterClient from './NeetChapterClient';
 import { Metadata } from 'next';
 

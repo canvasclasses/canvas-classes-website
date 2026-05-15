@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { fetchLecturesData, getLecturesStats } from '@/app/lib/lecturesData';
+import { fetchLecturesData, getLecturesStats } from '@/features/public-content/data/lecturesData';
 
 export async function GET() {
     try {

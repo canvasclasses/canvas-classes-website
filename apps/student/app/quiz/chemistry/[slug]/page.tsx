@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { CHEMISTRY_QUIZ_SLUGS, getChemistryQuiz } from '@/app/lib/quizzes';
-import type { QuizData } from '@/app/lib/quizzes/types';
+import { CHEMISTRY_QUIZ_SLUGS, getChemistryQuiz } from '@/features/public-content/data/quizzes';
+import type { QuizData } from '@/features/public-content/data/quizzes/types';
 import QuizClient from './QuizClient';
 
 const BASE_URL = 'https://www.canvasclasses.in';

@@ -1,7 +1,7 @@
 
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getQuestionsByChapter, getAllChapters } from '../../lib/jee-pyqs/data';
+import { getQuestionsByChapter, getAllChapters } from '@/features/public-content/data/jee-pyqs/data';
 import JeeTestClient from '../JeeTestClient';
 import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 

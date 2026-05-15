@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { fetchSamplePapers } from '../../lib/samplePapersData';
+import { fetchSamplePapers } from '@/features/public-content/data/samplePapersData';
 
 export const revalidate = 86400; // 24 hours
 

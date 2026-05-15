@@ -1,5 +1,5 @@
 import AssertionReasonClient from './AssertionReasonClient';
-import { fetchAssertionReasonQuestions } from '../lib/assertionReasonData';
+import { fetchAssertionReasonQuestions } from '@/features/public-content/data/assertionReasonData';
 
 export const revalidate = 86400;
 

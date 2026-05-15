@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import OneShotClient from './OneShotClient';
-import { fetchQuickRecapData } from '../lib/quickRecapData';
+import { fetchQuickRecapData } from '@/features/public-content/data/quickRecapData';
 
 export const metadata: Metadata = {
     title: 'One Shot Chemistry Lectures for JEE & NEET 2025 - Complete Chapters | Canvas Classes',

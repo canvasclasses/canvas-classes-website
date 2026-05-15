@@ -12,8 +12,8 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 
-import { AssertionReasonQuestion, groupByChapter, ChapterGroup, shuffleArray } from '../lib/assertionReasonData';
-import { useAssertionProgress } from '../hooks/useAssertionProgress';
+import { AssertionReasonQuestion, groupByChapter, ChapterGroup, shuffleArray } from '@/features/public-content/data/assertionReasonData';
+import { useAssertionProgress } from '@/features/public-content/hooks/useAssertionProgress';
 import { QualityRating } from '@/features/flashcards/lib/spacedRepetition';
 
 type Phase = 'assertion' | 'reason' | 'link' | 'result';

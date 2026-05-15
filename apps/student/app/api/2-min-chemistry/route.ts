@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { fetch2MinData, get2MinStats } from '@/app/lib/twoMinData';
+import { fetch2MinData, get2MinStats } from '@/features/public-content/data/twoMinData';
 
 export async function GET() {
     try {

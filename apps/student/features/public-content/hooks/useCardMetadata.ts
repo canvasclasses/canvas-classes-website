@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { createClient } from '../utils/supabase/client';
+import { createClient } from '@/app/utils/supabase/client';
 
 const STORAGE_KEY = 'canvas_flashcard_metadata';
 const MONGO_ENDPOINT = '/api/v2/user/flashcard-metadata';

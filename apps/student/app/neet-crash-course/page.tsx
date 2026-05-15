@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import NeetCrashCourseClient from './NeetCrashCourseClient';
-import { fetchNeetCrashCourseData } from '@/app/lib/neetCrashCourseData';
+import { fetchNeetCrashCourseData } from '@/features/public-content/data/neetCrashCourseData';
 
 export const revalidate = 86400;
 

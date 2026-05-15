@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { BookOpen, ChevronRight, Zap, PlayCircle, FileText, Clock, Book } from 'lucide-react';
-import { NeetChapter } from '@/app/lib/neetCrashCourseData';
+import { NeetChapter } from '@/features/public-content/data/neetCrashCourseData';
 import Image from 'next/image';
 
 interface NeetCrashCourseClientProps {

@@ -21,7 +21,7 @@ import {
     getPendingWriteCount,
     flushPendingWrites,
     subscribeToRemoteUpdates
-} from '../utils/progressSync';
+} from '@/app/utils/progressSync';
 
 const STORAGE_KEY = 'canvas_flashcard_progress';
 const FEATURE_TYPE = 'flashcard';

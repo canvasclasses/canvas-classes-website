@@ -18,9 +18,9 @@ import {
     RefreshCw
 } from 'lucide-react';
 import { FlashcardItem, ChapterTopic } from '../lib/flashcardsData';
-import { useCardProgress } from '@/app/hooks/useCardProgress';
+import { useCardProgress } from '@/features/public-content/hooks/useCardProgress';
 import { useFlashcardMeta } from '../hooks/useFlashcardMeta';
-import { useCardMetadata } from '@/app/hooks/useCardMetadata';
+import { useCardMetadata } from '@/features/public-content/hooks/useCardMetadata';
 import { useFlashcardSettings } from '../hooks/useFlashcardSettings';
 import { flushPendingWrites } from '@/app/utils/progressSync';
 import { QualityRating, isLeech, localDateString } from '../lib/spacedRepetition';

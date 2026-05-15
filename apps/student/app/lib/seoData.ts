@@ -1,4 +1,4 @@
-import { fetchFlashcards, FlashcardItem } from './revisionData';
+import { fetchFlashcards, FlashcardItem } from '@/features/public-content/data/revisionData';
 
 export interface SEOQuestion extends FlashcardItem {
     slug: string;

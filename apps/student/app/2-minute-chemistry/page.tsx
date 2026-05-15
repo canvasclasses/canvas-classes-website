@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import TwoMinClient from './TwoMinClient';
 
-import { fetch2MinData } from '../lib/twoMinData';
+import { fetch2MinData } from '@/features/public-content/data/twoMinData';
 
 export const metadata: Metadata = {
     title: '2 Minute Chemistry - Quick Lessons for JEE & NEET | Canvas Classes',

@@ -5,8 +5,8 @@ import {
     getActiveChapters,
     getChapterBySlug,
     getChapterQuestions,
-} from '@/app/lib/jee-main-pyqs/data';
-import type { JmpChapterMeta, JmpQuestion } from '@/app/lib/jee-main-pyqs/types';
+} from '@/features/public-content/data/jee-main-pyqs/data';
+import type { JmpChapterMeta, JmpQuestion } from '@/features/public-content/data/jee-main-pyqs/types';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 

@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
-import type { QuizData, QuizQuestion } from '@/app/lib/quizzes/types';
+import type { QuizData, QuizQuestion } from '@/features/public-content/data/quizzes/types';
 
 // Renders an interactive chemistry quiz. Users click an option — correct
 // picks turn green, incorrect picks turn red and the correct answer is

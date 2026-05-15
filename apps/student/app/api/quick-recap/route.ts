@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { fetchQuickRecapData, getQuickRecapStats } from '@/app/lib/quickRecapData';
+import { fetchQuickRecapData, getQuickRecapStats } from '@/features/public-content/data/quickRecapData';
 
 export async function GET() {
     try {

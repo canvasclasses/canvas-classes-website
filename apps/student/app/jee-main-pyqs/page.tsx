@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { getManifest } from '@/app/lib/jee-main-pyqs/data';
+import { getManifest } from '@/features/public-content/data/jee-main-pyqs/data';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 const HUB_URL = `${BASE_URL}/jee-main-pyqs`;

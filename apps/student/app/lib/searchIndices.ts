@@ -1,8 +1,8 @@
 import { unstable_cache } from 'next/cache';
 import { fetchOrganicReactions } from '@/features/simulations/data/organicReactionsData';
-import { fetchTop50Data } from './top50Data';
-import { fetch2MinData } from './twoMinData';
-import { fetchLecturesData } from './lecturesData';
+import { fetchTop50Data } from '@/features/public-content/data/top50Data';
+import { fetch2MinData } from '@/features/public-content/data/twoMinData';
+import { fetchLecturesData } from '@/features/public-content/data/lecturesData';
 
 export type SearchItem = {
     id: string;

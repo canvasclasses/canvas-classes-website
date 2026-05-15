@@ -32,7 +32,7 @@ import {
     ArrowUpDown
 } from 'lucide-react';
 import { FlashcardItem, ChapterSummary, ChapterTopic } from '../lib/flashcardsData';
-import { useCardProgress } from '@/app/hooks/useCardProgress';
+import { useCardProgress } from '@/features/public-content/hooks/useCardProgress';
 import { useFlashcardMeta } from '../hooks/useFlashcardMeta';
 import { flushPendingWrites } from '@/app/utils/progressSync';
 import { QualityRating } from '../lib/spacedRepetition';

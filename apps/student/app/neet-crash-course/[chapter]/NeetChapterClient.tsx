@@ -14,7 +14,7 @@ import {
     X,
     BookOpen
 } from 'lucide-react';
-import { NeetChapter, NeetLecture } from '@/app/lib/neetCrashCourseData';
+import { NeetChapter, NeetLecture } from '@/features/public-content/data/neetCrashCourseData';
 
 export default function NeetChapterClient({ chapter }: { chapter: NeetChapter }) {
     // Tab State

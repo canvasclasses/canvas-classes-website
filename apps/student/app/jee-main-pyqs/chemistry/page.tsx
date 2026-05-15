@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { getActiveChapters, getManifest } from '@/app/lib/jee-main-pyqs/data';
-import type { JmpChapterMeta } from '@/app/lib/jee-main-pyqs/types';
+import { getActiveChapters, getManifest } from '@/features/public-content/data/jee-main-pyqs/data';
+import type { JmpChapterMeta } from '@/features/public-content/data/jee-main-pyqs/types';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 const HUB_URL = `${BASE_URL}/jee-main-pyqs/chemistry`;

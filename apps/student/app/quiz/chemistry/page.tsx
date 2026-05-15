@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { CHEMISTRY_QUIZZES_ORDERED } from '@/app/lib/quizzes';
+import { CHEMISTRY_QUIZZES_ORDERED } from '@/features/public-content/data/quizzes';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 const HUB_URL = `${BASE_URL}/quiz/chemistry`;

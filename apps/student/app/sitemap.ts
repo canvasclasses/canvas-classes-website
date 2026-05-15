@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getFlashcardChapters } from './lib/revisionData';
+import { getFlashcardChapters } from '@/features/public-content/data/revisionData';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 
@@ -256,7 +256,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Reads from the published Google Sheet that powers /detailed-lectures.
     let detailedLectureEntries: MetadataRoute.Sitemap = [];
     try {
-        const { fetchLecturesData } = await import('./lib/lecturesData');
+        const { fetchLecturesData } = await import('@/features/public-content/data/lecturesData');
         const chapters = await fetchLecturesData();
         detailedLectureEntries = chapters
             .filter((ch) => Boolean(ch.slug))
@@ -273,7 +273,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // ── JEE PYQs: per-chapter pages (Top-25 PYQs each) ───────────────────────
     let jeePyqEntries: MetadataRoute.Sitemap = [];
     try {
-        const { getAllChapters } = await import('./lib/jee-pyqs/data');
+        const { getAllChapters } = await import('@/features/public-content/data/jee-pyqs/data');
         const chapters = getAllChapters();
         jeePyqEntries = chapters.map((c) => ({
             url: `${BASE_URL}/jee-pyqs/${c.id}`,
@@ -306,7 +306,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // underlying JSON; this block emits the URLs for whatever's in that data.
     let jeeMainPyqEntries: MetadataRoute.Sitemap = [];
     try {
-        const { getManifest } = await import('./lib/jee-main-pyqs/data');
+        const { getManifest } = await import('@/features/public-content/data/jee-main-pyqs/data');
         const manifest = getManifest();
         // Hub
         jeeMainPyqEntries.push({
@@ -352,7 +352,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // CHEMISTRY_QUIZZES — the sitemap picks it up automatically.
     let chemistryQuizEntries: MetadataRoute.Sitemap = [];
     try {
-        const { CHEMISTRY_QUIZZES_ORDERED } = await import('./lib/quizzes');
+        const { CHEMISTRY_QUIZZES_ORDERED } = await import('@/features/public-content/data/quizzes');
         // Hub page first, then individual quizzes.
         chemistryQuizEntries.push({
             url: `${BASE_URL}/quiz/chemistry`,

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { fetchTop50Data, getTop50Stats } from '@/app/lib/top50Data';
+import { fetchTop50Data, getTop50Stats } from '@/features/public-content/data/top50Data';
 
 export async function GET() {
     try {

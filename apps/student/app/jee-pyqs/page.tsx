@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getAllChapters } from '../lib/jee-pyqs/data';
+import { getAllChapters } from '@/features/public-content/data/jee-pyqs/data';
 import { ArrowRight, BookOpen, Star, Trophy, Video } from 'lucide-react';
 
 export const metadata = {

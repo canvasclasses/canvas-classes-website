@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Top50Client from './Top50Client';
 
-import { fetchTop50Data } from '@/app/lib/top50Data';
+import { fetchTop50Data } from '@/features/public-content/data/top50Data';
 
 export const metadata: Metadata = {
     title: 'Top 50 Must-Know Chemistry Concepts for JEE & NEET 2025 | Canvas Classes',

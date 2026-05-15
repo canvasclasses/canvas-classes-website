@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import LecturesClient from './LecturesClient';
-import { fetchLecturesData, getLecturesStats } from '../lib/lecturesData';
+import { fetchLecturesData, getLecturesStats } from '@/features/public-content/data/lecturesData';
 
 export const revalidate = 86400;
 

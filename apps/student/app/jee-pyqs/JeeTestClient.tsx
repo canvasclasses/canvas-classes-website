@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { JEEQuestion } from '@/app/lib/jee-pyqs/data';
+import { JEEQuestion } from '@/features/public-content/data/jee-pyqs/data';
 import { LayoutGrid, CheckCircle, Clock, Video, FileText, ChevronLeft, ChevronRight, Play, Flag, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 

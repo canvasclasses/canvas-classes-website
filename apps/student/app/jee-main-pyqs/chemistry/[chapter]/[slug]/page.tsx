@@ -6,9 +6,9 @@ import {
     getChapterBySlug,
     getQuestion,
     getRelatedQuestions,
-} from '@/app/lib/jee-main-pyqs/data';
-import type { JmpChapterMeta, JmpQuestion } from '@/app/lib/jee-main-pyqs/types';
-import QuestionMarkdown from '@/app/lib/jee-main-pyqs/QuestionMarkdown';
+} from '@/features/public-content/data/jee-main-pyqs/data';
+import type { JmpChapterMeta, JmpQuestion } from '@/features/public-content/data/jee-main-pyqs/types';
+import QuestionMarkdown from '@/features/public-content/components/QuestionMarkdown';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 
