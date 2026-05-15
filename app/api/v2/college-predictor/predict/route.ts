@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { predictColleges, type PredictorResult, type Bucket } from '@/lib/collegePredictor/predictor';
 import { percentileToRank } from '@/lib/collegePredictor/percentileToRank';
+import { createRateLimiter, getClientIp } from '@/lib/rateLimit';
 
 const PredictRequestSchema = z.object({
   rank: z.number().int().positive().max(2_000_000).optional(),
@@ -29,34 +30,7 @@ const PredictRequestSchema = z.object({
   message: 'Provide either rank or percentile',
 });
 
-// ── Basic in-memory rate limit ─────────────────────────────────────────────────
-// TODO(production): replace with Upstash Redis when traffic scales. In-memory
-// maps don't survive serverless cold-starts and don't coordinate across regions.
-const RATE_LIMIT_WINDOW_MS = 60_000;
-const RATE_LIMIT_MAX = 30;
-const RATE_LIMIT_MAX_ENTRIES = 5000;
-type RateEntry = { count: number; reset_at: number };
-const rateStore = new Map<string, RateEntry>();
-
-function rateLimit(ip: string): { ok: boolean; remaining: number } {
-  const now = Date.now();
-  if (rateStore.size > RATE_LIMIT_MAX_ENTRIES) {
-    for (const [k, v] of rateStore) {
-      if (v.reset_at < now) rateStore.delete(k);
-      if (rateStore.size <= RATE_LIMIT_MAX_ENTRIES) break;
-    }
-  }
-  const entry = rateStore.get(ip);
-  if (!entry || entry.reset_at < now) {
-    rateStore.set(ip, { count: 1, reset_at: now + RATE_LIMIT_WINDOW_MS });
-    return { ok: true, remaining: RATE_LIMIT_MAX - 1 };
-  }
-  if (entry.count >= RATE_LIMIT_MAX) {
-    return { ok: false, remaining: 0 };
-  }
-  entry.count++;
-  return { ok: true, remaining: RATE_LIMIT_MAX - entry.count };
-}
+const predictorLimiter = createRateLimiter({ max: 30, windowMs: 60_000 });
 
 // ── Dream-branch canonicalisation ─────────────────────────────────────────────
 // Users write "CSE", "Computer Science", "Mechanical Engineering" — map any of
@@ -331,11 +305,8 @@ function groupByCollege(
 
 export async function POST(request: NextRequest) {
   try {
-    const ip =
-      request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
-      request.headers.get('x-real-ip') ||
-      'unknown';
-    const rl = rateLimit(ip);
+    const ip = getClientIp(request);
+    const rl = predictorLimiter.check(ip);
     if (!rl.ok) {
       return NextResponse.json(
         { success: false, error: 'Too many requests. Please wait a minute.' },

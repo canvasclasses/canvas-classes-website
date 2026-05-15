@@ -3,51 +3,13 @@ import connectToDatabase from '@/lib/mongodb';
 import Flashcard from '@/lib/models/Flashcard';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { isLocalhostDev } from '@/lib/bookAuth';
+import { createRateLimiter, getClientIp } from '@/lib/rateLimit';
 
-// In-memory rate limiter with periodic cleanup to prevent memory leaks.
-// NOTE: per-instance only — swap for Redis at scale.
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const UNAUTHENTICATED_LIMIT = 30;
 const AUTHENTICATED_LIMIT = 300;
-const RATE_LIMIT_MAX_ENTRIES = 5000;
-let lastCleanup = Date.now();
 
-function getRateLimitKey(req: NextRequest): string {
-  const forwarded = req.headers.get('x-forwarded-for');
-  const ip = forwarded ? forwarded.split(',')[0] : req.headers.get('x-real-ip') || 'unknown';
-  return ip;
-}
-
-function checkRateLimit(key: string, limit: number): boolean {
-  const now = Date.now();
-
-  // Periodic cleanup: evict expired entries
-  if (now - lastCleanup > RATE_LIMIT_WINDOW * 2) {
-    for (const [k, v] of rateLimitMap) {
-      if (now > v.resetTime) rateLimitMap.delete(k);
-    }
-    lastCleanup = now;
-  }
-
-  if (rateLimitMap.size >= RATE_LIMIT_MAX_ENTRIES && !rateLimitMap.has(key)) {
-    return false;
-  }
-
-  const record = rateLimitMap.get(key);
-
-  if (!record || now > record.resetTime) {
-    rateLimitMap.set(key, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
-    return true;
-  }
-
-  if (record.count >= limit) {
-    return false;
-  }
-
-  record.count++;
-  return true;
-}
+// One shared budget; the per-call `max` override switches authed vs. unauthed limits.
+const flashcardsLimiter = createRateLimiter({ max: AUTHENTICATED_LIMIT, windowMs: 60_000 });
 
 // GET /api/v2/flashcards - Fetch flashcards with optional filters
 export async function GET(req: NextRequest) {
@@ -58,11 +20,10 @@ export async function GET(req: NextRequest) {
     const user = await getAuthenticatedUser(req);
     const isAuthenticated = (await isLocalhostDev()) || !!user;
 
-    // Rate limiting
-    const rateLimitKey = getRateLimitKey(req);
+    const ip = getClientIp(req);
     const limit = isAuthenticated ? AUTHENTICATED_LIMIT : UNAUTHENTICATED_LIMIT;
-    
-    if (!checkRateLimit(rateLimitKey, limit)) {
+
+    if (!flashcardsLimiter.check(ip, { max: limit }).ok) {
       return NextResponse.json(
         { error: 'Rate limit exceeded. Please try again later.' },
         { status: 429 }
