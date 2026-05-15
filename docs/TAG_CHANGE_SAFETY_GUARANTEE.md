@@ -7,7 +7,7 @@
 ## How the System Works
 
 ### 1. **Single Source of Truth**
-- **File**: `app/crucible/admin/taxonomy/taxonomyData_from_csv.ts`
+- **File**: `lib/taxonomy/taxonomyData_from_csv.ts`
 - All tag data lives in this TypeScript file
 - The entire application reads from this file (not from MongoDB)
 - When you save changes in the Taxonomy Dashboard, they write back to this file

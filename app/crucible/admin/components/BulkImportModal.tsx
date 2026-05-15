@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { X, Upload, FileJson, CheckCircle, AlertCircle, ChevronRight, Loader2, Eye } from 'lucide-react';
-import { TAXONOMY_FROM_CSV } from '../taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
 import { validateLaTeX } from '@/lib/latexValidator';
 
 interface ImportQuestion {

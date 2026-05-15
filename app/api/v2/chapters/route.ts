@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
 import connectDB from '@/lib/mongodb';
 import { QuestionV2 } from '@/lib/models/Question.v2';
 import { unstable_cache } from 'next/cache';

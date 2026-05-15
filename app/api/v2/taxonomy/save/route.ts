@@ -60,6 +60,7 @@ export async function POST(request: NextRequest) {
     // Generate the TypeScript file content
     const lines: string[] = [
       '// CRITICAL: This taxonomy data is the single source of truth for the practice session.',
+      '// Canonical location: lib/taxonomy/taxonomyData_from_csv.ts',
       '// DO NOT MODIFY DIRECTLY — use the Taxonomy Dashboard at /crucible/admin/taxonomy',
       '// Changes made in the dashboard are auto-saved here via POST /api/v2/taxonomy/save',
       '',
@@ -144,7 +145,7 @@ export async function POST(request: NextRequest) {
 
     const fileContent = lines.join('\n');
 
-    const filePath = join(process.cwd(), 'app', 'crucible', 'admin', 'taxonomy', 'taxonomyData_from_csv.ts');
+    const filePath = join(process.cwd(), 'lib', 'taxonomy', 'taxonomyData_from_csv.ts');
     await writeFile(filePath, fileContent, 'utf-8');
 
     return NextResponse.json({

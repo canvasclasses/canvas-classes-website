@@ -16,7 +16,7 @@ import {
   Tag,
   ArrowLeft,
 } from 'lucide-react';
-import MathRenderer from '@/app/crucible/admin/components/MathRenderer';
+import MathRenderer from '@/components/MathRenderer';
 import { QuestionDetail } from '../../actions';
 import { Chapter } from '../../components/types';
 import { formatExamLabel } from '../../components/examLabel';

@@ -1,4 +1,4 @@
-import { TAXONOMY_FROM_CSV } from '../../crucible/admin/taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
 import type { TopicQuestionCounts } from './chapterStats.server';
 
 // "What's inside · N topics" — server-rendered list of every primary tag

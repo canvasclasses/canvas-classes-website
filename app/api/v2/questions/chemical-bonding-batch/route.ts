@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { QuestionV2 } from '@/lib/models/Question.v2';
 import connectToDatabase from '@/lib/mongodb';
-import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
 
 /**
  * GET /api/v2/questions/chemical-bonding-batch?batch=1

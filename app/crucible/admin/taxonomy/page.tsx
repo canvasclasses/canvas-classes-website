@@ -5,7 +5,7 @@ import {
     Loader, Plus, Trash2, Edit2, Save, X, Folder, Tag, ChevronDown, ChevronRight,
     Beaker, Atom, Leaf, FlaskConical, Check, AlertCircle
 } from 'lucide-react';
-import { TAXONOMY_FROM_CSV, type TaxonomyNode } from './taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV, type TaxonomyNode } from '@/lib/taxonomy/taxonomyData_from_csv';
 
 type ChapterType = 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra' | 'biology';
 type SubjectTab = 'chemistry' | 'physics' | 'mathematics' | 'biology';

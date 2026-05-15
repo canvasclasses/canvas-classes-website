@@ -6,10 +6,10 @@
  * routes need name lookups by id frequently. This module builds the Map once
  * and exports a small surface.
  *
- * Source of truth: app/crucible/admin/taxonomy/taxonomyData_from_csv.ts.
+ * Source of truth: lib/taxonomy/taxonomyData_from_csv.ts.
  */
 
-import { TAXONOMY_FROM_CSV, TaxonomyNode } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV, TaxonomyNode } from '@/lib/taxonomy/taxonomyData_from_csv';
 
 const idToNode = new Map<string, TaxonomyNode>();
 for (const node of TAXONOMY_FROM_CSV) {

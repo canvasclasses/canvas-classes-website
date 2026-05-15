@@ -2,32 +2,7 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import { X, Download, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
-
-interface Question {
-  _id: string;
-  display_id: string;
-  question_text: { markdown: string };
-  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ' | 'WKEX';
-  options: Array<{ id: string; text: string; is_correct: boolean }>;
-  answer?: { integer_value?: number; decimal_value?: number };
-  solution: { text_markdown: string };
-  metadata: { 
-    difficultyLevel: 1 | 2 | 3 | 4 | 5; 
-    chapter_id: string;
-    questionNature?: 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis';
-    examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
-    sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
-    examDetails?: {
-      exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG';
-      year?: number;
-      month?: string;
-      phase?: string;
-      shift?: string;
-      paper?: string;
-    };
-  };
-  svg_scales?: Record<string, number>; // keys: 'question', 'solution', 'option_a'…
-}
+import type { AdminQuestion as Question } from '../types';
 interface ExportDashboardProps {
   questions: Question[];
   initialSelected?: Set<string>;

@@ -10,7 +10,7 @@
 
 import { UserRole, type Subject, type RoleType, type IUserRole } from './models/UserRole';
 import connectToDatabase from './mongodb';
-import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
 
 export interface UserPermissions {
   email: string;

@@ -68,7 +68,7 @@ export interface ChapterWithCounts {
 // /the-crucible/[chapterId]/page.tsx. Centralised so the two pages can never
 // drift out of agreement.
 export async function buildChaptersWithCounts(): Promise<ChapterWithCounts[]> {
-    const { TAXONOMY_FROM_CSV } = await import('@/app/crucible/admin/taxonomy/taxonomyData_from_csv');
+    const { TAXONOMY_FROM_CSV } = await import('@/lib/taxonomy/taxonomyData_from_csv');
 
     const baseChapters = TAXONOMY_FROM_CSV.filter(
         (node) => node.type === 'chapter' &&

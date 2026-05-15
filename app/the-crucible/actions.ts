@@ -1,9 +1,9 @@
 'use server';
 
 import { unstable_cache } from 'next/cache';
-import { Question as QuestionPageType, TaxonomyNode, Chapter } from './components/types';
+import { Question as QuestionPageType, Chapter } from './components/types';
 import connectToDatabase from '@/lib/mongodb';
-import { Chapter as ChapterModel } from '@/lib/models/Chapter';
+import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
 
 // MongoDB document types (lean queries return plain objects)
 interface MongoQuestionDoc {
@@ -83,29 +83,7 @@ export async function getQuestionBySlug(
     if (!doc) return null;
 
     const question: QuestionDetail = {
-      id: toString(doc._id),
-      display_id: doc.display_id || toString(doc._id)?.slice(0, 8)?.toUpperCase() || 'Q',
-      question_text: { markdown: doc.question_text?.markdown || '' },
-      type: (doc.type as 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ' | 'WKEX') || 'SCQ',
-      options: doc.options || [],
-      answer: doc.answer || {},
-      solution: {
-        text_markdown: doc.solution?.text_markdown || '',
-        video_url: doc.solution?.video_url || undefined,
-        asset_ids: doc.solution?.asset_ids || undefined,
-        latex_validated: doc.solution?.latex_validated || false,
-      },
-      metadata: {
-        difficultyLevel: (doc.metadata?.difficultyLevel || 3) as 1 | 2 | 3 | 4 | 5,
-        chapter_id: doc.metadata?.chapter_id || '',
-        subject: (doc.metadata?.subject || 'chemistry') as 'chemistry' | 'physics' | 'maths' | 'biology',
-        tags: doc.metadata?.tags || [],
-        // Modern field is the source of truth; fall back to legacy only if sourceType missing.
-        is_pyq: doc.metadata?.sourceType === 'PYQ' || doc.metadata?.is_pyq || false,
-        is_top_pyq: doc.metadata?.is_top_pyq || false,  // KEEP — Top Questions feature
-        exam_source: doc.metadata?.examDetails || doc.metadata?.exam_source,
-      },
-      svg_scales: doc.svg_scales || {},
+      ...mapDocToQuestion(doc),
       updated_at: doc.updated_at?.toISOString?.() || new Date().toISOString(),
       created_at: doc.created_at?.toISOString?.() || new Date().toISOString(),
       status: doc.status || 'published',
@@ -226,93 +204,68 @@ const toString = (val: unknown): string => {
   return String(val);
 };
 
-// Category mapping by chapter name keywords (derived from taxonomyData_from_csv.ts)
-// Maps lowercase name fragments → category
-const CATEGORY_MAP: Array<{ keywords: string[]; category: Chapter['category'] }> = [
-    { keywords: ['mole', 'basic concept', 'structure of atom', 'classification', 'periodicity', 'chemical bonding', 'thermodynamic', 'equilibrium', 'ionic equilibrium', 'electrochemistry', 'kinetics', 'solutions', 'solid state', 'surface chemistry', 'states of matter', 'hydrogen', 's-block', 'gaseous'], category: 'Physical' },
-    { keywords: ['redox', 'p-block', 'p block', 'd-block', 'd block', 'f-block', 'f block', 'coordination', 'metallurgy', 'isolation', 'qualitative analysis', 'salt analysis', 'inorganic'], category: 'Inorganic' },
-    { keywords: ['organic chemistry', 'goc', 'hydrocarbons', 'haloalkane', 'haloarene', 'alcohol', 'phenol', 'ether', 'aldehyde', 'ketone', 'carboxylic', 'amine', 'biomolecule', 'polymer', 'everyday life', 'aromatic', 'stereochem', 'environmental'], category: 'Organic' },
-    { keywords: ['practical', 'qualitative', 'salt analysis'], category: 'Practical' },
-];
-
-function deriveCategory(name: string): Chapter['category'] {
-    const lower = name.toLowerCase();
-    for (const entry of CATEGORY_MAP) {
-        if (entry.keywords.some(kw => lower.includes(kw))) {
-            return entry.category;
-        }
-    }
-    return 'Physical';
-}
-
-// V2 System: Return empty questions array since we're starting fresh
-export async function getQuestions(): Promise<QuestionPageType[]> {
-    // questions_v2 collection is empty - fresh start, no old data migrated
-    return [];
-}
-
-export async function saveQuestion(updatedQuestion: QuestionPageType): Promise<{ success: boolean; message: string }> {
-    // V2 System: Use /crucible/admin with V2 API
-    return { success: false, message: 'Please use the new admin panel at /crucible/admin' };
-}
-
-export async function deleteQuestion(questionId: string): Promise<{ success: boolean; message: string }> {
-    // V2 System: Use /crucible/admin
-    return { success: false, message: 'Please use the new admin panel at /crucible/admin' };
+// Maps a raw MongoDB document to the QuestionPageType the UI expects.
+// Centralises legacy-field bridges (exam_source→examDetails, is_pyq→sourceType,
+// examBoard→applicableExams[0]) so Phase 4 cleanup is a one-line change here,
+// not a hunt across multiple query functions.
+function mapDocToQuestion(doc: MongoQuestionDoc): QuestionPageType {
+  return {
+    id: toString(doc._id),
+    display_id: doc.display_id || toString(doc._id)?.slice(0, 8)?.toUpperCase() || 'Q',
+    question_text: { markdown: doc.question_text?.markdown || '' },
+    type: (doc.type as QuestionPageType['type']) || 'SCQ',
+    options: doc.options || [],
+    answer: doc.answer || {},
+    solution: {
+      // .markdown is a legacy field name; .text_markdown is canonical.
+      text_markdown: doc.solution?.markdown || doc.solution?.text_markdown || '',
+      video_url: doc.solution?.video_url || undefined,
+      asset_ids: doc.solution?.asset_ids as Record<string, string[]> | undefined,
+      latex_validated: doc.solution?.latex_validated || false,
+    },
+    metadata: {
+      difficultyLevel: (doc.metadata?.difficultyLevel || 3) as 1 | 2 | 3 | 4 | 5,
+      chapter_id: doc.metadata?.chapter_id || '',
+      subject: (doc.metadata?.subject || 'chemistry') as 'chemistry' | 'physics' | 'maths' | 'biology',
+      tags: doc.metadata?.tags || [],
+      // Modern field is the source of truth; legacy fallbacks dropped in Phase 4.
+      is_pyq: doc.metadata?.sourceType === 'PYQ' || doc.metadata?.is_pyq || false,
+      is_top_pyq: doc.metadata?.is_top_pyq || false,
+      exam_source: (doc.metadata?.examDetails || doc.metadata?.exam_source) as Record<string, unknown> | undefined,
+      examBoard: (doc.metadata?.applicableExams?.[0] || doc.metadata?.examBoard) as 'JEE' | 'NEET' | undefined,
+      sourceType: doc.metadata?.sourceType as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined,
+      examDetails: doc.metadata?.examDetails as Record<string, unknown> | undefined,
+    },
+    svg_scales: doc.svg_scales || {},
+  };
 }
 
 // --- Taxonomy Actions (V2) ---
 
+// Chemistry chapterTypes in the taxonomy. Physics, math, and biology chapters
+// are excluded — the Crucible student UI shows chemistry only.
+const CHEM_CHAPTER_TYPES = new Set(['physical', 'inorganic', 'organic', 'practical']);
+
+const CHAPTER_TYPE_TO_CATEGORY: Record<string, Chapter['category']> = {
+    physical: 'Physical',
+    inorganic: 'Inorganic',
+    organic: 'Organic',
+    practical: 'Practical',
+};
+
+// Derive the chapter list from the taxonomy single source of truth instead of
+// maintaining a parallel hardcoded array. Adding a chemistry chapter to
+// taxonomyData_from_csv.ts automatically surfaces it here.
 export async function getTaxonomy(): Promise<Chapter[]> {
-    // Always use MOCK_CHAPTERS as the canonical chapter list.
-    // These IDs (ch11_atom, ch11_mole, etc.) match the metadata.chapter_id
-    // values stored in every QuestionV2 document, so question counts work correctly.
-    return MOCK_CHAPTERS;
-}
-
-// Mock chapters for fallback when MongoDB is not connected
-// Following the real taxonomy from taxonomyData_from_csv.ts
-// SINGLE SOURCE OF TRUTH: IDs here MUST exactly match taxonomyData_from_csv.ts chapter IDs
-// and metadata.chapter_id values stored in MongoDB questions_v2 collection.
-// DO NOT add chapters here that are not in taxonomyData_from_csv.ts.
-const MOCK_CHAPTERS: Chapter[] = [
-    // Unsorted
-    { id: 'ch_unsorted', name: 'Unsorted Questions', class_level: 11, display_order: 0, category: 'Physical' },
-    // Class 11 — 12 chapters
-    { id: 'ch11_mole', name: 'Some Basic Concepts of Chemistry (Mole Concept)', class_level: 11, display_order: 1, category: 'Physical' },
-    { id: 'ch11_atom', name: 'Structure of Atom', class_level: 11, display_order: 2, category: 'Physical' },
-    { id: 'ch11_periodic', name: 'Classification of Elements and Periodicity', class_level: 11, display_order: 3, category: 'Inorganic' },
-    { id: 'ch11_bonding', name: 'Chemical Bonding', class_level: 11, display_order: 4, category: 'Inorganic' },
-    { id: 'ch11_thermo', name: 'Thermodynamics', class_level: 11, display_order: 5, category: 'Physical' },
-    { id: 'ch11_chem_eq', name: 'Chemical Equilibrium', class_level: 11, display_order: 6, category: 'Physical' },
-    { id: 'ch11_ionic_eq', name: 'Ionic Equilibrium', class_level: 11, display_order: 7, category: 'Physical' },
-    { id: 'ch11_redox', name: 'Redox Reactions', class_level: 11, display_order: 8, category: 'Inorganic' },
-    { id: 'ch11_pblock', name: 'P Block (Class 11)', class_level: 11, display_order: 9, category: 'Inorganic' },
-    { id: 'ch11_goc', name: 'GOC', class_level: 11, display_order: 10, category: 'Organic' },
-    { id: 'ch11_hydrocarbon', name: 'Hydrocarbons', class_level: 11, display_order: 11, category: 'Organic' },
-    { id: 'ch11_prac_org', name: 'Practical Organic Chemistry', class_level: 11, display_order: 12, category: 'Practical' },
-    // Class 12 — 13 chapters (ch12_aromatic removed, ch12_aldehydes + ch12_carboxylic merged into ch12_carbonyl)
-    { id: 'ch12_solutions', name: 'Solutions', class_level: 12, display_order: 14, category: 'Physical' },
-    { id: 'ch12_electrochem', name: 'Electrochemistry', class_level: 12, display_order: 15, category: 'Physical' },
-    { id: 'ch12_kinetics', name: 'Chemical Kinetics', class_level: 12, display_order: 16, category: 'Physical' },
-    { id: 'ch12_pblock', name: 'P Block (12th)', class_level: 12, display_order: 17, category: 'Inorganic' },
-    { id: 'ch12_dblock', name: 'D & F Block', class_level: 12, display_order: 18, category: 'Inorganic' },
-    { id: 'ch12_coord', name: 'Coordination Compounds', class_level: 12, display_order: 19, category: 'Inorganic' },
-    { id: 'ch12_haloalkanes', name: 'Haloalkanes & Haloarenes', class_level: 12, display_order: 20, category: 'Organic' },
-    { id: 'ch12_alcohols', name: 'Alcohols, Phenols & Ethers', class_level: 12, display_order: 21, category: 'Organic' },
-    { id: 'ch12_carbonyl', name: 'Aldehydes, Ketones and Carboxylic Acids', class_level: 12, display_order: 22, category: 'Organic' },
-    { id: 'ch12_amines', name: 'Amines', class_level: 12, display_order: 23, category: 'Organic' },
-    { id: 'ch12_biomolecules', name: 'Biomolecules', class_level: 12, display_order: 24, category: 'Organic' },
-    { id: 'ch12_salt', name: 'Salt Analysis', class_level: 12, display_order: 25, category: 'Practical' },
-    { id: 'ch12_prac_phys', name: 'Practical Physical Chemistry', class_level: 12, display_order: 26, category: 'Practical' },
-];
-
-export async function saveTaxonomyNode(node: TaxonomyNode): Promise<{ success: boolean; message: string }> {
-    return { success: false, message: 'Use admin panel for chapter management' };
-}
-
-export async function deleteTaxonomyNode(nodeId: string): Promise<{ success: boolean; message: string }> {
-    return { success: false, message: 'Use admin panel for chapter management' };
+    return TAXONOMY_FROM_CSV
+        .filter(n => n.type === 'chapter' && (n.class_level ?? 0) >= 11 && CHEM_CHAPTER_TYPES.has(n.chapterType ?? ''))
+        .map(n => ({
+            id: n.id,
+            name: n.name,
+            class_level: n.class_level!,
+            display_order: n.sequence_order ?? 0,
+            category: CHAPTER_TYPE_TO_CATEGORY[n.chapterType ?? ''] ?? 'Physical',
+        }));
 }
 
 // Aggregations over questions_v2 are expensive and the result only changes when
@@ -368,11 +321,6 @@ export async function getChapterStarCounts(): Promise<Record<string, number>> {
     }
 }
 
-export async function syncSupabaseToMongo(): Promise<{ success: boolean; message: string; count?: number }> {
-    // V2: No sync needed - fresh database
-    return { success: true, message: 'V2 System: No sync required', count: 0 };
-}
-
 // Fetch all published questions for a single chapter (used by per-chapter pages)
 // Pass examBoard to scope results to JEE or NEET only. Omit for unfiltered (legacy).
 export async function getChapterQuestions(chapterId: string, examBoard?: 'JEE' | 'NEET'): Promise<QuestionPageType[]> {
@@ -391,36 +339,7 @@ export async function getChapterQuestions(chapterId: string, examBoard?: 'JEE' |
             .sort({ display_id: 1 })
             .lean();
 
-        return docs.map((q: MongoQuestionDoc): QuestionPageType => ({
-            id: toString(q._id),
-            display_id: q.display_id || toString(q._id)?.slice(0, 8)?.toUpperCase() || 'Q',
-            question_text: { markdown: q.question_text?.markdown || '' },
-            type: q.type as QuestionPageType['type'],
-            options: q.options || [],
-            answer: q.answer,
-            solution: {
-                text_markdown: q.solution?.markdown || q.solution?.text_markdown || '',
-                video_url: q.solution?.video_url || undefined,
-                asset_ids: q.solution?.asset_ids as Record<string, string[]> | undefined,
-                latex_validated: q.solution?.latex_validated || false,
-            },
-            metadata: {
-                difficultyLevel: (q.metadata?.difficultyLevel || 3) as 1 | 2 | 3 | 4 | 5,
-                chapter_id: q.metadata?.chapter_id || '',
-                subject: (q.metadata?.subject || 'chemistry') as 'chemistry' | 'physics' | 'maths' | 'biology',
-                tags: q.metadata?.tags || [],
-                // Modern field is the source of truth; fall back to legacy only if sourceType missing.
-                is_pyq: q.metadata?.sourceType === 'PYQ' || q.metadata?.is_pyq || false,
-                is_top_pyq: q.metadata?.is_top_pyq || false,  // KEEP — Top Questions feature
-                exam_source: (q.metadata?.examDetails || q.metadata?.exam_source) as Record<string, unknown> | undefined,
-                // examBoard kept in response shape for client-side compat;
-                // sourced from canonical applicableExams[0] with legacy fallback.
-                examBoard: ((q.metadata?.applicableExams?.[0]) || q.metadata?.examBoard) as 'JEE' | 'NEET' | undefined,
-                sourceType: q.metadata?.sourceType as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined,
-                examDetails: q.metadata?.examDetails as Record<string, unknown> | undefined,
-            },
-            svg_scales: q.svg_scales || {},
-        }));
+        return docs.map((q: MongoQuestionDoc) => mapDocToQuestion(q));
     } catch (error) {
         console.error('Failed to get chapter questions:', error);
         return [];

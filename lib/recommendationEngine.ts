@@ -41,9 +41,7 @@
  *     URL, reason). UI never reaches back into the engine for context.
  */
 
-import connectToDatabase from '@/lib/mongodb';
-import { UserProgress } from '@/lib/models/UserProgress';
-import { ResourceLink, ResourceType } from '@/lib/models/ResourceLink';
+import type { ResourceType } from '@/lib/models/ResourceLink';
 
 // ── Public types — these are the API contract the UI depends on. ─────────
 
@@ -105,22 +103,10 @@ export async function getRecommendations(
 ): Promise<RecommendationItem[]> {
   const limit = Math.min(Math.max(opts.limit ?? 5, 1), 20);
 
-  // ── BRIDGE — gates closed. Once livebook/lecture content + ResourceLink
-  //    rows exist, replace this block with the algorithm in the file header.
-  //    Below is the wiring you'd uncomment to do step 1; intentionally
-  //    commented so the function stays a true no-op for now (no DB reads).
-
-  // await connectToDatabase();
-  // const progress = await UserProgress.findById(userId)
-  //   .select('concept_mastery chapter_progress')
-  //   .lean();
-  // if (!progress) return [];
-  // // … score & rank concepts, look up ResourceLink, build items …
-
-  // Suppress unused-import lint while gates are closed. Removing the imports
-  // would require re-adding them when the gates open and a future engineer
-  // would not see the intended dependency surface. Keep the imports.
-  void connectToDatabase; void UserProgress; void ResourceLink; void limit;
+  // STUB — gates closed. When livebook/lecture content + ResourceLink rows
+  // exist, implement the algorithm from the file header. Re-add imports for
+  // connectToDatabase / UserProgress / ResourceLink at that point.
+  void limit;
 
   return [];
 }

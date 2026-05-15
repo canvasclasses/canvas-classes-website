@@ -23,7 +23,7 @@ import {
   type MicroFeedbackResponse,
   type NextQuestionDecision,
   type AdaptiveEngineInputV2,
-} from '@/lib/adaptiveEngine';
+} from '@/app/the-crucible/lib/adaptiveEngine';
 import type { IStudentChapterProfile } from '@/lib/models/StudentChapterProfile';
 import {
   SESSION_PHASE_DIAGNOSTIC,

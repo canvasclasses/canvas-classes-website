@@ -2,25 +2,8 @@
 
 import { forwardRef } from 'react';
 import type React from 'react';
-import MathRenderer from './MathRenderer';
-
-interface Question {
-  _id: string;
-  display_id: string;
-  question_text: { markdown: string };
-  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC';
-  options: Array<{ id: string; text: string; is_correct: boolean }>;
-  answer?: { integer_value?: number; decimal_value?: number };
-  solution: { text_markdown: string };
-  metadata: { 
-    difficultyLevel: 1 | 2 | 3 | 4 | 5; 
-    chapter_id: string;
-    questionNature?: 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis';
-    examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
-    sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
-  };
-  svg_scales?: Record<string, number>;
-}
+import MathRenderer from '@/components/MathRenderer';
+import type { AdminQuestion as Question } from '../types';
 
 interface QuestionCardProps {
   question: Question;

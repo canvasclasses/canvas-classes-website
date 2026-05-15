@@ -11,7 +11,7 @@
 // order array, that question is sorted to the end of the chapter.
 //
 // Tag IDs match exactly with `metadata.tags[].tag_id` in MongoDB and with the
-// taxonomy in app/crucible/admin/taxonomy/taxonomyData_from_csv.ts.
+// taxonomy in lib/taxonomy/taxonomyData_from_csv.ts.
 
 export const NCERT_TOPIC_ORDER: Record<string, string[]> = {
     // ─── Class 11 ─────────────────────────────────────────────────────────────

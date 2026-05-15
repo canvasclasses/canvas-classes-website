@@ -6,7 +6,7 @@ import { Chapter, Question } from './types';
 import BrowseView from './BrowseView';
 import AdaptiveSession from './guided-practice/AdaptiveSession';
 import WorkedExamplesCarousel from './guided-practice/WorkedExamplesCarousel';
-import { TAXONOMY_FROM_CSV } from '@/app/crucible/admin/taxonomy/taxonomyData_from_csv';
+import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
 import { FEATURE_ADAPTIVE_PRACTICE } from '@/constants/adaptivePractice';
 
 // API response types

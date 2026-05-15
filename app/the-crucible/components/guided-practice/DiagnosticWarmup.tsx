@@ -8,7 +8,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { Question, Chapter } from '@/app/the-crucible/components/types';
-import type { ConceptBaseline, MicroFeedbackResponse } from '@/lib/adaptiveEngine';
+import type { ConceptBaseline, MicroFeedbackResponse } from '@/app/the-crucible/lib/adaptiveEngine';
 import { SESSION_DIAGNOSTIC_LENGTH } from '@/constants/adaptivePractice';
 import AdaptiveQuestionCard from './AdaptiveQuestionCard';
 import MicroFeedback from './MicroFeedback';

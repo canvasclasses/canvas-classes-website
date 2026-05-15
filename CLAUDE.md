@@ -257,10 +257,12 @@ Two-level hierarchy: **Chapter → Topic Tag**
 
 - Chapter IDs: `ch11_mole`, `ch11_atom`, `ch12_solutions`, etc.
 - Topic tag IDs: `tag_mole_1`, `tag_atom_3`, etc.
-- **Single source of truth**: `app/crucible/admin/taxonomy/taxonomyData_from_csv.ts`
+- **Single source of truth**: `lib/taxonomy/taxonomyData_from_csv.ts`
 - `metadata.chapter_id` on every `QuestionV2` document must match a chapter `id` in that file exactly
 
 The taxonomy file is auto-updated by the dashboard at `/crucible/admin/taxonomy` via `POST /api/v2/taxonomy/save`. Do not edit it manually.
+
+**For tag-level rules** (which tags to apply, how to weight them, micro-concept naming conventions): read `_agents/workflows/CRUCIBLE_TAXONOMY_AND_TAGGING_RULES.md`.
 
 ### Key Files
 
@@ -271,11 +273,18 @@ The taxonomy file is auto-updated by the dashboard at `/crucible/admin/taxonomy`
 | Chapter model | `lib/models/Chapter.ts` |
 | Asset model | `lib/models/Asset.ts` |
 | AuditLog model | `lib/models/AuditLog.ts` |
-| Taxonomy source of truth | `app/crucible/admin/taxonomy/taxonomyData_from_csv.ts` |
+| Taxonomy source of truth | `lib/taxonomy/taxonomyData_from_csv.ts` |
+| Math/LaTeX renderer (shared) | `components/MathRenderer.tsx` |
+| Adaptive engine (Crucible) | `app/the-crucible/lib/adaptiveEngine.ts` |
+| Recommendation engine | `lib/recommendationEngine.ts` |
+| Difficulty utils (shared) | `lib/difficultyUtils.ts` |
 | LaTeX validator utility | `lib/latexValidator.ts` |
 | V2 questions API | `app/api/v2/questions/route.ts` |
 | Admin question editor | `app/crucible/admin/page.tsx` |
+| Student server actions | `app/the-crucible/actions.ts` |
 | Student landing | `app/the-crucible/page.tsx` |
+
+> **Import direction rule:** student-facing code (`app/the-crucible/`) and notes pages must never import from `app/crucible/admin/`. Shared modules belong in `lib/`, `lib/taxonomy/`, or `components/`.
 
 ### Simplicity Constraint
 

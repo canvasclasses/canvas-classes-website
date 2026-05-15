@@ -2,28 +2,8 @@
 
 import { useState } from 'react';
 import { BarChart3, TrendingUp, AlertTriangle, CheckCircle, Tag, BookOpen, Layers, Target, FlaskConical, GraduationCap } from 'lucide-react';
-import { TAXONOMY_FROM_CSV } from './taxonomy/taxonomyData_from_csv';
-
-interface Question {
-    metadata: {
-        chapter_id: string;
-        tags?: Array<{ tag_id: string }>;
-        difficultyLevel?: number;
-        // Modern canonical fields (preferred):
-        sourceType?: string;
-        examDetails?: { exam?: string };
-        // Legacy fields (read with bridge fallback):
-        is_pyq?: boolean;
-        exam_source?: { exam?: string };
-        microConcept?: string;
-    };
-    type?: string;
-}
-
-interface Chapter {
-    _id: string;
-    name: string;
-}
+import { TAXONOMY_FROM_CSV } from '@/lib/taxonomy/taxonomyData_from_csv';
+import type { AdminQuestion as Question, AdminChapter as Chapter } from './types';
 
 interface AnalyticsDashboardProps {
     questions: Question[];

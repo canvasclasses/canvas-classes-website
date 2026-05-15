@@ -5,7 +5,7 @@
 // Emits MicroFeedback data to parent AdaptiveSession.
 
 import { useEffect, useState } from 'react';
-import type { MicroFeedbackResponse } from '@/lib/adaptiveEngine';
+import type { MicroFeedbackResponse } from '@/app/the-crucible/lib/adaptiveEngine';
 
 interface MicroFeedbackProps {
   questionId: string;

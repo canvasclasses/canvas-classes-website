@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Check, CheckCircle2, ExternalLink, Lightbulb, Loader2, X, XCircle } from 'lucide-react';
-import MathRenderer from '../../crucible/admin/components/MathRenderer';
+import MathRenderer from '@/components/MathRenderer';
 
 // Shape returned by /api/v2/notes-quicktest/[chapterId]. Mirrors the route's
 // QuickTestQuestion type. Kept in sync manually — both are small.

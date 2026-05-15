@@ -6,7 +6,7 @@ import {
   ChevronLeft, ChevronRight, LayoutList, LayoutGrid, Monitor, Smartphone,
   Wand2, Filter, MonitorPlay,
 } from 'lucide-react';
-import MathRenderer from './MathRenderer';
+import MathRenderer from '@/components/MathRenderer';
 import SVGDropZone from './SVGDropZone';
 import SVGScaleControls from './SVGScaleControls';
 import VideoDropZone from './VideoDropZone';

@@ -12,11 +12,11 @@ description: Crucible question-bank taxonomy, tagging, and post-insertion mainte
 
 ## 0. PRIMARY DIRECTIVES
 
-1. **Single source of truth** for the taxonomy is `app/crucible/admin/taxonomy/taxonomyData_from_csv.ts`. Every `chapter_id`, `tag_id`, and `microConcept` value stored on a question MUST resolve to a node in that file.
+1. **Single source of truth** for the taxonomy is `lib/taxonomy/taxonomyData_from_csv.ts` (canonical location).  Every `chapter_id`, `tag_id`, and `microConcept` value stored on a question MUST resolve to a node in that file.
 2. **Single source of truth** for question data is the `questions_v2` collection in MongoDB cluster `crucible-cluster`, database `crucible`. Never write to `questions` (V1 — frozen).
 3. **Never bulk-update without a dry-run first.** Every script that mutates more than 5 documents must support a `--dry-run` mode that prints proposed changes without writing.
 4. **Never delete questions.** Soft-delete only: set `deleted_at: new Date()` and `deleted_by`. Hard deletion is forbidden.
-5. **Never edit `taxonomyData_from_csv.ts` by hand if the dashboard can do it.** The Taxonomy Dashboard at `/crucible/admin/taxonomy` writes via `POST /api/v2/taxonomy/save`. Manual edits are allowed only when the dashboard cannot express the change (e.g. structural reorderings, scripted rename).
+5. **Never edit `taxonomyData_from_csv.ts` by hand if the dashboard can do it.** The Taxonomy Dashboard at `/crucible/admin/taxonomy` writes via `POST /api/v2/taxonomy/save` — it now writes directly to `lib/taxonomy/taxonomyData_from_csv.ts`. Manual edits are allowed only when the dashboard cannot express the change (e.g. structural reorderings, scripted rename).
 
 ---
 
@@ -294,4 +294,4 @@ These rules are non-negotiable and apply to every script and API route:
 - `_agents/workflows/solution-ingestion-workflow.md` — writing solutions
 - `_agents/workflows/MOCK_TEST_INGESTION_WORKFLOW.md` — mock tests
 - `lib/models/Question.v2.ts` — authoritative schema
-- `app/crucible/admin/taxonomy/taxonomyData_from_csv.ts` — taxonomy SOT
+- `lib/taxonomy/taxonomyData_from_csv.ts` — taxonomy SOT
