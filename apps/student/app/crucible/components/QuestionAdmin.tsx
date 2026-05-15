@@ -2,7 +2,6 @@
 
 import { useState, useRef } from 'react';
 import { TAXONOMY_FROM_CSV, type TaxonomyNode } from '@canvas/data/taxonomy/taxonomyData_from_csv';
-import { uploadToR2, UploadResult } from '@canvas/core/r2-storage';
 import { 
   Plus, 
   Upload, 
@@ -81,26 +80,36 @@ export default function QuestionAdmin() {
 
     setAudioUploading(true);
     try {
-      // Generate display ID placeholder
-      const displayId = `${chapterId.toUpperCase().replace('CH_', '')}-XXX`;
-      const fileName = `${displayId}_audio_${Date.now()}.mp3`;
-      
-      const buffer = await audioFile.arrayBuffer();
-      const result: UploadResult = await uploadToR2(
-        Buffer.from(buffer),
-        fileName,
-        'audio',
-        audioFile.type
-      );
+      // Upload via server route (POST /api/v2/assets/upload). R2 credentials
+      // live server-side; the browser only sends the file. The route also
+      // creates an Asset DB record and audit log — strictly more than the
+      // previous client-direct R2 upload did.
+      const formData = new FormData();
+      formData.append('file', audioFile);
+      formData.append('field_type', 'audio');
+      formData.append('context', 'practice');
 
-      if (result.success && result.url) {
-        setAudioUrl(result.url);
+      const res = await fetch('/api/v2/assets/upload', {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      });
+
+      let payload: { success?: boolean; error?: string; data?: { file?: { cdn_url?: string } } } = {};
+      try {
+        payload = await res.json();
+      } catch {
+        // non-JSON response (e.g. 502); fall through to generic error
+      }
+
+      if (res.ok && payload.success && payload.data?.file?.cdn_url) {
+        setAudioUrl(payload.data.file.cdn_url);
         setMessage({ type: 'success', text: 'Audio uploaded successfully!' });
       } else {
-        setMessage({ type: 'error', text: result.error || 'Upload failed' });
+        setMessage({ type: 'error', text: payload.error || 'Upload failed' });
       }
     } catch (error) {
-      setMessage({ type: 'error', text: 'Upload failed. Check R2 configuration.' });
+      setMessage({ type: 'error', text: 'Upload failed. Please try again.' });
     } finally {
       setAudioUploading(false);
     }

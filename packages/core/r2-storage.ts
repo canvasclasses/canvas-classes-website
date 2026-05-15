@@ -1,3 +1,4 @@
+import 'server-only';
 import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
@@ -5,6 +6,14 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 // CLOUDFLARE R2 CONFIGURATION
 // S3-compatible API for audio/image storage
 // ============================================
+//
+// `import 'server-only'` is the tripwire: if any `'use client'` component
+// ever tries to import this module, Next.js will fail the build with a
+// clear "you are importing a server-only file into the client" error.
+// This prevents R2 credentials from leaking into the browser bundle and
+// catches the upload-from-browser anti-pattern at build time. Upload from
+// the browser via POST /api/v2/assets/upload (or the analogous routes for
+// blog/book uploads) — never call uploadToR2 directly from a client file.
 
 // All R2 config is read at call time (inside functions) to avoid Next.js module cache issues.
 // Do NOT read process.env at module level — values may be undefined on first load.
