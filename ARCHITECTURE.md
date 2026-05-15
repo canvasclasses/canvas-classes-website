@@ -1,5 +1,10 @@
 # Canvas Classes - Project Architecture & Design System
 
+> **⚠️ This document is not actively maintained** (last updated Feb 2026).
+> For agent/AI instructions: read **`CLAUDE.md`** (auto-loaded every session).
+> For Crucible architecture: read **`_agents/CRUCIBLE_ARCHITECTURE.md`**.
+> This file is kept for historical reference only — do not rely on it for current decisions.
+
 > **Last Updated:** February 2026
 > **Purpose:** This document provides a comprehensive overview of the Canvas Classes website architecture, design decisions, and feature implementations. It serves as a reference for developers and AI assistants to understand the project's evolution.
 
