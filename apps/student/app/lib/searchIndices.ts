@@ -1,5 +1,5 @@
 import { unstable_cache } from 'next/cache';
-import { fetchOrganicReactions } from './organicReactionsData';
+import { fetchOrganicReactions } from '@/features/simulations/data/organicReactionsData';
 import { fetchTop50Data } from './top50Data';
 import { fetch2MinData } from './twoMinData';
 import { fetchLecturesData } from './lecturesData';

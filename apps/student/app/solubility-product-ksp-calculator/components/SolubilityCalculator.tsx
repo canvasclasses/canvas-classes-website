@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Salt, formatKsp, calculateSolubility, formatSolubility, solubilityFormulas, getDissociationEquation } from '@/app/lib/kspData';
+import { Salt, formatKsp, calculateSolubility, formatSolubility, solubilityFormulas, getDissociationEquation } from '@/features/simulations/data/kspData';
 import CommonIonSimulation from './CommonIonSimulation';
 
 interface SolubilityCalculatorProps {

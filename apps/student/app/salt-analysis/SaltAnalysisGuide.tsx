@@ -1,7 +1,7 @@
 import { X, BookOpen, FlaskConical, Beaker } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { CATION_GROUPS, ANION_GROUPS, ANIONS } from '../lib/saltAnalysisData';
+import { CATION_GROUPS, ANION_GROUPS, ANIONS } from '@/features/simulations/data/saltAnalysisData';
 
 export default function SaltAnalysisGuide() {
     const [activeTab, setActiveTab] = useState<'anions' | 'cations'>('anions');

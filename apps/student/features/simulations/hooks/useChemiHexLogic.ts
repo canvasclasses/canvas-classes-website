@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { MoleculeNodeData, Reagent, GameEdge } from '../types/chemihex';
+import { MoleculeNodeData, Reagent, GameEdge } from '@/types/chemihex';
 import reagentsRaw from '../data/reagents_data.json';
 
 const reagents = reagentsRaw as unknown as Reagent[];

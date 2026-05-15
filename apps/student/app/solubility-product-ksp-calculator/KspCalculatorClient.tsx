@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { kspData, categories } from '../lib/kspData';
+import { kspData, categories } from '@/features/simulations/data/kspData';
 import dynamic from 'next/dynamic';
 import { Sparkles, Calculator, ArrowRight, FlaskConical, Loader2 } from 'lucide-react';
 import Link from 'next/link';

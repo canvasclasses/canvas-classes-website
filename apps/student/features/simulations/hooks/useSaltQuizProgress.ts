@@ -10,7 +10,7 @@ import {
     getMasteryLevel,
     MasteryLevel
 } from '@/features/flashcards/lib/spacedRepetition';
-import { syncProgressWithCloud, saveProgressItemToCloud } from '../utils/progressSync';
+import { syncProgressWithCloud, saveProgressItemToCloud } from '@/app/utils/progressSync';
 
 // Separate storage keys for MCQs and Flashcards
 const MCQ_STORAGE_KEY = 'canvas_salt_quiz_mcq_progress';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MoleculeNodeData } from '../../types/chemihex';
+import { MoleculeNodeData } from '@/types/chemihex';
 import { FlaskConical } from 'lucide-react';
 
 interface MoleculeNodeProps {

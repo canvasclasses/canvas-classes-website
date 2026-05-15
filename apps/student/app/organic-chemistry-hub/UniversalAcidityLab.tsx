@@ -17,7 +17,7 @@ import {
   calculatePkaHammett,
   getHammettExplanation,
   type HammettCalculationResult,
-} from '@/lib/hammettCalculator';
+} from '@/features/simulations/lib/hammettCalculator';
 import {
   OrthoEffectSection,
 } from './AcidityEducationCards.v2';

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Salt, formatKspParts, calculateSolubility, formatSolubilityParts } from '@/app/lib/kspData';
+import { Salt, formatKspParts, calculateSolubility, formatSolubilityParts } from '@/features/simulations/data/kspData';
 
 interface KspTableProps {
     salts: Salt[];

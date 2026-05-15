@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback } from 'react';
-import { Salt, formatKsp, calculateSolubility, formatSolubility, getDissociationEquation, solubilityFormulas } from '@/app/lib/kspData';
+import { Salt, formatKsp, calculateSolubility, formatSolubility, getDissociationEquation, solubilityFormulas } from '@/features/simulations/data/kspData';
 
 interface QuizModeProps {
     salts: Salt[];

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Reagent } from '../../types/chemihex';
+import { Reagent } from '@/types/chemihex';
 import { ReagentCard } from './ReagentCard';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, BookOpen } from 'lucide-react';

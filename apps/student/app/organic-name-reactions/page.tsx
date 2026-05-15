@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import OrganicReactionsClient from './OrganicReactionsClient';
-import { fetchOrganicReactions } from '../lib/organicReactionsData';
+import { fetchOrganicReactions } from '@/features/simulations/data/organicReactionsData';
 
 export const revalidate = 86400;
 

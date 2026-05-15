@@ -15,7 +15,7 @@ import {
     ChevronRight,
     X,
 } from 'lucide-react';
-import { ELEMENTS, type Element } from '../lib/elementsData';
+import { ELEMENTS, type Element } from '@/features/simulations/data/elementsData';
 
 type GameState = 'idle' | 'playing' | 'finished';
 type BlockFilter = 'all' | 's' | 'p' | 'd' | 'f';

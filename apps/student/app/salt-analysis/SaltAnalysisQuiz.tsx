@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { MASTERY_QUESTIONS } from './quizData';
-import { useSaltQuizProgress } from '../hooks/useSaltQuizProgress';
+import { useSaltQuizProgress } from '@/features/simulations/hooks/useSaltQuizProgress';
 import { QualityRating, MasteryLevel } from '@/features/flashcards/lib/spacedRepetition';
 
 // ============ MCQ QUESTIONS DATA ============

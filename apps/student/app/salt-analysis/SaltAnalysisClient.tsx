@@ -46,7 +46,7 @@ import {
     type Salt,
     type Anion,
     type Cation,
-} from '../lib/saltAnalysisData';
+} from '@/features/simulations/data/saltAnalysisData';
 
 // Loading skeleton component
 const LoadingSkeleton = () => (

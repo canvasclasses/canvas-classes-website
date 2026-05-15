@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Salt, formatKsp, calculateSolubility, formatSolubility, getDissociationEquation, solubilityFormulas, formatKspParts, formatSolubilityParts } from '@/app/lib/kspData';
+import { Salt, formatKsp, calculateSolubility, formatSolubility, getDissociationEquation, solubilityFormulas, formatKspParts, formatSolubilityParts } from '@/features/simulations/data/kspData';
 
 interface ComparisonToolProps {
     salts: Salt[];

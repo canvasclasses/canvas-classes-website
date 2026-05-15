@@ -4,7 +4,7 @@ import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Type, Image as ImageIcon, Music, Trash2, Plus, ArrowRight, Save, ToggleLeft as Toggle, Mic, Square, Circle, Upload, X, RefreshCw, Play, Check } from 'lucide-react';
 import { Level } from '../ConversionGame';
-import { uploadAsset } from '../../../lib/uploadUtils';
+import { uploadAsset } from '@/lib/uploadUtils';
 
 interface Reagent {
     id: string;

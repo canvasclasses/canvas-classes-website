@@ -1,5 +1,5 @@
 import React from 'react';
-import { Reagent } from '../../types/chemihex';
+import { Reagent } from '@/types/chemihex';
 import { motion } from 'framer-motion';
 import { FlaskConical, Info, AlertTriangle } from 'lucide-react';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { Salt, categories as allCategories } from '@/app/lib/kspData';
+import { Salt, categories as allCategories } from '@/features/simulations/data/kspData';
 
 interface KspGraphProps {
     salts: Salt[];

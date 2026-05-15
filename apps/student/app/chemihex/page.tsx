@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useChemiHexLogic } from '../../hooks/useChemiHexLogic';
-import { MoleculeNode } from '../../components/chemihex/MoleculeNode';
-import { ReagentDeck } from '../../components/chemihex/ReagentDeck';
-import { ReactionTable } from '../../components/chemihex/ReactionTable';
+import { useChemiHexLogic } from '@/features/simulations/hooks/useChemiHexLogic';
+import { MoleculeNode } from '@/features/simulations/components/chemihex/MoleculeNode';
+import { ReagentDeck } from '@/features/simulations/components/chemihex/ReagentDeck';
+import { ReactionTable } from '@/features/simulations/components/chemihex/ReactionTable';
 import { FlaskConical, AlertTriangle, CheckCircle, HelpCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 

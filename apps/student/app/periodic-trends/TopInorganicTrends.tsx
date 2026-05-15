@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { inorganicTrendsData } from '@/app/lib/inorganicTrendsData';
+import { inorganicTrendsData } from '@/features/simulations/data/inorganicTrendsData';
 import { BookOpen, Trophy, Sparkles, Lightbulb, ChevronDown, Hash, X, Target, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';

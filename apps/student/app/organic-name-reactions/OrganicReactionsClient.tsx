@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
-import { OrganicReaction, getReactionStats, getUniqueReactionTypes } from '../lib/organicReactionsData';
+import { OrganicReaction, getReactionStats, getUniqueReactionTypes } from '@/features/simulations/data/organicReactionsData';
 import { Search, FlaskConical, ChevronDown, ChevronUp, Info, Sparkles, BookOpen, Layers, Zap, X, Filter } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';

@@ -1,4 +1,4 @@
-import AdminDashboard from '../../../components/organic-wizard/admin/AdminDashboard';
+import AdminDashboard from '@/features/simulations/components/organic-wizard/admin/AdminDashboard';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

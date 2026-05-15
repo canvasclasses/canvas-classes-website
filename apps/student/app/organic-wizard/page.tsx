@@ -1,4 +1,4 @@
-import OrganicWizardGame from '@/components/organic-wizard/ConversionGame';
+import OrganicWizardGame from '@/features/simulations/components/organic-wizard/ConversionGame';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

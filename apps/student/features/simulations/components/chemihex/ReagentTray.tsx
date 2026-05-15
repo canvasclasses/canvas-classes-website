@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Reagent } from '../../types/chemihex';
+import { Reagent } from '@/types/chemihex';
 import { motion } from 'framer-motion';
 
 interface ReagentTrayProps {
