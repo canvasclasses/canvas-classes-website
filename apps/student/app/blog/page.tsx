@@ -1,8 +1,8 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../components/Navbar';
-import BlogGrid from './BlogGrid';
-import { getPublishedPosts } from '../lib/blogDb';
+import BlogGrid from '@/features/blog/components/BlogGrid';
+import { getPublishedPosts } from '@/features/blog/lib/blogDb';
 
 export const revalidate = 60;
 

@@ -4,10 +4,10 @@ import Navbar from '../../components/Navbar';
 import 'katex/dist/katex.min.css';
 import { ArrowLeft, Calendar, User } from 'lucide-react';
 import Link from 'next/link';
-import BlogPostContent from './BlogPostContent';
+import BlogPostContent from '@/features/blog/components/BlogPostContent';
 import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import { Metadata } from 'next';
-import { getPublishedPostBySlug, getPublishedSlugs } from '../../lib/blogDb';
+import { getPublishedPostBySlug, getPublishedSlugs } from '@/features/blog/lib/blogDb';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 

@@ -288,7 +288,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // ── Blog posts ───────────────────────────────────────────────────────────
     let blogEntries: MetadataRoute.Sitemap = [];
     try {
-        const { getPublishedSlugs } = await import('./lib/blogDb');
+        const { getPublishedSlugs } = await import('@/features/blog/lib/blogDb');
         const slugs = await getPublishedSlugs();
         blogEntries = slugs.map((slug) => ({
             url: `${BASE_URL}/blog/${slug}`,
