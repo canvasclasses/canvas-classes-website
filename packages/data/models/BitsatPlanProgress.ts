@@ -1,3 +1,4 @@
+import 'server-only';
 import mongoose, { Schema } from 'mongoose';
 
 // Tracks per-user completion of the BITSAT 30-day Chemistry plan.

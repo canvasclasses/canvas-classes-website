@@ -1,3 +1,4 @@
+import 'server-only';
 /**
  * MongoDB Connection Utility
  * 

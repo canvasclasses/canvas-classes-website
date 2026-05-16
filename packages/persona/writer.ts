@@ -1,3 +1,4 @@
+import 'server-only';
 import type { HydratedDocument } from 'mongoose';
 import type {
   AttemptConfidence,

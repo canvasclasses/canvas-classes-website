@@ -55,3 +55,14 @@ features/books/
 - Book/BookPage Mongoose models live in `@canvas/data/models/`.
 - `app/api/v2/books/*` route handlers stay at the Next.js route level.
 - Cross-app components like `MathRenderer` are in `@canvas/ui`.
+
+## Cross-feature dependencies
+
+Outbound edges (books importing from other features). Single-consumer edges —
+if a second non-{simulations} consumer of `MoleculeViewer` appears, promote it
+to `apps/student/components/` or `@canvas/ui/`.
+
+| File | Imports from | Symbol |
+|---|---|---|
+| `components/renderer/blocks/Molecule2DBlockRenderer.tsx` | `@/features/simulations/components/organic-wizard/MoleculeViewer` | `MoleculeViewer` (default) |
+| `components/editor/blocks/Molecule2DEditor.tsx` | `@/features/simulations/components/organic-wizard/MoleculeViewer` | `MoleculeViewer` (default) |

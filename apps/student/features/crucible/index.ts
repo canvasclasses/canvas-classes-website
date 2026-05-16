@@ -18,3 +18,14 @@
 // Phase 5 will split the /crucible/admin/* sub-tree out into apps/admin/;
 // the admin components are organized under features/crucible/components/admin/
 // to make that extraction surgical.
+
+// ── Cross-feature surface ───────────────────────────────────────────────────
+// Symbols consumed by OTHER features should be re-exported here so the import
+// site is stable across future internal refactors. Admin components are
+// intentionally NOT re-exported — they are admin-only and not for cross-feature
+// use (Phase 5 will move them to apps/admin/).
+
+export { default as CrucibleBrand } from './components/CrucibleBrand';
+export { default as CrucibleQuestionCarousel } from './components/CrucibleQuestionCarousel';
+export type { CarouselQuestion } from './components/CrucibleQuestionCarousel';
+export { formatExamLabel } from './components/examLabel';

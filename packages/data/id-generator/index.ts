@@ -1,3 +1,4 @@
+import 'server-only';
 import { QuestionV2 } from '../models/Question.v2';
 
 const CHAPTER_PREFIX_MAP: Record<string, string> = {

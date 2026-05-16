@@ -1,3 +1,4 @@
+import 'server-only';
 import mongoose, { Schema } from 'mongoose';
 
 // Questionnaire items for the Career Explorer.

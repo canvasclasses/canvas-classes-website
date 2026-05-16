@@ -1,3 +1,4 @@
+import 'server-only';
 import mongoose, { Schema } from 'mongoose';
 
 // Career taxonomy for the Career Explorer module.

@@ -1,3 +1,4 @@
+import 'server-only';
 // ActivityLog — community stats signal (used by /api/v2/questions/[id]/stats).
 // Was previously the last surviving export of the V1 lib/models.ts wrapper;
 // promoted into the data package as its own file during the monorepo migration.

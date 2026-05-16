@@ -1,3 +1,4 @@
+import 'server-only';
 import mongoose, { Schema, Document, Model } from 'mongoose';
 import { Book, BookChapter } from '../types/books';
 

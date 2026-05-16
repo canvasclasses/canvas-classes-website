@@ -1,3 +1,4 @@
+import 'server-only';
 import { Schema, model, models } from 'mongoose';
 
 export type BlogStatus = 'idea' | 'draft' | 'review' | 'scheduled' | 'published' | 'archived';

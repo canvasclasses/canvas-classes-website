@@ -5,6 +5,7 @@ import connectToDatabase from '@canvas/data/db/mongodb';
 import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { Chapter } from '@canvas/data/models/Chapter';
 import { AuditLog } from '@canvas/data/models/AuditLog';
+import { getAuthenticatedUser, isAdmin } from '@/lib/auth';
 
 // Chapter prefix map — CANONICAL prefixes matching actual display_id values in DB
 // IDs MUST match taxonomyData_from_csv.ts chapter IDs (ch11_* / ch12_* scheme)
@@ -57,6 +58,14 @@ export async function POST(
 ) {
   const params = await context.params;
   try {
+    const user = await getAuthenticatedUser(request);
+    if (!user || !isAdmin(user.email)) {
+      return NextResponse.json(
+        { success: false, error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
     await connectToDatabase();
 
     const questionId = params.id;
@@ -135,7 +144,7 @@ export async function POST(
         'metadata.chapter_id': new_chapter_id,
         'metadata.tags': new_tags,
         updated_at: new Date(),
-        updated_by: 'admin',
+        updated_by: user.email ?? user.id,
       }
     });
 
@@ -173,8 +182,8 @@ export async function POST(
         { field: 'metadata.chapter_id', old_value: oldChapterId, new_value: new_chapter_id },
         { field: 'metadata.tags', old_value: question.metadata?.tags, new_value: new_tags },
       ],
-      user_id: 'admin',
-      user_email: 'admin@canvasclasses.com',
+      user_id: user.id,
+      user_email: user.email ?? 'admin@canvasclasses.com',
       timestamp: new Date(),
       can_rollback: true,
     }).save();

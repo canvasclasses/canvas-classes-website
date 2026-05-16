@@ -39,3 +39,13 @@ features/legal/
 Bump `PRIVACY_VERSION` or `TERMS_VERSION` in `lib/versions.ts`. The
 `ConsentRefreshModal` will prompt users who accepted older versions to
 review and re-accept.
+
+## Cross-feature dependencies
+
+Outbound edges (legal importing from other features). Single-consumer edge —
+if a second non-{landing} consumer of `FAQSection` appears, promote it to
+`apps/student/components/`.
+
+| File | Imports from | Symbol |
+|---|---|---|
+| `components/AboutPage.tsx` | `@/features/landing/components/FAQSection` | `FAQSection` (default) |

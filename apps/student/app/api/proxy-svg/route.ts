@@ -1,6 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
+
+const svgProxyLimiter = createRateLimiter({ max: 30, windowMs: 60_000 });
 
 export async function GET(req: NextRequest) {
+  const ip = getClientIp(req);
+  const rl = svgProxyLimiter.check(ip);
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please wait a minute.' },
+      { status: 429 },
+    );
+  }
+
   const url = req.nextUrl.searchParams.get('url');
   if (!url) return NextResponse.json({ error: 'Missing url' }, { status: 400 });
 

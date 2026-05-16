@@ -1,3 +1,4 @@
+import 'server-only';
 import mongoose, { Schema } from 'mongoose';
 
 // A CareerProfile is one student's pass through the questionnaire.

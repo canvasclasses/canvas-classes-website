@@ -1,3 +1,4 @@
+import 'server-only';
 import mongoose, { Schema } from 'mongoose';
 
 // CareerMatch stores one computed match for (profile, career). One row per

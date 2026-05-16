@@ -1,3 +1,4 @@
+import 'server-only';
 import { Schema, model, models, Document } from 'mongoose';
 
 export type BlogIdeaStatus = 'pending' | 'drafted' | 'archived';

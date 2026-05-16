@@ -71,6 +71,18 @@ is a follow-up task.
 consumer — acceptable. If a third feature consumes Crucible components, the
 shared bits get promoted to `apps/student/components/` or `@canvas/ui`.
 
+## Cross-feature dependencies
+
+Outbound edges (Crucible importing from other features). All are accepted
+single-consumer edges — if a second non-{flashcards} consumer of these
+helpers appears, promote them to `@canvas/data` or `apps/student/lib/`.
+
+| File | Imports from | Symbols |
+|---|---|---|
+| `components/admin/EnhancedFlashcardAdmin.tsx` | `@/features/flashcards/lib/flashcardMarkdown` | `flashcardMarkdownComponents` |
+| `components/admin/EnhancedFlashcardAdmin.tsx` | `@/features/flashcards/lib/flashcardTaxonomy` | `getCategoryNames`, `getFlashcardChaptersByCategory` |
+| `components/admin/FlashcardImageScaleControls.tsx` | `@/features/flashcards/lib/flashcardMarkdown` | `findImages`, `setImageWidthInText` |
+
 ## Phase 5 prep
 
 Admin code is namespaced under `features/crucible/components/admin/` +

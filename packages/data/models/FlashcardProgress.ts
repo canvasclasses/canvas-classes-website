@@ -1,3 +1,4 @@
+import 'server-only';
 /**
  * Per-user flashcard SRS state. The authoritative store for spaced-repetition
  * progress — Supabase + localStorage are caches in front of this.

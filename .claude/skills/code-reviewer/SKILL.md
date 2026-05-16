@@ -47,11 +47,12 @@ Skip any section that has no items.
 - [ ] `process.env.NODE_ENV === 'development'` never used as an auth bypass (use `isLocalhostDev()`)
 
 ### Import direction
-- [ ] Student code (`app/the-crucible/`) does NOT import from `app/crucible/admin/` — use shared locations:
-  - Math/LaTeX: `@/components/MathRenderer`
-  - Taxonomy: `@/lib/taxonomy/taxonomyData_from_csv`
-  - Adaptive engine: `@/app/the-crucible/lib/adaptiveEngine`
-- [ ] Cross-cutting utilities stay in `lib/`, not inside feature folders
+- [ ] Student code (`apps/student/features/crucible/` non-admin) does NOT import from `apps/student/features/crucible/components/admin/` — use shared locations:
+  - Math/LaTeX: `@canvas/ui/MathRenderer`
+  - Taxonomy: `@canvas/data/taxonomy/taxonomyData_from_csv`
+  - Adaptive engine: `@/features/crucible/lib/adaptiveEngine`
+- [ ] Cross-cutting utilities stay in `packages/data/`, `packages/persona/`, `packages/core/`, `packages/ui/`, or `apps/student/lib/` — not inside feature folders
+- [ ] Packages (`packages/*/`) never import from `apps/*` or use the `@/` alias — relative paths only
 
 ### MongoDB / Mongoose
 - [ ] `lean()` on read-only queries

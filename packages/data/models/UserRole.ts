@@ -1,3 +1,4 @@
+import 'server-only';
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export type Subject = 'chemistry' | 'physics' | 'mathematics';

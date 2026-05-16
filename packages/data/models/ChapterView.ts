@@ -1,3 +1,4 @@
+import 'server-only';
 import mongoose, { Schema } from 'mongoose';
 
 // Per-chapter visit counter for the handwritten-notes trust strip.
