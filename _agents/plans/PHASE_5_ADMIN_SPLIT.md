@@ -1,8 +1,22 @@
 # Phase 5 — Admin App Split
 
-**Status:** in progress (as of 2026-05-16)
+**Status:** code complete (as of 2026-05-16). Final commit `4199ba0`. Pending manual smoke test (5.9) before any preview deploy.
 **Branch:** `code-refactor`
 **Predecessor:** Phase 4.++ (`6de1434`)
+
+## Commits
+
+| Commit | Sub-phase |
+|---|---|
+| `e71d5a7` | 5.0 — decision record |
+| `c6ad600` | 5.1 — scaffold apps/admin Next.js shell |
+| `0f34ae4` | 5.2 — admin auth + middleware (Shape A: Supabase + ADMIN_EMAILS) |
+| `09b7f89` | 5.3+5.4 — admin components and route shells moved |
+| `3812df4` | 5.5a — move pure-admin API routes |
+| `96994fa` | 5.5b — split MIXED API routes + finish admin moves |
+| `c17a407` | 5.7 — cleanup student app + feature READMEs |
+| `6b8a064` | 5.10 — code-reviewer fixes (C1: 8 duplicated routes; C2: stale /crucible URLs; I1-I3) |
+| `4199ba0` | 5.11 — security-auditor fix (H1: open-redirect via backslash) |
 
 This document records the load-bearing decisions for Phase 5 so they are not
 relitigated mid-implementation. If an implementation diverges from this doc,

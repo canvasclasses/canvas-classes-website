@@ -14,7 +14,7 @@ If uncertain about scope, stop and ask. Do not pick silently.
 
 ---
 
-> **Before changing anything inside `apps/student/app/the-crucible/`, `apps/student/app/crucible/admin/`, `apps/student/app/api/v2/`, `apps/student/features/crucible/`, `packages/data/models/UserProgress.ts`, `packages/data/models/StudentChapterProfile.ts`, `packages/persona/`, or `packages/data/models/ResourceLink.ts` — read [`_agents/CRUCIBLE_ARCHITECTURE.md`](_agents/CRUCIBLE_ARCHITECTURE.md).** It is the canonical reference for Crucible's structure, the persona pipeline, the recommendation bridge, and the invariants that must not be broken. If anything in this file or in code comments contradicts it, that document wins; the fix is to update the doc, never to silently diverge.
+> **Before changing anything inside `apps/student/app/the-crucible/`, `apps/student/app/api/v2/`, `apps/student/features/crucible/`, `apps/admin/app/admin/`, `apps/admin/app/api/v2/`, `apps/admin/features/admin/`, `packages/data/models/UserProgress.ts`, `packages/data/models/StudentChapterProfile.ts`, `packages/persona/`, or `packages/data/models/ResourceLink.ts` — read [`_agents/CRUCIBLE_ARCHITECTURE.md`](_agents/CRUCIBLE_ARCHITECTURE.md).** It is the canonical reference for Crucible's structure, the persona pipeline, the recommendation bridge, and the invariants that must not be broken. If anything in this file or in code comments contradicts it, that document wins; the fix is to update the doc, never to silently diverge.
 
 ---
 
@@ -24,8 +24,24 @@ If uncertain about scope, stop and ask. Do not pick silently.
 
 - **Framework**: Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4
 - **Database**: MongoDB Atlas (questions, taxonomy, audit logs)
-- **Auth**: Supabase (user accounts, session management)
+- **Auth**: Supabase (user accounts, session management) — ADMIN_EMAILS allow-list for the admin app
 - **Assets**: Cloudflare R2 (`canvas-chemistry-assets` bucket)
+
+### Monorepo layout (as of Phase 5)
+
+The codebase is split into two Next.js apps in an npm workspace:
+
+| App | Host | Purpose |
+|---|---|---|
+| `apps/student/` | `canvasclasses.in` | Public student-facing site — `/the-crucible/*`, `/books/*`, `/class-*`, blog, public APIs |
+| `apps/admin/` | `admin.canvasclasses.in` | Operator console — `/admin/*`, `/dashboard`, `/preview`, admin write APIs |
+
+Both apps share `@canvas/{core,data,persona,ui}` packages from `packages/*`. **Neither app may import from the other** — workspace-level boundary enforced by tsc.
+
+The admin app's API surface (under `apps/admin/app/api/v2/*`) hosts:
+- Admin-write methods extracted from formerly-mixed routes (mock-tests, career-explorer/careers, career-explorer/questions write halves)
+- 1:1 admin-only routes (ai/*, taxonomy/save, books/* admin methods, career-explorer/{matches,questions/[id]}, questions admin sub-routes, blog/*, admin/{permissions,roles,revalidate,debug/sentry})
+- Byte-for-byte duplicates of routes admin UI also reads from (questions, flashcards, chapters, taxonomy/load, assets/[id], export/ppt) — each marked with a TODO header for future package consolidation
 
 ### Active System: V2
 
@@ -33,15 +49,15 @@ There are two versions of the question system. **V2 is the only active system.**
 
 | | V1 (Legacy — do not use) | V2 (Active) |
 |---|---|---|
-| Admin panel | `/the-crucible/admin/` | `/crucible/admin/` |
-| API | `/api/questions/` | `/api/v2/` |
+| Admin panel | `/the-crucible/admin/` | `admin.canvasclasses.in/admin/` |
+| API | `/api/questions/` | `apps/student/app/api/v2/` (public/student reads + writes), `apps/admin/app/api/v2/` (admin writes) |
 | Mongoose model | (deleted — V1 retired) | `packages/data/models/Question.v2.ts` |
 | Collection | `questions` | `questions_v2` |
 | Question IDs | Auto-increment strings | UUID v4 + `display_id` (e.g. `ATOM-042`) |
 
 **Student-facing UI** lives at `/the-crucible/` (route shell at `apps/student/app/the-crucible/`) and reads from V2 via server actions in `apps/student/features/crucible/server-actions/the-crucible.ts`.
 
-**Admin UI** lives at `/crucible/admin/` (route shell at `apps/student/app/crucible/admin/`, implementation in `apps/student/features/crucible/components/admin/`) and communicates via `/api/v2/` REST routes.
+**Admin UI** lives at `admin.canvasclasses.in/admin/` (route shell at `apps/admin/app/admin/`, components in `apps/admin/features/admin/components/`). Admin pages call same-origin `/api/v2/*` routes, all served by the admin app. **The admin app never crosses into student-origin** — that boundary is the point of the Phase 5 split. See `_agents/plans/PHASE_5_ADMIN_SPLIT.md` for the decision record.
 
 ---
 
@@ -241,15 +257,24 @@ Simulators live at: `app/[subject]-[hub-name]/[Topic]Simulator.tsx`
 ### Data Flow
 
 ```
-Student UI (/the-crucible/)
-  └─ Server Actions (apps/student/features/crucible/server-actions/the-crucible.ts)
-       └─ MongoDB: questions_v2 collection
+Student app (canvasclasses.in, apps/student/)
+  ├─ Student UI (/the-crucible/, /books/, /class-*)
+  │    └─ Server Actions (apps/student/features/<feature>/server-actions/*.ts)
+  │         └─ MongoDB: questions_v2, userprogress, bookpages, ...
+  └─ Public/student APIs (apps/student/app/api/v2/*)
+       └─ MongoDB + Supabase (auth check on writes)
 
-Admin UI (/crucible/admin/)
-  └─ REST API (/api/v2/questions, /api/v2/taxonomy, ...)
-       └─ MongoDB: questions_v2 + auditlogs
-       └─ Supabase: auth check on every mutating request
+Admin app (admin.canvasclasses.in, apps/admin/)
+  ├─ Admin UI (/admin/*, /dashboard, /preview)
+  │    └─ same-origin fetch → /api/v2/* (also in admin app)
+  └─ Admin APIs (apps/admin/app/api/v2/*)
+       ├─ middleware.ts → ADMIN_EMAILS allow-list (first line of defense)
+       └─ route handlers → requireAdmin() / getAuthenticatedUser + isAdmin
+            └─ MongoDB: questions_v2 + auditlogs (same cluster, shared models)
+            └─ Supabase: auth check on every mutating request (second line)
 ```
+
+Both apps connect to the same MongoDB cluster via the same `@canvas/data` Mongoose models. The hard network boundary is at the API layer — admin write routes are not reachable from the public `canvasclasses.in` host. A future hardening step (tracked as Phase 5.5d) splits MongoDB users so the student app gets read-only access to admin-managed collections.
 
 ### Taxonomy
 
@@ -260,7 +285,7 @@ Two-level hierarchy: **Chapter → Topic Tag**
 - **Single source of truth**: `packages/data/taxonomy/taxonomyData_from_csv.ts`
 - `metadata.chapter_id` on every `QuestionV2` document must match a chapter `id` in that file exactly
 
-The taxonomy file is auto-updated by the dashboard at `/crucible/admin/taxonomy` via `POST /api/v2/taxonomy/save`. Do not edit it manually.
+The taxonomy file is auto-updated by the dashboard at `admin.canvasclasses.in/admin/taxonomy` via `POST /api/v2/taxonomy/save` (served by the admin app). Do not edit it manually.
 
 **For tag-level rules** (which tags to apply, how to weight them, micro-concept naming conventions): read `_agents/workflows/CRUCIBLE_TAXONOMY_AND_TAGGING_RULES.md`.
 
@@ -289,15 +314,33 @@ The taxonomy file is auto-updated by the dashboard at `/crucible/admin/taxonomy`
 | R2 storage helper | `packages/core/r2-storage.ts` |
 | Analytics (Mixpanel server + client) | `packages/core/analytics/` |
 | `cn()` class-name merger | `packages/core/utils.ts` |
-| V2 questions API | `apps/student/app/api/v2/questions/route.ts` |
-| Admin question editor | `apps/student/features/crucible/components/admin/QuestionAdmin.tsx` (route shell: `apps/student/app/crucible/admin/page.tsx`) |
+| V2 questions API (student-facing GET + create) | `apps/student/app/api/v2/questions/route.ts` |
+| V2 questions API (admin same-origin copy) | `apps/admin/app/api/v2/questions/route.ts` (byte-for-byte duplicate; keep in sync) |
+| Admin question editor | `apps/admin/features/admin/components/QuestionAdmin.tsx` (route shell: `apps/admin/app/admin/page.tsx`) |
+| Admin auth helpers | `apps/admin/lib/auth.ts` (route handlers), `apps/admin/lib/adminAuth.ts` (server components) |
+| Admin middleware | `apps/admin/middleware.ts` (Supabase + ADMIN_EMAILS gate, all paths except `/login` + `/api/auth/*` + `/_next/*`) |
 | Student server actions | `apps/student/features/crucible/server-actions/the-crucible.ts` |
+| Student auth helpers | `apps/student/lib/auth.ts` (route handlers), `apps/student/lib/bookAuth.ts` (server components) |
 | Student landing | `apps/student/app/the-crucible/page.tsx` (renders `apps/student/features/crucible/` components) |
 
 > **Import direction rules** (post-monorepo migration):
-> - Student feature code (`apps/student/features/<feature>/`) and notes pages must never import from `apps/student/features/crucible/components/admin/` (admin-only surface). Shared modules belong in `packages/data/`, `packages/persona/`, `packages/core/`, `packages/ui/`, or `apps/student/lib/`.
+> - `apps/admin/` MUST NOT import from `apps/student/` and vice versa. Workspace tsc enforces this. Anything shared between the two apps must go through `packages/*/`.
+> - Student feature code (`apps/student/features/<feature>/`) and notes pages must never reach into admin-only surfaces. Shared modules belong in `packages/data/`, `packages/persona/`, `packages/core/`, `packages/ui/`, or `apps/student/lib/`.
 > - Anything inside `packages/*/` must not use the `@/` alias or import from `apps/*` — packages use relative paths internally and have no knowledge of which app consumes them.
-> - The shared data layer (Mongoose models, db, taxonomy, schemas, id-generator, difficulty utils) lives in `@canvas/data` — import via `from '@canvas/data/models/X'` or `from '@canvas/data/db/mongodb'`, never via `@/lib/...`.
+> - The shared data layer (Mongoose models, db, taxonomy, schemas, id-generator, difficulty utils) lives in `@canvas/data` — import via `from '@canvas/data/models/X'` or `from '@canvas/data/db/mongodb'`, never via an app's `@/lib/...`.
+
+### Duplicated route files (admin + student)
+
+Some `/api/v2/*` routes exist in BOTH apps because both apps' UIs fetch them same-origin. The duplicates are byte-for-byte equal modulo a `@/lib/bookAuth` → `@/lib/adminAuth` rewrite. Each admin copy carries a TODO header noting the future consolidation target.
+
+Routes duplicated:
+- `assets/upload/route.ts` (5.5b)
+- `questions/route.ts`, `questions/[id]/route.ts` (5.10)
+- `flashcards/route.ts`, `flashcards/[id]/route.ts` (5.10)
+- `chapters/route.ts`, `taxonomy/load/route.ts` (5.10)
+- `assets/[id]/route.ts`, `export/ppt/route.ts` (5.10)
+
+**Rule:** any change to one copy MUST be mirrored to the other. The compiler can't enforce equality. Until these promote to a shared service package, treat them as a single logical file with two physical copies.
 
 ### Simplicity Constraint
 

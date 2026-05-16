@@ -1,11 +1,28 @@
 # Crucible — Architecture & Persona Reference
 
 **Status:** Canonical reference. Read this before changing any Crucible code.
-**Owner:** Canvas Classes · **Last revised:** 2026-05-04
+**Owner:** Canvas Classes · **Last revised:** 2026-05-16 (Phase 5 admin split)
 
 > If anything in another doc, comment, or commit message contradicts this file,
 > **this file wins**. The fix is to update this doc — never to silently diverge.
 > Updates are allowed and encouraged, but they must be explicit and justified.
+
+---
+
+## 0a. Monorepo topology (Phase 5+)
+
+Crucible is served by **two Next.js apps** that share the same MongoDB cluster:
+
+| App | Host | Owns |
+|---|---|---|
+| `apps/student/` | `canvasclasses.in` | Student UI (`/the-crucible/*`), books reader, public/student APIs |
+| `apps/admin/` | `admin.canvasclasses.in` | Operator UI (`/admin/*`, `/dashboard`, `/preview`) + admin write APIs |
+
+Admin's API surface lives at `apps/admin/app/api/v2/*` and is gated by `apps/admin/middleware.ts` (Supabase + `ADMIN_EMAILS` allow-list) plus per-route `requireAdmin()` / `getAuthenticatedUser() + isAdmin()` (defense in depth). **Admin write methods are unreachable from the public `canvasclasses.in` host** — they live on a different network deployment.
+
+Both apps connect to the same `crucible-cluster` MongoDB instance via `@canvas/data` Mongoose models. The DB is shared today; the future second layer of defense (Phase 5.5d) is to split MongoDB users so the student app gets read-only access to admin-managed collections.
+
+See `_agents/plans/PHASE_5_ADMIN_SPLIT.md` for the decision record.
 
 ---
 
