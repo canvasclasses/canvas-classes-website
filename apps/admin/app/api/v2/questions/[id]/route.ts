@@ -14,7 +14,7 @@ import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { Chapter } from '@canvas/data/models/Chapter';
 import { AuditLog } from '@canvas/data/models/AuditLog';
 import { getAuthenticatedUser } from '@/lib/auth';
-import { canEditQuestion, canDeleteQuestion } from '@/lib/rbac';
+import { canEditQuestion, canDeleteQuestion } from '@canvas/data/rbac';
 import { isLocalhostDev } from '@/lib/adminAuth';
 import { trackServer } from '@canvas/core/analytics/mixpanel.server';
 

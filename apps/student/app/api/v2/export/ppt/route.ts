@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import PptxGenJS from 'pptxgenjs';
 import { getAuthenticatedUser } from '@/lib/auth';
-import { getUserPermissions } from '@/lib/rbac';
+import { getUserPermissions } from '@canvas/data/rbac';
 import { isLocalhostDev } from '@/lib/bookAuth';
 
 export const runtime = 'nodejs';

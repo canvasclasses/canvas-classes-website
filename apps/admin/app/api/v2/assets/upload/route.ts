@@ -6,7 +6,7 @@ import connectToDatabase from '@canvas/data/db/mongodb';
 import { Asset } from '@canvas/data/models/Asset';
 import { AuditLog } from '@canvas/data/models/AuditLog';
 import { uploadToR2, getExtensionFromMimeType, type AssetType } from '@canvas/core/r2-storage';
-import { getUserPermissions } from '@/lib/rbac';
+import { getUserPermissions } from '@canvas/data/rbac';
 import { getAuthenticatedUser, isAdmin } from '@/lib/auth';
 import { isLocalhostDev } from '@/lib/adminAuth';
 import { fileTypeFromBuffer } from 'file-type';

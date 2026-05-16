@@ -15,7 +15,7 @@ import { AuditLog } from '@canvas/data/models/AuditLog';
 import { trackServer } from '@canvas/core/analytics/mixpanel.server';
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 import { getAuthenticatedUser } from '@/lib/auth';
-import { getUserPermissions, getQuestionFilter, canEditQuestion, getSubjectFromChapterId } from '@/lib/rbac';
+import { getUserPermissions, getQuestionFilter, canEditQuestion, getSubjectFromChapterId } from '@canvas/data/rbac';
 import { isLocalhostDev } from '@/lib/adminAuth';
 import { QuestionSchema } from '@canvas/data/schemas/question';
 import { generateDisplayId, regenerateDisplayId } from '@canvas/data/id-generator';

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAuthenticatedUser } from '@/lib/auth';
-import { getUserPermissions } from '@/lib/rbac';
+import { getUserPermissions } from '@canvas/data/rbac';
 import { isLocalhostDev } from '@/lib/adminAuth';
 
 // GET /api/v2/admin/permissions - Get current user's permissions

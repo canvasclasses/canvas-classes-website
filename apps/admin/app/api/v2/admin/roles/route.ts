@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { UserRole } from '@canvas/data/models/UserRole';
 import { RoleAuditLog } from '@canvas/data/models/RoleAuditLog';
-import { getUserPermissions, invalidatePermissionsCache } from '@/lib/rbac';
+import { getUserPermissions, invalidatePermissionsCache } from '@canvas/data/rbac';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { isLocalhostDev } from '@/lib/adminAuth';
 import { z } from 'zod';

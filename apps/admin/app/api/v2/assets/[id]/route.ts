@@ -14,7 +14,7 @@ import { AuditLog } from '@canvas/data/models/AuditLog';
 import { deleteFromR2 } from '@canvas/core/r2-storage';
 import { v4 as uuidv4 } from 'uuid';
 import { createClient } from '@/app/utils/supabase/server';
-import { getUserPermissions } from '@/lib/rbac';
+import { getUserPermissions } from '@canvas/data/rbac';
 
 // DELETE - Delete asset from R2 and database
 export async function DELETE(

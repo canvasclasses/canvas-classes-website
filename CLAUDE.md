@@ -342,6 +342,17 @@ Routes duplicated:
 
 **Rule:** any change to one copy MUST be mirrored to the other. The compiler can't enforce equality. Until these promote to a shared service package, treat them as a single logical file with two physical copies.
 
+**Helper-level duplicates are gone (Phase 5.13).** The pure-data and pure-React-component duplicates from Phase 5.5 / 5.10 have been consolidated into shared packages and removed from both apps:
+
+| Helper | Canonical location |
+|---|---|
+| Flashcard taxonomy data + helpers | `@canvas/data/flashcards/flashcardTaxonomy` |
+| Flashcard markdown component dict | `@canvas/ui/flashcardMarkdown` |
+| Book block utilities (flattenBlocks, computeReadingTime, etc.) | `@canvas/data/books/utils` |
+| Book block Zod schemas (validateBlocks) | `@canvas/data/books/schemas` |
+
+`rbac` is also consolidated as `@canvas/data/rbac` (Phase 5.13d).
+
 ### Simplicity Constraint
 
 - Don't add a new Mongoose model unless explicitly requested.
