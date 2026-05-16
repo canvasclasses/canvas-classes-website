@@ -36,12 +36,12 @@ The codebase is split into two Next.js apps in an npm workspace:
 | `apps/student/` | `canvasclasses.in` | Public student-facing site — `/the-crucible/*`, `/books/*`, `/class-*`, blog, public APIs |
 | `apps/admin/` | `admin.canvasclasses.in` | Operator console — `/admin/*`, `/dashboard`, `/preview`, admin write APIs |
 
-Both apps share `@canvas/{core,data,persona,ui}` packages from `packages/*`. **Neither app may import from the other** — workspace-level boundary enforced by tsc.
+Both apps share `@canvas/{core,data,persona,services,ui}` packages from `packages/*`. **Neither app may import from the other** — workspace-level boundary enforced by tsc.
 
 The admin app's API surface (under `apps/admin/app/api/v2/*`) hosts:
 - Admin-write methods extracted from formerly-mixed routes (mock-tests, career-explorer/careers, career-explorer/questions write halves)
 - 1:1 admin-only routes (ai/*, taxonomy/save, books/* admin methods, career-explorer/{matches,questions/[id]}, questions admin sub-routes, blog/*, admin/{permissions,roles,revalidate,debug/sentry})
-- Byte-for-byte duplicates of routes admin UI also reads from (questions, flashcards, chapters, taxonomy/load, assets/[id], export/ppt) — each marked with a TODO header for future package consolidation
+- Thin wrappers over `@canvas/services` for the nine routes both apps host (questions, questions/[id], flashcards, flashcards/[id], chapters, taxonomy/load, assets/[id], assets/upload, export/ppt). Each wrapper imports the service function and injects its app-local auth helpers — see [ADR-001](_agents/adr/001-service-layer-di-pattern.md).
 
 ### Active System: V2
 
@@ -314,8 +314,8 @@ The taxonomy file is auto-updated by the dashboard at `admin.canvasclasses.in/ad
 | R2 storage helper | `packages/core/r2-storage.ts` |
 | Analytics (Mixpanel server + client) | `packages/core/analytics/` |
 | `cn()` class-name merger | `packages/core/utils.ts` |
-| V2 questions API (student-facing GET + create) | `apps/student/app/api/v2/questions/route.ts` |
-| V2 questions API (admin same-origin copy) | `apps/admin/app/api/v2/questions/route.ts` (byte-for-byte duplicate; keep in sync) |
+| Shared route-handler logic (questions, flashcards, chapters, taxonomy/load, assets/*, export/ppt) | `packages/services/<route>.ts` — each takes a `ServiceDeps` arg for auth DI |
+| V2 questions API wrappers | `apps/student/app/api/v2/questions/route.ts` + `apps/admin/app/api/v2/questions/route.ts` (thin wrappers over `@canvas/services/questions`) |
 | Admin question editor | `apps/admin/features/admin/components/QuestionAdmin.tsx` (route shell: `apps/admin/app/admin/page.tsx`) |
 | Admin auth helpers | `apps/admin/lib/auth.ts` (route handlers), `apps/admin/lib/adminAuth.ts` (server components) |
 | Admin middleware | `apps/admin/middleware.ts` (Supabase + ADMIN_EMAILS gate, all paths except `/login` + `/api/auth/*` + `/_next/*`) |
@@ -329,18 +329,22 @@ The taxonomy file is auto-updated by the dashboard at `admin.canvasclasses.in/ad
 > - Anything inside `packages/*/` must not use the `@/` alias or import from `apps/*` — packages use relative paths internally and have no knowledge of which app consumes them.
 > - The shared data layer (Mongoose models, db, taxonomy, schemas, id-generator, difficulty utils) lives in `@canvas/data` — import via `from '@canvas/data/models/X'` or `from '@canvas/data/db/mongodb'`, never via an app's `@/lib/...`.
 
-### Duplicated route files (admin + student)
+### Routes hosted in both apps (now share one source)
 
-Some `/api/v2/*` routes exist in BOTH apps because both apps' UIs fetch them same-origin. The duplicates are byte-for-byte equal modulo a `@/lib/bookAuth` → `@/lib/adminAuth` rewrite. Each admin copy carries a TODO header noting the future consolidation target.
+Nine `/api/v2/*` routes exist in BOTH apps because both apps' UIs fetch them same-origin. After Phase 6.0 (commit `84b3afa`), the handler logic lives in `@canvas/services/<route>` and each app's `route.ts` is a thin wrapper that injects its app-local auth helpers via `ServiceDeps`. See [ADR-001](_agents/adr/001-service-layer-di-pattern.md) for the pattern and rationale.
 
-Routes duplicated:
-- `assets/upload/route.ts` (5.5b)
-- `questions/route.ts`, `questions/[id]/route.ts` (5.10)
-- `flashcards/route.ts`, `flashcards/[id]/route.ts` (5.10)
-- `chapters/route.ts`, `taxonomy/load/route.ts` (5.10)
-- `assets/[id]/route.ts`, `export/ppt/route.ts` (5.10)
+Routes hosted by both apps (wrapper → service):
+- `assets/upload/route.ts` → `@canvas/services/assets-upload`
+- `assets/[id]/route.ts` → `@canvas/services/assets-by-id`
+- `chapters/route.ts` → `@canvas/services/chapters`
+- `taxonomy/load/route.ts` → `@canvas/services/taxonomy-load`
+- `export/ppt/route.ts` → `@canvas/services/export-ppt`
+- `questions/route.ts` → `@canvas/services/questions`
+- `questions/[id]/route.ts` → `@canvas/services/questions-by-id`
+- `flashcards/route.ts` → `@canvas/services/flashcards`
+- `flashcards/[id]/route.ts` → `@canvas/services/flashcards-by-id`
 
-**Rule:** any change to one copy MUST be mirrored to the other. The compiler can't enforce equality. Until these promote to a shared service package, treat them as a single logical file with two physical copies.
+**Rule:** any change to handler logic goes in the `@canvas/services` file. The wrappers should only ever change to add/remove a Next.js route-segment config export (`runtime`, `maxDuration`) — Next reads those from the route file itself.
 
 **Helper-level duplicates are gone (Phase 5.13).** The pure-data and pure-React-component duplicates from Phase 5.5 / 5.10 have been consolidated into shared packages and removed from both apps:
 

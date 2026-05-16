@@ -1,10 +1,11 @@
 # Monorepo Migration Plan
 
-**Status:** Living document. Every agent or developer returning to the migration reads here first.
-**Branch:** `code-refactor`
+**Status:** ✅ COMPLETE as of 2026-05-16. Phases 0 → 6 all DONE. Manual smoke test (5.9) and MongoDB user-permission split (5.5d) remain user-owned / deferred.
+**Branch:** `code-refactor` (awaiting final smoke test before merge to `main`)
 **Started:** 2026-05-15
+**Completed:** 2026-05-16
 
-This is the canonical tracker. If anything contradicts it, this wins; fix the doc rather than diverging.
+This is the canonical tracker for the migration's execution. Architectural rationale lives in [`_agents/adr/`](./adr/) (immutable); this doc is the timeline. If anything in code contradicts an ADR, fix the code or write a new ADR — don't silently diverge.
 
 ---
 
@@ -321,35 +322,44 @@ After all 12 features land, one comprehensive `code-reviewer` + `security-audito
 
 ---
 
-### Phase 5 — Split admin out into `apps/admin/`  ⏳ PENDING (HIGH RISK)
-**Goal:** Move `apps/student/app/crucible/admin/` + admin-only API routes into `apps/admin/`, with the admin app deploying separately. New custom admin auth lands here.
+### Phase 5 — Split admin out into `apps/admin/`  ✅ DONE
+**Goal:** Move admin UI + admin write APIs into a separate Next.js app deploying to `admin.canvasclasses.in`, separated from student.
 
-**Routes to move into `apps/admin/`:**
-- `apps/student/app/crucible/admin/*` → `apps/admin/app/crucible/*`
-- `apps/student/features/crucible/` (admin sub-features only, e.g. question-admin) → `apps/admin/features/`
-- Admin-only API routes: [TBD — see API split decision](#api-route-split-rule-tbd)
+**Outcome:** Admin app at `apps/admin/`, deployed independently. Initial admin auth landed as **Shape A** (Supabase + `ADMIN_EMAILS`) rather than the originally-planned Shape B — see [ADR-003](./adr/003-admin-auth-shape-a-first.md) for the deferral rationale. The DI seam from Phase 6.0 means Shape B becomes a future drop-in without touching `@canvas/services`.
 
-**Admin auth (per [decision](#admin-auth-decision-2026-05-15)):** Shape B — email + password, `admin_accounts` MongoDB collection, super-admin-managed, **not** Supabase. Custom JWT cookie. RBAC via merged `admin_accounts` collection (replaces `UserRole`).
+**Sub-phases:**
+- 5.0 — Decisions confirmed (subdomain `admin.canvasclasses.in`, in-app API not cross-origin, Shape A auth)
+- 5.1 — Scaffolded `apps/admin/` Next.js shell
+- 5.2 — Moved admin auth + middleware into apps/admin/
+- 5.3 — Moved admin components to apps/admin/features/admin/
+- 5.4 — Moved admin route shells to apps/admin/app/
+- 5.5 — Moved admin API routes, split MIXED routes (mock-tests, careers, questions admin sub-routes)
+- 5.6 — Resolved cross-feature edges (flashcards data, books renderer)
+- 5.7 — Cleanup student app + feature READMEs
+- 5.8 — Verification gates passed (TSC + lint both apps)
+- 5.10 — code-reviewer skill on full diff (findings addressed in 5.11)
+- 5.11 — security-auditor skill — addressed H1 (open-redirect via backslash) by using `sanitizeRedirect` from `@canvas/core/redirect-validation`
+- 5.12 — Final docs sync (CLAUDE.md, ARCHITECTURE.md, READMEs, memory)
+- 5.13a-d — Consolidated helper-level duplicates into shared packages (`@canvas/data/flashcards`, `@canvas/ui/flashcardMarkdown`, `@canvas/data/books`, `@canvas/data/rbac`)
+- 5.5d — MongoDB user permission split DEFERRED until prod stability
+- 5.9 — Manual smoke test OWNED BY USER
 
-**Deployment:**
-- New Vercel project: root directory `apps/admin/`, domain `[TBD — see subdomain decision]`
-- No shared cookie domain (admin auth is independent of student Supabase auth)
-
-**De-dup check:**
-- Anything in both apps that should be in `packages/`? Common culprits: layout shells, theme providers, error boundaries, providers, middleware helpers.
+**See:** [ADR-002](./adr/002-admin-app-split.md), [ADR-003](./adr/003-admin-auth-shape-a-first.md)
 
 ---
 
-### Phase 6 — Tests, docs, ADR  ⏳ PENDING
-**Goal:** Test scaffolding in place, documentation rewritten, decisions recorded.
+### Phase 6 — Service-layer extraction, ADRs, docs  ✅ DONE
+**Goal:** Eliminate the last must-stay-in-lockstep duplication between apps; record the architectural decisions made during the migration; refresh CLAUDE.md to match end-state.
 
-**Tasks:**
-- Add `vitest.workspace.ts` at root + per-app/package `vitest.config.ts`
-- Smoke test per package (just `import * as foo from '@canvas/foo'` to verify wiring)
-- CI workflow: `npm ci && npm test && npm run build` (npm workspaces per [package manager decision](#package-manager--npm-2026-05-15))
-- Rewrite `CLAUDE.md` for new paths
-- New `MONOREPO.md` (developer onboarding) at repo root
-- ADR documenting the split
+**Sub-phases:**
+- 6.0 — Service-layer extraction (commit `84b3afa`): nine duplicated route handlers extracted into `@canvas/services`, each app's route.ts reduced to a ~10-line wrapper. Net -1,629 lines. [ADR-001](./adr/001-service-layer-di-pattern.md).
+- 6.1 — code-reviewer skill on 6.0 (commit `3d93e70`): fixed three findings — student `export/ppt` wrapper was missed; `taxonomy-load.ts` was leaking `error.message`; README named-export drift.
+- 6.2 — Architecture Decision Records: created `_agents/adr/` with ADR-001 through ADR-004 covering the service-layer pattern, admin-app split, Shape A auth, and package boundary rules.
+- 6.3 — Refresh CLAUDE.md, plan doc, auto-memory for end-of-migration state.
+
+**Deferred from original Phase 6 scope (not blockers):**
+- Vitest scaffolding and smoke-import tests — not blocking; defer to a separate ticket when tests are actually being added.
+- Repo-root `MONOREPO.md` developer onboarding doc — superseded by the new ADR set + existing CLAUDE.md §7.
 
 ---
 
@@ -378,15 +388,23 @@ These shape one or more phases. When answered, move the answer here AND update t
 
 ## Decision log
 
-### Admin auth decision (2026-05-15)
-**Shape B — custom email + password, MongoDB-backed.**
-- New `admin_accounts` collection: `{ email, password_hash, role, status, accessible_subjects, accessible_chapters, created_by, created_at, last_login_at }`
-- Replaces the existing `UserRole` collection (merged into `admin_accounts`)
-- Super admin creates accounts (no self-signup)
-- bcrypt for hashing, JWT for session
-- **No Supabase RBAC** — Supabase auth + RLS don't apply because admin requests carry our own JWT, and admin data lives in MongoDB (Supabase can't see it).
-- Existing custom `rbac.ts` stays; reads from `admin_accounts` instead of `UserRole` after migration.
-- Phase 5 task. Implementation specifics deferred to that phase.
+> Many of these have been promoted into immutable ADRs under [`_agents/adr/`](./adr/). The entries below are kept for chronological reference; ADRs are the canonical source going forward.
+
+### Admin auth shape — revised to Shape A (2026-05-15, revised 2026-05-16)
+**Shipped as Shape A: Supabase auth + `ADMIN_EMAILS` allow-list.** The original Shape B plan (custom email + password + bcrypt + JWT + `admin_accounts` MongoDB collection) was deferred to a post-migration phase to bound the migration's risk surface. The DI seam introduced by Phase 6.0 means Shape B becomes a future swap of `apps/admin/lib/auth.ts` + `apps/admin/lib/adminAuth.ts` without touching `@canvas/services`.
+**See:** [ADR-003](./adr/003-admin-auth-shape-a-first.md)
+
+### Service-layer extraction (2026-05-16)
+Nine duplicated `/api/v2/*` route handlers extracted into a new `@canvas/services` package. Each app's route file is a thin wrapper that injects its app-local auth helpers via a `ServiceDeps` dependency-injection seam. Closes the last lockstep-duplication tax from the admin-app split.
+**See:** [ADR-001](./adr/001-service-layer-di-pattern.md)
+
+### Package boundary rules formalized (2026-05-16)
+Four explicit rules — no cross-app imports, no app imports from packages, no `@/` alias in packages, subpath exports for service surface. Enforced via code review and the `code-reviewer` skill's monorepo section.
+**See:** [ADR-004](./adr/004-package-boundary-rules.md)
+
+### Admin-app split rationale (2026-05-15)
+Admin runs as its own Next.js app at `admin.canvasclasses.in` with its own copy of every API route it needs. Cross-origin API (admin calls student-hosted `api.canvasclasses.in`) was explicitly rejected because it would defeat the network-isolation goal.
+**See:** [ADR-002](./adr/002-admin-app-split.md)
 
 ### Package count = 4 (2026-05-15)
 Confirmed during architecture review: `data`, `persona`, `ui`, `core`. Earlier proposal of `auth` package dropped because each app owns its own auth.
