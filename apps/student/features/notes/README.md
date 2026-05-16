@@ -40,6 +40,7 @@ features/notes/
 
 ## Cross-feature dependencies
 
-`CrucibleHeroRail` imports from `@/app/the-crucible/components/CrucibleBrand` and
-`CrucibleQuestionCarousel`. Those will move to `features/crucible/` in Phase 4.11
-and the imports will be updated then.
+`CrucibleHeroRail` imports from `@/features/crucible/components/CrucibleBrand` and
+`CrucibleQuestionCarousel`. This is a documented one-way edge (notes → crucible);
+a second non-notes consumer of those exports would be the signal to promote them
+out of `features/crucible/`.

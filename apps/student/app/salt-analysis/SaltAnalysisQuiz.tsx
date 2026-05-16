@@ -10,7 +10,7 @@ import {
 import confetti from 'canvas-confetti';
 import { MASTERY_QUESTIONS } from './quizData';
 import { useSaltQuizProgress } from '@/features/simulations/hooks/useSaltQuizProgress';
-import { QualityRating, MasteryLevel } from '@/features/flashcards/lib/spacedRepetition';
+import { QualityRating, MasteryLevel } from '@/lib/spacedRepetition';
 
 // ============ MCQ QUESTIONS DATA ============
 const QUIZ_QUESTIONS = [

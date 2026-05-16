@@ -1,4 +1,7 @@
-// Old types for backward compatibility - to be gradually migrated to V2
+// LEGACY camelCase shape — kept for back-compat with older student-side code.
+// The canonical V2 shape (matching `lib/models/Question.v2.ts` / `@canvas/data`)
+// lives at `./components/types.ts`. New code should import from there.
+// TODO: migrate remaining consumers off this file, then delete.
 
 export interface Option {
     id: string;

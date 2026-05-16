@@ -14,7 +14,19 @@ export { default as CrucibleHeroRail } from './components/CrucibleHeroRail';
 export { default as NextChapterCard } from './components/NextChapterCard';
 export { default as SideBySidePractice } from './components/SideBySidePractice';
 export { default as ViewTracker } from './components/ViewTracker';
-export * from './data/handwrittenNotesData';
-export * from './data/chapterMetadata';
+export {
+  type HandwrittenNote,
+  fetchHandwrittenNotes,
+  toInlineViewerUrl,
+  getUniqueCategories,
+  getNotesStats,
+} from './data/handwrittenNotesData';
+export {
+  type ChapterSubject,
+  type BestTool,
+  type ChapterMeta,
+  CHAPTER_META_LIST,
+  getChapterMetaBySlug,
+} from './data/chapterMetadata';
 export { getToolCardForSlug } from './data/toolCardConfig';
 export { getChapterCrucibleStats } from './lib/chapterStats.server';

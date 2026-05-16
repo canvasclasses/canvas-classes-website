@@ -1,5 +1,5 @@
 import { createClient } from './supabase/client';
-import { CardProgress } from '@/features/flashcards/lib/spacedRepetition';
+import { CardProgress } from '@/lib/spacedRepetition';
 
 type FeatureType = 'flashcard' | 'salt_mcq' | 'salt_flashcard' | 'assertion_reason' | 'crucible_item' | 'crucible_stats';
 

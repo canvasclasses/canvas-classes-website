@@ -32,10 +32,10 @@ import {
     ArrowUpDown
 } from 'lucide-react';
 import { FlashcardItem, ChapterSummary, ChapterTopic } from '../lib/flashcardsData';
-import { useCardProgress } from '@/features/public-content/hooks/useCardProgress';
+import { useCardProgress } from '@/hooks/useCardProgress';
 import { useFlashcardMeta } from '../hooks/useFlashcardMeta';
 import { flushPendingWrites } from '@/app/utils/progressSync';
-import { QualityRating } from '../lib/spacedRepetition';
+import { QualityRating } from '@/lib/spacedRepetition';
 import SyncStatusBanner from './SyncStatusBanner';
 import RegisterServiceWorker from './RegisterServiceWorker';
 import StudyHeatmap from './StudyHeatmap';

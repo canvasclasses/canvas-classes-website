@@ -1,7 +1,7 @@
 'use client';
 
 import { CloudOff, AlertTriangle, RefreshCw } from 'lucide-react';
-import type { SyncStatus } from '@/features/public-content/hooks/useCardProgress';
+import type { SyncStatus } from '@/hooks/useCardProgress';
 
 interface Props {
     status: SyncStatus;

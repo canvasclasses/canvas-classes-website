@@ -17,7 +17,7 @@ and the navbar's AuthButton.
 
 ```ts
 import { AuthButton } from '@/features/auth';
-import { signIn, signOut } from '@/features/auth';
+import { login, signup, signInWithGoogle } from '@/features/auth';
 ```
 
 ## Layout

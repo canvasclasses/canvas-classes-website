@@ -7,14 +7,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Before writing any code or running any script:
 
 1. **State assumptions explicitly.** If a request could mean two things (e.g., "fix the question UI" — which component?), name both interpretations and ask.
-2. **Name the invariants you'll preserve** when touching Crucible-governed paths (`app/the-crucible/`, `app/api/v2/`, the persona pipeline). Example: "I will not touch `actions.ts` outside the broken function."
+2. **Name the invariants you'll preserve** when touching Crucible-governed paths (`apps/student/app/the-crucible/`, `apps/student/app/api/v2/`, `apps/student/features/crucible/`, `packages/persona/`). Example: "I will not touch `server-actions/the-crucible.ts` outside the broken function."
 3. **For any script writing to `questions_v2`:** state how many documents will be affected and what the rollback is, before running.
 
 If uncertain about scope, stop and ask. Do not pick silently.
 
 ---
 
-> **Before changing anything inside `apps/student/app/the-crucible/`, `apps/student/app/crucible/admin/`, `apps/student/app/api/v2/`, `packages/data/models/UserProgress.ts`, `packages/data/models/StudentChapterProfile.ts`, `apps/student/lib/recommendationEngine.ts`, or `packages/data/models/ResourceLink.ts` — read [`_agents/CRUCIBLE_ARCHITECTURE.md`](_agents/CRUCIBLE_ARCHITECTURE.md).** It is the canonical reference for Crucible's structure, the persona pipeline, the recommendation bridge, and the invariants that must not be broken. If anything in this file or in code comments contradicts it, that document wins; the fix is to update the doc, never to silently diverge.
+> **Before changing anything inside `apps/student/app/the-crucible/`, `apps/student/app/crucible/admin/`, `apps/student/app/api/v2/`, `apps/student/features/crucible/`, `packages/data/models/UserProgress.ts`, `packages/data/models/StudentChapterProfile.ts`, `packages/persona/`, or `packages/data/models/ResourceLink.ts` — read [`_agents/CRUCIBLE_ARCHITECTURE.md`](_agents/CRUCIBLE_ARCHITECTURE.md).** It is the canonical reference for Crucible's structure, the persona pipeline, the recommendation bridge, and the invariants that must not be broken. If anything in this file or in code comments contradicts it, that document wins; the fix is to update the doc, never to silently diverge.
 
 ---
 
@@ -39,9 +39,9 @@ There are two versions of the question system. **V2 is the only active system.**
 | Collection | `questions` | `questions_v2` |
 | Question IDs | Auto-increment strings | UUID v4 + `display_id` (e.g. `ATOM-042`) |
 
-**Student-facing UI** lives at `/the-crucible/` and reads from V2 via server actions in `app/the-crucible/actions.ts`.
+**Student-facing UI** lives at `/the-crucible/` (route shell at `apps/student/app/the-crucible/`) and reads from V2 via server actions in `apps/student/features/crucible/server-actions/the-crucible.ts`.
 
-**Admin UI** lives at `/crucible/admin/` and communicates via `/api/v2/` REST routes.
+**Admin UI** lives at `/crucible/admin/` (route shell at `apps/student/app/crucible/admin/`, implementation in `apps/student/features/crucible/components/admin/`) and communicates via `/api/v2/` REST routes.
 
 ---
 
@@ -124,7 +124,7 @@ Spacing rules:
 
 ## 4.5 CANONICAL FIELD NAMES — DO NOT USE LEGACY ALIASES
 
-When updating questions in `questions_v2`, write to the **canonical** schema fields defined in `packages/data/models/Question.v2.ts`. Do NOT write to legacy aliases — both the student UI (`apps/student/app/the-crucible/actions.ts`) and the admin UI (`apps/student/app/crucible/admin/page.tsx`) read from the canonical fields only.
+When updating questions in `questions_v2`, write to the **canonical** schema fields defined in `packages/data/models/Question.v2.ts`. Do NOT write to legacy aliases — both the student UI (`apps/student/features/crucible/server-actions/the-crucible.ts`) and the admin UI (`apps/student/features/crucible/components/admin/QuestionAdmin.tsx`) read from the canonical fields only.
 
 | Canonical (read by UI) | Legacy alias (do not use) |
 |---|---|
@@ -173,10 +173,10 @@ Morning/Shift-I and Evening/Shift-II are equivalent. Always store the `Shift-I` 
 
 ### Rendering exam attribution — use the shared helper
 
-When rendering "JEE Main 2024 · Jan · S-I" style labels in any UI surface, **always use [`formatExamLabel`](app/the-crucible/components/examLabel.ts)**. Never write inline rendering logic — multiple sites had drifted into incompatible bespoke formatters before the consolidation on 2026-05-07.
+When rendering "JEE Main 2024 · Jan · S-I" style labels in any UI surface, **always use [`formatExamLabel`](apps/student/features/crucible/components/examLabel.ts)**. Never write inline rendering logic — multiple sites had drifted into incompatible bespoke formatters before the consolidation on 2026-05-07.
 
 ```ts
-import { formatExamLabel } from '@/app/the-crucible/components/examLabel';
+import { formatExamLabel } from '@/features/crucible/components/examLabel';
 
 const label = formatExamLabel(
   question.metadata.examDetails,    // canonical, modern
@@ -199,7 +199,7 @@ The helper handles: exam-name normalization (`JEE_Main` → `JEE Main`, `NEET_UG
 | Field | Status (as of 2026-05-07) | Action |
 |---|---|---|
 | `metadata.difficulty` (Easy/Medium/Hard enum) | **Removed.** $unset on 5,505 chemistry docs. Schema field still defined; safe to remove next Phase 4. | Don't write or read. Use `difficultyLevel` (1-5). |
-| `metadata.is_pyq` (boolean) | **Phase 1+2 complete.** Read paths migrated to `sourceType === 'PYQ'`. **Writes stopped** on new questions (insert template, bulk import, admin UI, API auto-fill all retired). Existing data still has the field; Phase 4 will $unset it. | Don't read or write. Use `sourceType === 'PYQ'`. The shared `isPyq()` helper in `app/the-crucible/components/examLabel.ts` handles the bridge. |
+| `metadata.is_pyq` (boolean) | **Phase 1+2 complete.** Read paths migrated to `sourceType === 'PYQ'`. **Writes stopped** on new questions (insert template, bulk import, admin UI, API auto-fill all retired). Existing data still has the field; Phase 4 will $unset it. | Don't read or write. Use `sourceType === 'PYQ'`. The shared `isPyq()` helper in `apps/student/features/crucible/components/examLabel.ts` handles the bridge. |
 | `metadata.examBoard` (single-valued) | **Phase 1+2 complete.** Read paths migrated to `applicableExams[0]`. **Writes stopped** — API no longer auto-syncs from applicableExams on POST/PATCH. | Don't read or write. Use `applicableExams[0]`. |
 | `metadata.exam_source` (legacy struct) | **Phase 1+2 complete.** Read paths migrated to `examDetails`. **Writes stopped** on new questions. | Don't read or write. Use `examDetails`. The `formatExamLabel()` helper handles fallback for older docs. |
 | `metadata.is_top_pyq` (boolean) | **KEEP.** Powers "Top Questions" practice mode (admin star-mark). | Default false on new questions. The admin curates via the dashboard. **Never legacy.** |
@@ -242,7 +242,7 @@ Simulators live at: `app/[subject]-[hub-name]/[Topic]Simulator.tsx`
 
 ```
 Student UI (/the-crucible/)
-  └─ Server Actions (app/the-crucible/actions.ts)
+  └─ Server Actions (apps/student/features/crucible/server-actions/the-crucible.ts)
        └─ MongoDB: questions_v2 collection
 
 Admin UI (/crucible/admin/)
@@ -278,8 +278,8 @@ The taxonomy file is auto-updated by the dashboard at `/crucible/admin/taxonomy`
 | `display_id` generator | `packages/data/id-generator/index.ts` |
 | Difficulty utils (shared) | `packages/data/difficulty.ts` |
 | Math/LaTeX renderer (shared) | `packages/ui/MathRenderer.tsx` |
-| Adaptive engine (Crucible) | `apps/student/app/the-crucible/lib/adaptiveEngine.ts` |
-| Recommendation engine | `apps/student/lib/recommendationEngine.ts` |
+| Adaptive engine (Crucible) | `apps/student/features/crucible/lib/adaptiveEngine.ts` |
+| Recommendation engine | `packages/persona/recommendation-engine.ts` (+ read-side contract in `packages/persona/contract.ts`) |
 | Persona writer (mutation surface) | `packages/persona/writer.ts` |
 | Persona contract (constants + classifiers) | `packages/persona/contract.ts` |
 | Profile engine | `packages/persona/profile-engine.ts` |
@@ -290,12 +290,12 @@ The taxonomy file is auto-updated by the dashboard at `/crucible/admin/taxonomy`
 | Analytics (Mixpanel server + client) | `packages/core/analytics/` |
 | `cn()` class-name merger | `packages/core/utils.ts` |
 | V2 questions API | `apps/student/app/api/v2/questions/route.ts` |
-| Admin question editor | `apps/student/app/crucible/admin/page.tsx` |
-| Student server actions | `apps/student/app/the-crucible/actions.ts` |
-| Student landing | `apps/student/app/the-crucible/page.tsx` |
+| Admin question editor | `apps/student/features/crucible/components/admin/QuestionAdmin.tsx` (route shell: `apps/student/app/crucible/admin/page.tsx`) |
+| Student server actions | `apps/student/features/crucible/server-actions/the-crucible.ts` |
+| Student landing | `apps/student/app/the-crucible/page.tsx` (renders `apps/student/features/crucible/` components) |
 
 > **Import direction rules** (post-monorepo migration):
-> - Student code (`apps/student/app/the-crucible/`) and notes pages must never import from `apps/student/app/crucible/admin/`. Shared modules belong in `packages/data/`, `apps/student/lib/`, or `apps/student/components/`.
+> - Student feature code (`apps/student/features/<feature>/`) and notes pages must never import from `apps/student/features/crucible/components/admin/` (admin-only surface). Shared modules belong in `packages/data/`, `packages/persona/`, `packages/core/`, `packages/ui/`, or `apps/student/lib/`.
 > - Anything inside `packages/*/` must not use the `@/` alias or import from `apps/*` — packages use relative paths internally and have no knowledge of which app consumes them.
 > - The shared data layer (Mongoose models, db, taxonomy, schemas, id-generator, difficulty utils) lives in `@canvas/data` — import via `from '@canvas/data/models/X'` or `from '@canvas/data/db/mongodb'`, never via `@/lib/...`.
 

@@ -18,12 +18,12 @@ import {
     RefreshCw
 } from 'lucide-react';
 import { FlashcardItem, ChapterTopic } from '../lib/flashcardsData';
-import { useCardProgress } from '@/features/public-content/hooks/useCardProgress';
+import { useCardProgress } from '@/hooks/useCardProgress';
 import { useFlashcardMeta } from '../hooks/useFlashcardMeta';
-import { useCardMetadata } from '@/features/public-content/hooks/useCardMetadata';
+import { useCardMetadata } from '@/hooks/useCardMetadata';
 import { useFlashcardSettings } from '../hooks/useFlashcardSettings';
 import { flushPendingWrites } from '@/app/utils/progressSync';
-import { QualityRating, isLeech, localDateString } from '../lib/spacedRepetition';
+import { QualityRating, isLeech, localDateString } from '@/lib/spacedRepetition';
 import SyncStatusBanner from './SyncStatusBanner';
 import RegisterServiceWorker from './RegisterServiceWorker';
 import { Star, EyeOff, Clock as ClockIcon, AlertOctagon } from 'lucide-react';

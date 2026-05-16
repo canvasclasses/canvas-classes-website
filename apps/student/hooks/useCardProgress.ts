@@ -13,7 +13,7 @@ import {
     localDateString,
     NEW_CARDS_PER_DAY,
     REVIEW_CARDS_PER_DAY
-} from '@/features/flashcards/lib/spacedRepetition';
+} from '@/lib/spacedRepetition';
 import {
     syncProgressWithCloud,
     saveProgressItemToCloud,

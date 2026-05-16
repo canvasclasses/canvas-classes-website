@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { localDateString } from '../lib/spacedRepetition';
+import { localDateString } from '@/lib/spacedRepetition';
 
 interface StudyDay {
     date: string;

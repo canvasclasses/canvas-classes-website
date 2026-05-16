@@ -10,7 +10,6 @@ export { default as FlashcardsClient } from './components/FlashcardsClient';
 export { default as FlashcardsChapterClient } from './components/FlashcardsChapterClient';
 export { default as StudyHeatmap } from './components/StudyHeatmap';
 export * as flashcardsData from './lib/flashcardsData';
-export * as spacedRepetition from './lib/spacedRepetition';
 export * as flashcardTaxonomy from './lib/flashcardTaxonomy';
 export * as flashcardMarkdown from './lib/flashcardMarkdown';
 export { useFlashcardMeta } from './hooks/useFlashcardMeta';

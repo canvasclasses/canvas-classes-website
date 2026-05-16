@@ -14,4 +14,4 @@
 //     Supabase client wrappers (22 importers across the codebase, cross-feature).
 
 export { AuthButton } from './components/AuthButton';
-export * from './server-actions';
+export { login, signup, signInWithGoogle } from './server-actions';

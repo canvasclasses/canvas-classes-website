@@ -42,11 +42,20 @@ Slots appear on-demand. A small feature might have only `components/` +
 - `app/<route>/page.tsx` imports from `@/features/<feature>/...` ✓
 - `features/<feature>/...` imports from `@canvas/data`, `@canvas/persona`,
   `@canvas/core`, `@canvas/ui` ✓
-- `features/<feature>/...` imports from `apps/student/lib/auth.ts` etc.
-  (cross-feature shared utilities) ✓
-- `features/A/` importing from `features/B/` ✗ — feature isolation rule.
-  Shared cross-feature code lives at `apps/student/lib/`, `apps/student/components/`,
-  or in a `@canvas/*` package.
+- `features/<feature>/...` imports from `apps/student/lib/`, `apps/student/hooks/`,
+  `apps/student/components/` (cross-feature shared utilities) ✓
+- **Cycles between features are forbidden.** `features/A → features/B → features/A` —
+  break the cycle by promoting the shared bit to `apps/student/lib/` (or `hooks/`,
+  or a package).
+- **One-way cross-feature imports are discouraged but acceptable when documented.**
+  Real examples: notes renders a Crucible rail (`features/notes → features/crucible`),
+  landing's search aggregates content from public-content (`landing → public-content`).
+  Each such edge MUST be documented in the importing feature's README under a
+  "Cross-feature dependencies" section. If a second consumer of the same export
+  emerges, that's the signal to promote the export to `apps/student/lib/` (or
+  `hooks/`, or a package).
+- Shared genuinely-cross-feature code lives at `apps/student/lib/`,
+  `apps/student/hooks/`, `apps/student/components/`, or in a `@canvas/*` package.
 
 ## Per-feature READMEs
 
