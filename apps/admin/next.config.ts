@@ -5,7 +5,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR ?? '.next',
-  transpilePackages: ['@canvas/core', '@canvas/data', '@canvas/persona', '@canvas/ui'],
+  transpilePackages: ['@canvas/core', '@canvas/data', '@canvas/persona', '@canvas/services', '@canvas/ui'],
   experimental: {
     serverActions: {
       bodySizeLimit: '20mb',

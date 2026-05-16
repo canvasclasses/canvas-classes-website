@@ -1,0 +1,30 @@
+{
+  "name": "@canvas/services",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./chapters": "./chapters.ts",
+    "./taxonomy-load": "./taxonomy-load.ts",
+    "./assets-by-id": "./assets-by-id.ts",
+    "./assets-upload": "./assets-upload.ts",
+    "./export-ppt": "./export-ppt.ts",
+    "./questions": "./questions.ts",
+    "./questions-by-id": "./questions-by-id.ts",
+    "./flashcards": "./flashcards.ts",
+    "./flashcards-by-id": "./flashcards-by-id.ts",
+    "./types": "./types.ts"
+  },
+  "dependencies": {
+    "file-type": "^22.0.0",
+    "pptxgenjs": "^4.0.1",
+    "uuid": "^13.0.0",
+    "zod": "^4.3.6"
+  },
+  "peerDependencies": {
+    "@supabase/supabase-js": "^2.95.3",
+    "next": "^15.0.0"
+  }
+}
