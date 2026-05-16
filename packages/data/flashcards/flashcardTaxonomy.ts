@@ -1,11 +1,10 @@
+// Single canonical source for flashcard taxonomy (categories, chapters, helpers).
+// Moved out of apps/student in Phase 5.13a so apps/admin can import the same data
+// without copy-paste duplication.
+
 // FLASHCARD TAXONOMY - Single Source of Truth
 // This is separate from Crucible taxonomy (taxonomyData_from_csv.ts)
 // Flashcards have their own chapter structure based on Google Sheets data
-//
-// TODO (Phase 5.6): duplicated from apps/student/features/flashcards/lib/
-// flashcardTaxonomy.ts. Promote to @canvas/data/flashcards/ in Phase 5.6 so
-// both apps share one canonical source. Keep this file byte-for-byte equal
-// to the student copy until then — any divergence is a bug.
 
 export interface FlashcardCategory {
   id: string;

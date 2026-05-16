@@ -5,8 +5,8 @@ import BookModel from '@canvas/data/models/Book';
 import BookPageModel from '@canvas/data/models/BookPage';
 import { requireAdmin, isAdminRequest } from '@/lib/adminAuth';
 import { ContentBlock } from '@canvas/data/types/books';
-import { validateBlocks } from '@/lib/schemas/blocks';
-import { computeReadingTime, computeContentTypes, extractVideoTitle } from '@/features/admin/lib/books/utils';
+import { validateBlocks } from '@canvas/data/books/schemas';
+import { computeReadingTime, computeContentTypes, extractVideoTitle } from '@canvas/data/books/utils';
 
 const VALID_CALLOUT_VARIANTS = new Set([
   'remember', 'note', 'warning', 'exam_tip', 'fun_fact',

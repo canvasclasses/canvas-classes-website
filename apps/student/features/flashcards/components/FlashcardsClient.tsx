@@ -40,7 +40,7 @@ import SyncStatusBanner from './SyncStatusBanner';
 import RegisterServiceWorker from './RegisterServiceWorker';
 import StudyHeatmap from './StudyHeatmap';
 import ReactMarkdown from 'react-markdown';
-import { flashcardMarkdownComponents } from '@/features/flashcards/lib/flashcardMarkdown';
+import { flashcardMarkdownComponents } from '@canvas/ui/flashcardMarkdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';

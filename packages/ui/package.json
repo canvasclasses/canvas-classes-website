@@ -6,7 +6,8 @@
   "types": "./index.ts",
   "exports": {
     ".": "./index.ts",
-    "./MathRenderer": "./MathRenderer.tsx"
+    "./MathRenderer": "./MathRenderer.tsx",
+    "./flashcardMarkdown": "./flashcardMarkdown.tsx"
   },
   "dependencies": {
     "isomorphic-dompurify": "^3.7.1",
@@ -14,6 +15,7 @@
   },
   "peerDependencies": {
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-markdown": "*"
   }
 }

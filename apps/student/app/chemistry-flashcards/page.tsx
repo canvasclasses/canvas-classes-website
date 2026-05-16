@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import FlashcardsClient from '@/features/flashcards/components/FlashcardsClient';
 import { getChapterSummaries } from '@/features/flashcards/lib/flashcardsData';
-import { FLASHCARD_CATEGORIES } from '@/features/flashcards/lib/flashcardTaxonomy';
+import { FLASHCARD_CATEGORIES } from '@canvas/data/flashcards/flashcardTaxonomy';
 
 export const revalidate = 86400;
 

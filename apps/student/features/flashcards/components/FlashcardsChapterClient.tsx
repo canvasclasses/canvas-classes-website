@@ -28,7 +28,7 @@ import SyncStatusBanner from './SyncStatusBanner';
 import RegisterServiceWorker from './RegisterServiceWorker';
 import { Star, EyeOff, Clock as ClockIcon, AlertOctagon } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-import { flashcardMarkdownComponents } from '@/features/flashcards/lib/flashcardMarkdown';
+import { flashcardMarkdownComponents } from '@canvas/ui/flashcardMarkdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';

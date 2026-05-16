@@ -20,7 +20,10 @@ export { useBookProgress } from './hooks/useBookProgress';
 export { useBookStats } from './hooks/useBookStats';
 export { useBookUserState } from './hooks/useBookUserState';
 export { SITE_URL, buildBookPageMetadata, buildBookPageJsonLd } from './lib/bookPageSeo';
-export { flattenBlocks, computeReadingTime, computeContentTypes, extractVideoTitle } from './lib/utils';
+// Phase 5.13c: utils moved to @canvas/data/books/utils. Consumers should
+// import directly from the package; this re-export is a temporary bridge
+// for any caller that still imports from this barrel.
+export { flattenBlocks, computeReadingTime, computeContentTypes, extractVideoTitle } from '@canvas/data/books/utils';
 export * as blockData from './data/blockData';
 export * as ncertBooksData from './data/ncertBooksData';
 export * as ncertData from './data/ncertData';

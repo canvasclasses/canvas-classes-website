@@ -1,4 +1,4 @@
-import { BlockType, ContentBlock } from '@canvas/data/types/books';
+import { BlockType, ContentBlock } from '../types/books';
 
 /**
  * Recursively flattens section blocks into a flat array of leaf blocks.

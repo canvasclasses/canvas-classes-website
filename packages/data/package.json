@@ -10,6 +10,8 @@
     "./models/*": "./models/*.ts",
     "./taxonomy/*": "./taxonomy/*.ts",
     "./schemas/*": "./schemas/*.ts",
+    "./flashcards/*": "./flashcards/*.ts",
+    "./books/*": "./books/*.ts",
     "./id-generator": "./id-generator/index.ts",
     "./difficulty": "./difficulty.ts",
     "./types/*": "./types/*.ts"
