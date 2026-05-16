@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function AdminProfilesList() {
   const admin = await requireAdmin();
-  if (!admin) redirect('/crucible/admin');
+  if (!admin) redirect('/admin');
   await connectToDatabase();
   type ProfileRow = {
     _id: string;
@@ -22,7 +22,7 @@ export default async function AdminProfilesList() {
   return (
     <main className="min-h-screen bg-[#050505] text-white">
       <div className="mx-auto max-w-6xl px-6 py-10">
-        <Link href="/crucible/admin/career-explorer" className="text-sm text-white/60 hover:text-white/90">← Career Explorer admin</Link>
+        <Link href="/admin/career-explorer" className="text-sm text-white/60 hover:text-white/90">← Career Explorer admin</Link>
         <h1 className="mt-2 text-3xl font-semibold">Student profiles</h1>
 
         <div className="mt-8 overflow-hidden rounded-xl border border-white/10 bg-[#0B0F15]">
@@ -50,7 +50,7 @@ export default async function AdminProfilesList() {
                   <td className="px-4 py-2">{p.progress_pct ?? 0}%</td>
                   <td className="px-4 py-2">{p.updated_at ? new Date(p.updated_at).toLocaleString('en-IN') : '—'}</td>
                   <td className="px-4 py-2 text-right">
-                    <Link href={`/crucible/admin/career-explorer/profiles/${p._id}`} className="text-orange-300 hover:text-orange-200">Open →</Link>
+                    <Link href={`/admin/career-explorer/profiles/${p._id}`} className="text-orange-300 hover:text-orange-200">Open →</Link>
                   </td>
                 </tr>
               ))}

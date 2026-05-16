@@ -27,7 +27,7 @@ export default async function DashboardPage() {
   }
 
   if (!user) {
-    redirect('/login?redirect=/crucible/dashboard');
+    redirect('/login?redirect=/dashboard');
   }
 
   return (

@@ -2,7 +2,7 @@
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PROTOTYPE — Crucible landing redesign (v2 — compact rows + sticky sidebar)
-// Throwaway page at /crucible/preview. Hardcoded sample data, no DB, no auth.
+// Throwaway page at /preview. Hardcoded sample data, no DB, no auth.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useState } from 'react';
@@ -97,7 +97,7 @@ export default function CruciblePreviewPage() {
         <div className="min-h-screen bg-[#050505] text-white">
             {/* Prototype banner */}
             <div className="bg-amber-500/10 border-b border-amber-500/20 text-amber-300 text-xs py-1.5 px-4 flex items-center justify-between flex-wrap gap-2">
-                <span>🎨 PROTOTYPE v2 — compact rows + sticky sidebar · /crucible/preview</span>
+                <span>🎨 PROTOTYPE v2 — compact rows + sticky sidebar · /preview</span>
                 <div className="flex items-center gap-2">
                     <span className="text-amber-300/60">View:</span>
                     <button

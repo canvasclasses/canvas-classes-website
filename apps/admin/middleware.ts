@@ -74,8 +74,10 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Match everything except Next internals + static assets. We intentionally
-    // INCLUDE /api/* here so admin API routes get the same gate as pages.
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|html|js|css|txt|ico)$).*)',
+    // Match everything except Next internals (full /_next/* tree, not just
+    // static/image — covers _next/data, _next/webpack-hmr, etc.) and static
+    // asset extensions. We intentionally INCLUDE /api/* here so admin API
+    // routes get the same gate as pages.
+    '/((?!_next/|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|html|js|css|txt|ico)$).*)',
   ],
 };

@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function AdminCareersList() {
   const admin = await requireAdmin();
-  if (!admin) redirect('/crucible/admin');
+  if (!admin) redirect('/admin');
   await connectToDatabase();
   type CareerRow = {
     _id: string;
@@ -25,7 +25,7 @@ export default async function AdminCareersList() {
   return (
     <main className="min-h-screen bg-[#050505] text-white">
       <div className="mx-auto max-w-6xl px-6 py-10">
-        <Link href="/crucible/admin/career-explorer" className="text-sm text-white/60 hover:text-white/90">← Career Explorer admin</Link>
+        <Link href="/admin/career-explorer" className="text-sm text-white/60 hover:text-white/90">← Career Explorer admin</Link>
         <h1 className="mt-2 text-3xl font-semibold">Careers</h1>
         <p className="mt-1 text-white/60">The 9-layer taxonomy powering matching. Edit each career below.</p>
 
@@ -54,7 +54,7 @@ export default async function AdminCareersList() {
                   <td className="px-4 py-2">{c.hidden_gem ? 'Yes' : '—'}</td>
                   <td className="px-4 py-2">{c.is_active ? 'Yes' : 'No'}</td>
                   <td className="px-4 py-2 text-right">
-                    <Link href={`/crucible/admin/career-explorer/careers/${c._id}`} className="text-orange-300 hover:text-orange-200">Edit →</Link>
+                    <Link href={`/admin/career-explorer/careers/${c._id}`} className="text-orange-300 hover:text-orange-200">Edit →</Link>
                   </td>
                 </tr>
               ))}

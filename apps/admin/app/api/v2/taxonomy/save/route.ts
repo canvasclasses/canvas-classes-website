@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
     const lines: string[] = [
       '// CRITICAL: This taxonomy data is the single source of truth for the practice session.',
       '// Canonical location: lib/taxonomy/taxonomyData_from_csv.ts',
-      '// DO NOT MODIFY DIRECTLY — use the Taxonomy Dashboard at /crucible/admin/taxonomy',
+      '// DO NOT MODIFY DIRECTLY — use the Taxonomy Dashboard at /admin/taxonomy',
       '// Changes made in the dashboard are auto-saved here via POST /api/v2/taxonomy/save',
       '',
       'export interface TaxonomyNode {',

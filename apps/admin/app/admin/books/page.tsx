@@ -9,7 +9,9 @@
 //      those deps to admin's package.json, promote MoleculeViewer to a
 //      shared package, or stub the 3D editor for the admin app.
 //
-// Until that migration ships, this page stands in as a placeholder.
+// Until that migration ships, this page stands in as a placeholder. The
+// student app no longer hosts /crucible/admin/books — there is no
+// alternate URL to redirect to. Book edits will need to wait for the port.
 import Link from 'next/link';
 import { ArrowLeft, BookOpen } from 'lucide-react';
 
@@ -22,9 +24,9 @@ export default function BooksAdminPlaceholder() {
         </div>
         <h1 className="text-2xl font-semibold tracking-tight">Books editor — migration pending</h1>
         <p className="text-sm text-white/60 leading-relaxed">
-          The book editor is being ported from the student app. Until it lands here,
-          continue editing books from <code className="px-1 rounded bg-white/5">canvasclasses.in/crucible/admin/books</code>
-          {' '}only if that route still exists on a legacy deployment.
+          The book editor is being ported from the student app to the admin app.
+          Until that lands, book edits are paused. Track progress in the Phase 5
+          handoff doc; ping the maintainer if you need an urgent edit.
         </p>
         <Link
           href="/admin"
