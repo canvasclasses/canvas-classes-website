@@ -6,6 +6,6 @@ export const dynamic = 'force-dynamic';
 
 export default async function BlogAdminPage() {
   const admin = await requireAdmin();
-  if (!admin) redirect('/login?next=/admin/blog');
+  if (!admin) redirect('/login?next=/blog');
   return <BlogAdminClient adminEmail={admin.email} />;
 }
