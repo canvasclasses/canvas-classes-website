@@ -22,13 +22,17 @@ independently in a future Shape B migration).
 
 ```ts
 import type { ServiceDeps } from '@canvas/services/types';
-import { questionsGET, questionsPOST } from '@canvas/services/questions';
+import { GET as svcGET, POST as svcPOST } from '@canvas/services/questions';
 
 // In each app's route.ts:
 const deps: ServiceDeps = { getAuthenticatedUser, isAdmin, hasScriptSecret, isLocalhostDev };
-export const GET = (req: NextRequest) => questionsGET(req, deps);
-export const POST = (req: NextRequest) => questionsPOST(req, deps);
+export const GET = (req: NextRequest) => svcGET(req, deps);
+export const POST = (req: NextRequest) => svcPOST(req, deps);
 ```
+
+Each service file exports `GET` / `POST` / `PATCH` / `DELETE` named after the
+HTTP method it implements — same names as Next.js expects in `route.ts`. Alias
+them at the import site (above) to avoid colliding with the wrapper's exports.
 
 ## Layout
 

@@ -71,7 +71,6 @@ export async function GET() {
     );
   } catch (error: unknown) {
     console.error('Taxonomy load error:', error);
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    return NextResponse.json({ success: false, error: errorMessage }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Failed to load taxonomy' }, { status: 500 });
   }
 }
