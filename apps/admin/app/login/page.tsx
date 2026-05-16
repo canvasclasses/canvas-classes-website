@@ -4,6 +4,7 @@ import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Loader2, ShieldCheck } from 'lucide-react';
 import { createClient } from '../utils/supabase/client';
+import { sanitizeRedirect } from '@canvas/core/redirect-validation';
 
 function LoginContent() {
   const searchParams = useSearchParams();
@@ -43,9 +44,11 @@ function LoginContent() {
         return;
       }
 
-      // Only redirect to relative paths inside this app.
-      const safeNext = nextPath.startsWith('/') && !nextPath.startsWith('//') ? nextPath : '/';
-      window.location.href = safeNext;
+      // Only redirect to relative paths inside this app. sanitizeRedirect
+      // parses via `new URL(...)` so it normalizes backslashes the same way
+      // browsers do — blocks `/\evil.com` which would otherwise navigate
+      // off-origin after the browser rewrites it to `//evil.com`.
+      window.location.href = sanitizeRedirect(nextPath, '/');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Connection failed.');
       setIsLoading(false);
