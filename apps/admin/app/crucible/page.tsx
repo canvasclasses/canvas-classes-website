@@ -288,7 +288,7 @@ function AdminPageContent() {
 
             const isDev = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
             if (!isDev && (qRes.redirected || qRes.url.includes('/login') || qRes.status === 401)) {
-                window.location.href = '/login?next=/admin';
+                window.location.href = '/login?next=/crucible';
                 return;
             }
 
@@ -320,7 +320,7 @@ function AdminPageContent() {
 
             const isDev = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
             if (!isDev && (res.redirected || res.url.includes('/login') || res.status === 401)) {
-                window.location.href = '/login?next=/admin';
+                window.location.href = '/login?next=/crucible';
                 return;
             }
 

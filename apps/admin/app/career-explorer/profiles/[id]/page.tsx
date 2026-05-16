@@ -15,7 +15,7 @@ export default async function AdminProfileDetail({
   params: Promise<{ id: string }>;
 }) {
   const admin = await requireAdmin();
-  if (!admin) redirect('/admin');
+  if (!admin) redirect('/');
   const { id } = await params;
   await connectToDatabase();
 
@@ -44,7 +44,7 @@ export default async function AdminProfileDetail({
   return (
     <main className="min-h-screen bg-[#050505] text-white">
       <div className="mx-auto max-w-6xl px-6 py-10">
-        <Link href="/admin/career-explorer/profiles" className="text-sm text-white/60 hover:text-white/90">← All profiles</Link>
+        <Link href="/career-explorer/profiles" className="text-sm text-white/60 hover:text-white/90">← All profiles</Link>
         <h1 className="mt-2 text-3xl font-semibold">Profile <span className="font-mono text-xl text-white/60">{id.slice(0, 8)}</span></h1>
         <ProfileDetailClient profile={profile} matches={hydrated} />
       </div>

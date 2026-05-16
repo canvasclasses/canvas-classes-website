@@ -29,11 +29,11 @@ export default function BooksAdminPlaceholder() {
           handoff doc; ping the maintainer if you need an urgent edit.
         </p>
         <Link
-          href="/admin"
+          href="/"
           className="inline-flex items-center gap-1.5 text-sm text-orange-300 hover:text-orange-200"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
-          Back to admin
+          Back to admin home
         </Link>
       </div>
     </main>

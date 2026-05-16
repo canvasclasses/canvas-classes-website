@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function AdminQuestions() {
   const admin = await requireAdmin();
-  if (!admin) redirect('/admin');
+  if (!admin) redirect('/');
   await connectToDatabase();
   type QRow = {
     _id: string;
@@ -24,7 +24,7 @@ export default async function AdminQuestions() {
   return (
     <main className="min-h-screen bg-[#050505] text-white">
       <div className="mx-auto max-w-5xl px-6 py-10">
-        <Link href="/admin/career-explorer" className="text-sm text-white/60 hover:text-white/90">← Career Explorer admin</Link>
+        <Link href="/career-explorer" className="text-sm text-white/60 hover:text-white/90">← Career Explorer admin</Link>
         <h1 className="mt-2 text-3xl font-semibold">Questions</h1>
         <p className="mt-1 text-white/60">Review the explorer flow. Edit via the seed script or directly in Mongo until a full editor lands.</p>
 

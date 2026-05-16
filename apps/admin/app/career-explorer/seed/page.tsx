@@ -6,11 +6,11 @@ export const dynamic = 'force-dynamic';
 
 export default async function AdminSeedPage() {
   const admin = await requireAdmin();
-  if (!admin) redirect('/admin');
+  if (!admin) redirect('/');
   return (
     <main className="min-h-screen bg-[#050505] text-white">
       <div className="mx-auto max-w-3xl px-6 py-10">
-        <Link href="/admin/career-explorer" className="text-sm text-white/60 hover:text-white/90">← Career Explorer admin</Link>
+        <Link href="/career-explorer" className="text-sm text-white/60 hover:text-white/90">← Career Explorer admin</Link>
         <h1 className="mt-2 text-3xl font-semibold">Seed / reset</h1>
         <p className="mt-2 text-white/70">Seed scripts are run from the CLI to keep seeding under version control.</p>
 

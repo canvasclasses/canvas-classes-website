@@ -34,7 +34,7 @@ The codebase is split into two Next.js apps in an npm workspace:
 | App | Host | Purpose |
 |---|---|---|
 | `apps/student/` | `canvasclasses.in` | Public student-facing site — `/the-crucible/*`, `/books/*`, `/class-*`, blog, public APIs |
-| `apps/admin/` | `admin.canvasclasses.in` | Operator console — `/admin/*`, `/dashboard`, `/preview`, admin write APIs |
+| `apps/admin/` | `admin.canvasclasses.in` | Operator console — `/` (landing), `/crucible` (question editor), `/flashcards`, `/blog`, `/books`, `/taxonomy`, `/career-explorer`, `/dashboard`, `/preview`, admin write APIs |
 
 Both apps share `@canvas/{core,data,persona,services,ui}` packages from `packages/*`. **Neither app may import from the other** — workspace-level boundary enforced by tsc.
 
@@ -49,7 +49,7 @@ There are two versions of the question system. **V2 is the only active system.**
 
 | | V1 (Legacy — do not use) | V2 (Active) |
 |---|---|---|
-| Admin panel | `/the-crucible/admin/` | `admin.canvasclasses.in/admin/` |
+| Admin panel | `/the-crucible/admin/` | `admin.canvasclasses.in/crucible` |
 | API | `/api/questions/` | `apps/student/app/api/v2/` (public/student reads + writes), `apps/admin/app/api/v2/` (admin writes) |
 | Mongoose model | (deleted — V1 retired) | `packages/data/models/Question.v2.ts` |
 | Collection | `questions` | `questions_v2` |
@@ -57,7 +57,7 @@ There are two versions of the question system. **V2 is the only active system.**
 
 **Student-facing UI** lives at `/the-crucible/` (route shell at `apps/student/app/the-crucible/`) and reads from V2 via server actions in `apps/student/features/crucible/server-actions/the-crucible.ts`.
 
-**Admin UI** lives at `admin.canvasclasses.in/admin/` (route shell at `apps/admin/app/admin/`, components in `apps/admin/features/admin/components/`). Admin pages call same-origin `/api/v2/*` routes, all served by the admin app. **The admin app never crosses into student-origin** — that boundary is the point of the Phase 5 split. See `_agents/plans/PHASE_5_ADMIN_SPLIT.md` for the decision record.
+**Admin UI** lives on the admin app at `admin.canvasclasses.in`. The landing at `/` is a card-grid of all operator panels; `/crucible` is the question editor (route shell at `apps/admin/app/crucible/`); other panels are flat siblings (`/flashcards`, `/blog`, `/books`, `/taxonomy`, `/career-explorer`, `/dashboard`, `/preview`). Components live in `apps/admin/features/admin/components/`. Admin pages call same-origin `/api/v2/*` routes, all served by the admin app. **The admin app never crosses into student-origin** — that boundary is the point of the Phase 5 split. See [ADR-002](_agents/adr/002-admin-app-split.md) and [ADR-005](_agents/adr/005-admin-url-flatten-and-landing.md).
 
 ---
 
@@ -265,7 +265,7 @@ Student app (canvasclasses.in, apps/student/)
        └─ MongoDB + Supabase (auth check on writes)
 
 Admin app (admin.canvasclasses.in, apps/admin/)
-  ├─ Admin UI (/admin/*, /dashboard, /preview)
+  ├─ Admin UI (/ landing, /crucible, /flashcards, /blog, /books, /taxonomy, /career-explorer, /dashboard, /preview)
   │    └─ same-origin fetch → /api/v2/* (also in admin app)
   └─ Admin APIs (apps/admin/app/api/v2/*)
        ├─ middleware.ts → ADMIN_EMAILS allow-list (first line of defense)
@@ -285,7 +285,7 @@ Two-level hierarchy: **Chapter → Topic Tag**
 - **Single source of truth**: `packages/data/taxonomy/taxonomyData_from_csv.ts`
 - `metadata.chapter_id` on every `QuestionV2` document must match a chapter `id` in that file exactly
 
-The taxonomy file is auto-updated by the dashboard at `admin.canvasclasses.in/admin/taxonomy` via `POST /api/v2/taxonomy/save` (served by the admin app). Do not edit it manually.
+The taxonomy file is auto-updated by the dashboard at `admin.canvasclasses.in/taxonomy` via `POST /api/v2/taxonomy/save` (served by the admin app). Do not edit it manually.
 
 **For tag-level rules** (which tags to apply, how to weight them, micro-concept naming conventions): read `_agents/workflows/CRUCIBLE_TAXONOMY_AND_TAGGING_RULES.md`.
 
@@ -316,7 +316,8 @@ The taxonomy file is auto-updated by the dashboard at `admin.canvasclasses.in/ad
 | `cn()` class-name merger | `packages/core/utils.ts` |
 | Shared route-handler logic (questions, flashcards, chapters, taxonomy/load, assets/*, export/ppt) | `packages/services/<route>.ts` — each takes a `ServiceDeps` arg for auth DI |
 | V2 questions API wrappers | `apps/student/app/api/v2/questions/route.ts` + `apps/admin/app/api/v2/questions/route.ts` (thin wrappers over `@canvas/services/questions`) |
-| Admin question editor | `apps/admin/features/admin/components/QuestionAdmin.tsx` (route shell: `apps/admin/app/admin/page.tsx`) |
+| Admin home landing | `apps/admin/app/page.tsx` — card grid linking to each operator panel |
+| Admin question editor (Crucible) | `apps/admin/features/admin/components/QuestionAdmin.tsx` (route shell: `apps/admin/app/crucible/page.tsx`) |
 | Admin auth helpers | `apps/admin/lib/auth.ts` (route handlers), `apps/admin/lib/adminAuth.ts` (server components) |
 | Admin middleware | `apps/admin/middleware.ts` (Supabase + ADMIN_EMAILS gate, all paths except `/login` + `/api/auth/*` + `/_next/*`) |
 | Student server actions | `apps/student/features/crucible/server-actions/the-crucible.ts` |

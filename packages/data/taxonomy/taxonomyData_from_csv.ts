@@ -1,5 +1,5 @@
 // CRITICAL: This taxonomy data is the single source of truth for the practice session.
-// DO NOT MODIFY DIRECTLY — use the Taxonomy Dashboard at /crucible/admin/taxonomy
+// DO NOT MODIFY DIRECTLY — use the Taxonomy Dashboard at admin.canvasclasses.in/taxonomy
 // Changes made in the dashboard are auto-saved here via POST /api/v2/taxonomy/save
 
 export interface TaxonomyNode {

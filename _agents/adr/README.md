@@ -15,6 +15,8 @@ links from / to any predecessor.
 | [002](./002-admin-app-split.md) | Split admin into its own Next.js app (same-origin API) | Accepted | 2026-05-15 |
 | [003](./003-admin-auth-shape-a-first.md) | Ship admin auth as Shape A; defer Shape B | Accepted | 2026-05-15 |
 | [004](./004-package-boundary-rules.md) | `@canvas/*` package boundary rules | Accepted | 2026-05-16 |
+| [005](./005-admin-url-flatten-and-landing.md) | Flatten admin URLs and introduce the admin home landing | Accepted | 2026-05-17 |
+| [006](./006-och-admin-classification.md) | Organic Chemistry Hub admin stays in the student app as a dev tool | Accepted | 2026-05-17 |
 
 ## When to write a new ADR
 

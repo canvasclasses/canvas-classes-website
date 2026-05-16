@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function CareerExplorerAdminPage() {
   const admin = await requireAdmin();
-  if (!admin) redirect('/admin');
+  if (!admin) redirect('/');
   await connectToDatabase();
 
   const [careers, questions, profiles, matches] = await Promise.all([
@@ -39,10 +39,10 @@ export default async function CareerExplorerAdminPage() {
       <div className="mx-auto max-w-6xl px-6 py-10">
         <div className="flex items-baseline justify-between">
           <div>
-            <div className="text-xs uppercase tracking-widest text-orange-300">Crucible Admin</div>
+            <div className="text-xs uppercase tracking-widest text-orange-300">Admin</div>
             <h1 className="mt-1 text-3xl font-semibold">Career Explorer</h1>
           </div>
-          <Link href="/admin" className="text-sm text-white/60 hover:text-white/90">← Back to admin</Link>
+          <Link href="/" className="text-sm text-white/60 hover:text-white/90">← Back to admin home</Link>
         </div>
 
         <div className="mt-8 grid gap-3 sm:grid-cols-4">
@@ -53,10 +53,10 @@ export default async function CareerExplorerAdminPage() {
         </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Tile href="/admin/career-explorer/careers" icon={<BookOpen />} title="Careers" hint="Edit the 9-layer taxonomy for every career path." />
-          <Tile href="/admin/career-explorer/questions" icon={<ListChecks />} title="Questions" hint="Review and tweak the 50-question explorer." />
-          <Tile href="/admin/career-explorer/profiles" icon={<Users2 />} title="Student profiles" hint="See completed profiles and override matches." />
-          <Tile href="/admin/career-explorer/seed" icon={<Settings2 />} title="Seed / reset" hint="Load the default questions and careers into Mongo." />
+          <Tile href="/career-explorer/careers" icon={<BookOpen />} title="Careers" hint="Edit the 9-layer taxonomy for every career path." />
+          <Tile href="/career-explorer/questions" icon={<ListChecks />} title="Questions" hint="Review and tweak the 50-question explorer." />
+          <Tile href="/career-explorer/profiles" icon={<Users2 />} title="Student profiles" hint="See completed profiles and override matches." />
+          <Tile href="/career-explorer/seed" icon={<Settings2 />} title="Seed / reset" hint="Load the default questions and careers into Mongo." />
         </div>
 
         <h2 className="mt-12 text-xl font-semibold">Recent profiles</h2>
@@ -85,7 +85,7 @@ export default async function CareerExplorerAdminPage() {
                   <td className="px-4 py-2">{p.progress_pct ?? 0}%</td>
                   <td className="px-4 py-2">{p.updated_at ? new Date(p.updated_at).toLocaleString('en-IN') : '—'}</td>
                   <td className="px-4 py-2 text-right">
-                    <Link href={`/admin/career-explorer/profiles/${p._id}`} className="text-orange-300 hover:text-orange-200">Open →</Link>
+                    <Link href={`/career-explorer/profiles/${p._id}`} className="text-orange-300 hover:text-orange-200">Open →</Link>
                   </td>
                 </tr>
               ))}

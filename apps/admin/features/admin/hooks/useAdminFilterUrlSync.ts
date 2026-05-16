@@ -39,7 +39,7 @@ export function useAdminFilterUrlSync(filters: AdminFilters, router: Router) {
     if (filters.selectedYearFilter !== 'all') params.set('year', filters.selectedYearFilter);
     if (filters.selectedTagFilter !== 'all') params.set('tag', filters.selectedTagFilter);
 
-    const newUrl = params.toString() ? `?${params.toString()}` : '/admin';
+    const newUrl = params.toString() ? `?${params.toString()}` : '/crucible';
     router.replace(newUrl, { scroll: false });
   }, [
     filters.searchQuery,
