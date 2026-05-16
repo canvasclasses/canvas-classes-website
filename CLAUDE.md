@@ -274,7 +274,7 @@ Admin app (admin.canvasclasses.in, apps/admin/)
             └─ Supabase: auth check on every mutating request (second line)
 ```
 
-Both apps connect to the same MongoDB cluster via the same `@canvas/data` Mongoose models. The hard network boundary is at the API layer — admin write routes are not reachable from the public `canvasclasses.in` host. A future hardening step (tracked as Phase 5.5d) splits MongoDB users so the student app gets read-only access to admin-managed collections.
+Both apps connect to the same MongoDB cluster via the same `@canvas/data` Mongoose models. The hard network boundary is at the API layer — admin write routes are not reachable from the public `canvasclasses.in` host. Splitting MongoDB users so the student app gets read-only access to admin-managed collections (Phase 5.5d) is **deferred** until Phase 5 is observed stable in production. The decision and the future spec live in `_agents/plans/PHASE_5_ADMIN_SPLIT.md` under "Out of scope."
 
 ### Taxonomy
 

@@ -46,7 +46,8 @@ because that handler is no longer hosted on the student origin at all.
 
 This does not give us **full** isolation — the underlying MongoDB cluster is
 still shared. That second layer of defense (separate DB users with separate
-permissions) is recorded as a deferred follow-up (Phase 5.5d in the task list).
+permissions) is **deferred by user (2026-05-16)** — see Phase 5.5d in the
+"Out of scope" section below.
 
 ---
 
@@ -159,7 +160,8 @@ lint + build on both apps before being made.
 | 5.10 | code-reviewer skill on the diff |
 | 5.11 | security-auditor skill on auth + cross-app boundary |
 | 5.12 | Final docs (CLAUDE.md, CRUCIBLE_ARCHITECTURE.md, READMEs, memory) |
-| 5.5d | (deferred follow-up) MongoDB user permission split |
+| 5.13a-d | Helper-package consolidation: flashcardTaxonomy, flashcardMarkdown, books utils + schemas, rbac → `@canvas/{data,ui}` (commits 9d7d40b + c42096a) |
+| 5.5d | **Deferred by user (2026-05-16).** MongoDB user permission split — to revisit once Phase 5 is stable in prod. See "Out of scope" below for the full spec. |
 
 ---
 
@@ -167,15 +169,39 @@ lint + build on both apps before being made.
 
 - **Shape B auth (bcrypt+JWT+admin_accounts).** Deferred. Now self-contained
   inside `apps/admin/` after the split, so can ship later without coupling.
-- **MongoDB user permission split.** Recorded as 5.5d, deferred until Phase 5
-  is observed stable in production for at least a week.
+- **MongoDB user permission split (5.5d).** **Deferred by user (2026-05-16).**
+  Will revisit once Phase 5 has been deployed and observed stable in
+  production. Specifics if/when we pick it up: split the `crucible-cluster`
+  Atlas users so the admin app's `MONGODB_URI` connects with write access to
+  admin-managed collections (questions_v2, chapters, assets, mocktestsets,
+  flashcards, books, bookpages, careerquestions, careerpaths, careerprofiles,
+  careermatches, blogposts, blogideas, blogsources, resourcelinks, userroles,
+  roleauditlogs, auditlogs) while the student app's `MONGODB_URI` gets
+  read-only on those + write on student-attribution collections (userprogress,
+  studentchapterprofiles, studentresponses, bookbookmarks, bookprogress,
+  flashcardprogress, testresults, chapterviews, activitylogs,
+  bitsatplanprogress). That's the second layer of defense behind the API
+  split. Cluster-side RBAC + separate env vars per Vercel project — no app
+  code changes required.
+- **Manual smoke test (5.9).** **Owned by user.** Walk-through list:
+  log into admin → /admin loads question list, edit + save → /admin/blog
+  (ideas + posts) → /admin/books placeholder shows → /admin/flashcards
+  (load + edit) → /admin/taxonomy (load + save) → /admin/career-explorer
+  (careers, questions, profiles, seed) → /dashboard → /preview. Student
+  regression: /the-crucible, /books/*, /class-9/*, chapter pages. The
+  code-reviewer audit flagged this explicitly because static checks
+  (tsc, build) can't validate runtime fetch URLs.
 - **Tests + ADR.** That's Phase 6.
 - **Preview deploy + production cutover.** User's call, after all phases on
   the `code-refactor` branch are complete and merged.
-- **Promoting flashcards helpers to a shared package.** If they have no
-  student-side coupling (pure pure functions), we promote in 5.6. Otherwise
-  we copy into admin with a divergence-risk comment and defer the package
-  extraction. Pure judgment call at the time.
+- **Promoting flashcards helpers to a shared package.** Done in Phase 5.13
+  (commits 9d7d40b + c42096a). All five pure-helper duplicates from the
+  audit (flashcardTaxonomy, flashcardMarkdown, books utils, books schemas,
+  rbac) now live in `@canvas/{data,ui}` and old copies are deleted.
+- **Service-layer extraction of the 9 still-duplicated route handlers.**
+  Not started. Would extract handler bodies into `@canvas/services` so
+  both apps' route.ts files become thin wrappers. Substantial scope; own
+  phase if we pick it up.
 
 ---
 
