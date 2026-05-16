@@ -8,9 +8,13 @@
   ],
   "scripts": {
     "dev": "npm run dev -w student",
+    "dev:admin": "npm run dev -w admin",
     "build": "npm run build -w student",
+    "build:admin": "npm run build -w admin",
     "start": "npm run start -w student",
+    "start:admin": "npm run start -w admin",
     "lint": "npm run lint -w student",
+    "lint:admin": "npm run lint -w admin",
     "backup:local": "tsx scripts/mongodb-backup.ts --local",
     "backup:r2": "tsx scripts/mongodb-backup.ts --r2",
     "backup:full": "tsx scripts/mongodb-backup.ts --local --r2",
