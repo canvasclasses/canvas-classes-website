@@ -1,7 +1,13 @@
 # features/crucible
 
-The Crucible — JEE/NEET chemistry practice platform + admin question editor.
-Spans both student-facing pages (`/the-crucible/*`) and admin pages (`/crucible/*`).
+The student-facing Crucible — JEE/NEET chemistry practice platform that
+serves `/the-crucible/*`.
+
+The admin side of Crucible — question editor, mock-tests admin, taxonomy
+admin, blog admin, career-explorer admin, flashcards admin — lives in a
+separate app at [`apps/admin/`](../../../admin/) and deploys to
+`admin.canvasclasses.in`. It moved out in Phase 5 (commits c6ad600
+through 96994fa on the `code-refactor` branch).
 
 ## Routes
 
@@ -11,19 +17,29 @@ Spans both student-facing pages (`/the-crucible/*`) and admin pages (`/crucible/
 | `/the-crucible/[chapterId]` | Chapter-level practice |
 | `/the-crucible/q/[slug]` | Single-question detail page |
 | `/the-crucible/dashboard` | Student dashboard |
-| `/crucible` | Admin landing |
-| `/crucible/admin` | Main question admin |
-| `/crucible/admin/blog` | Blog post admin |
-| `/crucible/admin/books` | Book editor admin |
-| `/crucible/admin/flashcards` | Flashcards admin |
-| `/crucible/admin/career-explorer` | Career-explorer seed admin |
-| `/crucible/admin/taxonomy` | Taxonomy editor admin |
-| `/crucible/admin/preview` | Question preview |
-| `/crucible/dashboard` | Admin user dashboard |
 
-API routes (`app/api/v2/*`) for questions, taxonomy, mock-tests, test-results,
-user/progress, etc. stay at the Next.js routing level and are unaffected by
-this move.
+## API routes that stay in `apps/student/app/api/v2/*`
+
+Public/student-facing data layer:
+
+- `user/*` — progress, stats, recommendations, session-response, etc.
+- `test-results/route.ts`
+- `flashcards/*` — public flashcard reads + student progress
+- `questions/route.ts` + `questions/[id]/route.ts` + `questions/[id]/flag/route.ts` + `questions/[id]/stats/route.ts`
+- `questions/chemical-bonding-batch/route.ts`
+- `books/{progress,user-state,bookmarks,stats,assets/upload}/route.ts` — student-attribution reads/writes
+- `chapters/route.ts`, `taxonomy/load/route.ts`, `validate/latex/route.ts`
+- `college-predictor/*` (public)
+- `notes-quicktest/[chapterId]/route.ts`
+- `career-explorer/{careers,careers/[slug],questions}/route.ts` — public GET halves only; admin write methods live in `apps/admin/`
+- `career-explorer/profiles/*` — all student-attribution
+- `mock-tests/route.ts` + `mock-tests/[id]/route.ts` — public GET halves only; admin write methods live in `apps/admin/`
+- `export/ppt/route.ts`, `assets/[id]/route.ts`
+
+API routes that MOVED to `apps/admin/`: ai/*, taxonomy/save, books/* admin
+methods, career-explorer admin write methods, mock-tests admin write
+methods, questions admin sub-routes (reclassify, flag/[flagIdx], flagged),
+admin/* namespace (permissions, roles, revalidate), debug/*, blog/*.
 
 ## Layout
 
@@ -32,22 +48,17 @@ features/crucible/
 ├── components/
 │   ├── BrowseView.tsx, TestView.tsx, CrucibleWizard.tsx, ...   ← student
 │   ├── guided-practice/   ← AdaptiveSession, AdaptiveQuestionCard, etc.
-│   ├── admin/             ← question admin UI (QuestionAdmin, AnalyticsDashboard,
-│   │                        BulkImportModal, FlagModal, RoleManagement,
-│   │                        QuestionPreviewPane, ExportDashboard, types,
-│   │                        BlogAdminClient, EnhancedFlashcardAdmin, etc.)
-│   ├── admin/blog/        ← BlogEditor, IdeaForm, SourcesPanel, BlogImageDrop
 │   └── dashboard/         ← DashboardClient, StatsCard, RecentTests, ChapterBreakdown
 ├── lib/
 │   ├── adaptiveEngine.ts, chapterCounts.ts, ncertTopicOrder.ts
 │   └── dashboard/calculateAnalytics.ts
 ├── server-actions/
 │   ├── the-crucible.ts    ← student-facing server actions
-│   └── progress.ts        ← user-progress server actions
-├── hooks/
-│   └── admin/             ← usePermissions, useAdminKeyNav, useAdminFilters, etc.
+│   └── progress.ts        ← user-progress server actions (admin variants
+│                            extracted to apps/admin/lib/serverActions/)
 ├── types.ts                ← Crucible legacy/internal types
-├── index.ts
+├── index.ts                ← cross-feature exports (CrucibleBrand,
+│                              CrucibleQuestionCarousel, formatExamLabel)
 └── README.md
 ```
 
@@ -70,21 +81,3 @@ is a follow-up task.
 `CrucibleQuestionCarousel` from this feature. That's the only cross-feature
 consumer — acceptable. If a third feature consumes Crucible components, the
 shared bits get promoted to `apps/student/components/` or `@canvas/ui`.
-
-## Cross-feature dependencies
-
-Outbound edges (Crucible importing from other features). All are accepted
-single-consumer edges — if a second non-{flashcards} consumer of these
-helpers appears, promote them to `@canvas/data` or `apps/student/lib/`.
-
-| File | Imports from | Symbols |
-|---|---|---|
-| `components/admin/EnhancedFlashcardAdmin.tsx` | `@/features/flashcards/lib/flashcardMarkdown` | `flashcardMarkdownComponents` |
-| `components/admin/EnhancedFlashcardAdmin.tsx` | `@/features/flashcards/lib/flashcardTaxonomy` | `getCategoryNames`, `getFlashcardChaptersByCategory` |
-| `components/admin/FlashcardImageScaleControls.tsx` | `@/features/flashcards/lib/flashcardMarkdown` | `findImages`, `setImageWidthInText` |
-
-## Phase 5 prep
-
-Admin code is namespaced under `features/crucible/components/admin/` +
-`features/crucible/hooks/admin/`. When Phase 5 splits admin into its own
-Vercel app (`apps/admin/`), these directories migrate as a unit.
