@@ -1,11 +1,11 @@
+// GET /api/v2/mock-tests — list mock test sets (admin: all; public: published only).
+// The matching admin POST (create set) lives in apps/admin.
+
 import { NextRequest, NextResponse } from 'next/server';
-import { v4 as uuidv4 } from 'uuid';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { MockTestSet } from '@canvas/data/models/MockTestSet';
 import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
 import { isLocalhostDev } from '@/lib/bookAuth';
-
-// ── GET /api/v2/mock-tests — list all sets (admin: all; public: published only) ──
 
 export async function GET(request: NextRequest) {
   try {
@@ -23,7 +23,6 @@ export async function GET(request: NextRequest) {
     if (exam && ['JEE', 'NEET'].includes(exam)) filter.exam = exam;
     if (admin && status) filter.status = status;
 
-    // Cap results to prevent OOM on large collections
     const limitParam = parseInt(searchParams.get('limit') || '100', 10);
     const safeLimit = Math.min(Math.max(1, limitParam), 200);
 
@@ -32,7 +31,6 @@ export async function GET(request: NextRequest) {
       .limit(safeLimit)
       .lean();
 
-    // Project and attach question count
     interface MockTestSetWithCount {
       questions?: Record<string, unknown>[];
       question_count: number;
@@ -50,77 +48,5 @@ export async function GET(request: NextRequest) {
   } catch (err) {
     console.error('[mock-tests GET]', err);
     return NextResponse.json({ success: false, error: 'Failed to fetch mock test sets' }, { status: 500 });
-  }
-}
-
-// ── POST /api/v2/mock-tests — create new set (admin only) ────────────────────
-
-export async function POST(request: NextRequest) {
-  try {
-    const scriptAuth = hasScriptSecret(request);
-    const user = scriptAuth ? null : await getAuthenticatedUser(request);
-    const localDev = await isLocalhostDev();
-    const authorEmail = scriptAuth ? 'script' : (user?.email ?? (localDev ? 'dev@localhost' : undefined));
-
-    if (!scriptAuth && !localDev && !isAdmin(user?.email)) {
-      return NextResponse.json({ success: false, error: `Unauthorized — logged in as: ${user?.email ?? 'not logged in'}` }, { status: 403 });
-    }
-
-    await connectToDatabase();
-    const body = await request.json();
-
-    const {
-      title,
-      exam,
-      year,
-      source,
-      duration_minutes,
-      marks_correct = 4,
-      marks_incorrect = -1,
-      sections,
-      description,
-      status = 'draft',
-    } = body;
-
-    if (!title || !exam || !['JEE', 'NEET'].includes(exam)) {
-      return NextResponse.json(
-        { success: false, error: 'title and exam (JEE|NEET) are required' },
-        { status: 400 }
-      );
-    }
-
-    const defaultDuration = exam === 'NEET' ? 200 : 180;
-
-    const newSet = new MockTestSet({
-      _id: uuidv4(),
-      title,
-      exam,
-      year: year ?? new Date().getFullYear(),
-      source: source ?? 'Custom',
-      duration_minutes: duration_minutes ?? defaultDuration,
-      marks_correct,
-      marks_incorrect,
-      sections: sections ?? [],
-      questions: [],
-      description: description ?? '',
-      status,
-      created_by: authorEmail ?? 'script',
-      updated_by: authorEmail ?? 'script',
-      created_at: new Date(),
-      updated_at: new Date(),
-    });
-
-    await newSet.save();
-
-    return NextResponse.json({ success: true, data: newSet.toObject() }, { status: 201 });
-  } catch (err: unknown) {
-    console.error('[mock-tests POST]', err);
-    const errorMessage = err instanceof Error ? err.message : 'Failed to create mock test set';
-    const errorName = err instanceof Error ? err.name : '';
-    return NextResponse.json({
-      success: false,
-      error: errorMessage,
-      detail: errorName,
-    }, { status: 500 });
   }
 }
