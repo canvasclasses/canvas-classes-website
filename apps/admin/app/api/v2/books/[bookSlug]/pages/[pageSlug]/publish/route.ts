@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import BookModel from '@canvas/data/models/Book';
 import BookPageModel from '@canvas/data/models/BookPage';
-import { requireAdmin } from '@/lib/bookAuth';
+import { requireAdmin } from '@/lib/adminAuth';
 
 type Params = { params: Promise<{ bookSlug: string; pageSlug: string }> };
 

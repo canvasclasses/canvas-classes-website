@@ -3,10 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import BookModel from '@canvas/data/models/Book';
 import BookPageModel from '@canvas/data/models/BookPage';
-import { requireAdmin, isAdminRequest } from '@/lib/bookAuth';
+import { requireAdmin, isAdminRequest } from '@/lib/adminAuth';
 import { ContentBlock } from '@canvas/data/types/books';
 import { validateBlocks } from '@/lib/schemas/blocks';
-import { computeReadingTime, computeContentTypes } from '@/features/books/lib/utils';
+import { computeReadingTime, computeContentTypes } from '@/features/admin/lib/books/utils';
 
 // GET branches on isAdminRequest() — admins see drafts, students see only
 // published. Caching would leak one view into the other. Students load page

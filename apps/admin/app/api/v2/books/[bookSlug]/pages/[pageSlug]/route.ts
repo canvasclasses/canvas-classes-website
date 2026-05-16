@@ -3,10 +3,10 @@ import { randomUUID } from 'crypto';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import BookModel from '@canvas/data/models/Book';
 import BookPageModel from '@canvas/data/models/BookPage';
-import { requireAdmin, isAdminRequest } from '@/lib/bookAuth';
+import { requireAdmin, isAdminRequest } from '@/lib/adminAuth';
 import { ContentBlock } from '@canvas/data/types/books';
 import { validateBlocks } from '@/lib/schemas/blocks';
-import { computeReadingTime, computeContentTypes, extractVideoTitle } from '@/features/books/lib/utils';
+import { computeReadingTime, computeContentTypes, extractVideoTitle } from '@/features/admin/lib/books/utils';
 
 const VALID_CALLOUT_VARIANTS = new Set([
   'remember', 'note', 'warning', 'exam_tip', 'fun_fact',

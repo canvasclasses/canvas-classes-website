@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAdmin } from '@/lib/bookAuth';
+import { requireAdmin } from '@/lib/adminAuth';
 
 // ============================================
 // AI SOLUTION GENERATION API

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
-import { requireAdmin } from '@/lib/bookAuth';
+import { requireAdmin } from '@/lib/adminAuth';
 
 /**
  * POST /api/v2/taxonomy/save

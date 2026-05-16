@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import BookModel from '@canvas/data/models/Book';
 import BookPageModel from '@canvas/data/models/BookPage';
-import { requireAdmin, isAdminRequest } from '@/lib/bookAuth';
+import { requireAdmin, isAdminRequest } from '@/lib/adminAuth';
 import { BookChapter } from '@canvas/data/types/books';
 
 // GET branches on isAdminRequest() — admins see unpublished chapters, students
