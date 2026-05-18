@@ -24,153 +24,9 @@ is merge-ready as-is. Everything below is architecture polish.
 
 ## Load-bearing (worth doing soon)
 
-### 1. Reuse `deps.isAdmin` in flashcard services
-
-**Files**
-- `packages/services/flashcards.ts:126-140` (POST)
-- `packages/services/flashcards-by-id.ts:73-79` (PATCH), `:159-165` (DELETE)
-
-**Problem**
-Three handlers re-parse `process.env.ADMIN_EMAILS` inline instead of calling
-`deps.isAdmin` from the `ServiceDeps` interface. `CLAUDE.md` §8.2 forbids
-re-defining `isAdmin` locally. The DI seam exists precisely so admin checks
-can be swapped per app — Shape B (bcrypt + JWT + `admin_accounts`,
-[ADR-003](./adr/003-admin-auth-shape-a-first.md)) would mean editing
-`apps/admin/lib/auth.ts:isAdmin` once. Inline env-var parsing breaks that.
-
-**Solution**
-Replace each inline check with `if (!user?.email || !deps.isAdmin(user.email)) return 403;`.
-~9 lines deleted across 3 sites.
-
-**Benefits**
-- **Locality**: admin-check rule lives in one place per app.
-- **Leverage**: Shape B migration swaps one function; no per-route edits.
-- **Testability**: mock `deps.isAdmin`; no env-var setup needed.
-
-**Surfaced by**: services depth audit + security-auditor (Medium).
-
----
-
-### 2. Extract a `requireAdmin` helper inside `@canvas/services`
-
-**Files**
-- Same flashcards files as #1
-- New helper: `packages/services/auth.ts` (or expanded `types.ts`)
-
-**Problem**
-Beyond the inline `isAdmin` issue, the entire "if not localhost, require auth,
-require admin email" block is copy-pasted across flashcard POST / PATCH /
-DELETE. Each handler repeats ~12 lines of ceremony before the actual
-mutation logic. The next admin-mutation service added to the package will
-copy it again. Pre-existing pattern, but the new package boundary makes the
-fix one place.
-
-**Solution sketch**
-```ts
-export async function requireAdmin(
-  request: NextRequest,
-  deps: ServiceDeps
-): Promise<{ ok: true; user: User } | { ok: false; status: 401 | 403; error: string }>
-```
-Each handler shrinks to `const auth = await requireAdmin(req, deps); if (!auth.ok) return NextResponse.json(...);`.
-
-**Benefits**
-- **Depth**: turns three shallow gate blocks into one deep gate.
-- **Leverage**: the next admin-mutation service gets the gate free.
-- **Locality**: future auth-shape changes (Shape B) need to touch the helper, not every handler.
-
-**Surfaced by**: services depth audit.
-
-**Note**: Depends on #1 being done (so the helper can use `deps.isAdmin`
-rather than re-importing the inline logic it replaces).
-
----
-
-### 3. Lift the URL-param filter builder out of `questions.ts:GET`
-
-**Files**
-- `packages/services/questions.ts:90-234`
-
-**Problem**
-A 250-line GET handler bundles three separable concerns: (a) URL param
-parsing + normalization (~130 lines), (b) three different query paths
-(fast-path A: batch-by-IDs, fast-path B: cached chapter fetch, slow path:
-dynamic query), (c) response formatting. The parsing block contains the
-§4.5 legacy-param-bridge logic (the `is_pyq`/`exam_level`/`examBoard`
-translation block) that CLAUDE.md says will be deleted "after Phase 4."
-
-The 130-line parsing block touches no I/O — it's pure computation, only
-untestable today because it sits inside an HTTP handler.
-
-**Solution sketch**
-Extract two pure functions:
-```ts
-function parseQuestionParams(searchParams: URLSearchParams): ParsedFilters
-function buildMongoFilter(parsed: ParsedFilters, rbacFilter?: object): Filter
-function buildProjection(parsed: ParsedFilters): Projection
-```
-The GET handler shrinks to: parse → check fast-path conditions → build
-filter → query → format.
-
-**Benefits**
-- **Testability**: `buildMongoFilter({ is_pyq: 'true', exam_level: 'mains' })`
-  becomes a one-line unit test with no Mongoose.
-- **Locality**: when the legacy-param bridge is finally deleted (per CLAUDE.md
-  §4.5 deprecation table), you edit one function.
-- **Leverage**: analytics/exports could reuse the same filter shape.
-
-**Surfaced by**: services depth audit.
-
----
-
-### 4. Pull `applyAttemptToProgress` into a pure `(state, event) → state` function
-
-**Files**
-- `packages/persona/writer.ts`
-
-**Problem**
-The densest single function in the persona pipeline (140 lines, mutates 7
-sub-structures of a hydrated Mongoose `UserProgress` document in place).
-[`CRUCIBLE_ARCHITECTURE.md`](./CRUCIBLE_ARCHITECTURE.md) identifies it as
-the canonical mutation surface for student attempts. Past bug (audit #18:
-streak math overwriting `prevPracticeDate` before reading it) lived here —
-finding it required reading the whole function because the seam is at
-"mutate a Mongoose doc," not at the actual state transition.
-
-To test "given `recent_attempts=[a,b,c]` + new attempt `d`, the result is
-`[d,a,b,c]`" you need a real DB or a complete Mongoose mock. The interface
-shape blocks the test seam at the most important place in the codebase.
-
-**Solution sketch**
-Extract a pure value-oriented core:
-```ts
-// New: packages/persona/user-progress-updater.ts
-export function updateUserProgressState(
-  current: Readonly<IUserProgress>,
-  attempt: IQuestionAttempt
-): IUserProgress
-```
-Keep `applyAttemptToProgress(doc, attempt)` as a 3-line wrapper:
-```ts
-const updated = updateUserProgressState(progress.toObject() as IUserProgress, attempt);
-Object.assign(progress, updated);
-```
-Public interface unchanged; opens an **internal seam** for tests.
-
-**Benefits**
-- **Testability** — biggest win in the codebase. Tier-gating rules,
-  streak-math edge cases, the demo-question constraint all become
-  pure-function tests.
-- **Locality** preserved (no change to where the logic lives).
-- **Leverage**: admin dashboards / AI training pipelines can simulate
-  "what would this attempt do to the user's state" without touching the
-  DB.
-
-**Surfaced by**: persona depth audit.
-
-**Invariant to preserve**: writer remains the canonical mutation surface
-([CRUCIBLE_ARCHITECTURE.md](./CRUCIBLE_ARCHITECTURE.md) §9 invariant #3).
-No changes to the public function signature.
+_All four original load-bearing items (1–4) shipped on 2026-05-18 — see
+[Completed](#completed) at the bottom of this doc. Add new load-bearing
+items here as the next audits surface them._
 
 ---
 
@@ -281,6 +137,98 @@ has to choose which shape to add it to. Until then the bridge pays its own
 tax.
 
 **Surfaced by**: features depth audit.
+
+---
+
+## Completed
+
+### 1. Reuse `deps.isAdmin` in flashcard services
+
+**Completed:** 2026-05-18, in the same commit as #2 (`refactor(packages): deepening-backlog #1–4 — auth gate, filter builder, persona pure core`).
+
+**What landed**
+- `packages/services/flashcards.ts:POST` and `packages/services/flashcards-by-id.ts` (PATCH + DELETE): inline `process.env.ADMIN_EMAILS.split(',')…` parses replaced with `deps.isAdmin(user.email)` from the `ServiceDeps` interface.
+- Two minor behaviour deltas worth recording: email comparison is now case-insensitive (matches the rest of the codebase via the canonical `isAdmin` helper); the `ADMIN_EMAILS` missing-config branch that returned a 500 collapsed to a 403 (less §8.5 disclosure surface, same lockout effect).
+- The DI seam is now respected at every flashcard admin gate — a future Shape-B swap ([ADR-003](./adr/003-admin-auth-shape-a-first.md)) touches one function per app.
+
+**Why this was worth doing soon (preserved rationale)**
+`CLAUDE.md` §8.2 forbids re-defining `isAdmin` locally; three handlers were
+in violation. The DI seam exists precisely so admin checks can be swapped
+per app — inline env-var parsing breaks that. Locality + leverage + testability
+all improved by eliminating the inline duplication.
+
+---
+
+### 2. Extract a `requireAdmin` helper inside `@canvas/services`
+
+**Completed:** 2026-05-18, same commit as #1.
+
+**What landed**
+- New file `packages/services/auth.ts` exporting `requireAdmin(req, deps)` and `AdminGateResult` (discriminated union `{ ok: true; user: User \| null } \| { ok: false; response: NextResponse }`).
+- Added `./auth` subpath to `packages/services/package.json` exports.
+- Three flashcard mutating handlers (POST / PATCH / DELETE) reduced to 2 lines of gate ceremony each: `const gate = await requireAdmin(req, deps); if (!gate.ok) return gate.response;`. Net ~30 lines of duplicate ceremony deleted.
+- Result shape carries `gate.user` even when callers don't use it today — future audit-log integration reads `gate.user?.email` without API churn.
+
+**Why this was worth doing soon (preserved rationale)**
+The "localhost bypass → require user → require admin email" preamble was
+copy-pasted three times. The next admin-mutation service added to the
+package would have copied it again. Centralising the gate turns three
+shallow blocks into one deep one; future auth-shape changes touch the
+helper, not every handler.
+
+**Notes**
+- Built on top of #1 (the helper uses `deps.isAdmin` rather than re-importing the inline logic).
+- Helper exposed only via subpath import — `index.ts` barrel still exports only `ServiceDeps`. Matches the package's "subpath-first" convention.
+
+---
+
+### 3. Lift the URL-param filter builder out of `questions.ts:GET`
+
+**Completed:** 2026-05-18, same commit as #1.
+
+**What landed**
+- New file `packages/services/questions-filters.ts` exporting pure helpers `parseQuestionParams`, `isSimpleChapterFetch`, `buildMongoFilter`, `buildProjection`, and the `PROJECTION_NO_SOLUTIONS` constant.
+- Added `./questions-filters` subpath to `packages/services/package.json` exports.
+- `questions.ts:GET` shrank: parse → resolve effective limit → fast-path A (batch by IDs) → fast-path B (cached chapter fetch) → slow path (RBAC + `buildMongoFilter` + `buildProjection` + query). The 130-line inline parsing block is gone; the `is_pyq` / `exam_level` / `examBoard` legacy-param bridge is now centralised inside `buildMongoFilter`.
+- Edge case improvement: `?limit=abc` and other non-numeric inputs now resolve to the auth-aware default instead of propagating NaN to `.limit(NaN)`. Existing numeric paths (including `?limit=0`) preserved exactly.
+- Symmetric use of `buildProjection({ excludeSolutions })` inside the cached `getCachedChapterQuestions` to keep the projection logic in one place.
+
+**Why this was worth doing soon (preserved rationale)**
+A 250-line GET handler bundled URL parsing, three query paths, and response
+formatting. The parsing block was pure computation, only untestable because
+it sat inside an HTTP handler. Extracting the pure functions opened the
+test seam and — more concretely — turned the CLAUDE.md §4.5 Phase 4
+legacy-param-bridge cleanup into a single-file delete instead of a
+handler-spanning hunt.
+
+---
+
+### 4. Pull `applyAttemptToProgress` into a pure `(state, event) → state` function
+
+**Completed:** 2026-05-18, same commit as #1.
+
+**What landed**
+- New file `packages/persona/user-progress-updater.ts` exporting `computeUserProgressUpdate(snapshot, attempt): UserProgressUpdate`, plus the supporting `UserProgressSnapshot` and `UserProgressUpdate` interfaces.
+- Added `./user-progress-updater` subpath to `packages/persona/package.json` exports.
+- `applyAttemptToProgress` in `writer.ts` shrank from 140 lines to a 35-line wrapper that: builds the snapshot, calls the pure function, then applies the change set via Mongoose's change-tracking surface (Map.set on `chapter_progress` / `concept_mastery`, direct array assignment for `recent_attempts` / `all_attempted_ids`, `Object.assign` on `stats`, primitive assignment for `updated_at`).
+- Public function signature unchanged. CRUCIBLE_ARCHITECTURE.md §9 invariant #3 preserved: writer.ts remains the canonical mutation surface.
+- The new file is genuinely isomorphic — no `'server-only'` marker, all model imports are `import type` (erased at compile). Tests, admin "what-if" simulators, and future AI replay pipelines can call it from any context.
+
+**Why this was worth doing soon (preserved rationale)**
+The densest single function in the persona pipeline (140 lines, mutating 7
+sub-structures of a hydrated Mongoose doc in place) was the test seam at
+the most important state transition in the codebase. The streak-math audit
+#18 lived here precisely because there was no value-oriented seam to test
+against. The pure function is now that seam.
+
+**Invariant preserved**: writer remains the canonical mutation surface
+([CRUCIBLE_ARCHITECTURE.md](./CRUCIBLE_ARCHITECTURE.md) §9 invariant #3).
+No changes to the public function signature.
+
+**Deferred follow-ups**
+- Vitest specs for `computeUserProgressUpdate` (streak math, tier-gating, recent_attempts cap, exposure-only-on-MEDIUM, dedupe-on-existing-tag). Not blocking; the seam is now ready when test scaffolding lands.
+- Optional `now: Date` parameter for full determinism. Trivial to add when tests are written.
+- Trim `Object.assign(progress.stats, update.stats)` to only the actually-changed fields. Marginal save-payload win; current shape is correct.
 
 ---
 

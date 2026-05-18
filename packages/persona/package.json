@@ -8,6 +8,7 @@
     ".": "./index.ts",
     "./contract": "./contract.ts",
     "./writer": "./writer.ts",
+    "./user-progress-updater": "./user-progress-updater.ts",
     "./profile-engine": "./profile-engine.ts",
     "./recommendation-engine": "./recommendation-engine.ts",
     "./scoring": "./scoring.ts"

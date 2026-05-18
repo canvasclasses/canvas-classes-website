@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import Flashcard from '@canvas/data/models/Flashcard';
+import { requireAdmin } from './auth';
 import type { ServiceDeps } from './types';
 
 // GET /api/v2/flashcards/[id] - Get single flashcard
@@ -61,23 +62,8 @@ export async function PATCH(
     await connectToDatabase();
     const { id } = await params;
 
-    if (!(await deps.isLocalhostDev())) {
-      const user = await deps.getAuthenticatedUser(req);
-      if (!user) {
-        return NextResponse.json(
-          { error: 'Authentication required' },
-          { status: 401 }
-        );
-      }
-
-      const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(e => e.length > 0);
-      if (!user.email || !adminEmails.includes(user.email)) {
-        return NextResponse.json(
-          { error: 'Admin access required' },
-          { status: 403 }
-        );
-      }
-    }
+    const gate = await requireAdmin(req, deps);
+    if (!gate.ok) return gate.response;
 
     const body = await req.json();
 
@@ -147,23 +133,8 @@ export async function DELETE(
     await connectToDatabase();
     const { id } = await params;
 
-    if (!(await deps.isLocalhostDev())) {
-      const user = await deps.getAuthenticatedUser(req);
-      if (!user) {
-        return NextResponse.json(
-          { error: 'Authentication required' },
-          { status: 401 }
-        );
-      }
-
-      const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(e => e.length > 0);
-      if (!user.email || !adminEmails.includes(user.email)) {
-        return NextResponse.json(
-          { error: 'Admin access required' },
-          { status: 403 }
-        );
-      }
-    }
+    const gate = await requireAdmin(req, deps);
+    if (!gate.ok) return gate.response;
 
     const flashcard = await Flashcard.findOneAndUpdate(
       { flashcard_id: id, deleted_at: null },

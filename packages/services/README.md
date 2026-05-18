@@ -51,6 +51,13 @@ audits trivial.
 | `flashcards.ts` | `/api/v2/flashcards/route.ts` (GET + POST) |
 | `flashcards-by-id.ts` | `/api/v2/flashcards/[id]/route.ts` (GET + PATCH + DELETE) |
 
+### Helpers (not route handlers)
+
+| Helper module | What lives here |
+|---|---|
+| `auth.ts` | `requireAdmin(req, deps)` — centralised admin gate. Handles the localhost bypass + auth + admin-email checks every admin-mutation service needs. Returns a discriminated union `{ ok: true; user } \| { ok: false; response }`. New admin-mutation handlers in this package MUST use this instead of re-implementing the gate inline. Delegates to `deps.isAdmin` so the [ADR-003](../../_agents/adr/003-admin-auth-shape-a-first.md) Shape-B swap stays a one-file change per app. |
+| `questions-filters.ts` | Pure URL-param + Mongo-filter helpers used by `questions.ts:GET`: `parseQuestionParams`, `isSimpleChapterFetch`, `buildMongoFilter`, `buildProjection`, `PROJECTION_NO_SOLUTIONS`. No I/O — unit-testable without Mongoose or `NextRequest`. The CLAUDE.md §4.5 legacy-param bridge (`is_pyq` / `exam_level` / `examBoard`) lives in `buildMongoFilter` so the Phase 4 cleanup is a one-file delete. |
+
 ## Package boundaries
 
 - Imports `@canvas/data/*` freely (Mongoose models, taxonomy, schemas, rbac)

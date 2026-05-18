@@ -11,17 +11,12 @@ import { getUserPermissions, getQuestionFilter, canEditQuestion, getSubjectFromC
 import { QuestionSchema } from '@canvas/data/schemas/question';
 import { generateDisplayId, regenerateDisplayId } from '@canvas/data/id-generator';
 import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
-
-// Mongo projection: when excludeSolutions=true, skip the heavy solution fields.
-// solution.text_markdown alone is often 1.5–3 KB per question; on a 500-Q chapter
-// this saves ~1MB of payload per fetch.
-const PROJECTION_NO_SOLUTIONS = {
-  'solution.text_markdown': 0,
-  'solution.markdown': 0,
-  'solution.video_url': 0,
-  'solution.asset_ids': 0,
-  'solution.video_timestamp_start': 0,
-};
+import {
+  buildMongoFilter,
+  buildProjection,
+  isSimpleChapterFetch,
+  parseQuestionParams,
+} from './questions-filters';
 
 const getCachedChapterQuestions = unstable_cache(
   async (
@@ -40,7 +35,7 @@ const getCachedChapterQuestions = unstable_cache(
     if (examBoard) filter['metadata.applicableExams'] = examBoard;
     if (isTopPYQ) filter['metadata.is_top_pyq'] = true;
 
-    const projection = excludeSolutions ? PROJECTION_NO_SOLUTIONS : {};
+    const projection = buildProjection({ excludeSolutions });
 
     const [total, docs] = await Promise.all([
       QuestionV2.countDocuments(filter),
@@ -88,27 +83,15 @@ export async function GET(request: NextRequest, deps: ServiceDeps) {
     }
 
     const { searchParams } = new URL(request.url);
-    const chapter_ids = searchParams.getAll('chapter_id');
-    const subject = searchParams.get('subject');
-    const status = searchParams.get('status');
-    const type = searchParams.get('type');
-    const difficulty = searchParams.get('difficulty');
-    const is_pyq = searchParams.get('is_pyq');
-    const is_top_pyq = searchParams.get('is_top_pyq');
-    const exam_level = searchParams.get('exam_level');
-    const year = searchParams.get('year');
-    const tag_id = searchParams.get('tag_id');
-    const searchTerm = searchParams.get('search');
-    const isCountOnly = searchParams.get('countOnly') === 'true';
-    const examBoard = searchParams.get('examBoard');
-    const sourceType = searchParams.get('sourceType');
-    const exam = searchParams.get('exam');
-    const excludeSolutions = searchParams.get('excludeSolutions') === 'true';
-    const idsParam = searchParams.get('ids');
+    const parsed = parseQuestionParams(searchParams);
+    const { skip, isCountOnly, excludeSolutions, examBoard, is_top_pyq, idsParam, chapter_ids } = parsed;
 
-    const requestedLimit = parseInt(searchParams.get('limit') || (isAuthenticated ? '5000' : '50'));
+    // Resolve the effective limit: unauthenticated requests (or count-only
+    // queries from authed users) are capped at 50; authenticated reads default
+    // to 5000 and honour whatever the caller asked for.
+    const defaultLimit = isAuthenticated ? 5000 : 50;
+    const requestedLimit = parsed.requestedLimit ?? defaultLimit;
     const limit = isAuthenticated && !isCountOnly ? requestedLimit : Math.min(requestedLimit, 50);
-    const skip = parseInt(searchParams.get('skip') || '0');
 
     // ── Fast path A: batch fetch by IDs (lazy solution loading) ──
     if (idsParam) {
@@ -128,13 +111,7 @@ export async function GET(request: NextRequest, deps: ServiceDeps) {
     // SECURITY: cache key doesn't include user email — RBAC is enforced before
     // serving cached data so admins restricted to certain subjects get [] for
     // chapters they can't access.
-    const isSimpleChapterFetch =
-      chapter_ids.length === 1 &&
-      !subject && !status && !type && !difficulty &&
-      !is_pyq && !exam_level && !year && !tag_id && !searchTerm &&
-      !sourceType && !exam && !isCountOnly;
-
-    if (isSimpleChapterFetch) {
+    if (isSimpleChapterFetch(parsed)) {
       if (isAuthenticated && user) {
         const permissions = await getUserPermissions(user.email!);
         if (permissions.role !== 'viewer') {
@@ -172,56 +149,17 @@ export async function GET(request: NextRequest, deps: ServiceDeps) {
     // ── Slow path: dynamic query for admin / search / multi-chapter / counts ──
     await connectToDatabase();
 
-    let query: Record<string, unknown> = { deleted_at: null };
-
+    let rbacFilter: Record<string, unknown> | undefined;
     if (isAuthenticated && user) {
       const permissions = await getUserPermissions(user.email!);
       if (permissions.role !== 'viewer') {
-        const rbacFilter = await getQuestionFilter(user.email!);
-        query = { ...query, ...rbacFilter };
+        rbacFilter = await getQuestionFilter(user.email!);
       }
     }
 
-    if (chapter_ids.length === 1) query['metadata.chapter_id'] = chapter_ids[0];
-    else if (chapter_ids.length > 1) query['metadata.chapter_id'] = { $in: chapter_ids };
-    if (subject) {
-      const subjects = subject.split(',').map(s => s.trim()).filter(Boolean);
-      query['metadata.subject'] = subjects.length === 1 ? subjects[0] : { $in: subjects };
-    }
-    if (status) query.status = status;
-    if (type) query.type = type;
-    if (difficulty) {
-      const diffMap: Record<string, number> = { 'Easy': 2, 'Medium': 3, 'Hard': 4 };
-      query['metadata.difficultyLevel'] = diffMap[difficulty] || Number(difficulty) || 3;
-    }
-    if (examBoard) query['metadata.applicableExams'] = examBoard;
-    if (sourceType) query['metadata.sourceType'] = sourceType;
-    if (exam) query['metadata.examDetails.exam'] = exam;
-    if (year && (sourceType === 'PYQ' || examBoard)) {
-      query['metadata.examDetails.year'] = Number(year);
-    }
+    const query = buildMongoFilter(parsed, { rbacFilter });
+    const projection = buildProjection({ excludeSolutions });
 
-    // Legacy URL-param translation — accepts old param names for back-compat,
-    // but routes them to the canonical Mongo fields. After Phase 4 of the
-    // 2026-05-07 cleanup, these filters can be deleted entirely.
-    if (is_pyq === 'true') query['metadata.sourceType'] = 'PYQ';
-    if (is_pyq === 'false') query['metadata.sourceType'] = { $ne: 'PYQ' };
-    if (is_top_pyq === 'true') query['metadata.is_top_pyq'] = true;
-    if (exam_level === 'mains') query['metadata.examDetails.exam'] = 'JEE_Main';
-    if (exam_level === 'adv') query['metadata.examDetails.exam'] = 'JEE_Advanced';
-    if (year && !sourceType && !examBoard) query['metadata.examDetails.year'] = Number(year);
-    if (tag_id) query['metadata.tags'] = { $elemMatch: { tag_id } };
-
-    // SECURITY: Escape regex special characters to prevent MongoDB injection
-    if (searchTerm) {
-      const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      query.$or = [
-        { display_id: { $regex: escapedSearchTerm, $options: 'i' } },
-        { 'question_text.markdown': { $regex: escapedSearchTerm, $options: 'i' } },
-      ];
-    }
-
-    const projection = excludeSolutions ? PROJECTION_NO_SOLUTIONS : {};
     const [total, questions] = await Promise.all([
       QuestionV2.countDocuments(query),
       isCountOnly
