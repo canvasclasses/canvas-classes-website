@@ -220,7 +220,9 @@ The helper handles: exam-name normalization (`JEE_Main` → `JEE Main`, `NEET_UG
 | `metadata.exam_source` (legacy struct) | **Phase 1+2 complete.** Read paths migrated to `examDetails`. **Writes stopped** on new questions. | Don't read or write. Use `examDetails`. The `formatExamLabel()` helper handles fallback for older docs. |
 | `metadata.is_top_pyq` (boolean) | **KEEP.** Powers "Top Questions" practice mode (admin star-mark). | Default false on new questions. The admin curates via the dashboard. **Never legacy.** |
 
-**Phase 4** ($unset legacy field data + remove from `Question.v2.ts` schema + remove related Mongoose indexes) ships ~2 weeks after Phase 2 is stable. After Phase 4 the bridge fallbacks in helpers and read sites can be deleted (single-canonical-source mode).
+**Phase 4** ($unset legacy field data + remove from `Question.v2.ts` schema + remove related Mongoose indexes) — target window **on or after 2026-06-01** (2 weeks after Phase 2 stability on 2026-05-07). After Phase 4 the bridge fallbacks in helpers and read sites can be deleted (single-canonical-source mode).
+
+**If you are reading this after 2026-06-01:** check whether Phase 4 has shipped before trusting this table. Run `grep -r "is_pyq\|examBoard\|exam_source" packages/data/models/Question.v2.ts` — if those field definitions are gone, Phase 4 is done and the bridge code in helpers can also be removed. If they're still there, Phase 4 is pending and the table is still accurate.
 
 ---
 
@@ -315,6 +317,9 @@ The taxonomy file is auto-updated by the dashboard at `admin.canvasclasses.in/ta
 | Analytics (Mixpanel server + client) | `packages/core/analytics/` |
 | `cn()` class-name merger | `packages/core/utils.ts` |
 | Shared route-handler logic (questions, flashcards, chapters, taxonomy/load, assets/*, export/ppt) | `packages/services/<route>.ts` — each takes a `ServiceDeps` arg for auth DI |
+| Shared admin gate for service handlers | `packages/services/auth.ts` — `requireAdmin(req, deps)` returns `{ ok: true; user } \| { ok: false; response }`. New admin-mutation service handlers MUST use this instead of re-implementing the localhost-bypass + auth + admin-email preamble inline. |
+| Pure question-filter helpers (URL params → Mongo filter) | `packages/services/questions-filters.ts` — `parseQuestionParams`, `buildMongoFilter`, `buildProjection`, `isSimpleChapterFetch`. The §4.5 legacy-param bridge (`is_pyq` / `exam_level` / `examBoard`) lives in `buildMongoFilter` so the Phase 4 cleanup is a one-file delete. No I/O — unit-testable. |
+| Pure persona state transition | `packages/services/../persona/user-progress-updater.ts` (`@canvas/persona/user-progress-updater`) — `computeUserProgressUpdate(snapshot, attempt): UserProgressUpdate`. The value-oriented core of `writer.ts`; safe to import from tests / admin simulators / AI replay. Writer.ts remains the canonical mutation surface (CRUCIBLE_ARCHITECTURE.md §9 invariant #3). |
 | V2 questions API wrappers | `apps/student/app/api/v2/questions/route.ts` + `apps/admin/app/api/v2/questions/route.ts` (thin wrappers over `@canvas/services/questions`) |
 | Admin home landing | `apps/admin/app/page.tsx` — card grid linking to each operator panel |
 | Admin question editor (Crucible) | `apps/admin/features/admin/components/QuestionAdmin.tsx` (route shell: `apps/admin/app/crucible/page.tsx`) |
@@ -454,6 +459,36 @@ For tasks that add or modify API routes, additionally run the security checklist
 3. Do error responses avoid leaking internal details?
 4. Are database queries bounded with `.limit()`?
 5. Are there any new local auth helper functions that should use the shared imports instead?
+
+---
+
+## 8.11 KNOWN ISSUES — AVOID RE-INTRODUCING
+
+These are pre-existing gaps the codebase carries today. They're tracked in `_agents/DEEPENING_BACKLOG.md` but called out here so new code does NOT compound them.
+
+### In-memory rate limiters do not scale across instances
+
+**Where:** `packages/core/rate-limit.ts` and every route that calls `createRateLimiter(...)`.
+
+**The gap:** `Map`-based limiters live in a single Node process. On Vercel each instance has its own Map, so the "30 requests per minute" cap is really "30 × N_instances per minute." Acceptable today (small fleet) but **do not deepen the pattern** in new high-volume endpoints. When traffic justifies it, swap to Upstash Redis or Cloudflare — see DEEPENING_BACKLOG item #5 for the port-adapter sketch.
+
+**For new routes:** continue using `createRateLimiter` for low-volume admin/auth surfaces (existing pattern). For anything student-facing and high-volume, consult before adding — don't silently expand the in-memory footprint.
+
+### Question PATCH lacks an explicit metadata-field whitelist
+
+**Where:** `packages/services/questions-by-id.ts:PATCH`.
+
+**The gap:** The handler spreads the incoming body into `metadata` rather than enumerating allowed sub-fields. Today the only callers are the admin UI (trusted) and bulk-update scripts (operator-controlled), so the risk is contained. But the path is a foot-gun: future code that calls this from a less-trusted surface, or a future bug that leaks user input into the body, would let arbitrary metadata fields land in the DB.
+
+**For new code:** if you add a new caller of `PATCH /api/v2/questions/[id]`, validate the body against `QuestionSchema.partial()` before sending. If you extend the handler itself, consider replacing the spread with an explicit `pick()` of the canonical fields per §4.5.
+
+### Six admin dashboards share a copy-pasted shell
+
+**Where:** `apps/admin/app/{crucible,flashcards,blog,books,taxonomy,career-explorer}/page.tsx` and friends.
+
+**The gap:** Same auth gate, same toolbar shape, same loading state, same empty state — repeated six times. Pre-existing and load-bearing; an `<AdminPanel>` abstraction is sketched in DEEPENING_BACKLOG #8 but not yet built.
+
+**For new dashboards:** if you're tempted to add a 7th, **flag it before adding** — that's the trigger to do the abstraction first. Until then, copy the closest existing dashboard verbatim rather than inventing a new shape, so the future consolidation stays mechanical.
 
 ---
 
