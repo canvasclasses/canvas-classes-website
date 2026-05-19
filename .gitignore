@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-/node_modules
+# dependencies — apply anywhere in the monorepo
+node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -11,14 +11,14 @@
 !.yarn/versions
 
 # testing
-/coverage
+coverage
 
-# next.js
-/.next/
-/out/
+# next.js — applies to any app under apps/
+.next/
+out/
 
 # production
-/build
+build
 
 # misc
 .DS_Store
@@ -76,7 +76,6 @@ _source_pdfs/
 /scripts/update_carbonyl_chapter_ids.js
 /scripts/final_merge_verification.js
 
-
 # automation pipeline output
 /automation/output/
 /automation/logs/
@@ -88,9 +87,11 @@ query_db.js
 html_output.txt
 *.html
 
-# Simulator/public HTML files must be deployed — un-ignore them
-!public/**/*.html
-!public/*.html
+# Simulator/public HTML files must be deployed — un-ignore them under each app
+!apps/student/public/**/*.html
+!apps/student/public/*.html
+!apps/admin/public/**/*.html
+!apps/admin/public/*.html
 
 # automation one-time scripts (insert/fix/check/audit)
 /automation/insert_*.js

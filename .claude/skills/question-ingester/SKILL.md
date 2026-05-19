@@ -13,13 +13,17 @@ You are ingesting questions into the Crucible question bank. **The canonical rul
 | Chemistry | `_agents/workflows/QUESTION_INGESTION_WORKFLOW.md` | ATOM, MOLE, SALT, PERI, CORD, … |
 | Maths | `_agents/workflows/QUESTION_INGESTION_WORKFLOW.md` (use the maths section) | QUAD, MTRX, LIMS, … |
 | Solutions only | `_agents/workflows/solution-ingestion-workflow.md` | (separate flow) |
+| NEET mock solutions | `_agents/workflows/MOCK_TEST_SOLUTION_WORKFLOW.md` | Whiteboard-style, 60-second reads |
+| Math solutions | `_agents/workflows/math-solution-workflow.md` | Teaching-the-thinking, anti-robotic style |
+| Tag / taxonomy maintenance | `_agents/workflows/CRUCIBLE_TAXONOMY_AND_TAGGING_RULES.md` | Post-insertion bulk re-tagging, audits, micro-topic additions |
 
 When anything below conflicts with the workflow doc, the workflow doc wins.
 
 ## STEP 0 — ALWAYS DO THIS FIRST
 
 1. Read the matching workflow doc end-to-end (don't paraphrase from memory).
-2. Read the chapter section of `app/crucible/admin/taxonomy/taxonomyData_from_csv.ts` — confirm `chapter_id`, `tag_id` values, and that the prefix is wired into the prefix maps in **both** `app/api/v2/questions/route.ts` and `app/crucible/admin/page.tsx`.
+2. Read the chapter section of `lib/taxonomy/taxonomyData_from_csv.ts` — confirm `chapter_id`, `tag_id` values, and that the prefix is wired into the prefix maps in **both** `app/api/v2/questions/route.ts` and `app/crucible/admin/page.tsx`.
+   - If you are doing **tag/taxonomy maintenance** (re-tagging, adding micro-topics, bulk reclassification) rather than initial ingestion, read `_agents/workflows/CRUCIBLE_TAXONOMY_AND_TAGGING_RULES.md` instead of (or in addition to) this skill.
 3. Glance at the V2 schema at `lib/models/Question.v2.ts` — pay attention to `metadata.examDetails.{year, month, shift}` shape.
 
 ## STEP 1 — IMAGE SURVEY (anti-hallucination gate)

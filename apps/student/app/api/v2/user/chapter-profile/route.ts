@@ -1,0 +1,84 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { getUserIdFromRequest } from '@/lib/auth';
+import connectToDatabase from '@canvas/data/db/mongodb';
+import { StudentChapterProfile, IStudentChapterProfile } from '@canvas/data/models/StudentChapterProfile';
+import { StudentResponse } from '@canvas/data/models/StudentResponse';
+import { updateProfileFromResponse, createEmptyProfile } from '@canvas/persona/profile-engine';
+
+// ─── GET /api/v2/user/chapter-profile?chapterId=xxx ──────────────────────────
+// Returns the student's multi-dimensional profile for a chapter.
+// If none exists, returns a fresh empty profile.
+export async function GET(req: NextRequest) {
+  try {
+    const userId = await getUserIdFromRequest(req);
+    if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+    const chapterId = req.nextUrl.searchParams.get('chapterId');
+    if (!chapterId) {
+      return NextResponse.json({ error: 'chapterId is required' }, { status: 400 });
+    }
+
+    await connectToDatabase();
+    const profile = await StudentChapterProfile.findOne({ studentId: userId, chapterId }).lean();
+
+    if (!profile) {
+      return NextResponse.json({ profile: createEmptyProfile(userId, chapterId) });
+    }
+
+    return NextResponse.json({ profile });
+  } catch (err) {
+    console.error('[GET /api/v2/user/chapter-profile]', err);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
+
+// ─── POST /api/v2/user/chapter-profile ───────────────────────────────────────
+// Updates the student's chapter profile based on a new StudentResponse.
+// Body: { chapterId, responseId } OR inline response data.
+// Called by the session-response API or by AdaptiveSession after writing a response.
+export async function POST(req: NextRequest) {
+  try {
+    const userId = await getUserIdFromRequest(req);
+    if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+    const body = await req.json();
+    const { chapterId, response: inlineResponse } = body;
+
+    if (!chapterId) {
+      return NextResponse.json({ error: 'chapterId is required' }, { status: 400 });
+    }
+    if (!inlineResponse) {
+      return NextResponse.json({ error: 'response data is required' }, { status: 400 });
+    }
+
+    await connectToDatabase();
+
+    // Load or create profile
+    let profileDoc = await StudentChapterProfile.findOne({ studentId: userId, chapterId });
+    let profileData: IStudentChapterProfile;
+
+    if (profileDoc) {
+      profileData = profileDoc.toObject();
+    } else {
+      profileData = createEmptyProfile(userId, chapterId);
+    }
+
+    // Run pure-function update
+    const updatedProfile = updateProfileFromResponse(profileData, {
+      ...inlineResponse,
+      studentId: userId,
+    } as Parameters<typeof updateProfileFromResponse>[1]);
+
+    // Upsert back to DB
+    await StudentChapterProfile.findOneAndUpdate(
+      { studentId: userId, chapterId },
+      { $set: updatedProfile },
+      { upsert: true, new: true }
+    );
+
+    return NextResponse.json({ success: true, profile: updatedProfile });
+  } catch (err) {
+    console.error('[POST /api/v2/user/chapter-profile]', err);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}

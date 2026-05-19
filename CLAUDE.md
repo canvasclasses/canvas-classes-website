@@ -7,14 +7,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Before writing any code or running any script:
 
 1. **State assumptions explicitly.** If a request could mean two things (e.g., "fix the question UI" — which component?), name both interpretations and ask.
-2. **Name the invariants you'll preserve** when touching Crucible-governed paths (`app/the-crucible/`, `app/api/v2/`, the persona pipeline). Example: "I will not touch `actions.ts` outside the broken function."
+2. **Name the invariants you'll preserve** when touching Crucible-governed paths (`apps/student/app/the-crucible/`, `apps/student/app/api/v2/`, `apps/student/features/crucible/`, `packages/persona/`). Example: "I will not touch `server-actions/the-crucible.ts` outside the broken function."
 3. **For any script writing to `questions_v2`:** state how many documents will be affected and what the rollback is, before running.
 
 If uncertain about scope, stop and ask. Do not pick silently.
 
 ---
 
-> **Before changing anything inside `app/the-crucible/`, `app/crucible/admin/`, `app/api/v2/`, `lib/models/UserProgress.ts`, `lib/models/StudentChapterProfile.ts`, `lib/recommendationEngine.ts`, or `lib/models/ResourceLink.ts` — read [`_agents/CRUCIBLE_ARCHITECTURE.md`](_agents/CRUCIBLE_ARCHITECTURE.md).** It is the canonical reference for Crucible's structure, the persona pipeline, the recommendation bridge, and the invariants that must not be broken. If anything in this file or in code comments contradicts it, that document wins; the fix is to update the doc, never to silently diverge.
+> **Before changing anything inside `apps/student/app/the-crucible/`, `apps/student/app/api/v2/`, `apps/student/features/crucible/`, `apps/admin/app/admin/`, `apps/admin/app/api/v2/`, `apps/admin/features/admin/`, `packages/data/models/UserProgress.ts`, `packages/data/models/StudentChapterProfile.ts`, `packages/persona/`, or `packages/data/models/ResourceLink.ts` — read [`_agents/CRUCIBLE_ARCHITECTURE.md`](_agents/CRUCIBLE_ARCHITECTURE.md).** It is the canonical reference for Crucible's structure, the persona pipeline, the recommendation bridge, and the invariants that must not be broken. If anything in this file or in code comments contradicts it, that document wins; the fix is to update the doc, never to silently diverge.
 
 ---
 
@@ -24,8 +24,24 @@ If uncertain about scope, stop and ask. Do not pick silently.
 
 - **Framework**: Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4
 - **Database**: MongoDB Atlas (questions, taxonomy, audit logs)
-- **Auth**: Supabase (user accounts, session management)
+- **Auth**: Supabase (user accounts, session management) — ADMIN_EMAILS allow-list for the admin app
 - **Assets**: Cloudflare R2 (`canvas-chemistry-assets` bucket)
+
+### Monorepo layout (as of Phase 5)
+
+The codebase is split into two Next.js apps in an npm workspace:
+
+| App | Host | Purpose |
+|---|---|---|
+| `apps/student/` | `canvasclasses.in` | Public student-facing site — `/the-crucible/*`, `/books/*`, `/class-*`, blog, public APIs |
+| `apps/admin/` | `admin.canvasclasses.in` | Operator console — `/` (landing), `/crucible` (question editor), `/flashcards`, `/blog`, `/books`, `/taxonomy`, `/career-explorer`, `/dashboard`, `/preview`, admin write APIs |
+
+Both apps share `@canvas/{core,data,persona,services,ui}` packages from `packages/*`. **Neither app may import from the other** — workspace-level boundary enforced by tsc.
+
+The admin app's API surface (under `apps/admin/app/api/v2/*`) hosts:
+- Admin-write methods extracted from formerly-mixed routes (mock-tests, career-explorer/careers, career-explorer/questions write halves)
+- 1:1 admin-only routes (ai/*, taxonomy/save, books/* admin methods, career-explorer/{matches,questions/[id]}, questions admin sub-routes, blog/*, admin/{permissions,roles,revalidate,debug/sentry})
+- Thin wrappers over `@canvas/services` for the nine routes both apps host (questions, questions/[id], flashcards, flashcards/[id], chapters, taxonomy/load, assets/[id], assets/upload, export/ppt). Each wrapper imports the service function and injects its app-local auth helpers — see [ADR-001](_agents/adr/001-service-layer-di-pattern.md).
 
 ### Active System: V2
 
@@ -33,15 +49,15 @@ There are two versions of the question system. **V2 is the only active system.**
 
 | | V1 (Legacy — do not use) | V2 (Active) |
 |---|---|---|
-| Admin panel | `/the-crucible/admin/` | `/crucible/admin/` |
-| API | `/api/questions/` | `/api/v2/` |
-| Mongoose model | `lib/models.ts` | `lib/models/Question.v2.ts` |
+| Admin panel | `/the-crucible/admin/` | `admin.canvasclasses.in/crucible` |
+| API | `/api/questions/` | `apps/student/app/api/v2/` (public/student reads + writes), `apps/admin/app/api/v2/` (admin writes) |
+| Mongoose model | (deleted — V1 retired) | `packages/data/models/Question.v2.ts` |
 | Collection | `questions` | `questions_v2` |
 | Question IDs | Auto-increment strings | UUID v4 + `display_id` (e.g. `ATOM-042`) |
 
-**Student-facing UI** lives at `/the-crucible/` and reads from V2 via server actions in `app/the-crucible/actions.ts`.
+**Student-facing UI** lives at `/the-crucible/` (route shell at `apps/student/app/the-crucible/`) and reads from V2 via server actions in `apps/student/features/crucible/server-actions/the-crucible.ts`.
 
-**Admin UI** lives at `/crucible/admin/` and communicates via `/api/v2/` REST routes.
+**Admin UI** lives on the admin app at `admin.canvasclasses.in`. The landing at `/` is a card-grid of all operator panels; `/crucible` is the question editor (route shell at `apps/admin/app/crucible/`); other panels are flat siblings (`/flashcards`, `/blog`, `/books`, `/taxonomy`, `/career-explorer`, `/dashboard`, `/preview`). Components live in `apps/admin/features/admin/components/`. Admin pages call same-origin `/api/v2/*` routes, all served by the admin app. **The admin app never crosses into student-origin** — that boundary is the point of the Phase 5 split. See [ADR-002](_agents/adr/002-admin-app-split.md) and [ADR-005](_agents/adr/005-admin-url-flatten-and-landing.md).
 
 ---
 
@@ -124,7 +140,7 @@ Spacing rules:
 
 ## 4.5 CANONICAL FIELD NAMES — DO NOT USE LEGACY ALIASES
 
-When updating questions in `questions_v2`, write to the **canonical** schema fields defined in `lib/models/Question.v2.ts`. Do NOT write to legacy aliases — both the student UI (`app/the-crucible/actions.ts`) and the admin UI (`app/crucible/admin/page.tsx`) read from the canonical fields only.
+When updating questions in `questions_v2`, write to the **canonical** schema fields defined in `packages/data/models/Question.v2.ts`. Do NOT write to legacy aliases — both the student UI (`apps/student/features/crucible/server-actions/the-crucible.ts`) and the admin UI (`apps/student/features/crucible/components/admin/QuestionAdmin.tsx`) read from the canonical fields only.
 
 | Canonical (read by UI) | Legacy alias (do not use) |
 |---|---|
@@ -173,10 +189,10 @@ Morning/Shift-I and Evening/Shift-II are equivalent. Always store the `Shift-I` 
 
 ### Rendering exam attribution — use the shared helper
 
-When rendering "JEE Main 2024 · Jan · S-I" style labels in any UI surface, **always use [`formatExamLabel`](app/the-crucible/components/examLabel.ts)**. Never write inline rendering logic — multiple sites had drifted into incompatible bespoke formatters before the consolidation on 2026-05-07.
+When rendering "JEE Main 2024 · Jan · S-I" style labels in any UI surface, **always use [`formatExamLabel`](apps/student/features/crucible/components/examLabel.ts)**. Never write inline rendering logic — multiple sites had drifted into incompatible bespoke formatters before the consolidation on 2026-05-07.
 
 ```ts
-import { formatExamLabel } from '@/app/the-crucible/components/examLabel';
+import { formatExamLabel } from '@/features/crucible/components/examLabel';
 
 const label = formatExamLabel(
   question.metadata.examDetails,    // canonical, modern
@@ -199,7 +215,7 @@ The helper handles: exam-name normalization (`JEE_Main` → `JEE Main`, `NEET_UG
 | Field | Status (as of 2026-05-07) | Action |
 |---|---|---|
 | `metadata.difficulty` (Easy/Medium/Hard enum) | **Removed.** $unset on 5,505 chemistry docs. Schema field still defined; safe to remove next Phase 4. | Don't write or read. Use `difficultyLevel` (1-5). |
-| `metadata.is_pyq` (boolean) | **Phase 1+2 complete.** Read paths migrated to `sourceType === 'PYQ'`. **Writes stopped** on new questions (insert template, bulk import, admin UI, API auto-fill all retired). Existing data still has the field; Phase 4 will $unset it. | Don't read or write. Use `sourceType === 'PYQ'`. The shared `isPyq()` helper in `app/the-crucible/components/examLabel.ts` handles the bridge. |
+| `metadata.is_pyq` (boolean) | **Phase 1+2 complete.** Read paths migrated to `sourceType === 'PYQ'`. **Writes stopped** on new questions (insert template, bulk import, admin UI, API auto-fill all retired). Existing data still has the field; Phase 4 will $unset it. | Don't read or write. Use `sourceType === 'PYQ'`. The shared `isPyq()` helper in `apps/student/features/crucible/components/examLabel.ts` handles the bridge. |
 | `metadata.examBoard` (single-valued) | **Phase 1+2 complete.** Read paths migrated to `applicableExams[0]`. **Writes stopped** — API no longer auto-syncs from applicableExams on POST/PATCH. | Don't read or write. Use `applicableExams[0]`. |
 | `metadata.exam_source` (legacy struct) | **Phase 1+2 complete.** Read paths migrated to `examDetails`. **Writes stopped** on new questions. | Don't read or write. Use `examDetails`. The `formatExamLabel()` helper handles fallback for older docs. |
 | `metadata.is_top_pyq` (boolean) | **KEEP.** Powers "Top Questions" practice mode (admin star-mark). | Default false on new questions. The admin curates via the dashboard. **Never legacy.** |
@@ -241,15 +257,24 @@ Simulators live at: `app/[subject]-[hub-name]/[Topic]Simulator.tsx`
 ### Data Flow
 
 ```
-Student UI (/the-crucible/)
-  └─ Server Actions (app/the-crucible/actions.ts)
-       └─ MongoDB: questions_v2 collection
+Student app (canvasclasses.in, apps/student/)
+  ├─ Student UI (/the-crucible/, /books/, /class-*)
+  │    └─ Server Actions (apps/student/features/<feature>/server-actions/*.ts)
+  │         └─ MongoDB: questions_v2, userprogress, bookpages, ...
+  └─ Public/student APIs (apps/student/app/api/v2/*)
+       └─ MongoDB + Supabase (auth check on writes)
 
-Admin UI (/crucible/admin/)
-  └─ REST API (/api/v2/questions, /api/v2/taxonomy, ...)
-       └─ MongoDB: questions_v2 + auditlogs
-       └─ Supabase: auth check on every mutating request
+Admin app (admin.canvasclasses.in, apps/admin/)
+  ├─ Admin UI (/ landing, /crucible, /flashcards, /blog, /books, /taxonomy, /career-explorer, /dashboard, /preview)
+  │    └─ same-origin fetch → /api/v2/* (also in admin app)
+  └─ Admin APIs (apps/admin/app/api/v2/*)
+       ├─ middleware.ts → ADMIN_EMAILS allow-list (first line of defense)
+       └─ route handlers → requireAdmin() / getAuthenticatedUser + isAdmin
+            └─ MongoDB: questions_v2 + auditlogs (same cluster, shared models)
+            └─ Supabase: auth check on every mutating request (second line)
 ```
+
+Both apps connect to the same MongoDB cluster via the same `@canvas/data` Mongoose models. The hard network boundary is at the API layer — admin write routes are not reachable from the public `canvasclasses.in` host. Splitting MongoDB users so the student app gets read-only access to admin-managed collections (Phase 5.5d) is **deferred** until Phase 5 is observed stable in production. The decision and the future spec live in `_agents/plans/PHASE_5_ADMIN_SPLIT.md` under "Out of scope."
 
 ### Taxonomy
 
@@ -257,25 +282,81 @@ Two-level hierarchy: **Chapter → Topic Tag**
 
 - Chapter IDs: `ch11_mole`, `ch11_atom`, `ch12_solutions`, etc.
 - Topic tag IDs: `tag_mole_1`, `tag_atom_3`, etc.
-- **Single source of truth**: `app/crucible/admin/taxonomy/taxonomyData_from_csv.ts`
+- **Single source of truth**: `packages/data/taxonomy/taxonomyData_from_csv.ts`
 - `metadata.chapter_id` on every `QuestionV2` document must match a chapter `id` in that file exactly
 
-The taxonomy file is auto-updated by the dashboard at `/crucible/admin/taxonomy` via `POST /api/v2/taxonomy/save`. Do not edit it manually.
+The taxonomy file is auto-updated by the dashboard at `admin.canvasclasses.in/taxonomy` via `POST /api/v2/taxonomy/save` (served by the admin app). Do not edit it manually.
+
+**For tag-level rules** (which tags to apply, how to weight them, micro-concept naming conventions): read `_agents/workflows/CRUCIBLE_TAXONOMY_AND_TAGGING_RULES.md`.
 
 ### Key Files
 
 | Purpose | Path |
 |---|---|
-| MongoDB connection | `lib/mongodb.ts` |
-| V2 Question model | `lib/models/Question.v2.ts` |
-| Chapter model | `lib/models/Chapter.ts` |
-| Asset model | `lib/models/Asset.ts` |
-| AuditLog model | `lib/models/AuditLog.ts` |
-| Taxonomy source of truth | `app/crucible/admin/taxonomy/taxonomyData_from_csv.ts` |
-| LaTeX validator utility | `lib/latexValidator.ts` |
-| V2 questions API | `app/api/v2/questions/route.ts` |
-| Admin question editor | `app/crucible/admin/page.tsx` |
-| Student landing | `app/the-crucible/page.tsx` |
+| MongoDB connection | `packages/data/db/mongodb.ts` |
+| V2 Question model | `packages/data/models/Question.v2.ts` |
+| Chapter model | `packages/data/models/Chapter.ts` |
+| Asset model | `packages/data/models/Asset.ts` |
+| AuditLog model | `packages/data/models/AuditLog.ts` |
+| Taxonomy source of truth | `packages/data/taxonomy/taxonomyData_from_csv.ts` |
+| Taxonomy lookup helpers | `packages/data/taxonomy/lookup.ts` |
+| `display_id` generator | `packages/data/id-generator/index.ts` |
+| Difficulty utils (shared) | `packages/data/difficulty.ts` |
+| Math/LaTeX renderer (shared) | `packages/ui/MathRenderer.tsx` |
+| Adaptive engine (Crucible) | `apps/student/features/crucible/lib/adaptiveEngine.ts` |
+| Recommendation engine | `packages/persona/recommendation-engine.ts` (+ read-side contract in `packages/persona/contract.ts`) |
+| Persona writer (mutation surface) | `packages/persona/writer.ts` |
+| Persona contract (constants + classifiers) | `packages/persona/contract.ts` |
+| Profile engine | `packages/persona/profile-engine.ts` |
+| LaTeX validator utility | `packages/core/latex-validator.ts` |
+| Rate limiter | `packages/core/rate-limit.ts` |
+| Redirect / SSRF validation | `packages/core/redirect-validation.ts` |
+| R2 storage helper | `packages/core/r2-storage.ts` |
+| Analytics (Mixpanel server + client) | `packages/core/analytics/` |
+| `cn()` class-name merger | `packages/core/utils.ts` |
+| Shared route-handler logic (questions, flashcards, chapters, taxonomy/load, assets/*, export/ppt) | `packages/services/<route>.ts` — each takes a `ServiceDeps` arg for auth DI |
+| V2 questions API wrappers | `apps/student/app/api/v2/questions/route.ts` + `apps/admin/app/api/v2/questions/route.ts` (thin wrappers over `@canvas/services/questions`) |
+| Admin home landing | `apps/admin/app/page.tsx` — card grid linking to each operator panel |
+| Admin question editor (Crucible) | `apps/admin/features/admin/components/QuestionAdmin.tsx` (route shell: `apps/admin/app/crucible/page.tsx`) |
+| Admin auth helpers | `apps/admin/lib/auth.ts` (route handlers), `apps/admin/lib/adminAuth.ts` (server components) |
+| Admin middleware | `apps/admin/middleware.ts` (Supabase + ADMIN_EMAILS gate, all paths except `/login` + `/api/auth/*` + `/_next/*`) |
+| Student server actions | `apps/student/features/crucible/server-actions/the-crucible.ts` |
+| Student auth helpers | `apps/student/lib/auth.ts` (route handlers), `apps/student/lib/bookAuth.ts` (server components) |
+| Student landing | `apps/student/app/the-crucible/page.tsx` (renders `apps/student/features/crucible/` components) |
+
+> **Import direction rules** (post-monorepo migration):
+> - `apps/admin/` MUST NOT import from `apps/student/` and vice versa. Workspace tsc enforces this. Anything shared between the two apps must go through `packages/*/`.
+> - Student feature code (`apps/student/features/<feature>/`) and notes pages must never reach into admin-only surfaces. Shared modules belong in `packages/data/`, `packages/persona/`, `packages/core/`, `packages/ui/`, or `apps/student/lib/`.
+> - Anything inside `packages/*/` must not use the `@/` alias or import from `apps/*` — packages use relative paths internally and have no knowledge of which app consumes them.
+> - The shared data layer (Mongoose models, db, taxonomy, schemas, id-generator, difficulty utils) lives in `@canvas/data` — import via `from '@canvas/data/models/X'` or `from '@canvas/data/db/mongodb'`, never via an app's `@/lib/...`.
+
+### Routes hosted in both apps (now share one source)
+
+Nine `/api/v2/*` routes exist in BOTH apps because both apps' UIs fetch them same-origin. After Phase 6.0 (commit `84b3afa`), the handler logic lives in `@canvas/services/<route>` and each app's `route.ts` is a thin wrapper that injects its app-local auth helpers via `ServiceDeps`. See [ADR-001](_agents/adr/001-service-layer-di-pattern.md) for the pattern and rationale.
+
+Routes hosted by both apps (wrapper → service):
+- `assets/upload/route.ts` → `@canvas/services/assets-upload`
+- `assets/[id]/route.ts` → `@canvas/services/assets-by-id`
+- `chapters/route.ts` → `@canvas/services/chapters`
+- `taxonomy/load/route.ts` → `@canvas/services/taxonomy-load`
+- `export/ppt/route.ts` → `@canvas/services/export-ppt`
+- `questions/route.ts` → `@canvas/services/questions`
+- `questions/[id]/route.ts` → `@canvas/services/questions-by-id`
+- `flashcards/route.ts` → `@canvas/services/flashcards`
+- `flashcards/[id]/route.ts` → `@canvas/services/flashcards-by-id`
+
+**Rule:** any change to handler logic goes in the `@canvas/services` file. The wrappers should only ever change to add/remove a Next.js route-segment config export (`runtime`, `maxDuration`) — Next reads those from the route file itself.
+
+**Helper-level duplicates are gone (Phase 5.13).** The pure-data and pure-React-component duplicates from Phase 5.5 / 5.10 have been consolidated into shared packages and removed from both apps:
+
+| Helper | Canonical location |
+|---|---|
+| Flashcard taxonomy data + helpers | `@canvas/data/flashcards/flashcardTaxonomy` |
+| Flashcard markdown component dict | `@canvas/ui/flashcardMarkdown` |
+| Book block utilities (flattenBlocks, computeReadingTime, etc.) | `@canvas/data/books/utils` |
+| Book block Zod schemas (validateBlocks) | `@canvas/data/books/schemas` |
+
+`rbac` is also consolidated as `@canvas/data/rbac` (Phase 5.13d).
 
 ### Simplicity Constraint
 
@@ -325,7 +406,7 @@ These rules are **non-negotiable**. Every agent must follow them when creating o
 
 - **Every POST/PATCH body** must be validated with a Zod schema or explicit field whitelist before reaching the database. Never pass raw `body` to `$set` or any Mongoose update.
 - **File uploads**: Sanitize filenames (strip `..`, `/`, `\`, special chars), enforce size limits, and verify the resolved path stays within the intended directory.
-- **URL parameters**: User-supplied redirect URLs must pass through `sanitizeRedirect()` from `lib/redirectValidation.ts`. Never use `window.location.href = userInput` or `redirect(userInput)` directly.
+- **URL parameters**: User-supplied redirect URLs must pass through `sanitizeRedirect()` from `@canvas/core/redirect-validation`. Never use `window.location.href = userInput` or `redirect(userInput)` directly.
 - **HTML rendering**: Any `innerHTML` assignment must sanitize through `DOMPurify` first. Use the KaTeX MathML allowlist pattern from `MathRenderer.tsx`.
 
 ### 8.5 Error Responses Must Not Leak Internals

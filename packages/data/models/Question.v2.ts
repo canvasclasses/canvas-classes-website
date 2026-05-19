@@ -1,0 +1,430 @@
+import 'server-only';
+import mongoose, { Schema, Document } from 'mongoose';
+
+// ============================================
+// NEW QUESTION MODEL - V2 Architecture
+// UUID-based, Asset-tracked, Audit-enabled
+// ============================================
+
+export interface IQuestionText {
+  markdown: string;
+  latex_validated: boolean;
+  last_validated_at?: Date;
+}
+
+export interface IQuestionOption {
+  id: string;
+  text: string;
+  is_correct: boolean;
+  asset_ids?: string[]; // References to Asset collection
+}
+
+export interface IQuestionAnswer {
+  integer_value?: number;
+  decimal_value?: number;
+  tolerance?: number;
+  unit?: string;
+}
+
+export interface IQuestionSolution {
+  text_markdown: string;
+  latex_validated: boolean;
+  asset_ids?: {
+    images?: string[];
+    svg?: string[];
+    audio?: string[];
+  };
+  video_url?: string;
+  video_timestamp_start?: number;
+  // Per-question depth links — used by the recommendation engine and the
+  // post-submit "Stuck? Read this section / Watch this lecture" CTA.
+  // Authoring is optional; the engine falls back to topic-tag-level
+  // ResourceLink rows when these are unset. See lib/recommendationEngine.ts
+  // and lib/models/ResourceLink.ts for the bridge.
+  learn_more?: {
+    book_page_ids?: string[];   // slugs/ids in the livebooks namespace
+    lecture_ids?: string[];     // YouTube/internal lecture ids
+  };
+}
+
+// Removed: CognitiveType, CalcLoad, EntryPoint — AI will infer from solution content
+
+export interface ICommunityDifficulty {
+  tooHardCount: number;
+  gotItCount: number;
+  tooEasyCount: number;
+  avgTimeSpentMs: number;
+  wrongAnswerRate: number;
+  studentScore: number; // computed 0.0–1.0
+}
+
+export interface IQuestionMetadata {
+  difficultyLevel: 1 | 2 | 3 | 4 | 5; // Granular difficulty: 1=easiest, 5=hardest
+  difficulty?: 'Easy' | 'Medium' | 'Hard'; // DEPRECATED: Keep temporarily for backward compatibility during migration
+  chapter_id: string;
+  // subject is the top-level discipline the question belongs to.
+  // Always set at ingestion time. Existing Chemistry questions are
+  // backfilled via scripts/migrate-add-subject.ts.
+  subject: 'chemistry' | 'physics' | 'maths' | 'biology';
+  tags: Array<{
+    tag_id: string;
+    weight: number;
+  }>;
+  // ── Multi-dimensional tagging ──
+  microConcept?: string;           // e.g. 'Hyperconjugation', 'Carbocation Stability'
+  isMultiConcept?: boolean;        // default false
+  // Drives solution depth/structure during ingestion. See _agents/workflows/solution-ingestion-workflow.md.
+  questionNature?: 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis';
+  
+  // ── NEW: 3-Tier Exam Taxonomy (for multi-exam support: JEE, NEET, etc.) ──
+  // applicableExams: which exams this question is *useful for* (multi-valued).
+  // examBoard: legacy single-valued field, kept in sync as applicableExams[0]
+  // during the transition. New code should read/write applicableExams.
+  applicableExams?: Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'>;
+  examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
+  sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
+  examDetails?: {
+    exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG';
+    year?: number;
+    month?: string;
+    phase?: string;      // For NEET (Phase 1, Phase 2)
+    shift?: string;      // For JEE Main (Shift 1, Shift 2)
+    paper?: string;      // For JEE Advanced (Paper 1, Paper 2)
+    question_number?: string;
+  };
+  
+  // ── DEPRECATED: Keep for backward compatibility during migration ──
+  exam_source?: {
+    exam: string;
+    year?: number;
+    month?: string;
+    day?: number;
+    shift?: string;
+    question_number?: string;
+  };
+  is_pyq?: boolean;      // DEPRECATED: Use sourceType instead
+  is_top_pyq?: boolean;  // KEEP — drives "Top Questions" practice mode (admin star-mark)
+  is_demo_question?: boolean;  // KEEP — drives the side-by-side practice panel on the
+                                // handwritten-notes chapter pages. A curated, frozen set
+                                // (~20–30 per chapter) that represents Crucible quality.
+                                // Toggled by admin in the question editor. The
+                                // /api/v2/notes-quicktest/[chapterId] endpoint reads
+                                // this flag with edge caching.
+}
+
+export interface IQuestionFlag {
+  type: string;                    // e.g. 'wrong_answer', 'latex_rendering', etc.
+  note?: string;                   // optional free-text note (max 500 chars)
+  flagged_by?: string;             // Supabase user UUID of the reporter (student) or admin email
+  source?: 'admin' | 'student';   // 'admin' = internal team flag; 'student' = reported by a student
+                                   // Flags without a source field are legacy admin flags (pre-separation)
+  flagged_at: Date;
+  resolved: boolean;
+  resolved_at?: Date;
+}
+
+export interface IQuestion {
+  _id: string; // UUID v4
+  display_id: string; // e.g., "ATOM-001"
+
+  question_text: IQuestionText;
+  type: 'SCQ' | 'MCQ' | 'NVT' | 'AR' | 'MST' | 'MTC' | 'SUBJ' | 'WKEX';
+  options: IQuestionOption[];
+  answer?: IQuestionAnswer;
+  solution: IQuestionSolution;
+  metadata: IQuestionMetadata;
+
+  flags?: IQuestionFlag[];
+
+  status: 'draft' | 'review' | 'published' | 'archived';
+  quality_score: number; // 0-100
+  needs_review: boolean;
+  review_notes?: string;
+
+  version: number;
+  created_at: Date;
+  created_by: string;
+  updated_at: Date;
+  updated_by: string;
+
+  deleted_at?: Date;
+  deleted_by?: string;
+
+  // ── Community difficulty (auto-populated from student responses) ──
+  communityDifficulty?: ICommunityDifficulty;
+
+  asset_ids: string[]; // All assets used in this question
+  svg_scales?: {
+    question?: number;
+    solution?: number;
+    [key: string]: number | undefined; // option_a, option_b, option_c, option_d
+  };
+}
+
+const QuestionTextSchema = new Schema<IQuestionText>({
+  markdown: { type: String, required: true, minlength: 10 },
+  latex_validated: { type: Boolean, default: false },
+  last_validated_at: { type: Date }
+}, { _id: false });
+
+const QuestionOptionSchema = new Schema<IQuestionOption>({
+  id: { type: String, required: true },
+  text: { type: String, required: true },
+  is_correct: { type: Boolean, required: true },
+  asset_ids: [{ type: String }]
+}, { _id: false });
+
+const QuestionAnswerSchema = new Schema<IQuestionAnswer>({
+  integer_value: { type: Number },
+  decimal_value: { type: Number },
+  tolerance: { type: Number },
+  unit: { type: String }
+}, { _id: false });
+
+const QuestionSolutionSchema = new Schema<IQuestionSolution>({
+  text_markdown: { type: String, default: '' },
+  latex_validated: { type: Boolean, default: false },
+  asset_ids: {
+    images: [{ type: String }],
+    svg: [{ type: String }],
+    audio: [{ type: String }]
+  },
+  video_url: { type: String },
+  video_timestamp_start: { type: Number },
+  // See IQuestionSolution.learn_more — recommendation-engine depth links.
+  learn_more: {
+    book_page_ids: [{ type: String }],
+    lecture_ids: [{ type: String }],
+  },
+}, { _id: false });
+
+const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
+  difficultyLevel: {
+    type: Number,
+    enum: [1, 2, 3, 4, 5],
+    required: true,
+    default: 3
+  },
+  difficulty: {
+    type: String,
+    enum: ['Easy', 'Medium', 'Hard'],
+    required: false, // DEPRECATED: Optional for backward compatibility during migration
+  },
+  chapter_id: { type: String, required: true },
+  // subject: always set going forward; defaults to 'chemistry' so existing
+  // documents remain valid until the migration script backfills them.
+  subject: {
+    type: String,
+    enum: ['chemistry', 'physics', 'maths', 'biology'],
+    default: 'chemistry',
+  },
+  tags: [{
+    tag_id: { type: String, required: true },
+    weight: { type: Number, required: true, min: 0, max: 1 }
+  }],
+  exam_source: {
+    exam: { type: String },
+    year: { type: Number },
+    month: { type: String },
+    day: { type: Number },
+    shift: { type: String },
+    question_number: { type: String }
+  },
+  // Multi-dimensional tagging fields
+  microConcept: { type: String },
+  isMultiConcept: { type: Boolean, default: false },
+  questionNature: {
+    type: String,
+    enum: ['Recall', 'Rule_Application', 'Numerical', 'Comparative', 'Graphical', 'Conceptual', 'Mechanistic', 'Synthesis'],
+    required: false,
+  },
+  // NEW: 3-Tier Exam Taxonomy
+  applicableExams: {
+    type: [String],
+    enum: ['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD'],
+    default: undefined,
+  },
+  examBoard: {
+    type: String,
+    enum: ['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD'],
+    required: false,
+  },
+  sourceType: {
+    type: String,
+    enum: ['PYQ', 'NCERT_Textbook', 'NCERT_Exemplar', 'Practice', 'Mock'],
+    required: false,
+  },
+  examDetails: {
+    exam: {
+      type: String,
+      enum: ['JEE_Main', 'JEE_Advanced', 'NEET_UG', 'NEET_PG'],
+      required: false,
+    },
+    year: { type: Number },
+    month: { type: String },
+    phase: { type: String },
+    shift: { type: String },
+    paper: { type: String },
+    question_number: { type: String },
+  },
+  // DEPRECATED fields (kept for backward compatibility)
+  is_pyq: { type: Boolean, default: false },
+  is_top_pyq: { type: Boolean, default: false },
+  // Curated demo flag — drives the side-by-side practice panel.
+  is_demo_question: { type: Boolean, default: false }
+}, { _id: false });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DISPLAY_ID FORMAT — CANONICAL REFERENCE
+// Format: {PREFIX}-{NNN}  where PREFIX is 2–10 uppercase alphanumeric chars
+// and NNN is 3+ digits (zero-padded).
+//
+// ALL known prefixes in production (questions_v2 collection):
+//   MOLE   → ch11_mole          (Some Basic Concepts)
+//   ATOM   → ch11_atom          (Structure of Atom)
+//   PERI   → ch11_periodic      (Periodicity)
+//   BOND   → ch11_bonding       (Chemical Bonding)
+//   THERMO → ch11_thermo        (Thermodynamics)      ← 6 chars
+//   CEQ    → ch11_chem_eq       (Chemical Equilibrium) ← 3 chars
+//   IEQ    → ch11_ionic_eq      (Ionic Equilibrium)   ← 3 chars
+//   RDX    → ch11_redox         (Redox)               ← 3 chars
+//   GOC    → ch11_goc           (GOC)
+//   HC     → ch11_hydrocarbon   (Hydrocarbons)        ← 2 chars
+//   SOL    → ch12_solutions     (Solutions)
+//   EC     → ch12_electrochem   (Electrochemistry)    ← 2 chars
+//   CK     → ch12_kinetics      (Chemical Kinetics)   ← 2 chars
+//   ALDO   → ch12_carbonyl      (Aldehydes, Ketones and Carboxylic Acids)
+//           NOTE: ch12_aldehydes + ch12_carboxylic merged → ch12_carbonyl (commit e99b756)
+//           CARB prefix (2 docs: CARB-001, CARB-002) kept as-is for continuity.
+//           All new questions use ALDO prefix. Next available: ALDO-259
+//   PB11   → ch11_pblock        (P-Block 11)          ← 4 chars with digit
+//   PB12   → ch12_pblock        (P-Block 12)          ← 4 chars with digit
+//   DNF    → ch12_dblock        (D & F Block)         ← 3 chars
+//   CORD   → ch12_coord         (Coordination Compounds)
+//   BIO    → ch12_biomolecules  (Biomolecules)
+//   POC    → ch11_prac_org      (Practical Organic)
+//
+// ── WORKED EXAMPLE PREFIXES (type: WKEX) ────────────────────────────────────
+// WKEX documents live in the same collection but are NEVER served in practice
+// or diagnostic pools. They are served only via the inline example trigger.
+// Prefix convention: {CHAPTERPREFIX}WX — e.g. GOCWX, HCWX, ALDOWX
+//   GOCWX  → ch11_goc  worked examples
+//
+// RULE: When adding a new chapter, add its prefix here BEFORE writing any
+// insertion scripts, and verify the regex below still matches it.
+// REGEX: ^[A-Z0-9]{2,10}-\d{3,}$
+// ─────────────────────────────────────────────────────────────────────────────
+
+const QuestionSchema = new Schema<IQuestion>({
+  _id: {
+    type: String,
+    required: true
+    // UUID v4 format — all AI-agent batch scripts must use uuidv4() for _id.
+    // Regex validation intentionally removed: Mongoose validates on write only,
+    // and a strict regex here causes .find()/.lean() to silently drop documents
+    // whose _id was inserted by an older script. Validation is enforced at the
+    // insertion script level instead (see QUESTION_INGESTION_WORKFLOW.md Rule 15).
+  },
+  display_id: {
+    type: String,
+    required: true,
+    // Matches all known prefixes: 2–10 uppercase alphanumeric chars, dash, 3+ digits.
+    // See canonical prefix table above. Update the table when adding new chapters.
+    match: /^[A-Z0-9]{2,10}-\d{3,}$/
+  },
+
+  question_text: { type: QuestionTextSchema, required: true },
+  type: {
+    type: String,
+    enum: ['SCQ', 'MCQ', 'NVT', 'AR', 'MST', 'MTC', 'SUBJ', 'WKEX'],
+    required: true
+  },
+  options: [QuestionOptionSchema],
+  answer: QuestionAnswerSchema,
+  solution: { type: QuestionSolutionSchema, required: true },
+  metadata: { type: QuestionMetadataSchema, required: true },
+
+  status: {
+    type: String,
+    enum: ['draft', 'review', 'published', 'archived'],
+    default: 'draft'
+  },
+  quality_score: { type: Number, default: 50, min: 0, max: 100 },
+  needs_review: { type: Boolean, default: false },
+  review_notes: { type: String },
+
+  version: { type: Number, default: 1 },
+  created_at: { type: Date, default: Date.now },
+  created_by: { type: String, required: true },
+  updated_at: { type: Date, default: Date.now },
+  updated_by: { type: String, required: true },
+
+  deleted_at: { type: Date },
+  deleted_by: { type: String },
+
+  asset_ids: [{ type: String }],
+  flags: {
+    type: [{
+      type: { type: String, required: true },
+      note: { type: String },
+      flagged_by: { type: String },             // UUID (student) or admin email
+      source: { type: String, enum: ['admin', 'student'] }, // undefined = legacy admin flag
+      flagged_at: { type: Date, default: Date.now },
+      resolved: { type: Boolean, default: false },
+      resolved_at: { type: Date }
+    }],
+    default: []
+  },
+  communityDifficulty: {
+    tooHardCount: { type: Number, default: 0 },
+    gotItCount: { type: Number, default: 0 },
+    tooEasyCount: { type: Number, default: 0 },
+    avgTimeSpentMs: { type: Number, default: 0 },
+    wrongAnswerRate: { type: Number, default: 0 },
+    studentScore: { type: Number, default: 0 },
+  },
+  svg_scales: {
+    type: Schema.Types.Mixed,
+    default: {}
+  }
+}, {
+  timestamps: false, // We manage timestamps manually
+  collection: 'questions_v2'
+});
+
+// Indexes for performance
+// Compound indexes follow the ESR rule (Equality, Sort, Range) and include
+// deleted_at so the ubiquitous `deleted_at: null` filter is covered by the index.
+QuestionSchema.index({ display_id: 1 }, { unique: true });
+QuestionSchema.index({ 'metadata.chapter_id': 1, status: 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.chapter_id': 1, 'metadata.is_top_pyq': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.chapter_id': 1, 'metadata.is_demo_question': 1, deleted_at: 1 }); // notes-quicktest endpoint
+QuestionSchema.index({ 'metadata.chapter_id': 1, display_id: 1, deleted_at: 1 }); // getAdjacentQuestions range scan
+QuestionSchema.index({ 'metadata.tags.tag_id': 1 });
+QuestionSchema.index({ status: 1, created_at: -1 });
+QuestionSchema.index({ deleted_at: 1 });
+QuestionSchema.index({ 'metadata.exam_source.year': 1, 'metadata.exam_source.exam': 1 });
+
+// 3-Tier exam taxonomy indexes (examBoard / sourceType / examDetails.year)
+// These cover the student landing aggregations and the admin filter dropdowns.
+QuestionSchema.index({ 'metadata.examBoard': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.examBoard': 1, 'metadata.is_top_pyq': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.examBoard': 1, 'metadata.chapter_id': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.sourceType': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.examDetails.year': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.examDetails.exam': 1, deleted_at: 1 });
+
+// Multikey indexes mirroring examBoard — used by the new applicableExams query path.
+// MongoDB matches `applicableExams: 'JEE'` as an array-element equality and uses these.
+QuestionSchema.index({ 'metadata.applicableExams': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.applicableExams': 1, 'metadata.is_top_pyq': 1, deleted_at: 1 });
+QuestionSchema.index({ 'metadata.applicableExams': 1, 'metadata.chapter_id': 1, deleted_at: 1 });
+
+// Pre-save middleware to update timestamps
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+QuestionSchema.pre('save', function (this: any, next: any) {
+  this.updated_at = new Date();
+  next();
+});
+
+export const QuestionV2 = mongoose.models.QuestionV2 || mongoose.model<IQuestion>('QuestionV2', QuestionSchema);

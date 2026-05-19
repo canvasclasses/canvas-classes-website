@@ -1,11 +1,28 @@
 # Crucible — Architecture & Persona Reference
 
 **Status:** Canonical reference. Read this before changing any Crucible code.
-**Owner:** Canvas Classes · **Last revised:** 2026-05-04
+**Owner:** Canvas Classes · **Last revised:** 2026-05-16 (Phase 5 admin split)
 
 > If anything in another doc, comment, or commit message contradicts this file,
 > **this file wins**. The fix is to update this doc — never to silently diverge.
 > Updates are allowed and encouraged, but they must be explicit and justified.
+
+---
+
+## 0a. Monorepo topology (Phase 5+)
+
+Crucible is served by **two Next.js apps** that share the same MongoDB cluster:
+
+| App | Host | Owns |
+|---|---|---|
+| `apps/student/` | `canvasclasses.in` | Student UI (`/the-crucible/*`), books reader, public/student APIs |
+| `apps/admin/` | `admin.canvasclasses.in` | Operator UI (`/admin/*`, `/dashboard`, `/preview`) + admin write APIs |
+
+Admin's API surface lives at `apps/admin/app/api/v2/*` and is gated by `apps/admin/middleware.ts` (Supabase + `ADMIN_EMAILS` allow-list) plus per-route `requireAdmin()` / `getAuthenticatedUser() + isAdmin()` (defense in depth). **Admin write methods are unreachable from the public `canvasclasses.in` host** — they live on a different network deployment.
+
+Both apps connect to the same `crucible-cluster` MongoDB instance via `@canvas/data` Mongoose models. The DB is shared today; the future second layer of defense (Phase 5.5d) is to split MongoDB users so the student app gets read-only access to admin-managed collections.
+
+See `_agents/plans/PHASE_5_ADMIN_SPLIT.md` for the decision record.
 
 ---
 
@@ -87,7 +104,7 @@ recommendation bridge broken), it is wrong even if it ships and looks fine.
                         ▼
               ┌──────────────────────┐
               │ Recommendation       │  ← bridge in place, gates closed
-              │ Engine (stub today)  │     (lib/recommendationEngine.ts)
+              │ Engine (stub today)  │     (apps/student/lib/recommendationEngine.ts)
               └──────────────────────┘
                         │
                         ▼
@@ -254,7 +271,7 @@ This is the field every persona-driven feature depends on. Its shape is a
 ```ts
 interface IConceptMastery {
   tag_id: string;              // taxonomy id (e.g. 'tag_atom_3')
-  tag_name: string;            // resolved via lib/taxonomyLookup.ts
+  tag_name: string;            // resolved via packages/data/taxonomy/lookup.ts
 
   // ── MASTERY counters — HIGH-confidence only (test + guided + saved) ──
   times_attempted: number;
@@ -283,10 +300,14 @@ interface IConceptMastery {
 
 #### Writer rules
 
-Both writers (`recordAttempt` in `UserProgress.ts` and the batch route
-`/api/v2/user/progress/batch/route.ts`) produce exactly this shape, with
-`tag_name` looked up server-side via `getTagName(tag_id)` from
-`lib/taxonomyLookup.ts`. Both honour the tier:
+All three writers — the per-attempt POST `/api/v2/user/progress/route.ts`, the
+batch POST `/api/v2/user/progress/batch/route.ts`, and the Crucible server
+action `apps/student/app/crucible/actions/progress.ts` — call
+`applyAttemptToProgress(progress, attempt)` from
+`apps/student/lib/personaWriter.ts` and then `await progress.save()`. The
+helper produces exactly this shape, with `tag_name` looked up server-side via
+`getTagName(tag_id)` from `packages/data/taxonomy/lookup.ts`. All three honour
+the tier:
 
 - HIGH attempt → increments mastery counters AND exposure_count AND last_attempted_at.
 - MEDIUM attempt → increments exposure_count AND last_attempted_at only.
@@ -313,7 +334,7 @@ If a new aggregate is needed, *extend* this interface — don't fork it.
 
 ### 4.3 `StudentChapterProfile` — the multi-dimensional profile
 
-Lives in `lib/models/StudentChapterProfile.ts`. One doc per (user, chapter)
+Lives in `packages/data/models/StudentChapterProfile.ts`. One doc per (user, chapter)
 pair. Tracks dimensions richer than concept_mastery — microConcept-level
 proficiency, dominant weakness, accuracy trends. Updated by the guided-
 practice flow via `lib/profileEngine.ts`.
@@ -343,7 +364,7 @@ collection too — don't invent a parallel one.
 
 ### 4.6 `ResourceLink` — the recommendation bridge
 
-`lib/models/ResourceLink.ts`. Junction document mapping a topic_tag_id (and
+`packages/data/models/ResourceLink.ts`. Junction document mapping a topic_tag_id (and
 optionally micro_concept) to a learning resource (book_page, video_lecture,
 flashcard_deck, external). This is the table the recommendation engine
 queries to answer "the student is weak on X — where can they LEARN it?"
@@ -426,9 +447,9 @@ improve recommendations," re-read §3.2 first.
 
 The bridge has **three components**, all in place; the algorithm is gated.
 
-1. **`ResourceLink` model** (`lib/models/ResourceLink.ts`) — the junction
+1. **`ResourceLink` model** (`packages/data/models/ResourceLink.ts`) — the junction
    table. Empty today; populated when livebook/lecture content is authored.
-2. **`recommendationEngine` module** (`lib/recommendationEngine.ts`) —
+2. **`recommendationEngine` module** (`apps/student/lib/recommendationEngine.ts`) —
    typed `getRecommendations(userId, opts)` and `getResourceForConcept(tagId)`.
    Stub implementation returns `[]` / `null`. The intended algorithm is
    documented in the file header.
@@ -544,14 +565,14 @@ incident is the reason it's listed.
 |---|---|---|
 | All persistence is immediate on submit | Tab-close data loss | grep for `Save & Exit`, `Save Progress`, `setShowSaveModal`. None should gate persistence. |
 | Every attempt POST carries `confidence` + (for browse-style modes) `session_id` | Tier model collapses without it | grep new POSTs to `/api/v2/user/progress*` — they must include `confidence` |
-| Mastery counters (`times_attempted`, `accuracy_percentage`, `chapter_progress`, `stats.total_*`) only move on HIGH-confidence attempts | Browse signal poisons mastery | Read `recordAttempt` and the batch route — every counter increment is gated on tier |
+| Mastery counters (`times_attempted`, `accuracy_percentage`, `chapter_progress`, `stats.total_*`) only move on HIGH-confidence attempts | Browse signal poisons mastery | Read `applyAttemptToProgress` in `apps/student/lib/personaWriter.ts` — every counter increment is gated on tier |
 | Test-mode attempts are always HIGH; browse-mode attempts are always MEDIUM (default) or LOW (casual-tagged) | Wrong tier = wrong counter set = wrong recommendations | grep TestView for `confidence:` — must be `'high'`. grep BrowseView — must be `'medium'`. |
-| `concept_mastery` writes use the canonical shape with BOTH counter sets | Persona corruption | Diff against `IConceptMastery` in `lib/models/UserProgress.ts` — must include `exposure_count`. |
+| `concept_mastery` writes use the canonical shape with BOTH counter sets | Persona corruption | Diff against `IConceptMastery` in `packages/data/models/UserProgress.ts` — must include `exposure_count`. |
 | All `/api/v2/*` mutating routes use `getUserIdFromRequest` | Auth drift across 9+ routes | grep `function getUserId` in `app/api/v2/` — must return zero hits. |
 | V1 (`questions` collection, `/the-crucible/admin/*`) is read-only / untouched | Migration nightmare | grep new code for `models.ts` (V1) or `/api/questions/`. |
 | Taxonomy edits go through the dashboard, not direct file edits | Source-of-truth drift | If `taxonomyData_from_csv.ts` is touched in a PR, dashboard usage must explain why. |
 | Submit-then-reveal across all modes | Polluted correctness signal | New question types must replicate `BrowseView.onSelectOption` / `onSubmit` separation. |
-| The recommendation bridge stays wired even while empty | UI-side regressions when engine activates | `/api/v2/user/recommendations` and `lib/recommendationEngine.ts` must keep returning the same contract; only the inner algorithm changes. |
+| The recommendation bridge stays wired even while empty | UI-side regressions when engine activates | `/api/v2/user/recommendations` and `apps/student/lib/recommendationEngine.ts` must keep returning the same contract; only the inner algorithm changes. |
 | Chapter accent colour is derived from `currentChapter.category`, not hardcoded | Cross-chapter inconsistency | grep new screens for hardcoded `#fb923c` / `#7c3aed`. |
 | `NODE_ENV === 'development'` is never used as an auth bypass | Vercel preview leak | grep `NODE_ENV === 'development'` in any route handler — must be zero. |
 
@@ -588,7 +609,7 @@ bug.
   assignment — a malicious client can claim 100% on a 5-question test.
   Always recompute server-side from canonical answers.
 - **Hardcoding `tag_id` strings in route handlers.** Use `getTagName()`
-  from `lib/taxonomyLookup.ts` for display; treat tag ids as opaque
+  from `packages/data/taxonomy/lookup.ts` for display; treat tag ids as opaque
   identifiers everywhere else.
 - **Adding a new "weakness" surface** that reads from `concept_mastery`
   with the old field names (`total_attempted`, `correct_count`,
@@ -660,9 +681,9 @@ from:
 
 - `CLAUDE.md` (project root) — top-level guidance for any agent working
   on the codebase.
-- New PRs touching `app/the-crucible/`, `app/crucible/admin/`,
-  `app/api/v2/`, or `lib/models/UserProgress.ts` /
-  `lib/models/StudentChapterProfile.ts` / `lib/recommendationEngine.ts`
+- New PRs touching `apps/student/app/the-crucible/`, `apps/student/app/crucible/admin/`,
+  `apps/student/app/api/v2/`, or `packages/data/models/UserProgress.ts` /
+  `packages/data/models/StudentChapterProfile.ts` / `apps/student/lib/recommendationEngine.ts`
   should reference (and update) this file in the description.
 
 Whenever you change anything in §3 (modes), §4 (data models), §5 (persona

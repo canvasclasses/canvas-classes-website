@@ -1,0 +1,21 @@
+{
+  "name": "@canvas/ui",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./MathRenderer": "./MathRenderer.tsx",
+    "./flashcardMarkdown": "./flashcardMarkdown.tsx"
+  },
+  "dependencies": {
+    "isomorphic-dompurify": "^3.7.1",
+    "katex": "^0.16.28"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "*"
+  }
+}

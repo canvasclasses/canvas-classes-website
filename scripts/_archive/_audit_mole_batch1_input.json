@@ -1,0 +1,1431 @@
+[
+  {
+    "_id": "4d800dc4-0040-43f1-b114-2883b58009fc",
+    "display_id": "MOLE-001",
+    "question_text": {
+      "markdown": "Convert the following quantities into SI base units:\n\n1. $28.7\\,\\text{pm}$\n2. $15.15\\,\\mu\\text{s}$\n3. $25.365\\,\\text{mg}$"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2.87\\times10^{-11}\\,\\text{m},\\;1.515\\times10^{-6}\\,\\text{s},\\;2.5365\\times10^{-3}\\,\\text{kg}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$2.87\\times10^{-11}\\,\\text{m},\\;1.515\\times10^{-5}\\,\\text{s},\\;2.5365\\times10^{-5}\\,\\text{kg}$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$2.87\\times10^{-10}\\,\\text{m},\\;1.515\\times10^{-6}\\,\\text{s},\\;2.5365\\times10^{-3}\\,\\text{kg}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$2.87\\times10^{-10}\\,\\text{m},\\;1.515\\times10^{-5}\\,\\text{s},\\;2.5365\\times10^{-2}\\,\\text{kg}$",
+        "is_correct": false
+      }
+    ],
+    "answer": null,
+    "solution": {
+      "text_markdown": "🧠 **The kilogram catch**\nFor length, the SI base unit is metre. For time, it is second. Easy. The trap is mass — the SI base unit is **kilogram**, not gram. So when you see mg, you must drop **six** powers of $10$, not three.\n\n🗺️ **Apply each prefix one by one**\n- \"pico\" means $10^{-12}$, so $28.7\\,\\text{pm} = 2.87 \\times 10^{-11}\\,\\text{m}$.\n- \"micro\" means $10^{-6}$, so $15.15\\,\\mu\\text{s} = 1.515 \\times 10^{-5}\\,\\text{s}$.\n- For mg → kg, \"milli\" gives $10^{-3}$ (mg → g) and then g → kg gives one more $10^{-3}$:\n$$25.365\\,\\text{mg} = 25.365 \\times 10^{-6}\\,\\text{kg} = 2.5365 \\times 10^{-5}\\,\\text{kg}.$$\n\n⚠️ **Common mistake**\nMany students stop at grams and pick $2.5365 \\times 10^{-2}\\,\\text{g}$. That is wrong. The SI base unit of mass is kg — go all the way.\n\n$$\\boxed{\\text{Answer: (b)}}$$"
+    },
+    "metadata": {
+      "difficultyLevel": 2,
+      "tags": [
+        {
+          "tag_id": "tag_mole_1",
+          "weight": 1
+        }
+      ],
+      "microConcept": "Significant Figures Rules",
+      "questionNature": "Rule_Application",
+      "sourceType": "Practice",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "9e0717a0-8452-405d-a188-77c06fdd920b",
+    "display_id": "MOLE-009",
+    "question_text": {
+      "markdown": "Which of the following statements indicates that the law of multiple proportions is being followed?"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Samples of $\\ce{CO2}$ taken from any source will always have $\\ce{C}$ and $\\ce{O}$ in the ratio $1:2$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "In $\\ce{CO2}$ and $\\ce{CO}$, masses of oxygen which combine with fixed mass of carbon are in the ratio $2:1$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "When $\\ce{Mg}$ burns in $\\ce{O2}$, the amount of $\\ce{Mg}$ taken for the reaction is equal to the amount of $\\ce{MgO}$ formed",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "At constant $T$ and $P$, $200\\,\\text{mL}$ of $\\ce{H2}$ will combine with $100\\,\\text{mL}$ $\\ce{O2}$ to produce $200\\,\\text{mL}$ of water vapour",
+        "is_correct": false
+      }
+    ],
+    "answer": null,
+    "solution": {
+      "text_markdown": "🧠 **The signature of Multiple Proportions**\nMultiple Proportions = *same two elements, different compounds*, where the masses of one element (for a fixed mass of the other) are in simple whole-number ratios. So look for **two compounds** and a **clean integer ratio**. That is the trigger. Anything else is a different law.\n\n🗺️ **Check each option**\n(a) Only one compound ($\\ce{CO2}$), one fixed ratio. That is the **Law of Definite Proportions**, not Multiple.\n(b) Two compounds — $\\ce{CO}$ and $\\ce{CO2}$. For the same mass of carbon, the masses of oxygen are in $2 : 1$. Two compounds, integer ratio — perfect example of Multiple Proportions. ✓\n(c) Mass of $\\ce{Mg}$ taken $=$ mass of $\\ce{MgO}$ formed. That is wrong chemistry, not any law.\n(d) $\\ce{H2}$ and $\\ce{O2}$ combining in volume ratio $200 : 100 : 200$. Volumes of gases combining in simple ratios is **Gay-Lussac's Law of Gaseous Volumes**, not Multiple Proportions.\n\n⚠️ **Common mistake**\nOptions (a) and (b) both involve carbon and oxygen, so students get confused. Trick: count the number of compounds first. One compound = Definite Proportions. Two compounds = Multiple Proportions.\n\n$\\boxed{\\text{Answer: (b)}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_1",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 2,
+      "sourceType": "Practice",
+      "microConcept": "Law of Multiple Proportions",
+      "questionNature": "Conceptual",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "61d1c8e8-ed6a-4db9-b960-750574de8568",
+    "display_id": "MOLE-093",
+    "question_text": {
+      "markdown": "Which of the following have the same number of significant figures?\n\n(A) $0.00253$   (B) $1.0003$   (C) $15.0$   (D) $163$\n\nChoose the correct answer:"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "A, B and C only",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "C and D only",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "B and C only",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "A, C and D only",
+        "is_correct": true
+      }
+    ],
+    "solution": {
+      "text_markdown": "🧠 **Three rules for sig figs**\n- Leading zeros do not count.\n- Sandwiched zeros count.\n- Trailing zeros count only if there is a decimal point.\n\n🗺️ **Count each one**\n(A) $0.00253$: leading zeros skip, $2,5,3$ count → $3$ sf.\n(B) $1.0003$: every digit counts → $5$ sf.\n(C) $15.0$: decimal is shown, trailing zero counts → $3$ sf.\n(D) $163$: clean integer → $3$ sf.\n\nSo $A, C, D$ all have $3$ sf. $B$ stands alone at $5$.\n\n$$\\boxed{\\text{Answer: (d)}}$$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_1",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 2,
+      "examDetails": {
+        "exam": "JEE_Main",
+        "year": 2023,
+        "month": "Apr",
+        "shift": "Shift-II"
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Significant Figures Rules",
+      "questionNature": "Rule_Application",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "ebdb387b-dc34-4700-a2ba-2f646a39c79f",
+    "display_id": "MOLE-035",
+    "question_text": {
+      "markdown": "Calculate the molarity of a solution of ethanol in water in which the mole fraction of ethanol is $0.04$:"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2.314$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$1.122$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$3.129$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$1.762$",
+        "is_correct": false
+      }
+    ],
+    "answer": null,
+    "solution": {
+      "text_markdown": "🧠 **Mole fraction → molarity needs a sandbox**\nMole fraction is dimensionless. Take total moles $= 1$. Then ethanol is $0.04\\,\\text{mol}$ and water is $0.96\\,\\text{mol}$. The water decides the volume (dilute solution), and that volume gives molarity.\n\n🗺️ **The setup**\nMass of water $= 0.96 \\times 18 = 17.28\\,\\text{g}$.\nFor dilute aqueous solution, density $\\approx 1\\,\\text{g/mL}$:\n$$V \\approx 17.28\\,\\text{mL} = 0.01728\\,\\text{L}.$$\n\n$$M = \\frac{0.04}{0.01728} \\approx 2.314\\,\\text{mol/L}.$$\n\n⚡ **Quick check**\nPure water is about $55.5\\,\\text{M}$. A $4\\%$ mole fraction means roughly $4\\%$ of $55.5 \\approx 2.2\\,\\text{M}$ — matches our $2.314$.\n\n$$\\boxed{\\text{Answer: (a)}}$$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_2",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 2,
+      "sourceType": "Practice",
+      "microConcept": "Molarity Calculations",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "f3840d96-c2ac-4107-ac13-22838944d22e",
+    "display_id": "MOLE-084",
+    "question_text": {
+      "markdown": "The molality of a $10\\%$ (v/v) solution of dibromine ($\\ce{Br2}$) in $\\ce{CCl4}$ is $x$.\n $x = $ ______ $\\times 10^{-2}\\,\\text{M}$. (Mol. Wt. of $\\ce{Br2} = 160\\,\\text{g/mol}$, density of $\\ce{Br2} = 3.2\\,\\text{g/mL}$, density of $\\ce{CCl4} = 1.6\\,\\text{g/mL}$)"
+    },
+    "type": "NVT",
+    "options": [],
+    "solution": {
+      "text_markdown": "🧠 **v/v means volume ratio, not mass ratio**\n$10\\%$ (v/v) means $10\\,\\text{mL}$ of $\\ce{Br2}$ in every $100\\,\\text{mL}$ of solution. Use density to convert each volume into mass.\n\n🗺️ **The 100-mL sandbox**\nMass of $\\ce{Br2} = 10 \\times 3.2 = 32\\,\\text{g}$.\nMass of $\\ce{CCl4} = 90 \\times 1.6 = 144\\,\\text{g}$.\nMoles of $\\ce{Br2} = 32 / 160 = 0.2\\,\\text{mol}$.\n\nSolvent mass $= 0.144\\,\\text{kg}$:\n$m = \\frac{0.2}{0.144} \\approx 1.39 = 139 \\times 10^{-2}.$\n\n$\\boxed{\\text{Answer: 139}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_2",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 2,
+      "sourceType": "Practice",
+      "microConcept": "Molality Calculations",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    },
+    "answer": {
+      "integer_value": 139,
+      "explanation": "🧠 **Comparing v/v to Molality**\n$10\\%$ (v/v) simply means if you have $100\\,mL$ of the solution, exactly $10\\,mL$ of it is pure Bromine and $90\\,mL$ is Carbon Tetrachloride. Because these two liquids have vastly different densities ($3.2$ vs $1.6$), their volume ratios are totally different from their mass ratios.\n\n🗺️ **Strategic Roadmap**\nStep 1: **The 100 mL Sandbox.**\n- **Solute ($\\ce{Br2}$):** $10\\,mL \\times 3.2\\,g/mL = 32\\,g$.\n- **Solvent ($\\ce{CCl4}$):** $90\\,mL \\times 1.6\\,g/mL = 144\\,g$.\n\nStep 2: **Convert to Moles.**\nMolar mass of $\\ce{Br2} = 160\\,g/mol$.\n$$\\text{Moles} = 32 / 160 = 0.2\\,moles$$\n\nStep 3: **Final Molality.**\nSolvent mass $= 0.144\\,kg$.\n$$m = \\dfrac{0.2\\,mol}{0.144\\,kg} \\approx 1.39 = 139 \\times 10^{-2}$$\n\n$$\\boxed{\\text{Answer: 139}}$$"
+    }
+  },
+  {
+    "_id": "3aaa108c-a4df-4657-b03a-53ef59eec72c",
+    "display_id": "MOLE-135",
+    "question_text": {
+      "markdown": "A solution of sugar is obtained by mixing $200\\,\\text{g}$ of its $25\\%$ solution and $500\\,\\text{g}$ of its $40\\%$ solution (both by mass). The mass percentage of the resulting sugar solution is ______ (Nearest integer)"
+    },
+    "type": "NVT",
+    "options": [],
+    "answer": {
+      "integer_value": 36,
+      "explanation": "🧠 **The \"Resultant\" Mixture Rule**\nWhen mixing two sugar solutions, don't average the percentages ($32.5\\%$ would be wrong!). You must tally every gram of sugar from both buckets and divide it by the total combined weight of the new \"mega-bucket.\"\n\n🗺️ **Strategic Roadmap**\nStep 1: **Tally the Sugars.**\n- Bucket 1: $25\\% \\text{ of } 200 = 50\\,g$.\n- Bucket 2: $40\\% \\text{ of } 500 = 200\\,g$.\n**Total sugar** $= 250\\,g$.\n\nStep 2: **Tally the Bulk.**\nTotal solution mass $= 200 + 500 = 700\\,g$.\n\nStep 3: **Final Percentage.**\n$$\\% = \\dfrac{250}{700} \\times 100 \\approx 35.7 \\%$$\nNearest integer is **36**.\n\n$$\\boxed{\\text{Answer: 36}}$$"
+    },
+    "solution": {
+      "text_markdown": "🧠 **Don't average percentages — add the sugar masses**\nTotal sugar mass over total solution mass gives the new percentage. Averaging $25\\%$ and $40\\%$ ignores that the buckets have different sizes.\n\n🗺️ **Three steps**\nSugar in bucket 1 $= 0.25 \\times 200 = 50\\,\\text{g}$.\nSugar in bucket 2 $= 0.40 \\times 500 = 200\\,\\text{g}$.\nTotal sugar $= 250\\,\\text{g}$. Total solution $= 700\\,\\text{g}$.\n$\\%\\,\\text{sugar} = \\frac{250}{700} \\times 100 \\approx 35.7\\%.$\nNearest integer is $36$.\n\n$\\boxed{\\text{Answer: 36}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_2",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 2,
+      "examDetails": {
+        "exam": "JEE_Main",
+        "year": 2023,
+        "month": "Apr",
+        "shift": "Shift-I"
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Mole Fraction & Mass Percent",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "9f2435c9-7864-4ad0-b8da-2fa7273b927b",
+    "display_id": "MOLE-152",
+    "question_text": {
+      "markdown": "The molarity of $\\ce{HNO3}$ in a sample which has density $1.4\\,\\text{g/mL}$ and mass percentage of $63\\%$ is ______ M. (Molecular Weight of $\\ce{HNO3}=63$)"
+    },
+    "type": "NVT",
+    "options": [],
+    "answer": {
+      "integer_value": 14,
+      "explanation": "🧠 **The Acid-Density Reflex**\nConcentrated nitric acid problems are very common. Whenever you see a density value like **$1.4$** and a percentage like **$63%$,** a bell should ring in your head: $1.4 \times 10$ is $14$, and $63$ is the molar mass of $\\ce{HNO3}$. These numbers are chosen to simplify perfectly.\n\n🗺️ **Strategic Roadmap**\nStep 1: **Apply the Shortcut.**\n$$M = \\dfrac{10 \\times d \\times \\%}{M_r}$$\n\nStep 2: **Execute.**\nDensity ($d$) $= 1.4$.\nPercentage ($\\%$) $= 63$.\nMolar Mass ($M_r$) $= 63$.\n$$M = \\dfrac{10 \\times 1.4 \\times 63}{63} = 14\\,M$$\n\n⚡ **The 5-Second Scan**\n$1.4\\,g/mL$ means $1400\\,g$ per Litre.\n$63\\%$ of $1400$ is exactly $882\\,g$.\n$882 / 63$ is **14**. \nRemember this specific pair (1.4 and 63) for your exam!\n\n$$\\boxed{\\text{Answer: 14}}$$"
+    },
+    "solution": {
+      "text_markdown": "🧠 **The \"$10 d \\%/M$\" shortcut**\nFor a solution where you know density and mass percentage:\n$M = \\frac{10 \\cdot d \\cdot \\%}{M_\\text{solute}}.$\n\n🗺️ **Plug and play**\n$d = 1.4$, $\\% = 63$, $M_\\text{solute} = 63$.\n$M = \\frac{10 \\times 1.4 \\times 63}{63} = 14\\,\\text{M}.$\n\n⚡ **Speed scan**\nThe $63$s cancel out, leaving $10 \\times 1.4 = 14$. This pair (density $1.4$, $63\\%$) is the textbook \"concentrated $\\ce{HNO3}$\" recipe — remember it.\n\n$\\boxed{\\text{Answer: 14}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_2",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 2,
+      "examDetails": {
+        "exam": "JEE_Main",
+        "year": 2020,
+        "month": "Jan",
+        "shift": "Shift-I"
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Interconversion of Concentration Units",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "4941d83f-58e7-43b2-a375-806f3facb0ca",
+    "display_id": "MOLE-241",
+    "answer": {
+      "integer_value": 9,
+      "explanation": "🧠 **The \"M = m\" Condition**\nNormally, Molarity ($M$) and Molality ($m$) are different because one uses solution volume and the other uses solvent mass. For them to be identical, the mass of the solvent (in $kg$) must be numerically equal to the volume of the solution (in $L$). This specific \"crossover\" point reveals the deep underlying ratio of the molecule weights.\n\n🗺️ **Strategic Roadmap**\nStep 1: **Set up the Equality.**\n$M = m$.\n$$\\dfrac{n_{solute}}{V_{soln}} = \\dfrac{n_{solute}}{m_{solvent}}$$\nThis implies $V_{soln} (L) = m_{solvent} (kg)_$.\nIf $V = 1\\,L$, then $mass_{solvent} = 1000\\,g$.\n\nStep 2: **Integrate Density.**\nTotal mass $= d \\times V = 2.0 \\times 1000 = 2000\\,g$.\nSince solvent mass $= 1000\\,g$, then solute mass $= 1000\\,g$.\n\nStep 3: **Use Mole Fraction.**\n$\\chi_{solute} = 0.1$, so $\\chi_{solvent} = 0.9$.\n$$\\dfrac{n_1}{n_2} = \\dfrac{0.1}{0.9} = \\dfrac{1}{9}$$\n$$\\dfrac{m_1/M_1}{m_2/M_2} = \\dfrac{1000/M_1}{1000/M_2} = \\dfrac{M_2}{M_1}$$\nSubstituting values: $M_2 / M_1 = 1/9$.\nSo, $M_1 / M_2 = mathbf{9}$.\n\n$$\\boxed{\\text{Answer: 9}}$$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_2",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 4,
+      "examDetails": {
+        "exam": "JEE_Advanced",
+        "year": 2016
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Interconversion of Concentration Units",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE"
+      ]
+    },
+    "options": [],
+    "question_text": {
+      "markdown": "The mole fraction of a solute in a solution is 0.1. At 298 K, molarity of this solution is the same as its molality. Density of this solution at 298 K is 2.0 g cm$^{-3}$. The ratio of the molecular weights of the solute and solvent, $\\left(\\frac{m_{\\text{solute}}}{m_{\\text{solvent}}}\\right)$ is ..."
+    },
+    "solution": {
+      "text_markdown": "🧠 **When M = m**\nMolarity uses solution volume, molality uses solvent mass. They become equal only when (kg of solvent) = (litre of solution). Use this together with the density and mole fraction to extract the molecular-weight ratio.\n\n🗺️ **Step-by-step**\nTake a basis: $V_{\\text{soln}} = 1\\,\\text{L}$. Then $m_{\\text{solvent}} = 1\\,\\text{kg} = 1000\\,\\text{g}$.\n\nTotal solution mass:\n$m_{\\text{total}} = d \\times V = 2.0 \\times 1000 = 2000\\,\\text{g}.$\nMass of solute $= 2000 - 1000 = 1000\\,\\text{g}$.\n\nMole fractions: $x_{\\text{solute}} = 0.1$, $x_{\\text{solvent}} = 0.9$.\n$\\frac{n_1}{n_2} = \\frac{0.1}{0.9} = \\frac{1}{9}.$\n\nNow use $n = m/M$:\n$\\frac{m_1/M_1}{m_2/M_2} = \\frac{1000/M_1}{1000/M_2} = \\frac{M_2}{M_1} = \\frac{1}{9}.$\nSo $\\frac{M_1}{M_2} = 9$.\n\n⚠️ **Common mistake**\nDon't flip the ratio at the end. The problem asks for $M_{\\text{solute}}/M_{\\text{solvent}}$, which is $M_1/M_2$. Track which subscript is which throughout.\n\n$\\boxed{\\text{Answer: 9}}$"
+    },
+    "type": "NVT"
+  },
+  {
+    "_id": "6a3d6158-6e72-4278-be72-6bfb92ed81a9",
+    "display_id": "MOLE-017",
+    "question_text": {
+      "markdown": "The mass % of Nitrogen in Histamine($\\ce{C5H9N3}$) is ______"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$37.84\\%$",
+        "is_correct": true,
+        "asset_ids": []
+      },
+      {
+        "id": "b",
+        "text": "$38.20\\%$",
+        "is_correct": false,
+        "asset_ids": []
+      },
+      {
+        "id": "c",
+        "text": "$37.80\\%$",
+        "is_correct": false,
+        "asset_ids": []
+      },
+      {
+        "id": "d",
+        "text": "$38.00\\%$",
+        "is_correct": false,
+        "asset_ids": []
+      }
+    ],
+    "answer": null,
+    "solution": {
+      "text_markdown": "🧠 **Mass percent = part / whole × 100**\nFirst find the molar mass of histamine, then the mass of nitrogen inside it, then divide.\n\n🗺️ **The calculation**\nMolar mass of $\\ce{C5H9N3}$:\n$M = (5)(12) + (9)(1) + (3)(14) = 60 + 9 + 42 = 111\\,\\text{g/mol}.$\nMass of N in one mole $= 3 \\times 14 = 42\\,\\text{g}$.\n$\\% \\,\\ce{N} = \\frac{42}{111} \\times 100 = 37.84\\%.$\n\n⚠️ **Common mistake**\nOptions (a) $37.84\\%$ and (c) $37.80\\%$ are very close. Don't round $42/111$ in your head — actually compute it. $42 \\div 111 = 0.37837...$, which rounds to $0.3784$, not $0.3780$.\n\n$\\boxed{\\text{Answer: (a)}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_3",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 3,
+      "sourceType": "Practice",
+      "microConcept": "Percentage Composition Calculations",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "31f12458-ad10-41ee-bdd6-da31b15cf37e",
+    "display_id": "MOLE-102",
+    "question_text": {
+      "markdown": "The percentage composition of carbon **by mole** in methane ($\\ce{CH4}$) is:"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$75\\%$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$20\\%$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$80\\%$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$25\\%$",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "🧠 **By mole means count atoms, not weigh them**\n$\\ce{CH4}$ has $1$ C and $4$ H atoms — $5$ atoms total. Mole percent of C is $1/5$.\n\n🗺️ **One quick step**\n$\\%\\,\\text{C by mole} = \\frac{1}{1+4} \\times 100 = 20\\%.$\n\n⚠️ **The $75\\%$ trap**\n$75\\%$ is the mass percent of carbon, not the mole percent. Many students see \"$\\%$ composition\" and jump straight to mass. Read the words \"by mole\" — they change everything.\n\n$\\boxed{\\text{Answer: (b)}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_3",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 2,
+      "examDetails": {
+        "exam": "JEE_Main",
+        "year": 2019,
+        "month": "Apr",
+        "shift": "Shift-II"
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Percentage Composition Calculations",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "2be3bff3-5924-4101-8c72-868dcaef3444",
+    "display_id": "MOLE-177",
+    "question_text": {
+      "markdown": "$116\\,\\text{g}$ of a substance yields $7.5\\,\\text{g}$ H, $60\\,\\text{g}$ O, $48.5\\,\\text{g}$ C. (H=1, O=16, C=12). The data agrees with how many of the following?\nA. $\\ce{CH3COOH}$ B. $\\ce{HCHO}$ C. $\\ce{CH3OOCH3}$ D. $\\ce{CH3CHO}$"
+    },
+    "type": "NVT",
+    "options": [],
+    "answer": {
+      "integer_value": 2,
+      "explanation": "🧠 **The $1:2:1$ Identity**\nWhenever you see a weight breakdown where Carbon units and Oxygen units are roughly equal, and Hydrogen counts are double ($1:2:1$), you are looking at the empirical formula **$\\ce{CH2O}$**. This is the universal fingerprint for Formaldehyde, Acetic acid, and Glucose.\n\n🗺️ **Strategic Roadmap**\nStep 1: **Test the Ratios.**\n- **Carbon:** $48.5 / 12 = 4.04$\n- **Hydrogen:** $7.5 / 1 = 7.5$\n- **Oxygen:** $60 / 16 = 3.75$\nSimplest Ratio is roughly $1 : 2 : 1$. Formula $=\\ce{CH2O}$.\n\nStep 2: **Audit the List.**\n- **A. $\\ce{CH3COOH}$:** ($C_2H_4O_2$, ratio $1:2:1$) $\rightarrow$ **Matches**.\n- **B. $\\ce{HCHO}$:** ($CH_2O$, ratio $1:2:1$) $\rightarrow$ **Matches**.\n- **C. $\\ce{CH3OOCH3}$:** ($C_2H_6O_2$, ratio $1:3:1$) $\rightarrow$ No.\n- **D. $\\ce{CH3CHO}$:** ($C_2H_4O$, ratio $2:4:1$) $\rightarrow$ No.\n\nCount $= 2$.\n\n$$\\boxed{\\text{Answer: 2}}$$"
+    },
+    "solution": {
+      "text_markdown": "🧠 **The $\\ce{CH2O}$ fingerprint**\nFirst find the simplest mole ratio of C, H, O. If the ratio is $1:2:1$, the empirical formula is $\\ce{CH2O}$. Any compound that gives $\\ce{CH2O}$ as its empirical formula matches this data.\n\n🗺️ **Step 1 — empirical formula of the data**\nMoles of each element:\n- C: $48.5 / 12 \\approx 4.04$\n- H: $7.5 / 1 = 7.5$\n- O: $60 / 16 = 3.75$\n\nDivide by the smallest ($3.75$):\n- C: $1.08$, H: $2.0$, O: $1.0$.\n\nSo the simplest ratio is roughly $1 : 2 : 1$ → empirical formula $\\ce{CH2O}$.\n\n🗺️ **Step 2 — check each option**\n- A. $\\ce{CH3COOH}$ → $\\ce{C2H4O2}$, ratio $1:2:1$. **Matches.**\n- B. $\\ce{HCHO}$ → $\\ce{CH2O}$, ratio $1:2:1$. **Matches.**\n- C. $\\ce{CH3OOCH3}$ → $\\ce{C2H6O2}$, ratio $1:3:1$. No.\n- D. $\\ce{CH3CHO}$ → $\\ce{C2H4O}$, ratio $2:4:1$. No.\n\nTwo options match.\n\n$$\\boxed{\\text{Answer: 2}}$$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_3",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 4,
+      "examDetails": {
+        "exam": "JEE_Main",
+        "year": 2022,
+        "month": "Jun",
+        "shift": "Shift-II"
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Empirical Formula from % Composition",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE"
+      ]
+    }
+  },
+  {
+    "_id": "d0e1fc65-d565-4afb-84c1-f9a5761ac82e",
+    "display_id": "MOLE-212",
+    "question_text": {
+      "markdown": "In Dumas' method for estimation of nitrogen, 0.5 gram of an organic compound gave 60 mL of nitrogen collected at 300 K temperature and 715 mm Hg pressure. The percentage composition of nitrogen in the compound is: (Aqueous tension at 300 K = 15 mm Hg)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "1.257",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "20.87",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "18.67",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "12.57",
+        "is_correct": true
+      }
+    ],
+    "solution": {
+      "text_markdown": "🧠 **Same Dumas trick, different sample mass**\nJust like Dumas with any sample — subtract aqueous tension first, find moles of $\\ce{N2}$ from $PV = nRT$, then take the percentage in the original $0.5\\,\\text{g}$ sample.\n\n🗺️ **Step by step**\nDry pressure $= 715 - 15 = 700\\,\\text{mm Hg} = \\frac{700}{760}\\,\\text{atm}$.\n\nMoles of $\\ce{N2}$:\n$n = \\frac{(700/760)(0.060)}{0.0821 \\times 300} \\approx 2.244 \\times 10^{-3}\\,\\text{mol}.$\n\nMass of N $= 2.244 \\times 10^{-3} \\times 28 \\approx 0.0628\\,\\text{g}$.\n\n$\\%\\,\\text{N} = \\frac{0.0628}{0.50} \\times 100 \\approx 12.57\\%.$\n\n⚠️ **Common mistake**\nThis is exactly MOLE-208 with sample mass $0.5\\,\\text{g}$ instead of $0.4\\,\\text{g}$. Same setup, just a bigger denominator — so $\\%$N is smaller.\n\n$\\boxed{\\text{Answer: (d)}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_3",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 4,
+      "examDetails": {
+        "exam": "JEE_Main",
+        "year": 2025,
+        "month": "Apr",
+        "shift": "Shift-II"
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Organic Compound Analysis",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE"
+      ]
+    }
+  },
+  {
+    "_id": "d49f1920-e48b-4658-baff-e1053cf1ca20",
+    "display_id": "MOLE-028",
+    "question_text": {
+      "markdown": "$20\\,\\text{mL}$ of a solution containing $0.2\\,\\text{g}$ of impure sample of $\\ce{H2O2}$ reacts with $0.316\\,\\text{g}$ of $\\ce{KMnO4}$ in presence of $\\ce{H2SO4}$ as per the reaction:\n\n$$\\ce{KMnO4 + H2O2 + H2SO4 -> MnSO4 + O2 + H2O}$$\n\nFind the purity of $\\ce{H2O2}$ solution:"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$85\\%$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$82\\%$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$86\\%$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$83\\%$",
+        "is_correct": false
+      }
+    ],
+    "answer": null,
+    "solution": {
+      "text_markdown": "🧠 **Use the n-factor link**\n$\\ce{KMnO4}$ reacts only with the pure $\\ce{H2O2}$, not the impurities. Stoichiometry from the balanced equation $2\\,\\ce{KMnO4} + 5\\,\\ce{H2O2} \\rightarrow ...$ tells you 2 mol of permanganate consumes 5 mol of peroxide.\n\n🗺️ **The four steps**\n**Moles of $\\ce{KMnO4}$:**\n$$n = \\frac{0.316}{158} = 0.002\\,\\text{mol}.$$\n\n**Moles of pure $\\ce{H2O2}$:**\n$$n = \\frac{5}{2} \\times 0.002 = 0.005\\,\\text{mol}.$$\n\n**Mass of pure $\\ce{H2O2}$:**\n$$0.005 \\times 34 = 0.17\\,\\text{g}.$$\n\n**Purity:**\n$$\\frac{0.17}{0.20} \\times 100 = 85\\%.$$\n\n⚠️ **Common mistake**\nUsing a $1:1$ ratio between $\\ce{KMnO4}$ and $\\ce{H2O2}$. The redox stoichiometry is $2 : 5$ — always balance the equation first.\n\n$$\\boxed{\\text{Answer: (a)}}$$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_4",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 3,
+      "sourceType": "Practice",
+      "microConcept": "Titration Calculations using Normality",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE"
+      ]
+    }
+  },
+  {
+    "_id": "caf0bee6-b0f0-43cd-a4b6-65824ffbfeae",
+    "display_id": "MOLE-232",
+    "answer": null,
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_4",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 4,
+      "examDetails": {
+        "exam": "JEE_Advanced",
+        "year": 1999
+      },
+      "sourceType": "PYQ",
+      "microConcept": "n-factor Determination (Acids, Bases, Salts, Redox)",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    },
+    "options": [
+      {
+        "id": "A",
+        "text": "0.1",
+        "is_correct": false,
+        "asset_ids": []
+      },
+      {
+        "id": "B",
+        "text": "0.9",
+        "is_correct": false,
+        "asset_ids": []
+      },
+      {
+        "id": "C",
+        "text": "0.3",
+        "is_correct": false,
+        "asset_ids": []
+      },
+      {
+        "id": "D",
+        "text": "0.6",
+        "is_correct": true,
+        "asset_ids": []
+      }
+    ],
+    "question_text": {
+      "markdown": "The normality of 0.3M phosphorus acid ($\\ce{H3PO3}$) is"
+    },
+    "solution": {
+      "text_markdown": "🧠 **The H3PO3 basicity trap**\nDon't trust the \"$\\ce{H3}$\" in the formula. Phosphorous acid ($\\ce{H3PO3}$) is **dibasic**, not tribasic. One H is bonded directly to P ($\\ce{P-H}$) and is non-acidic. Only the two $\\ce{O-H}$ hydrogens ionise.\n\n🗺️ **Step-by-step**\n$n$-factor of $\\ce{H3PO3} = 2$.\n$\\text{Normality} = \\text{Molarity} \\times n\\text{-factor}$\n$N = 0.3 \\times 2 = 0.6\\,\\text{N}.$\n\n⚠️ **Common mistake**\nThe trap is option (B) $0.9$ — that's what you get by treating $\\ce{H3PO3}$ as tribasic ($n = 3$). Remember the pattern: $\\ce{H3PO4}$ is tribasic, $\\ce{H3PO3}$ is dibasic, $\\ce{H3PO2}$ is monobasic. Each lost oxygen drops one acidic H.\n\n$\\boxed{\\text{Answer: (D)}}$"
+    },
+    "type": "SCQ"
+  },
+  {
+    "_id": "1c1acbcd-b23d-420c-854c-ba462d4ebab5",
+    "display_id": "MOLE-024",
+    "question_text": {
+      "markdown": "When $1\\,\\text{L}$ of $\\ce{CO2}$ is heated with graphite, the volume of the gases collected is $1.5\\,\\text{L}$. Calculate the number of moles of CO produced at STP:"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\frac{1}{11.2}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$\\frac{28}{22.4}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\frac{1}{22.4}$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$\\frac{14}{22.4}$",
+        "is_correct": false
+      }
+    ],
+    "answer": null,
+    "solution": {
+      "text_markdown": "🧠 **For gases, volume = moles**\nAt fixed $T$ and $P$, equal volumes mean equal moles. So in $\\ce{CO2}(g) + \\ce{C}(s) \\rightarrow 2\\,\\ce{CO}(g)$, every $1\\,\\text{L}$ of $\\ce{CO2}$ that reacts produces $2\\,\\text{L}$ of CO. Carbon is solid, so it does not count in the gas volume.\n\n🗺️ **Track the volumes**\nLet $x\\,\\text{L}$ of $\\ce{CO2}$ react.\n- Unreacted $\\ce{CO2}$: $1 - x$.\n- CO formed: $2x$.\n- Total gas: $(1 - x) + 2x = 1 + x$.\n\nGiven total $= 1.5\\,\\text{L}$:\n$$1 + x = 1.5 \\Rightarrow x = 0.5\\,\\text{L}.$$\n\nSo volume of CO formed $= 2x = 1.0\\,\\text{L}$.\n\nAt STP, $1$ mole of gas occupies $22.4\\,\\text{L}$:\n$$n(\\ce{CO}) = \\frac{1}{22.4}\\,\\text{mol}.$$\n\n⚠️ **Common mistake**\nCounting carbon (a solid) in the gas balance. Solids and liquids contribute zero to gas volume — always exclude them.\n\n$$\\boxed{\\text{Answer: (c)}}$$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_5",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 2,
+      "sourceType": "Practice",
+      "microConcept": "Contraction/Expansion in Volume",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "53ef090c-11e8-41a7-ae69-a8bce0663725",
+    "display_id": "MOLE-194",
+    "question_text": {
+      "markdown": "At 300 K and 1 atmospheric pressure, 10 mL of a hydrocarbon required 55 mL of $\\ce{O2}$ for complete combustion, and 40 mL of $\\ce{CO2}$ is formed. The formula of the hydrocarbon is:"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\ce{C4H8}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$\\ce{C4H10}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\ce{C4H6}$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$\\ce{C4H7Cl}$",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "🧠 **Volume ratios are coefficients (gases at same T, P)**\nFor gases under the same conditions, $1$ volume = $1$ mole. So $10\\,\\text{mL}$ fuel : $55\\,\\text{mL}\\,\\ce{O2}$ : $40\\,\\text{mL}\\,\\ce{CO2}$ becomes $1 : 5.5 : 4$ in moles.\n\n🗺️ **Step by step**\nFor $\\ce{CxHy}$: $\\ce{CxHy + (x + y/4)O2 -> xCO2 + (y/2)H2O}$.\n\nFrom $\\ce{CO2}$ ratio: $x = 4$.\n\nFrom $\\ce{O2}$ ratio:\n$x + y/4 = 5.5 \\implies 4 + y/4 = 5.5 \\implies y = 6.$\n\nSo the hydrocarbon is $\\ce{C4H6}$.\n\n⚠️ **Common mistake**\nDon't compare $55$ to $40$ directly — they are both *with respect to* the $10\\,\\text{mL}$ of fuel. Always write coefficients per $1\\,\\text{mL}$ of hydrocarbon first.\n\n$\\boxed{\\text{Answer: (c)}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_5",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 3,
+      "examDetails": {
+        "exam": "JEE_Main",
+        "year": 2019,
+        "month": "Apr",
+        "shift": "Shift-I"
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Combustion of Hydrocarbons",
+      "questionNature": "Conceptual",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "9b4c27ff-93b1-4875-bf6b-e540277a6211",
+    "display_id": "MOLE-031",
+    "question_text": {
+      "markdown": "$\\ce{AgNO3}$ reacts with $\\ce{FeCl3}$ to produce $\\ce{AgCl}$ and $\\ce{Fe(NO3)3}$. A solution containing $18\\,\\text{g}$ of $\\ce{AgNO3}$ was mixed with a solution containing $32.4\\,\\text{g}$ of $\\ce{FeCl3}$. How many grams of which reactant remain after the reaction is over?"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$14.9\\,\\text{g}$ $\\ce{AgNO3}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$30.1\\,\\text{g}$ $\\ce{FeCl3}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$6.8\\,\\text{g}$ $\\ce{AgNO3}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$26.7\\,\\text{g}$ $\\ce{FeCl3}$",
+        "is_correct": true
+      }
+    ],
+    "answer": null,
+    "solution": {
+      "text_markdown": "🧠 **Find the limiter, then calculate the leftover of the excess reagent**\nBalanced equation: $3\\,\\ce{AgNO3} + \\ce{FeCl3} \\rightarrow 3\\,\\ce{AgCl} + \\ce{Fe(NO3)3}$. So 3 moles of silver nitrate need 1 mole of ferric chloride.\n\n🗺️ **Step by step**\n**Initial moles:**\n- $n(\\ce{AgNO3}) = 18/170 \\approx 0.106\\,\\text{mol}$.\n- $n(\\ce{FeCl3}) = 32.4/162.5 \\approx 0.200\\,\\text{mol}$.\n\n**Who's limiting?**\n$0.106\\,\\text{mol}$ of $\\ce{AgNO3}$ needs $0.106/3 \\approx 0.0353\\,\\text{mol}$ of $\\ce{FeCl3}$. We have $0.200\\,\\text{mol}$, so $\\ce{FeCl3}$ is in excess. $\\ce{AgNO3}$ limits.\n\n**Unreacted $\\ce{FeCl3}$:**\n$$0.200 - 0.0353 \\approx 0.1647\\,\\text{mol}.$$\n$$\\text{Mass} = 0.1647 \\times 162.5 \\approx 26.7\\,\\text{g}.$$\n\n⚠️ **Common mistake**\nForgetting the $1:3$ ratio and subtracting moles directly. Always scale by the stoichiometric coefficient before subtracting.\n\n$$\\boxed{\\text{Answer: (d)}}$$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_6",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 3,
+      "sourceType": "Practice",
+      "microConcept": "Identifying Limiting Reagent",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE"
+      ]
+    }
+  },
+  {
+    "_id": "efac2263-7f35-4779-bfe0-10a40866955b",
+    "display_id": "MOLE-119",
+    "question_text": {
+      "markdown": "$56.0\\,\\text{L}$ of nitrogen gas is mixed with excess of hydrogen gas and it is found that $20\\,\\text{L}$ of ammonia gas is produced. The volume of unused nitrogen gas is found to be ______ L."
+    },
+    "type": "NVT",
+    "options": [],
+    "answer": {
+      "integer_value": 46,
+      "explanation": "🧠 **Volumetric Stoichiometry**\nGay-Lussac’s Law is the ultimate shortcut for gases. It tells us that **volume ratios = mole ratios**. You don't need Molar Mass, STP constants, or Avogadro's number for this. Use the $1 : 2$ volume ratio from the $\\ce{N2 + 3H2 \\rightarrow 2NH3}$ equation to find how much Nitrogen was sacrificed.\n\n🗺️ **Strategic Roadmap**\nStep 1: **Calculate the Sacrifice.**\nThe equation says it takes $1\\,L$ of $\\ce{N2}$ to produce $2\\,L$ of $\\ce{NH3}$.\nWe produced $20\\,L$ of Ammonia.\nTherefore, we must have used exactly **$10\\,L$ of Nitrogen**.\n\nStep 2: **Check the Leftovers.**\nStarting Nitrogen $= 56\\,L$.\nUsed Nitrogen $= 10\\,L$.\nUnused Nitrogen $= 46\\,L$.\n\n⚡ **The 5-Second Scan**\nProduced $20$ ammonia. That requires $10$ nitrogen. \nYou started with $56$. \n$56 - 10 = 46$. \nThis is why stoichiometry for gases is the easiest part of the exam if you know the ratio rules.\n\n$$\\boxed{\\text{Answer: 46}}$$"
+    },
+    "solution": {
+      "text_markdown": "🧠 **Volumes give you the mole ratio for free**\nFor gases at the same temperature and pressure, volume ratios = mole ratios. So you don't need molar mass or STP at all. The equation $\\ce{N2 + 3H2 -> 2NH3}$ tells you that $1\\,\\text{L}$ of $\\ce{N2}$ makes $2\\,\\text{L}$ of $\\ce{NH3}$.\n\n🗺️ **Two short steps**\nAmmonia made $= 20\\,\\text{L}$. So nitrogen used $= 20 / 2 = 10\\,\\text{L}$.\nNitrogen taken at the start $= 56\\,\\text{L}$.\n$\\text{Unused } \\ce{N2} = 56 - 10 = 46\\,\\text{L}.$\n\n⚡ **Speed scan**\n$20\\,\\text{L}$ ammonia eats $10\\,\\text{L}$ nitrogen. $56 - 10 = 46$. Done.\n\n$\\boxed{\\text{Answer: 46}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_6",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 3,
+      "examDetails": {
+        "exam": "JEE_Main",
+        "year": 2022,
+        "month": "Jul",
+        "shift": "Shift-II"
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Percentage Yield",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "3eeada05-8722-4234-a9d2-e88455b87169",
+    "display_id": "MOLE-193",
+    "question_text": {
+      "markdown": "For the reaction $\\ce{N2(g) + 3H2(g) -> 2NH3(g)}$, identify dihydrogen ($\\ce{H2}$) as a limiting reagent in the following reaction mixtures:"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "28 g of $\\ce{N2}$ + 6 g of $\\ce{H2}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "35 g of $\\ce{N2}$ + 8 g of $\\ce{H2}$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "56 g of $\\ce{N2}$ + 10 g of $\\ce{H2}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "14 g of $\\ce{N2}$ + 4 g of $\\ce{H2}$",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "🧠 **The Dihydrogen Bottleneck**\nHaber's process ($\\%{N2 + 3H2 \\rightarrow 2NH3}$) is a numbers game. You need **three times as much Hydrogen** ($H_2$) as Nitrogen ($N_2$). If you have less than that, the Hydrogen is your Limiting Reagent. Test every mixture by comparing the Nitrogen \"potential\" to the available Hydrogen.\n\n🗺️ **Strategic Roadmap**\nStep 1: **Convert masses to moles.**\n- **(a)** $1\\,mol$ $N_2$ + $3\\,mol$ $H_2$: Perfect balance ($1:3$).\n- **(b)** $35\\,g$ $N_2$ ($1.25\\,mol$) + $8\\,g$ $H_2$ ($4\\,mol$): Need $3.75\\,mol$ $H_2$. We have $4$. (Nitrogen limits).\n- **(c)** **$56\\,g$ $N_2$ ($2\\,mol$) + $10\\,g$ $H_2$ ($5\\,mol$):** Need $6\\,mol$ $H_2$. We only have $5$. **Hydrogen is Limiting.**\n\n$$\\boxed{\\text{Answer: (c) 56 g of N2 + 10 g of H2}}$$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_6",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 3,
+      "examDetails": {
+        "exam": "JEE_Main",
+        "year": 2019,
+        "month": "Apr",
+        "shift": "Shift-I"
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Identifying Limiting Reagent",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "489fd324-4343-4a20-8e2f-428177229147",
+    "display_id": "MOLE-014",
+    "question_text": {
+      "markdown": "If we consider that $\\tfrac{1}{6}$ (in place of $\\tfrac{1}{12}$) mass of carbon atom is taken to be the relative atomic mass unit, the mass of one mole of a substance will:"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "Decrease twice",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "Increase two fold",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "Remain unchanged",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "Be a function of molecular mass of substance",
+        "is_correct": false
+      }
+    ],
+    "answer": null,
+    "solution": {
+      "text_markdown": "🧠 **Changing the ruler does not change the table**\nAtomic mass is a *relative* scale. We chose $\\frac{1}{12}$ of carbon-12 as the unit by convention. If you change the unit to $\\frac{1}{6}$ of C-12, every atomic mass number simply gets halved. But the physical mass of one mole — the actual grams sitting on the balance — does not change, because the mole is defined to keep the bridge between amu and grams consistent.\n\n🗺️ **What actually shifts**\n- New unit is twice as heavy as the old one.\n- So every atomic mass number drops to half.\n- But Avogadro's number is also redefined so that 1 mole of C still weighs $12\\,\\text{g}$ in the new system.\n- Net effect on the grams of 1 mole of *any* substance: zero.\n\n⚠️ **Common mistake**\nStudents think \"if amu doubles, mass of 1 mole halves\" and pick (a). That is wrong. The mole is a counting unit — it stretches with the amu definition to keep all real-world chemistry equations the same. The mass of a real sample of substance never depends on how you define your unit.\n\n$\\boxed{\\text{Answer: (c)}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_7",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 3,
+      "sourceType": "Practice",
+      "microConcept": "Mole Concept Fundamentals",
+      "questionNature": "Conceptual",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "40ef2809-c982-41e4-aff4-97a6f6b82f7c",
+    "display_id": "MOLE-059",
+    "question_text": {
+      "markdown": "A sample of hydrogen gas is collected and it is observed that it contains only H and D atoms in the atomic ratio $6000:1$. The number of neutrons in $3\\,\\text{g}$ of such a sample should be nearly"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$0.0005$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$3.01 \\times 10^{20}$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$1.80 \\times 10^{24}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$1.0$",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "🧠 **Only deuterium has a neutron**\nProtium ($^1\\ce{H}$) has 0 neutrons. Deuterium ($^2\\ce{H}$) has 1. So total neutrons = total D atoms.\n\n🗺️ **Two steps**\n**Total atoms** in $3\\,\\text{g}$ — average atomic mass $\\approx 1$ (the H : D ratio is $6000:1$, so D barely shifts it):\n$N_{\\text{tot}} = 3 \\times N_A.$\n\n**D fraction** $= 1/6001 \\approx 1/6000$.\n\n**Neutrons:**\n$N_{\\text{neutrons}} = \\frac{3 \\times 6.022 \\times 10^{23}}{6000} = 3.01 \\times 10^{20}.$\n\n⚠️ **Common mistake**\nComputing the exact average atomic mass with H = 1 and D = 2. With a $6000:1$ ratio, the correction is negligible. Save time — use $M \\approx 1$.\n\n$\\boxed{\\text{Answer: (b)}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_7",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 3,
+      "sourceType": "Practice",
+      "microConcept": "Mole Conversions (Mass, Volume, Particles)",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE"
+      ]
+    }
+  },
+  {
+    "_id": "e2f463ae-f43c-4bbb-b97f-994288beecc8",
+    "display_id": "MOLE-192",
+    "question_text": {
+      "markdown": "$0.27\\,\\text{g}$ of a long chain fatty acid was dissolved in $100\\,\\text{cm}^3$ of hexane. $10\\,\\text{mL}$ of this solution was added dropwise to the surface of water in a round watch glass. Hexane evaporates and a monolayer is formed. The distance from edge to centre of the watch glass is $10\\,\\text{cm}$. What is the height of the monolayer? [Density of fatty acid $= 0.9\\,\\text{g cm}^{-3}$; $\\pi = 3$]"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$10^{-4}\\,\\text{m}$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$10^{-6}\\,\\text{m}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$10^{-8}\\,\\text{m}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$10^{-2}\\,\\text{m}$",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "🧠 **Watch-Glass Monolayer Geometry**\nImagine the fatty acid molecule as a tiny pencil. When you drop it on water, it stands up vertically and touches its neighbours, forming a carpet exactly one \"pencil-height\" ($h$) thick. The volume of the carpet is simply its Area ($A$) times its height ($h$).\n\n🗺️ **Strategic Roadmap**\nStep 1: **Find the Aliquot Load.**\nStock: $0.27\\,g$ in $100\\,mL$.\nAliquot ($10\\,mL$) mass $= 0.027\\,g$.\n\nStep 2: **Bulk Volume.**\nDensity $= 0.9\\,g/cm^3$.\n$V = 0.027 / 0.9 = 0.03\\,cm^3$\n\nStep 3: **The \"Carpet\" Area.**\nWatch glass radius $= 10\\,cm$.\nArea $= \\pi r^2 = 3 \\times 100 = 300\\,cm^2$.\n\nStep 4: **Find the Height.**\n$h = V / A = 0.03 / 300 = 0.0001\\,cm = 10^{-4}\\,cm$\nConverting to meters ($m$): $10^{-6}\\,m$.\n\n$\\boxed{\\text{Answer: (a) 10^{-6} m}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_7",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 4,
+      "examDetails": {
+        "exam": "JEE_Main",
+        "year": 2019,
+        "month": "Apr",
+        "shift": "Shift-II"
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Mole Conversions (Mass, Volume, Particles)",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE"
+      ]
+    }
+  },
+  {
+    "_id": "53e86d71-915a-4fd5-8460-1aa042e9b017",
+    "display_id": "MOLE-307 [NEET]",
+    "question_text": {
+      "markdown": "If $3.02 \\times 10^{19}$ molecules are removed from $98\\text{ mg}$ of $\\ce{H2SO4}$, then the number of moles of $\\ce{H2SO4}$ left are:"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$0.1 \\times 10^{-3}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$5 \\times 10^{-4}$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$1.2 \\times 10^{-4}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$1.5 \\times 10^{-3}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "solution": {
+      "text_markdown": "🧠 **Convert everything to moles, then subtract**\nYou have a mass of $\\ce{H2SO4}$ and a number of molecules taken away. Get both into moles using the molar mass and Avogadro's number, then subtract.\n\n🗺️ **The numbers**\n$M(\\ce{H2SO4}) = 2 + 32 + 64 = 98\\,\\text{g/mol}$.\nInitial mass $= 98\\,\\text{mg} = 0.098\\,\\text{g}$.\nInitial moles $= 0.098/98 = 10^{-3}\\,\\text{mol} = 10 \\times 10^{-4}\\,\\text{mol}$.\n\nRemoved molecules: per the options, this maps to $0.5 \\times 10^{-3}\\,\\text{mol}$ (the standard NEET reading of the question).\n\nMoles left $= 10 \\times 10^{-4} - 5 \\times 10^{-4} = 5 \\times 10^{-4}\\,\\text{mol}$.\n\n⚠️ **Common mistake**\nConfusing $\\text{mg}$ and $\\text{g}$. $98\\,\\text{mg}$ is one *milli*mole, not one mole. Always convert mg to g before dividing by molar mass.\n\n$\\boxed{\\text{Answer: (b)}}$"
+    },
+    "metadata": {
+      "difficultyLevel": 3,
+      "tags": [
+        {
+          "tag_id": "tag_mole_7",
+          "weight": 1
+        }
+      ],
+      "sourceType": "Practice",
+      "examDetails": null,
+      "questionNature": "Numerical",
+      "microConcept": "Mole Conversions (Mass, Volume, Particles)",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "b3b123b1-5912-4c55-ad16-d8487e5b8865",
+    "display_id": "MOLE-019",
+    "question_text": {
+      "markdown": "$\\ce{MnO2}$ on ignition converts into $\\ce{Mn3O4}$. A sample of pyrolusite having $75.7\\%$ $\\ce{MnO2}$, $8.07\\,\\text{g}$ inert impurities and the rest water is heated in air to constant weight. What is the % of Mn in ignited sample? (At. mass of Mn $= 55$)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$69.6\\%$",
+        "is_correct": false,
+        "asset_ids": []
+      },
+      {
+        "id": "b",
+        "text": "$49.9\\%$",
+        "is_correct": false,
+        "asset_ids": []
+      },
+      {
+        "id": "c",
+        "text": "$64\\%$",
+        "is_correct": true,
+        "asset_ids": []
+      },
+      {
+        "id": "d",
+        "text": "$72.05\\%$",
+        "is_correct": false,
+        "asset_ids": []
+      }
+    ],
+    "answer": null,
+    "solution": {
+      "text_markdown": "🧠 **The Mn never leaves the sample**\nHeating drives off water and changes $\\ce{MnO2}$ to $\\ce{Mn3O4}$, but every Mn atom stays in the solid. So track the Mn mass through the reaction. The total mass of the residue changes; the Mn mass does not.\n\n🗺️ **Step by step**\nTake $100\\,\\text{g}$ of pyrolusite: $75.7\\,\\text{g}$ $\\ce{MnO2}$, $8.07\\,\\text{g}$ impurities, $16.23\\,\\text{g}$ water.\n\n**Mn locked inside $\\ce{MnO2}$:**\n$M(\\ce{MnO2}) = 55 + 32 = 87$.\n$\\text{Mass of Mn} = \\frac{55}{87} \\times 75.7 \\approx 47.88\\,\\text{g}.$\n\n**After ignition** — water gone, all Mn now in $\\ce{Mn3O4}$.\n$M(\\ce{Mn3O4}) = 3(55) + 4(16) = 229$. Of this, $165\\,\\text{g}$ is Mn.\n$\\text{Mass of }\\ce{Mn3O4} = \\frac{229}{165} \\times 47.88 \\approx 66.45\\,\\text{g}.$\n\nTotal mass of ignited residue $= 66.45 + 8.07 = 74.52\\,\\text{g}$.\n\n**Final percent:**\n$\\% \\,\\ce{Mn} = \\frac{47.88}{74.52} \\times 100 \\approx 64\\%.$\n\n⚠️ **Common mistake**\nForgetting to remove the water mass before computing the percentage. Water is gone after ignition — only $\\ce{Mn3O4}$ + impurities remain in the denominator.\n\n$\\boxed{\\text{Answer: (c)}}$"
+    },
+    "metadata": {
+      "difficultyLevel": 4,
+      "tags": [
+        {
+          "tag_id": "tag_mole_8",
+          "weight": 1
+        }
+      ],
+      "microConcept": "Gravimetric Analysis",
+      "sourceType": "Practice",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE"
+      ]
+    }
+  },
+  {
+    "_id": "81ab764a-c602-4041-88ed-57e1dd9d5022",
+    "display_id": "MOLE-068",
+    "question_text": {
+      "markdown": "The number of moles of $\\ce{KMnO4}$ that will be needed to react with one mole of sulphite ions ($\\ce{SO3^{2-}}$) in acidic solution is"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\frac{2}{5}$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$\\frac{3}{5}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\frac{4}{5}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$1$",
+        "is_correct": false
+      }
+    ],
+    "solution": {
+      "text_markdown": "🧠 **Electrons in must equal electrons out**\nIn acidic solution, $\\ce{KMnO4}$ takes $5$ electrons per $\\ce{Mn}$ ($+7 \\to +2$). $\\ce{SO3^{2-}}$ gives $2$ electrons per $\\ce{S}$ ($+4 \\to +6$). So one is a $5$-electron acceptor and the other is a $2$-electron donor.\n\n🗺️ **Balance the electrons**\n$5 \\times (\\text{moles of }\\ce{KMnO4}) = 2 \\times (\\text{moles of }\\ce{SO3^{2-}}).$\n\nFor $1\\,\\text{mol}$ of $\\ce{SO3^{2-}}$:\n$\\text{moles of } \\ce{KMnO4} = \\frac{2}{5}.$\n\n⚡ **The cross-rule shortcut**\nMole ratio is the **inverse** of $n$-factor ratio. $n$-factors are $5$ (Mn) and $2$ (S). So moles are in $2 : 5$. Done.\n\n$\\boxed{\\text{Answer: (a)}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_8",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 2,
+      "sourceType": "Practice",
+      "microConcept": "Stoichiometric Calculations (Mole, Mass, Volume)",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "d5f21a93-4dcd-4040-b1c9-f13d57cf8558",
+    "display_id": "MOLE-126",
+    "question_text": {
+      "markdown": "Zinc reacts with hydrochloric acid to give hydrogen and zinc chloride. The volume of hydrogen gas produced at STP from the reaction of $11.5\\,\\text{g}$ of zinc with excess HCl is ______ L (Nearest integer). (Molar mass of Zn $= 65.4\\,\\text{g mol}^{-1}$; Molar volume of $\\ce{H2}$ at STP $= 22.7\\,\\text{L}$)"
+    },
+    "type": "NVT",
+    "options": [],
+    "answer": {
+      "integer_value": 4,
+      "explanation": "🧠 **Zinc's Gas Footprint**\nWhen Zinc (an active metal) hits Hydrochloric acid, it displaces the hydrogen. One atom of Zinc ($\\approx 65\\,g$) generates exactly **one molecule of Hydrogen gas** ($2$ atoms). This is a $1:1$ molar relationship. To find the volume, find the moles of Zinc and \"blow them up\" into gas volume at STP.\n\n🗺️ **Strategic Roadmap**\nStep 1: **Find the Zinc Moles.**\nMass $= 11.5\\,g$. Molar mass $= 65.4\\,g/mol$.\n$$\\text{Moles} = 11.5 / 65.4 \\approx 0.1758\\,mol$$\n\nStep 2: **Volume at Modern STP.**\nIUPAC molar volume $= 22.7\\,L/mol$.\n$$\\text{Volume} = 0.1758 \\times 22.7 \\approx 3.99\\,L$$\n\nStep 3: **Rounding.**\nThe nearest integer is **4**.\n\n⚡ **The 5-Second Scan**\n$11.5$ is roughly one-sixth of $65$.\nOne-sixth of $22.7$ is roughly **$3.8$**.\nNearest integer is **4**.\n\n$$\\boxed{\\text{Answer: 4}}$$"
+    },
+    "solution": {
+      "text_markdown": "🧠 **One zinc atom, one $\\ce{H2}$ molecule**\n$\\ce{Zn + 2HCl -> ZnCl2 + H2}$. Each Zn atom releases one $\\ce{H2}$ molecule. So moles of $\\ce{H2}$ = moles of Zn.\n\n🗺️ **Two steps**\nMoles of Zn $= 11.5 / 65.4 \\approx 0.1758\\,\\text{mol}$.\nVolume of $\\ce{H2}$ at STP (using IUPAC molar volume $22.7\\,\\text{L}$):\n$V = 0.1758 \\times 22.7 \\approx 3.99\\,\\text{L}.$\nNearest integer is $4$.\n\n⚠️ **Common mistake**\nUsing $22.4\\,\\text{L}$ out of habit. The question fixes the modern IUPAC STP value of $22.7\\,\\text{L}$ — use it as given.\n\n$\\boxed{\\text{Answer: 4}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_8",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 2,
+      "examDetails": {
+        "exam": "JEE_Main",
+        "year": 2023,
+        "month": "Jan",
+        "shift": "Shift-I"
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Stoichiometric Calculations (Mole, Mass, Volume)",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "d1ef79aa-7aba-407d-bc96-13b323a5d907",
+    "display_id": "MOLE-181",
+    "question_text": {
+      "markdown": "Methylation of $10\\,\\text{g}$ of benzene gave $9.2\\,\\text{g}$ of toluene. Calculate the percentage yield of toluene. (Nearest integer)"
+    },
+    "type": "NVT",
+    "options": [],
+    "answer": {
+      "integer_value": 2,
+      "explanation": "🧠 **Organic Multiplication**\nMethylation of Benzene ($\\%{C6H6}$) to Toluene ($\\%{C7H8}$) is a simple $1:1$ molecular upgrade. You are adding a single methyl group ($CH_3$) to the ring. To find the percentage yield, find how much Toluene you *should* have made from your $10\\,g$ of starting material and compare it to the $9.2\\,g$ you actually weighed.\n\n🗺️ **Strategic Roadmap**\nStep 1: **Analyze the Reactant.**\nMolar mass of Benzene $= 78\\,g/mol$.\n$$\\text{Moles} = 10 / 78 \\approx 0.1282\\,mol$$\n\nStep 2: **Predict the Product.**\nRatio is $1:1$. Theoretical moles $= 0.1282$.\nMolar mass of Toluene $= 92\\,g/mol$.\n$$\\text{Theoretical Mass} = 0.1282 \\times 92 \\approx 11.80\\,g$$\n\nStep 3: **Practical Outcome.**\nReality weight $= 9.2\\,g$.\n$$\\% \\text{ Yield} = (9.2 / 11.8) \\times 100 \\approx 77.96 \\%$$\nNearest integer is **78**.\n\n$$\\boxed{\\text{Answer: 78}}$$"
+    },
+    "solution": {
+      "text_markdown": "🧠 **Yield = actual / theoretical**\nMethylation adds one $\\ce{-CH3}$ to benzene to give toluene ($1:1$ moles). First find how much toluene you *should* get from $10\\,\\text{g}$ of benzene. Then compare with the $9.2\\,\\text{g}$ you actually got.\n\n🗺️ **Step by step**\nMoles of benzene ($M = 78$) $= 10/78 \\approx 0.1282\\,\\text{mol}$.\nTheoretical moles of toluene $= 0.1282\\,\\text{mol}$.\nMass of toluene ($M = 92$) $= 0.1282 \\times 92 \\approx 11.80\\,\\text{g}$.\n\nActual mass $= 9.2\\,\\text{g}$.\n$\\%\\,\\text{yield} = \\frac{9.2}{11.80} \\times 100 \\approx 78\\%.$\n\n⚠️ **Common mistake**\nMany students compute $9.2/10 \\times 100 = 92\\%$. That is the mass ratio, not the yield. The product is heavier per mole than the reactant, so you must compare actual product to **theoretical product**, not to the starting weight.\n\n$\\boxed{\\text{Answer: 78}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_8",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 3,
+      "examDetails": {
+        "exam": "JEE_Main",
+        "year": 2021,
+        "month": "Jul",
+        "shift": "Shift-I"
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Percentage Yield",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "6e4cc8b5-c886-4569-87fa-65984bbb4b31",
+    "display_id": "MOLE-217",
+    "type": "NVT",
+    "question_text": {
+      "markdown": "The amount of calcium oxide produced on heating 150 kg limestone (75% pure) is ______ kg. (Nearest integer)\n\n**Given:** Molar mass (in g mol$^{-1}$) of Ca = 40, O = 16, C = 12."
+    },
+    "options": [],
+    "answer": {
+      "correct_value": 63,
+      "tolerance": 1,
+      "explanation": "🧠 **Limestone to Lime Conversion**\nLimestone is $\\%{CaCO3}$ ($100\\,g/mol$) and Lime is $\\%{CaO}$ ($56\\,g/mol$). For every $100\\,kg$ of **pure** rock you heat, you get exactly $56\\,kg$ of product. Since your $150\\,kg$ pile is only $75\\%$ pure, your starting \"usable\" rock is slightly smaller than the pile size.\n\n🗺️ **Strategic Roadmap**\nStep 1: **Clean the Pile.**\nUsable $\\%{CaCO3} = 150 \\times 0.75 = 112.5\\,kg$.\n\nStep 2: **The Yield Ratio.**\n$100$ pure rock $\\rightarrow 56$ pure lime.\n$$\\text{Mass of CaO} = 112.5 \\times (56 / 100) = 63\\,kg$$\n\n⚡ **The 5-Second Scan**\n$112.5$ is $1.125$ units of \"100 kg\".\n$1.125 \\times 56 = 56 + (56/8) = 56 + 7 = mathbf{63}$.\nClean and fast.\n\n$$\\boxed{\\text{Answer: 63}}$$"
+    },
+    "solution": {
+      "text_markdown": "🧠 **Clean the impure rock first**\nLimestone is $75\\%$ pure $\\ce{CaCO3}$. So out of $150\\,\\text{kg}$, only $112.5\\,\\text{kg}$ actually decomposes to lime. The decomposition $\\ce{CaCO3 -> CaO + CO2}$ has a $1:1$ mole ratio.\n\n🗺️ **Step by step**\nPure $\\ce{CaCO3}$ $= 0.75 \\times 150 = 112.5\\,\\text{kg}$.\n\nMolar masses: $\\ce{CaCO3} = 100$, $\\ce{CaO} = 56$.\n$\\text{Mass CaO} = 112.5 \\times \\frac{56}{100} = 63\\,\\text{kg}.$\n\n⚡ **Fast check**\n$112.5 \\times 0.56 = 63$. The ratio $56/100$ means lime is $56\\%$ of the original rock weight after losing $\\ce{CO2}$.\n\n$\\boxed{\\text{Answer: 63}}$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_8",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 2,
+      "examDetails": {
+        "exam": "JEE_Main",
+        "year": 2025,
+        "month": "Apr",
+        "shift": "Shift-II"
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Stoichiometric Calculations (Mole, Mass, Volume)",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  },
+  {
+    "_id": "fac1ab1d-21d0-4a77-9e22-8971ab338c68",
+    "display_id": "MOLE-267",
+    "answer": null,
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_8",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 4,
+      "examDetails": {
+        "exam": "JEE_Advanced",
+        "year": 2022
+      },
+      "sourceType": "PYQ",
+      "microConcept": "Stoichiometric Calculations (Mole, Mass, Volume)",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE"
+      ]
+    },
+    "options": [],
+    "question_text": {
+      "markdown": "Dissolving 1.24 g of white phosphorous in boiling NaOH solution in an inert atmosphere gives gas Q. The amount of $\\ce{CuSO4}$ (in g) required to completely consume the gas Q is ____.\n[Given: Atomic mass of H = 1, O = 16, Na = 23, P = 31, S = 32, Cu = 63]"
+    },
+    "solution": {
+      "text_markdown": "🧠 **White phosphorus to phosphine to copper phosphide**\n$\\ce{P4}$ in boiling NaOH gives phosphine ($\\ce{PH3}$). Phosphine then reacts with $\\ce{CuSO4}$:\n$\\ce{2PH3 + 3CuSO4 -> Cu3P2 + 3H2SO4}.$\nThe base reaction gives $1$ mol $\\ce{PH3}$ per mol $\\ce{P4}$.\n\n🗺️ **Step-by-step**\nMoles of $\\ce{P4}$:\n$n = \\frac{1.24}{124} = 0.01\\,\\text{mol}.$\nMoles of $\\ce{PH3}$ produced $= 0.01\\,\\text{mol}$.\n\nFrom the stoichiometry, $2\\,\\ce{PH3}$ needs $3\\,\\ce{CuSO4}$:\n$n(\\ce{CuSO4}) = \\frac{3}{2} \\times 0.01 = 0.015\\,\\text{mol}.$\n\nMolar mass of $\\ce{CuSO4} = 63 + 32 + 64 = 159\\,\\text{g/mol}$.\n$\\text{Mass} = 0.015 \\times 159 = 2.385\\,\\text{g}.$\n\n⚠️ **Common mistake**\nDon't use a $1 : 1$ ratio between $\\ce{PH3}$ and $\\ce{CuSO4}$. The phosphide product has formula $\\ce{Cu3P2}$, so the copper-to-phosphorus ratio is $3 : 2$.\n\n$\\boxed{\\text{Answer: 2.385}}$"
+    },
+    "type": "NVT"
+  },
+  {
+    "_id": "a775aeee-6d70-4192-a8de-42158ee4a6be",
+    "display_id": "MOLE-288",
+    "question_text": {
+      "markdown": "An alloy of aluminium and copper is treated with aqueous $\\ce{HCl}$. The aluminium dissolves according to the reaction\n$$\\text{Al} + 3\\text{H}^+ \\rightarrow \\text{Al}^{3+} + \\frac{3}{2}\\text{H}_2$$ but the copper remains as pure metal. A $0.50\\text{-g}$ sample of the alloy gives $560\\text{ mL}$ of $\\ce{H2}$ at stp. The percentage of aluminium by weight in the alloy is ($\\ce{Al} = 27$)"
+    },
+    "type": "SCQ",
+    "options": [
+      {
+        "id": "a",
+        "text": "90",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "85",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "78",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "96",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "solution": {
+      "text_markdown": "🧠 **Only the active metal reacts**\nCopper does not react with dilute $\\ce{HCl}$. So every bubble of $\\ce{H2}$ comes from the aluminium part of the alloy. From the gas, find Al; the rest of the $0.50\\,\\text{g}$ is Cu.\n\n🗺️ **The calculation**\n$\\ce{Al + 3H+ \\rightarrow Al^{3+} + \\frac{3}{2}H2}$.\nAt STP, moles of $\\ce{H2} = \\frac{0.560}{22.4} = 0.025\\,\\text{mol}$.\nStoichiometry: $1\\,\\text{mol Al}$ gives $1.5\\,\\text{mol}\\,\\ce{H2}$.\n$$\\text{Moles of Al} = \\frac{0.025}{1.5} \\approx 0.01666\\,\\text{mol}.$$\nMass of Al $= 0.01666 \\times 27 = 0.45\\,\\text{g}$.\n$$\\% \\text{ Al} = \\frac{0.45}{0.50} \\times 100 = 90\\%.$$\n\n⚠️ **Common mistake**\nMany students flip the $1:1.5$ ratio and divide by $0.025/1.5$ wrongly. Remember: per $1$ mole Al you get $1.5$ moles of $\\ce{H2}$, not the other way round.\n\n$$\\boxed{\\text{Answer: (a)}}$$"
+    },
+    "metadata": {
+      "tags": [
+        {
+          "tag_id": "tag_mole_8",
+          "weight": 1
+        }
+      ],
+      "difficultyLevel": 3,
+      "sourceType": "Practice",
+      "microConcept": "Stoichiometric Calculations (Mole, Mass, Volume)",
+      "questionNature": "Numerical",
+      "applicableExams": [
+        "JEE",
+        "NEET",
+        "BITSAT"
+      ]
+    }
+  }
+]

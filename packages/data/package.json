@@ -1,0 +1,24 @@
+{
+  "name": "@canvas/data",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./db/*": "./db/*.ts",
+    "./models/*": "./models/*.ts",
+    "./taxonomy/*": "./taxonomy/*.ts",
+    "./schemas/*": "./schemas/*.ts",
+    "./flashcards/*": "./flashcards/*.ts",
+    "./books/*": "./books/*.ts",
+    "./id-generator": "./id-generator/index.ts",
+    "./difficulty": "./difficulty.ts",
+    "./rbac": "./rbac.ts",
+    "./types/*": "./types/*.ts"
+  },
+  "peerDependencies": {
+    "mongoose": "*",
+    "zod": "*"
+  }
+}

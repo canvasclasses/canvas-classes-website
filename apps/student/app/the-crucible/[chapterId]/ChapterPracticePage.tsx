@@ -1,0 +1,330 @@
+"use client";
+
+import { useState, useCallback, useEffect } from 'react';
+import { track } from '@canvas/core/analytics/mixpanel';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
+import { Chapter, Question } from '@/features/crucible/components/types';
+import BrowseView from '@/features/crucible/components/BrowseView';
+import TestConfigModal, { TestStartConfig } from '@/features/crucible/components/TestConfigModal';
+import TestView from '@/features/crucible/components/TestView';
+import { buildSmartTest, DifficultyMix, QuestionSort, AttemptedEntry, CustomDifficultyMix } from '@/features/crucible/components/testGenerator';
+import { isPyq, isJeeMainPyq, isJeeAdvancedPyq, isNeetPyq } from '@/features/crucible/components/examLabel';
+
+interface Props {
+    chapter: Chapter;
+    questions: Question[];
+    allChapters: Chapter[];
+    examBoard?: 'JEE' | 'NEET';
+}
+
+type Mode = 'choose' | 'browse' | 'test';
+
+const CAT_COLOR: Record<string, string> = {
+    Physical: '#38bdf8',
+    Organic: '#a78bfa',
+    Inorganic: '#34d399',
+    Practical: '#fbbf24',
+};
+
+async function fetchUserProgress(token: string, chapterId: string) {
+    try {
+        const res = await fetch(`/api/v2/user/progress?chapterId=${chapterId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) return null;
+        return await res.json();
+    } catch { return null; }
+}
+
+async function recordTestSession(token: string, chapterId: string, questionIds: string[], config: { count: number; mix: string }) {
+    try {
+        await fetch('/api/v2/user/test-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ chapter_id: chapterId, question_ids: questionIds, config }),
+        });
+    } catch { /* non-critical — test still starts */ }
+}
+
+export default function ChapterPracticePage({ chapter, questions, allChapters, examBoard }: Props) {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    // Helper: build a URL for this chapter, preserving examBoard if set
+    const chapterUrl = (chapterId: string, extra?: string) => {
+        const board = examBoard ? `examBoard=${examBoard}` : '';
+        const parts = [extra, board].filter(Boolean).join('&');
+        return `/the-crucible/${chapterId}${parts ? `?${parts}` : ''}`;
+    };
+
+    // Initialize mode from URL query param (e.g., ?mode=browse)
+    const initialMode = (searchParams.get('mode') as Mode) || 'choose';
+    const [mode, setMode] = useState<Mode>(initialMode);
+    const [testQuestions, setTestQuestions] = useState<Question[]>([]);
+    const [showTestConfig, setShowTestConfig] = useState(false);
+    const [isBuilding, setIsBuilding] = useState(false);
+
+    const color = CAT_COLOR[chapter.category ?? 'Physical'] ?? '#a78bfa';
+    const qCount = questions.length;
+
+    useEffect(() => {
+        if (!chapter.id) return;
+        track('chapter_opened', {
+            chapter_id: chapter.id,
+            source_page: typeof document !== 'undefined' ? document.referrer : undefined,
+        });
+    }, [chapter.id]);
+
+    // Helper to update mode and URL together — preserves examBoard param
+    const updateMode = useCallback((newMode: Mode) => {
+        setMode(newMode);
+        // Funnel event — top of practice funnel within a chapter. Lets us see
+        // which CTA students gravitate to per chapter (browse vs test).
+        if (newMode !== 'choose') {
+            track('mode_selected', {
+                chapter_id: chapter.id,
+                chapter_name: chapter.name,
+                mode: newMode,
+                exam_board: examBoard,
+            });
+        }
+        const url = newMode === 'choose'
+            ? chapterUrl(chapter.id)
+            : chapterUrl(chapter.id, `mode=${newMode}`);
+        router.push(url, { scroll: false });
+    }, [chapter.id, chapter.name, router, examBoard]);
+
+    // Internal builder — runs the generator against an arbitrary question
+    // subset. Centralised so both the modal flow and the URL-param auto-build
+    // flow funnel through one path.
+    const buildAndLaunch = useCallback(async (
+        questionPool: Question[],
+        count: number,
+        mix: DifficultyMix,
+        sort: QuestionSort,
+        useStarOnly: boolean,
+        customMix?: CustomDifficultyMix,
+    ) => {
+        setIsBuilding(true);
+        try {
+            let attempted: AttemptedEntry[] = [];
+            let starredIds = new Set<string>();
+            let last3Sessions: string[][] = [];
+
+            const { data: { session } } = await (createSupabaseClient()?.auth.getSession() ?? Promise.resolve({ data: { session: null } }));
+            const token = session?.access_token;
+
+            if (token) {
+                const progress = await fetchUserProgress(token, chapter.id);
+                if (progress) {
+                    attempted = progress.attempted_ids ?? [];
+                    starredIds = new Set<string>(progress.starred_ids ?? []);
+                    last3Sessions = progress.last_3_sessions ?? [];
+                }
+            }
+
+            // If "star-marked only" is on, narrow the pool to starred questions
+            // before scoring. Generator's `starredIds` is a soft preference; this
+            // is a hard filter.
+            const finalPool = useStarOnly && starredIds.size > 0
+                ? questionPool.filter(q => starredIds.has(q.id))
+                : questionPool;
+
+            const picked = buildSmartTest({
+                questions: finalPool,
+                count,
+                mix,
+                customMix,
+                sort,
+                starredIds,
+                attempted,
+                last3Sessions,
+            });
+
+            setTestQuestions(picked);
+            updateMode('test');
+        } finally {
+            setIsBuilding(false);
+        }
+    }, [chapter.id, updateMode]);
+
+    // Modal Start handler — receives the full TestStartConfig shape and
+    // pre-filters the question pool by topic/pool selections before kicking
+    // the generator.
+    const startTestFromConfig = useCallback(async (config: TestStartConfig) => {
+        setShowTestConfig(false);
+        const eligible = new Set(config.eligibleQuestionIds);
+        const pool = eligible.size > 0
+            ? questions.filter(q => eligible.has(q.id))
+            : questions;
+        await buildAndLaunch(pool, config.count, config.mix, config.sort, config.useStarOnly, config.customMix);
+    }, [questions, buildAndLaunch]);
+
+    // URL-param auto-build path — preserves the legacy entry point used by
+    // direct links and the auto-launch on `?mode=test`. No topic/pool filters
+    // here; uses the full chapter pool.
+    const startTestSimple = useCallback(async (count: number, mix: DifficultyMix, sort: QuestionSort = 'random') => {
+        await buildAndLaunch(questions, count, mix, sort, false);
+    }, [questions, buildAndLaunch]);
+
+    // Auto-build test if mode=test in URL on mount
+    useEffect(() => {
+        if (mode === 'test' && testQuestions.length === 0 && !isBuilding && questions.length > 0) {
+            // Read test config from URL params, or use defaults
+            const countParam = searchParams.get('count');
+            const mixParam = searchParams.get('mix') as DifficultyMix | null;
+            const sortParam = searchParams.get('sort') as QuestionSort | null;
+            
+            const count = countParam ? parseInt(countParam, 10) : 20;
+            const mix = mixParam && ['balanced', 'easy', 'hard', 'pyq'].includes(mixParam) ? mixParam : 'balanced';
+            const sort = sortParam && ['random', 'difficulty', 'topic'].includes(sortParam) ? sortParam : 'random';
+            
+            startTestSimple(count, mix, sort);
+        }
+    }, [mode, testQuestions.length, isBuilding, questions.length, startTestSimple, searchParams]);
+
+    if (mode === 'browse') {
+        const isTopPYQFilter = searchParams.get('is_top_pyq') === 'true';
+        const browseQuestions = isTopPYQFilter
+            ? questions.filter(q => q.metadata?.is_top_pyq === true)
+            : questions;
+        return <BrowseView questions={browseQuestions} chapters={allChapters} onBack={() => updateMode('choose')} chapterId={chapter.id} examBoard={examBoard} />;
+    }
+
+    if (mode === 'test') {
+        return <TestView questions={testQuestions} onBack={() => updateMode('choose')} />;
+    }
+
+    return (
+        <div style={{ minHeight: '100vh', background: '#080a0f', color: '#fff' }}>
+            {/* Nav */}
+            <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(8,10,15,0.96)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.07)', padding: '10px 16px', display: 'flex', justifyContent: 'center' }}>
+                <div style={{ width: '100%', maxWidth: 600, display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <button onClick={() => router.push('/the-crucible')}
+                        style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.07)', border: 'none', color: '#fff', cursor: 'pointer', fontSize: 12 }}>
+                        ← Back
+                    </button>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: 13, fontWeight: 800, color, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{chapter.name}</div>
+                        <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>Class {chapter.class_level} · {chapter.category} · {qCount} Questions</div>
+                    </div>
+                </div>
+            </nav>
+
+            <div style={{ maxWidth: 600, margin: '0 auto', padding: '32px 16px' }}>
+                {/* Chapter hero */}
+                <div style={{ textAlign: 'center', marginBottom: 40 }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '4px 14px', borderRadius: 99, background: `${color}18`, border: `1px solid ${color}33`, fontSize: 11, fontWeight: 700, color, marginBottom: 16 }}>
+                        {chapter.category} · Class {chapter.class_level}
+                    </div>
+                    <h1 style={{ fontSize: 'clamp(22px,5vw,32px)', fontWeight: 900, lineHeight: 1.2, margin: '0 0 12px' }}>{chapter.name}</h1>
+                    <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>
+                        {qCount > 0
+                            ? examBoard === 'NEET'
+                                ? `${qCount} curated NEET questions`
+                                : `${qCount} curated PYQs from JEE Main & JEE Advanced`
+                            : 'Questions coming soon — check back shortly.'}
+                    </p>
+                </div>
+
+                {qCount === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '40px 20px', background: 'rgba(255,255,255,0.03)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.08)' }}>
+                        <div style={{ fontSize: 36, marginBottom: 12 }}>🔨</div>
+                        <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 6 }}>Questions being added</div>
+                        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>This chapter is being populated. Come back soon!</div>
+                    </div>
+                ) : (
+                    <>
+                        {/* Stats row 1: totals */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 10 }}>
+                            {[
+                                [String(qCount), 'Total Qs', color],
+                                // Bridge: prefer canonical sourceType, fall back to legacy is_pyq.
+                                [String(questions.filter(q => isPyq(q.metadata)).length), 'PYQs', '#fbbf24'],
+                                [String(questions.filter(q => q.metadata.difficultyLevel >= 4).length), 'Hard', '#f87171'],
+                            ].map(([val, label, c]) => (
+                                <div key={label} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '14px 10px', textAlign: 'center' }}>
+                                    <div style={{ fontSize: 22, fontWeight: 800, color: c, fontFamily: 'monospace' }}>{val}</div>
+                                    <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', marginTop: 3 }}>{label}</div>
+                                </div>
+                            ))}
+                        </div>
+                        {/* Stats row 2: source breakdown — labels adapt to exam */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginBottom: 28 }}>
+                            {/* Bridge: helpers in examLabel.ts read modern fields first (sourceType, examDetails),
+                                fall back to legacy (is_pyq, exam_source) only when modern is absent. */}
+                            {(examBoard === 'NEET'
+                                ? [
+                                    [String(questions.filter(q => isNeetPyq(q.metadata)).length), 'NEET PYQ', '#34d399'],
+                                    [String(questions.filter(q => !isPyq(q.metadata)).length), 'Non-PYQ', '#a78bfa'],
+                                    [String(questions.filter(q => q.metadata.difficultyLevel >= 4).length), 'Hard', '#f87171'],
+                                ]
+                                : [
+                                    [String(questions.filter(q => isJeeMainPyq(q.metadata)).length), 'JEE Main', '#38bdf8'],
+                                    [String(questions.filter(q => isJeeAdvancedPyq(q.metadata)).length), 'JEE Adv', '#a78bfa'],
+                                    [String(questions.filter(q => !isPyq(q.metadata)).length), 'Non-PYQ', '#34d399'],
+                                ]
+                            ).map(([val, label, c]) => (
+                                <div key={label} style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${c}22`, borderRadius: 12, padding: '10px', textAlign: 'center' }}>
+                                    <div style={{ fontSize: 18, fontWeight: 800, color: c, fontFamily: 'monospace' }}>{val}</div>
+                                    <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{label}</div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Action buttons */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                            <button onClick={() => updateMode('browse')}
+                                style={{ padding: '18px', borderRadius: 14, border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.06)', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+                                📖 Topic-wise Problems
+                                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 400 }}>Solutions visible</span>
+                            </button>
+                            
+                            {/* Quick Revision - only show if ≥20 star questions */}
+                            {(chapter.star_question_count ?? 0) >= 20 && (
+                                <button onClick={() => router.push(chapterUrl(chapter.id, 'mode=browse&is_top_pyq=true'))}
+                                    style={{ padding: '18px', borderRadius: 14, border: '1px solid rgba(251,191,36,0.3)', background: 'rgba(251,191,36,0.1)', color: '#fbbf24', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+                                    ⭐ Top Questions
+                                    <span style={{ fontSize: 12, color: 'rgba(251,191,36,0.6)', fontWeight: 400 }}>{chapter.star_question_count} hand-picked · for revision &amp; backlogs</span>
+                                </button>
+                            )}
+                            
+                            <button onClick={() => setShowTestConfig(true)} disabled={isBuilding}
+                                style={{ padding: '18px', borderRadius: 14, border: 'none', background: isBuilding ? 'rgba(124,58,237,0.4)' : 'linear-gradient(135deg,#7c3aed,#5b21b6)', color: '#fff', fontSize: 15, fontWeight: 800, cursor: isBuilding ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, boxShadow: '0 4px 20px rgba(124,58,237,0.4)' }}>
+                                {isBuilding ? '⏳ Building test…' : '⏱ Chapter Test'}
+                                {!isBuilding && <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', fontWeight: 400 }}>Smart · topic-balanced</span>}
+                            </button>
+                        </div>
+
+                        {/* Other chapters quick-nav */}
+                        <div style={{ marginTop: 40 }}>
+                            <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Other Chapters</div>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                                {allChapters
+                                    .filter(ch => ch.id !== chapter.id && (ch.question_count ?? 0) > 0)
+                                    .slice(0, 12)
+                                    .map(ch => (
+                                        <button key={ch.id} onClick={() => router.push(chapterUrl(ch.id))}
+                                            style={{ padding: '6px 12px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.6)', fontSize: 11, cursor: 'pointer', transition: 'all 0.15s' }}>
+                                            {ch.name} <span style={{ color: 'rgba(255,255,255,0.3)' }}>{ch.question_count}</span>
+                                        </button>
+                                    ))}
+                            </div>
+                        </div>
+                    </>
+                )}
+            </div>
+
+            {showTestConfig && (
+                <TestConfigModal
+                    chapter={chapter}
+                    questions={questions}
+                    starQuestionCount={chapter.star_question_count ?? 0}
+                    onStart={startTestFromConfig}
+                    onClose={() => setShowTestConfig(false)}
+                />
+            )}
+        </div>
+    );
+}

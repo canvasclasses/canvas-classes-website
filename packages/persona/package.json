@@ -1,0 +1,22 @@
+{
+  "name": "@canvas/persona",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./contract": "./contract.ts",
+    "./writer": "./writer.ts",
+    "./user-progress-updater": "./user-progress-updater.ts",
+    "./profile-engine": "./profile-engine.ts",
+    "./recommendation-engine": "./recommendation-engine.ts",
+    "./scoring": "./scoring.ts"
+  },
+  "dependencies": {
+    "@canvas/data": "*"
+  },
+  "peerDependencies": {
+    "mongoose": "*"
+  }
+}

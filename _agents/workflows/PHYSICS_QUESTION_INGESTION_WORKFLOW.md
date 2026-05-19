@@ -58,7 +58,7 @@ ph12_communication    COMM     tag_comm_1..4              Communication System
 ph12_exp_phy          EXPP     tag_expp_1..7              Experimental Physics
 ```
 
-> Single source of truth for chapter and tag IDs is `app/crucible/admin/taxonomy/taxonomyData_from_csv.ts`. Never invent new tag IDs in scripts.
+> Single source of truth for chapter and tag IDs is `lib/taxonomy/taxonomyData_from_csv.ts`. Never invent new tag IDs in scripts.
 
 ### Type Detection (same across all subjects)
 
