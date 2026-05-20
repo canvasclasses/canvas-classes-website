@@ -381,14 +381,14 @@ When writing student-facing solutions, explanations, or any pedagogical content 
 **How to apply:**
 - Sentence length under 20 words; never over 30.
 - Use "you" directly — like a teacher at the board.
-- Replace refined vocabulary with the shorter/more common equivalent. The full ban list is in `_agents/workflows/solution-ingestion-workflow.md` under "Voice & Vocabulary".
+- Replace refined vocabulary with the shorter/more common equivalent. The full ban list lives in `_agents/workflows/chemistry-solution-workflow.md` (mirrored in `physics-solution-workflow.md`) under "Voice & Vocabulary".
 - It is fine to use NCERT subject terms (molar mass, oxidation state, atomicity, equivalent weight, STP) — those are subject vocabulary, not "refined English".
 - Lean on friendly phrasings: "Many students mark this — but...", "The trick is...", "Don't get confused by...", "Remember:", "This is the most common mistake."
 - The 🧠 section must sound like a teacher *saying* the line in class, not writing it for a journal.
 
 **Scope:** This applies to all Crucible solutions, simulator copy, blog posts targeted at JEE/NEET aspirants, and any other student-facing prose. Does not apply to admin UI, internal docs, or code comments.
 
-**Note:** Canonical version is in `_agents/workflows/solution-ingestion-workflow.md`. This memo adds the reasoning + word-list examples that drove the rule.
+**Note:** Canonical versions are in `_agents/workflows/chemistry-solution-workflow.md` and `_agents/workflows/physics-solution-workflow.md` (the two sibling workflows share identical voice rules). This memo adds the reasoning + word-list examples that drove the rule.
 
 ---
 

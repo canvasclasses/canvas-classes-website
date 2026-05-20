@@ -86,11 +86,19 @@ ADMIN_EMAILS=...
 
 ### Single Source of Truth
 
-**All question ingestion must follow `_agents/workflows/QUESTION_INGESTION_WORKFLOW.md` exactly.** That document is the canonical, version-controlled ruleset. When it conflicts with anything else (including this file), it wins.
+**All question ingestion must follow the canonical workflow doc for the subject:**
+
+| Subject | Workflow doc |
+|---|---|
+| Chemistry | [`_agents/workflows/QUESTION_INGESTION_WORKFLOW.md`](_agents/workflows/QUESTION_INGESTION_WORKFLOW.md) |
+| Physics | [`_agents/workflows/PHYSICS_QUESTION_INGESTION_WORKFLOW.md`](_agents/workflows/PHYSICS_QUESTION_INGESTION_WORKFLOW.md) |
+| Math | [`_agents/workflows/MATH_QUESTION_INGESTION_WORKFLOW.md`](_agents/workflows/MATH_QUESTION_INGESTION_WORKFLOW.md) |
+
+All three docs share an **identical canonical exam-metadata block** (`applicableExams`, `sourceType`, `examDetails` with per-exam shape table + canonical mappings for JEE Main / JEE Advanced / NEET). Subject-specific differences live only in LaTeX rules, question-nature decision-tree examples, and chapter/prefix tables. When any doc conflicts with anything else (including this file), the workflow doc wins.
 
 LaTeX rules, ID generation, PYQ metadata conventions, and security/secret-handling
 practices are documented inline in this file — see §4 (LaTeX), §4.5 (canonical
-field names), §8 (security rules), and the workflow doc above for ingestion
+field names), §8 (security rules), and the workflow docs above for ingestion
 specifics.
 
 ### Automation Pipeline
@@ -103,7 +111,13 @@ specifics.
 
 ### Display ID Prefixes
 
-Display ID prefixes (e.g. `ATOM`, `MOLE`, `SALT`) are defined in `_agents/workflows/QUESTION_INGESTION_WORKFLOW.md` — that file is the single source of truth and must not be duplicated here.
+Display ID prefixes are defined per subject in the workflow docs and frozen in [`scripts/insert_questions.js`](scripts/insert_questions.js)'s `PREFIX_TO_CHAPTER` map:
+
+- Chemistry (e.g. `ATOM`, `MOLE`, `SALT`, `GOC`) — see chemistry workflow
+- Physics (e.g. `MIP`, `UNIT`, `K1D`, `NLM`, `SHM`, `ELST`) — see physics workflow
+- Math (e.g. `QUAD`, `CMPL`, `MTRX`, `LIMS`, `DFIN`, `PROB`) — see math workflow
+
+Those files are the single source of truth and must not be duplicated here.
 
 ### Canonical Batch Script Pattern
 
@@ -116,6 +130,21 @@ Scripts go in `scripts/`, named `insert_{chapter}_b{N}.js`. Each script:
 6. Disconnects after completion
 
 Never use `node -e "..."` for scripts containing LaTeX — shell escaping corrupts backslashes. Always write a `.js` file and run `node scripts/file.js`.
+
+---
+
+## 3.5 SOLUTION GENERATION — DIFFERENT WORKFLOW FROM INGESTION
+
+§3 covers **adding new questions** to the bank. Writing **solutions** for questions that are already in the bank is a separate workflow with its own canonical doc and toolkit.
+
+For **math solutions**:
+
+- **Canonical workflow doc**: [`_agents/workflows/math-solution-workflow.md`](_agents/workflows/math-solution-workflow.md). Read this first. It defines the teacher-style "starting it right" philosophy, the 6-section solution structure (🧠 Reading the Question, 🖼️ Visual Sketch, 🗺️ Working It Out, ⚡ The Smart Move, 💡 A Different Angle, ⚠️ Where Students Get Stuck), the plain-English voice rules for tier-2/3 town students, the option-independent shortcut requirement, and the answer-verification protocol. A complete worked example lives at the bottom of the doc — agents should read it before writing their first solution.
+- **Toolkit**: [`scripts/math-solutions/`](scripts/math-solutions/). Three Node scripts (`fetch-batch.js`, `apply-batch.js`, `audit.js`) plus a [README](scripts/math-solutions/README.md) with the kickoff prompt and per-batch flow. All toolkit paths are pre-approved in `.claude/settings.local.json`, so the agent can run them without permission prompts.
+- **Flag file**: any question that can't be solved (corrupt question text, missing radius, no option matches derivation) goes into `_agents/solution-flags/<PREFIX>-flags.md` via `force_flag` — never hand-wave a derivation to fit the stored option.
+- **Skill**: the `math-solution-writer` skill bundles this whole flow. Invoke it via `/math-solution-writer` or trigger by asking for math solutions.
+
+For Chemistry and Physics solutions, follow `chemistry-solution-workflow.md` and `physics-solution-workflow.md` respectively (parallel structure; the math doc is the most polished and is the model the others will catch up to).
 
 ---
 
