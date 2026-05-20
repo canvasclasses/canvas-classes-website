@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* Tailwind v4 auto-detects content within the current app, but not inside
+   workspace packages. The Live Books reader pulls JSX from these packages,
+   so their classes must be registered explicitly or the page drops every
+   Tailwind class (no two-column layout, no image max-width, no block
+   spacing). */
+@source "../../../packages/book-renderer";
+@source "../../../packages/ui";
+
 /* CSS animations for better INP (replacing Framer Motion) */
 @keyframes fade-in {
   from { opacity: 0; }

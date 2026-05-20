@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* Tailwind v4 auto-detects content within the current app, but not inside
+   workspace packages. Live Books rendering pulls JSX from these packages,
+   so their classes must be registered explicitly or the preview pane
+   drops every Tailwind class (no two-column layout, no image max-width,
+   no block spacing). */
+@source "../../../packages/book-renderer";
+@source "../../../packages/ui";
+
 :root {
   --background: #050505;
   --foreground: #ffffff;

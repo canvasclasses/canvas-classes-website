@@ -1,10 +1,10 @@
 # PRBL — Math Solution Flags
 
-_Last updated: 2026-05-20 13:17_
+_Last updated: 2026-05-20 13:20_
 
 ## 🔴 Blocking — no solution written
 
-_(none)_
+- **PRBL-096** — solution present but stored integer_value is null
 
 ## 🟡 Needs verification — solution written, uncertain
 
