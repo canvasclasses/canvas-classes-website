@@ -101,25 +101,53 @@ Decision tree (top-down, take the first match):
 7. One rule applied once for a deterministic answer? → `Rule_Application`
 8. Pure fact recall? → `Recall`
 
-**Exam Taxonomy — canonical fields (project decision 2026-05-07):**
+**Exam Taxonomy — 3-tier canonical (IDENTICAL across Chemistry / Physics / Math):**
+
 ```
-applicableExams  → ('JEE' | 'NEET' | 'CBSE' | 'BITSAT' | …)[]   ← multi-valued, replaces examBoard
-sourceType       → 'PYQ' | 'Practice' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Mock'
-examDetails      → { exam, year, month, shift, phase, paper, question_number }
-                   exam ∈ {'JEE_Main', 'JEE_Advanced', 'NEET_UG', 'NEET_PG'} (enum, no free text)
-                   shift: ALWAYS use 'Shift-I' or 'Shift-II' (never 'Morning'/'M'/'Shift 1' — those are normalised away)
-                   NOTE: NEET is a single-shift exam — leave shift null for NEET PYQs.
+TIER 1: applicableExams → ('JEE' | 'NEET' | 'CBSE' | 'BITSAT')[]   ← multi-valued, replaces examBoard
+TIER 2: sourceType      → 'PYQ' | 'Practice' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Mock'
+TIER 3: examDetails     → { exam, year, month, shift, phase, paper }
+                          exam ∈ {'JEE_Main', 'JEE_Advanced', 'NEET_UG'} (enum, no free text)
+                          shift: ALWAYS use 'Shift-I' or 'Shift-II' (never 'Morning'/'Evening'/'M'/'Shift 1'/'shift-I')
 ```
 
-Canonical mappings:
-- JEE Main PYQ 2024 Morning → `applicableExams: ['JEE']`, `sourceType: 'PYQ'`, `examDetails: { exam: 'JEE_Main', year: 2024, month: 'Jan', shift: 'Shift-I' }`
-- JEE Main PYQ 2024 Evening → `applicableExams: ['JEE']`, `sourceType: 'PYQ'`, `examDetails: { exam: 'JEE_Main', year: 2024, month: 'Jan', shift: 'Shift-II' }`
-- JEE Advanced PYQ 2023 → `applicableExams: ['JEE']`, `sourceType: 'PYQ'`, `examDetails: { exam: 'JEE_Advanced', year: 2023, paper: 'Paper 1' }`
-- NEET PYQ 2024 → `applicableExams: ['NEET']`, `sourceType: 'PYQ'`, `examDetails: { exam: 'NEET_UG', year: 2024 }` (no shift; NEET is single-shift)
-- Practice question → `applicableExams: ['JEE']`, `sourceType: 'Practice'`, `examDetails: null` (or omit)
-- NCERT Exemplar → `applicableExams: ['CBSE']`, `sourceType: 'NCERT_Exemplar'`, `examDetails: null`
+**Per-exam shape (the field every PYQ must follow):**
 
-**Legacy fields (`is_pyq`, `examBoard`, `exam_source`, `difficulty`) — REMOVED:**
+| Exam | `exam` | `year` | `month` | `shift` | `paper` |
+|---|---|---|---|---|---|
+| JEE Main | `'JEE_Main'` | required | required (`'Jan'`..`'Dec'`) | required (`'Shift-I'` / `'Shift-II'`) | — |
+| JEE Advanced | `'JEE_Advanced'` | required | `null` | `null` | required (`'Paper 1'` / `'Paper 2'`) |
+| NEET UG | `'NEET_UG'` | required | `null` | `null` (single-shift exam) | — |
+
+**Canonical mappings (use these verbatim):**
+
+```js
+// JEE Main PYQ 2024 Morning slot
+applicableExams: ['JEE'], sourceType: 'PYQ',
+examDetails: { exam: 'JEE_Main', year: 2024, month: 'Jan', shift: 'Shift-I' }
+
+// JEE Main PYQ 2023 Evening slot
+applicableExams: ['JEE'], sourceType: 'PYQ',
+examDetails: { exam: 'JEE_Main', year: 2023, month: 'Apr', shift: 'Shift-II' }
+
+// JEE Advanced PYQ 2023 Paper 1 (no month, no shift)
+applicableExams: ['JEE'], sourceType: 'PYQ',
+examDetails: { exam: 'JEE_Advanced', year: 2023, month: null, shift: null, paper: 'Paper 1' }
+
+// NEET PYQ 2024 (single-shift exam — no month, no shift)
+applicableExams: ['NEET'], sourceType: 'PYQ',
+examDetails: { exam: 'NEET_UG', year: 2024, month: null, shift: null }
+
+// Practice question (non-PYQ)
+applicableExams: ['JEE'], sourceType: 'Practice', examDetails: null
+
+// NCERT Exemplar (CBSE textbook source)
+applicableExams: ['CBSE'], sourceType: 'NCERT_Exemplar', examDetails: null
+```
+
+**If the source is illegible.** Never guess year/month/shift/paper. Write `NEEDS_REVIEW: [field missing]` and continue. Past inconsistencies between subjects (mixed shift conventions, missing months) are why this rule exists.
+
+**Legacy fields (`is_pyq`, `examBoard`, `exam_source`, `difficulty` enum) — REMOVED:**
 As of Phase 2 of the 2026-05-07 cleanup, NEW questions must NOT include any of
 these fields. The canonical fields above (`applicableExams`, `sourceType`,
 `examDetails`, `difficultyLevel`) are the single source of truth. Read paths

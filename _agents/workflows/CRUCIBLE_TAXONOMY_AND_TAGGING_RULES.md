@@ -291,7 +291,9 @@ These rules are non-negotiable and apply to every script and API route:
 
 **See also:**
 - `_agents/workflows/QUESTION_INGESTION_WORKFLOW.md` — adding new questions
-- `_agents/workflows/solution-ingestion-workflow.md` — writing solutions
+- `_agents/workflows/chemistry-solution-workflow.md` — writing chemistry solutions (8 tiers)
+- `_agents/workflows/physics-solution-workflow.md` — writing physics solutions (4 tiers)
+- `_agents/workflows/math-solution-workflow.md` — writing math solutions (5-part structure)
 - `_agents/workflows/MOCK_TEST_INGESTION_WORKFLOW.md` — mock tests
 - `lib/models/Question.v2.ts` — authoritative schema
 - `lib/taxonomy/taxonomyData_from_csv.ts` — taxonomy SOT

@@ -58,7 +58,6 @@ export const QuestionSchema = z.object({
       phase: z.string().optional(),
       shift: z.string().optional(),
       paper: z.string().optional(),
-      question_number: z.string().optional(),
     }).optional(),
     is_pyq: z.boolean().optional(),
     is_top_pyq: z.boolean().optional(),

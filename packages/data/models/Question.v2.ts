@@ -73,7 +73,10 @@ export interface IQuestionMetadata {
   // ── Multi-dimensional tagging ──
   microConcept?: string;           // e.g. 'Hyperconjugation', 'Carbocation Stability'
   isMultiConcept?: boolean;        // default false
-  // Drives solution depth/structure during ingestion. See _agents/workflows/solution-ingestion-workflow.md.
+  // Drives solution depth/structure during ingestion. See the per-subject workflows:
+  // - chemistry: _agents/workflows/chemistry-solution-workflow.md (8 tiers)
+  // - physics:   _agents/workflows/physics-solution-workflow.md (4 tiers)
+  // - math:      _agents/workflows/math-solution-workflow.md
   questionNature?: 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis';
   
   // ── NEW: 3-Tier Exam Taxonomy (for multi-exam support: JEE, NEET, etc.) ──
@@ -90,7 +93,6 @@ export interface IQuestionMetadata {
     phase?: string;      // For NEET (Phase 1, Phase 2)
     shift?: string;      // For JEE Main (Shift 1, Shift 2)
     paper?: string;      // For JEE Advanced (Paper 1, Paper 2)
-    question_number?: string;
   };
   
   // ── DEPRECATED: Keep for backward compatibility during migration ──
@@ -265,7 +267,6 @@ const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
     phase: { type: String },
     shift: { type: String },
     paper: { type: String },
-    question_number: { type: String },
   },
   // DEPRECATED fields (kept for backward compatibility)
   is_pyq: { type: Boolean, default: false },

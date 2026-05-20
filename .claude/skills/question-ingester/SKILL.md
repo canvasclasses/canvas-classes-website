@@ -1,6 +1,6 @@
 ---
 name: question-ingester
-description: Ingest JEE/NEET PYQs or practice questions into the Crucible question bank (`questions_v2` collection). Enforces the canonical two-phase workflow — Phase 1 extraction into a per-chapter `scripts/_phase1_buffer_<prefix>.js` with SRC tags, Phase 2 insertion via per-batch scripts — plus the validator gate, `answer_pending` mode for batches without an answer key, year/month/shift metadata on every PYQ, and bulk-apply scripts when the answer key arrives later. Trigger when the user says "insert these questions", "extract these questions", "add to the chapter", "ingest this batch", "next batch of questions", "apply the answer key", "start the next chapter", uploads PDF page images of MCQs/NVTs, or mentions a chapter prefix like MIP/UNIT/K1D/MOLE/SALT followed by question content. Skip for solution-only ingestion (use solution-ingestion-workflow), mock test bundling (use MOCK_TEST_INGESTION_WORKFLOW), or single-question hand-edits via the admin UI.
+description: Ingest JEE/NEET PYQs or practice questions into the Crucible question bank (`questions_v2` collection) across Chemistry, Physics, and Math. Enforces the canonical two-phase workflow — Phase 1 extraction into a per-chapter `scripts/_phase1_buffer_<prefix>.js` with SRC tags, Phase 2 insertion via the generic `scripts/insert_questions.js` — plus the validator gate, `answer_pending` mode for batches without an answer key, year/month/shift/paper metadata on every PYQ, and bulk-apply scripts when the answer key arrives later. Trigger when the user says "insert these questions", "extract these questions", "add to the chapter", "ingest this batch", "next batch of questions", "apply the answer key", "start the next chapter", uploads PDF page images of MCQs/NVTs, or mentions any chapter prefix — Chemistry (MOLE, ATOM, PERI, BOND, GOC, SALT, ALCO, …), Physics (MIP, UNIT, K1D, NLM, SHM, ELST, EMI, ROPY, …), or Math (QUAD, CMPL, MTRX, LIMS, DIFF, DFIN, PROB, TRRI, CRCL, VCAL, …) — followed by question content. Skip for solution-only ingestion (use the subject-specific solution workflow: chemistry-solution-workflow / physics-solution-workflow / math-solution-workflow), mock test bundling (use MOCK_TEST_INGESTION_WORKFLOW), or single-question hand-edits via the admin UI.
 ---
 
 # Question Ingester
@@ -9,12 +9,13 @@ You are ingesting questions into the Crucible question bank. **The canonical rul
 
 | Subject | Workflow doc | Display ID prefix examples |
 |---|---|---|
-| Physics | `_agents/workflows/PHYSICS_QUESTION_INGESTION_WORKFLOW.md` | MIP, UNIT, K1D, NLM, ELST, … |
-| Chemistry | `_agents/workflows/QUESTION_INGESTION_WORKFLOW.md` | ATOM, MOLE, SALT, PERI, CORD, … |
-| Maths | `_agents/workflows/QUESTION_INGESTION_WORKFLOW.md` (use the maths section) | QUAD, MTRX, LIMS, … |
-| Solutions only | `_agents/workflows/solution-ingestion-workflow.md` | (separate flow) |
+| Chemistry | `_agents/workflows/QUESTION_INGESTION_WORKFLOW.md` | ATOM, MOLE, SALT, PERI, GOC, CORD, ALCO, ALDO, … |
+| Physics | `_agents/workflows/PHYSICS_QUESTION_INGESTION_WORKFLOW.md` | MIP, UNIT, K1D, NLM, SHM, ELST, EMI, ROPY, … |
+| Maths | `_agents/workflows/MATH_QUESTION_INGESTION_WORKFLOW.md` | QUAD, CMPL, MTRX, LIMS, DIFF, DFIN, PROB, TRRI, CRCL, VCAL, TDGM, … |
+| Chemistry solutions | `_agents/workflows/chemistry-solution-workflow.md` | Tier-based, 8 tiers keyed off `questionNature` |
+| Physics solutions | `_agents/workflows/physics-solution-workflow.md` | Tier-based, 4 tiers matching physics `questionNature` tags |
+| Math solutions | `_agents/workflows/math-solution-workflow.md` | Teaching-the-thinking, anti-robotic 5-part structure |
 | NEET mock solutions | `_agents/workflows/MOCK_TEST_SOLUTION_WORKFLOW.md` | Whiteboard-style, 60-second reads |
-| Math solutions | `_agents/workflows/math-solution-workflow.md` | Teaching-the-thinking, anti-robotic style |
 | Tag / taxonomy maintenance | `_agents/workflows/CRUCIBLE_TAXONOMY_AND_TAGGING_RULES.md` | Post-insertion bulk re-tagging, audits, micro-topic additions |
 
 When anything below conflicts with the workflow doc, the workflow doc wins.
@@ -22,9 +23,9 @@ When anything below conflicts with the workflow doc, the workflow doc wins.
 ## STEP 0 — ALWAYS DO THIS FIRST
 
 1. Read the matching workflow doc end-to-end (don't paraphrase from memory).
-2. Read the chapter section of `lib/taxonomy/taxonomyData_from_csv.ts` — confirm `chapter_id`, `tag_id` values, and that the prefix is wired into the prefix maps in **both** `app/api/v2/questions/route.ts` and `app/crucible/admin/page.tsx`.
+2. Read the chapter section of `packages/data/taxonomy/taxonomyData_from_csv.ts` — confirm `chapter_id`, `tag_id` values, and that the prefix is wired into `PREFIX_TO_CHAPTER` in `scripts/insert_questions.js` (the generic insert script derives `chapter_id` and `subject` from the display-id prefix).
    - If you are doing **tag/taxonomy maintenance** (re-tagging, adding micro-topics, bulk reclassification) rather than initial ingestion, read `_agents/workflows/CRUCIBLE_TAXONOMY_AND_TAGGING_RULES.md` instead of (or in addition to) this skill.
-3. Glance at the V2 schema at `lib/models/Question.v2.ts` — pay attention to `metadata.examDetails.{year, month, shift}` shape.
+3. Glance at the V2 schema at `packages/data/models/Question.v2.ts` — pay attention to `metadata.examDetails.{exam, year, month, shift, paper, phase}` shape.
 
 ## STEP 1 — IMAGE SURVEY (anti-hallucination gate)
 
@@ -61,7 +62,61 @@ const questions = [
 module.exports = { questions };
 ```
 
-**Required metadata on every PYQ doc:** `year` (number), `month` (3-letter string `'Jan'` … `'Dec'`), `shift` (canonical `'Shift-I'` or `'Shift-II'` — NEVER `'Morning'`/`'Evening'`/`'M'`/`'E'`/`'Shift 1'`). NEET is a single-shift exam — leave shift `null` for NEET PYQs. Read from the image's date stamp like `"25 Jan 2023 (M)"` → year 2023, month `'Jan'`, shift `'Shift-I'`. The user has explicitly asked that year and month be correct on every question.
+### Canonical PYQ metadata (IDENTICAL across Chemistry, Physics, Math)
+
+**`applicableExams`** — array, multi-valued. Allowed values: `'JEE'`, `'NEET'`, `'CBSE'`, `'BITSAT'`. Math is JEE-only (`['JEE']`). Physics and Chemistry are most often `['JEE']` or `['NEET']`; use `['JEE','NEET']` only when the question genuinely fits both syllabi.
+
+**`sourceType`** — one of: `'PYQ'`, `'Practice'`, `'NCERT_Textbook'`, `'NCERT_Exemplar'`, `'Mock'`.
+
+**`examDetails`** — populate only when `sourceType: 'PYQ'`. Otherwise `examDetails: null` (or omit). The shape depends on the exam:
+
+| Exam | `exam` | `year` | `month` | `shift` | `paper` |
+|---|---|---|---|---|---|
+| JEE Main | `'JEE_Main'` | required | required (`'Jan'`..`'Dec'`) | required (`'Shift-I'` / `'Shift-II'`) | — |
+| JEE Advanced | `'JEE_Advanced'` | required | `null` | `null` | required (`'Paper 1'` / `'Paper 2'`) |
+| NEET UG | `'NEET_UG'` | required | `null` | `null` (single-shift exam) | — |
+
+**Canonical shift values: `'Shift-I'` / `'Shift-II'` only.** NEVER use `'Morning'`, `'Evening'`, `'M'`, `'E'`, `'Shift 1'` (with space), `'shift-I'` (lowercase), or `'Session-I'`. The normaliser will reject inconsistent values at validation time.
+
+**Reading the source date stamp.** A header like `"25 Jan 2023 (M)"` means: year `2023`, month `'Jan'`, shift `'Shift-I'` (Morning = Shift-I, Evening = Shift-II). A JEE Advanced header like `"4 Jun 2023, Paper 1"` means: year `2023`, `paper: 'Paper 1'`, leave month and shift `null`.
+
+**If the source is illegible.** Never guess year/month/shift/paper. Write `NEEDS_REVIEW: [field missing]` and continue. The user has explicitly required that year, month, shift, and paper be correct on every PYQ — past inconsistencies between subjects (mixed shift conventions, missing months) caused this rule.
+
+**Canonical mappings (use these verbatim):**
+
+```js
+// JEE Main, January 2024, Morning slot
+applicableExams: ['JEE'],
+sourceType: 'PYQ',
+examDetails: { exam: 'JEE_Main', year: 2024, month: 'Jan', shift: 'Shift-I' }
+
+// JEE Main, April 2023, Evening slot
+applicableExams: ['JEE'],
+sourceType: 'PYQ',
+examDetails: { exam: 'JEE_Main', year: 2023, month: 'Apr', shift: 'Shift-II' }
+
+// JEE Advanced 2023, Paper 1
+applicableExams: ['JEE'],
+sourceType: 'PYQ',
+examDetails: { exam: 'JEE_Advanced', year: 2023, month: null, shift: null, paper: 'Paper 1' }
+
+// NEET UG 2024 (single-shift exam — no month, no shift)
+applicableExams: ['NEET'],
+sourceType: 'PYQ',
+examDetails: { exam: 'NEET_UG', year: 2024, month: null, shift: null }
+
+// Practice question (non-PYQ) — no examDetails
+applicableExams: ['JEE'],
+sourceType: 'Practice',
+examDetails: null
+
+// NCERT Exemplar (CBSE textbook source)
+applicableExams: ['CBSE'],
+sourceType: 'NCERT_Exemplar',
+examDetails: null
+```
+
+**Legacy fields (`is_pyq`, `examBoard`, `exam_source`, `difficulty` enum) — DO NOT WRITE.** Retired in Phase 2 of the 2026-05-07 cleanup. The canonical fields above are the single source of truth. Read paths still bridge to legacy for older docs, but new docs must not include them.
 
 **LaTeX rules** (validated in step 3):
 - Inline math only: `$...$` — never `$$...$$`

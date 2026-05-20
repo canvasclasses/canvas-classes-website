@@ -8,7 +8,8 @@ description: Physics Question Ingestion Workflow — Two-Phase System (JEE/NEET 
 >
 > **Companion docs:**
 > - `QUESTION_INGESTION_WORKFLOW.md` — chemistry/math sibling; same architecture
-> - `solution-ingestion-workflow.md` — tier-based solution generation (shared across all subjects)
+> - `physics-solution-workflow.md` — tier-based solution generation for physics (4 tiers matching the 4 physics `questionNature` tags)
+> - `chemistry-solution-workflow.md` — chemistry sibling (8 tiers)
 
 ---
 
@@ -137,26 +138,53 @@ Recall            "SI unit of magnetic flux is", "name the law that gives
 Mechanistic, Synthesis  → Not used in physics. Skip.
 ```
 
-### Exam Taxonomy (3-tier canonical, project decision 2026-05-07)
+### Exam Taxonomy (3-tier canonical, IDENTICAL across Chemistry / Physics / Math)
 
 ```
-TIER 1: applicableExams → ('JEE' | 'NEET' | 'CBSE' | 'BITSAT' | …)[]   ← multi-valued
+TIER 1: applicableExams → ('JEE' | 'NEET' | 'CBSE' | 'BITSAT')[]   ← multi-valued
 TIER 2: sourceType      → 'PYQ' | 'Practice' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Mock'
 TIER 3: examDetails     → { exam, year, month, shift, phase, paper }
-                          shift: ALWAYS 'Shift-I' or 'Shift-II' (never 'Morning'/'M'/'Shift 1')
-                          NEET is single-shift — leave shift null for NEET PYQs
-
-Common mappings:
-- JEE Main PYQ 2024 Morning slot → applicableExams:['JEE'], sourceType:'PYQ',
-  examDetails:{ exam:'JEE_Main', year:2024, month:'Jan', shift:'Shift-I' }
-- JEE Advanced PYQ 2023 → applicableExams:['JEE'], sourceType:'PYQ',
-  examDetails:{ exam:'JEE_Advanced', year:2023, paper:'Paper 1' }
-- NEET PYQ 2024 → applicableExams:['NEET'], sourceType:'PYQ',
-  examDetails:{ exam:'NEET_UG', year:2024, shift:null }
-- Practice question → applicableExams:['JEE'], sourceType:'Practice', examDetails:null
+                          exam ∈ {'JEE_Main', 'JEE_Advanced', 'NEET_UG'} (enum, no free text)
+                          shift: ALWAYS 'Shift-I' or 'Shift-II' (never 'Morning'/'Evening'/'M'/'Shift 1'/'shift-I')
 ```
 
-**Legacy fields (`is_pyq`, `examBoard`, `exam_source`, `difficulty` enum) — REMOVED:**
+**Per-exam shape (the field every PYQ must follow):**
+
+| Exam | `exam` | `year` | `month` | `shift` | `paper` |
+|---|---|---|---|---|---|
+| JEE Main | `'JEE_Main'` | required | required (`'Jan'`..`'Dec'`) | required (`'Shift-I'` / `'Shift-II'`) | — |
+| JEE Advanced | `'JEE_Advanced'` | required | `null` | `null` | required (`'Paper 1'` / `'Paper 2'`) |
+| NEET UG | `'NEET_UG'` | required | `null` | `null` (single-shift exam) | — |
+
+**Canonical mappings (use these verbatim):**
+
+```js
+// JEE Main PYQ 2024 Morning slot
+applicableExams: ['JEE'], sourceType: 'PYQ',
+examDetails: { exam: 'JEE_Main', year: 2024, month: 'Jan', shift: 'Shift-I' }
+
+// JEE Main PYQ 2023 Evening slot
+applicableExams: ['JEE'], sourceType: 'PYQ',
+examDetails: { exam: 'JEE_Main', year: 2023, month: 'Apr', shift: 'Shift-II' }
+
+// JEE Advanced PYQ 2023 Paper 1 (no month, no shift)
+applicableExams: ['JEE'], sourceType: 'PYQ',
+examDetails: { exam: 'JEE_Advanced', year: 2023, month: null, shift: null, paper: 'Paper 1' }
+
+// NEET PYQ 2024 (single-shift exam — no month, no shift)
+applicableExams: ['NEET'], sourceType: 'PYQ',
+examDetails: { exam: 'NEET_UG', year: 2024, month: null, shift: null }
+
+// Practice question (non-PYQ)
+applicableExams: ['JEE'], sourceType: 'Practice', examDetails: null
+
+// NCERT Exemplar (CBSE textbook source)
+applicableExams: ['CBSE'], sourceType: 'NCERT_Exemplar', examDetails: null
+```
+
+**If the source is illegible.** Never guess year/month/shift/paper. Write `NEEDS_REVIEW: [field missing]` and continue. Past inconsistencies between subjects (mixed shift conventions, missing months) are why this rule exists.
+
+**Legacy fields (`is_pyq`, `examBoard`, `exam_source`, `difficulty` enum) — DO NOT WRITE.**
 As of Phase 2 of the 2026-05-07 cleanup, NEW questions must NOT include these
 fields. The canonical fields above are the single source of truth. Phase 4 will
 drop them from the schema entirely.
@@ -356,15 +384,15 @@ After figures are uploaded, the user spot-checks 2–3 questions per batch for a
 2. Figures are uploaded manually (Phase 3 complete)
 3. User has spot-checked the batch for content accuracy
 
-> Why separate? See `solution-ingestion-workflow.md`. Tier-based solution depth requires the question's `questionNature` (set during extraction) AND, for `Graphical` tier, the actual figure visible in the rendered question. Mixing extraction with solutions blows the context budget and degrades both.
+> Why separate? See `physics-solution-workflow.md`. Tier-based solution depth requires the question's `questionNature` (set during extraction) AND, for `Graphical` tier, the actual figure visible in the rendered question. Mixing extraction with solutions blows the context budget and degrades both.
 
-**Tier selection is identical for physics** — the 8-tier system in `solution-ingestion-workflow.md` keys off `metadata.questionNature`, which is shared across all subjects.
+**Tier selection for physics** is documented in `physics-solution-workflow.md` — 4 tiers mapping to the 4 physics `questionNature` tags (`Rule_Application`, `Numerical`, `Conceptual`, `Graphical`). All structural and voice rules live in that doc; this section only lists the physics-specific quirks.
 
-**Physics-specific solution rules:**
+**Physics-specific solution rules** (full detail in `physics-solution-workflow.md`):
 - Always include units in numerical workings (`$F = ma = (2\,\text{kg})(3\,\text{m/s}^2) = 6\,\text{N}$`)
 - Vectors stay vectors (`$\vec{F}$`, not `$F$`) until the final magnitude
 - For Graphical tier, explicitly name the slope/intercept/area meaning before reading values
-- Boxed answer format: `$$\boxed{\text{Answer: (Option)}}$$` or `$$\boxed{\text{Answer: } 5\,\text{A}}$$`
+- Boxed answer format: `$\boxed{\text{Answer: (Option)}}$` or `$\boxed{\text{Answer: } 5\,\text{A}}$` — single `$`, never `$$`
 
 ---
 
@@ -392,4 +420,4 @@ After figures are uploaded, the user spot-checks 2–3 questions per batch for a
 
 ---
 
-**Document Version:** 1.0 | **Created:** 2026-05-06 | **Companion:** chemistry workflow at `QUESTION_INGESTION_WORKFLOW.md`, solutions at `solution-ingestion-workflow.md`
+**Document Version:** 1.1 | **Updated:** 2026-05-17 | **Companion:** chemistry ingestion at `QUESTION_INGESTION_WORKFLOW.md`, physics solutions at `physics-solution-workflow.md`, chemistry solutions at `chemistry-solution-workflow.md`

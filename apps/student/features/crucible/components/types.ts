@@ -61,7 +61,6 @@ export interface Question {
       phase?: string;
       shift?: string;
       paper?: string;
-      question_number?: string;
     };
     // KEEP — drives the "Top Questions" practice mode (star-marked questions
     // appearing under Chapter Practice → Top Questions). Sparsely set; the
