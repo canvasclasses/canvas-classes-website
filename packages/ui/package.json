@@ -7,11 +7,13 @@
   "exports": {
     ".": "./index.ts",
     "./MathRenderer": "./MathRenderer.tsx",
+    "./MoleculeViewer": "./MoleculeViewer.tsx",
     "./flashcardMarkdown": "./flashcardMarkdown.tsx"
   },
   "dependencies": {
     "isomorphic-dompurify": "^3.7.1",
-    "katex": "^0.16.28"
+    "katex": "^0.16.28",
+    "openchemlib": "^9.20.0"
   },
   "peerDependencies": {
     "react": "^19.0.0",

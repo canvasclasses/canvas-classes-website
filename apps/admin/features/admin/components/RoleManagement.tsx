@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Shield, UserPlus, Trash2, Save, X, AlertCircle, CheckCircle } from 'lucide-react';
 
-type Subject = 'chemistry' | 'physics' | 'mathematics';
+type Subject = 'chemistry' | 'physics' | 'mathematics' | 'biology';
 type RoleType = 'super_admin' | 'subject_admin' | 'viewer';
 
 interface UserRole {
@@ -123,6 +123,7 @@ export default function RoleManagement({ currentUserEmail }: RoleManagementProps
       chemistry: 'bg-green-500/20 text-green-400 border-green-500/30',
       physics: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
       mathematics: 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30',
+      biology: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
     };
     return styles[subject];
   };
@@ -192,7 +193,7 @@ export default function RoleManagement({ currentUserEmail }: RoleManagementProps
                 Subjects {formData.role === 'subject_admin' && <span className="text-red-400">*</span>}
               </label>
               <div className="flex flex-wrap gap-2">
-                {(['chemistry', 'physics', 'mathematics'] as Subject[]).map((subject) => (
+                {(['chemistry', 'physics', 'mathematics', 'biology'] as Subject[]).map((subject) => (
                   <button
                     key={subject}
                     type="button"

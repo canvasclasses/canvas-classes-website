@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import MoleculeViewer from '../MoleculeViewer';
+import MoleculeViewer from '@canvas/ui/MoleculeViewer';
 import { Level } from '../ConversionGame';
 import { ArrowRight, Play, Square, Music, Check } from 'lucide-react';
 import DOMPurify from 'isomorphic-dompurify';

@@ -1,7 +1,7 @@
 'use client';
 
 import { Molecule2DBlock } from '@canvas/data/types/books';
-import MoleculeViewer from '@/features/simulations/components/organic-wizard/MoleculeViewer';
+import MoleculeViewer from '@canvas/ui/MoleculeViewer';
 
 interface Props { block: Molecule2DBlock; onChange: (p: Partial<Molecule2DBlock>) => void; }
 

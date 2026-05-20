@@ -17,6 +17,8 @@ links from / to any predecessor.
 | [004](./004-package-boundary-rules.md) | `@canvas/*` package boundary rules | Accepted | 2026-05-16 |
 | [005](./005-admin-url-flatten-and-landing.md) | Flatten admin URLs and introduce the admin home landing | Accepted | 2026-05-17 |
 | [006](./006-och-admin-classification.md) | Organic Chemistry Hub admin stays in the student app as a dev tool | Accepted | 2026-05-17 |
+| [007](./007-books-editor-migration.md) | Live Books editor moves to apps/admin via a shared renderer package | Accepted | 2026-05-20 |
+| [008](./008-biology-subject-addition.md) | Add Biology as a first-class subject (NEET-UG track) | Accepted | 2026-05-20 |
 
 ## When to write a new ADR
 

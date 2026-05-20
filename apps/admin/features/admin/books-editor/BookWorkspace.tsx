@@ -6,7 +6,7 @@ import { Save, BookOpen, PanelLeft, Columns2, Eye } from 'lucide-react';
 import { Book, BookPage, ContentBlock, BlockType } from '@canvas/data/types/books';
 import BookSidebar from './BookSidebar';
 import BlockEditor from './BlockEditor';
-import PageRenderer from '../renderer/PageRenderer';
+import PageRenderer from '@canvas/book-renderer/PageRenderer';
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
 

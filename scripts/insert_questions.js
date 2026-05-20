@@ -58,6 +58,20 @@ const PREFIX_TO_CHAPTER = {
   ELPS: 'ma_ellipse', HYPB: 'ma_hyperbola', TRRI: 'ma_trig_ratios',
   TREQ: 'ma_trig_eq', ITF: 'ma_itf', HTDT: 'ma_height_dist',
   PRTR: 'ma_triangle_prop', VCAL: 'ma_vector_algebra', TDGM: 'ma_3d_geom',
+  // Biology (Class 11) — NEET post-2023 rationalised syllabus
+  TLW: 'bio11_living_world', BCLS: 'bio11_bio_class', PKGD: 'bio11_plant_kingdom',
+  AKGD: 'bio11_animal_kingdom', MOFP: 'bio11_morpho_plant', ANFP: 'bio11_anato_plant',
+  SOIA: 'bio11_struct_animal', CUOL: 'bio11_cell_unit', BMOL: 'bio11_biomol',
+  CCDV: 'bio11_cell_div', PHOT: 'bio11_photo', RPLN: 'bio11_resp_plant',
+  PGRO: 'bio11_plant_growth', BRTH: 'bio11_breathing', BDFL: 'bio11_body_fluids',
+  EXCR: 'bio11_excretion', LOMV: 'bio11_locomotion', NEUR: 'bio11_neural',
+  CHCO: 'bio11_chem_coord',
+  // Biology (Class 12) — NEET post-2023 rationalised syllabus
+  SRFP: 'bio12_sex_repro_plants', HMRP: 'bio12_human_repro', RPHL: 'bio12_repro_health',
+  PIVR: 'bio12_inheritance', MBIH: 'bio12_mol_inh', EVOL: 'bio12_evolution',
+  HHDS: 'bio12_health_disease', MIHW: 'bio12_microbes', BTPP: 'bio12_biotech_prin',
+  BTAP: 'bio12_biotech_app', ORGP: 'bio12_org_pop', ECOS: 'bio12_ecosystem',
+  BDCV: 'bio12_biodiversity',
 };
 
 function chapterToSubject(chapter_id) {

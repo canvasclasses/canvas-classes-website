@@ -9,4 +9,5 @@
 // will appear only when a component has its own internal helpers.
 
 export { default as MathRenderer } from './MathRenderer';
+export { default as MoleculeViewer } from './MoleculeViewer';
 export * from './flashcardMarkdown';

@@ -1,7 +1,7 @@
 import 'server-only';
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
-export type Subject = 'chemistry' | 'physics' | 'mathematics';
+export type Subject = 'chemistry' | 'physics' | 'mathematics' | 'biology';
 export type RoleType = 'super_admin' | 'subject_admin' | 'viewer';
 
 export interface IUserRole extends Document {
@@ -42,7 +42,7 @@ const UserRoleSchema = new Schema<IUserRole>(
     },
     subjects: {
       type: [String],
-      enum: ['chemistry', 'physics', 'mathematics'],
+      enum: ['chemistry', 'physics', 'mathematics', 'biology'],
       default: [],
       validate: {
         validator: subjectValidator,

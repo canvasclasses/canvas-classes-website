@@ -5,7 +5,7 @@ type Router = ReturnType<typeof useRouter>;
 
 export interface AdminFilters {
   searchQuery: string;
-  selectedSubjectFilter: 'chemistry' | 'physics' | 'maths' | 'all';
+  selectedSubjectFilter: 'chemistry' | 'physics' | 'maths' | 'biology' | 'all';
   selectedChapterFilter: string;
   selectedTypeFilter: string;
   selectedSourceFilter: string;

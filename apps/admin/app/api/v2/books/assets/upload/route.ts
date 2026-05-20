@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 import { uploadToR2, getExtensionFromMimeType, type AssetType } from '@canvas/core/r2-storage';
-import { isAdminRequest } from '@/lib/bookAuth';
+import { isAdminRequest } from '@/lib/adminAuth';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;

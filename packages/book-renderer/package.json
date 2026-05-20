@@ -1,0 +1,30 @@
+{
+  "name": "@canvas/book-renderer",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./PageRenderer": "./PageRenderer.tsx",
+    "./BlockRenderer": "./BlockRenderer.tsx",
+    "./simulators-context": "./simulators-context.tsx"
+  },
+  "dependencies": {
+    "@canvas/data": "*",
+    "@canvas/ui": "*",
+    "katex": "^0.16.28",
+    "rehype-katex": "^7.0.1",
+    "rehype-raw": "^7.0.0",
+    "remark-breaks": "^4.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "*",
+    "lucide-react": "*",
+    "next": "*"
+  }
+}

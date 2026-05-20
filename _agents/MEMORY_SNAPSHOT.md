@@ -156,7 +156,7 @@ merged or deployed.
 ### Deferred / queued follow-up work from Phase 5
 
 1. **Manual smoke test (5.9) — OWNED BY USER.** REQUIRED before any preview deploy.
-2. **Book editor migration (deferred follow-up phase).** `apps/student/features/books/components/editor/` is 27 admin-only files coupled into the books reader feature, with one outbound edge to `MoleculeViewer` pulling three.js + openchemlib + smiles-drawer. Until the port lands, `admin.canvasclasses.in/books` renders a placeholder.
+2. ~~Book editor migration~~ — **DONE (2026-05-20).** Editor moved to `apps/admin/features/admin/books-editor/`, renderer extracted into `@canvas/book-renderer`, `MoleculeViewer` promoted to `@canvas/ui`. App-route-local `atomic-models` simulator now injected via `ExtraSimulatorsProvider` from the renderer package so book pages referencing it still resolve on the student side.
 3. **Phase 5.5d — MongoDB user permission split. DEFERRED BY USER (2026-05-16).** Will revisit once Phase 5 has been deployed and observed stable in production.
 4. **Vercel deployment config.** Two Vercel projects: admin.canvasclasses.in for `apps/admin/`, canvasclasses.in for `apps/student/`. Env vars on both. Configure Supabase auth callback URL to include admin.canvasclasses.in.
 

@@ -16,7 +16,9 @@
 
 export { useChemiHexLogic } from './hooks/useChemiHexLogic';
 export { useSaltQuizProgress } from './hooks/useSaltQuizProgress';
-export { default as MoleculeViewer } from './components/organic-wizard/MoleculeViewer';
+// MoleculeViewer was promoted to @canvas/ui during the books-editor migration
+// so the admin app can use it without depending on apps/student.
+export { default as MoleculeViewer } from '@canvas/ui/MoleculeViewer';
 export { default as OrganicWizardGame } from './components/organic-wizard/ConversionGame';
 export * as elementsData from './data/elementsData';
 export * as kspData from './data/kspData';

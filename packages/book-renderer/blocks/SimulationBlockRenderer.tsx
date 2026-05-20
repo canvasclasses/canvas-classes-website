@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { SimulationBlock } from '@canvas/data/types/books';
 import dynamic from 'next/dynamic';
+import { ExtraSimulatorsContext } from '../simulators-context';
 
 // Lazy-load each simulator — keeps initial page bundle small
 const simulators: Record<string, React.ComponentType> = {
@@ -18,10 +19,9 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/RutherfordComparisonSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
-  'atomic-models': dynamic(
-    () => import('@/app/physical-chemistry-hub/AtomicModels'),
-    { ssr: false, loading: () => <SimulationSkeleton /> }
-  ),
+  // 'atomic-models' lives in apps/student (it depends on app-local UI bits and
+  // would pull in a non-shareable @/ alias) — it is injected at runtime via
+  // ExtraSimulatorsProvider so the student reader still renders it.
   'cathode-ray-tube': dynamic(
     () => import('./simulations/CathodeRayTubeSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
@@ -337,8 +337,9 @@ function PredictionGate({
 export default function SimulationBlockRenderer({ block }: { block: SimulationBlock }) {
   const [unlockedChoice, setUnlockedChoice] = useState<number | null>(null);
   const [showReveal, setShowReveal] = useState(false);
+  const extraSimulators = useContext(ExtraSimulatorsContext);
 
-  const Sim = simulators[block.simulation_id];
+  const Sim = simulators[block.simulation_id] ?? extraSimulators[block.simulation_id];
 
   if (!Sim) {
     return (

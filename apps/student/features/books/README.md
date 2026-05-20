@@ -1,7 +1,7 @@
 # features/books
 
 Chapter-level digital book reader for class 9-12 chemistry + ncert/cbse SEO
-landing pages + admin book editor.
+landing pages.
 
 ## Routes
 
@@ -15,11 +15,12 @@ landing pages + admin book editor.
 | `/ncert-solutions/` | NCERT solutions hub |
 | `/download-ncert-books/` | NCERT PDF download hub |
 
-Admin editor routes (`app/crucible/admin/*` book sections) consume this
-feature's `components/editor/*`.
+The admin book editor lives in `apps/admin/features/admin/books-editor/` and is
+mounted at `admin.canvasclasses.in/books`. Its write APIs are under
+`apps/admin/app/api/v2/books/*`.
 
-API: `app/api/v2/books/*` for the reader; `app/api/v2/admin/books/*` for the
-editor. Both use this feature's lib + data.
+Reader-side public APIs (bookmarks, progress, stats, user-state) live at
+`apps/student/app/api/v2/books/*`.
 
 ## Layout
 
@@ -30,9 +31,7 @@ features/books/
 │   ├── bookDesign.tsx              ← design tokens (book-specific)
 │   ├── GradeLandingPage.tsx        ← grade hub UI
 │   ├── LiveBooksComingSoon.tsx
-│   ├── editor/                     ← admin book editor (8 files: BookSidebar, BookWorkspace, blocks/, etc.)
-│   ├── reader/                     ← student book reader (BookReader, FreeGate)
-│   └── renderer/                   ← block renderer (PageRenderer, BlockRenderer, blocks/, blocks/simulations/)
+│   └── reader/                     ← student book reader (BookReader, FreeGate)
 ├── data/
 │   ├── blockData.ts                ← static block-type configuration
 │   ├── ncertBooksData.ts           ← NCERT book metadata
@@ -44,25 +43,22 @@ features/books/
 │   ├── useBookStats.ts
 │   └── useBookUserState.ts
 ├── lib/
-│   ├── bookPageSeo.ts              ← SEO/metadata builder for book pages
-│   └── utils.ts                    ← reading-time, content-type computation
+│   └── bookPageSeo.ts              ← SEO/metadata builder for book pages
 ├── index.ts
 └── README.md
 ```
 
 ## What's elsewhere
 
-- Book/BookPage Mongoose models live in `@canvas/data/models/`.
-- `app/api/v2/books/*` route handlers stay at the Next.js route level.
-- Cross-app components like `MathRenderer` are in `@canvas/ui`.
-
-## Cross-feature dependencies
-
-Outbound edges (books importing from other features). Single-consumer edges —
-if a second non-{simulations} consumer of `MoleculeViewer` appears, promote it
-to `apps/student/components/` or `@canvas/ui/`.
-
-| File | Imports from | Symbol |
-|---|---|---|
-| `components/renderer/blocks/Molecule2DBlockRenderer.tsx` | `@/features/simulations/components/organic-wizard/MoleculeViewer` | `MoleculeViewer` (default) |
-| `components/editor/blocks/Molecule2DEditor.tsx` | `@/features/simulations/components/organic-wizard/MoleculeViewer` | `MoleculeViewer` (default) |
+- **Reader-side block renderer** lives in `@canvas/book-renderer` (also reused
+  by the admin editor's split-view preview pane).
+- **`MoleculeViewer`** is in `@canvas/ui/MoleculeViewer` (shared with the
+  organic-wizard simulator).
+- **Book / BookPage Mongoose models** live in `@canvas/data/models/`.
+- **Block utility helpers** (`flattenBlocks`, `computeReadingTime`, etc.) live
+  in `@canvas/data/books/utils`.
+- **`AtomicModels` simulator** still lives at
+  `apps/student/app/physical-chemistry-hub/AtomicModels.tsx` because it depends
+  on app-local UI bits. `BookReader` injects it into the renderer via
+  `ExtraSimulatorsProvider` from `@canvas/book-renderer/simulators-context` so
+  any book page referencing `simulation_id: 'atomic-models'` still resolves.

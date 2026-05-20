@@ -1,4 +1,4 @@
-// features/books — chapter-level digital book reader (multi-grade) + admin editor.
+// features/books — chapter-level digital book reader (multi-grade).
 //
 // Routes (student):
 //   /books/[bookSlug]/[pageSlug]                → main book reader
@@ -9,11 +9,14 @@
 //   /ncert-solutions/                            → NCERT solutions hub
 //   /download-ncert-books/                       → NCERT PDF downloads
 //
-// Routes (admin) live at app/api/v2/books/* and the editor UI is mounted via
-// app/crucible/admin/* — those imports go through this feature.
+// Admin editor for these books lives at apps/admin/features/admin/books-editor/.
+// Its write APIs live under apps/admin/app/api/v2/books/*.
 
 export { default as BookReader } from './components/reader/BookReader';
-export { default as PageRenderer } from './components/renderer/PageRenderer';
+// PageRenderer was promoted to @canvas/book-renderer during the books-editor
+// migration so the admin preview pane can reuse it. Re-exported here for any
+// existing caller that still imports through this barrel.
+export { default as PageRenderer } from '@canvas/book-renderer/PageRenderer';
 export { default as GradeLandingPage } from './components/GradeLandingPage';
 export { useBookBookmarks } from './hooks/useBookBookmarks';
 export { useBookProgress } from './hooks/useBookProgress';

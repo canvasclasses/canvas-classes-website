@@ -10,7 +10,7 @@ import { z } from 'zod';
 const RoleSchema = z.object({
   email: z.string().email(),
   role: z.enum(['super_admin', 'subject_admin', 'viewer']),
-  subjects: z.array(z.enum(['chemistry', 'physics', 'mathematics'])),
+  subjects: z.array(z.enum(['chemistry', 'physics', 'mathematics', 'biology'])),
   notes: z.string().max(500).optional(),
 });
 

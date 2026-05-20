@@ -75,8 +75,7 @@ export default async function AdminHome() {
             href="/books"
             icon={<BookOpen />}
             title="Books"
-            hint="The interactive book editor (migration pending — placeholder for now)."
-            disabled
+            hint="Author Live Books — chapters, pages, blocks, and per-page publish. Split-pane preview reuses the student renderer."
           />
           <PanelCard
             href="/blog"

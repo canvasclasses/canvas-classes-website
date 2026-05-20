@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { RefreshCcw, ArrowRight, HelpCircle, Check, X, FlaskConical, Volume2, Play, Pause } from 'lucide-react';
-import MoleculeViewer from './MoleculeViewer';
+import MoleculeViewer from '@canvas/ui/MoleculeViewer';
 import ReagentCard from './ReagentCard';
 import LevelSidebar from './LevelSidebar';
 import gameData from '../../data/conversion_game_data.json';

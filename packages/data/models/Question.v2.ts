@@ -94,7 +94,19 @@ export interface IQuestionMetadata {
     shift?: string;      // For JEE Main (Shift 1, Shift 2)
     paper?: string;      // For JEE Advanced (Paper 1, Paper 2)
   };
-  
+
+  // ── NCERT line-level reference (mainly Biology; optional for other subjects) ──
+  // NEET draws ~85% of questions verbatim from NCERT lines, so we capture the
+  // anchor here. Optional everywhere; only `class` is required when present.
+  ncert_reference?: {
+    class: 11 | 12;
+    chapter_number?: number;   // NCERT chapter number (1-based, per NCERT TOC)
+    chapter_name?: string;     // e.g. "Cell: The Unit of Life"
+    page?: number;
+    line?: string;             // free-text, e.g. "Para 2, Line 4" or "Fig 8.3 caption"
+    edition?: string;          // e.g. "2023-Rationalised" — distinguishes pre/post rationalisation
+  };
+
   // ── DEPRECATED: Keep for backward compatibility during migration ──
   exam_source?: {
     exam: string;
@@ -267,6 +279,15 @@ const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
     phase: { type: String },
     shift: { type: String },
     paper: { type: String },
+  },
+  // NCERT line-level reference (mainly Biology; optional everywhere)
+  ncert_reference: {
+    class: { type: Number, enum: [11, 12], required: false },
+    chapter_number: { type: Number },
+    chapter_name: { type: String },
+    page: { type: Number },
+    line: { type: String },
+    edition: { type: String },
   },
   // DEPRECATED fields (kept for backward compatibility)
   is_pyq: { type: Boolean, default: false },

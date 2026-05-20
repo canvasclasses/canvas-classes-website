@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export type Subject = 'chemistry' | 'physics' | 'mathematics';
+export type Subject = 'chemistry' | 'physics' | 'mathematics' | 'biology';
 export type RoleType = 'super_admin' | 'subject_admin' | 'viewer';
 
 export interface UserPermissions {
@@ -37,7 +37,7 @@ export function usePermissions() {
         setPermissions({
           email: 'local-dev',
           role: 'super_admin',
-          subjects: ['chemistry', 'physics', 'mathematics'],
+          subjects: ['chemistry', 'physics', 'mathematics', 'biology'],
           permissions: {
             canEditQuestions: true,
             canDeleteQuestions: true,
@@ -96,7 +96,10 @@ export function usePermissions() {
     if (chapterId.startsWith('ma_')) {
       return canAccessSubject('mathematics');
     }
-    
+    if (chapterId.startsWith('bio11_') || chapterId.startsWith('bio12_') || chapterId.startsWith('bio9_')) {
+      return canAccessSubject('biology');
+    }
+
     return false;
   };
 

@@ -116,7 +116,7 @@ function AdminPageContent() {
     // Filters - initialize from URL params
     const [searchInput, setSearchInput] = useState(searchParams.get('search') || ''); // draft — applied on Enter
     const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
-    const [selectedSubjectFilter, setSelectedSubjectFilter] = useState<'chemistry' | 'physics' | 'maths' | 'all'>((searchParams.get('subject') as 'chemistry' | 'physics' | 'maths' | 'all' | null) || 'chemistry');
+    const [selectedSubjectFilter, setSelectedSubjectFilter] = useState<'chemistry' | 'physics' | 'maths' | 'biology' | 'all'>((searchParams.get('subject') as 'chemistry' | 'physics' | 'maths' | 'biology' | 'all' | null) || 'chemistry');
     const [selectedChapterFilter, setSelectedChapterFilter] = useState(searchParams.get('chapter') || 'all');
     const [selectedTypeFilter, setSelectedTypeFilter] = useState(searchParams.get('type') || 'all');
     const [selectedSourceFilter, setSelectedSourceFilter] = useState(searchParams.get('source') || 'all');
@@ -833,6 +833,7 @@ function AdminPageContent() {
                             { id: 'chemistry', label: '⚗️ Chem', color: 'from-amber-600 to-orange-600' },
                             { id: 'physics', label: '⚡ Phys', color: 'from-blue-600 to-cyan-600' },
                             { id: 'maths', label: '📐 Math', color: 'from-violet-600 to-purple-600' },
+                            { id: 'biology', label: '🧬 Bio', color: 'from-emerald-600 to-teal-600' },
                         ] as const).map(s => (
                             <button
                                 key={s.id}
@@ -864,6 +865,7 @@ function AdminPageContent() {
                                 if (selectedSubjectFilter === 'chemistry' && !(id.startsWith('ch11_') || id.startsWith('ch12_'))) return false;
                                 if (selectedSubjectFilter === 'physics' && !(id.startsWith('ph11_') || id.startsWith('ph12_'))) return false;
                                 if (selectedSubjectFilter === 'maths' && !id.startsWith('ma_')) return false;
+                                if (selectedSubjectFilter === 'biology' && !(id.startsWith('bio11_') || id.startsWith('bio12_'))) return false;
                                 // Permission filter - only show chapters user can access
                                 return canAccessChapter(id);
                             })

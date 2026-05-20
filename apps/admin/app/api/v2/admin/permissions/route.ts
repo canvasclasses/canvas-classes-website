@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({
         email: 'local-dev',
         role: 'super_admin',
-        subjects: ['chemistry', 'physics', 'mathematics'],
+        subjects: ['chemistry', 'physics', 'mathematics', 'biology'],
         permissions: {
           canEditQuestions: true,
           canDeleteQuestions: true,

@@ -20,7 +20,7 @@ If uncertain about scope, stop and ask. Do not pick silently.
 
 ## 1. PROJECT OVERVIEW
 
-**Crucible** is a JEE/NEET Chemistry question bank and adaptive practice platform built for Canvas Classes.
+**Crucible** is a JEE/NEET question bank and adaptive practice platform built for Canvas Classes — covering Chemistry, Physics, Maths, and Biology.
 
 - **Framework**: Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4
 - **Database**: MongoDB Atlas (questions, taxonomy, audit logs)
@@ -93,6 +93,7 @@ ADMIN_EMAILS=...
 | Chemistry | [`_agents/workflows/QUESTION_INGESTION_WORKFLOW.md`](_agents/workflows/QUESTION_INGESTION_WORKFLOW.md) |
 | Physics | [`_agents/workflows/PHYSICS_QUESTION_INGESTION_WORKFLOW.md`](_agents/workflows/PHYSICS_QUESTION_INGESTION_WORKFLOW.md) |
 | Math | [`_agents/workflows/MATH_QUESTION_INGESTION_WORKFLOW.md`](_agents/workflows/MATH_QUESTION_INGESTION_WORKFLOW.md) |
+| Biology | [`_agents/workflows/BIOLOGY_QUESTION_INGESTION_WORKFLOW.md`](_agents/workflows/BIOLOGY_QUESTION_INGESTION_WORKFLOW.md) |
 
 All three docs share an **identical canonical exam-metadata block** (`applicableExams`, `sourceType`, `examDetails` with per-exam shape table + canonical mappings for JEE Main / JEE Advanced / NEET). Subject-specific differences live only in LaTeX rules, question-nature decision-tree examples, and chapter/prefix tables. When any doc conflicts with anything else (including this file), the workflow doc wins.
 
@@ -116,6 +117,7 @@ Display ID prefixes are defined per subject in the workflow docs and frozen in [
 - Chemistry (e.g. `ATOM`, `MOLE`, `SALT`, `GOC`) — see chemistry workflow
 - Physics (e.g. `MIP`, `UNIT`, `K1D`, `NLM`, `SHM`, `ELST`) — see physics workflow
 - Math (e.g. `QUAD`, `CMPL`, `MTRX`, `LIMS`, `DFIN`, `PROB`) — see math workflow
+- Biology (e.g. `CUOL`, `MBIH`, `PIVR`, `EVOL`, `HMRP`, `BTPP`) — see biology workflow
 
 Those files are the single source of truth and must not be duplicated here.
 
@@ -144,7 +146,7 @@ For **math solutions**:
 - **Flag file**: any question that can't be solved (corrupt question text, missing radius, no option matches derivation) goes into `_agents/solution-flags/<PREFIX>-flags.md` via `force_flag` — never hand-wave a derivation to fit the stored option.
 - **Skill**: the `math-solution-writer` skill bundles this whole flow. Invoke it via `/math-solution-writer` or trigger by asking for math solutions.
 
-For Chemistry and Physics solutions, follow `chemistry-solution-workflow.md` and `physics-solution-workflow.md` respectively (parallel structure; the math doc is the most polished and is the model the others will catch up to).
+For Chemistry and Physics solutions, follow `chemistry-solution-workflow.md` and `physics-solution-workflow.md` respectively (parallel structure; the math doc is the most polished and is the model the others will catch up to). For Biology solutions, follow [`_agents/workflows/biology-solution-workflow.md`](_agents/workflows/biology-solution-workflow.md) — same 6-section structure but section 3 is `📖 NCERT Reference` instead of `🗺️ Working It Out`, and there's no LaTeX (biology questions are text + images, not derivations). See [ADR-008](_agents/adr/008-biology-subject-addition.md) for the design decisions behind the biology subject addition.
 
 ---
 
@@ -334,6 +336,9 @@ The taxonomy file is auto-updated by the dashboard at `admin.canvasclasses.in/ta
 | `display_id` generator | `packages/data/id-generator/index.ts` |
 | Difficulty utils (shared) | `packages/data/difficulty.ts` |
 | Math/LaTeX renderer (shared) | `packages/ui/MathRenderer.tsx` |
+| 2D molecule renderer (shared) | `packages/ui/MoleculeViewer.tsx` — uses openchemlib; consumed by organic-wizard + Live Books |
+| Live Books reader-side renderer (shared) | `packages/book-renderer/` — `PageRenderer`, `BlockRenderer`, 20 block renderers + 56 simulation files. Both the student `BookReader` and the admin editor's split-pane preview consume this package. App-route-local simulators (currently only `atomic-models`) are injected via `ExtraSimulatorsProvider` from `@canvas/book-renderer/simulators-context`. |
+| Admin Books editor | `apps/admin/features/admin/books-editor/BookWorkspace.tsx` (route shell: `apps/admin/app/books/page.tsx`). Asset upload: `apps/admin/app/api/v2/books/assets/upload/route.ts`. |
 | Adaptive engine (Crucible) | `apps/student/features/crucible/lib/adaptiveEngine.ts` |
 | Recommendation engine | `packages/persona/recommendation-engine.ts` (+ read-side contract in `packages/persona/contract.ts`) |
 | Persona writer (mutation surface) | `packages/persona/writer.ts` |

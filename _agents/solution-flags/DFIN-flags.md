@@ -1,10 +1,10 @@
 # DFIN — Math Solution Flags
 
-_Last updated: 2026-05-20 06:28_
+_Last updated: 2026-05-20 06:36_
 
 ## 🔴 Blocking — no solution written
 
-- **DFIN-169** — validation failed: uses forbidden $$ display math
+_(none)_
 
 ## 🟡 Needs verification — solution written, uncertain
 

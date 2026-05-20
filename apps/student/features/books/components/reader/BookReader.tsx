@@ -7,7 +7,19 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import Link from 'next/link';
-import PageRenderer from '../renderer/PageRenderer';
+import PageRenderer from '@canvas/book-renderer/PageRenderer';
+import { ExtraSimulatorsProvider } from '@canvas/book-renderer/simulators-context';
+import dynamic from 'next/dynamic';
+
+// `atomic-models` is the one book simulator that lives outside the renderer
+// package (it's a 555-line component in apps/student/app/physical-chemistry-hub/
+// with app-local UI dependencies). Inject it into the renderer via context so
+// the in-package SimulationBlockRenderer can still resolve it by id.
+const AtomicModels = dynamic(
+  () => import('@/app/physical-chemistry-hub/AtomicModels'),
+  { ssr: false }
+);
+const EXTRA_SIMULATORS = { 'atomic-models': AtomicModels };
 import { Book, BookPage, BlockType, ContentBlock } from '@canvas/data/types/books';
 import { useBookProgress } from '@/features/books/hooks/useBookProgress';
 import { useBookBookmarks } from '@/features/books/hooks/useBookBookmarks';
@@ -255,10 +267,12 @@ export default function BookReader({
 
         {/* ── Page content ──────────────────────────────────────────────── */}
         <main className="flex-1 min-w-0">
-          <PageRenderer
-            page={page}
-            onQuizPass={handleQuizPass}
-          />
+          <ExtraSimulatorsProvider value={EXTRA_SIMULATORS}>
+            <PageRenderer
+              page={page}
+              onQuizPass={handleQuizPass}
+            />
+          </ExtraSimulatorsProvider>
         </main>
       </div>
 

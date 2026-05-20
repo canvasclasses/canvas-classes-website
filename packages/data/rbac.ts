@@ -37,6 +37,9 @@ export function getSubjectFromChapterId(chapterId: string): Subject | null {
   if (chapterId.startsWith('ma_')) {
     return 'mathematics';
   }
+  if (chapterId.startsWith('bio9_') || chapterId.startsWith('bio11_') || chapterId.startsWith('bio12_')) {
+    return 'biology';
+  }
   return null;
 }
 
