@@ -397,7 +397,7 @@ async function fetchTopPYQs(examLevel?: 'mains' | 'advanced'): Promise<Question[
       tags: ((q.metadata?.tags as Array<{ tag_id: string; weight: number }>) || []),
       // Canonical fields — pass through so client-side filters can read modern values directly.
       sourceType: q.metadata?.sourceType as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined,
-      examDetails: q.metadata?.examDetails as { exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'; year?: number; month?: string; phase?: string; shift?: string; paper?: string; question_number?: string } | undefined,
+      examDetails: q.metadata?.examDetails as { exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'; year?: number; month?: string; phase?: string; shift?: string; paper?: string } | undefined,
       applicableExams: q.metadata?.applicableExams as Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'> | undefined,
       // Legacy + computed (kept for back-compat).
       is_pyq: q.metadata?.sourceType === 'PYQ' || q.metadata?.is_pyq || false,
@@ -436,7 +436,7 @@ async function fetchQuestions(chapterIds: string[], limit?: number, topPYQOnly?:
       tags: ((q.metadata?.tags as Array<{ tag_id: string; weight: number }>) || []),
       // Canonical fields — pass through so client-side filters can read modern values directly.
       sourceType: q.metadata?.sourceType as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined,
-      examDetails: q.metadata?.examDetails as { exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'; year?: number; month?: string; phase?: string; shift?: string; paper?: string; question_number?: string } | undefined,
+      examDetails: q.metadata?.examDetails as { exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'; year?: number; month?: string; phase?: string; shift?: string; paper?: string } | undefined,
       applicableExams: q.metadata?.applicableExams as Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'> | undefined,
       // Legacy + computed (kept for back-compat).
       is_pyq: q.metadata?.sourceType === 'PYQ' || q.metadata?.is_pyq || false,

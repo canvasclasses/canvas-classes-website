@@ -223,7 +223,6 @@ async function main() {
                 exam: q.metadata?.examDetails?.exam || null,
                 examYear: q.metadata?.examDetails?.year ?? q.metadata?.exam_source?.year ?? null,
                 examShift: q.metadata?.examDetails?.shift || q.metadata?.exam_source?.shift || null,
-                examQuestionNumber: q.metadata?.examDetails?.question_number || null,
             });
         }
 

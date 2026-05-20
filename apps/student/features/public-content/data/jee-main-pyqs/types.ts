@@ -26,7 +26,6 @@ export interface JmpQuestion {
     exam: string | null;
     examYear: number | null;
     examShift: string | null;
-    examQuestionNumber: string | null;
 }
 
 export interface JmpChapterMeta {

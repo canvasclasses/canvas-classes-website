@@ -72,7 +72,6 @@ export interface AdminQuestion {
       phase?: string;
       shift?: string;
       paper?: string;
-      question_number?: string;
     };
   };
   status: 'draft' | 'review' | 'published' | 'archived';

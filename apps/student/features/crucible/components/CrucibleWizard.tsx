@@ -141,7 +141,7 @@ function mapApiToQuestion(q: ApiQuestion): Question {
       // Canonical fields — pass through so client-side filters (isJeeMainPyq etc.)
       // can read modern values directly without falling back to legacy regex.
       sourceType: q.metadata?.sourceType as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined,
-      examDetails: q.metadata?.examDetails as { exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'; year?: number; month?: string; phase?: string; shift?: string; paper?: string; question_number?: string } | undefined,
+      examDetails: q.metadata?.examDetails as { exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'; year?: number; month?: string; phase?: string; shift?: string; paper?: string } | undefined,
       applicableExams: q.metadata?.applicableExams as Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'> | undefined,
       // Legacy + computed (kept for back-compat — clients reading these still work).
       is_pyq: q.metadata?.sourceType === 'PYQ' || q.metadata?.is_pyq || false,
@@ -996,7 +996,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
           tags: ((q.metadata?.tags as Array<{ tag_id: string; weight: number }>) || []),
           // Canonical fields — pass through so client-side filters can read modern values directly.
           sourceType: q.metadata?.sourceType as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined,
-          examDetails: q.metadata?.examDetails as { exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'; year?: number; month?: string; phase?: string; shift?: string; paper?: string; question_number?: string } | undefined,
+          examDetails: q.metadata?.examDetails as { exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'; year?: number; month?: string; phase?: string; shift?: string; paper?: string } | undefined,
           applicableExams: q.metadata?.applicableExams as Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'> | undefined,
           // Legacy + computed (kept for back-compat).
           is_pyq: q.metadata?.sourceType === 'PYQ' || q.metadata?.is_pyq || false,
