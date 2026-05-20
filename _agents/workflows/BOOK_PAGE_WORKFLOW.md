@@ -811,6 +811,54 @@ Do not force cross-subject links. One natural connection is better than three st
 
 ---
 
+## 4D. Topic Containment — One Page, One Sub-Topic, Fully Closed
+
+**The single most important structural rule.** Every page is a self-contained learning unit. A student who reads only this page should leave with one sub-topic *fully understood and tested*. Nothing carries over.
+
+### The Rule
+
+- **One page = one sub-topic.** Pick the smallest coherent idea that can be taught and tested in a single sitting.
+- **Finish what you start on the page itself.** All worked examples, all sub-cases, all definitions, and the closing quiz for *this* sub-topic must live on this page. Never split a sub-topic across two pages — never write *"we'll see this in the next page"* mid-explanation.
+- **Never carry content forward.** If a NCERT exercise has 4 parts and they all belong to the same sub-topic, all 4 parts must appear on the same page. If parts (i) and (ii) belong to a different sub-topic than (iii) and (iv), they belong on different pages — but each page still closes its own sub-topic completely.
+- **Every page ends with an `inline_quiz` that tests *this page's* sub-topic.** The quiz is the page's closure mechanism: it confirms the learner has finished the sub-topic before they move on.
+
+### Source images are a flow guide, not a page count
+
+When working from NCERT (or other) source images, treat them as a *map of the chapter's flow*, not a 1-to-1 page-count specification. **The book may take 2 source pages to cover a sub-topic, or 1 source page may contain 3 distinct sub-topics — split or merge as the topic demands.** Our digital pages are organised by *concept boundary*, not by where a printed page break happens to fall.
+
+### How to pick a sub-topic boundary
+
+Ask:
+1. *Can this idea be taught in 8–15 blocks without referring to "what comes next"?*
+2. *Can a learner pass a 3–4 question quiz on it after reading just this page?*
+3. *Does it have a clear opening question and a clear closing answer?*
+
+If yes to all three — it's one sub-topic, one page. If the answer to #1 is "no", split it into two sub-topics, two pages. If the answer to #2 is "no", you are mixing two sub-topics — separate them.
+
+### Examples (right vs wrong)
+
+| ❌ Wrong | ✅ Right |
+|---|---|
+| Page 13 introduces $y = ax + b$ and starts solving Example 11; Page 14 finishes Example 11 and starts Exercise Set 2.5 | Page 13: Finding $a, b$ from two points — full method + Example 11 + 2 more worked examples + quiz. Page 14: Practice on Exercise Set 2.5 — its own sub-topic, its own quiz. |
+| A page on growth/decay covers Q1, Q2, Q3 (i) and stops. Q3 (ii), (iii) and Q4 spill onto the next page. | Either the next page covers Q3 (ii)+(iii)+Q4 as one cohesive sub-topic ("Population tables & telecom decay") with its own quiz, or Q3 fits entirely on the previous page. Never split one NCERT question across pages. |
+
+---
+
+## 4E. Simulation Reuse — Prefer Existing Components
+
+Building a new simulation component is expensive and adds maintenance surface. **Default to reusing existing simulations.**
+
+### The Rule
+
+1. **Before proposing a new simulation, scan `components/books/renderer/blocks/simulations/` for an existing component that can be repurposed** — even loosely. A "linear pattern explorer" can serve "linear relationship builder" duties; a "Cartesian plotter" can serve "line graphing" duties; a "growth-decay visualizer" can serve any constant-step decay problem.
+2. **If an existing sim is a 70% fit, reuse it.** Cite the topic that contextualises it on the page (in the simulation block's `title` field) — the same component can headline different lessons.
+3. **Build a new simulation only if** the existing library has *nothing* that demonstrates the core mechanic the page is teaching, AND the page would be substantively weaker without an interactive element.
+4. **A page does not need a simulation** if no existing sim fits and a new one is not strictly necessary. A strong worked example + reasoning prompt + quiz is sufficient.
+
+When in doubt, reuse — and lean on the page's text and worked examples to carry the conceptual load.
+
+---
+
 ## 5. Tone & Style Guide
 
 ### Voice

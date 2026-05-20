@@ -12,7 +12,7 @@ export default function TimelineBlockRenderer({ block }: { block: TimelineBlock 
           </p>
         )}
         <div className="relative pl-6 border-l border-white/20 flex flex-col gap-5">
-          {block.events.map((event, idx) => (
+          {(block.events ?? []).map((event, idx) => (
             <div key={event.id} className="relative">
               {/* Dot */}
               <div className="absolute -left-[1.625rem] top-1 w-3 h-3 rounded-full
@@ -44,19 +44,19 @@ export default function TimelineBlockRenderer({ block }: { block: TimelineBlock 
         </p>
       )}
       <div className="flex items-start gap-0 min-w-max">
-        {block.events.map((event, idx) => (
+        {(block.events ?? []).map((event, idx) => (
           <div key={event.id} className="flex items-start">
             <div className="flex flex-col items-center">
               {/* Dot */}
               <div className="w-3 h-3 rounded-full bg-gradient-to-br from-orange-500 to-amber-400 shrink-0 mt-1" />
               {/* Connector line */}
-              {idx < block.events.length - 1 && (
+              {idx < (block.events ?? []).length - 1 && (
                 <div className="w-px h-full bg-white/20 hidden" />
               )}
             </div>
             <div className="relative flex flex-col items-start">
               {/* Horizontal connector */}
-              {idx < block.events.length - 1 && (
+              {idx < (block.events ?? []).length - 1 && (
                 <div className="absolute top-2 left-1.5 w-16 h-px bg-white/20" />
               )}
               <div className="ml-2 mr-20 max-w-[120px]">

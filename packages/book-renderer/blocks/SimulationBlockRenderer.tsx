@@ -240,6 +240,63 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/FloorPlanMeasurerSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
+  'quadrant-classifier': dynamic(
+    () => import('./simulations/QuadrantClassifierSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'door-swing-checker': dynamic(
+    () => import('./simulations/DoorSwingCheckerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'bathroom-fixture-placer': dynamic(
+    () => import('./simulations/BathroomFixturePlacerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'distance-explorer': dynamic(
+    () => import('./simulations/DistanceExplorerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'reflection-explorer': dynamic(
+    () => import('./simulations/ReflectionExplorerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'midpoint-builder': dynamic(
+    () => import('./simulations/MidpointBuilderSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'circle-and-locus-explorer': dynamic(
+    () => import('./simulations/CircleAndLocusExplorerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // ── Class 9 Mathematics — Chapter 2: Introduction to Linear Polynomials ──
+  'expression-builder': dynamic(
+    () => import('./simulations/ExpressionBuilderSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'wire-rectangle-explorer': dynamic(
+    () => import('./simulations/WireRectangleExplorerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'polynomial-classifier': dynamic(
+    () => import('./simulations/PolynomialClassifierSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'linear-pattern-explorer': dynamic(
+    () => import('./simulations/LinearPatternExplorerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'input-output-machine': dynamic(
+    () => import('./simulations/InputOutputMachineSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'tile-pattern-explorer': dynamic(
+    () => import('./simulations/TilePatternExplorerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'growth-decay-visualizer': dynamic(
+    () => import('./simulations/GrowthDecayVisualizerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
 };
 
 function SimulationSkeleton() {
