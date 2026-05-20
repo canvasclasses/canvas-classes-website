@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { unstable_cache } from 'next/cache';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { QuestionV2 } from '@canvas/data/models/Question.v2';
+import { getTopicSortKey, hasNcertOrder } from '@/features/crucible/lib/ncertTopicOrder';
 
 // PUBLIC: no auth required.
 //
@@ -43,6 +44,13 @@ function getDemoQuestionsForChapter(chapterId: string) {
       // Hard cap: 50. The curation target is ~25 per chapter; the cap is a
       // safety net in case the flag gets over-applied. The client may slice
       // further if needed.
+      //
+      // Sort: NCERT topic order by primary tag (tags[0]) with display_id as
+      // tiebreaker, so the side-by-side panel walks through concepts in the
+      // same sequence as the handwritten notes PDF. Chapters without an
+      // NCERT order entry fall back to pure display_id sort. Sort happens
+      // in-memory after fetch — the result set is ≤50 docs and Mongo can't
+      // express positional-array ordering as cheaply.
       const docs = await QuestionV2.find(
         {
           'metadata.chapter_id': chapterId,
@@ -54,6 +62,7 @@ function getDemoQuestionsForChapter(chapterId: string) {
           display_id: 1,
           type: 1,
           'metadata.difficultyLevel': 1,
+          'metadata.tags': 1,
           'question_text.markdown': 1,
           'options.id': 1,
           'options.text': 1,
@@ -65,21 +74,32 @@ function getDemoQuestionsForChapter(chapterId: string) {
           'solution.text_markdown': 1,
         }
       )
-        .sort({ display_id: 1 })
         .limit(50)
         .lean();
 
       interface RawDoc {
         display_id: string;
         type: QuickTestQuestion['type'];
-        metadata?: { difficultyLevel?: number };
+        metadata?: {
+          difficultyLevel?: number;
+          tags?: Array<{ tag_id: string; weight: number }>;
+        };
         question_text?: { markdown?: string };
         options?: Array<{ id?: string; text?: string; is_correct?: boolean }>;
         answer?: QuickTestQuestion['answer'];
         solution?: { text_markdown?: string };
       }
 
-      const questions: QuickTestQuestion[] = (docs as unknown as RawDoc[]).map((d) => ({
+      const sortedDocs = [...(docs as unknown as RawDoc[])].sort((a, b) => {
+        if (hasNcertOrder(chapterId)) {
+          const ai = getTopicSortKey(chapterId, a.metadata?.tags);
+          const bi = getTopicSortKey(chapterId, b.metadata?.tags);
+          if (ai !== bi) return ai - bi;
+        }
+        return a.display_id.localeCompare(b.display_id);
+      });
+
+      const questions: QuickTestQuestion[] = sortedDocs.map((d) => ({
         display_id: d.display_id,
         type: d.type,
         difficultyLevel: d.metadata?.difficultyLevel ?? 3,
