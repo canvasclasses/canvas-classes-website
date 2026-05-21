@@ -39,6 +39,10 @@ build
 *.bak
 *.bak.*
 
+# Generated script output — keep the scripts in git, never their output artifacts
+scripts/output/
+scripts/image_candidates.md
+
 # debug
 npm-debug.log*
 yarn-debug.log*

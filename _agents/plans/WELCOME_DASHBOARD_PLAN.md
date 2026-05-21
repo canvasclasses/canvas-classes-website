@@ -1,19 +1,25 @@
 # Personalised Welcome Dashboard — Design Plan
 
-**Owner:** Canvas Classes · **Status:** Plan ready for build · **Target:** Pre-paid-launch (within 30 days)
+**Owner:** Canvas Classes · **Status:** API shipped, UI pending · **Last revised:** 2026-05-22
 
 The returning student should land on something that feels like *their* product, not a chapter index. This document is the build brief.
+
+> **As of 2026-05-22:** the `/api/v2/user/welcome` route ships at
+> [`apps/student/app/api/v2/user/welcome/route.ts`](../../apps/student/app/api/v2/user/welcome/route.ts);
+> the UI component (`CrucibleWelcomeView.tsx`) has NOT been built yet.
+> `/the-crucible` still renders the chapter index. Build order §7 is still
+> the active TODO.
 
 ---
 
 ## 1. Where it lives
 
 - **Route:** `/the-crucible` (today the chapter index — replace it).
-- **Component:** `app/the-crucible/components/CrucibleWelcomeView.tsx` (new). Render conditionally inside the existing `app/the-crucible/page.tsx`:
+- **Component:** `apps/student/features/crucible/components/CrucibleWelcomeView.tsx` (new). Render conditionally inside the existing `apps/student/app/the-crucible/page.tsx`:
   - Logged out → keep current marketing landing (`CrucibleLanding.tsx`).
   - Logged in, **no prior attempts** → first-visit welcome (see §6).
   - Logged in, **has attempts** → personalised welcome dashboard.
-- **Data source:** `GET /api/v2/user/welcome` (already shipped — see [route.ts](app/api/v2/user/welcome/route.ts)). Single round-trip; the page should feel instant on cold load.
+- **Data source:** `GET /api/v2/user/welcome` (already shipped — see [route.ts](../../apps/student/app/api/v2/user/welcome/route.ts)). Single round-trip; the page should feel instant on cold load.
 
 ---
 
@@ -59,7 +65,7 @@ The returning student should land on something that feels like *their* product, 
 ## 3. Data contract
 
 The `/api/v2/user/welcome` route returns `WelcomePayload` (shape exported from
-[route.ts](app/api/v2/user/welcome/route.ts)). Fields are stable — UI binds against them
+[route.ts](../../apps/student/app/api/v2/user/welcome/route.ts)). Fields are stable — UI binds against them
 directly. Empty / null fields drive empty-state rendering; never block the
 page on a single panel's data.
 
@@ -157,9 +163,9 @@ Estimated effort: 2 days for one engineer.
 
 When livebook chapters and lecture content are ready, flipping the engine on requires only these steps — UI does not change:
 
-1. Populate the `resource_links` Mongo collection (admin authoring tool or CSV import — see [ResourceLink.ts](lib/models/ResourceLink.ts)).
+1. Populate the `resource_links` Mongo collection (admin authoring tool or CSV import — see [ResourceLink.ts](../../packages/data/models/ResourceLink.ts)).
 2. (Optional) Backfill `Question.v2.solution.learn_more` on key questions.
-3. Replace the stub block in [recommendationEngine.ts](lib/recommendationEngine.ts) `getRecommendations` with the real algorithm (algorithm is documented in the file header).
+3. Replace the stub block in [recommendation-engine.ts](../../packages/persona/recommendation-engine.ts) `getRecommendations` with the real algorithm (algorithm is documented in the file header).
 4. The "For you" row populates automatically; the placeholder copy disappears because `engine_status` returns `'active'`.
 
 That is all.

@@ -1,35 +1,44 @@
 # Crucible — Architecture & Persona Reference
 
-**Status:** Canonical reference. Read this before changing any Crucible code.
-**Owner:** Canvas Classes · **Last revised:** 2026-05-16 (Phase 5 admin split)
+**Status:** Canonical reference for Crucible domain logic. Read this before changing any persona-touching code.
+**Owner:** Canvas Classes · **Last revised:** 2026-05-22 (post Phase 5; persona package split; biology subject added)
 
-> If anything in another doc, comment, or commit message contradicts this file,
-> **this file wins**. The fix is to update this doc — never to silently diverge.
-> Updates are allowed and encouraged, but they must be explicit and justified.
+> **Scope of this doc:** the *domain logic* — practice modes, the tiered
+> signal model, the persona substrate (`UserProgress`, `StudentChapterProfile`),
+> the recommendation bridge, and the invariants that must not drift.
+>
+> For *whole-app topology* — apps, packages, routes, data plane, auth model —
+> see [`/ARCHITECTURE.md`](../ARCHITECTURE.md). That file is the bird's-eye
+> view; this file is the persona-pipeline deep-dive.
+>
+> If the two disagree, this file wins for persona; `ARCHITECTURE.md` wins for
+> topology. Updates are allowed and encouraged, but they must be explicit and
+> justified.
 
 ---
 
-## 0a. Monorepo topology (Phase 5+)
+## 0a. Where Crucible lives in the monorepo
 
-Crucible is served by **two Next.js apps** that share the same MongoDB cluster:
+Crucible is served by **two Next.js apps** that share the same MongoDB cluster (Phase 5 split, shipped):
 
-| App | Host | Owns |
+| App | Host | Owns Crucible surface |
 |---|---|---|
-| `apps/student/` | `canvasclasses.in` | Student UI (`/the-crucible/*`), books reader, public/student APIs |
-| `apps/admin/` | `admin.canvasclasses.in` | Operator UI (`/admin/*`, `/dashboard`, `/preview`) + admin write APIs |
+| `apps/student/` | `canvasclasses.in` | Student UI at `/the-crucible/*`, server actions, student-only `/api/v2/user/*` write routes, public-read question routes |
+| `apps/admin/` | `admin.canvasclasses.in` | Question editor at `/crucible`, mock-tests editor, flag/reclassify routes, admin landing |
 
-Admin's API surface lives at `apps/admin/app/api/v2/*` and is gated by `apps/admin/middleware.ts` (Supabase + `ADMIN_EMAILS` allow-list) plus per-route `requireAdmin()` / `getAuthenticatedUser() + isAdmin()` (defense in depth). **Admin write methods are unreachable from the public `canvasclasses.in` host** — they live on a different network deployment.
+Admin's API surface lives at `apps/admin/app/api/v2/*` and is gated by `apps/admin/middleware.ts` (Supabase + `ADMIN_EMAILS` allow-list) plus per-route `requireAdmin()` / `getAuthenticatedUser() + isAdmin()` (defense in depth). **Admin write methods are unreachable from the public `canvasclasses.in` host** — they live on a different network deployment. See ADR-002.
 
-Both apps connect to the same `crucible-cluster` MongoDB instance via `@canvas/data` Mongoose models. The DB is shared today; the future second layer of defense (Phase 5.5d) is to split MongoDB users so the student app gets read-only access to admin-managed collections.
+Both apps connect to the same `crucible-cluster` MongoDB instance via `@canvas/data` Mongoose models. The DB is shared today; the future second layer of defense (Phase 5.5d) is to split MongoDB users so the student app gets read-only access to admin-managed collections — deferred until Phase 5 is observed stable.
 
-See `_agents/plans/PHASE_5_ADMIN_SPLIT.md` for the decision record.
+Persona logic — the `applyAttemptToProgress` mutation surface, recommendation engine, profile engine, contract constants — lives in `@canvas/persona` (`packages/persona/`). Both apps import from it; neither app re-implements it. See §4.2 below for the package split.
 
 ---
 
 ## 0. Why this file exists
 
-Crucible is a JEE/NEET Chemistry question bank, but the *product* is the
-**student persona** it builds and the personalised recommendations it will
+Crucible is a JEE/NEET/CBSE question bank covering **Chemistry, Physics,
+Maths, and Biology** (biology added 2026, see ADR-008), but the *product* is
+the **student persona** it builds and the personalised recommendations it will
 serve from that persona. Several pieces (data model, write paths, schema
 shape, UX patterns) only make sense in the context of that downstream goal,
 and over the past months they have been broken at least once each by changes
@@ -55,8 +64,9 @@ Re-read it first. Then come back and update it as part of your change.
 Crucible is not a quiz app. It is a **per-student persona engine** that:
 
 1. Captures every meaningful signal a student emits while practising
-   chemistry (correctness, time, difficulty, concept tags, recency,
-   skip-and-view-solution, bookmarks, marked-for-review).
+   (correctness, time, difficulty, concept tags, recency,
+   skip-and-view-solution, bookmarks, marked-for-review) — across all
+   four subjects.
 2. Aggregates those signals into a multi-dimensional profile of which
    concepts they're strong in, weak in, stale on, and improving on.
 3. Uses that profile to surface *what to do next* — practice the right
@@ -104,7 +114,7 @@ recommendation bridge broken), it is wrong even if it ships and looks fine.
                         ▼
               ┌──────────────────────┐
               │ Recommendation       │  ← bridge in place, gates closed
-              │ Engine (stub today)  │     (apps/student/lib/recommendationEngine.ts)
+              │ Engine (stub today)  │     (packages/persona/recommendation-engine.ts)
               └──────────────────────┘
                         │
                         ▼
@@ -118,9 +128,10 @@ recommendation bridge broken), it is wrong even if it ships and looks fine.
 
 | Layer | Status |
 |---|---|
-| V2 question system (`questions_v2`, `/api/v2/*`, `/crucible/admin/*`) | **Active — only system to touch** |
-| V1 question system (`questions`, `/api/questions/*`, `/the-crucible/admin/*`) | **Deprecated — do not write to** |
-| Recommendation engine algorithm | **Stub** (returns `[]`); bridge wired |
+| V2 question system (`questions_v2`, student `/api/v2/*`, admin `/api/v2/*`, admin UI at `admin.canvasclasses.in/crucible`) | **Active — only system to touch** |
+| V1 question system (`questions` collection, `/api/questions/*` routes, `/the-crucible/admin/*` pages) | **Retired — collection still in DB, code paths deleted. Never reference.** |
+| Recommendation engine algorithm | **Stub** (returns `[]`); bridge wired — see §6 |
+| `resource_links` collection | **Empty** — schema in place, populated when livebook content lands |
 | Premium / payment gating | **Not built** — launch blocker |
 | Funnel analytics events | **Sparse** — only `chapter_opened`, `test-session`, `test-results` |
 
@@ -302,9 +313,9 @@ interface IConceptMastery {
 
 All three writers — the per-attempt POST `/api/v2/user/progress/route.ts`, the
 batch POST `/api/v2/user/progress/batch/route.ts`, and the Crucible server
-action `apps/student/app/crucible/actions/progress.ts` — call
+action `apps/student/features/crucible/server-actions/progress.ts` — call
 `applyAttemptToProgress(progress, attempt)` from
-`apps/student/lib/personaWriter.ts` and then `await progress.save()`. The
+`packages/persona/writer.ts` and then `await progress.save()`. The
 helper produces exactly this shape, with `tag_name` looked up server-side via
 `getTagName(tag_id)` from `packages/data/taxonomy/lookup.ts`. All three honour
 the tier:
@@ -332,12 +343,31 @@ stay correct after the relabel. No data is deleted.
 
 If a new aggregate is needed, *extend* this interface — don't fork it.
 
+#### The persona package split
+
+The `@canvas/persona` package separates the *mutation surface* from the
+*pure value transition*:
+
+| File | Role | When to use |
+|---|---|---|
+| `packages/persona/writer.ts` | **Canonical mutation surface.** `applyAttemptToProgress(progressDoc, attempt)` mutates a hydrated Mongoose `UserProgress` document in place. Caller saves. | All write paths (route handlers, server actions, batch endpoints, reclassify PATCH). |
+| `packages/persona/user-progress-updater.ts` | **Pure value-oriented core** of writer.ts. `computeUserProgressUpdate(snapshot, attempt): UserProgressUpdate` — takes a plain snapshot, returns the delta. No I/O. | Tests, admin simulators, AI replay, anything that needs to *compute* the next state without writing it. |
+| `packages/persona/contract.ts` | **Read-side constants + classifiers** — `ALLOWED_TIERS`, `MASTERY_THRESHOLDS`, `PROFICIENCY_ORDER`, `resolveConfidenceTier`, `computeChapterMasteryLevel`, `computeProficiencyLevel`, `shouldDropBack`, `computeDominantWeakness`. | Dashboards, analytics, anywhere that *reads* the persona and needs to classify it. |
+| `packages/persona/profile-engine.ts` | `StudentChapterProfile` updater. | Guided-mode write path (and eventually browse/test — see §4.3 known gap). |
+| `packages/persona/recommendation-engine.ts` | `getRecommendations`, `getResourceForConcept`. Stub today; algorithm gated. | `/api/v2/user/recommendations` route only. |
+| `packages/persona/scoring.ts` | `isAnswerCorrect(question, answer)` — pure correctness evaluator (MCQ, fill-in-the-blank, range-check). | Any caller that needs to score an answer without persisting it. |
+
+**Invariant:** `writer.ts` is the canonical mutation surface; nothing else
+mutates `UserProgress`. `user-progress-updater.ts` exists so non-write
+callers (tests, replay) don't need to fake out Mongoose. Do not invert this
+— never write `$set` against `userprogress` from outside `writer.ts`.
+
 ### 4.3 `StudentChapterProfile` — the multi-dimensional profile
 
 Lives in `packages/data/models/StudentChapterProfile.ts`. One doc per (user, chapter)
 pair. Tracks dimensions richer than concept_mastery — microConcept-level
 proficiency, dominant weakness, accuracy trends. Updated by the guided-
-practice flow via `lib/profileEngine.ts`.
+practice flow via `packages/persona/profile-engine.ts`.
 
 **Known gap (audit #5):** browse and test modes do not currently write to
 this. The fancy persona is empty for ~90% of student traffic. The plan is
@@ -449,7 +479,7 @@ The bridge has **three components**, all in place; the algorithm is gated.
 
 1. **`ResourceLink` model** (`packages/data/models/ResourceLink.ts`) — the junction
    table. Empty today; populated when livebook/lecture content is authored.
-2. **`recommendationEngine` module** (`apps/student/lib/recommendationEngine.ts`) —
+2. **Recommendation engine module** (`packages/persona/recommendation-engine.ts`) —
    typed `getRecommendations(userId, opts)` and `getResourceForConcept(tagId)`.
    Stub implementation returns `[]` / `null`. The intended algorithm is
    documented in the file header.
@@ -485,24 +515,32 @@ optional — the engine falls back to topic-level ResourceLink rows.
 
 ### 7.1 Canonical auth — only one path
 
-**Every** mutating route under `/api/v2/*` must call:
+**Every** mutating route under `/api/v2/*` (in either app) must use the
+canonical helpers from its app's own `lib/auth.ts`:
 
 ```ts
-import { getUserIdFromRequest } from '@/lib/auth';
-const userId = await getUserIdFromRequest(req);
-if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+// In a route handler under apps/student/app/api/v2/... or apps/admin/app/api/v2/...
+import { getAuthenticatedUser } from '@/lib/auth';
+
+const user = await getAuthenticatedUser(request);
+if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 ```
 
-`getUserIdFromRequest` (and `getAuthenticatedUser`) supports **both** the
-`Authorization: Bearer <token>` header (used by client-side fetch) and
-session cookies (used by SSR and `navigator.sendBeacon`). Do not add a new
-inline `getUserId` function in any route. Do not import `createClient`
-from `@supabase/supabase-js` for auth purposes — only for queries against
-public tables.
+`getAuthenticatedUser(request)` supports **both** the `Authorization: Bearer
+<token>` header (used by client-side fetch) and session cookies (used by SSR
+and `navigator.sendBeacon`). Do not add a new inline `getUserId` function in
+any route. Do not import `createClient` from `@supabase/supabase-js` for
+auth purposes — only for queries against public tables.
+
+For shared service handlers in `@canvas/services`, auth comes through the
+injected `ServiceDeps` (ADR-001). Service-level admin gating uses
+`requireAdmin(req, deps)` from `packages/services/auth.ts`. App-side
+wrappers stay thin and only pick which deps to inject.
 
 CLAUDE.md §8.3 forbids `process.env.NODE_ENV === 'development'` as an auth
 bypass — Vercel previews trigger that condition. Use `isLocalhostDev()`
-from `lib/bookAuth.ts` if you genuinely need a localhost-only path.
+from the app's `lib/bookAuth.ts` (student) or `lib/adminAuth.ts` (admin) if
+you genuinely need a localhost-only path.
 
 ### 7.2 Endpoint catalog
 
@@ -565,14 +603,15 @@ incident is the reason it's listed.
 |---|---|---|
 | All persistence is immediate on submit | Tab-close data loss | grep for `Save & Exit`, `Save Progress`, `setShowSaveModal`. None should gate persistence. |
 | Every attempt POST carries `confidence` + (for browse-style modes) `session_id` | Tier model collapses without it | grep new POSTs to `/api/v2/user/progress*` — they must include `confidence` |
-| Mastery counters (`times_attempted`, `accuracy_percentage`, `chapter_progress`, `stats.total_*`) only move on HIGH-confidence attempts | Browse signal poisons mastery | Read `applyAttemptToProgress` in `apps/student/lib/personaWriter.ts` — every counter increment is gated on tier |
+| Mastery counters (`times_attempted`, `accuracy_percentage`, `chapter_progress`, `stats.total_*`) only move on HIGH-confidence attempts | Browse signal poisons mastery | Read `applyAttemptToProgress` in `packages/persona/writer.ts` — every counter increment is gated on tier |
 | Test-mode attempts are always HIGH; browse-mode attempts are always MEDIUM (default) or LOW (casual-tagged) | Wrong tier = wrong counter set = wrong recommendations | grep TestView for `confidence:` — must be `'high'`. grep BrowseView — must be `'medium'`. |
 | `concept_mastery` writes use the canonical shape with BOTH counter sets | Persona corruption | Diff against `IConceptMastery` in `packages/data/models/UserProgress.ts` — must include `exposure_count`. |
-| All `/api/v2/*` mutating routes use `getUserIdFromRequest` | Auth drift across 9+ routes | grep `function getUserId` in `app/api/v2/` — must return zero hits. |
-| V1 (`questions` collection, `/the-crucible/admin/*`) is read-only / untouched | Migration nightmare | grep new code for `models.ts` (V1) or `/api/questions/`. |
+| All `/api/v2/*` mutating routes use the canonical `getAuthenticatedUser` from the app's `lib/auth.ts` | Auth drift across 30+ routes | grep `function getUserId\|function getAuthenticatedUser` inside route files — must be zero (helpers come from `lib/auth.ts` only). |
+| `UserProgress` is mutated only through `applyAttemptToProgress` in `packages/persona/writer.ts` | Bypass = silent persona corruption | grep `UserProgress.updateOne\|UserProgress.findOneAndUpdate\|$set.*concept_mastery` outside `packages/persona/` — must be zero. |
+| V1 (`questions` collection, `/api/questions/*`, any `the-crucible/admin/*` paths) is retired and never referenced | Code paths deleted; collection still in DB | grep new code for `models.ts` (V1) or `/api/questions/` — must be zero. |
 | Taxonomy edits go through the dashboard, not direct file edits | Source-of-truth drift | If `taxonomyData_from_csv.ts` is touched in a PR, dashboard usage must explain why. |
 | Submit-then-reveal across all modes | Polluted correctness signal | New question types must replicate `BrowseView.onSelectOption` / `onSubmit` separation. |
-| The recommendation bridge stays wired even while empty | UI-side regressions when engine activates | `/api/v2/user/recommendations` and `apps/student/lib/recommendationEngine.ts` must keep returning the same contract; only the inner algorithm changes. |
+| The recommendation bridge stays wired even while empty | UI-side regressions when engine activates | `/api/v2/user/recommendations` and `packages/persona/recommendation-engine.ts` must keep returning the same contract; only the inner algorithm changes. |
 | Chapter accent colour is derived from `currentChapter.category`, not hardcoded | Cross-chapter inconsistency | grep new screens for hardcoded `#fb923c` / `#7c3aed`. |
 | `NODE_ENV === 'development'` is never used as an auth bypass | Vercel preview leak | grep `NODE_ENV === 'development'` in any route handler — must be zero. |
 
@@ -602,9 +641,17 @@ bug.
   it, the casual-tag PATCH cannot find the attempts to relabel. Test and
   guided do not need session_id (their attempts are always HIGH and not
   reclassifiable).
-- **Local `getUserId` in a new route** because it's "just a small helper."
-  Drifts from the canonical version, often missing cookie auth, and now you
-  have 10 inline copies instead of 9.
+- **Local `getUserId` / `getAuthenticatedUser` in a new route** because it's
+  "just a small helper." Drifts from the canonical version, often misses
+  cookie auth (sendBeacon submits silently fail), and every inline copy is a
+  new place for the next auth-shape change to forget. Import from
+  `@/lib/auth` only.
+- **Writing directly to `UserProgress` from outside `@canvas/persona`.**
+  Tempting when "I just need to bump one counter" — but every direct write
+  has historically diverged from the IConceptMastery contract within a
+  month. Use `applyAttemptToProgress` from `packages/persona/writer.ts`. If
+  you need to compute next-state without writing (tests, replay), use
+  `computeUserProgressUpdate` from `packages/persona/user-progress-updater.ts`.
 - **Sending the client's `score` field** straight to MongoDB. Mass
   assignment — a malicious client can claim 100% on a 5-question test.
   Always recompute server-side from canonical answers.
@@ -681,12 +728,21 @@ from:
 
 - `CLAUDE.md` (project root) — top-level guidance for any agent working
   on the codebase.
-- New PRs touching `apps/student/app/the-crucible/`, `apps/student/app/crucible/admin/`,
-  `apps/student/app/api/v2/`, or `packages/data/models/UserProgress.ts` /
-  `packages/data/models/StudentChapterProfile.ts` / `apps/student/lib/recommendationEngine.ts`
-  should reference (and update) this file in the description.
+- `ARCHITECTURE.md` (project root) — whole-app topology; defers to this
+  file for persona/mode/recommendation invariants.
+- New PRs touching any of the following should reference (and update) this file:
+  - `apps/student/app/the-crucible/` (student Crucible UI)
+  - `apps/student/features/crucible/` (server actions, components)
+  - `apps/student/app/api/v2/user/*` (persona write paths)
+  - `apps/admin/app/crucible/` or `apps/admin/features/admin/components/QuestionAdmin.tsx` (admin editor)
+  - `packages/data/models/UserProgress.ts` / `StudentChapterProfile.ts` / `Question.v2.ts` / `ResourceLink.ts`
+  - Any file in `packages/persona/`
 
 Whenever you change anything in §3 (modes), §4 (data models), §5 (persona
 pipeline), §6 (recommendation bridge), §7 (auth/endpoints), §8 (UX
 principles), or §9 (invariants), update this file in the same PR. A doc
 that's stale by one PR is more harmful than no doc at all.
+
+For whole-app topology changes (new packages, new apps, new external
+services, ADR additions), update `ARCHITECTURE.md` instead — this file
+deliberately stays scoped to persona-pipeline concerns.

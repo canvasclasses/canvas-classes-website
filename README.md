@@ -1,46 +1,54 @@
-# Canvas Classes Website Remodel
+# Canvas Classes
 
-This project is a modern, responsive redesign of the Canvas Classes educational platform, built with Next.js 14, TypeScript, and Tailwind CSS.
+JEE / NEET / CBSE preparation platform. Next.js 15 + React 19 + TypeScript + Tailwind 4, MongoDB Atlas, Supabase auth, Cloudflare R2 assets.
 
-## 🚀 Technologies
+Two deployable apps, six shared packages, one MongoDB cluster.
 
-- **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **Icons**: [Lucide React](https://lucide.dev/)
+## Where to look first
 
-## 📂 Project Structure
+| If you want to… | Open |
+|---|---|
+| Understand the whole codebase | [`ARCHITECTURE.md`](./ARCHITECTURE.md) |
+| Read agent / AI rules + security invariants | [`CLAUDE.md`](./CLAUDE.md) (auto-loaded by Claude Code) |
+| Understand Crucible's persona pipeline | [`_agents/CRUCIBLE_ARCHITECTURE.md`](./_agents/CRUCIBLE_ARCHITECTURE.md) |
+| See architecture decisions | [`_agents/adr/`](./_agents/adr/) |
+| Run a workflow (ingest questions, author solutions, build a book page, etc.) | [`_agents/workflows/`](./_agents/workflows/) |
+| Operate (backups, analytics, RBAC) | [`docs/`](./docs/) · [`_agents/RBAC.md`](./_agents/RBAC.md) |
+
+## Quick start
+
+```bash
+npm install
+npm run dev         # student app at http://localhost:3000
+npm run lint        # ESLint across the workspace
+```
+
+The admin app (`apps/admin/`) runs separately — see its own `apps/admin/README.md`.
+
+## Layout
 
 ```
-app/
-├── components/         # Reusable UI components (Navbar, Sections, etc.)
-├── lectures/           # Detailed Video Lectures page
-├── quick-recap/        # Quick Recap videos module
-├── top-50-concepts/    # Top 50 Concepts module with PDF viewer
-├── 2-minute-chemistry/ # Short-form video module
-├── ncert-solutions/    # NCERT Solutions main & detail pages
-├── lib/                # Data fetching utilities and types
-└── api/                # API Routes for handling data requests
+apps/
+  student/      canvasclasses.in        — public + student APIs
+  admin/        admin.canvasclasses.in  — operator console
+packages/
+  data/         Mongoose models, taxonomy, RBAC, ID generator
+  persona/      mastery contract, writer, recommendation engine
+  services/    shared route handlers (DI'd auth) — both apps wrap these
+  core/         R2, LaTeX validator, rate-limit, analytics
+  ui/           MathRenderer, MoleculeViewer, flashcardMarkdown
+  book-renderer/PageRenderer + 20 BlockRenderers + simulators
+scripts/        ingestion + solution toolkits per subject
+_agents/        architecture docs, ADRs, workflows, archive
 ```
 
-## 🛠️ Getting Started
+See [`ARCHITECTURE.md`](./ARCHITECTURE.md) §2–§4 for the full topology.
 
-1.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
+## Required env vars (`.env.local`, never committed)
 
-2.  **Run the development server**:
-    ```bash
-    npm run dev
-    ```
-
-3.  Open [http://localhost:3000](http://localhost:3000) with your browser.
-
-## ✨ Key Features
-
--   **Dynamic Content**: All video and question data is fetched from structured data files (CSVs) or internal APIs.
--   **Dark Mode UI**: Consistent premium dark theme across all new modules.
--   **Interactive Elements**: Hover effects, animated counters, and smooth page transitions.
--   **NCERT Integration**: Full solution viewing with support for image rendering and video links.
+```
+MONGODB_URI=
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+ADMIN_EMAILS=
+```

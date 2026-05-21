@@ -2,15 +2,9 @@
 
 ## 🎯 Admin Dashboard URL
 
-**Local Development:**
-```
-http://localhost:3000/crucible/admin/flashcards
-```
+**Production:** `https://admin.canvasclasses.in/flashcards`
 
-**Production:**
-```
-https://canvasclasses.in/crucible/admin/flashcards
-```
+**Local Development:** run the admin app (`apps/admin/`) and visit `/flashcards`.
 
 ---
 
@@ -141,7 +135,7 @@ Flashcards
 ### Alternative: Fixed Taxonomy (Not Recommended)
 
 If you want a fixed taxonomy like Crucible questions:
-- Create `/app/crucible/admin/taxonomy/flashcardTaxonomy.ts`
+- Create `packages/data/flashcards/flashcardTaxonomy.ts` (canonical post-Phase 5.13 location)
 - Define chapters with IDs
 - Restrict chapter selection to dropdown
 
@@ -354,9 +348,7 @@ Question: Calculate the wavelength of the first line in Balmer series...
 
 ## 🎓 Summary
 
-**Admin Dashboard URL:**
-- Local: `http://localhost:3000/crucible/admin/flashcards`
-- Production: `https://canvasclasses.in/crucible/admin/flashcards`
+**Admin Dashboard URL:** `https://admin.canvasclasses.in/flashcards` (or run `apps/admin/` locally).
 
 **Key Features:**
 - ✅ Split-view with live preview
@@ -374,5 +366,5 @@ Question: Calculate the wavelength of the first line in Balmer series...
 **Next Steps:**
 1. Run migration script (see FLASHCARDS_MIGRATION_README.md)
 2. Login as admin
-3. Visit `/crucible/admin/flashcards`
+3. Visit `admin.canvasclasses.in/flashcards` (or local admin app `/flashcards`)
 4. Start creating flashcards!

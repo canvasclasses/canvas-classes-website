@@ -15,7 +15,7 @@ Paaras wants a morning routine where:
 1. Fresh education/exam news is pulled from RSS feeds.
 2. Items are triaged by relevance to JEE / NEET / CBSE / chemistry students.
 3. **One or two** drafts are produced and dropped in the **Review** column of
-   the admin board (`/crucible/admin/blog`) by ~09:30 IST.
+   the admin board (`admin.canvasclasses.in/blog`) by ~09:30 IST.
 4. Paaras opens the admin panel around 10–11 AM, approves or edits the drafts,
    and schedules them.
 
@@ -29,7 +29,7 @@ inside the scheduled task.
 ### Step 1 — Pull RSS feeds
 
 ```bash
-cd /Users/CanvasClasses/Desktop/canvas
+cd <repo-root>   # the canvas monorepo root on the machine running the scheduled task
 node scripts/blog/fetch_rss.js --hours 48
 ```
 
@@ -146,10 +146,10 @@ the notification:
 Good morning. Pulled 34 new RSS items, scored all, drafted 2.
 
 1. "JEE Main 2026 Session 2 Schedule" — from Indian Express, 0.92 relevance.
-   /crucible/admin/blog → Review column.
+   admin.canvasclasses.in/blog → Review column.
 
 2. "CBSE Class 12 Chemistry Paper Pattern Changes" — from PIB, 0.81.
-   /crucible/admin/blog → Review column.
+   admin.canvasclasses.in/blog → Review column.
 
 No pending ideas in queue. 3 items ignored as off-topic.
 ```
@@ -167,7 +167,7 @@ Keep it under 150 words. No fluff.
   `NEEDS_REVIEW: [what's missing]`. Never invent dates, numbers, or quotes.
 - **Never draft the same story twice.** `blog_sources` dedupes by URL hash
   and drafted sources flip to `status='drafted'` — but also scan existing
-  posts in `/crucible/admin/blog` (via `curl http://localhost:3000/api/blog/posts`
+  posts in `admin.canvasclasses.in/blog` (via `curl http://localhost:<admin-port>/api/blog/posts`
   locally, or read via Mongo directly) to avoid duplicating recent coverage.
 - **Never upload images in the cron.** Drafts go text-only. Paaras adds
   cover images manually via the admin drag-drop zone.
@@ -180,6 +180,6 @@ Keep it under 150 words. No fluff.
 
 Feeds: `scripts/blog/feeds.json` (edit freely; no code change required)
 Schedule: `0 8 * * *` local time (8:00 AM IST, Claude Code scheduled task)
-Admin panel: https://www.canvasclasses.in/crucible/admin/blog (or localhost)
+Admin panel: https://admin.canvasclasses.in/blog (or local admin app dev server)
 Auto-publish cron (Vercel): `*/15 * * * *` — flips `scheduled → published`
 when `scheduled_for` is due. Configured in `vercel.json`.
