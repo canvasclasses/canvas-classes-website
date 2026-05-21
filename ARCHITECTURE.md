@@ -56,8 +56,34 @@ from the public origin.
    `apps/*` or the `@/` alias. Packages use relative paths internally.
 3. **Packages export named subpaths.** Imports are
    `from '@canvas/data/models/X'`, never `from '@canvas/data'` for deep modules.
+   (Mechanism: see §2.2.)
 4. **Both apps may import from any package.** Shared code lives in
    `packages/*/`; the apps are thin route shells plus app-specific features.
+
+### 2.2 Per-app build-config conventions (ADR-009)
+
+Three silent-failure modes from real Vercel build outages, codified.
+When adding a new `@canvas/*` package, do all four:
+
+1. **Declare public subpaths in `package.json` `exports`.** Same shape as
+   every other package, including `.tsx` ones — entries spell the extension
+   (`"./PageRenderer": "./PageRenderer.tsx"`). See `@canvas/ui` /
+   `@canvas/book-renderer` for the pattern.
+2. **Register in `transpilePackages`** in both apps' `next.config.ts`. Skip
+   this = `Module not found` on Vercel (fresh install has no symlinks).
+3. **Register Tailwind `@source`** in both apps' `app/globals.css` if the
+   package has `className=` strings in `.tsx`:
+   ```css
+   @source "../../../packages/<name>";
+   ```
+   Skip this = classes silently omitted from the CSS bundle. The page
+   renders with no errors and the layout looks broken — no log to grep.
+4. **Declare runtime deps in the package's own `package.json`.** A package
+   that imports `lottie-react` declares it itself; the app does not hoist it.
+   Vercel's isolated builds don't see hoisted deps.
+
+Peer deps (React, Next, `lucide-react`) stay in `peerDependencies` on the
+package and `dependencies` on the apps — apps pin the versions.
 
 ---
 
@@ -501,6 +527,7 @@ All ADRs live in `_agents/adr/`. Each is one decision, one rationale, alternativ
 | 006 | OCH admin stays in student app as dev tool | Organic-chem hub editor is a dev tool, not production admin |
 | 007 | Books editor migration to admin via shared renderer | Extract `@canvas/book-renderer`; promote `MoleculeViewer` to `@canvas/ui` |
 | 008 | Biology as a first-class subject (NEET-UG track) | Single `chapterType: 'biology'` (32 chapters); optional `metadata.ncert_reference`; no botany/zoology split |
+| 009 | Per-app build-config conventions for shared packages | Mandatory `transpilePackages` + Tailwind `@source` + self-owned deps. Single package shape (ADR-004 rule 4 stands). |
 
 ---
 

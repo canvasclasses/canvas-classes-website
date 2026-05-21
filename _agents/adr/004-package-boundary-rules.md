@@ -1,6 +1,6 @@
 # ADR-004: `@canvas/*` package boundary rules
 
-**Status:** Accepted
+**Status:** Accepted. Build-config conventions extending this ADR are in [ADR-009](./009-package-shape-and-build-config.md).
 **Date:** 2026-05-16
 **Tags:** monorepo, packages, imports, build
 
