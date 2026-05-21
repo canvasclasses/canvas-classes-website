@@ -8,6 +8,7 @@
     "@canvas/data": "*",
     "@canvas/ui": "*",
     "katex": "^0.16.28",
+    "lottie-react": "^2.4.1",
     "rehype-katex": "^7.0.1",
     "rehype-raw": "^7.0.0",
     "remark-breaks": "^4.0.0",
