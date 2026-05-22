@@ -11,11 +11,13 @@ const Latex = ({ children, className }: { children: string, className?: string }
         throwOnError: false,
         displayMode: false,
     });
-    return <span className={className} dangerouslySetInnerHTML={{ 
-        __html: DOMPurify.sanitize(html, {
-            ALLOWED_TAGS: ['span', 'mrow', 'mi', 'mo', 'mn', 'msub', 'msup', 'mfrac', 'mtext', 'semantics', 'annotation', 'math'],
-            ALLOWED_ATTR: ['class', 'style', 'xmlns', 'encoding']
-        })
+    return <span className={className} suppressHydrationWarning dangerouslySetInnerHTML={{
+        __html: typeof window !== 'undefined'
+            ? DOMPurify.sanitize(html, {
+                ALLOWED_TAGS: ['span', 'mrow', 'mi', 'mo', 'mn', 'msub', 'msup', 'mfrac', 'mtext', 'semantics', 'annotation', 'math'],
+                ALLOWED_ATTR: ['class', 'style', 'xmlns', 'encoding']
+            })
+            : ''
     }} />;
 };
 
@@ -301,11 +303,14 @@ export const ReactionTable = () => {
 
                                             <div
                                                 className="text-slate-300 text-sm leading-7 font-normal tracking-wide text-left [&>strong]:text-teal-400 [&>strong]:font-bold"
-                                                dangerouslySetInnerHTML={{ 
-                                                    __html: DOMPurify.sanitize(selectedCell.mechanism, {
-                                                        ALLOWED_TAGS: ['strong', 'em', 'b', 'i', 'p', 'br', 'span', 'div'],
-                                                        ALLOWED_ATTR: ['class']
-                                                    })
+                                                suppressHydrationWarning
+                                                dangerouslySetInnerHTML={{
+                                                    __html: typeof window !== 'undefined'
+                                                        ? DOMPurify.sanitize(selectedCell.mechanism, {
+                                                            ALLOWED_TAGS: ['strong', 'em', 'b', 'i', 'p', 'br', 'span', 'div'],
+                                                            ALLOWED_ATTR: ['class']
+                                                        })
+                                                        : ''
                                                 }}
                                             />
                                         </div>

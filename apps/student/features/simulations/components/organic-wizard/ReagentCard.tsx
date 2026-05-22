@@ -46,11 +46,14 @@ const ReagentCard: React.FC<ReagentCardProps> = ({
 
             <div
                 className="text-sm font-bold leading-tight"
-                dangerouslySetInnerHTML={{ 
-                    __html: DOMPurify.sanitize(reagent.display, {
-                        ALLOWED_TAGS: ['sub', 'sup', 'span'],
-                        ALLOWED_ATTR: []
-                    })
+                suppressHydrationWarning
+                dangerouslySetInnerHTML={{
+                    __html: typeof window !== 'undefined'
+                        ? DOMPurify.sanitize(reagent.display, {
+                            ALLOWED_TAGS: ['sub', 'sup', 'span'],
+                            ALLOWED_ATTR: []
+                        })
+                        : ''
                 }}
             />
         </motion.div>

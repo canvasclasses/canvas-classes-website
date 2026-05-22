@@ -264,14 +264,17 @@ const OrganicWizardGame = () => {
 
                                             <div
                                                 className="font-handwriting text-[#e0e0e0] text-sm font-bold leading-tight"
+                                                suppressHydrationWarning
                                                 dangerouslySetInnerHTML={{
-                                                    __html: DOMPurify.sanitize(
-                                                        availableReagents.find(r => r.id === placedReagents[idx])?.display || '?',
-                                                        {
-                                                            ALLOWED_TAGS: ['sub', 'sup', 'span'],
-                                                            ALLOWED_ATTR: []
-                                                        }
-                                                    )
+                                                    __html: typeof window !== 'undefined'
+                                                        ? DOMPurify.sanitize(
+                                                            availableReagents.find(r => r.id === placedReagents[idx])?.display || '?',
+                                                            {
+                                                                ALLOWED_TAGS: ['sub', 'sup', 'span'],
+                                                                ALLOWED_ATTR: []
+                                                            }
+                                                        )
+                                                        : ''
                                                 }}
                                             />
                                             {/* Only show delete if NOT correct (locked) */}
