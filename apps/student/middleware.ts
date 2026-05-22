@@ -19,7 +19,11 @@ export async function middleware(request: NextRequest) {
     const isBooksRoute = pathname.startsWith('/books')
         || pathname.startsWith('/class-9')
         || pathname.startsWith('/class-11');
-    const isStudentCrucibleRoute = pathname.startsWith('/the-crucible');
+    // Skip /the-crucible/q/* — those are ISR-cached question detail pages
+    // and a cookie-writing middleware flips them to dynamic at runtime,
+    // throwing 500s on every bot crawl. Client-side auth still works there.
+    const isStudentCrucibleRoute = pathname.startsWith('/the-crucible')
+        && !pathname.startsWith('/the-crucible/q/');
 
     if (!isBooksRoute && !isStudentCrucibleRoute) {
         return NextResponse.next({ request });
