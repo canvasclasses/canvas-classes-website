@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import * as OCL from 'openchemlib';
-import DOMPurify from 'isomorphic-dompurify';
+import DOMPurify from 'dompurify';
 
 interface MoleculeViewerProps {
     smiles?: string;

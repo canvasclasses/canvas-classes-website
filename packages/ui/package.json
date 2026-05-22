@@ -11,7 +11,7 @@
     "./flashcardMarkdown": "./flashcardMarkdown.tsx"
   },
   "dependencies": {
-    "isomorphic-dompurify": "^3.7.1",
+    "dompurify": "^3.4.5",
     "katex": "^0.16.28",
     "openchemlib": "^9.20.0"
   },

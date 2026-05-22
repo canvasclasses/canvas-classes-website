@@ -9,7 +9,7 @@ import MoleculeViewer from '@canvas/ui/MoleculeViewer';
 import ReagentCard from './ReagentCard';
 import LevelSidebar from './LevelSidebar';
 import gameData from '../../data/conversion_game_data.json';
-import DOMPurify from 'isomorphic-dompurify';
+import DOMPurify from 'dompurify';
 
 // Types from JSON
 export interface Level {

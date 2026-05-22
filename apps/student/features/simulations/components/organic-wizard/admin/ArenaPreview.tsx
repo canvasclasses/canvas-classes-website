@@ -4,7 +4,7 @@ import React, { useState, useRef } from 'react';
 import MoleculeViewer from '@canvas/ui/MoleculeViewer';
 import { Level } from '../ConversionGame';
 import { ArrowRight, Play, Square, Music, Check } from 'lucide-react';
-import DOMPurify from 'isomorphic-dompurify';
+import DOMPurify from 'dompurify';
 
 const AudioPlayer = ({ url }: { url: string }) => {
     const [isPlaying, setIsPlaying] = useState(false);

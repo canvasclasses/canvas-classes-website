@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, FlaskConical, ArrowRight } from 'lucide-react';
 import 'katex/dist/katex.min.css';
 import katex from 'katex';
-import DOMPurify from 'isomorphic-dompurify';
+import DOMPurify from 'dompurify';
 
 const Latex = ({ children, className }: { children: string, className?: string }) => {
     const html = katex.renderToString(children, {
