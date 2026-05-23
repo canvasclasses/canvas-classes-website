@@ -1,0 +1,157 @@
+# IEQ — Chemistry Solution Flags
+
+_Last updated: 2026-05-23 06:59_
+
+## 🔴 Blocking — no solution written
+
+- **IEQ-034** — solution present but stored integer_value is null
+- **IEQ-037** — solution present but stored integer_value is null
+- **IEQ-038** — solution present but stored integer_value is null
+- **IEQ-082** — solution present but stored correct_option is null
+- **IEQ-085** — solution present but stored integer_value is null
+- **IEQ-087** — solution present but stored correct_option is null
+- **IEQ-088** — solution present but stored correct_option is null
+
+## 🟡 Needs verification — solution written, uncertain
+
+- **IEQ-096** — JEE Adv 2010 multi-correct; official answer is (c) AND (d). Stored single-option as (c) because schema accepts one correct_option; (d) is also correct.
+- **IEQ-106** — Stored answer marks (d) NH3 correct, which is wrong — NH3 is a perfectly stable weak base in water (forms aq. ammonia). The amide ion NH2⁻ is the species that cannot exist (it deprotonates water immediately). Overriding to (c).
+
+## ⚪ Soft quality — audit notes
+
+- **IEQ-001** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-002** — audit: too short (652 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-003** — audit: too short (676 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-004** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-005** — audit: too short (372 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-006** — audit: too short (737 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-007** — audit: too short (589 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-008** — audit: too short (609 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-009** — audit: too short (488 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-010** — audit: too short (564 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-011** — audit: too short (662 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-013** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-014** — audit: too short (797 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-015** — audit: too short (419 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-016** — audit: too short (422 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-017** — audit: too short (514 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-018** — audit: too short (394 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-019** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-020** — audit: too short (771 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-021** — audit: too short (783 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-022** — audit: too short (724 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-023** — audit: too short (602 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-024** — audit: too short (672 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-025** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-026** — audit: too short (476 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-027** — audit: too short (509 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-028** — audit: too short (544 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-029** — audit: too short (456 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-030** — audit: too short (640 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **IEQ-031** — audit: too short (550 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-032** — audit: too short (612 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-033** — audit: too short (507 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-034** — audit: too short (466 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-035** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-036** — audit: too short (568 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-037** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-038** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-039** — audit: too short (725 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-040** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-041** — audit: too short (780 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-042** — audit: too short (482 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-043** — audit: too short (762 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-044** — audit: too short (611 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-045** — audit: too short (436 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-046** — audit: too short (773 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-047** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-048** — audit: too short (499 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-049** — audit: too short (354 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-050** — audit: too short (603 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-051** — audit: too short (543 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-052** — audit: too short (507 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-053** — audit: too short (378 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-054** — audit: too short (661 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-055** — audit: too short (423 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-056** — audit: too short (463 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-057** — audit: too short (753 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-058** — audit: too short (551 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-059** — audit: too short (583 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-060** — audit: too short (790 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-061** — audit: too short (442 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-062** — audit: too short (490 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-063** — audit: too short (564 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-064** — audit: too short (569 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-065** — audit: too short (502 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-066** — audit: too short (576 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-067** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-068** — audit: too short (591 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-069** — audit: too short (676 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-070** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-071** — audit: too short (659 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-072** — audit: too short (785 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-073** — audit: too short (656 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-074** — audit: too short (595 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-075** — audit: too short (498 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-076** — audit: too short (499 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-077** — audit: too short (326 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-078** — audit: too short (727 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-079** — audit: too short (626 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math
+- **IEQ-080** — audit: too short (519 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **IEQ-081** — audit: too short (735 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-082** — audit: too short (369 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$
+- **IEQ-083** — audit: too short (326 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$
+- **IEQ-084** — audit: too short (416 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$
+- **IEQ-085** — audit: too short (358 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math; uses numbered "Step N" enumeration
+- **IEQ-086** — audit: too short (427 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math
+- **IEQ-087** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-088** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **IEQ-124** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-125** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-126** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-127** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-128** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-129** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-130** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-131** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-132** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-133** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-134** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-135** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-136** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-137** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-138** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-139** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-140** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-141** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-142** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-143** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-144** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-145** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-146** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-147** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-148** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-149** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-150** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-151** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-152** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-153** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-154** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-155** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-156** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-157** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-158** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-159** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-160** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-161** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-162** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-163** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-164** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-165** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-166** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-167** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-168** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-169** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-170** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-171** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **IEQ-172** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
