@@ -121,6 +121,12 @@ export default function MathRenderer({ markdown, className = '', fontSize, image
   return <div ref={containerRef} className={`latex-preview ${className}`} style={fontSize ? { fontSize } : undefined} />;
 }
 
+// Shared inline styles so tables render correctly even if globals.css
+// isn't loaded or a higher-specificity rule overrides .markdown-table.
+const TABLE_STYLE = 'border-collapse:collapse;margin:1em 0;width:auto;max-width:100%';
+const TH_STYLE    = 'border:1px solid #4B5563;padding:0.5rem 0.75rem;background-color:#374151;font-weight:600;color:#E5E7EB';
+const TD_STYLE    = 'border:1px solid #4B5563;padding:0.5rem 0.75rem;background-color:#1F2937;color:#D1D5DB';
+
 // Convert non-pipe-table MTC markdown into a 4-column HTML table.
 // Handles two formats found in the DB:
 //   Multiline:  **List I:**\nA. item\nB. item\n\n**List II:**\nI. item\n...
@@ -138,9 +144,9 @@ function processNonTableMTC(text: string): string {
       const letters = ['A', 'B', 'C', 'D', 'E'];
       const numerals = ['I', 'II', 'III', 'IV', 'V'];
       const count = Math.max(rowsI.length, rowsII.length);
-      let t = `<table class="markdown-table"><thead><tr><th colspan="2" style="text-align:left">${h1}</th><th colspan="2" style="text-align:left">${h2}</th></tr></thead><tbody>`;
+      let t = `<table class="markdown-table" style="${TABLE_STYLE}"><thead><tr><th colspan="2" style="${TH_STYLE};text-align:left">${h1}</th><th colspan="2" style="${TH_STYLE};text-align:left">${h2}</th></tr></thead><tbody>`;
       for (let i = 0; i < count; i++) {
-        t += `<tr><td>${letters[i] ?? ''}</td><td>${rowsI[i] ?? ''}</td><td>${numerals[i] ?? ''}</td><td>${rowsII[i] ?? ''}</td></tr>`;
+        t += `<tr><td style="${TD_STYLE}">${letters[i] ?? ''}</td><td style="${TD_STYLE}">${rowsI[i] ?? ''}</td><td style="${TD_STYLE}">${numerals[i] ?? ''}</td><td style="${TD_STYLE}">${rowsII[i] ?? ''}</td></tr>`;
       }
       t += '</tbody></table>';
       return t;
@@ -159,9 +165,9 @@ function processNonTableMTC(text: string): string {
       const letters = ['A', 'B', 'C', 'D', 'E'];
       const numerals = ['I', 'II', 'III', 'IV', 'V'];
       const count = Math.max(rowsI.length, rowsII.length);
-      let t = `<table class="markdown-table"><thead><tr><th colspan="2" style="text-align:left">${h1}</th><th colspan="2" style="text-align:left">${h2}</th></tr></thead><tbody>`;
+      let t = `<table class="markdown-table" style="${TABLE_STYLE}"><thead><tr><th colspan="2" style="${TH_STYLE};text-align:left">${h1}</th><th colspan="2" style="${TH_STYLE};text-align:left">${h2}</th></tr></thead><tbody>`;
       for (let i = 0; i < count; i++) {
-        t += `<tr><td>${letters[i] ?? ''}</td><td>${rowsI[i] ?? ''}</td><td>${numerals[i] ?? ''}</td><td>${rowsII[i] ?? ''}</td></tr>`;
+        t += `<tr><td style="${TD_STYLE}">${letters[i] ?? ''}</td><td style="${TD_STYLE}">${rowsI[i] ?? ''}</td><td style="${TD_STYLE}">${numerals[i] ?? ''}</td><td style="${TD_STYLE}">${rowsII[i] ?? ''}</td></tr>`;
       }
       t += '</tbody></table>';
       return t;
@@ -202,18 +208,18 @@ function processMarkdown(text: string, imageScale: number): string {
       const mtcH1 = isMTCHeader3 ? finalHs[0] : finalHs[1];
       const mtcH2 = isMTCHeader3 ? finalHs[2] : finalHs[3];
 
-      let t = '<table class="markdown-table"><thead><tr>';
+      let t = `<table class="markdown-table" style="${TABLE_STYLE}"><thead><tr>`;
       if (isMTCHeader) {
-        t += `<th colspan="2" style="text-align:left">${mtcH1}</th>`;
-        t += `<th colspan="2" style="text-align:left">${mtcH2}</th>`;
+        t += `<th colspan="2" style="${TH_STYLE};text-align:left">${mtcH1}</th>`;
+        t += `<th colspan="2" style="${TH_STYLE};text-align:left">${mtcH2}</th>`;
       } else {
-        finalHs.forEach((h: string) => { t += `<th>${h}</th>`; });
+        finalHs.forEach((h: string) => { t += `<th style="${TH_STYLE}">${h}</th>`; });
       }
       t += '</tr></thead><tbody>';
       rows.forEach((r: string[]) => {
         if (r.length === 0) return;
         t += '<tr>';
-        r.forEach((c: string) => { t += `<td>${c}</td>`; });
+        r.forEach((c: string) => { t += `<td style="${TD_STYLE}">${c}</td>`; });
         t += '</tr>';
       });
       t += '</tbody></table>';
