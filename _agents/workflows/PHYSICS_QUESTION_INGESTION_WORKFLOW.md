@@ -251,6 +251,27 @@ Starting extraction of Q[first] to Q[last].
 
 > Example: question says "Find the current in amperes." Answer field stores `5` (integer), not `"5 A"`. The unit lives in the question prompt — the answer is unitless.
 
+**MTC table format (CRITICAL — renderer detects only this pattern):**
+
+Every Match-the-Column question's `question_text.markdown` MUST use the canonical 4-column table layout below. The renderer (`packages/ui/MathRenderer.tsx`) applies the proper match-the-column styling (paired columns, bordered cells, `<th colspan="2">` headers) ONLY when it sees this exact header pattern — an empty cell before each list header.
+
+✅ Canonical (use this):
+
+```markdown
+| | List I | | List II |
+|---|---|---|---|
+| A | first item  | I   | first match  |
+| B | second item | II  | second match |
+| C | third item  | III | third match  |
+| D | fourth item | IV  | fourth match |
+```
+
+❌ Do NOT use:
+- 2-column `| List I | List II |` with `(A)` / `(I)` labels embedded inside cells.
+- Plain text lists like `List I: A. ... B. ... List II: I. ... II. ...`.
+
+Use uppercase `A B C D` for list-I labels and uppercase `I II III IV` for list-II labels in their own narrow cells — no parentheses, no trailing period.
+
 ### Step 1.4 — Options
 
 - SCQ/MCQ/AR/MST/MTC: always 4 options `[{id:"a",...},{id:"b",...},{id:"c",...},{id:"d",...}]`

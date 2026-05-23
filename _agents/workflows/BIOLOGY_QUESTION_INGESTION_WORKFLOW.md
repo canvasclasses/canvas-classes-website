@@ -99,6 +99,27 @@ NEET biology lean ~60% toward these formats vs. straight MCQ. Use the existing `
 
 (Same enum as chemistry/physics — we don't introduce biology-specific values.)
 
+**MTC table format (CRITICAL — renderer detects only this pattern):**
+
+Every Match-the-Column question's `question_text.markdown` MUST use the canonical 4-column table layout below. The renderer (`packages/ui/MathRenderer.tsx`) applies the proper match-the-column styling (paired columns, bordered cells, `<th colspan="2">` headers) ONLY when it sees this exact header pattern — an empty cell before each list header.
+
+✅ Canonical (use this):
+
+```markdown
+| | List I | | List II |
+|---|---|---|---|
+| A | first item  | I   | first match  |
+| B | second item | II  | second match |
+| C | third item  | III | third match  |
+| D | fourth item | IV  | fourth match |
+```
+
+❌ Do NOT use:
+- 2-column `| List I | List II |` with `(A)` / `(I)` labels embedded inside cells.
+- Plain text lists like `List I: A. ... B. ... List II: I. ... II. ...`.
+
+Use uppercase `A B C D` for list-I labels and uppercase `I II III IV` for list-II labels in their own narrow cells — no parentheses, no trailing period.
+
 ### 1.4 NCERT reference is REQUIRED for every NEET PYQ
 
 NEET draws ~85% of questions verbatim from NCERT lines. Every PYQ ingested via this workflow MUST set `metadata.ncert_reference`:

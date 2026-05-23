@@ -210,3 +210,55 @@ $\boxed{\text{Answer: (c) } \dfrac{8}{\sqrt{3}}}$
 - The English is simple. No idioms, no fancy words, short sentences. A student weak in English can still follow the math.
 
 This is the bar. Every solution we write should leave the student thinking *"now I see how to start that kind of problem — I can do the next one myself"*.
+
+---
+
+## 🗂️ Notion Sync — Mandatory at the End of Each Solution Session
+
+At the end of every solution batch / chapter (after the final `apply-batch.js` run), push two kinds of records to the **⚔️ Crucible Development Tracker** Notion page so the team can act on them. The local `_agents/solution-flags/<PREFIX>-flags.md` and `<PREFIX>-diagram-wishlist.md` files are **working notes**; the **Notion entries are the canonical destination** the team queries from.
+
+Do **not** skip this step. A chapter is not "done" until both syncs are completed.
+
+### 1. Answer discrepancies → `Math Answer Discrepancies` DB (to be created)
+
+A Math-specific answer-discrepancies database **does not exist yet** in the Crucible Development Tracker (only Physics and Chemistry have one). For now:
+
+- **Until the Math DB is created:** at the end of the chapter, surface every override (any item that came through `apply-batch` with `answer:` overwriting the stored value, OR carried a `verifier_note`) in your summary message to the user. List `Question ID`, stored answer, derived answer, one-line reason. The user will manually triage or create the Notion DB before the next chapter.
+- **When the Math DB is created** (will be named `Math Answer Discrepancies` under the same parent page): the workflow becomes identical to chemistry/physics — use `mcp__…__notion-create-pages` with the data source ID for `Math Answer Discrepancies`, one page per discrepancy, with properties `Question ID` (title), `Chapter`, `Key Answer`, `AI Answer`, `date:Date Logged:start`, `Status = Open`, `Resolution Notes`, and a page body containing the full derivation.
+
+### 2. 📐 Diagram markers → `🖼️ Physics - Solution-Side Diagrams Wishlist` DB (shared with Math)
+
+For every `📐 [Solution diagram: …]` marker `apply-batch.js` detected (one row appears in `_agents/solution-flags/<PREFIX>-diagram-wishlist.md` per marker), create one Notion page:
+
+- **Database:** [`🖼️ Physics - Solution-Side Diagrams Wishlist`](https://www.notion.so/6e92b1ddbef74bb3af2d57df53b3e074) — note: the name says "Physics" but the DB has a `Subject` property and is the canonical home for **both Physics and Math** diagrams.
+- **Database ID:** `6e92b1dd-bef7-4bb3-af2d-57df53b3e074`
+- **Data source ID** (use this with `mcp__…__notion-create-pages`): `bd867eda-14d3-4e28-b858-26ad5a74eb1d`
+- **Properties to set:**
+  - `Question ID` (title) — e.g. `STLN-049`
+  - `Chapter` — e.g. `Straight Lines (STLN)`
+  - `Subject` — `Math` (this is the critical field that separates math entries from physics in the shared DB)
+  - `Section` — usually `🖼️ Visual Sketch` or `🗺️ Working It Out` (enum also accepts `🧠 Reading the Question`, `⚡ The Smart Move`, `💡 A Different Angle`, `⚠️ Where Students Get Stuck`)
+  - `Status` — `Not started`
+  - `Diagram Description` — the text from inside the `📐 [Solution diagram: …]` marker (verbatim)
+  - `Notes` — short context, e.g. "Locus sketch with foci" or "Newton-style geometric construction"
+
+> **Note on 📐 markers in math:** Math solutions use the 📐 marker convention less often than chemistry mechanisms, but the convention is still available when a geometric construction, conic locus, vector diagram, or 3D visualisation would help the student. Trigger condition: if the solution describes a picture that the student must imagine, and the picture is non-trivial, drop a 📐 marker so the team can produce the actual image later.
+
+### Sync routine
+
+```
+1. After the final apply-batch run of the session, scan the run summaries
+   for every line containing "answer X → Y" or "verifier_note" → discrepancies.
+   Also open _agents/solution-flags/<PREFIX>-diagram-wishlist.md → markers.
+
+2. For diagram markers: use `mcp__…__notion-create-pages` with the shared
+   Physics/Math Wishlist data source (Subject="Math") to create entries.
+
+3. For answer discrepancies: until the Math DB is created, include the full
+   list inline in your summary message to the user instead of pushing to Notion.
+
+4. Briefly summarise to the user: how many discrepancies surfaced inline +
+   how many diagram entries pushed to Notion, with the returned Notion URLs.
+```
+
+This step is part of the chapter-completion contract. The agent must perform it before declaring the chapter done.
