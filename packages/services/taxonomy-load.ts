@@ -2,21 +2,11 @@
 // disk (bypassing the module cache) so the admin Taxonomy Manager always
 // sees latest edits.
 //
-// KNOWN ISSUES (carried over from the pre-extraction route — flagged for a
-// future cleanup, not changed during the service extraction so behavior is
-// preserved verbatim):
-//   1. The hardcoded path `app/crucible/admin/taxonomy/taxonomyData_from_csv.ts`
-//      is stale. The canonical file lives at
-//      `packages/data/taxonomy/taxonomyData_from_csv.ts` after the Phase 4
-//      monorepo migration. The current route returns a 500 in every
-//      environment because of this; the admin UI falls back to the
-//      compiled-in TAXONOMY_FROM_CSV.
-//   2. Both read (this route) and write (/api/v2/taxonomy/save) write to the
-//      local filesystem, which is read-only on Vercel/serverless. The
-//      taxonomy/save route has a TODO noting this; the same applies here.
-//      Both routes need a MongoDB-backed redesign for production.
-// Until that redesign ships, this route stays broken — keeping the
-// extraction byte-for-byte equivalent to the pre-extraction handler.
+// KNOWN ISSUES:
+//   1. Both read (this route) and write (/api/v2/taxonomy/save) operate on the
+//      local filesystem, which is read-only on Vercel/serverless. Both routes
+//      need a MongoDB-backed redesign for production use.
+// Path resolved relative to apps/admin/ (process.cwd() when the admin dev server runs).
 
 import { NextResponse } from 'next/server';
 import { readFile } from 'fs/promises';
@@ -24,7 +14,7 @@ import { join } from 'path';
 
 export async function GET() {
   try {
-    const filePath = join(process.cwd(), 'app', 'crucible', 'admin', 'taxonomy', 'taxonomyData_from_csv.ts');
+    const filePath = join(process.cwd(), '..', '..', 'packages', 'data', 'taxonomy', 'taxonomyData_from_csv.ts');
     const content = await readFile(filePath, 'utf-8');
 
     const match = content.match(/TAXONOMY_FROM_CSV[^=]+=\s*\[([\s\S]*?)\];/);
@@ -67,7 +57,7 @@ export async function GET() {
 
     return NextResponse.json(
       { success: true, nodes },
-      { headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' } }
+      { headers: { 'Cache-Control': 'no-store' } }
     );
   } catch (error: unknown) {
     console.error('Taxonomy load error:', error);

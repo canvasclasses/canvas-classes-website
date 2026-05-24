@@ -60,8 +60,8 @@ export async function POST(request: NextRequest) {
     // Generate the TypeScript file content
     const lines: string[] = [
       '// CRITICAL: This taxonomy data is the single source of truth for the practice session.',
-      '// Canonical location: lib/taxonomy/taxonomyData_from_csv.ts',
-      '// DO NOT MODIFY DIRECTLY — use the Taxonomy Dashboard at /taxonomy',
+      '// Canonical location: packages/data/taxonomy/taxonomyData_from_csv.ts',
+      '// DO NOT MODIFY DIRECTLY — use the Taxonomy Dashboard at admin.canvasclasses.in/taxonomy',
       '// Changes made in the dashboard are auto-saved here via POST /api/v2/taxonomy/save',
       '',
       'export interface TaxonomyNode {',
@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
       "    parent_id: string | null;",
       "    type: 'chapter' | 'topic' | 'micro_topic';",
       "    sequence_order?: number;",
-      "    class_level?: 9 | 10 | 11 | 12;",
+      "    class_level?: 8 | 9 | 10 | 11 | 12;",
       "    chapterType?: 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra' | 'biology';",
       '}',
       '',
@@ -79,20 +79,25 @@ export async function POST(request: NextRequest) {
 
     // Group chapters by class and type for organized output
     const byOrder = (a: TaxonomyNode, b: TaxonomyNode) => (a.sequence_order || 0) - (b.sequence_order || 0);
-    const class9Chem = chapters
-      .filter((c: TaxonomyNode) => c.class_level === 9 && c.id.startsWith('ch9_'))
+    // School (Classes 8-10) — separate from JEE/NEET subject sections
+    const school8 = chapters.filter((c: TaxonomyNode) => c.class_level === 8).sort(byOrder);
+    const school9 = chapters.filter((c: TaxonomyNode) => c.class_level === 9).sort(byOrder);
+    const school10 = chapters.filter((c: TaxonomyNode) => c.class_level === 10).sort(byOrder);
+    // JEE/NEET — class 11 & 12 only
+    const class11Bio = chapters
+      .filter((c: TaxonomyNode) => c.id.startsWith('bio11_'))
       .sort(byOrder);
-    const class9Bio = chapters
-      .filter((c: TaxonomyNode) => c.id.startsWith('bio9_'))
+    const class12Bio = chapters
+      .filter((c: TaxonomyNode) => c.id.startsWith('bio12_'))
       .sort(byOrder);
     const class11 = chapters
-      .filter((c: TaxonomyNode) => c.class_level === 11 && !c.id.startsWith('ma_') && !c.id.startsWith('ph'))
+      .filter((c: TaxonomyNode) => c.class_level === 11 && !c.id.startsWith('ma_') && !c.id.startsWith('ph') && !c.id.startsWith('bio'))
       .sort(byOrder);
     const class12 = chapters
-      .filter((c: TaxonomyNode) => c.class_level === 12 && !c.id.startsWith('ma_') && !c.id.startsWith('ph'))
+      .filter((c: TaxonomyNode) => c.class_level === 12 && !c.id.startsWith('ma_') && !c.id.startsWith('ph') && !c.id.startsWith('bio'))
       .sort(byOrder);
     const physChapters = chapters
-      .filter((c: TaxonomyNode) => c.id.startsWith('ph9_') || c.id.startsWith('ph11_') || c.id.startsWith('ph12_'))
+      .filter((c: TaxonomyNode) => c.id.startsWith('ph11_') || c.id.startsWith('ph12_'))
       .sort(byOrder);
     const mathChapters = chapters
       .filter((c: TaxonomyNode) => c.id.startsWith('ma_'))
@@ -127,11 +132,14 @@ export async function POST(request: NextRequest) {
       }
     };
 
-    writeChapterGroup(class9Chem, 'Class 9 Chemistry');
-    writeChapterGroup(class9Bio, 'Class 9 Biology');
+    writeChapterGroup(school8, 'School — Class 8');
+    writeChapterGroup(school9, 'School — Class 9');
+    writeChapterGroup(school10, 'School — Class 10');
     writeChapterGroup(class11, 'Class 11 Chemistry');
     writeChapterGroup(class12, 'Class 12 Chemistry');
-    writeChapterGroup(physChapters, 'Physics');
+    writeChapterGroup(class11Bio, 'Class 11 Biology');
+    writeChapterGroup(class12Bio, 'Class 12 Biology');
+    writeChapterGroup(physChapters, 'Physics (Classes 11-12)');
     writeChapterGroup(mathChapters, 'Mathematics (Competitive Syllabus)');
 
     lines.push('];');
@@ -145,7 +153,7 @@ export async function POST(request: NextRequest) {
 
     const fileContent = lines.join('\n');
 
-    const filePath = join(process.cwd(), 'lib', 'taxonomy', 'taxonomyData_from_csv.ts');
+    const filePath = join(process.cwd(), '..', '..', 'packages', 'data', 'taxonomy', 'taxonomyData_from_csv.ts');
     await writeFile(filePath, fileContent, 'utf-8');
 
     return NextResponse.json({

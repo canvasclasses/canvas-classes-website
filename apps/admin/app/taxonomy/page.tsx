@@ -8,7 +8,7 @@ import {
 import { TAXONOMY_FROM_CSV, type TaxonomyNode } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 
 type ChapterType = 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra' | 'biology';
-type SubjectTab = 'chemistry' | 'physics' | 'mathematics' | 'biology';
+type SubjectTab = 'chemistry' | 'physics' | 'mathematics' | 'biology' | 'school';
 
 const CHEM_BRANCHES = [
     { id: 'physical', name: 'Physical Chemistry', icon: Beaker, color: '#8B5CF6' },
@@ -36,13 +36,16 @@ const BIOLOGY_BRANCHES = [
 // CRITICAL: This taxonomy data is from user's CSV - DO NOT OVERWRITE
 const NEW_TAXONOMY: TaxonomyNode[] = TAXONOMY_FROM_CSV;
 
+const SCIENCE_CHAPTER_TYPES = new Set(['physical', 'inorganic', 'organic', 'practical', 'biology', 'physics']);
+const MATH_CHAPTER_TYPES = new Set(['algebra', 'calculus', 'coordinate_geometry', 'trigonometry', 'vector_algebra']);
+
 interface EditingNode {
     id: string;
     name: string;
     parent_id: string | null;
     type: 'chapter' | 'topic' | 'micro_topic';
     sequence_order?: number;
-    class_level?: 9 | 10 | 11 | 12;
+    class_level?: 8 | 9 | 10 | 11 | 12;
     chapterType?: ChapterType;
 }
 
@@ -55,7 +58,7 @@ export default function TaxonomyPage() {
     const [showAddForm, setShowAddForm] = useState(false);
     const [selectedSubject, setSelectedSubject] = useState<SubjectTab>('chemistry');
     const [selectedChapterType, setSelectedChapterType] = useState<ChapterType>('physical');
-    const [selectedClassLevel, setSelectedClassLevel] = useState<9 | 10 | 11 | 12>(11);
+    const [selectedClassLevel, setSelectedClassLevel] = useState<8 | 9 | 10 | 11 | 12>(11);
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
     const [saving, setSaving] = useState(false);
 
@@ -63,7 +66,8 @@ export default function TaxonomyPage() {
     const activeBranches = selectedSubject === 'chemistry' ? CHEM_BRANCHES
         : selectedSubject === 'physics' ? PHYSICS_BRANCHES
         : selectedSubject === 'biology' ? BIOLOGY_BRANCHES
-        : MATH_BRANCHES;
+        : selectedSubject === 'mathematics' ? MATH_BRANCHES
+        : []; // school tab renders its own stat panel below
 
     useEffect(() => {
         loadData();
@@ -83,7 +87,7 @@ export default function TaxonomyPage() {
         try {
             setLoading(true);
             // Always load from the API (reads the file directly) to avoid stale module cache
-            const res = await fetch('/api/v2/taxonomy/load');
+            const res = await fetch('/api/v2/taxonomy/load', { cache: 'no-store' });
             const data = await res.json();
             if (data.success && Array.isArray(data.nodes) && data.nodes.length > 0) {
                 setTaxonomy(data.nodes);
@@ -134,7 +138,7 @@ export default function TaxonomyPage() {
             if (!data.success) throw new Error(data.error || 'Save failed');
             setMessage({ type: 'success', text: `Saved — ${data.chapters} chapters, ${data.tags} tags, ${data.microTopics} micro topics` });
             // Reload from file to keep in-memory state perfectly in sync
-            const reloadRes = await fetch('/api/v2/taxonomy/load');
+            const reloadRes = await fetch('/api/v2/taxonomy/load', { cache: 'no-store' });
             const reloadData = await reloadRes.json();
             if (reloadData.success && Array.isArray(reloadData.nodes) && reloadData.nodes.length > 0) {
                 setTaxonomy(reloadData.nodes);
@@ -495,12 +499,29 @@ export default function TaxonomyPage() {
         );
     };
 
-    const chapters9Chem = taxonomy.filter(n => n.type === 'chapter' && n.id.startsWith('ch9_'));
-    const chapters9Bio = taxonomy.filter(n => n.type === 'chapter' && n.id.startsWith('bio9_'));
-    const chapters11 = taxonomy.filter(n => n.type === 'chapter' && n.class_level === 11 && !n.id.startsWith('ma_') && !n.id.startsWith('ph'));
-    const chapters12 = taxonomy.filter(n => n.type === 'chapter' && n.class_level === 12 && !n.id.startsWith('ma_') && !n.id.startsWith('ph'));
+    // JEE/NEET subject tabs — class 11 & 12 only (class 9 lives in the School tab)
+    const chapters11Bio = taxonomy.filter(n => n.type === 'chapter' && n.id.startsWith('bio11_'));
+    const chapters12Bio = taxonomy.filter(n => n.type === 'chapter' && n.id.startsWith('bio12_'));
+    const chapters11 = taxonomy.filter(n => n.type === 'chapter' && n.class_level === 11 && !n.id.startsWith('ma_') && !n.id.startsWith('ph') && !n.id.startsWith('bio'));
+    const chapters12 = taxonomy.filter(n => n.type === 'chapter' && n.class_level === 12 && !n.id.startsWith('ma_') && !n.id.startsWith('ph') && !n.id.startsWith('bio'));
     const mathChapters = taxonomy.filter(n => n.type === 'chapter' && n.id.startsWith('ma_'));
-    const physicsChapters = taxonomy.filter(n => n.type === 'chapter' && (n.id.startsWith('ph9_') || n.id.startsWith('ph11_') || n.id.startsWith('ph12_')));
+    const physicsChapters = taxonomy.filter(n => n.type === 'chapter' && (n.id.startsWith('ph11_') || n.id.startsWith('ph12_')));
+
+    // School tab — class 8 / 9 / 10. Group by class, then by science vs math.
+    const schoolChapters8 = taxonomy.filter(n => n.type === 'chapter' && n.class_level === 8);
+    const schoolChapters9 = taxonomy.filter(n => n.type === 'chapter' && n.class_level === 9);
+    const schoolChapters10 = taxonomy.filter(n => n.type === 'chapter' && n.class_level === 10);
+    const splitScienceMath = (chs: TaxonomyNode[]) => ({
+        science: chs.filter(c => SCIENCE_CHAPTER_TYPES.has(c.chapterType || '')),
+        math: chs.filter(c => MATH_CHAPTER_TYPES.has(c.chapterType || '')),
+    });
+    const schoolByClass = [
+        { level: 8 as const, ...splitScienceMath(schoolChapters8) },
+        { level: 9 as const, ...splitScienceMath(schoolChapters9) },
+        { level: 10 as const, ...splitScienceMath(schoolChapters10) },
+    ];
+    const totalSchoolChapters = schoolChapters8.length + schoolChapters9.length + schoolChapters10.length;
+    const schoolChapterIds = new Set([...schoolChapters8, ...schoolChapters9, ...schoolChapters10].map(c => c.id));
 
     if (loading) {
         return (
@@ -539,7 +560,7 @@ export default function TaxonomyPage() {
 
                     {/* Subject Tabs */}
                     <div className="flex gap-2 mt-4">
-                        {(['chemistry', 'physics', 'biology', 'mathematics'] as SubjectTab[]).map(subj => (
+                        {(['chemistry', 'physics', 'biology', 'mathematics', 'school'] as SubjectTab[]).map(subj => (
                             <button
                                 key={subj}
                                 onClick={() => setSelectedSubject(subj)}
@@ -549,16 +570,28 @@ export default function TaxonomyPage() {
                                         : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                                 }`}
                             >
-                                {subj === 'chemistry' ? '⚗️ Chemistry' : subj === 'physics' ? '⚡ Physics' : subj === 'biology' ? '🧬 Biology' : '📐 Mathematics'}
+                                {subj === 'chemistry' ? '⚗️ Chemistry' : subj === 'physics' ? '⚡ Physics' : subj === 'biology' ? '🧬 Biology' : subj === 'mathematics' ? '📐 Mathematics' : '🏫 School (8–10)'}
                             </button>
                         ))}
                     </div>
 
                     {/* Branch Stats for selected subject */}
                     <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
-                        {activeBranches.map(branch => {
+                        {selectedSubject === 'school' ? (
+                            schoolByClass.map(({ level, science, math }) => (
+                                <div key={level} className="flex items-center gap-3 p-3 rounded-xl bg-gray-700/50 border border-gray-600">
+                                    <div className="p-2 rounded-lg bg-blue-500/20">
+                                        <span className="text-blue-400 font-bold text-sm w-5 h-5 flex items-center justify-center">{level}</span>
+                                    </div>
+                                    <div>
+                                        <div className="text-xl font-bold text-blue-400">{science.length + math.length}</div>
+                                        <div className="text-xs text-gray-400">Class {level}{(science.length + math.length) === 0 ? ' (empty)' : ''}</div>
+                                    </div>
+                                </div>
+                            ))
+                        ) : activeBranches.map(branch => {
                             const BranchIcon = branch.icon;
-                            const count = taxonomy.filter(n => n.type === 'chapter' && n.chapterType === branch.id).length;
+                            const count = taxonomy.filter(n => n.type === 'chapter' && n.chapterType === branch.id && !schoolChapterIds.has(n.id)).length;
                             return (
                                 <div key={branch.id} className="flex items-center gap-3 p-3 rounded-xl bg-gray-700/50 border border-gray-600">
                                     <div className="p-2 rounded-lg" style={{ backgroundColor: `${branch.color}20` }}>
@@ -579,12 +612,14 @@ export default function TaxonomyPage() {
                                 <div className="text-xl font-bold text-gray-300">
                                     {taxonomy.filter(n => n.type === 'topic' && (
                                         selectedSubject === 'chemistry'
-                                            ? ((n.parent_id?.startsWith('ch1') || n.parent_id?.startsWith('ch9_')) ?? false)
+                                            ? (n.parent_id?.startsWith('ch1') ?? false)
                                             : selectedSubject === 'physics'
-                                            ? ((n.parent_id?.startsWith('ph1') || n.parent_id?.startsWith('ph9_')) ?? false)
+                                            ? (n.parent_id?.startsWith('ph1') ?? false)
                                             : selectedSubject === 'biology'
-                                            ? (n.parent_id?.startsWith('bio9_') ?? false)
-                                            : (n.parent_id?.startsWith('ma_') ?? false)
+                                            ? ((n.parent_id?.startsWith('bio11_') || n.parent_id?.startsWith('bio12_')) ?? false)
+                                            : selectedSubject === 'mathematics'
+                                            ? (n.parent_id?.startsWith('ma_') ?? false)
+                                            : (n.parent_id ? schoolChapterIds.has(n.parent_id) : false)
                                     )).length}
                                 </div>
                                 <div className="text-xs text-gray-400">Total Tags</div>
@@ -622,9 +657,10 @@ export default function TaxonomyPage() {
                                 <label className="block text-sm font-medium text-gray-300 mb-1">Class Level</label>
                                 <select
                                     value={selectedClassLevel}
-                                    onChange={(e) => setSelectedClassLevel(parseInt(e.target.value) as 9 | 10 | 11 | 12)}
+                                    onChange={(e) => setSelectedClassLevel(parseInt(e.target.value) as 8 | 9 | 10 | 11 | 12)}
                                     className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
                                 >
+                                    <option value={8}>Class 8</option>
                                     <option value={9}>Class 9</option>
                                     <option value={10}>Class 10</option>
                                     <option value={11}>Class 11</option>
@@ -668,18 +704,6 @@ export default function TaxonomyPage() {
                 <div className="space-y-8">
                     {selectedSubject === 'chemistry' && (
                         <>
-                            {chapters9Chem.length > 0 && (
-                                <div>
-                                    <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
-                                        <span className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-bold">9</span>
-                                        Class 9 Chemistry
-                                        <span className="text-sm font-normal text-gray-500">({chapters9Chem.length} chapters)</span>
-                                    </h2>
-                                    <div className="space-y-3">
-                                        {chapters9Chem.map(chapter => renderChapter(chapter))}
-                                    </div>
-                                </div>
-                            )}
                             <div>
                                 <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
                                     <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">11</span>
@@ -705,18 +729,6 @@ export default function TaxonomyPage() {
 
                     {selectedSubject === 'physics' && (
                         <>
-                            {physicsChapters.filter(c => c.id.startsWith('ph9_')).length > 0 && (
-                                <div>
-                                    <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
-                                        <span className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-bold">9</span>
-                                        Class 9 Physics
-                                        <span className="text-sm font-normal text-gray-500">({physicsChapters.filter(c => c.id.startsWith('ph9_')).length} chapters)</span>
-                                    </h2>
-                                    <div className="space-y-3">
-                                        {physicsChapters.filter(c => c.id.startsWith('ph9_')).map(chapter => renderChapter(chapter))}
-                                    </div>
-                                </div>
-                            )}
                             <div>
                                 <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
                                     <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">11</span>
@@ -742,16 +754,30 @@ export default function TaxonomyPage() {
 
                     {selectedSubject === 'biology' && (
                         <>
-                            <div>
-                                <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
-                                    <span className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-bold">9</span>
-                                    Class 9 Biology
-                                    <span className="text-sm font-normal text-gray-500">({chapters9Bio.length} chapters)</span>
-                                </h2>
-                                <div className="space-y-3">
-                                    {chapters9Bio.map(chapter => renderChapter(chapter))}
+                            {chapters11Bio.length > 0 && (
+                                <div>
+                                    <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
+                                        <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">11</span>
+                                        Class 11 Biology
+                                        <span className="text-sm font-normal text-gray-500">({chapters11Bio.length} chapters)</span>
+                                    </h2>
+                                    <div className="space-y-3">
+                                        {chapters11Bio.map(chapter => renderChapter(chapter))}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
+                            {chapters12Bio.length > 0 && (
+                                <div>
+                                    <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
+                                        <span className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center text-sm font-bold">12</span>
+                                        Class 12 Biology
+                                        <span className="text-sm font-normal text-gray-500">({chapters12Bio.length} chapters)</span>
+                                    </h2>
+                                    <div className="space-y-3">
+                                        {chapters12Bio.map(chapter => renderChapter(chapter))}
+                                    </div>
+                                </div>
+                            )}
                         </>
                     )}
 
@@ -771,6 +797,51 @@ export default function TaxonomyPage() {
                                         <div className="space-y-3">
                                             {branchChapters.map(chapter => renderChapter(chapter))}
                                         </div>
+                                    </div>
+                                );
+                            })}
+                        </>
+                    )}
+
+                    {selectedSubject === 'school' && (
+                        <>
+                            {totalSchoolChapters === 0 && (
+                                <div className="text-center py-12 px-4 rounded-xl bg-gray-800/50 border border-gray-700">
+                                    <p className="text-gray-400 text-sm">No school chapters yet. Use <span className="text-blue-400 font-semibold">+ Add Chapter</span> above and select Class 8, 9, or 10.</p>
+                                </div>
+                            )}
+                            {schoolByClass.map(({ level, science, math }) => {
+                                if (science.length === 0 && math.length === 0) return null;
+                                const colorByLevel: Record<number, string> = { 8: 'bg-pink-600', 9: 'bg-emerald-600', 10: 'bg-amber-600' };
+                                return (
+                                    <div key={level} className="rounded-xl bg-gray-800/30 border border-gray-700 p-4">
+                                        <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center gap-2">
+                                            <span className={`w-8 h-8 rounded-full ${colorByLevel[level]} text-white flex items-center justify-center text-sm font-bold`}>{level}</span>
+                                            Class {level}
+                                            <span className="text-sm font-normal text-gray-500">({science.length + math.length} chapters)</span>
+                                        </h2>
+                                        {science.length > 0 && (
+                                            <div className="mb-4">
+                                                <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2 flex items-center gap-2">
+                                                    <Beaker className="w-4 h-4" /> Science
+                                                    <span className="text-xs font-normal text-gray-500">({science.length})</span>
+                                                </h3>
+                                                <div className="space-y-3">
+                                                    {science.map(chapter => renderChapter(chapter))}
+                                                </div>
+                                            </div>
+                                        )}
+                                        {math.length > 0 && (
+                                            <div>
+                                                <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2 flex items-center gap-2">
+                                                    <Tag className="w-4 h-4" /> Mathematics
+                                                    <span className="text-xs font-normal text-gray-500">({math.length})</span>
+                                                </h3>
+                                                <div className="space-y-3">
+                                                    {math.map(chapter => renderChapter(chapter))}
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             })}
