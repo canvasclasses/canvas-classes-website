@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { QuestionV2 } from '@canvas/data/models/Question.v2';
-import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
-import { isLocalhostDev } from '@/lib/adminAuth';
+import { requireAdmin } from '@/lib/auth';
 
 // PATCH /api/v2/questions/[id]/flag/[flagIdx]/resolve
 // Marks a specific flag as resolved (admin only)
@@ -12,12 +11,8 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string; flagIdx: string }> }
 ) {
   try {
-    const scriptAuth = hasScriptSecret(request);
-    const user = scriptAuth ? null : await getAuthenticatedUser(request);
-    const localDev = await isLocalhostDev();
-    if (!scriptAuth && !localDev && !isAdmin(user?.email)) {
-      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 403 });
-    }
+    const gate = await requireAdmin(request);
+    if (!gate.ok) return gate.response;
 
     await connectToDatabase();
     const { id, flagIdx } = await params;

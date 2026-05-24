@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import * as Sentry from '@sentry/nextjs';
-import { getAuthenticatedUser, isAdmin } from '@/lib/auth';
+import { requireAdmin } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
-  const user = await getAuthenticatedUser(request);
-  if (!user || !isAdmin(user.email)) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const gate = await requireAdmin(request);
+  if (!gate.ok) return gate.response;
 
   try {
     throw new Error('sentry-smoketest ' + new Date().toISOString());

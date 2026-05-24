@@ -3,19 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { fileTypeFromBuffer } from 'file-type';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { uploadToR2, getExtensionFromMimeType } from '@canvas/core/r2-storage';
-import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
-import { isLocalhostDev } from '@/lib/adminAuth';
+import { requireAdmin } from '@/lib/auth';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
-
-async function authorize(request: NextRequest): Promise<{ ok: boolean; email: string } | null> {
-  if (await isLocalhostDev()) return { ok: true, email: 'dev@localhost' };
-  if (hasScriptSecret(request)) return { ok: true, email: 'script@canvas' };
-  const user = await getAuthenticatedUser(request);
-  if (user?.email && isAdmin(user.email)) return { ok: true, email: user.email };
-  return null;
-}
 
 function sanitizeSlug(raw: string): string {
   return raw
@@ -29,8 +20,8 @@ function sanitizeSlug(raw: string): string {
 export async function POST(request: NextRequest) {
   try {
     await connectToDatabase();
-    const auth = await authorize(request);
-    if (!auth) return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    const gate = await requireAdmin(request);
+    if (!gate.ok) return gate.response;
 
     const formData = await request.formData();
     const file = formData.get('file') as File | null;

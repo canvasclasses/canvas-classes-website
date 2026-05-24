@@ -471,8 +471,9 @@ These rules are **non-negotiable**. Every agent must follow them when creating o
 ### 8.1 Authentication Is Required by Default
 
 - **Every API route under `/api/v2/`** that performs a write (POST, PATCH, PUT, DELETE) **must** call an auth guard before touching the database. No exceptions.
-- **Admin routes**: Use `requireAdmin()` from `lib/bookAuth.ts` (for server components/actions) or `getAuthenticatedUser()` + `isAdmin()` from `lib/auth.ts` (for route handlers).
-- **Student routes** (e.g. flag submission, progress save): Use `getAuthenticatedUser()` from `lib/auth.ts` to verify the user is logged in.
+- **Admin routes (admin app)**: Use `requireAdmin(request)` from `apps/admin/lib/auth.ts` (for route handlers) or `requireAdmin()` from `apps/admin/lib/adminAuth.ts` (for server components / actions). Both apply the same three-tier check (localhost dev bypass → script-secret bypass → Supabase + ADMIN_EMAILS).
+- **Admin routes (shared `@canvas/services`)**: Use `requireAdmin(req, deps)` from `@canvas/services/auth`. Same shape, but receives auth helpers via `ServiceDeps` so each app injects its own implementations.
+- **Student routes**: Use `getAuthenticatedUser()` from `apps/student/lib/auth.ts` to verify the user is logged in.
 - **Public read routes** are the only exception — if a GET returns non-sensitive public data, auth may be skipped. Document this explicitly with a `// PUBLIC: no auth required` comment.
 - If you are unsure whether a route needs auth, **it needs auth**.
 
@@ -480,10 +481,60 @@ These rules are **non-negotiable**. Every agent must follow them when creating o
 
 | Context | File | Functions |
 |---|---|---|
-| Route handlers (`/api/**`) | `lib/auth.ts` | `getAuthenticatedUser(request)`, `isAdmin(email)`, `hasScriptSecret(request)` |
-| Server components / actions | `lib/bookAuth.ts` | `requireAdmin()`, `getUserId()`, `isAdminRequest()`, `isLocalhostDev()` |
+| Admin route handlers (`apps/admin/app/api/**`) | `apps/admin/lib/auth.ts` | **`requireAdmin(request)`** (canonical gate), `getAuthenticatedUser(request)`, `isAdmin(email)`, `hasScriptSecret(request)`, `getUserIdFromRequest(request)` |
+| Admin server components / actions | `apps/admin/lib/adminAuth.ts` | `requireAdmin()`, `getUserId()`, `isAdminRequest()`, `isLocalhostDev()` |
+| Shared service handlers (`packages/services/*.ts`) | `packages/services/auth.ts` | `requireAdmin(request, deps)` |
+| Student route handlers | `apps/student/lib/auth.ts` | `getAuthenticatedUser(request)`, `isAdmin(email)`, `hasScriptSecret(request)` |
+| Student server components / actions | `apps/student/lib/bookAuth.ts` | `requireAdmin()`, `getUserId()`, `isAdminRequest()`, `isLocalhostDev()` |
 
-**Never define a local `getAuthenticatedUser`, `isAdmin`, or `hasScriptSecret` inside a route file.** Always import from the shared modules above. If you need new auth logic, add it to one of these two files.
+**Never define a local `getAuthenticatedUser`, `isAdmin`, `hasScriptSecret`, or any "authorize"-style helper inside a route file.** Always import from the shared modules above. If you need new auth logic, add it to one of these files.
+
+### 8.2.1 Canonical pattern for admin route handlers
+
+Every admin route handler in `apps/admin/app/api/**` MUST start its mutating handler (POST/PATCH/DELETE) and any admin-only GET with this exact preamble:
+
+```ts
+import { requireAdmin } from '@/lib/auth';
+
+export async function POST(request: NextRequest) {
+  const gate = await requireAdmin(request);
+  if (!gate.ok) return gate.response;
+  // gate.user.id and gate.user.email are always strings here.
+  // ...
+}
+```
+
+`requireAdmin` applies a three-tier check IN ORDER:
+
+1. **Localhost dev bypass** — must stay in sync with `apps/admin/middleware.ts`. If you ever change one, change both.
+2. **Script-secret bypass** — `x-admin-secret` header equal to `ADMIN_SECRET` env var. For backend bulk scripts.
+3. **Supabase session + `ADMIN_EMAILS` allow-list** — the production check.
+
+On bypass, `gate.user` is a synthetic identity (`{ id: 'dev-user', email: 'dev@localhost' }` or `{ id: 'script', email: 'script@canvasclasses.in' }`) so audit logs and `updated_by` fields work uniformly without null checks.
+
+**Why this exists:** before the consolidation (commit `<pending>`), 17 admin routes re-implemented the gate inline. 9 of them missed the localhost bypass and silently 401'd on local dev even though the middleware let the request through — including question reclassify, mock-test mutations, blog post update, and flag resolution. The canonical helper eliminates that drift.
+
+**Exceptions that should NOT use `requireAdmin`:**
+- `apps/admin/app/api/v2/admin/permissions/route.ts` — returns the current user's permissions, not an admin gate. Has its own localhost bypass that returns synthetic super-admin permissions.
+- `apps/admin/app/api/v2/admin/roles/route.ts` — uses RBAC `canManageRoles` permission, a stricter check than admin-email. Keeps its own per-handler gate.
+- Service-layer routes (e.g. `apps/admin/app/api/v2/flashcards/*`) — these are thin wrappers that delegate to `@canvas/services/*`, which uses the service-side `requireAdmin(request, deps)` instead.
+
+### 8.2.2 Canonical pattern for `@canvas/services` handlers
+
+For handlers that live in `packages/services/*.ts` (because they're shared between student and admin), use the DI-friendly variant:
+
+```ts
+import { requireAdmin } from './auth';
+
+export async function POST(request: NextRequest, deps: ServiceDeps) {
+  const gate = await requireAdmin(request, deps);
+  if (!gate.ok) return gate.response;
+  // gate.user is User | null (null only on localhost bypass)
+  // ...
+}
+```
+
+The service-side helper takes `ServiceDeps` so each app can inject its own auth implementations (admin's stricter check vs student's lighter check). Service handlers must use this — do not call `deps.isLocalhostDev` + `deps.getAuthenticatedUser` + `deps.isAdmin` inline.
 
 ### 8.3 Never Use NODE_ENV for Auth Bypass
 

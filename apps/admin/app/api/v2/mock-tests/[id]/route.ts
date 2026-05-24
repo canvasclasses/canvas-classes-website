@@ -5,21 +5,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { MockTestSet } from '@canvas/data/models/MockTestSet';
-import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
-import { isLocalhostDev } from '@/lib/adminAuth';
+import { requireAdmin } from '@/lib/auth';
 
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const scriptAuth = hasScriptSecret(request);
-    const user = scriptAuth ? null : await getAuthenticatedUser(request);
-    const localDev = await isLocalhostDev();
-    const authorEmail = scriptAuth ? 'script' : (user?.email ?? (localDev ? 'dev@localhost' : undefined));
-    if (!scriptAuth && !localDev && !isAdmin(user?.email)) {
-      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 403 });
-    }
+    const gate = await requireAdmin(request);
+    if (!gate.ok) return gate.response;
+    const authorEmail = gate.user.email;
 
     await connectToDatabase();
     const { id } = await params;
@@ -59,13 +54,9 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const scriptAuth = hasScriptSecret(request);
-    const user = scriptAuth ? null : await getAuthenticatedUser(request);
-    const localDev = await isLocalhostDev();
-    const authorEmail = scriptAuth ? 'script' : (user?.email ?? (localDev ? 'dev@localhost' : undefined));
-    if (!scriptAuth && !localDev && !isAdmin(user?.email)) {
-      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 403 });
-    }
+    const gate = await requireAdmin(request);
+    if (!gate.ok) return gate.response;
+    const authorEmail = gate.user.email;
 
     await connectToDatabase();
     const { id } = await params;

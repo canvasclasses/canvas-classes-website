@@ -9,15 +9,19 @@
 // Follow CLAUDE.md Rule 8 — never define local auth helpers elsewhere.
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getAuthenticatedUser, isAdmin } from '@/lib/auth';
+import { requireAdmin } from '@/lib/auth';
 
+/**
+ * Thin alias over the canonical `requireAdmin` so existing callers in this
+ * subtree keep working with their `guard.user.{id,email}` access pattern.
+ * New code should call `requireAdmin` from `@/lib/auth` directly.
+ */
 export async function requireAdminUser(request: NextRequest) {
-  const user = await getAuthenticatedUser(request);
-  if (!user || !isAdmin(user.email)) {
-    return { ok: false as const, response: NextResponse.json({ error: 'Unauthorized' }, { status: 401 }) };
-  }
-  return { ok: true as const, user };
+  return requireAdmin(request);
 }
+
+// Re-export NextResponse so files that imported it from here still resolve.
+export { NextResponse };
 
 export function errorResponse(message: string, status = 500) {
   // Never leak internals — message must be a safe, user-facing string.

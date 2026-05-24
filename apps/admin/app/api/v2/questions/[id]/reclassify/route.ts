@@ -5,7 +5,7 @@ import connectToDatabase from '@canvas/data/db/mongodb';
 import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { Chapter } from '@canvas/data/models/Chapter';
 import { AuditLog } from '@canvas/data/models/AuditLog';
-import { getAuthenticatedUser, isAdmin } from '@/lib/auth';
+import { requireAdmin } from '@/lib/auth';
 
 // Chapter prefix map — CANONICAL prefixes matching actual display_id values in DB
 // IDs MUST match taxonomyData_from_csv.ts chapter IDs (ch11_* / ch12_* scheme)
@@ -58,13 +58,9 @@ export async function POST(
 ) {
   const params = await context.params;
   try {
-    const user = await getAuthenticatedUser(request);
-    if (!user || !isAdmin(user.email)) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
+    const gate = await requireAdmin(request);
+    if (!gate.ok) return gate.response;
+    const user = gate.user;
 
     await connectToDatabase();
 

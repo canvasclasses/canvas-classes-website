@@ -1,25 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { BlogPost, type BlogStatus } from '@canvas/data/models/BlogPost';
-import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
-import { isLocalhostDev } from '@/lib/adminAuth';
+import { requireAdmin } from '@/lib/auth';
 
 export const runtime = 'nodejs';
-
-async function authorize(request: NextRequest): Promise<{ ok: boolean; email: string } | null> {
-  if (await isLocalhostDev()) return { ok: true, email: 'dev@localhost' };
-  if (hasScriptSecret(request)) return { ok: true, email: 'script@canvas' };
-  const user = await getAuthenticatedUser(request);
-  if (user?.email && isAdmin(user.email)) return { ok: true, email: user.email };
-  return null;
-}
 
 export async function GET(request: NextRequest, props: { params: Promise<{ id: string }> }) {
   const { id } = await props.params;
   try {
     await connectToDatabase();
-    const auth = await authorize(request);
-    if (!auth) return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    const gate = await requireAdmin(request);
+    if (!gate.ok) return gate.response;
 
     const post = await BlogPost.findOne({ _id: id, deleted_at: null }).lean();
     if (!post) return NextResponse.json({ success: false, error: 'Not found' }, { status: 404 });
@@ -34,8 +25,8 @@ export async function PATCH(request: NextRequest, props: { params: Promise<{ id:
   const { id } = await props.params;
   try {
     await connectToDatabase();
-    const auth = await authorize(request);
-    if (!auth) return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    const gate = await requireAdmin(request);
+    if (!gate.ok) return gate.response;
 
     const body = await request.json();
     const post = await BlogPost.findOne({ _id: id, deleted_at: null });
@@ -76,7 +67,7 @@ export async function PATCH(request: NextRequest, props: { params: Promise<{ id:
         }
       }
     }
-    post.updated_by = auth.email;
+    post.updated_by = gate.user.email;
 
     await post.save();
     return NextResponse.json({ success: true, data: post });
@@ -90,14 +81,14 @@ export async function DELETE(request: NextRequest, props: { params: Promise<{ id
   const { id } = await props.params;
   try {
     await connectToDatabase();
-    const auth = await authorize(request);
-    if (!auth) return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    const gate = await requireAdmin(request);
+    if (!gate.ok) return gate.response;
 
     const post = await BlogPost.findOne({ _id: id });
     if (!post) return NextResponse.json({ success: false, error: 'Not found' }, { status: 404 });
 
     post.deleted_at = new Date();
-    post.updated_by = auth.email;
+    post.updated_by = gate.user.email;
     await post.save();
 
     return NextResponse.json({ success: true });

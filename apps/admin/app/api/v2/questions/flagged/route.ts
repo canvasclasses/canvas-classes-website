@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { QuestionV2 } from '@canvas/data/models/Question.v2';
-import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
-import { isLocalhostDev } from '@/lib/adminAuth';
+import { requireAdmin } from '@/lib/auth';
 
 // GET /api/v2/questions/flagged
 // Returns all questions that have at least one student flag (unresolved by default).
@@ -13,12 +12,8 @@ import { isLocalhostDev } from '@/lib/adminAuth';
 //   source=admin   → switch to admin-source flags instead (for internal use)
 export async function GET(request: NextRequest) {
   try {
-    const scriptAuth = hasScriptSecret(request);
-    const user = scriptAuth ? null : await getAuthenticatedUser(request);
-    const localDev = await isLocalhostDev();
-    if (!scriptAuth && !localDev && !isAdmin(user?.email)) {
-      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 403 });
-    }
+    const gate = await requireAdmin(request);
+    if (!gate.ok) return gate.response;
 
     await connectToDatabase();
 

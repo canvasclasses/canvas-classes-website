@@ -2,18 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { BlogPost, type BlogStatus } from '@canvas/data/models/BlogPost';
-import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
-import { isLocalhostDev } from '@/lib/adminAuth';
+import { requireAdmin } from '@/lib/auth';
 
 export const runtime = 'nodejs';
-
-async function authorize(request: NextRequest): Promise<{ ok: boolean; email: string } | null> {
-  if (await isLocalhostDev()) return { ok: true, email: 'dev@localhost' };
-  if (hasScriptSecret(request)) return { ok: true, email: 'script@canvas' };
-  const user = await getAuthenticatedUser(request);
-  if (user?.email && isAdmin(user.email)) return { ok: true, email: user.email };
-  return null;
-}
 
 function slugify(title: string): string {
   return title
@@ -28,8 +19,8 @@ function slugify(title: string): string {
 export async function GET(request: NextRequest) {
   try {
     await connectToDatabase();
-    const auth = await authorize(request);
-    if (!auth) return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    const gate = await requireAdmin(request);
+    if (!gate.ok) return gate.response;
 
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
@@ -52,8 +43,8 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     await connectToDatabase();
-    const auth = await authorize(request);
-    if (!auth) return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    const gate = await requireAdmin(request);
+    if (!gate.ok) return gate.response;
 
     const body = await request.json();
 
@@ -111,8 +102,8 @@ export async function POST(request: NextRequest) {
       idea_id,
       scheduled_for,
       seo,
-      created_by: auth.email,
-      updated_by: auth.email,
+      created_by: gate.user.email,
+      updated_by: gate.user.email,
     });
 
     await doc.save();

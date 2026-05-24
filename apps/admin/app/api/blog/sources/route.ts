@@ -3,18 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import crypto from 'crypto';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { BlogSource, type BlogSourceStatus } from '@canvas/data/models/BlogSource';
-import { getAuthenticatedUser, isAdmin, hasScriptSecret } from '@/lib/auth';
-import { isLocalhostDev } from '@/lib/adminAuth';
+import { requireAdmin } from '@/lib/auth';
 
 export const runtime = 'nodejs';
-
-async function authorize(request: NextRequest): Promise<{ ok: boolean; email: string } | null> {
-  if (await isLocalhostDev()) return { ok: true, email: 'dev@localhost' };
-  if (hasScriptSecret(request)) return { ok: true, email: 'script@canvas' };
-  const user = await getAuthenticatedUser(request);
-  if (user?.email && isAdmin(user.email)) return { ok: true, email: user.email };
-  return null;
-}
 
 function hashUrl(url: string): string {
   return crypto.createHash('sha256').update(url.trim().toLowerCase()).digest('hex').slice(0, 32);
@@ -23,8 +14,8 @@ function hashUrl(url: string): string {
 export async function GET(request: NextRequest) {
   try {
     await connectToDatabase();
-    const auth = await authorize(request);
-    if (!auth) return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    const gate = await requireAdmin(request);
+    if (!gate.ok) return gate.response;
 
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
@@ -50,8 +41,8 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     await connectToDatabase();
-    const auth = await authorize(request);
-    if (!auth) return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    const gate = await requireAdmin(request);
+    if (!gate.ok) return gate.response;
 
     const body = await request.json();
     const items = Array.isArray(body.items) ? body.items : [body];
@@ -95,8 +86,8 @@ export async function POST(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   try {
     await connectToDatabase();
-    const auth = await authorize(request);
-    if (!auth) return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    const gate = await requireAdmin(request);
+    if (!gate.ok) return gate.response;
 
     const body = await request.json();
     const id = typeof body.id === 'string' ? body.id : null;
