@@ -260,12 +260,61 @@ The helper handles: exam-name normalization (`JEE_Main` → `JEE Main`, `NEET_UG
 ## 5. DEVELOPMENT COMMANDS
 
 ```bash
-npm run dev     # Start development server at http://localhost:3000
-npm run build   # Production build
-npm run lint    # ESLint
+npm run dev          # Start STUDENT dev server at http://localhost:3000
+npm run dev:admin    # Start ADMIN dev server at http://localhost:3001
+npm run build        # Production build (student)
+npm run build:admin  # Production build (admin)
+npm run lint         # ESLint (student)
+npm run lint:admin   # ESLint (admin)
 ```
 
 No automated test suite. Data integrity validation scripts are in `scripts/` (e.g. `validate_pyq_metadata.js`, `validate_question_spacing.js`).
+
+### 5.1 ENV FILE LAYOUT (post-Phase 5 split)
+
+Because admin and student are separate Next.js apps, env vars are split into a shared base + per-app overrides. **This layout is required — do not collapse it back to a single root `.env.local`.**
+
+```
+canvas/
+├─ .env.local                              ← SHARED. Real file. 13 vars used by both apps + /scripts/*.
+├─ .env.example                            ← Committed template for SHARED vars.
+├─ apps/
+│   ├─ admin/
+│   │   ├─ .env.local                      ← SYMLINK → ../../.env.local (provides shared base to admin)
+│   │   ├─ .env.development.local          ← Real file. ADMIN-only overrides (e.g. Sentry admin DSN).
+│   │   └─ .env.development.local.example  ← Committed template.
+│   └─ student/
+│       ├─ .env.local                      ← SYMLINK → ../../.env.local (provides shared base to student)
+│       ├─ .env.development.local          ← Real file. STUDENT-only overrides (Google OAuth, GA, cron, feature flags).
+│       └─ .env.development.local.example  ← Committed template.
+```
+
+**Next.js load priority (highest → lowest in dev mode):** `process.env` > `.env.development.local` > `.env.local` > `.env.development` > `.env`. So app-specific (`.env.development.local`) automatically overrides shared (`.env.local`).
+
+**Which vars go where:**
+
+| Variable group | File | Why |
+|---|---|---|
+| `MONGODB_URI`, `NEXT_PUBLIC_SUPABASE_*`, `ADMIN_EMAILS`, `ADMIN_SECRET`, `NEXT_PUBLIC_ADMIN_SECRET`, `ANTHROPIC_API_KEY`, `R2_*` (5 keys), `NEXT_PUBLIC_BASE_URL` | Root `.env.local` (shared) | Used by both apps and/or by `/scripts/*.js` (which hardcode `dotenv.config({ path: '.env.local' })`) |
+| `NEXT_PUBLIC_FEATURE_ADAPTIVE_PRACTICE`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_SITE_VERIFICATION`, `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_CLARITY_ID`, `NEXT_PUBLIC_CF_BEACON_TOKEN`, `CRON_SECRET` | `apps/student/.env.development.local` | Only student-side code reads these |
+| `NEXT_PUBLIC_SENTRY_DSN_ADMIN`, `SENTRY_DSN_ADMIN` | `apps/admin/.env.development.local` | Only admin Sentry init reads these |
+
+**Onboarding a fresh clone (e.g. second Mac):**
+1. Copy values from the working Mac (manual — env files are gitignored).
+2. Create the three files: root `.env.local`, `apps/admin/.env.development.local`, `apps/student/.env.development.local`.
+3. Recreate the two symlinks:
+   ```bash
+   ln -s ../../.env.local apps/admin/.env.local
+   ln -s ../../.env.local apps/student/.env.local
+   ```
+4. Restart any running dev server — Next.js only reads env files at startup.
+
+**When in doubt: which file should this new env var go in?**
+- Used by both apps OR by any `/scripts/*` file → root `.env.local`
+- Only the student app code reads it → `apps/student/.env.development.local`
+- Only the admin app code reads it → `apps/admin/.env.development.local`
+
+**Why this split exists:** before Phase 5, a single root `.env.local` was symlinked into admin only. The student app had no env file at all (latent bug — student-only vars like `GOOGLE_CLIENT_ID` had nowhere to live), and any cross-Mac credential drift caused asset uploads, MongoDB, or auth to silently break with misleading "Failed to fetch" / "Network error" messages. The new layout makes ownership explicit and the failure modes obvious.
 
 ---
 
