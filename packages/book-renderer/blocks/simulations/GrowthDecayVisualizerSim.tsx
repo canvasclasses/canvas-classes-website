@@ -105,7 +105,7 @@ export default function GrowthDecayVisualizerSim() {
                   stroke={dimmed ? `${colour}55` : colour} strokeWidth={1.5} />
                 {!dimmed && (
                   <text x={x0 + 8} y={py(v) - 5} fill="#e2e8f0" fontSize={9} fontWeight={700} textAnchor="middle"
-                    fontVariantNumeric="tabular-nums">
+                    style={{ fontVariantNumeric: 'tabular-nums' }}>
                     {Number.isInteger(v) ? v : v.toFixed(2)}
                   </text>
                 )}
