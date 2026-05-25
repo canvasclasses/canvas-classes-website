@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, startTransition, useDeferredValue, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
 import { HandwrittenNote, getUniqueCategories, getNotesStats, toInlineViewerUrl } from '../data/handwrittenNotesData';
 import { getChapterMetaByName } from '../data/chapterMetadata';
 import {
@@ -491,14 +490,14 @@ function ChapterGridByClass({
                     {orphan.reduce((acc, [, n]) => acc + n.length, 0)} additional notes
                     aren&apos;t mapped to a chapter yet. Use the search bar above or switch sort to{' '}
                     <button
-                        onClick={() => setSortKey('newest')}
+                        onClick={() => startTransition(() => setSortKey('newest'))}
                         className="text-amber-500 hover:text-amber-400 font-medium underline-offset-2 hover:underline"
                     >
                         Newest
                     </button>{' '}
                     /{' '}
                     <button
-                        onClick={() => setSortKey('title')}
+                        onClick={() => startTransition(() => setSortKey('title'))}
                         className="text-amber-500 hover:text-amber-400 font-medium underline-offset-2 hover:underline"
                     >
                         A–Z
@@ -669,23 +668,23 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
         try { localStorage.setItem(STORAGE_OPENED, JSON.stringify(Array.from(opened))); } catch {}
     }, [opened, hydrated]);
 
-    const toggleBookmark = (id: string) => {
+    const toggleBookmark = useCallback((id: string) => {
         setBookmarks(prev => {
             const next = new Set(prev);
             if (next.has(id)) next.delete(id);
             else next.add(id);
             return next;
         });
-    };
+    }, []);
 
-    const handleOpenNote = (note: HandwrittenNote) => {
+    const handleOpenNote = useCallback((note: HandwrittenNote) => {
         setViewingNote(note);
         setOpened(prev => {
             const next = new Set(prev);
             next.add(note.id);
             return next;
         });
-    };
+    }, []);
 
     const stats = useMemo(() => getNotesStats(initialNotes), [initialNotes]);
     const categories = useMemo(() => getUniqueCategories(initialNotes), [initialNotes]);
@@ -699,13 +698,16 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
         return counts;
     }, [initialNotes, categories]);
 
-    // Filter pipeline
+    // Defer the search query so keystrokes don't block the input from updating
+    const deferredSearch = useDeferredValue(searchQuery);
+
+    // Filter pipeline — uses deferredSearch so typing stays responsive
     const filteredNotes = useMemo(() => {
         let pool = initialNotes;
         if (activeTab !== 'all') pool = pool.filter(n => n.category === activeTab);
         if (showBookmarkedOnly) pool = pool.filter(n => bookmarks.has(n.id));
-        if (searchQuery.trim()) {
-            const q = searchQuery.toLowerCase();
+        if (deferredSearch.trim()) {
+            const q = deferredSearch.toLowerCase();
             pool = pool.filter(n =>
                 n.title.toLowerCase().includes(q) ||
                 n.chapter.toLowerCase().includes(q) ||
@@ -713,7 +715,7 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
             );
         }
         return pool;
-    }, [initialNotes, activeTab, showBookmarkedOnly, searchQuery, bookmarks]);
+    }, [initialNotes, activeTab, showBookmarkedOnly, deferredSearch, bookmarks]);
 
     // Group by chapter (when sortKey === 'chapter')
     const chapterGroups = useMemo(() => {
@@ -784,13 +786,9 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
             {/* content sits above backdrop */}
             <div className="relative z-10">
             {/* ── PDF Viewer Modal ──────────────────────────────────── */}
-            <AnimatePresence>
-                {viewingNote && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-md flex flex-col"
+            {viewingNote && (
+                    <div
+                        className="fixed inset-0 z-[60] bg-black/95 flex flex-col"
                     >
                         <div className="h-14 border-b border-slate-800 bg-slate-900/95 flex items-center justify-between px-4 shrink-0">
                             <div className="flex items-center gap-3 overflow-hidden flex-1">
@@ -851,9 +849,8 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
                                 title={viewingNote.title}
                             />
                         </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                    </div>
+            )}
 
             {/* ── HERO ───────────────────────────────────────────────── */}
             <section className="pt-32 pb-10 px-4 relative overflow-hidden">
@@ -930,7 +927,7 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
                     <div className="flex flex-wrap items-center gap-2">
                         {/* Category tabs (ordered by size desc) */}
                         <button
-                            onClick={() => setActiveTab('all')}
+                            onClick={() => startTransition(() => setActiveTab('all'))}
                             className={`shrink-0 px-3 py-1.5 rounded-lg text-sm font-medium transition-all border ${
                                 activeTab === 'all'
                                     ? 'bg-amber-500/15 text-amber-300 border-amber-500/40'
@@ -945,7 +942,7 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
                             return (
                                 <button
                                     key={cat}
-                                    onClick={() => setActiveTab(cat)}
+                                    onClick={() => startTransition(() => setActiveTab(cat))}
                                     className={`shrink-0 px-3 py-1.5 rounded-lg text-sm font-medium transition-all border ${
                                         isActive
                                             ? style.activeTab
@@ -961,7 +958,7 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
                         {/* Bookmark filter */}
                         {hydrated && totalBookmarked > 0 && (
                             <button
-                                onClick={() => setShowBookmarkedOnly(v => !v)}
+                                onClick={() => startTransition(() => setShowBookmarkedOnly(v => !v))}
                                 className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all border ${
                                     showBookmarkedOnly
                                         ? 'bg-amber-500/15 text-amber-300 border-amber-500/40'
@@ -987,7 +984,7 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
                                     return (
                                         <button
                                             key={opt.k}
-                                            onClick={() => setSortKey(opt.k)}
+                                            onClick={() => startTransition(() => setSortKey(opt.k))}
                                             className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium transition-colors ${
                                                 active
                                                     ? 'bg-slate-800 text-slate-100'
@@ -1015,8 +1012,10 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
                         <button
                             onClick={() => {
                                 setSearchQuery('');
-                                setActiveTab('all');
-                                setShowBookmarkedOnly(false);
+                                startTransition(() => {
+                                    setActiveTab('all');
+                                    setShowBookmarkedOnly(false);
+                                });
                             }}
                             className="text-amber-500 hover:text-amber-400 font-medium text-sm transition-colors"
                         >
