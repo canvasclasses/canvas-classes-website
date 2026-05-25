@@ -1,0 +1,25 @@
+{
+  "name": "@canvas/seo",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./gsc-client": "./gsc-client.ts",
+    "./crux-client": "./crux-client.ts",
+    "./sync-gsc": "./sync-gsc.ts",
+    "./sync-crux": "./sync-crux.ts",
+    "./run-sync": "./run-sync.ts",
+    "./queries": "./queries.ts",
+    "./expected-ctr": "./expected-ctr.ts",
+    "./insights": "./insights.ts",
+    "./briefing": "./briefing.ts",
+    "./url-groups": "./url-groups.ts",
+    "./config": "./config.ts"
+  },
+  "peerDependencies": {
+    "googleapis": "*",
+    "mongoose": "*"
+  }
+}

@@ -105,6 +105,12 @@ export default async function AdminHome() {
             hint="Per-user progress and engagement view. Useful for support + cohort analysis."
           />
           <PanelCard
+            href="/seo"
+            icon={<BarChart3 />}
+            title="SEO Dashboard"
+            hint="Search Console clicks/queries/pages + Chrome UX Report Core Web Vitals. Daily cron at 02:00 UTC."
+          />
+          <PanelCard
             href="/preview"
             icon={<Eye />}
             title="Preview"

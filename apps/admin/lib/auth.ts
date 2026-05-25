@@ -59,6 +59,20 @@ export function hasScriptSecret(request: NextRequest): boolean {
   return request.headers.get('x-admin-secret') === secret;
 }
 
+/**
+ * Scoped secret for the SEO morning-briefing routine. Granted ONLY at the
+ * two briefing routes (`/api/v2/seo/digest` and `/api/v2/seo/briefing/synthesis`)
+ * so a leaked briefing secret can read SEO data + write a synthesis, but can
+ * NOT touch questions, flashcards, mock tests, or any other admin surface.
+ *
+ * Used by the remote Claude routine — see _agents/plans/SEO_DASHBOARD.md PR 4.
+ */
+export function hasBriefingSecret(request: NextRequest): boolean {
+  const secret = process.env.BRIEFING_SECRET;
+  if (!secret) return false;
+  return request.headers.get('x-briefing-secret') === secret;
+}
+
 // =============================================================================
 // CANONICAL admin gate for route handlers
 // =============================================================================
