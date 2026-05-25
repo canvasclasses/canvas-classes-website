@@ -1,11 +1,13 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import {
   ACCENT,
   AudienceToggle,
   BUCKET_COLOR,
+  BUCKET_DEFINITIONS,
   ConfidenceDots,
   Dropdown,
   FeatureCard,
@@ -21,7 +23,6 @@ import {
 } from './primitives';
 import ShareCardButton from '../components/ShareCardButton';
 import ChoiceListBuilder from '../components/ChoiceListBuilder';
-import DropYearAnalyzer from '../components/DropYearAnalyzer';
 
 // ============================================================================
 // PredictorExperience — the unified form + results surface that implements
@@ -67,13 +68,6 @@ const FEATURES: Feature[] = [
     color: '#7dd3fc',
     title: 'Share with parents',
     desc: 'A square WhatsApp card with plain-English chance labels. Travels through family groups on its own.',
-  },
-  {
-    n: '04',
-    icon: 'refresh',
-    color: '#c4b5fd',
-    title: 'Drop-year scenarios',
-    desc: 'See the realistic spread of outcomes if you put in another year — pessimistic to optimistic.',
   },
 ];
 
@@ -156,15 +150,29 @@ interface DisplayRow {
   // Score-delta vs the user's input — only meaningful for BITSAT; JoSAA
   // computes rank delta differently.
   delta?: number;
+  // Destination for the row click. JEE non-IIT colleges have a deep-dive
+  // page at /college-predictor/college/[slug]; IITs + BITSAT campuses don't,
+  // so they stay as plain non-clickable cards.
+  href?: string;
 }
 
 // ── Sensitivity-chart row (from /predict-range) ──────────────────────────────
+// Now carries:
+//   - raw counts (for the stacked-bar segments)
+//   - weighted_score (for bar HEIGHTS, so prestigious unlocks visibly outweigh
+//     marginal ones — a chart honesty fix)
+//   - tier_mix (3-dot indicator under each bar)
+//   - newlySafe with NIRF (the "what unlocks at this rank/score" list under
+//     the chart, ranked by prestige)
 interface SensRow {
   score?: number;
   rank?: number;
   safe: number;
   target: number;
   reach: number;
+  weighted_score?: number;
+  tier_mix?: { T1: number; T2: number; T3: number };
+  newly_safe?: { title: string; subtitle: string; nirf?: number }[];
 }
 
 export default function PredictorExperience() {
@@ -206,7 +214,6 @@ export default function PredictorExperience() {
   const [filter, setFilter] = useState<'all' | 'safe' | 'target' | 'reach'>('all');
   const [extended, setExtended] = useState(false);
   const [showBuilder, setShowBuilder] = useState(false);
-  const [showDropYear, setShowDropYear] = useState(false);
 
   const resultsRef = useRef<HTMLDivElement>(null);
 
@@ -275,11 +282,24 @@ export default function PredictorExperience() {
         });
         if (rangeRes?.success && rangeRes.points) {
           setSens(
-            rangeRes.points.map((p: { rank: number; counts: { safe: number; target: number; reach: number } }) => ({
+            rangeRes.points.map((p: {
+              rank: number;
+              counts: { safe: number; target: number; reach: number };
+              weighted_score?: number;
+              tier_mix?: { T1: number; T2: number; T3: number };
+              newly_safe?: { college_short_name: string; branch_name: string; nirf?: number }[];
+            }) => ({
               rank: p.rank,
               safe: p.counts.safe ?? 0,
               target: p.counts.target ?? 0,
               reach: p.counts.reach ?? 0,
+              weighted_score: p.weighted_score,
+              tier_mix: p.tier_mix,
+              newly_safe: (p.newly_safe ?? []).map((u) => ({
+                title: u.college_short_name,
+                subtitle: u.branch_name,
+                nirf: u.nirf,
+              })),
             })),
           );
         } else {
@@ -327,11 +347,24 @@ export default function PredictorExperience() {
         });
         if (rangeRes?.success && rangeRes.points) {
           setSens(
-            rangeRes.points.map((p: { score: number; counts: { safe: number; target: number; reach: number } }) => ({
+            rangeRes.points.map((p: {
+              score: number;
+              counts: { safe: number; target: number; reach: number };
+              weighted_score?: number;
+              tier_mix?: { T1: number; T2: number; T3: number };
+              newly_safe?: { campus_name: string; programme_name: string; nirf?: number }[];
+            }) => ({
               score: p.score,
               safe: p.counts.safe ?? 0,
               target: p.counts.target ?? 0,
               reach: p.counts.reach ?? 0,
+              weighted_score: p.weighted_score,
+              tier_mix: p.tier_mix,
+              newly_safe: (p.newly_safe ?? []).map((u) => ({
+                title: `BITS ${u.campus_name}`,
+                subtitle: u.programme_name,
+                nirf: u.nirf,
+              })),
             })),
           );
         } else {
@@ -364,6 +397,9 @@ export default function PredictorExperience() {
             .sort((a, c) => a.year - c.year)
             .map((h) => h.closing_rank)
             .concat([b.projected_closing_rank]),
+          // IITs don't have deep-dive pages (JoSAA predictor scope is
+          // NIT/IIIT/GFTI), so we only link non-IIT JEE rows.
+          href: g.college_type !== 'IIT' ? `/college-predictor/college/${g.college_id}` : undefined,
         })),
       );
     }
@@ -404,34 +440,48 @@ export default function PredictorExperience() {
         eyebrow="STEP 02 · YOUR TURN"
         titlePlain="Tell us your rank."
         titleAccent="We'll do the rest."
-        sub="Four steps. Sixty seconds. A college list backed by five years of counseling data."
+        sub="Three steps. Sixty seconds. A college list backed by five years of counseling data."
       />
       <TrustRow />
 
-      {/* 4 feature cards — 2-up on mobile, 4-up at md+ so the titles don't
-          wrap to 5 lines at narrow widths. Tailwind grid utilities keep this
-          declarative inside the otherwise-inline-style component. */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-[18px] mb-12">
+      {/* 3 feature cards — stacked at narrow widths, 3-up at md+. */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-[18px] mb-12">
         {FEATURES.map((f) => (
           <FeatureCard key={f.n} f={f} />
         ))}
       </div>
 
-      {/* Exam tabs */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+      {/* Exam selector — promoted from a small pill toggle to a two-card
+          choice block. This IS the most important control on the page (it
+          decides which predictor renders), so the visual weight earns its
+          place. Active card uses the same amber gradient as the primary CTA
+          so a user instantly maps "amber = current exam." Inactive card stays
+          tappable with a visible "Switch →" hint. */}
+      <div className="mb-6">
         <div
+          className="text-center mb-3"
           style={{
-            display: 'inline-flex',
-            padding: 6,
-            gap: 4,
-            borderRadius: 999,
-            background: 'rgba(0,0,0,0.35)',
-            border: '1px solid rgba(255,255,255,0.06)',
+            color: '#9a9aa6',
+            fontSize: 12,
+            fontFamily: "'JetBrains Mono', monospace",
+            letterSpacing: '0.12em',
+            fontWeight: 600,
           }}
         >
+          WHICH EXAM ARE YOU APPLYING THROUGH?
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mx-auto" style={{ maxWidth: 760 }}>
           {([
-            { id: 'jee' as const, label: 'JEE Main', sub: 'NIT · IIIT · GFTI' },
-            { id: 'bitsat' as const, label: 'BITSAT', sub: 'BITS Pilani · Goa · Hyderabad' },
+            {
+              id: 'jee' as const,
+              label: 'JEE Main',
+              sub: 'NITs, IIITs & GFTIs',
+            },
+            {
+              id: 'bitsat' as const,
+              label: 'BITSAT',
+              sub: 'BITS Pilani, Goa & Hyderabad',
+            },
           ]).map((t) => {
             const active = exam === t.id;
             return (
@@ -439,35 +489,91 @@ export default function PredictorExperience() {
                 key={t.id}
                 type="button"
                 onClick={() => setExam(t.id)}
+                aria-pressed={active}
                 style={{
-                  padding: '10px 20px',
-                  borderRadius: 999,
-                  border: 'none',
+                  position: 'relative',
+                  textAlign: 'left',
+                  padding: '16px 22px',
+                  borderRadius: 16,
                   cursor: 'pointer',
-                  background: active ? `linear-gradient(180deg, ${ACCENT}, #f97316)` : 'transparent',
-                  color: active ? '#0a0a0f' : '#cfcfd6',
+                  border: active
+                    ? '1px solid rgba(245,158,11,0.5)'
+                    : '1px solid rgba(255,255,255,0.08)',
+                  background: active
+                    ? `linear-gradient(180deg, ${ACCENT}, #f97316)`
+                    : 'linear-gradient(180deg, rgba(20,22,34,0.6), rgba(12,13,22,0.65))',
+                  color: active ? '#0a0a0f' : '#e7e7ea',
                   fontFamily: 'inherit',
-                  fontSize: 13.5,
-                  fontWeight: active ? 700 : 500,
-                  letterSpacing: '-0.005em',
-                  boxShadow: active ? `0 6px 16px -8px ${ACCENT}aa` : 'none',
-                  transition: 'all 0.2s',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 8,
+                  boxShadow: active
+                    ? `0 18px 40px -16px ${ACCENT}aa, 0 1px 0 rgba(255,255,255,0.3) inset`
+                    : '0 1px 0 rgba(255,255,255,0.03) inset',
+                  transition: 'transform 0.18s, border-color 0.18s, box-shadow 0.18s',
+                }}
+                onMouseEnter={(e) => {
+                  if (active) return;
+                  (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(245,158,11,0.35)';
+                  (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  if (active) return;
+                  (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.08)';
+                  (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
                 }}
               >
-                <span>{t.label}</span>
-                <span
+                {/* Active dot + selected marker on the top-right */}
+                <div
                   style={{
-                    fontSize: 11,
-                    opacity: active ? 0.65 : 0.5,
-                    fontWeight: active ? 600 : 400,
-                    fontFamily: "'JetBrains Mono', monospace",
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: 2,
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span
+                      style={{
+                        width: 8,
+                        height: 8,
+                        borderRadius: '50%',
+                        background: active ? '#0a0a0f' : 'rgba(255,255,255,0.2)',
+                        boxShadow: active ? '0 0 0 3px rgba(0,0,0,0.15)' : 'none',
+                      }}
+                    />
+                    <span
+                      style={{
+                        fontFamily: "'Space Grotesk', system-ui, sans-serif",
+                        fontSize: 22,
+                        fontWeight: 700,
+                        letterSpacing: '-0.025em',
+                        lineHeight: 1,
+                      }}
+                    >
+                      {t.label}
+                    </span>
+                  </div>
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 700,
+                      letterSpacing: '0.16em',
+                      fontFamily: "'JetBrains Mono', monospace",
+                      color: active ? 'rgba(10,10,15,0.7)' : '#7d7d88',
+                    }}
+                  >
+                    {active ? 'SELECTED' : 'SWITCH →'}
+                  </span>
+                </div>
+                <div
+                  style={{
+                    fontSize: 13,
+                    color: active ? 'rgba(10,10,15,0.75)' : '#9a9aa6',
+                    fontWeight: 500,
+                    marginTop: 6,
+                    letterSpacing: '-0.005em',
                   }}
                 >
                   {t.sub}
-                </span>
+                </div>
               </button>
             );
           })}
@@ -892,7 +998,7 @@ export default function PredictorExperience() {
                   fontFamily: "'JetBrains Mono', monospace",
                 }}
               >
-                · {totalCount ?? 0} total matches ·{' '}
+                · {totalCount ?? 0} {exam === 'jee' ? 'colleges' : 'programmes'} matched ·{' '}
                 {exam === 'jee'
                   ? `${rankType} ${rank.toLocaleString('en-IN')}`
                   : `BITSAT ${score}/${maxScore}`}
@@ -911,6 +1017,7 @@ export default function PredictorExperience() {
                       key={k}
                       type="button"
                       onClick={() => setFilter(active ? 'all' : lower)}
+                      title={BUCKET_DEFINITIONS[k]}
                       style={{
                         padding: '6px 12px',
                         borderRadius: 999,
@@ -996,8 +1103,8 @@ export default function PredictorExperience() {
             />
           )}
 
-          {/* Share row + drop-year link */}
-          <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {/* Share row */}
+          <div style={{ marginTop: 20 }}>
             <div
               style={{
                 padding: '18px 22px',
@@ -1073,42 +1180,6 @@ export default function PredictorExperience() {
                 )}
               </div>
             </div>
-            <div
-              style={{
-                padding: '18px 22px',
-                borderRadius: 14,
-                background: 'linear-gradient(180deg, rgba(20,22,34,0.4), rgba(12,13,22,0.55))',
-                border: '1px solid rgba(255,255,255,0.05)',
-                borderLeft: '2px solid #c4b5fd',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                gap: 14,
-              }}
-            >
-              <div style={{ color: '#cfcfd6', fontSize: 14 }}>
-                <span style={{ color: '#f5f5f7', fontWeight: 600 }}>Curious about another year of prep?</span>{' '}
-                See the realistic range of outcomes if you dropped a year.
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowDropYear(true)}
-                style={{
-                  padding: '9px 16px',
-                  borderRadius: 999,
-                  background: 'rgba(196,181,253,0.1)',
-                  border: '1px solid rgba(196,181,253,0.3)',
-                  color: '#ddd6fe',
-                  fontFamily: 'inherit',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                }}
-              >
-                Drop-year analysis →
-              </button>
-            </div>
           </div>
         </div>
       )}
@@ -1126,16 +1197,6 @@ export default function PredictorExperience() {
           }}
         />
       )}
-      <DropYearAnalyzer
-        open={showDropYear}
-        onClose={() => setShowDropYear(false)}
-        exam={exam === 'jee' ? 'jee_main' : 'bitsat'}
-        inputs={
-          exam === 'jee'
-            ? { rank, category, gender: 'Gender-Neutral', home_state: homeState }
-            : { score, regime: paper }
-        }
-      />
     </section>
   );
 }
@@ -1153,8 +1214,15 @@ function ResultRow({
   const palette = BUCKET_COLOR[r.bucket.toUpperCase() as 'SAFE' | 'TARGET' | 'REACH'] ?? BUCKET_COLOR.TARGET;
   // For BITSAT, delta is precomputed against the user's score.
   const showDelta = r.delta !== undefined;
+  const clickable = !!r.href;
+  // Polymorphic root — Link when we have a deep-dive URL, plain div otherwise.
+  // Using `as` here keeps the JSX tree single-rooted; the Link variant gets the
+  // href prop, the div ignores it.
+  const Tag = (clickable ? Link : 'div') as 'div';
+  const linkProps: { href?: string; prefetch?: boolean } = clickable ? { href: r.href, prefetch: false } : {};
   return (
-    <div
+    <Tag
+      {...linkProps}
       style={{
         position: 'relative',
         display: 'grid',
@@ -1166,13 +1234,17 @@ function ResultRow({
         border: '1px solid rgba(255,255,255,0.05)',
         borderRadius: 14,
         transition: 'transform 0.2s, border-color 0.2s, background 0.2s',
-        cursor: 'pointer',
+        cursor: clickable ? 'pointer' : 'default',
+        textDecoration: 'none',
+        color: 'inherit',
       }}
       onMouseEnter={(e) => {
+        if (!clickable) return;
         (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.12)';
         (e.currentTarget as HTMLDivElement).style.transform = 'translateX(2px)';
       }}
       onMouseLeave={(e) => {
+        if (!clickable) return;
         (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.05)';
         (e.currentTarget as HTMLDivElement).style.transform = 'translateX(0)';
       }}
@@ -1214,6 +1286,7 @@ function ResultRow({
             {r.programme}
           </span>
           <span
+            title={BUCKET_DEFINITIONS[r.bucket.toUpperCase() as 'SAFE' | 'TARGET' | 'REACH']}
             style={{
               padding: '2.5px 7px',
               borderRadius: 5,
@@ -1223,6 +1296,7 @@ function ResultRow({
               fontSize: 9.5,
               fontWeight: 700,
               letterSpacing: '0.16em',
+              cursor: 'help',
             }}
           >
             {r.bucket.toUpperCase()}
@@ -1296,8 +1370,21 @@ function ResultRow({
             CHANCE
           </div>
         </div>
+        {clickable && (
+          <span
+            aria-hidden
+            style={{
+              color: '#5e5e6a',
+              fontSize: 14,
+              marginLeft: 4,
+              transition: 'color 0.15s',
+            }}
+          >
+            ›
+          </span>
+        )}
       </div>
-    </div>
+    </Tag>
   );
 }
 
@@ -1327,16 +1414,40 @@ function SensitivityChart({
   const activeIdx = hover ?? userIdx;
   const sel = points[activeIdx];
   const current = points[userIdx];
-  const totals = points.map((p) => p.safe + p.target + p.reach);
-  const maxTotal = Math.max(...totals, 1);
-  const barMaxHeight = 240;
+
+  // ── DELTA-FROM-YOU chart ─────────────────────────────────────────────────
+  // The chart's headline asks "what does a different rank buy you?". The
+  // honest answer is the *delta* against the user's current rank — not the
+  // absolute Safe/Target/Reach stack, which is dominated by Safe and looks
+  // visually flat (the bug a user reported: 9 nearly-identical green bars).
+  //
+  // Each bar shows: gained Safe colleges (above the axis, green) or lost
+  // Safe colleges (below the axis, pink). YOU's bar sits flat at the axis.
+  // Magnitudes are clamped to a small minimum (3 px) when non-zero so a +1
+  // delta is still visible — otherwise tiny but real swings disappear.
+  const youSafe = current?.safe ?? 0;
+  const safeDeltas = points.map((p) => p.safe - youSafe);
+  const maxAbsDelta = Math.max(...safeDeltas.map(Math.abs), 1);
+  // Flat-band heuristic: if the whole sweep moves fewer than 5 Safe colleges
+  // in either direction, the band genuinely doesn't matter and we say so.
+  const isFlat = maxAbsDelta < 5;
+  // Half-height: each direction (gain/loss) gets this much room, axis in middle.
+  // Within each half, the bar itself is capped at `halfBarHeight - labelGutter`
+  // so the absolute-positioned numeric label (rendered just above/below the bar
+  // tip) doesn't bleed into the subtitle paragraph above or the tier-mix strip
+  // below. Previously when a bar hit max height (e.g. +46, −52 at the sweep
+  // extremes) its label visually collided with adjacent text.
+  const halfBarHeight = 130;
+  const labelGutter = 22;
+  const maxBarFill = halfBarHeight - labelGutter;
+  const barMaxHeight = halfBarHeight * 2; // total vertical room for bars
 
   const delta = sel
     ? exam === 'jee'
       ? (sel.rank ?? 0) - userValue
       : (sel.score ?? 0) - userValue
     : 0;
-  const safeDelta = sel ? sel.safe - (current?.safe ?? 0) : 0;
+  const safeDelta = sel ? sel.safe - youSafe : 0;
 
   return (
     <div
@@ -1374,32 +1485,85 @@ function SensitivityChart({
         </span>
       </div>
       <p style={{ margin: '8px 0 0', maxWidth: 720, color: '#9a9aa6', fontSize: 13.5, lineHeight: 1.55 }}>
-        Each bar is what the predictor would have said at that {exam === 'jee' ? 'rank' : 'score'}. Hover any bar
-        to see the diff against your current input.
+        Each bar shows the <span style={{ color: '#e7e7ea', fontWeight: 600 }}>change in Safe {exam === 'jee' ? 'branches' : 'programmes'}</span>{' '}
+        (a branch = one course at one college) vs your current. <span style={{ color: '#34d399', fontWeight: 600 }}>Green up</span> ={' '}
+        {exam === 'jee' ? 'branches' : 'programmes'} you&apos;d gain,{' '}
+        <span style={{ color: '#fb7185', fontWeight: 600 }}>pink down</span> = {exam === 'jee' ? 'branches' : 'programmes'} you&apos;d
+        lose. The tiny purple-blue-grey strip below each bar shows the tier mix of the Safe pool there. Hover
+        any bar for the specific {exam === 'jee' ? 'branches' : 'programmes'} that unlock.
       </p>
 
-      {/* Bars — on mobile we allow horizontal scroll so 9 bars don't squish
-          below readable width. Each bar gets a min-width of 60px on small. */}
+      {/* (c) Flat-banner — when bar variation is small, the chart is honestly
+          uninformative. Say so explicitly instead of pretending bar heights
+          mean something. */}
+      {isFlat && (
+        <div
+          style={{
+            marginTop: 18,
+            padding: '14px 18px',
+            borderRadius: 12,
+            background: 'rgba(56,189,248,0.06)',
+            border: '1px solid rgba(125,211,252,0.25)',
+            color: '#bae6fd',
+            fontSize: 13,
+            lineHeight: 1.55,
+          }}
+        >
+          <span style={{ fontWeight: 700, color: '#7dd3fc', letterSpacing: '0.02em' }}>
+            Your option set is essentially stable across this {exam === 'jee' ? 'rank' : 'score'} band.
+          </span>{' '}
+          The biggest swing is just {maxAbsDelta} Safe {exam === 'jee' ? 'branches' : 'programmes'} — a tiny
+          fraction of your option set. At your level, focus on{' '}
+          <em style={{ fontStyle: 'normal', color: '#e7e7ea' }}>which</em> options to pick — chasing a few
+          more {exam === 'jee' ? 'ranks' : 'marks'} won&apos;t unlock meaningfully new {exam === 'jee' ? 'branches' : 'programmes'}.
+        </div>
+      )}
+
+      {/* Delta bars — bars sit symmetric around a center axis. Above = gained
+          Safe colleges vs YOU. Below = lost. Bar magnitude is scaled to the
+          largest |delta| in the sweep so the most informative bar uses the
+          full available height. Non-zero deltas get a 3px floor so a +1 still
+          renders as a visible sliver instead of disappearing. */}
       <div
         style={{
+          position: 'relative',
           display: 'grid',
           gridTemplateColumns: `repeat(${points.length}, minmax(60px, 1fr))`,
           gap: 10,
-          alignItems: 'end',
           marginTop: 28,
-          height: barMaxHeight + 70,
+          height: barMaxHeight + 90,
           overflowX: 'auto',
         }}
       >
+        {/* Center axis line — sits at the middle of the bar area. Drawn as a
+            single absolutely-positioned element spanning all columns so the
+            visual zero line is consistent across the chart. */}
+        <div
+          aria-hidden
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: halfBarHeight,
+            height: 1,
+            background: 'rgba(255,255,255,0.12)',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }}
+        />
         {points.map((p, i) => {
-          const t = p.safe + p.target + p.reach;
-          const h = (t / maxTotal) * barMaxHeight;
-          const safeH = (p.safe / Math.max(t, 1)) * h;
-          const targetH = (p.target / Math.max(t, 1)) * h;
-          const reachH = (p.reach / Math.max(t, 1)) * h;
+          const sd = safeDeltas[i];
           const isYou = i === userIdx;
           const isHover = i === activeIdx;
+          // Bar magnitude scaled to the sweep's max |delta|, capped at
+          // maxBarFill (= halfBarHeight - labelGutter) so the label that
+          // sits above/below the bar tip stays inside its half-container.
+          // Min 3px when non-zero so small swings are still visible.
+          const rawH = (Math.abs(sd) / maxAbsDelta) * maxBarFill;
+          const barH = sd === 0 ? 0 : Math.max(rawH, 3);
           const labelValue = exam === 'jee' ? (p.rank ?? 0).toLocaleString('en-IN') : (p.score ?? 0);
+          const tierMix = p.tier_mix;
+          const deltaLabel = sd === 0 ? (isYou ? '±0' : '0') : sd > 0 ? `+${sd}` : `${sd}`;
           return (
             <button
               key={i}
@@ -1407,78 +1571,164 @@ function SensitivityChart({
               onClick={() => setHover(i)}
               onMouseEnter={() => setHover(i)}
               style={{
+                position: 'relative',
                 background: 'none',
                 border: 'none',
                 padding: 0,
                 cursor: 'pointer',
                 fontFamily: 'inherit',
-                height: barMaxHeight + 70,
+                height: barMaxHeight + 90,
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'flex-end',
                 alignItems: 'center',
+                zIndex: 1,
               }}
             >
-              <span
-                style={{
-                  color: isHover ? '#f5f5f7' : '#5e5e6a',
-                  fontSize: 11.5,
-                  fontWeight: 700,
-                  fontFamily: "'JetBrains Mono', monospace",
-                  marginBottom: 6,
-                  transition: 'color 0.15s',
-                  fontVariantNumeric: 'tabular-nums',
-                }}
-              >
-                {t}
-              </span>
+              {/* Top half — gained colleges (positive delta). Reserve the
+                  full half-height so the axis line stays at a fixed position
+                  across all columns regardless of which bar gets the tallest
+                  swing. */}
               <div
                 style={{
                   width: '100%',
                   maxWidth: 78,
-                  height: h,
+                  height: halfBarHeight,
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  justifyContent: 'center',
                   position: 'relative',
-                  borderRadius: 6,
-                  overflow: 'hidden',
-                  outline: isHover ? `2px solid ${ACCENT}` : 'none',
-                  outlineOffset: 2,
-                  transition: 'outline 0.15s',
                 }}
               >
-                <div
-                  style={{
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    height: safeH,
-                    background: isHover ? 'linear-gradient(180deg, #34d399, #10b981)' : 'rgba(16,185,129,0.55)',
-                    transition: 'background 0.15s',
-                  }}
-                />
-                <div
-                  style={{
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    bottom: safeH,
-                    height: targetH,
-                    background: isHover ? 'linear-gradient(180deg, #fbbf24, #f59e0b)' : 'rgba(245,158,11,0.55)',
-                    transition: 'background 0.15s',
-                  }}
-                />
-                <div
-                  style={{
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    bottom: safeH + targetH,
-                    height: reachH,
-                    background: isHover ? 'linear-gradient(180deg, #7dd3fc, #38bdf8)' : 'rgba(56,189,248,0.55)',
-                    transition: 'background 0.15s',
-                  }}
-                />
+                {/* Above-axis numeric label — visible only when there's a
+                    positive delta so we don't litter the axis with zeros. */}
+                {sd > 0 && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      bottom: barH + 4,
+                      color: isHover ? '#a7f3d0' : '#34d399',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontVariantNumeric: 'tabular-nums',
+                      transition: 'color 0.15s',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {deltaLabel}
+                  </span>
+                )}
+                {sd > 0 && (
+                  <div
+                    style={{
+                      width: '100%',
+                      maxWidth: 78,
+                      height: barH,
+                      borderRadius: '6px 6px 0 0',
+                      background: isHover
+                        ? 'linear-gradient(180deg, #34d399, #10b981)'
+                        : 'rgba(16,185,129,0.55)',
+                      outline: isHover ? `2px solid ${ACCENT}` : 'none',
+                      outlineOffset: 2,
+                      transition: 'background 0.15s, outline 0.15s',
+                    }}
+                  />
+                )}
               </div>
+              {/* Bottom half — lost colleges (negative delta). The mirror of
+                  the top half, growing downward from the axis. */}
+              <div
+                style={{
+                  width: '100%',
+                  maxWidth: 78,
+                  height: halfBarHeight,
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'center',
+                  position: 'relative',
+                }}
+              >
+                {sd < 0 && (
+                  <div
+                    style={{
+                      width: '100%',
+                      maxWidth: 78,
+                      height: barH,
+                      borderRadius: '0 0 6px 6px',
+                      background: isHover
+                        ? 'linear-gradient(180deg, #fb7185, #e11d48)'
+                        : 'rgba(244,63,94,0.55)',
+                      outline: isHover ? `2px solid ${ACCENT}` : 'none',
+                      outlineOffset: 2,
+                      transition: 'background 0.15s, outline 0.15s',
+                    }}
+                  />
+                )}
+                {sd < 0 && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: barH + 4,
+                      color: isHover ? '#fecdd3' : '#fb7185',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontVariantNumeric: 'tabular-nums',
+                      transition: 'color 0.15s',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {deltaLabel}
+                  </span>
+                )}
+                {sd === 0 && isYou && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: 6,
+                      color: ACCENT,
+                      fontSize: 11,
+                      fontWeight: 700,
+                      fontFamily: "'JetBrains Mono', monospace",
+                      letterSpacing: '0.06em',
+                    }}
+                  >
+                    ±0
+                  </span>
+                )}
+              </div>
+              {/* Tier-mix indicator — composition of the Safe pool at this
+                  bar (absolute, not delta). Lets the eye still sense "is the
+                  Safe pool here mostly prestigious?" alongside the delta. */}
+              {tierMix && (tierMix.T1 + tierMix.T2 + tierMix.T3 > 0) && (
+                <div
+                  style={{
+                    marginTop: 8,
+                    display: 'flex',
+                    width: '100%',
+                    maxWidth: 78,
+                    height: 4,
+                    borderRadius: 2,
+                    overflow: 'hidden',
+                    opacity: isHover ? 1 : 0.55,
+                    transition: 'opacity 0.15s',
+                  }}
+                  title={`Safe-pool tier mix here: ${tierMix.T1} top + ${tierMix.T2} solid + ${tierMix.T3} other`}
+                >
+                  {(() => {
+                    const total = tierMix.T1 + tierMix.T2 + tierMix.T3;
+                    return (
+                      <>
+                        <span style={{ flex: tierMix.T1 / total, background: '#c4b5fd' }} />
+                        <span style={{ flex: tierMix.T2 / total, background: '#60a5fa' }} />
+                        <span style={{ flex: tierMix.T3 / total, background: 'rgba(255,255,255,0.2)' }} />
+                      </>
+                    );
+                  })()}
+                </div>
+              )}
+              {/* x-axis label — the rank/score at this point, plus a YOU
+                  marker on the user's actual bar. */}
               <span
                 style={{
                   marginTop: 10,
@@ -1502,11 +1752,11 @@ function SensitivityChart({
         })}
       </div>
 
-      <div style={{ display: 'flex', gap: 16, marginTop: 22, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 18, marginTop: 22, flexWrap: 'wrap' }}>
         {[
-          { k: 'SAFE', color: '#34d399', label: 'Safe' },
-          { k: 'TARGET', color: '#fbbf24', label: 'Target' },
-          { k: 'REACH', color: '#7dd3fc', label: 'Reach' },
+          { k: 'GAIN', color: '#34d399', label: `${exam === 'jee' ? 'Branches' : 'Programmes'} you'd gain` },
+          { k: 'LOSE', color: '#fb7185', label: `${exam === 'jee' ? 'Branches' : 'Programmes'} you'd lose` },
+          { k: 'TIER', color: '#c4b5fd', label: 'Safe-pool tier mix (T1·T2·T3)' },
         ].map((l) => (
           <span
             key={l.k}
@@ -1532,7 +1782,10 @@ function SensitivityChart({
           {delta === 0 ? (
             <>
               This is <span style={{ color: ACCENT, fontWeight: 700 }}>your current {exam === 'jee' ? 'rank' : 'score'}</span>.{' '}
-              {sel?.safe ?? 0} Safe · {sel?.target ?? 0} Target · {sel?.reach ?? 0} Reach.
+              <span style={{ color: '#34d399', fontWeight: 700 }}>{sel?.safe ?? 0} Safe</span> ·{' '}
+              <span style={{ color: '#fbbf24', fontWeight: 700 }}>{sel?.target ?? 0} Target</span> ·{' '}
+              <span style={{ color: '#7dd3fc', fontWeight: 700 }}>{sel?.reach ?? 0} Reach</span>{' '}
+              <span style={{ color: '#7d7d88' }}>{exam === 'jee' ? 'branches' : 'programmes'}.</span>
             </>
           ) : (
             <>
@@ -1546,7 +1799,7 @@ function SensitivityChart({
               <span style={{ color: '#fbbf24', fontWeight: 700 }}>{sel?.target ?? 0} Target</span> ·{' '}
               <span style={{ color: '#7dd3fc', fontWeight: 700 }}>{sel?.reach ?? 0} Reach</span>{' '}
               <span style={{ color: '#7d7d88' }}>
-                ({safeDelta > 0 ? `+${safeDelta}` : safeDelta} Safe vs your current)
+                {exam === 'jee' ? 'branches' : 'programmes'} ({safeDelta > 0 ? `+${safeDelta}` : safeDelta} Safe vs your current)
               </span>
             </>
           )}
@@ -1555,17 +1808,129 @@ function SensitivityChart({
           <div style={{ marginTop: 6, color: safeDelta < 0 ? '#fb7185' : '#34d399', fontSize: 13, fontWeight: 600 }}>
             {safeDelta < 0 ? (
               <>
-                You&apos;d lose: <span style={{ fontWeight: 700 }}>{Math.abs(safeDelta)} Safe colleges</span> — a
-                reminder of what your current {exam === 'jee' ? 'rank' : 'score'} has already earned you.
+                You&apos;d lose:{' '}
+                <span style={{ fontWeight: 700 }}>
+                  {Math.abs(safeDelta)} Safe {exam === 'jee' ? 'branches' : 'programmes'}
+                </span>
+                {' '}— a reminder of what your current {exam === 'jee' ? 'rank' : 'score'} has already earned you.
               </>
             ) : (
               <>
-                You&apos;d unlock: <span style={{ fontWeight: 700 }}>{safeDelta} more Safe colleges</span>.
+                You&apos;d unlock:{' '}
+                <span style={{ fontWeight: 700 }}>
+                  {safeDelta} more Safe {exam === 'jee' ? 'branches' : 'programmes'}
+                </span>
+                .
               </>
             )}
           </div>
         )}
       </div>
+
+      {/* (a) Unlocks list — the specific colleges that become Safe at the
+          hovered bar. This is the chart's actual deliverable: not "more
+          options" but WHICH options. Sorted by NIRF on the server so the
+          headline names appear first. */}
+      {sel?.newly_safe && sel.newly_safe.length > 0 && delta !== 0 && (
+        <div
+          style={{
+            marginTop: 18,
+            padding: '18px 22px',
+            borderRadius: 12,
+            background: 'rgba(0,0,0,0.3)',
+            border: '1px solid rgba(255,255,255,0.06)',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'baseline',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: 8,
+              marginBottom: 12,
+            }}
+          >
+            <div
+              style={{
+                color: '#5e5e6a',
+                fontSize: 10,
+                fontWeight: 700,
+                letterSpacing: '0.18em',
+                fontFamily: "'JetBrains Mono', monospace",
+              }}
+            >
+              WHAT UNLOCKS AT{' '}
+              {exam === 'jee'
+                ? `CRL ${(sel.rank ?? 0).toLocaleString('en-IN')}`
+                : `${sel.score}/${maxScore}`}
+            </div>
+            <span style={{ color: '#7d7d88', fontSize: 11.5 }}>
+              {sel.newly_safe.length} new Safe{' '}
+              {exam === 'jee'
+                ? sel.newly_safe.length === 1 ? 'branch' : 'branches'
+                : sel.newly_safe.length === 1 ? 'programme' : 'programmes'}
+              {' '}vs your current — top {Math.min(6, sel.newly_safe.length)} shown
+            </span>
+          </div>
+          <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 8 }}>
+            {sel.newly_safe.slice(0, 6).map((u, i) => (
+              <li
+                key={`${u.title}-${u.subtitle}-${i}`}
+                style={{
+                  display: 'flex',
+                  gap: 8,
+                  alignItems: 'baseline',
+                  padding: '8px 12px',
+                  borderRadius: 8,
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.04)',
+                }}
+              >
+                <span style={{ color: '#34d399', fontSize: 9, marginTop: 2 }}>●</span>
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <div style={{ color: '#e7e7ea', fontSize: 13, fontWeight: 600, lineHeight: 1.3 }}>
+                    {u.title}
+                  </div>
+                  <div
+                    style={{
+                      color: '#7d7d88',
+                      fontSize: 11.5,
+                      lineHeight: 1.3,
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    {u.subtitle}
+                    {u.nirf !== undefined && (
+                      <span style={{ color: '#5e5e6a' }}> · NIRF #{u.nirf}</span>
+                    )}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {/* Honest empty-state — if the hovered bar adds nothing new, say so
+          instead of leaving the panel blank. Happens when the user hovers a
+          worse-than-current rank (everything was already in the option set). */}
+      {sel?.newly_safe && sel.newly_safe.length === 0 && delta !== 0 && delta < 0 === (exam === 'jee') && (
+        <div
+          style={{
+            marginTop: 18,
+            padding: '14px 18px',
+            borderRadius: 12,
+            background: 'rgba(0,0,0,0.2)',
+            border: '1px dashed rgba(255,255,255,0.08)',
+            color: '#7d7d88',
+            fontSize: 12.5,
+          }}
+        >
+          No new {exam === 'jee' ? 'branches' : 'programmes'} become Safe at this {exam === 'jee' ? 'rank' : 'score'} compared with your current — the {exam === 'jee' ? 'colleges' : 'programmes'} are the same set, just with shifted bucket assignments.
+        </div>
+      )}
 
       <div
         style={{
@@ -1575,7 +1940,7 @@ function SensitivityChart({
           fontFamily: "'JetBrains Mono', monospace",
         }}
       >
-        hover any bar · bar heights show total Safe + Target + Reach at that {exam === 'jee' ? 'rank' : 'score'}
+        hover any bar · bar height = number of Safe {exam === 'jee' ? 'branches' : 'programmes'} you&apos;d gain or lose vs your current
       </div>
     </div>
   );

@@ -757,29 +757,30 @@ export default function HandwrittenNotesClient({ initialNotes }: Props) {
 
     return (
         <div className="min-h-screen bg-[#050505] font-sans relative overflow-hidden">
-            {/* ── GLOBAL AMBIENT BACKDROP — colored glows + faint grid ── */}
-            <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-                {/* warm hero orbs */}
-                <div className="absolute -top-32 left-[8%] w-[620px] h-[620px] bg-amber-500/12 rounded-full blur-[130px]" />
-                <div className="absolute top-[12%] -right-24 w-[520px] h-[520px] bg-orange-500/12 rounded-full blur-[130px]" />
-                {/* mid-page cool accents */}
-                <div className="absolute top-[45%] -left-28 w-[540px] h-[540px] bg-purple-500/10 rounded-full blur-[130px]" />
-                <div className="absolute top-[60%] right-[5%] w-[480px] h-[480px] bg-emerald-500/8 rounded-full blur-[130px]" />
-                {/* lower glow */}
-                <div className="absolute top-[90%] left-[25%] w-[600px] h-[600px] bg-pink-500/8 rounded-full blur-[140px]" />
-                <div className="absolute top-[115%] right-[10%] w-[500px] h-[500px] bg-cyan-500/8 rounded-full blur-[130px]" />
-                {/* faint grid */}
-                <div
-                    className="absolute inset-0 opacity-[0.025]"
-                    style={{
-                        backgroundImage:
-                            'linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)',
-                        backgroundSize: '44px 44px',
-                        maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
-                        WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
-                    }}
-                />
-                {/* subtle top vignette for hero legibility */}
+            {/* ── GLOBAL AMBIENT BACKDROP — colored glows ──
+                Performance budget for this layer (INP-sensitive — was the
+                top suspect when GSC flagged 259ms INP p75 on 2026-05-25):
+                  • `contain: paint` isolates the layer so unrelated
+                    interactions don't trigger a backdrop repaint.
+                  • Orb count cut from 6 → 3 (one per visual band: hero,
+                    mid, lower). Each orb at blur-[130px] forced large
+                    compositor surfaces on mobile.
+                  • Blur radius dropped from 130-140px → 90-100px. Below
+                    100px the GPU can fall back to a faster blur path on
+                    most mobile devices.
+                  • Faint-grid mask-image layer removed. mask-image is one
+                    of the more expensive paint ops on Android Chrome and
+                    the grid was at opacity 0.025 — near-invisible.
+                If you ever want richer ambient lighting back, prefer a
+                pre-rendered WebP behind a `bg-cover` div over more orbs. */}
+            <div
+                className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+                style={{ contain: 'paint' }}
+            >
+                <div className="absolute -top-32 left-[8%] w-[620px] h-[620px] bg-amber-500/12 rounded-full blur-[100px]" />
+                <div className="absolute top-[45%] -left-28 w-[540px] h-[540px] bg-purple-500/10 rounded-full blur-[100px]" />
+                <div className="absolute top-[90%] left-[25%] w-[600px] h-[600px] bg-pink-500/8 rounded-full blur-[100px]" />
+                {/* subtle top vignette for hero legibility — cheap, kept */}
                 <div className="absolute inset-x-0 top-0 h-[50vh] bg-gradient-to-b from-[#050505]/60 via-transparent to-transparent" />
             </div>
 

@@ -609,26 +609,33 @@ export function Dropdown({
   );
 }
 
+// ── Canonical Safe / Target / Reach definitions ─────────────────────────────
+// These are the same plain-English strings used by tooltips on bucket badges
+// in result rows. Single source of truth so the page never disagrees with
+// itself about what each bucket means.
+export const BUCKET_DEFINITIONS: Record<'SAFE' | 'TARGET' | 'REACH', string> = {
+  SAFE:
+    'Past years closed comfortably in your favor. The cutoff would have to spike unusually for you to miss out.',
+  TARGET:
+    'Past cutoffs sit right around your input. The outcome swings with this year’s exam difficulty.',
+  REACH:
+    'Past cutoffs closed tighter than your input. Possible only if cutoffs loosen this year.',
+};
+
 // ── "What you'll get back" sidebar card ─────────────────────────────────────
+// Now carries explicit definitions for each bucket — students kept asking
+// "what does Safe actually mean?" so the sidebar earns its keep by defining
+// them instead of just naming the chips.
 export function ReturnsCard({ exam }: { exam: 'jee' | 'bitsat' }) {
-  const body =
+  const dataLine =
     exam === 'jee'
-      ? {
-          title: "What you'll get back",
-          lines: [
-            'Compared against 5 years of JoSAA closing ranks across 31 NITs, 26 IIITs and 38 GFTIs.',
-            'Every programme bucketed Safe · Target · Reach with a plain-English chance %.',
-            'Quota-aware: HS / OS / AI matched to your home state.',
-          ],
-        }
-      : {
-          title: "What you'll get back",
-          lines: [
-            'Score compared to 4 years of final BITSAT closing scores at Pilani, Goa and Hyderabad.',
-            'Every programme bucketed Safe · Target · Reach.',
-            'BITS has no category quotas — every result is open-merit.',
-          ],
-        };
+      ? 'Compared against 5 years of JoSAA closing ranks across 31 NITs, 26 IIITs and 38 GFTIs. Quota-aware: HS / OS / AI matched to your home state.'
+      : 'Score compared to 4 years of final BITSAT closing scores at Pilani, Goa and Hyderabad. BITS has no category quotas — every result is open-merit.';
+  const buckets = [
+    { key: 'SAFE',   color: '#34d399', def: BUCKET_DEFINITIONS.SAFE   },
+    { key: 'TARGET', color: '#fbbf24', def: BUCKET_DEFINITIONS.TARGET },
+    { key: 'REACH',  color: '#7dd3fc', def: BUCKET_DEFINITIONS.REACH  },
+  ] as const;
   return (
     <div
       style={{
@@ -654,7 +661,7 @@ export function ReturnsCard({ exam }: { exam: 'jee' | 'bitsat' }) {
       </div>
       <h4
         style={{
-          margin: '0 0 14px',
+          margin: '0 0 6px',
           fontFamily: "'Space Grotesk', system-ui, sans-serif",
           fontSize: 20,
           fontWeight: 600,
@@ -662,53 +669,60 @@ export function ReturnsCard({ exam }: { exam: 'jee' | 'bitsat' }) {
           color: '#f5f5f7',
         }}
       >
-        {body.title}
+        What each bucket means
       </h4>
-      <div style={{ display: 'flex', gap: 6, marginBottom: 16 }}>
-        {(['SAFE', 'TARGET', 'REACH'] as const).map((c) => {
-          const palette = { SAFE: '#34d399', TARGET: '#fbbf24', REACH: '#7dd3fc' }[c];
-          return (
+      <p style={{ margin: '0 0 16px', color: '#7d7d88', fontSize: 12.5, lineHeight: 1.5 }}>
+        Every programme bucketed by how comfortably your input clears the projected cutoff.
+      </p>
+
+      {/* Bucket definitions — one row per bucket */}
+      <ul
+        style={{
+          margin: 0,
+          padding: 0,
+          listStyle: 'none',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 12,
+        }}
+      >
+        {buckets.map((b) => (
+          <li key={b.key} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
             <span
-              key={c}
               style={{
+                flex: '0 0 auto',
                 padding: '3px 9px',
                 borderRadius: 6,
-                background: `${palette}14`,
-                border: `1px solid ${palette}44`,
-                color: palette,
+                background: `${b.color}14`,
+                border: `1px solid ${b.color}44`,
+                color: b.color,
                 fontSize: 10.5,
                 fontWeight: 700,
                 letterSpacing: '0.16em',
+                marginTop: 1,
+                whiteSpace: 'nowrap',
               }}
             >
-              {c}
+              {b.key}
             </span>
-          );
-        })}
-      </div>
-      <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {body.lines.map((l) => (
-          <li
-            key={l}
-            style={{ display: 'flex', gap: 10, color: '#9a9aa6', fontSize: 13.5, lineHeight: 1.55 }}
-          >
-            <span
-              style={{
-                width: 14,
-                height: 14,
-                marginTop: 3,
-                flex: '0 0 14px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <span style={{ width: 4, height: 4, borderRadius: '50%', background: '#34d399' }} />
-            </span>
-            <span>{l}</span>
+            <span style={{ color: '#cfcfd6', fontSize: 12.5, lineHeight: 1.5 }}>{b.def}</span>
           </li>
         ))}
       </ul>
+
+      {/* Data-source line */}
+      <p
+        style={{
+          margin: '18px 0 0',
+          paddingTop: 16,
+          borderTop: '1px dashed rgba(255,255,255,0.06)',
+          color: '#7d7d88',
+          fontSize: 12,
+          lineHeight: 1.55,
+        }}
+      >
+        {dataLine}
+      </p>
     </div>
   );
 }

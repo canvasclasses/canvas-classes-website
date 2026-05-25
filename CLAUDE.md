@@ -316,6 +316,17 @@ canvas/
 
 **Why this split exists:** before Phase 5, a single root `.env.local` was symlinked into admin only. The student app had no env file at all (latent bug — student-only vars like `GOOGLE_CLIENT_ID` had nowhere to live), and any cross-Mac credential drift caused asset uploads, MongoDB, or auth to silently break with misleading "Failed to fetch" / "Network error" messages. The new layout makes ownership explicit and the failure modes obvious.
 
+### 5.2 PREVIEW SERVER — DO NOT START WITHOUT EXPLICIT PERMISSION
+
+**Never call `mcp__Claude_Preview__preview_start` (or any other tool that spins up a dev server / preview window) unless the user has explicitly asked for it in the current turn.** The user runs their own local dev server outside the agent's control, and a Claude-spawned server competes for port 3000, takes over `.env.local` watchers, and disrupts their workflow.
+
+If you'd normally verify a UI change in the preview, instead:
+- Edit the source file and stop. The user will refresh their own browser.
+- If you genuinely need to query DOM state to debug, ask first: "Want me to start a preview server to verify X?" — and wait for an explicit yes.
+- `mcp__Claude_Preview__preview_eval` / `_screenshot` / `_inspect` / `_console_logs` / `_logs` are also off-limits unless the user has authorised a preview session this turn, because they implicitly require a running server.
+
+The only exception is when the user types something like "open the preview," "start a preview server," "spin up a dev server," "verify in the browser," or directly references a preview URL.
+
 ---
 
 ## 6. SIMULATIONS — READ THIS FIRST

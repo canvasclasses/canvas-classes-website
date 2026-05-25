@@ -1,8 +1,18 @@
 import type { Metadata } from 'next';
 
+// SEO metadata — rewritten 2026-05-25 based on the morning briefing flag.
+// Old title was 81 chars (truncated on mobile SERP; "JEE NEET" got cut off);
+// old description was 250 chars (also truncated). Page had 280k impressions
+// on 0.75% CTR over the prior 28 days — the dashboard estimated a top-3
+// benchmark CTR (~6%) would yield ~12k extra clicks/month.
+// New copy: 47-char title leading with "Every Exception" (completeness signal
+// for the exception-trap topics that dominate JEE/NEET questions), and a
+// 151-char description that names specific concepts (Lanthanide contraction,
+// inert pair effect, anomalous IE) to signal depth rather than just listing
+// generic keywords.
 export const metadata: Metadata = {
-    title: 'Periodic Trends and Exceptions - Interactive NCERT Graphs | JEE NEET',
-    description: 'Explore periodic property trends with interactive graphs from NCERT Chemistry. Visualize atomic radius, ionization energy, electronegativity, and important exceptions for s, p, d, f blocks. Essential for JEE Main, JEE Advanced, and NEET preparation.',
+    title: 'Periodic Trends + Every Exception — JEE & NEET',
+    description: 'Every periodic trend with all exceptions — Lanthanide contraction, inert pair effect, anomalous IE. Interactive graphs. JEE Main, Advanced & NEET. Free.',
     keywords: [
         'periodic trends',
         'periodic table trends',
@@ -21,8 +31,8 @@ export const metadata: Metadata = {
         'inert pair effect'
     ],
     openGraph: {
-        title: 'Periodic Trends & Exceptions - Interactive NCERT Graphs',
-        description: 'Visualize periodic property trends across s, p, d, f blocks with interactive graphs from NCERT Chemistry for JEE/NEET.',
+        title: 'Periodic Trends + Every Exception — JEE & NEET',
+        description: 'Every periodic trend with all exceptions — Lanthanide contraction, inert pair effect, anomalous IE. Interactive graphs. JEE Main, Advanced & NEET. Free.',
         type: 'website',
     },
 };

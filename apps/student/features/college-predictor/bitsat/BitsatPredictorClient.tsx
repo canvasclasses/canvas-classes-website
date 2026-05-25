@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import BitsatImpactExplorer from './BitsatImpactExplorer';
 import ParentProgrammeRow from './ParentProgrammeRow';
 import ShareCardButton from '../components/ShareCardButton';
-import DropYearAnalyzer from '../components/DropYearAnalyzer';
 import { parentSummary } from '../lib/parentVocab';
 
 type Bucket = 'safe' | 'target' | 'reach' | 'unlikely';
@@ -135,7 +134,6 @@ export default function BitsatPredictorClient() {
   const [viewMode, setViewMode] = useState<'student' | 'parent'>(() =>
     initialUrl.get(URL_KEYS.view) === 'parent' ? 'parent' : 'student',
   );
-  const [showDropYear, setShowDropYear] = useState(false);
 
   const maxScore = regime === 'modern' ? 390 : 450;
   const activeFilterCount = campuses.size + programmes.size;
@@ -633,23 +631,6 @@ export default function BitsatPredictorClient() {
                   </div>
                 </div>
 
-                {/* Drop-year CTA — quieter than primary actions, visible to
-                    those who want it. */}
-                {response.input_summary && (
-                  <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-white/[0.02] border border-dashed border-white/10 px-4 py-3">
-                    <div className="text-xs text-zinc-400">
-                      Curious what an extra year of prep could buy? See the realistic range of outcomes.
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setShowDropYear(true)}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-medium text-zinc-200 transition-colors"
-                    >
-                      Drop-year analysis →
-                    </button>
-                  </div>
-                )}
-
                 {truncated && (
                   <div className="mt-6 text-center">
                     <button
@@ -667,18 +648,6 @@ export default function BitsatPredictorClient() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {response?.input_summary && (
-        <DropYearAnalyzer
-          open={showDropYear}
-          onClose={() => setShowDropYear(false)}
-          exam="bitsat"
-          inputs={{
-            score: response.input_summary.score,
-            regime: response.input_summary.regime,
-          }}
-        />
-      )}
 
       <style jsx>{`
         .input {

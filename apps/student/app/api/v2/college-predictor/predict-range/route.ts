@@ -41,16 +41,48 @@ const RangeRequestSchema = z.object({
 
 const rangeLimiter = createRateLimiter({ max: 20, windowMs: 60_000 });
 
+// Tier weights — used to compute a "prestige-weighted" opportunity score per
+// rank point. The point isn't a precise ranking algorithm, it's to make the
+// sensitivity chart honest: a bar where 30 marginal NIT-Manipur Civil seats
+// open should NOT look taller than a bar where 5 NIT-Trichy CSE seats open.
+//
+// Tier buckets:
+//   T1 (NIRF ≤ 25): top NITs, IIIT Hyderabad/Delhi/Bangalore — life-changing
+//   T2 (NIRF 26–100): solid NITs/IIITs — strong outcomes
+//   T3 (NIRF > 100 or unranked): smaller GFTIs/new NITs — keep-an-option seats
+const TIER_WEIGHTS = { T1: 5, T2: 2, T3: 1 } as const;
+
+function tierFor(nirf?: number): 'T1' | 'T2' | 'T3' {
+  if (nirf !== undefined && nirf <= 25) return 'T1';
+  if (nirf !== undefined && nirf <= 100) return 'T2';
+  return 'T3';
+}
+
 interface RankPoint {
   rank: number;
   pct_delta: number;            // % change from base
   abs_delta: number;            // absolute rank difference (negative = better)
   counts: Record<Bucket, number>;
-  // Colleges that became Safe at this rank but weren't Safe at the prior
-  // (worse-ranked) point in the sweep. Counts unique college names — multiple
-  // branches at one college collapse to one entry to keep the unlock list
-  // legible.
-  newly_safe: { college_short_name: string; college_type: string; branch_name: string }[];
+  /**
+   * Prestige-weighted opportunity score: sum of TIER_WEIGHTS over Safe + Target
+   * branches. Lets the chart display tier-weighted bar heights so a few top
+   * NITs visibly outweigh many marginal seats.
+   */
+  weighted_score: number;
+  /** Tier mix of Safe branches at this rank — for the small T1/T2/T3 indicator below each bar. */
+  tier_mix: { T1: number; T2: number; T3: number };
+  // Branches (college::branch tuples) that are Safe at this rank but were
+  // NOT Safe at the user's current rank (the YOU baseline, pct_delta === 0).
+  // Per-branch — NOT deduped by college — so that count matches the Safe-
+  // delta the UI displays in the header callout. The UI will surface the
+  // top 6 sorted by NIRF prestige. Empty at YOU and at worse-than-YOU points
+  // (Safe pool can only shrink, not grow, when rank gets worse).
+  newly_safe: {
+    college_short_name: string;
+    college_type: string;
+    branch_name: string;
+    nirf?: number;
+  }[];
 }
 
 interface RangeResponse {
@@ -64,6 +96,21 @@ function bucketsToCounts(results: PredictorResult[]): Record<Bucket, number> {
   const out: Record<Bucket, number> = { safe: 0, target: 0, reach: 0, unlikely: 0 };
   for (const r of results) out[r.bucket] += 1;
   return out;
+}
+
+function computeWeighted(results: PredictorResult[]): {
+  weighted_score: number;
+  tier_mix: { T1: number; T2: number; T3: number };
+} {
+  let score = 0;
+  const mix = { T1: 0, T2: 0, T3: 0 };
+  for (const r of results) {
+    if (r.bucket !== 'safe' && r.bucket !== 'target') continue;
+    const tier = tierFor(r.nirf_rank_engineering);
+    score += TIER_WEIGHTS[tier];
+    if (r.bucket === 'safe') mix[tier] += 1;
+  }
+  return { weighted_score: score, tier_mix: mix };
 }
 
 export async function POST(request: NextRequest) {
@@ -141,41 +188,66 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Build per-point bucket counts + diff against previous point.
-    // For JoSAA, we sort ascending (better rank first) so the "unlocked
-    // colleges" reads left-to-right as "as you improve, you unlock these".
+    // Build per-point bucket counts. `newly_safe` is computed as the diff
+    // against the user's CURRENT rank (the bar where pct_delta === 0), NOT
+    // against the previous sweep point. Reason: the UI labels this list as
+    // "what unlocks vs your current", so the API must use that baseline or
+    // the two surfaces (header callout + unlock list) contradict each other
+    // — exactly the bug a user reported (e.g. "+33 Safe vs your current" but
+    // the unlock list showed zero new colleges).
     const sortedAscByRank = predictions.slice().sort((a, b) => a.rank - b.rank);
-    let prevSafeKeys = new Set<string>();
+
+    // Locate the YOU point (pct_delta === 0). Falls back to whichever point
+    // matches baseRank exactly if the explicit 0% step was deduplicated, then
+    // to the middle index. This is robust to the sweep dedup logic upstream.
+    const youPoint =
+      sortedAscByRank.find((p) => p.pct_delta === 0) ??
+      sortedAscByRank.find((p) => p.rank === baseRank) ??
+      sortedAscByRank[Math.floor(sortedAscByRank.length / 2)];
+    const youFilteredRows = applyFilters(youPoint.rows);
+    // YOU's Safe set keyed per branch (college_id::branch). Per-branch — NOT
+    // per-college — so that newly_safe.length matches the Safe-count delta
+    // the UI shows in the header callout. If we dedup by college_id, then a
+    // college already-Safe at YOU's rank silently absorbs additional Safe
+    // branches at better ranks, and the unlock list shows zero while the
+    // counter shows "+30 Safe vs your current". Exactly the contradiction
+    // a user reported.
+    const youSafeKeys = new Set<string>();
+    for (const r of youFilteredRows) {
+      if (r.bucket === 'safe') {
+        youSafeKeys.add(`${r.college_id}::${r.branch_short_name}`);
+      }
+    }
+
     const enriched: RankPoint[] = sortedAscByRank.map((p) => {
       const filtered = applyFilters(p.rows);
-      const safeKeys = new Set<string>();
+      // newly_safe = branches Safe here but not Safe at YOU. No college-level
+      // dedup; the UI shows top 6 by NIRF prestige.
       const newlySafe: RankPoint['newly_safe'] = [];
-      const seenColleges = new Set<string>();
       for (const r of filtered) {
         const key = `${r.college_id}::${r.branch_short_name}`;
-        if (r.bucket === 'safe') {
-          safeKeys.add(key);
-          if (!prevSafeKeys.has(key) && !seenColleges.has(r.college_id)) {
-            // First Safe branch at this college in this delta — represent
-            // the college once with its highest-bucket branch.
-            seenColleges.add(r.college_id);
-            newlySafe.push({
-              college_short_name: r.college_short_name,
-              college_type: r.college_type,
-              branch_name: r.branch_short_name,
-            });
-          }
+        if (r.bucket === 'safe' && !youSafeKeys.has(key)) {
+          newlySafe.push({
+            college_short_name: r.college_short_name,
+            college_type: r.college_type,
+            branch_name: r.branch_short_name,
+            nirf: r.nirf_rank_engineering,
+          });
         }
       }
-      const point: RankPoint = {
+      // Sort unlocks by NIRF asc (most prestigious first) so the UI surfaces
+      // the headline unlocks at the top of the list.
+      newlySafe.sort((a, b) => (a.nirf ?? 9999) - (b.nirf ?? 9999));
+      const { weighted_score, tier_mix } = computeWeighted(filtered);
+      return {
         rank: p.rank,
         pct_delta: p.pct_delta,
         abs_delta: p.abs_delta,
         counts: bucketsToCounts(filtered),
+        weighted_score,
+        tier_mix,
         newly_safe: newlySafe,
       };
-      prevSafeKeys = safeKeys;
-      return point;
     });
 
     // Return in original delta order (negative→positive) for the chart.

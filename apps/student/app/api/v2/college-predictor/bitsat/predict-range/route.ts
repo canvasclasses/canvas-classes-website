@@ -18,6 +18,7 @@ import {
   type BitsatBucket,
   type BitsatRegime,
 } from '@/features/college-predictor/bitsat/predictor';
+import { BITSAT_PROGRAMME_BY_CODE, type BitsatProgrammeCode } from '@canvas/data/bitsat/programmes';
 import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
 
 const PROGRAMME_CODES = [
@@ -43,14 +44,49 @@ const RangeRequestSchema = z.object({
 
 const rangeLimiter = createRateLimiter({ max: 20, windowMs: 60_000 });
 
+// BITSAT prestige weighting — combines campus tier (Pilani is NIRF #20 / T1,
+// Goa #56 / T2, Hyderabad flagship-but-unranked / T2) and programme demand tier
+// (CSE/MnC/ECE elite, EEE/EIE/MECH strong, others standard). Used so chart
+// bar heights reflect "is this prestigious opportunity?" not raw count.
+const CAMPUS_WEIGHT: Record<'Pilani' | 'Goa' | 'Hyderabad', number> = {
+  Pilani: 3,
+  Goa: 2,
+  Hyderabad: 2,
+};
+
+function tierForBitsat(campus: 'Pilani' | 'Goa' | 'Hyderabad', code: string): 'T1' | 'T2' | 'T3' {
+  const demand = BITSAT_PROGRAMME_BY_CODE[code as BitsatProgrammeCode]?.demand_tier ?? 3;
+  if (campus === 'Pilani' && demand === 1) return 'T1';            // Pilani CSE/MnC/ECE
+  if (campus === 'Pilani' && demand === 2) return 'T2';
+  if (campus !== 'Pilani' && demand === 1) return 'T2';            // Goa/Hyd CSE etc.
+  return 'T3';
+}
+
+const TIER_WEIGHTS = { T1: 5, T2: 2, T3: 1 } as const;
+
 interface ScorePoint {
   score: number;
   delta: number;
   counts: Record<BitsatBucket, number>;
-  // Programmes that became Safe at this score but were NOT Safe at the previous
-  // (lower) score in the sweep — i.e. the "what does this score unlock?" set.
-  newly_safe: { campus_name: string; programme_code: string; programme_name: string }[];
-  // Programmes that became Target-or-better at this score but were Reach below.
+  /**
+   * Prestige-weighted opportunity score — sum of TIER_WEIGHTS over
+   * Safe + Target programmes.
+   */
+  weighted_score: number;
+  tier_mix: { T1: number; T2: number; T3: number };
+  // Programmes that are Safe at this score but were NOT Safe at the user's
+  // CURRENT score (delta === 0). This is the diff vs YOU, not vs the adjacent
+  // sweep point — the UI labels this list as "what unlocks vs your current"
+  // so the API must use that baseline. Empty at YOU and at lower-than-YOU
+  // scores (where the Safe pool can only shrink).
+  newly_safe: {
+    campus_name: string;
+    programme_code: string;
+    programme_name: string;
+    nirf?: number;
+  }[];
+  // Programmes newly in play (target-or-better) at this score that were
+  // strictly Reach at YOU's current score.
   newly_in_play: { campus_name: string; programme_code: string; programme_name: string }[];
 }
 
@@ -67,6 +103,21 @@ function bucketsToCounts(results: BitsatPredictorResult[]): Record<BitsatBucket,
   const out: Record<BitsatBucket, number> = { safe: 0, target: 0, reach: 0, unlikely: 0 };
   for (const r of results) out[r.bucket] += 1;
   return out;
+}
+
+function computeWeightedBitsat(results: BitsatPredictorResult[]): {
+  weighted_score: number;
+  tier_mix: { T1: number; T2: number; T3: number };
+} {
+  let score = 0;
+  const mix = { T1: 0, T2: 0, T3: 0 };
+  for (const r of results) {
+    if (r.bucket !== 'safe' && r.bucket !== 'target') continue;
+    const tier = tierForBitsat(r.campus_name, r.programme_code);
+    score += TIER_WEIGHTS[tier] * (CAMPUS_WEIGHT[r.campus_name] / 3);
+    if (r.bucket === 'safe') mix[tier] += 1;
+  }
+  return { weighted_score: score, tier_mix: mix };
 }
 
 export async function POST(request: NextRequest) {
@@ -124,51 +175,75 @@ export async function POST(request: NextRequest) {
       ),
     );
 
-    // Build per-point bucket counts and diff against the previous point to
-    // compute "newly unlocked" lists.
-    const points: ScorePoint[] = [];
-    let prevSafeKeys = new Set<string>();
-    let prevInPlayKeys = new Set<string>();
-    for (const pred of predictions) {
-      const safeKeys = new Set<string>();
-      const inPlayKeys = new Set<string>();    // safe OR target — "in play"
+    // Build per-point bucket counts. `newly_safe` / `newly_in_play` are diffs
+    // against the YOU point (delta === 0), so the UI's "vs your current" copy
+    // matches the data. Computing against the previous sweep point causes the
+    // header callout ("+N Safe vs current") to disagree with the unlock list
+    // ("no new colleges") at most ranks — the bug that prompted this fix.
+    const youPoint =
+      predictions.find((p) => p.delta === 0) ??
+      predictions.find((p) => p.score === baseScore) ??
+      predictions[Math.floor(predictions.length / 2)];
+    const youSafeKeys = new Set<string>();
+    const youInPlayKeys = new Set<string>();
+    for (const r of youPoint.rows) {
+      const key = `${r.campus_id}::${r.programme_code}`;
+      if (r.bucket === 'safe') {
+        youSafeKeys.add(key);
+        youInPlayKeys.add(key);
+      } else if (r.bucket === 'target') {
+        youInPlayKeys.add(key);
+      }
+    }
+
+    const points: ScorePoint[] = predictions.map((pred) => {
       const newlySafe: ScorePoint['newly_safe'] = [];
       const newlyInPlay: ScorePoint['newly_in_play'] = [];
       for (const r of pred.rows) {
         const key = `${r.campus_id}::${r.programme_code}`;
-        if (r.bucket === 'safe') {
-          safeKeys.add(key);
-          if (!prevSafeKeys.has(key)) {
-            newlySafe.push({
-              campus_name: r.campus_name,
-              programme_code: r.programme_code,
-              programme_name: r.programme_name,
-            });
-          }
+        if (r.bucket === 'safe' && !youSafeKeys.has(key)) {
+          newlySafe.push({
+            campus_name: r.campus_name,
+            programme_code: r.programme_code,
+            programme_name: r.programme_name,
+            nirf: r.nirf_rank_engineering,
+          });
         }
-        if (r.bucket === 'safe' || r.bucket === 'target') {
-          inPlayKeys.add(key);
-          if (!prevInPlayKeys.has(key) && r.bucket === 'target') {
-            // Target additions only — safe additions are tracked separately
-            // and a row that goes reach → safe also reads as "in play".
-            newlyInPlay.push({
-              campus_name: r.campus_name,
-              programme_code: r.programme_code,
-              programme_name: r.programme_name,
-            });
-          }
+        // newly_in_play = went from strictly-Reach (or worse) at YOU to
+        // Target-or-better here. Excludes rows that were already Safe at YOU.
+        if (
+          (r.bucket === 'target' || r.bucket === 'safe') &&
+          !youInPlayKeys.has(key) &&
+          r.bucket === 'target'
+        ) {
+          newlyInPlay.push({
+            campus_name: r.campus_name,
+            programme_code: r.programme_code,
+            programme_name: r.programme_name,
+          });
         }
       }
-      points.push({
+      // Sort unlocks: Pilani first (prestige), then by demand tier so
+      // CSE/MnC bubble to the top.
+      newlySafe.sort((a, b) => {
+        const ca = CAMPUS_WEIGHT[a.campus_name as 'Pilani' | 'Goa' | 'Hyderabad'] ?? 1;
+        const cb = CAMPUS_WEIGHT[b.campus_name as 'Pilani' | 'Goa' | 'Hyderabad'] ?? 1;
+        if (ca !== cb) return cb - ca;
+        const da = BITSAT_PROGRAMME_BY_CODE[a.programme_code as BitsatProgrammeCode]?.demand_tier ?? 3;
+        const db = BITSAT_PROGRAMME_BY_CODE[b.programme_code as BitsatProgrammeCode]?.demand_tier ?? 3;
+        return da - db;
+      });
+      const { weighted_score, tier_mix } = computeWeightedBitsat(pred.rows);
+      return {
         score: pred.score,
         delta: pred.delta,
         counts: bucketsToCounts(pred.rows),
+        weighted_score,
+        tier_mix,
         newly_safe: newlySafe,
         newly_in_play: newlyInPlay,
-      });
-      prevSafeKeys = safeKeys;
-      prevInPlayKeys = inPlayKeys;
-    }
+      };
+    });
 
     return NextResponse.json<RangeResponse>({
       success: true,

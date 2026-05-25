@@ -8,7 +8,6 @@ import RankImpactExplorer from './RankImpactExplorer';
 import ParentCollegeCard from './ParentCollegeCard';
 import ShareCardButton from './ShareCardButton';
 import ChoiceListBuilder from './ChoiceListBuilder';
-import DropYearAnalyzer from './DropYearAnalyzer';
 import CuratedPicks from './CuratedPicks';
 import JargonTip, { GLOSSARY } from './JargonTip';
 import { CompareProvider, useCompare } from './CompareContext';
@@ -362,7 +361,6 @@ function PredictorClientInner() {
   const [exportText, setExportText] = useState('');
   const [copied, setCopied] = useState(false);
   const [showBuilder, setShowBuilder] = useState(false);
-  const [showDropYear, setShowDropYear] = useState(false);
 
   const activeFilterCount =
     regions.size + collegeTypes.size + (dreamBranch.trim() ? 1 : 0) + (dreamCollege.trim() ? 1 : 0);
@@ -1068,24 +1066,6 @@ function PredictorClientInner() {
                   </div>
                 </div>
 
-                {/* "Should I drop a year?" CTA — quieter than the main actions
-                    because most students won't need it, but visible so those
-                    who DO can find it without searching. */}
-                {response.input_summary?.effective_rank && (
-                  <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-white/[0.02] border border-dashed border-white/10 px-4 py-3">
-                    <div className="text-xs text-zinc-400">
-                      Curious what an extra year of prep could buy? See the realistic range of outcomes.
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setShowDropYear(true)}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-medium text-zinc-200 transition-colors"
-                    >
-                      Drop-year analysis →
-                    </button>
-                  </div>
-                )}
-
                 {truncated && (
                   <div className="mt-6 text-center">
                     <button
@@ -1198,24 +1178,6 @@ function PredictorClientInner() {
           dream_branch: dreamBranch || undefined,
         }}
       />
-
-      {/* Drop-year scenario explorer. Always uses the SAME effective rank as
-          the main predictor so the "should I drop?" framing lines up with
-          the results the student is already looking at. */}
-      {response?.input_summary?.effective_rank && (
-        <DropYearAnalyzer
-          open={showDropYear}
-          onClose={() => setShowDropYear(false)}
-          exam="jee_main"
-          inputs={{
-            rank: response.input_summary.effective_rank,
-            category,
-            gender,
-            home_state: homeState,
-            year: response.input_summary.year,
-          }}
-        />
-      )}
 
       {/* Compare tray + modal — fixed-position; rendered last so they overlay
           everything. The tray displays pinned items via a small mapper that
