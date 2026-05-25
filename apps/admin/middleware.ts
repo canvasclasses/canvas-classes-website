@@ -82,7 +82,8 @@ export async function middleware(request: NextRequest) {
 export const config = {
   // Node.js runtime is required because this middleware imports
   // @canvas/data/rbac → @canvas/data/models/UserAccess → mongoose.
-  // Mongoose is not Edge-compatible. See next.config.ts experimental.nodeMiddleware.
+  // Mongoose is not Edge-compatible. Next.js 15.5+ detects nodejs middleware
+  // via this runtime export — no next.config.ts flag is needed.
   runtime: 'nodejs',
   matcher: [
     // Match everything except Next internals (full /_next/* tree, not just
