@@ -12,6 +12,7 @@
     "./schemas/*": "./schemas/*.ts",
     "./flashcards/*": "./flashcards/*.ts",
     "./books/*": "./books/*.ts",
+    "./bitsat/*": "./bitsat/*.ts",
     "./id-generator": "./id-generator/index.ts",
     "./difficulty": "./difficulty.ts",
     "./rbac": "./rbac.ts",

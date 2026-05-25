@@ -1,18 +1,24 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
-import PredictorClient from '@/features/college-predictor/components/PredictorClient';
+import PredictorExperience from '@/features/college-predictor/predictor-design/PredictorExperience';
 import TopColleges from '@/features/college-predictor/components/TopColleges';
+import HeroDemo, { HeroBackdrop } from '@/features/college-predictor/components/HeroDemo';
+import TrustStrip from '@/features/college-predictor/components/TrustStrip';
 import { TOP_COLLEGES } from '@/features/college-predictor/data/topCollegesData';
 
 export const metadata: Metadata = {
-  title: 'JEE Main College Predictor 2026 — NIT, IIIT, GFTI Rank Predictor | Canvas Classes',
+  title: 'JEE Main & BITSAT College Predictor 2026 — NIT, IIIT, GFTI, BITS Rank Predictor | Canvas Classes',
   description:
-    'Free JEE Main college predictor with 5 years of JoSAA cutoff data. Enter your rank or percentile to see Safe / Target / Reach NITs, IIITs and GFTIs, plus detailed guides to the top IITs, NITs, IIITs, BITS and private engineering colleges in India — connectivity, climate and what makes each unique.',
+    'Free JEE Main + BITSAT college predictor. Enter your JEE Main rank/percentile for Safe / Target / Reach NITs, IIITs and GFTIs, or your BITSAT score for BITS Pilani / Goa / Hyderabad. Built on 5 years of JoSAA cutoff data and 9 years of official BITSAT closing scores.',
   keywords: [
     'JEE Main college predictor',
     'JEE Main rank predictor',
+    'BITSAT college predictor',
+    'BITSAT score predictor',
+    'BITS Pilani cutoff',
+    'BITS Goa cutoff',
+    'BITS Hyderabad cutoff',
     'NIT college predictor',
     'IIIT college predictor',
     'JoSAA college predictor',
@@ -23,6 +29,7 @@ export const metadata: Metadata = {
     'top IITs in India',
     'top NITs in India',
     'BITS Pilani admission',
+    'BITSAT cutoff 2025',
     'IIIT Hyderabad admission',
     'best engineering colleges India',
     'JoSAA choice list',
@@ -34,9 +41,9 @@ export const metadata: Metadata = {
     canonical: 'https://canvasclasses.com/college-predictor',
   },
   openGraph: {
-    title: 'JEE Main College Predictor — Free, Accurate, Ad-Free',
+    title: 'JEE Main + BITSAT College Predictor — Free, Accurate, Ad-Free',
     description:
-      'See which NITs, IIITs and GFTIs you can get with your JEE Main rank. Built on 5 years of official JoSAA cutoffs.',
+      'See which NITs, IIITs, GFTIs or BITS campuses you can get with your JEE Main rank or BITSAT score. Built on official JoSAA + BITS admission data.',
     url: 'https://canvasclasses.com/college-predictor',
     type: 'website',
   },
@@ -118,49 +125,52 @@ const jsonLd = {
           'Low-confidence predictions are flagged when there are fewer years of data or when cutoffs have been volatile.',
       },
     },
+    {
+      '@type': 'Question',
+      name: 'How does the BITSAT college predictor work?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text:
+          'Switch to the BITSAT tab and enter your total BITSAT score. The predictor compares it to four years of final closing scores ' +
+          '(post all iterations) at BITS Pilani, K K Birla Goa and Hyderabad campuses for every B.E., M.Sc. and B.Pharm. programme, ' +
+          'and classifies each one as Safe, Target or Reach. BITS has no category quotas, so the same cutoff applies to every candidate.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Which years of BITSAT data does the predictor cover?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text:
+          'The default modern regime covers BITSAT 2022 through 2025 — the four years of the current 390-mark paper. ' +
+          'A legacy mode is also available for BITSAT 2017 through 2021 (when the paper was out of 450), useful for research. ' +
+          'Scores are not directly comparable across the 2022 boundary, so the predictor scopes a single regime per query.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I share the prediction with my parents?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text:
+          'Yes. Every result page has a Parent view toggle that swaps the technical jargon (z-scores, projected closing ranks) ' +
+          'for plain-English verdicts like "Very strong chance" or "Worth trying", and a "Share with parents" button that ' +
+          'generates a clean square image of the top 5 colleges optimized for WhatsApp.',
+      },
+    },
   ],
 };
 
-// Milestone label overlaid on the hero journey image. One per panel in the
-// underlying illustration (student → graduate → professional → leader). Keeps
-// overlays lightweight so the image does the visual work; each label just
-// carries the age, a one-word title, and a compact stat tied to JoSAA data.
-function ImageMilestone({
-  title,
-  stat,
-  sub,
-  tone,
-  active,
-}: {
-  title: string;
-  stat: string;
-  sub: string;
-  tone: 'zinc' | 'amber' | 'orange';
-  active?: boolean;
-}) {
-  const statColor = {
-    zinc: 'text-zinc-100',
-    amber: 'text-amber-300',
-    orange: 'text-orange-400',
-  }[tone];
-  return (
-    <div
-      className={`text-center ${
-        active ? 'drop-shadow-[0_0_10px_rgba(249,115,22,0.4)]' : ''
-      }`}
-    >
-      <div className="text-xs md:text-sm font-semibold text-white">{title}</div>
-      <div className={`mt-0.5 text-base md:text-xl font-bold tabular-nums ${statColor}`}>
-        {stat}
-      </div>
-      <div className="text-[9px] md:text-[11px] text-zinc-400 leading-tight">{sub}</div>
-    </div>
-  );
-}
-
 export default function CollegePredictorPage() {
   return (
-    <main className="min-h-screen bg-[#050505] text-white">
+    <main className="min-h-screen text-white" style={{ background: '#070710' }}>
+      {/* Page-local fonts for the Claude-Design hero (Space Grotesk for the h1
+          + KPIs, JetBrains Mono for eyebrow + slider readouts). Loaded via
+          a stylesheet link so we don't perturb the root layout's font setup. */}
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -174,136 +184,135 @@ export default function CollegePredictorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collegeListJsonLd) }}
       />
 
-      <div className="max-w-5xl mx-auto px-6 pt-28 pb-20">
-        <header className="text-center mb-7">
+      {/* Hero zone — relative container so the animated backdrop (aurora +
+          ribbons + grid) spans the entire hero, including the headline.
+          Without this wrapper the backdrop was scoped to inside the predictor
+          card only, leaving the title on a flat dark grid. */}
+      <div className="relative isolate overflow-hidden">
+        <HeroBackdrop />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-20">
+          {/* Header — eyebrow + BETA chips + 2-line gradient h1 + sub. Layout
+              from the Claude Design handoff; gradient text uses the same
+              background-clip pattern as Hero.html so the amber line never
+              renders as a solid bar. */}
+          <header className="text-center mb-9">
           <div className="flex flex-wrap items-center justify-center gap-2 mb-5">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-medium uppercase tracking-wider">
-              Free · JEE Main 2026
+            <span
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full"
+              style={{
+                border: `1px solid ${'#f59e0b'}55`,
+                background: `${'#f59e0b'}10`,
+                color: '#f59e0b',
+                fontSize: 11.5,
+                fontWeight: 700,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                fontFamily: "'JetBrains Mono', monospace",
+              }}
+            >
+              JEE Main · BITSAT · 2026 cycle
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-wider">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-              Beta
+            <span
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full"
+              style={{
+                border: '1px solid rgba(250,204,21,0.4)',
+                background: 'rgba(250,204,21,0.06)',
+                color: '#facc15',
+                fontSize: 10.5,
+                fontWeight: 800,
+                letterSpacing: '0.16em',
+              }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#facc15', boxShadow: '0 0 8px #facc15' }} />
+              BETA
             </span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight bg-gradient-to-br from-white to-zinc-400 bg-clip-text text-transparent">
-            JEE Main College Predictor
-          </h1>
-          <p className="mt-6 text-xl md:text-3xl text-zinc-100 max-w-2xl mx-auto leading-tight font-light">
-            Four years of study.{' '}
-            <span className="bg-gradient-to-r from-orange-400 to-amber-300 bg-clip-text text-transparent font-semibold">
-              Forty years of career.
+          <h1
+            className="mx-auto"
+            style={{
+              fontFamily: "'Space Grotesk', 'Geist', system-ui, sans-serif",
+              fontSize: 'clamp(40px, 6vw, 80px)',
+              fontWeight: 700,
+              lineHeight: 0.98,
+              letterSpacing: '-0.035em',
+              maxWidth: 980,
+            }}
+          >
+            <span
+              style={{
+                background: 'linear-gradient(180deg, #ffffff 0%, #c8c8d0 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                display: 'block',
+              }}
+            >
+              Your rank deserves
             </span>
-          </p>
-          <p className="mt-3 text-sm md:text-base text-zinc-500 max-w-xl mx-auto">
-            One choice — shaped by data, not guesses.
+            <span
+              style={{
+                background: 'linear-gradient(90deg, #f59e0b 0%, #fbbf24 60%, #f59e0b 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                display: 'block',
+                marginTop: 4,
+              }}
+            >
+              more than a guess.
+            </span>
+          </h1>
+          <p
+            className="mx-auto mt-6"
+            style={{
+              maxWidth: 720,
+              fontSize: 'clamp(15px, 1.1vw, 18px)',
+              color: '#9a9aa6',
+              lineHeight: 1.55,
+            }}
+          >
+            Built on five years of JoSAA &amp; BITSAT counseling data — so you choose a college, not a coin flip.
           </p>
         </header>
 
-        {/* Image hero: photographic journey from desk to boardroom. The image
-            is the spectacle; overlaid milestone labels tie each panel to the
-            underlying JoSAA admission data. Source lives in Cloudflare R2
-            (shared bucket) — swap the URL below to update. Keep the four-panel
-            composition so the bottom-row milestone labels align with each scene. */}
-        {/* Hero block: image + data strip treated as one connected card.
-            Image has rounded-t only; data strip has rounded-b only, so they
-            share a seamless border with no gap. All text lives below the
-            image — zero chance of overlap with the artwork. */}
-        <div className="mb-8 mx-auto max-w-4xl">
+        {/* Live predictor demo — auto-playing showcase. Cursor types a rank,
+            then drags the slider through 5 waypoints while college chips
+            reshuffle between SAFE / TARGET / REACH columns. "Try your own
+            rank →" inside scrolls to #predictor (the real form below). */}
+        <HeroDemo />
 
-          {/* ── Image — borderless, floats on the dark page background ──── */}
-          <div className="relative aspect-[16/7] rounded-2xl overflow-hidden shadow-2xl shadow-black/60">
-            <Image
-              src="https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/shared/image/School%20to%20career%20journey.webp"
-              alt="From first lecture to last boardroom — the arc of a forty-year career shaped by one branch decision."
-              fill
-              priority
-              sizes="(min-width: 1024px) 1024px, 100vw"
-              className="object-cover object-center"
-            />
+        {/* Trust strip — 4 honest KPIs */}
+        <TrustStrip />
 
-            {/* Bottom vignette — keeps caption legible over any image tone */}
-            <div
-              aria-hidden
-              className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/80 to-transparent"
-            />
-
+          {/* Signature line — the Claude Design floor signature, kept lean */}
+          <div
+            className="text-center mt-7"
+            style={{
+              color: '#5e5e6a',
+              fontSize: 13,
+              fontFamily: "'JetBrains Mono', monospace",
+              letterSpacing: '0.02em',
+            }}
+          >
+            your branch compounds for decades
+            <span style={{ color: '#3a3a44', margin: '0 10px' }}>·</span>
+            <span style={{ color: '#9a9aa6' }}>built so you choose with data, not guesses.</span>
           </div>
-
-          {/* ── Data strip (below image, no border or card bg) ─────────── */}
-          <div className="px-2 pt-4 pb-6 md:px-4 md:pt-5 md:pb-7">
-
-            {/* Milestone stats — one column per life stage */}
-            <div className="grid grid-cols-4 gap-2 md:gap-4">
-              <ImageMilestone title="You choose" stat="14 L+" sub="aspirants" tone="zinc" />
-              <ImageMilestone title="Graduate"   stat="~60 K"  sub="top seats"   tone="amber"  />
-              <ImageMilestone title="Career"     stat="~15 K"  sub="in CSE / IT" tone="orange" />
-              <ImageMilestone title="Lead"       stat="40 yr"  sub="of impact"   tone="orange" active />
-            </div>
-
-            {/* Timeline arrow — gradient line + dots + arrowhead */}
-            <div className="relative mt-4 md:mt-5 h-3 md:h-4">
-              {/* Gradient line */}
-              <div
-                aria-hidden
-                className="absolute left-1 right-3 top-1/2 -translate-y-1/2 h-[3px] rounded-full bg-gradient-to-r from-zinc-500 via-amber-400 to-orange-500"
-              />
-              {/* Arrowhead */}
-              <div
-                aria-hidden
-                className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-y-[5px] border-y-transparent border-l-[9px] border-l-orange-500 drop-shadow-[0_0_6px_rgba(249,115,22,0.6)]"
-              />
-              {/* Milestone dots — grid-cols-4 mirrors the stat grid above */}
-              <div className="relative grid grid-cols-4 h-full">
-                {[
-                  'bg-zinc-300',
-                  'bg-amber-300',
-                  'bg-orange-400',
-                  'bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.85)] animate-pulse',
-                ].map((cls, i) => (
-                  <div key={i} className="flex items-center justify-center">
-                    <div className={`w-2 h-2 md:w-2.5 md:h-2.5 rounded-full ring-[3px] ring-[#050505] ${cls}`} />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Age axis labels */}
-            <div className="grid grid-cols-4 gap-2 md:gap-4 mt-2 md:mt-2.5">
-              {['17', '22', '30', '45+'].map((age) => (
-                <div
-                  key={age}
-                  className="text-center text-[9px] md:text-[10px] text-zinc-500 uppercase tracking-[0.15em]"
-                >
-                  Age {age}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Narrative pull-quote */}
-          <p className="mt-6 text-center text-sm md:text-base text-zinc-300 leading-relaxed max-w-2xl mx-auto">
-            <span className="font-semibold text-white">Your branch compounds for decades.</span>{' '}
-            AI is rewriting careers faster than any generation before you —
-            the advice that worked 15 years ago no longer holds.
-          </p>
-          <p className="mt-1.5 text-center text-[11px] md:text-xs text-zinc-500 max-w-xl mx-auto">
-            Stats · JEE Main 2024 (NTA + JoSAA)
-          </p>
         </div>
+      </div>
 
-        <div className="mb-8 mx-auto max-w-2xl flex items-center justify-center gap-2 text-xs text-amber-200/70">
-          <svg className="w-3.5 h-3.5 text-amber-400/80 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
-            <path fillRule="evenodd" clipRule="evenodd" d="M8.485 2.495c.67-1.16 2.36-1.16 3.03 0l6.28 10.875c.67 1.16-.168 2.61-1.515 2.61H3.72c-1.347 0-2.185-1.45-1.515-2.61L8.485 2.495zM10 6a1 1 0 011 1v3a1 1 0 11-2 0V7a1 1 0 011-1zm0 8a1 1 0 100-2 1 1 0 000 2z" />
-          </svg>
-          <span>
-            <span className="font-semibold text-amber-300">Public beta</span>
-            {' — '}predictions are based on 5 years of JoSAA data but may have edge-case errors. Cross-check with official JoSAA before finalising your choice list.
-          </span>
-        </div>
+      {/* Everything below the hero — the new PredictorExperience implements
+          STEP 02 (input form with feature cards + tabs + form panel) and
+          STEP 03 (results + sensitivity chart + share row) from the Claude
+          Design handoff. The component owns its own container width; we just
+          give it room to breathe. */}
+      <div id="predictor" />
+      <Suspense fallback={<div className="h-96 rounded-2xl bg-[#0B0F15] border border-white/5 animate-pulse mx-auto max-w-7xl" />}>
+        <PredictorExperience />
+      </Suspense>
 
-        <Suspense fallback={<div className="h-96 rounded-2xl bg-[#0B0F15] border border-white/5 animate-pulse" />}>
-          <PredictorClient />
-        </Suspense>
+      <div className="max-w-7xl mx-auto px-6 pt-16 pb-20">
 
         <section className="mt-16">
           <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">
@@ -338,18 +347,18 @@ export default function CollegePredictorPage() {
             {
               title: 'How the math works',
               body:
-                'Weighted mean of the last 5 years of Round 6 closing ranks, projected forward using a linear trend. ' +
+                'Weighted mean of recent years (Round 6 closing ranks for JoSAA, final closing scores for BITSAT) projected forward using a linear trend. ' +
                 'Each result is bucketed by z-score against the projection\'s standard deviation.',
             },
             {
               title: 'No ads, no spam',
               body:
-                'We do not sell your rank to counseling agencies. The predictor is a free tool built to help you choose — nothing else.',
+                'We do not sell your rank or score to counseling agencies. The predictor is a free tool built to help you choose — nothing else.',
             },
             {
               title: 'Launch scope',
               body:
-                'NITs, IIITs and GFTIs (JEE Main). IITs (JEE Advanced) come in a separate predictor. State-level counseling follows.',
+                'NITs, IIITs and GFTIs (JEE Main) plus BITS Pilani, Goa and Hyderabad (BITSAT). IITs (JEE Advanced) come in a separate predictor.',
             },
           ].map((card) => (
             <div key={card.title} className="p-5 rounded-xl bg-[#0B0F15] border border-white/5">

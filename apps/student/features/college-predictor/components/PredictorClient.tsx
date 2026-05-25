@@ -4,6 +4,17 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import RankImpactExplorer from './RankImpactExplorer';
+import ParentCollegeCard from './ParentCollegeCard';
+import ShareCardButton from './ShareCardButton';
+import ChoiceListBuilder from './ChoiceListBuilder';
+import DropYearAnalyzer from './DropYearAnalyzer';
+import CuratedPicks from './CuratedPicks';
+import JargonTip, { GLOSSARY } from './JargonTip';
+import { CompareProvider, useCompare } from './CompareContext';
+import CompareTray from './CompareTray';
+import CompareModal from './CompareModal';
+import { parentSummary } from '../lib/parentVocab';
 
 type Category =
   | 'OPEN' | 'OBC-NCL' | 'SC' | 'ST' | 'EWS'
@@ -268,12 +279,23 @@ const URL_KEYS = {
   collegeTypes: 'ct',  // csv
   dreamBranch: 'db',
   dreamCollege: 'dc',
+  view: 'view',        // 'student' | 'parent' — survives share-link round-trips
 } as const;
 
 const ALL_REGIONS: Region[] = ['North', 'South', 'East', 'West', 'Central', 'Northeast'];
 const ALL_COLLEGE_TYPES: CollegeType[] = ['NIT', 'IIIT', 'GFTI'];
 
+// Wraps the inner predictor in the compare-provider so any nested CollegeCard
+// can pin / unpin via the shared store without prop drilling.
 export default function PredictorClient() {
+  return (
+    <CompareProvider>
+      <PredictorClientInner />
+    </CompareProvider>
+  );
+}
+
+function PredictorClientInner() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -324,6 +346,9 @@ export default function PredictorClient() {
     initialUrl.has(URL_KEYS.dreamCollege),
   );
   const [sharedCopied, setSharedCopied] = useState(false);
+  const [viewMode, setViewMode] = useState<'student' | 'parent'>(() =>
+    initialUrl.get(URL_KEYS.view) === 'parent' ? 'parent' : 'student',
+  );
 
   const [loading, setLoading] = useState(false);
   const [expanding, setExpanding] = useState(false);
@@ -331,10 +356,13 @@ export default function PredictorClient() {
   const [lastBody, setLastBody] = useState<Record<string, unknown> | null>(null);
   const [submittedMode, setSubmittedMode] = useState<'rank' | 'percentile' | null>(null);
 
-  // Choice-list export modal state
+  // Choice-list export modal state. `showExport` keeps the legacy flat-list
+  // modal as a fallback; `showBuilder` opens the new smart-list wizard.
   const [showExport, setShowExport] = useState(false);
   const [exportText, setExportText] = useState('');
   const [copied, setCopied] = useState(false);
+  const [showBuilder, setShowBuilder] = useState(false);
+  const [showDropYear, setShowDropYear] = useState(false);
 
   const activeFilterCount =
     regions.size + collegeTypes.size + (dreamBranch.trim() ? 1 : 0) + (dreamCollege.trim() ? 1 : 0);
@@ -380,6 +408,7 @@ export default function PredictorClient() {
     if (collegeTypes.size > 0) params.set(URL_KEYS.collegeTypes, [...collegeTypes].join(','));
     if (dreamBranch.trim()) params.set(URL_KEYS.dreamBranch, dreamBranch.trim());
     if (dreamCollege.trim()) params.set(URL_KEYS.dreamCollege, dreamCollege.trim());
+    if (viewMode === 'parent') params.set(URL_KEYS.view, 'parent');
     return params.toString();
   }
 
@@ -635,11 +664,17 @@ export default function PredictorClient() {
                 placeholder="e.g. 12500"
                 className="input"
               />
-              {category !== 'OPEN' && (
-                <p className="mt-1.5 text-[11px] text-zinc-500">
-                  Use the {category} category rank from your JEE Main scorecard, not your CRL. Reserved-category cutoffs are published as category ranks.
-                </p>
-              )}
+              <p className="mt-1.5 text-[11px] text-zinc-500">
+                {category === 'OPEN' ? (
+                  <>
+                    Enter your <JargonTip term="CRL" explainer={GLOSSARY.CRL} /> from the JEE Main scorecard.
+                  </>
+                ) : (
+                  <>
+                    Use the <JargonTip term={`${category} category rank`} explainer={GLOSSARY.CategoryRank} /> from your JEE Main scorecard, not your CRL.
+                  </>
+                )}
+              </p>
             </Field>
           )}
 
@@ -884,38 +919,126 @@ export default function PredictorClient() {
                         )}
                       </>
                     )}
+                    {viewMode === 'parent' && response.counts && (
+                      <span className="text-zinc-500">
+                        {' '}· {parentSummary({
+                          safe: response.counts.safe,
+                          target: response.counts.target,
+                          reach: response.counts.reach,
+                        })}
+                      </span>
+                    )}
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-2 text-[11px] text-zinc-400">
-                    {response.counts?.safe !== undefined && response.counts.safe > 0 && (
-                      <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-                        Safe · {response.counts.safe}
-                      </span>
-                    )}
-                    {response.counts?.target !== undefined && response.counts.target > 0 && (
-                      <span className="px-2 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20">
-                        Target · {response.counts.target}
-                      </span>
-                    )}
-                    {response.counts?.reach !== undefined && response.counts.reach > 0 && (
-                      <span className="px-2 py-0.5 rounded-full bg-sky-500/10 border border-sky-500/20">
-                        Reach · {response.counts.reach}
-                      </span>
+                  {/* View-mode toggle + count badges. The toggle is sized up
+                      vs the count badges so a parent looking over the student's
+                      shoulder spots it immediately. The "Showing for" label
+                      narrates the current mode in plain English. */}
+                  <div className="flex flex-wrap items-center gap-3 text-[11px] text-zinc-400">
+                    <div className="flex items-center gap-2">
+                      <span className="hidden md:inline text-[10px] uppercase tracking-wider text-zinc-500">Showing for</span>
+                      <div role="group" className="inline-flex items-center gap-0.5 p-1 rounded-full bg-white/5 border border-white/10 shadow-inner">
+                        <button
+                          type="button"
+                          onClick={() => { setViewMode('student'); syncUrl(); }}
+                          className={`px-3 py-1 rounded-full transition-colors text-xs ${
+                            viewMode === 'student'
+                              ? 'bg-orange-500 text-black font-semibold shadow-sm'
+                              : 'text-zinc-300 hover:text-white hover:bg-white/5'
+                          }`}
+                        >
+                          🎓 Student
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => { setViewMode('parent'); syncUrl(); }}
+                          className={`px-3 py-1 rounded-full transition-colors text-xs ${
+                            viewMode === 'parent'
+                              ? 'bg-orange-500 text-black font-semibold shadow-sm'
+                              : 'text-zinc-300 hover:text-white hover:bg-white/5'
+                          }`}
+                        >
+                          👨‍👩‍👧 Parent
+                        </button>
+                      </div>
+                    </div>
+                    {viewMode === 'student' && (
+                      <>
+                        {response.counts?.safe !== undefined && response.counts.safe > 0 && (
+                          <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                            Safe · {response.counts.safe}
+                          </span>
+                        )}
+                        {response.counts?.target !== undefined && response.counts.target > 0 && (
+                          <span className="px-2 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20">
+                            Target · {response.counts.target}
+                          </span>
+                        )}
+                        {response.counts?.reach !== undefined && response.counts.reach > 0 && (
+                          <span className="px-2 py-0.5 rounded-full bg-sky-500/10 border border-sky-500/20">
+                            Reach · {response.counts.reach}
+                          </span>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  {colleges.map((g, i) => (
-                    <CollegeCard key={g.college_id} group={g} rank={i + 1} dreamBranch={dreamBranch} />
-                  ))}
+                  {colleges.map((g, i) => {
+                    // Insert a section separator every 10 cards when the
+                    // extended list is open. Helps a student skim 50+ colleges
+                    // without losing their place.
+                    const showSeparator = isExtended && i > 0 && i % 10 === 0;
+                    const card = viewMode === 'parent' ? (
+                      <ParentCollegeCard group={g} rank={i + 1} />
+                    ) : (
+                      <CollegeCard group={g} rank={i + 1} dreamBranch={dreamBranch} />
+                    );
+                    return (
+                      <div key={g.college_id} className="contents">
+                        {showSeparator && (
+                          <div className="pt-2 pb-1 flex items-center gap-3">
+                            <div className="text-[10px] uppercase tracking-[0.18em] text-zinc-500 font-semibold whitespace-nowrap">
+                              Colleges {i + 1}–{Math.min(i + 10, colleges.length)}
+                            </div>
+                            <div className="flex-1 h-px bg-white/5" />
+                          </div>
+                        )}
+                        {card}
+                      </div>
+                    );
+                  })}
                 </div>
+
+                {/* Curated picks — four facet-driven recommendations drawn
+                    from the student's own result set. Replaces the static
+                    "Browse colleges" tile grid when results are present. */}
+                <CuratedPicks groups={colleges} homeState={homeState} />
+
+                {/* What-if rank explorer — shows how the picture would change
+                    if the user's rank moved by ±40 %. Currently uses the
+                    `effective_rank` published in input_summary so percentile
+                    inputs land in the right unit too. */}
+                {response.input_summary?.effective_rank && (
+                  <div className="mt-6">
+                    <RankImpactExplorer
+                      baseRank={response.input_summary.effective_rank}
+                      category={category}
+                      gender={gender}
+                      homeState={homeState}
+                      year={response.input_summary.year}
+                      regions={regions.size > 0 ? [...regions] : undefined}
+                      collegeTypes={collegeTypes.size > 0 ? [...collegeTypes] : undefined}
+                    />
+                  </div>
+                )}
 
                 <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-white/[0.03] border border-white/10 p-4">
                   <div className="text-xs text-zinc-400">
-                    Ready to fill JoSAA? Export this as a reference list, or share the link with your parents / counselor.
+                    Ready to fill JoSAA? Export the choice list, share a link, or send your parents an image summary.
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <button
                       type="button"
                       onClick={copyShareLink}
@@ -923,15 +1046,45 @@ export default function PredictorClient() {
                     >
                       {sharedCopied ? 'Link copied ✓' : 'Share link'}
                     </button>
+                    {response.input_summary?.effective_rank && (
+                      <ShareCardButton
+                        params={{
+                          tool: 'jeemain',
+                          rank: response.input_summary.effective_rank,
+                          category,
+                          gender,
+                          home_state: homeState,
+                          year: response.input_summary.year,
+                        }}
+                      />
+                    )}
                     <button
                       type="button"
-                      onClick={openExport}
+                      onClick={() => setShowBuilder(true)}
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-black font-bold text-xs transition-opacity hover:opacity-90"
                     >
-                      Export choice list →
+                      Build smart choice list →
                     </button>
                   </div>
                 </div>
+
+                {/* "Should I drop a year?" CTA — quieter than the main actions
+                    because most students won't need it, but visible so those
+                    who DO can find it without searching. */}
+                {response.input_summary?.effective_rank && (
+                  <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-white/[0.02] border border-dashed border-white/10 px-4 py-3">
+                    <div className="text-xs text-zinc-400">
+                      Curious what an extra year of prep could buy? See the realistic range of outcomes.
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowDropYear(true)}
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-medium text-zinc-200 transition-colors"
+                    >
+                      Drop-year analysis →
+                    </button>
+                  </div>
+                )}
 
                 {truncated && (
                   <div className="mt-6 text-center">
@@ -1029,6 +1182,56 @@ export default function PredictorClient() {
         )}
       </AnimatePresence>
 
+      {/* Smart choice-list wizard. Uses the current form state as base inputs
+          so the user doesn't have to re-enter rank / category / etc. */}
+      <ChoiceListBuilder
+        open={showBuilder}
+        onClose={() => setShowBuilder(false)}
+        baseInputs={{
+          rank: mode === 'rank' ? (parseInt(rankInput, 10) || undefined) : undefined,
+          percentile: mode === 'percentile' ? (parseFloat(percentileInput) || undefined) : undefined,
+          category,
+          gender,
+          home_state: homeState,
+          year: response?.input_summary?.year,
+          college_types: collegeTypes.size > 0 ? [...collegeTypes] : undefined,
+          dream_branch: dreamBranch || undefined,
+        }}
+      />
+
+      {/* Drop-year scenario explorer. Always uses the SAME effective rank as
+          the main predictor so the "should I drop?" framing lines up with
+          the results the student is already looking at. */}
+      {response?.input_summary?.effective_rank && (
+        <DropYearAnalyzer
+          open={showDropYear}
+          onClose={() => setShowDropYear(false)}
+          exam="jee_main"
+          inputs={{
+            rank: response.input_summary.effective_rank,
+            category,
+            gender,
+            home_state: homeState,
+            year: response.input_summary.year,
+          }}
+        />
+      )}
+
+      {/* Compare tray + modal — fixed-position; rendered last so they overlay
+          everything. The tray displays pinned items via a small mapper that
+          turns the payload back into a chip label. */}
+      <CompareTray
+        displayMapper={(item) => {
+          const p = item.payload as { college_short_name?: string; branch_short_name?: string };
+          return {
+            id: item.id,
+            title: p.college_short_name ?? 'College',
+            subtitle: p.branch_short_name,
+          };
+        }}
+      />
+      <CompareModal />
+
       <style jsx>{`
         .input {
           width: 100%;
@@ -1099,6 +1302,9 @@ function CollegeCard({
   const primary = group.branches[0];
   const others = group.branches.slice(1);
   const headlineMeta = BUCKET_META[group.best_bucket];
+  const compare = useCompare();
+  const pinId = `${group.college_id}::${primary.branch_short_name}`;
+  const isPinned = compare.isPinned(pinId);
 
   const branchCount = group.branches.length;
   const buckets = useMemo(() => {
@@ -1139,7 +1345,10 @@ function CollegeCard({
                 {group.college_type}
               </span>
               {group.nirf_rank_engineering && (
-                <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-white/5 text-zinc-400">
+                <span
+                  className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-white/5 text-zinc-400 cursor-help"
+                  title={GLOSSARY.NIRF}
+                >
                   NIRF #{group.nirf_rank_engineering}
                 </span>
               )}
@@ -1158,9 +1367,44 @@ function CollegeCard({
             </div>
           </div>
 
-          <div className="text-right shrink-0">
-            <div className="text-2xl font-bold text-orange-400">{group.best_probability_pct}%</div>
-            <div className="text-[10px] uppercase tracking-wider text-zinc-500">best chance</div>
+          <div className="flex flex-col items-end gap-1.5 shrink-0">
+            <div className="text-right">
+              <div className="text-2xl font-bold text-orange-400">{group.best_probability_pct}%</div>
+              <div className="text-[10px] uppercase tracking-wider text-zinc-500">best chance</div>
+            </div>
+            <button
+              type="button"
+              onClick={() =>
+                compare.toggle({
+                  id: pinId,
+                  payload: {
+                    kind: 'josaa',
+                    college_id: group.college_id,
+                    college_short_name: group.college_short_name,
+                    college_type: group.college_type,
+                    college_state: group.college_state,
+                    college_region: group.college_region,
+                    nirf_rank_engineering: group.nirf_rank_engineering,
+                    branch_short_name: primary.branch_short_name,
+                    branch_name: primary.branch_name,
+                    bucket: primary.bucket,
+                    probability_pct: primary.probability_pct,
+                    projected_closing_rank: primary.projected_closing_rank,
+                    historical: primary.historical,
+                    quota_matched: primary.quota_matched,
+                  },
+                })
+              }
+              aria-pressed={isPinned}
+              aria-label={isPinned ? 'Unpin from comparison' : 'Pin to comparison'}
+              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-[10px] uppercase tracking-wider font-semibold transition-colors ${
+                isPinned
+                  ? 'bg-orange-500 text-black border-orange-500'
+                  : 'bg-white/5 text-zinc-400 border-white/10 hover:bg-white/10 hover:text-white'
+              }`}
+            >
+              {isPinned ? '📌 Pinned' : '📌 Compare'}
+            </button>
           </div>
         </div>
 
@@ -1326,11 +1570,9 @@ function BranchRow({
   primary?: boolean;
 }) {
   const meta = BUCKET_META[branch.bucket];
-  const confidenceColor = {
-    high: 'text-emerald-400',
-    medium: 'text-amber-400',
-    low: 'text-zinc-500',
-  }[branch.confidence];
+  // Confidence is rendered as a 3-dot icon (●●● / ●●○ / ●○○) in muted zinc so it
+  // doesn't compete with the green Safe-bucket badge. Tooltip carries the reason.
+  const confidenceDots = { high: '●●●', medium: '●●○', low: '●○○' }[branch.confidence];
 
   const r1 = branch.r1_projected_closing_rank;
   const r3 = branch.r3_projected_closing_rank;
@@ -1386,8 +1628,25 @@ function BranchRow({
           ) : (
             <>Projected close #{rF.toLocaleString('en-IN')}</>
           )}
-          {' · '}Quota {branch.quota_matched} ·{' '}
-          <span className={confidenceColor}>{branch.confidence} confidence</span>
+          {' · '}Quota{' '}
+          <span
+            className="cursor-help underline decoration-dotted underline-offset-2 decoration-zinc-600"
+            title={
+              branch.quota_matched === 'HS' ? GLOSSARY.HS
+              : branch.quota_matched === 'OS' ? GLOSSARY.OS
+              : branch.quota_matched === 'AI' ? GLOSSARY.AI
+              : branch.quota_matched
+            }
+          >
+            {branch.quota_matched}
+          </span>{' '}·{' '}
+          <span
+            className="text-zinc-400 font-mono tracking-tighter cursor-help"
+            title={`Confidence: ${branch.confidence} — ${branch.confidence_reason}`}
+          >
+            {confidenceDots}
+          </span>
+          <span className="ml-1 text-zinc-500">{branch.confidence}</span>
         </div>
         {expectedMeta && (
           <div className="mt-1">

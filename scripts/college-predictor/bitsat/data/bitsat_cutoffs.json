@@ -1,0 +1,3522 @@
+[
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 206,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 274,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 255,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "BE-ECMP",
+    "programme_name": "B.E. Electronics and Computer",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics and Computer",
+    "cutoff_score": 262,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 243,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 234,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "BE-ENV",
+    "programme_name": "B.E. Environmental and Sustainability",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Environmental and Sustainability",
+    "cutoff_score": 189,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 223,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "BE-MNC",
+    "programme_name": "B.E. Mathematics and Computing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mathematics and Computing",
+    "cutoff_score": 268,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 203,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 205,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 237,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 216,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 212,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Goa",
+    "programme_code": "MSC-SEMI",
+    "programme_name": "M.Sc. Semiconductor and Nanoscience",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Semiconductor and Nanoscience",
+    "cutoff_score": 225,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 205,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 203,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 270,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 256,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 239,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 232,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "BE-ENV",
+    "programme_name": "B.E. Environmental and Sustainability",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Environmental and Sustainability",
+    "cutoff_score": 181,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 214,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "BE-MNC",
+    "programme_name": "B.E. Mathematics and Computing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mathematics and Computing",
+    "cutoff_score": 266,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B. Pharm",
+    "cutoff_score": 151,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 203,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 203,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 231,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 212,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 209,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-SEMI",
+    "programme_name": "M.Sc. Semiconductor and Nanoscience",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Semiconductor and Nanoscience",
+    "cutoff_score": 225,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 210,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 206,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 304,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 285,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 260,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 250,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "BE-ENV",
+    "programme_name": "B.E. Environmental and Sustainability",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Environmental and Sustainability",
+    "cutoff_score": 203,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "BE-MANF",
+    "programme_name": "B.E. Manufacturing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Manufacturing",
+    "cutoff_score": 211,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 235,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "BE-MNC",
+    "programme_name": "B.E. Mathematics and Computing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mathematics and Computing",
+    "cutoff_score": 295,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B. Pharm",
+    "cutoff_score": 168,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 208,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 212,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 251,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 229,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 223,
+    "max_score": 390
+  },
+  {
+    "year": 2025,
+    "campus": "Pilani",
+    "programme_code": "MSC-SEMI",
+    "programme_name": "M.Sc. Semiconductor and Nanoscience",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Semiconductor and Nanoscience",
+    "cutoff_score": 239,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Goa",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 239,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Goa",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 301,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Goa",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 287,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Goa",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 278,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Goa",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 270,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Goa",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 254,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Goa",
+    "programme_code": "BE-MNC",
+    "programme_name": "B.E. Mathematics and Computing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mathematics and Computing",
+    "cutoff_score": 295,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Goa",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 234,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Goa",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 236,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Goa",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 263,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Goa",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 249,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Goa",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 248,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 238,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 235,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 298,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Hyderabad",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 284,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 275,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 270,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Hyderabad",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 251,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Hyderabad",
+    "programme_code": "BE-MNC",
+    "programme_name": "B.E. Mathematics and Computing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mathematics and Computing",
+    "cutoff_score": 293,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Hyderabad",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B. Pharm",
+    "cutoff_score": 161,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 234,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 235,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 261,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 247,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 245,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 247,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 238,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 327,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 314,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 292,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 282,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "BE-MANF",
+    "programme_name": "B.E. Manufacturing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Manufacturing",
+    "cutoff_score": 243,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 266,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "BE-MNC",
+    "programme_name": "B.E. Mathematics and Computing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mathematics and Computing",
+    "cutoff_score": 318,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B. Pharm",
+    "cutoff_score": 165,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 236,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 241,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 271,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 256,
+    "max_score": 390
+  },
+  {
+    "year": 2024,
+    "campus": "Pilani",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 254,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Goa",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 209,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Goa",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 295,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Goa",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 267,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Goa",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 252,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Goa",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 244,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Goa",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 223,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Goa",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 204,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Goa",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 205,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Goa",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 239,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Goa",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 221,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Goa",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 222,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 207,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 204,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 284,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Hyderabad",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 265,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 251,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 244,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Hyderabad",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 218,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Hyderabad",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B. Pharm",
+    "cutoff_score": 135,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 204,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 205,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 236,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 219,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 219,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Pilani",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 224,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Pilani",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 213,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Pilani",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 331,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Pilani",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 296,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Pilani",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 272,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Pilani",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 266,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Pilani",
+    "programme_code": "BE-MANF",
+    "programme_name": "B.E. Manufacturing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Manufacturing",
+    "cutoff_score": 220,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Pilani",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 244,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Pilani",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B. Pharm",
+    "cutoff_score": 153,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Pilani",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 212,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Pilani",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 213,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Pilani",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 257,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Pilani",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 236,
+    "max_score": 390
+  },
+  {
+    "year": 2023,
+    "campus": "Pilani",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 235,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Goa",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 165,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Goa",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 286,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Goa",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 256,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Goa",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 237,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Goa",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 224,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Goa",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 191,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Goa",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 164,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Goa",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 163,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Goa",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 230,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Goa",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 187,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Goa",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 188,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 162,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 158,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 279,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Hyderabad",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 252,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 230,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 222,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Hyderabad",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 182,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Hyderabad",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B. Pharm",
+    "cutoff_score": 109,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 158,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 160,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 220,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 177,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 173,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Pilani",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 191,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Pilani",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 167,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Pilani",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 320,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Pilani",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 279,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Pilani",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 258,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Pilani",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 249,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Pilani",
+    "programme_code": "BE-MANF",
+    "programme_name": "B.E. Manufacturing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Manufacturing",
+    "cutoff_score": 184,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Pilani",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 223,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Pilani",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B. Pharm",
+    "cutoff_score": 125,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Pilani",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 171,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Pilani",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 168,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Pilani",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 247,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Pilani",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 214,
+    "max_score": 390
+  },
+  {
+    "year": 2022,
+    "campus": "Pilani",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 214,
+    "max_score": 390
+  },
+  {
+    "year": 2021,
+    "campus": "Goa",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 145,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Goa",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 328,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Goa",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 293,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Goa",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 273,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Goa",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 252,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Goa",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 221,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Goa",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 167,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Goa",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 158,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Goa",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 267,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Goa",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 228,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Goa",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 228,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 146,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 148,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 319,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Hyderabad",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 285,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 262,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 248,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Hyderabad",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 192,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Hyderabad",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B. Pharm",
+    "cutoff_score": 143,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 157,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 149,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 249,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 198,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 173,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Pilani",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 223,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Pilani",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 169,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Pilani",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 364,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Pilani",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 322,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Pilani",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 304,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Pilani",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 294,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Pilani",
+    "programme_code": "BE-MANF",
+    "programme_name": "B.E. Manufacturing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Manufacturing",
+    "cutoff_score": 190,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Pilani",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 262,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Pilani",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B. Pharm",
+    "cutoff_score": 189,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Pilani",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 226,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Pilani",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 214,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Pilani",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 291,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Pilani",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 256,
+    "max_score": 450
+  },
+  {
+    "year": 2021,
+    "campus": "Pilani",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 252,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Goa",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 248,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Goa",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 347,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Goa",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 320,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Goa",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 306,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Goa",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 293,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Goa",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 269,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Goa",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 246,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Goa",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 249,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Goa",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 290,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Goa",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 265,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Goa",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 271,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 240,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 240,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 336,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Hyderabad",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 314,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 300,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 290,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Hyderabad",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 260,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Hyderabad",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B. Pharm",
+    "cutoff_score": 161,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 240,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 240,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 281,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 257,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 256,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Pilani",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 270,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Pilani",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 254,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Pilani",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 372,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Pilani",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 333,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Pilani",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 323,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Pilani",
+    "programme_code": "BE-MANF",
+    "programme_name": "B.E. Manufacturing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Manufacturing",
+    "cutoff_score": 253,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Pilani",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 298,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Pilani",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B. Pharm",
+    "cutoff_score": 203,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Pilani",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 261,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Pilani",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 258,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Pilani",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 304,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Pilani",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 286,
+    "max_score": 450
+  },
+  {
+    "year": 2020,
+    "campus": "Pilani",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 283,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Goa",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 254,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Goa",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 352,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Goa",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 322,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Goa",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical and Electronics",
+    "cutoff_score": 310,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Goa",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 294,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Goa",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 280,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Goa",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 250,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Goa",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 256,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Goa",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 295,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Goa",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 276,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Goa",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 274,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 252,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 254,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 342,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Hyderabad",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 318,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical and Electronics",
+    "cutoff_score": 308,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 294,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Hyderabad",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 275,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Hyderabad",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B.Pharm.",
+    "cutoff_score": 161,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 247,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 249,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 290,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 270,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 265,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Pilani",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 281,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Pilani",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 269,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Pilani",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 383,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Pilani",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 341,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Pilani",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 328,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Pilani",
+    "programme_code": "BE-MANF",
+    "programme_name": "B.E. Manufacturing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Manufacturing",
+    "cutoff_score": 255,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Pilani",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 313,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Pilani",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B.Pharm.",
+    "cutoff_score": 195,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Pilani",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 265,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Pilani",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 269,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Pilani",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 315,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Pilani",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 297,
+    "max_score": 450
+  },
+  {
+    "year": 2019,
+    "campus": "Pilani",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 290,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Goa",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 260,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Goa",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 347,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Goa",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 314,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Goa",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical and Electronics",
+    "cutoff_score": 308,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Goa",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 289,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Goa",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 283,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Goa",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 252,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Goa",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 255,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Goa",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 292,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Goa",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 277,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Goa",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 275,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 257,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 258,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 334,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Hyderabad",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 312,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical and Electronics",
+    "cutoff_score": 298,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 286,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Hyderabad",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 275,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Hyderabad",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B.Pharm.",
+    "cutoff_score": 177,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 250,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 254,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 283,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 267,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 265,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Pilani",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 280,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Pilani",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 274,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Pilani",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 378,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Pilani",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 338,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Pilani",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 319,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Pilani",
+    "programme_code": "BE-MANF",
+    "programme_name": "B.E. Manufacturing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Manufacturing",
+    "cutoff_score": 270,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Pilani",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 313,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Pilani",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B.Pharm.",
+    "cutoff_score": 213,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Pilani",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 259,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Pilani",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 265,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Pilani",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 308,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Pilani",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 297,
+    "max_score": 450
+  },
+  {
+    "year": 2018,
+    "campus": "Pilani",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 288,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Goa",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 276,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Goa",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 350,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Goa",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 322,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Goa",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical and Electronics",
+    "cutoff_score": 320,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Goa",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 301,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Goa",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 304,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Goa",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 202,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Goa",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 235,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Goa",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 290,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Goa",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 273,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Goa",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 270,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 272,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 273,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Hyderabad",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 339,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Hyderabad",
+    "programme_code": "BE-ECE",
+    "programme_name": "B.E. Electronics & Communication",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Communication",
+    "cutoff_score": 320,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical and Electronics",
+    "cutoff_score": 310,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Hyderabad",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 298,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Hyderabad",
+    "programme_code": "BE-MANF",
+    "programme_name": "B.E. Manufacturing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Manufacturing",
+    "cutoff_score": 269,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Hyderabad",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 297,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Hyderabad",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B.Pharm.",
+    "cutoff_score": 200,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 202,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 222,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 279,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 258,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Hyderabad",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 251,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Pilani",
+    "programme_code": "BE-CHE",
+    "programme_name": "B.E. Chemical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Chemical",
+    "cutoff_score": 306,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Pilani",
+    "programme_code": "BE-CIV",
+    "programme_name": "B.E. Civil",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Civil",
+    "cutoff_score": 294,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Pilani",
+    "programme_code": "BE-CSE",
+    "programme_name": "B.E. Computer Science",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Computer Science",
+    "cutoff_score": 382,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Pilani",
+    "programme_code": "BE-EEE",
+    "programme_name": "B.E. Electrical & Electronics",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electrical & Electronics",
+    "cutoff_score": 355,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Pilani",
+    "programme_code": "BE-EIE",
+    "programme_name": "B.E. Electronics & Instrumentation",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Electronics & Instrumentation",
+    "cutoff_score": 332,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Pilani",
+    "programme_code": "BE-MANF",
+    "programme_name": "B.E. Manufacturing",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Manufacturing",
+    "cutoff_score": 288,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Pilani",
+    "programme_code": "BE-MECH",
+    "programme_name": "B.E. Mechanical",
+    "degree_type": "BE",
+    "programme_raw": "B.E. Mechanical",
+    "cutoff_score": 334,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Pilani",
+    "programme_code": "BPHARM",
+    "programme_name": "B. Pharm.",
+    "degree_type": "BPHARM",
+    "programme_raw": "B.Pharm.",
+    "cutoff_score": 221,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Pilani",
+    "programme_code": "MSC-BIO",
+    "programme_name": "M.Sc. Biological Sciences",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Biological Sciences",
+    "cutoff_score": 237,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Pilani",
+    "programme_code": "MSC-CHEM",
+    "programme_name": "M.Sc. Chemistry",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Chemistry",
+    "cutoff_score": 265,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Pilani",
+    "programme_code": "MSC-ECON",
+    "programme_name": "M.Sc. Economics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Economics",
+    "cutoff_score": 323,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Pilani",
+    "programme_code": "MSC-MATH",
+    "programme_name": "M.Sc. Mathematics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Mathematics",
+    "cutoff_score": 312,
+    "max_score": 450
+  },
+  {
+    "year": 2017,
+    "campus": "Pilani",
+    "programme_code": "MSC-PHYS",
+    "programme_name": "M.Sc. Physics",
+    "degree_type": "MSC",
+    "programme_raw": "M.Sc. Physics",
+    "cutoff_score": 304,
+    "max_score": 450
+  }
+]

@@ -1,0 +1,353 @@
+year,campus,programme_code,programme_name,degree_type,cutoff_score,max_score
+2025,Goa,BE-CHE,"B.E. Chemical",BE,206,390
+2025,Goa,BE-CSE,"B.E. Computer Science",BE,274,390
+2025,Goa,BE-ECE,"B.E. Electronics & Communication",BE,255,390
+2025,Goa,BE-ECMP,"B.E. Electronics and Computer",BE,262,390
+2025,Goa,BE-EEE,"B.E. Electrical & Electronics",BE,243,390
+2025,Goa,BE-EIE,"B.E. Electronics & Instrumentation",BE,234,390
+2025,Goa,BE-ENV,"B.E. Environmental and Sustainability",BE,189,390
+2025,Goa,BE-MECH,"B.E. Mechanical",BE,223,390
+2025,Goa,BE-MNC,"B.E. Mathematics and Computing",BE,268,390
+2025,Goa,MSC-BIO,"M.Sc. Biological Sciences",MSC,203,390
+2025,Goa,MSC-CHEM,"M.Sc. Chemistry",MSC,205,390
+2025,Goa,MSC-ECON,"M.Sc. Economics",MSC,237,390
+2025,Goa,MSC-MATH,"M.Sc. Mathematics",MSC,216,390
+2025,Goa,MSC-PHYS,"M.Sc. Physics",MSC,212,390
+2025,Goa,MSC-SEMI,"M.Sc. Semiconductor and Nanoscience",MSC,225,390
+2025,Hyderabad,BE-CHE,"B.E. Chemical",BE,205,390
+2025,Hyderabad,BE-CIV,"B.E. Civil",BE,203,390
+2025,Hyderabad,BE-CSE,"B.E. Computer Science",BE,270,390
+2025,Hyderabad,BE-ECE,"B.E. Electronics & Communication",BE,256,390
+2025,Hyderabad,BE-EEE,"B.E. Electrical & Electronics",BE,239,390
+2025,Hyderabad,BE-EIE,"B.E. Electronics & Instrumentation",BE,232,390
+2025,Hyderabad,BE-ENV,"B.E. Environmental and Sustainability",BE,181,390
+2025,Hyderabad,BE-MECH,"B.E. Mechanical",BE,214,390
+2025,Hyderabad,BE-MNC,"B.E. Mathematics and Computing",BE,266,390
+2025,Hyderabad,BPHARM,"B. Pharm.",BPHARM,151,390
+2025,Hyderabad,MSC-BIO,"M.Sc. Biological Sciences",MSC,203,390
+2025,Hyderabad,MSC-CHEM,"M.Sc. Chemistry",MSC,203,390
+2025,Hyderabad,MSC-ECON,"M.Sc. Economics",MSC,231,390
+2025,Hyderabad,MSC-MATH,"M.Sc. Mathematics",MSC,212,390
+2025,Hyderabad,MSC-PHYS,"M.Sc. Physics",MSC,209,390
+2025,Hyderabad,MSC-SEMI,"M.Sc. Semiconductor and Nanoscience",MSC,225,390
+2025,Pilani,BE-CHE,"B.E. Chemical",BE,210,390
+2025,Pilani,BE-CIV,"B.E. Civil",BE,206,390
+2025,Pilani,BE-CSE,"B.E. Computer Science",BE,304,390
+2025,Pilani,BE-ECE,"B.E. Electronics & Communication",BE,285,390
+2025,Pilani,BE-EEE,"B.E. Electrical & Electronics",BE,260,390
+2025,Pilani,BE-EIE,"B.E. Electronics & Instrumentation",BE,250,390
+2025,Pilani,BE-ENV,"B.E. Environmental and Sustainability",BE,203,390
+2025,Pilani,BE-MANF,"B.E. Manufacturing",BE,211,390
+2025,Pilani,BE-MECH,"B.E. Mechanical",BE,235,390
+2025,Pilani,BE-MNC,"B.E. Mathematics and Computing",BE,295,390
+2025,Pilani,BPHARM,"B. Pharm.",BPHARM,168,390
+2025,Pilani,MSC-BIO,"M.Sc. Biological Sciences",MSC,208,390
+2025,Pilani,MSC-CHEM,"M.Sc. Chemistry",MSC,212,390
+2025,Pilani,MSC-ECON,"M.Sc. Economics",MSC,251,390
+2025,Pilani,MSC-MATH,"M.Sc. Mathematics",MSC,229,390
+2025,Pilani,MSC-PHYS,"M.Sc. Physics",MSC,223,390
+2025,Pilani,MSC-SEMI,"M.Sc. Semiconductor and Nanoscience",MSC,239,390
+2024,Goa,BE-CHE,"B.E. Chemical",BE,239,390
+2024,Goa,BE-CSE,"B.E. Computer Science",BE,301,390
+2024,Goa,BE-ECE,"B.E. Electronics & Communication",BE,287,390
+2024,Goa,BE-EEE,"B.E. Electrical & Electronics",BE,278,390
+2024,Goa,BE-EIE,"B.E. Electronics & Instrumentation",BE,270,390
+2024,Goa,BE-MECH,"B.E. Mechanical",BE,254,390
+2024,Goa,BE-MNC,"B.E. Mathematics and Computing",BE,295,390
+2024,Goa,MSC-BIO,"M.Sc. Biological Sciences",MSC,234,390
+2024,Goa,MSC-CHEM,"M.Sc. Chemistry",MSC,236,390
+2024,Goa,MSC-ECON,"M.Sc. Economics",MSC,263,390
+2024,Goa,MSC-MATH,"M.Sc. Mathematics",MSC,249,390
+2024,Goa,MSC-PHYS,"M.Sc. Physics",MSC,248,390
+2024,Hyderabad,BE-CHE,"B.E. Chemical",BE,238,390
+2024,Hyderabad,BE-CIV,"B.E. Civil",BE,235,390
+2024,Hyderabad,BE-CSE,"B.E. Computer Science",BE,298,390
+2024,Hyderabad,BE-ECE,"B.E. Electronics & Communication",BE,284,390
+2024,Hyderabad,BE-EEE,"B.E. Electrical & Electronics",BE,275,390
+2024,Hyderabad,BE-EIE,"B.E. Electronics & Instrumentation",BE,270,390
+2024,Hyderabad,BE-MECH,"B.E. Mechanical",BE,251,390
+2024,Hyderabad,BE-MNC,"B.E. Mathematics and Computing",BE,293,390
+2024,Hyderabad,BPHARM,"B. Pharm.",BPHARM,161,390
+2024,Hyderabad,MSC-BIO,"M.Sc. Biological Sciences",MSC,234,390
+2024,Hyderabad,MSC-CHEM,"M.Sc. Chemistry",MSC,235,390
+2024,Hyderabad,MSC-ECON,"M.Sc. Economics",MSC,261,390
+2024,Hyderabad,MSC-MATH,"M.Sc. Mathematics",MSC,247,390
+2024,Hyderabad,MSC-PHYS,"M.Sc. Physics",MSC,245,390
+2024,Pilani,BE-CHE,"B.E. Chemical",BE,247,390
+2024,Pilani,BE-CIV,"B.E. Civil",BE,238,390
+2024,Pilani,BE-CSE,"B.E. Computer Science",BE,327,390
+2024,Pilani,BE-ECE,"B.E. Electronics & Communication",BE,314,390
+2024,Pilani,BE-EEE,"B.E. Electrical & Electronics",BE,292,390
+2024,Pilani,BE-EIE,"B.E. Electronics & Instrumentation",BE,282,390
+2024,Pilani,BE-MANF,"B.E. Manufacturing",BE,243,390
+2024,Pilani,BE-MECH,"B.E. Mechanical",BE,266,390
+2024,Pilani,BE-MNC,"B.E. Mathematics and Computing",BE,318,390
+2024,Pilani,BPHARM,"B. Pharm.",BPHARM,165,390
+2024,Pilani,MSC-BIO,"M.Sc. Biological Sciences",MSC,236,390
+2024,Pilani,MSC-CHEM,"M.Sc. Chemistry",MSC,241,390
+2024,Pilani,MSC-ECON,"M.Sc. Economics",MSC,271,390
+2024,Pilani,MSC-MATH,"M.Sc. Mathematics",MSC,256,390
+2024,Pilani,MSC-PHYS,"M.Sc. Physics",MSC,254,390
+2023,Goa,BE-CHE,"B.E. Chemical",BE,209,390
+2023,Goa,BE-CSE,"B.E. Computer Science",BE,295,390
+2023,Goa,BE-ECE,"B.E. Electronics & Communication",BE,267,390
+2023,Goa,BE-EEE,"B.E. Electrical & Electronics",BE,252,390
+2023,Goa,BE-EIE,"B.E. Electronics & Instrumentation",BE,244,390
+2023,Goa,BE-MECH,"B.E. Mechanical",BE,223,390
+2023,Goa,MSC-BIO,"M.Sc. Biological Sciences",MSC,204,390
+2023,Goa,MSC-CHEM,"M.Sc. Chemistry",MSC,205,390
+2023,Goa,MSC-ECON,"M.Sc. Economics",MSC,239,390
+2023,Goa,MSC-MATH,"M.Sc. Mathematics",MSC,221,390
+2023,Goa,MSC-PHYS,"M.Sc. Physics",MSC,222,390
+2023,Hyderabad,BE-CHE,"B.E. Chemical",BE,207,390
+2023,Hyderabad,BE-CIV,"B.E. Civil",BE,204,390
+2023,Hyderabad,BE-CSE,"B.E. Computer Science",BE,284,390
+2023,Hyderabad,BE-ECE,"B.E. Electronics & Communication",BE,265,390
+2023,Hyderabad,BE-EEE,"B.E. Electrical & Electronics",BE,251,390
+2023,Hyderabad,BE-EIE,"B.E. Electronics & Instrumentation",BE,244,390
+2023,Hyderabad,BE-MECH,"B.E. Mechanical",BE,218,390
+2023,Hyderabad,BPHARM,"B. Pharm.",BPHARM,135,390
+2023,Hyderabad,MSC-BIO,"M.Sc. Biological Sciences",MSC,204,390
+2023,Hyderabad,MSC-CHEM,"M.Sc. Chemistry",MSC,205,390
+2023,Hyderabad,MSC-ECON,"M.Sc. Economics",MSC,236,390
+2023,Hyderabad,MSC-MATH,"M.Sc. Mathematics",MSC,219,390
+2023,Hyderabad,MSC-PHYS,"M.Sc. Physics",MSC,219,390
+2023,Pilani,BE-CHE,"B.E. Chemical",BE,224,390
+2023,Pilani,BE-CIV,"B.E. Civil",BE,213,390
+2023,Pilani,BE-CSE,"B.E. Computer Science",BE,331,390
+2023,Pilani,BE-ECE,"B.E. Electronics & Communication",BE,296,390
+2023,Pilani,BE-EEE,"B.E. Electrical & Electronics",BE,272,390
+2023,Pilani,BE-EIE,"B.E. Electronics & Instrumentation",BE,266,390
+2023,Pilani,BE-MANF,"B.E. Manufacturing",BE,220,390
+2023,Pilani,BE-MECH,"B.E. Mechanical",BE,244,390
+2023,Pilani,BPHARM,"B. Pharm.",BPHARM,153,390
+2023,Pilani,MSC-BIO,"M.Sc. Biological Sciences",MSC,212,390
+2023,Pilani,MSC-CHEM,"M.Sc. Chemistry",MSC,213,390
+2023,Pilani,MSC-ECON,"M.Sc. Economics",MSC,257,390
+2023,Pilani,MSC-MATH,"M.Sc. Mathematics",MSC,236,390
+2023,Pilani,MSC-PHYS,"M.Sc. Physics",MSC,235,390
+2022,Goa,BE-CHE,"B.E. Chemical",BE,165,390
+2022,Goa,BE-CSE,"B.E. Computer Science",BE,286,390
+2022,Goa,BE-ECE,"B.E. Electronics & Communication",BE,256,390
+2022,Goa,BE-EEE,"B.E. Electrical & Electronics",BE,237,390
+2022,Goa,BE-EIE,"B.E. Electronics & Instrumentation",BE,224,390
+2022,Goa,BE-MECH,"B.E. Mechanical",BE,191,390
+2022,Goa,MSC-BIO,"M.Sc. Biological Sciences",MSC,164,390
+2022,Goa,MSC-CHEM,"M.Sc. Chemistry",MSC,163,390
+2022,Goa,MSC-ECON,"M.Sc. Economics",MSC,230,390
+2022,Goa,MSC-MATH,"M.Sc. Mathematics",MSC,187,390
+2022,Goa,MSC-PHYS,"M.Sc. Physics",MSC,188,390
+2022,Hyderabad,BE-CHE,"B.E. Chemical",BE,162,390
+2022,Hyderabad,BE-CIV,"B.E. Civil",BE,158,390
+2022,Hyderabad,BE-CSE,"B.E. Computer Science",BE,279,390
+2022,Hyderabad,BE-ECE,"B.E. Electronics & Communication",BE,252,390
+2022,Hyderabad,BE-EEE,"B.E. Electrical & Electronics",BE,230,390
+2022,Hyderabad,BE-EIE,"B.E. Electronics & Instrumentation",BE,222,390
+2022,Hyderabad,BE-MECH,"B.E. Mechanical",BE,182,390
+2022,Hyderabad,BPHARM,"B. Pharm.",BPHARM,109,390
+2022,Hyderabad,MSC-BIO,"M.Sc. Biological Sciences",MSC,158,390
+2022,Hyderabad,MSC-CHEM,"M.Sc. Chemistry",MSC,160,390
+2022,Hyderabad,MSC-ECON,"M.Sc. Economics",MSC,220,390
+2022,Hyderabad,MSC-MATH,"M.Sc. Mathematics",MSC,177,390
+2022,Hyderabad,MSC-PHYS,"M.Sc. Physics",MSC,173,390
+2022,Pilani,BE-CHE,"B.E. Chemical",BE,191,390
+2022,Pilani,BE-CIV,"B.E. Civil",BE,167,390
+2022,Pilani,BE-CSE,"B.E. Computer Science",BE,320,390
+2022,Pilani,BE-ECE,"B.E. Electronics & Communication",BE,279,390
+2022,Pilani,BE-EEE,"B.E. Electrical & Electronics",BE,258,390
+2022,Pilani,BE-EIE,"B.E. Electronics & Instrumentation",BE,249,390
+2022,Pilani,BE-MANF,"B.E. Manufacturing",BE,184,390
+2022,Pilani,BE-MECH,"B.E. Mechanical",BE,223,390
+2022,Pilani,BPHARM,"B. Pharm.",BPHARM,125,390
+2022,Pilani,MSC-BIO,"M.Sc. Biological Sciences",MSC,171,390
+2022,Pilani,MSC-CHEM,"M.Sc. Chemistry",MSC,168,390
+2022,Pilani,MSC-ECON,"M.Sc. Economics",MSC,247,390
+2022,Pilani,MSC-MATH,"M.Sc. Mathematics",MSC,214,390
+2022,Pilani,MSC-PHYS,"M.Sc. Physics",MSC,214,390
+2021,Goa,BE-CHE,"B.E. Chemical",BE,145,450
+2021,Goa,BE-CSE,"B.E. Computer Science",BE,328,450
+2021,Goa,BE-ECE,"B.E. Electronics & Communication",BE,293,450
+2021,Goa,BE-EEE,"B.E. Electrical & Electronics",BE,273,450
+2021,Goa,BE-EIE,"B.E. Electronics & Instrumentation",BE,252,450
+2021,Goa,BE-MECH,"B.E. Mechanical",BE,221,450
+2021,Goa,MSC-BIO,"M.Sc. Biological Sciences",MSC,167,450
+2021,Goa,MSC-CHEM,"M.Sc. Chemistry",MSC,158,450
+2021,Goa,MSC-ECON,"M.Sc. Economics",MSC,267,450
+2021,Goa,MSC-MATH,"M.Sc. Mathematics",MSC,228,450
+2021,Goa,MSC-PHYS,"M.Sc. Physics",MSC,228,450
+2021,Hyderabad,BE-CHE,"B.E. Chemical",BE,146,450
+2021,Hyderabad,BE-CIV,"B.E. Civil",BE,148,450
+2021,Hyderabad,BE-CSE,"B.E. Computer Science",BE,319,450
+2021,Hyderabad,BE-ECE,"B.E. Electronics & Communication",BE,285,450
+2021,Hyderabad,BE-EEE,"B.E. Electrical & Electronics",BE,262,450
+2021,Hyderabad,BE-EIE,"B.E. Electronics & Instrumentation",BE,248,450
+2021,Hyderabad,BE-MECH,"B.E. Mechanical",BE,192,450
+2021,Hyderabad,BPHARM,"B. Pharm.",BPHARM,143,450
+2021,Hyderabad,MSC-BIO,"M.Sc. Biological Sciences",MSC,157,450
+2021,Hyderabad,MSC-CHEM,"M.Sc. Chemistry",MSC,149,450
+2021,Hyderabad,MSC-ECON,"M.Sc. Economics",MSC,249,450
+2021,Hyderabad,MSC-MATH,"M.Sc. Mathematics",MSC,198,450
+2021,Hyderabad,MSC-PHYS,"M.Sc. Physics",MSC,173,450
+2021,Pilani,BE-CHE,"B.E. Chemical",BE,223,450
+2021,Pilani,BE-CIV,"B.E. Civil",BE,169,450
+2021,Pilani,BE-CSE,"B.E. Computer Science",BE,364,450
+2021,Pilani,BE-ECE,"B.E. Electronics & Communication",BE,322,450
+2021,Pilani,BE-EEE,"B.E. Electrical & Electronics",BE,304,450
+2021,Pilani,BE-EIE,"B.E. Electronics & Instrumentation",BE,294,450
+2021,Pilani,BE-MANF,"B.E. Manufacturing",BE,190,450
+2021,Pilani,BE-MECH,"B.E. Mechanical",BE,262,450
+2021,Pilani,BPHARM,"B. Pharm.",BPHARM,189,450
+2021,Pilani,MSC-BIO,"M.Sc. Biological Sciences",MSC,226,450
+2021,Pilani,MSC-CHEM,"M.Sc. Chemistry",MSC,214,450
+2021,Pilani,MSC-ECON,"M.Sc. Economics",MSC,291,450
+2021,Pilani,MSC-MATH,"M.Sc. Mathematics",MSC,256,450
+2021,Pilani,MSC-PHYS,"M.Sc. Physics",MSC,252,450
+2020,Goa,BE-CHE,"B.E. Chemical",BE,248,450
+2020,Goa,BE-CSE,"B.E. Computer Science",BE,347,450
+2020,Goa,BE-ECE,"B.E. Electronics & Communication",BE,320,450
+2020,Goa,BE-EEE,"B.E. Electrical & Electronics",BE,306,450
+2020,Goa,BE-EIE,"B.E. Electronics & Instrumentation",BE,293,450
+2020,Goa,BE-MECH,"B.E. Mechanical",BE,269,450
+2020,Goa,MSC-BIO,"M.Sc. Biological Sciences",MSC,246,450
+2020,Goa,MSC-CHEM,"M.Sc. Chemistry",MSC,249,450
+2020,Goa,MSC-ECON,"M.Sc. Economics",MSC,290,450
+2020,Goa,MSC-MATH,"M.Sc. Mathematics",MSC,265,450
+2020,Goa,MSC-PHYS,"M.Sc. Physics",MSC,271,450
+2020,Hyderabad,BE-CHE,"B.E. Chemical",BE,240,450
+2020,Hyderabad,BE-CIV,"B.E. Civil",BE,240,450
+2020,Hyderabad,BE-CSE,"B.E. Computer Science",BE,336,450
+2020,Hyderabad,BE-ECE,"B.E. Electronics & Communication",BE,314,450
+2020,Hyderabad,BE-EEE,"B.E. Electrical & Electronics",BE,300,450
+2020,Hyderabad,BE-EIE,"B.E. Electronics & Instrumentation",BE,290,450
+2020,Hyderabad,BE-MECH,"B.E. Mechanical",BE,260,450
+2020,Hyderabad,BPHARM,"B. Pharm.",BPHARM,161,450
+2020,Hyderabad,MSC-BIO,"M.Sc. Biological Sciences",MSC,240,450
+2020,Hyderabad,MSC-CHEM,"M.Sc. Chemistry",MSC,240,450
+2020,Hyderabad,MSC-ECON,"M.Sc. Economics",MSC,281,450
+2020,Hyderabad,MSC-MATH,"M.Sc. Mathematics",MSC,257,450
+2020,Hyderabad,MSC-PHYS,"M.Sc. Physics",MSC,256,450
+2020,Pilani,BE-CHE,"B.E. Chemical",BE,270,450
+2020,Pilani,BE-CIV,"B.E. Civil",BE,254,450
+2020,Pilani,BE-CSE,"B.E. Computer Science",BE,372,450
+2020,Pilani,BE-EEE,"B.E. Electrical & Electronics",BE,333,450
+2020,Pilani,BE-EIE,"B.E. Electronics & Instrumentation",BE,323,450
+2020,Pilani,BE-MANF,"B.E. Manufacturing",BE,253,450
+2020,Pilani,BE-MECH,"B.E. Mechanical",BE,298,450
+2020,Pilani,BPHARM,"B. Pharm.",BPHARM,203,450
+2020,Pilani,MSC-BIO,"M.Sc. Biological Sciences",MSC,261,450
+2020,Pilani,MSC-CHEM,"M.Sc. Chemistry",MSC,258,450
+2020,Pilani,MSC-ECON,"M.Sc. Economics",MSC,304,450
+2020,Pilani,MSC-MATH,"M.Sc. Mathematics",MSC,286,450
+2020,Pilani,MSC-PHYS,"M.Sc. Physics",MSC,283,450
+2019,Goa,BE-CHE,"B.E. Chemical",BE,254,450
+2019,Goa,BE-CSE,"B.E. Computer Science",BE,352,450
+2019,Goa,BE-ECE,"B.E. Electronics & Communication",BE,322,450
+2019,Goa,BE-EEE,"B.E. Electrical & Electronics",BE,310,450
+2019,Goa,BE-EIE,"B.E. Electronics & Instrumentation",BE,294,450
+2019,Goa,BE-MECH,"B.E. Mechanical",BE,280,450
+2019,Goa,MSC-BIO,"M.Sc. Biological Sciences",MSC,250,450
+2019,Goa,MSC-CHEM,"M.Sc. Chemistry",MSC,256,450
+2019,Goa,MSC-ECON,"M.Sc. Economics",MSC,295,450
+2019,Goa,MSC-MATH,"M.Sc. Mathematics",MSC,276,450
+2019,Goa,MSC-PHYS,"M.Sc. Physics",MSC,274,450
+2019,Hyderabad,BE-CHE,"B.E. Chemical",BE,252,450
+2019,Hyderabad,BE-CIV,"B.E. Civil",BE,254,450
+2019,Hyderabad,BE-CSE,"B.E. Computer Science",BE,342,450
+2019,Hyderabad,BE-ECE,"B.E. Electronics & Communication",BE,318,450
+2019,Hyderabad,BE-EEE,"B.E. Electrical & Electronics",BE,308,450
+2019,Hyderabad,BE-EIE,"B.E. Electronics & Instrumentation",BE,294,450
+2019,Hyderabad,BE-MECH,"B.E. Mechanical",BE,275,450
+2019,Hyderabad,BPHARM,"B. Pharm.",BPHARM,161,450
+2019,Hyderabad,MSC-BIO,"M.Sc. Biological Sciences",MSC,247,450
+2019,Hyderabad,MSC-CHEM,"M.Sc. Chemistry",MSC,249,450
+2019,Hyderabad,MSC-ECON,"M.Sc. Economics",MSC,290,450
+2019,Hyderabad,MSC-MATH,"M.Sc. Mathematics",MSC,270,450
+2019,Hyderabad,MSC-PHYS,"M.Sc. Physics",MSC,265,450
+2019,Pilani,BE-CHE,"B.E. Chemical",BE,281,450
+2019,Pilani,BE-CIV,"B.E. Civil",BE,269,450
+2019,Pilani,BE-CSE,"B.E. Computer Science",BE,383,450
+2019,Pilani,BE-EEE,"B.E. Electrical & Electronics",BE,341,450
+2019,Pilani,BE-EIE,"B.E. Electronics & Instrumentation",BE,328,450
+2019,Pilani,BE-MANF,"B.E. Manufacturing",BE,255,450
+2019,Pilani,BE-MECH,"B.E. Mechanical",BE,313,450
+2019,Pilani,BPHARM,"B. Pharm.",BPHARM,195,450
+2019,Pilani,MSC-BIO,"M.Sc. Biological Sciences",MSC,265,450
+2019,Pilani,MSC-CHEM,"M.Sc. Chemistry",MSC,269,450
+2019,Pilani,MSC-ECON,"M.Sc. Economics",MSC,315,450
+2019,Pilani,MSC-MATH,"M.Sc. Mathematics",MSC,297,450
+2019,Pilani,MSC-PHYS,"M.Sc. Physics",MSC,290,450
+2018,Goa,BE-CHE,"B.E. Chemical",BE,260,450
+2018,Goa,BE-CSE,"B.E. Computer Science",BE,347,450
+2018,Goa,BE-ECE,"B.E. Electronics & Communication",BE,314,450
+2018,Goa,BE-EEE,"B.E. Electrical & Electronics",BE,308,450
+2018,Goa,BE-EIE,"B.E. Electronics & Instrumentation",BE,289,450
+2018,Goa,BE-MECH,"B.E. Mechanical",BE,283,450
+2018,Goa,MSC-BIO,"M.Sc. Biological Sciences",MSC,252,450
+2018,Goa,MSC-CHEM,"M.Sc. Chemistry",MSC,255,450
+2018,Goa,MSC-ECON,"M.Sc. Economics",MSC,292,450
+2018,Goa,MSC-MATH,"M.Sc. Mathematics",MSC,277,450
+2018,Goa,MSC-PHYS,"M.Sc. Physics",MSC,275,450
+2018,Hyderabad,BE-CHE,"B.E. Chemical",BE,257,450
+2018,Hyderabad,BE-CIV,"B.E. Civil",BE,258,450
+2018,Hyderabad,BE-CSE,"B.E. Computer Science",BE,334,450
+2018,Hyderabad,BE-ECE,"B.E. Electronics & Communication",BE,312,450
+2018,Hyderabad,BE-EEE,"B.E. Electrical & Electronics",BE,298,450
+2018,Hyderabad,BE-EIE,"B.E. Electronics & Instrumentation",BE,286,450
+2018,Hyderabad,BE-MECH,"B.E. Mechanical",BE,275,450
+2018,Hyderabad,BPHARM,"B. Pharm.",BPHARM,177,450
+2018,Hyderabad,MSC-BIO,"M.Sc. Biological Sciences",MSC,250,450
+2018,Hyderabad,MSC-CHEM,"M.Sc. Chemistry",MSC,254,450
+2018,Hyderabad,MSC-ECON,"M.Sc. Economics",MSC,283,450
+2018,Hyderabad,MSC-MATH,"M.Sc. Mathematics",MSC,267,450
+2018,Hyderabad,MSC-PHYS,"M.Sc. Physics",MSC,265,450
+2018,Pilani,BE-CHE,"B.E. Chemical",BE,280,450
+2018,Pilani,BE-CIV,"B.E. Civil",BE,274,450
+2018,Pilani,BE-CSE,"B.E. Computer Science",BE,378,450
+2018,Pilani,BE-EEE,"B.E. Electrical & Electronics",BE,338,450
+2018,Pilani,BE-EIE,"B.E. Electronics & Instrumentation",BE,319,450
+2018,Pilani,BE-MANF,"B.E. Manufacturing",BE,270,450
+2018,Pilani,BE-MECH,"B.E. Mechanical",BE,313,450
+2018,Pilani,BPHARM,"B. Pharm.",BPHARM,213,450
+2018,Pilani,MSC-BIO,"M.Sc. Biological Sciences",MSC,259,450
+2018,Pilani,MSC-CHEM,"M.Sc. Chemistry",MSC,265,450
+2018,Pilani,MSC-ECON,"M.Sc. Economics",MSC,308,450
+2018,Pilani,MSC-MATH,"M.Sc. Mathematics",MSC,297,450
+2018,Pilani,MSC-PHYS,"M.Sc. Physics",MSC,288,450
+2017,Goa,BE-CHE,"B.E. Chemical",BE,276,450
+2017,Goa,BE-CSE,"B.E. Computer Science",BE,350,450
+2017,Goa,BE-ECE,"B.E. Electronics & Communication",BE,322,450
+2017,Goa,BE-EEE,"B.E. Electrical & Electronics",BE,320,450
+2017,Goa,BE-EIE,"B.E. Electronics & Instrumentation",BE,301,450
+2017,Goa,BE-MECH,"B.E. Mechanical",BE,304,450
+2017,Goa,MSC-BIO,"M.Sc. Biological Sciences",MSC,202,450
+2017,Goa,MSC-CHEM,"M.Sc. Chemistry",MSC,235,450
+2017,Goa,MSC-ECON,"M.Sc. Economics",MSC,290,450
+2017,Goa,MSC-MATH,"M.Sc. Mathematics",MSC,273,450
+2017,Goa,MSC-PHYS,"M.Sc. Physics",MSC,270,450
+2017,Hyderabad,BE-CHE,"B.E. Chemical",BE,272,450
+2017,Hyderabad,BE-CIV,"B.E. Civil",BE,273,450
+2017,Hyderabad,BE-CSE,"B.E. Computer Science",BE,339,450
+2017,Hyderabad,BE-ECE,"B.E. Electronics & Communication",BE,320,450
+2017,Hyderabad,BE-EEE,"B.E. Electrical & Electronics",BE,310,450
+2017,Hyderabad,BE-EIE,"B.E. Electronics & Instrumentation",BE,298,450
+2017,Hyderabad,BE-MANF,"B.E. Manufacturing",BE,269,450
+2017,Hyderabad,BE-MECH,"B.E. Mechanical",BE,297,450
+2017,Hyderabad,BPHARM,"B. Pharm.",BPHARM,200,450
+2017,Hyderabad,MSC-BIO,"M.Sc. Biological Sciences",MSC,202,450
+2017,Hyderabad,MSC-CHEM,"M.Sc. Chemistry",MSC,222,450
+2017,Hyderabad,MSC-ECON,"M.Sc. Economics",MSC,279,450
+2017,Hyderabad,MSC-MATH,"M.Sc. Mathematics",MSC,258,450
+2017,Hyderabad,MSC-PHYS,"M.Sc. Physics",MSC,251,450
+2017,Pilani,BE-CHE,"B.E. Chemical",BE,306,450
+2017,Pilani,BE-CIV,"B.E. Civil",BE,294,450
+2017,Pilani,BE-CSE,"B.E. Computer Science",BE,382,450
+2017,Pilani,BE-EEE,"B.E. Electrical & Electronics",BE,355,450
+2017,Pilani,BE-EIE,"B.E. Electronics & Instrumentation",BE,332,450
+2017,Pilani,BE-MANF,"B.E. Manufacturing",BE,288,450
+2017,Pilani,BE-MECH,"B.E. Mechanical",BE,334,450
+2017,Pilani,BPHARM,"B. Pharm.",BPHARM,221,450
+2017,Pilani,MSC-BIO,"M.Sc. Biological Sciences",MSC,237,450
+2017,Pilani,MSC-CHEM,"M.Sc. Chemistry",MSC,265,450
+2017,Pilani,MSC-ECON,"M.Sc. Economics",MSC,323,450
+2017,Pilani,MSC-MATH,"M.Sc. Mathematics",MSC,312,450
+2017,Pilani,MSC-PHYS,"M.Sc. Physics",MSC,304,450
