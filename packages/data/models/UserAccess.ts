@@ -38,14 +38,20 @@ function getSubjectFromChapterId(chapterId: string): Subject | null {
 }
 
 // Per-grant validator: when chapters is an array, every chapter id must
-// belong to that grant's subject.
+// belong to that grant's subject. Mongoose types `this` inside a SchemaType
+// validator as `Document | Query`, so we cast to access the parent subdoc's
+// `subject` field. The API-layer Zod check in /api/v2/admin/user-access
+// validates the same constraint before write — this is defense in depth.
 const grantChaptersValidator = {
-  validator: function (this: Grant, chapters: 'all' | string[]): boolean {
+  validator: function (this: unknown, chapters: 'all' | string[]): boolean {
     if (chapters === 'all') return true;
     if (!Array.isArray(chapters) || chapters.length === 0) return false;
     if (chapters.length > 100) return false;
     if (new Set(chapters).size !== chapters.length) return false;
-    return chapters.every((chId) => getSubjectFromChapterId(chId) === this.subject);
+    const parent = this as { subject?: Subject } | undefined;
+    const subject = parent?.subject;
+    if (!subject) return false;
+    return chapters.every((chId) => getSubjectFromChapterId(chId) === subject);
   },
   message: "Every chapter ID in `chapters` must be unique and belong to the grant's subject.",
 };
