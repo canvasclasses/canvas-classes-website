@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: '20mb',
     },
+    // Required for middleware to query MongoDB. The RBAC gate in
+    // apps/admin/middleware.ts reads user_access docs via @canvas/data/rbac,
+    // which imports mongoose — not Edge-compatible. Stable since Next.js 15.2.
+    nodeMiddleware: true,
   },
   async headers() {
     return [
