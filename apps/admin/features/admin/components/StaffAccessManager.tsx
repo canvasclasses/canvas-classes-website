@@ -1,9 +1,20 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { Shield, UserPlus, Trash2, Save, X, AlertCircle, Pencil } from 'lucide-react';
+import { Shield, UserPlus, Trash2, Save, X, AlertCircle, Pencil, ExternalLink } from 'lucide-react';
 import { GrantEditor } from './GrantEditor';
 import type { Grant, Subject } from '../hooks/usePermissions';
+
+// Build a deep link to this project's Supabase Auth → Users page. Falls back
+// to the generic dashboard if the public URL doesn't match the supabase.co
+// pattern (e.g. localhost dev).
+function getSupabaseUsersUrl(): string {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!url) return 'https://supabase.com/dashboard';
+  const match = url.match(/^https?:\/\/([^.]+)\.supabase\.co/);
+  if (!match) return 'https://supabase.com/dashboard';
+  return `https://supabase.com/dashboard/project/${match[1]}/auth/users`;
+}
 
 interface UserAccessDoc {
   _id: string;
@@ -315,6 +326,20 @@ export default function StaffAccessManager({ currentUserEmail }: StaffAccessMana
                   placeholder="someone@canvasclasses.in"
                   className="w-full rounded-md bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:bg-white/10 focus:outline-none disabled:opacity-60"
                 />
+                {modal.mode === 'add' && (
+                  <p className="mt-1.5 text-xs text-white/40">
+                    Make sure this person has a Supabase account before they try to log in.{' '}
+                    <a
+                      href={getSupabaseUsersUrl()}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 text-orange-300/80 hover:text-orange-300"
+                    >
+                      Open Supabase users
+                      <ExternalLink className="h-3 w-3" />
+                    </a>
+                  </p>
+                )}
               </div>
 
               <div>
