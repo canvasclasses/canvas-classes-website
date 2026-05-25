@@ -4,7 +4,7 @@
 // apps/student/app/api/v2/career-explorer/_shared.ts — only the helpers
 // admin routes actually use are kept. The student-side `requireAuthedUser`
 // (permits any logged-in user) is intentionally omitted because admin
-// middleware already enforces ADMIN_EMAILS — there's no scenario in this
+// middleware already enforces SUPER_ADMIN_EMAILS — there's no scenario in this
 // app where we'd want "any authenticated user" auth.
 // Follow CLAUDE.md Rule 8 — never define local auth helpers elsewhere.
 

@@ -1,255 +1,206 @@
 /**
- * Role-Based Access Control (RBAC) utilities
- * 
- * Security principles:
- * 1. Fail-safe defaults - deny access if unclear
- * 2. Least privilege - users get minimum necessary permissions
- * 3. Defense in depth - check permissions at multiple layers
- * 4. Audit trail - log all permission checks
+ * Role-Based Access Control (RBAC) — grant-based model
+ *
+ * Architecture:
+ *   - Super admin: defined in SUPER_ADMIN_EMAILS env var. Cannot be created or
+ *     modified via HTTP. Has all powers including delete and role management.
+ *   - Staff: stored in `user_access` collection as a list of grants
+ *     { subject, chapters: 'all' | string[], level: 'view' | 'edit' }.
+ *   - Unknown user: no env entry AND no user_access doc → fail-safe, no powers.
+ *
+ * Three enforcement layers (see CLAUDE.md §7):
+ *   1. Middleware (apps/admin/middleware.ts): env OR active user_access doc.
+ *   2. Service handlers (packages/services/*): per-chapter check on stored doc.
+ *   3. Client hook (apps/admin/features/admin/hooks/usePermissions.ts): UX hint.
  */
 
-import { UserRole, type Subject, type RoleType, type IUserRole } from './models/UserRole';
+import type { Grant, Subject, IUserAccess } from './models/UserAccess';
+import { UserAccess } from './models/UserAccess';
 import connectToDatabase from './db/mongodb';
 import { TAXONOMY_FROM_CSV } from './taxonomy/taxonomyData_from_csv';
 
-export interface UserPermissions {
-  email: string;
-  role: RoleType;
-  subjects: Subject[];
-  canAccessSubject: (subject: Subject) => boolean;
-  canEditQuestions: boolean;
-  canDeleteQuestions: boolean;
-  canManageRoles: boolean;
-  canAccessAnalytics: boolean;
-  canExportData: boolean;
-}
+export type { Grant, Subject, AccessLevel } from './models/UserAccess';
 
-/**
- * Map chapter_id to subject
- */
+// ── Chapter ↔ subject mapping ────────────────────────────────────────────────
+// IMPORTANT: this mapping is duplicated in packages/data/models/UserAccess.ts
+// (inside getSubjectFromChapterId there). Keep the two in sync. CLAUDE.md §9
+// rules out extracting a shared helper until a third caller appears.
+
 export function getSubjectFromChapterId(chapterId: string): Subject | null {
-  if (chapterId.startsWith('ch11_') || chapterId.startsWith('ch12_')) {
-    return 'chemistry';
-  }
-  if (chapterId.startsWith('ph11_') || chapterId.startsWith('ph12_')) {
-    return 'physics';
-  }
-  if (chapterId.startsWith('ma_')) {
-    return 'mathematics';
-  }
-  if (chapterId.startsWith('bio9_') || chapterId.startsWith('bio11_') || chapterId.startsWith('bio12_')) {
+  if (chapterId.startsWith('ch11_') || chapterId.startsWith('ch12_')) return 'chemistry';
+  if (chapterId.startsWith('ph11_') || chapterId.startsWith('ph12_')) return 'physics';
+  if (chapterId.startsWith('ma_')) return 'mathematics';
+  if (
+    chapterId.startsWith('bio9_') ||
+    chapterId.startsWith('bio11_') ||
+    chapterId.startsWith('bio12_')
+  ) {
     return 'biology';
   }
   return null;
 }
 
-/**
- * Get all chapter IDs for a given subject
- */
 interface TaxonomyNode {
   type: string;
   id: string;
 }
 
 export function getChapterIdsForSubject(subject: Subject): string[] {
-  return TAXONOMY_FROM_CSV
-    .filter((node: TaxonomyNode) => node.type === 'chapter')
-    .filter((node: TaxonomyNode) => {
-      const nodeSubject = getSubjectFromChapterId(node.id);
-      return nodeSubject === subject;
-    })
-    .map((node: TaxonomyNode) => node.id);
+  return (TAXONOMY_FROM_CSV as TaxonomyNode[])
+    .filter((node) => node.type === 'chapter')
+    .filter((node) => getSubjectFromChapterId(node.id) === subject)
+    .map((node) => node.id);
 }
 
-// ── Per-process permissions cache ──────────────────────────────────────────────
-// Each call to getUserPermissions previously hit MongoDB. The slow-path admin
-// query path triggers up to three calls per request (direct, plus indirectly via
-// getQuestionFilter → getAccessibleChapters → getUserPermissions). Caching for
-// 60 s removes those round-trips without sacrificing safety:
-//   • TTL is short, so role changes propagate within a minute on every instance
-//   • A serverless instance restart clears the cache
-//   • Writes to /api/v2/admin/roles SHOULD call invalidatePermissionsCache(email)
-//     for instant propagation (see invalidate helper below).
-// CAUTION: Do NOT cache `UserPermissions` objects that contain bound closures
-// over a stale `userRole` document — we re-construct the public surface each
-// call so `userRole.subjects` mutations elsewhere can't leak in.
-type CachedPermissions = { permissions: UserPermissions; expiresAt: number };
-const permissionsCache = new Map<string, CachedPermissions>();
-const PERMISSIONS_TTL_MS = 60_000;
-const PERMISSIONS_CACHE_MAX = 5_000; // cap to avoid memory growth on unique emails
+// ── Env super-admin check (pure, no I/O) ────────────────────────────────────
 
-/** Invalidate cached permissions for one user (call from role-management writes). */
-export function invalidatePermissionsCache(email: string): void {
-  permissionsCache.delete(email.toLowerCase());
+function parseSuperAdminEmails(): string[] {
+  return (process.env.SUPER_ADMIN_EMAILS ?? '')
+    .split(',')
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
 }
 
-/** Drop the entire permissions cache (call after a bulk role migration). */
-export function clearPermissionsCache(): void {
-  permissionsCache.clear();
+export function isSuperAdmin(email: string | null | undefined): boolean {
+  if (!email) return false;
+  return parseSuperAdminEmails().includes(email.toLowerCase());
+}
+
+export function listSuperAdmins(): string[] {
+  return parseSuperAdminEmails();
+}
+
+// ── Per-process cache for getEffectiveAccess (60s TTL, 5000-entry cap) ──────
+
+export type EffectiveAccess =
+  | { isSuperAdmin: true }
+  | { isSuperAdmin: false; grants: Grant[] };
+
+type CachedAccess = { value: EffectiveAccess; expiresAt: number };
+const accessCache = new Map<string, CachedAccess>();
+const ACCESS_TTL_MS = 60_000;
+const ACCESS_CACHE_MAX = 5_000;
+
+export function invalidateAccessCache(email: string): void {
+  accessCache.delete(email.toLowerCase());
+}
+
+export function clearAccessCache(): void {
+  accessCache.clear();
 }
 
 /**
- * Fetch user permissions from database
- * CRITICAL: This is the single source of truth for permissions
+ * Returns the effective access for `email`:
+ *   - super admin → { isSuperAdmin: true }
+ *   - staff with active user_access doc → { isSuperAdmin: false, grants }
+ *   - unknown → { isSuperAdmin: false, grants: [] }
  *
- * Results are cached in-process for {@link PERMISSIONS_TTL_MS}. Use
- * {@link invalidatePermissionsCache} after role changes for instant propagation.
+ * Cached for {@link ACCESS_TTL_MS}. Writes to user_access SHOULD call
+ * {@link invalidateAccessCache} for instant propagation.
  */
-export async function getUserPermissions(email: string): Promise<UserPermissions> {
+export async function getEffectiveAccess(email: string): Promise<EffectiveAccess> {
+  if (isSuperAdmin(email)) return { isSuperAdmin: true };
+
   const key = email.toLowerCase();
   const now = Date.now();
-  const hit = permissionsCache.get(key);
-  if (hit && hit.expiresAt > now) {
-    return hit.permissions;
-  }
+  const hit = accessCache.get(key);
+  if (hit && hit.expiresAt > now) return hit.value;
 
-  // Periodic eviction so the map can't grow unbounded under unique-email load.
-  if (permissionsCache.size >= PERMISSIONS_CACHE_MAX) {
-    for (const [k, v] of permissionsCache) {
-      if (v.expiresAt <= now) permissionsCache.delete(k);
+  // Periodic eviction so the map cannot grow unbounded under unique-email load.
+  if (accessCache.size >= ACCESS_CACHE_MAX) {
+    for (const [k, v] of accessCache) {
+      if (v.expiresAt <= now) accessCache.delete(k);
     }
-    // Hard cap fallback: if still full, clear half (oldest entries).
-    if (permissionsCache.size >= PERMISSIONS_CACHE_MAX) {
-      const drop = Math.floor(PERMISSIONS_CACHE_MAX / 2);
+    if (accessCache.size >= ACCESS_CACHE_MAX) {
+      const drop = Math.floor(ACCESS_CACHE_MAX / 2);
       let i = 0;
-      for (const k of permissionsCache.keys()) {
+      for (const k of accessCache.keys()) {
         if (i++ >= drop) break;
-        permissionsCache.delete(k);
+        accessCache.delete(k);
       }
     }
   }
 
   await connectToDatabase();
+  const doc: IUserAccess | null = await UserAccess.findOne({
+    email: key,
+    is_active: true,
+  }).lean<IUserAccess>();
 
-  // Check if user has a role in database
-  const userRole = await UserRole.findOne({ email: email.toLowerCase(), is_active: true });
+  const value: EffectiveAccess = doc
+    ? { isSuperAdmin: false, grants: doc.grants ?? [] }
+    : { isSuperAdmin: false, grants: [] };
 
-  // Default: no access (fail-safe)
-  if (!userRole) {
-    const noAccess: UserPermissions = {
-      email,
-      role: 'viewer',
-      subjects: [],
-      canAccessSubject: () => false,
-      canEditQuestions: false,
-      canDeleteQuestions: false,
-      canManageRoles: false,
-      canAccessAnalytics: false,
-      canExportData: false,
-    };
-    permissionsCache.set(key, { permissions: noAccess, expiresAt: now + PERMISSIONS_TTL_MS });
-    return noAccess;
+  accessCache.set(key, { value, expiresAt: now + ACCESS_TTL_MS });
+
+  if (doc) {
+    // Fire-and-forget last-accessed tracking
+    UserAccess.updateOne({ email: key }, { last_accessed_at: new Date() }).catch(() => {});
   }
 
-  // Update last accessed timestamp (fire and forget)
-  UserRole.updateOne(
-    { email: email.toLowerCase() },
-    { last_accessed_at: new Date() }
-  ).catch(() => {
-    // Silently fail - this is just for tracking
-  });
-
-  const isSuperAdmin = userRole.role === 'super_admin';
-  const isSubjectAdmin = userRole.role === 'subject_admin';
-  // Snapshot subjects array at fetch time so the cached canAccessSubject
-  // closure can't be affected by any mutation to userRole.subjects later.
-  const subjectsSnapshot: Subject[] = isSuperAdmin
-    ? ['chemistry', 'physics', 'mathematics']
-    : [...userRole.subjects];
-
-  const permissions: UserPermissions = {
-    email,
-    role: userRole.role,
-    subjects: subjectsSnapshot,
-    canAccessSubject: (subject: Subject) => {
-      if (isSuperAdmin) return true;
-      return subjectsSnapshot.includes(subject);
-    },
-    canEditQuestions: isSuperAdmin || isSubjectAdmin,
-    canDeleteQuestions: isSuperAdmin, // Only super admin can delete
-    canManageRoles: isSuperAdmin,
-    canAccessAnalytics: true, // All authenticated users can view analytics
-    canExportData: isSuperAdmin,
-  };
-  permissionsCache.set(key, { permissions, expiresAt: now + PERMISSIONS_TTL_MS });
-  return permissions;
+  return value;
 }
 
-/**
- * Check if user can access a specific chapter
- */
-export async function canAccessChapter(email: string, chapterId: string): Promise<boolean> {
-  const permissions = await getUserPermissions(email);
+// ── Question-level checks (used by service handlers) ────────────────────────
+
+function grantMatches(grant: Grant, subject: Subject, chapterId: string): boolean {
+  if (grant.subject !== subject) return false;
+  if (grant.chapters === 'all') return true;
+  return grant.chapters.includes(chapterId);
+}
+
+export async function canViewQuestion(email: string, chapterId: string): Promise<boolean> {
+  const access = await getEffectiveAccess(email);
+  if (access.isSuperAdmin) return true;
   const subject = getSubjectFromChapterId(chapterId);
-  
-  if (!subject) return false; // Unknown chapter format
-  
-  return permissions.canAccessSubject(subject);
+  if (!subject) return false;
+  return access.grants.some((g) => grantMatches(g, subject, chapterId));
+  // 'view' and 'edit' grants both satisfy a view check.
 }
 
-/**
- * Check if user can edit a specific question
- */
 export async function canEditQuestion(email: string, chapterId: string): Promise<boolean> {
-  const permissions = await getUserPermissions(email);
-  
-  if (!permissions.canEditQuestions) return false;
-  
+  const access = await getEffectiveAccess(email);
+  if (access.isSuperAdmin) return true;
   const subject = getSubjectFromChapterId(chapterId);
   if (!subject) return false;
-  
-  return permissions.canAccessSubject(subject);
+  return access.grants.some(
+    (g) => g.level === 'edit' && grantMatches(g, subject, chapterId),
+  );
 }
 
-/**
- * Check if user can delete a specific question
- */
-export async function canDeleteQuestion(email: string, chapterId: string): Promise<boolean> {
-  const permissions = await getUserPermissions(email);
-  
-  if (!permissions.canDeleteQuestions) return false;
-  
-  const subject = getSubjectFromChapterId(chapterId);
-  if (!subject) return false;
-  
-  return permissions.canAccessSubject(subject);
+// chapterId kept for API symmetry; only super admins can delete, irrespective of chapter.
+export async function canDeleteQuestion(email: string, _chapterId: string): Promise<boolean> {
+  return isSuperAdmin(email);
 }
 
-/**
- * Filter chapters based on user permissions
- */
-export async function getAccessibleChapters(email: string): Promise<string[]> {
-  const permissions = await getUserPermissions(email);
-
-  if (permissions.role === 'super_admin') {
-    // Super admin gets all chapters
-    return TAXONOMY_FROM_CSV
-      .filter((node: TaxonomyNode) => node.type === 'chapter')
-      .map((node: TaxonomyNode) => node.id);
-  }
-
-  // Get chapters for allowed subjects only
-  const allowedChapters: string[] = [];
-  for (const subject of permissions.subjects) {
-    allowedChapters.push(...getChapterIdsForSubject(subject));
-  }
-
-  return allowedChapters;
-}
+// ── List-endpoint filter ────────────────────────────────────────────────────
 
 /**
- * Build MongoDB filter for questions based on user permissions
- * CRITICAL: Use this in all question queries to enforce access control
+ * Returns a Mongo filter that restricts a query to chapters the user can READ
+ * (view-level OR edit-level grants).
+ *
+ *   - super admin → {} (no restriction)
+ *   - staff       → { 'metadata.chapter_id': { $in: [...allowed...] } }
+ *   - unknown     → {} (the student case — student app exposes only public content)
+ *
+ * NOTE: callers that do not want students to see staff-only data must apply
+ * their own "has staff access" gate before calling this. Today's callers only
+ * call getQuestionFilter for authenticated staff queries.
  */
 export async function getQuestionFilter(email: string): Promise<Record<string, unknown>> {
-  const accessibleChapters = await getAccessibleChapters(email);
-  
-  if (accessibleChapters.length === 0) {
-    // No access - return filter that matches nothing
-    return { _id: { $exists: false } };
+  const access = await getEffectiveAccess(email);
+  if (access.isSuperAdmin) return {};
+  if (access.grants.length === 0) return {};
+
+  const accessible = new Set<string>();
+  for (const g of access.grants) {
+    if (g.chapters === 'all') {
+      for (const id of getChapterIdsForSubject(g.subject)) accessible.add(id);
+    } else {
+      for (const id of g.chapters) accessible.add(id);
+    }
   }
-  
-  return {
-    'metadata.chapter_id': { $in: accessibleChapters },
-  };
+
+  if (accessible.size === 0) return { _id: { $exists: false } };
+  return { 'metadata.chapter_id': { $in: Array.from(accessible) } };
 }

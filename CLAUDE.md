@@ -24,7 +24,7 @@ If uncertain about scope, stop and ask. Do not pick silently.
 
 - **Framework**: Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4
 - **Database**: MongoDB Atlas (questions, taxonomy, audit logs)
-- **Auth**: Supabase (user accounts, session management) — ADMIN_EMAILS allow-list for the admin app
+- **Auth**: Supabase (user accounts, session management). Super admin tier defined in `SUPER_ADMIN_EMAILS` env var; staff defined in `user_access` collection (see §7 RBAC).
 - **Assets**: Cloudflare R2 (`canvas-chemistry-assets` bucket)
 
 ### Monorepo layout (as of Phase 5)
@@ -77,7 +77,7 @@ Required env vars (all in `.env.local`, never committed):
 MONGODB_URI=...
 NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-ADMIN_EMAILS=...
+SUPER_ADMIN_EMAILS=...
 ```
 
 ---
@@ -301,8 +301,8 @@ Admin app (admin.canvasclasses.in, apps/admin/)
   ├─ Admin UI (/ landing, /crucible, /flashcards, /blog, /books, /taxonomy, /career-explorer, /dashboard, /preview)
   │    └─ same-origin fetch → /api/v2/* (also in admin app)
   └─ Admin APIs (apps/admin/app/api/v2/*)
-       ├─ middleware.ts → ADMIN_EMAILS allow-list (first line of defense)
-       └─ route handlers → requireAdmin() / getAuthenticatedUser + isAdmin
+       ├─ middleware.ts → SUPER_ADMIN_EMAILS env OR active user_access doc (first line of defense)
+       └─ route handlers → requireAdmin() / per-chapter canEditQuestion / isSuperAdmin
             └─ MongoDB: questions_v2 + auditlogs (same cluster, shared models)
             └─ Supabase: auth check on every mutating request (second line)
 ```
@@ -321,6 +321,22 @@ Two-level hierarchy: **Chapter → Topic Tag**
 The taxonomy file is auto-updated by the dashboard at `admin.canvasclasses.in/taxonomy` via `POST /api/v2/taxonomy/save` (served by the admin app). Do not edit it manually.
 
 **For tag-level rules** (which tags to apply, how to weight them, micro-concept naming conventions): read `_agents/workflows/CRUCIBLE_TAXONOMY_AND_TAGGING_RULES.md`.
+
+### RBAC (Role-Based Access Control)
+
+Per ADR-010, the admin app uses a grant-based access model:
+
+- **Super admin tier** is defined in the `SUPER_ADMIN_EMAILS` env var. Members have all powers including delete and staff management. Cannot be created or modified via HTTP.
+- **Staff tier** is stored in the `user_access` collection. Each document holds a list of grants `{ subject, chapters: 'all' | string[], level: 'view' | 'edit' }`.
+- **Question deletion** is restricted to super admins. All other operations gate on per-chapter checks.
+
+Helpers in `@canvas/data/rbac`:
+- `isSuperAdmin(email)` — pure env check, no I/O.
+- `canEditQuestion(email, chapterId)` / `canViewQuestion(email, chapterId)` / `canDeleteQuestion(email, _chapter)` — async, cached.
+- `getQuestionFilter(email)` — Mongo filter for list endpoints.
+- `getEffectiveAccess(email)` — full access object for the current user.
+
+Staff are managed in the admin app at `/staff`. See `docs/superpowers/specs/2026-05-23-rbac-redesign-design.md` for the full design.
 
 ### Key Files
 
@@ -358,7 +374,10 @@ The taxonomy file is auto-updated by the dashboard at `admin.canvasclasses.in/ta
 | Admin home landing | `apps/admin/app/page.tsx` — card grid linking to each operator panel |
 | Admin question editor (Crucible) | `apps/admin/features/admin/components/QuestionAdmin.tsx` (route shell: `apps/admin/app/crucible/page.tsx`) |
 | Admin auth helpers | `apps/admin/lib/auth.ts` (route handlers), `apps/admin/lib/adminAuth.ts` (server components) |
-| Admin middleware | `apps/admin/middleware.ts` (Supabase + ADMIN_EMAILS gate, all paths except `/login` + `/api/auth/*` + `/_next/*`) |
+| RBAC helpers | `packages/data/rbac.ts` (grant-based; see ADR-010) |
+| User access model | `packages/data/models/UserAccess.ts` |
+| User access audit log | `packages/data/models/UserAccessAuditLog.ts` |
+| Admin middleware | `apps/admin/middleware.ts` (Supabase + SUPER_ADMIN_EMAILS / user_access gate, all paths except `/login` + `/api/auth/*` + `/_next/*`) |
 | Student server actions | `apps/student/features/crucible/server-actions/the-crucible.ts` |
 | Student auth helpers | `apps/student/lib/auth.ts` (route handlers), `apps/student/lib/bookAuth.ts` (server components) |
 | Student landing | `apps/student/app/the-crucible/page.tsx` (renders `apps/student/features/crucible/` components) |
@@ -422,7 +441,7 @@ These rules are **non-negotiable**. Every agent must follow them when creating o
 ### 8.1 Authentication Is Required by Default
 
 - **Every API route under `/api/v2/`** that performs a write (POST, PATCH, PUT, DELETE) **must** call an auth guard before touching the database. No exceptions.
-- **Admin routes**: Use `requireAdmin()` from `lib/bookAuth.ts` (for server components/actions) or `getAuthenticatedUser()` + `isAdmin()` from `lib/auth.ts` (for route handlers).
+- **Admin routes**: Use `requireAdmin()` from `lib/adminAuth.ts` (server components/actions) or `getAuthenticatedUser()` + `isSuperAdmin()` from `lib/auth.ts` + `@canvas/data/rbac` (route handlers). For per-chapter checks, use `canEditQuestion(email, chapter_id)` / `canViewQuestion(email, chapter_id)` / `canDeleteQuestion(email, _chapter)` from `@canvas/data/rbac`.
 - **Student routes** (e.g. flag submission, progress save): Use `getAuthenticatedUser()` from `lib/auth.ts` to verify the user is logged in.
 - **Public read routes** are the only exception — if a GET returns non-sensitive public data, auth may be skipped. Document this explicitly with a `// PUBLIC: no auth required` comment.
 - If you are unsure whether a route needs auth, **it needs auth**.

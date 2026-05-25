@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { updateSession } from './app/utils/supabase/middleware';
+import { isSuperAdmin, getEffectiveAccess } from '@canvas/data/rbac';
 
 // Admin app middleware — enforces a hard auth gate at the framework boundary
 // for EVERY path except the login flow and auth callbacks.
@@ -57,15 +58,21 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  // Signed in but not on the ADMIN_EMAILS allow-list → 403.
-  const adminEmails = (process.env.ADMIN_EMAILS || '')
-    .split(',')
-    .map((e) => e.trim().toLowerCase())
-    .filter(Boolean);
+  // Gate: must be either a super admin (env) or have an active user_access doc.
+  // getEffectiveAccess uses the 60s cache, short-circuits super admins (no Mongo),
+  // and reads from the user_access collection for staff.
+  if (!user.email) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  }
 
-  const isSuperAdmin = !!user.email && adminEmails.includes(user.email.toLowerCase());
-
-  if (!isSuperAdmin) {
+  try {
+    const access = await getEffectiveAccess(user.email);
+    const allowed = access.isSuperAdmin || (access.grants.length > 0);
+    if (!allowed) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+  } catch (err) {
+    console.error('Middleware access lookup failed:', err);
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 

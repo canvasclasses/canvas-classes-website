@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Save, Plus, Filter, MonitorPlay, AlertTriangle, CheckSquare, Square, BarChart3, FileDown, FileJson, Wand2, Library, Info, Shield } from 'lucide-react';
+import { Save, Plus, Filter, MonitorPlay, AlertTriangle, CheckSquare, Square, BarChart3, FileDown, FileJson, Wand2, Library, Info } from 'lucide-react';
 // uuid removed — display_id is now generated inline
 import AnalyticsDashboard from '@/features/admin/components/AnalyticsDashboard';
 import ExportDashboard from '@/features/admin/components/ExportDashboard';
@@ -15,7 +15,6 @@ import AudioPlayer from '@/features/admin/components/AudioPlayer';
 import SVGScaleControls from '@/features/admin/components/SVGScaleControls';
 import SVGDropZone from '@/features/admin/components/SVGDropZone';
 import VideoDropZone from '@/features/admin/components/VideoDropZone';
-import RoleManagement from '@/features/admin/components/RoleManagement';
 import MockTestsAdmin from '@/features/admin/components/MockTestsAdmin';
 import FlagsDashboard from '@/features/admin/components/FlagsDashboard';
 import FlagModal, { type FlagSubmission } from '@/features/admin/components/FlagModal';
@@ -48,7 +47,7 @@ const isTagValid = (tags: Array<{ tag_id: string }> | undefined | null): tags is
 //   §6 SECTION_BODY   Conditional on adminSection: mock-tests | flags |
 //                     practice (the practice path is the metadata editor +
 //                     side-by-side text editor / live preview)
-//   §7 MODALS         Analytics, BulkImport, Export, RoleManagement, FlagModal
+//   §7 MODALS         Analytics, BulkImport, Export, FlagModal
 //
 // Companion files (already extracted):
 //   - ./hooks/useAdminKeyNav.ts          — arrow-key prev/next
@@ -88,10 +87,9 @@ function AdminPageContent() {
     // Analytics
     const [showAnalytics, setShowAnalytics] = useState(false);
     const [showExport, setShowExport] = useState(false);
-    const [showRoleManagement, setShowRoleManagement] = useState(false);
 
     // Permissions
-    const { permissions, loading: permissionsLoading, canEdit, canDelete, canManageRoles, canAccessChapter } = usePermissions();
+    const { loading: permissionsLoading, canEdit, canView, isSuperAdmin } = usePermissions();
 
     // Bulk import
     const [showBulkImport, setShowBulkImport] = useState(false);
@@ -668,13 +666,6 @@ function AdminPageContent() {
                         className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-blue-600/60 rounded-lg transition shrink-0">
                         <FileJson size={13} />
                     </button>
-                    {canManageRoles && (
-                        <button onClick={() => setShowRoleManagement(!showRoleManagement)} title="Role Management"
-                            className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-purple-600/60 rounded-lg transition shrink-0">
-                            <Shield size={13} />
-                        </button>
-                    )}
-
                     <div className="w-px h-4 bg-gray-700/50 shrink-0" />
 
                     {/* Search — press Enter to apply, Escape to clear */}
@@ -867,7 +858,7 @@ function AdminPageContent() {
                                 if (selectedSubjectFilter === 'maths' && !id.startsWith('ma_')) return false;
                                 if (selectedSubjectFilter === 'biology' && !(id.startsWith('bio11_') || id.startsWith('bio12_'))) return false;
                                 // Permission filter - only show chapters user can access
-                                return canAccessChapter(id);
+                                return canView(id);
                             })
                             .map(ch => (
                                 <option key={ch._id} value={ch._id}>{ch.name}</option>
@@ -1098,7 +1089,7 @@ function AdminPageContent() {
                         chapters={chapters}
                         reclassifying={reclassifying}
                         aiAnalyzing={aiAnalyzing}
-                        canDelete={canDelete}
+                        canDelete={isSuperAdmin}
                         deletingId={deletingId}
                         onReclassify={handleReclassify}
                         onUpdate={handleUpdate}
@@ -1566,7 +1557,7 @@ function AdminPageContent() {
                 )}
             </div>}
 
-            {/* §7 MODALS — Analytics, BulkImport, Export, RoleManagement, FlagModal */}
+            {/* §7 MODALS — Analytics, BulkImport, Export, FlagModal */}
             {/* Analytics Dashboard Modal */}
             {showAnalytics && (
                 <AnalyticsDashboard
@@ -1593,29 +1584,6 @@ function AdminPageContent() {
                     initialSelected={bulkMode && selectedQuestions.size > 0 ? selectedQuestions : undefined}
                     onClose={() => setShowExport(false)}
                 />
-            )}
-
-            {/* Role Management Modal */}
-            {showRoleManagement && canManageRoles && permissions && (
-                <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4 overflow-y-auto">
-                    <div className="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-4xl my-8 overflow-hidden shadow-2xl">
-                        <div className="p-6 border-b border-gray-800 flex items-center justify-between bg-gray-900/50">
-                            <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                                <Shield className="text-purple-400" size={24} />
-                                Role Management
-                            </h2>
-                            <button 
-                                onClick={() => setShowRoleManagement(false)} 
-                                className="text-gray-500 hover:text-white transition text-2xl leading-none"
-                            >
-                                ✕
-                            </button>
-                        </div>
-                        <div className="p-6 max-h-[80vh] overflow-y-auto">
-                            <RoleManagement currentUserEmail={permissions.email} />
-                        </div>
-                    </div>
-                </div>
             )}
 
             <FlagModal

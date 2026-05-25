@@ -10,6 +10,7 @@ import {
   Eye,
   Beaker,
   ExternalLink,
+  Users,
 } from 'lucide-react';
 import { createClient } from '@/app/utils/supabase/server';
 
@@ -109,6 +110,12 @@ export default async function AdminHome() {
             icon={<Eye />}
             title="Preview"
             hint="Render a single question or flashcard as a student would see it."
+          />
+          <PanelCard
+            href="/staff"
+            icon={<Users />}
+            title="Staff Access"
+            hint="Grant or revoke per-subject and per-chapter access for staff. Super admins are managed via env."
           />
         </Section>
 
