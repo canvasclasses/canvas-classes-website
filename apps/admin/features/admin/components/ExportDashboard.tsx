@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { X, Download, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { AdminQuestion as Question } from './types';
+import { Select } from './Select';
 interface ExportDashboardProps {
   questions: Question[];
   initialSelected?: Set<string>;
@@ -1068,25 +1069,43 @@ export default function ExportDashboard({ questions, initialSelected, onClose }:
 
               {showFilters && (
                 <div className="flex items-center gap-2 flex-wrap">
-                  <select value={filterDifficulty} onChange={e => { setFilterDifficulty(e.target.value); setPage(0); }}
-                    className="px-2 py-1 rounded-lg bg-[#1e2a3a] border border-[#2d3f55] text-xs text-gray-300 focus:outline-none focus:border-indigo-500">
-                    <option value="">All Levels</option>
-                    <option value="1">Level 1</option>
-                    <option value="2">Level 2</option>
-                    <option value="3">Level 3</option>
-                    <option value="4">Level 4</option>
-                    <option value="5">Level 5</option>
-                  </select>
-                  <select value={filterType} onChange={e => { setFilterType(e.target.value); setPage(0); }}
-                    className="px-2 py-1 rounded-lg bg-[#1e2a3a] border border-[#2d3f55] text-xs text-gray-300 focus:outline-none focus:border-indigo-500">
-                    <option value="">All Types</option>
-                    {['SCQ', 'MCQ', 'NVT', 'AR', 'MST', 'MTC'].map(t => <option key={t} value={t}>{t}</option>)}
-                  </select>
-                  <select value={filterChapter} onChange={e => { setFilterChapter(e.target.value); setPage(0); }}
-                    className="px-2 py-1 rounded-lg bg-[#1e2a3a] border border-[#2d3f55] text-xs text-gray-300 focus:outline-none focus:border-indigo-500">
-                    <option value="">All Chapters</option>
-                    {allChapters.map(c => <option key={c} value={c}>{c}</option>)}
-                  </select>
+                  <Select
+                    size="sm"
+                    className="w-28"
+                    triggerClassName="bg-[#1e2a3a] hover:bg-[#243043] border border-[#2d3f55] text-gray-300"
+                    value={filterDifficulty}
+                    onChange={(v) => { setFilterDifficulty(v); setPage(0); }}
+                    options={[
+                      { value: '', label: 'All Levels' },
+                      { value: '1', label: 'Level 1' },
+                      { value: '2', label: 'Level 2' },
+                      { value: '3', label: 'Level 3' },
+                      { value: '4', label: 'Level 4' },
+                      { value: '5', label: 'Level 5' },
+                    ]}
+                  />
+                  <Select
+                    size="sm"
+                    className="w-24"
+                    triggerClassName="bg-[#1e2a3a] hover:bg-[#243043] border border-[#2d3f55] text-gray-300"
+                    value={filterType}
+                    onChange={(v) => { setFilterType(v); setPage(0); }}
+                    options={[
+                      { value: '', label: 'All Types' },
+                      ...['SCQ', 'MCQ', 'NVT', 'AR', 'MST', 'MTC'].map((t) => ({ value: t, label: t })),
+                    ]}
+                  />
+                  <Select
+                    size="sm"
+                    className="w-40"
+                    triggerClassName="bg-[#1e2a3a] hover:bg-[#243043] border border-[#2d3f55] text-gray-300"
+                    value={filterChapter}
+                    onChange={(v) => { setFilterChapter(v); setPage(0); }}
+                    options={[
+                      { value: '', label: 'All Chapters' },
+                      ...allChapters.map((c) => ({ value: c, label: c })),
+                    ]}
+                  />
                   {(filterDifficulty || filterType || filterChapter || searchFilter) && (
                     <button onClick={clearFilters}
                       className="px-2 py-1 rounded-lg bg-red-900/30 text-red-400 text-xs hover:bg-red-900/50 transition">

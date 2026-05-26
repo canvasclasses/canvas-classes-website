@@ -10,7 +10,8 @@
 //   Preserved verbatim so behaviour is unchanged.)
 //
 // Auth (POST): localhost dev bypass → x-admin-secret header → Supabase
-// session with email in ADMIN_EMAILS OR RBAC `canEditQuestions`.
+// session with email in SUPER_ADMIN_EMAILS OR canEditQuestion(email, chapter)
+// where chapter is resolved from the required `questionId` form field.
 
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
@@ -20,7 +21,8 @@ import connectToDatabase from '@canvas/data/db/mongodb';
 import { Asset } from '@canvas/data/models/Asset';
 import { AuditLog } from '@canvas/data/models/AuditLog';
 import { uploadToR2, getExtensionFromMimeType, type AssetType } from '@canvas/core/r2-storage';
-import { getUserPermissions } from '@canvas/data/rbac';
+import { canEditQuestion, isSuperAdmin } from '@canvas/data/rbac';
+import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { fileTypeFromBuffer } from 'file-type';
 import type { ServiceDeps } from './types';
 
@@ -43,44 +45,26 @@ export async function POST(request: NextRequest, deps: ServiceDeps) {
   try {
     await connectToDatabase();
 
-    let isAuthorized = await deps.isLocalhostDev();
+    const isLocalDev = await deps.isLocalhostDev();
+    const isScript = deps.hasScriptSecret(request);
 
-    if (!isAuthorized && deps.hasScriptSecret(request)) {
-      isAuthorized = true;
-    }
-
-    if (!isAuthorized) {
+    // Auth probe BEFORE parsing the body. Otherwise an unauthenticated POST
+    // with a 50 MB body would be fully buffered into memory before the 401
+    // fires — bandwidth-DoS risk. Localhost dev and script-secret callers
+    // bypass the user lookup.
+    let authedEmail: string | null = null;
+    if (!isLocalDev && !isScript) {
       const user = await deps.getAuthenticatedUser(request);
-      if (user?.email) {
-        if (deps.isAdmin(user.email)) {
-          isAuthorized = true;
-        } else {
-          try {
-            const permissions = await getUserPermissions(user.email);
-            if (permissions.canEditQuestions) {
-              isAuthorized = true;
-            }
-          } catch (rbacErr) {
-            console.error('RBAC lookup failed during asset upload auth:', rbacErr);
-          }
-        }
-
-        if (!isAuthorized) {
-          return NextResponse.json(
-            { success: false, error: 'Forbidden - Insufficient permissions to upload assets' },
-            { status: 403 }
-          );
-        }
+      if (!user?.email) {
+        return NextResponse.json(
+          { success: false, error: 'Unauthorized - Authentication required' },
+          { status: 401 }
+        );
       }
+      authedEmail = user.email;
     }
 
-    if (!isAuthorized) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-
+    // Now safe to parse the body.
     formData = await request.formData();
     file = formData.get('file') as File;
     const questionId = formData.get('questionId') as string | null;
@@ -89,6 +73,18 @@ export async function POST(request: NextRequest, deps: ServiceDeps) {
     const caption = formData.get('caption') as string;
     const context = (formData.get('context') as string) || 'practice';
 
+    // questionId is REQUIRED for normal users. Asset uploads must be tied to
+    // a specific question so the chapter-level RBAC check has something to
+    // gate on. Localhost dev and script-secret callers bypass this.
+    if (!isLocalDev && !isScript) {
+      if (!questionId) {
+        return NextResponse.json(
+          { success: false, error: 'questionId is required' },
+          { status: 400 }
+        );
+      }
+    }
+
     if (questionId) {
       const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
       if (!uuidRegex.test(questionId)) {
@@ -96,6 +92,50 @@ export async function POST(request: NextRequest, deps: ServiceDeps) {
           { success: false, error: 'Invalid questionId format - must be a valid UUID' },
           { status: 400 }
         );
+      }
+    }
+
+    // For non-bypass callers, gate on the question's chapter (super admins
+    // skip the question lookup entirely).
+    if (!isLocalDev && !isScript) {
+      if (authedEmail && !isSuperAdmin(authedEmail)) {
+        const targetQuestion = await QuestionV2.findOne(
+          { _id: questionId, deleted_at: null },
+          { 'metadata.chapter_id': 1 },
+        ).lean<{ metadata: { chapter_id: string } } | null>();
+
+        if (!targetQuestion) {
+          return NextResponse.json(
+            { success: false, error: 'Question not found' },
+            { status: 404 }
+          );
+        }
+
+        if (!targetQuestion?.metadata?.chapter_id) {
+          return NextResponse.json(
+            { success: false, error: 'Question has no chapter — cannot validate access' },
+            { status: 500 }
+          );
+        }
+
+        try {
+          const allowed = await canEditQuestion(
+            authedEmail,
+            targetQuestion.metadata.chapter_id,
+          );
+          if (!allowed) {
+            return NextResponse.json(
+              { success: false, error: "Forbidden - You do not have edit access to this question's subject/chapter" },
+              { status: 403 }
+            );
+          }
+        } catch (rbacErr) {
+          console.error('RBAC lookup failed during asset upload auth:', rbacErr);
+          return NextResponse.json(
+            { success: false, error: 'Forbidden - Permission check failed' },
+            { status: 403 }
+          );
+        }
       }
     }
 

@@ -7,7 +7,7 @@ import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { AuditLog } from '@canvas/data/models/AuditLog';
 import { trackServer } from '@canvas/core/analytics/mixpanel.server';
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
-import { getUserPermissions, getQuestionFilter, canEditQuestion, getSubjectFromChapterId } from '@canvas/data/rbac';
+import { getEffectiveAccess, getQuestionFilter, canEditQuestion, canViewQuestion, getSubjectFromChapterId } from '@canvas/data/rbac';
 import { QuestionSchema } from '@canvas/data/schemas/question';
 import { generateDisplayId, regenerateDisplayId } from '@canvas/data/id-generator';
 import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
@@ -113,10 +113,14 @@ export async function GET(request: NextRequest, deps: ServiceDeps) {
     // chapters they can't access.
     if (isSimpleChapterFetch(parsed)) {
       if (isAuthenticated && user) {
-        const permissions = await getUserPermissions(user.email!);
-        if (permissions.role !== 'viewer') {
-          const subj = getSubjectFromChapterId(chapter_ids[0]);
-          if (!subj || !permissions.canAccessSubject(subj)) {
+        // Staff (non-students) need explicit access to this chapter. Students
+        // — authenticated users with no user_access doc — fall through to the
+        // public read; getEffectiveAccess returns grants: [] for them and the
+        // check below is a no-op.
+        const access = await getEffectiveAccess(user.email!);
+        if (access.isSuperAdmin === false && access.grants.length > 0) {
+          const canSee = await canViewQuestion(user.email!, chapter_ids[0]);
+          if (!canSee) {
             return NextResponse.json({
               success: true,
               data: [],
@@ -151,8 +155,10 @@ export async function GET(request: NextRequest, deps: ServiceDeps) {
 
     let rbacFilter: Record<string, unknown> | undefined;
     if (isAuthenticated && user) {
-      const permissions = await getUserPermissions(user.email!);
-      if (permissions.role !== 'viewer') {
+      // Apply chapter-level filter only for staff (super admin or with grants).
+      // Students have grants: [] → no filter, same as today.
+      const access = await getEffectiveAccess(user.email!);
+      if (access.isSuperAdmin || access.grants.length > 0) {
         rbacFilter = await getQuestionFilter(user.email!);
       }
     }

@@ -31,7 +31,6 @@ export { Asset, type IAsset } from './models/Asset';
 export { AuditLog, type IAuditLog } from './models/AuditLog';
 export { ActivityLog, type IActivityLog } from './models/ActivityLog';
 export { ResourceLink, type ResourceType } from './models/ResourceLink';
-export { UserRole, type Subject, type RoleType, type IUserRole } from './models/UserRole';
 
 // ── Taxonomy ──
 export { TAXONOMY_FROM_CSV, type TaxonomyNode } from './taxonomy/taxonomyData_from_csv';

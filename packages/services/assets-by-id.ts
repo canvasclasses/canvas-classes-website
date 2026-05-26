@@ -16,7 +16,7 @@ import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { AuditLog } from '@canvas/data/models/AuditLog';
 import { deleteFromR2 } from '@canvas/core/r2-storage';
 import { v4 as uuidv4 } from 'uuid';
-import { getUserPermissions } from '@canvas/data/rbac';
+import { isSuperAdmin } from '@canvas/data/rbac';
 import type { ServiceDeps } from './types';
 
 export async function DELETE(
@@ -35,10 +35,9 @@ export async function DELETE(
       );
     }
 
-    const permissions = await getUserPermissions(user.email);
-    if (!permissions.canDeleteQuestions) {
+    if (!isSuperAdmin(user.email)) {
       return NextResponse.json(
-        { success: false, error: 'Forbidden - Insufficient permissions to delete assets' },
+        { success: false, error: 'Forbidden - Only super admins can delete assets' },
         { status: 403 }
       );
     }

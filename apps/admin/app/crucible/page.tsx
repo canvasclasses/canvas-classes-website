@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback, Suspense } from 'react';
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Save, Plus, Filter, MonitorPlay, AlertTriangle, CheckSquare, Square, BarChart3, FileDown, FileJson, Wand2, Library, Info, Shield } from 'lucide-react';
+import { Save, Plus, Filter, MonitorPlay, AlertTriangle, CheckSquare, Square, BarChart3, FileDown, FileJson, Wand2, Library, Info, ChevronLeft } from 'lucide-react';
 // uuid removed — display_id is now generated inline
 import AnalyticsDashboard from '@/features/admin/components/AnalyticsDashboard';
 import ExportDashboard from '@/features/admin/components/ExportDashboard';
@@ -15,7 +16,6 @@ import AudioPlayer from '@/features/admin/components/AudioPlayer';
 import SVGScaleControls from '@/features/admin/components/SVGScaleControls';
 import SVGDropZone from '@/features/admin/components/SVGDropZone';
 import VideoDropZone from '@/features/admin/components/VideoDropZone';
-import RoleManagement from '@/features/admin/components/RoleManagement';
 import MockTestsAdmin from '@/features/admin/components/MockTestsAdmin';
 import FlagsDashboard from '@/features/admin/components/FlagsDashboard';
 import FlagModal, { type FlagSubmission } from '@/features/admin/components/FlagModal';
@@ -28,6 +28,7 @@ import { usePermissions } from '@/features/admin/hooks/usePermissions';
 import { useAdminKeyNav } from '@/features/admin/hooks/useAdminKeyNav';
 import { useAdminFilterUrlSync } from '@/features/admin/hooks/useAdminFilterUrlSync';
 import { type AdminQuestion as Question, type AdminChapter as Chapter, QUESTION_TYPES } from '@/features/admin/components/types';
+import { Select } from '@/features/admin/components/Select';
 
 const VALID_TOPIC_IDS = new Set(TAXONOMY_FROM_CSV.filter(t => t.type === 'topic').map(t => t.id));
 const isTagValid = (tags: Array<{ tag_id: string }> | undefined | null): tags is Array<{ tag_id: string }> => {
@@ -48,7 +49,7 @@ const isTagValid = (tags: Array<{ tag_id: string }> | undefined | null): tags is
 //   §6 SECTION_BODY   Conditional on adminSection: mock-tests | flags |
 //                     practice (the practice path is the metadata editor +
 //                     side-by-side text editor / live preview)
-//   §7 MODALS         Analytics, BulkImport, Export, RoleManagement, FlagModal
+//   §7 MODALS         Analytics, BulkImport, Export, FlagModal
 //
 // Companion files (already extracted):
 //   - ./hooks/useAdminKeyNav.ts          — arrow-key prev/next
@@ -88,10 +89,9 @@ function AdminPageContent() {
     // Analytics
     const [showAnalytics, setShowAnalytics] = useState(false);
     const [showExport, setShowExport] = useState(false);
-    const [showRoleManagement, setShowRoleManagement] = useState(false);
 
     // Permissions
-    const { permissions, loading: permissionsLoading, canEdit, canDelete, canManageRoles, canAccessChapter } = usePermissions();
+    const { loading: permissionsLoading, canEdit, canView, isSuperAdmin } = usePermissions();
 
     // Bulk import
     const [showBulkImport, setShowBulkImport] = useState(false);
@@ -632,6 +632,14 @@ function AdminPageContent() {
                 {/* Row 1: title + actions + search + Prev/Next + selector + chapter/type filters */}
                 {/* flex-wrap so content reflows to additional lines on narrow viewports — accessible without horizontal scroll on any laptop/OS */}
                 <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-800/40 flex-wrap">
+                    <Link
+                        href="/"
+                        title="Back to admin home"
+                        className="inline-flex items-center gap-1 rounded-md bg-gray-800/60 px-2 py-1 text-xs text-gray-300 hover:bg-gray-700/60 hover:text-white shrink-0"
+                    >
+                        <ChevronLeft size={12} />
+                        Home
+                    </Link>
                     <h1 className="text-sm font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 bg-clip-text text-transparent shrink-0">
                         Crucible Admin
                     </h1>
@@ -668,13 +676,6 @@ function AdminPageContent() {
                         className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-blue-600/60 rounded-lg transition shrink-0">
                         <FileJson size={13} />
                     </button>
-                    {canManageRoles && (
-                        <button onClick={() => setShowRoleManagement(!showRoleManagement)} title="Role Management"
-                            className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-purple-600/60 rounded-lg transition shrink-0">
-                            <Shield size={13} />
-                        </button>
-                    )}
-
                     <div className="w-px h-4 bg-gray-700/50 shrink-0" />
 
                     {/* Search — press Enter to apply, Escape to clear */}
@@ -739,20 +740,21 @@ function AdminPageContent() {
                         <div className="flex items-center gap-2 px-2 py-1 bg-green-900/20 border border-green-600/50 rounded-lg shrink-0">
                             <CheckSquare size={12} className="text-green-400" />
                             <span className="text-xs font-bold text-green-400">{selectedQuestions.size} sel</span>
-                            <select
-                                onChange={(e) => {
-                                    const chapterId = e.target.value;
+                            <Select
+                                size="sm"
+                                className="w-44"
+                                value=""
+                                onChange={(chapterId) => {
                                     if (chapterId && confirm(`Assign ${selectedQuestions.size} questions to this chapter?`)) {
                                         handleBulkTagAssignment(chapterId, '');
                                     }
                                 }}
-                                className="bg-gray-800 border border-gray-700 rounded px-2 py-1 text-xs"
-                            >
-                                <option value="">Bulk Assign Chapter</option>
-                                {chapters.map(ch => (
-                                    <option key={ch._id} value={ch._id}>{ch.name}</option>
-                                ))}
-                            </select>
+                                placeholder="Bulk Assign Chapter"
+                                options={[
+                                    { value: '', label: 'Bulk Assign Chapter' },
+                                    ...chapters.map((ch) => ({ value: ch._id, label: ch.name })),
+                                ]}
+                            />
                             <button
                                 onClick={() => setSelectedQuestions(new Set())}
                                 className="text-xs text-red-400 hover:text-red-300"
@@ -801,30 +803,31 @@ function AdminPageContent() {
                             )}
                         </div>
                     ) : (
-                        <select
+                        <Select
+                            size="sm"
+                            className="w-56 shrink-0"
                             value={selectedQuestionId || ''}
-                            onChange={(e) => setSelectedQuestionId(e.target.value || null)}
-                            className="w-56 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none shrink-0"
-                        >
-                            <option value="">Select ({filteredQuestions.length})</option>
-                            {filteredQuestions.map(q => {
-                                const hasChapter = !!q.metadata.chapter_id;
-                                const hasPrimaryTag = isTagValid(q.metadata.tags);
-                                const statusDot = !hasChapter ? '🔴' : !hasPrimaryTag ? '🟡' : '🟢';
-                                // Bridge: prefer modern examDetails, fall back to legacy exam_source.
-                                const det = q.metadata?.examDetails;
-                                const src = q.metadata?.exam_source;
-                                const examName = det?.exam?.replace(/_/g, ' ').replace('JEE ', '') ?? src?.exam?.replace('JEE ', '') ?? '';
-                                const examYear = det?.year ?? src?.year;
-                                const examShift = det?.shift ?? src?.shift;
-                                const srcLabel = (det?.year || src?.year) ? ` [${examName} ${examYear ?? ''} ${examShift ? examShift.replace(/^Shift-/, '') : ''}]` : '';
-                                return (
-                                    <option key={q._id} value={q._id}>
-                                        {statusDot} {q.display_id}{srcLabel}: {q.question_text?.markdown?.substring(0, 40) || "No text"}...
-                                    </option>
-                                );
-                            })}
-                        </select>
+                            onChange={(v) => setSelectedQuestionId(v || null)}
+                            placeholder={`Select (${filteredQuestions.length})`}
+                            options={[
+                                { value: '', label: `Select (${filteredQuestions.length})` },
+                                ...filteredQuestions.map((q) => {
+                                    const hasChapter = !!q.metadata.chapter_id;
+                                    const hasPrimaryTag = isTagValid(q.metadata.tags);
+                                    const statusDot = !hasChapter ? '🔴' : !hasPrimaryTag ? '🟡' : '🟢';
+                                    const det = q.metadata?.examDetails;
+                                    const src = q.metadata?.exam_source;
+                                    const examName = det?.exam?.replace(/_/g, ' ').replace('JEE ', '') ?? src?.exam?.replace('JEE ', '') ?? '';
+                                    const examYear = det?.year ?? src?.year;
+                                    const examShift = det?.shift ?? src?.shift;
+                                    const srcLabel = (det?.year || src?.year) ? ` [${examName} ${examYear ?? ''} ${examShift ? examShift.replace(/^Shift-/, '') : ''}]` : '';
+                                    return {
+                                        value: q._id,
+                                        label: `${statusDot} ${q.display_id}${srcLabel}: ${q.question_text?.markdown?.substring(0, 40) || 'No text'}...`,
+                                    };
+                                }),
+                            ]}
+                        />
                     )}
 
                     {/* Subject Selector Pills */}
@@ -852,38 +855,35 @@ function AdminPageContent() {
                     </div>
 
                     {/* Chapter filter — scoped to selected subject */}
-                    <select
+                    <Select
+                        size="sm"
+                        className="shrink-0 w-40"
                         value={selectedChapterFilter}
-                        onChange={(e) => setSelectedChapterFilter(e.target.value)}
-                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                    >
-                        <option value="all">All Chapters</option>
-                        {chapters
-                            .filter(ch => {
-                                const id = ch._id;
-                                // Subject filter
-                                if (selectedSubjectFilter === 'chemistry' && !(id.startsWith('ch11_') || id.startsWith('ch12_'))) return false;
-                                if (selectedSubjectFilter === 'physics' && !(id.startsWith('ph11_') || id.startsWith('ph12_'))) return false;
-                                if (selectedSubjectFilter === 'maths' && !id.startsWith('ma_')) return false;
-                                if (selectedSubjectFilter === 'biology' && !(id.startsWith('bio11_') || id.startsWith('bio12_'))) return false;
-                                // Permission filter - only show chapters user can access
-                                return canAccessChapter(id);
-                            })
-                            .map(ch => (
-                                <option key={ch._id} value={ch._id}>{ch.name}</option>
-                            ))
-                        }
-                    </select>
-                    <select
+                        onChange={setSelectedChapterFilter}
+                        options={[
+                            { value: 'all', label: 'All Chapters' },
+                            ...chapters
+                                .filter((ch) => {
+                                    const id = ch._id;
+                                    if (selectedSubjectFilter === 'chemistry' && !(id.startsWith('ch11_') || id.startsWith('ch12_'))) return false;
+                                    if (selectedSubjectFilter === 'physics' && !(id.startsWith('ph11_') || id.startsWith('ph12_'))) return false;
+                                    if (selectedSubjectFilter === 'maths' && !id.startsWith('ma_')) return false;
+                                    if (selectedSubjectFilter === 'biology' && !(id.startsWith('bio11_') || id.startsWith('bio12_'))) return false;
+                                    return canView(id);
+                                })
+                                .map((ch) => ({ value: ch._id, label: ch.name })),
+                        ]}
+                    />
+                    <Select
+                        size="sm"
+                        className="shrink-0 w-24"
                         value={selectedTypeFilter}
-                        onChange={(e) => setSelectedTypeFilter(e.target.value)}
-                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-                    >
-                        <option value="all">All Types</option>
-                        {QUESTION_TYPES.map(qt => (
-                            <option key={qt.id} value={qt.id}>{qt.id}</option>
-                        ))}
-                    </select>
+                        onChange={setSelectedTypeFilter}
+                        options={[
+                            { value: 'all', label: 'All Types' },
+                            ...QUESTION_TYPES.map((qt) => ({ value: qt.id, label: qt.id })),
+                        ]}
+                    />
 
                     {/* Page navigation */}
                     {totalCount > PAGE_SIZE && (!searchQuery && selectedChapterFilter !== 'all') && (
@@ -951,84 +951,105 @@ function AdminPageContent() {
                         return (
                             <div className="flex items-center gap-1.5 shrink-0 pl-2 ml-1 border-l border-gray-700/60">
                                 {/* Source Type */}
-                                <select
-                                    value={(selectedQuestion.metadata.sourceType ?? '') as string}
-                                    onChange={(e) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, sourceType: (e.target.value || undefined) as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined } })}
+                                <Select
+                                    size="sm"
+                                    className="shrink-0 w-28"
                                     title="Source"
-                                    className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-blue-500 outline-none"
-                                >
-                                    <option value="">Source —</option>
-                                    <option value="PYQ">PYQ</option>
-                                    <option value="NCERT_Textbook">NCERT Text</option>
-                                    <option value="NCERT_Exemplar">NCERT Exem</option>
-                                    <option value="Practice">Practice</option>
-                                    <option value="Mock">Mock</option>
-                                </select>
+                                    value={(selectedQuestion.metadata.sourceType ?? '') as string}
+                                    onChange={(v) => handleUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, sourceType: (v || undefined) as 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock' | undefined } })}
+                                    placeholder="Source —"
+                                    options={[
+                                        { value: '', label: 'Source —' },
+                                        { value: 'PYQ', label: 'PYQ' },
+                                        { value: 'NCERT_Textbook', label: 'NCERT Text' },
+                                        { value: 'NCERT_Exemplar', label: 'NCERT Exem' },
+                                        { value: 'Practice', label: 'Practice' },
+                                        { value: 'Mock', label: 'Mock' },
+                                    ]}
+                                />
                                 {isPYQ && (<>
-                                    <select
-                                        value={(ed?.exam ?? '') as string}
-                                        onChange={(e) => patchExamDetails({ exam: (e.target.value || undefined) as 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG' | undefined })}
+                                    <Select
+                                        size="sm"
+                                        className="shrink-0 w-24"
                                         title="Exam"
-                                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs outline-none"
-                                    >
-                                        <option value="">Exam —</option>
-                                        <option value="JEE_Main">JEE Main</option>
-                                        <option value="JEE_Advanced">JEE Adv</option>
-                                        <option value="NEET_UG">NEET UG</option>
-                                    </select>
-                                    <select
-                                        value={(ed?.year ?? '') as string | number}
-                                        onChange={(e) => patchExamDetails({ year: e.target.value ? Number(e.target.value) : undefined })}
+                                        value={(ed?.exam ?? '') as string}
+                                        onChange={(v) => patchExamDetails({ exam: (v || undefined) as 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG' | undefined })}
+                                        placeholder="Exam —"
+                                        options={[
+                                            { value: '', label: 'Exam —' },
+                                            { value: 'JEE_Main', label: 'JEE Main' },
+                                            { value: 'JEE_Advanced', label: 'JEE Adv' },
+                                            { value: 'NEET_UG', label: 'NEET UG' },
+                                        ]}
+                                    />
+                                    <Select
+                                        size="sm"
+                                        className="shrink-0 w-20"
                                         title="Year"
-                                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs outline-none"
-                                    >
-                                        <option value="">Year —</option>
-                                        {[2026,2025,2024,2023,2022,2021,2020,2019,2018,2017,2016,2015].map(y => <option key={y} value={y}>{y}</option>)}
-                                    </select>
-                                    <select
-                                        value={ed?.month ?? ''}
-                                        onChange={(e) => patchExamDetails({ month: e.target.value })}
+                                        value={String(ed?.year ?? '')}
+                                        onChange={(v) => patchExamDetails({ year: v ? Number(v) : undefined })}
+                                        placeholder="Year —"
+                                        options={[
+                                            { value: '', label: 'Year —' },
+                                            ...[2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015].map((y) => ({ value: String(y), label: String(y) })),
+                                        ]}
+                                    />
+                                    <Select
+                                        size="sm"
+                                        className="shrink-0 w-20"
                                         title="Month"
-                                        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs outline-none"
-                                    >
-                                        <option value="">Month —</option>
-                                        {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map(m => <option key={m} value={m}>{m}</option>)}
-                                    </select>
+                                        value={ed?.month ?? ''}
+                                        onChange={(v) => patchExamDetails({ month: v })}
+                                        placeholder="Month —"
+                                        options={[
+                                            { value: '', label: 'Month —' },
+                                            ...['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((m) => ({ value: m, label: m })),
+                                        ]}
+                                    />
                                     {ed?.exam?.startsWith('JEE') && (
-                                        <select
-                                            value={ed?.shift ?? ''}
-                                            onChange={(e) => patchExamDetails({ shift: e.target.value })}
+                                        <Select
+                                            size="sm"
+                                            className="shrink-0 w-24"
                                             title="Shift"
-                                            className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs outline-none"
-                                        >
-                                            <option value="">Shift —</option>
-                                            <option value="Shift 1">Shift 1</option>
-                                            <option value="Shift 2">Shift 2</option>
-                                        </select>
+                                            value={ed?.shift ?? ''}
+                                            onChange={(v) => patchExamDetails({ shift: v })}
+                                            placeholder="Shift —"
+                                            options={[
+                                                { value: '', label: 'Shift —' },
+                                                { value: 'Shift 1', label: 'Shift 1' },
+                                                { value: 'Shift 2', label: 'Shift 2' },
+                                            ]}
+                                        />
                                     )}
                                     {ed?.exam === 'NEET_UG' && (
-                                        <select
-                                            value={ed?.phase ?? ''}
-                                            onChange={(e) => patchExamDetails({ phase: e.target.value })}
+                                        <Select
+                                            size="sm"
+                                            className="shrink-0 w-24"
                                             title="Phase"
-                                            className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs outline-none"
-                                        >
-                                            <option value="">Phase —</option>
-                                            <option value="Phase 1">Phase 1</option>
-                                            <option value="Phase 2">Phase 2</option>
-                                        </select>
+                                            value={ed?.phase ?? ''}
+                                            onChange={(v) => patchExamDetails({ phase: v })}
+                                            placeholder="Phase —"
+                                            options={[
+                                                { value: '', label: 'Phase —' },
+                                                { value: 'Phase 1', label: 'Phase 1' },
+                                                { value: 'Phase 2', label: 'Phase 2' },
+                                            ]}
+                                        />
                                     )}
                                     {ed?.exam === 'JEE_Advanced' && (
-                                        <select
-                                            value={ed?.paper ?? ''}
-                                            onChange={(e) => patchExamDetails({ paper: e.target.value })}
+                                        <Select
+                                            size="sm"
+                                            className="shrink-0 w-24"
                                             title="Paper"
-                                            className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs outline-none"
-                                        >
-                                            <option value="">Paper —</option>
-                                            <option value="Paper 1">Paper 1</option>
-                                            <option value="Paper 2">Paper 2</option>
-                                        </select>
+                                            value={ed?.paper ?? ''}
+                                            onChange={(v) => patchExamDetails({ paper: v })}
+                                            placeholder="Paper —"
+                                            options={[
+                                                { value: '', label: 'Paper —' },
+                                                { value: 'Paper 1', label: 'Paper 1' },
+                                                { value: 'Paper 2', label: 'Paper 2' },
+                                            ]}
+                                        />
                                     )}
                                 </>)}
                             </div>
@@ -1098,7 +1119,7 @@ function AdminPageContent() {
                         chapters={chapters}
                         reclassifying={reclassifying}
                         aiAnalyzing={aiAnalyzing}
-                        canDelete={canDelete}
+                        canDelete={isSuperAdmin}
                         deletingId={deletingId}
                         onReclassify={handleReclassify}
                         onUpdate={handleUpdate}
@@ -1566,7 +1587,7 @@ function AdminPageContent() {
                 )}
             </div>}
 
-            {/* §7 MODALS — Analytics, BulkImport, Export, RoleManagement, FlagModal */}
+            {/* §7 MODALS — Analytics, BulkImport, Export, FlagModal */}
             {/* Analytics Dashboard Modal */}
             {showAnalytics && (
                 <AnalyticsDashboard
@@ -1593,29 +1614,6 @@ function AdminPageContent() {
                     initialSelected={bulkMode && selectedQuestions.size > 0 ? selectedQuestions : undefined}
                     onClose={() => setShowExport(false)}
                 />
-            )}
-
-            {/* Role Management Modal */}
-            {showRoleManagement && canManageRoles && permissions && (
-                <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4 overflow-y-auto">
-                    <div className="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-4xl my-8 overflow-hidden shadow-2xl">
-                        <div className="p-6 border-b border-gray-800 flex items-center justify-between bg-gray-900/50">
-                            <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                                <Shield className="text-purple-400" size={24} />
-                                Role Management
-                            </h2>
-                            <button 
-                                onClick={() => setShowRoleManagement(false)} 
-                                className="text-gray-500 hover:text-white transition text-2xl leading-none"
-                            >
-                                ✕
-                            </button>
-                        </div>
-                        <div className="p-6 max-h-[80vh] overflow-y-auto">
-                            <RoleManagement currentUserEmail={permissions.email} />
-                        </div>
-                    </div>
-                </div>
             )}
 
             <FlagModal

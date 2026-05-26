@@ -1,45 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAuthenticatedUser } from '@/lib/auth';
-import { getUserPermissions } from '@canvas/data/rbac';
 import { isLocalhostDev } from '@/lib/adminAuth';
+import {
+  getEffectiveAccess,
+  isSuperAdmin,
+  listSuperAdmins,
+} from '@canvas/data/rbac';
 
-// GET /api/v2/admin/permissions - Get current user's permissions
+// GET /api/v2/admin/permissions — return current user's effective access.
 export async function GET(request: NextRequest) {
   try {
-    // Safe localhost bypass: only on actual localhost AND dev mode AND not Vercel
     if (await isLocalhostDev()) {
       return NextResponse.json({
         email: 'local-dev',
-        role: 'super_admin',
-        subjects: ['chemistry', 'physics', 'mathematics', 'biology'],
-        permissions: {
-          canEditQuestions: true,
-          canDeleteQuestions: true,
-          canManageRoles: true,
-          canAccessAnalytics: true,
-          canExportData: true,
-        },
+        isSuperAdmin: true,
+        grants: [],
+        superAdmins: listSuperAdmins(),
       });
     }
 
     const user = await getAuthenticatedUser(request);
-    if (!user) {
+    if (!user?.email) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const permissions = await getUserPermissions(user.email!);
+    if (isSuperAdmin(user.email)) {
+      return NextResponse.json({
+        email: user.email,
+        isSuperAdmin: true,
+        grants: [],
+        superAdmins: listSuperAdmins(),
+      });
+    }
 
+    // Non-super-admin staff don't get the super-admin roster — that list is
+    // only consumed by StaffAccessManager (super-admin-gated UI), and
+    // exposing it to anyone authenticated is a free phishing-target list.
+    const access = await getEffectiveAccess(user.email);
     return NextResponse.json({
-      email: permissions.email,
-      role: permissions.role,
-      subjects: permissions.subjects,
-      permissions: {
-        canEditQuestions: permissions.canEditQuestions,
-        canDeleteQuestions: permissions.canDeleteQuestions,
-        canManageRoles: permissions.canManageRoles,
-        canAccessAnalytics: permissions.canAccessAnalytics,
-        canExportData: permissions.canExportData,
-      },
+      email: user.email,
+      isSuperAdmin: false,
+      grants: access.isSuperAdmin ? [] : access.grants,
+      superAdmins: [],
     });
   } catch (error) {
     console.error('Error fetching permissions:', error);

@@ -12,6 +12,7 @@ import SVGScaleControls from './SVGScaleControls';
 import VideoDropZone from './VideoDropZone';
 import AudioRecorder from './AudioRecorder';
 import AudioPlayer from './AudioPlayer';
+import { Select } from './Select';
 import { validateLaTeX, autoFixLatex, type LaTeXValidationResult } from '@canvas/core/latex-validator';
 
 // Supabase session cookie is sent automatically on same-origin requests.
@@ -455,18 +456,20 @@ export default function MockTestsAdmin() {
             {loadingSets ? (
               <div className="text-xs text-gray-500 px-2">Loading…</div>
             ) : (
-              <select
+              <Select
+                className="max-w-xs w-72"
+                triggerClassName="bg-gray-800/70 hover:bg-gray-700/70 border border-gray-700/50 font-semibold"
                 value={selectedSetId ?? ''}
-                onChange={e => setSelectedSetId(e.target.value || null)}
-                className="bg-gray-800/70 border border-gray-700/50 rounded-lg px-3 py-1.5 text-sm font-semibold text-white focus:border-orange-500 outline-none max-w-xs"
-              >
-                <option value="">— Select Mock Test —</option>
-                {sets.map(s => (
-                  <option key={s._id} value={s._id}>
-                    {s.title} ({s.question_count ?? s.questions?.length ?? 0}Q)
-                  </option>
-                ))}
-              </select>
+                onChange={(v) => setSelectedSetId(v || null)}
+                placeholder="— Select Mock Test —"
+                options={[
+                  { value: '', label: '— Select Mock Test —' },
+                  ...sets.map((s) => ({
+                    value: s._id,
+                    label: `${s.title} (${s.question_count ?? s.questions?.length ?? 0}Q)`,
+                  })),
+                ]}
+              />
             )}
             {/* New test button */}
             <button
@@ -519,18 +522,18 @@ export default function MockTestsAdmin() {
 
               {/* Jump-to dropdown */}
               {filteredQuestions.length > 0 ? (
-                <select
-                  value={currentQIdx}
-                  onChange={e => setCurrentQIdx(Number(e.target.value))}
-                  aria-label="Jump to question"
-                  className="bg-gray-800/70 border border-gray-700/50 rounded-lg px-2 py-1 text-xs text-gray-300 font-mono tabular-nums focus:border-orange-500 outline-none focus:ring-2 focus:ring-orange-500/30 cursor-pointer max-w-[9rem]"
-                >
-                  {filteredQuestions.map((q, i) => (
-                    <option key={q._id} value={i}>
-                      {`Q${i + 1}${q.display_id ? ` · ${q.display_id}` : ''}`}
-                    </option>
-                  ))}
-                </select>
+                <Select
+                  size="sm"
+                  className="w-36"
+                  triggerClassName="bg-gray-800/70 hover:bg-gray-700/70 border border-gray-700/50 text-gray-300 font-mono tabular-nums"
+                  title="Jump to question"
+                  value={String(currentQIdx)}
+                  onChange={(v) => setCurrentQIdx(Number(v))}
+                  options={filteredQuestions.map((q, i) => ({
+                    value: String(i),
+                    label: `Q${i + 1}${q.display_id ? ` · ${q.display_id}` : ''}`,
+                  }))}
+                />
               ) : (
                 <span className="text-xs text-gray-500 px-1">—</span>
               )}
@@ -551,28 +554,34 @@ export default function MockTestsAdmin() {
               <Filter size={11} className="text-orange-400 shrink-0" />
 
               {/* Subject filter */}
-              <select
+              <Select
+                size="sm"
+                className="shrink-0 w-32"
+                triggerClassName={`bg-gray-800/50 hover:bg-gray-700/50 border ${filterSubject !== 'all' ? 'border-orange-500/60 text-orange-300' : 'border-gray-700/50'}`}
                 value={filterSubject}
-                onChange={e => setFilterSubject(e.target.value)}
-                className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-orange-500 outline-none ${filterSubject !== 'all' ? 'border-orange-500/60 text-orange-300' : 'border-gray-700/50'}`}
-              >
-                <option value="all">All Subjects</option>
-                <option value="physics">Physics</option>
-                <option value="chemistry">Chemistry</option>
-                <option value="biology">Biology</option>
-                <option value="maths">Maths</option>
-              </select>
+                onChange={setFilterSubject}
+                options={[
+                  { value: 'all', label: 'All Subjects' },
+                  { value: 'physics', label: 'Physics' },
+                  { value: 'chemistry', label: 'Chemistry' },
+                  { value: 'biology', label: 'Biology' },
+                  { value: 'maths', label: 'Maths' },
+                ]}
+              />
 
               {/* Section filter */}
               {allSections.length > 0 && (
-                <select
+                <Select
+                  size="sm"
+                  className="shrink-0 w-32"
+                  triggerClassName={`bg-gray-800/50 hover:bg-gray-700/50 border ${filterSection !== 'all' ? 'border-orange-500/60 text-orange-300' : 'border-gray-700/50'}`}
                   value={filterSection}
-                  onChange={e => setFilterSection(e.target.value)}
-                  className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-orange-500 outline-none ${filterSection !== 'all' ? 'border-orange-500/60 text-orange-300' : 'border-gray-700/50'}`}
-                >
-                  <option value="all">All Sections</option>
-                  {allSections.map(s => <option key={s} value={s!}>{s}</option>)}
-                </select>
+                  onChange={setFilterSection}
+                  options={[
+                    { value: 'all', label: 'All Sections' },
+                    ...allSections.filter((s): s is string => !!s).map((s) => ({ value: s, label: s })),
+                  ]}
+                />
               )}
             </>
           )}
@@ -668,9 +677,12 @@ export default function MockTestsAdmin() {
                 {/* Type */}
                 <div className="flex flex-col gap-0.5">
                   <span className="text-[10px] text-gray-500">Type</span>
-                  <select value={editingQ.type}
-                    onChange={e => {
-                      const t = e.target.value as MockQuestion['type'];
+                  <Select<MockQuestion['type']>
+                    size="sm"
+                    className="w-28"
+                    triggerClassName="bg-gray-800/50 hover:bg-gray-700/50 border border-gray-700/50"
+                    value={editingQ.type}
+                    onChange={(t) => {
                       const needsOptions = t !== 'NVT' && t !== 'SUBJ';
                       setEditingQ(prev => prev ? {
                         ...prev, type: t,
@@ -679,36 +691,45 @@ export default function MockTestsAdmin() {
                           : prev.options,
                       } : prev);
                     }}
-                    className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none">
-                    {QUESTION_TYPES.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
-                  </select>
+                    options={QUESTION_TYPES.map(t => ({ value: t.id as MockQuestion['type'], label: t.name }))}
+                  />
                 </div>
 
                 {/* Subject */}
                 <div className="flex flex-col gap-0.5">
                   <span className="text-[10px] text-gray-500">Subject</span>
-                  <select value={editingQ.metadata.subject}
-                    onChange={e => setEditingQ(prev => prev ? { ...prev, metadata: { ...prev.metadata, subject: e.target.value as 'chemistry' | 'physics' | 'maths' | 'biology' } } : prev)}
-                    className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs outline-none capitalize">
-                    <option value="physics">Physics</option>
-                    <option value="chemistry">Chemistry</option>
-                    <option value="biology">Biology</option>
-                    <option value="maths">Maths</option>
-                  </select>
+                  <Select
+                    size="sm"
+                    className="w-28"
+                    triggerClassName="bg-gray-800/50 hover:bg-gray-700/50 border border-gray-700/50 capitalize"
+                    value={editingQ.metadata.subject}
+                    onChange={(v) => setEditingQ(prev => prev ? { ...prev, metadata: { ...prev.metadata, subject: v as 'chemistry' | 'physics' | 'maths' | 'biology' } } : prev)}
+                    options={[
+                      { value: 'physics', label: 'Physics' },
+                      { value: 'chemistry', label: 'Chemistry' },
+                      { value: 'biology', label: 'Biology' },
+                      { value: 'maths', label: 'Maths' },
+                    ]}
+                  />
                 </div>
 
                 {/* Difficulty */}
                 <div className="flex flex-col gap-0.5">
                   <span className="text-[10px] text-gray-500">Difficulty</span>
-                  <select value={editingQ.metadata.difficultyLevel}
-                    onChange={e => setEditingQ(prev => prev ? { ...prev, metadata: { ...prev.metadata, difficultyLevel: Number(e.target.value) as 1 | 2 | 3 | 4 | 5 } } : prev)}
-                    className={`bg-gray-800/50 border rounded px-2 py-1 text-xs outline-none ${DIFF_COLORS(editingQ.metadata.difficultyLevel)}`}>
-                    <option value="1">D1 — Easy</option>
-                    <option value="2">D2 — Easy+</option>
-                    <option value="3">D3 — Medium</option>
-                    <option value="4">D4 — Hard</option>
-                    <option value="5">D5 — Challenge</option>
-                  </select>
+                  <Select
+                    size="sm"
+                    className="w-28"
+                    triggerClassName={`bg-gray-800/50 hover:bg-gray-700/50 border ${DIFF_COLORS(editingQ.metadata.difficultyLevel)}`}
+                    value={String(editingQ.metadata.difficultyLevel)}
+                    onChange={(v) => setEditingQ(prev => prev ? { ...prev, metadata: { ...prev.metadata, difficultyLevel: Number(v) as 1 | 2 | 3 | 4 | 5 } } : prev)}
+                    options={[
+                      { value: '1', label: 'D1 — Easy' },
+                      { value: '2', label: 'D2 — Easy+' },
+                      { value: '3', label: 'D3 — Medium' },
+                      { value: '4', label: 'D4 — Hard' },
+                      { value: '5', label: 'D5 — Challenge' },
+                    ]}
+                  />
                 </div>
 
                 {/* Delete button */}
@@ -1174,11 +1195,15 @@ export default function MockTestsAdmin() {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="text-xs text-gray-500 block mb-1">Exam</label>
-                  <select value={createForm.exam} onChange={e => setCreateForm(f => ({ ...f, exam: e.target.value as 'JEE' | 'NEET' }))}
-                    className="w-full bg-gray-800/50 border border-gray-700/50 rounded-lg px-3 py-2 text-sm outline-none">
-                    <option value="NEET">NEET</option>
-                    <option value="JEE">JEE</option>
-                  </select>
+                  <Select
+                    className="w-full"
+                    value={createForm.exam}
+                    onChange={(v) => setCreateForm(f => ({ ...f, exam: v as 'JEE' | 'NEET' }))}
+                    options={[
+                      { value: 'NEET', label: 'NEET' },
+                      { value: 'JEE', label: 'JEE' },
+                    ]}
+                  />
                 </div>
                 <div>
                   <label className="text-xs text-gray-500 block mb-1">Duration (min)</label>

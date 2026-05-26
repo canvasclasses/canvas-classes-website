@@ -10,8 +10,11 @@ import {
   Eye,
   Beaker,
   ExternalLink,
+  Users,
 } from 'lucide-react';
 import { createClient } from '@/app/utils/supabase/server';
+import { SignoutButton } from '@/features/admin/components/SignoutButton';
+import { isSuperAdmin } from '@canvas/data/rbac';
 
 export const metadata = {
   title: 'Admin Home | Canvas',
@@ -33,6 +36,11 @@ export default async function AdminHome() {
     // request never reaches here in production. Localhost dev shows null.
   }
 
+  // Staff (non-super-admin) only ever get question-bank access via grants in
+  // the user_access collection, so the only panel they should see here is
+  // Crucible. All other operator surfaces are super-admin-only.
+  const superAdmin = isSuperAdmin(email);
+
   return (
     <main className="min-h-screen bg-[#050505] text-white">
       <div className="mx-auto max-w-6xl px-6 py-12">
@@ -49,87 +57,110 @@ export default async function AdminHome() {
               workflow.
             </p>
           </div>
-          {email && (
-            <div className="hidden text-right text-xs text-white/40 sm:block">
-              <div className="uppercase tracking-widest">Signed in</div>
-              <div className="mt-1 font-mono text-white/70">{email}</div>
-            </div>
-          )}
+          <div className="flex items-center gap-4">
+            {email && (
+              <div className="hidden text-right text-xs text-white/40 sm:block">
+                <div className="uppercase tracking-widest">Signed in</div>
+                <div className="mt-1 font-mono text-white/70">{email}</div>
+              </div>
+            )}
+            <SignoutButton />
+          </div>
         </header>
 
-        <Section title="Content panels" hint="Live production writes — actions here affect what students see.">
-          <PanelCard
-            href="/crucible"
-            icon={<FlaskConical />}
-            title="Crucible"
-            hint="The chemistry question bank — add, edit, tag, and curate questions_v2 + flags + mock tests + analytics."
-            accent="primary"
-          />
-          <PanelCard
-            href="/flashcards"
-            icon={<Layers />}
-            title="Flashcards"
-            hint="Author and curate flashcards. Bulk import + image scaling + markdown."
-          />
-          <PanelCard
-            href="/books"
-            icon={<BookOpen />}
-            title="Books"
-            hint="Author Live Books — chapters, pages, blocks, and per-page publish. Split-pane preview reuses the student renderer."
-          />
-          <PanelCard
-            href="/blog"
-            icon={<Newspaper />}
-            title="Blog"
-            hint="Draft, review, and publish blog posts. Image upload + sources + AI idea queue."
-          />
-          <PanelCard
-            href="/taxonomy"
-            icon={<Network />}
-            title="Taxonomy"
-            hint="Edit the chapter ↔ topic-tag taxonomy. Auto-syncs to taxonomyData_from_csv.ts."
-          />
-          <PanelCard
-            href="/career-explorer"
-            icon={<Compass />}
-            title="Career Explorer"
-            hint="Manage the 9-layer career taxonomy + the 50-question explorer + student profile overrides."
-          />
-        </Section>
+        {superAdmin ? (
+          <>
+            <Section title="Content panels" hint="Live production writes — actions here affect what students see.">
+              <PanelCard
+                href="/crucible"
+                icon={<FlaskConical />}
+                title="Crucible"
+                hint="The chemistry question bank — add, edit, tag, and curate questions_v2 + flags + mock tests + analytics."
+                accent="primary"
+              />
+              <PanelCard
+                href="/flashcards"
+                icon={<Layers />}
+                title="Flashcards"
+                hint="Author and curate flashcards. Bulk import + image scaling + markdown."
+              />
+              <PanelCard
+                href="/books"
+                icon={<BookOpen />}
+                title="Books"
+                hint="Author Live Books — chapters, pages, blocks, and per-page publish. Split-pane preview reuses the student renderer."
+              />
+              <PanelCard
+                href="/blog"
+                icon={<Newspaper />}
+                title="Blog"
+                hint="Draft, review, and publish blog posts. Image upload + sources + AI idea queue."
+              />
+              <PanelCard
+                href="/taxonomy"
+                icon={<Network />}
+                title="Taxonomy"
+                hint="Edit the chapter ↔ topic-tag taxonomy. Auto-syncs to taxonomyData_from_csv.ts."
+              />
+              <PanelCard
+                href="/career-explorer"
+                icon={<Compass />}
+                title="Career Explorer"
+                hint="Manage the 9-layer career taxonomy + the 50-question explorer + student profile overrides."
+              />
+            </Section>
 
-        <Section title="Operator tools" hint="Read-only views and operator-facing surfaces.">
-          <PanelCard
-            href="/dashboard"
-            icon={<BarChart3 />}
-            title="Dashboard"
-            hint="Per-user progress and engagement view. Useful for support + cohort analysis."
-          />
-          <PanelCard
-            href="/seo"
-            icon={<BarChart3 />}
-            title="SEO Dashboard"
-            hint="Search Console clicks/queries/pages + Chrome UX Report Core Web Vitals. Daily cron at 02:00 UTC."
-          />
-          <PanelCard
-            href="/preview"
-            icon={<Eye />}
-            title="Preview"
-            hint="Render a single question or flashcard as a student would see it."
-          />
-        </Section>
+            <Section title="Operator tools" hint="Read-only views and operator-facing surfaces.">
+              <PanelCard
+                href="/dashboard"
+                icon={<BarChart3 />}
+                title="Dashboard"
+                hint="Per-user progress and engagement view. Useful for support + cohort analysis."
+              />
+              <PanelCard
+                href="/seo"
+                icon={<BarChart3 />}
+                title="SEO Dashboard"
+                hint="Search Console clicks/queries/pages + Chrome UX Report Core Web Vitals. Daily cron at 02:00 UTC."
+              />
+              <PanelCard
+                href="/preview"
+                icon={<Eye />}
+                title="Preview"
+                hint="Render a single question or flashcard as a student would see it."
+              />
+              <PanelCard
+                href="/staff"
+                icon={<Users />}
+                title="Staff Access"
+                hint="Grant or revoke per-subject and per-chapter access for staff. Super admins are managed via env."
+              />
+            </Section>
 
-        <Section
-          title="Developer tools"
-          hint="Local-only or external utilities. Production writes are disabled in these surfaces."
-        >
-          <PanelCard
-            href="https://canvasclasses.in/organic-chemistry-hub/admin"
-            external
-            icon={<Beaker />}
-            title="Organic Chem Hub — reactions editor"
-            hint="Edit the named-reactions dataset that powers the Organic Chemistry Hub. Lives on the student site; production writes return 403."
-          />
-        </Section>
+            <Section
+              title="Developer tools"
+              hint="Local-only or external utilities. Production writes are disabled in these surfaces."
+            >
+              <PanelCard
+                href="https://canvasclasses.in/organic-chemistry-hub/admin"
+                external
+                icon={<Beaker />}
+                title="Organic Chem Hub — reactions editor"
+                hint="Edit the named-reactions dataset that powers the Organic Chemistry Hub. Lives on the student site; production writes return 403."
+              />
+            </Section>
+          </>
+        ) : (
+          <Section title="Your panels" hint="Access is scoped to the chapters granted to you in Staff Access.">
+            <PanelCard
+              href="/crucible"
+              icon={<FlaskConical />}
+              title="Crucible"
+              hint="The question bank — edit, tag, and curate questions for the chapters you have access to."
+              accent="primary"
+            />
+          </Section>
+        )}
 
         <footer className="mt-16 border-t border-white/5 pt-6 text-xs text-white/40">
           Production: <code className="text-orange-300/80">admin.canvasclasses.in</code>

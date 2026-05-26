@@ -1,117 +1,128 @@
-import { useState, useEffect } from 'react';
+'use client';
+
+import { useState, useEffect, useCallback } from 'react';
 
 export type Subject = 'chemistry' | 'physics' | 'mathematics' | 'biology';
-export type RoleType = 'super_admin' | 'subject_admin' | 'viewer';
+export type AccessLevel = 'view' | 'edit';
 
-export interface UserPermissions {
-  email: string;
-  role: RoleType;
-  subjects: Subject[];
-  permissions: {
-    canEditQuestions: boolean;
-    canDeleteQuestions: boolean;
-    canManageRoles: boolean;
-    canAccessAnalytics: boolean;
-    canExportData: boolean;
-  };
+export interface Grant {
+  subject: Subject;
+  chapters: 'all' | string[];
+  level: AccessLevel;
 }
 
+export interface PermissionsResponse {
+  email: string;
+  isSuperAdmin: boolean;
+  grants: Grant[];
+  superAdmins: string[];
+}
+
+function getSubjectFromChapterId(chapterId: string): Subject | null {
+  if (chapterId.startsWith('ch11_') || chapterId.startsWith('ch12_')) return 'chemistry';
+  if (chapterId.startsWith('ph11_') || chapterId.startsWith('ph12_')) return 'physics';
+  if (chapterId.startsWith('ma_')) return 'mathematics';
+  if (
+    chapterId.startsWith('bio9_') ||
+    chapterId.startsWith('bio11_') ||
+    chapterId.startsWith('bio12_')
+  ) {
+    return 'biology';
+  }
+  return null;
+}
+
+const EMPTY: PermissionsResponse = {
+  email: '',
+  isSuperAdmin: false,
+  grants: [],
+  superAdmins: [],
+};
+
 export function usePermissions() {
-  const [permissions, setPermissions] = useState<UserPermissions | null>(null);
+  const [data, setData] = useState<PermissionsResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchPermissions();
+    let cancelled = false;
+    (async () => {
+      try {
+        setLoading(true);
+
+        // Localhost grants full super admin in dev (matches the API behaviour).
+        const isLocalhost =
+          typeof window !== 'undefined' &&
+          (window.location.hostname === 'localhost' ||
+            window.location.hostname === '127.0.0.1');
+        if (isLocalhost) {
+          if (!cancelled) {
+            setData({
+              email: 'local-dev',
+              isSuperAdmin: true,
+              grants: [],
+              superAdmins: [],
+            });
+          }
+          return;
+        }
+
+        const res = await fetch('/api/v2/admin/permissions');
+        if (!res.ok) throw new Error('Failed to fetch permissions');
+        const json = (await res.json()) as PermissionsResponse;
+        if (!cancelled) setData(json);
+      } catch (err) {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : 'Unknown error');
+          setData(EMPTY);
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  const fetchPermissions = async () => {
-    try {
-      setLoading(true);
-      
-      // Localhost bypass - grant full super admin access
-      const isLocalhost = typeof window !== 'undefined' && 
-        (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-      
-      if (isLocalhost) {
-        setPermissions({
-          email: 'local-dev',
-          role: 'super_admin',
-          subjects: ['chemistry', 'physics', 'mathematics', 'biology'],
-          permissions: {
-            canEditQuestions: true,
-            canDeleteQuestions: true,
-            canManageRoles: true,
-            canAccessAnalytics: true,
-            canExportData: true,
-          },
-        });
-        setLoading(false);
-        return;
-      }
-      
-      const response = await fetch('/api/v2/admin/permissions');
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch permissions');
-      }
-      
-      const data = await response.json() as UserPermissions;
-      setPermissions(data);
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Unknown error');
-      // Default to no permissions on error
-      setPermissions({
-        email: '',
-        role: 'viewer',
-        subjects: [],
-        permissions: {
-          canEditQuestions: false,
-          canDeleteQuestions: false,
-          canManageRoles: false,
-          canAccessAnalytics: false,
-          canExportData: false,
-        },
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+  const canView = useCallback(
+    (chapterId: string): boolean => {
+      if (!data) return false;
+      if (data.isSuperAdmin) return true;
+      const subj = getSubjectFromChapterId(chapterId);
+      if (!subj) return false;
+      return data.grants.some(
+        (g) =>
+          g.subject === subj && (g.chapters === 'all' || g.chapters.includes(chapterId)),
+      );
+    },
+    [data],
+  );
 
-  const canAccessSubject = (subject: Subject): boolean => {
-    if (!permissions) return false;
-    return permissions.subjects.includes(subject);
-  };
-
-  const canAccessChapter = (chapterId: string): boolean => {
-    if (!permissions) return false;
-    
-    // Determine subject from chapter ID
-    if (chapterId.startsWith('ch11_') || chapterId.startsWith('ch12_')) {
-      return canAccessSubject('chemistry');
-    }
-    if (chapterId.startsWith('ph11_') || chapterId.startsWith('ph12_')) {
-      return canAccessSubject('physics');
-    }
-    if (chapterId.startsWith('ma_')) {
-      return canAccessSubject('mathematics');
-    }
-    if (chapterId.startsWith('bio11_') || chapterId.startsWith('bio12_') || chapterId.startsWith('bio9_')) {
-      return canAccessSubject('biology');
-    }
-
-    return false;
-  };
+  const canEdit = useCallback(
+    (chapterId: string): boolean => {
+      if (!data) return false;
+      if (data.isSuperAdmin) return true;
+      const subj = getSubjectFromChapterId(chapterId);
+      if (!subj) return false;
+      return data.grants.some(
+        (g) =>
+          g.subject === subj &&
+          g.level === 'edit' &&
+          (g.chapters === 'all' || g.chapters.includes(chapterId)),
+      );
+    },
+    [data],
+  );
 
   return {
-    permissions,
+    email: data?.email ?? '',
+    isSuperAdmin: data?.isSuperAdmin ?? false,
+    grants: data?.grants ?? [],
+    superAdmins: data?.superAdmins ?? [],
+    canView,
+    canEdit,
     loading,
     error,
-    canAccessSubject,
-    canAccessChapter,
-    isSuperAdmin: permissions?.role === 'super_admin',
-    canEdit: permissions?.permissions.canEditQuestions ?? false,
-    canDelete: permissions?.permissions.canDeleteQuestions ?? false,
-    canManageRoles: permissions?.permissions.canManageRoles ?? false,
   };
 }

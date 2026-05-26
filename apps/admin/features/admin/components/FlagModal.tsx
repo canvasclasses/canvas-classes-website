@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { AlertTriangle } from 'lucide-react';
+import { Select } from './Select';
 
 export type FlagReason = 'latex_error' | 'table_error' | 'mismatch' | 'solution_incorrect' | 'other';
 
@@ -38,17 +39,19 @@ export default function FlagModal({ isOpen, onClose, onSubmit }: FlagModalProps)
         <div className="p-6 space-y-4">
           <div>
             <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">Issue Type</label>
-            <select
+            <Select<FlagReason>
+              className="w-full"
+              triggerClassName="bg-gray-950 hover:bg-gray-900 border border-gray-700 rounded-xl"
               value={reason}
-              onChange={(e) => setReason(e.target.value as FlagReason)}
-              className="w-full bg-gray-950 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none text-white"
-            >
-              <option value="latex_error">LaTeX not rendering properly</option>
-              <option value="table_error">Table formatting issue</option>
-              <option value="mismatch">Question text/options mismatch</option>
-              <option value="solution_incorrect">Solution is incorrect</option>
-              <option value="other">Other issue</option>
-            </select>
+              onChange={(v) => setReason(v)}
+              options={[
+                { value: 'latex_error', label: 'LaTeX not rendering properly' },
+                { value: 'table_error', label: 'Table formatting issue' },
+                { value: 'mismatch', label: 'Question text/options mismatch' },
+                { value: 'solution_incorrect', label: 'Solution is incorrect' },
+                { value: 'other', label: 'Other issue' },
+              ]}
+            />
           </div>
           <div>
             <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">Remarks (Optional)</label>

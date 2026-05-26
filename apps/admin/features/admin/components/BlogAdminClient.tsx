@@ -1,7 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Plus, FileText, Clock, CheckCircle2, Archive, Lightbulb, Rss, RefreshCw, Eye } from 'lucide-react';
+import Link from 'next/link';
+import { Plus, FileText, Clock, CheckCircle2, Archive, Lightbulb, Rss, RefreshCw, Eye, ChevronLeft } from 'lucide-react';
 import BlogEditor from './blog/BlogEditor';
 import IdeaForm from './blog/IdeaForm';
 import SourcesPanel from './blog/SourcesPanel';
@@ -106,6 +107,13 @@ export default function BlogAdminClient({ adminEmail }: { adminEmail: string }) 
       <div className="border-b border-white/5 bg-gray-900/60 backdrop-blur sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div>
+            <Link
+              href="/"
+              className="mb-1.5 inline-flex items-center gap-1 text-xs text-gray-400 hover:text-orange-300"
+            >
+              <ChevronLeft className="h-3.5 w-3.5" />
+              Back to admin home
+            </Link>
             <h1 className="text-2xl font-bold">Blog Studio</h1>
             <p className="text-xs text-gray-500 mt-1">Signed in as {adminEmail}</p>
           </div>

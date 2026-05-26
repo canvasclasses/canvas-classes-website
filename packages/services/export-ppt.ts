@@ -1,11 +1,11 @@
 // POST /api/v2/export/ppt — build a PPTX from a JSON slide spec.
 //
 // Auth: super-admin only — subject_admins explicitly excluded via the
-// `canExportData` permission. Localhost dev bypass for development.
+// `isSuperAdmin` check. Localhost dev bypass for development.
 
 import { NextRequest, NextResponse } from 'next/server';
 import PptxGenJS from 'pptxgenjs';
-import { getUserPermissions } from '@canvas/data/rbac';
+import { isSuperAdmin } from '@canvas/data/rbac';
 import type { ServiceDeps } from './types';
 
 type PptShapeType = 'rect' | 'line' | 'roundRect';
@@ -75,8 +75,7 @@ export async function POST(request: NextRequest, deps: ServiceDeps) {
       if (!user) {
         return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
       }
-      const permissions = await getUserPermissions(user.email!);
-      if (!permissions.canExportData) {
+      if (!isSuperAdmin(user.email!)) {
         return NextResponse.json({ success: false, error: 'Forbidden: export requires super admin access' }, { status: 403 });
       }
     }

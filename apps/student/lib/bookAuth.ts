@@ -32,7 +32,7 @@ export async function isLocalhostDev(): Promise<boolean> {
 
 /**
  * Returns the admin identity if the current request is authenticated AND
- * the user's email is in the ADMIN_EMAILS allow-list. Returns null otherwise.
+ * the user's email is in the SUPER_ADMIN_EMAILS allow-list. Returns null otherwise.
  *
  * Callers should 403 when this returns null.
  */
@@ -46,7 +46,7 @@ export async function requireAdmin(): Promise<AdminIdentity | null> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user?.email) return null;
 
-    const adminEmails = (process.env.ADMIN_EMAILS || '')
+    const adminEmails = (process.env.SUPER_ADMIN_EMAILS || '')
       .split(',')
       .map((e) => e.trim().toLowerCase())
       .filter(Boolean);

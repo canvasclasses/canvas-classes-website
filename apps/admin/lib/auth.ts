@@ -47,7 +47,7 @@ export async function getUserIdFromRequest(request: NextRequest): Promise<string
 
 export function isAdmin(email: string | undefined | null): boolean {
   if (!email) return false;
-  const adminEmails = (process.env.ADMIN_EMAILS ?? '')
+  const adminEmails = (process.env.SUPER_ADMIN_EMAILS ?? '')
     .split(',')
     .map(e => e.trim().toLowerCase());
   return adminEmails.includes(email.toLowerCase());

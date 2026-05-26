@@ -2,6 +2,7 @@ import { AlertCircle, AlertTriangle, Check, Sparkles, Star, Bookmark, Trash2 } f
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 import { type AdminQuestion as Question, type AdminChapter as Chapter, QUESTION_TYPES } from './types';
 import AITagSuggestionsBox from './AITagSuggestionsBox';
+import { Select } from './Select';
 
 const VALID_TOPIC_IDS = new Set(TAXONOMY_FROM_CSV.filter(t => t.type === 'topic').map(t => t.id));
 
@@ -67,19 +68,21 @@ export default function QuestionTaggingRow(props: QuestionTaggingRowProps) {
               <label className="text-[10px] text-gray-500 mb-0.5 flex items-center gap-1">
                 Chapter {reclassifying && <span className="text-purple-400 animate-pulse">● …</span>}
               </label>
-              <select
-                value={selectedQuestion.metadata.chapter_id}
+              <Select
+                size="sm"
+                className="w-full"
                 disabled={reclassifying}
-                onChange={(e) => {
-                  const newChapterId = e.target.value;
+                value={selectedQuestion.metadata.chapter_id || ''}
+                onChange={(newChapterId) => {
                   if (!newChapterId || newChapterId === selectedQuestion.metadata.chapter_id) return;
                   onReclassify(selectedQuestion._id, newChapterId, selectedQuestion.metadata.tags);
                 }}
-                className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs focus:border-purple-500 outline-none disabled:opacity-50 disabled:cursor-wait"
-              >
-                <option value="">Select Chapter</option>
-                {chapters.map(ch => <option key={ch._id} value={ch._id}>{ch.name}</option>)}
-              </select>
+                placeholder="Select Chapter"
+                options={[
+                  { value: '', label: 'Select Chapter' },
+                  ...chapters.map((ch) => ({ value: ch._id, label: ch.name })),
+                ]}
+              />
             </div>
             <div className="flex flex-col flex-1 min-w-0">
               <label className="text-[10px] text-gray-500 mb-0.5 flex items-center justify-between">
@@ -89,42 +92,52 @@ export default function QuestionTaggingRow(props: QuestionTaggingRowProps) {
                   return validation.warning ? <span className="text-yellow-400 flex items-center gap-0.5"><AlertCircle size={8} />{validation.warning}</span> : null;
                 })()}
               </label>
-              <select
+              <Select
+                size="sm"
+                className="w-full"
+                triggerClassName="bg-gray-800/50 hover:bg-gray-700/50 border border-gray-700/50 text-purple-300 font-mono"
                 value={selectedQuestion.metadata.tags?.[0]?.tag_id || ''}
-                onChange={(e) => onUpdate(selectedQuestion._id, {
-                  metadata: { ...selectedQuestion.metadata, tags: e.target.value ? [{ tag_id: e.target.value, weight: 1.0 }] : [] }
+                onChange={(v) => onUpdate(selectedQuestion._id, {
+                  metadata: { ...selectedQuestion.metadata, tags: v ? [{ tag_id: v, weight: 1.0 }] : [] }
                 })}
-                className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs text-purple-300 focus:border-purple-500 outline-none font-mono"
-              >
-                <option value="">Select Tag</option>
-                {TAXONOMY_FROM_CSV
-                  .filter(node => node.parent_id === selectedQuestion.metadata.chapter_id && node.type === 'topic')
-                  .map(tag => <option key={tag.id} value={tag.id}>{tag.name}</option>)
-                }
-              </select>
+                placeholder="Select Tag"
+                options={[
+                  { value: '', label: 'Select Tag' },
+                  ...TAXONOMY_FROM_CSV
+                    .filter((node) => node.parent_id === selectedQuestion.metadata.chapter_id && node.type === 'topic')
+                    .map((tag) => ({ value: tag.id, label: tag.name })),
+                ]}
+              />
             </div>
             <div className="flex flex-col flex-1 min-w-0">
               <label className="text-[10px] text-gray-500 mb-0.5">Micro Concept</label>
-              <select
-                value={selectedQuestion.metadata.microConcept ?? ''}
-                onChange={(e) => onUpdate(selectedQuestion._id, {
-                  metadata: { ...selectedQuestion.metadata, microConcept: e.target.value }
-                })}
-                className="w-full bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs text-teal-300 focus:border-teal-500 outline-none"
-              >
-                <option value="">— select micro concept —</option>
-                {(() => {
-                  const primaryTagId = selectedQuestion.metadata.tags?.[0]?.tag_id;
-                  if (!primaryTagId) return <option value="" disabled>Select a Primary Tag first</option>;
-                  const microTopics = TAXONOMY_FROM_CSV.filter(node =>
-                    node.parent_id === primaryTagId && node.type === 'micro_topic'
-                  );
-                  if (microTopics.length === 0) return <option value="" disabled>No micro concepts for this tag</option>;
-                  return microTopics.map(micro => (
-                    <option key={micro.id} value={micro.name}>{micro.name}</option>
-                  ));
-                })()}
-              </select>
+              {(() => {
+                const primaryTagId = selectedQuestion.metadata.tags?.[0]?.tag_id;
+                const microTopics = primaryTagId
+                  ? TAXONOMY_FROM_CSV.filter((node) => node.parent_id === primaryTagId && node.type === 'micro_topic')
+                  : [];
+                const microOptions = !primaryTagId
+                  ? [{ value: '', label: 'Select a Primary Tag first', disabled: true }]
+                  : microTopics.length === 0
+                    ? [{ value: '', label: 'No micro concepts for this tag', disabled: true }]
+                    : [
+                        { value: '', label: '— select micro concept —' },
+                        ...microTopics.map((m) => ({ value: m.name, label: m.name })),
+                      ];
+                return (
+                  <Select
+                    size="sm"
+                    className="w-full"
+                    triggerClassName="bg-gray-800/50 hover:bg-gray-700/50 border border-gray-700/50 text-teal-300"
+                    value={selectedQuestion.metadata.microConcept ?? ''}
+                    onChange={(v) => onUpdate(selectedQuestion._id, {
+                      metadata: { ...selectedQuestion.metadata, microConcept: v },
+                    })}
+                    placeholder="— select micro concept —"
+                    options={microOptions}
+                  />
+                );
+              })()}
             </div>
             <label className="flex items-center gap-1 cursor-pointer shrink-0 pb-1">
               <input
@@ -143,10 +156,12 @@ export default function QuestionTaggingRow(props: QuestionTaggingRowProps) {
           <div className="flex items-end gap-1.5 pr-3 mr-2 border-r border-gray-700/60">
             <div className="flex flex-col">
               <span className="text-[10px] text-gray-500 mb-0.5">Type</span>
-              <select
+              <Select<Question['type']>
+                size="sm"
+                className="w-24"
+                triggerClassName="bg-gray-800/50 hover:bg-gray-700/50 border border-gray-700/50 font-medium"
                 value={selectedQuestion.type}
-                onChange={(e) => {
-                  const newType = e.target.value as Question['type'];
+                onChange={(newType) => {
                   const oldType = selectedQuestion.type;
                   if (newType === oldType) return;
                   const update: Partial<Question> = { type: newType };
@@ -158,53 +173,59 @@ export default function QuestionTaggingRow(props: QuestionTaggingRowProps) {
                       { id: 'a', text: 'Option A', is_correct: newType === 'SCQ' },
                       { id: 'b', text: 'Option B', is_correct: false },
                       { id: 'c', text: 'Option C', is_correct: false },
-                      { id: 'd', text: 'Option D', is_correct: false }
+                      { id: 'd', text: 'Option D', is_correct: false },
                     ] as Question['options'];
                     update.answer = {} as Question['answer'];
                   }
                   onUpdate(selectedQuestion._id, update);
                 }}
-                className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs font-medium"
-              >
-                {QUESTION_TYPES.map(qt => <option key={qt.id} value={qt.id}>{qt.name}</option>)}
-              </select>
+                options={QUESTION_TYPES.map((qt) => ({ value: qt.id as Question['type'], label: qt.name }))}
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-[10px] text-gray-500 mb-0.5">Question Nature</span>
-              <select
+              <Select
+                size="sm"
+                className="w-40"
+                triggerClassName="bg-gray-800/50 hover:bg-gray-700/50 border border-gray-700/50 text-purple-300"
                 value={selectedQuestion.metadata.questionNature ?? ''}
-                onChange={(e) => onUpdate(selectedQuestion._id, {
-                  metadata: { ...selectedQuestion.metadata, questionNature: (e.target.value || undefined) as 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis' | undefined }
+                onChange={(v) => onUpdate(selectedQuestion._id, {
+                  metadata: { ...selectedQuestion.metadata, questionNature: (v || undefined) as 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis' | undefined },
                 })}
-                className="bg-gray-800/50 border border-gray-700/50 rounded px-2 py-1 text-xs text-purple-300 focus:border-purple-500 outline-none"
-              >
-                <option value="">— select nature —</option>
-                <option value="Recall">Recall</option>
-                <option value="Rule_Application">Rule Application</option>
-                <option value="Numerical">Numerical</option>
-                <option value="Comparative">Comparative</option>
-                <option value="Graphical">Graphical</option>
-                <option value="Conceptual">Conceptual</option>
-                <option value="Mechanistic">Mechanistic</option>
-                <option value="Synthesis">Synthesis</option>
-              </select>
+                placeholder="— select nature —"
+                options={[
+                  { value: '', label: '— select nature —' },
+                  { value: 'Recall', label: 'Recall' },
+                  { value: 'Rule_Application', label: 'Rule Application' },
+                  { value: 'Numerical', label: 'Numerical' },
+                  { value: 'Comparative', label: 'Comparative' },
+                  { value: 'Graphical', label: 'Graphical' },
+                  { value: 'Conceptual', label: 'Conceptual' },
+                  { value: 'Mechanistic', label: 'Mechanistic' },
+                  { value: 'Synthesis', label: 'Synthesis' },
+                ]}
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-[10px] text-gray-500 mb-0.5">Difficulty</span>
-              <select
-                value={selectedQuestion.metadata.difficultyLevel}
-                onChange={(e) => onUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, difficultyLevel: Number(e.target.value) as 1 | 2 | 3 | 4 | 5 } })}
-                className={`bg-gray-800/50 border rounded px-2 py-1 text-xs font-medium ${
+              <Select
+                size="sm"
+                className="w-24"
+                triggerClassName={`bg-gray-800/50 hover:bg-gray-700/50 border font-medium ${
                   selectedQuestion.metadata.difficultyLevel >= 4 ? 'border-red-500/50 text-red-400' :
                   selectedQuestion.metadata.difficultyLevel === 3 ? 'border-orange-500/50 text-orange-400' :
-                  'border-emerald-500/50 text-emerald-400'}`}
-              >
-                <option value="1">Level 1</option>
-                <option value="2">Level 2</option>
-                <option value="3">Level 3</option>
-                <option value="4">Level 4</option>
-                <option value="5">Level 5</option>
-              </select>
+                  'border-emerald-500/50 text-emerald-400'
+                }`}
+                value={String(selectedQuestion.metadata.difficultyLevel)}
+                onChange={(v) => onUpdate(selectedQuestion._id, { metadata: { ...selectedQuestion.metadata, difficultyLevel: Number(v) as 1 | 2 | 3 | 4 | 5 } })}
+                options={[
+                  { value: '1', label: 'Level 1' },
+                  { value: '2', label: 'Level 2' },
+                  { value: '3', label: 'Level 3' },
+                  { value: '4', label: 'Level 4' },
+                  { value: '5', label: 'Level 5' },
+                ]}
+              />
             </div>
           </div>
 

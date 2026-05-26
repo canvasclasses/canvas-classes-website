@@ -58,11 +58,11 @@ export async function getUserIdFromRequest(request: NextRequest): Promise<string
 }
 
 /**
- * Check if an email is in the ADMIN_EMAILS allow-list.
+ * Check if an email is in the SUPER_ADMIN_EMAILS allow-list.
  */
 export function isAdmin(email: string | undefined | null): boolean {
   if (!email) return false;
-  const adminEmails = (process.env.ADMIN_EMAILS ?? '')
+  const adminEmails = (process.env.SUPER_ADMIN_EMAILS ?? '')
     .split(',')
     .map(e => e.trim().toLowerCase());
   return adminEmails.includes(email.toLowerCase());
