@@ -11,7 +11,14 @@ and the navbar's AuthButton.
 | `/account` | `app/account/page.tsx` | Inline JSX |
 | `/auth/callback` | `app/auth/callback/route.ts` | OAuth callback handler |
 
-`AuthButton` is rendered globally from `app/layout.tsx`.
+`AuthButton` is rendered globally from `app/layout.tsx`. It is a **client
+component** (`'use client'`) that fetches the user via the browser Supabase
+client. Keeping it client-side is load-bearing: a server-side `cookies()`
+call in the root layout flips every ISR-cached page (e.g. `/the-crucible/q/[slug]`,
+`/college-predictor/college/[slug]`) to dynamic at runtime and throws a 500
+("Page changed from static to dynamic at runtime, reason: cookies"). Do not
+convert this back to a server component without first removing it from the
+root layout.
 
 ## Public surface
 
