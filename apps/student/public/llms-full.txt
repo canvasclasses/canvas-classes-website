@@ -27,16 +27,7 @@ The Crucible is Canvas Classes's adaptive Chemistry practice engine. It contains
 - Per-question pages: https://www.canvasclasses.in/the-crucible/q/{uuid}
 - Coverage: Class 11 & 12 NCERT Chemistry, JEE Main PYQs, JEE Advanced PYQs
 
-## 3. Top 500 JEE Main PYQs
-
-A curated collection of the highest-yield JEE Main Chemistry questions from recent years, organised chapter-wise. For each chapter, Paaras Sir has hand-picked the top 25 questions that cover roughly 90% of the concepts asked in recent JEE Main exams. Every question has a detailed video solution.
-
-- Root: https://www.canvasclasses.in/jee-pyqs
-- Per-chapter: https://www.canvasclasses.in/jee-pyqs/{chapter_id}
-- Total: ~500 hand-picked questions across all Class 11 & 12 Chemistry chapters
-- Categories: Physical, Organic, Inorganic Chemistry
-
-## 4. NCERT Solutions (Class 11 & 12 Chemistry)
+## 3. NCERT Solutions (Class 11 & 12 Chemistry)
 
 Free, step-by-step NCERT Chemistry textbook solutions for every Class 11 and Class 12 question, with detailed explanations and YouTube video walkthroughs. Updated for the 2025-26 syllabus and aligned to the official NCERT chapter sequence.
 
@@ -66,7 +57,7 @@ Free, step-by-step NCERT Chemistry textbook solutions for every Class 11 and Cla
 9. Amines
 10. Biomolecules
 
-## 5. Detailed Video Lectures
+## 4. Detailed Video Lectures
 
 Full-chapter Chemistry video lectures for JEE & NEET preparation. Each chapter is broken into 10-30 video segments covering NCERT theory, derivations, problem solving, and PYQ walkthroughs. Total runtime per chapter typically ranges from 4 to 12 hours.
 
@@ -75,7 +66,7 @@ Full-chapter Chemistry video lectures for JEE & NEET preparation. Each chapter i
 - Format: YouTube embeds with chapter-organized playlists
 - Coverage: Complete Class 11 + Class 12 Chemistry NCERT
 
-## 6. Interactive Simulators
+## 5. Interactive Simulators
 
 Browser-based Chemistry visualisations for hands-on learning.
 
@@ -95,7 +86,7 @@ Browser-based Chemistry visualisations for hands-on learning.
 - [Chemihex](https://www.canvasclasses.in/chemihex) — Hexagonal puzzle game for learning organic reagents and reactions through play.
 - [Organic Name Reactions](https://www.canvasclasses.in/organic-name-reactions) — Curated list of named organic reactions with mechanisms.
 
-## 7. Subject Hubs
+## 6. Subject Hubs
 
 Topic-organized landing pages that funnel into the relevant tools, lectures, and questions.
 
@@ -103,7 +94,7 @@ Topic-organized landing pages that funnel into the relevant tools, lectures, and
 - [Inorganic Chemistry Hub](https://www.canvasclasses.in/inorganic-chemistry-hub)
 - [Physical Chemistry Hub](https://www.canvasclasses.in/physical-chemistry-hub)
 
-## 8. Revision & Exam Strategy
+## 7. Revision & Exam Strategy
 
 - [Chemistry Flashcards](https://www.canvasclasses.in/chemistry-flashcards) — Daily-revision flashcards organized by chapter.
 - [Per-chapter flashcards](https://www.canvasclasses.in/chemistry-flashcards/{chapter-slug})
@@ -112,13 +103,13 @@ Topic-organized landing pages that funnel into the relevant tools, lectures, and
 - [Top 50 Concepts](https://www.canvasclasses.in/top-50-concepts) — The 50 highest-yield JEE/NEET Chemistry concepts.
 - [Assertion-Reason Questions](https://www.canvasclasses.in/assertion-reason) — Practice in the assertion-reason MCQ format.
 
-## 9. Exam-Specific Courses
+## 8. Exam-Specific Courses
 
 - [NEET Crash Course](https://www.canvasclasses.in/neet-crash-course) — Compressed NEET-Chemistry curriculum.
 - [BITSAT Chemistry Revision](https://www.canvasclasses.in/bitsat-chemistry-revision) — 30-day BITSAT Chemistry revision plan.
 - [BITSAT Plan](https://www.canvasclasses.in/bitsat-chemistry-revision/plan) — Day-by-day study plan for BITSAT Chemistry.
 
-## 10. Class & Board Hubs
+## 9. Class & Board Hubs
 
 - [Class 9](https://www.canvasclasses.in/class-9) — Class 9 NCERT Chemistry (new syllabus).
 - [Class 11](https://www.canvasclasses.in/class-11) — Class 11 Chemistry topics.
@@ -130,22 +121,22 @@ Topic-organized landing pages that funnel into the relevant tools, lectures, and
 - [CBSE Class 12](https://www.canvasclasses.in/cbse-class-12)
 - [CBSE Class 12 NCERT Revision](https://www.canvasclasses.in/cbse-12-ncert-revision)
 
-## 11. Notes & Downloads
+## 10. Notes & Downloads
 
 - [Handwritten Notes](https://www.canvasclasses.in/handwritten-notes) — Highlighted NCERT scans, revision sheets, personal notes by Paaras Sir.
 - [Download NCERT Books](https://www.canvasclasses.in/download-ncert-books) — Free official NCERT textbook PDFs.
 
-## 12. Career Tools
+## 11. Career Tools
 
 - [College Predictor](https://www.canvasclasses.in/college-predictor) — JEE Main / Advanced college predictor with cutoffs and branch-wise data.
 - [Career Explorer](https://www.canvasclasses.in/career-explorer) — Career options after JEE & NEET.
 
-## 13. Blog
+## 12. Blog
 
 - [Blog index](https://www.canvasclasses.in/blog) — Chemistry concepts, exam strategy, syllabus updates, and study tips.
 - Per-post: https://www.canvasclasses.in/blog/{slug}
 
-## 14. Question Bank (Programmatic SEO)
+## 13. Question Bank (Programmatic SEO)
 
 - [Chemistry Questions Directory](https://www.canvasclasses.in/chemistry-questions) — Browseable database of Chemistry Q&A organized by chapter.
 - Per-chapter: https://www.canvasclasses.in/chemistry-questions/{chapter-slug}

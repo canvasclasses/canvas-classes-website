@@ -1,10 +1,20 @@
 import { Metadata } from 'next';
 import BitsatLandingClient from './BitsatLandingClient';
 
+// Deprioritized 2026-05-25: BITSAT 2026 has ended (Session 2 was May 2026).
+// The 30-day plan was built for that exam window and is no longer time-
+// relevant. Page is kept live so deep links don't 404, but Google is asked
+// to deindex (`robots.index = false`) and the nav/sitemap/cross-promo are
+// updated to stop sending traffic here. To revive for BITSAT 2027:
+//   1. Refresh stats + content for the new syllabus,
+//   2. Remove the `robots` override below,
+//   3. Add /bitsat-chemistry-revision back to sitemap.ts + URL_GROUPS,
+//   4. Re-feature in the Navbar's Study Lab dropdown (see Navbar.tsx).
 export const metadata: Metadata = {
-    title: 'BITSAT 2026 Chemistry Revision: 30-Day Session 2 Master Plan | Canvas Classes',
+    title: 'BITSAT 2026 Chemistry Revision (archive) | Canvas Classes',
     description:
-        'Free BITSAT 2026 Chemistry revision plan built from real Session 1 data. 30-day master plan covering deleted syllabus, Physical, Organic & Inorganic — with flashcards, interactive periodic table, one-shot lectures and handwritten notes for every phase.',
+        'Archive: the 30-day BITSAT 2026 Session 2 Chemistry plan. The 2026 exam window has ended; a refreshed BITSAT 2027 plan will return next year.',
+    robots: { index: false, follow: true },
     keywords: [
         'BITSAT 2026 Chemistry preparation',
         'BITSAT Chemistry revision',

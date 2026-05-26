@@ -90,11 +90,16 @@ type Tool = {
     relevantTo: Array<CategoryKey | string>; // categories OR chapter names
 };
 
+// BITSAT 2026 Master Plan removed 2026-05-25 — exam cycle ended; the page is
+// noindex'd until refreshed for BITSAT 2027. Featured slot moved to NEET 2027
+// Crash Course since it's the live, on-season equivalent (mapped audience for
+// JEE/NEET preppers + complete Class 11-12 content). When BITSAT 2027 ships,
+// add the BITSAT card back at index 0 and rebalance the chapter map below.
 const TOOLS: Tool[] = [
     {
-        name: 'BITSAT 2026 Master Plan',
-        hook: '30-day Chemistry plan from real Session 1 data.',
-        href: '/bitsat-chemistry-revision',
+        name: 'NEET 2027 Crash Course',
+        hook: '3-month NEET Chemistry plan — lectures, DPP, PDF notes.',
+        href: '/neet-crash-course',
         icon: Flame,
         badge: 'New',
         iconBg: 'bg-orange-500/10',
@@ -192,11 +197,11 @@ const TOOLS: Tool[] = [
 // Pick 5 tools most relevant to current filter context
 function getRelevantTools(activeCategory: string | null): Tool[] {
     if (!activeCategory || activeCategory === 'all') {
-        // Default mix — BITSAT plan first as flagship
+        // Default mix — flagship at index 0 (was BITSAT 2026, now NEET 2027 Crash Course)
         return [TOOLS[0], TOOLS[1], TOOLS[2], TOOLS[3], TOOLS[4]];
     }
     const matched = TOOLS.filter(t => t.relevantTo.includes(activeCategory));
-    // Always include BITSAT plan + Crucible + Flashcards as a safety net
+    // Always include flagship + Crucible + Flashcards as a safety net
     const evergreen = [TOOLS[0], TOOLS[1], TOOLS[3]];
     const seen = new Set<string>();
     const out: Tool[] = [];
@@ -209,10 +214,15 @@ function getRelevantTools(activeCategory: string | null): Tool[] {
     return out;
 }
 
-// Per-chapter contextual recommendation (1 link per chapter group)
+// Per-chapter contextual recommendation (1 link per chapter group).
+// BITSAT 2026 mappings (Solid State, Biomolecules & Polymers, Strategy & Index)
+// remapped 2026-05-25 — the BITSAT plan was deprioritized after the 2026 exam.
+// Solid State + Biomolecules & Polymers now point to Chemistry Flashcards
+// (rote/memorization-heavy chapters); Strategy & Index points to The Crucible
+// (drilling). Restore BITSAT entries when the 2027 plan ships.
 function getChapterRecommendation(chapter: string): Tool | null {
     const map: Record<string, string> = {
-        'Solid State': 'BITSAT 2026 Master Plan',
+        'Solid State': 'Chemistry Flashcards',
         'p-Block': 'Periodic Trends',
         's-Block': 'Periodic Trends',
         'd & f Block': 'Periodic Trends',
@@ -229,11 +239,11 @@ function getChapterRecommendation(chapter: string): Tool | null {
         'Atomic Structure': 'Chemistry Flashcards',
         'Chemical Bonding': 'Chemistry Flashcards',
         'Physical Chemistry Revision': 'Chemistry Flashcards',
-        'Biomolecules & Polymers': 'BITSAT 2026 Master Plan',
+        'Biomolecules & Polymers': 'Chemistry Flashcards',
         'Hydrogen': 'Periodic Trends',
         'Surface Chemistry': 'The Crucible',
         'Problem Sets & PYQs': 'The Crucible',
-        'Strategy & Index': 'BITSAT 2026 Master Plan',
+        'Strategy & Index': 'The Crucible',
         'Mixed Organic': 'Organic Wizard',
         'Other': 'The Crucible',
     };

@@ -15,7 +15,7 @@ with feature-local data files.
 | `/detailed-lectures` | `data/lecturesData.ts` |
 | `/download-ncert-books` | (uses `@/features/books/data/ncertBooksData`) |
 | `/jee-main-pyqs/chemistry/[chapter]/[slug]` | `data/jee-main-pyqs/data.ts` + chapter JSONs |
-| `/jee-pyqs/[chapter]` | `data/jee-pyqs/data.ts` |
+| ~~`/jee-pyqs/[chapter]`~~ | removed 2026-05-25 — see The Crucible question bank |
 | `/ncert-solutions` | (uses `@/features/books/data/ncertData`) |
 | `/neet-crash-course` | `data/neetCrashCourseData.ts` |
 | `/one-shot-lectures` | `data/quickRecapData.ts` |
@@ -42,7 +42,6 @@ features/public-content/
 │   │   ├── data.ts
 │   │   ├── types.ts
 │   │   └── data/<chapter>.json
-│   ├── jee-pyqs/data.ts
 │   └── quizzes/
 │       ├── index.ts
 │       ├── types.ts

@@ -7,7 +7,6 @@ Canvas Classes (https://www.canvasclasses.in) is an Indian online Chemistry coac
 ## Core Tools and Practice
 
 - [The Crucible — Adaptive Question Bank](https://www.canvasclasses.in/the-crucible): Adaptive Chemistry practice engine with 5000+ questions tagged by chapter and topic. Includes JEE Main and JEE Advanced PYQs with detailed video solutions.
-- [Top 500 JEE Main PYQs](https://www.canvasclasses.in/jee-pyqs): Hand-picked top 25 questions per chapter from recent JEE Main exams, with video solutions.
 - [NCERT Solutions for Class 11 & 12 Chemistry](https://www.canvasclasses.in/ncert-solutions): Step-by-step solutions for every NCERT Chemistry textbook question, with video explanations.
 - [Chemistry Flashcards](https://www.canvasclasses.in/chemistry-flashcards): Daily-revision flashcards across all Chemistry chapters for spaced repetition.
 - [Handwritten Notes](https://www.canvasclasses.in/handwritten-notes): Free downloadable PDF notes — highlighted NCERTs, revision sheets, and personal notes for Organic, Inorganic, and Physical Chemistry.
