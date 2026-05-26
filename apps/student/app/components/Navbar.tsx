@@ -97,10 +97,12 @@ const jeeNeetMenu: MegaMenuDef = {
     {
       heading: 'Learn',
       links: [
-        { label: 'Detailed Lectures', href: '/detailed-lectures' },
+        { label: 'Chemistry Lectures', href: '/detailed-lectures' },
         { label: 'One Shot Lectures', href: '/one-shot-lectures' },
         { label: 'NEET Crash Course', href: '/neet-crash-course' },
-        { label: 'JEE PYQs', href: '/jee-pyqs' },
+        // /jee-pyqs removed 2026-05-25 — question bank lives in The Crucible
+        // (featured panel) now; the standalone route was redundant. A 301
+        // redirect in next.config.ts forwards any deep links to /the-crucible.
       ],
     },
     {
@@ -119,11 +121,16 @@ const studyLabMenu: MegaMenuDef = {
   label: 'Study Lab',
   anchor: 'center',
   width: 'w-[860px]',
+  // Featured slot 2026-05-25: BITSAT 2026 Master Plan replaced with the
+  // Interactive Periodic Table. The BITSAT plan is exam-cycle-specific and
+  // its 2026 window ended; the periodic table is evergreen and one of our
+  // highest-traffic interactive tools. Swap back to BITSAT 2027 when the
+  // refreshed plan ships next year.
   featured: {
-    label: 'BITSAT 2026 Master Plan',
-    tagline: '30-day Chemistry plan built from real Session 1 data. Phased revision with every Canvas resource mapped to each day.',
-    href: '/bitsat-chemistry-revision',
-    cta: 'Open the Plan',
+    label: 'Interactive Periodic Table',
+    tagline: 'Every trend, exception, and property on one interactive table — atomic radius, IE, electronegativity, oxidation states, with JEE/NEET-tagged exam relevance.',
+    href: '/interactive-periodic-table',
+    cta: 'Open the Table',
   },
   columns: [
     {
@@ -155,11 +162,38 @@ const studyLabMenu: MegaMenuDef = {
   ],
 };
 
+// Plan your career: College Predictor (featured — highest search intent) +
+// Career Guide + Career Planning hub. Replaces the previous standalone
+// /college-predictor top-level link so the predictor and editorial career
+// content sit under one navigational umbrella.
+const planYourCareerMenu: MegaMenuDef = {
+  id: 'plan-your-career',
+  label: 'Plan your career',
+  anchor: 'right',
+  featured: {
+    label: 'College Predictor',
+    tagline:
+      'Rank-to-college predictions for JEE Main, JEE Advanced, and NEET. Filter by branch, state, and category.',
+    href: '/college-predictor',
+    cta: 'Predict my colleges',
+  },
+  columns: [
+    {
+      heading: '',
+      links: [
+        { label: 'Career Guide', href: '/career-guide' },
+        { label: 'Career Planning hub', href: '/career-planning' },
+      ],
+    },
+  ],
+};
+
 const allMenus: MegaMenuDef[] = [
   class9to10Menu,
   class11to12Menu,
   jeeNeetMenu,
   studyLabMenu,
+  planYourCareerMenu,
 ];
 
 // =====================================================================
@@ -225,12 +259,6 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
               onMouseLeave={() => setActiveDropdown(null)}
             />
           ))}
-          <Link
-            href="/college-predictor"
-            className="px-3.5 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap text-orange-400 hover:text-orange-300 hover:bg-orange-500/[0.06]"
-          >
-            College Predictor
-          </Link>
           <NavLink
             href="/blog"
             label="Blog"
@@ -269,13 +297,6 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
                   onLinkClick={() => setMobileMenuOpen(false)}
                 />
               ))}
-              <Link
-                href="/college-predictor"
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-4 py-3 text-sm font-medium text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-xl transition-colors"
-              >
-                College Predictor
-              </Link>
               <Link
                 href="/blog"
                 onClick={() => setMobileMenuOpen(false)}

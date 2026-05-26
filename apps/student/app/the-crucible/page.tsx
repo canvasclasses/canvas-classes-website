@@ -7,6 +7,12 @@ import { buildChaptersWithCounts, type ChapterWithCounts } from '@/features/cruc
 
 export const revalidate = 3600; // Revalidate every hour — question counts don't change per-request
 
+// SEO note 2026-05-25: page is OVER-performing benchmark (6.86% CTR at avg
+// position 8.5 vs ~3% expected — the unique brand title "Forge Your Rank"
+// stands out). Title + description left untouched intentionally. Only
+// refreshed the keywords array: removed stale "JEE Main 2026" mention,
+// added 2027 + 2028 cohort signals. Brand-query traffic to this page is
+// the primary acquisition channel for the question bank itself.
 export const metadata: Metadata = {
     title: 'The Crucible | Forge Your Rank - Master Chemistry',
     description: 'Master Chemistry one question at a time. Personalized practice sessions and mock tests designed by Paaras Sir for JEE Main, JEE Advanced, and NEET.',
@@ -14,10 +20,15 @@ export const metadata: Metadata = {
         'JEE Question Bank',
         'Paaras Sir Chemistry',
         'IIT JEE Practice',
-        'JEE Main 2026',
+        'JEE Main 2027',
+        'JEE Main 2028',
+        'JEE Advanced 2027',
+        'JEE Advanced 2028',
         'JEE Advanced Mock Test',
+        'NEET 2027 Chemistry',
+        'NEET 2028 Chemistry',
         'NEET Chemistry',
-        'Canvas Classes Crucible'
+        'Canvas Classes Crucible',
     ],
     alternates: {
         canonical: 'https://www.canvasclasses.in/the-crucible',

@@ -31,10 +31,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { path: '/salt-analysis', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/solubility-product-ksp-calculator', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/the-crucible', priority: 1.0, changeFrequency: 'daily' as const },
-        { path: '/bitsat-chemistry-revision', priority: 0.9, changeFrequency: 'weekly' as const },
-        { path: '/bitsat-chemistry-revision/plan', priority: 0.85, changeFrequency: 'weekly' as const },
+        // /bitsat-chemistry-revision removed from sitemap 2026-05-25 — BITSAT
+        // 2026 exam window ended; page is noindex'd until refreshed for 2027.
         { path: '/college-predictor', priority: 1.0, changeFrequency: 'daily' as const },
-        { path: '/jee-pyqs', priority: 0.9, changeFrequency: 'weekly' as const },
+        { path: '/career-guide', priority: 0.95, changeFrequency: 'weekly' as const },
+        { path: '/career-planning', priority: 0.9, changeFrequency: 'weekly' as const },
+        // /jee-pyqs removed from sitemap 2026-05-25 — route deleted, the
+        // question bank lives in /the-crucible. 301 redirect in next.config.ts.
         // Subject hubs
         { path: '/organic-chemistry-hub', priority: 0.85, changeFrequency: 'weekly' as const },
         { path: '/inorganic-chemistry-hub', priority: 0.85, changeFrequency: 'weekly' as const },
@@ -270,20 +273,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Error fetching lecture chapters for sitemap:', error);
     }
 
-    // ── JEE PYQs: per-chapter pages (Top-25 PYQs each) ───────────────────────
-    let jeePyqEntries: MetadataRoute.Sitemap = [];
-    try {
-        const { getAllChapters } = await import('@/features/public-content/data/jee-pyqs/data');
-        const chapters = getAllChapters();
-        jeePyqEntries = chapters.map((c) => ({
-            url: `${BASE_URL}/jee-pyqs/${c.id}`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly' as const,
-            priority: 0.8,
-        }));
-    } catch (error) {
-        console.error('Error fetching JEE PYQ chapters for sitemap:', error);
-    }
+    // JEE PYQs section removed 2026-05-25 — /jee-pyqs route was deleted in
+    // favour of the /the-crucible question bank. Per-chapter PYQs are now
+    // available as filter views inside Crucible.
 
     // ── Blog posts ───────────────────────────────────────────────────────────
     let blogEntries: MetadataRoute.Sitemap = [];
@@ -431,6 +423,49 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Error fetching handwritten-notes chapters for sitemap:', error);
     }
 
+    // ── Career Guide: programmatic SEO topic landing pages ───────────────────
+    // Curated entry points for head queries (best-after-jee-main, etc.). Lives
+    // at /career-guide/topics/[slug] — does not collide with /career-guide/[slug].
+    let careerTopicEntries: MetadataRoute.Sitemap = [];
+    try {
+        const { TOPICS } = await import('@/features/career-guide/data/topics');
+        careerTopicEntries = TOPICS.map((t) => ({
+            url: `${BASE_URL}/career-guide/topics/${t.slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.85,
+        }));
+    } catch (error) {
+        console.error('Error loading career-guide topics for sitemap:', error);
+    }
+
+    // ── Career Guide: per-spec detail pages ──────────────────────────────────
+    // Reads published CareerSpec slugs from MongoDB so newly-published specs
+    // auto-appear in the sitemap on the next 24-hour revalidate. No code change
+    // needed when the editorial team ships a new career.
+    let careerSpecEntries: MetadataRoute.Sitemap = [];
+    try {
+        const connectToDatabase = (await import('@canvas/data/db/mongodb')).default;
+        const { CareerSpec } = await import('@canvas/data/models/CareerSpec');
+        await connectToDatabase();
+        const specs = await CareerSpec
+            .find({ status: 'published', deleted_at: null })
+            .select('slug updated_at')
+            .limit(100)
+            .lean<Array<{ slug: string; updated_at?: Date }>>();
+        careerSpecEntries = specs.map((s) => ({
+            url: `${BASE_URL}/career-guide/${s.slug}`,
+            lastModified: s.updated_at instanceof Date ? s.updated_at : new Date(),
+            // Quarterly refresh cadence — leaf pages, lower change frequency
+            // than the index. Still useful priority since these are deep
+            // editorial pages with unique content per career.
+            changeFrequency: 'monthly' as const,
+            priority: 0.85,
+        }));
+    } catch (error) {
+        console.error('Error fetching career spec slugs for sitemap:', error);
+    }
+
     return [
         ...staticEntries,
         ...collegePredictorLandingEntries,
@@ -441,13 +476,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ...crucibleQuestionEntries,
         ...bookPageEntries,
         ...detailedLectureEntries,
-        ...jeePyqEntries,
         ...blogEntries,
         ...ncertChapterEntries,
         ...ncertPdfChapterEntries,
         ...handwrittenChapterEntries,
         ...chemistryQuizEntries,
         ...jeeMainPyqEntries,
+        ...careerTopicEntries,
+        ...careerSpecEntries,
     ];
 }
 

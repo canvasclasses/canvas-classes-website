@@ -156,6 +156,191 @@ interface DisplayRow {
   href?: string;
 }
 
+// ── Career-guide suggestions ────────────────────────────────────────────────
+// Maps branch / programme codes that show up in predictor results to the
+// career-spec slugs they realistically lead toward in 2026.
+//
+// Why hardcoded vs fetched: with 3-6 published specs the matching surface is
+// small enough that an in-component map is more honest than a fuzzy slug-to-
+// degree-list matcher. As the editorial catalog grows (target: 12 by Q4) this
+// either expands or moves to a `branch_tags: string[]` field on CareerSpec.
+//
+// Editorial note: this map only surfaces a spec if we have GENUINE coverage
+// for that branch. E.g. NIT Mech CSE shows SWE + ML; NIT Mech does NOT show
+// the SWE spec because a Mech-Eng graduate isn't a natural product-engineer
+// pipeline (despite the occasional switch). The empty-match fallback is the
+// generic /career-guide link — better to say "explore" than to fake a match.
+const BRANCH_TO_CAREER_SLUGS: Record<string, readonly string[]> = {
+  // CS family — software / data / ML / quant / AI-evals are all plausible.
+  // Order matters: the first 3 entries become the top-3 suggestions when a
+  // student has only CS branches in their matches.
+  'CSE': ['software-engineer-product', 'data-engineer', 'ml-engineer'],
+  'CS':  ['software-engineer-product', 'data-engineer', 'ml-engineer'],
+  'IT':  ['software-engineer-product', 'data-engineer'],
+  'AI':  ['ml-engineer', 'ai-evaluations-engineer', 'data-engineer'],
+  'AI & ML': ['ml-engineer', 'ai-evaluations-engineer', 'data-engineer'],
+  'AIML': ['ml-engineer', 'ai-evaluations-engineer', 'data-engineer'],
+  'AI & DS': ['ml-engineer', 'data-engineer'],
+  // Math & Computing — uniquely positioned for quant + ML on top of standard SWE.
+  'M&C':  ['quant-developer', 'ml-engineer', 'software-engineer-product'],
+  'MNC':  ['quant-developer', 'ml-engineer', 'software-engineer-product'],
+  'CSAI': ['ml-engineer', 'ai-evaluations-engineer', 'data-engineer'],
+  'DSE':  ['data-engineer', 'ml-engineer'],
+
+  // Electronics — primary pipeline is semiconductor; ML / data engineering
+  // are real-but-secondary pivots that require self-driven CS work.
+  'ECE': ['semiconductor-engineer', 'ml-engineer', 'robotics-engineer'],
+  'EE':  ['semiconductor-engineer', 'robotics-engineer', 'ml-engineer'],
+  'EEE': ['semiconductor-engineer', 'robotics-engineer', 'ml-engineer'],
+  'EIE': ['semiconductor-engineer', 'robotics-engineer'],
+  'VLSI': ['semiconductor-engineer'],
+  'Microelectronics': ['semiconductor-engineer'],
+
+  // Mechanical family — robotics is the modern path; energy + materials for
+  // the chem-adjacent or thermal/EV interest.
+  'ME':  ['robotics-engineer', 'energy-materials-engineer'],
+  'Mech': ['robotics-engineer', 'energy-materials-engineer'],
+  'Mechanical': ['robotics-engineer', 'energy-materials-engineer'],
+  'Mechatronics': ['robotics-engineer', 'semiconductor-engineer'],
+  'Production': ['robotics-engineer'],
+  'Manufacturing': ['robotics-engineer'],
+  'Industrial': ['robotics-engineer'],
+  'Aerospace': ['robotics-engineer', 'semiconductor-engineer'],
+
+  // Chemical / Materials family
+  'ChE': ['energy-materials-engineer'],
+  'Chemical': ['energy-materials-engineer'],
+  'CHE': ['energy-materials-engineer'],
+  'Metallurgy': ['energy-materials-engineer'],
+  'Metallurgical': ['energy-materials-engineer'],
+  'Materials': ['energy-materials-engineer'],
+  'MME': ['energy-materials-engineer'],
+  'Polymer': ['energy-materials-engineer'],
+  'Ceramic': ['energy-materials-engineer'],
+
+  // Biotech / biological engineering
+  'BT':  ['biotech-research', 'healthcare-ai'],
+  'Biotech': ['biotech-research', 'healthcare-ai'],
+  'Biotechnology': ['biotech-research', 'healthcare-ai'],
+  'BioE': ['biotech-research', 'healthcare-ai'],
+  'Bioengineering': ['biotech-research', 'healthcare-ai'],
+  'Biological': ['biotech-research', 'healthcare-ai'],
+
+  // BITSAT programme codes — extend with Mech / Chem / Bio coverage
+  'BE-CSE':  ['software-engineer-product', 'data-engineer', 'ml-engineer'],
+  'BE-ECE':  ['semiconductor-engineer', 'ml-engineer', 'robotics-engineer'],
+  'BE-EEE':  ['semiconductor-engineer', 'robotics-engineer', 'ml-engineer'],
+  'BE-EIE':  ['semiconductor-engineer', 'robotics-engineer'],
+  'BE-ECMP': ['software-engineer-product', 'ml-engineer', 'data-engineer'],
+  'BE-MECH': ['robotics-engineer', 'energy-materials-engineer'],
+  'BE-CHE':  ['energy-materials-engineer'],
+  'BE-MANF': ['robotics-engineer'],
+  'BE-MNC':  ['quant-developer', 'ml-engineer', 'software-engineer-product'],
+  'BE-ENV':  ['energy-materials-engineer'],
+  'MSC-MATH':   ['quant-developer', 'ml-engineer'],
+  'MSC-PHYS':   ['quant-developer', 'semiconductor-engineer'],
+  'MSC-CHEM':   ['energy-materials-engineer', 'biotech-research'],
+  'MSC-BIO':    ['biotech-research', 'healthcare-ai'],
+  'MSC-ECON':   ['quant-developer', 'data-engineer'],
+  'MSC-SEMI':   ['semiconductor-engineer'],
+  'BPHARM':     ['biotech-research', 'healthcare-ai'],
+};
+
+// Inline spec metadata for the suggestions panel. As the catalog grows this
+// either expands or gets fetched from /api/v2/career-guide at mount time.
+// For V1 (3-6 specs), hardcoding is cleaner than a loading-state.
+interface CareerSuggestion {
+  slug: string;
+  title: string;
+  blurb: string;
+  archetype: 'transforming' | 'emerging' | 'traditional';
+}
+const CAREER_SUGGESTIONS: Record<string, CareerSuggestion> = {
+  'software-engineer-product': {
+    slug: 'software-engineer-product',
+    title: 'Software engineer — product track',
+    blurb: 'Build and ship product features at companies that sell software. AI is reshaping it, not replacing it.',
+    archetype: 'transforming',
+  },
+  'ml-engineer': {
+    slug: 'ml-engineer',
+    title: 'ML / Applied AI engineer',
+    blurb: 'Design and deploy ML systems inside real products. The actual "AI engineer" career — and what it really involves.',
+    archetype: 'emerging',
+  },
+  'clinical-doctor': {
+    slug: 'clinical-doctor',
+    title: 'Clinical doctor (MBBS path)',
+    blurb: 'The long, hard, back-loaded medical path. Read this before committing.',
+    archetype: 'traditional',
+  },
+  'data-engineer': {
+    slug: 'data-engineer',
+    title: 'Data engineer / analytics engineer',
+    blurb: 'Build the pipelines analytics, dashboards, and ML rely on. The "switch fields" career — less hype, more durability.',
+    archetype: 'transforming',
+  },
+  'semiconductor-engineer': {
+    slug: 'semiconductor-engineer',
+    title: 'Semiconductor / chip design engineer',
+    blurb: 'Design and verify the chips behind phones, cars, and AI accelerators. ECE\'s most-emerging path.',
+    archetype: 'emerging',
+  },
+  'quant-developer': {
+    slug: 'quant-developer',
+    title: 'Quant developer / quantitative analyst',
+    blurb: 'Build the systems and models trading firms use. Narrow entry, very well paid — read the cons honestly.',
+    archetype: 'transforming',
+  },
+  'robotics-engineer': {
+    slug: 'robotics-engineer',
+    title: 'Robotics + automation engineer',
+    blurb: 'Build machines that move physical stuff — warehouse robots, factory automation, mobile platforms. Mech\'s most modern path.',
+    archetype: 'transforming',
+  },
+  'energy-materials-engineer': {
+    slug: 'energy-materials-engineer',
+    title: 'Energy / materials engineer',
+    blurb: 'Battery chemistry, hydrogen, advanced materials. Chemical Engineering\'s honest second act in 2026.',
+    archetype: 'emerging',
+  },
+  'biotech-research': {
+    slug: 'biotech-research',
+    title: 'Biotech / drug discovery research',
+    blurb: 'Drug discovery, computational biology, biotech R&D. The NEET path without clinical practice.',
+    archetype: 'emerging',
+  },
+  'product-designer': {
+    slug: 'product-designer',
+    title: 'Product designer / UX research',
+    blurb: 'Design how people interact with software — the bridge between engineering, business, and the user.',
+    archetype: 'transforming',
+  },
+  'ai-evaluations-engineer': {
+    slug: 'ai-evaluations-engineer',
+    title: 'AI evaluations / safety engineer',
+    blurb: 'Figure out how to know if AI systems actually work. Brand-new career — didn\'t exist 24 months ago.',
+    archetype: 'emerging',
+  },
+};
+
+// Pure helper — given an array of branch tokens, return up to 3 unique career
+// slugs ranked by how many input branches mapped to them (more matches first).
+// Honest behavior: empty input or no matches return an empty array; the caller
+// then falls back to the static index link.
+function suggestCareerSlugsFromBranches(branches: readonly string[]): string[] {
+  const score = new Map<string, number>();
+  for (const b of branches) {
+    const slugs = BRANCH_TO_CAREER_SLUGS[b];
+    if (!slugs) continue;
+    for (const s of slugs) score.set(s, (score.get(s) ?? 0) + 1);
+  }
+  return Array.from(score.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([slug]) => slug);
+}
+
 // ── Sensitivity-chart row (from /predict-range) ──────────────────────────────
 // Now carries:
 //   - raw counts (for the stacked-bar segments)
@@ -432,6 +617,31 @@ export default function PredictorExperience() {
   }, [rows, filter]);
   const visibleRows = extended ? filteredRows : filteredRows.slice(0, 10);
   const hasResults = jeeGroups !== null || bitsatRows !== null;
+
+  // Career-suggestion shortlist — derived from the user's matched branches.
+  // Empty array means "no honest match, fall back to the static index link".
+  // Only considers Safe + Target buckets because Reach is a stretch and
+  // probably shouldn't drive career-direction recommendations.
+  const suggestedCareerSlugs = useMemo(() => {
+    if (!hasResults) return [];
+    const branches: string[] = [];
+    if (exam === 'jee' && jeeGroups) {
+      for (const g of jeeGroups) {
+        for (const b of g.branches) {
+          if (b.bucket === 'safe' || b.bucket === 'target') {
+            branches.push(b.branch_short_name);
+          }
+        }
+      }
+    } else if (exam === 'bitsat' && bitsatRows) {
+      for (const r of bitsatRows) {
+        if (r.bucket === 'safe' || r.bucket === 'target') {
+          branches.push(r.programme_code);
+        }
+      }
+    }
+    return suggestCareerSlugsFromBranches(branches);
+  }, [exam, jeeGroups, bitsatRows, hasResults]);
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
@@ -1103,8 +1313,14 @@ export default function PredictorExperience() {
             />
           )}
 
-          {/* Share row */}
-          <div style={{ marginTop: 20 }}>
+          {/* Share row + career-guide pointer. Two stacked panels: the
+              primary share + smart-list panel above, and a quieter pointer
+              to the editorial Career Guide below. We surface career briefs
+              here because predicting WHICH college is only half of the
+              question — the other half is what those colleges actually lead
+              to. The link is static (no per-branch matching) in V1; smarter
+              branch-aware suggestions land once we have more than 3 specs. */}
+          <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', gap: 12 }}>
             <div
               style={{
                 padding: '18px 22px',
@@ -1180,6 +1396,122 @@ export default function PredictorExperience() {
                 )}
               </div>
             </div>
+
+            {/* Career-guide pointer — branch-aware. When the student's matched
+                Safe + Target branches map to careers we have published specs
+                for (currently SWE + ML for CS-family branches), surface those
+                directly as small cards. Otherwise fall back to a generic link
+                to the index. The fallback is honest — we don't fake a match. */}
+            {suggestedCareerSlugs.length > 0 ? (
+              <div
+                style={{
+                  padding: '20px 22px',
+                  borderRadius: 14,
+                  background: 'linear-gradient(180deg, rgba(20,22,34,0.4), rgba(12,13,22,0.55))',
+                  border: '1px solid rgba(255,255,255,0.05)',
+                  borderLeft: '2px solid #c4b5fd',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 14,
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+                  <div style={{ color: '#cfcfd6', fontSize: 14, lineHeight: 1.5 }}>
+                    <span style={{ color: '#f5f5f7', fontWeight: 600 }}>What your matched branches actually lead to</span>
+                    <br />
+                    <span style={{ color: '#9a9aa6', fontSize: 13 }}>
+                      Based on the branches you matched — here are the careers worth investigating before you finalise your choice list.
+                    </span>
+                  </div>
+                  <a
+                    href="/career-guide"
+                    style={{
+                      padding: '7px 14px',
+                      borderRadius: 999,
+                      background: 'rgba(196,181,253,0.08)',
+                      border: '1px solid rgba(196,181,253,0.25)',
+                      color: '#ddd6fe',
+                      fontFamily: 'inherit',
+                      fontSize: 12,
+                      fontWeight: 600,
+                      textDecoration: 'none',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    All career briefs →
+                  </a>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10 }}>
+                  {suggestedCareerSlugs.map((slug) => {
+                    const s = CAREER_SUGGESTIONS[slug];
+                    if (!s) return null;
+                    return (
+                      <a
+                        key={slug}
+                        href={`/career-guide/${slug}`}
+                        style={{
+                          padding: '14px 16px',
+                          borderRadius: 12,
+                          background: 'rgba(0,0,0,0.25)',
+                          border: '1px solid rgba(255,255,255,0.06)',
+                          textDecoration: 'none',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: 6,
+                          transition: 'border-color 0.15s, background 0.15s',
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 6 }}>
+                          <span style={{ color: '#f5f5f7', fontWeight: 600, fontSize: 13.5, letterSpacing: '-0.005em' }}>{s.title}</span>
+                          <span style={{ color: '#5e5e6a', fontSize: 12 }}>→</span>
+                        </div>
+                        <span style={{ color: '#9a9aa6', fontSize: 12, lineHeight: 1.5 }}>{s.blurb}</span>
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              <div
+                style={{
+                  padding: '16px 22px',
+                  borderRadius: 14,
+                  background: 'linear-gradient(180deg, rgba(20,22,34,0.3), rgba(12,13,22,0.45))',
+                  border: '1px solid rgba(255,255,255,0.05)',
+                  borderLeft: '2px solid #c4b5fd',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
+                  gap: 14,
+                }}
+              >
+                <div style={{ color: '#cfcfd6', fontSize: 14, lineHeight: 1.5 }}>
+                  <span style={{ color: '#f5f5f7', fontWeight: 600 }}>Wondering what these colleges actually lead to?</span>
+                  <br />
+                  <span style={{ color: '#9a9aa6', fontSize: 13 }}>
+                    Honest career briefs — what each career is in 2026, income distributions, AI risk over 10 years.
+                  </span>
+                </div>
+                <a
+                  href="/career-guide"
+                  style={{
+                    padding: '9px 16px',
+                    borderRadius: 999,
+                    background: 'rgba(196,181,253,0.1)',
+                    border: '1px solid rgba(196,181,253,0.3)',
+                    color: '#ddd6fe',
+                    fontFamily: 'inherit',
+                    fontSize: 13,
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  See career briefs →
+                </a>
+              </div>
+            )}
           </div>
         </div>
       )}

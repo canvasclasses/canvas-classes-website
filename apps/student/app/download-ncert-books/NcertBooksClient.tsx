@@ -407,12 +407,15 @@ function TakeItFurther() {
                 <div className="mt-6 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-xs">
                     <span className="text-gray-500 font-medium">Also explore:</span>
                     {[
+                        // /jee-pyqs replaced with /the-crucible (2026-05-25 —
+                        // the standalone PYQs page was deleted, question bank
+                        // lives in Crucible). /bitsat-chemistry-revision
+                        // removed since BITSAT 2026 ended; refresh next year.
                         { href: '/chemistry-flashcards', label: 'Flashcards' },
-                        { href: '/jee-pyqs', label: 'JEE PYQs' },
+                        { href: '/the-crucible', label: 'JEE/NEET Question Bank' },
                         { href: '/salt-analysis', label: 'Salt Analysis Lab' },
                         { href: '/quick-recap', label: 'Quick Recap' },
                         { href: '/cbse-12-ncert-revision', label: 'Class 12 Revision' },
-                        { href: '/bitsat-chemistry-revision', label: 'BITSAT Revision' },
                     ].map((link) => (
                         <Link
                             key={link.href}

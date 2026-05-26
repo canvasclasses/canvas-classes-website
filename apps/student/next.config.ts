@@ -262,6 +262,20 @@ const nextConfig: NextConfig = {
         destination: '/class-11/chemistry/:pageSlug',
         permanent: true,
       },
+      // /jee-pyqs deprecated 2026-05-25 — the page bank lives inside Crucible
+      // now, so the standalone route was redundant. 301 to /the-crucible
+      // preserves whatever ranking authority the position-3 page accumulated
+      // and lands searchers in the real question bank with chapter filters.
+      {
+        source: '/jee-pyqs',
+        destination: '/the-crucible',
+        permanent: true,
+      },
+      {
+        source: '/jee-pyqs/:chapter*',
+        destination: '/the-crucible',
+        permanent: true,
+      },
     ];
   },
 };

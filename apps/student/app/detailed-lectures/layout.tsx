@@ -1,17 +1,7 @@
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-    title: "Chemistry Video Lectures for JEE & NEET",
-    description:
-        "Free in-depth chemistry video lectures covering complete CBSE, JEE & NEET syllabus. Learn organic, inorganic, and physical chemistry from basics to advanced.",
-    keywords: [
-        "chemistry video lectures",
-        "JEE chemistry",
-        "NEET chemistry",
-        "free chemistry coaching",
-    ],
-};
-
+// Metadata for /detailed-lectures lives entirely in page.tsx — single source
+// of truth (page-level metadata overrides layout-level, so dual definitions
+// silently mask bugs). This layout exists only to wrap children; if you ever
+// need per-segment providers (theme, analytics, etc.) they go here.
 export default function LecturesLayout({
     children,
 }: {

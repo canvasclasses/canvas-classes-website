@@ -20,8 +20,18 @@ import {
 } from 'lucide-react';
 
 // Animated Counter Component
+//
+// Initial state now = `value` instead of 0 (was 0; changed 2026-05-25). The
+// old behaviour rendered "0" in the server HTML so crawlers + Google's SERP
+// preview saw "0 Chapters · 0 Videos · 0 Hours" instead of the real numbers
+// — a serious miss on a page ranking at position #2 with a CTR-leak alert.
+// Now the SSR + first client render shows the real value (visible to
+// crawlers, zero CLS for the user); when the element scrolls into view we
+// reset to 0 and animate up. The brief reset-to-0 flash on first
+// intersection is the trade-off — it's only noticeable on slow connections,
+// and the SEO payoff (real numbers in static HTML) is large.
 function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
-    const [displayValue, setDisplayValue] = useState(0);
+    const [displayValue, setDisplayValue] = useState(value);
     const ref = useRef<HTMLSpanElement>(null);
     const hasAnimated = useRef(false);
 
@@ -32,6 +42,9 @@ function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: strin
             (entries) => {
                 if (entries[0].isIntersecting && !hasAnimated.current) {
                     hasAnimated.current = true;
+                    // Reset to 0 then animate up so the count-up motion is
+                    // visible even though SSR rendered the final value.
+                    setDisplayValue(0);
                     const duration = 1500; // 1.5 seconds
                     const startTime = performance.now();
 

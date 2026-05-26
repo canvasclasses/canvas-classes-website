@@ -1,17 +1,9 @@
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-    title: "2 Minute Chemistry Tips & Tricks",
-    description:
-        "Learn chemistry concepts in just 2 minutes! Quick tips, tricks, and shortcuts for JEE, NEET, and CBSE Chemistry exams.",
-    keywords: [
-        "2 minute chemistry",
-        "chemistry tips",
-        "quick chemistry tricks",
-        "JEE shortcuts",
-    ],
-};
-
+// layout.tsx kept as a passthrough — its metadata block was removed 2026-05-25
+// because page.tsx defines a complete (and accurate) Metadata object. Next.js
+// precedence rules give the page-level metadata priority, so the old layout-
+// level block was dead code that drifted from the page (different title, "2
+// minute" vs "under 5 minute" inconsistency, missing OG fields, no schema).
+// Single source of truth now lives in page.tsx.
 export default function TwoMinChemistryLayout({
     children,
 }: {

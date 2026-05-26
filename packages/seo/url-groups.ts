@@ -19,12 +19,17 @@ export const URL_GROUPS = [
   ORIGIN,                                                  // origin-wide
   `${ORIGIN}/`,                                            // homepage
   `${ORIGIN}/handwritten-notes`,                           // the page that triggered this whole dashboard
+  `${ORIGIN}/detailed-lectures`,                           // top traffic page (530+ videos hub) — added after 2026-05-25 CTR-leak fix
+  `${ORIGIN}/neet-crash-course`,                           // NEET 3-month crash course hub — added 2026-05-25 alongside CTR rewrite
   `${ORIGIN}/the-crucible`,
   `${ORIGIN}/chemistry-flashcards`,
   `${ORIGIN}/interactive-periodic-table`,
   `${ORIGIN}/organic-wizard`,
-  `${ORIGIN}/bitsat-chemistry-revision`,
+  // /bitsat-chemistry-revision removed 2026-05-25 — BITSAT 2026 exam window
+  // ended, page is noindex'd until refreshed for BITSAT 2027.
   `${ORIGIN}/college-predictor`,
+  `${ORIGIN}/career-guide`,                                // editorial Career Guide index
+  `${ORIGIN}/career-planning`,                             // hub linking predictor + guide
 ] as const;
 
 export type UrlGroup = (typeof URL_GROUPS)[number];

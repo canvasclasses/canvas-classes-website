@@ -6,7 +6,8 @@ import { CareerPath } from '@canvas/data/models/CareerPath';
 import { CareerQuestion } from '@canvas/data/models/CareerQuestion';
 import { CareerProfile } from '@canvas/data/models/CareerProfile';
 import { CareerMatch } from '@canvas/data/models/CareerMatch';
-import { BookOpen, ListChecks, Users2, Settings2 } from 'lucide-react';
+import { CareerSpec } from '@canvas/data/models/CareerSpec';
+import { BookOpen, ListChecks, Users2, Settings2, FileText } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,11 +16,12 @@ export default async function CareerExplorerAdminPage() {
   if (!admin) redirect('/');
   await connectToDatabase();
 
-  const [careers, questions, profiles, matches] = await Promise.all([
+  const [careers, questions, profiles, matches, specsPublished] = await Promise.all([
     CareerPath.countDocuments({ is_active: true }),
     CareerQuestion.countDocuments({ is_active: true }),
     CareerProfile.countDocuments({}),
     CareerMatch.countDocuments({}),
+    CareerSpec.countDocuments({ status: 'published', deleted_at: null }),
   ]);
 
   type ProfileRow = {
@@ -45,15 +47,17 @@ export default async function CareerExplorerAdminPage() {
           <Link href="/" className="text-sm text-white/60 hover:text-white/90">← Back to admin home</Link>
         </div>
 
-        <div className="mt-8 grid gap-3 sm:grid-cols-4">
+        <div className="mt-8 grid gap-3 sm:grid-cols-5">
           <Stat label="Active careers" value={careers} />
           <Stat label="Active questions" value={questions} />
           <Stat label="Profiles started" value={profiles} />
           <Stat label="Matches stored" value={matches} />
+          <Stat label="Live specs (published)" value={specsPublished} />
         </div>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Tile href="/career-explorer/careers" icon={<BookOpen />} title="Careers" hint="Edit the 9-layer taxonomy for every career path." />
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Tile href="/career-explorer/specs" icon={<FileText />} title="Live Specs (V1)" hint="Editorial career briefs — honest 2026 framing, income distributions, AI exposure. Refresh quarterly." />
+          <Tile href="/career-explorer/careers" icon={<BookOpen />} title="Careers (taxonomy)" hint="The 9-layer taxonomy that powers the quiz matcher." />
           <Tile href="/career-explorer/questions" icon={<ListChecks />} title="Questions" hint="Review and tweak the 50-question explorer." />
           <Tile href="/career-explorer/profiles" icon={<Users2 />} title="Student profiles" hint="See completed profiles and override matches." />
           <Tile href="/career-explorer/seed" icon={<Settings2 />} title="Seed / reset" hint="Load the default questions and careers into Mongo." />
