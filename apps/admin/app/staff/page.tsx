@@ -1,5 +1,7 @@
 import { requireSuperAdmin } from '@/lib/adminAuth';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
+import { ChevronLeft } from 'lucide-react';
 import StaffAccessManager from '@/features/admin/components/StaffAccessManager';
 
 export const metadata = {
@@ -20,6 +22,13 @@ export default async function StaffPage() {
     <main className="min-h-screen bg-[#050505] text-white">
       <div className="mx-auto max-w-5xl px-6 py-12">
         <header className="mb-8">
+          <Link
+            href="/"
+            className="mb-3 inline-flex items-center gap-1 text-xs text-white/50 hover:text-orange-300"
+          >
+            <ChevronLeft className="h-3.5 w-3.5" />
+            Back to admin home
+          </Link>
           <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-orange-400/80">
             <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
             Canvas Classes — Staff Access

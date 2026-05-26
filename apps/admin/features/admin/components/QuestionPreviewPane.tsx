@@ -79,7 +79,7 @@ export default function QuestionPreviewPane({
                             </div>
                         </div>
                     </div>
-                    <div className="flex-1 overflow-y-auto p-4 flex justify-center">
+                    <div className="flex-1 overflow-auto p-4 flex justify-center">
                         {selectedQuestion ? (
                             <div className={`space-y-4 transition-all duration-300 ${previewMode === 'mobile'
                                 ? 'w-[420px] border border-gray-700/60 rounded-2xl overflow-y-auto shadow-2xl shadow-black/50 bg-gray-900 max-h-full'

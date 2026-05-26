@@ -299,8 +299,8 @@ export default function StaffAccessManager({ currentUserEmail }: StaffAccessMana
 
       {modal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-          <div className="w-full max-w-2xl rounded-2xl border border-white/10 bg-[#0B0F15] p-6 shadow-2xl">
-            <div className="mb-4 flex items-center justify-between">
+          <div className="flex max-h-[90vh] w-full max-w-2xl flex-col rounded-2xl border border-white/10 bg-[#0B0F15] shadow-2xl">
+            <div className="flex items-center justify-between border-b border-white/5 px-6 py-4">
               <h3 className="text-lg font-semibold">
                 {modal.mode === 'add' ? 'Add staff member' : 'Edit staff access'}
               </h3>
@@ -313,7 +313,7 @@ export default function StaffAccessManager({ currentUserEmail }: StaffAccessMana
               </button>
             </div>
 
-            <div className="space-y-4">
+            <div className="flex-1 space-y-4 overflow-y-auto px-6 py-4">
               <div>
                 <label className="block text-xs uppercase tracking-widest text-white/40 mb-1">
                   Email
@@ -379,7 +379,7 @@ export default function StaffAccessManager({ currentUserEmail }: StaffAccessMana
               </div>
             </div>
 
-            <div className="mt-6 flex justify-end gap-2">
+            <div className="flex justify-end gap-2 border-t border-white/5 px-6 py-4">
               <button
                 type="button"
                 onClick={() => setModal(null)}

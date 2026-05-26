@@ -1,3 +1,5 @@
+import { Select } from './Select';
+
 interface AdminFilterRowProps {
   // Selected values
   selectedDifficultyFilter: string;
@@ -56,97 +58,117 @@ export default function AdminFilterRow(props: AdminFilterRowProps) {
   return (
     <>
       {/* Difficulty */}
-      <select
+      <Select
+        size="sm"
+        className="shrink-0 w-32"
+        triggerClassName={`bg-gray-800/50 hover:bg-gray-700/50 border ${selectedDifficultyFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
         value={selectedDifficultyFilter}
-        onChange={(e) => setSelectedDifficultyFilter(e.target.value)}
-        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedDifficultyFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
-      >
-        <option value="all">All Difficulties</option>
-        <option value="1">L1 — Easy</option>
-        <option value="2">L2 — Easy+</option>
-        <option value="3">L3 — Medium</option>
-        <option value="4">L4 — Hard</option>
-        <option value="5">L5 — Challenging</option>
-      </select>
+        onChange={setSelectedDifficultyFilter}
+        options={[
+          { value: 'all', label: 'All Difficulties' },
+          { value: '1', label: 'L1 — Easy' },
+          { value: '2', label: 'L2 — Easy+' },
+          { value: '3', label: 'L3 — Medium' },
+          { value: '4', label: 'L4 — Hard' },
+          { value: '5', label: 'L5 — Challenging' },
+        ]}
+      />
 
       {/* Exam Board */}
-      <select
+      <Select
+        size="sm"
+        className="shrink-0 w-28"
+        triggerClassName={`bg-gray-800/50 hover:bg-gray-700/50 border ${selectedSourceFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
         value={selectedSourceFilter}
-        onChange={(e) => { setSelectedSourceFilter(e.target.value); resetPage(); }}
-        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedSourceFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
-      >
-        <option value="all">All Boards</option>
-        <option value="JEE">JEE</option>
-        <option value="NEET">NEET</option>
-        <option value="CBSE">CBSE</option>
-        <option value="BITSAT">BITSAT</option>
-      </select>
+        onChange={(v) => { setSelectedSourceFilter(v); resetPage(); }}
+        options={[
+          { value: 'all', label: 'All Boards' },
+          { value: 'JEE', label: 'JEE' },
+          { value: 'NEET', label: 'NEET' },
+          { value: 'CBSE', label: 'CBSE' },
+          { value: 'BITSAT', label: 'BITSAT' },
+        ]}
+      />
 
       {/* Source Type */}
-      <select
+      <Select
+        size="sm"
+        className="shrink-0 w-32"
+        triggerClassName={`bg-gray-800/50 hover:bg-gray-700/50 border ${selectedShiftFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
         value={selectedShiftFilter}
-        onChange={(e) => { setSelectedShiftFilter(e.target.value); resetPage(); }}
-        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedShiftFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
-      >
-        <option value="all">All Sources</option>
-        <option value="PYQ">PYQ</option>
-        <option value="Practice">Practice</option>
-        <option value="NCERT_Textbook">NCERT Text</option>
-        <option value="NCERT_Exemplar">NCERT Exem</option>
-        <option value="Mock">Mock</option>
-      </select>
+        onChange={(v) => { setSelectedShiftFilter(v); resetPage(); }}
+        options={[
+          { value: 'all', label: 'All Sources' },
+          { value: 'PYQ', label: 'PYQ' },
+          { value: 'Practice', label: 'Practice' },
+          { value: 'NCERT_Textbook', label: 'NCERT Text' },
+          { value: 'NCERT_Exemplar', label: 'NCERT Exem' },
+          { value: 'Mock', label: 'Mock' },
+        ]}
+      />
 
       {/* Year — visible when PYQ source or exam board is selected */}
       {showYearFilter && (
-        <select
+        <Select
+          size="sm"
+          className="shrink-0 w-24"
+          triggerClassName={`bg-gray-800/50 hover:bg-gray-700/50 border ${selectedYearFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
           value={selectedYearFilter}
-          onChange={(e) => setSelectedYearFilter(e.target.value)}
-          className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedYearFilter !== 'all' ? 'border-purple-500/70 text-purple-300' : 'border-gray-700/50'}`}
-        >
-          <option value="all">All Years</option>
-          {[2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015].map(y => (
-            <option key={y} value={String(y)}>{y}</option>
-          ))}
-        </select>
+          onChange={setSelectedYearFilter}
+          options={[
+            { value: 'all', label: 'All Years' },
+            ...[2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015].map((y) => ({
+              value: String(y),
+              label: String(y),
+            })),
+          ]}
+        />
       )}
 
       {/* Concept / Topic tag — only when a chapter is loaded */}
       {showTagFilter && (
-        <select
+        <Select
+          size="sm"
+          className="shrink-0 w-44"
+          triggerClassName={`bg-gray-800/50 hover:bg-gray-700/50 border ${selectedTagFilter !== 'all' ? 'border-emerald-500/70 text-emerald-300' : 'border-gray-700/50'}`}
           value={selectedTagFilter}
-          onChange={(e) => setSelectedTagFilter(e.target.value)}
-          className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none ${selectedTagFilter !== 'all' ? 'border-emerald-500/70 text-emerald-300' : 'border-gray-700/50'}`}
-        >
-          <option value="all">All Topics</option>
-          {chapterFilterTags.map(tag => (
-            <option key={tag.id} value={tag.id}>{tag.name}</option>
-          ))}
-        </select>
+          onChange={setSelectedTagFilter}
+          options={[
+            { value: 'all', label: 'All Topics' },
+            ...chapterFilterTags.map((tag) => ({ value: tag.id, label: tag.name })),
+          ]}
+        />
       )}
 
       {/* Top PYQ */}
-      <select
+      <Select
+        size="sm"
+        className="shrink-0 w-24"
+        triggerClassName="bg-gray-800/50 hover:bg-gray-700/50 border border-gray-700/50"
         value={selectedTopPYQFilter}
-        onChange={(e) => setSelectedTopPYQFilter(e.target.value)}
-        className="shrink-0 bg-gray-800/50 border border-gray-700/50 rounded-lg px-2 py-1 text-xs focus:border-purple-500 outline-none"
-      >
-        <option value="all">All PYQ</option>
-        <option value="top">⭐ Top</option>
-        <option value="not-top">Other</option>
-      </select>
+        onChange={setSelectedTopPYQFilter}
+        options={[
+          { value: 'all', label: 'All PYQ' },
+          { value: 'top', label: '⭐ Top' },
+          { value: 'not-top', label: 'Other' },
+        ]}
+      />
 
       {/* Tag / QC status */}
-      <select
+      <Select
+        size="sm"
+        className="shrink-0 w-40"
+        triggerClassName={`bg-gray-800/50 hover:bg-gray-700/50 border ${selectedTagStatusFilter !== 'all' ? 'border-red-500 text-red-300' : 'border-gray-700/50'}`}
         value={selectedTagStatusFilter}
-        onChange={(e) => setSelectedTagStatusFilter(e.target.value)}
-        className={`shrink-0 bg-gray-800/50 border rounded-lg px-2 py-1 text-xs outline-none ${selectedTagStatusFilter !== 'all' ? 'border-red-500 text-red-300' : 'border-gray-700/50'}`}
-      >
-        <option value="all">Tags ✓</option>
-        <option value="untagged">⚠ Untagged ({untaggedCount})</option>
-        <option value="no-chapter">🔴 No Chapter ({noChapterCount})</option>
-        <option value="no-tag">🟡 No Tag ({noTagCount})</option>
-        <option value="flagged">🚨 Flagged ({flaggedCount})</option>
-      </select>
+        onChange={setSelectedTagStatusFilter}
+        options={[
+          { value: 'all', label: 'Tags ✓' },
+          { value: 'untagged', label: `⚠ Untagged (${untaggedCount})` },
+          { value: 'no-chapter', label: `🔴 No Chapter (${noChapterCount})` },
+          { value: 'no-tag', label: `🟡 No Tag (${noTagCount})` },
+          { value: 'flagged', label: `🚨 Flagged (${flaggedCount})` },
+        ]}
+      />
     </>
   );
 }

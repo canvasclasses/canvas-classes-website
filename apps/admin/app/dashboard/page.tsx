@@ -1,6 +1,8 @@
 import { createClient } from '@/app/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import { ChevronLeft } from 'lucide-react';
+import { isSuperAdmin } from '@canvas/data/rbac';
 import UserDashboard from '@/features/admin/components/UserDashboard';
 
 // ============================================
@@ -30,6 +32,12 @@ export default async function DashboardPage() {
     redirect('/login?next=/dashboard');
   }
 
+  // Super-admin only — non-super-admin staff bounce back to /, where they
+  // only see the Crucible card.
+  if (!isSuperAdmin(user.email)) {
+    redirect('/');
+  }
+
   return (
     <main className="min-h-screen bg-slate-900">
       {/* Header */}
@@ -37,6 +45,13 @@ export default async function DashboardPage() {
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
+              <Link
+                href="/"
+                className="mb-1 inline-flex items-center gap-1 text-xs text-slate-400 hover:text-indigo-300"
+              >
+                <ChevronLeft className="h-3.5 w-3.5" />
+                Back to admin home
+              </Link>
               <h1 className="text-xl font-bold text-white">Canvas Crucible</h1>
               <p className="text-sm text-slate-400">JEE Chemistry Mastery Platform</p>
             </div>

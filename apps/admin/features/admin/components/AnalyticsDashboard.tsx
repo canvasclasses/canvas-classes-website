@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { BarChart3, TrendingUp, AlertTriangle, CheckCircle, Tag, BookOpen, Layers, Target, FlaskConical, GraduationCap } from 'lucide-react';
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 import type { AdminQuestion as Question, AdminChapter as Chapter } from './types';
+import { Select } from './Select';
 
 interface AnalyticsDashboardProps {
     questions: Question[];
@@ -219,16 +220,18 @@ export default function AnalyticsDashboard({ questions, chapters, onClose, selec
 
                         {/* Chapter selector */}
                         <div className="flex items-center gap-3 flex-1 max-w-sm">
-                            <select
+                            <Select
+                                size="sm"
+                                className="flex-1"
+                                triggerClassName="bg-gray-800 hover:bg-gray-700 border border-gray-700"
                                 value={focusChapterId}
-                                onChange={e => { setFocusChapterId(e.target.value); setTab('chapter'); }}
-                                className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-white focus:border-purple-500 outline-none"
-                            >
-                                <option value="">— All loaded chapters —</option>
-                                {chapterOptions.map(ch => (
-                                    <option key={ch._id} value={ch._id}>{ch.name}</option>
-                                ))}
-                            </select>
+                                onChange={(v) => { setFocusChapterId(v); setTab('chapter'); }}
+                                placeholder="— All loaded chapters —"
+                                options={[
+                                    { value: '', label: '— All loaded chapters —' },
+                                    ...chapterOptions.map((ch) => ({ value: ch._id, label: ch.name })),
+                                ]}
+                            />
                         </div>
 
                         {/* Tab switcher */}

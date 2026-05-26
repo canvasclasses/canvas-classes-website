@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { X, Upload, FileJson, CheckCircle, AlertCircle, ChevronRight, Loader2, Eye } from 'lucide-react';
 import { TAXONOMY_FROM_CSV } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 import { validateLaTeX } from '@canvas/core/latex-validator';
+import { Select } from './Select';
 
 interface ImportQuestion {
   display_id?: string;
@@ -269,16 +270,20 @@ export default function BulkImportModal({ onClose, onImported, defaultChapterId 
             <div className="space-y-4">
               <div>
                 <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">Target Chapter</label>
-                <select
+                <Select
+                  className="w-full"
+                  triggerClassName="bg-gray-950 hover:bg-gray-900 border border-gray-700 rounded-xl"
                   value={chapterId}
-                  onChange={e => setChapterId(e.target.value)}
-                  className="w-full bg-gray-950 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-blue-500 outline-none"
-                >
-                  <option value="">— Select chapter (or include in JSON) —</option>
-                  {chapters.map(c => (
-                    <option key={c.id} value={c.id}>{c.name} [{CHAPTER_PREFIX_MAP[c.id] || c.id}]</option>
-                  ))}
-                </select>
+                  onChange={setChapterId}
+                  placeholder="— Select chapter (or include in JSON) —"
+                  options={[
+                    { value: '', label: '— Select chapter (or include in JSON) —' },
+                    ...chapters.map((c) => ({
+                      value: c.id,
+                      label: `${c.name} [${CHAPTER_PREFIX_MAP[c.id] || c.id}]`,
+                    })),
+                  ]}
+                />
                 <p className="text-[11px] text-gray-600 mt-1">If chapter_id is in the JSON, it will override this selection.</p>
               </div>
 

@@ -3,6 +3,7 @@
 import { Trash2 } from 'lucide-react';
 import type { Grant, Subject, AccessLevel } from '../hooks/usePermissions';
 import { ChapterMultiSelect } from './ChapterMultiSelect';
+import { Select } from './Select';
 
 interface GrantEditorProps {
   grant: Grant;
@@ -52,21 +53,15 @@ export function GrantEditor({ grant, disabledSubjects, onChange, onRemove }: Gra
             <label className="block text-xs uppercase tracking-widest text-white/40 mb-1">
               Subject
             </label>
-            <select
+            <Select<Subject>
               value={grant.subject}
-              onChange={(e) => handleSubjectChange(e.target.value as Subject)}
-              className="w-full rounded-md bg-white/5 px-2 py-1.5 text-sm text-white focus:bg-white/10 focus:outline-none"
-            >
-              {ALL_SUBJECTS.map((s) => (
-                <option
-                  key={s}
-                  value={s}
-                  disabled={s !== grant.subject && disabledSubjects.includes(s)}
-                >
-                  {SUBJECT_LABEL[s]}
-                </option>
-              ))}
-            </select>
+              onChange={handleSubjectChange}
+              options={ALL_SUBJECTS.map((s) => ({
+                value: s,
+                label: SUBJECT_LABEL[s],
+                disabled: s !== grant.subject && disabledSubjects.includes(s),
+              }))}
+            />
           </div>
 
           <div>

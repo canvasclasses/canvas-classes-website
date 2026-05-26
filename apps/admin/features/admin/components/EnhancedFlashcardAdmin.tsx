@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo, useRef } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search, Plus, Trash2, Save, X, FolderPlus, Loader2,
@@ -556,6 +557,13 @@ export default function EnhancedFlashcardAdmin() {
           {/* Header */}
           <div className="p-5 border-b border-white/10 flex items-center justify-between">
             <div>
+              <Link
+                href="/"
+                className="mb-1.5 inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-purple-300"
+              >
+                <ChevronLeft className="h-3 w-3" />
+                Home
+              </Link>
               <h1 className="text-xl font-bold text-white">Flashcards</h1>
               <p className="text-slate-400 text-xs mt-0.5">
                 <span className="text-purple-400 font-semibold">{filteredFlashcards.length}</span>

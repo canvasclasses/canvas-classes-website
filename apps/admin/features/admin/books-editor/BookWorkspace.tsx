@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import Link from 'next/link';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { Save, BookOpen, PanelLeft, Columns2, Eye } from 'lucide-react';
+import { Save, BookOpen, PanelLeft, Columns2, Eye, ChevronLeft } from 'lucide-react';
 import { Book, BookPage, ContentBlock, BlockType } from '@canvas/data/types/books';
 import BookSidebar from './BookSidebar';
 import BlockEditor from './BlockEditor';
@@ -353,6 +354,13 @@ export default function BookWorkspace() {
       <header className="shrink-0 flex items-center justify-between px-4 h-12
         border-b border-white/8 bg-[#0B0F15] gap-4 overflow-hidden">
         <div className="flex items-center gap-2 min-w-0 overflow-hidden">
+          <Link
+            href="/"
+            title="Back to admin home"
+            className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-white/50 hover:bg-white/5 hover:text-orange-300 shrink-0"
+          >
+            <ChevronLeft size={13} />
+          </Link>
           <BookOpen size={16} className="text-orange-500 shrink-0" />
           <span className="text-sm font-semibold text-white/80 shrink-0">Live Books</span>
           {selectedBook && (
