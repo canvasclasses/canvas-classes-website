@@ -63,14 +63,40 @@ async function connectToDatabase(): Promise<Mongoose | null> {
     }
 
     if (!cached!.promise) {
+        // ── Pool sizing ────────────────────────────────────────────────────
+        //
+        // Lowered 2026-05-27 after Atlas hit 425 / 500 connections in prod.
+        // Each Vercel function instance was holding up to 25 connections; with
+        // N concurrent warm instances this comfortably saturated an entry-tier
+        // cluster. Three structural changes happened simultaneously to make
+        // a much smaller pool safe:
+        //
+        //   1. PredictorDataset is now cached in-process (lib/predictor.ts),
+        //      so the /predict-range thundering-herd of 9 parallel dataset
+        //      loads collapses to a single cached lookup.
+        //   2. /career-guide pages moved from force-dynamic to revalidate=3600,
+        //      removing the per-render Mongo round-trip on a 17-URL surface
+        //      that Google was crawling actively.
+        //   3. /api/v2/career-guide* GET routes already had s-maxage=600 edge
+        //      cache headers.
+        //
+        // After those, observed per-instance need is 1-3 concurrent queries.
+        // maxPoolSize: 10 gives 3-5× headroom. minPoolSize: 0 frees idle
+        // connections immediately instead of pinning 2 warm per instance
+        // (which across 30 warm Vercel instances was 60 wasted slots).
+        // maxIdleTimeMS reclaims any idle connection after 30s.
+        // waitQueueTimeoutMS prevents queued queries hanging forever if a
+        // burst genuinely exceeds the pool; they fail fast at 10s instead.
         const opts = {
             bufferCommands: false,
-            maxPoolSize: 25,                 // Handle concurrent serverless invocations
-            minPoolSize: 2,                  // Keep warm connections ready
-            serverSelectionTimeoutMS: 5000,  // Fail fast if Atlas is unreachable
-            socketTimeoutMS: 45000,          // Prevent zombie connections
-            connectTimeoutMS: 10000,         // Timeout on initial connect
-            heartbeatFrequencyMS: 15000,     // Detect stale connections sooner
+            maxPoolSize: 10,                 // was 25 — see comment above
+            minPoolSize: 0,                  // was 2 — free idle conns for the cluster
+            maxIdleTimeMS: 30000,            // close idle sockets after 30s
+            serverSelectionTimeoutMS: 5000,  // fail fast if Atlas is unreachable
+            socketTimeoutMS: 30000,          // was 45000 — release stuck sockets sooner
+            connectTimeoutMS: 10000,         // timeout on initial connect
+            heartbeatFrequencyMS: 15000,     // detect stale connections sooner
+            waitQueueTimeoutMS: 10000,       // fail-fast instead of hanging on a burst
         };
 
         mongoose.set('strictQuery', false);
@@ -94,12 +120,14 @@ async function connectToDatabase(): Promise<Mongoose | null> {
             try {
                 cached!.promise = mongoose.connect(MONGODB_URI, {
                     bufferCommands: false,
-                    maxPoolSize: 25,
-                    minPoolSize: 2,
+                    maxPoolSize: 10,
+                    minPoolSize: 0,
+                    maxIdleTimeMS: 30000,
                     serverSelectionTimeoutMS: 5000,
-                    socketTimeoutMS: 45000,
+                    socketTimeoutMS: 30000,
                     connectTimeoutMS: 10000,
                     heartbeatFrequencyMS: 15000,
+                    waitQueueTimeoutMS: 10000,
                 });
                 cached!.conn = await cached!.promise;
                 console.log('✅ MongoDB connected on retry', attempt);
