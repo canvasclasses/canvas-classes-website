@@ -13,9 +13,8 @@ const ITEMS = [
 export default function TrustStrip() {
   return (
     <div
-      className="grid grid-cols-2 md:grid-cols-4 gap-0 mt-11 mx-auto max-w-5xl"
+      className="grid grid-cols-2 md:grid-cols-4 gap-0 mt-6 md:mt-11 mx-auto max-w-5xl py-3 md:py-[22px] px-2"
       style={{
-        padding: '22px 8px',
         borderTop: '1px solid rgba(255,255,255,0.06)',
         borderBottom: '1px solid rgba(255,255,255,0.06)',
       }}
@@ -23,25 +22,30 @@ export default function TrustStrip() {
       {ITEMS.map((it, i) => (
         <div
           key={it.kpi}
-          className="text-center"
+          className="text-center px-2 md:px-5"
           style={{
-            padding: '0 20px',
+            // Only show vertical dashed dividers when the cell isn't last in
+            // its row. On mobile (2 cols) that means the right border drops
+            // on every even-indexed cell; on desktop (4 cols) only the last.
             borderRight: i < ITEMS.length - 1 ? '1px dashed rgba(255,255,255,0.06)' : 'none',
           }}
         >
           <div
-            className="text-white"
+            className="text-white text-[19px] md:text-[28px]"
             style={{
               fontFamily: "'Space Grotesk', system-ui, sans-serif",
-              fontSize: 28,
               fontWeight: 700,
               letterSpacing: '-0.02em',
               fontVariantNumeric: 'tabular-nums',
+              lineHeight: 1.1,
             }}
           >
             {it.kpi}
           </div>
-          <div style={{ color: '#7d7d88', fontSize: 12, marginTop: 4, letterSpacing: '0.01em' }}>
+          <div
+            className="text-[10.5px] md:text-[12px] mt-0.5 md:mt-1"
+            style={{ color: '#7d7d88', letterSpacing: '0.01em', lineHeight: 1.35 }}
+          >
             {it.label}
           </div>
         </div>

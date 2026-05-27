@@ -400,6 +400,7 @@ export default function PredictorExperience() {
 
   // Submission + results state
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [jeeGroups, setJeeGroups] = useState<JoSAACollegeGroup[] | null>(null);
   const [bitsatRows, setBitsatRows] = useState<BitsatProgrammeResult[] | null>(null);
   const [sens, setSens] = useState<SensRow[] | null>(null);
@@ -425,6 +426,46 @@ export default function PredictorExperience() {
   }, [exam]);
 
   // ── Submit handlers ────────────────────────────────────────────────────────
+
+  // "Load more" — re-fires the predict call with extended:true to lift the
+  // result cap from the default 10 colleges to 100. Mirrors submitJEE's body
+  // construction so any quota / branch / rank state changes apply uniformly.
+  // We only refresh the colleges + counts; the sensitivity sparkline data
+  // (predict-range) and the bucket counts are unchanged when the cap lifts,
+  // so we skip re-fetching those to stay light on Mongo.
+  async function loadMoreJee() {
+    if (loadingMore) return;
+    setLoadingMore(true);
+    try {
+      const body: Record<string, unknown> = {
+        rank,
+        category: effectiveCategory,
+        gender: effectiveGender,
+        home_state: homeState,
+        ...(pickedBranches[0] ? { dream_branch: pickedBranches[0] } : {}),
+        extended: true,
+      };
+      const predictRes = await fetch('/api/v2/college-predictor/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      }).then((r) => r.json());
+      if (predictRes?.success) {
+        let groups: JoSAACollegeGroup[] = predictRes.colleges ?? [];
+        if (tierOnly) {
+          groups = groups.filter((g) => (g.nirf_rank_engineering ?? 9999) <= 25);
+        }
+        setJeeGroups(groups);
+        setTotalCount(predictRes.total_colleges ?? groups.length);
+        setExtended(true);
+      }
+    } catch {
+      // Silently keep the prior (top-10) results visible. The user can retry.
+    } finally {
+      setLoadingMore(false);
+    }
+  }
+
   async function submitJEE() {
     setLoading(true);
     setExtended(false);
@@ -905,6 +946,35 @@ export default function PredictorExperience() {
                     onToggle={() => setIsPwD((v) => !v)}
                   />
                 </div>
+
+                {/* PwD merit-list hint. JoSAA runs a separate ~10K-candidate
+                    merit list for PwD aspirants, so a "PwD rank" lives on a
+                    different scale from CRL. Without this note, a student
+                    with CRL ~15K who toggles PwD on sees "0 colleges" and
+                    assumes the tool is broken. Surface only when PwD is on
+                    AND the entered rank is past the realistic PwD range. */}
+                {isPwD && (
+                  <div
+                    role="note"
+                    style={{
+                      marginTop: 10,
+                      padding: '10px 14px',
+                      borderRadius: 10,
+                      border: '1px solid rgba(125,211,252,0.25)',
+                      background: 'rgba(125,211,252,0.06)',
+                      color: '#a7d4f0',
+                      fontSize: 12.5,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    <strong style={{ color: '#bce0f5' }}>PwD uses a separate merit list.</strong>{' '}
+                    JoSAA&apos;s PwD pool is roughly 10,000 candidates, so PwD ranks are
+                    on a different scale from CRL — typical PwD ranks are{' '}
+                    <strong style={{ color: '#bce0f5' }}>under 5,000</strong>. If you
+                    entered your CRL above, the predictor may return zero matches
+                    because no PwD seat closes that high.
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-[18px]">
@@ -1326,12 +1396,27 @@ export default function PredictorExperience() {
             )}
           </div>
 
-          {/* Show all */}
-          {filteredRows.length > 10 && !extended && (
+          {/* Load more. The predict API defaults to extended:false which caps
+              at 10 colleges; this button re-fires with extended:true (up to
+              100). Visibility condition is `totalCount > visibleRows.length`
+              — covers both the JEE case (where the API already truncated) and
+              the BITSAT case (where the local slice is the only cap). Hidden
+              once extended=true has been applied.
+
+              Previously this button checked filteredRows.length > 10, which
+              was unreachable because the API already capped at 10 server-side
+              — the button never rendered. Confirmed via integration tests
+              showing baseline JEE returned 96 total colleges but only 10
+              came back over the wire. */}
+          {(totalCount ?? 0) > visibleRows.length && !extended && (
             <div style={{ textAlign: 'center', marginTop: 26 }}>
               <button
                 type="button"
-                onClick={() => setExtended(true)}
+                onClick={() => {
+                  if (exam === 'jee') loadMoreJee();
+                  else setExtended(true);
+                }}
+                disabled={loadingMore}
                 style={{
                   padding: '12px 22px',
                   borderRadius: 999,
@@ -1341,16 +1426,40 @@ export default function PredictorExperience() {
                   fontFamily: 'inherit',
                   fontSize: 13.5,
                   fontWeight: 600,
-                  cursor: 'pointer',
+                  cursor: loadingMore ? 'wait' : 'pointer',
+                  opacity: loadingMore ? 0.6 : 1,
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: 8,
                   transition: 'all 0.2s',
                 }}
               >
-                Show all {filteredRows.length} {exam === 'jee' ? 'colleges' : 'programmes'}
-                {Icons.arrow('currentColor')}
+                {loadingMore
+                  ? 'Loading more…'
+                  : `Show all ${totalCount} ${exam === 'jee' ? 'colleges' : 'programmes'}`}
+                {!loadingMore && Icons.arrow('currentColor')}
               </button>
+            </div>
+          )}
+
+          {/* "All shown" footer once the cap has been lifted. Gives the user
+              closure on the list length so they don't keep scrolling looking
+              for more. */}
+          {extended && (totalCount ?? 0) > 10 && (
+            <div
+              style={{
+                textAlign: 'center',
+                marginTop: 26,
+                color: '#7d7d88',
+                fontSize: 12.5,
+                fontFamily: "'JetBrains Mono', monospace",
+                letterSpacing: '0.04em',
+              }}
+            >
+              Showing all {visibleRows.length} of {totalCount}
+              {(totalCount ?? 0) >= 100 && (
+                <> · capped at 100 by the predictor</>
+              )}
             </div>
           )}
 
