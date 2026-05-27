@@ -55,8 +55,10 @@ import './career-detail.css';
  * harder stuff — risks, India context — comes after they're already engaged.
  */
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// ISR — see comment on /career-guide index. Detail pages are quarterly-fresh
+// content; 1-hour revalidate eliminates the per-request MongoDB hit (× 12
+// detail pages × every visit) that was saturating the Atlas connection pool.
+export const revalidate = 3600;
 
 type SpecLean = Omit<ICareerSpec, 'deleted_at' | 'deleted_by' | 'created_by' | 'updated_by'>;
 

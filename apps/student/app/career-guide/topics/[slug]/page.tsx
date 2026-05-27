@@ -19,7 +19,10 @@ import '../../career-guide.css';
  * JSON-LD: Article + BreadcrumbList (Canvas → Career Guide → [topic]).
  */
 
-export const dynamic = 'force-dynamic';
+// ISR — topic pages curate from the same career-spec data; 1-hour revalidate
+// is plenty fresh given quarterly editorial cadence, and removes the per-
+// request MongoDB hit on the 4 head-query SEO landings.
+export const revalidate = 3600;
 
 const SITE_ORIGIN = 'https://canvasclasses.in';
 

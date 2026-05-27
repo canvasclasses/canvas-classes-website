@@ -20,7 +20,12 @@ import './career-guide.css';
  * visual showing the jobs-list shifting across 2011 → 2026.
  */
 
-export const dynamic = 'force-dynamic';
+// ISR — career specs change quarterly per editorial cadence, so a 1-hour
+// revalidate is more than fresh enough. Previously force-dynamic, which hit
+// MongoDB on every render and contributed to Atlas connection-pool pressure
+// under load. When an admin edits a spec they can hit the existing revalidate
+// endpoint for an immediate refresh, or wait up to 60 minutes.
+export const revalidate = 3600;
 
 const SITE_ORIGIN = 'https://canvasclasses.in';
 
