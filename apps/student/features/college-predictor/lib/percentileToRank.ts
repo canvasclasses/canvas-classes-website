@@ -143,3 +143,87 @@ export function rankToPercentile(
   if (rank < 1) return 100;
   return Math.max(0, Math.min(100, 100 - (rank / pool) * 100));
 }
+
+// ── CRL → category-rank conversion ──────────────────────────────────────────
+// For a reserved-category candidate, JoSAA closing-ranks are stored as
+// category-pool ranks (e.g. "SC rank 1,081 at NIT Trichy CSE"), NOT CRL.
+// When a user types in their CRL and selects a non-OPEN category, we have
+// to convert before matching against the cutoff data — otherwise the
+// predictor compares a CRL like 15,000 against SC closing-ranks (which top
+// out around 122K with most seats closing under 16K) and returns near-empty
+// results.
+//
+// The conversion uses the same NTA category-share table as percentileToRank:
+//
+//   category_rank ≈ CRL × shareFor(year, category)
+//
+// Worked example, SC + CRL=15,000 in 2026:
+//   pool_share(SC) = 0.100  →  category_rank ≈ 15,000 × 0.100 = 1,500
+//
+// Accuracy caveat: candidates aren't perfectly uniformly distributed across
+// CRL by category — higher CRLs skew slightly toward non-OPEN — so this is
+// a ±10-20% approximation. The Safe/Target/Reach bucket boundaries already
+// absorb errors of that magnitude (sigma > 5% of projected closing). We
+// surface the conversion to the user in the UI so they understand what
+// the predictor did with their input.
+export function crlToCategoryRank(
+  crl: number,
+  category: CutoffCategory,
+  year = new Date().getFullYear(),
+): number {
+  if (category === 'OPEN' || category === 'OPEN (PwD)') return crl;
+  return Math.max(1, Math.round(crl * shareFor(year, category)));
+}
+
+// ── Effective-rank resolver (used by every predictor API route) ────────────
+// One place to translate a (rank | percentile, rank_type, category, year)
+// tuple into the single rank number the matcher actually compares against
+// closing-ranks. All four routes (predict, predict-range, choice-list,
+// share-card) go through this — keeping the conversion logic centralised so
+// the four can't drift.
+export type RankType = 'CRL' | 'CAT';
+
+export interface ResolveRankInput {
+  rank?: number;
+  percentile?: number;
+  rank_type?: RankType;       // default 'CAT' to preserve historical caller behaviour
+  category: CutoffCategory;
+  year: number;
+}
+
+export interface ResolveRankResult {
+  /** The rank value to compare against category-specific closing_rank fields. */
+  effectiveRank: number;
+  /** True iff a CRL → category-rank conversion was applied. UI uses this to
+   *  show a one-liner ("Treating CRL 15,000 as approximate SC rank ~1,500"). */
+  converted: boolean;
+  /** The user's original input if a conversion happened, else undefined. */
+  originalCrl?: number;
+}
+
+export function resolveEffectiveRank(input: ResolveRankInput): ResolveRankResult {
+  const { rank, percentile, rank_type, category, year } = input;
+  const rt: RankType = rank_type ?? 'CAT';
+
+  // Percentile path: percentileToRank already routes by category correctly.
+  if (rank === undefined && percentile !== undefined) {
+    return { effectiveRank: percentileToRank(percentile, year, category), converted: false };
+  }
+
+  if (rank === undefined) {
+    throw new Error('resolveEffectiveRank: either rank or percentile must be provided');
+  }
+
+  // Rank path. If the caller declared CRL and the selected category is non-
+  // OPEN, convert. OPEN/OPEN(PwD) means CRL == category rank by definition.
+  const isCrl = rt === 'CRL';
+  const isReserved = category !== 'OPEN' && category !== 'OPEN (PwD)';
+  if (isCrl && isReserved) {
+    return {
+      effectiveRank: crlToCategoryRank(rank, category, year),
+      converted: true,
+      originalCrl: rank,
+    };
+  }
+  return { effectiveRank: rank, converted: false };
+}

@@ -48,6 +48,7 @@ interface Props {
   baseInputs: {
     rank?: number;
     percentile?: number;
+    rank_type?: 'CRL' | 'CAT';
     category: string;
     gender: string;
     home_state: string;

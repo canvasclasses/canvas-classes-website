@@ -401,6 +401,12 @@ export default function PredictorExperience() {
   // Submission + results state
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
+  // When the API reports it converted CRL → category-rank, we show a one-
+  // liner above the results so reserved-category users see what the
+  // predictor actually matched against. Set from predictRes.rank_conversion.
+  const [rankConversion, setRankConversion] = useState<
+    { original: number; converted: number; category: string } | null
+  >(null);
   const [jeeGroups, setJeeGroups] = useState<JoSAACollegeGroup[] | null>(null);
   const [bitsatRows, setBitsatRows] = useState<BitsatProgrammeResult[] | null>(null);
   const [sens, setSens] = useState<SensRow[] | null>(null);
@@ -439,6 +445,7 @@ export default function PredictorExperience() {
     try {
       const body: Record<string, unknown> = {
         rank,
+        rank_type: rankType,
         category: effectiveCategory,
         gender: effectiveGender,
         home_state: homeState,
@@ -470,11 +477,17 @@ export default function PredictorExperience() {
     setLoading(true);
     setExtended(false);
     setFilter('all');
+    setRankConversion(null);
     try {
       // For category rank, percentileToRank knows the conversion isn't needed
       // since user already typed a category rank. We pass the raw rank.
       const body: Record<string, unknown> = {
         rank,
+        // rank_type tells the API whether `rank` is a CRL (Common Rank List,
+        // total ranking) or a CAT (category-pool rank). The API converts
+        // CRL → category rank automatically when category is non-OPEN. See
+        // lib/percentileToRank.ts and lib/predictor.ts for the math.
+        rank_type: rankType,
         category: effectiveCategory,
         gender: effectiveGender,
         home_state: homeState,
@@ -494,6 +507,7 @@ export default function PredictorExperience() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             rank,
+            rank_type: rankType,
             category: effectiveCategory,
             gender: effectiveGender,
             home_state: homeState,
@@ -518,6 +532,19 @@ export default function PredictorExperience() {
           target: predictRes.counts?.target ?? 0,
           reach: predictRes.counts?.reach ?? 0,
         });
+        // If the API converted CRL → category rank, surface it. Reserved-
+        // category students need to see what we actually matched against;
+        // otherwise the "Safe-bucket count: 47" feels disconnected from the
+        // CRL they typed in.
+        setRankConversion(
+          predictRes.rank_conversion
+            ? {
+                original: predictRes.rank_conversion.original,
+                converted: predictRes.rank_conversion.converted,
+                category: predictRes.rank_conversion.category,
+              }
+            : null,
+        );
         if (rangeRes?.success && rangeRes.points) {
           setSens(
             rangeRes.points.map((p: {
@@ -1295,6 +1322,43 @@ export default function PredictorExperience() {
             <p style={{ margin: 0, color: '#9a9aa6', fontSize: 15 }}>
               Ranked by chance, sorted by institute tier. Sparklines show the last 4 years&apos; closing trend.
             </p>
+
+            {/* CRL → category-rank conversion banner. JoSAA closing-ranks for
+                reserved categories are on a category-pool scale (e.g. "SC
+                rank 1,081 at NIT Trichy CSE"), NOT CRL. When the user typed
+                CRL + selected a reserved category, the API converted before
+                matching. Showing it here so the user sees what the predictor
+                actually compared their rank against. */}
+            {rankConversion && (
+              <div
+                role="note"
+                style={{
+                  marginTop: 16,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  padding: '10px 16px',
+                  borderRadius: 12,
+                  background: 'rgba(125,211,252,0.08)',
+                  border: '1px solid rgba(125,211,252,0.25)',
+                  color: '#bce0f5',
+                  fontSize: 13,
+                  lineHeight: 1.5,
+                  textAlign: 'left',
+                  maxWidth: 720,
+                }}
+              >
+                <span aria-hidden style={{ fontSize: 16 }}>↻</span>
+                <span>
+                  You entered <strong>CRL {rankConversion.original.toLocaleString('en-IN')}</strong>. JoSAA stores{' '}
+                  <strong>{rankConversion.category}</strong> closing-ranks on a category-pool scale,
+                  so the predictor matched against an approximate{' '}
+                  <strong>{rankConversion.category} rank ≈ {rankConversion.converted.toLocaleString('en-IN')}</strong>{' '}
+                  (using the 2026 NTA share table). If you know your exact category rank, switch the toggle to{' '}
+                  <em>Category Rank</em> and re-submit for higher precision.
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Header bar */}
@@ -1524,6 +1588,7 @@ export default function PredictorExperience() {
                     params={{
                       tool: 'jeemain',
                       rank,
+                      rank_type: rankType,
                       category: effectiveCategory,
                       gender: effectiveGender,
                       home_state: homeState,
@@ -1683,6 +1748,7 @@ export default function PredictorExperience() {
           onClose={() => setShowBuilder(false)}
           baseInputs={{
             rank,
+            rank_type: rankType,
             category: effectiveCategory,
             gender: effectiveGender,
             home_state: homeState,

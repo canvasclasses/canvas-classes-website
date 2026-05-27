@@ -14,7 +14,7 @@ import {
   type Bucket,
   type PredictorResult,
 } from '@/features/college-predictor/lib/predictor';
-import { percentileToRank } from '@/features/college-predictor/lib/percentileToRank';
+import { resolveEffectiveRank } from '@/features/college-predictor/lib/percentileToRank';
 import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
 
 // Percent deltas applied to the base rank. Negative = better rank.
@@ -25,6 +25,9 @@ const DEFAULT_PCT_DELTAS = [-40, -25, -15, -8, 0, 8, 15, 25, 40];
 const RangeRequestSchema = z.object({
   rank: z.number().int().positive().max(2_000_000).optional(),
   percentile: z.number().min(0).max(100).optional(),
+  // See /predict route — same CRL/CAT semantics. The sparkline is rank-
+  // sensitive so the conversion has to happen BEFORE pct_deltas are applied.
+  rank_type: z.enum(['CRL', 'CAT']).optional(),
   category: z.enum([
     'OPEN', 'OBC-NCL', 'SC', 'ST', 'EWS',
     'OPEN (PwD)', 'OBC-NCL (PwD)', 'SC (PwD)', 'ST (PwD)', 'EWS (PwD)',
@@ -141,9 +144,15 @@ export async function POST(request: NextRequest) {
     }
     const input = parsed.data;
     const targetYear = input.year ?? new Date().getFullYear();
-    const baseRank =
-      input.rank ??
-      percentileToRank(input.percentile as number, targetYear, input.category);
+    // Resolve base rank with CRL→category-rank conversion if applicable, so
+    // the pct_delta ±40% band is computed on the same scale the matcher uses.
+    const baseRank = resolveEffectiveRank({
+      rank: input.rank,
+      percentile: input.percentile,
+      rank_type: input.rank_type,
+      category: input.category,
+      year: targetYear,
+    }).effectiveRank;
 
     const pctDeltas = (input.pct_deltas ?? DEFAULT_PCT_DELTAS).slice().sort((a, b) => a - b);
 
