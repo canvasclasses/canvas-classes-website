@@ -269,14 +269,81 @@ function groupCutoffs(rows: { college_id: string; branch_short_name: string; quo
   return out;
 }
 
+// ── Dataset cache ─────────────────────────────────────────────────────────────
+// Keyed on (category, gender, year). The dataset only changes when admins
+// ingest new cutoff rows (rare — once per JoSAA cycle, i.e. annually). A 10-
+// minute TTL is plenty fresh and eliminates two specific load patterns that
+// were saturating the Atlas connection pool:
+//
+//   1. /predict-range fires Promise.all over 9 rank deltas, each calling
+//      loadPredictorDataset(). Before this cache, that was 9× the same
+//      4 Mongo queries (final + R1 + R3 + colleges) in parallel per user
+//      click — instantly burning ~36 connections out of a 25-slot pool.
+//
+//   2. Repeat users in quick succession (back-and-forth tweaking rank or
+//      category filters) each re-ran the full ~10k-doc dataset load.
+//
+// We store BOTH a resolved value and the in-flight promise. In-flight
+// dedup is what prevents the /predict-range thundering-herd: 9 simultaneous
+// callers all await the same promise instead of each firing their own query.
+//
+// The cache is process-local (per Vercel function instance). Across instances
+// the data may differ briefly during a JoSAA cutoff ingest; that's acceptable.
+interface CacheEntry {
+  value?: PredictorDataset;
+  promise?: Promise<PredictorDataset>;
+  loadedAt: number;
+}
+const DATASET_CACHE_TTL_MS = 10 * 60 * 1000;
+const datasetCache = new Map<string, CacheEntry>();
+
+function datasetCacheKey(c: CutoffCategory, g: CutoffGender, y: number): string {
+  return `${c}|${g}|${y}`;
+}
+
 export async function loadPredictorDataset(
   category: CutoffCategory,
   gender: CutoffGender,
   year?: number,
 ): Promise<PredictorDataset> {
+  const targetYear = year ?? new Date().getFullYear();
+
+  // Cache lookup: serve a fresh resolved value, or join an in-flight load.
+  const key = datasetCacheKey(category, gender, targetYear);
+  const now = Date.now();
+  const cached = datasetCache.get(key);
+  if (cached) {
+    if (cached.value && now - cached.loadedAt < DATASET_CACHE_TTL_MS) {
+      return cached.value;
+    }
+    if (cached.promise) {
+      // Another caller is mid-load — wait for them rather than firing again.
+      return cached.promise;
+    }
+    // Otherwise stale — fall through and refresh.
+  }
+
+  const loadPromise = doLoadPredictorDataset(category, gender, targetYear);
+  datasetCache.set(key, { promise: loadPromise, loadedAt: now });
+  try {
+    const value = await loadPromise;
+    datasetCache.set(key, { value, loadedAt: Date.now() });
+    return value;
+  } catch (err) {
+    // Drop the failed entry so the next caller retries instead of awaiting
+    // a rejected promise forever.
+    datasetCache.delete(key);
+    throw err;
+  }
+}
+
+async function doLoadPredictorDataset(
+  category: CutoffCategory,
+  gender: CutoffGender,
+  targetYear: number,
+): Promise<PredictorDataset> {
   await connectDB();
 
-  const targetYear = year ?? new Date().getFullYear();
   const minYear = targetYear - 5;
 
   const [finalRows, r1Rows, r3Rows, colleges] = await Promise.all([
