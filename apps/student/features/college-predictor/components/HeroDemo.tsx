@@ -882,7 +882,13 @@ function PredictorDemo() {
           gap: 10,
         }}
       >
-        <div style={{ display: 'flex', gap: 14, alignItems: 'center', color: '#7d7d88', fontSize: 12, flexWrap: 'wrap' }}>
+        {/* Trust chips — hidden on mobile because <TrustStrip /> rendered just
+            below already shows the same data, and on narrow screens the
+            duplication eats ~120-150px of scroll before the actual form. */}
+        <div
+          className="hidden sm:flex"
+          style={{ gap: 14, alignItems: 'center', color: '#7d7d88', fontSize: 12, flexWrap: 'wrap' }}
+        >
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.04em' }}>
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399' }} />
             5 yrs counseling data

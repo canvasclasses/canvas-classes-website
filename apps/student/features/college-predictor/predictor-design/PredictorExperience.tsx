@@ -375,6 +375,18 @@ export default function PredictorExperience() {
   const [homeState, setHomeState] = useState('Uttar Pradesh');
   const [rankType, setRankType] = useState<'CRL' | 'CAT'>('CRL');
   const [rank, setRank] = useState(8532);
+  // Affirmative-action toggles. The cutoff schema models these as:
+  //   - Girls Quota → gender = 'Female-only (including Supernumerary)'
+  //   - PwD Quota   → category gets a ' (PwD)' suffix at submit time
+  // Both default off (i.e. Gender-Neutral, non-PwD seats).
+  const [isFemale, setIsFemale] = useState(false);
+  const [isPwD, setIsPwD] = useState(false);
+  // Derived API-shaped values — used by submitJEE, share-card, and choice-list
+  // so all three downstream calls honour the same quota selection.
+  const effectiveCategory = isPwD ? (`${category} (PwD)` as const) : category;
+  const effectiveGender = isFemale
+    ? ('Female-only (including Supernumerary)' as const)
+    : ('Gender-Neutral' as const);
 
   // BITSAT form state
   const [paper, setPaper] = useState<'modern' | 'legacy'>('modern');
@@ -422,8 +434,8 @@ export default function PredictorExperience() {
       // since user already typed a category rank. We pass the raw rank.
       const body: Record<string, unknown> = {
         rank,
-        category,
-        gender: 'Gender-Neutral',
+        category: effectiveCategory,
+        gender: effectiveGender,
         home_state: homeState,
         // Branch filter (best-effort): pass first picked branch as dream_branch
         // since the API accepts only one. Tier-only is enforced client-side.
@@ -441,8 +453,8 @@ export default function PredictorExperience() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             rank,
-            category,
-            gender: 'Gender-Neutral',
+            category: effectiveCategory,
+            gender: effectiveGender,
             home_state: homeState,
           }),
         }).then((r) => r.json()).catch(() => null),
@@ -654,8 +666,11 @@ export default function PredictorExperience() {
       />
       <TrustRow />
 
-      {/* 3 feature cards — stacked at narrow widths, 3-up at md+. */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-[18px] mb-12">
+      {/* 3 feature cards — hidden on mobile (the titles essentially restate
+          what the tool does; on a narrow screen they pushed the actual form
+          ~700px further down without adding information). Show from sm: up,
+          where the 3-column layout makes them feel like a scannable summary. */}
+      <div className="hidden sm:grid grid-cols-3 gap-[18px] mb-12">
         {FEATURES.map((f) => (
           <FeatureCard key={f.n} f={f} />
         ))}
@@ -856,6 +871,42 @@ export default function PredictorExperience() {
                   { value: 'ST', label: 'ST' },
                 ]}
               />
+
+              {/* Affirmative-action toggles — Girls Quota + PwD Quota.
+                  Both default off (Gender-Neutral, non-PwD). The chosen
+                  combination maps directly to JoSAA's cutoff matrix:
+                    - Girls ON  → gender = 'Female-only (incl. Supernumerary)'
+                    - PwD ON    → category = '<base> (PwD)'
+                  Both can be on simultaneously (Female + PwD seats exist). */}
+              <div>
+                <div
+                  style={{
+                    color: '#9a9aa6',
+                    fontSize: 11,
+                    fontWeight: 700,
+                    letterSpacing: '0.16em',
+                    fontFamily: "'JetBrains Mono', monospace",
+                    marginBottom: 10,
+                  }}
+                >
+                  ADDITIONAL QUOTAS · OPTIONAL
+                </div>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                  <QuotaToggle
+                    label="Girls Quota"
+                    sublabel="Female-only + Supernumerary seats"
+                    active={isFemale}
+                    onToggle={() => setIsFemale((v) => !v)}
+                  />
+                  <QuotaToggle
+                    label="PwD Quota"
+                    sublabel="Persons-with-Disability cutoffs"
+                    active={isPwD}
+                    onToggle={() => setIsPwD((v) => !v)}
+                  />
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-[18px]">
                 <Seg
                   label="QUOTA"
@@ -1364,8 +1415,8 @@ export default function PredictorExperience() {
                     params={{
                       tool: 'jeemain',
                       rank,
-                      category,
-                      gender: 'Gender-Neutral',
+                      category: effectiveCategory,
+                      gender: effectiveGender,
                       home_state: homeState,
                     }}
                   />
@@ -1523,8 +1574,8 @@ export default function PredictorExperience() {
           onClose={() => setShowBuilder(false)}
           baseInputs={{
             rank,
-            category,
-            gender: 'Gender-Neutral',
+            category: effectiveCategory,
+            gender: effectiveGender,
             home_state: homeState,
           }}
         />
@@ -2275,5 +2326,80 @@ function SensitivityChart({
         hover any bar · bar height = number of Safe {exam === 'jee' ? 'branches' : 'programmes'} you&apos;d gain or lose vs your current
       </div>
     </div>
+  );
+}
+
+// ── QuotaToggle ──────────────────────────────────────────────────────────────
+// On/off pill used for the Girls Quota + PwD Quota controls in the JEE form.
+// Same visual language as the Seg chips above so the row feels native, but
+// state is boolean (toggle) rather than mutually-exclusive (pick-one).
+function QuotaToggle({
+  label,
+  sublabel,
+  active,
+  onToggle,
+}: {
+  label: string;
+  sublabel: string;
+  active: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-pressed={active}
+      style={{
+        textAlign: 'left',
+        padding: '10px 14px',
+        borderRadius: 10,
+        border: active
+          ? '1px solid rgba(245,158,11,0.5)'
+          : '1px solid rgba(255,255,255,0.08)',
+        background: active ? 'rgba(245,158,11,0.10)' : 'rgba(255,255,255,0.02)',
+        color: active ? '#fbbf24' : '#cfcfd6',
+        cursor: 'pointer',
+        fontFamily: 'inherit',
+        transition: 'border-color 0.18s, background 0.18s, color 0.18s',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+        minWidth: 200,
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontWeight: 600, fontSize: 13.5 }}>
+        <span
+          style={{
+            display: 'inline-block',
+            width: 14,
+            height: 14,
+            borderRadius: 4,
+            background: active ? '#fbbf24' : 'transparent',
+            border: active ? '1px solid #fbbf24' : '1px solid rgba(255,255,255,0.2)',
+            position: 'relative',
+          }}
+        >
+          {active && (
+            <span
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%) rotate(45deg)',
+                width: 4,
+                height: 8,
+                borderRight: '2px solid #0a0a0f',
+                borderBottom: '2px solid #0a0a0f',
+                marginTop: -1,
+              }}
+            />
+          )}
+        </span>
+        {label}
+      </div>
+      <div style={{ color: active ? 'rgba(251,191,36,0.7)' : '#7d7d88', fontSize: 11.5, marginLeft: 22 }}>
+        {sublabel}
+      </div>
+    </button>
   );
 }
