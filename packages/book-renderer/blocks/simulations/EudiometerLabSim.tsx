@@ -167,11 +167,12 @@ export default function EudiometerLabSim() {
         })}
       </div>
 
-      {/* Main grid: SVG + sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-[8fr_5fr] gap-6">
-        {/* SVG canvas */}
+      {/* Main: stacked layout — SVG on top, controls below */}
+      <div className="flex flex-col gap-6">
+        {/* SVG canvas — centred with constrained width so the portrait
+            eudiometer tube stays a sensible size */}
         <div
-          className="relative overflow-hidden flex items-center justify-center rounded-3xl"
+          className="relative overflow-hidden flex items-center justify-center rounded-3xl mx-auto w-full max-w-lg"
           style={{
             minHeight: 520,
             background: 'radial-gradient(circle at center,#1e204a 0%,#050614 100%)',
@@ -196,8 +197,9 @@ export default function EudiometerLabSim() {
           />
         </div>
 
-        {/* Sidebar */}
-        <div className="flex flex-col py-1 gap-5">
+        {/* Controls — placed below the SVG, slightly constrained max-width
+            for readability on wide screens */}
+        <div className="flex flex-col py-1 gap-5 mx-auto w-full max-w-3xl">
           {phase === 'setup' && (
             <SetupPanel
               hcId={hcId}
@@ -519,22 +521,8 @@ function EudiometerSVG(props: {
         EUDIOMETER TUBE
       </text>
 
-      {/* Absorbent indicator (right side, during absorb phase) */}
-      {phase === 'absorb' && (
-        <g>
-          <text x={300} y={120} textAnchor="end" fontSize={10} fontWeight={800} fill="#94a3b8">
-            Absorbents:
-          </text>
-          <g opacity={absorbStep >= 1 ? 1 : 0.35}>
-            <circle cx={310} cy={140} r={6} fill={absorbStep >= 1 ? '#34d399' : '#475569'} />
-            <text x={322} y={144} fontSize={10} fontWeight={700} fill="#cbd5e1">KOH → CO₂</text>
-          </g>
-          <g opacity={absorbStep >= 2 ? 1 : 0.35}>
-            <circle cx={310} cy={158} r={6} fill={absorbStep >= 2 ? '#34d399' : '#475569'} />
-            <text x={322} y={162} fontSize={10} fontWeight={700} fill="#cbd5e1">Pyrogallol → O₂</text>
-          </g>
-        </g>
-      )}
+      {/* Note: absorbent status indicator removed — duplicated in the sidebar.
+          Keeps the SVG focused on the tube and gas-volume readout only. */}
     </svg>
   );
 }
