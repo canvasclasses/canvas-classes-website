@@ -468,7 +468,7 @@ export default function GoldFoilSim() {
             { label: 'Backscattered',    key: 'backscattered' as const, color: '#f87171', bg: 'rgba(248,113,113,0.06)',bdr: 'rgba(248,113,113,0.18)' },
           ] as const).map(({ label, key, color, bg, bdr }) => (
             <div key={key} style={{ background: bg, border: `1px solid ${bdr}`, borderRadius: '10px', padding: '10px 12px' }}>
-              <div style={{ fontSize: '22px', fontWeight: 800, fontFamily: 'monospace', color, lineHeight: 1.1 }}>
+              <div style={{ fontSize: '22px', fontWeight: 800, fontVariantNumeric: 'tabular-nums', color, lineHeight: 1.1 }}>
                 {T > 0 ? `${((counts[key] / T) * 100).toFixed(1)}%` : '—'}
               </div>
               <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.42)', marginTop: 3 }}>{label}</div>

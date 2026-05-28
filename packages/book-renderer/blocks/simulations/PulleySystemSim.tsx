@@ -179,7 +179,7 @@ function MovableDiagram({ loadN, effortN }: { loadN: number; effortN: number }) 
         stroke="#fbbf24" strokeWidth={1.2} strokeDasharray="3,2" />
 
       <text x={movPulleyCx} y={H - 12} textAnchor="middle" fill="#64748b" fontSize={10}>
-        2 ropes share the load → effort = load ÷ 2 (MA = 2)
+        2 ropes share the load → effort = load / 2 (MA = 2)
       </text>
     </svg>
   );

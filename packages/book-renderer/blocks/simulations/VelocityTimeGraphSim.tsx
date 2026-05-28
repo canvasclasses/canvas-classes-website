@@ -403,7 +403,7 @@ export default function VelocityTimeGraphSim() {
         </div>
         <div style={STAT_CARD}>
           <div style={{ fontSize: 11, color: '#94a3b8', marginBottom: 6 }}>Equations used</div>
-          <div style={{ fontSize: 10, color: '#e2e8f0', lineHeight: 1.7, fontFamily: 'monospace' }}>
+          <div style={{ fontSize: 10, color: '#e2e8f0', lineHeight: 1.7, fontVariantNumeric: 'tabular-nums' }}>
             <div>v = u + at</div>
             <div>s = ut + ½at²</div>
             <div>v² = u² + 2as</div>

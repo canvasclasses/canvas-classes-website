@@ -623,7 +623,7 @@ export default function TyndallEffectSim() {
             className="flex-1"
             style={{ accentColor: '#818cf8' }}
           />
-          <span className="text-sm font-black font-mono shrink-0 w-20 text-right tabular-nums" style={{ color: content.accent }}>
+          <span className="text-sm font-black tabular-nums shrink-0 w-20 text-right tabular-nums" style={{ color: content.accent }}>
             {formatNm(displayNm)}
           </span>
         </div>

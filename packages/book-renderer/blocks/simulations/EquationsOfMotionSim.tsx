@@ -14,6 +14,7 @@
 // Design: follows SIMULATION_DESIGN_WORKFLOW.md exactly.
 
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { prettyExp } from './_typography';
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -210,7 +211,7 @@ function solveKinematics(
 // ── Helper: format number ──────────────────────────────────────────────────────
 
 function fmt(n: number): string {
-  if (Math.abs(n) < 0.001 && n !== 0) return n.toExponential(2);
+  if (Math.abs(n) < 0.001 && n !== 0) return prettyExp(n.toExponential(2));
   const s = parseFloat(n.toFixed(3)).toString();
   return s;
 }

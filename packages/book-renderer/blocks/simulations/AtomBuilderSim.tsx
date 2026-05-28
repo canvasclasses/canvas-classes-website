@@ -230,9 +230,9 @@ function AtomSVG({
           <circle cx={ATOM_CX} cy={ATOM_CY} r={26}
             fill="rgba(249,115,22,0.18)" stroke="rgba(249,115,22,0.55)" strokeWidth={1.2} />
           <text x={ATOM_CX} y={ATOM_CY - 2} textAnchor="middle" fontSize={12}
-            fontWeight="800" fill="#fb923c" fontFamily="monospace">{protons}p</text>
+            fontWeight="800" fill="#fb923c">{protons}p</text>
           <text x={ATOM_CX} y={ATOM_CY + 12} textAnchor="middle" fontSize={12}
-            fontWeight="800" fill="#94a3b8" fontFamily="monospace">{neutrons}n</text>
+            fontWeight="800" fill="#94a3b8">{neutrons}n</text>
         </g>
       ) : (
         <g>
@@ -293,7 +293,7 @@ function AtomSVG({
           <text x={ATOM_VB - 22} y={26} textAnchor="middle"
             fontSize={12} fontWeight="800"
             fill={charge > 0 ? '#f87171' : '#60a5fa'}
-            fontFamily="monospace">
+           >
             {charge > 0 ? (charge === 1 ? '+' : `${charge}+`) : (charge === -1 ? '−' : `${Math.abs(charge)}−`)}
           </text>
         </g>

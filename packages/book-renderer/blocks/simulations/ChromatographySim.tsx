@@ -12,6 +12,7 @@
 
 import { useState, useRef } from 'react';
 import { useAnimationFrame } from './_shared';
+import { Frac } from './_typography';
 
 type Mode = 'column' | 'paper';
 
@@ -873,8 +874,9 @@ export default function ChromatographySim() {
                 ))}
                 <div className="rounded-lg px-3 py-2.5 mt-2"
                   style={{ background: 'rgba(99,102,241,0.07)', border: '1px solid rgba(129,140,248,0.14)' }}>
-                  <p className="text-xs font-black text-center" style={{ color: '#818cf8' }}>
-                    Rf = distance by spot ÷ distance by solvent front
+                  <p className="text-xs font-black text-center inline-flex items-center justify-center flex-wrap w-full"
+                    style={{ color: '#818cf8' }}>
+                    Rf = <Frac num="distance by spot" den="distance by solvent front" />
                   </p>
                 </div>
               </div>

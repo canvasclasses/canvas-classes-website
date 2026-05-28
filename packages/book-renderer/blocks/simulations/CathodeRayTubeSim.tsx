@@ -10,6 +10,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useAnimationFrame } from './_shared';
+import { prettyExp } from './_typography';
 
 interface Particle {
   x: number; y: number;
@@ -360,7 +361,7 @@ export default function CathodeRayTubeSim() {
       ctx.textAlign = 'right';
       const pLabel = vacSlider <= 0  ? '760 mmHg'
                    : vacSlider >= 100 ? '0.001 mmHg'
-                   : `~${(760 * Math.pow(0.001 / 760, vacSlider / 100)).toExponential(1)} mmHg`;
+                   : `~${prettyExp((760 * Math.pow(0.001 / 760, vacSlider / 100)).toExponential(1))} mmHg`;
       ctx.font = 'bold 9px system-ui, sans-serif';
       ctx.fillStyle = 'rgba(51,65,85,0.9)';
       ctx.fillText('PRESSURE', TX + TW - 12, TY + TH - 24);
@@ -508,7 +509,7 @@ export default function CathodeRayTubeSim() {
   const isDischarging = vacOk && voltage >= threshold;
   const pressureDisplay = vacSlider <= 0  ? '760 mmHg (atmospheric)'
                         : vacSlider >= 100 ? '0.001 mmHg (high vacuum)'
-                        : `${(760 * Math.pow(0.001 / 760, vacSlider / 100)).toExponential(2)} mmHg`;
+                        : `${prettyExp((760 * Math.pow(0.001 / 760, vacSlider / 100)).toExponential(2))} mmHg`;
 
   return (
     <div className="p-4 md:p-6" style={{ background: '#0d1117', color: '#e2e8f0' }}>

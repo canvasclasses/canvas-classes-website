@@ -1336,7 +1336,7 @@ function Eudiometer({
                 <g>
                   <text
                     x={tubeX + tubeW / 2} y={l.yMid - 3}
-                    fontFamily="ui-monospace, monospace"
+                   
                     fontSize="13" fontWeight="500"
                     fill="rgba(255,255,255,0.95)" textAnchor="middle"
                   >
@@ -1344,7 +1344,7 @@ function Eudiometer({
                   </text>
                   <text
                     x={tubeX + tubeW / 2} y={l.yMid + 11}
-                    fontFamily="ui-monospace, monospace"
+                   
                     fontSize="12"
                     fill="rgba(255,255,255,0.7)" textAnchor="middle"
                   >
@@ -1388,7 +1388,7 @@ function Eudiometer({
               {isMajor && ml % 20 === 0 && (
                 <text
                   x={tubeX - 12} y={y + 3}
-                  fontFamily="ui-monospace, monospace"
+                 
                   fontSize="11"
                   fill="rgba(255,255,255,0.5)"
                   textAnchor="end"
@@ -1402,7 +1402,7 @@ function Eudiometer({
         })}
         <text
           x={tubeX - 12} y={tubeTop - 2}
-          fontFamily="ui-monospace, monospace"
+         
           fontSize="10.5"
           fill="rgba(255,255,255,0.4)"
           textAnchor="end"
@@ -1424,7 +1424,7 @@ function Eudiometer({
         />
         <g transform={`translate(${tubeX + tubeW + 26}, ${waterTopInTube + 3})`}>
           <text
-            fontFamily="ui-monospace, monospace"
+           
             fontSize="12"
             fill="rgba(176,166,251,0.9)"
             letterSpacing="0.02em"
@@ -1433,7 +1433,7 @@ function Eudiometer({
           </text>
           <text
             y="11"
-            fontFamily="ui-monospace, monospace"
+           
             fontSize="10"
             fill="rgba(176,166,251,0.5)"
             letterSpacing="0.1em"

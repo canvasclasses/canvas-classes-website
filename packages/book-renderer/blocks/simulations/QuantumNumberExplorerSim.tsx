@@ -155,7 +155,7 @@ function Btn({ selected, color, onClick, disabled, label }: {
   return (
     <button onClick={onClick} disabled={disabled} style={{
       padding: '6px 10px', borderRadius: 8, fontSize: 13,
-      fontWeight: 700, fontFamily: 'monospace', minWidth: 36,
+      fontWeight: 700, fontVariantNumeric: 'tabular-nums', minWidth: 36,
       cursor: disabled ? 'not-allowed' : 'pointer',
       transition: 'all 0.15s',
       background: selected ? `${color}20` : disabled ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.04)',
@@ -302,12 +302,12 @@ export default function QuantumNumberExplorerSim() {
                     <div key={nd.label} className="text-center rounded-lg p-2"
                       style={{ background: 'rgba(255,255,255,0.04)',
                         border: '1px solid rgba(255,255,255,0.06)' }}>
-                      <div style={{ fontSize: 18, fontWeight: 800, fontFamily: 'monospace',
+                      <div style={{ fontSize: 18, fontWeight: 800, fontVariantNumeric: 'tabular-nums',
                         color: '#e2e8f0', lineHeight: 1 }}>{nd.val}</div>
                       <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)',
                         textTransform: 'uppercase', marginTop: 3 }}>{nd.label}</div>
                       <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.20)',
-                        fontFamily: 'monospace' }}>= {nd.formula}</div>
+                        fontVariantNumeric: 'tabular-nums' }}>= {nd.formula}</div>
                     </div>
                   ))}
                 </div>
@@ -362,18 +362,18 @@ export default function QuantumNumberExplorerSim() {
                   }}>
                   {/* Filling order # */}
                   <span style={{ fontSize: 10, fontWeight: 700, width: 16,
-                    textAlign: 'right', fontFamily: 'monospace',
+                    textAlign: 'right', fontVariantNumeric: 'tabular-nums',
                     color: 'rgba(255,255,255,0.20)' }}>
                     {idx + 1}
                   </span>
                   {/* Sublevel label */}
                   <span style={{ fontSize: 13, fontWeight: 700, width: 28,
-                    fontFamily: 'monospace',
+                    fontVariantNumeric: 'tabular-nums',
                     color: isCurrent ? subColor : 'rgba(255,255,255,0.45)' }}>
                     {key}
                   </span>
                   {/* n+l */}
-                  <span style={{ fontSize: 10, width: 40, fontFamily: 'monospace',
+                  <span style={{ fontSize: 10, width: 40, fontVariantNumeric: 'tabular-nums',
                     color: 'rgba(255,255,255,0.20)' }}>
                     n+l={sub.n + sub.l}
                   </span>
@@ -395,7 +395,7 @@ export default function QuantumNumberExplorerSim() {
                           }}>
                             {isThis ? (ms > 0 ? '↑' : '↓') : ''}
                           </div>
-                          <span style={{ fontSize: 8, fontFamily: 'monospace',
+                          <span style={{ fontSize: 8, fontVariantNumeric: 'tabular-nums',
                             color: isCurrent ? 'rgba(255,255,255,0.30)' : 'rgba(255,255,255,0.12)' }}>
                             {boxMl >= 0 ? `+${boxMl}` : boxMl}
                           </span>

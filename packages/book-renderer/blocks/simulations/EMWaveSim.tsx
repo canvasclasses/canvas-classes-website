@@ -6,6 +6,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useAnimationFrame } from './_shared';
+import { prettyExp } from './_typography';
 
 // ── EM Spectrum Regions ────────────────────────────────────────────────────
 const REGIONS = [
@@ -117,12 +118,12 @@ function fmtLambda(m: number): string {
 
 function fmtEnergy(hz: number): string {
   const eV = (6.626e-34 * hz) / 1.602e-19;
-  if (eV >= 1e9)  return `${(eV / 1e9).toExponential(1)} GeV`;
-  if (eV >= 1e6)  return `${(eV / 1e6).toExponential(1)} MeV`;
+  if (eV >= 1e9)  return `${prettyExp((eV / 1e9).toExponential(1))} GeV`;
+  if (eV >= 1e6)  return `${prettyExp((eV / 1e6).toExponential(1))} MeV`;
   if (eV >= 1e3)  return `${(eV / 1e3).toFixed(1)} keV`;
   if (eV >= 1)    return `${eV.toFixed(2)} eV`;
   if (eV >= 1e-3) return `${(eV * 1e3).toFixed(2)} meV`;
-  return `${eV.toExponential(2)} eV`;
+  return `${prettyExp(eV.toExponential(2))} eV`;
 }
 
 const C = 3e8;
@@ -328,14 +329,14 @@ export default function EMWaveSim() {
       <div className="grid grid-cols-3 gap-3 px-5 mb-3">
         {[
           { label: 'Wavelength',   sym: 'λ',  val: fmtLambda(lambda), color: '#fbbf24',    note: 'λ = c / ν' },
-          { label: 'Frequency',    sym: 'ν',  val: fmtFreq(freq),     color: region.color, note: freq.toExponential(2) + ' Hz' },
+          { label: 'Frequency',    sym: 'ν',  val: fmtFreq(freq),     color: region.color, note: prettyExp(freq.toExponential(2)) + ' Hz' },
           { label: 'Photon Energy',sym: 'E',  val: fmtEnergy(freq),   color: '#f87171',    note: 'E = hν' },
         ].map(p => (
           <div key={p.label} className="rounded-xl p-3 text-center"
             style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', transition: 'border-color 0.3s' }}>
-            <div style={{ fontSize: 18, fontWeight: 800, fontFamily: 'monospace', color: p.color, lineHeight: 1.1 }}>{p.val}</div>
+            <div style={{ fontSize: 18, fontWeight: 800, fontVariantNumeric: 'tabular-nums', color: p.color, lineHeight: 1.1 }}>{p.val}</div>
             <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.28)', marginTop: 3, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{p.label}</div>
-            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.18)', marginTop: 2, fontFamily: 'monospace' }}>{p.note}</div>
+            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.18)', marginTop: 2, fontVariantNumeric: 'tabular-nums' }}>{p.note}</div>
           </div>
         ))}
       </div>

@@ -81,6 +81,7 @@ ATOM: Functional group  fill #8b5cf6  stroke #5b21b6
   When a row contains a `Frac`, align the row with `items-center` (not `items-baseline`) so the step number and result column sit visually centred on the fraction.
 
 - **The ONLY exception** is when the simulator is explicitly teaching the `÷` glyph itself (e.g. an arithmetic-symbols flashcard sim) — and even then, call it out in a comment so future readers know it's intentional.
+- **Inline prose like "Power = Work / Time" or "effort = load / 2"** — a plain ASCII forward slash `/` is acceptable for short descriptive captions. It doesn't have the ÷-as-+ ambiguity. Keep `Frac` for the prominent / displayed formula, use `/` for the sub-caption explaining it. (Example: `<p>P = W / t</p>` underneath, with `Frac` above showing the stacked version.)
 - For multiplication, `×` (U+00D7) reads cleanly from a distance and stays. For subtraction use `−` (U+2212, the proper minus), not the hyphen.
 
 ### Scientific Notation — NEVER expose "e+23" to students
