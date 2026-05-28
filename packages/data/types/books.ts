@@ -52,7 +52,7 @@ export interface ImageBlock extends BaseBlock {
   src: string;       // R2 CDN URL — empty string means image not yet uploaded
   alt: string;
   caption?: string;
-  width?: 'full' | 'half' | 'third';
+  width?: 'full' | 'five_sixth' | 'three_quarter' | 'two_third' | 'half' | 'two_fifth' | 'third' | 'quarter';
   align?: 'center' | 'left' | 'right';   // horizontal placement — default 'center'
   side_text?: string;                    // markdown shown beside image when align ≠ 'center'
   generation_prompt?: string;  // AI image generation prompt — shown as placeholder until src is filled
