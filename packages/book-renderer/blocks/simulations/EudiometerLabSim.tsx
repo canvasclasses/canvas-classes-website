@@ -1,936 +1,1478 @@
 'use client';
 
 /**
- * Eudiometer Virtual Lab
+ * Eudiometer Virtual Lab — v2 (instrument-panel redesign)
  *
  * Academic source: NCERT Class 11, Chapter 1 — Some Basic Concepts of Chemistry
- * (Section: Stoichiometry / Volume–Volume Analysis / Eudiometry).
+ * (Stoichiometry / Volume–Volume Analysis / Eudiometry).
  *
- * Pedagogical goal: let the student replicate the classical experimental
- * procedure that deduces an unknown hydrocarbon's formula from gas-volume
+ * Pedagogical goal: replicate the classical experimental procedure that
+ * deduces an unknown hydrocarbon's molecular formula from gas-volume
  * measurements alone. The student picks a hydrocarbon and an O₂ amount,
- * fires a spark, watches combustion, cools the mixture to condense water,
- * then absorbs CO₂ in KOH and excess O₂ in alkaline pyrogallol. The
- * resulting volume drops feed the standard combustion equation
- *   C_xH_y + (x + y/4) O₂ → x CO₂ + (y/2) H₂O
- * and the student solves for x and y to identify the gas.
+ * fires a spark, watches H₂O condense, passes KOH through to absorb CO₂,
+ * then derives x and y from the two volume contractions:
+ *
+ *   x = (V₁ − V₂) / V_gas
+ *   y = 4·((V₀ − V₁) / V_gas − 1)
+ *
+ * Design: three-column instrument console — controls on the left, the
+ * eudiometer tube + live stat tiles in the middle, lab notebook (balanced
+ * equation + derivation) on the right. Action bar at the bottom drives
+ * the four steps (Setup → Ignite → Absorb → Deduce).
+ *
+ * All CSS is scoped under `.eud-root` (prefixed `eud-*` class names and
+ * `.eud-root`-scoped custom properties) so styles cannot leak into the
+ * surrounding page.
  */
 
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-// ── Hydrocarbon catalog ──────────────────────────────────────────────────────
-const HYDROCARBONS = [
-  { id: 'CH4',     x: 1, y: 4, name: 'Methane',  formula: 'CH₄',     color: '#34d399', hint: 'Natural gas — the simplest alkane.' },
-  { id: 'C2H4',    x: 2, y: 4, name: 'Ethylene', formula: 'C₂H₄',    color: '#fbbf24', hint: 'An alkene (one double bond).' },
-  { id: 'C2H6',    x: 2, y: 6, name: 'Ethane',   formula: 'C₂H₆',    color: '#818cf8', hint: 'An alkane — saturated.' },
-  { id: 'C3H8',    x: 3, y: 8, name: 'Propane',  formula: 'C₃H₈',    color: '#f472b6', hint: 'LPG component.' },
-  { id: 'MYS_1',   x: 4, y: 6, name: 'Mystery A', formula: 'C?H?',   color: '#c4b5fd', hint: '— hidden until you solve —' },
-  { id: 'MYS_2',   x: 2, y: 2, name: 'Mystery B', formula: 'C?H?',   color: '#fb923c', hint: '— hidden until you solve —' },
+// ── Gas catalogue ─────────────────────────────────────────────────────────────
+// x = carbons, y = hydrogens.  Combustion: CxHy + (x + y/4) O₂ → x CO₂ + (y/2) H₂O
+const GASES = {
+  methane:  { id: 'methane',  name: 'Methane',   formula: 'CH₄',  x: 1, y: 4,  desc: 'Natural gas — the simplest alkane.' },
+  ethylene: { id: 'ethylene', name: 'Ethylene',  formula: 'C₂H₄', x: 2, y: 4,  desc: 'An alkene that ripens fruit.' },
+  ethane:   { id: 'ethane',   name: 'Ethane',    formula: 'C₂H₆', x: 2, y: 6,  desc: 'Saturated, two-carbon alkane.' },
+  propane:  { id: 'propane',  name: 'Propane',   formula: 'C₃H₈', x: 3, y: 8,  desc: 'LPG; common cooking fuel.' },
+  mystA:    { id: 'mystA',    name: 'Mystery A', formula: 'CₓHᵧ', x: 2, y: 2,  desc: 'Hidden until you deduce its formula.', mystery: 'C₂H₂ (acetylene)' },
+  mystB:    { id: 'mystB',    name: 'Mystery B', formula: 'CₓHᵧ', x: 4, y: 10, desc: 'Hidden until you deduce its formula.', mystery: 'C₄H₁₀ (butane)' },
+} as const;
+type GasKey = keyof typeof GASES;
+type Gas = typeof GASES[GasKey] & { mystery?: string };
+
+const STEPS = [
+  { id: 0, name: 'Setup',  desc: 'Charge the tube' },
+  { id: 1, name: 'Ignite', desc: 'Spark and condense' },
+  { id: 2, name: 'Absorb', desc: 'Pass KOH solution' },
+  { id: 3, name: 'Deduce', desc: 'Derive the formula' },
 ] as const;
-type HydrocarbonId = typeof HYDROCARBONS[number]['id'];
 
-// ── Phases ───────────────────────────────────────────────────────────────────
-type Phase = 'setup' | 'ignite' | 'absorb' | 'deduce';
-const PHASES: { id: Phase; label: string }[] = [
-  { id: 'setup',   label: '1 · Setup' },
-  { id: 'ignite',  label: '2 · Ignite' },
-  { id: 'absorb',  label: '3 · Absorb' },
-  { id: 'deduce',  label: '4 · Deduce' },
-];
+// ── Scoped CSS ────────────────────────────────────────────────────────────────
+const STYLES = `
+.eud-root {
+  --bg-0: #06080D;
+  --bg-1: #0B0E16;
+  --bg-2: #10141F;
+  --bg-3: #161B28;
+  --bg-4: #1D2333;
 
-// ── CSS animations ───────────────────────────────────────────────────────────
-const ANIM = `
-  @keyframes eud-spark   { 0%,100% { opacity:0; } 30%,70% { opacity:1; transform:scale(1.2); } }
-  @keyframes eud-flash   { 0%,100% { opacity:0; } 40% { opacity:1; } }
-  @keyframes eud-rise    { from { transform:translateY(20px); opacity:0; } to { transform:translateY(0); opacity:1; } }
-  .eud-spark   { animation: eud-spark 0.7s ease-in-out infinite; transform-origin:center; }
-  .eud-flash   { animation: eud-flash 0.6s ease-out 1; }
-  .eud-rise-in { animation: eud-rise 0.5s ease-out 1; }
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --border-accent: rgba(139, 126, 248, 0.35);
+
+  --text-0: #F4F6FB;
+  --text-1: #B7BEd0;
+  --text-2: #6C7488;
+  --text-3: #3E4558;
+
+  --accent: #8B7EF8;
+  --accent-soft: #B0A6FB;
+  --accent-glow: rgba(139, 126, 248, 0.18);
+  --accent-dim: rgba(139, 126, 248, 0.08);
+
+  --gas: #4ADE92;
+  --gas-soft: rgba(74, 222, 146, 0.22);
+  --oxygen: #57B8F2;
+  --oxygen-soft: rgba(87, 184, 242, 0.22);
+  --co2: #F2B463;
+  --co2-soft: rgba(242, 180, 99, 0.22);
+  --water: rgba(82, 132, 188, 0.28);
+  --water-line: rgba(140, 180, 220, 0.5);
+  --spark: #FF7A6B;
+
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 14px;
+  --radius-xl: 18px;
+
+  --shadow-card: 0 1px 0 rgba(255,255,255,0.03) inset, 0 8px 24px rgba(0,0,0,0.32);
+
+  background: var(--bg-0);
+  color: var(--text-0);
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+}
+.eud-root::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 22% 28%, rgba(139,126,248,0.10), transparent 60%),
+    radial-gradient(ellipse 500px 350px at 78% 78%, rgba(87,184,242,0.06), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+.eud-mono { font-family: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace; }
+
+/* App ── */
+.eud-app {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column;
+  padding: 22px 26px 24px;
+  gap: 18px;
+}
+
+/* Header ── */
+.eud-hdr { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.eud-hdr-l { display: flex; align-items: center; gap: 14px; }
+.eud-hdr-mark {
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  background: linear-gradient(140deg, var(--accent-dim), transparent 70%), var(--bg-2);
+  border: 1px solid var(--border-strong);
+  color: var(--accent-soft);
+}
+.eud-hdr-title { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; color: var(--text-0); }
+.eud-hdr-sub { font-size: 13.5px; color: var(--text-2); letter-spacing: 0.02em; margin-top: 2px; }
+.eud-hdr-r {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-2);
+}
+.eud-hdr-tag {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  background: rgba(255,255,255,0.015);
+}
+.eud-hdr-dot {
+  width: 6px; height: 6px; border-radius: 99px;
+  background: var(--gas); box-shadow: 0 0 8px var(--gas);
+  display: inline-block; margin-right: 6px;
+}
+
+/* Stepper ── */
+.eud-stepper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-l);
+  background: rgba(255,255,255,0.012);
+  overflow: hidden;
+}
+.eud-step {
+  padding: 14px 18px;
+  display: flex; align-items: center; gap: 14px;
+  position: relative;
+  border-right: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.18s ease;
+  background: transparent;
+  border-top: none; border-bottom: none; border-left: none;
+  font: inherit; color: inherit;
+  text-align: left;
+}
+.eud-step:last-child { border-right: none; }
+.eud-step:hover:not(.is-locked) { background: rgba(255,255,255,0.02); }
+.eud-step.is-locked { cursor: not-allowed; opacity: 0.55; }
+.eud-step.is-current { background: linear-gradient(180deg, var(--accent-dim), transparent 110%); }
+.eud-step.is-current::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent) 30%, var(--accent) 70%, transparent);
+}
+.eud-step-n {
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  display: grid; place-items: center;
+  font-family: ui-monospace, monospace;
+  font-size: 13.5px;
+  background: var(--bg-2);
+  border: 1px solid var(--border-strong);
+  color: var(--text-1);
+  flex: 0 0 26px;
+}
+.eud-step.is-current .eud-step-n {
+  background: var(--accent); border-color: var(--accent);
+  color: var(--bg-0); font-weight: 600;
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+.eud-step.is-done .eud-step-n {
+  background: rgba(74, 222, 146, 0.12);
+  border-color: rgba(74, 222, 146, 0.5);
+  color: var(--gas);
+}
+.eud-step-name {
+  font-size: 14px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-1);
+}
+.eud-step.is-current .eud-step-name { color: var(--text-0); }
+.eud-step-desc { font-size: 13px; color: var(--text-2); margin-top: 2px; }
+
+/* Grid ── */
+.eud-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr 320px;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.eud-card {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.004)),
+    var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-l);
+  padding: 18px;
+  box-shadow: var(--shadow-card);
+  display: flex; flex-direction: column; gap: 14px;
+  position: relative;
+}
+.eud-card-h {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.eud-card-title {
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-1);
+}
+.eud-card-title .accent { color: var(--accent-soft); }
+.eud-card-tag {
+  font-family: ui-monospace, monospace;
+  font-size: 12.5px; color: var(--text-2);
+  letter-spacing: 0.04em;
+}
+
+/* Controls ── */
+.eud-section { display: flex; flex-direction: column; gap: 8px; }
+.eud-label {
+  display: flex; align-items: baseline; justify-content: space-between;
+  font-size: 12.5px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--text-2);
+}
+.eud-label .val {
+  font-family: ui-monospace, monospace;
+  color: var(--text-0); font-size: 14px;
+  letter-spacing: 0.02em;
+}
+.eud-label .val.gas { color: var(--gas); }
+.eud-label .val.o2 { color: var(--oxygen); }
+
+.eud-gas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.eud-gas-card {
+  position: relative;
+  background: rgba(255,255,255,0.015);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 10px 11px;
+  cursor: pointer;
+  text-align: left;
+  font: inherit; color: inherit;
+  transition: all 0.16s ease;
+  display: flex; flex-direction: column; gap: 4px;
+  overflow: hidden;
+}
+.eud-gas-card:hover { background: rgba(255,255,255,0.03); border-color: var(--border-strong); }
+.eud-gas-card.is-active {
+  background: linear-gradient(180deg, var(--accent-dim), rgba(255,255,255,0.02));
+  border-color: var(--border-accent);
+  box-shadow: 0 0 0 1px var(--border-accent) inset;
+}
+.eud-gas-card .name { font-size: 14.5px; font-weight: 600; color: var(--text-0); }
+.eud-gas-card .formula {
+  font-family: ui-monospace, monospace;
+  font-size: 12.5px; color: var(--text-2);
+  letter-spacing: 0.04em;
+}
+.eud-gas-card.is-active .formula { color: var(--accent-soft); }
+.eud-gas-card.is-mystery .formula { color: var(--text-3); letter-spacing: 0.12em; }
+.eud-gas-card .mystery-glyph {
+  position: absolute; right: 8px; top: 8px;
+  width: 14px; height: 14px;
+  border-radius: 99px;
+  background: var(--bg-3);
+  display: grid; place-items: center;
+  font-size: 11px; color: var(--text-2);
+  border: 1px solid var(--border);
+}
+.eud-gas-desc {
+  font-size: 13.5px; color: var(--text-2);
+  margin-top: 4px; font-style: italic;
+}
+
+/* Sliders ── */
+.eud-slider-wrap { position: relative; height: 32px; display: flex; align-items: center; }
+.eud-slider-track {
+  position: absolute; left: 0; right: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.eud-slider-fill {
+  position: absolute; top: 0; bottom: 0; left: 0;
+  border-radius: 99px;
+  transition: width 0.18s ease;
+}
+.eud-slider-fill.gas { background: linear-gradient(90deg, transparent, var(--gas)); }
+.eud-slider-fill.o2 { background: linear-gradient(90deg, transparent, var(--oxygen)); }
+.eud-slider-input {
+  width: 100%; height: 32px;
+  appearance: none; background: transparent;
+  position: relative; cursor: pointer;
+  margin: 0;
+}
+.eud-slider-input::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px; height: 16px;
+  border-radius: 99px;
+  background: var(--text-0);
+  border: 3px solid var(--bg-1);
+  box-shadow: 0 0 0 1px var(--border-strong), 0 2px 8px rgba(0,0,0,0.5);
+  cursor: grab;
+}
+.eud-slider-input.gas::-webkit-slider-thumb {
+  background: var(--gas);
+  box-shadow: 0 0 0 1px rgba(74,222,146,0.4), 0 0 12px rgba(74,222,146,0.5);
+}
+.eud-slider-input.o2::-webkit-slider-thumb {
+  background: var(--oxygen);
+  box-shadow: 0 0 0 1px rgba(87,184,242,0.4), 0 0 12px rgba(87,184,242,0.5);
+}
+.eud-slider-input::-moz-range-thumb {
+  width: 16px; height: 16px;
+  border-radius: 99px;
+  background: var(--text-0);
+  border: 3px solid var(--bg-1);
+  cursor: grab;
+}
+.eud-slider-input.gas::-moz-range-thumb { background: var(--gas); }
+.eud-slider-input.o2::-moz-range-thumb { background: var(--oxygen); }
+.eud-slider-ticks {
+  display: flex; justify-content: space-between;
+  margin-top: 4px;
+  font-family: ui-monospace, monospace;
+  font-size: 11.5px; color: var(--text-3);
+}
+
+/* Callouts ── */
+.eud-callout {
+  font-size: 13.5px; color: var(--text-2);
+  padding: 8px 10px;
+  background: rgba(255,255,255,0.018);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+  display: flex; align-items: center; gap: 8px;
+}
+.eud-callout.warn {
+  color: #F2C77A;
+  background: rgba(242,180,99,0.06);
+  border-color: rgba(242,180,99,0.25);
+}
+.eud-callout.ok {
+  color: var(--gas);
+  background: rgba(74,222,146,0.05);
+  border-color: rgba(74,222,146,0.2);
+}
+.eud-callout .ico {
+  width: 14px; height: 14px; flex: 0 0 14px;
+  display: grid; place-items: center;
+  border-radius: 99px;
+  font-size: 11px;
+}
+
+/* Eudiometer card ── */
+.eud-eu-card {
+  align-items: center;
+  padding: 22px 22px 20px;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(139,126,248,0.05), transparent 70%),
+    linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.004)),
+    var(--bg-1);
+  gap: 10px;
+}
+.eud-eu-head {
+  width: 100%;
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.eud-stat-row { display: flex; gap: 10px; width: 100%; margin-top: 4px; }
+.eud-stat {
+  flex: 1;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.eud-stat.is-current { border-color: var(--border-accent); background: linear-gradient(180deg, var(--accent-dim), rgba(255,255,255,0.01)); }
+.eud-stat .lbl {
+  font-size: 11.5px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--text-2);
+  display: flex; align-items: center; gap: 6px;
+}
+.eud-stat .lbl-dot { width: 6px; height: 6px; border-radius: 99px; background: var(--text-3); }
+.eud-stat.is-initial .lbl-dot { background: var(--text-1); }
+.eud-stat.is-ignite .lbl-dot { background: var(--co2); box-shadow: 0 0 6px var(--co2); }
+.eud-stat.is-absorb .lbl-dot { background: var(--oxygen); box-shadow: 0 0 6px var(--oxygen); }
+.eud-stat .v {
+  font-family: ui-monospace, monospace;
+  font-size: 20px; letter-spacing: -0.01em;
+  color: var(--text-0); font-weight: 500;
+}
+.eud-stat .v.dim { color: var(--text-3); }
+.eud-stat .v .unit { font-size: 12px; color: var(--text-2); margin-left: 2px; }
+.eud-stat .delta {
+  font-family: ui-monospace, monospace;
+  font-size: 12px; color: var(--text-2);
+}
+.eud-stat .delta.minus { color: #F38B7A; }
+
+.eud-tube-stage {
+  width: 100%;
+  flex: 1;
+  display: flex; justify-content: center; align-items: stretch;
+  position: relative;
+  min-height: 460px;
+}
+.eud-tube-svg { width: 100%; height: 100%; max-height: 600px; }
+
+/* Right panel ── */
+.eud-eq {
+  font-family: ui-monospace, monospace;
+  font-size: 15px; line-height: 1.6;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  letter-spacing: 0.01em;
+}
+.eud-eq .c-gas { color: var(--gas); }
+.eud-eq .c-o2 { color: var(--oxygen); }
+.eud-eq .c-co2 { color: var(--co2); }
+.eud-eq .c-water { color: var(--water-line); }
+.eud-eq .arrow { color: var(--text-2); margin: 0 8px; }
+.eud-eq sub { font-size: 0.75em; vertical-align: sub; }
+
+.eud-derivation {
+  display: flex; flex-direction: column;
+  gap: 8px;
+  font-family: ui-monospace, monospace;
+  font-size: 13.5px; line-height: 1.5;
+  color: var(--text-1);
+}
+.eud-derivation .row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 8px; padding: 8px 10px;
+  background: rgba(255,255,255,0.015);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+}
+.eud-derivation .row .lbl {
+  color: var(--text-2);
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.eud-derivation .row .v { color: var(--text-0); font-size: 14.5px; }
+.eud-derivation .row.is-hi { border-color: var(--border-accent); background: var(--accent-dim); }
+.eud-derivation .row.is-hi .v { color: var(--accent-soft); }
+
+.eud-formula-result {
+  text-align: center;
+  padding: 20px 14px;
+  border-radius: var(--radius-m);
+  background:
+    radial-gradient(ellipse at center, var(--accent-dim), transparent 70%),
+    rgba(255,255,255,0.015);
+  border: 1px solid var(--border-accent);
+}
+.eud-formula-result .lbl {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+.eud-formula-result .f {
+  font-family: ui-monospace, monospace;
+  font-size: 34px; font-weight: 500;
+  color: var(--accent-soft);
+  letter-spacing: 0.02em;
+}
+.eud-formula-result .f sub { font-size: 0.55em; }
+.eud-formula-result .note {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-top: 8px;
+}
+.eud-formula-result .note.match { color: var(--gas); }
+
+/* Narrative ── */
+.eud-narr-title { font-size: 16px; font-weight: 600; color: var(--text-0); letter-spacing: -0.005em; }
+.eud-narr-list { margin: 0; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.eud-narr-list li { font-size: 14px; color: var(--text-1); line-height: 1.55; display: flex; gap: 8px; }
+.eud-narr-list .n {
+  color: var(--accent-soft); flex: 0 0 16px;
+  font-family: ui-monospace, monospace; font-size: 13px;
+}
+
+/* Action bar ── */
+.eud-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-l);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.002)),
+    var(--bg-1);
+  flex-wrap: wrap;
+}
+.eud-bar-left { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.eud-bar-right { display: flex; gap: 10px; flex-wrap: wrap; }
+.eud-bar-hint {
+  font-size: 13.5px;
+  color: var(--text-2);
+  display: flex; align-items: center; gap: 6px;
+}
+.eud-kbd {
+  font-family: ui-monospace, monospace;
+  font-size: 12.5px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  color: var(--text-1);
+}
+
+.eud-btn {
+  appearance: none;
+  border: 1px solid var(--border-strong);
+  background: rgba(255,255,255,0.025);
+  color: var(--text-0);
+  padding: 9px 14px;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: all 0.14s ease;
+}
+.eud-btn:hover:not(:disabled) { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
+.eud-btn.is-primary {
+  background: linear-gradient(180deg, var(--accent), #6E61E0);
+  border-color: rgba(139,126,248,0.6);
+  color: #0A0814; font-weight: 600;
+  box-shadow: 0 0 0 1px rgba(139,126,248,0.4) inset, 0 4px 20px rgba(139,126,248,0.3);
+}
+.eud-btn.is-fire {
+  background: linear-gradient(180deg, #FF8266, #E55842);
+  border-color: rgba(255,130,102,0.6);
+  color: #1A0606; font-weight: 600;
+  box-shadow: 0 0 0 1px rgba(255,130,102,0.4) inset, 0 4px 20px rgba(255,130,102,0.35);
+}
+.eud-btn.is-ghost { background: transparent; }
+.eud-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Ignition flash ── */
+@keyframes eud-flash-ignite {
+  0%   { opacity: 0; }
+  6%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+.eud-flash {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255,200,140,0.95), rgba(255,140,90,0.4) 30%, transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 5;
+  mix-blend-mode: screen;
+}
+.eud-flash.is-firing { animation: eud-flash-ignite 1.2s ease-out 1; }
+
+@media (max-width: 1100px) {
+  .eud-grid { grid-template-columns: 1fr; }
+  .eud-tube-stage { min-height: 520px; }
+  .eud-stat-row { flex-wrap: wrap; }
+  .eud-stat { min-width: 100px; }
+}
+@media (max-width: 700px) {
+  .eud-stepper { grid-template-columns: repeat(2, 1fr); }
+  .eud-step:nth-child(2) { border-right: none; }
+  .eud-step { border-bottom: 1px solid var(--border); }
+  .eud-step:nth-child(3), .eud-step:nth-child(4) { border-bottom: none; }
+  .eud-hdr-r { display: none; }
+}
 `;
 
-// ── Tube geometry ────────────────────────────────────────────────────────────
-const TUBE_X = 60;
-const TUBE_W = 90;
-const TUBE_TOP = 40;
-const TUBE_BOT = 480;
-const TUBE_H = TUBE_BOT - TUBE_TOP;
-const MAX_VOL = 100; // mL — full tube
-const RESERVOIR_TOP = 470;
-const RESERVOIR_BOT = 560;
-
-function volToHeight(vol: number) {
-  return (vol / MAX_VOL) * TUBE_H;
+// ── Pretty formula renderer ──────────────────────────────────────────────────
+function Formula({
+  x,
+  y,
+  kind,
+}: {
+  x?: number;
+  y?: number;
+  kind: 'gas' | 'o2' | 'co2' | 'water';
+}) {
+  const cls = 'c-' + kind;
+  if (kind === 'o2') return <span className={cls}>O<sub>2</sub></span>;
+  if (kind === 'water') return <span className={cls}>H<sub>2</sub>O</span>;
+  if (kind === 'co2') return <span className={cls}>CO<sub>2</sub></span>;
+  return (
+    <span className={cls}>
+      {x === 1 ? 'C' : (<>C<sub>{x}</sub></>)}
+      {y === 0 ? '' : y === 1 ? 'H' : (<>H<sub>{y}</sub></>)}
+    </span>
+  );
 }
 
 // ── Main component ───────────────────────────────────────────────────────────
 export default function EudiometerLabSim() {
-  const [phase, setPhase] = useState<Phase>('setup');
-  const [hcId, setHcId] = useState<HydrocarbonId>('CH4');
-  const [hcVol, setHcVol] = useState(10); // mL
-  const [o2Vol, setO2Vol] = useState(50); // mL
-  const [ignited, setIgnited] = useState(false);
-  const [absorbStep, setAbsorbStep] = useState(0); // 0 = none, 1 = after KOH, 2 = after pyrogallol
-  const [guess, setGuess] = useState<{ x: number; y: number }>({ x: 1, y: 4 });
-  const [revealed, setRevealed] = useState(false);
+  const [step, setStep] = useState(0);
+  const [gasKey, setGasKey] = useState<GasKey>('methane');
+  const [vGas, setVGas] = useState(10);
+  const [vO2, setVO2] = useState(50);
+  const [firing, setFiring] = useState(false);
 
-  const hc = HYDROCARBONS.find((h) => h.id === hcId)!;
+  const gas = GASES[gasKey] as Gas;
+  const { x, y } = gas;
 
-  // ── Reaction stoichiometry ────────────────────────────────────────────────
-  // C_xH_y + (x + y/4) O₂ → x CO₂ + (y/2) H₂O
-  const o2NeededForFullCombustion = useMemo(() => hcVol * (hc.x + hc.y / 4), [hcVol, hc]);
-  const o2IsLimiting = o2Vol < o2NeededForFullCombustion;
+  // Stoichiometry
+  const o2NeededPerMole = x + y / 4;
+  const o2Needed = vGas * o2NeededPerMole;
+  const enoughO2 = vO2 >= o2Needed;
+  const excessO2 = Math.max(0, vO2 - o2Needed);
 
-  // Volumes after combustion (water still as vapour — we'll condense in absorb phase)
-  const co2Formed = o2IsLimiting
-    ? (o2Vol / (hc.x + hc.y / 4)) * hc.x
-    : hcVol * hc.x;
-  const h2oFormed = o2IsLimiting
-    ? (o2Vol / (hc.x + hc.y / 4)) * (hc.y / 2)
-    : hcVol * (hc.y / 2);
-  const o2Consumed = o2IsLimiting ? o2Vol : o2NeededForFullCombustion;
-  const o2Remaining = o2Vol - o2Consumed;
-  const hcConsumed = o2IsLimiting
-    ? o2Vol / (hc.x + hc.y / 4)
-    : hcVol;
-  const hcRemaining = hcVol - hcConsumed;
+  const vInitial = vGas + vO2;
+  const vAfterIgnition = enoughO2 ? vO2 - vGas * (y / 4) : null;
+  const vAfterKOH = enoughO2 ? vO2 - vGas * (x + y / 4) : null;
 
-  // After cooling (water condenses, doesn't count as gas volume)
-  const totalAfterCool = co2Formed + o2Remaining + hcRemaining;
-  const volAfterKOH = totalAfterCool - co2Formed; // KOH absorbs CO₂
-  const volAfterPyrogallol = volAfterKOH - o2Remaining; // Pyrogallol absorbs O₂
+  // Reset to step 0 when inputs change
+  useEffect(() => {
+    if (step > 0) setStep(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gasKey, vGas, vO2]);
 
-  // ── Phase control ─────────────────────────────────────────────────────────
-  function goNext() {
-    const idx = PHASES.findIndex((p) => p.id === phase);
-    if (idx < PHASES.length - 1) setPhase(PHASES[idx + 1].id);
-  }
-  function goBack() {
-    const idx = PHASES.findIndex((p) => p.id === phase);
-    if (idx > 0) setPhase(PHASES[idx - 1].id);
-  }
-  function resetAll() {
-    setPhase('setup');
-    setIgnited(false);
-    setAbsorbStep(0);
-    setRevealed(false);
-    setGuess({ x: 1, y: 4 });
-  }
+  // Tube layers per step
+  type Layer = { id: string; formula: string; volume: number; color: string };
+  const layers: Layer[] = useMemo(() => {
+    if (step === 0) {
+      return [
+        { id: 'gas', formula: gas.formula, volume: vGas, color: '#4ADE92' },
+        { id: 'o2', formula: 'O₂', volume: vO2, color: '#57B8F2' },
+      ];
+    }
+    if (step === 1) {
+      const vCO2 = vGas * x;
+      const vO2left = vO2 - vGas * (x + y / 4);
+      return [
+        { id: 'co2', formula: 'CO₂', volume: vCO2, color: '#F2B463' },
+        { id: 'o2', formula: 'O₂', volume: vO2left, color: '#57B8F2' },
+      ].filter((l) => l.volume > 0.05);
+    }
+    if (step >= 2) {
+      const vO2left = vO2 - vGas * (x + y / 4);
+      return [
+        { id: 'o2', formula: 'O₂', volume: vO2left, color: '#57B8F2' },
+      ].filter((l) => l.volume > 0.05);
+    }
+    return [];
+  }, [step, gas, vGas, vO2, x, y]);
 
-  const phaseIdx = PHASES.findIndex((p) => p.id === phase);
+  const totalGas = layers.reduce((s, l) => s + l.volume, 0);
 
-  // ── Render ────────────────────────────────────────────────────────────────
-  return (
-    <div className="p-4 md:p-6" style={{ background: '#0d1117', color: '#e2e8f0', minHeight: '80vh' }}>
-      <style>{ANIM}</style>
+  // Handlers
+  const goNext = useCallback(() => {
+    if (!enoughO2 && step === 0) return;
+    if (step === 0) {
+      setFiring(true);
+      setTimeout(() => setStep(1), 350);
+      setTimeout(() => setFiring(false), 1200);
+    } else if (step < 3) {
+      setStep(step + 1);
+    }
+  }, [step, enoughO2]);
+  const goBack = useCallback(() => { if (step > 0) setStep(step - 1); }, [step]);
+  const reset = useCallback(() => setStep(0), []);
 
-      {/* Header */}
-      <div className="mb-3 flex justify-between items-start flex-wrap gap-2">
-        <div>
-          <h1 className="text-3xl font-black tracking-tight text-white">
-            Eudiometer <span style={{ color: '#7c3aed' }}>Lab</span>
-          </h1>
-          <p className="text-[11px] font-bold uppercase tracking-widest mt-0.5" style={{ color: '#475569' }}>
-            Deduce a hydrocarbon's formula from gas-volume measurements
-          </p>
-        </div>
-        <div className="text-[10px] font-black uppercase tracking-widest pt-1" style={{ color: '#64748b' }}>
-          Volume–Volume Analysis · NCERT Ch 1
-        </div>
-      </div>
+  // Keyboard
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+      if (e.key === 'ArrowRight' || e.key === 'Enter') { e.preventDefault(); goNext(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); goBack(); }
+      if (e.key === 'r' || e.key === 'R') reset();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [goNext, goBack, reset]);
 
-      {/* StepBar */}
-      <div className="flex items-center gap-2 mb-6 flex-wrap">
-        {PHASES.map((p, i) => {
-          const active = p.id === phase;
-          const done = i < phaseIdx;
-          return (
-            <button
-              key={p.id}
-              onClick={() => done && setPhase(p.id)}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-[11px] font-black uppercase tracking-wider transition-all"
-              style={{
-                background: active ? 'rgba(129,140,248,0.15)' : done ? 'rgba(52,211,153,0.08)' : 'rgba(255,255,255,0.03)',
-                border: `1px solid ${active ? 'rgba(129,140,248,0.45)' : done ? 'rgba(52,211,153,0.25)' : 'rgba(255,255,255,0.07)'}`,
-                color: active ? '#c4b5fd' : done ? '#6ee7b7' : 'rgba(255,255,255,0.25)',
-                cursor: done ? 'pointer' : 'default',
-              }}
-            >
-              <span
-                className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black shrink-0"
-                style={{ background: active ? '#6366f1' : done ? '#059669' : 'rgba(255,255,255,0.06)', color: 'white' }}
-              >
-                {done ? '✓' : i + 1}
-              </span>
-              {p.label}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Main: stacked layout — SVG on top, controls below */}
-      <div className="flex flex-col gap-6">
-        {/* SVG canvas — centred with constrained width so the portrait
-            eudiometer tube stays a sensible size */}
-        <div
-          className="relative overflow-hidden flex items-center justify-center rounded-3xl mx-auto w-full max-w-lg"
-          style={{
-            minHeight: 520,
-            background: 'radial-gradient(circle at center,#1e204a 0%,#050614 100%)',
-            border: '1px solid rgba(99,102,241,0.2)',
-          }}
-        >
-          <EudiometerSVG
-            phase={phase}
-            hc={hc}
-            hcVol={hcVol}
-            o2Vol={o2Vol}
-            ignited={ignited}
-            absorbStep={absorbStep}
-            o2IsLimiting={o2IsLimiting}
-            hcConsumed={hcConsumed}
-            hcRemaining={hcRemaining}
-            co2Formed={co2Formed}
-            o2Remaining={o2Remaining}
-            totalAfterCool={totalAfterCool}
-            volAfterKOH={volAfterKOH}
-            volAfterPyrogallol={volAfterPyrogallol}
-          />
-        </div>
-
-        {/* Controls — placed below the SVG, slightly constrained max-width
-            for readability on wide screens */}
-        <div className="flex flex-col py-1 gap-5 mx-auto w-full max-w-3xl">
-          {phase === 'setup' && (
-            <SetupPanel
-              hcId={hcId}
-              setHcId={(id) => {
-                setHcId(id);
-                setIgnited(false);
-                setAbsorbStep(0);
-                setGuess({ x: 1, y: 4 });
-                setRevealed(false);
-              }}
-              hcVol={hcVol}
-              setHcVol={setHcVol}
-              o2Vol={o2Vol}
-              setO2Vol={setO2Vol}
-              hc={hc}
-              o2NeededForFullCombustion={o2NeededForFullCombustion}
-              o2IsLimiting={o2IsLimiting}
-            />
-          )}
-          {phase === 'ignite' && (
-            <IgnitePanel
-              hc={hc}
-              hcVol={hcVol}
-              o2Vol={o2Vol}
-              ignited={ignited}
-              onIgnite={() => setIgnited(true)}
-              co2Formed={co2Formed}
-              h2oFormed={h2oFormed}
-              o2Remaining={o2Remaining}
-              hcRemaining={hcRemaining}
-              o2IsLimiting={o2IsLimiting}
-            />
-          )}
-          {phase === 'absorb' && (
-            <AbsorbPanel
-              absorbStep={absorbStep}
-              setAbsorbStep={setAbsorbStep}
-              totalAfterCool={totalAfterCool}
-              volAfterKOH={volAfterKOH}
-              volAfterPyrogallol={volAfterPyrogallol}
-              co2Formed={co2Formed}
-              o2Remaining={o2Remaining}
-              hcRemaining={hcRemaining}
-            />
-          )}
-          {phase === 'deduce' && (
-            <DeducePanel
-              hc={hc}
-              hcVol={hcVol}
-              o2Vol={o2Vol}
-              co2Formed={co2Formed}
-              o2Remaining={o2Remaining}
-              o2Consumed={o2Consumed}
-              guess={guess}
-              setGuess={setGuess}
-              revealed={revealed}
-              setRevealed={setRevealed}
-            />
-          )}
-        </div>
-      </div>
-
-      {/* Bottom nav */}
-      <div className="flex justify-between items-center pt-6">
-        <button
-          onClick={goBack}
-          disabled={phaseIdx === 0}
-          className="px-4 py-2 rounded-lg text-sm font-bold transition-all"
-          style={{
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.1)',
-            color: phaseIdx === 0 ? '#334155' : '#94a3b8',
-            cursor: phaseIdx === 0 ? 'not-allowed' : 'pointer',
-          }}
-        >
-          ← Back
-        </button>
-        <button
-          onClick={resetAll}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all"
-          style={{
-            background: 'rgba(99,102,241,0.10)',
-            border: '1px solid rgba(129,140,248,0.3)',
-            color: '#a5b4fc',
-          }}
-        >
-          ↺ Reset Lab
-        </button>
-        <button
-          onClick={goNext}
-          disabled={phaseIdx === PHASES.length - 1 || !canProceed(phase, ignited, absorbStep)}
-          className="px-5 py-2 rounded-lg text-sm font-bold transition-all"
-          style={{
-            background: 'rgba(99,102,241,0.18)',
-            border: '1px solid rgba(129,140,248,0.4)',
-            color: phaseIdx === PHASES.length - 1 || !canProceed(phase, ignited, absorbStep) ? '#334155' : '#c4b5fd',
-            cursor: phaseIdx === PHASES.length - 1 || !canProceed(phase, ignited, absorbStep) ? 'not-allowed' : 'pointer',
-          }}
-        >
-          Next: {PHASES[phaseIdx + 1]?.label.split('·')[1]?.trim() ?? '—'} →
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function canProceed(phase: Phase, ignited: boolean, absorbStep: number): boolean {
-  if (phase === 'ignite') return ignited;
-  if (phase === 'absorb') return absorbStep >= 2;
-  return true;
-}
-
-// ─── SVG eudiometer ─────────────────────────────────────────────────────────
-function EudiometerSVG(props: {
-  phase: Phase;
-  hc: typeof HYDROCARBONS[number];
-  hcVol: number;
-  o2Vol: number;
-  ignited: boolean;
-  absorbStep: number;
-  o2IsLimiting: boolean;
-  hcConsumed: number;
-  hcRemaining: number;
-  co2Formed: number;
-  o2Remaining: number;
-  totalAfterCool: number;
-  volAfterKOH: number;
-  volAfterPyrogallol: number;
-}) {
-  const {
-    phase, hc, hcVol, o2Vol, ignited, absorbStep,
-    co2Formed, o2Remaining, hcRemaining, totalAfterCool, volAfterKOH, volAfterPyrogallol,
-  } = props;
-
-  // What gases are in the tube right now?
-  // Setup: hydrocarbon + O₂ as separate-colored bands (top = lighter density depiction).
-  // Ignite (post-ignition): CO₂ + remaining O₂ + remaining HC + water vapour
-  // Cool: water removed → CO₂ + O₂ + remaining HC
-  // Absorb after KOH: O₂ + remaining HC
-  // Absorb after Pyrogallol: remaining HC only (usually 0 with stoichiometric O₂)
-
-  type Band = { vol: number; color: string; label: string };
-  let bands: Band[] = [];
-  let totalVol = hcVol + o2Vol;
-
-  if (phase === 'setup' || (phase === 'ignite' && !ignited)) {
-    bands = [
-      { vol: hcVol, color: hc.color, label: hc.id.startsWith('MYS') ? 'Unknown' : hc.formula },
-      { vol: o2Vol, color: '#60a5fa', label: 'O₂' },
-    ];
-    totalVol = hcVol + o2Vol;
-  } else if (phase === 'ignite' && ignited) {
-    // After combustion, before cooling — water still as vapour
-    const h2oVol = (hcVol - hcRemaining) * (hc.y / 2);
-    bands = [];
-    if (hcRemaining > 0.01) bands.push({ vol: hcRemaining, color: hc.color, label: hc.formula });
-    if (o2Remaining > 0.01) bands.push({ vol: o2Remaining, color: '#60a5fa', label: 'O₂' });
-    if (co2Formed > 0.01)   bands.push({ vol: co2Formed,   color: '#94a3b8', label: 'CO₂' });
-    if (h2oVol > 0.01)      bands.push({ vol: h2oVol,      color: '#7dd3fc', label: 'H₂O (vapour)' });
-    totalVol = hcRemaining + o2Remaining + co2Formed + h2oVol;
-  } else if (phase === 'absorb' && absorbStep === 0) {
-    // Just cooled — water condensed out
-    bands = [];
-    if (hcRemaining > 0.01) bands.push({ vol: hcRemaining, color: hc.color, label: hc.formula });
-    if (o2Remaining > 0.01) bands.push({ vol: o2Remaining, color: '#60a5fa', label: 'O₂' });
-    if (co2Formed > 0.01)   bands.push({ vol: co2Formed,   color: '#94a3b8', label: 'CO₂' });
-    totalVol = totalAfterCool;
-  } else if (phase === 'absorb' && absorbStep === 1) {
-    // After KOH — CO₂ gone
-    bands = [];
-    if (hcRemaining > 0.01) bands.push({ vol: hcRemaining, color: hc.color, label: hc.formula });
-    if (o2Remaining > 0.01) bands.push({ vol: o2Remaining, color: '#60a5fa', label: 'O₂' });
-    totalVol = volAfterKOH;
-  } else if ((phase === 'absorb' && absorbStep >= 2) || phase === 'deduce') {
-    // After pyrogallol — O₂ gone
-    bands = [];
-    if (hcRemaining > 0.01) bands.push({ vol: hcRemaining, color: hc.color, label: hc.formula });
-    totalVol = volAfterPyrogallol;
-  }
-
-  // Layout bands from bottom up
-  let cursorY = TUBE_BOT;
-  const renderedBands = bands.map((b, idx) => {
-    const h = volToHeight(b.vol);
-    const y = cursorY - h;
-    cursorY = y;
-    return { ...b, y, h, idx };
-  });
-
-  // Water droplets in the reservoir if we've combusted
-  const showWaterInReservoir = (phase === 'ignite' && ignited) || phase === 'absorb' || phase === 'deduce';
+  const accentLabel = step === 0 ? 'TOTAL' : step === 1 ? 'AFTER IGNITE' : 'AFTER KOH';
+  const headTag =
+    step === 0 ? 'PRE-IGNITION' :
+    step === 1 ? 'POST-IGNITION' :
+    step === 2 ? 'POST-KOH' :
+                 'FINAL VOLUME';
 
   return (
-    <svg width="100%" height="100%" viewBox="0 0 360 580" style={{ minHeight: 520 }}>
-      {/* Reservoir bowl */}
-      <ellipse cx={TUBE_X + TUBE_W / 2} cy={RESERVOIR_BOT - 5} rx={120} ry={20} fill="#1e293b" stroke="rgba(148,163,184,0.5)" strokeWidth={1.5} />
-      <path
-        d={`M ${TUBE_X + TUBE_W / 2 - 120} ${RESERVOIR_BOT - 5}
-            L ${TUBE_X + TUBE_W / 2 - 130} ${RESERVOIR_TOP + 10}
-            Q ${TUBE_X + TUBE_W / 2 - 130} ${RESERVOIR_TOP} ${TUBE_X + TUBE_W / 2 - 110} ${RESERVOIR_TOP}
-            L ${TUBE_X + TUBE_W / 2 + 110} ${RESERVOIR_TOP}
-            Q ${TUBE_X + TUBE_W / 2 + 130} ${RESERVOIR_TOP} ${TUBE_X + TUBE_W / 2 + 130} ${RESERVOIR_TOP + 10}
-            L ${TUBE_X + TUBE_W / 2 + 120} ${RESERVOIR_BOT - 5}`}
-        fill="rgba(30,41,59,0.6)" stroke="rgba(148,163,184,0.3)" strokeWidth={1}
-      />
-      {/* Water level in reservoir */}
-      <rect
-        x={TUBE_X + TUBE_W / 2 - 125}
-        y={RESERVOIR_TOP + 18}
-        width={250}
-        height={RESERVOIR_BOT - RESERVOIR_TOP - 23}
-        fill="rgba(96,165,250,0.18)"
-      />
+    <div className="eud-root">
+      <style>{STYLES}</style>
+      <div className="eud-app">
+        {/* HEADER */}
+        <header className="eud-hdr">
+          <div className="eud-hdr-l">
+            <div className="eud-hdr-mark">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M7 2 L7 8 L3.5 16 Q3 17.5 4.5 17.5 L15.5 17.5 Q17 17.5 16.5 16 L13 8 L13 2 Z"
+                      stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+                <line x1="7" y1="2" x2="13" y2="2" stroke="currentColor" strokeWidth="1.4" />
+                <circle cx="10" cy="13" r="1.5" fill="currentColor" />
+              </svg>
+            </div>
+            <div>
+              <div className="eud-hdr-title">Eudiometer Lab</div>
+              <div className="eud-hdr-sub">Volume–volume analysis of gaseous hydrocarbons</div>
+            </div>
+          </div>
+          <div className="eud-hdr-r">
+            <div className="eud-hdr-tag"><span className="eud-hdr-dot" />Apparatus armed</div>
+            <div className="eud-hdr-tag">Mole Concept · CH 1</div>
+          </div>
+        </header>
 
-      {/* Tube body */}
-      <rect
-        x={TUBE_X}
-        y={TUBE_TOP - 5}
-        width={TUBE_W}
-        height={TUBE_BOT - TUBE_TOP + 5}
-        rx={4}
-        fill="rgba(15,23,42,0.6)"
-        stroke="rgba(148,163,184,0.5)"
-        strokeWidth={1.5}
-      />
-
-      {/* Gradations */}
-      {Array.from({ length: 11 }).map((_, i) => {
-        const v = (i * MAX_VOL) / 10;
-        const y = TUBE_BOT - volToHeight(v);
-        return (
-          <g key={i}>
-            <line x1={TUBE_X} y1={y} x2={TUBE_X + 8} y2={y} stroke="rgba(148,163,184,0.4)" strokeWidth={1} />
-            <text x={TUBE_X - 4} y={y + 3} textAnchor="end" fontSize={9} fill="#94a3b8" fontFamily="ui-monospace, monospace">
-              {v}
-            </text>
-          </g>
-        );
-      })}
-
-      {/* Gas bands */}
-      {renderedBands.map((b) => (
-        <g key={b.idx} className={phase === 'absorb' || (phase === 'ignite' && ignited) ? 'eud-rise-in' : ''}>
-          <rect
-            x={TUBE_X + 2}
-            y={b.y}
-            width={TUBE_W - 4}
-            height={b.h}
-            fill={b.color}
-            opacity={0.65}
-          />
-          {b.h > 14 && (
-            <text
-              x={TUBE_X + TUBE_W / 2}
-              y={b.y + b.h / 2 + 3}
-              textAnchor="middle"
-              fontSize={10}
-              fontWeight={700}
-              fill="white"
-            >
-              {b.label} · {b.vol.toFixed(1)} mL
-            </text>
-          )}
-        </g>
-      ))}
-
-      {/* Total volume readout, top */}
-      <g>
-        <rect x={TUBE_X + TUBE_W + 14} y={TUBE_TOP} width={110} height={50} rx={8} fill="rgba(15,23,42,0.7)" stroke="rgba(99,102,241,0.3)" />
-        <text x={TUBE_X + TUBE_W + 22} y={TUBE_TOP + 18} fontSize={9} fontWeight={800} fill="#6366f1" letterSpacing={1.5}>
-          TOTAL GAS
-        </text>
-        <text x={TUBE_X + TUBE_W + 22} y={TUBE_TOP + 38} fontSize={18} fontWeight={900} fill="#e2e8f0" fontFamily="ui-monospace, monospace">
-          {totalVol.toFixed(1)} mL
-        </text>
-      </g>
-
-      {/* Platinum electrodes + spark */}
-      <line x1={TUBE_X + 20} y1={TUBE_TOP - 5} x2={TUBE_X + 25} y2={TUBE_TOP + 18} stroke="#cbd5e1" strokeWidth={2.5} strokeLinecap="round" />
-      <line x1={TUBE_X + TUBE_W - 20} y1={TUBE_TOP - 5} x2={TUBE_X + TUBE_W - 25} y2={TUBE_TOP + 18} stroke="#cbd5e1" strokeWidth={2.5} strokeLinecap="round" />
-      {phase === 'ignite' && ignited && (
-        <g className="eud-spark">
-          <circle cx={TUBE_X + TUBE_W / 2} cy={TUBE_TOP + 22} r={8} fill="#fde047" opacity={0.6} />
-          <circle cx={TUBE_X + TUBE_W / 2} cy={TUBE_TOP + 22} r={4} fill="#fef9c3" />
-        </g>
-      )}
-      {phase === 'ignite' && ignited && (
-        <rect
-          className="eud-flash"
-          x={TUBE_X + 2}
-          y={TUBE_TOP - 3}
-          width={TUBE_W - 4}
-          height={TUBE_BOT - TUBE_TOP}
-          fill="rgba(254,240,138,0.35)"
-        />
-      )}
-
-      {/* Water droplets in reservoir after combustion */}
-      {showWaterInReservoir && (
-        <g>
-          {[0, 1, 2, 3, 4].map((i) => (
-            <circle
-              key={i}
-              cx={TUBE_X + TUBE_W / 2 - 80 + i * 36}
-              cy={RESERVOIR_TOP + 28 + (i % 2) * 8}
-              r={4}
-              fill="#7dd3fc"
-              opacity={0.7}
-            />
-          ))}
-          <text x={TUBE_X + TUBE_W / 2} y={RESERVOIR_BOT + 15} textAnchor="middle" fontSize={10} fontWeight={700} fill="#7dd3fc">
-            H₂O condensed
-          </text>
-        </g>
-      )}
-
-      {/* Title above tube */}
-      <text x={TUBE_X + TUBE_W / 2} y={28} textAnchor="middle" fontSize={11} fontWeight={800} fill="#818cf8" letterSpacing={1.5}>
-        EUDIOMETER TUBE
-      </text>
-
-      {/* Note: absorbent status indicator removed — duplicated in the sidebar.
-          Keeps the SVG focused on the tube and gas-volume readout only. */}
-    </svg>
-  );
-}
-
-// ─── Setup panel ────────────────────────────────────────────────────────────
-function SetupPanel(props: {
-  hcId: HydrocarbonId;
-  setHcId: (id: HydrocarbonId) => void;
-  hcVol: number;
-  setHcVol: (v: number) => void;
-  o2Vol: number;
-  setO2Vol: (v: number) => void;
-  hc: typeof HYDROCARBONS[number];
-  o2NeededForFullCombustion: number;
-  o2IsLimiting: boolean;
-}) {
-  const { hcId, setHcId, hcVol, setHcVol, o2Vol, setO2Vol, hc, o2NeededForFullCombustion, o2IsLimiting } = props;
-  return (
-    <div className="flex flex-col gap-5">
-      <h2 className="text-xl font-black uppercase tracking-tighter" style={{ color: '#e2e8f0' }}>
-        Setup the Experiment
-      </h2>
-
-      <div>
-        <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: '#818cf8' }}>
-          1. Pick a gas
-        </p>
-        <div className="grid grid-cols-2 gap-2">
-          {HYDROCARBONS.map((h) => {
-            const active = h.id === hcId;
+        {/* STEPPER */}
+        <div className="eud-stepper">
+          {STEPS.map((s) => {
+            const cur = step === s.id;
+            const done = step > s.id;
+            const locked = s.id > step;
             return (
               <button
-                key={h.id}
-                onClick={() => setHcId(h.id)}
-                className="text-left px-3 py-2 rounded-lg transition-all"
-                style={{
-                  background: active ? 'rgba(129,140,248,0.15)' : 'rgba(255,255,255,0.03)',
-                  border: `1px solid ${active ? 'rgba(129,140,248,0.45)' : 'rgba(255,255,255,0.07)'}`,
-                }}
+                key={s.id}
+                type="button"
+                className={`eud-step${cur ? ' is-current' : ''}${done ? ' is-done' : ''}${locked ? ' is-locked' : ''}`}
+                onClick={() => { if (!locked) setStep(s.id); }}
               >
-                <div className="text-sm font-bold" style={{ color: active ? '#c4b5fd' : '#94a3b8' }}>{h.name}</div>
-                <div className="text-[10px] font-mono" style={{ color: active ? h.color : '#475569' }}>{h.formula}</div>
+                <div className="eud-step-n">{done ? '✓' : s.id + 1}</div>
+                <div>
+                  <div className="eud-step-name">{s.name}</div>
+                  <div className="eud-step-desc">{s.desc}</div>
+                </div>
               </button>
             );
           })}
         </div>
-        <p className="text-[10px] mt-2 italic" style={{ color: '#64748b' }}>{hc.hint}</p>
-      </div>
 
-      <div>
-        <div className="flex items-baseline justify-between mb-1">
-          <p className="text-xs font-black uppercase tracking-widest" style={{ color: '#818cf8' }}>
-            2. Volume of gas
-          </p>
-          <span className="text-sm font-bold font-mono" style={{ color: hc.color }}>{hcVol} mL</span>
+        {/* MAIN GRID */}
+        <div className="eud-grid">
+          <LeftPanel
+            step={step}
+            gasKey={gasKey}
+            setGasKey={setGasKey}
+            gas={gas}
+            vGas={vGas} setVGas={setVGas}
+            vO2={vO2} setVO2={setVO2}
+            enoughO2={enoughO2}
+            excessO2={excessO2}
+            o2Needed={o2Needed}
+            y={y}
+            x={x}
+          />
+
+          {/* CENTER — eudiometer */}
+          <div className="eud-card eud-eu-card">
+            <div className="eud-eu-head">
+              <div className="eud-card-title">Eudiometer <span className="accent">/ tube</span></div>
+              <div className="eud-card-tag">{headTag}</div>
+            </div>
+            <div className="eud-stat-row">
+              <Stat label="Initial"      value={vInitial}        isInitial isCurrent={step === 0} />
+              <Stat label="After Ignite" value={vAfterIgnition} isIgnite  isCurrent={step === 1}
+                    delta={vAfterIgnition != null ? -(vInitial - vAfterIgnition) : null}
+                    dim={step < 1} />
+              <Stat label="After KOH"    value={vAfterKOH}       isAbsorb  isCurrent={step >= 2}
+                    delta={vAfterKOH != null && vAfterIgnition != null ? -(vAfterIgnition - vAfterKOH) : null}
+                    dim={step < 2} />
+            </div>
+            <div className="eud-tube-stage">
+              <Eudiometer
+                layers={layers}
+                totalGas={totalGas}
+                accentLabel={accentLabel}
+                firing={firing}
+                bubbling={step === 2}
+              />
+              <div className={`eud-flash${firing ? ' is-firing' : ''}`} />
+            </div>
+          </div>
+
+          <RightPanel
+            step={step}
+            gas={gas}
+            x={x} y={y}
+            vGas={vGas}
+            vInitial={vInitial}
+            vAfterIgnition={vAfterIgnition}
+            vAfterKOH={vAfterKOH}
+          />
         </div>
-        <input
-          type="range"
-          min={5}
-          max={20}
-          step={1}
-          value={hcVol}
-          onChange={(e) => setHcVol(parseInt(e.target.value, 10))}
-          className="w-full"
-          style={{ accentColor: '#6366f1' }}
-        />
-      </div>
 
-      <div>
-        <div className="flex items-baseline justify-between mb-1">
-          <p className="text-xs font-black uppercase tracking-widest" style={{ color: '#818cf8' }}>
-            3. Volume of O₂
-          </p>
-          <span className="text-sm font-bold font-mono" style={{ color: '#60a5fa' }}>{o2Vol} mL</span>
+        {/* ACTION BAR */}
+        <div className="eud-bar">
+          <div className="eud-bar-left">
+            <div className="eud-bar-hint">
+              <span className="eud-kbd">←</span><span className="eud-kbd">→</span><span>step</span>
+              <span className="eud-kbd" style={{ marginLeft: 8 }}>R</span><span>reset</span>
+            </div>
+            {!enoughO2 && step === 0 && (
+              <div className="eud-callout warn">
+                <span className="ico">!</span>
+                Not enough O₂ — need {o2Needed.toFixed(1)} mL to fully combust this charge.
+              </div>
+            )}
+          </div>
+          <div className="eud-bar-right">
+            {step > 0 && <button type="button" className="eud-btn is-ghost" onClick={goBack}>← Back</button>}
+            {step > 0 && <button type="button" className="eud-btn is-ghost" onClick={reset}>Reset</button>}
+            {step === 0 && (
+              <button type="button" className="eud-btn is-fire" onClick={goNext} disabled={!enoughO2}>
+                Spark ignition
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M8 1 L3 7.5 L6.5 7.5 L5 13 L10 6 L7 6 Z" fill="currentColor" />
+                </svg>
+              </button>
+            )}
+            {step === 1 && (
+              <button type="button" className="eud-btn is-primary" onClick={goNext}>
+                Introduce KOH
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M2 7 H11 M7 3 L11 7 L7 11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                </svg>
+              </button>
+            )}
+            {step === 2 && (
+              <button type="button" className="eud-btn is-primary" onClick={goNext}>
+                Deduce formula →
+              </button>
+            )}
+            {step === 3 && (
+              <button type="button" className="eud-btn is-primary" onClick={reset}>
+                Run another experiment
+              </button>
+            )}
+          </div>
         </div>
-        <input
-          type="range"
-          min={20}
-          max={80}
-          step={1}
-          value={o2Vol}
-          onChange={(e) => setO2Vol(parseInt(e.target.value, 10))}
-          className="w-full"
-          style={{ accentColor: '#60a5fa' }}
-        />
-        <p className="text-[10px] mt-1.5" style={{ color: o2IsLimiting ? '#fbbf24' : '#64748b' }}>
-          {o2IsLimiting
-            ? `⚠ O₂ is the limiting reagent — only ${o2Vol.toFixed(1)} mL out of ${o2NeededForFullCombustion.toFixed(1)} mL needed for complete combustion.`
-            : `Excess O₂ — ${(o2Vol - o2NeededForFullCombustion).toFixed(1)} mL will remain unreacted.`}
-        </p>
-      </div>
-
-      <div className="pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <h5 className="text-[9px] font-black uppercase tracking-widest mb-1.5" style={{ color: '#6366f1' }}>Setup Tip</h5>
-        <p className="text-white text-sm font-bold leading-tight italic">
-          &ldquo;Use *excess* O₂ for cleanest results — the unreacted O₂ then shows up in the alkaline pyrogallol step.&rdquo;
-        </p>
       </div>
     </div>
   );
 }
 
-// ─── Ignite panel ───────────────────────────────────────────────────────────
-function IgnitePanel(props: {
-  hc: typeof HYDROCARBONS[number];
-  hcVol: number;
-  o2Vol: number;
-  ignited: boolean;
-  onIgnite: () => void;
-  co2Formed: number;
-  h2oFormed: number;
-  o2Remaining: number;
-  hcRemaining: number;
-  o2IsLimiting: boolean;
+// ── Stat tile ────────────────────────────────────────────────────────────────
+function Stat({
+  label, value, delta,
+  isInitial, isIgnite, isAbsorb,
+  isCurrent, dim,
+}: {
+  label: string;
+  value: number | null;
+  delta?: number | null;
+  isInitial?: boolean;
+  isIgnite?: boolean;
+  isAbsorb?: boolean;
+  isCurrent?: boolean;
+  dim?: boolean;
 }) {
-  const { hc, hcVol, o2Vol, ignited, onIgnite, co2Formed, h2oFormed, o2Remaining, hcRemaining, o2IsLimiting } = props;
+  const cls = ['eud-stat',
+    isInitial && 'is-initial',
+    isIgnite && 'is-ignite',
+    isAbsorb && 'is-absorb',
+    isCurrent && 'is-current',
+  ].filter(Boolean).join(' ');
   return (
-    <div className="flex flex-col gap-5">
-      <h2 className="text-xl font-black uppercase tracking-tighter" style={{ color: '#e2e8f0' }}>
-        Fire the Spark
-      </h2>
+    <div className={cls}>
+      <div className="lbl"><span className="lbl-dot" />{label}</div>
+      <div className={`v${dim ? ' dim' : ''}`}>
+        {value != null ? value.toFixed(1) : '—'}<span className="unit">mL</span>
+      </div>
+      {delta != null && !dim && (
+        <div className={`delta${delta < 0 ? ' minus' : ''}`}>
+          Δ {delta > 0 ? '+' : ''}{delta.toFixed(1)} mL
+        </div>
+      )}
+    </div>
+  );
+}
 
-      <div>
-        <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: '#818cf8' }}>
-          The Reaction
-        </p>
-        <p className="text-white font-bold text-base leading-snug font-mono">
-          {hc.id.startsWith('MYS') ? 'CₓHᵧ' : hc.formula} + (x + y/4) O₂ → x CO₂ + (y/2) H₂O
-        </p>
-        <p className="text-sm mt-2" style={{ color: '#94a3b8' }}>
-          A spark across the platinum electrodes ignites the gas mixture. After combustion, water condenses on the cool walls of the tube — its volume drops out of the gas count.
-        </p>
+// ── Left panel ───────────────────────────────────────────────────────────────
+function LeftPanel({
+  step, gasKey, setGasKey, gas, vGas, setVGas, vO2, setVO2,
+  enoughO2, excessO2, o2Needed, x, y,
+}: {
+  step: number;
+  gasKey: GasKey;
+  setGasKey: (k: GasKey) => void;
+  gas: Gas;
+  vGas: number; setVGas: (v: number) => void;
+  vO2: number; setVO2: (v: number) => void;
+  enoughO2: boolean;
+  excessO2: number;
+  o2Needed: number;
+  x: number; y: number;
+}) {
+  const gasFill = (vGas / 30) * 100;
+  const o2Fill = (vO2 / 100) * 100;
+
+  return (
+    <div className="eud-card">
+      <div className="eud-card-h">
+        <div className="eud-card-title">
+          {step === 0 ? (<>Setup <span className="accent">/ charge</span></>) :
+           step === 1 ? (<>Ignition <span className="accent">/ combustion</span></>) :
+           step === 2 ? (<>Absorption <span className="accent">/ KOH</span></>) :
+                       (<>Deduction <span className="accent">/ formula</span></>)}
+        </div>
+        <div className="eud-card-tag">STEP {step + 1} / 4</div>
       </div>
 
-      {!ignited ? (
-        <button
-          onClick={onIgnite}
-          className="px-5 py-3 rounded-lg text-base font-black uppercase tracking-wider transition-all"
-          style={{
-            background: 'linear-gradient(135deg, #f59e0b, #ef4444)',
-            border: '1px solid rgba(251,191,36,0.5)',
-            color: 'white',
-            boxShadow: '0 0 20px rgba(239,68,68,0.3)',
-          }}
-        >
-          ⚡ Fire Spark
-        </button>
-      ) : (
-        <div>
-          <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: '#34d399' }}>
-            After Combustion
-          </p>
-          <div className="space-y-1.5 text-sm font-mono">
-            <Row label={`${hc.id.startsWith('MYS') ? 'Unknown' : hc.formula} consumed`} value={`${(hcVol - hcRemaining).toFixed(2)} mL`} color={hc.color} />
-            <Row label="O₂ consumed" value={`${(o2Vol - o2Remaining).toFixed(2)} mL`} color="#60a5fa" />
-            <Row label="CO₂ formed" value={`${co2Formed.toFixed(2)} mL`} color="#94a3b8" />
-            <Row label="H₂O formed (vapour)" value={`${h2oFormed.toFixed(2)} mL`} color="#7dd3fc" />
-            {hcRemaining > 0.01 && <Row label={`${hc.formula} leftover`} value={`${hcRemaining.toFixed(2)} mL`} color="#fbbf24" />}
-            {o2Remaining > 0.01 && <Row label="O₂ leftover" value={`${o2Remaining.toFixed(2)} mL`} color="#60a5fa" />}
+      {step === 0 && (
+        <>
+          <div className="eud-section">
+            <div className="eud-label"><span>Hydrocarbon</span><span className="val gas">{gas.formula}</span></div>
+            <div className="eud-gas-grid">
+              {Object.values(GASES).map((g) => {
+                const active = g.id === gasKey;
+                const mystery = 'mystery' in g;
+                return (
+                  <button
+                    key={g.id}
+                    type="button"
+                    className={`eud-gas-card${active ? ' is-active' : ''}${mystery ? ' is-mystery' : ''}`}
+                    onClick={() => setGasKey(g.id as GasKey)}
+                  >
+                    <div className="name">{g.name}</div>
+                    <div className="formula">{g.formula}</div>
+                    {mystery && <div className="mystery-glyph">?</div>}
+                  </button>
+                );
+              })}
+            </div>
+            <div className="eud-gas-desc">{gas.desc}</div>
           </div>
-          {o2IsLimiting && (
-            <p className="text-[11px] mt-2 italic" style={{ color: '#fbbf24' }}>
-              O₂ ran out before all the hydrocarbon could burn. Add more O₂ in the setup phase for a clean experiment.
-            </p>
+
+          <div className="eud-section">
+            <div className="eud-label"><span>Volume of gas</span><span className="val gas">{vGas} mL</span></div>
+            <div className="eud-slider-wrap">
+              <div className="eud-slider-track">
+                <div className="eud-slider-fill gas" style={{ width: `${gasFill}%` }} />
+              </div>
+              <input
+                type="range" min={1} max={30} step={1} value={vGas}
+                className="eud-slider-input gas"
+                onChange={(e) => setVGas(parseInt(e.target.value, 10))}
+              />
+            </div>
+            <div className="eud-slider-ticks"><span>1</span><span>10</span><span>20</span><span>30</span></div>
+          </div>
+
+          <div className="eud-section">
+            <div className="eud-label"><span>Volume of O₂</span><span className="val o2">{vO2} mL</span></div>
+            <div className="eud-slider-wrap">
+              <div className="eud-slider-track">
+                <div className="eud-slider-fill o2" style={{ width: `${o2Fill}%` }} />
+              </div>
+              <input
+                type="range" min={10} max={100} step={1} value={vO2}
+                className="eud-slider-input o2"
+                onChange={(e) => setVO2(parseInt(e.target.value, 10))}
+              />
+            </div>
+            <div className="eud-slider-ticks"><span>10</span><span>40</span><span>70</span><span>100</span></div>
+          </div>
+
+          {enoughO2 ? (
+            <div className="eud-callout ok">
+              <span className="ico">✓</span>
+              {o2Needed.toFixed(1)} mL O₂ consumed · {excessO2.toFixed(1)} mL excess
+            </div>
+          ) : (
+            <div className="eud-callout warn">
+              <span className="ico">!</span>
+              Need ≥ {o2Needed.toFixed(1)} mL O₂ for full combustion
+            </div>
+          )}
+        </>
+      )}
+
+      {step === 1 && (
+        <StepNarrative
+          title="A spark ignites the mixture"
+          bullets={[
+            'Platinum electrodes at the top of the sealed tube discharge a spark across the gas mixture.',
+            'The hydrocarbon burns instantly in O₂. Water vapour produced is rapidly cooled and condenses onto the trough — its gaseous contribution vanishes.',
+            'What remains in the gas phase: any excess O₂ plus all the CO₂ produced.',
+          ]}
+          measure={{ label: 'Volume contraction', value: `${(vGas * (1 + y / 4)).toFixed(1)} mL` }}
+        />
+      )}
+
+      {step === 2 && (
+        <StepNarrative
+          title="KOH solution removes CO₂"
+          bullets={[
+            'Concentrated potassium hydroxide is admitted into the tube. CO₂ reacts with KOH to form K₂CO₃, dissolving into the liquid.',
+            'Watch the level rise as carbon dioxide is scrubbed away.',
+            'The volume remaining is pure unreacted O₂.',
+          ]}
+          measure={{ label: 'CO₂ absorbed', value: `${(vGas * x).toFixed(1)} mL` }}
+        />
+      )}
+
+      {step === 3 && (
+        <StepNarrative
+          title="Two contractions, one formula"
+          bullets={[
+            'From the first contraction we count hydrogens. From the second we count carbons.',
+            'Each is normalised by the volume of the original hydrocarbon — Avogadro’s principle lets us read mole ratios straight off volume ratios.',
+          ]}
+        />
+      )}
+    </div>
+  );
+}
+
+function StepNarrative({
+  title, bullets, measure,
+}: {
+  title: string;
+  bullets: string[];
+  measure?: { label: string; value: string };
+}) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <div className="eud-narr-title">{title}</div>
+      <ul className="eud-narr-list">
+        {bullets.map((b, i) => (
+          <li key={i}>
+            <span className="n">{String(i + 1).padStart(2, '0')}</span>
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
+      {measure && (
+        <div className="eud-callout ok" style={{ marginTop: 4 }}>
+          <span className="ico">Σ</span>
+          {measure.label}: <span className="eud-mono" style={{ marginLeft: 4, color: 'var(--text-0)' }}>{measure.value}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Right panel ──────────────────────────────────────────────────────────────
+function RightPanel({
+  step, gas, x, y, vGas, vInitial, vAfterIgnition, vAfterKOH,
+}: {
+  step: number;
+  gas: Gas;
+  x: number; y: number;
+  vGas: number;
+  vInitial: number;
+  vAfterIgnition: number | null;
+  vAfterKOH: number | null;
+}) {
+  const dedX =
+    vAfterIgnition != null && vAfterKOH != null ? (vAfterIgnition - vAfterKOH) / vGas : null;
+  const dedY =
+    vAfterIgnition != null ? 4 * ((vInitial - vAfterIgnition) / vGas - 1) : null;
+
+  const o2Coef = x + y / 4;
+  const waterCoef = y / 2;
+  const fmtCoef = (c: number) =>
+    c === 1 ? '' : Number.isInteger(c) ? c + '·' : c.toFixed(1) + '·';
+
+  return (
+    <div className="eud-card">
+      <div className="eud-card-h">
+        <div className="eud-card-title">Lab notebook <span className="accent">/ math</span></div>
+        <div className="eud-card-tag">NCERT · CLASS 11</div>
+      </div>
+
+      <div>
+        <div className="eud-label" style={{ marginBottom: 8 }}><span>Balanced reaction</span></div>
+        <div className="eud-eq">
+          <Formula x={x} y={y} kind="gas" />
+          {' + '}
+          <span className="c-o2">{fmtCoef(o2Coef)}</span>
+          <Formula kind="o2" />
+          <span className="arrow">→</span>
+          <span className="c-co2">{x === 1 ? '' : x + '·'}</span>
+          <Formula kind="co2" />
+          {' + '}
+          <span className="c-water">{waterCoef === 1 ? '' : waterCoef + '·'}</span>
+          <Formula kind="water" />
+        </div>
+        <div style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 6, lineHeight: 1.5 }}>
+          Avogadro: equal volumes ↔ equal moles. Mole ratios = volume ratios.
+        </div>
+      </div>
+
+      <div>
+        <div className="eud-label" style={{ marginBottom: 8 }}><span>Volume bookkeeping</span></div>
+        <div className="eud-derivation">
+          <div className="row">
+            <span className="lbl">V₀ initial</span>
+            <span className="v">{vInitial.toFixed(1)} mL</span>
+          </div>
+          <div className="row" style={{ opacity: step >= 1 ? 1 : 0.45 }}>
+            <span className="lbl">V₁ post-ignite</span>
+            <span className="v">{vAfterIgnition != null && step >= 1 ? `${vAfterIgnition.toFixed(1)} mL` : '— —'}</span>
+          </div>
+          <div className="row" style={{ opacity: step >= 2 ? 1 : 0.45 }}>
+            <span className="lbl">V₂ post-KOH</span>
+            <span className="v">{vAfterKOH != null && step >= 2 ? `${vAfterKOH.toFixed(1)} mL` : '— —'}</span>
+          </div>
+          <div className="row" style={{ opacity: step >= 1 ? 1 : 0.45, marginTop: 6 }}>
+            <span className="lbl">V₀ − V₁ (gas + H lost)</span>
+            <span className="v">{step >= 1 && vAfterIgnition != null ? `${(vInitial - vAfterIgnition).toFixed(1)} mL` : '—'}</span>
+          </div>
+          <div className="row" style={{ opacity: step >= 2 ? 1 : 0.45 }}>
+            <span className="lbl">V₁ − V₂ (CO₂ absorbed)</span>
+            <span className="v">{step >= 2 && vAfterIgnition != null && vAfterKOH != null ? `${(vAfterIgnition - vAfterKOH).toFixed(1)} mL` : '—'}</span>
+          </div>
+
+          {step >= 3 && dedX != null && dedY != null && (
+            <>
+              <div className="row is-hi">
+                <span className="lbl">x = (V₁ − V₂) / V<sub>gas</sub></span>
+                <span className="v">{dedX.toFixed(2)} → <strong style={{ color: 'var(--text-0)' }}>{Math.round(dedX)}</strong></span>
+              </div>
+              <div className="row is-hi">
+                <span className="lbl">y = 4·((V₀ − V₁)/V<sub>gas</sub> − 1)</span>
+                <span className="v">{dedY.toFixed(2)} → <strong style={{ color: 'var(--text-0)' }}>{Math.round(dedY)}</strong></span>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {step >= 3 && dedX != null && dedY != null && (
+        <div className="eud-formula-result">
+          <div className="lbl">Deduced formula</div>
+          <div className="f">
+            C{Math.round(dedX) === 1 ? '' : <sub>{Math.round(dedX)}</sub>}
+            H{Math.round(dedY) === 1 ? '' : <sub>{Math.round(dedY)}</sub>}
+          </div>
+          {gas.mystery ? (
+            <div className="note match">↳ {gas.name} unmasked: {gas.mystery}</div>
+          ) : (
+            <div className="note match">↳ matches {gas.name} ({gas.formula})</div>
           )}
         </div>
       )}
-
-      <div className="pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <h5 className="text-[9px] font-black uppercase tracking-widest mb-1.5" style={{ color: '#6366f1' }}>Why Platinum?</h5>
-        <p className="text-white text-sm font-bold leading-tight italic">
-          &ldquo;Platinum doesn't react with the gases or with combustion products. Any other metal would burn or oxidise and contaminate the result.&rdquo;
-        </p>
-      </div>
     </div>
   );
 }
 
-function Row({ label, value, color }: { label: string; value: string; color: string }) {
-  return (
-    <div className="flex items-center justify-between">
-      <span style={{ color: '#94a3b8' }}>{label}</span>
-      <span className="font-bold" style={{ color }}>{value}</span>
-    </div>
-  );
-}
-
-// ─── Absorb panel ───────────────────────────────────────────────────────────
-function AbsorbPanel(props: {
-  absorbStep: number;
-  setAbsorbStep: (n: number) => void;
-  totalAfterCool: number;
-  volAfterKOH: number;
-  volAfterPyrogallol: number;
-  co2Formed: number;
-  o2Remaining: number;
-  hcRemaining: number;
-}) {
-  const { absorbStep, setAbsorbStep, totalAfterCool, volAfterKOH, volAfterPyrogallol, co2Formed, o2Remaining, hcRemaining } = props;
-  return (
-    <div className="flex flex-col gap-5">
-      <h2 className="text-xl font-black uppercase tracking-tighter" style={{ color: '#e2e8f0' }}>
-        Selective Absorption
-      </h2>
-
-      <div>
-        <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: '#818cf8' }}>
-          The Trick
-        </p>
-        <p className="text-sm" style={{ color: '#94a3b8' }}>
-          The tube now contains a mixture of CO₂, leftover O₂, and possibly leftover hydrocarbon. We can't tell them apart by looking — but each gas has its own selective absorbent. The **volume drop** after each absorbent step tells us how much of that gas was present.
-        </p>
-      </div>
-
-      <div className="space-y-2">
-        <AbsorbButton
-          step={1}
-          currentStep={absorbStep}
-          onClick={() => setAbsorbStep(Math.max(absorbStep, 1))}
-          label="Add KOH solution"
-          target="CO₂"
-          before={totalAfterCool}
-          after={volAfterKOH}
-          delta={co2Formed}
-          color="#94a3b8"
-        />
-        <AbsorbButton
-          step={2}
-          currentStep={absorbStep}
-          onClick={() => setAbsorbStep(Math.max(absorbStep, 2))}
-          label="Add alkaline pyrogallol"
-          target="O₂"
-          before={volAfterKOH}
-          after={volAfterPyrogallol}
-          delta={o2Remaining}
-          color="#60a5fa"
-        />
-      </div>
-
-      {absorbStep >= 2 && (
-        <div className="rounded-lg p-3" style={{ background: 'rgba(52,211,153,0.08)', border: '1px solid rgba(52,211,153,0.25)' }}>
-          <p className="text-xs font-black uppercase tracking-widest mb-1" style={{ color: '#6ee7b7' }}>Final Reading</p>
-          <p className="text-sm" style={{ color: '#a7f3d0' }}>
-            Final gas volume: <span className="font-mono font-bold">{volAfterPyrogallol.toFixed(2)} mL</span>
-            {hcRemaining > 0.01 ? ` (unreacted hydrocarbon — you used too little O₂!)` : ` (zero — everything absorbed)`}.
-            Now use the volume drops in the Deduce step to find x and y.
-          </p>
-        </div>
-      )}
-
-      <div className="pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <h5 className="text-[9px] font-black uppercase tracking-widest mb-1.5" style={{ color: '#6366f1' }}>Order Matters</h5>
-        <p className="text-white text-sm font-bold leading-tight italic">
-          &ldquo;Always absorb CO₂ before O₂. Pyrogallol absorbs both, but KOH is specific to CO₂ — so the first step is unambiguous.&rdquo;
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function AbsorbButton({
-  step, currentStep, onClick, label, target, before, after, delta, color,
+// ── Eudiometer SVG ───────────────────────────────────────────────────────────
+function Eudiometer({
+  layers, totalGas, accentLabel, firing, bubbling,
 }: {
-  step: number; currentStep: number; onClick: () => void;
-  label: string; target: string; before: number; after: number; delta: number; color: string;
+  layers: { id: string; formula: string; volume: number; color: string }[];
+  totalGas: number;
+  accentLabel: string;
+  firing: boolean;
+  bubbling: boolean;
 }) {
-  const done = currentStep >= step;
-  const available = currentStep === step - 1;
+  // Geometry
+  const W = 280;
+  const H = 640;
+  const tubeX = 88;
+  const tubeW = 64;
+  const tubeTop = 28;
+  const tubeBottom = 540;
+  const tubeH = tubeBottom - tubeTop;
+  const mlToY = (ml: number) => tubeBottom - (ml / 100) * tubeH;
+
+  let cursor = 0;
+  const rendered = layers.map((l) => {
+    const yBottom = mlToY(cursor);
+    const yTop = mlToY(cursor + l.volume);
+    cursor += l.volume;
+    return { ...l, yTop, yBottom, yMid: (yTop + yBottom) / 2, height: yBottom - yTop };
+  });
+
+  const waterTopInTube = mlToY(totalGas);
+  const troughTop = 540;
+  const troughBottom = 612;
+  const troughLeftX = 30;
+  const troughRightX = 250;
+
   return (
-    <button
-      onClick={available ? onClick : undefined}
-      disabled={!available}
-      className="w-full text-left px-3 py-3 rounded-lg transition-all"
-      style={{
-        background: done ? 'rgba(52,211,153,0.08)' : available ? 'rgba(99,102,241,0.10)' : 'rgba(255,255,255,0.02)',
-        border: `1px solid ${done ? 'rgba(52,211,153,0.25)' : available ? 'rgba(129,140,248,0.4)' : 'rgba(255,255,255,0.05)'}`,
-        cursor: available ? 'pointer' : 'default',
-        opacity: !done && !available ? 0.5 : 1,
-      }}
-    >
-      <div className="flex items-center justify-between mb-1">
-        <span className="text-sm font-bold" style={{ color: done ? '#6ee7b7' : available ? '#c4b5fd' : '#64748b' }}>
-          {done ? '✓ ' : `${step}. `}{label}
-        </span>
-        <span className="text-[10px] font-mono font-bold" style={{ color }}>removes {target}</span>
-      </div>
-      {done && (
-        <div className="text-xs font-mono" style={{ color: '#94a3b8' }}>
-          {before.toFixed(2)} mL → {after.toFixed(2)} mL · drop = <span className="font-bold" style={{ color }}>{delta.toFixed(2)} mL of {target}</span>
-        </div>
-      )}
-    </button>
-  );
-}
+    <svg className="eud-tube-svg" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet">
+      <defs>
+        {rendered.map((l) => (
+          <linearGradient key={l.id + '-g'} id={`eud-grad-${l.id}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={l.color} stopOpacity="0.45" />
+            <stop offset="50%" stopColor={l.color} stopOpacity="0.7" />
+            <stop offset="100%" stopColor={l.color} stopOpacity="0.55" />
+          </linearGradient>
+        ))}
+        <linearGradient id="eud-water-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(140,180,220,0.0)" />
+          <stop offset="3%" stopColor="rgba(140,180,220,0.4)" />
+          <stop offset="20%" stopColor="rgba(80,130,180,0.35)" />
+          <stop offset="100%" stopColor="rgba(50,90,140,0.5)" />
+        </linearGradient>
+        <linearGradient id="eud-tube-glass" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.08)" />
+          <stop offset="30%" stopColor="rgba(255,255,255,0.02)" />
+          <stop offset="70%" stopColor="rgba(255,255,255,0.0)" />
+          <stop offset="100%" stopColor="rgba(255,255,255,0.06)" />
+        </linearGradient>
+        <linearGradient id="eud-trough-water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(140,180,220,0.55)" />
+          <stop offset="100%" stopColor="rgba(40,70,110,0.65)" />
+        </linearGradient>
+        <clipPath id="eud-tube-clip">
+          <rect x={tubeX} y={tubeTop} width={tubeW} height={tubeH + 12} rx="2" />
+        </clipPath>
+      </defs>
 
-// ─── Deduce panel ───────────────────────────────────────────────────────────
-function DeducePanel(props: {
-  hc: typeof HYDROCARBONS[number];
-  hcVol: number;
-  o2Vol: number;
-  co2Formed: number;
-  o2Remaining: number;
-  o2Consumed: number;
-  guess: { x: number; y: number };
-  setGuess: (g: { x: number; y: number }) => void;
-  revealed: boolean;
-  setRevealed: (v: boolean) => void;
-}) {
-  const { hc, hcVol, o2Vol, co2Formed, o2Consumed, guess, setGuess, revealed, setRevealed } = props;
-  const xFromData = co2Formed / hcVol;
-  const yFromData = 4 * (o2Consumed / hcVol - xFromData);
-  const correct = guess.x === hc.x && guess.y === hc.y;
-  return (
-    <div className="flex flex-col gap-5">
-      <h2 className="text-xl font-black uppercase tracking-tighter" style={{ color: '#e2e8f0' }}>
-        Deduce the Formula
-      </h2>
+      {/* Trough */}
+      <g>
+        <path
+          d={`M ${troughLeftX} ${troughTop}
+              L ${troughLeftX} ${troughBottom - 14}
+              Q ${troughLeftX} ${troughBottom} ${troughLeftX + 14} ${troughBottom}
+              L ${troughRightX - 14} ${troughBottom}
+              Q ${troughRightX} ${troughBottom} ${troughRightX} ${troughBottom - 14}
+              L ${troughRightX} ${troughTop}
+              Z`}
+          fill="rgba(20,28,42,0.6)"
+          stroke="rgba(255,255,255,0.08)"
+          strokeWidth="1"
+        />
+        <path
+          d={`M ${troughLeftX + 2} ${troughTop + 8}
+              L ${troughLeftX + 2} ${troughBottom - 14}
+              Q ${troughLeftX + 2} ${troughBottom - 2} ${troughLeftX + 14} ${troughBottom - 2}
+              L ${troughRightX - 14} ${troughBottom - 2}
+              Q ${troughRightX - 2} ${troughBottom - 2} ${troughRightX - 2} ${troughBottom - 14}
+              L ${troughRightX - 2} ${troughTop + 8}
+              Z`}
+          fill="url(#eud-trough-water)"
+        />
+        <line
+          x1={troughLeftX + 4} y1={troughTop + 8}
+          x2={troughRightX - 4} y2={troughTop + 8}
+          stroke="rgba(180,210,240,0.4)" strokeWidth="1"
+        />
+      </g>
 
-      <div>
-        <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: '#818cf8' }}>
-          The data you collected
-        </p>
-        <div className="space-y-1.5 text-sm font-mono">
-          <Row label="Hydrocarbon used" value={`${hcVol} mL`} color="#c4b5fd" />
-          <Row label="O₂ consumed" value={`${o2Consumed.toFixed(2)} mL`} color="#60a5fa" />
-          <Row label="CO₂ formed (from KOH)" value={`${co2Formed.toFixed(2)} mL`} color="#94a3b8" />
-        </div>
-      </div>
+      {/* Tube body */}
+      <g>
+        <rect
+          x={tubeX - 6} y={tubeTop - 14}
+          width={tubeW + 12} height={tubeH + 22}
+          rx="6"
+          fill="rgba(8,12,20,0.8)"
+          stroke="rgba(255,255,255,0.1)"
+          strokeWidth="1"
+        />
+        {/* Stopper + electrodes */}
+        <g>
+          <line x1={tubeX - 6} y1={tubeTop - 14} x2={tubeX + tubeW + 6} y2={tubeTop - 14}
+                stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" strokeLinecap="round" />
+          <line x1={tubeX + tubeW * 0.3} y1={tubeTop - 14} x2={tubeX + tubeW * 0.42} y2={tubeTop + 8}
+                stroke="rgba(220,220,220,0.5)" strokeWidth="1.2" strokeLinecap="round" />
+          <line x1={tubeX + tubeW * 0.7} y1={tubeTop - 14} x2={tubeX + tubeW * 0.58} y2={tubeTop + 8}
+                stroke="rgba(220,220,220,0.5)" strokeWidth="1.2" strokeLinecap="round" />
+          {firing && (
+            <g>
+              <circle cx={tubeX + tubeW / 2} cy={tubeTop + 8} r="6" fill="rgba(255,220,150,0.9)" />
+              <circle cx={tubeX + tubeW / 2} cy={tubeTop + 8} r="14" fill="rgba(255,180,100,0.4)" />
+            </g>
+          )}
+        </g>
 
-      <div>
-        <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: '#fbbf24' }}>
-          Apply the combustion ratio
-        </p>
-        <p className="text-sm font-mono" style={{ color: '#94a3b8' }}>
-          CₓHᵧ + (x + y/4) O₂ → x CO₂ + (y/2) H₂O
-        </p>
-        <p className="text-sm mt-2" style={{ color: '#94a3b8' }}>
-          From CO₂: <span className="font-mono">x = {co2Formed.toFixed(2)} / {hcVol} = <span className="font-bold text-white">{xFromData.toFixed(2)}</span></span>
-        </p>
-        <p className="text-sm mt-1" style={{ color: '#94a3b8' }}>
-          From O₂: <span className="font-mono">x + y/4 = {o2Consumed.toFixed(2)} / {hcVol} = <span className="font-bold text-white">{(o2Consumed / hcVol).toFixed(2)}</span></span>
-        </p>
-        <p className="text-sm mt-1" style={{ color: '#94a3b8' }}>
-          ⇒ <span className="font-mono">y = 4 × ({(o2Consumed / hcVol).toFixed(2)} − {xFromData.toFixed(2)}) = <span className="font-bold text-white">{yFromData.toFixed(2)}</span></span>
-        </p>
-      </div>
-
-      <div>
-        <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: '#818cf8' }}>
-          Your answer
-        </p>
-        <div className="flex items-center gap-2">
-          <span className="text-base text-white">C</span>
-          <input
-            type="number"
-            min={1}
-            max={8}
-            value={guess.x}
-            onChange={(e) => setGuess({ ...guess, x: parseInt(e.target.value || '0', 10) })}
-            className="w-14 px-2 py-1.5 rounded-lg text-sm font-bold font-mono text-center"
-            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}
+        {/* Inner clipped */}
+        <g clipPath="url(#eud-tube-clip)">
+          <rect
+            x={tubeX} y={tubeTop}
+            width={tubeW}
+            height={Math.max(0, waterTopInTube - tubeTop)}
+            fill="url(#eud-water-grad)"
+            style={{ transition: 'height 0.6s cubic-bezier(0.4,0,0.2,1), y 0.6s cubic-bezier(0.4,0,0.2,1)' }}
           />
-          <span className="text-base text-white">H</span>
-          <input
-            type="number"
-            min={1}
-            max={20}
-            value={guess.y}
-            onChange={(e) => setGuess({ ...guess, y: parseInt(e.target.value || '0', 10) })}
-            className="w-14 px-2 py-1.5 rounded-lg text-sm font-bold font-mono text-center"
-            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}
-          />
-          <button
-            onClick={() => setRevealed(true)}
-            className="ml-2 px-3 py-1.5 rounded-lg text-xs font-bold"
-            style={{ background: 'rgba(99,102,241,0.18)', border: '1px solid rgba(129,140,248,0.4)', color: '#c4b5fd' }}
-          >
-            Check
-          </button>
-        </div>
-      </div>
+          {totalGas < 100 && (
+            <line
+              x1={tubeX + 1} y1={waterTopInTube}
+              x2={tubeX + tubeW - 1} y2={waterTopInTube}
+              stroke="rgba(160,200,235,0.7)" strokeWidth="1"
+              style={{ transition: 'y1 0.6s cubic-bezier(0.4,0,0.2,1), y2 0.6s cubic-bezier(0.4,0,0.2,1)' }}
+            />
+          )}
 
-      {revealed && (
-        <div
-          className="rounded-lg p-3"
-          style={{
-            background: correct ? 'rgba(52,211,153,0.08)' : 'rgba(220,38,38,0.08)',
-            border: `1px solid ${correct ? 'rgba(52,211,153,0.25)' : 'rgba(220,38,38,0.25)'}`,
-          }}
+          {rendered.map((l) => (
+            <g key={l.id}>
+              <rect
+                x={tubeX} y={l.yTop}
+                width={tubeW} height={l.height}
+                fill={`url(#eud-grad-${l.id})`}
+                style={{ transition: 'y 0.6s cubic-bezier(0.4,0,0.2,1), height 0.6s cubic-bezier(0.4,0,0.2,1)' }}
+              />
+              <line
+                x1={tubeX + 1} y1={l.yTop}
+                x2={tubeX + tubeW - 1} y2={l.yTop}
+                stroke={l.color}
+                strokeWidth="1" strokeOpacity="0.6"
+                style={{ transition: 'y1 0.6s cubic-bezier(0.4,0,0.2,1), y2 0.6s cubic-bezier(0.4,0,0.2,1)' }}
+              />
+              {l.height > 22 && (
+                <g>
+                  <text
+                    x={tubeX + tubeW / 2} y={l.yMid - 3}
+                    fontFamily="ui-monospace, monospace"
+                    fontSize="13" fontWeight="500"
+                    fill="rgba(255,255,255,0.95)" textAnchor="middle"
+                  >
+                    {l.formula}
+                  </text>
+                  <text
+                    x={tubeX + tubeW / 2} y={l.yMid + 11}
+                    fontFamily="ui-monospace, monospace"
+                    fontSize="12"
+                    fill="rgba(255,255,255,0.7)" textAnchor="middle"
+                  >
+                    {l.volume.toFixed(1)} mL
+                  </text>
+                </g>
+              )}
+            </g>
+          ))}
+        </g>
+
+        <rect
+          x={tubeX} y={tubeTop}
+          width={tubeW} height={tubeH}
+          fill="url(#eud-tube-glass)"
+          pointerEvents="none"
+        />
+        <rect
+          x={tubeX} y={tubeTop}
+          width={tubeW} height={tubeH}
+          fill="none"
+          stroke="rgba(255,255,255,0.14)"
+          strokeWidth="1"
+        />
+      </g>
+
+      {/* Graduations (left side) */}
+      <g>
+        {Array.from({ length: 21 }).map((_, i) => {
+          const ml = i * 5;
+          const y = mlToY(ml);
+          const isMajor = ml % 10 === 0;
+          return (
+            <g key={ml}>
+              <line
+                x1={tubeX - 8} y1={y}
+                x2={tubeX - (isMajor ? 2 : 4)} y2={y}
+                stroke={isMajor ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.18)'}
+                strokeWidth={isMajor ? 1 : 0.8}
+              />
+              {isMajor && ml % 20 === 0 && (
+                <text
+                  x={tubeX - 12} y={y + 3}
+                  fontFamily="ui-monospace, monospace"
+                  fontSize="11"
+                  fill="rgba(255,255,255,0.5)"
+                  textAnchor="end"
+                  letterSpacing="0.04em"
+                >
+                  {ml}
+                </text>
+              )}
+            </g>
+          );
+        })}
+        <text
+          x={tubeX - 12} y={tubeTop - 2}
+          fontFamily="ui-monospace, monospace"
+          fontSize="10.5"
+          fill="rgba(255,255,255,0.4)"
+          textAnchor="end"
+          letterSpacing="0.1em"
         >
-          <p className="text-xs font-black uppercase tracking-widest mb-1" style={{ color: correct ? '#6ee7b7' : '#fca5a5' }}>
-            {correct ? '✓ Correct!' : 'Not quite'}
-          </p>
-          <p className="text-sm" style={{ color: correct ? '#a7f3d0' : '#fecaca' }}>
-            The hydrocarbon was <span className="font-bold font-mono">{hc.formula}</span> ({hc.name}). The combustion equation:
-          </p>
-          <p className="text-sm font-mono mt-1" style={{ color: '#e2e8f0' }}>
-            {hc.formula} + {hc.x + hc.y / 4} O₂ → {hc.x} CO₂ + {hc.y / 2} H₂O
-          </p>
-        </div>
-      )}
+          mL
+        </text>
+      </g>
 
-      <div className="pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <h5 className="text-[9px] font-black uppercase tracking-widest mb-1.5" style={{ color: '#6366f1' }}>Expert Tip</h5>
-        <p className="text-white text-sm font-bold leading-tight italic">
-          &ldquo;In real JEE eudiometry problems, the H₂O term doesn't show up in volume measurements — but the *moles* of H₂O still matter, because they're how you derive y. Always work backwards from CO₂ to find x first, then use O₂ consumption to find y.&rdquo;
-        </p>
-      </div>
-    </div>
+      {/* Side indicator (right) */}
+      <g>
+        <line
+          x1={tubeX + tubeW + 10} y1={waterTopInTube}
+          x2={tubeX + tubeW + 22} y2={waterTopInTube}
+          stroke="#B0A6FB"
+          strokeOpacity="0.7"
+          strokeWidth="1"
+          style={{ transition: 'y1 0.6s cubic-bezier(0.4,0,0.2,1), y2 0.6s cubic-bezier(0.4,0,0.2,1)' }}
+        />
+        <g transform={`translate(${tubeX + tubeW + 26}, ${waterTopInTube + 3})`}>
+          <text
+            fontFamily="ui-monospace, monospace"
+            fontSize="12"
+            fill="rgba(176,166,251,0.9)"
+            letterSpacing="0.02em"
+          >
+            {totalGas.toFixed(1)} mL
+          </text>
+          <text
+            y="11"
+            fontFamily="ui-monospace, monospace"
+            fontSize="10"
+            fill="rgba(176,166,251,0.5)"
+            letterSpacing="0.1em"
+          >
+            {accentLabel}
+          </text>
+        </g>
+      </g>
+
+      {/* Bubbles during absorb */}
+      {bubbling && (
+        <g>
+          {[0, 1, 2, 3, 4].map((i) => (
+            <circle
+              key={i}
+              cx={tubeX + 12 + (i * 11)}
+              cy={tubeBottom - 10}
+              r={2 + (i % 2)}
+              fill="rgba(180,220,255,0.7)"
+            >
+              <animate
+                attributeName="cy"
+                from={tubeBottom - 10}
+                to={waterTopInTube + 10}
+                dur={`${1.5 + i * 0.2}s`}
+                repeatCount="indefinite"
+                begin={`${i * 0.3}s`}
+              />
+              <animate
+                attributeName="opacity"
+                values="0;0.8;0.8;0"
+                dur={`${1.5 + i * 0.2}s`}
+                repeatCount="indefinite"
+                begin={`${i * 0.3}s`}
+              />
+            </circle>
+          ))}
+        </g>
+      )}
+    </svg>
   );
 }

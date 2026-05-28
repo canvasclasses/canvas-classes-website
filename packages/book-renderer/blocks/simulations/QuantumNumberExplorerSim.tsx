@@ -64,27 +64,51 @@ function validate(n: number, l: number, ml: number) {
 /* ── Schematic orbital shape preview ────────────────────────────────────── */
 
 function OrbitalPreview({ l }: { l: number }) {
-  const s = 96, c = s / 2;
+  // Bumped 96 → 160 so the shape is legible alongside the n/l/mℓ/mₛ selectors.
+  // All lobe sizes scale from the base unit (s/96) so the existing proportions
+  // are preserved exactly.
+  const s = 160, c = s / 2;
+  const k = s / 96; // scale factor
   const pos = SUB_COLORS[L_LABELS[l]] ?? '#818cf8';
   const neg = '#ef4444';
 
+  // Unique gradient IDs per `pos` colour so multiple OrbitalPreview instances
+  // (e.g. different l values rendered in parallel) don't share defs.
+  const gid = `qn-orb-${pos.replace('#', '')}`;
+
   return (
     <svg width={s} height={s} viewBox={`0 0 ${s} ${s}`}>
+      <defs>
+        {/* Density-cloud gradient — bright centre fading to translucent edge.
+            Matches the orbital style used in OrbitalShapeExplorerSim so the
+            two sims feel like the same product. */}
+        <radialGradient id={`${gid}-pos`}>
+          <stop offset="0%"   stopColor={pos} stopOpacity={0.85} />
+          <stop offset="55%"  stopColor={pos} stopOpacity={0.40} />
+          <stop offset="100%" stopColor={pos} stopOpacity={0.04} />
+        </radialGradient>
+        <radialGradient id={`${gid}-neg`}>
+          <stop offset="0%"   stopColor={neg} stopOpacity={0.80} />
+          <stop offset="55%"  stopColor={neg} stopOpacity={0.35} />
+          <stop offset="100%" stopColor={neg} stopOpacity={0.04} />
+        </radialGradient>
+      </defs>
+
       {/* nucleus dot */}
-      <circle cx={c} cy={c} r={2.5} fill="#e2e8f0" />
+      <circle cx={c} cy={c} r={2.5 * k} fill="#e2e8f0" />
 
       {l === 0 && (
-        <circle cx={c} cy={c} r={32} fill={`${pos}18`} stroke={pos}
-          strokeWidth={1.5} />
+        <circle cx={c} cy={c} r={32 * k} fill={`url(#${gid}-pos)`}
+          stroke={pos} strokeOpacity={0.55} strokeWidth={1.2} />
       )}
 
       {l === 1 && (<>
-        <ellipse cx={c} cy={c - 18} rx={15} ry={26}
-          fill={`${pos}20`} stroke={pos} strokeWidth={1.5} />
-        <ellipse cx={c} cy={c + 18} rx={15} ry={26}
-          fill={`${neg}15`} stroke={neg} strokeWidth={1.5} />
+        <ellipse cx={c} cy={c - 18 * k} rx={15 * k} ry={26 * k}
+          fill={`url(#${gid}-pos)`} stroke={pos} strokeOpacity={0.55} strokeWidth={1.2} />
+        <ellipse cx={c} cy={c + 18 * k} rx={15 * k} ry={26 * k}
+          fill={`url(#${gid}-neg)`} stroke={neg} strokeOpacity={0.55} strokeWidth={1.2} />
         {/* nodal plane */}
-        <line x1={c - 26} y1={c} x2={c + 26} y2={c}
+        <line x1={c - 26 * k} y1={c} x2={c + 26 * k} y2={c}
           stroke={neg} strokeWidth={0.8} strokeDasharray="3,3" opacity={0.5} />
       </>)}
 
@@ -92,13 +116,14 @@ function OrbitalPreview({ l }: { l: number }) {
         {/* four-leaf clover (dxy-style) */}
         {[45, 135, 225, 315].map((deg, i) => {
           const rad = (deg * Math.PI) / 180;
-          const lx = c + Math.cos(rad) * 19;
-          const ly = c + Math.sin(rad) * 19;
+          const lx = c + Math.cos(rad) * 19 * k;
+          const ly = c + Math.sin(rad) * 19 * k;
+          const isPos = i % 2 === 0;
           return (
-            <ellipse key={deg} cx={lx} cy={ly} rx={10} ry={19}
+            <ellipse key={deg} cx={lx} cy={ly} rx={10 * k} ry={19 * k}
               transform={`rotate(${deg} ${lx} ${ly})`}
-              fill={i % 2 === 0 ? `${pos}18` : `${neg}12`}
-              stroke={i % 2 === 0 ? pos : neg} strokeWidth={1.2} />
+              fill={`url(#${gid}-${isPos ? 'pos' : 'neg'})`}
+              stroke={isPos ? pos : neg} strokeOpacity={0.55} strokeWidth={1.1} />
           );
         })}
       </>)}
@@ -106,13 +131,14 @@ function OrbitalPreview({ l }: { l: number }) {
       {l === 3 && (<>
         {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => {
           const rad = (deg * Math.PI) / 180;
-          const lx = c + Math.cos(rad) * 24;
-          const ly = c + Math.sin(rad) * 24;
+          const lx = c + Math.cos(rad) * 24 * k;
+          const ly = c + Math.sin(rad) * 24 * k;
+          const isPos = i % 2 === 0;
           return (
-            <ellipse key={deg} cx={lx} cy={ly} rx={7} ry={15}
+            <ellipse key={deg} cx={lx} cy={ly} rx={7 * k} ry={15 * k}
               transform={`rotate(${deg} ${lx} ${ly})`}
-              fill={i % 2 === 0 ? `${pos}15` : `${neg}10`}
-              stroke={i % 2 === 0 ? pos : neg} strokeWidth={0.9} />
+              fill={`url(#${gid}-${isPos ? 'pos' : 'neg'})`}
+              stroke={isPos ? pos : neg} strokeOpacity={0.55} strokeWidth={0.9} />
           );
         })}
       </>)}

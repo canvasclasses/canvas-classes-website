@@ -161,18 +161,43 @@ export default function CathodeRayTubeSim() {
       ctx.fillStyle = '#f87171';
       ctx.fillText('+', ANOX, wireY - 6);
 
-      // ── Glass tube ────────────────────────────────────────────────────────
+      // ── Glass tube (cylindrical) ─────────────────────────────────────────
+      // Vertical gradient gives the tube a cylindrical 3D appearance — bright
+      // highlight on the top edge, mid-tone in the middle, soft shadow on the
+      // bottom. Flat end-caps on each side suggest sealed glass terminations.
       const tubeGrad = ctx.createLinearGradient(TX, TY, TX, TY + TH);
-      tubeGrad.addColorStop(0,   'rgba(120,190,255,0.07)');
-      tubeGrad.addColorStop(0.5, 'rgba(80,140,255,0.03)');
-      tubeGrad.addColorStop(1,   'rgba(120,190,255,0.07)');
+      tubeGrad.addColorStop(0,    'rgba(180,220,255,0.18)');
+      tubeGrad.addColorStop(0.15, 'rgba(120,190,255,0.10)');
+      tubeGrad.addColorStop(0.5,  'rgba(70,120,200,0.04)');
+      tubeGrad.addColorStop(0.85, 'rgba(60,100,180,0.10)');
+      tubeGrad.addColorStop(1,    'rgba(40,70,150,0.18)');
       ctx.fillStyle = tubeGrad;
       rrPath(ctx, TX, TY, TW, TH, 22);
       ctx.fill();
-      ctx.strokeStyle = 'rgba(100,170,255,0.22)';
+      ctx.strokeStyle = 'rgba(150,200,255,0.40)';
       ctx.lineWidth = 1.5;
       rrPath(ctx, TX, TY, TW, TH, 22);
       ctx.stroke();
+      // Curved horizontal highlight near the top — reads as a cylinder gloss
+      const tubeHi = ctx.createLinearGradient(TX, TY + 6, TX, TY + 28);
+      tubeHi.addColorStop(0,   'rgba(255,255,255,0.18)');
+      tubeHi.addColorStop(1,   'rgba(255,255,255,0)');
+      ctx.fillStyle = tubeHi;
+      ctx.fillRect(TX + 30, TY + 4, TW - 60, 22);
+      // Soft shadow near the bottom — completes the cylinder illusion
+      const tubeSh = ctx.createLinearGradient(TX, TY + TH - 24, TX, TY + TH - 4);
+      tubeSh.addColorStop(0,   'rgba(0,0,0,0)');
+      tubeSh.addColorStop(1,   'rgba(0,0,0,0.30)');
+      ctx.fillStyle = tubeSh;
+      ctx.fillRect(TX + 30, TY + TH - 24, TW - 60, 20);
+      // End caps — small darker bands flanking the cylinder
+      ctx.fillStyle = 'rgba(30,50,90,0.45)';
+      rrPath(ctx, TX - 6, TY + 8, 12, TH - 16, 4); ctx.fill();
+      rrPath(ctx, TX + TW - 6, TY + 8, 12, TH - 16, 4); ctx.fill();
+      ctx.strokeStyle = 'rgba(120,160,210,0.55)';
+      ctx.lineWidth = 1;
+      rrPath(ctx, TX - 6, TY + 8, 12, TH - 16, 4); ctx.stroke();
+      rrPath(ctx, TX + TW - 6, TY + 8, 12, TH - 16, 4); ctx.stroke();
 
       // ── Inner discharge glow ──────────────────────────────────────────────
       if (glow > 0) {
@@ -246,39 +271,69 @@ export default function CathodeRayTubeSim() {
         ctx.fillText('B ⊗', PX2 + 10, bLabelY);
       }
 
-      // ── Cathode electrode ─────────────────────────────────────────────────
-      // Body
-      const cathGlow = glow > 0 ? `rgba(160,120,255,${0.7 * glow})` : '#334155';
-      ctx.fillStyle = '#334155';
-      ctx.fillRect(CATX - 9, TY + 22, 18, TH - 44);
-      // Holes (3 slots)
-      ctx.fillStyle = '#050614';
-      for (let i = 0; i < 3; i++) {
-        ctx.fillRect(CATX - 9, TY + 48 + i * 26, 18, 9);
-      }
-      // Cathode glow
+      // ── Cathode electrode (concave disc) ─────────────────────────────────
+      // In a real Crookes/Thomson tube the cathode is a metal disc, often
+      // slightly concave to focus the emitted ray. We draw a metallic
+      // gradient body + a darker vertical inner band suggesting concavity,
+      // with a stem on top connecting to the HV wire.
+      const elTop = TY + 22;
+      const elBot = TY + TH - 22;
+      const elH = elBot - elTop;
+      // Metallic gradient (left → right across the disc face)
+      const cathMet = ctx.createLinearGradient(CATX - 9, 0, CATX + 9, 0);
+      cathMet.addColorStop(0,   '#1e293b');
+      cathMet.addColorStop(0.5, '#64748b');
+      cathMet.addColorStop(1,   '#1e293b');
+      ctx.fillStyle = cathMet;
+      rrPath(ctx, CATX - 9, elTop, 18, elH, 3); ctx.fill();
+      ctx.strokeStyle = 'rgba(203,213,225,0.55)';
+      ctx.lineWidth = 0.8;
+      rrPath(ctx, CATX - 9, elTop, 18, elH, 3); ctx.stroke();
+      // Concave inner shadow (suggests dished face)
+      ctx.fillStyle = 'rgba(0,0,0,0.45)';
+      ctx.fillRect(CATX - 4, elTop + 3, 8, elH - 6);
+      // Stem to HV wire — vertical rod from top of cathode up to TY
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(CATX, TY); ctx.lineTo(CATX, elTop); ctx.stroke();
+      // Discharge glow — purple haze emerging from the cathode face
       if (glow > 0) {
-        ctx.shadowColor = 'rgba(160,120,255,0.9)';
-        ctx.shadowBlur  = 18 * glow;
-        ctx.fillStyle   = cathGlow;
-        ctx.fillRect(CATX - 9, TY + 22, 18, TH - 44);
-        ctx.shadowBlur  = 0;
-        // Re-draw holes over glow
-        ctx.fillStyle = '#050614';
-        for (let i = 0; i < 3; i++) {
-          ctx.fillRect(CATX - 9, TY + 48 + i * 26, 18, 9);
-        }
+        const cathGrad = ctx.createRadialGradient(CATX + 6, TCY, 0, CATX + 6, TCY, 18);
+        cathGrad.addColorStop(0,   `rgba(160,120,255,${0.55 * glow})`);
+        cathGrad.addColorStop(1,   'rgba(160,120,255,0)');
+        ctx.fillStyle = cathGrad;
+        ctx.beginPath(); ctx.arc(CATX + 6, TCY, 18, 0, Math.PI * 2); ctx.fill();
       }
 
-      // ── Anode electrode ───────────────────────────────────────────────────
-      ctx.fillStyle = '#334155';
-      ctx.fillRect(ANOX - 9, TY + 22, 18, TH - 44);
+      // ── Anode electrode (perforated disc — passes canal rays) ────────────
+      // A real anode is a metal disc with one or more central holes that let
+      // positive ions ("canal rays") stream through toward the cathode side.
+      const anMet = ctx.createLinearGradient(ANOX - 9, 0, ANOX + 9, 0);
+      anMet.addColorStop(0,   '#1e293b');
+      anMet.addColorStop(0.5, '#64748b');
+      anMet.addColorStop(1,   '#1e293b');
+      ctx.fillStyle = anMet;
+      rrPath(ctx, ANOX - 9, elTop, 18, elH, 3); ctx.fill();
+      ctx.strokeStyle = 'rgba(203,213,225,0.55)';
+      ctx.lineWidth = 0.8;
+      rrPath(ctx, ANOX - 9, elTop, 18, elH, 3); ctx.stroke();
+      // Central hole through the disc — lets canal rays pass through
+      ctx.fillStyle = '#050614';
+      ctx.fillRect(ANOX - 9, TCY + 14, 18, 10);
+      ctx.strokeStyle = 'rgba(251,146,60,0.45)';
+      ctx.lineWidth = 0.7;
+      ctx.strokeRect(ANOX - 9, TCY + 14, 18, 10);
+      // Stem to HV wire
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(ANOX, TY); ctx.lineTo(ANOX, elTop); ctx.stroke();
+      // Anode glow — soft blue when discharging
       if (glow > 0) {
-        ctx.shadowColor = 'rgba(100,200,255,0.8)';
-        ctx.shadowBlur  = 12 * glow;
-        ctx.fillStyle   = `rgba(100,200,255,${0.45 * glow})`;
-        ctx.fillRect(ANOX - 9, TY + 22, 18, TH - 44);
-        ctx.shadowBlur  = 0;
+        const anGrad = ctx.createRadialGradient(ANOX - 6, TCY, 0, ANOX - 6, TCY, 16);
+        anGrad.addColorStop(0,   `rgba(100,200,255,${0.45 * glow})`);
+        anGrad.addColorStop(1,   'rgba(100,200,255,0)');
+        ctx.fillStyle = anGrad;
+        ctx.beginPath(); ctx.arc(ANOX - 6, TCY, 16, 0, Math.PI * 2); ctx.fill();
       }
 
       // ── Electrode text labels (below tube) ────────────────────────────────

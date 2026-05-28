@@ -141,15 +141,43 @@ export default function GoldFoilSim() {
       ctx.fillStyle = '#0a0f1a';
       ctx.fillRect(0, 0, W, H);
 
-      // ── ZnS Screen ──────────────────────────────────────────────
+      // ── ZnS Detector Screen ─────────────────────────────────────
+      // Real ZnS screens fluoresce yellow-green when struck by α particles.
+      // Draw an outer dark "backing", a glowing fluorescent band, and a
+      // sharp inner ring so the screen reads as a physical detector arc.
+      ctx.beginPath();
+      ctx.arc(FOIL_X, CY, SCREEN_R + 6, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(15,23,42,0.85)';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+      // Outer fluorescent ring (thick faint glow)
       ctx.beginPath();
       ctx.arc(FOIL_X, CY, SCREEN_R, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(20,184,166,0.07)';
-      ctx.lineWidth = 16;
+      ctx.strokeStyle = 'rgba(190,242,100,0.08)';
+      ctx.lineWidth = 22;
       ctx.stroke();
-      ctx.strokeStyle = 'rgba(20,184,166,0.40)';
+      // Mid fluorescent ring
+      ctx.strokeStyle = 'rgba(132,204,22,0.20)';
+      ctx.lineWidth = 8;
+      ctx.stroke();
+      // Inner sharp edge — the actual screen
+      ctx.strokeStyle = 'rgba(190,242,100,0.55)';
       ctx.lineWidth = 1.5;
       ctx.stroke();
+      // Tick marks every 30° around the screen so it reads as a graduated
+      // detector arc rather than a plain circle.
+      for (let deg = 0; deg < 360; deg += 30) {
+        const a = (deg * Math.PI) / 180;
+        const x1 = FOIL_X + (SCREEN_R - 4) * Math.cos(a);
+        const y1 = CY     + (SCREEN_R - 4) * Math.sin(a);
+        const x2 = FOIL_X + (SCREEN_R + 4) * Math.cos(a);
+        const y2 = CY     + (SCREEN_R + 4) * Math.sin(a);
+        ctx.beginPath();
+        ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
+        ctx.strokeStyle = 'rgba(190,242,100,0.32)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
 
       // ── Persistent glow marks ───────────────────────────────────
       glowsRef.current = glowsRef.current.filter(g => g.intensity > 0.012);
@@ -169,44 +197,113 @@ export default function GoldFoilSim() {
         ctx.fill();
       }
 
-      // ── Gold foil ────────────────────────────────────────────────
+      // ── Gold Foil ────────────────────────────────────────────────
+      // Real ~100 nm gold foil is microscopically thin, but visually we need
+      // it to read as a flat metallic sheet hanging in a frame. We draw:
+      //   1. A dark frame/holder rectangle (vertical bracket on each side)
+      //   2. The gold sheet itself with a metallic gradient (light edges,
+      //      bright middle reflection) — wider than the old 4-px line
+      //   3. Faint horizontal "hammered gold" texture lines
+      //   4. A sharp specular highlight down the centre
       const foilTop = CY - SCREEN_R * 0.70;
       const foilBot = CY + SCREEN_R * 0.70;
-      const fGrad = ctx.createLinearGradient(FOIL_X - 2, 0, FOIL_X + 2, 0);
-      fGrad.addColorStop(0,   'rgba(245,158,11,0.15)');
-      fGrad.addColorStop(0.5, 'rgba(245,158,11,0.90)');
-      fGrad.addColorStop(1,   'rgba(245,158,11,0.15)');
+      const FOIL_W = 10;
+      // Frame/holder — black metal bracket gripping the foil at top + bottom
+      ctx.fillStyle = '#1f2937';
+      rrect(ctx, FOIL_X - FOIL_W / 2 - 3, foilTop - 8, FOIL_W + 6, 8, 2); ctx.fill();
+      rrect(ctx, FOIL_X - FOIL_W / 2 - 3, foilBot,     FOIL_W + 6, 8, 2); ctx.fill();
+      ctx.strokeStyle = 'rgba(148,163,184,0.45)';
+      ctx.lineWidth = 0.8;
+      ctx.strokeRect(FOIL_X - FOIL_W / 2 - 3, foilTop - 8, FOIL_W + 6, 8);
+      ctx.strokeRect(FOIL_X - FOIL_W / 2 - 3, foilBot,     FOIL_W + 6, 8);
+      // Gold sheet — metallic linear gradient across the width
+      const fGrad = ctx.createLinearGradient(FOIL_X - FOIL_W / 2, 0, FOIL_X + FOIL_W / 2, 0);
+      fGrad.addColorStop(0,    'rgba(146,64,14,0.95)');
+      fGrad.addColorStop(0.20, 'rgba(217,119,6,0.95)');
+      fGrad.addColorStop(0.50, 'rgba(254,243,199,0.95)');
+      fGrad.addColorStop(0.80, 'rgba(217,119,6,0.95)');
+      fGrad.addColorStop(1,    'rgba(146,64,14,0.95)');
       ctx.fillStyle = fGrad;
-      ctx.fillRect(FOIL_X - 2, foilTop, 4, foilBot - foilTop);
+      ctx.fillRect(FOIL_X - FOIL_W / 2, foilTop, FOIL_W, foilBot - foilTop);
+      // Hammered-gold horizontal lines
+      ctx.strokeStyle = 'rgba(120,53,15,0.35)';
+      ctx.lineWidth = 0.5;
+      for (let yy = foilTop + 6; yy < foilBot; yy += 9) {
+        ctx.beginPath();
+        ctx.moveTo(FOIL_X - FOIL_W / 2 + 1, yy);
+        ctx.lineTo(FOIL_X + FOIL_W / 2 - 1, yy);
+        ctx.stroke();
+      }
+      // Sharp central specular highlight
+      ctx.fillStyle = 'rgba(255,251,235,0.55)';
+      ctx.fillRect(FOIL_X - 0.5, foilTop + 2, 1, foilBot - foilTop - 4);
 
       // ── Lead collimator ──────────────────────────────────────────
+      // Two lead-grey blocks stacked vertically with a horizontal slit
+      // between them. Adding a metallic gradient (highlight top, shadow
+      // bottom) reads as a dense lead brick instead of a flat rectangle.
       const bx = SRC_X - BLOCK_W / 2;
-      ctx.fillStyle = '#2d3a5a';
-      rrect(ctx, bx, CY - BLOCK_H / 2,             BLOCK_W, (BLOCK_H - SLIT_H) / 2 - 1, 3); ctx.fill();
-      ctx.fillStyle = '#2d3a5a';
-      rrect(ctx, bx, CY + SLIT_H / 2 + 1,          BLOCK_W, (BLOCK_H - SLIT_H) / 2 - 1, 3); ctx.fill();
-      ctx.strokeStyle = 'rgba(71,85,105,0.55)';
+      const lGradTop = ctx.createLinearGradient(bx, CY - BLOCK_H / 2, bx, CY - SLIT_H / 2);
+      lGradTop.addColorStop(0,   '#475569');
+      lGradTop.addColorStop(0.5, '#334155');
+      lGradTop.addColorStop(1,   '#1e293b');
+      ctx.fillStyle = lGradTop;
+      rrect(ctx, bx, CY - BLOCK_H / 2, BLOCK_W, (BLOCK_H - SLIT_H) / 2 - 1, 3); ctx.fill();
+      const lGradBot = ctx.createLinearGradient(bx, CY + SLIT_H / 2, bx, CY + BLOCK_H / 2);
+      lGradBot.addColorStop(0,   '#1e293b');
+      lGradBot.addColorStop(0.5, '#334155');
+      lGradBot.addColorStop(1,   '#475569');
+      ctx.fillStyle = lGradBot;
+      rrect(ctx, bx, CY + SLIT_H / 2 + 1, BLOCK_W, (BLOCK_H - SLIT_H) / 2 - 1, 3); ctx.fill();
+      ctx.strokeStyle = 'rgba(148,163,184,0.55)';
       ctx.lineWidth = 1;
-      ctx.strokeRect(bx, CY - BLOCK_H / 2, BLOCK_W, BLOCK_H);
+      ctx.strokeRect(bx, CY - BLOCK_H / 2,        BLOCK_W, (BLOCK_H - SLIT_H) / 2 - 1);
+      ctx.strokeRect(bx, CY + SLIT_H / 2 + 1,     BLOCK_W, (BLOCK_H - SLIT_H) / 2 - 1);
+      // "Pb" labels on each block
+      ctx.fillStyle = 'rgba(255,255,255,0.40)';
+      ctx.font = 'bold 9px system-ui';
+      ctx.textAlign = 'center';
+      ctx.fillText('Pb', bx + BLOCK_W / 2, CY - BLOCK_H / 2 + 15);
+      ctx.fillText('Pb', bx + BLOCK_W / 2, CY + BLOCK_H / 2 - 9);
 
-      // Slit glow
+      // Slit glow — the α beam streaming through the slit
       const sgx = SRC_X + BLOCK_W / 2;
       const sg  = ctx.createLinearGradient(sgx, CY, sgx + 35, CY);
-      sg.addColorStop(0, 'rgba(251,191,36,0.18)'); sg.addColorStop(1, 'transparent');
+      sg.addColorStop(0, 'rgba(251,191,36,0.25)'); sg.addColorStop(1, 'transparent');
       ctx.fillStyle = sg;
       ctx.fillRect(sgx, CY - SLIT_H / 2, 35, SLIT_H);
 
-      // ── Radioactive source ───────────────────────────────────────
-      const srcCX = bx - 7;
-      const sGrad = ctx.createRadialGradient(srcCX, CY, 0, srcCX, CY, 14);
-      sGrad.addColorStop(0,   '#fef3c7');
-      sGrad.addColorStop(0.3, '#f59e0b');
-      sGrad.addColorStop(0.7, 'rgba(245,158,11,0.25)');
+      // ── Radioactive source (encased in a lead container) ─────────
+      const srcCX = bx - 16;
+      // Lead container housing
+      const housingW = 24, housingH = 32;
+      const houseGrad = ctx.createLinearGradient(srcCX - housingW / 2, 0, srcCX + housingW / 2, 0);
+      houseGrad.addColorStop(0,   '#1e293b');
+      houseGrad.addColorStop(0.5, '#475569');
+      houseGrad.addColorStop(1,   '#1e293b');
+      ctx.fillStyle = houseGrad;
+      rrect(ctx, srcCX - housingW / 2, CY - housingH / 2, housingW, housingH, 3); ctx.fill();
+      ctx.strokeStyle = 'rgba(148,163,184,0.55)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(srcCX - housingW / 2, CY - housingH / 2, housingW, housingH);
+      // Opening (port) facing the collimator
+      ctx.fillStyle = '#0b1220';
+      rrect(ctx, srcCX + housingW / 2 - 4, CY - 4, 6, 8, 1); ctx.fill();
+      // Glowing radium pellet inside the container
+      const sGrad = ctx.createRadialGradient(srcCX, CY, 0, srcCX, CY, 9);
+      sGrad.addColorStop(0,   '#fef9c3');
+      sGrad.addColorStop(0.4, '#f59e0b');
+      sGrad.addColorStop(0.85, 'rgba(245,158,11,0.35)');
       sGrad.addColorStop(1,   'transparent');
       ctx.fillStyle = sGrad;
-      ctx.beginPath(); ctx.arc(srcCX, CY, 14, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(srcCX, CY, 9, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = '#b45309';
-      ctx.beginPath(); ctx.arc(srcCX, CY, 5, 0, Math.PI * 2);  ctx.fill();
+      ctx.beginPath(); ctx.arc(srcCX, CY, 3, 0, Math.PI * 2);  ctx.fill();
+      // "Ra" label on the container
+      ctx.fillStyle = 'rgba(255,255,255,0.45)';
+      ctx.font = 'bold 8px system-ui';
+      ctx.textAlign = 'center';
+      ctx.fillText('Ra', srcCX, CY - housingH / 2 - 3);
 
       // ── Labels ────────────────────────────────────────────────────
       ctx.textAlign = 'center';

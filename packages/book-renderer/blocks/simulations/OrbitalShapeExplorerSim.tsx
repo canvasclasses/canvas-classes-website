@@ -113,7 +113,9 @@ function SOrbital({ orbital, showNodes, showAxes, cx, cy }: {
   return (
     <g>
       <AxisLabels cx={cx} cy={cy} show={showAxes} />
-      <circle cx={cx} cy={cy} r={outer} fill={`${COL.indigo}26`} stroke={COL.indigo} strokeWidth={1.8} />
+      {/* Density cloud (fades from centre) — replaces the flat hollow circle */}
+      <circle cx={cx} cy={cy} r={outer} fill="url(#orb-grad-indigo)"
+        stroke={COL.indigo} strokeOpacity={0.55} strokeWidth={1.2} />
       {showNodes && nodeRadii.map((r, i) => (
         <g key={i}>
           <circle cx={cx} cy={cy} r={r} fill="none" stroke={COL.node}
@@ -144,14 +146,14 @@ function POrbital({ orbital, showNodes, showAxes, cx, cy }: {
     <g>
       <AxisLabels cx={cx} cy={cy} show={showAxes} />
       <g transform={`rotate(${angle}, ${cx}, ${cy})`}>
-        {/* Positive lobe (right/top) */}
+        {/* Positive lobe (right/top) — emerald density cloud */}
         <ellipse cx={cx + lobeOffset} cy={cy} rx={ry} ry={rx}
-          fill={`${COL.emerald}33`} stroke={COL.emerald} strokeWidth={1.5} />
+          fill="url(#orb-grad-emerald)" stroke={COL.emerald} strokeOpacity={0.55} strokeWidth={1.1} />
         <text x={cx + lobeOffset} y={cy - rx - 6}
           style={{ fontSize: 10, fill: COL.emerald, fontFamily: 'system-ui', textAnchor: 'middle' }}>+</text>
-        {/* Negative lobe (left/bottom) */}
+        {/* Negative lobe (left/bottom) — red density cloud */}
         <ellipse cx={cx - lobeOffset} cy={cy} rx={ry} ry={rx}
-          fill={`${COL.red}26`} stroke={COL.red} strokeWidth={1.5} />
+          fill="url(#orb-grad-red)" stroke={COL.red} strokeOpacity={0.55} strokeWidth={1.1} />
         <text x={cx - lobeOffset} y={cy - rx - 6}
           style={{ fontSize: 10, fill: COL.red, fontFamily: 'system-ui', textAnchor: 'middle' }}>&minus;</text>
       </g>
@@ -187,12 +189,13 @@ function DClover({ cx, cy, angle, showNodes }: {
       {lobes.map((lb, i) => {
         const isPos = lb.phase === '+';
         const col = isPos ? COL.amber : COL.red;
+        const gradId = isPos ? 'orb-grad-amber' : 'orb-grad-red';
         const lobeAngle = Math.atan2(lb.dy, lb.dx) * 180 / Math.PI;
         return (
           <g key={i} transform={`rotate(${lobeAngle}, ${cx}, ${cy})`}>
             <ellipse cx={cx + Math.sqrt(lb.dx ** 2 + lb.dy ** 2)} cy={cy}
-              rx={ry} ry={rx} fill={`${col}${isPos ? '33' : '26'}`}
-              stroke={col} strokeWidth={1.3} />
+              rx={ry} ry={rx} fill={`url(#${gradId})`}
+              stroke={col} strokeOpacity={0.55} strokeWidth={1.1} />
           </g>
         );
       })}
@@ -219,16 +222,16 @@ function DOrbital({ orbital, showNodes, showAxes, cx, cy }: {
     return (
       <g>
         <AxisLabels cx={cx} cy={cy} show={showAxes} />
-        {/* Torus belt (behind lobes) */}
+        {/* Torus belt (behind lobes) — red density ring */}
         <ellipse cx={cx} cy={cy} rx={60} ry={16}
-          fill={`${COL.red}20`} stroke={COL.red} strokeWidth={1.2} />
-        {/* Top lobe */}
+          fill="url(#orb-grad-red)" stroke={COL.red} strokeOpacity={0.55} strokeWidth={1} />
+        {/* Top lobe — amber density cloud */}
         <ellipse cx={cx} cy={cy - 55} rx={28} ry={50}
-          fill={`${COL.amber}33`} stroke={COL.amber} strokeWidth={1.4} />
+          fill="url(#orb-grad-amber)" stroke={COL.amber} strokeOpacity={0.55} strokeWidth={1.1} />
         <text x={cx} y={cy - 100} style={{ fontSize: 10, fill: COL.amber, fontFamily: 'system-ui', textAnchor: 'middle' }}>+</text>
         {/* Bottom lobe */}
         <ellipse cx={cx} cy={cy + 55} rx={28} ry={50}
-          fill={`${COL.amber}33`} stroke={COL.amber} strokeWidth={1.4} />
+          fill="url(#orb-grad-amber)" stroke={COL.amber} strokeOpacity={0.55} strokeWidth={1.1} />
         <text x={cx} y={cy + 112} style={{ fontSize: 10, fill: COL.amber, fontFamily: 'system-ui', textAnchor: 'middle' }}>+</text>
         {/* Nodal cone lines */}
         {showNodes && (
@@ -354,6 +357,37 @@ export default function OrbitalShapeExplorerSim() {
             background: 'radial-gradient(circle at center, #1e204a 0%, #050614 100%)',
             border: '1px solid rgba(99,102,241,0.2)',
           }}>
+          <defs>
+            {/* Radial-gradient fills make each orbital lobe read as an
+                electron-density cloud — bright at the centre, fading to
+                near-transparent at the boundary surface. Replaces the flat
+                ~15 % alpha fills that previously looked like hollow outlines. */}
+            <radialGradient id="orb-grad-indigo">
+              <stop offset="0%"   stopColor="#a5b4fc" stopOpacity={0.85} />
+              <stop offset="50%"  stopColor="#818cf8" stopOpacity={0.45} />
+              <stop offset="100%" stopColor="#4338ca" stopOpacity={0.05} />
+            </radialGradient>
+            <radialGradient id="orb-grad-emerald">
+              <stop offset="0%"   stopColor="#6ee7b7" stopOpacity={0.85} />
+              <stop offset="55%"  stopColor="#34d399" stopOpacity={0.45} />
+              <stop offset="100%" stopColor="#047857" stopOpacity={0.05} />
+            </radialGradient>
+            <radialGradient id="orb-grad-red">
+              <stop offset="0%"   stopColor="#fca5a5" stopOpacity={0.80} />
+              <stop offset="55%"  stopColor="#ef4444" stopOpacity={0.40} />
+              <stop offset="100%" stopColor="#991b1b" stopOpacity={0.05} />
+            </radialGradient>
+            <radialGradient id="orb-grad-amber">
+              <stop offset="0%"   stopColor="#fcd34d" stopOpacity={0.85} />
+              <stop offset="55%"  stopColor="#fbbf24" stopOpacity={0.45} />
+              <stop offset="100%" stopColor="#92400e" stopOpacity={0.05} />
+            </radialGradient>
+            {/* SVG blur for a softer cloud edge */}
+            <filter id="orb-soft" x="-10%" y="-10%" width="120%" height="120%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" />
+            </filter>
+          </defs>
+
           {/* Faint crosshairs */}
           <line x1={cx} y1={20} x2={cx} y2={svgH - 20}
             stroke="rgba(255,255,255,0.06)" strokeWidth={0.8} />
