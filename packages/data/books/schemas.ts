@@ -72,7 +72,7 @@ const ImageBlockSchema = BaseBlockSchema.extend({
   src: z.string(), // empty string allowed — placeholder state
   alt: z.string(),
   caption: z.string().optional(),
-  width: z.enum(['full', 'half', 'third']).optional(),
+  width: z.enum(['full', 'five_sixth', 'three_quarter', 'two_third', 'half', 'two_fifth', 'third', 'quarter']).optional(),
   align: z.enum(['center', 'left', 'right']).optional(),
   side_text: z.string().optional(),
   generation_prompt: z.string().optional(),

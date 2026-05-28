@@ -8,16 +8,30 @@ import { UploadFn } from '../BookWorkspace';
 interface Props { block: ImageBlock; onChange: (p: Partial<ImageBlock>) => void; onUpload: UploadFn; }
 
 const WIDTH_LABELS: Record<NonNullable<ImageBlock['width']>, string> = {
-  full: 'Full',
-  half: 'Half',
-  third: 'Third',
+  full:           '100%',
+  five_sixth:     '83%',
+  three_quarter:  '75%',
+  two_third:      '67%',
+  half:           '50%',
+  two_fifth:      '40%',
+  third:          '33%',
+  quarter:        '25%',
 };
 
 const WIDTH_PREVIEW: Record<NonNullable<ImageBlock['width']>, string> = {
-  full: 'w-full',
-  half: 'w-1/2',
-  third: 'w-1/3',
+  full:           'w-full',
+  five_sixth:     'w-5/6',
+  three_quarter:  'w-3/4',
+  two_third:      'w-2/3',
+  half:           'w-1/2',
+  two_fifth:      'w-2/5',
+  third:          'w-1/3',
+  quarter:        'w-1/4',
 };
+
+const WIDTH_OPTIONS: NonNullable<ImageBlock['width']>[] = [
+  'full', 'five_sixth', 'three_quarter', 'two_third', 'half', 'two_fifth', 'third', 'quarter',
+];
 
 const ASPECT_RATIO_OPTIONS: { value: NonNullable<ImageBlock['aspect_ratio']> | 'natural'; label: string }[] = [
   { value: 'natural', label: 'Natural' },
@@ -172,8 +186,8 @@ export default function ImageBlockEditor({ block, onChange, onUpload }: Props) {
       {/* Width selector */}
       <div>
         <label className="text-xs text-white/40 mb-1 block">Width</label>
-        <div className="flex gap-2">
-          {(['full', 'half', 'third'] as const).map((w) => (
+        <div className="flex flex-wrap gap-2">
+          {WIDTH_OPTIONS.map((w) => (
             <button key={w} onClick={() => onChange({ width: w })}
               className={`px-3 py-1 rounded-lg text-xs transition-colors
                 ${width === w
