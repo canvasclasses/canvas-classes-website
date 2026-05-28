@@ -26,12 +26,17 @@ export default async function BookLandingPage({ params }: Props) {
   // Student-facing view — hide the whole book if it's not live yet.
   if (!book.is_published) notFound();
 
-  // Only published chapters are visible to students.
-  const publishedChapters = book.chapters
-    .filter((c) => c.is_published)
+  // All chapters are listed in NCERT order. Unpublished ones render as
+  // "Coming Soon" stubs in the TOC — they're visible but not navigable.
+  const sortedChapters = book.chapters
+    .slice()
     .sort((a, b) => a.number - b.number);
 
-  const publishedChapterNumbers = publishedChapters.map((c) => c.number);
+  // Page content is only fetched for published chapters — unpublished chapters
+  // never expose their drafts to students even if pages already exist.
+  const publishedChapterNumbers = sortedChapters
+    .filter((c) => c.is_published)
+    .map((c) => c.number);
 
   const rawPages =
     publishedChapterNumbers.length === 0
@@ -57,12 +62,14 @@ export default async function BookLandingPage({ params }: Props) {
 
   const firstPage = pages[0];
 
-  // Group pages by chapter.
-  const chapters: ToCChapter[] = publishedChapters.map((ch) => ({
+  // Group pages by chapter. Unpublished chapters carry an empty page list and
+  // their `is_published` flag drives the "Coming Soon" rendering in the TOC.
+  const chapters: ToCChapter[] = sortedChapters.map((ch) => ({
     number: ch.number,
     title: ch.title,
     slug: ch.slug,
-    pages: pages.filter((p) => p.chapter_number === ch.number),
+    is_published: Boolean(ch.is_published),
+    pages: ch.is_published ? pages.filter((p) => p.chapter_number === ch.number) : [],
   }));
 
   // Serialise book metadata (only what the client component needs).

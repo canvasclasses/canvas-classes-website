@@ -192,18 +192,46 @@ export default function BookWorkspace() {
       .finally(() => setLoadingPage(false));
   }, [selectedBookSlug, selectedPageSlug]);
 
-  // ── Auto-save (30s after last change) ────────────────────────────────────
+  // ── Auto-save (1.5s after last change) ───────────────────────────────────
+  // Short debounce so most edits land on the server before the user can
+  // refresh. The unload listeners further down handle the final-keystroke
+  // window where the debounce hasn't fired yet.
   useEffect(() => {
     if (!isDirty) return;
     if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current);
-    autoSaveTimer.current = setTimeout(() => { save(); }, 30_000);
+    autoSaveTimer.current = setTimeout(() => { save(); }, 1_500);
     return () => { if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDirty, blocks, pageTitle, pageSubtitle]);
 
   // ── Save ─────────────────────────────────────────────────────────────────
-  const save = useCallback(async () => {
-    if (!selectedBookSlug || !selectedPageSlug || isSaving) return;
+  // Two paths:
+  //   • normal (no opts)                — UI-aware: shows Saving…, sets dirty=false on success,
+  //                                       refreshes the page list, surfaces errors.
+  //   • { keepalive: true }             — fire-and-forget flush used by the beforeunload /
+  //                                       visibilitychange listeners. fetch's keepalive flag
+  //                                       lets the request survive page unload (up to ~64KB).
+  //                                       Does NOT touch UI state — the page may already be
+  //                                       in the process of unloading.
+  const save = useCallback(async (opts?: { keepalive?: boolean }) => {
+    if (!selectedBookSlug || !selectedPageSlug) return;
+    const keepalive = opts?.keepalive ?? false;
+
+    if (keepalive) {
+      try {
+        await fetch(`/api/v2/books/${selectedBookSlug}/pages/${selectedPageSlug}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: pageTitle, subtitle: pageSubtitle || undefined, blocks }),
+          keepalive: true,
+        });
+      } catch {
+        // The page is going away — nothing useful to do here.
+      }
+      return;
+    }
+
+    if (isSaving) return;
     setIsSaving(true);
     setSaveError(null);
     try {
@@ -232,6 +260,43 @@ export default function BookWorkspace() {
       setIsSaving(false);
     }
   }, [selectedBookSlug, selectedPageSlug, isSaving, pageTitle, pageSubtitle, blocks]);
+
+  // ── Refs for the global unload / visibility listeners ────────────────────
+  // The listeners are bound once on mount and need to reach the *current*
+  // save closure + dirty flag without re-subscribing on every render.
+  const saveRef = useRef(save);
+  const isDirtyRef = useRef(isDirty);
+  const selectedPageSlugRef = useRef(selectedPageSlug);
+  useEffect(() => { saveRef.current = save; }, [save]);
+  useEffect(() => { isDirtyRef.current = isDirty; }, [isDirty]);
+  useEffect(() => { selectedPageSlugRef.current = selectedPageSlug; }, [selectedPageSlug]);
+
+  // ── Save on refresh / tab close / hide ───────────────────────────────────
+  // Three protections layered together when the page is dirty:
+  //   1. Native "Leave site?" confirm via beforeunload + event.returnValue
+  //   2. Best-effort keepalive PUT — fetch's keepalive flag lets the request
+  //      survive page unload, so a refresh mid-debounce still lands the data.
+  //   3. Hidden-tab flush via visibilitychange — covers minimize / tab-switch
+  //      cases where beforeunload doesn't fire reliably (especially mobile).
+  useEffect(() => {
+    const beforeUnload = (e: BeforeUnloadEvent) => {
+      if (!isDirtyRef.current) return;
+      saveRef.current?.({ keepalive: true });
+      e.preventDefault();
+      e.returnValue = '';
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden' && isDirtyRef.current) {
+        saveRef.current?.({ keepalive: true });
+      }
+    };
+    window.addEventListener('beforeunload', beforeUnload);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      window.removeEventListener('beforeunload', beforeUnload);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, []);
 
   // ── Keyboard shortcut Cmd+S ───────────────────────────────────────────────
   useEffect(() => {
@@ -294,10 +359,27 @@ export default function BookWorkspace() {
   };
 
   // ── Sidebar callbacks (stable refs so memo'd sidebar doesn't re-render) ──
+  // Both book-switch and page-switch replace the editor's in-memory state.
+  // If the current page is dirty when that happens, fire a best-effort
+  // keepalive PUT for the outgoing page first so unsaved edits don't get
+  // overwritten by the new page's load. Goes through saveRef so the latest
+  // closure (with current blocks/title/subtitle) is used.
+  const flushOutgoingIfDirty = useCallback(() => {
+    if (isDirtyRef.current) {
+      saveRef.current?.({ keepalive: true });
+    }
+  }, []);
+
   const onSelectBookForSidebar = useCallback((slug: string) => {
+    flushOutgoingIfDirty();
     setSelectedBookSlug(slug);
     setSelectedPageSlug(null);
-  }, []);
+  }, [flushOutgoingIfDirty]);
+
+  const onSelectPage = useCallback((slug: string | null) => {
+    if (slug !== selectedPageSlugRef.current) flushOutgoingIfDirty();
+    setSelectedPageSlug(slug);
+  }, [flushOutgoingIfDirty]);
 
   const onBookCreated = useCallback((book: Book) => {
     setBooks((prev) => [book, ...prev]);
@@ -413,7 +495,7 @@ export default function BookWorkspace() {
           )}
 
           <button
-            onClick={save}
+            onClick={() => save()}
             disabled={!isDirty || isSaving || !currentPage}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold
               bg-gradient-to-r from-orange-500 to-amber-500 text-black
@@ -435,7 +517,7 @@ export default function BookWorkspace() {
           selectedBookSlug={selectedBookSlug}
           selectedPageSlug={selectedPageSlug}
           onSelectBook={onSelectBookForSidebar}
-          onSelectPage={setSelectedPageSlug}
+          onSelectPage={onSelectPage}
           onBookCreated={onBookCreated}
           onBookUpdated={onBookUpdated}
           onPageCreated={onPageCreated}

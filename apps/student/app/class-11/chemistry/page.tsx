@@ -26,11 +26,14 @@ export default async function Class11ChemistryPage() {
   if (!book) notFound();
   if (!book.is_published) notFound();
 
-  const publishedChapters = book.chapters
-    .filter((c) => c.is_published)
+  // All chapters listed in NCERT order; unpublished ones render as "Coming Soon" stubs.
+  const sortedChapters = book.chapters
+    .slice()
     .sort((a, b) => a.number - b.number);
 
-  const publishedChapterNumbers = publishedChapters.map((c) => c.number);
+  const publishedChapterNumbers = sortedChapters
+    .filter((c) => c.is_published)
+    .map((c) => c.number);
 
   const rawPages =
     publishedChapterNumbers.length === 0
@@ -56,11 +59,12 @@ export default async function Class11ChemistryPage() {
 
   const firstPage = pages[0];
 
-  const chapters: ToCChapter[] = publishedChapters.map((ch) => ({
+  const chapters: ToCChapter[] = sortedChapters.map((ch) => ({
     number: ch.number,
     title: ch.title,
     slug: ch.slug,
-    pages: pages.filter((p) => p.chapter_number === ch.number),
+    is_published: Boolean(ch.is_published),
+    pages: ch.is_published ? pages.filter((p) => p.chapter_number === ch.number) : [],
   }));
 
   const bookData: ToCBook = {

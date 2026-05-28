@@ -335,7 +335,7 @@ function AtomPanel({ label, atom, onChange }: AtomPanelProps) {
           className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-base transition-all"
           style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.55)', cursor: 'pointer' }}
         >−</button>
-        <span style={{ width: 28, textAlign: 'center', fontSize: 15, fontWeight: 700, fontFamily: 'monospace', color }}>{atom[field]}</span>
+        <span style={{ width: 28, textAlign: 'center', fontSize: 15, fontWeight: 700, fontVariantNumeric: 'tabular-nums', color }}>{atom[field]}</span>
         <button
           onClick={() => adjust(field, +1)}
           className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-base transition-all"
@@ -358,8 +358,8 @@ function AtomPanel({ label, atom, onChange }: AtomPanelProps) {
         <div className="flex items-start gap-1">
           {/* Mass number top, atomic number bottom */}
           <div className="flex flex-col items-end" style={{ lineHeight: 1 }}>
-            <span style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.55)', fontFamily: 'monospace' }}>{A}</span>
-            <span style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.35)', fontFamily: 'monospace' }}>{Z}</span>
+            <span style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.55)', fontVariantNumeric: 'tabular-nums' }}>{A}</span>
+            <span style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.35)', fontVariantNumeric: 'tabular-nums' }}>{Z}</span>
           </div>
           {/* Symbol */}
           <span style={{ fontSize: 38, fontWeight: 800, lineHeight: 1, color: el.color, fontFamily: 'system-ui, sans-serif' }}>{el.symbol}</span>
@@ -382,7 +382,7 @@ function AtomPanel({ label, atom, onChange }: AtomPanelProps) {
         ].map(s => (
           <div key={s.label} className="rounded-lg p-2 text-center"
             style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-            <div style={{ fontSize: 18, fontWeight: 800, fontFamily: 'monospace', color: s.color, lineHeight: 1 }}>{s.val}</div>
+            <div style={{ fontSize: 18, fontWeight: 800, fontVariantNumeric: 'tabular-nums', color: s.color, lineHeight: 1 }}>{s.val}</div>
             <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.28)', marginTop: 3, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{s.sub}</div>
           </div>
         ))}
