@@ -45,7 +45,8 @@ function validateSolution(md) {
   const issues = [];
 
   if (!md || typeof md !== 'string') return ['solution is empty or non-string'];
-  if (md.length < 800) issues.push(`solution too short (${md.length} chars; min 800)`);
+  // No minimum length: calibrate by substance per chemistry-solution-workflow.md.
+  // A 150-char solution for a trivial oxidation-state question is correct; bloat is the bug.
 
   if (!/\*\*🧠/.test(md)) issues.push('missing 🧠 heading (Reading the Question)');
   if (!/\*\*🗺️/.test(md)) issues.push('missing 🗺️ heading (Working It Out)');
@@ -284,10 +285,17 @@ function clearFlagsForId(sections, displayId) {
     const notes = [];
 
     if (item.answer) {
+      // If cur.answer is null (not an object), we must set the whole `answer` field
+      // at once rather than dotted sub-paths (Mongo can't create fields on null).
+      const curAnswerIsObject = cur.answer && typeof cur.answer === 'object';
       if (item.answer.correct_option != null) {
-        const old = cur.answer && cur.answer.correct_option;
+        const old = curAnswerIsObject ? cur.answer.correct_option : undefined;
         if (old !== item.answer.correct_option) {
-          set['answer.correct_option'] = item.answer.correct_option;
+          if (curAnswerIsObject) {
+            set['answer.correct_option'] = item.answer.correct_option;
+          } else {
+            set.answer = { ...(set.answer || {}), correct_option: item.answer.correct_option };
+          }
           notes.push(old == null
             ? `answer null → (${item.answer.correct_option})`
             : `answer (${old}) → (${item.answer.correct_option})`);
@@ -295,9 +303,13 @@ function clearFlagsForId(sections, displayId) {
         }
       }
       if (item.answer.integer_value != null) {
-        const old = cur.answer && cur.answer.integer_value;
+        const old = curAnswerIsObject ? cur.answer.integer_value : undefined;
         if (old !== item.answer.integer_value) {
-          set['answer.integer_value'] = item.answer.integer_value;
+          if (curAnswerIsObject) {
+            set['answer.integer_value'] = item.answer.integer_value;
+          } else {
+            set.answer = { ...(set.answer || {}), integer_value: item.answer.integer_value };
+          }
           notes.push(old == null
             ? `integer null → ${item.answer.integer_value}`
             : `integer ${old} → ${item.answer.integer_value}`);
@@ -339,6 +351,16 @@ function clearFlagsForId(sections, displayId) {
       } else if (cur.metadata?.questionNature !== item.questionNature) {
         set['metadata.questionNature'] = item.questionNature;
         notes.push(`questionNature: ${cur.metadata?.questionNature || '(none)'} → ${item.questionNature}`);
+      }
+    }
+
+    if (item.difficultyLevel != null) {
+      if (![1, 2, 3, 4, 5].includes(item.difficultyLevel)) {
+        addOrReplaceFlag(flagSections, 'soft', id, `difficultyLevel must be 1–5: ${item.difficultyLevel}`);
+        softFlags++;
+      } else if (cur.metadata?.difficultyLevel !== item.difficultyLevel) {
+        set['metadata.difficultyLevel'] = item.difficultyLevel;
+        notes.push(`difficultyLevel: ${cur.metadata?.difficultyLevel || '(none)'} → ${item.difficultyLevel}`);
       }
     }
 

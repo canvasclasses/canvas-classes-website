@@ -26,7 +26,7 @@ const FORBIDDEN_PHRASES = [
 function validateSolution(md) {
   const issues = [];
   if (!md || typeof md !== 'string') return ['solution is empty or missing'];
-  if (md.length < 800) issues.push(`too short (${md.length} chars)`);
+  // No minimum-length check: calibrate by substance, not a target length.
   if (!/\*\*🧠/.test(md)) issues.push('missing 🧠 heading');
   if (!/\*\*🗺️/.test(md)) issues.push('missing 🗺️ heading');
   if (!/\*\*⚡/.test(md)) issues.push('missing ⚡ heading');

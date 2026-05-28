@@ -1,0 +1,249 @@
+# SALT — Chemistry Solution Flags
+
+_Last updated: 2026-05-23 17:51_
+
+## 🔴 Blocking — no solution written
+
+- **SALT-041** — solution present but stored correct_option is null
+- **SALT-042** — solution present but stored correct_option is null
+- **SALT-043** — solution present but stored correct_option is null
+- **SALT-044** — solution present but stored correct_option is null
+- **SALT-045** — solution present but stored correct_option is null
+- **SALT-046** — solution present but stored correct_option is null
+- **SALT-047** — solution present but stored correct_option is null
+- **SALT-048** — solution present but stored correct_option is null
+- **SALT-049** — solution present but stored correct_option is null
+- **SALT-050** — solution present but stored correct_option is null
+- **SALT-051** — solution present but stored correct_option is null
+- **SALT-052** — solution present but stored correct_option is null
+- **SALT-053** — solution present but stored correct_option is null
+- **SALT-054** — solution present but stored correct_option is null
+- **SALT-055** — solution present but stored correct_option is null
+- **SALT-056** — solution present but stored correct_option is null
+- **SALT-057** — solution present but stored correct_option is null
+- **SALT-058** — solution present but stored correct_option is null
+- **SALT-059** — solution present but stored correct_option is null
+- **SALT-060** — solution present but stored correct_option is null
+- **SALT-061** — solution present but stored correct_option is null
+- **SALT-062** — solution present but stored correct_option is null
+- **SALT-063** — solution present but stored correct_option is null
+- **SALT-064** — solution present but stored correct_option is null
+- **SALT-065** — solution present but stored correct_option is null
+- **SALT-066** — solution present but stored correct_option is null
+- **SALT-067** — solution present but stored correct_option is null
+- **SALT-068** — solution present but stored correct_option is null
+- **SALT-069** — solution present but stored correct_option is null
+- **SALT-070** — solution present but stored correct_option is null
+- **SALT-071** — solution present but stored correct_option is null
+- **SALT-072** — solution present but stored correct_option is null
+- **SALT-073** — solution present but stored correct_option is null
+- **SALT-074** — solution present but stored correct_option is null
+- **SALT-075** — solution present but stored correct_option is null
+- **SALT-076** — solution present but stored correct_option is null
+- **SALT-077** — solution present but stored correct_option is null
+- **SALT-078** — solution present but stored correct_option is null
+- **SALT-079** — solution present but stored correct_option is null
+- **SALT-080** — solution present but stored correct_option is null
+- **SALT-081** — solution present but stored correct_option is null
+- **SALT-082** — solution present but stored correct_option is null
+- **SALT-083** — solution present but stored correct_option is null
+- **SALT-084** — solution present but stored correct_option is null
+- **SALT-085** — solution present but stored correct_option is null
+- **SALT-086** — solution present but stored correct_option is null
+- **SALT-087** — solution present but stored correct_option is null
+- **SALT-088** — solution present but stored correct_option is null
+- **SALT-089** — solution present but stored correct_option is null
+- **SALT-090** — solution present but stored correct_option is null
+- **SALT-091** — solution present but stored correct_option is null
+- **SALT-092** — solution present but stored correct_option is null
+- **SALT-093** — solution present but stored correct_option is null
+- **SALT-094** — solution present but stored correct_option is null
+- **SALT-095** — solution present but stored correct_option is null
+- **SALT-096** — solution present but stored correct_option is null
+- **SALT-097** — solution present but stored correct_option is null
+- **SALT-098** — solution present but stored correct_option is null
+- **SALT-099** — solution present but stored correct_option is null
+- **SALT-100** — solution present but stored correct_option is null
+- **SALT-101** — solution present but stored correct_option is null
+- **SALT-102** — solution present but stored correct_option is null
+- **SALT-103** — solution present but stored correct_option is null
+- **SALT-104** — solution present but stored correct_option is null
+- **SALT-105** — solution present but stored correct_option is null
+- **SALT-106** — solution present but stored correct_option is null
+- **SALT-107** — solution present but stored correct_option is null
+- **SALT-108** — solution present but stored correct_option is null
+- **SALT-109** — solution present but stored correct_option is null
+- **SALT-110** — solution present but stored correct_option is null
+- **SALT-111** — solution present but stored correct_option is null
+- **SALT-112** — solution present but stored correct_option is null
+- **SALT-113** — solution present but stored correct_option is null
+- **SALT-114** — solution present but stored correct_option is null
+- **SALT-115** — solution present but stored correct_option is null
+- **SALT-116** — solution present but stored correct_option is null
+- **SALT-117** — solution present but stored correct_option is null
+- **SALT-118** — solution present but stored correct_option is null
+- **SALT-119** — solution present but stored correct_option is null
+- **SALT-120** — solution present but stored correct_option is null
+- **SALT-121** — solution present but stored correct_option is null
+- **SALT-122** — solution present but stored correct_option is null
+- **SALT-123** — solution present but stored correct_option is null
+- **SALT-124** — solution present but stored correct_option is null
+- **SALT-146** — solution present but stored integer_value is null
+- **SALT-147** — solution present but stored integer_value is null
+- **SALT-148** — solution present but stored integer_value is null
+- **SALT-149** — solution present but stored integer_value is null
+- **SALT-150** — solution present but stored integer_value is null
+- **SALT-151** — solution present but stored integer_value is null
+- **SALT-152** — solution present but stored integer_value is null
+- **SALT-153** — solution present but stored integer_value is null
+- **SALT-154** — solution present but stored integer_value is null
+
+## 🟡 Needs verification — solution written, uncertain
+
+- **SALT-141** — Multi-correct (JEE Adv 2021): both (a) and (b) accepted. Stored only single option; full set is (a),(b). Schema limits to one — set to (a); the solution narrative names both.
+- **SALT-142** — Multi-correct (JEE Adv 2018): (b) and (d). Schema accepts only one option key; stored as (b). Solution narrative names both correct options.
+- **SALT-143** — Multi-correct (JEE Adv 2015): (c) and (d). Schema stores one option; set to (c). Solution names both.
+- **SALT-144** — Multi-correct (JEE Adv 2012): (a), (c), (d). Schema stores one option; set to (a). Solution narrative names all three.
+- **SALT-145** — Multi-correct (JEE Adv 2008): (a) and (b). Schema stores one option; set to (a). Solution narrative names both.
+- **SALT-212** — Multi-correct: both (a) Na2CO3 and (c) Na2SO3 give lime water turbidity. Schema stores one option; set to (a). Solution narrative names both.
+- **SALT-213** — Multi-correct: all four options (a,b,c,d) correct — all are Group II cations that precipitate with H2S in 0.3 M HCl. Schema stores one; set to (a). Solution names all.
+- **SALT-214** — Multi-correct: all four options (Ni, Co, Mn, Zn) are Group IV cations that precipitate with H2S in ammoniacal medium. Schema stores one; set to (a). Solution names all.
+- **SALT-215** — Multi-correct: (a) K, (b) Ba, (c) Sr give flame tests; (d) Mg does NOT (UV emission). Schema stores one; set to (a). Solution names all correct.
+- **SALT-216** — Multi-correct: (a) Na2HPO4 and (b) As2O3 (As(III) gets oxidised to As(V) by conc HNO3) both give yellow molybdate precipitates. Schema stores one; set to (a). Solution names both.
+- **SALT-217** — Multi-correct: (c) sulphide and (d) sulphite both detectable with dilute H2SO4. Schema stores one; set to (c). Solution names both.
+- **SALT-218** — Multi-correct: (a) Cu salt → CuS black, (b) Pb salt → PbS black. Schema stores one; set to (a). Solution names both.
+- **SALT-219** — Multi-correct: (a) Ni and (c) Co give black sulfides in ammoniacal H2S (Group IV). Schema stores one; set to (a). Solution names both.
+- **SALT-220** — Multi-correct: (b), (c), (d) all primary standards. (a) Na2S2O3·5H2O is secondary (decomposes/loses water). Schema stores one; set to (b). Solution names all three.
+- **SALT-221** — Multi-correct: (a) Sn, (b) As, (d) Sb — Group IIB metalloid sulfides dissolve in yellow (NH4)2Sx. (c) Hg is Group IIA, stays precipitated. Schema stores one; set to (a). Solution names all three.
+- **SALT-222** — Multi-correct: (a) NaHCO3, (b) Na2CO3, (c) Na2SO3 all give lime water turbidity. (d) NaNO2 gives NO/NO2, no turbidity. Schema stores one; set to (a). Solution names all three.
+- **SALT-223** — Multi-correct: (a) Ba²⁺ → BaCrO4 yellow, (b) Pb²⁺ → PbCrO4 yellow. Cu and Fe give other colours. Schema stores one; set to (a). Solution names both.
+- **SALT-224** — Multi-correct: (a), (b), (d) separable (one cation in Group II, other not); (c) not separable (both Group II). Schema stores one; set to (a). Solution names all separable pairs.
+- **SALT-225** — Multi-correct: (b) NaCl and (d) KCl both give Cl2 which turns KI-starch blue. Schema stores one; set to (b). Solution names both.
+
+## ⚪ Soft quality — audit notes
+
+- **SALT-001** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-002** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-003** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-004** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-005** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-006** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-007** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-008** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-009** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-010** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-011** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-012** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-013** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-014** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-015** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-016** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-017** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-018** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-019** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-020** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-021** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-022** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-023** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-024** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-025** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-026** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-027** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-028** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-029** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-030** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-031** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-032** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-033** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-034** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-035** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-036** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-037** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-038** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-039** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-040** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
+- **SALT-041** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-042** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-043** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-044** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-045** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-046** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-047** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-048** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-049** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-050** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-051** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-052** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-053** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$
+- **SALT-054** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$
+- **SALT-055** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-056** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-057** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-058** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-059** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-060** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-061** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-062** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-063** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-064** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-065** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-066** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-067** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-068** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-069** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-070** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-071** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-072** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-073** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-074** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-075** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-076** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-077** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-078** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-079** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-080** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-081** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-082** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-083** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-084** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-085** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-086** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-087** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-088** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-089** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-090** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-091** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-092** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-093** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-094** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-095** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-096** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-097** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-098** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-099** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-100** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-101** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-102** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-103** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-104** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-105** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-106** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-107** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-108** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-109** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-110** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-111** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-112** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-113** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-114** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-115** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-116** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-117** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-118** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-119** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-120** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-121** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-122** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-123** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-124** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
+- **SALT-227** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math

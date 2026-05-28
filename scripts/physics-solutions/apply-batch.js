@@ -41,7 +41,8 @@ function validateSolution(md) {
   const issues = [];
 
   if (!md || typeof md !== 'string') return ['solution is empty or non-string'];
-  if (md.length < 800) issues.push(`solution too short (${md.length} chars; min 800)`);
+  // Length floor intentionally removed: solution length should track pedagogical
+  // value, not a word/char minimum. Short solutions for simple questions are fine.
 
   if (!/\*\*🧠/.test(md)) issues.push('missing 🧠 heading (Reading the Question)');
   if (!/\*\*🗺️/.test(md)) issues.push('missing 🗺️ heading (Working It Out)');
@@ -175,7 +176,7 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
 
     const cur = await Q.findOne(
       { display_id: id },
-      { projection: { answer: 1, question_text: 1, options: 1, solution: 1 } }
+      { projection: { answer: 1, question_text: 1, options: 1, solution: 1, metadata: 1 } }
     );
     if (!cur) {
       addOrReplaceFlag(flagSections, 'blocking', id, 'not found in DB');
@@ -242,6 +243,45 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
     if (item.verifier_note) {
       addOrReplaceFlag(flagSections, 'verify', id, item.verifier_note);
       verifyFlags++;
+    }
+
+    // Optional metadata tag/nature/difficulty updates.
+    // primary_tag_id: a single tag id (e.g. 'tag_rot_1') — replaces metadata.tags with [{tag_id, weight:1}].
+    // question_nature: enum string per Question.v2.ts.
+    // difficulty_level: integer 1–5.
+    const VALID_NATURES = ['Recall','Rule_Application','Numerical','Comparative','Graphical','Conceptual','Mechanistic','Synthesis'];
+    if (item.primary_tag_id) {
+      const oldTags = (cur.metadata && cur.metadata.tags) || [];
+      const oldPrimary = oldTags[0] && oldTags[0].tag_id;
+      if (oldPrimary !== item.primary_tag_id) {
+        set['metadata.tags'] = [{ tag_id: item.primary_tag_id, weight: 1 }];
+        notes.push(`tag ${oldPrimary || 'null'} → ${item.primary_tag_id}`);
+      }
+    }
+    if (item.question_nature) {
+      if (!VALID_NATURES.includes(item.question_nature)) {
+        addOrReplaceFlag(flagSections, 'soft', id, `invalid question_nature: ${item.question_nature}`);
+        softFlags++;
+      } else {
+        const oldNat = cur.metadata && cur.metadata.questionNature;
+        if (oldNat !== item.question_nature) {
+          set['metadata.questionNature'] = item.question_nature;
+          notes.push(`nature ${oldNat || 'null'} → ${item.question_nature}`);
+        }
+      }
+    }
+    if (item.difficulty_level != null) {
+      const dl = Number(item.difficulty_level);
+      if (!Number.isInteger(dl) || dl < 1 || dl > 5) {
+        addOrReplaceFlag(flagSections, 'soft', id, `invalid difficulty_level: ${item.difficulty_level}`);
+        softFlags++;
+      } else {
+        const oldDL = cur.metadata && cur.metadata.difficultyLevel;
+        if (oldDL !== dl) {
+          set['metadata.difficultyLevel'] = dl;
+          notes.push(`difficulty ${oldDL || 'null'} → ${dl}`);
+        }
+      }
     }
 
     if (!dryRun) {

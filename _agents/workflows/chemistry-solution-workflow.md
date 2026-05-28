@@ -139,7 +139,17 @@ You are a senior JEE/NEET teacher writing for a student in your class. The stude
    - **Greek letters:** always inside `$...$`. Never bare `Δ`, `α` in prose.
    - **Units outside math:** plain text "mol/L", "kJ/mol", "g cm⁻³". Inside math: `\,\mathrm{mol/L}`.
 
-7. **Word target:** **300–450 words** of prose per solution (excluding LaTeX). Slightly higher than math/physics because mechanism explanations genuinely need a few extra sentences for arrow-pushing. Going 10–15% over is acceptable for genuinely complex multi-step problems (Tier-7-equivalent mechanisms, retrosynthesis). Going 30%+ over is a workflow violation — write tighter.
+7. **Length is set by substance, not by a target.** There is **no minimum and no maximum** word count. Calibrate to the actual teaching value of the question:
+
+   - **Trivial questions** (single oxidation-state calculation, one-line algebra, direct recall): the 🧠 section should be **1–2 sentences naming the move**, the 🗺️ section just the arithmetic, ⚡ one real rule the student should memorise, ⚠️ *the* specific trap (singular). Total often ~150–250 words. **Do not pad.** Skip 🖼️ and 💡 unless they teach something.
+   - **Medium questions** (concept recognition, multi-option comparison, identifying a reaction type): 🧠 sets up the diagnostic test in 2–4 sentences, 🗺️ walks each option briefly, ⚡ is the recognition rule, ⚠️ names the specific trap. Total often ~250–350 words.
+   - **Hard questions** (multi-step calculations, non-obvious first move, JEE Advanced novelty, synthesis chains): full 🧠 setup with the "starting it right" framing is mandatory — this is where the workflow rule earns its keep. Length is whatever the chemistry requires.
+
+   **The rule isn't "longer is better" or "shorter is better" — it is "match the explanation to the actual cognitive load of the question."** If a step is obvious, don't explain it. If the trap is unique to one option, say so in one sentence, not three. If a question genuinely needs 500 words, write 500 — but never inflate to hit a target, and never trim a load-bearing explanation just to look lean.
+
+   **Signs of bloat to delete:** restating the question in your own words at the top of 🧠; explaining standard procedure ("we will compute the oxidation state") instead of doing it; multi-paragraph framing when the framing fits in one sentence; long ⚠️ sections listing every conceivable mistake instead of the one or two that actually catch students; ⚡ tips that just re-state the 🗺️ work.
+
+   **Signs of under-explaining to fix:** skipping the bespoke 🧠 title on a question that has a genuine concept; merging 🗺️ steps when the conceptual transition between them is the teaching point; omitting the ⚠️ section entirely; not naming the underlying principle so the student can transfer it to a similar question next time.
 
 8. **LaTeX in batch files.** Solutions live inside CommonJS template-literal strings (`scripts/chemistry-solutions/_batch_*.js`). Every `\` in LaTeX must be `\\`: `\\ce{H2SO4}`, `\\frac{a}{b}`, `\\boxed{...}`, `\\rightarrow`. Single backslash → silent corruption in the DB.
 
@@ -296,7 +306,7 @@ Before saving any solution:
 3. Does my 🧠 open with a **bespoke title** naming the specific concept/trick?
 4. Does my 🧠 open with chemistry — not a meta-comment about the question type?
 5. Does the boxed answer match my derivation (and disagree with stored only if I checked twice)?
-6. Is my prose within ~300–450 words (excluding LaTeX)?
+6. Is the length of my prose set by the substance of the question, not by a target — no padding for short questions, no premature trimming for genuinely complex ones?
 7. Did I delete every adjective that was not load-bearing?
 8. Is every `$` paired? Every `{` paired? No `$$`? No `\dfrac`?
 9. Does the solution end with `$\boxed{\text{Answer: ...}}$`?
@@ -368,7 +378,7 @@ This workflow mirrors `math-solution-workflow.md` and `physics-solution-workflow
 | Aspect | Math | Physics | Chemistry |
 |---|---|---|---|
 | Section count | 6 | 6 | 6 |
-| Word target | ~400 implicit | 300–400 | 300–450 (slightly higher for mechanisms) |
+| Word target | ~400 implicit | 300–400 | no target — calibrate to substance (see §7) |
 | Visual sketch | When picture helps | Almost always — physics diagrams | When structure helps — chemistry structures |
 | Display math | `$...$` only | `$...$` only | `$...$` only — same |
 | Subject vocab | Vieta, Apollonius | Vectors $\vec{v}$, units $\mathrm{...}$ | $\ce{...}$ formulas, $\mathrm{[Cu(NH_3)_4]^{2+}}$ for coordination |

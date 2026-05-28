@@ -15,6 +15,7 @@ _(none)_
 - **HALO-048** — Stored answer was (d) which shows methylcyclopentane (no functional group, no C=C). That product makes no chemical sense from OH-/EtOH on a tertiary halide. The chemistry-correct answer is (c) = 1-methylcyclopent-1-ene (Zaitsev E2 product). Please verify against official answer key.
 - **HALO-050** — Stored answer was (d) cyclobutyl-CHBr-CH3 (secondary halide). The chemistry-correct answer for "fastest SN2" is (c) cyclobutyl-CH2-CH2-Br (primary halide). For SN2, the rate ranking is primary > secondary > tertiary. Even with β-cyclobutyl substitution, (c) is still a primary halide and significantly faster than the secondary (d). Please verify against official answer key.
 - **HALO-051** — I count only 4 ring-junction stereocenters in perhydroanthracene with Br on one upper junction and CH3 on the other (giving 2^4=16 stereoisomers). Stored answer 32 implies 5 stereocenters. Possibility: the official key counts an additional stereocenter at one of the meso positions (C9 or C10). Keeping stored value but flagging for verification of the stereocenter count.
+- **HALO-081** — Stored answer (c) = primary amide. Standard NCERT chemistry (H2/Ni on nitrile → primary amine) would suggest (a); the (c) outcome requires nitrile hydration to amide under wet Ni-catalysed conditions. Solution written for stored (c); verify against official JEE Main 2022 June Shift-I key.
 
 ## ⚪ Soft quality — audit notes
 
