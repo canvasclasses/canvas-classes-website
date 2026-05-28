@@ -259,8 +259,14 @@ function FakeCursor({ x, y, pressed, visible, tight }: CursorState) {
         left: 0,
         top: 0,
         transform: `translate(${x}px, ${y}px) scale(${pressed ? 0.92 : 1})`,
+        // In tight mode (autoplay tween) the cursor and the slider thumb are
+        // both driven from the same rAF tick, but the thumb has no CSS
+        // transition while the cursor used to have a 40 ms one — so the
+        // cursor visibly trailed the thumb by ~40 ms ("cursor not aligned at
+        // start"). Dropping the transform transition during tight mode keeps
+        // both in lockstep; opacity still smooths fade in/out.
         transition: tight
-          ? 'transform 0.04s linear, opacity 0.4s'
+          ? 'transform 0s linear, opacity 0.4s'
           : 'transform 0.7s cubic-bezier(.5,.1,.25,1), opacity 0.4s',
         opacity: visible ? 1 : 0,
         pointerEvents: 'none',

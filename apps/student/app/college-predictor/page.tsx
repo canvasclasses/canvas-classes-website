@@ -4,6 +4,7 @@ import Link from 'next/link';
 import PredictorExperience from '@/features/college-predictor/predictor-design/PredictorExperience';
 import TopColleges from '@/features/college-predictor/components/TopColleges';
 import HeroDemo, { HeroBackdrop } from '@/features/college-predictor/components/HeroDemo';
+import HeroPreviewMobile from '@/features/college-predictor/components/HeroPreviewMobile';
 import TrustStrip from '@/features/college-predictor/components/TrustStrip';
 import { TOP_COLLEGES } from '@/features/college-predictor/data/topCollegesData';
 
@@ -191,12 +192,12 @@ export default function CollegePredictorPage() {
       <div className="relative isolate overflow-hidden">
         <HeroBackdrop />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-20">
+        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 pt-20 sm:pt-24 pb-12 sm:pb-20">
           {/* Header — eyebrow + BETA chips + 2-line gradient h1 + sub. Layout
               from the Claude Design handoff; gradient text uses the same
               background-clip pattern as Hero.html so the amber line never
               renders as a solid bar. */}
-          <header className="text-center mb-9">
+          <header className="text-center mb-6 sm:mb-9">
           <div className="flex flex-wrap items-center justify-center gap-2 mb-5">
             <span
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full"
@@ -232,7 +233,11 @@ export default function CollegePredictorPage() {
             className="mx-auto"
             style={{
               fontFamily: "'Space Grotesk', 'Geist', system-ui, sans-serif",
-              fontSize: 'clamp(40px, 6vw, 80px)',
+              // Smaller floor on mobile — the 40px floor was leaving the two
+              // gradient lines stacked on phones in a way that pushed the
+              // demo / form way down. 32px keeps the headline punchy without
+              // dominating the first screen.
+              fontSize: 'clamp(32px, 6vw, 80px)',
               fontWeight: 700,
               lineHeight: 0.98,
               letterSpacing: '-0.035em',
@@ -276,11 +281,18 @@ export default function CollegePredictorPage() {
           </p>
         </header>
 
-        {/* Live predictor demo — auto-playing showcase. Cursor types a rank,
-            then drags the slider through 5 waypoints while college chips
-            reshuffle between SAFE / TARGET / REACH columns. "Try your own
-            rank →" inside scrolls to #predictor (the real form below). */}
-        <HeroDemo />
+        {/* Live predictor demo — desktop only.
+            On mobile the rAF-driven slider + cursor + 30-chip reshuffle was
+            stuttering on Safari/Chrome and the cursor visibly desynced from
+            the slider thumb. Mobile gets a static preview card instead that
+            mirrors the same "this is what the tool produces" story without
+            the animation cost. See HeroPreviewMobile.tsx. */}
+        <div className="hidden md:block">
+          <HeroDemo />
+        </div>
+        <div className="md:hidden">
+          <HeroPreviewMobile />
+        </div>
 
         {/* Trust strip — 4 honest KPIs */}
         <TrustStrip />
