@@ -48,7 +48,13 @@ function renderLatexCached(source: string): RenderResult {
         displayMode: true,
         throwOnError: true,
         trust: true,
-        macros: { '\\ce': '\\text{#1}' }, // fallback if mhchem not loaded
+        // No-op for display math (where \frac is already displaystyle), but
+        // kept for parity with the inline renderers so authors can rely on a
+        // single consistent rule platform-wide.
+        macros: {
+          '\\ce': '\\text{#1}', // fallback if mhchem not loaded
+          '\\frac': '\\dfrac{#1}{#2}',
+        },
       }),
       error: '',
     };

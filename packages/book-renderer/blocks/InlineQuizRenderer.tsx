@@ -8,6 +8,7 @@ import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
 import { InlineQuizBlock } from '@canvas/data/types/books';
+import { REHYPE_KATEX_OPTIONS } from './_katexConfig';
 
 interface Props {
   block: InlineQuizBlock;
@@ -18,7 +19,7 @@ interface Props {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const remarkPlugins = [remarkMath, remarkGfm] as any[];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const rehypePlugins = [rehypeKatex] as any[];
+const rehypePlugins = [[rehypeKatex, REHYPE_KATEX_OPTIONS]] as any[];
 
 const Md = ({ children }: { children: string }) => (
   <ReactMarkdown

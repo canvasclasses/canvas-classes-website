@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
 import rehypeKatex from 'rehype-katex';
+import { REHYPE_KATEX_OPTIONS } from './_katexConfig';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
 import { WorkedExampleBlock } from '@canvas/data/types/books';
@@ -116,7 +117,7 @@ export default function WorkedExampleRenderer({ block }: Props) {
       <div className="text-white/85 leading-relaxed">
         <ReactMarkdown
           remarkPlugins={[remarkMath, remarkGfm]}
-          rehypePlugins={[rehypeKatex]}
+          rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
           components={mdComponents}
         >
           {block.problem}
@@ -137,7 +138,7 @@ export default function WorkedExampleRenderer({ block }: Props) {
           <div className="text-white/85 leading-relaxed">
             <ReactMarkdown
               remarkPlugins={[remarkMath, remarkGfm]}
-              rehypePlugins={[rehypeKatex]}
+              rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
               components={mdComponents}
             >
               {block.solution}
