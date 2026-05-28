@@ -393,8 +393,11 @@ export default function PredictorExperience() {
   const [score, setScore] = useState(295);
   const maxScore = paper === 'modern' ? 390 : 450;
 
-  // Narrow-down state
-  const [narrowOpen, setNarrowOpen] = useState(false);
+  // Narrow-down state. Default OPEN so the branch filter (the most-requested
+  // refinement) is visible to every user without an extra click — pre-fix
+  // analytics showed users were missing the collapsed section entirely and
+  // asking us to add a branch filter that was already there.
+  const [narrowOpen, setNarrowOpen] = useState(true);
   const [pickedBranches, setPickedBranches] = useState<string[]>([]);
   const [tierOnly, setTierOnly] = useState(false);
 
@@ -418,6 +421,14 @@ export default function PredictorExperience() {
   const [filter, setFilter] = useState<'all' | 'safe' | 'target' | 'reach'>('all');
   const [extended, setExtended] = useState(false);
   const [showBuilder, setShowBuilder] = useState(false);
+  // Pagination — slice the result list into 10-row pages so a 96-college
+  // response doesn't force a multi-screen scroll. Reset to 0 on every new
+  // submission and whenever the active filter changes (handled via useEffect
+  // below). The Next button straddles the extended-fetch boundary: if the
+  // user is on the last locally-loaded page but the API has more results,
+  // pressing Next triggers loadMoreJee() and only then advances the page.
+  const PAGE_SIZE = 10;
+  const [pageIndex, setPageIndex] = useState(0);
 
   const resultsRef = useRef<HTMLDivElement>(null);
 
@@ -695,7 +706,52 @@ export default function PredictorExperience() {
     if (filter === 'all') return rows;
     return rows.filter((r) => r.bucket === filter);
   }, [rows, filter]);
-  const visibleRows = extended ? filteredRows : filteredRows.slice(0, 10);
+
+  // Reset to page 1 whenever the underlying list changes (new submit, filter
+  // toggle, or extended fetch landed). Otherwise the user can end up parked
+  // on "page 5" of a 1-page filtered list and see an empty results pane.
+  useEffect(() => {
+    setPageIndex(0);
+  }, [filter, jeeGroups, bitsatRows]);
+
+  // Effective total pages. When the API capped at 10 (extended=false) but
+  // totalCount says there are more, surface those phantom pages so Next can
+  // trigger the extended fetch transparently. Once extended fires, totalPages
+  // collapses to ceil(filteredRows / PAGE_SIZE) of the real data.
+  const localPageCount = Math.max(1, Math.ceil(filteredRows.length / PAGE_SIZE));
+  const totalPages =
+    !extended && filter === 'all' && (totalCount ?? 0) > filteredRows.length
+      ? Math.max(localPageCount, Math.ceil((totalCount ?? 0) / PAGE_SIZE))
+      : localPageCount;
+  const safePageIndex = Math.min(pageIndex, totalPages - 1);
+  const pageStart = safePageIndex * PAGE_SIZE;
+  const visibleRows = filteredRows.slice(pageStart, pageStart + PAGE_SIZE);
+  const rangeStart = filteredRows.length === 0 ? 0 : pageStart + 1;
+  const rangeEnd = Math.min(pageStart + PAGE_SIZE, filteredRows.length);
+
+  // Jump to a specific page. If the target sits past the locally-cached rows
+  // and there's more available server-side, fetch the extended set first.
+  // Only JEE has a server-side extended fetch — BITSAT returns the full list
+  // up-front, so the local slice handles it.
+  async function goToPage(target: number) {
+    const clamped = Math.max(0, Math.min(target, totalPages - 1));
+    const needsMore =
+      !extended && (target + 1) * PAGE_SIZE > filteredRows.length && (totalCount ?? 0) > filteredRows.length;
+    if (needsMore) {
+      if (exam === 'jee') {
+        await loadMoreJee();
+      } else {
+        setExtended(true);
+      }
+    }
+    setPageIndex(clamped);
+    // Scroll the results header back into view so the user sees the new page
+    // start, not the bottom of the previous one.
+    requestAnimationFrame(() => {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
   const hasResults = jeeGroups !== null || bitsatRows !== null;
 
   // Career-suggestion shortlist — derived from the user's matched branches.
@@ -927,6 +983,49 @@ export default function PredictorExperience() {
         {exam === 'jee' ? (
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] gap-8">
             <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+              {/* Rank input lifted to the top of the form. On mobile especially,
+                  asking a student to scroll past category + quota + state
+                  selectors before they can type their rank felt backwards —
+                  the rank is the one number that always has to be entered, so
+                  it leads. Category / quota / state default to sensible values
+                  (OPEN, Home State, UP) below, which the student can adjust
+                  after they see what they're working with. */}
+              <Seg
+                label="RANK TYPE"
+                value={rankType}
+                onChange={setRankType}
+                options={[
+                  { value: 'CRL', label: 'CRL — Common Rank' },
+                  { value: 'CAT', label: 'Category Rank' },
+                ]}
+              />
+              <NumberWithSlider
+                label="YOUR RANK"
+                sublabel="out of ~1,500,000 candidates"
+                value={rank}
+                onChange={setRank}
+                min={1}
+                max={150000}
+                suffix={rankType}
+                ticks={[
+                  { value: 1000, label: 'Top 1K' },
+                  { value: 5000, label: 'Top 5K' },
+                  { value: 15000, label: '15K' },
+                  { value: 50000, label: '50K' },
+                  { value: 100000, label: '1L+' },
+                ]}
+              />
+
+              {/* Visual divider between the primary input (above) and the
+                  refinement controls (below). Signals "you've entered the
+                  must-have; everything below tunes the result." */}
+              <div
+                style={{
+                  borderTop: '1px dashed rgba(255,255,255,0.08)',
+                  margin: '2px 0 -2px',
+                }}
+              />
+
               <Seg
                 label="CATEGORY"
                 value={category}
@@ -1022,50 +1121,17 @@ export default function PredictorExperience() {
                   options={INDIAN_STATES.map((s) => ({ value: s, label: s }))}
                 />
               </div>
-              <Seg
-                label="RANK TYPE"
-                value={rankType}
-                onChange={setRankType}
-                options={[
-                  { value: 'CRL', label: 'CRL — Common Rank' },
-                  { value: 'CAT', label: 'Category Rank' },
-                ]}
-              />
-              <NumberWithSlider
-                label="YOUR RANK"
-                sublabel="out of ~1,500,000 candidates"
-                value={rank}
-                onChange={setRank}
-                min={1}
-                max={150000}
-                suffix={rankType}
-                ticks={[
-                  { value: 1000, label: 'Top 1K' },
-                  { value: 5000, label: 'Top 5K' },
-                  { value: 15000, label: '15K' },
-                  { value: 50000, label: '50K' },
-                  { value: 100000, label: '1L+' },
-                ]}
-              />
             </div>
             <ReturnsCard exam="jee" />
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] gap-8">
             <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-              <Seg
-                label="PAPER VERSION"
-                value={paper}
-                onChange={(v) => {
-                  setPaper(v);
-                  // Re-clamp score to the new max when switching regimes.
-                  setScore((s) => Math.min(s, v === 'modern' ? 390 : 450));
-                }}
-                options={[
-                  { value: 'modern', label: 'Modern paper · 2022+ · max 390' },
-                  { value: 'legacy', label: 'Legacy · ≤2021 · max 450' },
-                ]}
-              />
+              {/* Score lifted above the paper-version selector for the same
+                  reason as the JEE form — the marks input is the one number
+                  the student always has to type, so it leads. The paper
+                  version (modern / legacy) follows as a small refinement;
+                  switching it re-clamps the score to the new max. */}
               <NumberWithSlider
                 label="YOUR BITSAT SCORE"
                 sublabel="enter total (no sectional split)"
@@ -1092,13 +1158,48 @@ export default function PredictorExperience() {
                       ]
                 }
               />
+
+              <div
+                style={{
+                  borderTop: '1px dashed rgba(255,255,255,0.08)',
+                  margin: '2px 0 -2px',
+                }}
+              />
+
+              <Seg
+                label="PAPER VERSION"
+                value={paper}
+                onChange={(v) => {
+                  setPaper(v);
+                  // Re-clamp score to the new max when switching regimes.
+                  setScore((s) => Math.min(s, v === 'modern' ? 390 : 450));
+                }}
+                options={[
+                  { value: 'modern', label: 'Modern paper · 2022+ · max 390' },
+                  { value: 'legacy', label: 'Legacy · ≤2021 · max 450' },
+                ]}
+              />
             </div>
             <ReturnsCard exam="bitsat" />
           </div>
         )}
 
-        {/* Narrow down */}
-        <div style={{ borderTop: '1px dashed rgba(255,255,255,0.08)', paddingTop: 22, marginTop: 24 }}>
+        {/* Narrow down — promoted from a low-contrast dashed-border section
+            to an orange-accented callout card. Pre-fix UX feedback showed
+            users were missing this entirely and asking us to add a branch
+            filter that was already here. The card now defaults open, leads
+            with the branch-picker, and uses the same amber accent as the
+            primary CTA so a glance places it in the same "this is important"
+            visual tier. */}
+        <div
+          style={{
+            marginTop: 24,
+            borderRadius: 14,
+            border: `1px solid ${ACCENT}33`,
+            background: `linear-gradient(180deg, ${ACCENT}0d, rgba(255,255,255,0.01))`,
+            padding: 18,
+          }}
+        >
           <button
             type="button"
             onClick={() => setNarrowOpen((v) => !v)}
@@ -1111,12 +1212,46 @@ export default function PredictorExperience() {
               width: '100%',
             }}
           >
-            <div>
-              <span style={{ color: '#f5f5f7', fontSize: 15, fontWeight: 600, letterSpacing: '-0.005em' }}>
-                Narrow it down
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+              <span
+                aria-hidden
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 26,
+                  height: 26,
+                  borderRadius: 8,
+                  background: `${ACCENT}22`,
+                  color: ACCENT,
+                  fontSize: 14,
+                  fontWeight: 700,
+                }}
+              >
+                🎯
               </span>
-              <span style={{ color: '#5e5e6a', fontSize: 13, marginLeft: 10 }}>
-                optional · pin branches or campuses
+              <span style={{ color: '#f5f5f7', fontSize: 15, fontWeight: 700, letterSpacing: '-0.005em' }}>
+                Filter by branch
+              </span>
+              <span
+                style={{
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: '0.14em',
+                  fontFamily: "'JetBrains Mono', monospace",
+                  color: ACCENT,
+                  background: `${ACCENT}1a`,
+                  border: `1px solid ${ACCENT}40`,
+                  padding: '3px 7px',
+                  borderRadius: 999,
+                }}
+              >
+                MOST USED
+              </span>
+              <span style={{ color: '#9a9aa6', fontSize: 12.5 }}>
+                {pickedBranches.length > 0
+                  ? `${pickedBranches.length} branch${pickedBranches.length === 1 ? '' : 'es'} selected`
+                  : 'pick CSE, ECE, Mechanical or any branch you want'}
               </span>
             </div>
             <span
@@ -1136,7 +1271,7 @@ export default function PredictorExperience() {
               <div>
                 <div
                   style={{
-                    color: '#9a9aa6',
+                    color: '#cfcfd6',
                     fontSize: 11,
                     fontWeight: 700,
                     letterSpacing: '0.16em',
@@ -1460,71 +1595,33 @@ export default function PredictorExperience() {
             )}
           </div>
 
-          {/* Load more. The predict API defaults to extended:false which caps
-              at 10 colleges; this button re-fires with extended:true (up to
-              100). Visibility condition is `totalCount > visibleRows.length`
-              — covers both the JEE case (where the API already truncated) and
-              the BITSAT case (where the local slice is the only cap). Hidden
-              once extended=true has been applied.
-
-              Previously this button checked filteredRows.length > 10, which
-              was unreachable because the API already capped at 10 server-side
-              — the button never rendered. Confirmed via integration tests
-              showing baseline JEE returned 96 total colleges but only 10
-              came back over the wire. */}
-          {(totalCount ?? 0) > visibleRows.length && !extended && (
-            <div style={{ textAlign: 'center', marginTop: 26 }}>
-              <button
-                type="button"
-                onClick={() => {
-                  if (exam === 'jee') loadMoreJee();
-                  else setExtended(true);
-                }}
-                disabled={loadingMore}
-                style={{
-                  padding: '12px 22px',
-                  borderRadius: 999,
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  color: '#cfcfd6',
-                  fontFamily: 'inherit',
-                  fontSize: 13.5,
-                  fontWeight: 600,
-                  cursor: loadingMore ? 'wait' : 'pointer',
-                  opacity: loadingMore ? 0.6 : 1,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  transition: 'all 0.2s',
-                }}
-              >
-                {loadingMore
-                  ? 'Loading more…'
-                  : `Show all ${totalCount} ${exam === 'jee' ? 'colleges' : 'programmes'}`}
-                {!loadingMore && Icons.arrow('currentColor')}
-              </button>
-            </div>
-          )}
-
-          {/* "All shown" footer once the cap has been lifted. Gives the user
-              closure on the list length so they don't keep scrolling looking
-              for more. */}
-          {extended && (totalCount ?? 0) > 10 && (
-            <div
-              style={{
-                textAlign: 'center',
-                marginTop: 26,
-                color: '#7d7d88',
-                fontSize: 12.5,
-                fontFamily: "'JetBrains Mono', monospace",
-                letterSpacing: '0.04em',
-              }}
-            >
-              Showing all {visibleRows.length} of {totalCount}
-              {(totalCount ?? 0) >= 100 && (
-                <> · capped at 100 by the predictor</>
-              )}
-            </div>
+          {/* Pagination — 10 rows per page. Replaces the prior "Show all N"
+              button + post-load "All shown" footer, which dumped up to 100
+              rows into one scroll-forever page. Next/Prev sit alongside a
+              page-number strip; on the boundary where local rows run out but
+              totalCount says there's more, goToPage transparently triggers
+              the extended fetch before advancing. */}
+          {filteredRows.length > 0 && totalPages > 1 && (
+            <Pager
+              pageIndex={safePageIndex}
+              totalPages={totalPages}
+              rangeStart={rangeStart}
+              rangeEnd={rangeEnd}
+              total={
+                !extended && filter === 'all' && (totalCount ?? 0) > filteredRows.length
+                  ? totalCount ?? filteredRows.length
+                  : filteredRows.length
+              }
+              unit={exam === 'jee' ? 'colleges' : 'programmes'}
+              loadingMore={loadingMore}
+              onGo={goToPage}
+              accent={ACCENT}
+              capNote={
+                extended && (totalCount ?? 0) >= 100
+                  ? 'capped at 100 by the predictor'
+                  : undefined
+              }
+            />
           )}
 
           {/* Sensitivity chart */}
@@ -1948,6 +2045,162 @@ function ResultRow({
 
 function Sep() {
   return <span style={{ color: '#3a3a44' }}>·</span>;
+}
+
+// ── Pager — 10-rows-per-page pagination control ────────────────────────────
+// Compact, dark-theme paginator used at the bottom of the results list. The
+// page-number strip uses the standard 1 … 4 [5] 6 … N compression so we stay
+// at ≤7 buttons even when there are 10 pages. The "boundary" Next press is
+// handled by the parent's onGo — when the cached rows run out but more
+// exist on the server, onGo fetches and then advances.
+function Pager({
+  pageIndex,
+  totalPages,
+  rangeStart,
+  rangeEnd,
+  total,
+  unit,
+  loadingMore,
+  onGo,
+  accent,
+  capNote,
+}: {
+  pageIndex: number;
+  totalPages: number;
+  rangeStart: number;
+  rangeEnd: number;
+  total: number;
+  unit: 'colleges' | 'programmes';
+  loadingMore: boolean;
+  onGo: (target: number) => void;
+  accent: string;
+  capNote?: string;
+}) {
+  // Build the compressed page-number sequence.
+  // - Always show 1 and totalPages.
+  // - Show current ± 1.
+  // - Insert an ellipsis when the gap is > 1.
+  const items: (number | 'ellipsis')[] = [];
+  const current = pageIndex;
+  const pushedSet = new Set<number>();
+  function pushPage(p: number) {
+    if (p < 0 || p >= totalPages || pushedSet.has(p)) return;
+    pushedSet.add(p);
+    items.push(p);
+  }
+  const ordered = [0, current - 1, current, current + 1, totalPages - 1].filter(
+    (p) => p >= 0 && p < totalPages,
+  );
+  const unique = Array.from(new Set(ordered)).sort((a, b) => a - b);
+  let prev = -1;
+  for (const p of unique) {
+    if (prev !== -1 && p - prev > 1) items.push('ellipsis');
+    pushPage(p);
+    prev = p;
+  }
+
+  const baseBtn: React.CSSProperties = {
+    minWidth: 36,
+    height: 36,
+    padding: '0 10px',
+    borderRadius: 10,
+    border: '1px solid rgba(255,255,255,0.08)',
+    background: 'rgba(255,255,255,0.03)',
+    color: '#cfcfd6',
+    fontFamily: 'inherit',
+    fontSize: 13,
+    fontWeight: 600,
+    cursor: 'pointer',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    transition: 'all 0.15s',
+  };
+  const activeBtn: React.CSSProperties = {
+    ...baseBtn,
+    background: accent,
+    color: '#0a0a0f',
+    border: `1px solid ${accent}`,
+  };
+  const disabledBtn: React.CSSProperties = {
+    ...baseBtn,
+    opacity: 0.4,
+    cursor: 'not-allowed',
+  };
+
+  const prevDisabled = pageIndex === 0 || loadingMore;
+  const nextDisabled = pageIndex >= totalPages - 1 || loadingMore;
+
+  return (
+    <div
+      style={{
+        marginTop: 28,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: 14,
+        flexWrap: 'wrap',
+      }}
+    >
+      <div
+        style={{
+          color: '#9a9aa6',
+          fontSize: 12.5,
+          fontFamily: "'JetBrains Mono', monospace",
+          letterSpacing: '0.04em',
+        }}
+      >
+        Showing <span style={{ color: '#f5f5f7', fontWeight: 600 }}>{rangeStart}–{rangeEnd}</span>{' '}
+        of <span style={{ color: '#f5f5f7', fontWeight: 600 }}>{total}</span> {unit}
+        {capNote && <span style={{ color: '#5e5e6a' }}> · {capNote}</span>}
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+        <button
+          type="button"
+          onClick={() => onGo(pageIndex - 1)}
+          disabled={prevDisabled}
+          style={prevDisabled ? disabledBtn : baseBtn}
+          aria-label="Previous page"
+        >
+          ← Prev
+        </button>
+        {items.map((it, i) =>
+          it === 'ellipsis' ? (
+            <span
+              key={`e-${i}`}
+              style={{ color: '#5e5e6a', padding: '0 4px', fontSize: 13 }}
+              aria-hidden
+            >
+              …
+            </span>
+          ) : (
+            <button
+              key={it}
+              type="button"
+              onClick={() => onGo(it)}
+              disabled={loadingMore}
+              style={it === pageIndex ? activeBtn : baseBtn}
+              aria-current={it === pageIndex ? 'page' : undefined}
+              aria-label={`Page ${it + 1}`}
+            >
+              {it + 1}
+            </button>
+          ),
+        )}
+        <button
+          type="button"
+          onClick={() => onGo(pageIndex + 1)}
+          disabled={nextDisabled}
+          style={nextDisabled ? disabledBtn : baseBtn}
+          aria-label="Next page"
+        >
+          {loadingMore ? 'Loading…' : 'Next →'}
+        </button>
+      </div>
+    </div>
+  );
 }
 
 // ── Sensitivity chart — stacked bars across score/rank band ─────────────────
