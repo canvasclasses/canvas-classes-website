@@ -663,3 +663,156 @@ These are pre-existing gaps the codebase carries today. They're tracked in `_age
 - Notice unrelated dead code → mention it in your response, but don't delete it.
 
 Every changed line must trace directly to the user's request. If it doesn't, revert it.
+
+---
+
+## 10. CACHING & RENDERING RULES — MANDATORY FOR EVERY PUBLIC PAGE
+
+These rules exist because **the 2026-06 Vercel bill caught a ~10× outbound-traffic spike** that traced back to public pages bypassing the edge cache. Three commits closed the gap on 2026-06-02:
+
+- `6f5af21 feat(robots)` — block AI training crawlers
+- `4e9f188 perf(student)` — remove `force-dynamic` from public pages, move auth into client islands
+- `caf8b94 perf(student)` — bump aggressive `revalidate = 60` windows to 3600 / 86400
+
+**Do not undo any of those.** Every rule below is a direct lesson from that incident. Violations cost real money in Origin Transfer, CPU, Memory, and ISR Writes simultaneously.
+
+### 10.1 The cacheability decision
+
+| Page type | Rule |
+|---|---|
+| Public — same content for every visitor (SEO pages, marketing landings, content directories, blog posts, books, chapter pages, career briefs, questions) | **Must be cacheable.** Use `export const revalidate = <seconds>`. Never `force-dynamic`. |
+| Public — same content but needs auth-aware UI bits (login state, progress badges, "continue where you left off") | **Still cacheable.** Page is a Server Component reading only public data. Wrap the auth-aware UI in a `'use client'` island that reads auth via `supabase.auth.getUser()` on mount. See [`apps/student/app/the-crucible/[chapterId]/CrucibleChapterClient.tsx`](apps/student/app/the-crucible/[chapterId]/CrucibleChapterClient.tsx) — the canonical example. |
+| Genuinely per-user — dashboards, user profile pages, per-user career profiles | **`force-dynamic` is correct.** These should not be in the sitemap and ideally should be behind auth. |
+| Internal admin tools | **`force-dynamic`** OR statically rendered + RBAC-gated. Either is fine — admin traffic is low. |
+
+### 10.2 Forbidden patterns on public pages
+
+```ts
+// ❌ FORBIDDEN — opts the page out of edge caching forever.
+//    Caused the 2026-06 bill spike. ~$8/month of Origin Transfer.
+export const dynamic = 'force-dynamic';
+
+// ❌ FORBIDDEN — equivalent to force-dynamic. Same problem.
+export const revalidate = 0;
+
+// ❌ FORBIDDEN — 60-second cache means each URL regenerates up to 1440×/day.
+//    With bots crawling the sitemap continuously this drove ~200K ISR
+//    writes/day. Use 3600 or 86400 unless content actually changes every minute.
+export const revalidate = 60;
+
+// ❌ FORBIDDEN in any Server Component reached via the root layout —
+//    raises Next.js 15 E132 "Page changed from static to dynamic at runtime,
+//    reason: cookies" and flips every page below the layout to dynamic.
+//    The May 2026 outage from this pattern is documented in commit 484930b.
+import { cookies } from 'next/headers';
+const c = cookies();
+
+// ❌ FORBIDDEN in Server Components on cacheable routes — opts the route
+//    into dynamic rendering even if force-dynamic isn't set.
+export default async function Page({ searchParams }: { searchParams: Promise<...> }) {
+  const sp = await searchParams; // forces dynamic
+}
+```
+
+### 10.3 Correct patterns
+
+**Static shell + client island for auth-aware public pages:**
+
+```ts
+// page.tsx — Server Component, cacheable
+export const revalidate = 3600;
+
+export async function generateMetadata({ params }) { /* ... */ }
+
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;   // params is OK — does NOT force dynamic
+  const data = await getPublicData(slug);
+  if (!data) notFound();
+  return <PageClient data={data} />;
+}
+```
+
+```tsx
+// PageClient.tsx — Client Component, handles auth + searchParams
+'use client';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { createClient } from '@/app/utils/supabase/client';
+
+export default function PageClient({ data }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const sp = useSearchParams();
+
+  useEffect(() => {
+    createClient()?.auth.getUser()
+      .then(({ data: { user } }) => setIsLoggedIn(!!user))
+      .catch(() => {/* leave false */});
+  }, []);
+
+  return <UI data={data} isLoggedIn={isLoggedIn} param={sp.get('foo')} />;
+}
+```
+
+The page caches at the edge for everyone. The personalised UI hydrates ~100–300ms after first paint. That flash is acceptable — the cost savings dwarf it.
+
+**Reference implementations in this repo:**
+- `apps/student/app/the-crucible/[chapterId]/page.tsx` + `CrucibleChapterClient.tsx` — auth + searchParams
+- `apps/student/app/chemistry-questions/[chapter]/page.tsx` — pure public, no auth
+- `apps/student/app/career-guide/[slug]/page.tsx` — pure public, no auth
+
+### 10.4 The E132 layout trap
+
+If a Server Component anywhere in the layout tree (especially `apps/student/app/layout.tsx`) calls `cookies()` or `headers()` from `next/headers`, **every cached page below the layout breaks with E132 at runtime**.
+
+The canonical fix is [`apps/student/features/auth/components/AuthButton.tsx`](apps/student/features/auth/components/AuthButton.tsx) — it is a Client Component for this exact reason, and its `features/auth/README.md` has a load-bearing warning: *"Do not convert to a Server Component."* Respect it.
+
+**If you see E132 in production logs**, trace the layout tree from the failing route up to root and grep for `cookies()` / `headers()` from `next/headers`. A single read at any level flips every page below.
+
+### 10.5 ISR `revalidate` window guide
+
+Default: **`revalidate = 3600`** (1 hour). Use this when in doubt.
+
+| Content velocity | Use |
+|---|---|
+| Effectively static (NCERT chapter pages, class hubs, career briefs, exam-prep landings) | `revalidate = 86400` (24h) |
+| Editorial — may change mid-day but not minute-to-minute (blog posts, books, NCERT pages, chapter views) | `revalidate = 3600` (1h) |
+| User-aware per-request data | Not ISR — use a Client Component island that fetches per-user data |
+| Content that actually changes every minute | Justify in a code comment. Almost nothing should be in this bucket. |
+
+For instant-turnaround on admin saves, call `revalidatePath()` from the admin save handler — that's strictly cheaper than running a short `revalidate` window.
+
+### 10.6 robots.ts policy — DO NOT LOOSEN
+
+[`apps/student/app/robots.ts`](apps/student/app/robots.ts) blocks AI **training** crawlers:
+
+- `GPTBot` (OpenAI training)
+- `Google-Extended` (Bard/Gemini training — separate from Googlebot)
+- `Applebot-Extended` (Apple Intelligence training — separate from Applebot)
+- `CCBot` (Common Crawl)
+- `Bytespider`, `anthropic-ai` (legacy), `Amazonbot`, `Meta-ExternalAgent`, `cohere-ai`
+
+…and explicitly **allows** AI **answer/citation** crawlers (these grant clickable links back in AI search results):
+
+- `ChatGPT-User`, `OAI-SearchBot` (ChatGPT search mode)
+- `PerplexityBot`, `Perplexity-User`
+- `ClaudeBot`
+- `Googlebot`, `Bingbot` (untouched)
+
+**Do not:**
+- Add `*` allowance for the blocked training bots — they pulled 5–8 GB/day on uncached pages in the 2026-06 incident with zero return.
+- Block the on-demand answer bots — that breaks GEO (citations in ChatGPT / Perplexity / Claude answers).
+
+The distinction is: **training crawlers cost bandwidth, return nothing measurable; answer crawlers grant citations + clicks per user query.**
+
+### 10.7 Pre-deploy checklist for any new page
+
+Before merging any new page under `apps/student/app/`:
+
+1. **Is it public-facing?** Yes → it must be cacheable. Decide `revalidate` value per §10.5.
+2. **Does it read cookies / auth / session server-side?** If yes, can the auth-aware bit be moved into a Client Component island? Almost always: yes (see §10.3).
+3. **Does it read `searchParams`?** If yes, can `useSearchParams()` in a client island replace the server read? Almost always: yes.
+4. **Does it call `cookies()` / `headers()` from `next/headers` at the page or layout level?** If yes — STOP. Refactor before merging. This is the E132 trap.
+5. **Is the route in `sitemap.ts`?** If yes, it WILL be hit by bots — caching is mandatory.
+6. **Did you add `force-dynamic` to "fix" a Next.js error?** Don't ship it. The error is usually solvable by moving the offending read into a Client Component. `force-dynamic` is a silent-cost shortcut that the bill catches months later.
+
+If you genuinely need `force-dynamic` (per-user dashboard, auth flow, admin tool), **add a comment explaining why** so the next agent doesn't strip it as cleanup.
