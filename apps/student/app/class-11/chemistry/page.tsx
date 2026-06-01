@@ -8,7 +8,7 @@ import BookTableOfContents, {
   type ToCPage,
 } from '@/features/books/components/BookTableOfContents';
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export const metadata = {
   title: 'Class 11 Chemistry — NCERT Simplified | Canvas Classes',
