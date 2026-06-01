@@ -55,8 +55,9 @@ import './career-detail.css';
  * harder stuff — risks, India context — comes after they're already engaged.
  */
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// 24-hour ISR matches the quarterly editorial cadence. revalidatePath
+// can be called from the admin save flow when a spec is updated.
+export const revalidate = 86400;
 
 type SpecLean = Omit<ICareerSpec, 'deleted_at' | 'deleted_by' | 'created_by' | 'updated_by'>;
 

@@ -8,7 +8,10 @@ export const metadata = {
     alternates: { canonical: 'https://www.canvasclasses.in/chemistry-questions' },
 };
 
-export const dynamic = 'force-dynamic';
+// Pure SEO directory page — same HTML for every visitor. Cache at the
+// edge for 24h; revalidatePath('/chemistry-questions') can flip the
+// cache if the question bank grows mid-day.
+export const revalidate = 86400;
 
 export default async function QuestionsDirectory() {
     const questions = await getAllSEOQuestions();

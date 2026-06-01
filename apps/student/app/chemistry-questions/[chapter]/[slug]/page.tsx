@@ -18,7 +18,11 @@ export async function generateStaticParams() {
 }
 */
 
-export const dynamic = 'force-dynamic';
+// 24h ISR — leaf SEO pages, content is the same for everyone. The
+// generateStaticParams block above is commented out intentionally
+// (was causing slow builds) — pages are generated on-demand on first
+// request after the cache expires.
+export const revalidate = 86400;
 
 export async function generateMetadata(props: { params: Promise<{ chapter: string; slug: string }> }) {
     const params = await props.params;

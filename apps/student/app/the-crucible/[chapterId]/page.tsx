@@ -1,20 +1,23 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { getTaxonomy } from '@/features/crucible/server-actions/the-crucible';
-import CrucibleWizard from '@/features/crucible/components/CrucibleWizard';
-import { createClient } from '@/app/utils/supabase/server';
-import { isLocalhostDev } from '@/lib/bookAuth';
 import { buildChaptersWithCounts, type ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
+import CrucibleChapterClient from './CrucibleChapterClient';
 
-// Dynamic rendering — the page reads cookies() for auth state, which forces it
-// out of SSG anyway. Pre-rendering all 26 chapters at deploy time was wasteful
-// (3 min added to build) and incorrect (every static copy was generated with
-// `isLoggedIn=false` because there are no cookies at build time).
+// ISR — 1-hour edge cache. The underlying chapter counts come from
+// unstable_cache (1h TTL, invalidated by the 'questions' tag), so the
+// page payload and the data layer agree on freshness.
 //
-// With dynamic rendering, each request gets fresh auth state and the underlying
-// MongoDB count aggregations are still served from `unstable_cache` (1 hour TTL,
-// invalidated by 'questions' tag), so the per-request cost is negligible.
-export const dynamic = 'force-dynamic';
+// All auth-aware UI lives inside CrucibleChapterClient (a client island
+// that reads Supabase on mount). The page itself reads only public Mongo
+// data + the route params, so it's safe to serve from the edge cache to
+// anonymous visitors, bots, and logged-in students alike.
+//
+// Prior to 2026-06 this page set `export const dynamic = 'force-dynamic'`
+// to read cookies server-side; that pattern was the primary driver of
+// Fast Origin Transfer + Function Invocation cost on canvasclasses.in.
+// The fix is documented in the bill diagnostic from that month.
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: { params: Promise<{ chapterId: string }> }): Promise<Metadata> {
     const { chapterId } = await params;
@@ -44,32 +47,8 @@ export async function generateMetadata({ params }: { params: Promise<{ chapterId
     };
 }
 
-export default async function Page({
-    params,
-    searchParams,
-}: {
-    params: Promise<{ chapterId: string }>;
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
+export default async function Page({ params }: { params: Promise<{ chapterId: string }> }) {
     const { chapterId } = await params;
-    const resolvedSearch = await searchParams;
-
-    // Read examBoard from URL (?examBoard=NEET or ?examBoard=JEE)
-    const rawBoard = resolvedSearch['examBoard'];
-    const examBoard = rawBoard === 'NEET' ? 'NEET' : rawBoard === 'JEE' ? 'JEE' : undefined;
-
-    // Auth check — wrapped so a Supabase outage / build-time invocation never 500s.
-    let isLoggedIn = await isLocalhostDev();
-    try {
-        const supabase = await createClient();
-        if (supabase) {
-            const { data: { user } } = await supabase.auth.getUser();
-            isLoggedIn = isLoggedIn || !!user;
-        }
-    } catch (err) {
-        console.error(`Supabase auth check failed on /the-crucible/${chapterId}:`, err);
-        // Fall through — page can still render for non-logged-in users.
-    }
 
     // Build chapters list using the shared utility — keeps JEE/NEET counts
     // identical to /the-crucible/page.tsx so the user sees consistent numbers
@@ -97,12 +76,9 @@ export default async function Page({
     if (!chapter) notFound();
 
     return (
-        <CrucibleWizard
+        <CrucibleChapterClient
             chapters={chaptersWithCounts}
-            isLoggedIn={isLoggedIn}
             initialChapterId={chapterId}
-            initialMode="browse"
-            initialExam={examBoard}
         />
     );
 }

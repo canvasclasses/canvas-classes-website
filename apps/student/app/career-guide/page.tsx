@@ -20,7 +20,11 @@ import './career-guide.css';
  * visual showing the jobs-list shifting across 2011 → 2026.
  */
 
-export const dynamic = 'force-dynamic';
+// Career briefs refresh on a quarterly editorial cadence (per the doc in
+// sitemap.ts). 24-hour ISR is more than fast enough; admin can fire an
+// explicit revalidatePath('/career-guide') after publishing a new spec
+// if a faster turnaround is ever needed.
+export const revalidate = 86400;
 
 const SITE_ORIGIN = 'https://canvasclasses.in';
 

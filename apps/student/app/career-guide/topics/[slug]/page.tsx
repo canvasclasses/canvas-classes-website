@@ -19,7 +19,10 @@ import '../../career-guide.css';
  * JSON-LD: Article + BreadcrumbList (Canvas → Career Guide → [topic]).
  */
 
-export const dynamic = 'force-dynamic';
+// Topic pages are programmatic SEO landings — content is curated in
+// features/career-guide/data/topics.ts plus a Mongo lookup. 24-hour ISR
+// is appropriate; generateStaticParams above pre-renders all topics.
+export const revalidate = 86400;
 
 const SITE_ORIGIN = 'https://canvasclasses.in';
 

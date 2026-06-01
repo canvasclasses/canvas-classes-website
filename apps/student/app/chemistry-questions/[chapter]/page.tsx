@@ -7,7 +7,12 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 
-export const dynamic = 'force-dynamic';
+// 24h ISR. The generateStaticParams below pre-renders every chapter at
+// build time; subsequent updates flow in via revalidation, not on-demand
+// SSR. Previously this file had `force-dynamic` which silently overrode
+// generateStaticParams — that was the source of the Origin Transfer cost
+// for this route (see 2026-06 bill diagnostic).
+export const revalidate = 86400;
 
 export async function generateStaticParams() {
     const slugs = await getAllChapterSlugs();
