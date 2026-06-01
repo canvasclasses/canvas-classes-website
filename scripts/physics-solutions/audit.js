@@ -26,7 +26,7 @@ const FORBIDDEN_PHRASES = [
 function validateSolution(md) {
   const issues = [];
   if (!md || typeof md !== 'string') return ['solution is empty or missing'];
-  if (md.length < 800) issues.push(`too short (${md.length} chars)`);
+  // Length floor intentionally removed: brevity for simple questions is desired.
   if (!/\*\*🧠/.test(md)) issues.push('missing 🧠 heading');
   if (!/\*\*🗺️/.test(md)) issues.push('missing 🗺️ heading');
   if (!/\*\*⚡/.test(md)) issues.push('missing ⚡ heading');
@@ -180,7 +180,7 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
   }
 
   if (sampleN > 0) {
-    const eligible = docs.filter(d => d.solution && d.solution.text_markdown && d.solution.text_markdown.length >= 800);
+    const eligible = docs.filter(d => d.solution && d.solution.text_markdown && d.solution.text_markdown.length >= 200);
     const shuffled = eligible.sort(() => Math.random() - 0.5).slice(0, sampleN);
     console.log(`\nManual-review sample (${sampleN} random IDs to read for soft quality):`);
     for (const d of shuffled) console.log(`  ${d.display_id}`);

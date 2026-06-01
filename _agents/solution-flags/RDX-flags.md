@@ -1,199 +1,35 @@
 # RDX — Chemistry Solution Flags
 
-_Last updated: 2026-05-23 13:07_
+_Last updated: 2026-05-23 14:25_
 
 ## 🔴 Blocking — no solution written
 
-- **RDX-081** — solution present but stored correct_option is null
 - **RDX-083** — solution present but stored correct_option is null
 - **RDX-084** — solution present but stored correct_option is null
 - **RDX-090** — solution present but stored correct_option is null
 - **RDX-092** — solution present but stored integer_value is null
 - **RDX-094** — solution present but stored correct_option is null
-- **RDX-095** — solution present but stored correct_option is null
-- **RDX-096** — solution present but stored correct_option is null
-- **RDX-097** — solution present but stored correct_option is null
-- **RDX-098** — solution present but stored correct_option is null
-- **RDX-099** — solution present but stored correct_option is null
-- **RDX-100** — solution present but stored correct_option is null
-- **RDX-101** — solution present but stored correct_option is null
-- **RDX-102** — solution present but stored correct_option is null
-- **RDX-103** — solution present but stored correct_option is null
-- **RDX-104** — solution present but stored correct_option is null
-- **RDX-105** — solution present but stored correct_option is null
-- **RDX-106** — solution present but stored correct_option is null
-- **RDX-107** — solution present but stored correct_option is null
-- **RDX-108** — solution present but stored correct_option is null
-- **RDX-109** — solution present but stored correct_option is null
-- **RDX-110** — solution present but stored correct_option is null
-- **RDX-111** — solution present but stored correct_option is null
-- **RDX-112** — solution present but stored correct_option is null
-- **RDX-113** — solution present but stored correct_option is null
-- **RDX-114** — solution present but stored correct_option is null
-- **RDX-115** — solution present but stored correct_option is null
-- **RDX-116** — solution present but stored correct_option is null
-- **RDX-117** — solution present but stored correct_option is null
-- **RDX-118** — solution present but stored correct_option is null
-- **RDX-119** — solution present but stored correct_option is null
-- **RDX-120** — solution present but stored correct_option is null
-- **RDX-121** — solution present but stored correct_option is null
-- **RDX-122** — solution present but stored correct_option is null
-- **RDX-123** — solution present but stored correct_option is null
-- **RDX-124** — solution present but stored correct_option is null
-- **RDX-125** — solution present but stored correct_option is null
-- **RDX-126** — solution present but stored correct_option is null
-- **RDX-127** — solution present but stored correct_option is null
-- **RDX-128** — solution present but stored correct_option is null
-- **RDX-129** — solution present but stored correct_option is null
-- **RDX-130** — solution present but stored correct_option is null
-- **RDX-131** — solution present but stored correct_option is null
-- **RDX-132** — solution present but stored correct_option is null
-- **RDX-133** — solution present but stored correct_option is null
-- **RDX-134** — solution present but stored correct_option is null
 
 ## 🟡 Needs verification — solution written, uncertain
 
 - **RDX-090** — Multi-correct (a, b, d). Stored answer was empty {} but is_correct flags already set on options correctly.
 - **RDX-092** — JEE Adv 2020 numerical answer is 0.11 M (decimal). Stored integer_value is null and remains null because the actual answer is non-integer.
 - **RDX-094** — JEE Advanced 2001 subjective question. The DB has placeholder options A/B/C/D — none are correct. Answer is numerical (0.1 M H2O2). Recommend converting to Integer/Numerical answer_type with value 0.1.
+- **RDX-023** — Stored correct_option was "a" (2 g) which is the monoprotic-mistake answer. is_correct flags in DB already mark (b) as true. Corrected stored answer to (b).
+- **RDX-073** — Stored answer was 100 (the JEE Main 2020 official key); orthodox derivation gives 50 mL using standard n-factors (FeC2O4: n=3, K2Cr2O7: n=6). The discrepancy is well-known in the JEE coaching community.
+- **RDX-077** — JEE 2021 Kjeldahl question. The boxed derivation uses the standard %N = 1.4 × NV / m formula. Note: a strict back-titration interpretation (initial acid - back-titrated NaOH) gives meq NH3 = 17.5, leading to %N > 100%, which is impossible. The published answer (63) matches the formula where meq NH3 = NaOH meq directly.
+- **RDX-128** — Multi-correct: both (b) KCrO3Cl and (c) CrO5 have Cr at +6. is_correct flags in DB mark both as true.
+- **RDX-129** — Multi-correct: all four options (a) HCHO, (b) CH2Cl2, (c) C6H12O6, (d) C12H22O11 have C at 0 average oxidation state. is_correct flags mark all four as true.
+- **RDX-130** — Multi-correct: both (b) and (d) are not redox. is_correct flags mark both as true.
+- **RDX-131** — Multi-correct: both (a) and (d) are redox. is_correct flags mark both as true.
+- **RDX-132** — Multi-correct: (a), (b), (c) are all autoredox/disproportionation. is_correct flags mark all three as true.
+- **RDX-133** — Multi-correct: (a) Caro acid, (b) Marshall acid, (c) oleum all have S at +6. is_correct flags mark all three as true.
+- **RDX-134** — Multi-correct: (a) and (c) both show decreasing S oxidation states. is_correct flags mark both as true.
 
 ## ⚪ Soft quality — audit notes
 
-- **RDX-001** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-002** — audit: too short (478 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-003** — audit: too short (468 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-004** — audit: too short (719 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-005** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-006** — audit: too short (541 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-007** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-008** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-009** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-010** — audit: too short (701 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-011** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-012** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-013** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-014** — audit: too short (761 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-015** — audit: too short (672 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-016** — audit: too short (603 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-017** — audit: too short (697 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-018** — audit: too short (452 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-019** — audit: too short (625 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-020** — audit: too short (602 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-021** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-022** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-023** — audit: too short (729 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-024** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-025** — audit: too short (720 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-026** — audit: too short (605 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-027** — audit: too short (685 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-028** — audit: too short (663 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-029** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-030** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-031** — audit: too short (766 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-032** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-033** — audit: too short (583 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-034** — audit: too short (486 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-035** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-036** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-037** — audit: too short (771 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-038** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-039** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$
-- **RDX-040** — audit: too short (677 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-041** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-042** — audit: too short (677 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-043** — audit: too short (429 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-044** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-045** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-046** — audit: too short (540 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-047** — audit: too short (717 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-048** — audit: too short (568 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-049** — audit: too short (759 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-050** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-051** — audit: too short (570 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-052** — audit: too short (580 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-053** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-054** — audit: too short (578 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-055** — audit: too short (589 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-056** — audit: too short (520 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-057** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-058** — audit: too short (668 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-059** — audit: too short (549 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-060** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-061** — audit: too short (754 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-062** — audit: too short (670 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-063** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-064** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-065** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-066** — audit: too short (680 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-067** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-068** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-069** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-070** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-071** — audit: too short (634 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-072** — audit: too short (534 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$
-- **RDX-073** — audit: too short (749 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$
-- **RDX-074** — audit: too short (588 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math
-- **RDX-076** — audit: too short (456 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$
-- **RDX-077** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-078** — audit: too short (484 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math
-- **RDX-079** — audit: too short (562 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-080** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
-- **RDX-081** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
 - **RDX-082** — audit: too short (764 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses $$ display math; uses numbered "Step N" enumeration
 - **RDX-083** — audit: too short (489 chars); missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$
 - **RDX-084** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$
-- **RDX-095** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-096** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-097** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-098** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-099** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-100** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-101** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-102** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-103** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-104** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-105** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-106** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-107** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-108** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-109** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-110** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-111** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-112** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-113** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-114** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-115** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-116** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-117** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-118** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-119** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-120** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-121** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-122** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-123** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-124** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-125** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-126** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-127** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-128** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-129** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-130** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-131** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-132** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-133** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-134** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-135** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-136** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-138** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-139** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-140** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-141** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-142** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; missing $\boxed{...}$; uses numbered "Step N" enumeration
-- **RDX-143** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-144** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-145** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-146** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-147** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-148** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-149** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
-- **RDX-150** — audit: missing 🧠 heading; missing 🗺️ heading; missing ⚡ heading; missing ⚠️ heading; uses $$ display math
+- **RDX-101** — audit: too short (798 chars)
+- **RDX-127** — audit: too short (777 chars)

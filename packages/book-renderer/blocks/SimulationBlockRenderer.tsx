@@ -202,6 +202,27 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/TyndallEffectSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
+  // ── Class 11 Chemistry — Chapter 1: Some Basic Concepts of Chemistry ─────
+  'eudiometer-lab': dynamic(
+    () => import('./simulations/EudiometerLabSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'equivalent-concept-explorer': dynamic(
+    () => import('./simulations/EquivalentConceptSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'mole-converter': dynamic(
+    () => import('./simulations/MoleConverterSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'limiting-reagent': dynamic(
+    () => import('./simulations/LimitingReagentSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'concentration-lab': dynamic(
+    () => import('./simulations/ConcentrationLabSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
   // ── Class 9 Physics — Chapter 1: Motion ──────────────────────────────────
   'velocity-time-graph': dynamic(
     () => import('./simulations/VelocityTimeGraphSim'),

@@ -250,6 +250,16 @@ function usePlaceholderTypewriter(topics: readonly string[]) {
 // + lotus & flower-of-life (CW) + static ॐ nucleus. Breathes subtly.
 // =====================================================================
 
+// Hydration-safe rounding for trig-derived SVG coordinates. Math.cos / Math.sin
+// in Node (SSR) and V8 (client) can disagree on the very last bit of the
+// mantissa, e.g. -27.71281292110203 vs -27.712812921102028. React then warns
+// that the server HTML doesn't match the client tree. Rounding to 4 decimals
+// (~1/10000 of an SVG unit on a 600×600 viewBox — far below sub-pixel) makes
+// both sides emit identical strings without any visible change.
+function round4(n: number): number {
+    return Math.round(n * 10000) / 10000;
+}
+
 function HeroFusionSigil() {
     // Electron dot positions on the three tilted Bohr orbitals (rx=240, ry=85)
     // Angles chosen so they don't visually cluster during rotation.
@@ -283,8 +293,13 @@ function HeroFusionSigil() {
                         <g transform="translate(300,300)" stroke="none">
                             {electrons.map((e, i) => {
                                 const rad = (e.t * Math.PI) / 180;
-                                const px = 240 * Math.cos(rad);
-                                const py =  85 * Math.sin(rad);
+                                // Round to 4 decimals so the SSR-emitted string
+                                // matches the client-rerun result exactly. Math.cos /
+                                // Math.sin in V8 vs Node sometimes disagree on the
+                                // 15th-digit ULP, which surfaces as a React hydration
+                                // warning on first paint.
+                                const px = round4(240 * Math.cos(rad));
+                                const py = round4( 85 * Math.sin(rad));
                                 const rot = `rotate(${e.orbit} 0 0)`;
                                 return (
                                     <circle
@@ -331,8 +346,10 @@ function HeroFusionSigil() {
                                     stroke="rgba(255,255,255,0.07)" strokeWidth="0.4" />
                             {[0,60,120,180,240,300].map(a => {
                                 const rad = (a * Math.PI) / 180;
-                                const cx  = 32 * Math.cos(rad);
-                                const cy  = 32 * Math.sin(rad);
+                                // Same hydration-safety rounding as the electron
+                                // loop above — see comment there for the reason.
+                                const cx  = round4(32 * Math.cos(rad));
+                                const cy  = round4(32 * Math.sin(rad));
                                 return (
                                     <circle key={a} cx={cx} cy={cy} r="32" fill="none"
                                             stroke="rgba(255,255,255,0.05)" strokeWidth="0.35" />

@@ -5,12 +5,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { predictColleges, type PredictorResult, type Bucket } from '@/features/college-predictor/lib/predictor';
-import { percentileToRank } from '@/features/college-predictor/lib/percentileToRank';
+import { resolveEffectiveRank } from '@/features/college-predictor/lib/percentileToRank';
 import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
 
 const PredictRequestSchema = z.object({
   rank: z.number().int().positive().max(2_000_000).optional(),
   percentile: z.number().min(0).max(100).optional(),
+  // Whether `rank` is a CRL (Common Rank List, total ranking) or a CAT
+  // (category-pool rank). Default 'CAT' preserves the pre-2026-05-27
+  // behaviour where the route trusted callers to pass the right kind of
+  // rank for the category they selected. When 'CRL' is passed and the
+  // category is non-OPEN, the route converts using NTA category shares.
+  rank_type: z.enum(['CRL', 'CAT']).optional(),
   category: z.enum([
     'OPEN', 'OBC-NCL', 'SC', 'ST', 'EWS',
     'OPEN (PwD)', 'OBC-NCL (PwD)', 'SC (PwD)', 'ST (PwD)', 'EWS (PwD)',
@@ -332,14 +338,20 @@ export async function POST(request: NextRequest) {
     const input = parsed.data;
 
     const targetYear = input.year ?? new Date().getFullYear();
-    // Reserved categories: input.percentile is the category percentile, and
-    // we need to convert it to a category rank that matches how JoSAA stores
-    // closing ranks for that category. percentileToRank handles the routing
-    // by category. For input.rank, we trust the caller to pass the right
-    // unit — the form is responsible for asking "Category Rank" when the
-    // selected category is non-OPEN.
-    const effectiveRank =
-      input.rank ?? percentileToRank(input.percentile as number, targetYear, input.category);
+    // resolveEffectiveRank handles both:
+    //   1. percentile → category-rank conversion (via percentileToRank)
+    //   2. CRL → category-rank conversion when rank_type === 'CRL' AND
+    //      category is non-OPEN (i.e. JoSAA stores those closing-ranks on a
+    //      category-pool scale; a raw CRL would mismatch).
+    // See lib/percentileToRank.ts for the math and the NTA share table.
+    const rankResolution = resolveEffectiveRank({
+      rank: input.rank,
+      percentile: input.percentile,
+      rank_type: input.rank_type,
+      category: input.category,
+      year: targetYear,
+    });
+    const effectiveRank = rankResolution.effectiveRank;
 
     const allResults = await predictColleges(
       {
@@ -403,6 +415,17 @@ export async function POST(request: NextRequest) {
         home_state: input.home_state,
         year: targetYear,
       },
+      // Surfacing the conversion lets the UI render a one-liner like
+      // "Treating CRL 15,000 as approximate SC rank ~1,500" so reserved-
+      // category students understand what the predictor matched against.
+      rank_conversion: rankResolution.converted
+        ? {
+            from: 'CRL' as const,
+            original: rankResolution.originalCrl,
+            converted: rankResolution.effectiveRank,
+            category: input.category,
+          }
+        : null,
       counts,
       total_colleges: groups.length,
       returned_colleges: colleges.length,

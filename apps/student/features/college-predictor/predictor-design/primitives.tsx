@@ -143,57 +143,70 @@ export function SectionHead({
 }
 
 // ── Trust row — accuracy pill + beta warning ─────────────────────────────────
+// On mobile these two pills wrap into 4 lines that eat ~140 px of vertical
+// space for what is essentially a disclaimer pair. We swap to a single-line,
+// shorter-copy variant below sm: (smaller font, tighter padding, abbreviated
+// labels) and keep the full pills from sm: up where the room exists.
 export function TrustRow() {
   return (
-    <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 36 }}>
+    <div
+      className="gap-2 sm:gap-[14px] mb-5 sm:mb-9"
+      style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}
+    >
       <a
         href="/college-predictor/validation"
+        className="text-[11.5px] sm:text-[13px] gap-2 sm:gap-[10px] px-[10px] sm:px-[14px] py-[5px] sm:py-2"
         style={{
           display: 'inline-flex',
           alignItems: 'center',
-          gap: 10,
-          padding: '8px 14px',
           borderRadius: 999,
           background: 'rgba(16,185,129,0.06)',
           border: '1px solid rgba(52,211,153,0.3)',
           color: '#34d399',
-          fontSize: 13,
           fontWeight: 500,
           textDecoration: 'none',
         }}
       >
         <span
+          className="w-[5px] h-[5px] sm:w-[7px] sm:h-[7px]"
           style={{
-            width: 7,
-            height: 7,
             borderRadius: '50%',
             background: '#34d399',
             boxShadow: '0 0 10px #34d399',
+            flexShrink: 0,
           }}
         />
-        <span style={{ color: '#a7f3d0', fontWeight: 700 }}>90.5% Safe-bucket accuracy</span>
-        <span style={{ color: '#34d39988' }}>·</span>
-        <span>backtested on 3 years</span>
+        {/* Long copy on desktop, abbreviated on mobile so the pill fits on a
+            single line at 360–400 px viewports. */}
+        <span className="hidden sm:inline" style={{ color: '#a7f3d0', fontWeight: 700 }}>
+          90.5% Safe-bucket accuracy
+        </span>
+        <span className="hidden sm:inline" style={{ color: '#34d39988' }}>·</span>
+        <span className="hidden sm:inline">backtested on 3 years</span>
+        <span className="sm:hidden" style={{ color: '#a7f3d0', fontWeight: 700 }}>
+          90.5% accuracy
+        </span>
+        <span className="sm:hidden" style={{ color: '#34d39988' }}>·</span>
+        <span className="sm:hidden">3y backtest</span>
         <span style={{ marginLeft: 4 }}>{Icons.arrow('#34d399')}</span>
       </a>
       <div
+        className="text-[11.5px] sm:text-[13px] gap-2 sm:gap-[10px] px-[10px] sm:px-[14px] py-[5px] sm:py-2"
         style={{
           display: 'inline-flex',
           alignItems: 'center',
-          gap: 10,
-          padding: '8px 14px',
           borderRadius: 999,
           background: 'rgba(250,204,21,0.06)',
           border: '1px solid rgba(250,204,21,0.3)',
           color: '#facc15',
-          fontSize: 13,
           fontWeight: 500,
         }}
       >
         {Icons.warn('#facc15')}
-        <span style={{ color: '#fde68a', fontWeight: 700 }}>Public beta</span>
+        <span style={{ color: '#fde68a', fontWeight: 700 }}>Beta</span>
         <span style={{ color: '#facc1588' }}>·</span>
-        <span>cross-check with official JoSAA before finalising</span>
+        <span className="hidden sm:inline">cross-check with official JoSAA before finalising</span>
+        <span className="sm:hidden">verify on JoSAA before finalising</span>
       </div>
     </div>
   );

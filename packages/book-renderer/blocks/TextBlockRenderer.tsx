@@ -5,6 +5,7 @@ import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import rehypeKatex from 'rehype-katex';
+import { REHYPE_KATEX_OPTIONS } from './_katexConfig';
 import rehypeRaw from 'rehype-raw';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
@@ -183,7 +184,7 @@ export default function TextBlockRenderer({ block }: { block: TextBlock }) {
     <div className="max-w-none">
       <ReactMarkdown
         remarkPlugins={[remarkMath, remarkGfm, remarkBreaks]}
-        rehypePlugins={[rehypeKatex, rehypeRaw]}
+        rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS], rehypeRaw]}
         components={components}
       >
         {block.markdown}

@@ -272,7 +272,7 @@ export default function WavePropertiesSim() {
               { label: 'A', value: `${amplitude} units` },
             ].map(({ label, value }) => (
               <div key={label} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 7 }}>
-                <span style={{ fontSize: 12, color: '#94a3b8', fontFamily: 'monospace' }}>{label}</span>
+                <span style={{ fontSize: 12, color: '#94a3b8', fontVariantNumeric: 'tabular-nums' }}>{label}</span>
                 <span style={{ fontSize: 13, fontWeight: 700, color: '#e2e8f0' }}>{value}</span>
               </div>
             ))}

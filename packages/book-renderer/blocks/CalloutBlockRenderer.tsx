@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import { REHYPE_KATEX_OPTIONS } from './_katexConfig';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
 import { CalloutBlock } from '@canvas/data/types/books';
@@ -64,7 +65,7 @@ function ExamTipCallout({ block }: { block: CalloutBlock }) {
       <div className="px-5 py-4">
         <ReactMarkdown
           remarkPlugins={[remarkMath]}
-          rehypePlugins={[rehypeKatex]}
+          rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
           components={{
             p: ({ children }) => (
               <div className="flex gap-2.5 items-start text-[14px] leading-[1.7] text-white/72 mb-2.5 last:mb-0">
@@ -122,7 +123,7 @@ function FunFactCallout({ block }: { block: CalloutBlock }) {
       {/* Body */}
       <ReactMarkdown
         remarkPlugins={[remarkMath]}
-        rehypePlugins={[rehypeKatex]}
+        rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
         components={{
           // Sanskrit / large header
           h3: ({ children }) => (
@@ -183,7 +184,7 @@ function RememberCallout({ block }: { block: CalloutBlock }) {
       </p>
       <ReactMarkdown
         remarkPlugins={[remarkMath]}
-        rehypePlugins={[rehypeKatex]}
+        rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
         components={{
           // --- renders as a clearly visible hairline rule
           hr: () => (
@@ -226,7 +227,7 @@ function WarningCallout({ block }: { block: CalloutBlock }) {
       <div className="text-[15px] leading-[1.75] text-white/75
         prose prose-invert max-w-none prose-p:my-1.5 prose-p:leading-[1.75]
         prose-strong:text-white/90 prose-strong:font-semibold">
-        <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+        <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}>
           {block.markdown}
         </ReactMarkdown>
       </div>
@@ -327,7 +328,7 @@ function NoteCallout({ block }: { block: CalloutBlock }) {
           {/* Preview */}
           <ReactMarkdown
             remarkPlugins={[remarkMath]}
-            rehypePlugins={[rehypeKatex]}
+            rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
             components={mdComponents}
           >
             {previewMd}
@@ -338,7 +339,7 @@ function NoteCallout({ block }: { block: CalloutBlock }) {
             <div className="mt-1 border-t border-white/6 pt-3">
               <ReactMarkdown
                 remarkPlugins={[remarkMath]}
-                rehypePlugins={[rehypeKatex]}
+                rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
                 components={mdComponents}
               >
                 {detailMd}

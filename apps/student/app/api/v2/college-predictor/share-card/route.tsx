@@ -13,7 +13,7 @@ import { NextRequest } from 'next/server';
 import { z } from 'zod';
 import { predictColleges } from '@/features/college-predictor/lib/predictor';
 import { predictBitsat } from '@/features/college-predictor/bitsat/predictor';
-import { percentileToRank } from '@/features/college-predictor/lib/percentileToRank';
+import { resolveEffectiveRank } from '@/features/college-predictor/lib/percentileToRank';
 import { parentVerdict, type Bucket } from '@/features/college-predictor/lib/parentVocab';
 import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
 
@@ -23,6 +23,11 @@ const JoSAASchema = z.object({
   tool: z.literal('jeemain'),
   rank: z.coerce.number().int().positive().max(2_000_000).optional(),
   percentile: z.coerce.number().min(0).max(100).optional(),
+  // See /predict route — same CRL/CAT semantics. The label rendered on the
+  // share-card PNG also adapts ("CRL N" when no conversion, "category rank N
+  // — converted from CRL M" when one happened) so parents reading the image
+  // see the same translation the UI showed.
+  rank_type: z.enum(['CRL', 'CAT']).optional(),
   category: z.enum([
     'OPEN', 'OBC-NCL', 'SC', 'ST', 'EWS',
     'OPEN (PwD)', 'OBC-NCL (PwD)', 'SC (PwD)', 'ST (PwD)', 'EWS (PwD)',
@@ -80,13 +85,24 @@ export async function GET(request: NextRequest) {
 
     if (input.tool === 'jeemain') {
       const targetYear = input.year ?? new Date().getFullYear();
-      const effRank =
-        input.rank ??
-        percentileToRank(input.percentile as number, targetYear, input.category);
-      inputLabel =
-        input.category === 'OPEN'
-          ? `CRL ${effRank.toLocaleString('en-IN')}`
-          : `${input.category} rank ${effRank.toLocaleString('en-IN')}`;
+      const resolution = resolveEffectiveRank({
+        rank: input.rank,
+        percentile: input.percentile,
+        rank_type: input.rank_type,
+        category: input.category,
+        year: targetYear,
+      });
+      const effRank = resolution.effectiveRank;
+      // Label adapts to whether a conversion happened, so the parent reading
+      // the PNG sees both the original CRL they typed and the category rank
+      // we matched against.
+      if (input.category === 'OPEN' || input.category === 'OPEN (PwD)') {
+        inputLabel = `CRL ${effRank.toLocaleString('en-IN')}`;
+      } else if (resolution.converted) {
+        inputLabel = `${input.category} rank ~${effRank.toLocaleString('en-IN')} (from CRL ${resolution.originalCrl!.toLocaleString('en-IN')})`;
+      } else {
+        inputLabel = `${input.category} rank ${effRank.toLocaleString('en-IN')}`;
+      }
       const results = await predictColleges({
         rank: effRank,
         category: input.category,

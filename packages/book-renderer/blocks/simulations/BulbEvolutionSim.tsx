@@ -408,7 +408,7 @@ export default function BulbEvolutionSim() {
           <span className="text-slate-300 text-[12px] font-bold tracking-widest uppercase">
             Temperature (T)
           </span>
-          <span className="font-mono text-[16px] font-bold" style={{ color: bbCss }}>
+          <span className="tabular-nums text-[16px] font-bold" style={{ color: bbCss }}>
             {T} K
           </span>
         </div>
@@ -517,7 +517,7 @@ function BulbTypeCard({
       <div className="text-[11px] font-bold tracking-widest uppercase text-slate-400">
         Useful light output
       </div>
-      <div className={`font-mono text-[22px] font-bold mt-1 ${toneClass}`}>{useful}</div>
+      <div className={`tabular-nums text-[22px] font-bold mt-1 ${toneClass}`}>{useful}</div>
       <div className="text-[14px] text-slate-300 leading-relaxed mt-3">{desc}</div>
     </div>
   );

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
   ChevronRight, Play, CheckCircle2, Search, Bookmark, PlayCircle,
   FlaskConical, Video, Brain, ClipboardCheck, Gamepad2, Clock,
-  Flame, ArrowRight, X, Sparkles, Languages, Zap,
+  Flame, ArrowRight, X, Sparkles, Languages, Zap, Lock,
 } from 'lucide-react';
 import { useBookProgress, BookProgressRecord } from '@/features/books/hooks/useBookProgress';
 import { useBookBookmarks } from '@/features/books/hooks/useBookBookmarks';
@@ -29,6 +29,7 @@ export interface ToCChapter {
   number: number;
   title: string;
   slug: string;
+  is_published: boolean;
   pages: ToCPage[];
 }
 
@@ -68,7 +69,13 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
   const decor = getDecor(book.subject);
   const Icon = theme.icon;
 
-  const [activeIdx, setActiveIdx] = useState(0);
+  // Default to the first PUBLISHED chapter so the right pane never opens
+  // on a Coming-Soon stub. Falls back to 0 if every chapter is a stub.
+  const firstPublishedIdx = useMemo(() => {
+    const idx = chapters.findIndex((c) => c.is_published);
+    return idx === -1 ? 0 : idx;
+  }, [chapters]);
+  const [activeIdx, setActiveIdx] = useState(firstPublishedIdx);
   const [searchQuery, setSearchQuery] = useState('');
   const [showBookmarks, setShowBookmarks] = useState(false);
 
@@ -431,18 +438,24 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
             {chapters.map((ch, i) => {
               const prog = chapterProgress[i];
               const isActive = i === activeIdx && !showBookmarks;
+              const isLocked = !ch.is_published;
               return (
                 <button
                   key={ch.number}
-                  onClick={() => { setActiveIdx(i); setShowBookmarks(false); }}
+                  onClick={() => { if (!isLocked) { setActiveIdx(i); setShowBookmarks(false); } }}
+                  disabled={isLocked}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold
                     whitespace-nowrap transition-all ${
-                    isActive
-                      ? `${theme.bg} ${theme.accent} border ${theme.border}`
-                      : 'text-zinc-400 hover:text-white border border-transparent'
+                    isLocked
+                      ? 'text-zinc-600 border border-transparent cursor-not-allowed'
+                      : isActive
+                        ? `${theme.bg} ${theme.accent} border ${theme.border}`
+                        : 'text-zinc-400 hover:text-white border border-transparent'
                   }`}
                 >
-                  {prog.pct === 100 && <CheckCircle2 size={10} className="text-emerald-400" />}
+                  {isLocked
+                    ? <Lock size={10} className="text-zinc-600" />
+                    : prog.pct === 100 && <CheckCircle2 size={10} className="text-emerald-400" />}
                   <span>Ch {ch.number}</span>
                 </button>
               );
@@ -478,6 +491,36 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                     const prog = chapterProgress[i];
                     const isActive = i === activeIdx && !showBookmarks;
                     const isDone = prog.pct === 100;
+                    const isLocked = !ch.is_published;
+
+                    if (isLocked) {
+                      // "Coming Soon" stub — not clickable, dimmed, lock icon.
+                      return (
+                        <div
+                          key={ch.number}
+                          className="w-full text-left px-4 py-3.5 flex flex-col gap-1.5
+                            border-b border-white/[0.04] last:border-b-0 opacity-55 cursor-not-allowed select-none"
+                          aria-disabled="true"
+                          title="Coming soon — this chapter is being prepared"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-bold uppercase tracking-[0.15em] leading-none text-zinc-500">
+                              Ch {ch.number}
+                            </span>
+                            <Lock size={11} className="text-zinc-500 ml-auto" />
+                          </div>
+                          <p className="text-[13px] leading-snug text-zinc-500">
+                            {ch.title}
+                          </p>
+                          <span className="inline-flex w-fit items-center gap-1 px-1.5 py-0.5 rounded-full
+                            text-[9px] font-bold uppercase tracking-[0.12em]
+                            bg-white/[0.04] border border-white/[0.08] text-zinc-400 mt-0.5">
+                            Coming Soon
+                          </span>
+                        </div>
+                      );
+                    }
+
                     return (
                       <button
                         key={ch.number}

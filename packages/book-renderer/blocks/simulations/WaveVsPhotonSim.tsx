@@ -13,6 +13,7 @@ import {
   useResolvedFont,
   logFreqToRGB as freqToRGB,
 } from './_shared';
+import { prettyExp } from './_typography';
 
 const CANVAS_W = 900;
 const CANVAS_H = 360;
@@ -35,7 +36,7 @@ function formatFreq(f: number): string {
 }
 
 function formatEnergy(e: number): string {
-  if (e < 0.01) return e.toExponential(2);
+  if (e < 0.01) return prettyExp(e.toExponential(2));
   if (e < 10) return e.toFixed(2);
   return e.toFixed(1);
 }
@@ -278,7 +279,7 @@ export default function WaveVsPhotonSim() {
           <span className="text-slate-300 text-[12px] font-bold tracking-widest uppercase">
             Frequency (ν)
           </span>
-          <span className="font-mono text-[14px] font-bold" style={{ color: colorCss }}>
+          <span className="tabular-nums text-[14px] font-bold" style={{ color: colorCss }}>
             {formatFreq(freq)}
           </span>
         </div>
@@ -326,14 +327,14 @@ export default function WaveVsPhotonSim() {
             Energy of one photon{' '}
             <span className="ml-2 text-slate-500">— {region}</span>
           </div>
-          <div className="font-mono text-xl text-slate-100 mt-1">
+          <div className="tabular-nums text-xl text-slate-100 mt-1">
             E = hν =&nbsp;
             <span className="font-bold" style={{ color: colorCss }}>
               {formatEnergy(eEV)} eV
             </span>
           </div>
         </div>
-        <div className="text-[11px] font-mono text-slate-500 text-right">
+        <div className="text-[11px] tabular-nums text-slate-500 text-right">
           h = 6.626 × 10⁻³⁴ J s
         </div>
       </div>

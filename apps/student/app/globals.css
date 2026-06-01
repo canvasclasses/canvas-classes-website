@@ -556,7 +556,12 @@ select {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  /* var(--font-geist-sans) is set on <body> by next/font/local. var(--font-sans)
+     is declared inside Tailwind v4's @theme inline block which makes it a
+     build-time design token only — it resolves to empty at runtime, so we
+     reference --font-geist-sans directly. */
+  font-family: var(--font-geist-sans), 'Inter', -apple-system, BlinkMacSystemFont,
+               system-ui, Arial, Helvetica, sans-serif;
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
@@ -673,16 +678,6 @@ body {
   border-bottom-width: 0.06em !important;
 }
 
-/* Scale up inline fractions everywhere inside the book page reader.
-   Scoped to .book-page-content so admin / question-bank math is unaffected.
-   zoom (unlike transform:scale) participates in layout flow, so surrounding
-   operators (= signs, ×, etc.) correctly reposition around the enlarged fraction.
-   Covers text blocks, callouts, worked examples, quiz explanations — all at once. */
-.book-page-content .katex .mfrac {
-  zoom: 1.35;
-  display: inline-block;
-}
-
 /* Inside option buttons: extra size boost for legibility */
 button .katex,
 [role="button"] .katex {
@@ -702,20 +697,87 @@ button .katex,
   word-wrap: break-word;
 }
 
-/* Vertical breathing room so scaled fractions don't overlap adjacent text lines */
-.katex .mfrac .vlist-r {
-  padding: 0.05em 0;
-}
-
-/* Display-mode math blocks — same size as inline for consistency */
-.katex-display .katex {
-  font-size: 1em !important;
-}
-
 /* Ensure fraction lines are visible at all sizes */
 .katex .frac-line {
   border-bottom-width: 0.06em !important;
   min-height: 1px;
+}
+
+/* ============================================================================
+   LiveBooks math typography — make KaTeX feel like an extension of the body
+   text, not a chunk of Computer-Modern serif pasted into a sans-serif page.
+   Scoped to .book-page-content so admin / question-bank math stays untouched.
+
+   IMPORTANT: katex.min.css is imported per-block (TextBlock, LatexBlock, …)
+   so it loads AFTER globals.css in Next.js's CSS graph. Every rule below
+   uses !important to win regardless of source order, and selectors include
+   the universal `*` fallback so even nested KaTeX spans we didn't enumerate
+   inherit the right font.
+   ============================================================================ */
+
+/* 1. Match math size to surrounding text. KaTeX defaults to 1.21em which made
+      formulas look chunkier than the prose around them. */
+.book-page-content .katex,
+.book-page-content .katex-display > .katex {
+  font-size: 1.05em !important;
+}
+
+/* 2. Force EVERY KaTeX glyph inside the book reader to use the body sans-serif.
+      This covers \text{}, \mathrm{}, digits, units, operators, subscripts,
+      and any KaTeX class we don't enumerate by name. Math italic for variables
+      is restored just below — this is the broad sweep.
+
+      NOTE 1: we use --font-geist-sans directly (set on <body> by next/font/local),
+      NOT --font-sans. Tailwind v4 declares --font-sans inside @theme inline
+      which makes it a build-time design token but does NOT expose it as a
+      runtime CSS custom property — so var(--font-sans) resolves to empty
+      and the whole declaration would silently fall back to Tailwind's
+      ui-sans-serif default.
+
+      NOTE 2: the enumerated selectors (.mord.text, .mtext, .mathrm, .mop) are
+      required to MATCH the specificity of the global .katex rule at line 147
+      above which targets the same glyphs at (0,3,0). Without these the broad
+      `.katex *` rule at (0,2,1) loses the specificity battle and Geist gets
+      dropped from the resolved font stack on text-mode glyphs. */
+.book-page-content .katex,
+.book-page-content .katex *,
+.book-page-content .katex .mord.text,
+.book-page-content .katex .mtext,
+.book-page-content .katex .mord.textrm,
+.book-page-content .katex .textrm,
+.book-page-content .katex .mathrm,
+.book-page-content .katex .mop {
+  font-family: var(--font-geist-sans, 'Inter'), -apple-system, BlinkMacSystemFont,
+               system-ui, sans-serif !important;
+}
+
+/* 3. Restore italic for actual math variables (x, y, n …) so they remain
+      visually distinct from upright text — but keep the sans-serif family
+      from rule 2 so we don't fall back to KaTeX_Math serif. */
+.book-page-content .katex .mathnormal,
+.book-page-content .katex .mathit,
+.book-page-content .katex .mainit,
+.book-page-content .katex .textit {
+  font-style: italic !important;
+}
+
+/* 4. Fractions: KaTeX shrinks numerator/denominator to ~70% (scriptstyle) in
+      inline mode via the `.mtight` class on inner spans. Force every span
+      INSIDE an .mfrac back to full text size so $\frac{a}{b}$ reads at the
+      same scale as the sentence. We DON'T target `.mtight` globally because
+      that would also blow up subscripts (O₂, KClO₃, v₀) which legitimately
+      need to be smaller than surrounding text. */
+.book-page-content .katex .mfrac,
+.book-page-content .katex .mfrac * {
+  font-size: 1em !important;
+}
+
+/* Vertical breathing room so full-size fractions don't crowd adjacent text lines */
+.book-page-content .katex .mfrac {
+  display: inline-block !important;
+}
+.book-page-content .katex .mfrac .vlist-r {
+  padding: 0.08em 0 !important;
 }
 
 /* ======================================== */

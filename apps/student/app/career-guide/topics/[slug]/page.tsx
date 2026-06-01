@@ -19,9 +19,11 @@ import '../../career-guide.css';
  * JSON-LD: Article + BreadcrumbList (Canvas → Career Guide → [topic]).
  */
 
-// Topic pages are programmatic SEO landings — content is curated in
-// features/career-guide/data/topics.ts plus a Mongo lookup. 24-hour ISR
-// is appropriate; generateStaticParams above pre-renders all topics.
+// 24-hour ISR — programmatic SEO landings curated in features/career-guide/
+// data/topics.ts plus a Mongo lookup. Quarterly editorial cadence, and the
+// generateStaticParams above pre-renders all topics at build time. Removes
+// the per-request Mongo hit that was contributing to Atlas pool pressure.
+// Per CLAUDE.md §10.5 ("Effectively static → 86400").
 export const revalidate = 86400;
 
 const SITE_ORIGIN = 'https://canvasclasses.in';

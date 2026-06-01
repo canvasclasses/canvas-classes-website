@@ -363,7 +363,7 @@ function Row({ label, formula, value, color, big }:{
       <div>
         <div className={`${big ? 'text-sm' : 'text-xs'} font-bold`}
              style={{color: big ? '#e2e8f0' : '#94a3b8'}}>{label}</div>
-        <div className="text-[10px] font-mono" style={{color:'#475569'}}>{formula}</div>
+        <div className="text-[10px] tabular-nums" style={{color:'#475569'}}>{formula}</div>
       </div>
       <div className={`${big ? 'text-2xl' : 'text-lg'} font-black tabular-nums`} style={{color}}>{value}</div>
     </div>

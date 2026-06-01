@@ -40,8 +40,76 @@ ATOM: Functional group  fill #8b5cf6  stroke #5b21b6
 
 ## 2. TYPOGRAPHY SYSTEM
 
-### Font Stack
-No custom font imports. Use Tailwind's system font stack (`font-sans`) throughout.
+### Font Stack — sans-serif ONLY
+- **Use the inherited body sans-serif (Geist Sans) for ALL text in the simulator.** Do nothing — by inheriting from the page, the text picks up the right font automatically. No custom font imports.
+- **Never use monospace fonts in a simulator.** That means:
+  - ❌ no `font-mono` Tailwind class
+  - ❌ no `fontFamily: 'monospace'`, `'Courier'`, `'Menlo'`, etc.
+  - ❌ no `<code>` or `<pre>` tags around values shown to students
+  - Monospace reads as raw data / source code, not as the natural prose-with-arithmetic feel a teaching simulator needs. It also clashes visually with the body Geist Sans typography of the surrounding book page.
+- **Need digits to line up in a column (sliders, tables, time-series readouts)?** Use `font-variant-numeric: tabular-nums` (Tailwind: `tabular-nums`) instead. Geist Sans supports OpenType `tnum`, so columns of numbers stay aligned WITHOUT the typewriter look. Example: `<span className="tabular-nums">1.000</span>`.
+- **Italic math variables** (e.g. `M`, `m`, `n`, `χ`) → use `fontStyle: 'italic'` on a sans-serif glyph, not a monospace font. Matches the convention used in `OrbitalShapeExplorerSim` and the KaTeX-rendered formulas in the book pages.
+
+### Division & Fractions — NEVER use the ÷ symbol
+- **The `÷` (Unicode U+00F7) glyph is banned in simulator UI text.** From any normal viewing distance it reads as a `+` (the centre stroke of the divide sign looks like the cross of a plus). It silently makes "A ÷ B" look like "A + B" to students sitting at the back of a classroom or anyone glancing at the screen.
+- **Use stacked numerator/denominator notation everywhere a division appears**, both in:
+  - Formula headers (e.g. "M = [moles of solute] / [volume of solution]")
+  - Step-by-step calculation rows (e.g. "moles of KMnO₄ = [15.80 g] / [158.03 g/mol] = 0.100 mol")
+- **Implementation pattern** — a small `Frac` component renders the numerator/denominator stack inline with the surrounding text:
+
+  ```tsx
+  function Frac({ num, den }: { num: React.ReactNode; den: React.ReactNode }) {
+    return (
+      <span style={{
+        display: 'inline-flex', flexDirection: 'column', alignItems: 'center',
+        verticalAlign: 'middle', lineHeight: 1.15, margin: '0 4px',
+      }}>
+        <span style={{ padding: '0 6px 2px 6px' }}>{num}</span>
+        <span style={{
+          padding: '2px 6px 0 6px',
+          borderTop: '1.5px solid currentColor',
+          width: '100%', textAlign: 'center',
+        }}>{den}</span>
+      </span>
+    );
+  }
+
+  // Usage in a derivation step:
+  <Frac num="15.80 g" den="158.03 g/mol" />
+  ```
+
+  When a row contains a `Frac`, align the row with `items-center` (not `items-baseline`) so the step number and result column sit visually centred on the fraction.
+
+- **The ONLY exception** is when the simulator is explicitly teaching the `÷` glyph itself (e.g. an arithmetic-symbols flashcard sim) — and even then, call it out in a comment so future readers know it's intentional.
+- **Inline prose like "Power = Work / Time" or "effort = load / 2"** — a plain ASCII forward slash `/` is acceptable for short descriptive captions. It doesn't have the ÷-as-+ ambiguity. Keep `Frac` for the prominent / displayed formula, use `/` for the sub-caption explaining it. (Example: `<p>P = W / t</p>` underneath, with `Frac` above showing the stacked version.)
+- For multiplication, `×` (U+00D7) reads cleanly from a distance and stays. For subtraction use `−` (U+2212, the proper minus), not the hyphen.
+
+### Scientific Notation — NEVER expose "e+23" to students
+- **JavaScript's `Number.prototype.toExponential()` returns strings like `"6.022e+23"`. NEVER render that string directly in a simulator's UI.** The `e+` form is programming syntax — it's not what students see in NCERT or in any chemistry / physics textbook, and it actively confuses them.
+- **Always render as `6.022 × 10²³`** — proper mantissa-times-power-of-ten form with the exponent in Unicode superscript digits.
+- **Implementation pattern** — keep a tiny `prettyExp` helper that post-processes `toExponential()` output:
+
+  ```tsx
+  const SUP_DIGITS = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+
+  function prettyExp(eNotation: string): string {
+    const m = eNotation.match(/^(-?[\d.]+)e([+-]?\d+)$/);
+    if (!m) return eNotation;
+    const mantissa = m[1];
+    const expNum = parseInt(m[2], 10);
+    if (expNum === 0) return mantissa;
+    const sup = String(Math.abs(expNum)).split('')
+      .map(d => SUP_DIGITS[parseInt(d, 10)]).join('');
+    const sign = expNum < 0 ? '⁻' : '';
+    return `${mantissa} × 10${sign}${sup}`;
+  }
+
+  // Use anywhere you'd otherwise call .toExponential() directly:
+  prettyExp(value.toExponential(3))   // → "6.022 × 10²³"
+  ```
+
+- **Editable input fields** (where the user types a value back) need a *separate* "draft" formatter that returns plain `"6.022e+23"`, because `parseFloat()` cannot parse Unicode superscripts. Pattern: pretty form for the read-only display, raw e-notation for the editable draft initialised on focus.
+- Negative exponents use the proper Unicode minus `⁻` (U+207B), not a hyphen.
 
 ### Scale & Usage
 
@@ -356,6 +424,11 @@ No custom font imports. Use Tailwind's system font stack (`font-sans`) throughou
 | Inventing new accent colors | Only use palette defined in Section 3 |
 | Omitting the Expert Tip in sidebars | Every mechanism sidebar must end with an Expert Tip block |
 | Generating scientific facts from training knowledge without citation | Always state source or mark `NEEDS_REVIEW:` |
+| `font-mono` Tailwind class on numbers or text | Inherit body sans-serif; use `tabular-nums` for column alignment |
+| `fontFamily: 'monospace'` (or 'Courier', 'Menlo', etc.) | Same — sans-serif only. Italic for math variables. |
+| `÷` (division sign U+00F7) in any formula or calc step | Stacked numerator/denominator via the `Frac` component (see §2). From a distance, ÷ reads as +. |
+| Hyphen `-` used for subtraction in a formula | Proper minus `−` (U+2212). |
+| `"6.022e+23"` or any other `e+N`/`e-N` programming syntax visible to students | `"6.022 × 10²³"` via the `prettyExp` helper (see §2). Use raw e-notation only inside editable input drafts. |
 
 ---
 
@@ -377,6 +450,9 @@ No custom font imports. Use Tailwind's system font stack (`font-sans`) throughou
 
 - [ ] Simulator background is `#0d1117` — matches page background
 - [ ] All fonts follow the typography scale (Section 2)
+- [ ] **No `font-mono` class or `fontFamily: 'monospace'` anywhere in the simulator.** Use `tabular-nums` for column alignment, `fontStyle: 'italic'` for math variables.
+- [ ] **No `÷` symbol anywhere in formulas or calc steps.** Use the `Frac` component (numerator stacked over denominator) — see §2 "Division & Fractions". The `÷` glyph reads as `+` from a distance.
+- [ ] **No `e+N` / `e-N` programming-style scientific notation rendered to students.** Use `prettyExp(value.toExponential(n))` so values appear as `6.022 × 10²³`, never `6.022e+23`.
 - [ ] No colors outside the defined palette (Section 3)
 - [ ] StepBar uses pill pattern from Section 4c
 - [ ] Back/Next buttons use pattern from Section 4d

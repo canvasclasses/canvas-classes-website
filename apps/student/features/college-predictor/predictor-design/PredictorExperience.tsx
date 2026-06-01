@@ -375,19 +375,41 @@ export default function PredictorExperience() {
   const [homeState, setHomeState] = useState('Uttar Pradesh');
   const [rankType, setRankType] = useState<'CRL' | 'CAT'>('CRL');
   const [rank, setRank] = useState(8532);
+  // Affirmative-action toggles. The cutoff schema models these as:
+  //   - Girls Quota → gender = 'Female-only (including Supernumerary)'
+  //   - PwD Quota   → category gets a ' (PwD)' suffix at submit time
+  // Both default off (i.e. Gender-Neutral, non-PwD seats).
+  const [isFemale, setIsFemale] = useState(false);
+  const [isPwD, setIsPwD] = useState(false);
+  // Derived API-shaped values — used by submitJEE, share-card, and choice-list
+  // so all three downstream calls honour the same quota selection.
+  const effectiveCategory = isPwD ? (`${category} (PwD)` as const) : category;
+  const effectiveGender = isFemale
+    ? ('Female-only (including Supernumerary)' as const)
+    : ('Gender-Neutral' as const);
 
   // BITSAT form state
   const [paper, setPaper] = useState<'modern' | 'legacy'>('modern');
   const [score, setScore] = useState(295);
   const maxScore = paper === 'modern' ? 390 : 450;
 
-  // Narrow-down state
-  const [narrowOpen, setNarrowOpen] = useState(false);
+  // Narrow-down state. Default OPEN so the branch filter (the most-requested
+  // refinement) is visible to every user without an extra click — pre-fix
+  // analytics showed users were missing the collapsed section entirely and
+  // asking us to add a branch filter that was already there.
+  const [narrowOpen, setNarrowOpen] = useState(true);
   const [pickedBranches, setPickedBranches] = useState<string[]>([]);
   const [tierOnly, setTierOnly] = useState(false);
 
   // Submission + results state
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  // When the API reports it converted CRL → category-rank, we show a one-
+  // liner above the results so reserved-category users see what the
+  // predictor actually matched against. Set from predictRes.rank_conversion.
+  const [rankConversion, setRankConversion] = useState<
+    { original: number; converted: number; category: string } | null
+  >(null);
   const [jeeGroups, setJeeGroups] = useState<JoSAACollegeGroup[] | null>(null);
   const [bitsatRows, setBitsatRows] = useState<BitsatProgrammeResult[] | null>(null);
   const [sens, setSens] = useState<SensRow[] | null>(null);
@@ -399,8 +421,83 @@ export default function PredictorExperience() {
   const [filter, setFilter] = useState<'all' | 'safe' | 'target' | 'reach'>('all');
   const [extended, setExtended] = useState(false);
   const [showBuilder, setShowBuilder] = useState(false);
+  // Pagination — slice the result list into 10-row pages so a 96-college
+  // response doesn't force a multi-screen scroll. Reset to 0 on every new
+  // submission and whenever the active filter changes (handled via useEffect
+  // below). The Next button straddles the extended-fetch boundary: if the
+  // user is on the last locally-loaded page but the API has more results,
+  // pressing Next triggers loadMoreJee() and only then advances the page.
+  const PAGE_SIZE = 10;
+  const [pageIndex, setPageIndex] = useState(0);
 
   const resultsRef = useRef<HTMLDivElement>(null);
+
+  // Hydration flag — flipped true once we've attempted to restore from
+  // sessionStorage. Must be state (not a ref) so the persistence effect waits
+  // for the re-render after the hydration setters apply; otherwise its closure
+  // would still hold default values when it fires and would clobber the
+  // snapshot we just read.
+  const [hydrated, setHydrated] = useState(false);
+  const STORAGE_KEY = 'predictor:state:v2';
+
+  // Hydrate from sessionStorage on mount. Navigating away (e.g. clicking a
+  // college card) and back used to wipe the form + results because they live
+  // entirely in component state. We restore everything except pageIndex
+  // (lands on page 1; the reset-on-results-change effect re-fires anyway).
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const s = JSON.parse(raw) as Record<string, unknown>;
+        if (s.exam === 'jee' || s.exam === 'bitsat') setExam(s.exam);
+        if (typeof s.rank === 'number') setRank(s.rank);
+        if (s.rankType === 'CRL' || s.rankType === 'CAT') setRankType(s.rankType);
+        if (s.category === 'OPEN' || s.category === 'EWS' || s.category === 'OBC-NCL' || s.category === 'SC' || s.category === 'ST') setCategory(s.category);
+        if (s.quota === 'HS' || s.quota === 'OS' || s.quota === 'AI') setQuota(s.quota);
+        if (typeof s.homeState === 'string') setHomeState(s.homeState);
+        if (typeof s.isFemale === 'boolean') setIsFemale(s.isFemale);
+        if (typeof s.isPwD === 'boolean') setIsPwD(s.isPwD);
+        if (typeof s.score === 'number') setScore(s.score);
+        if (s.paper === 'modern' || s.paper === 'legacy') setPaper(s.paper);
+        if (Array.isArray(s.pickedBranches)) setPickedBranches(s.pickedBranches as string[]);
+        if (typeof s.tierOnly === 'boolean') setTierOnly(s.tierOnly);
+        if (Array.isArray(s.jeeGroups)) setJeeGroups(s.jeeGroups as JoSAACollegeGroup[]);
+        if (Array.isArray(s.bitsatRows)) setBitsatRows(s.bitsatRows as BitsatProgrammeResult[]);
+        if (Array.isArray(s.sens)) setSens(s.sens as SensRow[]);
+        if (typeof s.totalCount === 'number') setTotalCount(s.totalCount);
+        if (s.counts && typeof s.counts === 'object') setCounts(s.counts as { safe: number; target: number; reach: number });
+        if (s.rankConversion && typeof s.rankConversion === 'object') setRankConversion(s.rankConversion as { original: number; converted: number; category: string });
+        if (s.audience === 'student' || s.audience === 'parent') setAudience(s.audience);
+        if (s.filter === 'all' || s.filter === 'safe' || s.filter === 'target' || s.filter === 'reach') setFilter(s.filter);
+        if (typeof s.extended === 'boolean') setExtended(s.extended);
+      }
+    } catch {
+      // Bad JSON or quota error — keep defaults.
+    }
+    setHydrated(true);
+  }, []);
+
+  // Persist whenever interesting state changes — gated by `hydrated` so the
+  // initial render doesn't overwrite a fresh snapshot with default values.
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      sessionStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          exam, rank, rankType, category, quota, homeState, isFemale, isPwD,
+          score, paper, pickedBranches, tierOnly,
+          jeeGroups, bitsatRows, sens, totalCount, counts, rankConversion,
+          audience, filter, extended,
+        }),
+      );
+    } catch {
+      // sessionStorage quota / disabled — silent fail; UI still works.
+    }
+  }, [hydrated, exam, rank, rankType, category, quota, homeState, isFemale, isPwD,
+      score, paper, pickedBranches, tierOnly,
+      jeeGroups, bitsatRows, sens, totalCount, counts, rankConversion,
+      audience, filter, extended]);
 
   // Keep URL in sync with the active exam so a shared link respects the tab.
   useEffect(() => {
@@ -413,17 +510,64 @@ export default function PredictorExperience() {
   }, [exam]);
 
   // ── Submit handlers ────────────────────────────────────────────────────────
+
+  // "Load more" — re-fires the predict call with extended:true to lift the
+  // result cap from the default 10 colleges to 100. Mirrors submitJEE's body
+  // construction so any quota / branch / rank state changes apply uniformly.
+  // We only refresh the colleges + counts; the sensitivity sparkline data
+  // (predict-range) and the bucket counts are unchanged when the cap lifts,
+  // so we skip re-fetching those to stay light on Mongo.
+  async function loadMoreJee() {
+    if (loadingMore) return;
+    setLoadingMore(true);
+    try {
+      const body: Record<string, unknown> = {
+        rank,
+        rank_type: rankType,
+        category: effectiveCategory,
+        gender: effectiveGender,
+        home_state: homeState,
+        ...(pickedBranches[0] ? { dream_branch: pickedBranches[0] } : {}),
+        extended: true,
+      };
+      const predictRes = await fetch('/api/v2/college-predictor/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      }).then((r) => r.json());
+      if (predictRes?.success) {
+        let groups: JoSAACollegeGroup[] = predictRes.colleges ?? [];
+        if (tierOnly) {
+          groups = groups.filter((g) => (g.nirf_rank_engineering ?? 9999) <= 25);
+        }
+        setJeeGroups(groups);
+        setTotalCount(predictRes.total_colleges ?? groups.length);
+        setExtended(true);
+      }
+    } catch {
+      // Silently keep the prior (top-10) results visible. The user can retry.
+    } finally {
+      setLoadingMore(false);
+    }
+  }
+
   async function submitJEE() {
     setLoading(true);
     setExtended(false);
     setFilter('all');
+    setRankConversion(null);
     try {
       // For category rank, percentileToRank knows the conversion isn't needed
       // since user already typed a category rank. We pass the raw rank.
       const body: Record<string, unknown> = {
         rank,
-        category,
-        gender: 'Gender-Neutral',
+        // rank_type tells the API whether `rank` is a CRL (Common Rank List,
+        // total ranking) or a CAT (category-pool rank). The API converts
+        // CRL → category rank automatically when category is non-OPEN. See
+        // lib/percentileToRank.ts and lib/predictor.ts for the math.
+        rank_type: rankType,
+        category: effectiveCategory,
+        gender: effectiveGender,
         home_state: homeState,
         // Branch filter (best-effort): pass first picked branch as dream_branch
         // since the API accepts only one. Tier-only is enforced client-side.
@@ -441,8 +585,9 @@ export default function PredictorExperience() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             rank,
-            category,
-            gender: 'Gender-Neutral',
+            rank_type: rankType,
+            category: effectiveCategory,
+            gender: effectiveGender,
             home_state: homeState,
           }),
         }).then((r) => r.json()).catch(() => null),
@@ -465,6 +610,19 @@ export default function PredictorExperience() {
           target: predictRes.counts?.target ?? 0,
           reach: predictRes.counts?.reach ?? 0,
         });
+        // If the API converted CRL → category rank, surface it. Reserved-
+        // category students need to see what we actually matched against;
+        // otherwise the "Safe-bucket count: 47" feels disconnected from the
+        // CRL they typed in.
+        setRankConversion(
+          predictRes.rank_conversion
+            ? {
+                original: predictRes.rank_conversion.original,
+                converted: predictRes.rank_conversion.converted,
+                category: predictRes.rank_conversion.category,
+              }
+            : null,
+        );
         if (rangeRes?.success && rangeRes.points) {
           setSens(
             rangeRes.points.map((p: {
@@ -615,7 +773,80 @@ export default function PredictorExperience() {
     if (filter === 'all') return rows;
     return rows.filter((r) => r.bucket === filter);
   }, [rows, filter]);
-  const visibleRows = extended ? filteredRows : filteredRows.slice(0, 10);
+
+  // Reset to page 1 whenever the underlying list changes (new submit, filter
+  // toggle, or extended fetch landed). Otherwise the user can end up parked
+  // on "page 5" of a 1-page filtered list and see an empty results pane.
+  useEffect(() => {
+    setPageIndex(0);
+  }, [filter, jeeGroups, bitsatRows]);
+
+  // Effective total available for the current view — drives pagination math.
+  // Before the bucket-filter fix this only honored totalCount when filter was
+  // 'all', which meant clicking SAFE (e.g. Safe · 69) collapsed pagination to
+  // the locally-loaded slice (10 rows max), silently hiding the rest. Now we
+  // use the per-bucket count from `counts` when a filter is active, so the
+  // pager shows the real page count and the extended fetch can be triggered.
+  const filteredTotal =
+    filter === 'all'
+      ? totalCount ?? filteredRows.length
+      : counts?.[filter] ?? filteredRows.length;
+  const localPageCount = Math.max(1, Math.ceil(filteredRows.length / PAGE_SIZE));
+  // Phantom pages exist when the API capped at 10 (extended=false) but the
+  // bucket actually contains more. Once `extended` lands, totalPages collapses
+  // to ceil(filteredRows / PAGE_SIZE) of the real loaded data.
+  const totalPages =
+    !extended && filteredTotal > filteredRows.length
+      ? Math.max(localPageCount, Math.ceil(filteredTotal / PAGE_SIZE))
+      : localPageCount;
+  const safePageIndex = Math.min(pageIndex, totalPages - 1);
+  const pageStart = safePageIndex * PAGE_SIZE;
+  const visibleRows = filteredRows.slice(pageStart, pageStart + PAGE_SIZE);
+  const rangeStart = filteredRows.length === 0 ? 0 : pageStart + 1;
+  const rangeEnd = Math.min(pageStart + PAGE_SIZE, filteredRows.length);
+
+  // Auto-trigger the extended fetch the moment the user activates a bucket
+  // filter whose count exceeds what's locally loaded. Without this the
+  // pagination at the bottom is enough — but the user expects to see all 69
+  // Safe colleges immediately, not have to click Next first. Guarded by
+  // `extended` so it fires once per result set, and by `loadingMore` so a
+  // pending fetch isn't re-fired.
+  useEffect(() => {
+    if (filter === 'all') return;
+    if (extended || loadingMore) return;
+    if (exam !== 'jee') return;
+    const bucketCount = counts?.[filter] ?? 0;
+    if (bucketCount > filteredRows.length) {
+      loadMoreJee();
+    }
+    // loadMoreJee is stable per submit cycle; deps capture the inputs that
+    // could change the answer.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filter, extended, loadingMore, exam, counts, filteredRows.length]);
+
+  // Jump to a specific page. If the target sits past the locally-cached rows
+  // and there's more available server-side, fetch the extended set first.
+  // Only JEE has a server-side extended fetch — BITSAT returns the full list
+  // up-front, so the local slice handles it.
+  async function goToPage(target: number) {
+    const clamped = Math.max(0, Math.min(target, totalPages - 1));
+    const needsMore =
+      !extended && (target + 1) * PAGE_SIZE > filteredRows.length && filteredTotal > filteredRows.length;
+    if (needsMore) {
+      if (exam === 'jee') {
+        await loadMoreJee();
+      } else {
+        setExtended(true);
+      }
+    }
+    setPageIndex(clamped);
+    // Scroll the results header back into view so the user sees the new page
+    // start, not the bottom of the previous one.
+    requestAnimationFrame(() => {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
   const hasResults = jeeGroups !== null || bitsatRows !== null;
 
   // Career-suggestion shortlist — derived from the user's matched branches.
@@ -643,6 +874,183 @@ export default function PredictorExperience() {
     return suggestCareerSlugsFromBranches(branches);
   }, [exam, jeeGroups, bitsatRows, hasResults]);
 
+  // ── Filter-by-branch panel — shared between the JEE and BITSAT forms.
+  // Lives inside whichever grid is active so we can use CSS order to place it
+  // between the form fields and the ReturnsCard on mobile (per UX feedback —
+  // it belongs right under the home-state filter), and below the full row on
+  // desktop. Defined once here so both branches reuse the same instance.
+  const narrowDownPanel = (
+    <div
+      style={{
+        borderRadius: 14,
+        border: `1px solid ${ACCENT}33`,
+        background: `linear-gradient(180deg, ${ACCENT}0d, rgba(255,255,255,0.01))`,
+        padding: 18,
+      }}
+    >
+      <button
+        type="button"
+        onClick={() => setNarrowOpen((v) => !v)}
+        style={{
+          all: 'unset',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: '100%',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+          <span
+            aria-hidden
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 26,
+              height: 26,
+              borderRadius: 8,
+              background: `${ACCENT}22`,
+              color: ACCENT,
+              fontSize: 14,
+              fontWeight: 700,
+            }}
+          >
+            🎯
+          </span>
+          <span style={{ color: '#f5f5f7', fontSize: 15, fontWeight: 700, letterSpacing: '-0.005em' }}>
+            Filter by branch
+          </span>
+          <span
+            style={{
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: '0.14em',
+              fontFamily: "'JetBrains Mono', monospace",
+              color: ACCENT,
+              background: `${ACCENT}1a`,
+              border: `1px solid ${ACCENT}40`,
+              padding: '3px 7px',
+              borderRadius: 999,
+            }}
+          >
+            MOST USED
+          </span>
+          <span style={{ color: '#9a9aa6', fontSize: 12.5 }}>
+            {pickedBranches.length > 0
+              ? `${pickedBranches.length} branch${pickedBranches.length === 1 ? '' : 'es'} selected`
+              : 'pick CSE, ECE, Mechanical or any branch you want'}
+          </span>
+        </div>
+        <span
+          style={{
+            color: '#9a9aa6',
+            display: 'inline-flex',
+            alignItems: 'center',
+            transform: narrowOpen ? 'rotate(180deg)' : 'none',
+            transition: 'transform 0.2s',
+          }}
+        >
+          {Icons.caret('#9a9aa6')}
+        </span>
+      </button>
+      {narrowOpen && (
+        <div style={{ marginTop: 18, display: 'flex', flexDirection: 'column', gap: 18 }}>
+          <div>
+            <div
+              style={{
+                color: '#cfcfd6',
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: '0.16em',
+                fontFamily: "'JetBrains Mono', monospace",
+                marginBottom: 10,
+              }}
+            >
+              BRANCHES — pick any
+            </div>
+            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+              {(exam === 'jee'
+                ? ['CSE', 'ECE', 'IT', 'EE', 'Mechanical', 'Civil', 'Chemical', 'Materials']
+                : ['CSE', 'ECE', 'EEE', 'Mechanical', 'Chemical', 'Biological', 'Pharmacy', 'Manufacturing']
+              ).map((b) => {
+                const active = pickedBranches.includes(b);
+                return (
+                  <button
+                    key={b}
+                    type="button"
+                    onClick={() =>
+                      setPickedBranches((arr) =>
+                        arr.includes(b) ? arr.filter((x) => x !== b) : [...arr, b],
+                      )
+                    }
+                    style={{
+                      padding: '7px 12px',
+                      borderRadius: 8,
+                      border: active ? `1px solid ${ACCENT}80` : '1px solid rgba(255,255,255,0.08)',
+                      background: active ? `${ACCENT}15` : 'rgba(255,255,255,0.02)',
+                      color: active ? ACCENT : '#cfcfd6',
+                      fontSize: 12.5,
+                      fontWeight: active ? 600 : 500,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s',
+                      fontFamily: 'inherit',
+                    }}
+                  >
+                    {b}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <label
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 10,
+              color: '#cfcfd6',
+              fontSize: 13.5,
+              cursor: 'pointer',
+            }}
+          >
+            <span
+              style={{
+                width: 18,
+                height: 18,
+                borderRadius: 5,
+                border: tierOnly ? `1px solid ${ACCENT}` : '1px solid rgba(255,255,255,0.15)',
+                background: tierOnly ? ACCENT : 'transparent',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.15s',
+              }}
+            >
+              {tierOnly && (
+                <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                  <path
+                    d="M2 6 L5 9 L10 3"
+                    stroke="#0a0a0f"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
+              <input
+                type="checkbox"
+                checked={tierOnly}
+                onChange={(e) => setTierOnly(e.target.checked)}
+                style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}
+              />
+            </span>
+            Only show Tier-1 colleges (top NITs · IIITs · BITS)
+          </label>
+        </div>
+      )}
+    </div>
+  );
+
   // ── Render ────────────────────────────────────────────────────────────────
   return (
     <section style={{ position: 'relative', maxWidth: 1180, margin: '0 auto', padding: '100px 8px 0' }}>
@@ -654,8 +1062,11 @@ export default function PredictorExperience() {
       />
       <TrustRow />
 
-      {/* 3 feature cards — stacked at narrow widths, 3-up at md+. */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-[18px] mb-12">
+      {/* 3 feature cards — hidden on mobile (the titles essentially restate
+          what the tool does; on a narrow screen they pushed the actual form
+          ~700px further down without adding information). Show from sm: up,
+          where the 3-column layout makes them feel like a scannable summary. */}
+      <div className="hidden sm:grid grid-cols-3 gap-[18px] mb-12">
         {FEATURES.map((f) => (
           <FeatureCard key={f.n} f={f} />
         ))}
@@ -842,38 +1253,21 @@ export default function PredictorExperience() {
         </div>
 
         {exam === 'jee' ? (
+          // Grid uses CSS `order` so on mobile (single column) the children
+          // stack in DOM order — form fields, then filter-by-branch, then
+          // ReturnsCard (matches UX feedback that the branch filter belongs
+          // right under the home-state selector). On desktop, ReturnsCard
+          // jumps to col 2 row 1 (order-2) and the filter spans both cols
+          // below (order-last, col-span-2).
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] gap-8">
             <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-              <Seg
-                label="CATEGORY"
-                value={category}
-                onChange={setCategory}
-                options={[
-                  { value: 'OPEN', label: 'OPEN' },
-                  { value: 'EWS', label: 'EWS' },
-                  { value: 'OBC-NCL', label: 'OBC-NCL' },
-                  { value: 'SC', label: 'SC' },
-                  { value: 'ST', label: 'ST' },
-                ]}
-              />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-[18px]">
-                <Seg
-                  label="QUOTA"
-                  value={quota}
-                  onChange={setQuota}
-                  options={[
-                    { value: 'HS', label: 'Home State' },
-                    { value: 'OS', label: 'Other State' },
-                    { value: 'AI', label: 'All India' },
-                  ]}
-                />
-                <Dropdown
-                  label="HOME STATE"
-                  value={homeState}
-                  onChange={setHomeState}
-                  options={INDIAN_STATES.map((s) => ({ value: s, label: s }))}
-                />
-              </div>
+              {/* Rank input lifted to the top of the form. On mobile especially,
+                  asking a student to scroll past category + quota + state
+                  selectors before they can type their rank felt backwards —
+                  the rank is the one number that always has to be entered, so
+                  it leads. Category / quota / state default to sensible values
+                  (OPEN, Home State, UP) below, which the student can adjust
+                  after they see what they're working with. */}
               <Seg
                 label="RANK TYPE"
                 value={rankType}
@@ -899,25 +1293,134 @@ export default function PredictorExperience() {
                   { value: 100000, label: '1L+' },
                 ]}
               />
-            </div>
-            <ReturnsCard exam="jee" />
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] gap-8">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-              <Seg
-                label="PAPER VERSION"
-                value={paper}
-                onChange={(v) => {
-                  setPaper(v);
-                  // Re-clamp score to the new max when switching regimes.
-                  setScore((s) => Math.min(s, v === 'modern' ? 390 : 450));
+
+              {/* Visual divider between the primary input (above) and the
+                  refinement controls (below). Signals "you've entered the
+                  must-have; everything below tunes the result." */}
+              <div
+                style={{
+                  borderTop: '1px dashed rgba(255,255,255,0.08)',
+                  margin: '2px 0 -2px',
                 }}
+              />
+
+              <Seg
+                label="CATEGORY"
+                value={category}
+                onChange={setCategory}
                 options={[
-                  { value: 'modern', label: 'Modern paper · 2022+ · max 390' },
-                  { value: 'legacy', label: 'Legacy · ≤2021 · max 450' },
+                  { value: 'OPEN', label: 'OPEN' },
+                  { value: 'EWS', label: 'EWS' },
+                  { value: 'OBC-NCL', label: 'OBC-NCL' },
+                  { value: 'SC', label: 'SC' },
+                  { value: 'ST', label: 'ST' },
                 ]}
               />
+
+              {/* Affirmative-action toggles — Girls Quota + PwD Quota.
+                  Both default off (Gender-Neutral, non-PwD). The chosen
+                  combination maps directly to JoSAA's cutoff matrix:
+                    - Girls ON  → gender = 'Female-only (incl. Supernumerary)'
+                    - PwD ON    → category = '<base> (PwD)'
+                  Both can be on simultaneously (Female + PwD seats exist). */}
+              <div>
+                <div
+                  style={{
+                    color: '#9a9aa6',
+                    fontSize: 11,
+                    fontWeight: 700,
+                    letterSpacing: '0.16em',
+                    fontFamily: "'JetBrains Mono', monospace",
+                    marginBottom: 10,
+                  }}
+                >
+                  ADDITIONAL QUOTAS · OPTIONAL
+                </div>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                  <QuotaToggle
+                    label="Girls Quota"
+                    sublabel="Female-only + Supernumerary seats"
+                    active={isFemale}
+                    onToggle={() => setIsFemale((v) => !v)}
+                  />
+                  <QuotaToggle
+                    label="PwD Quota"
+                    sublabel="Persons-with-Disability cutoffs"
+                    active={isPwD}
+                    onToggle={() => setIsPwD((v) => !v)}
+                  />
+                </div>
+
+                {/* PwD merit-list hint. JoSAA runs a separate ~10K-candidate
+                    merit list for PwD aspirants, so a "PwD rank" lives on a
+                    different scale from CRL. Without this note, a student
+                    with CRL ~15K who toggles PwD on sees "0 colleges" and
+                    assumes the tool is broken. Surface only when PwD is on
+                    AND the entered rank is past the realistic PwD range. */}
+                {isPwD && (
+                  <div
+                    role="note"
+                    style={{
+                      marginTop: 10,
+                      padding: '10px 14px',
+                      borderRadius: 10,
+                      border: '1px solid rgba(125,211,252,0.25)',
+                      background: 'rgba(125,211,252,0.06)',
+                      color: '#a7d4f0',
+                      fontSize: 12.5,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    <strong style={{ color: '#bce0f5' }}>PwD uses a separate merit list.</strong>{' '}
+                    JoSAA&apos;s PwD pool is roughly 10,000 candidates, so PwD ranks are
+                    on a different scale from CRL — typical PwD ranks are{' '}
+                    <strong style={{ color: '#bce0f5' }}>under 5,000</strong>. If you
+                    entered your CRL above, the predictor may return zero matches
+                    because no PwD seat closes that high.
+                  </div>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-[18px]">
+                <Seg
+                  label="QUOTA"
+                  value={quota}
+                  onChange={setQuota}
+                  options={[
+                    { value: 'HS', label: 'Home State' },
+                    { value: 'OS', label: 'Other State' },
+                    { value: 'AI', label: 'All India' },
+                  ]}
+                />
+                <Dropdown
+                  label="HOME STATE"
+                  value={homeState}
+                  onChange={setHomeState}
+                  options={INDIAN_STATES.map((s) => ({ value: s, label: s }))}
+                />
+              </div>
+            </div>
+            {/* DOM order is form → filter → ReturnsCard so mobile stacks the
+                filter directly under the form fields (per UX feedback — it's
+                part of the filters, not a result). On desktop we override with
+                explicit grid placement: filter spans row 2 full-width, the
+                ReturnsCard jumps to row 1 col 2. */}
+            <div className="lg:row-start-2 lg:col-span-2">
+              {narrowDownPanel}
+            </div>
+            <div className="lg:row-start-1 lg:col-start-2">
+              <ReturnsCard exam="jee" />
+            </div>
+          </div>
+        ) : (
+          // Same ordering trick as the JEE grid — see comment above.
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] gap-8">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+              {/* Score lifted above the paper-version selector for the same
+                  reason as the JEE form — the marks input is the one number
+                  the student always has to type, so it leads. The paper
+                  version (modern / legacy) follows as a small refinement;
+                  switching it re-clamps the score to the new max. */}
               <NumberWithSlider
                 label="YOUR BITSAT SCORE"
                 sublabel="enter total (no sectional split)"
@@ -944,140 +1447,37 @@ export default function PredictorExperience() {
                       ]
                 }
               />
+
+              <div
+                style={{
+                  borderTop: '1px dashed rgba(255,255,255,0.08)',
+                  margin: '2px 0 -2px',
+                }}
+              />
+
+              <Seg
+                label="PAPER VERSION"
+                value={paper}
+                onChange={(v) => {
+                  setPaper(v);
+                  // Re-clamp score to the new max when switching regimes.
+                  setScore((s) => Math.min(s, v === 'modern' ? 390 : 450));
+                }}
+                options={[
+                  { value: 'modern', label: 'Modern paper · 2022+ · max 390' },
+                  { value: 'legacy', label: 'Legacy · ≤2021 · max 450' },
+                ]}
+              />
             </div>
-            <ReturnsCard exam="bitsat" />
+            {/* Same DOM-order trick as the JEE grid above — see comment there. */}
+            <div className="lg:row-start-2 lg:col-span-2">
+              {narrowDownPanel}
+            </div>
+            <div className="lg:row-start-1 lg:col-start-2">
+              <ReturnsCard exam="bitsat" />
+            </div>
           </div>
         )}
-
-        {/* Narrow down */}
-        <div style={{ borderTop: '1px dashed rgba(255,255,255,0.08)', paddingTop: 22, marginTop: 24 }}>
-          <button
-            type="button"
-            onClick={() => setNarrowOpen((v) => !v)}
-            style={{
-              all: 'unset',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              width: '100%',
-            }}
-          >
-            <div>
-              <span style={{ color: '#f5f5f7', fontSize: 15, fontWeight: 600, letterSpacing: '-0.005em' }}>
-                Narrow it down
-              </span>
-              <span style={{ color: '#5e5e6a', fontSize: 13, marginLeft: 10 }}>
-                optional · pin branches or campuses
-              </span>
-            </div>
-            <span
-              style={{
-                color: '#9a9aa6',
-                display: 'inline-flex',
-                alignItems: 'center',
-                transform: narrowOpen ? 'rotate(180deg)' : 'none',
-                transition: 'transform 0.2s',
-              }}
-            >
-              {Icons.caret('#9a9aa6')}
-            </span>
-          </button>
-          {narrowOpen && (
-            <div style={{ marginTop: 18, display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <div>
-                <div
-                  style={{
-                    color: '#9a9aa6',
-                    fontSize: 11,
-                    fontWeight: 700,
-                    letterSpacing: '0.16em',
-                    fontFamily: "'JetBrains Mono', monospace",
-                    marginBottom: 10,
-                  }}
-                >
-                  BRANCHES — pick any
-                </div>
-                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  {(exam === 'jee'
-                    ? ['CSE', 'ECE', 'IT', 'EE', 'Mechanical', 'Civil', 'Chemical', 'Materials']
-                    : ['CSE', 'ECE', 'EEE', 'Mechanical', 'Chemical', 'Biological', 'Pharmacy', 'Manufacturing']
-                  ).map((b) => {
-                    const active = pickedBranches.includes(b);
-                    return (
-                      <button
-                        key={b}
-                        type="button"
-                        onClick={() =>
-                          setPickedBranches((arr) =>
-                            arr.includes(b) ? arr.filter((x) => x !== b) : [...arr, b],
-                          )
-                        }
-                        style={{
-                          padding: '7px 12px',
-                          borderRadius: 8,
-                          border: active ? `1px solid ${ACCENT}80` : '1px solid rgba(255,255,255,0.08)',
-                          background: active ? `${ACCENT}15` : 'rgba(255,255,255,0.02)',
-                          color: active ? ACCENT : '#cfcfd6',
-                          fontSize: 12.5,
-                          fontWeight: active ? 600 : 500,
-                          cursor: 'pointer',
-                          transition: 'all 0.15s',
-                          fontFamily: 'inherit',
-                        }}
-                      >
-                        {b}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-              <label
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 10,
-                  color: '#cfcfd6',
-                  fontSize: 13.5,
-                  cursor: 'pointer',
-                }}
-              >
-                <span
-                  style={{
-                    width: 18,
-                    height: 18,
-                    borderRadius: 5,
-                    border: tierOnly ? `1px solid ${ACCENT}` : '1px solid rgba(255,255,255,0.15)',
-                    background: tierOnly ? ACCENT : 'transparent',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'all 0.15s',
-                  }}
-                >
-                  {tierOnly && (
-                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                      <path
-                        d="M2 6 L5 9 L10 3"
-                        stroke="#0a0a0f"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  )}
-                  <input
-                    type="checkbox"
-                    checked={tierOnly}
-                    onChange={(e) => setTierOnly(e.target.checked)}
-                    style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}
-                  />
-                </span>
-                Only show Tier-1 colleges (top NITs · IIITs · BITS)
-              </label>
-            </div>
-          )}
-        </div>
 
         {/* CTA */}
         <div
@@ -1174,6 +1574,43 @@ export default function PredictorExperience() {
             <p style={{ margin: 0, color: '#9a9aa6', fontSize: 15 }}>
               Ranked by chance, sorted by institute tier. Sparklines show the last 4 years&apos; closing trend.
             </p>
+
+            {/* CRL → category-rank conversion banner. JoSAA closing-ranks for
+                reserved categories are on a category-pool scale (e.g. "SC
+                rank 1,081 at NIT Trichy CSE"), NOT CRL. When the user typed
+                CRL + selected a reserved category, the API converted before
+                matching. Showing it here so the user sees what the predictor
+                actually compared their rank against. */}
+            {rankConversion && (
+              <div
+                role="note"
+                style={{
+                  marginTop: 16,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  padding: '10px 16px',
+                  borderRadius: 12,
+                  background: 'rgba(125,211,252,0.08)',
+                  border: '1px solid rgba(125,211,252,0.25)',
+                  color: '#bce0f5',
+                  fontSize: 13,
+                  lineHeight: 1.5,
+                  textAlign: 'left',
+                  maxWidth: 720,
+                }}
+              >
+                <span aria-hidden style={{ fontSize: 16 }}>↻</span>
+                <span>
+                  You entered <strong>CRL {rankConversion.original.toLocaleString('en-IN')}</strong>. JoSAA stores{' '}
+                  <strong>{rankConversion.category}</strong> closing-ranks on a category-pool scale,
+                  so the predictor matched against an approximate{' '}
+                  <strong>{rankConversion.category} rank ≈ {rankConversion.converted.toLocaleString('en-IN')}</strong>{' '}
+                  (using the 2026 NTA share table). If you know your exact category rank, switch the toggle to{' '}
+                  <em>Category Rank</em> and re-submit for higher precision.
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Header bar */}
@@ -1275,32 +1712,33 @@ export default function PredictorExperience() {
             )}
           </div>
 
-          {/* Show all */}
-          {filteredRows.length > 10 && !extended && (
-            <div style={{ textAlign: 'center', marginTop: 26 }}>
-              <button
-                type="button"
-                onClick={() => setExtended(true)}
-                style={{
-                  padding: '12px 22px',
-                  borderRadius: 999,
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  color: '#cfcfd6',
-                  fontFamily: 'inherit',
-                  fontSize: 13.5,
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  transition: 'all 0.2s',
-                }}
-              >
-                Show all {filteredRows.length} {exam === 'jee' ? 'colleges' : 'programmes'}
-                {Icons.arrow('currentColor')}
-              </button>
-            </div>
+          {/* Pagination — 10 rows per page. Replaces the prior "Show all N"
+              button + post-load "All shown" footer, which dumped up to 100
+              rows into one scroll-forever page. Next/Prev sit alongside a
+              page-number strip; on the boundary where local rows run out but
+              totalCount says there's more, goToPage transparently triggers
+              the extended fetch before advancing. */}
+          {filteredRows.length > 0 && totalPages > 1 && (
+            <Pager
+              pageIndex={safePageIndex}
+              totalPages={totalPages}
+              rangeStart={rangeStart}
+              rangeEnd={rangeEnd}
+              total={
+                !extended && filteredTotal > filteredRows.length
+                  ? filteredTotal
+                  : filteredRows.length
+              }
+              unit={exam === 'jee' ? 'colleges' : 'programmes'}
+              loadingMore={loadingMore}
+              onGo={goToPage}
+              accent={ACCENT}
+              capNote={
+                extended && (totalCount ?? 0) >= 100
+                  ? 'capped at 100 by the predictor'
+                  : undefined
+              }
+            />
           )}
 
           {/* Sensitivity chart */}
@@ -1364,8 +1802,9 @@ export default function PredictorExperience() {
                     params={{
                       tool: 'jeemain',
                       rank,
-                      category,
-                      gender: 'Gender-Neutral',
+                      rank_type: rankType,
+                      category: effectiveCategory,
+                      gender: effectiveGender,
                       home_state: homeState,
                     }}
                   />
@@ -1523,8 +1962,9 @@ export default function PredictorExperience() {
           onClose={() => setShowBuilder(false)}
           baseInputs={{
             rank,
-            category,
-            gender: 'Gender-Neutral',
+            rank_type: rankType,
+            category: effectiveCategory,
+            gender: effectiveGender,
             home_state: homeState,
           }}
         />
@@ -1555,13 +1995,15 @@ function ResultRow({
   return (
     <Tag
       {...linkProps}
+      // Mobile-compact result card. Below sm: tighter padding, smaller rank
+      // column, no sparkline (hidden on mobile to reclaim height — scrolling
+      // 10 college cards on a 390px screen was the UX complaint), smaller
+      // chance % and programme fonts. From sm: up the original spacing
+      // returns. The vertical accent stripe + grid layout stay structurally
+      // identical so the change is purely a density tweak.
+      className="grid items-center gap-3 sm:gap-[18px] py-3 px-3 sm:py-4 sm:pl-[22px] sm:pr-[22px] grid-cols-[26px_1fr_auto] sm:grid-cols-[44px_1fr_auto]"
       style={{
         position: 'relative',
-        display: 'grid',
-        gridTemplateColumns: '44px 1fr auto',
-        gap: 18,
-        alignItems: 'center',
-        padding: '16px 22px 18px',
         background: 'linear-gradient(180deg, rgba(20,22,34,0.55), rgba(12,13,22,0.7))',
         border: '1px solid rgba(255,255,255,0.05)',
         borderRadius: 14,
@@ -1585,8 +2027,8 @@ function ResultRow({
         style={{
           position: 'absolute',
           left: 0,
-          top: 14,
-          bottom: 14,
+          top: 10,
+          bottom: 10,
           width: 2,
           background: palette.fg,
           opacity: 0.5,
@@ -1594,10 +2036,10 @@ function ResultRow({
         }}
       />
       <div
+        className="text-[11px] sm:text-[12px]"
         style={{
           color: '#5e5e6a',
           fontFamily: "'JetBrains Mono', monospace",
-          fontSize: 12,
           fontWeight: 500,
           letterSpacing: '0.04em',
         }}
@@ -1605,14 +2047,15 @@ function ResultRow({
         #{r.rank}
       </div>
       <div style={{ minWidth: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
           <span
+            className="text-[14.5px] sm:text-[17px]"
             style={{
               color: '#f5f5f7',
               fontFamily: "'Space Grotesk', system-ui, sans-serif",
-              fontSize: 17,
               fontWeight: 600,
               letterSpacing: '-0.012em',
+              lineHeight: 1.2,
             }}
           >
             {r.programme}
@@ -1620,12 +2063,12 @@ function ResultRow({
           <span
             title={BUCKET_DEFINITIONS[r.bucket.toUpperCase() as 'SAFE' | 'TARGET' | 'REACH']}
             style={{
-              padding: '2.5px 7px',
+              padding: '2px 6px',
               borderRadius: 5,
               border: `1px solid ${palette.border}`,
               background: palette.bg,
               color: palette.fg,
-              fontSize: 9.5,
+              fontSize: 9,
               fontWeight: 700,
               letterSpacing: '0.16em',
               cursor: 'help',
@@ -1635,14 +2078,15 @@ function ResultRow({
           </span>
         </div>
         <div
+          className="text-[11.5px] sm:text-[12.5px]"
           style={{
-            marginTop: 5,
+            marginTop: 4,
             display: 'flex',
             alignItems: 'center',
             flexWrap: 'wrap',
-            gap: 8,
+            gap: 6,
             color: '#7d7d88',
-            fontSize: 12.5,
+            lineHeight: 1.35,
           }}
         >
           <span style={{ color: '#cfcfd6', fontWeight: 500 }}>{r.inst}</span>
@@ -1682,14 +2126,18 @@ function ResultRow({
           <ConfidenceDots level={r.conf} />
         </div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
-        <Sparkline data={r.trend} />
-        <div style={{ textAlign: 'right', minWidth: 64 }}>
+      <div className="flex items-center gap-2 sm:gap-[18px]">
+        {/* Sparkline is decorative — hidden on mobile to save vertical space
+            (each row otherwise eats ~110px even before the metadata wraps). */}
+        <div className="hidden sm:block">
+          <Sparkline data={r.trend} />
+        </div>
+        <div className="text-right min-w-[44px] sm:min-w-[64px]">
           <div
+            className="text-[20px] sm:text-[26px]"
             style={{
               color: ACCENT,
               fontFamily: "'Space Grotesk', system-ui, sans-serif",
-              fontSize: 26,
               fontWeight: 700,
               letterSpacing: '-0.025em',
               lineHeight: 1,
@@ -1698,13 +2146,17 @@ function ResultRow({
           >
             {r.pct}%
           </div>
-          <div style={{ color: '#5e5e6a', fontSize: 10, marginTop: 4, letterSpacing: '0.14em', fontWeight: 600 }}>
+          <div
+            className="text-[9px] sm:text-[10px] mt-[2px] sm:mt-1"
+            style={{ color: '#5e5e6a', letterSpacing: '0.14em', fontWeight: 600 }}
+          >
             CHANCE
           </div>
         </div>
         {clickable && (
           <span
             aria-hidden
+            className="hidden sm:inline"
             style={{
               color: '#5e5e6a',
               fontSize: 14,
@@ -1722,6 +2174,162 @@ function ResultRow({
 
 function Sep() {
   return <span style={{ color: '#3a3a44' }}>·</span>;
+}
+
+// ── Pager — 10-rows-per-page pagination control ────────────────────────────
+// Compact, dark-theme paginator used at the bottom of the results list. The
+// page-number strip uses the standard 1 … 4 [5] 6 … N compression so we stay
+// at ≤7 buttons even when there are 10 pages. The "boundary" Next press is
+// handled by the parent's onGo — when the cached rows run out but more
+// exist on the server, onGo fetches and then advances.
+function Pager({
+  pageIndex,
+  totalPages,
+  rangeStart,
+  rangeEnd,
+  total,
+  unit,
+  loadingMore,
+  onGo,
+  accent,
+  capNote,
+}: {
+  pageIndex: number;
+  totalPages: number;
+  rangeStart: number;
+  rangeEnd: number;
+  total: number;
+  unit: 'colleges' | 'programmes';
+  loadingMore: boolean;
+  onGo: (target: number) => void;
+  accent: string;
+  capNote?: string;
+}) {
+  // Build the compressed page-number sequence.
+  // - Always show 1 and totalPages.
+  // - Show current ± 1.
+  // - Insert an ellipsis when the gap is > 1.
+  const items: (number | 'ellipsis')[] = [];
+  const current = pageIndex;
+  const pushedSet = new Set<number>();
+  function pushPage(p: number) {
+    if (p < 0 || p >= totalPages || pushedSet.has(p)) return;
+    pushedSet.add(p);
+    items.push(p);
+  }
+  const ordered = [0, current - 1, current, current + 1, totalPages - 1].filter(
+    (p) => p >= 0 && p < totalPages,
+  );
+  const unique = Array.from(new Set(ordered)).sort((a, b) => a - b);
+  let prev = -1;
+  for (const p of unique) {
+    if (prev !== -1 && p - prev > 1) items.push('ellipsis');
+    pushPage(p);
+    prev = p;
+  }
+
+  const baseBtn: React.CSSProperties = {
+    minWidth: 36,
+    height: 36,
+    padding: '0 10px',
+    borderRadius: 10,
+    border: '1px solid rgba(255,255,255,0.08)',
+    background: 'rgba(255,255,255,0.03)',
+    color: '#cfcfd6',
+    fontFamily: 'inherit',
+    fontSize: 13,
+    fontWeight: 600,
+    cursor: 'pointer',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    transition: 'all 0.15s',
+  };
+  const activeBtn: React.CSSProperties = {
+    ...baseBtn,
+    background: accent,
+    color: '#0a0a0f',
+    border: `1px solid ${accent}`,
+  };
+  const disabledBtn: React.CSSProperties = {
+    ...baseBtn,
+    opacity: 0.4,
+    cursor: 'not-allowed',
+  };
+
+  const prevDisabled = pageIndex === 0 || loadingMore;
+  const nextDisabled = pageIndex >= totalPages - 1 || loadingMore;
+
+  return (
+    <div
+      style={{
+        marginTop: 28,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: 14,
+        flexWrap: 'wrap',
+      }}
+    >
+      <div
+        style={{
+          color: '#9a9aa6',
+          fontSize: 12.5,
+          fontFamily: "'JetBrains Mono', monospace",
+          letterSpacing: '0.04em',
+        }}
+      >
+        Showing <span style={{ color: '#f5f5f7', fontWeight: 600 }}>{rangeStart}–{rangeEnd}</span>{' '}
+        of <span style={{ color: '#f5f5f7', fontWeight: 600 }}>{total}</span> {unit}
+        {capNote && <span style={{ color: '#5e5e6a' }}> · {capNote}</span>}
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+        <button
+          type="button"
+          onClick={() => onGo(pageIndex - 1)}
+          disabled={prevDisabled}
+          style={prevDisabled ? disabledBtn : baseBtn}
+          aria-label="Previous page"
+        >
+          ← Prev
+        </button>
+        {items.map((it, i) =>
+          it === 'ellipsis' ? (
+            <span
+              key={`e-${i}`}
+              style={{ color: '#5e5e6a', padding: '0 4px', fontSize: 13 }}
+              aria-hidden
+            >
+              …
+            </span>
+          ) : (
+            <button
+              key={it}
+              type="button"
+              onClick={() => onGo(it)}
+              disabled={loadingMore}
+              style={it === pageIndex ? activeBtn : baseBtn}
+              aria-current={it === pageIndex ? 'page' : undefined}
+              aria-label={`Page ${it + 1}`}
+            >
+              {it + 1}
+            </button>
+          ),
+        )}
+        <button
+          type="button"
+          onClick={() => onGo(pageIndex + 1)}
+          disabled={nextDisabled}
+          style={nextDisabled ? disabledBtn : baseBtn}
+          aria-label="Next page"
+        >
+          {loadingMore ? 'Loading…' : 'Next →'}
+        </button>
+      </div>
+    </div>
+  );
 }
 
 // ── Sensitivity chart — stacked bars across score/rank band ─────────────────
@@ -2275,5 +2883,80 @@ function SensitivityChart({
         hover any bar · bar height = number of Safe {exam === 'jee' ? 'branches' : 'programmes'} you&apos;d gain or lose vs your current
       </div>
     </div>
+  );
+}
+
+// ── QuotaToggle ──────────────────────────────────────────────────────────────
+// On/off pill used for the Girls Quota + PwD Quota controls in the JEE form.
+// Same visual language as the Seg chips above so the row feels native, but
+// state is boolean (toggle) rather than mutually-exclusive (pick-one).
+function QuotaToggle({
+  label,
+  sublabel,
+  active,
+  onToggle,
+}: {
+  label: string;
+  sublabel: string;
+  active: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-pressed={active}
+      style={{
+        textAlign: 'left',
+        padding: '10px 14px',
+        borderRadius: 10,
+        border: active
+          ? '1px solid rgba(245,158,11,0.5)'
+          : '1px solid rgba(255,255,255,0.08)',
+        background: active ? 'rgba(245,158,11,0.10)' : 'rgba(255,255,255,0.02)',
+        color: active ? '#fbbf24' : '#cfcfd6',
+        cursor: 'pointer',
+        fontFamily: 'inherit',
+        transition: 'border-color 0.18s, background 0.18s, color 0.18s',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+        minWidth: 200,
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontWeight: 600, fontSize: 13.5 }}>
+        <span
+          style={{
+            display: 'inline-block',
+            width: 14,
+            height: 14,
+            borderRadius: 4,
+            background: active ? '#fbbf24' : 'transparent',
+            border: active ? '1px solid #fbbf24' : '1px solid rgba(255,255,255,0.2)',
+            position: 'relative',
+          }}
+        >
+          {active && (
+            <span
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%) rotate(45deg)',
+                width: 4,
+                height: 8,
+                borderRight: '2px solid #0a0a0f',
+                borderBottom: '2px solid #0a0a0f',
+                marginTop: -1,
+              }}
+            />
+          )}
+        </span>
+        {label}
+      </div>
+      <div style={{ color: active ? 'rgba(251,191,36,0.7)' : '#7d7d88', fontSize: 11.5, marginLeft: 22 }}>
+        {sublabel}
+      </div>
+    </button>
   );
 }

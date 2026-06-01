@@ -20,10 +20,14 @@ import './career-guide.css';
  * visual showing the jobs-list shifting across 2011 → 2026.
  */
 
-// Career briefs refresh on a quarterly editorial cadence (per the doc in
-// sitemap.ts). 24-hour ISR is more than fast enough; admin can fire an
-// explicit revalidatePath('/career-guide') after publishing a new spec
-// if a faster turnaround is ever needed.
+// 24-hour ISR — career briefs refresh on a quarterly editorial cadence, so
+// the cache window can be long. Previously `force-dynamic`, which hit Mongo
+// on every render and contributed to Atlas connection-pool pressure under
+// load (and was the 2026-06 Vercel bill driver, see CLAUDE.md §10). The
+// admin save flow already calls revalidatePath() for instant turnaround
+// when a spec is published, so this TTL is just the safety net. Per
+// CLAUDE.md §10.5: "Effectively static (career briefs, exam-prep landings,
+// class hubs) → 86400".
 export const revalidate = 86400;
 
 const SITE_ORIGIN = 'https://canvasclasses.in';

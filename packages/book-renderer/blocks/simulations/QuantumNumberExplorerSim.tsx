@@ -64,27 +64,51 @@ function validate(n: number, l: number, ml: number) {
 /* ── Schematic orbital shape preview ────────────────────────────────────── */
 
 function OrbitalPreview({ l }: { l: number }) {
-  const s = 96, c = s / 2;
+  // Bumped 96 → 160 so the shape is legible alongside the n/l/mℓ/mₛ selectors.
+  // All lobe sizes scale from the base unit (s/96) so the existing proportions
+  // are preserved exactly.
+  const s = 160, c = s / 2;
+  const k = s / 96; // scale factor
   const pos = SUB_COLORS[L_LABELS[l]] ?? '#818cf8';
   const neg = '#ef4444';
 
+  // Unique gradient IDs per `pos` colour so multiple OrbitalPreview instances
+  // (e.g. different l values rendered in parallel) don't share defs.
+  const gid = `qn-orb-${pos.replace('#', '')}`;
+
   return (
     <svg width={s} height={s} viewBox={`0 0 ${s} ${s}`}>
+      <defs>
+        {/* Density-cloud gradient — bright centre fading to translucent edge.
+            Matches the orbital style used in OrbitalShapeExplorerSim so the
+            two sims feel like the same product. */}
+        <radialGradient id={`${gid}-pos`}>
+          <stop offset="0%"   stopColor={pos} stopOpacity={0.85} />
+          <stop offset="55%"  stopColor={pos} stopOpacity={0.40} />
+          <stop offset="100%" stopColor={pos} stopOpacity={0.04} />
+        </radialGradient>
+        <radialGradient id={`${gid}-neg`}>
+          <stop offset="0%"   stopColor={neg} stopOpacity={0.80} />
+          <stop offset="55%"  stopColor={neg} stopOpacity={0.35} />
+          <stop offset="100%" stopColor={neg} stopOpacity={0.04} />
+        </radialGradient>
+      </defs>
+
       {/* nucleus dot */}
-      <circle cx={c} cy={c} r={2.5} fill="#e2e8f0" />
+      <circle cx={c} cy={c} r={2.5 * k} fill="#e2e8f0" />
 
       {l === 0 && (
-        <circle cx={c} cy={c} r={32} fill={`${pos}18`} stroke={pos}
-          strokeWidth={1.5} />
+        <circle cx={c} cy={c} r={32 * k} fill={`url(#${gid}-pos)`}
+          stroke={pos} strokeOpacity={0.55} strokeWidth={1.2} />
       )}
 
       {l === 1 && (<>
-        <ellipse cx={c} cy={c - 18} rx={15} ry={26}
-          fill={`${pos}20`} stroke={pos} strokeWidth={1.5} />
-        <ellipse cx={c} cy={c + 18} rx={15} ry={26}
-          fill={`${neg}15`} stroke={neg} strokeWidth={1.5} />
+        <ellipse cx={c} cy={c - 18 * k} rx={15 * k} ry={26 * k}
+          fill={`url(#${gid}-pos)`} stroke={pos} strokeOpacity={0.55} strokeWidth={1.2} />
+        <ellipse cx={c} cy={c + 18 * k} rx={15 * k} ry={26 * k}
+          fill={`url(#${gid}-neg)`} stroke={neg} strokeOpacity={0.55} strokeWidth={1.2} />
         {/* nodal plane */}
-        <line x1={c - 26} y1={c} x2={c + 26} y2={c}
+        <line x1={c - 26 * k} y1={c} x2={c + 26 * k} y2={c}
           stroke={neg} strokeWidth={0.8} strokeDasharray="3,3" opacity={0.5} />
       </>)}
 
@@ -92,13 +116,14 @@ function OrbitalPreview({ l }: { l: number }) {
         {/* four-leaf clover (dxy-style) */}
         {[45, 135, 225, 315].map((deg, i) => {
           const rad = (deg * Math.PI) / 180;
-          const lx = c + Math.cos(rad) * 19;
-          const ly = c + Math.sin(rad) * 19;
+          const lx = c + Math.cos(rad) * 19 * k;
+          const ly = c + Math.sin(rad) * 19 * k;
+          const isPos = i % 2 === 0;
           return (
-            <ellipse key={deg} cx={lx} cy={ly} rx={10} ry={19}
+            <ellipse key={deg} cx={lx} cy={ly} rx={10 * k} ry={19 * k}
               transform={`rotate(${deg} ${lx} ${ly})`}
-              fill={i % 2 === 0 ? `${pos}18` : `${neg}12`}
-              stroke={i % 2 === 0 ? pos : neg} strokeWidth={1.2} />
+              fill={`url(#${gid}-${isPos ? 'pos' : 'neg'})`}
+              stroke={isPos ? pos : neg} strokeOpacity={0.55} strokeWidth={1.1} />
           );
         })}
       </>)}
@@ -106,13 +131,14 @@ function OrbitalPreview({ l }: { l: number }) {
       {l === 3 && (<>
         {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => {
           const rad = (deg * Math.PI) / 180;
-          const lx = c + Math.cos(rad) * 24;
-          const ly = c + Math.sin(rad) * 24;
+          const lx = c + Math.cos(rad) * 24 * k;
+          const ly = c + Math.sin(rad) * 24 * k;
+          const isPos = i % 2 === 0;
           return (
-            <ellipse key={deg} cx={lx} cy={ly} rx={7} ry={15}
+            <ellipse key={deg} cx={lx} cy={ly} rx={7 * k} ry={15 * k}
               transform={`rotate(${deg} ${lx} ${ly})`}
-              fill={i % 2 === 0 ? `${pos}15` : `${neg}10`}
-              stroke={i % 2 === 0 ? pos : neg} strokeWidth={0.9} />
+              fill={`url(#${gid}-${isPos ? 'pos' : 'neg'})`}
+              stroke={isPos ? pos : neg} strokeOpacity={0.55} strokeWidth={0.9} />
           );
         })}
       </>)}
@@ -129,7 +155,7 @@ function Btn({ selected, color, onClick, disabled, label }: {
   return (
     <button onClick={onClick} disabled={disabled} style={{
       padding: '6px 10px', borderRadius: 8, fontSize: 13,
-      fontWeight: 700, fontFamily: 'monospace', minWidth: 36,
+      fontWeight: 700, fontVariantNumeric: 'tabular-nums', minWidth: 36,
       cursor: disabled ? 'not-allowed' : 'pointer',
       transition: 'all 0.15s',
       background: selected ? `${color}20` : disabled ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.04)',
@@ -276,12 +302,12 @@ export default function QuantumNumberExplorerSim() {
                     <div key={nd.label} className="text-center rounded-lg p-2"
                       style={{ background: 'rgba(255,255,255,0.04)',
                         border: '1px solid rgba(255,255,255,0.06)' }}>
-                      <div style={{ fontSize: 18, fontWeight: 800, fontFamily: 'monospace',
+                      <div style={{ fontSize: 18, fontWeight: 800, fontVariantNumeric: 'tabular-nums',
                         color: '#e2e8f0', lineHeight: 1 }}>{nd.val}</div>
                       <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)',
                         textTransform: 'uppercase', marginTop: 3 }}>{nd.label}</div>
                       <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.20)',
-                        fontFamily: 'monospace' }}>= {nd.formula}</div>
+                        fontVariantNumeric: 'tabular-nums' }}>= {nd.formula}</div>
                     </div>
                   ))}
                 </div>
@@ -336,18 +362,18 @@ export default function QuantumNumberExplorerSim() {
                   }}>
                   {/* Filling order # */}
                   <span style={{ fontSize: 10, fontWeight: 700, width: 16,
-                    textAlign: 'right', fontFamily: 'monospace',
+                    textAlign: 'right', fontVariantNumeric: 'tabular-nums',
                     color: 'rgba(255,255,255,0.20)' }}>
                     {idx + 1}
                   </span>
                   {/* Sublevel label */}
                   <span style={{ fontSize: 13, fontWeight: 700, width: 28,
-                    fontFamily: 'monospace',
+                    fontVariantNumeric: 'tabular-nums',
                     color: isCurrent ? subColor : 'rgba(255,255,255,0.45)' }}>
                     {key}
                   </span>
                   {/* n+l */}
-                  <span style={{ fontSize: 10, width: 40, fontFamily: 'monospace',
+                  <span style={{ fontSize: 10, width: 40, fontVariantNumeric: 'tabular-nums',
                     color: 'rgba(255,255,255,0.20)' }}>
                     n+l={sub.n + sub.l}
                   </span>
@@ -369,7 +395,7 @@ export default function QuantumNumberExplorerSim() {
                           }}>
                             {isThis ? (ms > 0 ? '↑' : '↓') : ''}
                           </div>
-                          <span style={{ fontSize: 8, fontFamily: 'monospace',
+                          <span style={{ fontSize: 8, fontVariantNumeric: 'tabular-nums',
                             color: isCurrent ? 'rgba(255,255,255,0.30)' : 'rgba(255,255,255,0.12)' }}>
                             {boxMl >= 0 ? `+${boxMl}` : boxMl}
                           </span>

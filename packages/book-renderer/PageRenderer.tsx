@@ -81,10 +81,10 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
   return (
     // Outer shell: centers content and caps total width on large screens
     // book-page-content scopes CSS fixes (e.g. fraction zoom) to this reader only
-    <div className="book-page-content w-full max-w-[1300px] mx-auto px-3 sm:px-8 pt-8 pb-10">
+    <div className="book-page-content w-full max-w-[1495px] mx-auto px-3 sm:px-8 pt-8 pb-10">
 
       {/* Page header — always full width */}
-      <header className="mb-5 max-w-[980px]">
+      <header className="mb-5 max-w-[1127px]">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <h1 className="text-[32px] sm:text-[38px] font-bold text-white leading-[1.15] tracking-tight">
@@ -134,7 +134,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
       <div className={hasSidebar ? 'xl:flex xl:gap-14 xl:items-start' : ''}>
 
         {/* ── Main prose column ── */}
-        <article className="min-w-0 flex-1 max-w-[980px]">
+        <article className="min-w-0 flex-1 max-w-[1127px]">
           {/* Mobile/tablet: render ALL blocks inline including callouts */}
           <div className="xl:hidden flex flex-col gap-1">
             {sorted.map(block => (

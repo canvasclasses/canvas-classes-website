@@ -257,7 +257,7 @@ export default function PowerSim() {
               Formulae
             </p>
             {[
-              { lhs: 'P', rhs: 'W / t', sub: 'Power = Work ÷ Time' },
+              { lhs: 'P', rhs: 'W / t', sub: 'Power = Work / Time' },
               { lhs: 'P', rhs: 'F × v', sub: 'Power = Force × velocity' },
               { lhs: '1 W', rhs: '1 J/s', sub: '1 Watt = 1 Joule per second' },
               { lhs: '1 kWh', rhs: '3.6 × 10⁶ J', sub: 'Commercial unit of energy' },

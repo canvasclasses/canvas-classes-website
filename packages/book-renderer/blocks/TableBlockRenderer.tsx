@@ -6,13 +6,14 @@ import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
 import { TableBlock } from '@canvas/data/types/books';
+import { REHYPE_KATEX_OPTIONS } from './_katexConfig';
 
 // Cell content — supports inline markdown + LaTeX
 function CellContent({ text }: { text: string }) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkMath]}
-      rehypePlugins={[rehypeKatex]}
+      rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
       components={{
         p: ({ children }) => <span>{children}</span>,
         strong: ({ children }) => (

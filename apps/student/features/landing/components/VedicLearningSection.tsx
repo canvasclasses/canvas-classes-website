@@ -8,6 +8,15 @@ import { Volume2, FlaskConical, Target } from 'lucide-react';
 // MANDALA — SVG geometric watermark, slow rotation, East-meets-West motif
 // ─────────────────────────────────────────────────────────────────────────────
 
+// Hydration-safe rounding for trig-derived SVG coordinates. Math.cos / Math.sin
+// in Node (SSR) and V8 (client) can disagree on the last ULP of the mantissa
+// (e.g. 122.01626123751154 vs 122.01626123751157), which React then refuses
+// to patch on hydration. Rounding to 4 decimals on a 600×600 viewBox is far
+// below sub-pixel — no visible change, but both sides emit identical strings.
+function round4(n: number): number {
+    return Math.round(n * 10000) / 10000;
+}
+
 function Mandala() {
     const C = 300; // center
 
@@ -18,8 +27,8 @@ function Mandala() {
             return (
                 <circle
                     key={i}
-                    cx={C + r * Math.cos(a)}
-                    cy={C + r * Math.sin(a)}
+                    cx={round4(C + r * Math.cos(a))}
+                    cy={round4(C + r * Math.sin(a))}
                     r={pr}
                     fill="none"
                     stroke="#f59e0b"
@@ -35,8 +44,8 @@ function Mandala() {
             return (
                 <line
                     key={i}
-                    x1={C + r1 * Math.cos(a)} y1={C + r1 * Math.sin(a)}
-                    x2={C + r2 * Math.cos(a)} y2={C + r2 * Math.sin(a)}
+                    x1={round4(C + r1 * Math.cos(a))} y1={round4(C + r1 * Math.sin(a))}
+                    x2={round4(C + r2 * Math.cos(a))} y2={round4(C + r2 * Math.sin(a))}
                     stroke="#f59e0b"
                     strokeWidth="0.25"
                 />

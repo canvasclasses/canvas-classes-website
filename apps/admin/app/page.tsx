@@ -15,6 +15,7 @@ import {
 import { createClient } from '@/app/utils/supabase/server';
 import { SignoutButton } from '@/features/admin/components/SignoutButton';
 import { isSuperAdmin } from '@canvas/data/rbac';
+import { isLocalhostDev } from '@/lib/adminAuth';
 
 export const metadata = {
   title: 'Admin Home | Canvas',
@@ -39,7 +40,13 @@ export default async function AdminHome() {
   // Staff (non-super-admin) only ever get question-bank access via grants in
   // the user_access collection, so the only panel they should see here is
   // Crucible. All other operator surfaces are super-admin-only.
-  const superAdmin = isSuperAdmin(email);
+  //
+  // Localhost dev bypass — matches apps/admin/middleware.ts and the rest of
+  // the admin app's adminAuth helpers. Gates: NODE_ENV === 'development' AND
+  // VERCEL !== '1' AND hostname is localhost/127.0.0.1. All three required;
+  // cannot trigger on production or on Vercel preview deployments.
+  const isLocalDev = await isLocalhostDev();
+  const superAdmin = isLocalDev || isSuperAdmin(email);
 
   return (
     <main className="min-h-screen bg-[#050505] text-white">

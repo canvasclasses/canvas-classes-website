@@ -55,8 +55,11 @@ import './career-detail.css';
  * harder stuff — risks, India context — comes after they're already engaged.
  */
 
-// 24-hour ISR matches the quarterly editorial cadence. revalidatePath
-// can be called from the admin save flow when a spec is updated.
+// 24-hour ISR — quarterly editorial cadence, same reasoning as the
+// /career-guide index. Eliminates the per-request MongoDB hit (× 12 detail
+// pages × every visit) that was saturating the Atlas pool under bot load.
+// revalidatePath() from the admin save flow handles instant turnaround.
+// Per CLAUDE.md §10.5 ("Effectively static → 86400").
 export const revalidate = 86400;
 
 type SpecLean = Omit<ICareerSpec, 'deleted_at' | 'deleted_by' | 'created_by' | 'updated_by'>;

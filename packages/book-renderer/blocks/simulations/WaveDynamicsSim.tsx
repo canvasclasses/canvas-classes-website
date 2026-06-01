@@ -374,7 +374,7 @@ function SliderControl({
         <span className="text-purple-400 text-[10px] font-bold tracking-widest uppercase">
           {label}
         </span>
-        <span className="text-cyan-400 font-mono text-sm font-medium">{value}</span>
+        <span className="text-cyan-400 tabular-nums text-sm font-medium">{value}</span>
       </div>
       <input
         type="range"

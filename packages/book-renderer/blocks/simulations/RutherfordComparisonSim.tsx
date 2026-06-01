@@ -276,7 +276,7 @@ export default function RutherfordComparisonSim() {
             <div className="flex flex-col gap-2">
               <div className="flex justify-between items-center">
                 <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: 'rgba(255,255,255,0.4)' }}>Particle Gun Aim (Y-Axis)</span>
-                <span className="text-xs font-bold font-mono" style={{ color: '#e5b567' }}>{getGunDisplay()}</span>
+                <span className="text-xs font-bold tabular-nums" style={{ color: '#e5b567' }}>{getGunDisplay()}</span>
               </div>
               <input
                 type="range" min="-150" max="150" step="1" value={gunY}
@@ -319,7 +319,7 @@ export default function RutherfordComparisonSim() {
             <div className="flex items-center gap-2 mb-3">
               <div className="w-1 h-4 rounded" style={{ background: '#2dd4bf' }} />
               <span className="text-sm font-bold" style={{ color: '#2dd4bf' }}>Live Scattering Statistics</span>
-              <span className="text-xs font-mono ml-auto px-2 py-0.5 rounded" style={{ color: '#99f6e4', background: 'rgba(45,212,191,0.15)' }}>
+              <span className="text-xs tabular-nums ml-auto px-2 py-0.5 rounded" style={{ color: '#99f6e4', background: 'rgba(45,212,191,0.15)' }}>
                 {stats.total} particles
               </span>
             </div>
@@ -331,9 +331,9 @@ export default function RutherfordComparisonSim() {
                 { pct: String(stats.total), label: 'Total Fired', count: null, color: '#2dd4bf' },
               ].map((s) => (
                 <div key={s.label} className="rounded-lg p-3 text-center" style={{ background: 'rgba(0,0,0,0.25)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                  <div className="text-2xl font-extrabold font-mono leading-none" style={{ color: s.color }}>{s.pct}{s.count !== null ? '%' : ''}</div>
+                  <div className="text-2xl font-extrabold tabular-nums leading-none" style={{ color: s.color }}>{s.pct}{s.count !== null ? '%' : ''}</div>
                   <div className="text-xs mt-1 font-semibold" style={{ color: 'rgba(255,255,255,0.55)' }}>{s.label}</div>
-                  {s.count !== null && <div className="text-xs mt-0.5 font-mono" style={{ color: 'rgba(255,255,255,0.3)' }}>{s.count}</div>}
+                  {s.count !== null && <div className="text-xs mt-0.5 tabular-nums" style={{ color: 'rgba(255,255,255,0.3)' }}>{s.count}</div>}
                 </div>
               ))}
             </div>

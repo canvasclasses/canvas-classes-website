@@ -7,6 +7,7 @@ import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import rehypeKatex from 'rehype-katex';
+import { REHYPE_KATEX_OPTIONS } from './_katexConfig';
 import rehypeRaw from 'rehype-raw';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
@@ -15,9 +16,14 @@ import { ImageBlock } from '@canvas/data/types/books';
 
 // ── Width presets when the block sits on its own row ──
 const fullRowWidthClass: Record<NonNullable<ImageBlock['width']>, string> = {
-  full: 'w-full',
-  half: 'w-1/2 mx-auto',
-  third: 'w-1/3 mx-auto',
+  full:           'w-full',
+  five_sixth:     'w-5/6 mx-auto',
+  three_quarter:  'w-3/4 mx-auto',
+  two_third:      'w-2/3 mx-auto',
+  half:           'w-1/2 mx-auto',
+  two_fifth:      'w-2/5 mx-auto',
+  third:          'w-1/3 mx-auto',
+  quarter:        'w-1/4 mx-auto',
 };
 
 // ── Aspect ratio → Tailwind class ──────────────────────────────────────────
@@ -33,10 +39,16 @@ const ASPECT_RATIO_CLASS: Record<NonNullable<ImageBlock['aspect_ratio']>, string
 
 // ── Width presets for the IMAGE pane inside a side-by-side row ──
 // (the remaining horizontal space goes to the text pane)
+// Anything ≥ half is capped at sm:w-1/2 so the text pane always has breathing room.
 const sideImageWidthClass: Record<NonNullable<ImageBlock['width']>, string> = {
-  full:  'sm:w-1/2',   // 'full' inside a row = equal 50/50 split
-  half:  'sm:w-1/2',   // 'half' = equal 50/50 split
-  third: 'sm:w-1/3',   // 'third' = narrow image, wide text
+  full:           'sm:w-1/2',
+  five_sixth:     'sm:w-1/2',
+  three_quarter:  'sm:w-1/2',
+  two_third:      'sm:w-1/2',
+  half:           'sm:w-1/2',
+  two_fifth:      'sm:w-2/5',
+  third:          'sm:w-1/3',
+  quarter:        'sm:w-1/4',
 };
 
 // ── Markdown renderer overrides for the side_text (match TextBlockRenderer) ──
@@ -206,7 +218,7 @@ function wrapSideBySide(figure: React.ReactNode, block: ImageBlock, align: 'left
       <div className="flex-1 min-w-0 w-full pt-1">
         <ReactMarkdown
           remarkPlugins={[remarkMath, remarkGfm, remarkBreaks]}
-          rehypePlugins={[rehypeKatex, rehypeRaw]}
+          rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS], rehypeRaw]}
           components={sideTextComponents}
         >
           {block.side_text ?? ''}

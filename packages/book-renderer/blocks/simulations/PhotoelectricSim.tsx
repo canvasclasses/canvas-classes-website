@@ -966,7 +966,7 @@ export default function PhotoelectricSim() {
             <span className="text-slate-300 text-[11px] font-bold tracking-widest uppercase">
               Frequency (ν)
             </span>
-            <span className="font-mono text-[13px] font-bold" style={{ color: photonCss }}>
+            <span className="tabular-nums text-[13px] font-bold" style={{ color: photonCss }}>
               {formatFreq(nu10_14)}
             </span>
           </div>
@@ -1007,7 +1007,7 @@ export default function PhotoelectricSim() {
             <span className="text-slate-300 text-[11px] font-bold tracking-widest uppercase">
               Intensity (I)
             </span>
-            <span className="text-cyan-300 font-mono text-[13px] font-bold">
+            <span className="text-cyan-300 tabular-nums text-[13px] font-bold">
               {intensity}
             </span>
           </div>
@@ -1040,7 +1040,7 @@ export default function PhotoelectricSim() {
           <div className="text-[10px] font-bold tracking-widest uppercase text-slate-300">
             Photon energy
           </div>
-          <div className="font-mono text-[15px] text-slate-100 mt-1">
+          <div className="tabular-nums text-[15px] text-slate-100 mt-1">
             hν = <span className="font-bold" style={{ color: photonCss }}>{formatEV(Ephoton)}</span> eV
           </div>
         </div>
@@ -1048,7 +1048,7 @@ export default function PhotoelectricSim() {
           <div className="text-[10px] font-bold tracking-widest uppercase text-slate-300">
             Work function
           </div>
-          <div className="font-mono text-[15px] text-slate-100 mt-1">
+          <div className="tabular-nums text-[15px] text-slate-100 mt-1">
             W₀ = <span className="text-amber-300 font-bold">{metal.W0.toFixed(2)}</span> eV
           </div>
         </div>
@@ -1056,7 +1056,7 @@ export default function PhotoelectricSim() {
           <div className="text-[10px] font-bold tracking-widest uppercase text-slate-300">
             Kinetic energy
           </div>
-          <div className="font-mono text-[15px] text-slate-100 mt-1">
+          <div className="tabular-nums text-[15px] text-slate-100 mt-1">
             KE = <span className={ejects ? 'text-cyan-300 font-bold' : 'text-rose-300 font-bold'}>
               {formatEV(KE)}
             </span> eV
@@ -1066,7 +1066,7 @@ export default function PhotoelectricSim() {
           <div className="text-[10px] font-bold tracking-widest uppercase text-slate-300">
             Photo-current
           </div>
-          <div className="font-mono text-[15px] text-slate-100 mt-1">
+          <div className="tabular-nums text-[15px] text-slate-100 mt-1">
             i = <span className={ejects ? 'text-cyan-300 font-bold' : 'text-slate-500 font-bold'}>
               {photoCurrent.toFixed(2)}
             </span> μA
@@ -1076,7 +1076,7 @@ export default function PhotoelectricSim() {
           <div className="text-[10px] font-bold tracking-widest uppercase text-slate-300">
             Status
           </div>
-          <div className={`font-mono text-[12px] mt-1 font-bold ${ejects ? 'text-emerald-300' : 'text-rose-300'}`}>
+          <div className={`tabular-nums text-[12px] mt-1 font-bold ${ejects ? 'text-emerald-300' : 'text-rose-300'}`}>
             {ejects ? 'ELECTRONS EJECTED' : 'BELOW THRESHOLD'}
           </div>
         </div>
@@ -1117,7 +1117,7 @@ export default function PhotoelectricSim() {
       {/* Takeaway */}
       <div className="mt-4 text-[12px] text-slate-300 leading-relaxed">
         Einstein&apos;s equation:{' '}
-        <span className="font-mono text-slate-100 font-semibold">KE = hν − W₀</span>. Try it
+        <span className="tabular-nums text-slate-100 font-semibold">KE = hν − W₀</span>. Try it
         yourself — raising <span className="text-cyan-300 font-semibold">intensity</span> fires
         more photons (the ammeter climbs) but does{' '}
         <em className="not-italic text-rose-300">not</em> change each electron&apos;s KE.

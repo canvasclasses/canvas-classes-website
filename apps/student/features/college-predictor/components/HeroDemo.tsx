@@ -259,8 +259,14 @@ function FakeCursor({ x, y, pressed, visible, tight }: CursorState) {
         left: 0,
         top: 0,
         transform: `translate(${x}px, ${y}px) scale(${pressed ? 0.92 : 1})`,
+        // In tight mode (autoplay tween) the cursor and the slider thumb are
+        // both driven from the same rAF tick, but the thumb has no CSS
+        // transition while the cursor used to have a 40 ms one — so the
+        // cursor visibly trailed the thumb by ~40 ms ("cursor not aligned at
+        // start"). Dropping the transform transition during tight mode keeps
+        // both in lockstep; opacity still smooths fade in/out.
         transition: tight
-          ? 'transform 0.04s linear, opacity 0.4s'
+          ? 'transform 0s linear, opacity 0.4s'
           : 'transform 0.7s cubic-bezier(.5,.1,.25,1), opacity 0.4s',
         opacity: visible ? 1 : 0,
         pointerEvents: 'none',
@@ -882,7 +888,13 @@ function PredictorDemo() {
           gap: 10,
         }}
       >
-        <div style={{ display: 'flex', gap: 14, alignItems: 'center', color: '#7d7d88', fontSize: 12, flexWrap: 'wrap' }}>
+        {/* Trust chips — hidden on mobile because <TrustStrip /> rendered just
+            below already shows the same data, and on narrow screens the
+            duplication eats ~120-150px of scroll before the actual form. */}
+        <div
+          className="hidden sm:flex"
+          style={{ gap: 14, alignItems: 'center', color: '#7d7d88', fontSize: 12, flexWrap: 'wrap' }}
+        >
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.04em' }}>
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399' }} />
             5 yrs counseling data

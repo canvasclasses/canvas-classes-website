@@ -5,13 +5,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { predictColleges } from '@/features/college-predictor/lib/predictor';
-import { percentileToRank } from '@/features/college-predictor/lib/percentileToRank';
+import { resolveEffectiveRank } from '@/features/college-predictor/lib/percentileToRank';
 import { buildChoiceList } from '@/features/college-predictor/lib/choiceList';
 import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
 
 const ChoiceListRequestSchema = z.object({
   rank: z.number().int().positive().max(2_000_000).optional(),
   percentile: z.number().min(0).max(100).optional(),
+  // See /predict route — same CRL/CAT semantics. Default 'CAT' preserves
+  // historical behaviour for any direct API callers.
+  rank_type: z.enum(['CRL', 'CAT']).optional(),
   category: z.enum([
     'OPEN', 'OBC-NCL', 'SC', 'ST', 'EWS',
     'OPEN (PwD)', 'OBC-NCL (PwD)', 'SC (PwD)', 'ST (PwD)', 'EWS (PwD)',
@@ -62,9 +65,13 @@ export async function POST(request: NextRequest) {
     const input = parsed.data;
 
     const targetYear = input.year ?? new Date().getFullYear();
-    const effRank =
-      input.rank ??
-      percentileToRank(input.percentile as number, targetYear, input.category);
+    const effRank = resolveEffectiveRank({
+      rank: input.rank,
+      percentile: input.percentile,
+      rank_type: input.rank_type,
+      category: input.category,
+      year: targetYear,
+    }).effectiveRank;
 
     // Run the full predictor (include_unlikely=false; the optimizer will drop
     // its own unlikely set internally anyway).
