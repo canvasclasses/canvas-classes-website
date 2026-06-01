@@ -1,6 +1,6 @@
 # Architecture Deepening Backlog
 
-Last updated: 2026-05-17 (after migration close-out audit on branch `code-refactor`).
+Last updated: 2026-06-01 (added items #10–12 after a four-agent depth audit covering work landed since the RBAC redesign).
 
 This is a living list of architecture work that came out of running the
 `improve-codebase-architecture` skill across the full repo after the
@@ -137,6 +137,109 @@ has to choose which shape to add it to. Until then the bridge pays its own
 tax.
 
 **Surfaced by**: features depth audit.
+
+---
+
+### 10. `requireSuperAdmin(req, deps)` helper to mirror the shipped `requireAdmin`
+
+**Files**:
+- `packages/services/assets-upload.ts:24,101` — direct `isSuperAdmin(authedEmail)` after a hand-rolled bypass+auth preamble
+- `packages/services/assets-by-id.ts:19,38` — same shape
+- `packages/services/export-ppt.ts:8,78` — same shape
+- Counter-examples (correct pattern): `packages/services/flashcards.ts:116`, `flashcards-by-id.ts:65,136` use `requireAdmin(req, deps)` from `auth.ts`
+
+**Problem**: backlog #2 (shipped 2026-05-18) introduced `requireAdmin(req, deps)`
+in `packages/services/auth.ts` to collapse the "localhost bypass → authed user
+→ admin-email check" preamble. Three handlers that need the *stricter*
+super-admin tier never adopted that pattern — they import `isSuperAdmin`
+directly from `@canvas/data/rbac` and re-implement their own preamble around
+it. The service README explicitly says "New admin-mutation handlers in this
+package MUST use this instead of re-implementing the gate inline" — these
+three violate that contract. **Deletion test**: if the three inline
+preambles vanish, the gate ceremony reappears in three places. A central
+`requireSuperAdmin` helper concentrates it.
+
+**Solution shape**: a sibling to the shipped `requireAdmin` that delegates
+super-admin detection through `deps` (so the ADR-003 Shape-B swap stays
+per-app). Same discriminated union return as `requireAdmin`. Requires adding
+`isSuperAdmin` to the `ServiceDeps` surface OR keeping the env-var read in
+`@canvas/data/rbac` and importing it inside `auth.ts` only.
+
+**Trigger**: now-ish, or whenever the next handler needs a super-admin gate
+(would otherwise copy the inline shape). Not security-blocking — the check
+itself runs correctly in all three places today; this is pattern drift.
+
+**Surfaced by**: 2026-06-01 packages depth audit. No security gap;
+contract-violation of the service README.
+
+---
+
+### 11. Pure persona-write helper for the three user-progress routes
+
+**Files**:
+- `apps/student/app/api/v2/user/progress/route.ts:168–200`
+- `apps/student/app/api/v2/user/session-response/route.ts:79–80`
+- `apps/student/app/api/v2/user/chapter-profile/route.ts`
+
+**Problem**: three handlers each implement an optimistic-concurrency retry
+loop around a `UserProgress` write **plus** a "mirror" write to
+`StudentChapterProfile` via `updateProfileFromAttempt`. The retry / concurrency
+/ tier-gating ceremony is copy-pasted with subtle field-name drift
+(`microConcept` vs `concept_tags`). **Deletion test**: drop the duplicate
+retry blocks and they reappear in three places — the ceremony multiplies.
+
+Sits next to shipped #4 (`computeUserProgressUpdate` pure core). #4 made the
+in-memory state transition testable; this candidate addresses the
+surrounding orchestration (concurrency + secondary write) that the pure core
+doesn't cover.
+
+**Solution shape**: a `performPersonaUpdate(userId, chapterId, attempt, deps)`
+adapter inside `@canvas/persona` that owns concurrency + retry + the dual
+write. Each route handler becomes "primary write → call helper → respond."
+Lives between today's `writer.ts` (mutation surface) and the three HTTP
+handlers. Preserves [CRUCIBLE_ARCHITECTURE.md](./CRUCIBLE_ARCHITECTURE.md)
+§9 invariant #3 (writer.ts remains the canonical mutation surface).
+
+**Trigger**: when the next persona-write surface is added (flashcard practice
+or mock-test result writes are the obvious candidates) — that would be a 4th
+copy of the ceremony. Until then the duplication is bounded at three.
+
+**Surfaced by**: 2026-06-01 student-app depth audit.
+
+---
+
+### 12. Pure `derivePermissions` helpers alongside `usePermissions`
+
+**Files**:
+- `apps/admin/features/admin/hooks/usePermissions.ts` (the hook)
+- `apps/admin/app/crucible/page.tsx:573–579` (only consumer today)
+
+**Problem**: the Crucible editor derives two UI-RBAC booleans inline:
+`canEditCurrent = canEdit(selectedQuestion.metadata.chapter_id)` and
+`canEditAny = isSuperAdmin || grants.some(g => g.level === 'edit')`. Pure
+functions of the RBAC contract data, but currently inlined in a 1,643-line
+god-file. **Deletion test**: one consumer today, so deleting the (not-yet-
+extracted) helpers concentrates nothing — this is one-adapter / hypothetical
+seam by the backlog's own rule.
+
+Worth tracking because the trigger is concrete: today's UI-RBAC gating
+landed only in Crucible. Extending it to Staff Access, Flags Dashboard, the
+planned Books editor, or Mock Tests admin will each re-derive the same two
+booleans.
+
+**Solution shape**: promote `canEditCurrent(grants, isSuperAdmin, chapterId)`
+and `canEditAny(grants, isSuperAdmin)` to named exports of `usePermissions.ts`
+(or a sibling pure file). The hook's data path stays unchanged; the new
+helpers take `{ grants, isSuperAdmin }` and return booleans. Crucible page
+imports and uses them; future dashboards do the same.
+
+**Trigger**: when the second dashboard (likely Books editor or Staff Access)
+adds the same fieldset-disabled UI-RBAC pattern. Until then this is
+single-call-site; inline it stays.
+
+**Surfaced by**: 2026-06-01 admin-app depth audit. Acknowledged as
+"one-adapter = hypothetical seam" — listed so the second-consumer trigger
+isn't forgotten.
 
 ---
 
