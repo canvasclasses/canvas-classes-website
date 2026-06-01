@@ -4,7 +4,7 @@ import BookModel from '@canvas/data/models/Book';
 import BookPageModel from '@canvas/data/models/BookPage';
 import BookReader from '@/features/books/components/reader/BookReader';
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 interface Props {
   params: Promise<{ pageSlug: string }>;

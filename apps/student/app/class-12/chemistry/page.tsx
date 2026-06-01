@@ -8,7 +8,7 @@ import BookTableOfContents, {
 } from '@/features/books/components/BookTableOfContents';
 import LiveBooksComingSoon from '@/features/books/components/LiveBooksComingSoon';
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export const metadata = {
   title: 'Class 12 Chemistry — NCERT Simplified | Canvas Classes',

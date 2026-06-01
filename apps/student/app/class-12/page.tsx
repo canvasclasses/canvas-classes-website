@@ -8,7 +8,7 @@ import GradeLandingPage, {
 } from '@/features/books/components/GradeLandingPage';
 import LiveBooksComingSoon from '@/features/books/components/LiveBooksComingSoon';
 
-export const revalidate = 60;
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Class 12 Live Books — NCERT Interactive Lessons | Canvas Classes',

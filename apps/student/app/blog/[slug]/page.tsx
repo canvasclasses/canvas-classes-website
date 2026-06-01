@@ -22,7 +22,7 @@ function safeJsonLd(data: unknown): string {
         .replace(/'/g, '\\u0027');
 }
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export async function generateStaticParams() {
     const slugs = await getPublishedSlugs();

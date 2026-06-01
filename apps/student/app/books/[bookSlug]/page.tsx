@@ -8,9 +8,10 @@ import BookTableOfContents, {
   type ToCPage,
 } from '@/features/books/components/BookTableOfContents';
 
-// ISR — the ToC changes only when an admin publishes a new chapter / page,
-// so a 60s revalidate window is safe and keeps Mongo off the hot path.
-export const revalidate = 60;
+// ISR — the ToC changes only when an admin publishes a new chapter / page.
+// 1-hour TTL is plenty; admin save flows can fire revalidatePath() for
+// instant turnaround on the rare occasion that's needed.
+export const revalidate = 3600;
 
 interface Props {
   params: Promise<{ bookSlug: string }>;

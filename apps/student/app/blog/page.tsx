@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import BlogGrid from '@/features/blog/components/BlogGrid';
 import { getPublishedPosts } from '@/features/blog/lib/blogDb';
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 const BASE_URL = 'https://www.canvasclasses.in';
 
